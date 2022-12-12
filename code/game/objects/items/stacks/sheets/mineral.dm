@@ -469,7 +469,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=20, res_amount=1, category = CAT_ROBOT),
 	new /datum/stack_recipe("ancient armor", /obj/item/clothing/suit/armor/elder_atmosian, req_amount = 5, res_amount = 1, category = CAT_CLOTHING),
 	new /datum/stack_recipe("ancient helmet", /obj/item/clothing/head/helmet/elder_atmosian, req_amount = 3, res_amount = 1, category = CAT_CLOTHING),
-	new /datum/stack_recipe("metallic hydrogen axe", /obj/item/fireaxe/metal_h2_axe, req_amount = 15, res_amount = 1, category = CAT_WEAPON_MELE),
+	new /datum/stack_recipe("metallic hydrogen axe", /obj/item/fireaxe/metal_h2_axe, req_amount = 15, res_amount = 1, category = CAT_WEAPON_MELEE),
 	))
 
 /obj/item/stack/sheet/mineral/metal_hydrogen

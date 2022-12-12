@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 1 SECONDS, category = CAT_TOOLS),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_CONTAINERS),\
 	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),\
-	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 1.5 SECONDS, category = CAT_WEAPON_MELE),\
+	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 1.5 SECONDS, category = CAT_WEAPON_MELEE),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/cup/mortar, 3, category = CAT_CHEMISTRY), \
 	new/datum/stack_recipe("firebrand", /obj/item/match/firebrand, 2, time = 10 SECONDS, category = CAT_TOOLS), \
@@ -355,7 +355,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 
 GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	new/datum/stack_recipe("punji sticks trap", /obj/structure/punji_sticks, 5, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("bamboo spear", /obj/item/spear/bamboospear, 25, time = 9 SECONDS, category = CAT_WEAPON_MELE), \
+	new/datum/stack_recipe("bamboo spear", /obj/item/spear/bamboospear, 25, time = 9 SECONDS, category = CAT_WEAPON_MELEE), \
 	new/datum/stack_recipe("blow gun", /obj/item/gun/syringe/blowgun, 10, time = 7 SECONDS, category = CAT_WEAPON_RANGED), \
 	new/datum/stack_recipe("crude syringe", /obj/item/reagent_containers/syringe/crude, 5, time = 1 SECONDS, category = CAT_CHEMISTRY), \
 	new/datum/stack_recipe("rice hat", /obj/item/clothing/head/costume/rice_hat, 10, time = 7 SECONDS, category = CAT_CLOTHING), \

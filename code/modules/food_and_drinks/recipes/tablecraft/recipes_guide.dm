@@ -8,7 +8,7 @@
 		/obj/item/stack/sheet/cloth = 1,
 	)
 	result = /obj/item/knife/shiv
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 	steps = list("Use cloth on a glass shard of any type")
 
 /datum/crafting_recipe/restraints

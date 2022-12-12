@@ -104,7 +104,7 @@
 
 //crafting defines
 #define CAT_WEAPON_RANGED "Weapons Ranged"
-#define CAT_WEAPON_MELE "Weapons Melee"
+#define CAT_WEAPON_MELEE "Weapons Melee"
 #define CAT_WEAPON_AMMO "Weapon Ammo"
 #define CAT_ROBOT "Robotics"
 #define CAT_MISC "Misc"

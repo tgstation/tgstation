@@ -120,7 +120,7 @@
 				/obj/item/stack/rods = 1,
 				/obj/item/assembly/igniter = 1)
 	time = 4 SECONDS
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/teleprod
 	name = "Teleprod"
@@ -130,7 +130,7 @@
 				/obj/item/assembly/igniter = 1,
 				/obj/item/stack/ore/bluespace_crystal = 1)
 	time = 4 SECONDS
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/bola
 	name = "Bola"
@@ -156,7 +156,7 @@
 				/obj/item/stack/sheet/iron = 1)
 	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
 	time = 4 SECONDS
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
@@ -165,7 +165,7 @@
 				/obj/item/stack/cable_coil = 1)
 	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
 	time = 4 SECONDS
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/catwhip
 	name = "Cat O' Nine Tails"
@@ -173,7 +173,7 @@
 	reqs = list(/obj/item/organ/external/tail/cat = 1,
 				/obj/item/stack/cable_coil = 1)
 	time = 4 SECONDS
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/reciever
 	name = "Modular Rifle Reciever"
@@ -602,7 +602,7 @@
 				/obj/item/stack/sheet/plasteel = 5)
 	tool_behaviors = list(TOOL_WELDER)
 	time = 5 SECONDS
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/spear
 	name = "Spear"
@@ -612,7 +612,7 @@
 				/obj/item/stack/rods = 1)
 	parts = list(/obj/item/shard = 1)
 	time = 4 SECONDS
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
@@ -808,7 +808,7 @@
 	name = "Toy Sword"
 	reqs = list(/obj/item/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
 	result = /obj/item/toy/sword
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/blackcarpet
 	name = "Black Carpet"
@@ -948,7 +948,7 @@
 	result = /obj/item/knife/combat/bone
 	time = 2 SECONDS
 	reqs = list(/obj/item/stack/sheet/bone = 2)
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/bonespear
 	name = "Bone Spear"
@@ -956,7 +956,7 @@
 	time = 3 SECONDS
 	reqs = list(/obj/item/stack/sheet/bone = 4,
 				/obj/item/stack/sheet/sinew = 1)
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/boneaxe
 	name = "Bone Axe"
@@ -964,7 +964,7 @@
 	time = 5 SECONDS
 	reqs = list(/obj/item/stack/sheet/bone = 6,
 				/obj/item/stack/sheet/sinew = 3)
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/bonfire
 	name = "Bonfire"
@@ -1826,7 +1826,7 @@
 		/obj/item/roulette_wheel_beacon = 1,
 	)
 	time = 10 SECONDS
-	category = CAT_WEAPON_MELE
+	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/punching_bag
 	name = "Punching Bag"
