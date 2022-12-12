@@ -38,6 +38,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	overlay_mic_idle = null
 	overlay_mic_active = null
 
+	/// on the go anominity seems excessive
+	anon_protect = TRUE
+
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
 	return TOXLOSS

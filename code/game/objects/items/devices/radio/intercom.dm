@@ -20,6 +20,7 @@
 /obj/item/radio/intercom/prison
 	name = "prison intercom"
 	desc = "A station intercom. It looks like it has been modified to not broadcast."
+	anon_protect = TRUE
 
 /obj/item/radio/intercom/prison/Initialize(mapload, ndir, building)
 	. = ..()
@@ -200,6 +201,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 	desc = "The command team's special extended-frequency intercom. Mostly just used for eavesdropping, gossiping about subordinates, and complaining about the higher-ups."
 	icon_state = "intercom_command"
 	freerange = TRUE
+	anon_protect = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)

@@ -60,6 +60,8 @@
 
 	///makes anyone who is talking through this anonymous.
 	var/anonymize = FALSE
+	/// Prevents anomimity being set by wire manipulation
+	var/anon_protect = FALSE
 
 	/// Encryption key handling
 	var/obj/item/encryptionkey/keyslot
@@ -240,6 +242,13 @@
 		update_icon()
 	else if (!perform_update_icon)
 		should_update_icon = TRUE
+
+/// Setter for the anonimity of the speaker. Also checks for protection, but can be overriden with the force var
+/obj/item/radio/proc/set_anon(new_anon, force = FALSE)
+	if(anon_protect && !force)
+		visible_message("\The [src] beeps.")
+		return
+	anonymize = new_anon
 
 ///setter for the on var that sets both broadcasting and listening to off or whatever they were supposed to be
 /obj/item/radio/proc/set_on(new_on)

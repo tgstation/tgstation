@@ -5,7 +5,8 @@
 /datum/wires/radio/New(atom/holder)
 	wires = list(
 		WIRE_SIGNAL,
-		WIRE_RX, WIRE_TX
+		WIRE_RX, WIRE_TX,
+		WIRE_ANON
 	)
 	..()
 
@@ -25,3 +26,17 @@
 			R.set_listening(!R.get_listening())
 		if(WIRE_TX)
 			R.set_broadcasting(!R.get_broadcasting())
+		if(WIRE_ANON)
+			R.set_anon(!R.anonymize)
+
+/datum/wires/radio/on_cut(wire, mend)
+	if(wire == WIRE_ANON)
+		R.set_anon(!mend)
+
+/datum/wires/radio/get_status()
+	var/obj/item/radio/R = holder
+	var/list/status = list()
+	status += "The broadcast light is [R.get_broadcasting() ? "on" : "off"]."
+	status += "The listening light is [R.get_listening() ? "on" : "off"]."
+	status += "The voice recognition chip is [anonymize ? "slightly buzzing" : "silent"]."
+	return status

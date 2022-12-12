@@ -54,3 +54,4 @@
 #define WIRE_ZAP "High Voltage Circuit"
 #define WIRE_ZAP1 "High Voltage Circuit 1"
 #define WIRE_ZAP2 "High Voltage Circuit 2"
+#define WIRE_ANON "Voice Detection"
