@@ -9,6 +9,12 @@
 	return ..()
 
 /datum/status_effect/drowsiness/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE) || !(owner.status_flags & CANUNCONSCIOUS))
+		return FALSE
+	// Do robots dream of electric sheep?
+	if(issilicon(owner))
+		return FALSE
+
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/on_face_clean)
 	return TRUE
 

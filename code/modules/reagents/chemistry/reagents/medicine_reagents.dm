@@ -1022,8 +1022,8 @@
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/antihol
 	/// All status effects we remove on metabolize.
-	/// Does not include drunk as that's decresed gradually
-	var/static/list/statis_effects_to_clear = list(
+	/// Does not include drunk (despite what you may thing) as that's decresed gradually
+	var/static/list/status_effects_to_clear = list(
 		/datum/status_effect/confusion,
 		/datum/status_effect/dizziness,
 		/datum/status_effect/drowsiness,
@@ -1031,7 +1031,7 @@
 	)
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	for(var/effect in statis_effects_to_clear)
+	for(var/effect in status_effects_to_clear)
 		M.remove_status_effect(effect)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)

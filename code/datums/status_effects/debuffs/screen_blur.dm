@@ -14,6 +14,9 @@
 	return ..()
 
 /datum/status_effect/eye_blur/on_apply()
+	if(owner.mob_biotypes & (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC))
+		return FALSE
+
 	// If we get applied to a mob without a client, apply the blur when they log in
 	RegisterSignal(owner, COMSIG_MOB_LOGIN, .proc/update_blur)
 	// Apply initial blur
@@ -35,7 +38,7 @@
 /datum/status_effect/eye_blur/proc/update_blur(datum/source)
 	SIGNAL_HANDLER
 
-	if(!owner.client || !owner.hud_used)
+	if(!owner.hud_used)
 		return
 
 	var/time_left_in_seconds = (duration - world.time) / 10
