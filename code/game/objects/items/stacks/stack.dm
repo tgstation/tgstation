@@ -402,7 +402,7 @@
 
 	// Use up the material
 	use(recipe.req_amount * multiplier)
-	builder.investigate_log("[key_name(builder)] crafted [recipe.title]", INVESTIGATE_CRAFTING)
+	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
 	if(recipe.applies_mats && LAZYLEN(mats_per_unit))

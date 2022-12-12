@@ -944,7 +944,7 @@
 			.["user"]["department"] = C.registered_account.account_job.paycheck_department
 		else
 			.["user"]["job"] = "No Job"
-			.["user"]["department"] = "No Department"
+			.["user"]["department"] = DEPARTMENT_UNASSIGNED
 	.["stock"] = list()
 
 	for (var/datum/data/vending_product/product_record in product_records + coin_records + hidden_records)

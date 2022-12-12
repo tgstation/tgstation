@@ -196,7 +196,7 @@
 			healing += 0.1
 
 		// sleeping in silence is always better
-		if(HAS_TRAIT(src, TRAIT_DEAF))
+		if(HAS_TRAIT(owner, TRAIT_DEAF))
 			healing += 0.1
 
 		// check for beds
@@ -583,11 +583,10 @@
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	if(!owner.can_hear())
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
 		return
+
 	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
-	if(hearing_speaker == owner)
-		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.

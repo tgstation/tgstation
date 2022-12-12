@@ -43,6 +43,8 @@
 	data["contents"] = list()
 	if(machine)
 		data["stacking_amount"] = machine.stack_amt
+		data["input_direction"] = dir2text(machine.input_dir)
+		data["output_direction"] = dir2text(machine.output_dir)
 		for(var/stack_type in machine.stack_list)
 			var/obj/item/stack/sheet/stored_sheet = machine.stack_list[stack_type]
 			if(stored_sheet.amount <= 0)
@@ -68,6 +70,10 @@
 			var/obj/item/stack/sheet/out = new inp.type(null, inp.amount)
 			inp.amount = 0
 			machine.unload_mineral(out)
+			return TRUE
+		if("rotate")
+			var/input = text2num(params["input"])
+			machine.rotate(input)
 			return TRUE
 
 /**********************Mineral stacking unit**************************/
@@ -117,6 +123,14 @@
 			console.machine = src
 			to_chat(user, span_notice("You link [src] to the console in [M]'s buffer."))
 			return TRUE
+
+/obj/machinery/mineral/stacking_machine/proc/rotate(input)
+	if (input)
+		input_dir = turn(input_dir, 90)
+	else
+		output_dir = turn(output_dir, 90)
+	if (input_dir == output_dir)
+		rotate(input)
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	if(QDELETED(inp))

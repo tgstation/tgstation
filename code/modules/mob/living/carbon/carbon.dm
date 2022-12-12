@@ -604,7 +604,7 @@
 		set_invis_see(see_override)
 
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		new_sight = SEE_BLACKNESS
+		new_sight = NONE
 
 	set_sight(new_sight)
 	return ..()
@@ -873,7 +873,7 @@
 		return FALSE
 
 	// And we can't heal them if they're missing their liver
-	if(!getorganslot(ORGAN_SLOT_LIVER))
+	if(!HAS_TRAIT(src, TRAIT_NOMETABOLISM) && !getorganslot(ORGAN_SLOT_LIVER))
 		return FALSE
 
 	return ..()
