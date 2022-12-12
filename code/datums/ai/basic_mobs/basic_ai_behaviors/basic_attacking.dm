@@ -73,9 +73,9 @@
 
 	if(shots>1)
 		var/atom/burst_target = hiding_target ? hiding_target : target
-		var/datum/callback/cb = CALLBACK(basic_mob, TYPE_PROC_REF(/mob/living/basic,RangedAttack), burst_target)
+		var/datum/callback/callback = CALLBACK(basic_mob, TYPE_PROC_REF(/mob/living/basic,RangedAttack), burst_target)
 		for(var/i in 1 to shots)
-			addtimer(cb, (i - 1) * burst_interval)
+			addtimer(callback, (i - 1) * burst_interval)
 	else
 		basic_mob.RangedAttack(hiding_target ? hiding_target : target)
 
