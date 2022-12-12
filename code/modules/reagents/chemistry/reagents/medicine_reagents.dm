@@ -658,7 +658,7 @@
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.adjust_blindness(-2 * REM * delta_time * normalise_creation_purity())
-	owner.adjust_eye_blue(-4 SECONDS * REM * delta_time * normalise_creation_purity())
+	owner.adjust_eye_blur(-4 SECONDS * REM * delta_time * normalise_creation_purity())
 	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return ..()

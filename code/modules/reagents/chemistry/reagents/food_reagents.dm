@@ -486,7 +486,7 @@
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))
 			victim.emote("cry")
-			victim.blur_eyes(3) // 6 seconds
+			victim.set_eye_blur_if_lower(6 SECONDS)
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
