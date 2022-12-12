@@ -117,7 +117,7 @@
 
 
 //Gas alerts
-// The 5-Second timeout ensures alerts don't get stuck on the screen.
+// The timeout ensures gas alerts don't get stuck on the screen.
 // Gas alerts are continuously thrown/cleared by:
 // * /obj/item/organ/internal/lungs/proc/check_breath()
 // * /mob/living/carbon/check_breath()
@@ -177,7 +177,7 @@
 	name = "Choking (No N2O)"
 	desc = "You're not getting enough N2O. Find some good air before you pass out!"
 	icon_state = ALERT_NOT_ENOUGH_N2O
-	imeout = 10 SECONDS
+	timeout = 10 SECONDS
 
 /atom/movable/screen/alert/too_much_n2o
 	name = "Choking (N2O)"
