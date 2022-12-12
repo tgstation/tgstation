@@ -64,7 +64,7 @@
 		var/turf/target_turf = target
 		for(var/turf/adjacent_turf in target_turf.get_atmos_adjacent_turfs())
 			scrub(adjacent_turf.return_air())
-			return ..()
+		return ..()
 	scrub(target.return_air())
 	return ..()
 
