@@ -117,12 +117,12 @@
 "W" = (
 /obj/structure/table,
 /obj/item/trash/candle,
-/obj/structure/life_candle{
-	pixel_x = -8;
-	pixel_y = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/food_or_drink/booze,
+/obj/item/candle{
+	pixel_y = 4;
+	pixel_x = -7
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 

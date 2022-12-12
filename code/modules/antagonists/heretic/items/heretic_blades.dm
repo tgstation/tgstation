@@ -76,6 +76,7 @@
 	icon_state = "ash_blade"
 	inhand_icon_state = "ash_blade"
 	after_use_message = "The Nightwatcher hears your call..."
+	resistance_flags = FIRE_PROOF
 
 // Path of Flesh's blade
 /obj/item/melee/sickly_blade/flesh
@@ -95,11 +96,12 @@
 	inhand_icon_state = "void_blade"
 	after_use_message = "The Aristocrat hears your call..."
 
-// Path of the Blade's... blade
-// Opting for /dark (darkened blade) instead of /blade to avoid "sickly_blade/blade".
+// Path of the Blade's... blade.
+// Opting for /dark instead of /blade to avoid "sickly_blade/blade".
 /obj/item/melee/sickly_blade/dark
-	name = "\improper darkened blade"
-	desc = "A blade made of brilliant silver that shines gloriously. Unknown rage is bottled within."
+	name = "\improper sundered blade"
+	desc = "A galliant blade, sundered and torn. \
+		Furiously, the blade cuts. Silver scars bind it forever to its dark purpose."
 	icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
 	after_use_message = "The Torn Champion hears your call..."

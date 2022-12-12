@@ -50,11 +50,7 @@
 
 	//Aquire access from the inserted ID card.
 	if(!length(access))
-		var/obj/item/card/id/D
-		var/obj/item/computer_hardware/card_slot/card_slot
-		if(computer)
-			card_slot = computer.all_components[MC_CARD]
-			D = card_slot?.GetID()
+		var/obj/item/card/id/D = computer?.computer_id_slot?.GetID()
 		if(!D)
 			return FALSE
 		access = D.GetAccess()
@@ -70,8 +66,7 @@
 	data["location"] = SSshuttle.supply.getStatusText()
 	data["department"] = "Cargo"
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/id_card = card_slot?.GetID()
+	var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 	if(id_card?.registered_account)
 		if((ACCESS_COMMAND in id_card.access))
 			requestonly = FALSE
@@ -150,9 +145,9 @@
 	return data
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())
@@ -165,9 +160,9 @@
 				SSshuttle.supply.export_categories = get_export_categories()
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				computer.say("The supply shuttle is departing.")
-				computer.investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
+				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
-				computer.investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
+				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
@@ -186,7 +181,7 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				computer.say("The supply shuttle has been loaned to CentCom.")
-				computer.investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				usr.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
 				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
@@ -224,7 +219,7 @@
 					return
 
 			var/reason = ""
-			if((requestonly && !self_paid) || !(card_slot?.GetID()))
+			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
 				reason = tgui_input_text(usr, "Reason", name)
 				if(isnull(reason) || ..())
 					return
@@ -235,13 +230,13 @@
 				return
 
 			if(!requestonly && !self_paid && ishuman(usr) && !account)
-				var/obj/item/card/id/id_card = card_slot?.GetID()
+				var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(src)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
-			if((requestonly && !self_paid) || !(card_slot?.GetID()))
+			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
 				SSshuttle.request_list += SO
 			else
 				SSshuttle.shopping_list += SO
@@ -262,7 +257,7 @@
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
-					var/obj/item/card/id/id_card = card_slot?.GetID()
+					var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 					if(id_card && id_card?.registered_account)
 						SO.paying_account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 					SSshuttle.request_list -= SO

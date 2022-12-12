@@ -26,7 +26,7 @@
 
 	var/obj/item/radio/headset/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = TRUE
+	R.freqlock = RADIO_FREQENCY_LOCKED
 	..()
 
 /datum/outfit/space
@@ -113,77 +113,6 @@
 	head = /obj/item/clothing/head/helmet/bluetaghelm
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 
-/datum/outfit/pirate
-	name = "Space Pirate"
-
-	id = /obj/item/card/id/advanced
-	id_trim = /datum/id_trim/pirate
-	uniform = /obj/item/clothing/under/costume/pirate
-	suit = /obj/item/clothing/suit/costume/pirate/armored
-	ears = /obj/item/radio/headset/syndicate
-	glasses = /obj/item/clothing/glasses/eyepatch
-	head = /obj/item/clothing/head/bandana/armored
-	shoes = /obj/item/clothing/shoes/sneakers/brown
-
-/datum/outfit/pirate/post_equip(mob/living/carbon/human/equipped)
-	equipped.faction |= "pirate"
-
-	var/obj/item/radio/outfit_radio = equipped.ears
-	if(outfit_radio)
-		outfit_radio.set_frequency(FREQ_SYNDICATE)
-		outfit_radio.freqlock = TRUE
-
-	var/obj/item/card/id/outfit_id = equipped.wear_id
-	if(outfit_id)
-		outfit_id.registered_name = equipped.real_name
-		outfit_id.update_label()
-		outfit_id.update_icon()
-	
-	var/obj/item/clothing/under/pirate_uniform = equipped.w_uniform
-	if(pirate_uniform)
-		pirate_uniform.has_sensor = NO_SENSORS
-		pirate_uniform.sensor_mode = SENSOR_OFF
-		equipped.update_suit_sensors()
-
-/datum/outfit/pirate/captain
-	name = "Space Pirate Captain"
-
-	id_trim = /datum/id_trim/pirate/captain
-	head = /obj/item/clothing/head/pirate/armored
-
-/datum/outfit/pirate/space
-	name = "Space Pirate (EVA)"
-
-	suit = /obj/item/clothing/suit/space/pirate
-	suit_store = /obj/item/tank/internals/oxygen
-	head = /obj/item/clothing/head/helmet/space/pirate/bandana
-	mask = /obj/item/clothing/mask/breath
-
-/datum/outfit/pirate/space/captain
-	name = "Space Pirate Captain (EVA)"
-
-	head = /obj/item/clothing/head/helmet/space/pirate
-
-/datum/outfit/pirate/silverscale
-	name = "Silver Scale Member"
-
-	id = /obj/item/card/id/advanced/silver
-	id_trim = /datum/id_trim/pirate/silverscale
-	uniform = /obj/item/clothing/under/syndicate/sniper
-	suit = /obj/item/clothing/suit/armor/vest/alt
-	glasses = /obj/item/clothing/glasses/monocle
-	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/collectable/tophat
-	shoes = /obj/item/clothing/shoes/laceup
-
-/datum/outfit/pirate/silverscale/captain
-	name = "Silver Scale Captain"
-
-	id_trim = /datum/id_trim/pirate/captain/silverscale
-	head = /obj/item/clothing/head/crown
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
-	l_pocket = /obj/item/lighter
-
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"
 
@@ -218,7 +147,7 @@
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	gloves = /obj/item/clothing/gloves/color/latex
-	head = /obj/item/clothing/head/welding
+	head = /obj/item/clothing/head/utility/welding
 	mask = /obj/item/clothing/mask/surgical
 	l_pocket = /obj/item/knife/kitchen
 	r_pocket = /obj/item/scalpel
@@ -238,7 +167,7 @@
 	id_trim = /datum/id_trim/reaper_assassin
 	uniform = /obj/item/clothing/under/suit/black
 	neck = /obj/item/clothing/neck/tie/red/hitman/tied
-	belt = /obj/item/modular_computer/tablet/pda/heads
+	belt = /obj/item/modular_computer/pda/heads
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/black
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -264,7 +193,7 @@
 	sec_briefcase.contents += new /obj/item/ammo_box/a357
 	sec_briefcase.contents += new /obj/item/grenade/c4/x4
 
-	var/obj/item/modular_computer/tablet/pda/heads/pda = H.belt
+	var/obj/item/modular_computer/pda/heads/pda = H.belt
 	pda.saved_identification = H.real_name
 	pda.saved_job = "Reaper"
 
@@ -285,7 +214,7 @@
 	ears = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
-	head = /obj/item/clothing/head/centhat
+	head = /obj/item/clothing/head/hats/centhat
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	shoes = /obj/item/clothing/shoes/combat/swat
 	l_pocket = /obj/item/ammo_box/a357
@@ -384,7 +313,7 @@
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
-	head = /obj/item/clothing/head/pirate/captain
+	head = /obj/item/clothing/head/costume/pirate/captain
 	shoes = /obj/item/clothing/shoes/combat
 
 /datum/outfit/centcom/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

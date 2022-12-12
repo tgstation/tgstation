@@ -30,7 +30,7 @@
 	if(locked)
 		to_chat(user, span_notice("The crate is locked with a Deca-code lock."))
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text|null
-		if(user.canUseTopic(src, BE_CLOSE) && locked)
+		if(user.canUseTopic(src, be_close = TRUE) && locked)
 			var/list/sanitised = list()
 			var/sanitycheck = TRUE
 			var/char = ""
@@ -45,9 +45,6 @@
 			if(input == code)
 				if(!spawned_loot)
 					spawn_loot()
-				if(qdel_on_open)
-					qdel(src)
-					return
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 				togglelock(user)
 			else if(!input || !sanitycheck || length(sanitised) != codelen)
@@ -63,7 +60,7 @@
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 
@@ -127,6 +124,11 @@
 		return
 	return ..()
 
+/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+	. = ..()
+	if(qdel_on_open)
+		qdel(src)
+
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
@@ -157,7 +159,7 @@
 			for(var/i in 1 to 5)
 				new /obj/item/toy/snappop/phoenix(src)
 		if(41 to 45)
-			new /obj/item/modular_computer/tablet/pda/clear(src)
+			new /obj/item/modular_computer/pda/clear(src)
 		if(46 to 50)
 			new /obj/item/storage/box/syndie_kit/chameleon/broken
 		if(51 to 52) // 2% chance
@@ -175,7 +177,7 @@
 			new /obj/item/clothing/head/helmet/space(src)
 		if(61 to 62)
 			for(var/i in 1 to 5)
-				new /obj/item/clothing/head/kitty(src)
+				new /obj/item/clothing/head/costume/kitty(src)
 				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
 			new /obj/item/clothing/shoes/kindle_kicks(src)

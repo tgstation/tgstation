@@ -36,6 +36,10 @@
 	var/list/completed_objectives = list()
 	/// All objectives assigned by type to handle any duplicates
 	var/list/potential_duplicate_objectives = list()
+	/// Text of the final objective, once assigned. Used for uplink data and traitor greentext. Empty string means not yet reached.
+	var/final_objective = ""
+	/// Objectives that must be completed for traitor greentext. Set by the traitor datum.
+	var/list/primary_objectives
 	/// The role that this uplink handler is associated to.
 	var/assigned_role
 	/// The species this uplink handler is associated to.
@@ -114,16 +118,28 @@
 		potential_objectives_left--
 	on_update()
 
-/datum/uplink_handler/proc/try_add_objective(datum/traitor_objective/objective_typepath)
+/datum/uplink_handler/proc/try_add_objective(datum/traitor_objective/objective_typepath, force = FALSE)
 	var/datum/traitor_objective/objective = new objective_typepath(src)
-	var/should_abort = SEND_SIGNAL(objective, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE, owner, potential_duplicate_objectives[objective_typepath]) & COMPONENT_TRAITOR_OBJECTIVE_ABORT_GENERATION
-	if(should_abort || !objective.generate_objective(owner, potential_duplicate_objectives[objective_typepath]))
+	var/duplicate_typepath = objective.duplicate_type
+	if(!duplicate_typepath)
+		if(objective.abstract_type != /datum/traitor_objective)
+			duplicate_typepath = objective.abstract_type
+		else
+			duplicate_typepath = objective_typepath
+
+	if(!force && !objective.can_generate_objective(owner, potential_duplicate_objectives[duplicate_typepath]))
+		qdel(objective)
+		return
+
+	var/should_abort = SEND_SIGNAL(objective, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE, owner, potential_duplicate_objectives[duplicate_typepath]) & COMPONENT_TRAITOR_OBJECTIVE_ABORT_GENERATION
+	if(should_abort || !objective.generate_objective(owner, potential_duplicate_objectives[duplicate_typepath]))
 		qdel(objective)
 		return
 	if(!handle_duplicate(objective))
 		qdel(objective)
 		return
-	log_traitor("[key_name(owner)] has received a potential objective: [objective.to_debug_string()]")
+	objective.forced = force
+	log_traitor("[key_name(owner)] has received a potential objective: [objective.to_debug_string()] | Forced: [force]")
 	objective.original_progression = objective.progression_reward
 	objective.update_progression_reward()
 	potential_objectives += objective
@@ -140,11 +156,6 @@
 		if(!potential_duplicate_objectives[current_type])
 			potential_duplicate_objectives[current_type] = list(potential_duplicate)
 		else
-			for(var/datum/traitor_objective/duplicate_checker as anything in potential_duplicate_objectives[current_type])
-				if(duplicate_checker.is_duplicate(potential_duplicate))
-					for(var/typepath in added_types)
-						potential_duplicate_objectives[typepath] -= potential_duplicate
-					return FALSE
 			potential_duplicate_objectives[current_type] += potential_duplicate
 
 		added_types += current_type
@@ -186,7 +197,7 @@
 		objective.update_progression_reward()
 
 /datum/uplink_handler/proc/abort_objective(datum/traitor_objective/to_abort)
-	if(istype(to_abort, /datum/traitor_objective/final))
+	if(istype(to_abort, /datum/traitor_objective/ultimate))
 		return
 	if(to_abort.objective_state != OBJECTIVE_STATE_ACTIVE)
 		return

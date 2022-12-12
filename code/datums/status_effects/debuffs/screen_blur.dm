@@ -7,13 +7,13 @@
 	id = "eye_blur"
 	tick_interval = 1 SECONDS
 	alert_type = null
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/eye_blur/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/eye_blur/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/clear_blur)
 	// If we get applied to a mob without a client, apply the blur when they log in
 	RegisterSignal(owner, COMSIG_MOB_LOGIN, .proc/update_blur)
 	// Apply initial blur
@@ -29,12 +29,6 @@
 /datum/status_effect/eye_blur/tick(delta_time, times_fired)
 	// Blur lessens the closer we are to expiring, so we update per tick.
 	update_blur()
-
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL]. When ahealed, self delete
-/datum/status_effect/eye_blur/proc/clear_blur(datum/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
 
 /// Updates the blur of the owner of the status effect.
 /// Also a signal proc for [COMSIG_MOB_LOGIN], to trigger then when the mob gets a client.

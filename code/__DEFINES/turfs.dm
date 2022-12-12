@@ -22,6 +22,9 @@
 ///Returns all turfs in a zlevel
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 
+///Returns all currently loaded turfs
+#define ALL_TURFS(...) block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
+
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
 
 /// The pipes, disposals, and wires are hidden
@@ -49,7 +52,7 @@
 #define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
 
 /// Maximum amount of time, (in deciseconds) a tile can be wet for.
-#define MAXIMUM_WET_TIME 5 MINUTES
+#define MAXIMUM_WET_TIME (5 MINUTES)
 
 /**
  * Get the turf that `A` resides in, regardless of any containers.

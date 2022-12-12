@@ -7,7 +7,7 @@
 	matching -= resolve_parent
 
 	if(istype(to_insert, /obj/item/storage/backpack/holding) || matching.len)
-		INVOKE_ASYNC(src, .proc/recursive_insertion, to_insert, user)
+		INVOKE_ASYNC(src, PROC_REF(recursive_insertion), to_insert, user)
 		return
 
 	return ..()
@@ -18,7 +18,7 @@
 		return
 
 	var/safety = tgui_alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [to_insert.name]?", list("Proceed", "Abort"))
-	if(safety != "Proceed" || QDELETED(to_insert) || QDELETED(resolve_parent) || QDELETED(user) || !user.canUseTopic(resolve_parent, BE_CLOSE, iscarbon(user)))
+	if(safety != "Proceed" || QDELETED(to_insert) || QDELETED(resolve_parent) || QDELETED(user) || !user.canUseTopic(resolve_parent, be_close = TRUE, no_dexterity = iscarbon(user)))
 		return
 
 	var/turf/loccheck = get_turf(resolve_parent)
@@ -29,6 +29,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
 	user.log_message("detonated a bag of holding at [loc_name(loccheck)].", LOG_ATTACK, color="red")
 
+	user.investigate_log("has been gibbed by a bag of holding recursive insertion.", INVESTIGATE_DEATHS)
 	user.gib(TRUE, TRUE, TRUE)
 	new/obj/boh_tear(loccheck)
 	qdel(resolve_parent)

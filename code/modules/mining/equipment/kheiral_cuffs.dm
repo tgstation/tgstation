@@ -25,7 +25,7 @@
 /obj/item/kheiral_cuffs/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
-	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
+	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_z))
 
 	check_z(new_turf = loc)
 
@@ -35,11 +35,11 @@
 		. += span_notice("The cuff's GPS signal is on.")
 
 /obj/item/kheiral_cuffs/item_action_slot_check(slot)
-	return slot == ITEM_SLOT_GLOVES
+	return (slot & ITEM_SLOT_GLOVES)
 
 /obj/item/kheiral_cuffs/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot != ITEM_SLOT_GLOVES)
+	if(!(slot & ITEM_SLOT_GLOVES))
 		return
 	on_wrist = TRUE
 	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -93,22 +93,22 @@
 		if(isliving(loc))
 			connect_kheiral_network(loc)
 
+// LEMON AND HERE
 /obj/item/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "strandcuff_emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "strandcuff_emissive", src, alpha = src.alpha)
 
 /obj/item/kheiral_cuffs/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "strand_light", alpha = src.alpha)
+	. += emissive_appearance(icon, "strand_light", src, alpha = src.alpha)
 
 /obj/item/kheiral_cuffs/suicide_act(mob/living/carbon/user)
-	var/mob/living/carbon/human/victim
-	if(ishuman(user))
-		victim = user
-	else
-		return ..()
-	user.visible_message(span_suicide("[user] locks [src] around their neck, wrinkles forming across their face. It looks like [user.p_theyre()] trying to commit suicide!"))
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/victim = user
+	victim.visible_message(span_suicide("[user] locks [src] around their neck, wrinkles forming across their face. It looks like [user.p_theyre()] trying to commit suicide!"))
 	for(var/mult in 1 to 5) // Rapidly age
 		if(!do_after(victim, 0.5 SECONDS)) // just to space out the aging, either way you still dust.
 			break

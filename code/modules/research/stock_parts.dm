@@ -97,8 +97,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	atom_storage.max_total_storage = 800
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
-	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
-	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_part_exited)
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(on_part_entered))
+	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_part_exited))
 
 /**
  * Signal handler for when a part has been inserted into the BRPED.
@@ -115,7 +115,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		if(length(inserted_component.reagents.reagent_list))
 			inserted_component.reagents.clear_reagents()
 			to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
-		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, .proc/on_insered_component_reagent_pre_add)
+		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, PROC_REF(on_insered_component_reagent_pre_add))
 
 
 	if(!istype(inserted_component, /obj/item/stock_parts/cell))
@@ -216,8 +216,23 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
+/obj/item/storage/part_replacer/proc/get_sorted_parts()
+	var/list/part_list = list()
+	//Assemble a list of current parts, then sort them by their rating!
+	for(var/obj/item/component_part in contents)
+		part_list += component_part
+		//Sort the parts. This ensures that higher tier items are applied first.
+	part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
+	return part_list
+
 /proc/cmp_rped_sort(obj/item/A, obj/item/B)
-	return B.get_part_rating() - A.get_part_rating()
+	/**
+	 * stacks components like cable,glass,plasteel are not component parts hence their get_part_rating() method is undefined and would return undefined values causing errors
+	 * so we assign them an default rating of 1 when the RPED sorts these components
+	 */
+	var/a_rating = isstack(A) ? 1 : A.get_part_rating()
+	var/b_rating = isstack(B) ? 1 : B.get_part_rating()
+	return b_rating - a_rating
 
 /obj/item/stock_parts
 	name = "stock part"

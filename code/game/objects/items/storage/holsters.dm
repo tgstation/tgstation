@@ -10,7 +10,7 @@
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_BELT || ITEM_SLOT_SUITSTORE)
+	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE))
 		ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
 
 /obj/item/storage/belt/holster/dropped(mob/user)
@@ -82,9 +82,9 @@
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/revolver/detective = 1,
+		/obj/item/gun/ballistic/revolver/c38/detective = 1,
 		/obj/item/ammo_box/c38 = 2,
-	),src)
+	), src)
 
 /obj/item/storage/belt/holster/detective/full/ert
 	name = "marine's holster"

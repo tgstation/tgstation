@@ -31,7 +31,7 @@
 	history["demand"] = list()
 
 
-/datum/computer_file/program/power_monitor/process_tick()
+/datum/computer_file/program/power_monitor/process_tick(delta_time)
 	if(!get_powernet())
 		search()
 	else

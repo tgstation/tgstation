@@ -62,7 +62,7 @@
 /datum/action/innate/blobpop
 	name = "Pop"
 	desc = "Unleash the blob"
-	icon_icon = 'icons/mob/nonhuman-player/blob.dmi'
+	button_icon = 'icons/mob/nonhuman-player/blob.dmi'
 	button_icon_state = "blob"
 
 	/// The time taken before this ability is automatically activated.
@@ -71,7 +71,7 @@
 /datum/action/innate/blobpop/Grant(Target)
 	. = ..()
 	if(owner)
-		addtimer(CALLBACK(src, .proc/Activate, TRUE), autoplace_time, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(Activate), TRUE), autoplace_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 		to_chat(owner, "<span class='big'><font color=\"#EE4000\">You will automatically pop and place your blob core in [DisplayTimeText(autoplace_time)].</font></span>")
 
 /datum/action/innate/blobpop/Activate(timer_activated = FALSE)
@@ -132,3 +132,15 @@
 	blob_icon.Blend(finish_preview_icon(human_icon), ICON_OVERLAY)
 
 	return blob_icon
+
+/atom/proc/can_blob_attack()
+	return !(HAS_TRAIT(src, TRAIT_MAGICALLY_PHASED))
+
+/mob/living/can_blob_attack()
+	. = ..()
+	if(!.)
+		return
+	return !incorporeal_move
+
+/obj/effect/dummy/phased_mob/can_blob_attack()
+	return FALSE

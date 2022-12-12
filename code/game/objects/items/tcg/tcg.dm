@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
 		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard/update_desc(updates)
 	. = ..()
 	if(!flipped)
-		var/datum/card/template = SStrading_card_game.cached_cards[series]["ALL"][id]
+		var/datum/card/template = extract_datum()
 		desc = "<i>[template.desc]</i>"
 	else
 		desc = "It's the back of a trading card... no peeking!"
@@ -113,7 +113,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		icon_state = "cardback"
 		return ..()
 
-	var/datum/card/template = SStrading_card_game.cached_cards[series]["ALL"][id]
+	var/datum/card/template = extract_datum()
+	if(!template)
+		return
 	icon_state = template.icon_state
 	return ..()
 
@@ -213,7 +215,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
 		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -332,6 +334,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"epic" = 9,
 		"rare" = 30,
 		"uncommon" = 60)
+	var/drop_all_cards = FALSE
 
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
@@ -361,7 +364,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
-	var/list/cards = buildCardListWithRarity(card_count, guaranteed_count)
+	var/list/cards
+	if(drop_all_cards)
+		cards = SStrading_card_game.cached_cards[series]["ALL"]
+	else
+		cards = buildCardListWithRarity(card_count, guaranteed_count)
+
 	for(var/template in cards)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), series, template)

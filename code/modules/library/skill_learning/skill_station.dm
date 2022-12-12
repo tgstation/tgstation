@@ -1,5 +1,5 @@
-#define SKILLCHIP_IMPLANT_TIME 15 SECONDS
-#define SKILLCHIP_REMOVAL_TIME 15 SECONDS
+#define SKILLCHIP_IMPLANT_TIME (15 SECONDS)
+#define SKILLCHIP_REMOVAL_TIME (15 SECONDS)
 
 /obj/machinery/skill_station
 	name = "\improper Skillsoft station"
@@ -100,8 +100,7 @@
 /obj/machinery/skill_station/dump_inventory_contents(list/subset = null)
 	// Don't drop the skillchip, it's directly inserted into the machine.
 	// dump_contents() will drop everything including the skillchip as an alternative to this.
-	subset = contents - inserted_skillchip
-	return ..()
+	return ..(contents - inserted_skillchip)
 
 /obj/machinery/skill_station/proc/toggle_open(mob/user)
 	state_open ? close_machine() : open_machine()
@@ -115,7 +114,7 @@
 		CRASH("Unusual error - [usr] attempted to start implanting of [inserted_skillchip] when the interface state should not have allowed it.")
 
 	working = TRUE
-	work_timer = addtimer(CALLBACK(src,.proc/implant),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
+	work_timer = addtimer(CALLBACK(src, PROC_REF(implant)),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
 	update_appearance()
 
 /// Finish implanting.
@@ -142,7 +141,7 @@
 		CRASH("Unusual error - [usr] attempted to start removal of [to_be_removed] when the interface state should not have allowed it.")
 
 	working = TRUE
-	work_timer = addtimer(CALLBACK(src,.proc/remove_skillchip,to_be_removed),SKILLCHIP_REMOVAL_TIME,TIMER_STOPPABLE)
+	work_timer = addtimer(CALLBACK(src, PROC_REF(remove_skillchip),to_be_removed),SKILLCHIP_REMOVAL_TIME,TIMER_STOPPABLE)
 	update_appearance()
 
 /// Finish removal.

@@ -61,10 +61,10 @@
 /datum/action/innate/vibe
 	name = "Vibe"
 	desc = "LMB: Change vibe color. RMB: Reset vibe color."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "funk"
 
-/datum/action/innate/vibe/IsAvailable()
+/datum/action/innate/vibe/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

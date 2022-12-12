@@ -1,5 +1,6 @@
 /turf/closed
 	layer = CLOSED_TURF_LAYER
+	plane = WALL_PLANE
 	turf_flags = IS_SOLID
 	opacity = TRUE
 	density = TRUE
@@ -107,6 +108,10 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 			if(NAMEOF(src, icon))
 				SStitle.icon = icon
 				handle_generic_titlescreen_sizes()
+
+/turf/closed/indestructible/splashscreen/examine()
+	desc = pick(strings(SPLASH_FILE, "splashes"))
+	return ..()
 
 /turf/closed/indestructible/start_area
 	name = null

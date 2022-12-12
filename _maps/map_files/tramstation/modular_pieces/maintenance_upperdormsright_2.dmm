@@ -174,7 +174,9 @@
 "T" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "U" = (
 /obj/effect/turf_decal/sand/plating,

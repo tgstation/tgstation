@@ -20,6 +20,10 @@
 	/// The icon to show in the preferences menu.
 	/// This references a tgui icon, so it can be FontAwesome or a tgfont (with a tg- prefix).
 	var/icon
+	/// A list of items people can receive from mail who have this quirk enabled
+	/// The base weight for the each quirk's mail goodies list to be selected is 5
+	/// then the item selected is determined by pick(selected_quirk.mail_goodies)
+	var/mail_goodies = list()
 
 /datum/quirk/Destroy()
 	if(quirk_holder)
@@ -73,9 +77,9 @@
 		if(quirk_holder.client)
 			post_add()
 		else
-			RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, .proc/on_quirk_holder_first_login)
+			RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, PROC_REF(on_quirk_holder_first_login))
 
-	RegisterSignal(quirk_holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdeleting)
+	RegisterSignal(quirk_holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdeleting))
 
 	return TRUE
 

@@ -6,6 +6,10 @@
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+
+	///category for plumbing RCD
+	category="Synthesizers"
+
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
 	///I track them here because I have no idea how I'd make tgui loop like that
@@ -62,7 +66,10 @@
 /obj/machinery/plumbing/synthesizer/ui_data(mob/user)
 	var/list/data = list()
 
-	var/is_hallucinating = user.hallucinating()
+	var/is_hallucinating = FALSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
 	var/list/chemicals = list()
 
 	for(var/A in dispensable_reagents)

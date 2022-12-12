@@ -211,11 +211,6 @@
 	SHOULD_BE_PURE(TRUE)
 	return eye_blind ? TRUE : HAS_TRAIT(src, TRAIT_BLIND)
 
-///Is the mob hallucinating?
-/mob/proc/hallucinating()
-	return FALSE
-
-
 // moved out of admins.dm because things other than admin procs were calling this.
 /// Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
 /proc/is_special_character(mob/M)
@@ -312,7 +307,7 @@
 		return FALSE
 	var/brute_damage = brute_heal > burn_heal //changes repair text based on how much brute/burn was supplied
 	if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-		if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYTYPE_ROBOTIC))
+		if(affecting.heal_damage(brute_heal, burn_heal, BODYTYPE_ROBOTIC))
 			human.update_damage_overlays()
 		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : "burnt wires in"] [human]'s [affecting.name]."), \
 			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"]	[affecting.name]."))
@@ -364,7 +359,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
-		M.ghostize(0)
+		M.ghostize(FALSE)
 		M.key = C.key
 		M.client?.init_verbs()
 		return TRUE

@@ -20,15 +20,12 @@
 /obj/docking_port/mobile{
 	callTime = 250;
 	dir = 2;
-	dwidth = 11;
-	height = 17;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Frigate";
 	port_direction = 8;
-	preferred_direction = 4;
-	width = 27
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
@@ -211,7 +208,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bar)
 "ay" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -220,7 +217,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -334,7 +331,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
 "aM" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -589,7 +586,7 @@
 	dir = 1
 	},
 /obj/item/storage/wallet/random,
-/obj/item/clothing/under/rank/centcom/officer,
+/obj/item/clothing/under/rank/centcom/official,
 /obj/item/clothing/under/rank/centcom/commander,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -639,7 +636,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -716,7 +713,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -2;
 	pixel_y = 1
 	},
@@ -1111,7 +1108,7 @@
 	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/item/clothing/head/centhat{
+/obj/item/clothing/head/hats/centhat{
 	desc = "There's a gouge through the top where something has clawed clean through it. Whoever was wearing it probably doesn't need a hat any more.";
 	name = "\improper damaged CentCom hat";
 	pixel_x = 2;
@@ -1965,7 +1962,7 @@
 	pixel_y = 12
 	},
 /obj/item/toy/cards/cardhand{
-	cards = list("2 of Diamonds","3 of Clubs");
+	initial_cards = list("2 of Diamonds","3 of Clubs");
 	pixel_x = -5
 	},
 /obj/item/reagent_containers/cup/glass/bottle/beer{

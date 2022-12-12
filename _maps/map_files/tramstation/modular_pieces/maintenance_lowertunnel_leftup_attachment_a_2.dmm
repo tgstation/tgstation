@@ -22,7 +22,9 @@
 /area/station/maintenance/port/central)
 "E" = (
 /obj/item/relic,
-/turf/open/misc/asteroid/dug,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
 /area/station/maintenance/port/central)
 "F" = (
 /obj/modular_map_connector,

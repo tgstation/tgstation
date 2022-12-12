@@ -38,6 +38,10 @@
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
+"h" = (
+/obj/effect/landmark/blobstart,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
 "i" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -161,6 +165,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
+"H" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -171,6 +182,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"N" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "O" = (
 /obj/effect/decal/cleanable/dirt,
@@ -386,7 +401,7 @@ y
 y
 y
 y
-y
+H
 y
 B
 "}
@@ -790,7 +805,7 @@ x
 x
 x
 x
-C
+N
 k
 k
 x
@@ -877,7 +892,7 @@ x
 x
 x
 x
-C
+h
 k
 k
 x

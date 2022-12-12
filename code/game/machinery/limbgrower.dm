@@ -21,7 +21,7 @@
 	/// Our internal techweb for limbgrower designs.
 	var/datum/techweb/stored_research
 	/// All the categories of organs we can print.
-	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, "other")
+	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_LIMBS_DIGITIGRADE)
 
 /obj/machinery/limbgrower/Initialize(mapload)
 	create_reagents(100, OPENCONTAINER)
@@ -156,7 +156,7 @@
 			for(var/reagent_id in consumed_reagents_list)
 				consumed_reagents_list[reagent_id] *= production_coefficient
 				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
-					audible_message(span_notice("The [src] buzzes."))
+					audible_message(span_notice("[src] buzzes."))
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 					return
 
@@ -167,7 +167,7 @@
 			flick("limbgrower_fill",src)
 			icon_state = "limbgrower_idleon"
 			selected_category = params["active_tab"]
-			addtimer(CALLBACK(src, .proc/build_item, consumed_reagents_list), production_speed * production_coefficient)
+			addtimer(CALLBACK(src, PROC_REF(build_item), consumed_reagents_list), production_speed * production_coefficient)
 			. = TRUE
 
 	return

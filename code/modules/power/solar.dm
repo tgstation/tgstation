@@ -1,7 +1,7 @@
 #define SOLAR_GEN_RATE 1500
 #define OCCLUSION_DISTANCE 20
-#define PANEL_Y_OFFSET 13
-#define PANEL_EDGE_Y_OFFSET (PANEL_Y_OFFSET - 2)
+#define PANEL_Z_OFFSET 13
+#define PANEL_EDGE_Z_OFFSET (PANEL_Z_OFFSET - 2)
 
 /obj/machinery/power/solar
 	name = "solar panel"
@@ -33,25 +33,32 @@
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Y_OFFSET)
-	panel = add_panel_overlay("solar_panel", PANEL_Y_OFFSET)
+	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Z_OFFSET)
+	panel = add_panel_overlay("solar_panel", PANEL_Z_OFFSET)
 
 	Make(S)
 	connect_to_network()
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(queue_update_solar_exposure))
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
 	return ..()
 
-/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, y_offset)
+/obj/machinery/power/solar/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(panel_edge, PLANE_TO_TRUE(panel_edge.plane), new_turf)
+	SET_PLANE(panel, PLANE_TO_TRUE(panel.plane), new_turf)
+
+/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, z_offset)
 	var/obj/effect/overlay/overlay = new()
 	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
 	overlay.appearance_flags = TILE_BOUND
 	overlay.icon_state = icon_state
 	overlay.layer = FLY_LAYER
-	overlay.plane = ABOVE_GAME_PLANE
-	overlay.pixel_y = y_offset
+	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
+	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay
 
@@ -377,7 +384,7 @@
 /obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
 	azimuth_rate = SSsun.base_rotation
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(timed_track))
 	connect_to_network()
 	if(powernet)
 		set_panels(azimuth_target)
@@ -552,5 +559,5 @@
 
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE
-#undef PANEL_Y_OFFSET
-#undef PANEL_EDGE_Y_OFFSET
+#undef PANEL_Z_OFFSET
+#undef PANEL_EDGE_Z_OFFSET

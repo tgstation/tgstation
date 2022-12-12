@@ -87,10 +87,12 @@
 	if(health > 0)
 		return
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
+	///Whether we killed the megafauna with primarily crusher damage or not
 	var/crusher_kill = FALSE
-	if(crusher_dmg && crusher_loot && crusher_dmg.total_damage >= maxHealth * 0.6)
-		spawn_crusher_loot()
+	if(crusher_dmg && crusher_dmg.total_damage >= maxHealth * 0.6)
 		crusher_kill = TRUE
+		if(crusher_loot) // spawn crusher loot, if any
+			spawn_crusher_loot()
 	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
 		var/tab = "megafauna_kills"
 		if(crusher_kill)
@@ -140,6 +142,7 @@
 		span_userdanger("You feast on [L], restoring your health!"))
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
+	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
 	L.gib()
 	return TRUE
 
@@ -189,7 +192,7 @@
 
 /datum/action/innate/megafauna_attack
 	name = "Megafauna Attack"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = ""
 	var/chosen_message
 	var/chosen_attack_num = 0

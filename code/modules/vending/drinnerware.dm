@@ -19,12 +19,13 @@
 		/obj/item/kitchen/rollingpin = 2,
 		/obj/item/knife/kitchen = 2,
 		/obj/item/book/granter/crafting_recipe/cooking_sweets_101 = 2,
+		/obj/item/skillchip/chefs_kiss = 2,
 		/obj/item/plate/small = 5,
 		/obj/item/plate = 10,
 		/obj/item/plate/large = 5,
 	)
 	contraband = list(
-		/obj/item/kitchen/rollingpin = 2,
+		/obj/item/kitchen/rollingpin/illegal = 2,
 		/obj/item/knife/butcher = 2,
 	)
 	refill_canister = /obj/item/vending_refill/dinnerware

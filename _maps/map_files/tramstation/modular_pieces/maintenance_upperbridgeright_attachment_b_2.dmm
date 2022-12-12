@@ -23,7 +23,7 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/head/hardhat/orange,
+/obj/item/clothing/head/utility/hardhat/orange,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)

@@ -20,20 +20,16 @@
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
-	if(!d_type)
+/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, damage_type)
+	if(!damage_type)
 		return 0
-	var/protection = 0
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(!bp)
-			continue
-		if(bp && istype(bp , /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & def_zone.body_part)
-				protection += C.armor.getRating(d_type)
-	protection += physiology.armor.getRating(d_type)
-	return protection
+	var/protection = 100
+	var/list/covering_clothing = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	for(var/obj/item/clothing/clothing_item in covering_clothing)
+		if(clothing_item.body_parts_covered & def_zone.body_part)
+			protection *= (100 - min(clothing_item.armor.getRating(damage_type), 100)) * 0.01
+	protection *= (100 - min(physiology.armor.getRating(damage_type), 100)) * 0.01
+	return 100 - protection
 
 ///Get all the clothing on a specific body part
 /mob/living/carbon/human/proc/clothingonpart(obj/item/bodypart/def_zone)
@@ -204,7 +200,8 @@
 		return
 	if(check_block()) //everybody is kung fu fighting
 		return
-	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
+	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+	playsound(loc, active_arm.unarmed_attack_sound, 25, TRUE, -1)
 	visible_message(span_danger("[user] [hulk_verb]ed [src]!"), \
 					span_userdanger("[user] [hulk_verb]ed [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 	to_chat(user, span_danger("You [hulk_verb] [src]!"))
@@ -257,7 +254,8 @@
 
 	if(try_inject(user, affecting, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
-			var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+			var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+			var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
 			if(!damage)
 				return
 			if(check_shields(user, damage, "the [user.name]"))
@@ -266,7 +264,7 @@
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(check_shields(user, 0, "the [user.name]"))
 		visible_message(span_danger("[user] attempts to touch [src]!"), \
 						span_danger("[user] attempts to touch you!"), span_hear("You hear a swoosh!"), null, user)
@@ -415,6 +413,7 @@
 							SSexplosions.med_mov_atom += thing
 						if(EXPLODE_LIGHT)
 							SSexplosions.low_mov_atom += thing
+				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 				gib()
 				return
 			else
@@ -707,77 +706,8 @@
 		missing -= body_part.body_zone
 		if(body_part.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
 			continue
-		var/self_aware = FALSE
-		if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
-			self_aware = TRUE
-		var/limb_max_damage = body_part.max_damage
-		var/status = ""
-		var/brutedamage = body_part.brute_dam
-		var/burndamage = body_part.burn_dam
-		if(hallucination)
-			if(prob(30))
-				brutedamage += rand(30,40)
-			if(prob(30))
-				burndamage += rand(30,40)
 
-		if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
-			status = "[brutedamage] brute damage and [burndamage] burn damage"
-			if(!brutedamage && !burndamage)
-				status = "no damage"
-
-		else
-			if(body_part.type in hal_screwydoll)//Are we halucinating?
-				brutedamage = (hal_screwydoll[body_part.type] * 0.2)*limb_max_damage
-
-			if(brutedamage > 0)
-				status = body_part.light_brute_msg
-			if(brutedamage > (limb_max_damage*0.4))
-				status = body_part.medium_brute_msg
-			if(brutedamage > (limb_max_damage*0.8))
-				status = body_part.heavy_brute_msg
-			if(brutedamage > 0 && burndamage > 0)
-				status += " and "
-
-			if(burndamage > (limb_max_damage*0.8))
-				status += body_part.heavy_burn_msg
-			else if(burndamage > (limb_max_damage*0.2))
-				status += body_part.medium_burn_msg
-			else if(burndamage > 0)
-				status += body_part.light_burn_msg
-
-			if(status == "")
-				status = "OK"
-		var/no_damage
-		if(status == "OK" || status == "no damage")
-			no_damage = TRUE
-		var/isdisabled = ""
-		if(body_part.bodypart_disabled)
-			isdisabled = " is disabled"
-			if(no_damage)
-				isdisabled += " but otherwise"
-			else
-				isdisabled += " and"
-		combined_msg += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [body_part.name][isdisabled][self_aware ? " has " : " is "][status].</span>"
-
-		for(var/thing in body_part.wounds)
-			var/datum/wound/W = thing
-			var/msg
-			switch(W.severity)
-				if(WOUND_SEVERITY_TRIVIAL)
-					msg = "\t [span_danger("Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)].")]"
-				if(WOUND_SEVERITY_MODERATE)
-					msg = "\t [span_warning("Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)]!")]"
-				if(WOUND_SEVERITY_SEVERE)
-					msg = "\t [span_warning("<b>Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)]!</b>")]"
-				if(WOUND_SEVERITY_CRITICAL)
-					msg = "\t [span_warning("<b>Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)]!!</b>")]"
-			combined_msg += msg
-
-		for(var/obj/item/I in body_part.embedded_objects)
-			if(I.isEmbedHarmless())
-				combined_msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [I] stuck to your [body_part.name]!</a>"
-			else
-				combined_msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [I] embedded in your [body_part.name]!</a>"
+		body_part.check_for_injuries(src, combined_msg)
 
 	for(var/t in missing)
 		combined_msg += span_boldannounce("Your [parse_zone(t)] is missing!")

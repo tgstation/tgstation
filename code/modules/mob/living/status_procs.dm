@@ -606,18 +606,6 @@
 		update_movespeed()
 
 /**
- * Sets the [SHOCKED_1] flag on this mob.
- */
-/mob/living/proc/set_shocked()
-	flags_1 |= SHOCKED_1
-
-/**
- * Unsets the [SHOCKED_1] flag on this mob.
- */
-/mob/living/proc/reset_shocked()
-	flags_1 &= ~ SHOCKED_1
-
-/**
  * Adjusts a timed status effect on the mob,taking into account any existing timed status effects.
  * This can be any status effect that takes into account "duration" with their initialize arguments.
  *
@@ -773,3 +761,7 @@
 /mob/living/proc/get_drunk_amount()
 	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
 	return inebriation?.drunk_value || 0
+
+/// Helper to check if we seem to be alive or not
+/mob/living/proc/appears_alive()
+	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)

@@ -108,7 +108,7 @@
 			var/y_off = T.y - origin.y
 			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 			I.layer = ABOVE_NORMAL_TURF_LAYER
-			I.plane = ABOVE_GAME_PLANE
+			SET_PLANE(I, ABOVE_GAME_PLANE, T)
 			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			the_eye.placement_images[I] = list(x_off, y_off)
 
@@ -147,7 +147,7 @@
 	if(designate_time && (landing_clear != SHUTTLE_DOCKER_BLOCKED))
 		to_chat(current_user, span_warning("Targeting transit location, please wait [DisplayTimeText(designate_time)]..."))
 		designating_target_loc = the_eye.loc
-		var/wait_completed = do_after(current_user, designate_time, designating_target_loc, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget))
+		var/wait_completed = do_after(current_user, designate_time, designating_target_loc, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/computer/camera_advanced/shuttle_docker, canDesignateTarget)))
 		designating_target_loc = null
 		if(!current_user)
 			return
@@ -195,8 +195,8 @@
 		var/image/I = V
 		var/image/newI = image('icons/effects/alphacolors.dmi', the_eye.loc, "blue")
 		newI.loc = I.loc //It is highly unlikely that any landing spot including a null tile will get this far, but better safe than sorry.
-		newI.layer = ABOVE_OPEN_TURF_LAYER
-		newI.plane = ABOVE_GAME_PLANE
+		newI.layer = NAVIGATION_EYE_LAYER
+		SET_PLANE_EXPLICIT(newI, ABOVE_GAME_PLANE, V)
 		newI.mouse_opacity = 0
 		the_eye.placed_images += newI
 
@@ -320,14 +320,14 @@
 	console.checkLandingSpot()
 
 /mob/camera/ai_eye/remote/shuttle_docker/update_remote_sight(mob/living/user)
-	user.sight = BLIND|SEE_TURFS
+	user.set_sight(BLIND|SEE_TURFS)
 	user.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	user.sync_lighting_plane_alpha()
 	return TRUE
 
 /datum/action/innate/shuttledocker_rotate
 	name = "Rotate"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/innate/shuttledocker_rotate/Activate()
@@ -339,7 +339,7 @@
 
 /datum/action/innate/shuttledocker_place
 	name = "Place"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/innate/shuttledocker_place/Activate()

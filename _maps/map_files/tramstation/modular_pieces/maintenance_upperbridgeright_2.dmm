@@ -240,6 +240,10 @@
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
+"LG" = (
+/obj/effect/landmark/blobstart,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
 "LQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
@@ -279,6 +283,13 @@
 "Qw" = (
 /obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"Rc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "Rd" = (
@@ -571,7 +582,7 @@ Cy
 Cy
 Fd
 Fd
-jx
+Rc
 jx
 Fd
 Fd
@@ -769,7 +780,7 @@ Cy
 (13,1,1) = {"
 ij
 OS
-Uh
+LG
 Hr
 Mv
 ij

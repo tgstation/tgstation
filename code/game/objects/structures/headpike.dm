@@ -63,11 +63,11 @@
 	return ..()
 
 /obj/structure/headpike/deconstruct(disassembled)
-	if(!disassembled)
-		return ..()
-	if(victim)
+	if(victim) //Make sure the head always comes off
 		victim.forceMove(drop_location())
 		victim = null
+	if(!disassembled)
+		return ..()
 	if(spear)
 		spear.forceMove(drop_location())
 		spear = null

@@ -18,6 +18,7 @@
 		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
+		/obj/item/coupon,
 		/obj/item/flashlight/pen,
 		/obj/item/seeds,
 		/obj/item/stack/medical,
@@ -94,7 +95,6 @@
 	cached_flat_icon = null
 	if(!front_id)
 		return
-	COMPILE_OVERLAYS(front_id)
 	. += mutable_appearance(front_id.icon, front_id.icon_state)
 	. += front_id.overlays
 	. += mutable_appearance(icon, "wallet_overlay")

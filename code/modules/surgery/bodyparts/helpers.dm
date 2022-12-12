@@ -11,6 +11,12 @@
 		if(bodypart.body_zone == zone)
 			return bodypart
 
+///Replaces a single limb and deletes the old one if there was one
+/mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
+	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
+	if(old_limb)
+		qdel(old_limb)
+	new_limb.try_attach_limb(src, special = special)
 
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(!i)
@@ -64,10 +70,7 @@
 	return TRUE
 
 
-/mob/living/proc/get_missing_limbs()
-	return list()
-
-/mob/living/carbon/get_missing_limbs()
+/mob/living/carbon/proc/get_missing_limbs()
 	RETURN_TYPE(/list)
 	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	for(var/zone in full)
@@ -137,19 +140,19 @@
 			new_bodypart = new /obj/item/bodypart/chest/larva()
 	. = new_bodypart
 
-/mob/living/carbon/alien/humanoid/newBodyPart(zone)
+/mob/living/carbon/alien/adult/newBodyPart(zone)
 	var/obj/item/bodypart/new_bodypart
 	switch(zone)
 		if(BODY_ZONE_L_ARM)
-			new_bodypart = new /obj/item/bodypart/l_arm/alien()
+			new_bodypart = new /obj/item/bodypart/arm/left/alien()
 		if(BODY_ZONE_R_ARM)
-			new_bodypart = new /obj/item/bodypart/r_arm/alien()
+			new_bodypart = new /obj/item/bodypart/arm/right/alien()
 		if(BODY_ZONE_HEAD)
 			new_bodypart = new /obj/item/bodypart/head/alien()
 		if(BODY_ZONE_L_LEG)
-			new_bodypart = new /obj/item/bodypart/l_leg/alien()
+			new_bodypart = new /obj/item/bodypart/leg/left/alien()
 		if(BODY_ZONE_R_LEG)
-			new_bodypart = new /obj/item/bodypart/r_leg/alien()
+			new_bodypart = new /obj/item/bodypart/leg/right/alien()
 		if(BODY_ZONE_CHEST)
 			new_bodypart = new /obj/item/bodypart/chest/alien()
 	if(new_bodypart)

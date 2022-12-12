@@ -5,11 +5,20 @@
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
 	eat_time = 3 SECONDS
+	/// type is spawned 5 at a time and replaces this bread loaf when processed by cutting tool
+	var/obj/item/food/breadslice/slice_type
+	/// so that the yield can change if it isnt 5
+	var/yield = 5
 
 /obj/item/food/bread/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 	AddComponent(/datum/component/food_storage)
+
+/obj/item/food/bread/MakeProcessable()
+	if (slice_type)
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_SAW, slice_type, yield, 4 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -32,13 +41,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
+	slice_type = /obj/item/food/breadslice/plain
 
 /obj/item/food/bread/plain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
-
-/obj/item/food/bread/plain/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 3 SECONDS, table_required = TRUE)
 
 // special subtype we use for the "Bread" Admin Smite (or the breadify proc)
 /obj/item/food/bread/plain/smite
@@ -86,10 +93,7 @@
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_CHEAP
-
-
-/obj/item/food/bread/meat/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/meat, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/breadslice/meat
 
 /obj/item/food/breadslice/meat
 	name = "meatbread slice"
@@ -105,9 +109,7 @@
 	foodtypes = GRAIN | MEAT
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 12)
 	tastes = list("bread" = 10, "meat" = 10)
-
-/obj/item/food/bread/sausage/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/sausage, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/breadslice/sausage
 
 /obj/item/food/breadslice/sausage
 	name = "sausagebread slice"
@@ -124,9 +126,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 15)
 	tastes = list("bread" = 10, "acid" = 10)
 	foodtypes = GRAIN | MEAT
-
-/obj/item/food/bread/xenomeat/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/xenomeat, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/breadslice/xenomeat
 
 /obj/item/food/breadslice/xenomeat
 	name = "xenomeatbread slice"
@@ -142,9 +142,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/toxin = 15, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 12)
 	tastes = list("bread" = 10, "cobwebs" = 5)
 	foodtypes = GRAIN | MEAT | TOXIC
-
-/obj/item/food/bread/spidermeat/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/spidermeat, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/breadslice/spidermeat
 
 /obj/item/food/breadslice/spidermeat
 	name = "spider meat bread slice"
@@ -160,9 +158,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/banana = 20)
 	tastes = list("bread" = 10) // bananjuice will also flavour
 	foodtypes = GRAIN | FRUIT
-
-/obj/item/food/bread/banana/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/banana, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/breadslice/banana
 
 /obj/item/food/breadslice/banana
 	name = "banana-nut bread slice"
@@ -179,9 +175,7 @@
 	tastes = list("bread" = 10, "tofu" = 10)
 	foodtypes = GRAIN | VEGETABLES
 	venue_value = FOOD_PRICE_TRASH
-
-/obj/item/food/bread/tofu/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/tofu, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/breadslice/tofu
 
 /obj/item/food/breadslice/tofu
 	name = "tofubread slice"
@@ -197,9 +191,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("bread" = 10, "cheese" = 10)
 	foodtypes = GRAIN | DAIRY
-
-/obj/item/food/bread/creamcheese/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/creamcheese, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/breadslice/creamcheese
 
 /obj/item/food/breadslice/creamcheese
 	name = "cream cheese bread slice"
@@ -211,9 +203,7 @@
 	name = "bread"
 	icon_state = "tofubread"
 	desc = "It's bread, customized to your wildest dreams."
-
-/obj/item/food/bread/empty/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/empty, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/breadslice/empty
 
 /obj/item/food/bread/mimana
 	name = "mimana bread"
@@ -222,9 +212,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("bread" = 10, "silence" = 10)
 	foodtypes = GRAIN | FRUIT
-
-/obj/item/food/bread/mimana/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/mimana, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/breadslice/mimana
 
 /obj/item/food/breadslice/mimana
 	name = "mimana bread slice"
@@ -249,7 +237,7 @@
 	desc = "Bon appetit!"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
-	inhand_icon_state = "baguette"
+	inhand_icon_state = null
 	worn_icon_state = "baguette"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 3)
 	bite_consumption = 3
@@ -270,15 +258,15 @@
 /obj/item/food/baguette/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if (user.mind?.miming && held_item == src)
-		context[SCREENTIP_CONTEXT_RMB] = "Toggle Swordplay"
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle Swordplay"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/food/baguette/examine(mob/user)
-	var/examine_list = ..()
+	. = ..()
 	if(user.mind?.miming)
-		examine_list += span_notice("You can wield this like a sword by right clicking it.")
+		. += span_notice("You can wield this like a sword by using it in your hand.")
 
-/obj/item/food/baguette/attack_self_secondary(mob/user, modifiers)
+/obj/item/food/baguette/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!user.mind?.miming)
 		return
@@ -292,24 +280,28 @@
 		span_notice("[user] begins wielding [src] like a sword!"),
 		span_notice("You begin wielding [src] like a sword, with a firm grip on the bottom as an imaginary handle.")
 	)
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, SWORDPLAY_TRAIT)
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
+	fake_swordplay = TRUE
 
-	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/on_sword_equipped)
-	RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/on_sword_dropped)
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_sword_equipped))
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_sword_dropped))
 
 /obj/item/food/baguette/proc/end_swordplay(mob/user)
 	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
+	REMOVE_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, SWORDPLAY_TRAIT)
 	attack_verb_continuous = initial(attack_verb_continuous)
 	attack_verb_simple = initial(attack_verb_simple)
 	hitsound = initial(hitsound)
+	fake_swordplay = FALSE
 
 	if(user)
-		visible_message( \
-			span_notice("[user] no longer holds [src] like a sword!"), \
-			span_notice("You go back to holding [src] normally.") \
+		visible_message(
+			span_notice("[user] no longer holds [src] like a sword!"),
+			span_notice("You go back to holding [src] normally.")
 		)
 
 /obj/item/food/baguette/proc/on_sword_dropped(datum/source, mob/user)
@@ -320,7 +312,7 @@
 /obj/item/food/baguette/proc/on_sword_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(slot != ITEM_SLOT_HANDS)
+	if(!(slot & ITEM_SLOT_HANDS))
 		end_swordplay()
 
 /obj/item/food/garlicbread
@@ -328,7 +320,7 @@
 	desc = "Alas, it is limited."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "garlicbread"
-	inhand_icon_state = "garlicbread"
+	inhand_icon_state = null
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/garlic = 2)
 	bite_consumption = 3
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)

@@ -14,6 +14,12 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/medical)
 "j" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
@@ -435,7 +441,7 @@ a
 N
 Q
 X
-O
+i
 N
 a
 "}

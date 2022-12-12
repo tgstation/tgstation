@@ -150,7 +150,7 @@
 //Debug proc used to highlight bounding area
 /obj/docking_port/proc/highlight(_color = "#f00")
 	invisibility = 0
-	plane = GHOST_PLANE
+	SET_PLANE_IMPLICIT(src, GHOST_PLANE)
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
 	var/turf/T1 = locate(L[3],L[4],z)
@@ -328,6 +328,8 @@
 		"whiteship_donut",
 		"whiteship_delta",
 		"whiteship_tram",
+		"whiteship_personalshuttle",
+		"whiteship_obelisk",
 	)
 
 /// Helper proc that tests to ensure all whiteship templates can spawn at their docking port, and logs their sizes
@@ -365,11 +367,11 @@
 			delta_width = max(theoretical_ship.width - theoretical_ship.dwidth, delta_width)
 			theoretical_ship.jumpToNullSpace()
 	qdel(port, TRUE)
-	log_world("Whitship sizing information. Use this to set the docking port, and the map size\n\
+	log_world("Whiteship sizing information. Use this to set the docking port, and the map size\n\
 		Max Height: [height] \n\
 		Max Width: [width] \n\
 		Max DHeight: [dheight] \n\
-		Max DHeight: [dwidth] \n\
+		Max DWidth: [dwidth] \n\
 		The following are the safest bet for map sizing. Anything smaller then this could in the worst case not fit in the docking port\n\
 		Max Combined Width: [height + dheight] \n\
 		Max Combinded Height [width + dwidth]")
@@ -382,8 +384,8 @@
 
 	///List of all areas our shuttle holds.
 	var/list/shuttle_areas = list()
-	///List of all engines connected to the shuttle.
-	var/list/obj/structure/shuttle/engine/engine_list = list()
+	///List of all currently used engines that propels us.
+	var/list/obj/machinery/power/shuttle_engine/engine_list = list()
 
 	///How fast the shuttle should be, taking engine thrust into account.
 	var/engine_coeff = 1
@@ -429,6 +431,75 @@
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
 
+#define WORLDMAXX_CUTOFF (world.maxx + 1)
+#define WORLDMAXY_CUTOFF (world.maxx + 1)
+/**
+ * Calculated and populates the information used for docking and some internal vars.
+ * This can also be used to calculate from shuttle_areas so that you can expand/shrink shuttles!
+ *
+ * Arguments:
+ * * loading_from - The template that the shuttle was loaded from, if not given we iterate shuttle_areas to calculate information instead
+ */
+/obj/docking_port/mobile/proc/calculate_docking_port_information(datum/map_template/shuttle/loading_from)
+	var/port_x_offset = loading_from?.port_x_offset
+	var/port_y_offset = loading_from?.port_y_offset
+	var/width = loading_from?.width
+	var/height = loading_from?.height
+	if(!loading_from)
+		if(!length(shuttle_areas))
+			CRASH("Attempted to calculate a docking port's information without a template before it was assigned any areas!")
+		// no template given, use shuttle_areas to calculate width and height
+		var/min_x = -1
+		var/min_y = -1
+		var/max_x = WORLDMAXX_CUTOFF
+		var/max_y = WORLDMAXY_CUTOFF
+		for(var/area/area as anything in shuttle_areas)
+			for(var/turf/turf in area)
+				min_x = max(turf.x, min_x)
+				max_x = min(turf.x, max_x)
+				min_y = max(turf.y, min_y)
+				max_y = min(turf.y, max_y)
+			CHECK_TICK
+
+		if(min_x == -1 || max_x == WORLDMAXX_CUTOFF)
+			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
+		if(min_y == -1 || max_y == WORLDMAXY_CUTOFF)
+			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
+
+		width = (max_x - min_x) + 1
+		height = (max_y - min_y) + 1
+		port_x_offset = min_x - x
+		port_y_offset = min_y - y
+
+	if(dir in list(EAST, WEST))
+		src.width = height
+		src.height = width
+	else
+		src.width = width
+		src.height = height
+
+	switch(dir)
+		if(NORTH)
+			dwidth = port_x_offset - 1
+			dheight = port_y_offset - 1
+		if(EAST)
+			dwidth = height - port_y_offset
+			dheight = port_x_offset - 1
+		if(SOUTH)
+			dwidth = width - port_x_offset
+			dheight = height - port_y_offset
+		if(WEST)
+			dwidth = port_y_offset - 1
+			dheight = width - port_x_offset
+#undef WORLDMAXX_CUTOFF
+#undef WORLDMAXY_CUTOFF
+
+/**
+ * Actions to be taken after shuttle is loaded but before it has been moved out of transit z-level to its final location
+ *
+ * Arguments:
+ * * replace - TRUE if this shuttle is replacing an existing one. FALSE by default.
+ */
 /obj/docking_port/mobile/register(replace = FALSE)
 	. = ..()
 	if(!shuttle_id)
@@ -450,6 +521,15 @@
 			SSshuttle.assoc_mobile[shuttle_id] = 1
 
 	SSshuttle.mobile_docking_ports += src
+
+/**
+ * Actions to be taken after shuttle is loaded and has been moved to its final location
+ *
+ * Arguments:
+ * * replace - TRUE if this shuttle is replacing an existing one. FALSE by default.
+ */
+/obj/docking_port/mobile/proc/postregister(replace = FALSE)
+	return
 
 /obj/docking_port/mobile/unregister()
 	. = ..()
@@ -548,32 +628,37 @@
 /obj/docking_port/mobile/proc/transit_failure()
 	message_admins("Shuttle [src] repeatedly failed to create transit zone.")
 
-//call the shuttle to destination S
-/obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
-	if(!check_dock(S))
+/**
+ * Calls the shuttle to the destination port, respecting its ignition and call timers
+ *
+ * Arguments:
+ * * destination_port - Stationary docking port to move the shuttle to
+ */
+/obj/docking_port/mobile/proc/request(obj/docking_port/stationary/destination_port)
+	if(!check_dock(destination_port))
 		testing("check_dock failed on request for [src]")
 		return
 
-	if(mode == SHUTTLE_IGNITING && destination == S)
+	if(mode == SHUTTLE_IGNITING && destination == destination_port)
 		return
 
 	switch(mode)
 		if(SHUTTLE_CALL)
-			if(S == destination)
+			if(destination_port == destination)
 				if(timeLeft(1) < callTime * engine_coeff)
 					setTimer(callTime * engine_coeff)
 			else
-				destination = S
+				destination = destination_port
 				setTimer(callTime * engine_coeff)
 		if(SHUTTLE_RECALL)
-			if(S == destination)
+			if(destination_port == destination)
 				setTimer(callTime * engine_coeff - timeLeft(1))
 			else
-				destination = S
+				destination = destination_port
 				setTimer(callTime * engine_coeff)
 			mode = SHUTTLE_CALL
 		if(SHUTTLE_IDLE, SHUTTLE_IGNITING)
-			destination = S
+			destination = destination_port
 			mode = SHUTTLE_IGNITING
 			setTimer(ignitionTime)
 
@@ -631,7 +716,9 @@
 		if(!oldT || !istype(oldT.loc, area_type))
 			continue
 		var/area/old_area = oldT.loc
+		old_area.turfs_to_uncontain += oldT
 		underlying_area.contents += oldT
+		underlying_area.contained_turfs += oldT
 		oldT.transfer_area_lighting(old_area, underlying_area)
 		oldT.empty(FALSE)
 
@@ -644,6 +731,10 @@
 
 	qdel(src, force=TRUE)
 
+/**
+ * Ghosts and marks as escaped (for greentext purposes) all mobs, then deletes the shuttle.
+ * Used by the Shuttle Manipulator
+ */
 /obj/docking_port/mobile/proc/intoTheSunset()
 	// Loop over mobs
 	for(var/turf/turfs as anything in return_turfs())
@@ -949,7 +1040,7 @@
 				source = distant_source
 			else
 				var/closest_dist = 10000
-				for(var/obj/structure/shuttle/engine/engines as anything in engine_list)
+				for(var/obj/machinery/power/shuttle_engine/engines as anything in engine_list)
 					var/dist_near = get_dist(zlevel_mobs, engines)
 					if(dist_near < closest_dist)
 						source = engines

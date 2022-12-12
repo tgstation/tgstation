@@ -6,7 +6,7 @@
 	health = 500
 	held_lh = 'icons/mob/inhands/pai_item_lh.dmi'
 	held_rh = 'icons/mob/inhands/pai_item_rh.dmi'
-	head_icon = 'icons/mob/clothing/head/pai_item_head.dmi'
+	head_icon = 'icons/mob/clothing/head/pai_head.dmi'
 	hud_type = /datum/hud/pai
 	icon = 'icons/mob/silicon/pai.dmi'
 	icon_state = "repairbot"
@@ -226,7 +226,7 @@
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
 
-	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, .proc/on_cult_sacrificed)
+	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()

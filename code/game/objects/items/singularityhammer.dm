@@ -63,7 +63,7 @@
 			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
 			var/turf/target = get_turf(A)
 			vortex(target,user)
-			addtimer(CALLBACK(src, .proc/recharge), 100)
+			addtimer(CALLBACK(src, PROC_REF(recharge)), 100)
 
 /obj/item/mjollnir
 	name = "Mjolnir"
@@ -103,16 +103,17 @@
 		span_hear("You hear a heavy electrical crack!"))
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
-	return
 
-/obj/item/mjollnir/attack(mob/living/M, mob/user)
+/obj/item/mjollnir/attack(mob/living/target_mob, mob/user)
 	..()
+	if(QDELETED(target_mob))
+		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		shock(M)
+		shock(target_mob)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(isliving(hit_atom))
+	if(!QDELETED(hit_atom) && isliving(hit_atom))
 		shock(hit_atom)

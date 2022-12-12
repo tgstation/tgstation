@@ -155,12 +155,12 @@
 		if("node1")
 			var/value = text2num(params["concentration"])
 			adjust_node1_value(value)
-			investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("was set to [100 * node1_concentration] % on node 1 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("node2")
 			var/value = text2num(params["concentration"])
 			adjust_node1_value(100 - value)
-			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("was set to [100 * node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_appearance()
 

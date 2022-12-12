@@ -5,7 +5,7 @@
  * also be caught and displayed (if any) above the list of runtimes.
  *
  * How to use:
- * 1) Copy and paste your list of runtimes from Dream Daemon into input.exe
+ * 1) Copy and paste your list of runtimes from Dream Daemon into Input.txt
  * 2) Run RuntimeCondenser.exe
  * 3) Open output.txt for a condensed report of the runtimes
  *

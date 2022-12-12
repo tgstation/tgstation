@@ -102,12 +102,12 @@
 
 /obj/machinery/door/puzzle/light/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED, .proc/check_mechanism)
+	RegisterSignal(SSdcs, COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED, PROC_REF(check_mechanism))
 
 /obj/machinery/door/puzzle/light/proc/check_mechanism(datum/source, try_id)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/try_puzzle_open, try_id)
+	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), try_id)
 
 //*************************
 //***Box Pushing Puzzles***
@@ -205,7 +205,7 @@
 		if(!light_list[i])
 			continue
 		var/mutable_appearance/lit_image = mutable_appearance('icons/obj/puzzle_small.dmi', "light_lit")
-		var/mutable_appearance/emissive_image = emissive_appearance('icons/obj/puzzle_small.dmi', "light_lit")
+		var/mutable_appearance/emissive_image = emissive_appearance('icons/obj/puzzle_small.dmi', "light_lit", src)
 		lit_image.pixel_x = 8 * ((i % 3 || 3 ) - 1)
 		lit_image.pixel_y = -8 * (ROUND_UP(i / 3) - 1)
 		emissive_image.pixel_x = lit_image.pixel_x

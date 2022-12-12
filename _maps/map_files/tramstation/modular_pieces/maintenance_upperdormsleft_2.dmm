@@ -63,6 +63,7 @@
 /area/station/maintenance/port/aft)
 "O" = (
 /obj/item/shovel,
+/obj/effect/landmark/event_spawn,
 /turf/open/misc/asteroid{
 	icon_state = "asteroid_dug"
 	},

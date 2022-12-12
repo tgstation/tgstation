@@ -34,7 +34,7 @@
 	create_reagents(max_volume, DRAINABLE)
 	reagents.add_reagent(reagent_id, max_volume)
 
-	RegisterSignal(src, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), .proc/start_chemming)
+	RegisterSignals(src, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(start_chemming))
 
 	if(erupting_state)
 		icon_state = erupting_state
@@ -167,7 +167,7 @@
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
 /obj/item/plunger/AltClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
 		return
 
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)

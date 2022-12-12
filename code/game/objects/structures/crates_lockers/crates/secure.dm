@@ -9,6 +9,10 @@
 	var/tamperproof = 0
 	damage_deflection = 25
 
+/obj/structure/closet/crate/secure/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
+
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
 		boom()

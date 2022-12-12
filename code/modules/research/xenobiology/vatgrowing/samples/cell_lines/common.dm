@@ -26,7 +26,7 @@
 
 	virus_suspectibility = 2
 	growth_rate = VAT_GROWTH_RATE
-	resulting_atoms = list(/mob/living/simple_animal/mouse = 2)
+	resulting_atoms = list(/mob/living/basic/mouse = 2)
 
 /datum/micro_organism/cell_line/chicken //basic cell line designed as a good source of protein and eggyolk.
 	desc = "Galliform skin cells."
@@ -128,7 +128,7 @@
 		/datum/reagent/consumable/coco = -2)
 
 	virus_suspectibility = 1
-	resulting_atoms = list(/mob/living/simple_animal/pet/dog/corgi = 1)
+	resulting_atoms = list(/mob/living/basic/pet/dog/corgi = 1)
 
 /datum/micro_organism/cell_line/pug
 	desc = "Squat canid cells"
@@ -146,7 +146,7 @@
 		/datum/reagent/consumable/coco = -2)
 
 	virus_suspectibility = 3
-	resulting_atoms = list(/mob/living/simple_animal/pet/dog/pug = 1)
+	resulting_atoms = list(/mob/living/basic/pet/dog/pug = 1)
 
 /datum/micro_organism/cell_line/bear //bears can't really compete directly with more powerful creatures, so i made it possible to grow them real fast.
 	desc = "Ursine cells"

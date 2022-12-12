@@ -15,10 +15,8 @@
 	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
-	var/map_name
 	var/atom/movable/screen/map_view/cam_screen
 	/// All the plane masters that need to be applied.
-	var/list/cam_plane_masters
 	var/atom/movable/screen/background/cam_background
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_SIGHT
@@ -28,33 +26,20 @@
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
 	// I wasted 6 hours on this. :agony:
-	map_name = "camera_console_[REF(src)]_map"
+	var/map_name = "camera_console_[REF(src)]_map"
 	// Convert networks to lowercase
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
 	// Initialize map objects
 	cam_screen = new
-	cam_screen.name = "screen"
-	cam_screen.assigned_map = map_name
-	cam_screen.del_on_map_removal = FALSE
-	cam_screen.screen_loc = "[map_name]:1,1"
-	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/instance = new plane()
-		if(instance.blend_mode_override)
-			instance.blend_mode = instance.blend_mode_override
-		instance.assigned_map = map_name
-		instance.del_on_map_removal = FALSE
-		instance.screen_loc = "[map_name]:CENTER"
-		cam_plane_masters += instance
+	cam_screen.generate_view(map_name)
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
 
 /obj/machinery/computer/security/Destroy()
 	QDEL_NULL(cam_screen)
-	QDEL_LIST(cam_plane_masters)
 	QDEL_NULL(cam_background)
 	return ..()
 
@@ -83,9 +68,7 @@
 			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
 			use_power(active_power_usage)
 		// Register map objects
-		user.client.register_map_obj(cam_screen)
-		for(var/plane in cam_plane_masters)
-			user.client.register_map_obj(plane)
+		cam_screen.display_to(user)
 		user.client.register_map_obj(cam_background)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)
@@ -110,7 +93,7 @@
 
 /obj/machinery/computer/security/ui_static_data()
 	var/list/data = list()
-	data["mapRef"] = map_name
+	data["mapRef"] = cam_screen.assigned_map
 	var/list/cameras = get_available_cameras()
 	data["cameras"] = list()
 	for(var/i in cameras)
@@ -148,24 +131,25 @@
 
 	var/list/visible_turfs = list()
 
-	// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
-	var/cam_location = isliving(active_camera.loc) ? active_camera.loc : active_camera
+	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
+	var/new_cam_turf = get_turf(active_camera)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
 	// Most security cameras will end here as they're not moving.
-	var/newturf = get_turf(cam_location)
-	if(last_camera_turf == newturf)
+	if(last_camera_turf == new_cam_turf)
 		return
 
 	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
-	last_camera_turf = get_turf(cam_location)
+	last_camera_turf = new_cam_turf
 
-	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : view(active_camera.view_range, cam_location)
+	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
+	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, new_cam_turf) : view(active_camera.view_range, new_cam_turf)
 
 	for(var/turf/visible_turf in visible_things)
 		visible_turfs += visible_turf
 
+	//Get coordinates for a rectangle area that contains the turfs we see so we can then clear away the static in the resulting rectangle area
 	var/list/bbox = get_bbox_of_atoms(visible_turfs)
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
@@ -181,7 +165,7 @@
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects
-	user.client.clear_map(map_name)
+	cam_screen.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
@@ -196,21 +180,23 @@
 // Returns the list of cameras accessible from this computer
 /obj/machinery/computer/security/proc/get_available_cameras()
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-		if((is_away_level(z) || is_away_level(C.z)) && (C.z != z))//if on away mission, can only receive feed from same z_level cameras
+	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
+		//Get the camera's turf in case it's inside something like a borg
+		var/turf/camera_turf = get_turf(cam)
+		if((is_away_level(z) || is_away_level(camera_turf.z)) && (camera_turf.z != z))//if on away mission, can only receive feed from same z_level cameras
 			continue
-		L.Add(C)
+		L.Add(cam)
 	var/list/D = list()
-	for(var/obj/machinery/camera/C in L)
-		if(!C.network)
+	for(var/obj/machinery/camera/cam in L)
+		if(!cam.network)
 			stack_trace("Camera in a cameranet has no camera network")
 			continue
-		if(!(islist(C.network)))
+		if(!(islist(cam.network)))
 			stack_trace("Camera in a cameranet has a non-list camera network")
 			continue
-		var/list/tempnetwork = C.network & network
+		var/list/tempnetwork = cam.network & network
 		if(tempnetwork.len)
-			D["[C.c_tag]"] = C
+			D["[cam.c_tag]"] = cam
 	return D
 
 // SECURITY MONITORS
@@ -291,7 +277,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_CLICK, .proc/BigClick)
+	RegisterSignal(src, COMSIG_CLICK, PROC_REF(BigClick))
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
@@ -301,7 +287,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		balloon_alert(usr, "there's nothing on TV!")
 		return
 
-	INVOKE_ASYNC(src, /atom.proc/interact, usr)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, interact), usr)
 
 ///Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)

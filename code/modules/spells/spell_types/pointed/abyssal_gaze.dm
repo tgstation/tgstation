@@ -4,7 +4,9 @@
 	desc = "This spell instills a deep terror in your target, temporarily chilling and blinding it."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	background_icon_state = "bg_demon"
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	overlay_icon_state = "bg_demon_border"
+
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "abyssal_gaze"
 
 	school = SCHOOL_EVOCATION
@@ -35,7 +37,7 @@
 	cast_on.playsound_local(get_turf(cast_on), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	owner.playsound_local(get_turf(owner), 'sound/effects/ghost2.ogg', 50, 1)
 	cast_on.become_blind(ABYSSAL_GAZE_BLIND)
-	addtimer(CALLBACK(src, .proc/cure_blindness, cast_on), blind_duration)
+	addtimer(CALLBACK(src, PROC_REF(cure_blindness), cast_on), blind_duration)
 	if(ishuman(cast_on))
 		var/mob/living/carbon/human/human_cast_on = cast_on
 		human_cast_on.adjust_coretemperature(-amount_to_cool)

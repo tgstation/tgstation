@@ -100,9 +100,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
-"O" = (
-/turf/open/misc/asteroid/airless,
-/area/template_noop)
 "T" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/pickaxe,
@@ -118,39 +115,39 @@
 
 (1,1,1) = {"
 g
-a
-a
-O
-O
-O
-O
-a
-a
-a
+g
+g
+g
+g
+g
+g
+g
+g
+g
 "}
 (2,1,1) = {"
 g
-a
-a
-a
-O
-O
-O
-a
-a
-a
+g
+g
+g
+g
+g
+g
+g
+g
+g
 "}
 (3,1,1) = {"
 g
-a
+g
 X
 X
 F
 F
 x
 x
-a
-a
+g
+g
 "}
 (4,1,1) = {"
 g
@@ -161,8 +158,8 @@ z
 L
 d
 F
-O
-a
+g
+g
 "}
 (5,1,1) = {"
 K
@@ -173,8 +170,8 @@ T
 C
 j
 V
-O
-O
+g
+g
 "}
 (6,1,1) = {"
 g
@@ -185,42 +182,42 @@ y
 p
 h
 F
-O
-O
+g
+g
 "}
 (7,1,1) = {"
 g
-a
-a
+g
+g
 F
 F
 I
 F
 F
-O
-O
+g
+g
 "}
 (8,1,1) = {"
 g
-a
-a
-O
+g
+g
+g
 F
 i
 F
-O
-O
-O
+g
+g
+g
 "}
 (9,1,1) = {"
 g
-a
-a
-a
+g
+g
+g
 F
 w
 F
-O
-O
-O
+g
+g
+g
 "}

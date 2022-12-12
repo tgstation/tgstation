@@ -23,7 +23,7 @@
 	search_objects = 0
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
-	var/spawn_mecha_type = /obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded
+	var/spawn_mecha_type = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	var/obj/vehicle/sealed/mecha/mecha //Ref to pilot's mecha instance
 	var/required_mecha_charge = 7500 //If the pilot doesn't have a mecha, what charge does a potential Grand Theft Mecha need? (Defaults to half a battery)
 	var/mecha_charge_evacuate = 50 //Amount of charge at which the pilot tries to abandon the mecha
@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/Initialize(mapload)
 	. = ..()
-	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha/combat, TRUE)
+	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha, TRUE)
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/nanotrasen //nanotrasen are syndies! no it's just a weird path.
 	name = "\improper Nanotrasen Mecha Pilot"
@@ -48,7 +48,7 @@
 	icon_living = "nanotrasen"
 	icon_state = "nanotrasen"
 	faction = list("nanotrasen")
-	spawn_mecha_type = /obj/vehicle/sealed/mecha/combat/marauder/loaded
+	spawn_mecha_type = /obj/vehicle/sealed/mecha/marauder/loaded
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/nanotrasen
 	name = "\improper Nanotrasen Mecha Pilot"
@@ -63,7 +63,7 @@
 	if(spawn_mecha_type)
 		var/obj/vehicle/sealed/mecha/M = new spawn_mecha_type (get_turf(src))
 		if(istype(M))
-			INVOKE_ASYNC(src, .proc/enter_mecha, M)
+			INVOKE_ASYNC(src, PROC_REF(enter_mecha), M)
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/vehicle/sealed/mecha/M)
@@ -100,9 +100,9 @@
 	targets_from = null
 
 	//Find a new mecha
-	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha/combat, TRUE)
+	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha, TRUE)
 	var/search_aggressiveness = 2
-	for(var/obj/vehicle/sealed/mecha/combat/C in range(vision_range,src))
+	for(var/obj/vehicle/sealed/mecha/C in range(vision_range,src))
 		if(is_valid_mecha(C))
 			GiveTarget(C)
 			search_aggressiveness = 3 //We can see a mech? RUN FOR IT, IGNORE MOBS!
@@ -199,7 +199,7 @@
 	if(!.)
 		return
 	if(!mecha)
-		for(var/obj/vehicle/sealed/mecha/combat/mecha_in_range in range(src,vision_range))
+		for(var/obj/vehicle/sealed/mecha/mecha_in_range in range(src,vision_range))
 			if(is_valid_mecha(mecha_in_range))
 				GiveTarget(mecha_in_range) //Let's nab it!
 				minimum_distance = 1
@@ -231,7 +231,7 @@
 				if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_defense_mode) && !mecha.defense_mode)
 					var/datum/action/vehicle/sealed/mecha/mech_defense_mode/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
 					action.Trigger(forced_state = TRUE)
-					addtimer(CALLBACK(action, /datum/action/vehicle/sealed/mecha/mech_defense_mode.proc/Trigger, FALSE), 100) //10 seconds of defense, then toggle off
+					addtimer(CALLBACK(action, TYPE_PROC_REF(/datum/action/vehicle/sealed/mecha/mech_defense_mode, Trigger), FALSE), 100) //10 seconds of defense, then toggle off
 
 			else if(prob(retreat_chance))
 				//Speed boost if possible
@@ -239,7 +239,7 @@
 					var/datum/action/vehicle/sealed/mecha/mech_overload_mode/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_overload_mode]
 					mecha.leg_overload_mode = FALSE
 					action.Trigger(forced_state = TRUE)
-					addtimer(CALLBACK(action, /datum/action/vehicle/sealed/mecha/mech_overload_mode.proc/Trigger, FALSE), 100) //10 seconds of speeeeed, then toggle off
+					addtimer(CALLBACK(action, TYPE_PROC_REF(/datum/action/vehicle/sealed/mecha/mech_overload_mode, Trigger), FALSE), 100) //10 seconds of speeeeed, then toggle off
 
 				retreat_distance = 50
 				addtimer(VARSET_CALLBACK(src, retreat_distance, 0), 10 SECONDS)

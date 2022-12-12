@@ -8,7 +8,7 @@
 #define CRYO_TX_QTY 0.5
 // The minimum O2 moles in the cryotube before it switches off.
 #define CRYO_MIN_GAS_MOLES 5
-#define CRYO_BREAKOUT_TIME 30 SECONDS
+#define CRYO_BREAKOUT_TIME (30 SECONDS)
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/visual/cryo_occupant
@@ -30,8 +30,8 @@
 	// It will follow this as the animation goes, but that's no problem as the "mask" icon state
 	// already accounts for this.
 	add_filter("alpha_mask", 1, list("type" = "alpha", "icon" = icon('icons/obj/medical/cryogenics.dmi', "mask"), "y" = -22))
-	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, .proc/on_set_occupant)
-	RegisterSignal(parent, COMSIG_CRYO_SET_ON, .proc/on_set_on)
+	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, PROC_REF(on_set_occupant))
+	RegisterSignal(parent, COMSIG_CRYO_SET_ON, PROC_REF(on_set_on))
 
 /// COMSIG_MACHINERY_SET_OCCUPANT callback
 /atom/movable/visual/cryo_occupant/proc/on_set_occupant(datum/source, mob/living/new_occupant)
@@ -39,6 +39,7 @@
 
 	if(occupant)
 		vis_contents -= occupant
+		occupant.vis_flags &= ~VIS_INHERIT_PLANE
 		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
 		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
 
@@ -47,6 +48,8 @@
 		return
 
 	occupant.setDir(SOUTH)
+	// We want to pull our occupant up to our plane so we look right
+	occupant.vis_flags |= VIS_INHERIT_PLANE
 	vis_contents += occupant
 	pixel_y = 22
 	ADD_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
@@ -129,6 +132,12 @@
 	if(airs[1])
 		airs[1].volume = CELL_VOLUME * 0.5
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(occupant_vis, PLANE_TO_TRUE(occupant_vis.plane), new_turf)
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/set_occupant(atom/movable/new_occupant)
 	. = ..()
 	update_appearance()
@@ -187,6 +196,11 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
+	if(occupant)
+		occupant.vis_flags &= ~VIS_INHERIT_PLANE
+		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
+
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
@@ -197,10 +211,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	. = ..()
-	plane = initial(plane)
-
-GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE))
-GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-off", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE))
+	SET_PLANE_IMPLICIT(src, initial(plane))
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_overlays()
 	. = ..()
@@ -208,7 +219,10 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/medical/cr
 		. += "pod-panel"
 	if(state_open)
 		return
-	. += (on && is_operational) ? GLOB.cryo_overlay_cover_on : GLOB.cryo_overlay_cover_off
+	if(on && is_operational)
+		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+	else
+		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()

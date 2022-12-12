@@ -130,13 +130,6 @@
 	reqs = list(/obj/item/bedsheet = 1)
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/cowboyboots
-	name = "Cowboy Boots"
-	result = /obj/item/clothing/shoes/cowboy
-	reqs = list(/obj/item/stack/sheet/leather = 2)
-	time = 4.5 SECONDS
-	category = CAT_CLOTHING
-
 /datum/crafting_recipe/lizardboots
 	name = "Lizard Skin Boots"
 	result = /obj/effect/spawner/random/clothing/lizardboots
@@ -167,7 +160,7 @@
 
 /datum/crafting_recipe/tv_helmet
 	name = "Television Helmet"
-	result = /obj/item/clothing/head/tv_head
+	result = /obj/item/clothing/head/costume/tv_head
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR)
 	reqs = list(/obj/item/wallframe/status_display = 1)
 	time = 2 SECONDS

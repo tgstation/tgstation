@@ -140,15 +140,15 @@
 	///World ticks the machine is electified for
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	///When this is TRUE, we fire items at customers! We're broken!
-	var/shoot_inventory = 0
+	var/shoot_inventory = FALSE
 	///How likely this is to happen (prob 100) per second
 	var/shoot_inventory_chance = 1
 	//Stop spouting those godawful pitches!
-	var/shut_up = 0
+	var/shut_up = FALSE
 	///can we access the hidden inventory?
-	var/extended_inventory = 0
+	var/extended_inventory = FALSE
 	///Are we checking the users ID
-	var/scan_id = 1
+	var/scan_id = TRUE
 	///Coins that we accept?
 	var/obj/item/coin/coin
 	///Bills we accept?
@@ -186,7 +186,7 @@
 	var/light_mask
 
 	/// used for narcing on underages
-	var/obj/item/radio/Radio
+	var/obj/item/radio/sec_radio
 
 
 /**
@@ -226,14 +226,12 @@
 				circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
-	Radio = new /obj/item/radio(src)
-	Radio.set_listening(FALSE)
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
-	QDEL_NULL(Radio)
+	QDEL_NULL(sec_radio)
 	return ..()
 
 /obj/machinery/vending/can_speak()
@@ -285,7 +283,7 @@
 	if(panel_open)
 		. += panel_type
 	if(light_mask && !(machine_stat & BROKEN) && powered())
-		. += emissive_appearance(icon, light_mask)
+		. += emissive_appearance(icon, light_mask, src)
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
@@ -652,7 +650,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	visible_message(span_danger("[src] tips over!"))
 	tilted = TRUE
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
+	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	var/crit_case
 	if(crit)
@@ -663,7 +661,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	. = FALSE
 
-	if(in_range(fatty, src))
+	if(Adjacent(fatty))
 		for(var/mob/living/L in get_turf(fatty))
 			var/was_alive = (L.stat != DEAD)
 			var/mob/living/carbon/C = L
@@ -682,10 +680,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(1) // shatter their legs and bleed 'em
 						crit_rebate = 60
 						C.bleed(150)
-						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
+						var/obj/item/bodypart/leg/left/l = C.get_bodypart(BODY_ZONE_L_LEG)
 						if(l)
 							l.receive_damage(brute=200)
-						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
+						var/obj/item/bodypart/leg/right/r = C.get_bodypart(BODY_ZONE_R_LEG)
 						if(r)
 							r.receive_damage(brute=200)
 						if(l || r)
@@ -767,7 +765,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	tilted = FALSE
 	layer = initial(layer)
-	plane = initial(plane)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 
 	var/matrix/M = matrix()
 	M.Turn(0)
@@ -854,12 +852,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 	obj_flags |= EMAGGED
 	to_chat(user, span_notice("You short out the product lock on [src]."))
 
-/obj/machinery/vending/_try_interact(mob/user)
+/obj/machinery/vending/interact(mob/user)
 	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
 
-	if(tilted && !user.buckled && !isAI(user))
+	if(tilted && !user.buckled && !isAdminGhostAI(user))
 		to_chat(user, span_notice("You begin righting [src]."))
 		if(do_after(user, 50, target=src))
 			untilt(user)
@@ -948,7 +946,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			.["user"]["department"] = C.registered_account.account_job.paycheck_department
 		else
 			.["user"]["job"] = "No Job"
-			.["user"]["department"] = "No Department"
+			.["user"]["department"] = DEPARTMENT_UNASSIGNED
 	.["stock"] = list()
 
 	for (var/datum/data/vending_product/product_record in product_records + coin_records + hidden_records)
@@ -1003,7 +1001,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			allowed_configs += "[initial(item.greyscale_config_inhand_right)]"
 
 	var/datum/greyscale_modify_menu/menu = new(
-		src, usr, allowed_configs, CALLBACK(src, .proc/vend_greyscale, params),
+		src, usr, allowed_configs, CALLBACK(src, PROC_REF(vend_greyscale), params),
 		starting_icon_state=initial(fake_atom.icon_state),
 		starting_config=initial(fake_atom.greyscale_config),
 		starting_colors=initial(fake_atom.greyscale_colors)
@@ -1068,8 +1066,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 		else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
 			say("You are not of legal age to purchase [R.name].")
 			if(!(usr in GLOB.narcd_underages))
-				Radio.set_frequency(FREQ_SECURITY)
-				Radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [usr] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
+				if (isnull(sec_radio))
+					sec_radio = new
+					sec_radio.set_listening(FALSE)
+				sec_radio.set_frequency(FREQ_SECURITY)
+				sec_radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [usr] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
 				GLOB.narcd_underages += usr
 			flick(icon_deny,src)
 			vend_ready = TRUE
@@ -1081,7 +1082,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
 		if(LAZYLEN(R.returned_products))
 			price_to_use = 0 //returned items are free
-		if(price_to_use && !account.adjust_money(-price_to_use))
+		if(price_to_use && !account.adjust_money(-price_to_use, "Vending: [R.name]"))
 			say("You do not possess the funds to purchase [R.name].")
 			flick(icon_deny,src)
 			vend_ready = TRUE
@@ -1356,12 +1357,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
 	return FALSE
 
-/obj/machinery/vending/custom/Destroy()
+/obj/machinery/vending/custom/deconstruct(disassembled)
 	unbuckle_all_mobs(TRUE)
-	var/turf/T = get_turf(src)
-	if(T)
-		for(var/obj/item/I in contents)
-			I.forceMove(T)
+	var/turf/current_turf = get_turf(src)
+	if(current_turf)
+		for(var/obj/item/stored_item in contents)
+			stored_item.forceMove(current_turf)
 		explosion(src, devastation_range = -1, light_impact_range = 3)
 	return ..()
 
@@ -1393,8 +1394,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 			balloon_alert(user, "insufficient funds")
 			return TRUE
 		/// Make the transaction
-		payee.adjust_money(-dispensed_item.custom_price)
-		linked_account.adjust_money(dispensed_item.custom_price)
+		payee.adjust_money(-dispensed_item.custom_price, , "Vending: [dispensed_item]")
+		linked_account.adjust_money(dispensed_item.custom_price, "Vending: [dispensed_item] Bought")
 		linked_account.bank_card_talk("[payee.account_holder] made a [dispensed_item.custom_price] \
 		cr purchase at your custom vendor.")
 		/// Log the transaction
@@ -1424,34 +1425,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	machine_name = "Custom Vendor"
 	icon_state = "refill_custom"
 	custom_premium_price = PAYCHECK_CREW
-
-/obj/item/price_tagger
-	name = "price tagger"
-	desc = "This tool is used to set a price for items used in custom vendors."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "pricetagger"
-	custom_premium_price = PAYCHECK_CREW * 0.5
-	///the price of the item
-	var/price = 1
-
-/obj/item/price_tagger/attack_self(mob/user)
-	if(loc != user)
-		to_chat(user, span_warning("You must be holding the price tagger to continue!"))
-		return
-	var/chosen_price = tgui_input_number(user, "Set price", "Price", price)
-	if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
-		return
-	price = chosen_price
-	to_chat(user, span_notice(" The [src] will now give things a [price] cr tag."))
-
-/obj/item/price_tagger/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(isitem(target))
-		var/obj/item/I = target
-		I.custom_price = price
-		to_chat(user, span_notice("You set the price of [I] to [price] cr."))
 
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
 	icon_state = "greed"

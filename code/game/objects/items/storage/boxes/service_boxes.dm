@@ -26,7 +26,7 @@
 
 /obj/item/storage/box/pdas/PopulateContents()
 	for(var/i in 1 to 4)
-		new /obj/item/modular_computer/tablet/pda(src)
+		new /obj/item/modular_computer/pda(src)
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
@@ -76,6 +76,8 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
 	inhand_icon_state = "zippo"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "lighter"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
@@ -112,13 +114,12 @@
 
 /obj/item/storage/box/lights
 	name = "box of replacement bulbs"
-	icon = 'icons/obj/storage/storage.dmi'
-	illustration = "light"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
+	illustration = "light"
 
 /obj/item/storage/box/lights/Initialize(mapload)
 	. = ..()
@@ -172,7 +173,7 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/wrench = 1,
-		)
+	)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/actionfigure
@@ -188,9 +189,9 @@
 /obj/item/storage/box/tail_pin
 	name = "pin the tail on the corgi supplies"
 	desc = "For ages 10 and up. ...Why is this even on a space station? Aren't you a little old for babby games?" //Intentional typo.
+	custom_price = PAYCHECK_COMMAND * 1.25
 
 /obj/item/storage/box/tail_pin/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
-

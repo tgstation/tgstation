@@ -6,7 +6,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack/fireproof
 	ears = /obj/item/radio/headset/syndicate/alt
-	l_pocket = /obj/item/modular_computer/tablet/nukeops
+	l_pocket = /obj/item/modular_computer/pda/nukeops
 	r_pocket = /obj/item/pen/edagger
 	id = /obj/item/card/id/advanced/chameleon
 	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
@@ -30,7 +30,7 @@
 		return
 	var/obj/item/radio/radio = nukie.ears
 	radio.set_frequency(FREQ_SYNDICATE)
-	radio.freqlock = TRUE
+	radio.freqlock = RADIO_FREQENCY_LOCKED
 	if(command_radio)
 		radio.command = TRUE
 		radio.use_command = TRUE
@@ -97,7 +97,7 @@
 /datum/outfit/syndicate/reinforcement/donk
 	name = "Syndicate Operative - Donk Reinforcement"
 	suit = /obj/item/clothing/suit/hazardvest
-	head = /obj/item/clothing/head/hardhat/orange
+	head = /obj/item/clothing/head/utility/hardhat/orange
 	shoes = /obj/item/clothing/shoes/workboots
 	glasses = /obj/item/clothing/glasses/meson
 	faction = "the Donk Corporation"

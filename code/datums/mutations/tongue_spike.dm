@@ -12,7 +12,7 @@
 /datum/action/cooldown/spell/tongue_spike
 	name = "Launch spike"
 	desc = "Shoot your tongue out in the direction you're facing, embedding it and dealing damage until they remove it."
-	icon_icon = 'icons/mob/actions/actions_genetic.dmi'
+	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "spike"
 
 	cooldown_time = 10 SECONDS
@@ -64,7 +64,7 @@
 /obj/item/hardened_spike/Initialize(mapload, mob/living/carbon/source)
 	. = ..()
 	src.fired_by_ref = WEAKREF(source)
-	addtimer(CALLBACK(src, .proc/check_embedded), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(check_embedded)), 5 SECONDS)
 
 /obj/item/hardened_spike/proc/check_embedded()
 	if(missed)
@@ -146,7 +146,7 @@
 	name = "Transfer Chemicals"
 	desc = "Send all of your reagents into whomever the chem spike is embedded in. One use."
 	background_icon_state = "bg_spell"
-	icon_icon = 'icons/mob/actions/actions_genetic.dmi'
+	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "spikechemswap"
 	check_flags = AB_CHECK_CONSCIOUS
 

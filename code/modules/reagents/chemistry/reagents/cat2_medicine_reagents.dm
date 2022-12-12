@@ -64,12 +64,13 @@
 			reaping = FALSE
 		else if(RockPaperScissors[RPSchoice] == grim) //You lost!
 			to_chat(M, span_hierophant("You lose, and the malevolent spirits smirk eerily as they surround your body."))
+			M.investigate_log("has lost rock paper scissors with the grim reaper and been dusted.", INVESTIGATE_DEATHS)
 			M.dust()
 			return
 		else //VICTORY ROYALE
 			to_chat(M, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
 			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
-			M.revive(full_heal = TRUE, admin_revive = FALSE)
+			M.revive(HEAL_ALL)
 			holder.del_reagent(type)
 			return
 
@@ -386,7 +387,7 @@
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
 		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), 0)	  //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/internal/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
-	if((L.organ_flags & ORGAN_FAILING) || !L)
+	if(!L || L.organ_flags & ORGAN_FAILING)
 		return
 	conversion_amount = (trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100)*normalise_creation_purity()) //the more damaged the liver the worse we metabolize.
 	C.reagents.remove_reagent(/datum/reagent/medicine/c2/syriniver, conversion_amount)
@@ -503,9 +504,14 @@
 	inverse_chem_val = 0.25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/atom/movable/screen/alert/penthrite
+	name = "Strong Heartbeat"
+	desc = "Your heart beats with great force!"
+	icon_state = "penthrite"
+
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	user.balloon_alert(user, "your heart beats with a great force")
+	user.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
 	ADD_TRAIT(user, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(user, TRAIT_NOHARDCRIT,type)
 	ADD_TRAIT(user, TRAIT_NOSOFTCRIT,type)
@@ -524,8 +530,8 @@
 
 		H.adjustOrganLoss(ORGAN_SLOT_HEART, max(volume/10, 1) * REM * delta_time) // your heart is barely keeping up!
 
-		H.set_timed_status_effect(rand(0 SECONDS, 4 SECONDS) * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
-		H.set_timed_status_effect(rand(0 SECONDS, 4 SECONDS) * REM * delta_time, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		H.set_jitter_if_lower(rand(0 SECONDS, 4 SECONDS) * REM * delta_time)
+		H.set_dizzy_if_lower(rand(0 SECONDS, 4 SECONDS) * REM * delta_time)
 
 		if(DT_PROB(18, delta_time))
 			to_chat(H,span_danger("Your body is trying to give up, but your heart is still beating!"))
@@ -539,7 +545,7 @@
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
-	user.balloon_alert(user, "your heart relaxes")
+	user.clear_alert("penthrite")
 	REMOVE_TRAIT(user, TRAIT_STABLEHEART, type)
 	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT,type)
 	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT,type)

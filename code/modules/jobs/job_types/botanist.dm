@@ -8,6 +8,7 @@
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "BOTANIST"
 
 	outfit = /datum/outfit/job/botanist
 	plasmaman_outfit = /datum/outfit/plasmaman/botany
@@ -47,7 +48,7 @@
 	uniform = /obj/item/clothing/under/rank/civilian/hydroponics
 	suit = /obj/item/clothing/suit/apron
 	suit_store = /obj/item/plant_analyzer
-	belt = /obj/item/modular_computer/tablet/pda/botanist
+	belt = /obj/item/modular_computer/pda/botanist
 	ears = /obj/item/radio/headset/headset_srv
 	gloves = /obj/item/clothing/gloves/botanic_leather
 
