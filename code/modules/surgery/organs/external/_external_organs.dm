@@ -436,9 +436,6 @@
 		return TRUE
 	return FALSE
 
-/obj/item/organ/external/pod_hair/get_global_feature_list()
-	return GLOB.pod_hair_list
-
 /obj/item/organ/external/pod_hair/get_overlay_color(draw_layer)
 	if(draw_layer != bitflag_to_layer(color_swapped_layer))
 		return ..()
