@@ -49,8 +49,6 @@
 /datum/ai_controller/basic_controller/pig
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
-		BB_BASIC_MOB_FLEE_BELOW_HP_RATIO = 0.5,
-		BB_BASIC_MOB_STOP_FLEE_AT_HP_RATIO = 1,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

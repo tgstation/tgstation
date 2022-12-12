@@ -225,8 +225,6 @@
 
 /// Flag to set on or off if you want your mob to prioritise running away
 #define BB_BASIC_MOB_FLEEING "BB_basic_fleeing"
-#define BB_BASIC_MOB_FLEE_BELOW_HP_RATIO "BB_basic_mob_flee_below_HP_ratio"
-#define BB_BASIC_MOB_STOP_FLEE_AT_HP_RATIO "BB_basic_mob_stop_flee_above_HP_ratio"
 
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
