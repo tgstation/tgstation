@@ -30,7 +30,7 @@
 	healable = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
-	sight = SEE_TURFS | SEE_OBJS| SEE_BLACKNESS
+	sight = SEE_TURFS | SEE_OBJS
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
