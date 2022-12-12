@@ -32,6 +32,7 @@
 /mob/living/basic/pig/Initialize()
 	AddElement(/datum/element/pet_bonus, "oinks!")
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/ai_flee_while_injured)
 	make_tameable()
 	. = ..()
 
@@ -57,7 +58,6 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/flee_if_unhealthy,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
