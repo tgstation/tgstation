@@ -432,3 +432,70 @@
   zxaber:
   - balance: Traitors now have two kill and an escape objective for Greentext purposes,
       though completing a Final Objective will Greentext too.
+2022-12-12:
+  A.C.M.O.:
+  - bugfix: Fixed the DNA Infuser's Space Carp infusion, which was not properly granting
+      its organ set bonus. Having all 4 carp organs infused now makes you space-proof
+      as expected.
+  - bugfix: Fixed robotic/surplus limbs not taking damage/healing as expected; including
+      via the Var Viewer, Player Panel, and from sources of spread-damage.
+  Autisem:
+  - bugfix: Teleporters work properly now with circuits
+  DragonTrance:
+  - bugfix: The respawn verb now alerts players if respawning is disabled
+  Fikou:
+  - imagedel: non parallax space is now black
+  LemonInTheDark:
+  - refactor: The logic of how we well, render things has changed. Make an issue report
+      if anything looks funky, particularly layers. PLEASE USE YOUR EYES
+  MTandi:
+  - qol: allowed stacking machine input, output rotation via console
+  - qol: Biogenenerator biomass overlay uses sine instead of linear interpolation
+  - rscadd: Fermented drinks give mood buffs according to the stats of fermented fruit
+  Melbert:
+  - bugfix: Corrects the look of pinned modules
+  Profakos:
+  - bugfix: F.R.A.M.E. cartridges work again
+  Rhials:
+  - code_imp: there can now be more than one grey tide event running at once.
+  ShizCalev:
+  - bugfix: Fixed a bunch of missing lattices underneath grilles on Delta.
+  SkeletalElite:
+  - bugfix: Forced speech from brain damage will no longer trigger the world filter
+  SyncIt21:
+  - rscadd: Custom print button for protolathe just like the autolathe
+  Tattle:
+  - bugfix: lockboxes' and wrapped crates' invisibility spell has worn off
+  TheBoondock:
+  - bugfix: fixed a building a rack with telekinesis results in it being built at
+      your feet. Now it will be built at where the rack part is
+  Watermelon914:
+  - qol: Changed the reputation cap of 'Legendary' on the UI to be at 1400 reputation.
+      This is the point at which you unlock Final Objectives. This is purely a visual
+      change.
+  Zergspower:
+  - bugfix: Tram Station - Fixes the stray Disposal pipes in Medbay
+  - imageadd: Containers - New Interdyne Container with new mapping default icon
+  - bugfix: Containers - unified the apperance of each one, fixed blemishes and stray
+      pixels
+  - bugfix: MetaStation - Removes stray pipe found under the courtroom door
+  etherware-novice:
+  - rscadd: forensics scanner can read id access
+  - balance: forensics scanner can detect transforming items
+  - code_imp: forensics scanner was rewritten, items can add their own data to the
+      log
+  - rscadd: holiday specific posters (only a few now)
+  lizardqueenlexi:
+  - bugfix: Admin removal of Heretic status no longer makes a sound.
+  - bugfix: Made the external smartfridge in the Tramstation pharmacy accessible from
+      inside.
+  - spellcheck: Improved "Steal Heirloom" objective description.
+  necromanceranne:
+  - code_imp: Makes a lot of the bodypart variables clearer as to what they do. Includes
+      more detailed code comments.
+  - bugfix: Robotic limbs are no longer immune to being disabled through reaching
+      maximum damage.
+  san7890:
+  - bugfix: Nanotrasen will now no longer mount the HoPline's Ticket Machines on windows
+      for Meta, IceBox, and Tram.
+  - bugfix: When you examine a mecha, you should now no longer see two integrity messages.

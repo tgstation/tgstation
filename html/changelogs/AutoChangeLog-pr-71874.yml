@@ -1,4 +1,0 @@
-author: "DragonTrance"
-delete-after: True
-changes:
-  - bugfix: "The respawn verb now alerts players if respawning is disabled"
