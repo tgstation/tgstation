@@ -42,7 +42,10 @@
 	// Defer to original check_breath in the presence of gas.
 	if(breath && (breath.total_moles() > 0))
 		return ..()
-	breather.failed_last_breath = FALSE
+	// Mob always breathes normally when in vacuum and not in crit.
+	if(breather.health >= breather.crit_threshold)
+		breather.failed_last_breath = FALSE
+		breather.adjustOxyLoss(-5)
 	return TRUE
 
 ///occasionally sheds carp teeth, stronger melee (bite) attacks, but you can't cover your mouth anymore.
