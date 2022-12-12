@@ -31,14 +31,14 @@
 			clear_alert(category)
 			return .()
 		else if(!severity || severity == thealert.severity)
-			if(thealert.timeout)
-				// Reset existing alert timeout
-				var/timeout = initial(thealert.timeout)
-				addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), timeout)
-				thealert.timeout = world.time + timeout - world.tick_lag
+			if(!thealert.timeout)
+				// No need to update existing alert
 				return thealert
-			else //no need to update
-				return thealert
+			// Reset timeout of existing alert
+			var/timeout = initial(thealert.timeout)
+			addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), timeout)
+			thealert.timeout = world.time + timeout - world.tick_lag
+			return thealert
 	else
 		thealert = new type()
 		thealert.override_alerts = override
