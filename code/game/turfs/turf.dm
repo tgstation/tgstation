@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///The max temperature of the fire which it was subjected to
 	var/max_fire_temperature_sustained = 0
 
-	var/max_temperature = 1500
+	var/max_temperature = 3500
 
 	var/blocks_air = FALSE
 	// If this turf should initialize atmos adjacent turfs or not
