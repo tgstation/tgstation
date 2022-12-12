@@ -40,8 +40,9 @@
 // Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
 /obj/item/organ/internal/lungs/carp/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	// Defer to original check_breath in the presence of gas.
-	if(breath)
+	if(breath && (breath.total_moles() == 0))
 		return ..()
+	breather.failed_last_breath = FALSE
 	return TRUE
 
 ///occasionally sheds carp teeth, stronger melee (bite) attacks, but you can't cover your mouth anymore.
