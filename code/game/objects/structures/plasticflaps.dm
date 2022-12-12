@@ -17,6 +17,17 @@
 	. = ..()
 	alpha = 0
 	gen_overlay()
+	update_atmos_behaviour()
+
+/obj/structure/plasticflaps/Destroy()
+	update_atmos_behaviour()
+	return ..()
+
+/obj/structure/plasticflaps/Move(atom/newloc, direct, glide_size_override)
+	var/turf/old_loc = loc
+	. = ..()
+	update_atmos_behaviour()
+	old_loc?.air_update_turf(TRUE, FALSE)
 
 /obj/structure/plasticflaps/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
@@ -47,13 +58,13 @@
 		return TRUE
 	set_anchored(!anchored)
 	update_atmos_behaviour()
-	air_update_turf(TRUE)
 	to_chat(user, span_notice("You [uraction] the floor."))
 	return TRUE
 
 ///Update the flaps behaviour to gases, if not anchored will let air pass through
 /obj/structure/plasticflaps/proc/update_atmos_behaviour()
-	can_atmos_pass = anchored ? ATMOS_PASS_YES : ATMOS_PASS_NO
+	can_atmos_pass = anchored ? ATMOS_PASS_NO : ATMOS_PASS_YES
+	air_update_turf(TRUE, FALSE)
 
 /obj/structure/plasticflaps/wirecutter_act(mob/living/user, obj/item/W)
 	. = ..()
@@ -88,7 +99,6 @@
 		return CanAStarPass(ID, to_dir, caller.pulling, no_id = no_id)
 	return TRUE //diseases, stings, etc can pass
 
-
 /obj/structure/plasticflaps/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(mover.pass_flags & PASSFLAPS) //For anything specifically engineered to cross plastic flaps.
@@ -117,18 +127,7 @@
 		if(living_mover.body_position == STANDING_UP && living_mover.mob_size != MOB_SIZE_TINY && !(HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_NUDE)))
 			return FALSE //If you're not laying down, or a small creature, or a ventcrawler, then no pass.
 
-
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/plastic/five(loc)
 	qdel(src)
-
-/obj/structure/plasticflaps/Initialize(mapload)
-	. = ..()
-	air_update_turf(TRUE, TRUE)
-
-/obj/structure/plasticflaps/Destroy()
-	var/atom/oldloc = loc
-	. = ..()
-	if (oldloc)
-		oldloc.air_update_turf(TRUE, FALSE)
