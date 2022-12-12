@@ -61,7 +61,6 @@
 	if(!open())
 		return
 	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
-		say("Emergency exit activated!")
 		return PROCESS_KILL
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)
