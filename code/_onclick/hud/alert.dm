@@ -32,8 +32,11 @@
 			return .()
 		else if(!severity || severity == thealert.severity)
 			if(thealert.timeout)
-				clear_alert(category)
-				return .()
+				// Reset existing alert timeout
+				var/timeout = initial(thealert.timeout)
+				addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), timeout)
+				thealert.timeout = world.time + timeout - world.tick_lag
+				return thealert
 			else //no need to update
 				return thealert
 	else
