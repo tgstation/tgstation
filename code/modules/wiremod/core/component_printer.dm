@@ -83,7 +83,7 @@
 
 	///linear interpolation between full cost i.e 1 & 1/8th the cost i.e 0.125
 	///we do it in 6 steps because maximum rating of 2 manipulators is 8 but -1 gives us 6
-	var/coff=1.0+((0.125-1.0)*(rating/6))
+	var/coff = 1.0+((0.125-1.0)*(rating/6))
 
 	///copied from production.dm calculate_efficiency() proc
 	if(materials)
