@@ -40,7 +40,7 @@
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/food/fishmeat/carp/imitation
-	name = "carp fillet imitation"
+	name = "imitation carp fillet"
 	desc = "Almost just like the real thing, kinda."
 	cell_line = null
 
