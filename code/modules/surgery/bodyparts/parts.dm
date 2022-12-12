@@ -53,7 +53,7 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 500
 	acceptable_bodytype = BODYTYPE_HUMANOID
 
@@ -64,7 +64,7 @@
 	limb_id = BODYPART_ID_LARVA
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER

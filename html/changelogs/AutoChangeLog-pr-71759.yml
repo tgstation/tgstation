@@ -1,4 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes:
-  - bugfix: "The dog's attack command is somewhat more reliable."
