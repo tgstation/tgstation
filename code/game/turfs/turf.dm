@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	icon = 'icons/turf/floors.dmi'
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1
+	uses_integrity = TRUE
 
 	/// Turf bitflags, see code/__DEFINES/flags.dm
 	var/turf_flags = NONE
@@ -26,6 +27,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/to_be_destroyed = 0
 	///The max temperature of the fire which it was subjected to
 	var/max_fire_temperature_sustained = 0
+
+	var/max_temperature = 1500
 
 	var/blocks_air = FALSE
 	// If this turf should initialize atmos adjacent turfs or not

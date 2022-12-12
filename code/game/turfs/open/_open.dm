@@ -1,5 +1,7 @@
 /turf/open
 	plane = FLOOR_PLANE
+
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 0)
 	///negative for faster, positive for slower
 	var/slowdown = 0
 
@@ -47,6 +49,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = TRUE
+	resistance_flags = INDESTRUCTIBLE
 
 /turf/open/indestructible/Melt()
 	to_be_destroyed = FALSE

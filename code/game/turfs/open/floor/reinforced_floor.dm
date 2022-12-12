@@ -5,7 +5,9 @@
 	icon_state = "engine"
 	holodeck_compatible = TRUE
 	thermal_conductivity = 0.025
-	heat_capacity = INFINITY
+	heat_capacity = 1000
+	max_temperature = INFINITY
+	resistance_flags = INDESTRUCTIBLE
 	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -13,7 +15,6 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 	rcd_proof = TRUE
-
 
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()

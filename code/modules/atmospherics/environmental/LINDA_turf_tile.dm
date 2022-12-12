@@ -2,7 +2,7 @@
 	///used for temperature calculations in superconduction
 	var/thermal_conductivity = 0.05
 	///Amount of heat necessary to activate some atmos processes (there is a weird usage of this var because is compared directly to the temperature instead of heat energy)
-	var/heat_capacity = INFINITY //This should be opt in rather then opt out
+	var/heat_capacity = 1000 //This should be opt in rather then opt out
 	///Archived version of the temperature on a turf
 	var/temperature_archived
 	///All currently stored conductivities changes
@@ -122,10 +122,12 @@
 	return return_air()
 
 /turf/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature >= heat_capacity || to_be_destroyed)
+	return (exposed_temperature >= max_temperature || to_be_destroyed)
 
 /turf/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(exposed_temperature >= heat_capacity)
+	if(exposed_temperature >= max_temperature && get_integrity() > 0)
+		take_damage((exposed_temperature - max_temperature) * 0.01, BURN, FIRE, FALSE)
+	if(get_integrity() <= 0)
 		to_be_destroyed = TRUE
 	if(to_be_destroyed && exposed_temperature >= max_fire_temperature_sustained)
 		max_fire_temperature_sustained = min(exposed_temperature, max_fire_temperature_sustained + heat_capacity / 4) //Ramp up to 100% yeah?
