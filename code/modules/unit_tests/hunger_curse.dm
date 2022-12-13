@@ -1,3 +1,5 @@
+/// Tests that the curse of hunger, from [/datum/component/curse_of_hunger],
+/// is properly added when equipped to the correct slot and removed when dropped / deleted
 /datum/unit_test/hunger_curse
 
 /datum/unit_test/hunger_curse/Run()
