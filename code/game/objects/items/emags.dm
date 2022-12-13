@@ -69,7 +69,7 @@
 	A.emag_act(user, src)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
-	if(emag_required && !(emag_access & emag_required))
+	if(target.emag_required && !(emag_access & target.emag_required))
 		to_chat(user, span_warning("The [target] cannot be affected by the [src]! A more specialized hacking device is required."))
 		return FALSE
 	return TRUE
@@ -127,31 +127,19 @@
 	var/reset_deviation = 5
 	/// uses tracked
 	var/current_use_loop = 0
-	/// how long until it re-rolls access
-	COOLDOWN_DECLARE(reset_after_time)
 
 /obj/item/card/emag/broken/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSObj, src)
-
-/obj/item/card/emag/broken/Destroy(force)
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/card/emag/broken/process(delta_time)
-	. = ..()
-	if(COOLDOWN_FINISHED(src, reset_after_time) || !emag_access)
-		roll_access()
-		COOLDOWN_START(src, reset_after_time, 5 MINUTES)
+	roll_access()
 
 /obj/item/card/emag/broken/proc/roll_access()
 	emag_access = rand(1, 2 ^ EMAG_ACCESS_TOTAL_CATEGORIES - 1)
 	audible_message("\The [src] buzzes quietly, shaking, before falling silent.")
 
-/obj/item/card/emag/can_emag(atom/target, mob/user)
+/obj/item/card/emag/broken/can_emag(atom/target, mob/user)
 	if(prob(50))
 		to_chat(user, span_warning("\The [src] sparks, but does nothing else."))
-		do_sparks(1, FALSE, A)
+		do_sparks(1, FALSE, src)
 		return
 	current_use_loop += 1
 	if(current_use_loop >= uses_to_reset + rand(-reset_deviation, reset_deviation))
