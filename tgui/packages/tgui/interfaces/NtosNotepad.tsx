@@ -42,13 +42,13 @@ enum Dialogs {
 }
 
 type MenuBarProps = {
-  save: () => void;
-  exit: () => void;
-  newNote: () => void;
-  cutSelected: () => void;
-  copySelected: () => void;
-  pasteClipboard: () => void;
-  deleteSelected: () => void;
+  onSave: () => void;
+  onExit: () => void;
+  onNewNote: () => void;
+  onCutSelected: () => void;
+  onCopySelected: () => void;
+  onPasteSelected: () => void;
+  onDeleteSelected: () => void;
   showStatusBar: boolean;
   setShowStatusBar: (boolean) => void;
   wordWrap: boolean;
@@ -58,13 +58,13 @@ type MenuBarProps = {
 
 const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
   const {
-    save,
-    exit,
-    newNote,
-    cutSelected,
-    copySelected,
-    pasteClipboard,
-    deleteSelected,
+    onSave,
+    onExit,
+    onNewNote,
+    onCutSelected,
+    onCopySelected,
+    onPasteSelected,
+    onDeleteSelected,
     setShowStatusBar,
     showStatusBar,
     wordWrap,
@@ -86,25 +86,25 @@ const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
     setOpenMenuBar(null);
     switch (value) {
       case 'save':
-        save();
+        onSave();
         break;
       case 'exit':
-        exit();
+        onExit();
         break;
       case 'new':
-        newNote();
+        onNewNote();
         break;
       case 'cut':
-        cutSelected();
+        onCutSelected();
         break;
       case 'copy':
-        copySelected();
+        onCopySelected();
         break;
       case 'paste':
-        pasteClipboard();
+        onPasteSelected();
         break;
       case 'delete':
-        deleteSelected();
+        onDeleteSelected();
         break;
       case 'statusBar':
         setShowStatusBar(!showStatusBar);
@@ -327,7 +327,7 @@ const AboutDialog = (props: AboutDialogProps) => {
   const { close, clientName } = props;
   const paragraphStyle = { 'padding': '.5rem 1rem 0 2rem' };
   return (
-    <Dialog title="About Notepad" close={close} width={'500px'}>
+    <Dialog title="About Notepad" onClose={close} width={'500px'}>
       <div className="Dialog__body">
         <span className="NtosNotepad__AboutDialog__logo">NtOS</span>
         <Divider />
@@ -470,13 +470,13 @@ export const NtosNotepad = (props, context) => {
       <NtosWindow.Content>
         <Box className="NtosNotepad__layout">
           <NtosNotepadMenuBar
-            save={handleSave}
-            exit={exit}
-            newNote={newNote}
-            cutSelected={() => document.execCommand('cut')}
-            copySelected={() => document.execCommand('copy')}
-            pasteClipboard={() => document.execCommand('paste')}
-            deleteSelected={() => document.execCommand('delete')}
+            onSave={handleSave}
+            onExit={exit}
+            onNewNote={newNote}
+            onCutSelected={() => document.execCommand('cut')}
+            onCopySelected={() => document.execCommand('copy')}
+            onPasteSelected={() => document.execCommand('paste')}
+            onDeleteSelected={() => document.execCommand('delete')}
             showStatusBar={showStatusBar}
             setShowStatusBar={setShowStatusBar}
             wordWrap={wordWrap}
