@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - rscadd: "Adds a grace period for hit detection, between clicking ON someone, and then moving your mouse off before releasing the click. It's short, hopefully it helps with stupid"
