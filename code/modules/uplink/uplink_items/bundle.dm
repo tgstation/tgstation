@@ -79,14 +79,34 @@
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 20
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-	var/starting_crate_value = 30
+	/// Value of items inside the crate in TC
+	var/crate_tc_value = 30
 
 /datum/uplink_item/bundles_tc/surplus/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
-	var/static/datum/supply_pack/misc/syndicate/cratefill = new()
-	cratefill.crate_value = starting_crate_value
-	cratefill.progression_maximum = handler.progression_points
 	var/obj/structure/closet/crate/surplus_crate = new()
-	cratefill.fill(surplus_crate)
+
+	var/list/possible_items = list()
+	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
+		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
+		if(src == uplink_item || !uplink_item.item)
+			continue
+		if(!handler.check_if_restricted(uplink_item))
+			continue
+		if(!uplink_item.surplus)
+			continue
+		if(handler.not_enough_reputation(uplink_item))
+			continue
+		possible_items += uplink_item
+
+	var/tc_budget = crate_tc_value
+	while(tc_budget)
+		var/datum/uplink_item/uplink_item = pick(possible_items)
+		if(prob(100 - uplink_item.surplus))
+			continue
+		if(tc_budget < uplink_item.cost)
+			continue
+		tc_budget -= uplink_item.cost
+		new uplink_item.item(surplus_crate)
 
 	podspawn(list(
 		"target" = get_turf(user),
@@ -100,4 +120,4 @@
 			Rumored to contain a valuable assortment of items, but you never know. Contents are sorted to always be worth 75 TC."
 	cost = 40
 	progression_minimum = 30 MINUTES
-	starting_crate_value = 75
+	crate_tc_value = 75
