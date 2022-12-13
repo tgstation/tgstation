@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - qol: "Add roundstart tip to let new doctors now that morgue trays and freezers prevent organ decay"
-  - code_imp: "Renamed organ decay proc to be `toggle_organ_decay` instead of `recursive_organ_check`"

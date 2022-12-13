@@ -55,8 +55,8 @@
 /obj/effect/powerup/health
 	name = "health pickup"
 	desc = "Blessing from the havens."
-	icon = 'icons/obj/storage/storage.dmi'
-	icon_state = "medicalpack"
+	icon = 'icons/obj/storage/backpack.dmi'
+	icon_state = "backpack-medical"
 	respawn_time = 30 SECONDS
 	pickup_message = "Health restored!"
 	pickup_sound = 'sound/magic/staff_healing.ogg'
@@ -85,7 +85,7 @@
 /obj/effect/powerup/ammo
 	name = "ammo pickup"
 	desc = "You like revenge, right? Everybody likes revenge! Well, let's go get some!"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/box.dmi'
 	icon_state = "ammobox"
 	respawn_time = 30 SECONDS
 	pickup_message = "Ammunition reloaded!"

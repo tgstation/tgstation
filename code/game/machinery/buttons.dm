@@ -286,15 +286,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/flasher
 
+/obj/machinery/button/flasher/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/machinery/button/curtain
 	name = "curtain button"
 	desc = "A remote control switch for a mechanical curtain."
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/curtain
+	var/sync_doors = TRUE
 
-/obj/machinery/button/flasher/indestructible
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+/obj/machinery/button/curtain/setup_device()
+	var/obj/item/assembly/control/curtain = device
+	curtain.sync_doors = sync_doors
+	return ..()
 
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"

@@ -81,7 +81,6 @@
 	RegisterSignal(carbon_parent, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_added_organ))
 	RegisterSignal(carbon_parent, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
 	RegisterSignal(carbon_parent, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(on_treat_living_message))
-	RegisterSignal(carbon_parent, COMSIG_MOVABLE_TREAT_MESSAGE, PROC_REF(on_treat_message))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_USING_RADIO, PROC_REF(on_using_radio))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_SAY_QUOTE, PROC_REF(on_say_quote))
 	RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
@@ -108,7 +107,6 @@
 		COMSIG_CARBON_GAIN_ORGAN,
 		COMSIG_LIVING_TRY_SPEECH,
 		COMSIG_LIVING_TREAT_MESSAGE,
-		COMSIG_MOVABLE_TREAT_MESSAGE,
 		COMSIG_MOVABLE_USING_RADIO,
 		COMSIG_MOVABLE_SAY_QUOTE,
 		COMSIG_MOB_SAY
@@ -213,14 +211,6 @@
 
 	message_args[MOVABLE_SAY_QUOTE_MESSAGE] = sanitize_message(message_args[MOVABLE_SAY_QUOTE_MESSAGE])
 
-/// Signal proc for [COMSIG_MOVABLE_TREAT_MESSAGE]
-/// Removes exclamation/question marks only if /atom/movable/proc/say_quote() isn't going to run.
-/datum/component/sign_language/proc/on_treat_message(atom/movable/source, list/message_args)
-	SIGNAL_HANDLER
-
-	if (message_args[MOVABLE_TREAT_MESSAGE_NOQUOTE])
-		message_args[MOVABLE_TREAT_MESSAGE_MESSAGE] = sanitize_message(message_args[MOVABLE_TREAT_MESSAGE_MESSAGE])
-
 /// Signal proc for [COMSIG_MOVABLE_USING_RADIO]
 /// Disallows us from speaking on comms if we don't have the special trait.
 /datum/component/sign_language/proc/on_using_radio(atom/movable/source, obj/item/radio/radio)
@@ -256,6 +246,10 @@
 		tonal_timerid = addtimer(CALLBACK(src, PROC_REF(remove_tonal_indicator)), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	else // If we're not gonna use it, just be sure we get rid of it
 		tonal_indicator = null
+
+	// remove the ! and ? symbols from message at the end
+	message = sanitize_message(message)
+	speech_args[SPEECH_MESSAGE] = message
 
 /// Removes the tonal indicator overlay completely
 /datum/component/sign_language/proc/remove_tonal_indicator()
