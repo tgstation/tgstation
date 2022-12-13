@@ -1,6 +1,7 @@
 /obj/item/swapper
 	name = "quantum spin inverter"
-	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function."
+	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function. A warning label is printed on the back: \n\n\
+	WARNING: DO NOT ATTEMPT TO BREAK LINK WHILE RECHARGING"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "swapper"
 	inhand_icon_state = "electronic"
@@ -70,7 +71,15 @@
 	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		return
 	if(world.time < next_use)
-		to_chat(user, span_warning("[src] is still recharging."))
+		if(linked_swapper)
+			if(ishuman(user))
+				var/mob/living/carbon/human/homer = user
+				if(!isflyperson(user))
+					to_chat(homer, span_warning("You hear a buzzing in your ears as [src] sparks, attracting a passing fly which gets caught in the quantum flux field!"))
+					homer.set_species(/datum/species/fly)
+					homer.log_message("was turned into a [initial(species_to_transform.name)] through [src].", LOG_GAME)
+				else
+					to_chat(homer, span_warning("[src] sparks, but doesn't attract a fly this time, an error message on the device stating it's still charging and can't safely deconstruct the quantum flux field."))
 		return
 	to_chat(user, span_notice("You break the current quantum link."))
 	if(!QDELETED(linked_swapper))
@@ -112,9 +121,3 @@
 		if(ismob(B))
 			var/mob/M = B
 			to_chat(M, span_warning("[linked_swapper] activates, and you find yourself somewhere else."))
-			if(ishuman(M))
-				var/mob/living/carbon/human/homer = M
-				if(prob(1))
-					to_chat(M, span_hear("You hear a buzzing in your ears."))
-					homer.set_species(/datum/species/fly)
-					homer.log_message("was turned into a [initial(species_to_transform.name)] through [src].", LOG_GAME)
