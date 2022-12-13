@@ -34,7 +34,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		ui.open()
 
 /datum/latejoin_menu/proc/scream_at_player(mob/dead/new_player/player)
-	if(!player.jobs_menu_mounted)
+	if(istype(player) && !player.jobs_menu_mounted)
 		to_chat(player, span_notice("If the late join menu isn't showing, hold CTRL while clicking the join button!"))
 
 /datum/latejoin_menu/ui_data(mob/user)
