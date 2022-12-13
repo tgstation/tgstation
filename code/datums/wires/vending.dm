@@ -38,11 +38,6 @@
 	var/obj/machinery/vending/vending_machine = holder
 	var/datum/language_holder/vending_languages = vending_machine.get_language_holder()
 	var/datum/language/current_language = GLOB.language_datum_instances[vending_languages.get_selected_language()]
-
-	if(!length(vending_languages.spoken_languages))
-		CRASH("Vending machine [vending_machine] does not have any spoken languages in it's language holder.")
-		return
-
 	var/list/status = list()
 	status += "The orange light is [vending_machine.seconds_electrified ? "on" : "off"]."
 	status += "The red light is [vending_machine.shoot_inventory ? "off" : "blinking"]."
@@ -66,10 +61,6 @@
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = !vending_machine.scan_id
 		if(WIRE_SPEAKER)
-			if(!length(vending_languages.spoken_languages))
-				CRASH("Vending machine [vending_machine] does not have any spoken languages in it's language holder.")
-				return
-
 			language_iterator %= length(vending_languages.spoken_languages)
 			language_iterator += 1
 			vending_languages.selected_language = vending_languages.spoken_languages[language_iterator]
