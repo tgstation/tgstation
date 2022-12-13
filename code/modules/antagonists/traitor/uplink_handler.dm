@@ -52,22 +52,32 @@
 	SEND_SIGNAL(src, COMSIG_UPLINK_HANDLER_ON_UPDATE)
 	return
 
+/// Checks if traitor has enough reputation to purchase an item
+/datum/uplink_handler/proc/not_enough_reputation(datum/uplink_item/to_purchase)
+	return has_progression && progression_points < to_purchase.progression_minimum
+
+/// Checks for uplink flags as well as items restricted to roles and species
+/datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
+	if((to_purchase in extra_purchasable))
+		return TRUE
+	if(!(to_purchase.purchasable_from & uplink_flag))
+		return FALSE
+	if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
+		return FALSE
+	if(length(to_purchase.restricted_species) && !(assigned_species in to_purchase.restricted_species))
+		return FALSE
+	return TRUE
+
 /datum/uplink_handler/proc/can_purchase_item(mob/user, datum/uplink_item/to_purchase)
 	if(debug_mode)
 		return TRUE
 
-	if(!(to_purchase in extra_purchasable))
-		if(!(to_purchase.purchasable_from & uplink_flag))
-			return FALSE
-
-		if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
-			return FALSE
-		if(length(to_purchase.restricted_species) && !(assigned_species in to_purchase.restricted_species))
-			return FALSE
+	if(!check_if_restricted(to_purchase))
+		return FALSE
 
 	var/current_stock = item_stock[to_purchase]
 	var/stock = current_stock != null? current_stock : INFINITY
-	if(telecrystals < to_purchase.cost || stock <= 0 || (has_progression && progression_points < to_purchase.progression_minimum))
+	if(telecrystals < to_purchase.cost || stock <= 0 || not_enough_reputation(to_purchase))
 		return FALSE
 
 	return TRUE
