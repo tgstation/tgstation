@@ -55,8 +55,9 @@
 /datum/uplink_item/bundles_tc/bundle_a
 	name = "Syndi-kit Tactical"
 	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
-			These items are collectively worth more than 20 telecrystals, but you do not know which specialization \
-			you will receive. May contain discontinued and/or exotic items."
+			These items are collectively worth more than 25 telecrystals, but you do not know which specialization \
+			you will receive. May contain discontinued and/or exotic items. \
+			The Syndicate will only provide one Syndi-Kit per agent."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_a
 	cost = 25
@@ -66,7 +67,9 @@
 /datum/uplink_item/bundles_tc/bundle_b
 	name = "Syndi-kit Special"
 	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
-			In Syndi-kit Special, you will receive items used by famous syndicate agents of the past. Collectively worth more than 20 telecrystals, the syndicate loves a good throwback."
+			In Syndi-kit Special, you will receive items used by famous syndicate agents of the past. \
+			Collectively worth more than 25 telecrystals, the syndicate loves a good throwback. \
+			The Syndicate will only provide one Syndi-Kit per agent."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_b
 	cost = 25
@@ -77,7 +80,7 @@
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
 			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind.\
-			Contents are sorted to always be worth 30 TC."
+			Contents are sorted to always be worth 30 TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 20
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
