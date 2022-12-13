@@ -1032,7 +1032,7 @@
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	for(var/effect in status_effects_to_clear)
-		M.remove_status_effect(effect)
+		affected_mob.remove_status_effect(effect)
 	affected_mob.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	affected_mob.adjustToxLoss(-0.2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	affected_mob.adjust_drunk_effect(-10 * REM * delta_time * normalise_creation_purity())
