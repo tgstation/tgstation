@@ -69,6 +69,9 @@
 /obj/item/swapper/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		return
+	if(world.time < next_use)
+		to_chat(user, span_warning("[src] is still recharging."))
+		return
 	to_chat(user, span_notice("You break the current quantum link."))
 	if(!QDELETED(linked_swapper))
 		linked_swapper.linked_swapper = null
