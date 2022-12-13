@@ -65,7 +65,7 @@ type MenuBarDropdownProps = {
   openWidth: string;
   children: any;
   disabled?: boolean;
-  display: InfernoNode;
+  display: any;
   onMouseOver: () => void;
   onClick: () => void;
   onOutsideClick: () => void;
