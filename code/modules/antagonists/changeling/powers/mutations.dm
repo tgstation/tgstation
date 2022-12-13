@@ -292,6 +292,7 @@
 	projectile_type = /obj/projectile/tentacle
 	caliber = CALIBER_TENTACLE
 	icon_state = "tentacle_end"
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	firing_effect_type = null
 	var/obj/item/gun/magic/tentacle/gun //the item that shot it
 

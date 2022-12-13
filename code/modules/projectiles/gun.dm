@@ -6,7 +6,7 @@
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "detective"
+	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
 	flags_1 = CONDUCT_1
