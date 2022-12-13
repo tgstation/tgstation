@@ -41,7 +41,7 @@
 	victim.Knockdown(5 SECONDS)
 
 	// If someone's already cursed, don't try to give them another
-	if(HAS_TRAIT(victim, TRAIT_DUFFEL_CURSE_PROOF))
+	if(istype(victim.back, /obj/item/storage/backpack/duffelbag/cursed))
 		to_chat(caster, span_warning("The burden of [victim]'s duffel bag becomes too much, shoving them to the floor!"))
 		to_chat(victim, span_warning("The weight of this bag becomes overburdening!"))
 		return TRUE
@@ -53,8 +53,6 @@
 		span_danger("You feel something attaching itself to you, and a strong desire to discuss your [pick(elaborate_backstory)] at length!"),
 	)
 
-	// This duffelbag is now cuuuurrrsseed! Equip it on them
-	ADD_TRAIT(conjured_duffel, TRAIT_DUFFEL_CURSE_PROOF, CURSED_ITEM_TRAIT(conjured_duffel.name))
 	conjured_duffel.pickup(victim)
 	conjured_duffel.forceMove(victim)
 
