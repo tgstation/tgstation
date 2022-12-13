@@ -1,7 +1,6 @@
 /turf/open
 	plane = FLOOR_PLANE
-
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 0)
+	max_integrity = 600
 	///negative for faster, positive for slower
 	var/slowdown = 0
 
