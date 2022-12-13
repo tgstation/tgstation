@@ -1,7 +1,7 @@
 /**
  * tgui state: new_player_state
  *
- * Checks that the user is a new_player, or if user is an admin
+ * Checks that the user is a /mob/dead/new_player
  */
 
 GLOBAL_DATUM_INIT(new_player_state, /datum/ui_state/new_player_state, new)
