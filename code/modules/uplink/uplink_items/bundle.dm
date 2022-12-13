@@ -60,6 +60,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_a
 	cost = 25
+	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/bundles_tc/bundle_b
@@ -69,6 +70,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_b
 	cost = 25
+	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/bundles_tc/surplus
@@ -79,6 +81,7 @@
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 20
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
 	var/crate_tc_value = 30
 
@@ -120,4 +123,5 @@
 			Rumored to contain a valuable assortment of items, but you never know. Contents are sorted to always be worth 75 TC."
 	cost = 40
 	progression_minimum = 30 MINUTES
+	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	crate_tc_value = 75

@@ -16,8 +16,8 @@
 	var/progression_points = 0
 	/// The purchase log of this uplink handler
 	var/datum/uplink_purchase_log/purchase_log
-	/// Associative array of uplink item = stock left
-	var/list/item_stock = list()
+	/// Associative array of uplink item = stock left;
+	var/list/item_stock = list(UPLINK_SHARED_STOCK_KITS = 1 , UPLINK_SHARED_STOCK_SURPLUS = 1)
 	/// Extra stuff that can be purchased by an uplink, regardless of flag.
 	var/list/extra_purchasable = list()
 	/// Whether this uplink handler has objectives.
@@ -75,7 +75,7 @@
 	if(!check_if_restricted(to_purchase))
 		return FALSE
 
-	var/current_stock = item_stock[to_purchase]
+	var/current_stock = item_stock[to_purchase.stock_key]
 	var/stock = current_stock != null? current_stock : INFINITY
 	if(telecrystals < to_purchase.cost || stock <= 0 || not_enough_reputation(to_purchase))
 		return FALSE
@@ -86,14 +86,14 @@
 	if(!can_purchase_item(user, to_purchase))
 		return
 
-	if(to_purchase.limited_stock != -1 && !(to_purchase in item_stock))
-		item_stock[to_purchase] = to_purchase.limited_stock
+	if(to_purchase.limited_stock != -1 && !(to_purchase.stock_key in item_stock))
+		item_stock[to_purchase.stock_key] = to_purchase.limited_stock
 
 	telecrystals -= to_purchase.cost
 	to_purchase.purchase(user, src, source)
 
-	if(to_purchase in item_stock)
-		item_stock[to_purchase] -= 1
+	if(to_purchase.stock_key in item_stock)
+		item_stock[to_purchase.stock_key] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
 	on_update()

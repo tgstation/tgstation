@@ -249,6 +249,12 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// because they have nothing else that supports an implant.
 #define UPLINK_IMPLANT_TELECRYSTAL_COST 4
 
+/// Items with this stock key do not share stock with other items
+#define UPLINK_SHARED_STOCK_UNIQUE "uplink_shared_stock_unique"
+/// Stock keys for items that share inventory stock
+#define UPLINK_SHARED_STOCK_KITS "uplink_shared_stock_kits"
+#define UPLINK_SHARED_STOCK_SURPLUS "uplink_shared_stock_surplus"
+
 // Used for traitor objectives
 /// If the objective hasn't been taken yet
 #define OBJECTIVE_STATE_INACTIVE 1
