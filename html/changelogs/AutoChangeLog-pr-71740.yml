@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscdel: "Removed object rotation related verbs, overwhelmingly overshadowed by the click shortcuts anyway."

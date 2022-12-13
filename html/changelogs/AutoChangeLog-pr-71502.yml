@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Experiment handlers now give a more reasonable explanation for why they can't find a server."
+  - admin: "Machines being disconnected from techwebs is now logged in research."

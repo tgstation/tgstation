@@ -499,3 +499,27 @@
   - bugfix: Nanotrasen will now no longer mount the HoPline's Ticket Machines on windows
       for Meta, IceBox, and Tram.
   - bugfix: When you examine a mecha, you should now no longer see two integrity messages.
+2022-12-13:
+  Ghommie:
+  - rscdel: Removed object rotation related verbs, overwhelmingly overshadowed by
+      the click shortcuts anyway.
+  Jacquerel:
+  - rscadd: Tell your crew how much you care by ordering a shuttle where half of the
+      seats have been removed so that you can get some angling done before you clock
+      out.
+  LT3:
+  - balance: Getting hit by the tram may now break some of your bones, or more. Be
+      careful!
+  Sealed101:
+  - bugfix: fixed Advanced Scanning Modules Calibration Experiment not registering
+      upgraded machines to its progress
+  SyncIt21:
+  - qol: creating a shard is possible
+  - rscadd: TGUI for RCD Just like Rapid Pipe Dispenser
+  - rscadd: Radial menu for RLD
+  - code_imp: silo link upgrades for both RLD & Plumbing RCD
+  - rscdel: Switch Mode, Window Glass, Airlock action icons for construction console
+  - refactor: FURNISHING , FRAMES & SIMPLE_CIRCUITS are banned upgrades for RLD &
+      Plumbing RCD
+  tralezab:
+  - qol: Regal rats are on the orbit menu
