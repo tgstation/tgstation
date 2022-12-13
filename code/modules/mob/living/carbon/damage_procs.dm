@@ -140,7 +140,7 @@
 	if(required_organtype && (affected_organ.status != required_organtype))
 		return
 	var/diff = amount - affected_organ.damage
-	if(!diff)
+	if(affected_organ.damage == amount)
 		return
 	affected_organ.setOrganDamage(amount)
 
