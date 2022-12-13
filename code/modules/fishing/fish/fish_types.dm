@@ -289,7 +289,7 @@
 /datum/status_effect/red_herring/on_remove()
 	. = ..()
 	animate(owner, alpha = initial(owner.alpha), time = 1.5 SECONDS)
-	to_chat(owner, span_warning("You are revealed by leaving the red herring's radius!"))
+	to_chat(owner, span_warning("You are no longer cloaked by the red herring!"))
 
 /atom/movable/screen/alert/status_effect/red_herring
 	name = "Red Herring Cloaking"
