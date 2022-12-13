@@ -11,6 +11,7 @@ fi
 
 mkdir -p \
     $1/_maps \
+	$1/icons/effects \
 	$1/icons/mob/clothing \
     $1/icons/mob/inhands \
     $1/icons/obj \
@@ -27,6 +28,7 @@ fi
 
 cp tgstation.dmb tgstation.rsc $1/
 cp -r _maps/* $1/_maps/
+cp -r icons/effects/* $1/icons/effects/
 cp -r icons/mob/clothing/* $1/icons/mob/clothing/
 cp -r icons/mob/inhands/* $1/icons/mob/inhands/
 cp -r icons/obj/* $1/icons/obj/
