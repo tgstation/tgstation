@@ -176,6 +176,9 @@
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
 
+	/// the emag access required by an emag to trigger emag_act()
+	var/emag_required
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *

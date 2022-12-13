@@ -269,3 +269,22 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define OBJECTIVE_WEIGHT_HUGE 20
 
 #define REVENANT_NAME_FILE "revenant_names.json"
+
+// EMAG ACCESS ZONE
+/// Access to all airlocks and firelocks
+#define EMAG_ACCESS_AIRLOCK (1 << 0)
+/// Borg and aibot frying
+#define EMAG_ACCESS_BOT_FRY (1 << 1)
+/// Dispenser and Vendor Extra options
+#define EMAG_ACCESS_DISPENSE (1 << 2)
+/// Specialized ID access checks (Lockers, Communication Console, Display cases, etc)
+#define EMAG_ACCESS_ID_CHECK (1 << 3)
+/// Directly makes the machine more hazardous (Recycler, Vape, Arcade, AI-bots)
+#define EMAG_ACCESS_HAZARD (1 << 4)
+/// Visual adjustments/lesser gameplay impact (Vape, Ethereals, Bar Sign)
+#define EMAG_ACCESS_VISUAL (1 << 5)
+/// Access to syndicate systems (Mod PC, Comms console, Fax Machine, Cargo Requests)
+#define EMAG_ACCESS_SYSTEMS (1 << 6)
+
+/// Defines how high the bits roll on the broken emag
+#define EMAG_ACCESS_TOTAL_CATEGORIES 6

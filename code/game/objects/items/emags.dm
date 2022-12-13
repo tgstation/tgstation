@@ -8,7 +8,7 @@
  * EMAG AND SUBTYPES
  */
 /obj/item/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry."
+	desc = "It's a card with a magnetic strip attached to some circuitry. It's designed to break systems to an unusable state."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	inhand_icon_state = "card-id"
@@ -18,7 +18,7 @@
 	slot_flags = ITEM_SLOT_ID
 	worn_icon_state = "emag"
 	var/prox_check = TRUE //If the emag requires you to be in range
-	var/type_blacklist //List of types that require a specialized emag
+	var/emag_access = EMAG_ACCESS_BOT_FRY | EMAG_ACCESS_HAZARD | EMAG_ACCESS_VISUAL | EMAG_ACCESS_DISPENSE
 
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
@@ -55,10 +55,6 @@
 	. = ..()
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 
-/obj/item/card/emag/Initialize(mapload)
-	. = ..()
-	type_blacklist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all typepaths that require a specialized emag to hack.
-
 /obj/item/card/emag/attack()
 	return
 
@@ -73,29 +69,24 @@
 	A.emag_act(user, src)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
-	for (var/subtypelist in type_blacklist)
-		if (target.type in subtypelist)
-			to_chat(user, span_warning("The [target] cannot be affected by the [src]! A more specialized hacking device is required."))
-			return FALSE
+	if(emag_required && !(emag_access & emag_required))
+		to_chat(user, span_warning("The [target] cannot be affected by the [src]! A more specialized hacking device is required."))
+		return FALSE
 	return TRUE
 
 /*
  * DOORMAG
  */
 /obj/item/card/emag/doorjack
-	desc = "Commonly known as a \"doorjack\", this device is a specialized cryptographic sequencer specifically designed to override station airlock access codes. Uses self-refilling charges to hack airlocks."
+	desc = "This is a specialized cryptographic sequencer specifically designed to override access codes. Uses self-refilling charges to hack various machines. Can also link various machines to syndicate systems."
 	name = "airlock authentication override card"
 	icon_state = "doorjack"
 	worn_icon_state = "doorjack"
-	var/type_whitelist //List of types
 	var/charges = 3
 	var/max_charges = 3
 	var/list/charge_timers = list()
 	var/charge_time = 1800 //three minutes
-
-/obj/item/card/emag/doorjack/Initialize(mapload)
-	. = ..()
-	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all acceptable typepaths that this device can affect
+	emag_access = EMAG_ACCESS_AIRLOCK | EMAG_ACCESS_DISPENSE | EMAG_ACCESS_ID_CHECK | EMAG_ACCESS_SYSTEMS | EMAG_ACCESS_VISUAL
 
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
@@ -121,11 +112,51 @@
 	if (charges <= 0)
 		to_chat(user, span_warning("[src] is recharging!"))
 		return FALSE
-	for (var/list/subtypelist in type_whitelist)
-		if (target.type in subtypelist)
-			return TRUE
-	to_chat(user, span_warning("[src] is unable to interface with this. It only seems to fit into airlock electronics."))
-	return FALSE
+	return ..()
+
+// basically a rng nightmore
+/obj/item/card/emag/broken
+	name = "broken emag"
+	desc = "A discarded-looking emag device. Many of the wires look ready to snap, and the whole thing feels grimy.\
+	It would be a miracle if this actually works."
+	emag_access = null  // handled by process
+
+	/// how many uses until the card re-rolls access
+	var/uses_to_reset = 10
+	/// standard deviation of the above to add extra pain
+	var/reset_deviation = 5
+	/// uses tracked
+	var/current_use_loop = 0
+	/// how long until it re-rolls access
+	COOLDOWN_DECLARE(reset_after_time)
+
+/obj/item/card/emag/broken/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSObj, src)
+
+/obj/item/card/emag/broken/Destroy(force)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/card/emag/broken/process(delta_time)
+	. = ..()
+	if(COOLDOWN_FINISHED(src, reset_after_time) || !emag_access)
+		roll_access()
+		COOLDOWN_START(src, reset_after_time, 5 MINUTES)
+
+/obj/item/card/emag/broken/proc/roll_access()
+	emag_access = rand(1, 2 ^ EMAG_ACCESS_TOTAL_CATEGORIES - 1)
+	audible_message("\The [src] buzzes quietly, shaking, before falling silent.")
+
+/obj/item/card/emag/can_emag(atom/target, mob/user)
+	if(prob(50))
+		to_chat(user, span_warning("\The [src] sparks, but does nothing else."))
+		do_sparks(1, FALSE, A)
+		return
+	current_use_loop += 1
+	if(current_use_loop >= uses_to_reset + rand(-reset_deviation, reset_deviation))
+		roll_access()
+	. = ..()
 
 /*
  * Battlecruiser Access
@@ -149,6 +180,7 @@
 	. = ..()
 	. += span_notice("It can only be used on the communications console.")
 
+// bypasses traditional emag_access checks, bc i dont want to refactor to a attack_with
 /obj/item/card/emag/battlecruiser/can_emag(atom/target, mob/user)
 	if(used)
 		to_chat(user, span_warning("[src] is used up."))
@@ -157,3 +189,8 @@
 		to_chat(user, span_warning("[src] is unable to interface with this. It only seems to interface with the communication console."))
 		return FALSE
 	return TRUE
+
+/obj/item/card/emag/admin
+	name = "syndicate leader emag"
+	desc = "A special, gold plated emag produced from years of covert operations. Can emag any compatible device."
+	emag_access = ALL

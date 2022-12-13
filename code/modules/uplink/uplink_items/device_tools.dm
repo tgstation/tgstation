@@ -94,9 +94,10 @@
 	cost = 1
 
 /datum/uplink_item/device_tools/doorjack
-	name = "Airlock Authentication Override Card"
-	desc = "A specialized cryptographic sequencer specifically designed to override station airlock access codes. \
-			After hacking a certain number of airlocks, the device will require some time to recharge."
+	name = "Authentication Override Card"
+	desc = "This is a specialized cryptographic sequencer specifically designed to override access codes. \
+			It can also link devices to syndicate systems. \
+			After hacking a certain number of machines, the device will require some time to recharge."
 	item = /obj/item/card/emag/doorjack
 	cost = 3
 
@@ -194,8 +195,8 @@
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
-	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
-			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Cannot be used to open airlocks."
+	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hazardous functions \
+			in electronic devices, and subverts intended functions,Cannot be used to unlock most devices."
 	progression_minimum = 20 MINUTES
 	item = /obj/item/card/emag
 	cost = 4
