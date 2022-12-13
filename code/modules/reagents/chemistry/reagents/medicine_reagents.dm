@@ -69,7 +69,7 @@
 	affected_mob.heal_bodypart_damage(5 * REM * delta_time, 5 * REM * delta_time, 0, FALSE, affected_bodytype)
 	affected_mob.adjustToxLoss(-5 * REM * delta_time, FALSE, TRUE, affected_biotype)
 	// Heal everything! That we want to. But really don't heal reagents. Otherwise we'll lose ... us.
-	affected_mob.fully_heal(full_heal_flags & ~HEAL_ALL_REAGENTS, affected_biotype)
+	affected_mob.fully_heal(full_heal_flags & ~HEAL_ALL_REAGENTS)
 	return ..()
 
 /datum/reagent/medicine/adminordrazine/quantum_heal
