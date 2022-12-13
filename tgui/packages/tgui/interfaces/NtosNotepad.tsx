@@ -285,7 +285,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
     TEXTAREA_UPDATE_TRIGGERS.forEach((trigger) =>
       textarea.addEventListener(trigger, this)
     );
-    // Slight hack: Keep selection when textarea loses focus so menubar actions can be used (i.e cut, delete)
+    // Slight hack: Keep selection when textarea loses focus so menubar actions can be used (i.e. cut, delete)
     textarea.onblur = this.onblur.bind(this);
   }
 
