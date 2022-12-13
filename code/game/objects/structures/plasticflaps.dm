@@ -23,8 +23,7 @@
 	update_atmos_behaviour()
 	return ..()
 
-/obj/structure/plasticflaps/Move(atom/newloc, direct, glide_size_override)
-	var/turf/old_loc = loc
+/obj/structure/plasticflaps/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	update_atmos_behaviour()
 	old_loc?.air_update_turf(TRUE, FALSE)
@@ -64,7 +63,7 @@
 ///Update the flaps behaviour to gases, if not anchored will let air pass through
 /obj/structure/plasticflaps/proc/update_atmos_behaviour()
 	can_atmos_pass = anchored ? ATMOS_PASS_NO : ATMOS_PASS_YES
-	air_update_turf(TRUE, FALSE)
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/plasticflaps/wirecutter_act(mob/living/user, obj/item/W)
 	. = ..()
