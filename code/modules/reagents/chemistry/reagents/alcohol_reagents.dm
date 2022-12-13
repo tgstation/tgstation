@@ -1198,14 +1198,32 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Singulo"
 	glass_desc = "A blue-space beverage."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/static/list/ray_filter = list(type = "rays", size = 40, density = 15, color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = 15)
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_metabolize(mob/living/drinker)
 	ADD_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
-	ADD_TRAIT(drinker, TRAIT_NEGATES_GRAVITY, type)
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_end_metabolize(mob/living/drinker)
 	REMOVE_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
-	REMOVE_TRAIT(drinker, TRAIT_NEGATES_GRAVITY, type)
+	drinker.remove_filter("singulo_rays")
+
+/datum/reagent/consumable/ethanol/singulo/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(DT_PROB(2.5, delta_time))
+		// 20u = 1x1, 45u = 2x2, 80u = 3x3
+		var/volume_to_radius = FLOOR(sqrt(volume/5), 1) - 1
+		var/suck_range = clamp(volume_to_radius, 0, 3)
+
+		if(!suck_range)
+			return ..()
+
+		var/turf/gravity_well_turf = get_turf(drinker)
+		goonchem_vortex(gravity_well_turf, 0, suck_range)
+		playsound(get_turf(drinker), 'sound/effects/supermatter.ogg', 150, TRUE)
+		drinker.add_filter("singulo_rays", 1, ray_filter)
+		animate(drinker.get_filter("singulo_rays"), offset = 10, time = 1.5 SECONDS, loop = -1)
+		addtimer(CALLBACK(drinker, TYPE_PROC_REF(/atom/, remove_filter), "singulo_rays"), 1.5 SECONDS)
+		drinker.emote("burp")
+	return ..()
 
 /datum/reagent/consumable/ethanol/sbiten
 	name = "Sbiten"
@@ -1554,8 +1572,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Bacchus' Blessing"
 	glass_desc = "You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-
 
 /datum/reagent/consumable/ethanol/atomicbomb
 	name = "Atomic Bomb"
