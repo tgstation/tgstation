@@ -15161,6 +15161,18 @@
 /obj/item/clothing/mask/breath,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos/storage/gas)
+"dDe" = (
+/obj/structure/table/reinforced,
+/obj/machinery/newscaster/directional/north,
+/obj/item/clipboard,
+/obj/item/toy/figure/engineer{
+	pixel_x = -6
+	},
+/obj/item/toy/figure/atmos{
+	pixel_x = 6
+	},
+/turf/open/floor/wood,
+/area/station/engineering/break_room)
 "dDk" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -51561,18 +51573,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_showroom)
-"mzO" = (
-/obj/structure/table/reinforced,
-/obj/machinery/newscaster/directional/north,
-/obj/item/clipboard,
-/obj/item/toy/figure/engineer{
-	pixel_x = -6
-	},
-/obj/item/toy/figure/atmos{
-	pixel_x = 6
-	},
-/turf/open/floor/wood,
-/area/station/engineering/break_room)
 "mzV" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/bot,
@@ -52655,12 +52655,6 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
-"mLL" = (
-/obj/structure/table/reinforced,
-/obj/machinery/airalarm/directional/north,
-/obj/machinery/coffeemaker/impressa,
-/turf/open/floor/wood,
-/area/station/engineering/break_room)
 "mLP" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
@@ -57652,19 +57646,6 @@
 	dir = 4
 	},
 /area/station/commons/fitness/recreation)
-"nZo" = (
-/obj/structure/table/reinforced,
-/obj/effect/spawner/random/entertainment/cigarette_pack,
-/obj/effect/spawner/random/entertainment/cigarette_pack{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/storage/box/coffeepack{
-	pixel_x = -13;
-	pixel_y = 7
-	},
-/turf/open/floor/wood,
-/area/station/engineering/break_room)
 "nZt" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -79653,7 +79634,7 @@
 /obj/effect/spawner/random/structure/table_fancy,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -82176,6 +82157,23 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"ubg" = (
+/obj/structure/table/reinforced,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = -13;
+	pixel_y = 7
+	},
+/turf/open/floor/wood,
+/area/station/engineering/break_room)
 "ubk" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -92834,6 +92832,11 @@
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
+"wBr" = (
+/obj/structure/table/reinforced,
+/obj/machinery/coffeemaker/impressa,
+/turf/open/floor/wood,
+/area/station/engineering/break_room)
 "wBB" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/junction/yjunction{
@@ -122006,7 +122009,7 @@ tsB
 sch
 cKK
 vQj
-mzO
+dDe
 agA
 hHJ
 tgl
@@ -122263,7 +122266,7 @@ lKe
 nZW
 qAz
 vQj
-mLL
+ubg
 agA
 uzb
 jLx
@@ -122520,7 +122523,7 @@ ciD
 vYI
 lpv
 vQj
-nZo
+wBr
 gsf
 miE
 tgl
