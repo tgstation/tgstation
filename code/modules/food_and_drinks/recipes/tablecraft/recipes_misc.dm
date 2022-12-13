@@ -278,7 +278,6 @@
 		/obj/item/food/grown/potato = 2,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/butter = 1,
-		/datum/reagent/consumable/milk = 1,
 	)
 	result = /obj/item/food/mashed_potatoes
 	subcategory = CAT_MISCFOOD
@@ -366,7 +365,7 @@
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/meat_pierogi
-	name = "Cheese pierogi"
+	name = "Meat pierogi"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/potato = 1,

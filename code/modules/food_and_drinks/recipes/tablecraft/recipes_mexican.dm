@@ -185,8 +185,8 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/boiledrice = 1,
 		/obj/item/food/grown/tomato = 1,
-		/datum/reagent/consumable/salt = 2,
-		/datum/reagent/consumable/blackpepper = 2,
+		/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/blackpepper = 1,
 	)
 	result = /obj/item/food/spanish_rice
 	subcategory = CAT_MEXICAN

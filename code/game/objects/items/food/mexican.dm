@@ -191,7 +191,7 @@
 	desc = "A hard-shell taco with just meat, for the picky eaters and children in us all."
 	icon_state = "plain_hard_shell_taco"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment/protein = 6,)
-	tastes = list("crunchy taco shell" = 1, "cabbage" = 3, "tomatoes" = 1, "ground meat" = 1, "cheese" = 1)
+	tastes = list("crunchy taco shell" = 1, "ground meat" = 1)
 	foodtypes = GRAIN | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -206,7 +206,7 @@
 
 /obj/item/food/spanish_rice
 	name = "spanish rice"
-	desc = "A bowl of delicious spanish rice, cooked in a tomato sauce which give it the orange color."
+	desc = "A bowl of delicious spanish rice, cooked in a tomato sauce which gives it the orange color."
 	icon_state = "spanish_rice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("zesty rice" = 1, "tomato sauce" = 3,)
