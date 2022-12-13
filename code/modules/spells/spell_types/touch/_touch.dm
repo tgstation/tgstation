@@ -302,6 +302,9 @@
 /datum/action/cooldown/spell/touch/proc/on_hand_taken(obj/item/source, mob/living/carbon/offerer, mob/living/carbon/taker)
 	SIGNAL_HANDLER
 
+	if(!can_hit_with_hand(taker, offerer))
+		return
+
 	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, taker, offerer)
 	return COMPONENT_OFFER_INTERRUPT
 
