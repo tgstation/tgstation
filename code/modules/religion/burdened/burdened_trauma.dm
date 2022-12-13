@@ -162,9 +162,9 @@
 	)
 	for(var/bad_trait in bad_traits)
 		if(HAS_TRAIT(burdened, bad_trait))
-			slots_youd_actually_miss -= bad_traits[bad_trait]
+			critical_slots -= bad_traits[bad_trait]
 
-	if(!(old_organ.slot in slots_youd_actually_miss))
+	if(!(old_organ.slot in critical_slots))
 		return
 	else if(istype(old_organ, /obj/item/organ/internal/eyes))
 		var/obj/item/organ/internal/eyes/old_eyes = old_organ
