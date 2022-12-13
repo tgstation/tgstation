@@ -7,15 +7,15 @@ import { Box } from './Box';
 import { Button } from './Button';
 
 type DialogProps = {
-  title: string;
-  close: () => void;
+  title: any;
+  onClose: () => void;
   children: any;
   width?: string;
   height?: string;
 };
 
 export const Dialog = (props: DialogProps) => {
-  const { title, close, children, width, height } = props;
+  const { title, onClose, children, width, height } = props;
   return (
     <div className="Dialog">
       <Box className="Dialog__content" width={width || '370px'} height={height}>
@@ -31,7 +31,7 @@ export const Dialog = (props: DialogProps) => {
               icon="window-close-o"
               tooltip="Close"
               tooltipPosition="bottom-start"
-              onClick={close}
+              onClick={onClose}
             />
           </Box>
         </div>
@@ -70,7 +70,7 @@ type UnsavedChangesDialogProps = {
 export const UnsavedChangesDialog = (props: UnsavedChangesDialogProps) => {
   const { documentName, onSave, onDiscard, onClose } = props;
   return (
-    <Dialog title="Notepad" close={close}>
+    <Dialog title="Notepad" onClose={onClose}>
       <div className="Dialog__body">
         Do you want to save changes to {documentName}?
       </div>
