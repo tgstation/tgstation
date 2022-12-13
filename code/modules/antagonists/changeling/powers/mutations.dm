@@ -476,7 +476,8 @@
 
 /obj/item/clothing/suit/space/changeling
 	name = "flesh mass"
-	icon_state = "lingspacesuit"
+	icon_state = "lingspacesuit_t"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
 	item_flags = DROPDEL
 	clothing_flags = STOPSPRESSUREDAMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)

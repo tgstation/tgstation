@@ -15,6 +15,7 @@ path/corner/color_name {\
 
 /obj/structure/chair/sofa
 	name = "old ratty sofa"
+	icon = "error"
 	icon = 'icons/obj/sofa.dmi'
 	buildstackamount = 1
 	item_chair = null
