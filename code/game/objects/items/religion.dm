@@ -271,6 +271,7 @@
 /obj/item/clothing/head/helmet/plate/crusader
 	name = "Crusader's Hood"
 	desc = "A brownish hood."
+	icon = 'icons/obj/clothing/head/chaplain.dmi'
 	icon_state = "crusader"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL

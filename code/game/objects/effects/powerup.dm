@@ -79,7 +79,7 @@
 /obj/effect/powerup/health/full
 	name = "mega health pickup"
 	desc = "Now this is what I'm talking about."
-	icon_state = "duffel-med"
+	icon_state = "duffel-medical"
 	full_heal = TRUE
 
 /obj/effect/powerup/ammo
