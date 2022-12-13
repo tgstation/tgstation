@@ -146,10 +146,10 @@
 				continue
 
 			if(beacon.renamed)
-				targets[avoid_assoc_duplicate_keys("[beacon.name] ([get_area(beacon)])", area_index)] = beacon
+				targets[avoid_assoc_duplicate_keys("[beacon.name] ([format_text(get_area(beacon))])", area_index)] = beacon
 			else
 				var/area/area = get_area(beacon)
-				targets[avoid_assoc_duplicate_keys(area.name, area_index)] = beacon
+				targets[avoid_assoc_duplicate_keys(format_text(area.name), area_index)] = beacon
 
 		for (var/obj/item/implant/tracking/tracking_implant in GLOB.tracked_implants)
 			if (!tracking_implant.imp_in || !isliving(tracking_implant.loc) || !tracking_implant.allow_teleport)
@@ -160,12 +160,12 @@
 				continue
 
 			if (is_eligible(tracking_implant))
-				targets[avoid_assoc_duplicate_keys("[implanted.real_name] ([get_area(implanted)])", area_index)] = tracking_implant
+				targets[avoid_assoc_duplicate_keys("[implanted.real_name] ([format_text(get_area(implanted))])", area_index)] = tracking_implant
 	else
 		for (var/obj/machinery/teleport/station/station as anything in power_station.linked_stations)
 			if (is_eligible(station) && station.teleporter_hub)
 				var/area/area = get_area(station)
-				targets[avoid_assoc_duplicate_keys(area.name, area_index)] = station
+				targets[avoid_assoc_duplicate_keys(format_text(area.name), area_index)] = station
 
 	return targets
 
