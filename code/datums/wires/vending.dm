@@ -16,7 +16,6 @@
 
 	if(!length(vending_languages.spoken_languages))
 		CRASH("Vending machine [vending_machine] does not have any spoken languages in it's language holder.")
-		return
 
 	// synch the current language to the language_iterator
 	for(var/i in vending_languages.spoken_languages)
