@@ -676,10 +676,10 @@
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * delta_time)
 	if(DT_PROB(33, delta_time))
-		M.adjustBruteLoss(-1, 0, required_bodytype = affected_bodytype)
-		M.adjustFireLoss(-1, 0, required_bodytype = affected_bodytype)
-		M.adjustOxyLoss(-1, 0, required_biotype = affected_biotype)
-		M.adjustToxLoss(-1, 0, required_biotype = affected_biotype)
+		M.adjustBruteLoss(-1, FALSE, required_bodytype = affected_bodytype)
+		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
+		M.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype)
+		M.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
 	..()
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -743,8 +743,8 @@
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 4
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150, affected_biotype)
-		M.adjustToxLoss(3*REM, 0, required_biotype = affected_biotype)
-		M.adjustStaminaLoss(10*REM, 0, required_biotype = affected_biotype)
+		M.adjustToxLoss(3*REM, FALSE, required_biotype = affected_biotype)
+		M.adjustStaminaLoss(10*REM, FALSE, required_biotype = affected_biotype)
 		M.blur_eyes(5)
 		. = TRUE
 	..()
@@ -795,8 +795,8 @@
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(55, delta_time))
-		M.adjustBruteLoss(-1, 0, required_bodytype = affected_bodytype)
-		M.adjustFireLoss(-1, 0, required_bodytype = affected_bodytype)
+		M.adjustBruteLoss(-1, FALSE, required_bodytype = affected_bodytype)
+		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
 		. = TRUE
 	..()
 

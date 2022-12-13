@@ -46,7 +46,7 @@
 	liver_damage = 0
 
 /datum/reagent/impurity/chloralax/on_mob_life(mob/living/carbon/owner, delta_time)
-	owner.adjustToxLoss(1 * REM * delta_time, 0, required_biotype = affected_biotype)
+	owner.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 
 

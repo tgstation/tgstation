@@ -24,7 +24,7 @@
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(toxpwr && affected_mob.health > health_required)
-		affected_mob.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * delta_time, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * delta_time, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	..()
 
@@ -170,7 +170,7 @@
 		. = FALSE
 
 	if(.)
-		affected_mob.adjustOxyLoss(5 * REM * normalise_creation_purity() * delta_time, 0, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(5 * REM * normalise_creation_purity() * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath += 2 * REM * normalise_creation_purity() * delta_time
 		if(DT_PROB(10, delta_time))
 			affected_mob.emote("gasp")
@@ -199,7 +199,7 @@
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
 		to_chat(affected_mob, span_danger("Your insides are burning!"))
-		affected_mob.adjustToxLoss(rand(20, 60), 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(rand(20, 60), FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	else if(DT_PROB(23, delta_time))
 		affected_mob.heal_bodypart_damage(5)
@@ -247,7 +247,7 @@
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
 	. = ..()
-	holder_mob.adjustOxyLoss(0.5*REM, 0, required_biotype = affected_biotype)
+	holder_mob.adjustOxyLoss(0.5*REM, FALSE, required_biotype = affected_biotype)
 	if(data?["method"] & INGEST)
 		holder_mob.fakedeath(type)
 
@@ -300,7 +300,7 @@
 	..()
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustOxyLoss(1 * REM * delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE
 
@@ -481,7 +481,7 @@
 			. = TRUE
 		if(51 to INFINITY)
 			affected_mob.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
-			affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * normalise_creation_purity() * delta_time, 0, required_biotype = affected_biotype)
+			affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * normalise_creation_purity() * delta_time, FALSE, required_biotype = affected_biotype)
 			. = TRUE
 	..()
 
@@ -503,7 +503,7 @@
 			affected_mob.Sleeping(40 * REM * delta_time)
 		if(51 to INFINITY)
 			affected_mob.Sleeping(40 * REM * delta_time)
-			affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * delta_time, 0, required_biotype = affected_biotype)
+			affected_mob.adjustToxLoss(1 * (current_cycle - 50) * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/toxin/coffeepowder
@@ -608,7 +608,7 @@
 			if(4)
 				if(prob(75))
 					to_chat(affected_mob, span_danger("You scratch at an itch."))
-					affected_mob.adjustBruteLoss(2*REM, 0, required_bodytype = affected_bodytype)
+					affected_mob.adjustBruteLoss(2*REM, FALSE, required_bodytype = affected_bodytype)
 					. = TRUE
 	..()
 
@@ -658,7 +658,7 @@
 	affected_mob.update_transform()
 
 	toxpwr = 0.1 * volume
-	affected_mob.adjustBruteLoss((0.3 * volume) * REM * delta_time, 0, required_bodytype = affected_bodytype)
+	affected_mob.adjustBruteLoss((0.3 * volume) * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	. = TRUE
 	if(DT_PROB(8, delta_time))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5, 10))
@@ -688,7 +688,7 @@
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * normalise_creation_purity() * delta_time, 150)
 	if(affected_mob.toxloss <= 60)
-		affected_mob.adjustToxLoss(1 * REM * normalise_creation_purity() * delta_time, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(1 * REM * normalise_creation_purity() * delta_time, FALSE, required_biotype = affected_biotype)
 	if(current_cycle >= 4)
 		affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
@@ -714,7 +714,7 @@
 	if(DT_PROB(4, delta_time))
 		to_chat(affected_mob, span_danger("You feel horrendously weak!"))
 		affected_mob.Stun(40)
-		affected_mob.adjustToxLoss(2*REM * normalise_creation_purity(), 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(2*REM * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/toxin/bad_food
@@ -744,15 +744,15 @@
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(DT_PROB(8, delta_time))
 		to_chat(affected_mob, span_danger("You scratch at your head."))
-		affected_mob.adjustBruteLoss(0.2*REM, 0, required_bodytype = affected_bodytype)
+		affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
 		. = TRUE
 	if(DT_PROB(8, delta_time))
 		to_chat(affected_mob, span_danger("You scratch at your leg."))
-		affected_mob.adjustBruteLoss(0.2*REM, 0, required_bodytype = affected_bodytype)
+		affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
 		. = TRUE
 	if(DT_PROB(8, delta_time))
 		to_chat(affected_mob, span_danger("You scratch at your arm."))
-		affected_mob.adjustBruteLoss(0.2*REM, 0, required_bodytype = affected_bodytype)
+		affected_mob.adjustBruteLoss(0.2*REM, FALSE, required_bodytype = affected_bodytype)
 		. = TRUE
 	if(DT_PROB(1.5, delta_time))
 		holder.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
@@ -779,7 +779,7 @@
 				. = TRUE
 			if(2)
 				affected_mob.losebreath += 10
-				affected_mob.adjustOxyLoss(rand(5,25), 0, required_biotype = affected_biotype)
+				affected_mob.adjustOxyLoss(rand(5,25), FALSE, required_biotype = affected_biotype)
 				. = TRUE
 			if(3)
 				if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
@@ -788,7 +788,7 @@
 						affected_mob.visible_message(span_userdanger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart stopped!"))
 				else
 					affected_mob.losebreath += 10
-					affected_mob.adjustOxyLoss(rand(5,25), 0, required_biotype = affected_biotype)
+					affected_mob.adjustOxyLoss(rand(5,25), FALSE, required_biotype = affected_biotype)
 					. = TRUE
 	return ..() || .
 
@@ -891,7 +891,7 @@
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.nutrition <= NUTRITION_LEVEL_STARVING)
-		affected_mob.adjustToxLoss(1 * REM * delta_time, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	affected_mob.adjust_nutrition(-3 * REM * normalise_creation_purity() * delta_time) // making the chef more valuable, one meme trap at a time
 	affected_mob.overeatduration = 0
 	return ..()
@@ -948,7 +948,7 @@
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(current_cycle >= 11)
 		affected_mob.Paralyze(60 * REM * delta_time)
-	affected_mob.adjustOxyLoss(0.5*REM*delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(0.5*REM*delta_time, FALSE, required_biotype = affected_biotype)
 	. = TRUE
 	..()
 
@@ -1094,7 +1094,7 @@
 		mytray.adjust_weedlevel(-rand(1,4))
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustFireLoss((current_cycle/15) * REM * normalise_creation_purity() * delta_time, 0, required_bodytype = affected_bodytype)
+	affected_mob.adjustFireLoss((current_cycle/15) * REM * normalise_creation_purity() * delta_time, FALSE, required_bodytype = affected_bodytype)
 	. = TRUE
 	..()
 
@@ -1128,7 +1128,7 @@
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(current_cycle > delay)
 		holder.remove_reagent(type, actual_metaboliztion_rate * affected_mob.metabolism_efficiency * delta_time)
-		affected_mob.adjustToxLoss(actual_toxpwr * REM * delta_time, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(actual_toxpwr * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		if(DT_PROB(5, delta_time))
 			affected_mob.Paralyze(20)
 		. = TRUE

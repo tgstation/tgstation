@@ -1159,7 +1159,7 @@
 		exposed_mob.adjust_fire_stacks(reac_volume / 10)
 
 /datum/reagent/fuel/on_mob_life(mob/living/carbon/victim, delta_time, times_fired)
-	victim.adjustToxLoss(0.5 * delta_time, 0, required_biotype = affected_biotype)
+	victim.adjustToxLoss(0.5 * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	return TRUE
 
@@ -1573,7 +1573,7 @@
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(DT_PROB(tox_prob, delta_time))
-		affected_mob.adjustToxLoss(1, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	..()
 

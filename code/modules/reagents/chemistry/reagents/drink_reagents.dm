@@ -17,7 +17,7 @@
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.getOxyLoss() && DT_PROB(16, delta_time))
-		affected_mob.adjustOxyLoss(-1, 0, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	..()
 
@@ -50,7 +50,7 @@
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.getToxLoss() && DT_PROB(10, delta_time))
-		affected_mob.adjustToxLoss(-1, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	..()
 
@@ -106,7 +106,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustToxLoss(1 * REM * delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	. = TRUE
 	..()
 
@@ -326,7 +326,7 @@
 	affected_mob.adjust_jitter(-6 SECONDS * REM * delta_time)
 	affected_mob.AdjustSleeping(-20 * REM * delta_time)
 	if(affected_mob.getToxLoss() && DT_PROB(10, delta_time))
-		affected_mob.adjustToxLoss(-1, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
 	affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
@@ -398,7 +398,7 @@
 	affected_mob.AdjustSleeping(-60 * REM * delta_time)
 	affected_mob.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, affected_mob.get_body_temp_normal())
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * delta_time)
-	affected_mob.adjustToxLoss(1 * REM * delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE
 
@@ -418,7 +418,7 @@
 	affected_mob.adjust_drowsyness(-1 * REM * delta_time)
 	affected_mob.AdjustSleeping(-40 * REM * delta_time)
 	if(affected_mob.getToxLoss() && DT_PROB(10, delta_time))
-		affected_mob.adjustToxLoss(-1, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
@@ -800,10 +800,10 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustBruteLoss(-0.5 * REM * delta_time, 0, required_bodytype = affected_bodytype)
-	affected_mob.adjustFireLoss(-0.5 * REM * delta_time, 0, required_bodytype = affected_bodytype)
-	affected_mob.adjustToxLoss(-0.5 * REM * delta_time, 0, required_biotype = affected_biotype)
-	affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustBruteLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjustFireLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjustToxLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	if(affected_mob.nutrition && (affected_mob.nutrition - 2 > 0))
 		var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
 		if(!(HAS_TRAIT(liver, TRAIT_MEDICAL_METABOLISM)))
@@ -1179,7 +1179,7 @@
 
 /datum/reagent/consumable/aloejuice/on_mob_life(mob/living/affected_mob, delta_time, times_fired)
 	if(affected_mob.getToxLoss() && DT_PROB(16, delta_time))
-		affected_mob.adjustToxLoss(-1, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE
 
@@ -1197,7 +1197,7 @@
 /datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, affected_mob.get_body_temp_normal())
 	if(affected_mob.getToxLoss() && DT_PROB(10, delta_time))
-		affected_mob.adjustToxLoss(-0.5, 0, required_biotype = affected_biotype)
+		affected_mob.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/consumable/mushroom_tea
@@ -1213,7 +1213,7 @@
 
 /datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(islizard(affected_mob))
-		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, 0, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE
 
@@ -1332,5 +1332,5 @@
 /datum/reagent/consumable/cucumberlemonade/on_mob_life(mob/living/carbon/doll, delta_time, times_fired)
 	doll.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, doll.get_body_temp_normal())
 	if(doll.getToxLoss() && DT_PROB(10, delta_time))
-		doll.adjustToxLoss(-0.5, 0, required_biotype = affected_biotype)
+		doll.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
 	return ..()

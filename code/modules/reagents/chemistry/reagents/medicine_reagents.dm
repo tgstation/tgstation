@@ -138,7 +138,7 @@
 	affected_mob.adjustOxyLoss(-3 * power * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	affected_mob.adjustBruteLoss(-power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-power * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-	affected_mob.adjustToxLoss(-power * REM * delta_time, 0, TRUE, affected_biotype) //heals TOXINLOVERs
+	affected_mob.adjustToxLoss(-power * REM * delta_time, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
 	affected_mob.adjustCloneLoss(-power * REM * delta_time, FALSE, affected_biotype)
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
@@ -1060,13 +1060,13 @@
 		affected_mob.adjustBruteLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.AdjustAllImmobility(-60  * REM * delta_time)
-	affected_mob.adjustStaminaLoss(-5 * REM * delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustStaminaLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/affected_mob, delta_time, times_fired)
 	if(DT_PROB(18, delta_time))
-		affected_mob.adjustStaminaLoss(2.5, 0, required_biotype = affected_biotype)
+		affected_mob.adjustStaminaLoss(2.5, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath++
 		. = TRUE
@@ -1171,7 +1171,7 @@
 		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustToxLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustCloneLoss(-0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-		affected_mob.adjustStaminaLoss(-0.5 * REM * delta_time, 0, required_biotype = affected_biotype)
+		affected_mob.adjustStaminaLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150, affected_organtype) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	else
 		affected_mob.adjustBruteLoss(-5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype) //slow to start, but very quick healing once it gets going
@@ -1231,7 +1231,7 @@
 
 	if(DT_PROB(10, delta_time))
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 50, affected_organtype)
-	affected_mob.adjustStaminaLoss(2.5 * REM * delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustStaminaLoss(2.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	return TRUE
 
@@ -1359,7 +1359,7 @@
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + ((rand(-10, 10) / 10) * REM * delta_time) // for extra fun
 		metabolizer.AdjustAllImmobility(-5 * REM * delta_time)
-		metabolizer.adjustStaminaLoss(-0.5 * REM * delta_time, 0, required_biotype = affected_biotype)
+		metabolizer.adjustStaminaLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		metabolizer.set_jitter_if_lower(1 SECONDS * REM * delta_time)
 		metabolization_rate = 0.005 * REAGENTS_METABOLISM * rand(5, 20) // randomizes metabolism between 0.02 and 0.08 per second
 		. = TRUE

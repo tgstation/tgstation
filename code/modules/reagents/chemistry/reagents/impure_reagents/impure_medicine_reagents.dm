@@ -493,7 +493,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(length(affected_mob.reagents.reagent_list) > 1)
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time, required_organtype = affected_organtype) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
-	affected_mob.adjustToxLoss(-2 * REM * creation_purity * delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustToxLoss(-2 * REM * creation_purity * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	return TRUE
 
