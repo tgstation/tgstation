@@ -468,4 +468,4 @@
 	. = ..()
 
 /obj/item/tape/dyed
-	icon_state = "greyscale"
+	icon_state = "tape_greyscale"
