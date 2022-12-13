@@ -72,6 +72,7 @@ export const PrimaryObjectiveMenu = (
                 canAbort={false}
                 grow={false}
                 finalObjective={false}
+                hideFooter={1}
               />
             </Stack.Item>
           ))}
