@@ -34,7 +34,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
  * * Matched with the `list/canSmoothWith` variable to check whether smoothing is possible or not.
  */
 
-#define S_TURF(num) ((24 * 0) + num) //Not any different from the number itself, but kept this way in case someone wants to expand it by adding stuff before it.
+// #define S_TURF(num) ((24 * 0) + num) //Not any different from the number itself, but kept this way in case someone wants to expand it by adding stuff before it.
+#define S_TURF(num) (#num + ",")
+
 /* /turf only */
 
 #define SMOOTH_GROUP_TURF_OPEN S_TURF(0) ///turf/open
@@ -102,10 +104,10 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(58) ///turf/closed/indestructible/riveted/boss
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(59) ///turf/closed/wall/mineral/titanium/survival
 
-#define MAX_S_TURF SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS //Always match this value with the one above it.
+// #define MAX_S_TURF SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS //Always match this value with the one above it.
 
 
-#define S_OBJ(num) (MAX_S_TURF + 1 + num)
+#define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
 
 #define SMOOTH_GROUP_WALLS S_OBJ(0) ///turf/closed/wall, /obj/structure/falsewall
@@ -163,4 +165,31 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_GAS_TANK S_OBJ(71)
 
-#define MAX_S_OBJ SMOOTH_GROUP_GAS_TANK //Always match this value with the one above it.
+/// Performs the work to set smoothing_groups and canSmoothWith.
+/// An inlined function used in both turf/Initialize and atom/Initialize.
+#define SETUP_SMOOTHING(...) \
+	if (smoothing_groups) { \
+		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
+			ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_groups); \
+		} \
+		SET_BITFLAG_LIST(smoothing_groups); \
+	} \
+\
+	if (canSmoothWith) { \
+		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
+			ASSERT_SORTED_SMOOTHING_GROUPS(canSmoothWith); \
+		} \
+		SET_BITFLAG_LIST(canSmoothWith); \
+		if (canSmoothWith[1] == "-") { \
+			smoothing_flags |= SMOOTH_OBJ; \
+		} \
+	}
+
+/// Given a smoothing groups variable, will set out to the actual numbers inside it
+#define UNWRAP_SMOOTHING_GROUPS(smoothing_groups, out) \
+	json_decode("\[[##smoothing_groups]0\]"); \
+	##out.len--;
+
+#define ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_group_variable) \
+	var/list/unwrapped = UNWRAP_SMOOTHING_GROUPS(smoothing_group_variable, unwrapped); \
+	assert_sorted(unwrapped, "[#smoothing_group_variable] ([type])"); \

@@ -9,7 +9,7 @@
 	desc = "A bluespace engine used to make shuttles move."
 	icon = 'icons/turf/shuttle.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS)
+	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS
 	armor = list(MELEE = 100, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70) //default + ignores melee
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	max_integrity = 500

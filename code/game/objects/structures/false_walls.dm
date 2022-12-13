@@ -13,8 +13,8 @@
 	opacity = TRUE
 	max_integrity = 100
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_WALLS)
+	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS
 	can_be_unanchored = FALSE
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -177,8 +177,8 @@
 	mineral = /obj/item/stack/sheet/mineral/uranium
 	walltype = /turf/closed/wall/mineral/uranium
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_URANIUM_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_URANIUM_WALLS
+	canSmoothWith = SMOOTH_GROUP_URANIUM_WALLS
 
 	/// Mutex to prevent infinite recursion when propagating radiation pulses
 	var/active = null
@@ -228,8 +228,8 @@
 	mineral = /obj/item/stack/sheet/mineral/gold
 	walltype = /turf/closed/wall/mineral/gold
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_GOLD_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_GOLD_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_GOLD_WALLS
+	canSmoothWith = SMOOTH_GROUP_GOLD_WALLS
 
 /obj/structure/falsewall/silver
 	name = "silver wall"
@@ -240,8 +240,8 @@
 	mineral = /obj/item/stack/sheet/mineral/silver
 	walltype = /turf/closed/wall/mineral/silver
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SILVER_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_SILVER_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_SILVER_WALLS
+	canSmoothWith = SMOOTH_GROUP_SILVER_WALLS
 
 /obj/structure/falsewall/diamond
 	name = "diamond wall"
@@ -252,8 +252,8 @@
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	walltype = /turf/closed/wall/mineral/diamond
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_DIAMOND_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_DIAMOND_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_DIAMOND_WALLS
+	canSmoothWith = SMOOTH_GROUP_DIAMOND_WALLS
 	max_integrity = 800
 
 /obj/structure/falsewall/plasma
@@ -265,8 +265,8 @@
 	mineral = /obj/item/stack/sheet/mineral/plasma
 	walltype = /turf/closed/wall/mineral/plasma
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASMA_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_PLASMA_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_PLASMA_WALLS
+	canSmoothWith = SMOOTH_GROUP_PLASMA_WALLS
 
 /obj/structure/falsewall/bananium
 	name = "bananium wall"
@@ -277,8 +277,8 @@
 	mineral = /obj/item/stack/sheet/mineral/bananium
 	walltype = /turf/closed/wall/mineral/bananium
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BANANIUM_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_BANANIUM_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BANANIUM_WALLS
+	canSmoothWith = SMOOTH_GROUP_BANANIUM_WALLS
 
 
 /obj/structure/falsewall/sandstone
@@ -290,8 +290,8 @@
 	mineral = /obj/item/stack/sheet/mineral/sandstone
 	walltype = /turf/closed/wall/mineral/sandstone
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SANDSTONE_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_SANDSTONE_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_SANDSTONE_WALLS
+	canSmoothWith = SMOOTH_GROUP_SANDSTONE_WALLS
 
 /obj/structure/falsewall/wood
 	name = "wooden wall"
@@ -302,8 +302,8 @@
 	mineral = /obj/item/stack/sheet/mineral/wood
 	walltype = /turf/closed/wall/mineral/wood
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_WOOD_WALLS
+	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
 
 /obj/structure/falsewall/bamboo
 	name = "bamboo wall"
@@ -313,8 +313,8 @@
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	walltype = /turf/closed/wall/mineral/bamboo
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_BAMBOO_WALLS, SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
+	smoothing_groups = SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_BAMBOO_WALLS
 
 /obj/structure/falsewall/iron
 	name = "rough iron wall"
@@ -327,8 +327,8 @@
 	walltype = /turf/closed/wall/mineral/iron
 	base_icon_state = "iron_wall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_IRON_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_IRON_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_IRON_WALLS
+	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
 
 /obj/structure/falsewall/abductor
 	name = "alien wall"
@@ -339,8 +339,8 @@
 	mineral = /obj/item/stack/sheet/mineral/abductor
 	walltype = /turf/closed/wall/mineral/abductor
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ABDUCTOR_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_ABDUCTOR_WALLS
+	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
 
 /obj/structure/falsewall/titanium
 	name = "wall"
@@ -351,8 +351,8 @@
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	walltype = /turf/closed/wall/mineral/titanium
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_TITANIUM_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TITANIUM_WALLS
+	canSmoothWith = SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_SHUTTLE_PARTS
 
 /obj/structure/falsewall/plastitanium
 	name = "wall"
@@ -363,8 +363,8 @@
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_PLASTITANIUM_WALLS
+	canSmoothWith = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_SHUTTLE_PARTS
 
 /obj/structure/falsewall/material
 	name = "wall"
@@ -374,8 +374,8 @@
 	base_icon_state = "materialwall"
 	walltype = /turf/closed/wall/material
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MATERIAL_WALLS, SMOOTH_GROUP_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_MATERIAL_WALLS)
+	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MATERIAL_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_MATERIAL_WALLS
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/structure/falsewall/material/deconstruct(disassembled = TRUE)

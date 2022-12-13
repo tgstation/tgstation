@@ -7,8 +7,8 @@
 	baseturfs = /turf/baseturf_bottom
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS)
-	canSmoothWith = list(SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS)
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS
+	canSmoothWith = SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW

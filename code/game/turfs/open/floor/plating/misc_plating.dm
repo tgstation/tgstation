@@ -64,8 +64,8 @@
 	icon_state = "snow_turf-0"
 	base_icon_state = "snow_turf"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_SNOWED)
-	canSmoothWith = list(SMOOTH_GROUP_FLOOR_SNOWED)
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SNOWED
+	canSmoothWith = SMOOTH_GROUP_FLOOR_SNOWED
 	planetary_atmos = TRUE
 
 /turf/open/floor/plating/snowed/temperatre

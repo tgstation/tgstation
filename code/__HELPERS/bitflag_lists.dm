@@ -11,15 +11,18 @@ GLOBAL_LIST_EMPTY(bitflag_lists)
  * Arguments:
  * * target - List of integers.
  */
+// MBTODO: Rename? Or don't do here?
 #define SET_BITFLAG_LIST(target) \
 	do { \
-		var/txt_signature = target.Join("-"); \
-		if(!GLOB.bitflag_lists[txt_signature]) { \
+		var/txt_signature = target; \
+		target = GLOB.bitflag_lists[txt_signature]; \
+		if(isnull(target)) { \
 			var/list/new_bitflag_list = list(); \
-			for(var/value in target) { \
+			var/list/decoded = json_decode("\[[txt_signature]0\]"); \
+			decoded.len--; \
+			for(var/value in decoded) { \
 				new_bitflag_list["[round(value / 24)]"] |= (1 << (value % 24)); \
 			}; \
-			GLOB.bitflag_lists[txt_signature] = new_bitflag_list; \
+			target = GLOB.bitflag_lists[txt_signature] = new_bitflag_list; \
 		}; \
-		target = GLOB.bitflag_lists[txt_signature]; \
 	} while (FALSE)
