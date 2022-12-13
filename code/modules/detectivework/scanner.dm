@@ -113,16 +113,16 @@
 			det_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(A)
 
 			// Only get reagents from non-mobs.
-			for(var/datum/reagent/present_reagnet as anything in A.reagents?.reagent_list)
+			for(var/datum/reagent/present_reagent as anything in A.reagents?.reagent_list)
 				LAZYADD(det_data[DETSCAN_CATEGORY_DRINK], \
-					"Reagent: <font color='red'>[present_reagnet.name]</font> Volume: <font color='red'>[present_reagnet.volume]</font>")
+					"Reagent: <font color='red'>[present_reagent.name]</font> Volume: <font color='red'>[present_reagent.volume]</font>")
 
 				// Get blood data from the blood reagent.
-				if(!istype(present_reagnet, /datum/reagent/blood))
+				if(!istype(present_reagent, /datum/reagent/blood))
 					continue
 
-				var/blood_DNA = present_reagnet.data["blood_DNA"]
-				var/blood_type = present_reagnet.data["blood_type"]
+				var/blood_DNA = present_reagent.data["blood_DNA"]
+				var/blood_type = present_reagent.data["blood_type"]
 				if(!blood_DNA || !blood_type)
 					continue
 
