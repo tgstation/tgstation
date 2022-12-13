@@ -144,7 +144,7 @@
 		return
 
 	/// only organs that are slotted in these count. because there's a lot of useless organs to cheese with.
-	var/list/slots_youd_actually_miss = list(
+	var/list/critical_slots = list(
 		ORGAN_SLOT_BRAIN,
 		ORGAN_SLOT_HEART,
 		ORGAN_SLOT_LUNGS,
@@ -158,6 +158,7 @@
 		TRAIT_NOHUNGER = ORGAN_SLOT_STOMACH,
 		TRAIT_NOBREATH = ORGAN_SLOT_LUNGS,
 		TRAIT_NOMETABOLISM = ORGAN_SLOT_LIVER,
+		NO_TONGUE = ORGAN_SLOT_TONGUE,
 	)
 	for(var/bad_trait in bad_traits)
 		if(HAS_TRAIT(burdened, bad_trait))
