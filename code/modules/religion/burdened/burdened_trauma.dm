@@ -136,10 +136,7 @@
 
 	update_burden(increase = FALSE)//working organ
 
-/// Signal to increase burden_level (see update_burden proc) if an organ is removed
-/datum/brain_trauma/special/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ, special)
-	SIGNAL_HANDLER
-
+/datum/brain_trauma/special/burdened/proc/is_burdensome_to_lose_organ(mob/burdened, obj/item/organ/old_organ, special)
 	if(special) //aheals
 		return
 
@@ -158,19 +155,25 @@
 		TRAIT_NOHUNGER = ORGAN_SLOT_STOMACH,
 		TRAIT_NOBREATH = ORGAN_SLOT_LUNGS,
 		TRAIT_NOMETABOLISM = ORGAN_SLOT_LIVER,
-		NO_TONGUE = ORGAN_SLOT_TONGUE,
+		TRAIT_NOBLOOD = ORGAN_SLOT_HEART,
+		TRAIT_NOTONGUE = ORGAN_SLOT_TONGUE,
 	)
 	for(var/bad_trait in bad_traits)
 		if(HAS_TRAIT(burdened, bad_trait))
 			critical_slots -= bad_traits[bad_trait]
 
 	if(!(old_organ.slot in critical_slots))
-		return
+		return FALSE
 	else if(istype(old_organ, /obj/item/organ/internal/eyes))
 		var/obj/item/organ/internal/eyes/old_eyes = old_organ
 		if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
-			update_burden(TRUE)
-		return
+			return TRUE
+		return FALSE
+	return TRUE
+
+/// Signal to increase burden_level (see update_burden proc) if an organ is removed
+/datum/brain_trauma/special/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ, special)
+	SIGNAL_HANDLER
 
 	update_burden(increase = TRUE)//lost organ
 

@@ -122,7 +122,7 @@
 		return
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
-		if(NOBLOOD in human_victim.dna?.species.species_traits)
+		if(HAS_TRAIT(human_victim, TRAIT_NOBLOOD))
 			return
 
 	if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume && prob(internal_bleeding_chance + wounding_dmg))

@@ -543,8 +543,8 @@
 		owner.visible_message(span_danger("[owner] grabs [owner.p_their()] throat, struggling for breath!"), span_userdanger("You suddenly feel like you can't breathe!"))
 		failed = TRUE
 
-/obj/item/organ/internal/lungs/get_availability(datum/species/owner_species)
-	return !(TRAIT_NOBREATH in owner_species.inherent_traits)
+/obj/item/organ/internal/lungs/get_availability(mob/living/owner_mob)
+	return HAS_TRAIT(owner_mob, TRAIT_NOBREATH)
 
 /obj/item/organ/internal/lungs/plasmaman
 	name = "plasma filter"

@@ -291,7 +291,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * Arguments:
  * owner_species - species, needed to return whether the species has an organ specific trait
  */
-/obj/item/organ/proc/get_availability(datum/species/owner_species)
+/obj/item/organ/proc/get_availability(mob/living/owner_mob)
 	return TRUE
 
 /// Called before organs are replaced in regenerate_organs with new ones

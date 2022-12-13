@@ -210,8 +210,8 @@
 	for(var/datum/reagent/chem as anything in carbon_owner.reagents.reagent_list)
 		chem.on_mob_dead(carbon_owner, delta_time)
 
-/obj/item/organ/internal/liver/get_availability(datum/species/species)
-	return !(TRAIT_NOMETABOLISM in species.inherent_traits)
+/obj/item/organ/internal/liver/get_availability(mob/living/owner_mob)
+	return !HAS_TRAIT(owner_mob, TRAIT_NOMETABOLISM)
 
 /obj/item/organ/internal/liver/plasmaman
 	name = "reagent processing crystal"
