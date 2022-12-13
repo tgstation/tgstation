@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				C.linked_dirs |= inverse
 
 				// We will update on LateInitialize otherwise.
-				if (MC_RUNNING(SSatoms.init_stage))
+				if (C.is_fully_initialized)
 					C.update_appearance(UPDATE_ICON)
 
 	if (is_fully_initialized)
