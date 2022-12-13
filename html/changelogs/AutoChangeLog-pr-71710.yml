@@ -1,8 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - rscadd: "TGUI for RCD Just like Rapid Pipe Dispenser"
-  - rscadd: "Radial menu for RLD"
-  - code_imp: "silo link upgrades for both RLD & Plumbing RCD"
-  - rscdel: "Switch Mode, Window Glass, Airlock action icons for construction console"
-  - refactor: "FURNISHING , FRAMES & SIMPLE_CIRCUITS are banned upgrades for RLD & Plumbing RCD"
