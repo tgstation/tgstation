@@ -3,7 +3,7 @@
 	name = "door"
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/doorint.dmi'
-	icon_state = "door_closed"
+	icon_state = "door1"
 	base_icon_state = "door"
 	opacity = TRUE
 	density = TRUE
