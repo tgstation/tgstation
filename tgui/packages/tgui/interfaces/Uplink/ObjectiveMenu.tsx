@@ -293,6 +293,7 @@ const ObjectiveFunction = (
       originalProgression={objective.original_progression}
       hideTcRep={objective.final_objective}
       finalObjective={objective.final_objective}
+      hideFooter={objective.final_objective && !objective.ui_buttons?.length}
       canAbort={
         !!handleAbort &&
         !objective.final_objective &&
@@ -346,6 +347,7 @@ type ObjectiveElementProps = {
   hideTcRep: BooleanLike;
   finalObjective: BooleanLike;
   canAbort: BooleanLike;
+  hideFooter: BooleanLike;
 
   handleCompletion?: (event: MouseEvent) => void;
   handleAbort?: (event: MouseEvent) => void;
@@ -368,6 +370,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     grow,
     hideTcRep,
     finalObjective,
+    hideFooter,
     ...rest
   } = props;
 
@@ -424,13 +427,13 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
       <Flex.Item grow={grow} basis="content">
         <Box
           style={{
-            'border-bottom': hideTcRep
+            'border-bottom': hideFooter
               ? '2px solid rgba(0, 0, 0, 0.5)'
               : undefined,
           }}
           className="UplinkObjective__Content"
           height="100%"
-          mb={hideTcRep ? 2 : 0}>
+          mb={hideFooter ? 2 : 0}>
           <Box>{description}</Box>
           {!hideTcRep && (
             <Box mt={1}>
@@ -447,106 +450,108 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         </Box>
       </Flex.Item>
       <Flex.Item>
-        {!hideTcRep && (
+        {!hideFooter && (
           <Box className="UplinkObjective__Footer">
             <Stack vertical>
-              <Stack.Item>
-                <Stack align="center" justify="center">
-                  <Box
-                    style={{
-                      'border': '2px solid rgba(0, 0, 0, 0.5)',
-                      'border-left': 'none',
-                      'border-right': 'none',
-                      'border-bottom': objectiveFinished ? 'none' : undefined,
-                    }}
-                    className={reputation.gradient}
-                    py={0.5}
-                    width="100%"
-                    textAlign="center">
-                    {telecrystalReward} TC,
-                    <Box ml={1} as="span">
-                      {calculateProgression(progressionReward)} Reputation
-                      {Math.abs(progressionDiff) > 10 && (
-                        <Tooltip
-                          content={
-                            <Box>
-                              You will get
-                              <Box
-                                mr={1}
-                                ml={1}
-                                color={
-                                  progressionDiff > 0
-                                    ? progressionDiff > 25
-                                      ? 'red'
-                                      : 'orange'
-                                    : 'green'
-                                }
-                                as="span">
-                                {Math.abs(progressionDiff)}%
-                              </Box>
-                              {progressionDiff > 0 ? 'less' : 'more'} reputation
-                              from this objective. This is because your
-                              reputation is{' '}
-                              {progressionDiff > 0 ? 'ahead ' : 'behind '}
-                              where it normally should be at.
-                            </Box>
-                          }>
-                          <Box
-                            ml={1}
-                            color={
-                              progressionDiff > 0
-                                ? progressionDiff > 35
-                                  ? 'red'
-                                  : 'orange'
-                                : 'green'
-                            }
-                            as="span">
-                            ({progressionDiff > 0 ? '-' : '+'}
-                            {Math.abs(progressionDiff)}%)
-                          </Box>
-                        </Tooltip>
-                      )}
-                    </Box>
-                  </Box>
-                </Stack>
-                {objectiveFinished ? (
-                  <Box
-                    inline
-                    className={reputation.gradient}
-                    style={{
-                      'border-radius': '0',
-                      'border': '2px solid rgba(0, 0, 0, 0.5)',
-                      'border-left': 'none',
-                      'border-right': 'none',
-                    }}
-                    position="relative"
-                    width="100%"
-                    textAlign="center"
-                    bold>
+              {!hideTcRep && (
+                <Stack.Item>
+                  <Stack align="center" justify="center">
                     <Box
-                      width="100%"
-                      height="100%"
-                      backgroundColor={
-                        objectiveFailed
-                          ? 'rgba(255, 0, 0, 0.1)'
-                          : 'rgba(0, 255, 0, 0.1)'
-                      }
-                      position="absolute"
-                      left={0}
-                      top={0}
-                    />
-                    <Button
-                      onClick={handleCompletion}
-                      color={objectiveFailed ? 'bad' : 'good'}
                       style={{
-                        'border': '1px solid rgba(0, 0, 0, 0.65)',
+                        'border': '2px solid rgba(0, 0, 0, 0.5)',
+                        'border-left': 'none',
+                        'border-right': 'none',
+                        'border-bottom': objectiveFinished ? 'none' : undefined,
                       }}
-                      my={1}>
-                      TURN IN
-                    </Button>
-                  </Box>
-                ) : null}
-              </Stack.Item>
+                      className={reputation.gradient}
+                      py={0.5}
+                      width="100%"
+                      textAlign="center">
+                      {telecrystalReward} TC,
+                      <Box ml={1} as="span">
+                        {calculateProgression(progressionReward)} Reputation
+                        {Math.abs(progressionDiff) > 10 && (
+                          <Tooltip
+                            content={
+                              <Box>
+                                You will get
+                                <Box
+                                  mr={1}
+                                  ml={1}
+                                  color={
+                                    progressionDiff > 0
+                                      ? progressionDiff > 25
+                                        ? 'red'
+                                        : 'orange'
+                                      : 'green'
+                                  }
+                                  as="span">
+                                  {Math.abs(progressionDiff)}%
+                                </Box>
+                                {progressionDiff > 0 ? 'less' : 'more'}{' '}
+                                reputation from this objective. This is because
+                                your reputation is{' '}
+                                {progressionDiff > 0 ? 'ahead ' : 'behind '}
+                                where it normally should be at.
+                              </Box>
+                            }>
+                            <Box
+                              ml={1}
+                              color={
+                                progressionDiff > 0
+                                  ? progressionDiff > 35
+                                    ? 'red'
+                                    : 'orange'
+                                  : 'green'
+                              }
+                              as="span">
+                              ({progressionDiff > 0 ? '-' : '+'}
+                              {Math.abs(progressionDiff)}%)
+                            </Box>
+                          </Tooltip>
+                        )}
+                      </Box>
+                    </Box>
+                  </Stack>
+                  {objectiveFinished ? (
+                    <Box
+                      inline
+                      className={reputation.gradient}
+                      style={{
+                        'border-radius': '0',
+                        'border': '2px solid rgba(0, 0, 0, 0.5)',
+                        'border-left': 'none',
+                        'border-right': 'none',
+                      }}
+                      position="relative"
+                      width="100%"
+                      textAlign="center"
+                      bold>
+                      <Box
+                        width="100%"
+                        height="100%"
+                        backgroundColor={
+                          objectiveFailed
+                            ? 'rgba(255, 0, 0, 0.1)'
+                            : 'rgba(0, 255, 0, 0.1)'
+                        }
+                        position="absolute"
+                        left={0}
+                        top={0}
+                      />
+                      <Button
+                        onClick={handleCompletion}
+                        color={objectiveFailed ? 'bad' : 'good'}
+                        style={{
+                          'border': '1px solid rgba(0, 0, 0, 0.65)',
+                        }}
+                        my={1}>
+                        TURN IN
+                      </Button>
+                    </Box>
+                  ) : null}
+                </Stack.Item>
+              )}
               {!!uiButtons && !objectiveFinished && (
                 <Stack.Item>{uiButtons}</Stack.Item>
               )}
