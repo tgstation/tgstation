@@ -112,3 +112,9 @@
 		if(ismob(B))
 			var/mob/M = B
 			to_chat(M, span_warning("[linked_swapper] activates, and you find yourself somewhere else."))
+			if(ishuman(M))
+				var/mob/living/carbon/human/homer = M
+				if(prob(1))
+					to_chat(M, span_hear("You hear a buzzing in your ears."))
+					homer.set_species(/datum/species/fly)
+					homer.log_message("was turned into a [initial(species_to_transform.name)] through [src].", LOG_GAME)
