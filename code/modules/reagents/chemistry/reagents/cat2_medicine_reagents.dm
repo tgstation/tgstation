@@ -130,7 +130,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/affected_mob, delta_time, times_fired)
-	affected_mob.adjustStaminaLoss(3 * REM * delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustStaminaLoss(3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	if(affected_mob.getStaminaLoss() >= 80)
 		affected_mob.adjust_drowsyness(1 * REM * delta_time)
 	if(affected_mob.getStaminaLoss() >= 100)
@@ -246,8 +246,8 @@
 	var/oxycalc = 2.5 * REM * current_cycle
 	if(!overdosed)
 		oxycalc = min(oxycalc, affected_mob.getOxyLoss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
-	affected_mob.adjustOxyLoss(-oxycalc * delta_time * normalise_creation_purity(), 0, required_biotype = affected_biotype)
-	affected_mob.adjustToxLoss(oxycalc * delta_time / CONVERMOL_RATIO, 0, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-oxycalc * delta_time * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustToxLoss(oxycalc * delta_time / CONVERMOL_RATIO, FALSE, required_biotype = affected_biotype)
 	if(DT_PROB(current_cycle / 2, delta_time) && affected_mob.losebreath)
 		affected_mob.losebreath--
 	..()
@@ -385,7 +385,7 @@
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), 0, required_biotype = affected_biotype)	  //This is to promote iv pole use for that chemotherapy feel.
+		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)	  //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/internal/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if(!L || L.organ_flags & ORGAN_FAILING)
 		return
@@ -396,7 +396,7 @@
 
 /datum/reagent/medicine/c2/syriniver/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8 * REM * delta_time, required_organtype = affected_organtype)
-	affected_mob.adjustToxLoss(-1 * REM * delta_time, 0, required_biotype = affected_biotype)
+	affected_mob.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
@@ -425,7 +425,7 @@
 
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * delta_time, required_organtype = affected_organtype)
-	affected_mob.adjustToxLoss(-1 * REM * delta_time * normalise_creation_purity(), 0, required_biotype = affected_biotype)
+	affected_mob.adjustToxLoss(-1 * REM * delta_time * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
@@ -521,10 +521,10 @@
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time, required_organtype = affected_organtype)
 	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT * (2 * normalise_creation_purity()))) //we cannot save someone below our lowered crit threshold.
 
-		H.adjustToxLoss(-2 * REM * delta_time, 0, required_biotype = affected_biotype)
-		H.adjustBruteLoss(-2 * REM * delta_time, 0, required_bodytype = affected_bodytype)
-		H.adjustFireLoss(-2 * REM * delta_time, 0, required_bodytype = affected_bodytype)
-		H.adjustOxyLoss(-6 * REM * delta_time, 0, required_biotype = affected_biotype)
+		H.adjustToxLoss(-2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		H.adjustBruteLoss(-2 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
+		H.adjustFireLoss(-2 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
+		H.adjustOxyLoss(-6 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 
 		H.losebreath = 0
 
