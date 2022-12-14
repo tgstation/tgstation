@@ -244,6 +244,17 @@ Primarily used in reagents/reaction_agents
 
 	return TRUE
 
+/**
+ * Specifically made for mutation reagent reactions
+ */
+/datum/reagent/proc/plant_mutation_reagent_apply(datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user, mr = 5, hm = 2)
+	if(chems.has_reagent(src.type, mr))
+		mytray.mutation_roll(user)
+	else if(chems.has_reagent(src.type, hm))
+		mytray.hardmutate()
+	else
+		mytray.mutate()
+
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)
 	return list("[taste_description]" = 1)

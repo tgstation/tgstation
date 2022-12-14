@@ -8,7 +8,6 @@
 	product = /obj/item/food/grown/peas
 	maturation = 3
 	potency = 25
-	instability = 15
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "peas-grow"
@@ -71,7 +70,6 @@
 	potency = 75
 	yield = 1
 	production = 10
-	instability = 45 //The world is a very unstable place. Constantly changing.
 	growthstages = 3
 	icon_grow = "worldpeas-grow"
 	icon_dead = "worldpeas-dead"

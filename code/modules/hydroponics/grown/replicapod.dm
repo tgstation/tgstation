@@ -13,13 +13,11 @@
 	maturation = 3
 	production = 5
 	yield = 4
-	instability = 10
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-	seed_flags = null
 
 /obj/item/food/grown/cabbage
 	seed = /obj/item/seeds/cabbage

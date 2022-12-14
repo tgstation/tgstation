@@ -40,8 +40,6 @@
 	var/potency = 10
 	/// Amount of growth sprites the plant has.
 	var/growthstages = 6
-	// Chance that a plant will mutate in each stage of it's life.
-	var/instability = 5
 	/// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
 	var/rarity = 0
 	/// The type of plants that this plant can mutate into.
@@ -61,8 +59,6 @@
 	var/grafted = FALSE
 	///Type-path of trait to be applied when grafting a plant.
 	var/graft_gene
-	///Determines if the plant should be allowed to mutate early at 30+ instability.
-	var/seed_flags = MUTATE_EARLY
 
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
@@ -78,7 +74,17 @@
 	if(!icon_harvest && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && yield != -1)
 		icon_harvest = "[species]-harvest"
 
-	if(!nogenes)
+	if(!nogenes) // not used on Copy()
+		genes += new /datum/plant_gene/core/lifespan(lifespan)
+		genes += new /datum/plant_gene/core/endurance(endurance)
+		genes += new /datum/plant_gene/core/weed_rate(weed_rate)
+		genes += new /datum/plant_gene/core/weed_chance(weed_chance)
+		if(yield != -1)
+			genes += new /datum/plant_gene/core/yield(yield)
+			genes += new /datum/plant_gene/core/production(production)
+		if(potency != -1)
+			genes += new /datum/plant_gene/core/potency(potency)
+
 		for(var/plant_gene in genes)
 			if(ispath(plant_gene))
 				genes -= plant_gene
@@ -128,7 +134,6 @@
 	copy_seed.production = production
 	copy_seed.yield = yield
 	copy_seed.potency = potency
-	copy_seed.instability = instability
 	copy_seed.weed_rate = weed_rate
 	copy_seed.weed_chance = weed_chance
 	copy_seed.name = name
@@ -152,13 +157,24 @@
 	for(var/datum/plant_gene/reagent/R in genes)
 		reagents_add[R.reagent_id] = R.rate
 
-/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3)
+///This proc adds a mutability_flag to a gene
+/obj/item/seeds/proc/set_mutability(typepath, mutability)
+	var/datum/plant_gene/g = get_gene(typepath)
+	if(g)
+		g.mutability_flags |=  mutability
+
+///This proc removes a mutability_flag from a gene
+/obj/item/seeds/proc/unset_mutability(typepath, mutability)
+	var/datum/plant_gene/g = get_gene(typepath)
+	if(g)
+		g.mutability_flags &=  ~mutability
+
+/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0)
 	adjust_lifespan(rand(-lifemut,lifemut))
 	adjust_endurance(rand(-endmut,endmut))
 	adjust_production(rand(-productmut,productmut))
 	adjust_yield(rand(-yieldmut,yieldmut))
 	adjust_potency(rand(-potmut,potmut))
-	adjust_instability(rand(-stabmut,stabmut))
 	adjust_weed_rate(rand(-wrmut, wrmut))
 	adjust_weed_chance(rand(-wcmut, wcmut))
 	if(prob(traitmut))
@@ -213,26 +229,7 @@
 	var/product_count = getYield()
 
 	while(t_amount < product_count)
-		var/obj/item/food/grown/t_prod
-		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))
-			var/obj/item/seeds/mutated_seed = pick(mutatelist)
-			t_prod = initial(mutated_seed.product)
-			if(!t_prod)
-				continue
-			mutated_seed = new mutated_seed
-			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
-				if((trait.mutability_flags & PLANT_GENE_MUTATABLE) && trait.can_add(mutated_seed))
-					mutated_seed.genes += trait.Copy()
-			t_prod = new t_prod(output_loc, mutated_seed)
-			t_prod.transform = initial(t_prod.transform)
-			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
-			ADD_TRAIT(t_prod, TRAIT_PLANT_WILDMUTATE, INNATE_TRAIT)
-			t_amount++
-			if(t_prod.seed)
-				t_prod.seed.set_instability(round(instability * 0.5))
-			continue
-		else
-			t_prod = new product(output_loc, src)
+		var/obj/item/food/grown/t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = lowertext(parent.myseed.plantname)
 		if(productdesc)
@@ -351,14 +348,6 @@
 	potency = clamp(potency + adjustamt, 0, MAX_PLANT_POTENCY)
 
 /**
- * Adjusts seed instability up or down according to adjustamt. (Max 100)
- */
-/obj/item/seeds/proc/adjust_instability(adjustamt)
-	if(instability == -1)
-		return
-	instability = clamp(instability + adjustamt, 0, MAX_PLANT_INSTABILITY)
-
-/**
  * Adjusts seed weed grwoth speed up or down according to adjustamt. (Max 10)
  */
 /obj/item/seeds/proc/adjust_weed_rate(adjustamt)
@@ -417,14 +406,6 @@
 	if(potency == -1)
 		return
 	potency = clamp(adjustamt, 0, MAX_PLANT_POTENCY)
-
-/**
- * Sets the plant's instability stat to the value of adjustamt. (Max 100)
- */
-/obj/item/seeds/proc/set_instability(adjustamt)
-	if(instability == -1)
-		return
-	instability = clamp(adjustamt, 0, MAX_PLANT_INSTABILITY)
 
 /**
  * Sets the plant's weed production rate to the value of adjustamt. (Max 10)

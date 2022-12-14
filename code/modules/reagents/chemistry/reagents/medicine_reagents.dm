@@ -47,15 +47,15 @@
 
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
-	mytray.adjust_pestlevel(-rand(1,5))
-	mytray.adjust_weedlevel(-rand(1,5))
-	if(chems.has_reagent(type, 3))
-		switch(rand(100))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustPests(-rand(1,5))
+		mytray.adjustWeeds(-rand(1,5))
+	if(chems.has_reagent(src.type, 3))
+		switch(rand(0, 100))
 			if(66  to 100)
 				mytray.mutatespecie()
 			if(33 to 65)
@@ -150,11 +150,10 @@
 
 // Healing
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 3))
-	mytray.adjust_toxic(-round(chems.get_reagent_amount(type) * 3))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 3))
+		mytray.adjustToxic(-round(chems.get_reagent_amount(src.type) * 3))
 
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
@@ -889,29 +888,9 @@
 
 // FEED ME SEYMOUR
 /datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.spawnplant()
-
-/// Calculates the amount of reagent to at a bare minimum make the target not dead
-/datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_revive(mob/living/benefactor)
-	var/their_health = benefactor.getMaxHealth() - (benefactor.getBruteLoss() + benefactor.getFireLoss())
-	if(their_health > 0)
-		return 1
-
-	return round(-their_health / healing_per_reagent_unit, DAMAGE_PRECISION)
-
-/// Calculates the amount of reagent that will be needed to both revive and full heal the target. Looks at healing_per_reagent_unit and excess_healing_ratio
-/datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_full_heal(mob/living/benefactor)
-	var/their_health = benefactor.getBruteLoss() + benefactor.getFireLoss()
-	var/max_health = benefactor.getMaxHealth()
-	if(their_health >= max_health)
-		return 1
-
-	var/amount_needed_to_revive = calculate_amount_needed_to_revive(benefactor)
-	var/expected_amount_to_full_heal = round(max_health / healing_per_reagent_unit, DAMAGE_PRECISION) / excess_healing_ratio
-	return amount_needed_to_revive + expected_amount_to_full_heal
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.spawnplant()
 
 /datum/reagent/medicine/strange_reagent/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	if(exposed_mob.stat != DEAD || !(exposed_mob.mob_biotypes & MOB_ORGANIC))
@@ -1267,18 +1246,14 @@
 	..()
 	. = TRUE
 
-/// Returns a hippie-esque string for the person affected by the reagent to say.
-/datum/reagent/medicine/earthsblood/proc/return_hippie_line()
-	var/static/list/earthsblood_lines = list(
-		"Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?",
-		"Do you believe in magic in a young girl's heart?",
-		"It ain't me, it ain't me...",
-		"Make love, not war!",
-		"Stop, hey, what's that sound? Everybody look what's going down...",
-		"Yeah, well, you know, that's just, like, uh, your opinion, man.",
-	)
-
-	return pick(earthsblood_lines)
+/datum/reagent/medicine/earthsblood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.self_sufficiency_progress += chems.get_reagent_amount(src.type)
+		if(mytray.self_sufficiency_progress >= mytray.self_sufficiency_req)
+			mytray.become_self_sufficient()
+		else if(!mytray.self_sustaining)
+			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"

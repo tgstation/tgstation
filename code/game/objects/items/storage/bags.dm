@@ -237,7 +237,8 @@
 		/obj/item/graft,
 		/obj/item/grown,
 		/obj/item/reagent_containers/honeycomb,
-		/obj/item/seeds,
+		/obj/item/graft,
+		/obj/item/disk/plantgene,
 		))
 ////////
 

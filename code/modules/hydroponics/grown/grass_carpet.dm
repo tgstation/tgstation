@@ -11,7 +11,6 @@
 	maturation = 2
 	production = 5
 	yield = 5
-	instability = 10
 	growthstages = 2
 	icon_grow = "grass-grow"
 	icon_dead = "grass-dead"

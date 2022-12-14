@@ -289,12 +289,11 @@
 		text += "\nYield: [span_notice("[scanned.yield]")]"
 	text += "\nMaturation speed: [span_notice("[scanned.maturation]")]"
 	if(scanned.yield != -1)
-		text += "\nProduction speed: [span_notice("[scanned.production]")]"
-	text += "\nEndurance: [span_notice("[scanned.endurance]")]"
-	text += "\nLifespan: [span_notice("[scanned.lifespan]")]"
-	text += "\nInstability: [span_notice("[scanned.instability]")]"
-	text += "\nWeed Growth Rate: [span_notice("[scanned.weed_rate]")]"
-	text += "\nWeed Vulnerability: [span_notice("[scanned.weed_chance]")]"
+		text += "- Production speed: [span_notice("[scanned.production]")]\n"
+	text += "- Endurance: [span_notice("[scanned.endurance]")]\n"
+	text += "- Lifespan: [span_notice("[scanned.lifespan]")]\n"
+	text += "- Weed Growth Rate: [span_notice("[scanned.weed_rate]")]\n"
+	text += "- Weed Vulnerability: [span_notice("[scanned.weed_chance]")]\n"
 	if(scanned.rarity)
 		text += "\nSpecies Discovery Value: [span_notice("[scanned.rarity]")]"
 	var/all_removable_traits = ""

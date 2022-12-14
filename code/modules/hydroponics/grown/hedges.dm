@@ -10,7 +10,6 @@
 	maturation = 4
 	production = 6
 	yield = 2
-	instability = 10
 	growthstages = 3
 	reagents_add = list()
 

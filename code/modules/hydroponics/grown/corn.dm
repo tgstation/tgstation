@@ -8,7 +8,6 @@
 	product = /obj/item/food/grown/corn
 	maturation = 8
 	potency = 20
-	instability = 50 //Corn used to be wheatgrass, before being cultivated for generations.
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes

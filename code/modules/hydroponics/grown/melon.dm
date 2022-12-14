@@ -8,7 +8,6 @@
 	product = /obj/item/food/grown/watermelon
 	lifespan = 50
 	endurance = 40
-	instability = 20
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "watermelon-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

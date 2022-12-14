@@ -9,7 +9,6 @@
 	lifespan = 30
 	endurance = 40 // tuff like a toiger
 	yield = 4
-	instability = 25
 	growthstages = 5
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/attack/nettle_attack, /datum/plant_gene/trait/backfire/nettle_burn)
 	mutatelist = list(/obj/item/seeds/nettle/death)
