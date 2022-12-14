@@ -276,6 +276,8 @@
 		var/datum/uplink_item/uplink_item = pick(uplink_items)
 		if(!uplink_item.surplus || prob(100 - uplink_item.surplus))
 			continue
+		if(length(uplink_item.restricted_roles) || length(uplink_item.restricted_species))
+			continue
 		if(crate_value < uplink_item.cost)
 			continue
 		crate_value -= uplink_item.cost

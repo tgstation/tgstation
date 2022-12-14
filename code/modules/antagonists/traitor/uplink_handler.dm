@@ -17,7 +17,7 @@
 	/// The purchase log of this uplink handler
 	var/datum/uplink_purchase_log/purchase_log
 	/// Associative array of stock keys = stock left. For items that don't share stock, the key is their typepath
-	var/list/item_stock = list(UPLINK_SHARED_STOCK_KITS = 1 , UPLINK_SHARED_STOCK_SURPLUS = 12)
+	var/list/item_stock = list(UPLINK_SHARED_STOCK_KITS = 1 , UPLINK_SHARED_STOCK_SURPLUS = 1)
 	/// Extra stuff that can be purchased by an uplink, regardless of flag.
 	var/list/extra_purchasable = list()
 	/// Whether this uplink handler has objectives.
