@@ -15,6 +15,7 @@
 /obj/item/storage/fish_case
 	name = "stasis fish case"
 	desc = "A small case keeping the fish inside in stasis."
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "fishbox"
 
 	inhand_icon_state = "syringe_kit"

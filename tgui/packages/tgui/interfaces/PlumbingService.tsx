@@ -1,14 +1,17 @@
+import { useBackend, useLocalState } from '../backend';
+import { capitalizeAll } from 'common/string';
 import { BooleanLike, classes } from 'common/react';
 import { Window } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
 import { Section, Tabs, Button, Stack, Box } from '../components';
 import { ColorItem, LayerSelect } from './RapidPipeDispenser';
-import { capitalizeAll } from 'common/string';
+import { SiloItem, MatterItem } from './RapidConstructionDevice';
 
 type Data = {
+  silo_upgraded: BooleanLike;
   layer_icon: string;
   categories: Category[];
   selected_category: string;
+  selected_recipe: string;
 };
 
 type Category = {
@@ -26,7 +29,7 @@ type Recipe = {
 
 const PlumbingTypeSection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { categories = [], selected_category } = data;
+  const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
     'categoryName',
@@ -54,40 +57,36 @@ const PlumbingTypeSection = (props, context) => {
           fluid
           ellipsis
           color="transparent"
-          selected={recipe.selected}
+          selected={recipe.name === selected_recipe}
           onClick={() =>
             act('recipe', {
               id: recipe.index,
             })
           }>
-          <Stack>
-            <Stack.Item>
-              <Box
-                className={classes(['plumbing-tgui32x32', recipe.icon])}
-                style={{
-                  transform: 'scale(1.5) translate(9%, 9.5%)',
-                }}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <span style={{ width: '7px' }} />
-            </Stack.Item>
-            <Stack.Item>
-              <Section verticalAlign="middle">
-                {capitalizeAll(recipe.name)}
-              </Section>
-            </Stack.Item>
-          </Stack>
+          <Box
+            inline
+            verticalAlign="middle"
+            mr="20px"
+            className={classes(['plumbing-tgui32x32', recipe.icon])}
+            style={{
+              transform: 'scale(1.5) translate(9.5%, 9.5%)',
+            }}
+          />
+          <span>{capitalizeAll(recipe.name)}</span>
         </Button>
       ))}
     </Section>
   );
 };
 
-const ColorSection = (props, context) => {
+const StaticSection = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { silo_upgraded } = data;
   return (
     <Section>
-      <ColorItem />
+      <MatterItem />
+      {silo_upgraded ? <SiloItem /> : ''}
+      <ColorItem space />
     </Section>
   );
 };
@@ -126,7 +125,7 @@ export const PlumbingService = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <ColorSection />
+            <StaticSection />
           </Stack.Item>
           <Stack.Item grow>
             <Stack fill>
