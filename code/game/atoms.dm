@@ -176,8 +176,6 @@
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
 
-	/// the emag access required by an emag to trigger emag_act()
-	var/emag_required
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -1007,14 +1005,6 @@
 /atom/proc/acid_act(acidpwr, acid_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
 	return FALSE
-
-/**
- * Respond to an emag being used on our atom
- *
- * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
- */
-/atom/proc/emag_act(mob/user, obj/item/card/emag/emag_card)
-	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, emag_card)
 
 /**
  * Respond to narsie eating our atom

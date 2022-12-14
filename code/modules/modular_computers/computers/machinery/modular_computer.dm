@@ -11,7 +11,7 @@
 	icon_state = null
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
-	emag_access = EMAG_ACCESS_SYSTEMS
+	emag_required = EMAG_ACCESS_SYSTEMS
 	///The power cell, null by default as we use the APC we're in
 	var/internal_cell = null
 	///A flag that describes this device type

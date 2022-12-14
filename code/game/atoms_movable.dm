@@ -94,6 +94,9 @@
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
 
+	/// the emag access required by an emag to trigger emag_act()
+	var/emag_required
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -1518,3 +1521,11 @@
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	setDir(direction)
+
+/**
+ * Respond to an emag being used on our atom
+ *
+ * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
+ */
+/atom/movable/proc/emag_act(mob/user, obj/item/card/emag/emag_card)
+	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, emag_card)
