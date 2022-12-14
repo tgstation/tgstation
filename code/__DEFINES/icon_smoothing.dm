@@ -34,7 +34,6 @@ DEFINE_BITFIELD(smoothing_flags, list(
  * * Matched with the `list/canSmoothWith` variable to check whether smoothing is possible or not.
  */
 
-// #define S_TURF(num) ((24 * 0) + num) //Not any different from the number itself, but kept this way in case someone wants to expand it by adding stuff before it.
 #define S_TURF(num) (#num + ",")
 
 /* /turf only */
