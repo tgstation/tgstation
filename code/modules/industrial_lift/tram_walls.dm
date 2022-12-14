@@ -13,7 +13,7 @@
 	opacity = FALSE
 	max_integrity = 100
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
 	can_be_unanchored = FALSE
 	can_atmos_pass = ATMOS_PASS_DENSITY
@@ -82,8 +82,8 @@
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	tram_wall_type = /obj/structure/tramwall/titanium
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TITANIUM_WALLS
-	canSmoothWith = SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_SHUTTLE_PARTS
+	smoothing_groups = SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_TITANIUM_WALLS
 
 /obj/structure/tramwall/plastitanium
 	name = "wall"
@@ -94,8 +94,8 @@
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	tram_wall_type = /obj/structure/tramwall/plastitanium
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_PLASTITANIUM_WALLS
-	canSmoothWith = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_SHUTTLE_PARTS
+	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS
 
 /obj/structure/tramwall/gold
 	name = "gold wall"
@@ -106,7 +106,7 @@
 	mineral = /obj/item/stack/sheet/mineral/gold
 	tram_wall_type = /obj/structure/tramwall/gold
 	explosion_block = 0 //gold is a soft metal you dingus.
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_GOLD_WALLS
+	smoothing_groups = SMOOTH_GROUP_GOLD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_GOLD_WALLS
 	custom_materials = list(/datum/material/gold = 4000)
 
@@ -119,7 +119,7 @@
 	mineral = /obj/item/stack/sheet/mineral/silver
 	tram_wall_type = /obj/structure/tramwall/silver
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_SILVER_WALLS
+	smoothing_groups = SMOOTH_GROUP_SILVER_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SILVER_WALLS
 	custom_materials = list(/datum/material/silver = 4000)
 
@@ -135,7 +135,7 @@
 	max_integrity = 800
 	explosion_block = 3
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_DIAMOND_WALLS
+	smoothing_groups = SMOOTH_GROUP_DIAMOND_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_DIAMOND_WALLS
 	custom_materials = list(/datum/material/diamond = 4000)
 
@@ -148,7 +148,7 @@
 	mineral = /obj/item/stack/sheet/mineral/bananium
 	tram_wall_type = /obj/structure/tramwall/bananium
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BANANIUM_WALLS
+	smoothing_groups = SMOOTH_GROUP_BANANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BANANIUM_WALLS
 	custom_materials = list(/datum/material/bananium = 4000)
 
@@ -162,7 +162,7 @@
 	tram_wall_type = /obj/structure/tramwall/sandstone
 	explosion_block = 0
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_SANDSTONE_WALLS
+	smoothing_groups = SMOOTH_GROUP_SANDSTONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SANDSTONE_WALLS
 	custom_materials = list(/datum/material/sandstone = 4000)
 
@@ -176,7 +176,7 @@
 	mineral = /obj/item/stack/sheet/mineral/uranium
 	tram_wall_type = /obj/structure/tramwall/uranium
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_URANIUM_WALLS
+	smoothing_groups = SMOOTH_GROUP_URANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_URANIUM_WALLS
 	custom_materials = list(/datum/material/uranium = 4000)
 
@@ -221,7 +221,7 @@
 	mineral = /obj/item/stack/sheet/mineral/plasma
 	tram_wall_type = /obj/structure/tramwall/plasma
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_PLASMA_WALLS
+	smoothing_groups = SMOOTH_GROUP_PLASMA_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_PLASMA_WALLS
 	custom_materials = list(/datum/material/plasma = 4000)
 
@@ -235,7 +235,7 @@
 	tram_wall_type = /obj/structure/tramwall/wood
 	explosion_block = 0
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_WOOD_WALLS
+	smoothing_groups = SMOOTH_GROUP_WOOD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
 	custom_materials = list(/datum/material/wood = 4000)
 
@@ -255,7 +255,7 @@
 	icon = 'icons/turf/walls/bamboo_wall.dmi'
 	icon_state = "bamboo"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BAMBOO_WALLS
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	tram_wall_type = /obj/structure/tramwall/bamboo
@@ -270,7 +270,7 @@
 	mineral_amount = 5
 	tram_wall_type = /obj/structure/tramwall/iron
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_IRON_WALLS
+	smoothing_groups = SMOOTH_GROUP_IRON_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
 	custom_materials = list(/datum/material/iron = 5000)
 
@@ -285,7 +285,7 @@
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_ABDUCTOR_WALLS
+	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
 	custom_materials = list(/datum/material/alloy/alien = 4000)
 
@@ -296,7 +296,7 @@
 	icon_state = "materialwall-0"
 	base_icon_state = "materialwall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MATERIAL_WALLS + SMOOTH_GROUP_WALLS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MATERIAL_WALLS
 	canSmoothWith = SMOOTH_GROUP_MATERIAL_WALLS
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 

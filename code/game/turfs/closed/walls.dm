@@ -16,7 +16,7 @@
 	flags_ricochet = RICOCHET_HARD
 
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_WALLS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
 
 	rcd_memory = RCD_MEMORY_WALL

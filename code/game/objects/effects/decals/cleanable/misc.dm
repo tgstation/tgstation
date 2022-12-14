@@ -67,7 +67,7 @@
 	base_icon_state = "dirt"
 	smoothing_flags = NONE
 	smoothing_groups = SMOOTH_GROUP_CLEANABLE_DIRT
-	canSmoothWith = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLEANABLE_DIRT
+	canSmoothWith = SMOOTH_GROUP_CLEANABLE_DIRT + SMOOTH_GROUP_WALLS
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	beauty = -75
 

@@ -13,7 +13,7 @@
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_LATTICE
-	canSmoothWith = SMOOTH_GROUP_OPEN_FLOOR + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_LATTICE
+	canSmoothWith = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_OPEN_FLOOR
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
 
@@ -77,7 +77,7 @@
 	base_icon_state = "catwalk"
 	number_of_mats = 2
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_OPEN_FLOOR + SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_CATWALK
+	smoothing_groups = SMOOTH_GROUP_CATWALK + SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_OPEN_FLOOR
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
@@ -113,7 +113,7 @@
 	number_of_mats = 1
 	color = "#5286b9ff"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_OPEN_FLOOR + SMOOTH_GROUP_LATTICE
+	smoothing_groups = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_OPEN_FLOOR
 	canSmoothWith = SMOOTH_GROUP_LATTICE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF

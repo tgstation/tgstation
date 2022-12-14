@@ -19,4 +19,4 @@
 /datum/unit_test/focus_only/multiple_space_initialization
 
 /// Checks that smoothing_groups and canSmoothWith are properly sorted in /atom/Initialize
-TEST_FOCUS(/datum/unit_test/focus_only/sorted_smoothing_groups)
+/datum/unit_test/focus_only/sorted_smoothing_groups
