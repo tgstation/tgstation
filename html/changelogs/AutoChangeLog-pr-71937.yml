@@ -1,6 +1,0 @@
-author: "Floofies"
-delete-after: True
-changes:
-  - bugfix: "Fixed a stray-tab typo in \"item_heal_robotic\""
-  - bugfix: "Fixed reagents and other effects which were inappropriately affecting robotic limbs."
-  - code_imp: "Refactored all of reagents code to be more readable and maintainable."
