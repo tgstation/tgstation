@@ -79,7 +79,7 @@
 /datum/uplink_item/bundles_tc/surplus
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
-			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind.\
+			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind. \
 			Contents are sorted to always be worth 30 TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 20
@@ -87,10 +87,9 @@
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
 	var/crate_tc_value = 30
+	var/crate_type = /obj/structure/closet/crate
 
-/datum/uplink_item/bundles_tc/surplus/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
-	var/obj/structure/closet/crate/surplus_crate = new()
-
+/datum/uplink_item/bundles_tc/surplus/proc/generate_possible_items(mob/user, datum/uplink_handler/handler)
 	var/list/possible_items = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
@@ -103,16 +102,32 @@
 		if(handler.not_enough_reputation(uplink_item))
 			continue
 		possible_items += uplink_item
+	return possible_items
 
+/datum/uplink_item/bundles_tc/surplus/proc/pick_possible_item(list/possible_items, tc_budget)
+	var/datum/uplink_item/uplink_item = pick(possible_items)
+	if(prob(100 - uplink_item.surplus))
+		return null
+	if(tc_budget < uplink_item.cost)
+		return null
+	return uplink_item
+
+/datum/uplink_item/bundles_tc/surplus/proc/fill_crate(obj/structure/closet/crate/surplus_crate, list/possible_items)
 	var/tc_budget = crate_tc_value
 	while(tc_budget)
-		var/datum/uplink_item/uplink_item = pick(possible_items)
-		if(prob(100 - uplink_item.surplus))
-			continue
-		if(tc_budget < uplink_item.cost)
+		var/datum/uplink_item/uplink_item = pick_possible_item(possible_items, tc_budget)
+		if(!uplink_item)
 			continue
 		tc_budget -= uplink_item.cost
 		new uplink_item.item(surplus_crate)
+
+/datum/uplink_item/bundles_tc/surplus/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	var/obj/structure/closet/crate/surplus_crate = new crate_type()
+	if(!istype(surplus_crate))
+		CRASH("crate_type is not a crate")
+	var/list/possible_items = generate_possible_items(user, handler)
+
+	fill_crate(surplus_crate, possible_items)
 
 	podspawn(list(
 		"target" = get_turf(user),
@@ -131,6 +146,18 @@
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	crate_tc_value = 80
+	crate_type = /obj/structure/closet/crate/syndicrate
+
+/datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/closet/crate/syndicrate/surplus_crate, list/possible_items)
+	if(!istype(surplus_crate))
+		return
+	var/tc_budget = crate_tc_value
+	while(tc_budget)
+		var/datum/uplink_item/uplink_item = pick_possible_item(possible_items, tc_budget)
+		if(!uplink_item)
+			continue
+		tc_budget -= uplink_item.cost
+		surplus_crate.unlock_contents += uplink_item.item
 
 /datum/uplink_item/bundles_tc/surplus_key
 	name = "United Surplus Crate Key"
@@ -141,35 +168,3 @@
 	item = /obj/item/syndicrate_key
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-
-/datum/uplink_item/bundles_tc/surplus/united/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
-	var/obj/structure/closet/crate/syndicrate/surplus_crate = new()
-
-	var/list/possible_items = list()
-	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
-		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
-		if(src == uplink_item || !uplink_item.item)
-			continue
-		if(!handler.check_if_restricted(uplink_item))
-			continue
-		if(!uplink_item.surplus)
-			continue
-		if(handler.not_enough_reputation(uplink_item))
-			continue
-		possible_items += uplink_item
-
-	var/tc_budget = crate_tc_value
-	while(tc_budget)
-		var/datum/uplink_item/uplink_item = pick(possible_items)
-		if(prob(100 - uplink_item.surplus))
-			continue
-		if(tc_budget < uplink_item.cost)
-			continue
-		tc_budget -= uplink_item.cost
-		new uplink_item.item(surplus_crate)
-
-	podspawn(list(
-		"target" = get_turf(user),
-		"style" = STYLE_SYNDICATE,
-		"spawn" = surplus_crate,
-	))
