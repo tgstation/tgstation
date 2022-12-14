@@ -243,7 +243,6 @@
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
 	icon = "facegrimace"
 	value = -4
-	mob_trait = TRAIT_EASILY_WOUNDED
 	gain_text = "<span class='danger'>Your jaw feels loose.</span>"
 	lose_text = "<span class='notice'>Your jaw feels connected again.</span>"
 	medical_record_text = "Patient is absurdly easy to knock out. Do not allow them near a boxing ring."
