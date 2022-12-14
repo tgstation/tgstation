@@ -4,7 +4,7 @@
 /obj/item/reagent_containers/cup/glass
 	name = "drink"
 	desc = "yummy"
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/drinks.dmi'
 	icon_state = null
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	resistance_flags = NONE
@@ -40,6 +40,7 @@
 /obj/item/reagent_containers/cup/glass/trophy
 	name = "pewter cup"
 	desc = "Everyone gets a trophy."
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "pewter_cup"
 	w_class = WEIGHT_CLASS_TINY
 	force = 1
@@ -56,6 +57,7 @@
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup
 	name = "gold cup"
 	desc = "You're winner!"
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "golden_cup"
 	inhand_icon_state = "golden_cup"
 	w_class = WEIGHT_CLASS_BULKY
@@ -68,6 +70,7 @@
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup
 	name = "silver cup"
 	desc = "Best loser!"
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "silver_cup"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
@@ -80,6 +83,7 @@
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup
 	name = "bronze cup"
 	desc = "At least you ranked!"
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "bronze_cup"
 	w_class = WEIGHT_CLASS_SMALL
 	force = 5
@@ -96,7 +100,9 @@
 /obj/item/reagent_containers/cup/glass/coffee
 	name = "robust coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
+	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "coffee"
+	base_icon_state = "coffee"
 	list_reagents = list(/datum/reagent/consumable/coffee = 30)
 	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
@@ -120,9 +126,9 @@
 
 /obj/item/reagent_containers/cup/glass/coffee/update_icon_state()
 	if(lid_open)
-		icon_state = reagents.total_volume ? "coffee_full" : "coffee_empty"
+		icon_state = reagents.total_volume ? "[base_icon_state]_full" : "[base_icon_state]_empty"
 	else
-		icon_state = "coffee"
+		icon_state = base_icon_state
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/ice
@@ -142,6 +148,7 @@
 /obj/item/reagent_containers/cup/glass/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
 	desc = "A drink served in a classy mug."
+	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "tea_empty"
 	base_icon_state = "tea"
 	inhand_icon_state = "coffee"
@@ -175,14 +182,16 @@
 /obj/item/reagent_containers/cup/glass/coffee_cup
 	name = "coffee cup"
 	desc = "A heat-formed plastic coffee cup. Can theoretically be used for other hot drinks, if you're feeling adventurous."
+	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "coffee_cup_e"
+	base_icon_state = "coffee_cup"
 	possible_transfer_amounts = list(10)
 	volume = 30
 	spillable = TRUE
 	isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/coffee_cup/update_icon_state()
-	icon_state = reagents.total_volume ? "coffee_cup" : "coffee_cup_e"
+	icon_state = reagents.total_volume ? base_icon_state : "[base_icon_state]_e"
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/dry_ramen
@@ -197,7 +206,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle
 	name = "bottle of water"
 	desc = "A bottle of water filled at an old Earth bottling facility."
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "smallbottle"
 	inhand_icon_state = null
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
@@ -358,100 +367,22 @@
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton
 	name = "small carton"
 	desc = "A small carton, intended for holding drinks."
+	icon = 'icons/obj/drinks/boxes.dmi'
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
-/// Reagent container icon updates, especially this one, are complete jank. I will need to rework them after this is merged.
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/on_reagent_change(datum/reagents/holder, ...)
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/Initialize(mapload, vol)
 	. = ..()
-	if(!length(reagents.reagent_list))
-		drink_type = NONE /// Why are drink types on the _container_? TODO: move these to the reagents //im waiting
+	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_box_change)), CALLBACK(src, PROC_REF(on_box_reset)))
+
+/// Having our icon state change changes our food type
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_box_change(datum/glass_style/juicebox/style)
+	if(!istype(style))
 		return
+	drink_type = style.drink_type
 
-	switch(reagents.get_master_reagent_id())
-		if(/datum/reagent/consumable/orangejuice)
-			drink_type = FRUIT | BREAKFAST
-		if(/datum/reagent/consumable/milk)
-			drink_type = DAIRY | BREAKFAST
-		if(/datum/reagent/consumable/applejuice)
-			drink_type = FRUIT
-		if(/datum/reagent/consumable/grapejuice)
-			drink_type = FRUIT
-		if(/datum/reagent/consumable/pineapplejuice)
-			drink_type = FRUIT | PINEAPPLE
-		if(/datum/reagent/consumable/milk/chocolate_milk)
-			drink_type = SUGAR
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			drink_type = MEAT
-
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/update_name(updates)
-	. = ..()
-	if(!length(reagents.reagent_list))
-		name = "small carton"
-		return
-
-	switch(reagents.get_master_reagent_id())
-		if(/datum/reagent/consumable/orangejuice)
-			name = "orange juice box"
-		if(/datum/reagent/consumable/milk)
-			name = "carton of milk"
-		if(/datum/reagent/consumable/applejuice)
-			name = "apple juice box"
-		if(/datum/reagent/consumable/grapejuice)
-			name = "grape juice box"
-		if(/datum/reagent/consumable/pineapplejuice)
-			name = "pineapple juice box"
-		if(/datum/reagent/consumable/milk/chocolate_milk)
-			name = "carton of chocolate milk"
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			name = "carton of eggnog"
-
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/update_desc(updates)
-	. = ..()
-	if(!length(reagents.reagent_list))
-		desc = "A small carton, intended for holding drinks."
-		return
-
-	switch(reagents.get_master_reagent_id())
-		if(/datum/reagent/consumable/orangejuice)
-			desc = "A great source of vitamins. Stay healthy!"
-		if(/datum/reagent/consumable/milk)
-			desc = "An excellent source of calcium for growing space explorers."
-		if(/datum/reagent/consumable/applejuice)
-			desc = "Sweet apple juice. Don't be late for school!"
-		if(/datum/reagent/consumable/grapejuice)
-			desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
-		if(/datum/reagent/consumable/pineapplejuice)
-			desc = "Why would you even want this?"
-		if(/datum/reagent/consumable/milk/chocolate_milk)
-			desc = "Milk for cool kids!"
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			desc = "For enjoying the most wonderful time of the year."
-
-
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/update_icon_state()
-	. = ..()
-	if(!length(reagents.reagent_list))
-		icon_state = "juicebox"
-		return
-
-	switch(reagents.get_master_reagent_id()) // Thanks to update_name not existing we need to do this whole switch twice
-		if(/datum/reagent/consumable/orangejuice)
-			icon_state = "orangebox"
-		if(/datum/reagent/consumable/milk)
-			icon_state = "milkbox"
-		if(/datum/reagent/consumable/applejuice)
-			icon_state = "juicebox"
-		if(/datum/reagent/consumable/grapejuice)
-			icon_state = "grapebox"
-		if(/datum/reagent/consumable/pineapplejuice)
-			icon_state = "pineapplebox"
-		if(/datum/reagent/consumable/milk/chocolate_milk)
-			icon_state = "chocolatebox"
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			icon_state = "nog2"
-		else
-			icon_state = "juicebox"
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_box_reset()
+	drink_type = NONE
 
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
@@ -465,7 +396,7 @@
 /obj/item/reagent_containers/cup/glass/colocup
 	name = "colo cup"
 	desc = "A cheap, mass produced style of cup, typically used at parties. They never seem to come out red, for some reason..."
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/colo.dmi'
 	icon_state = "colocup"
 	inhand_icon_state = "colocup"
 	custom_materials = list(/datum/material/plastic = 1000)
@@ -494,6 +425,7 @@
 /obj/item/reagent_containers/cup/glass/shaker
 	name = "shaker"
 	desc = "A metal shaker to mix drinks in."
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
 	custom_materials = list(/datum/material/iron=1500)
 	amount_per_transfer_from_this = 10
@@ -511,6 +443,7 @@
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	custom_price = PAYCHECK_COMMAND * 2
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "flask"
 	custom_materials = list(/datum/material/iron=250)
 	volume = 60
@@ -528,9 +461,11 @@
 	icon_state = "detflask"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 30)
 
-/obj/item/reagent_containers/cup/glass/britcup
+/obj/item/reagent_containers/cup/glass/mug/britcup
 	name = "cup"
 	desc = "A cup with the british flag emblazoned on it."
-	icon_state = "britcup"
+	icon = 'icons/obj/drinks/coffee.dmi'
+	icon_state = "britcup_empty"
+	base_icon_state = "britcup"
 	volume = 30
 	spillable = TRUE

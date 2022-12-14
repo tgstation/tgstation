@@ -47,6 +47,10 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
+/obj/item/organ/internal/tongue/carp/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+
 /obj/item/organ/internal/tongue/carp/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	. = ..()
 	if(!ishuman(tongue_owner))
@@ -107,8 +111,8 @@
 
 /obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/brain_owner, special, drop_if_replaced, no_id_transfer)
 	. = ..()
-	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE)
-	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, .proc/satisfied_nomad)
+	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
+	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(satisfied_nomad))
 
 //technically you could get around the mood issue by extracting and reimplanting the brain but it will be far easier to just go one z there and back
 /obj/item/organ/internal/brain/carp/Remove(mob/living/carbon/brain_owner, special, no_id_transfer)
@@ -125,7 +129,7 @@
 /obj/item/organ/internal/brain/carp/proc/satisfied_nomad()
 	SIGNAL_HANDLER
 	owner.clear_mood_event("nomad")
-	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE)
+	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /// makes you cold resistant, but heat-weak.
 /obj/item/organ/internal/heart/carp

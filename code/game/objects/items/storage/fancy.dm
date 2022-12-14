@@ -15,8 +15,6 @@
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox"
-	base_icon_state = "donutbox"
 	resistance_flags = FLAMMABLE
 	custom_materials = list(/datum/material/cardboard = 2000)
 	/// Used by examine to report what this thing is holding.
