@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(bitflag_lists)
 #define SET_SMOOTHING_GROUPS(target) \
 	do { \
 		var/txt_signature = target; \
-		if(isnull(target = GLOB.bitflag_lists[txt_signature])) { \
+		if(isnull((target = GLOB.bitflag_lists[txt_signature]))) { \
 			var/list/new_bitflag_list = list(); \
 			var/list/decoded = UNWRAP_SMOOTHING_GROUPS("\[[txt_signature]0\]", decoded); \
 			for(var/value in decoded) { \
