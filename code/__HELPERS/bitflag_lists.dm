@@ -18,6 +18,9 @@ GLOBAL_LIST_EMPTY(bitflag_lists)
 			var/list/new_bitflag_list = list(); \
 			var/list/decoded = UNWRAP_SMOOTHING_GROUPS(txt_signature, decoded); \
 			for(var/value in decoded) { \
+				if (value < 0) { \
+					value = MAX_S_TURF + 1 + abs(value); \
+				} \
 				new_bitflag_list["[round(value / 24)]"] |= (1 << (value % 24)); \
 			}; \
 			target = GLOB.bitflag_lists[txt_signature] = new_bitflag_list; \
