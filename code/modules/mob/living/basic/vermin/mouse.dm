@@ -366,9 +366,9 @@
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/rat
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/attack_obstacles/rat
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/rat
 
-/datum/ai_behavior/basic_melee_attack/attack_obstacles/rat
+/datum/ai_behavior/basic_melee_attack/rat
 	action_cooldown = 2 SECONDS
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/rat
