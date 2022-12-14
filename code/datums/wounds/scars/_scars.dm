@@ -17,7 +17,7 @@
 	var/precise_location
 
 	/// These scars are assumed to come from changeling disguises, rather than from persistence or wounds. As such, they are deleted by dropping changeling disguises, and are ignored by persistence
-	var/fake=FALSE
+	var/fake = FALSE
 	/// How many tiles away someone can see this scar, goes up with severity. Clothes covering this limb will decrease visibility by 1 each, except for the head/face which is a binary "is mask obscuring face" check
 	var/visibility = 2
 	/// Whether this scar can actually be covered up by clothing
@@ -61,7 +61,7 @@
 
 	biology = limb?.biological_state || BIO_FLESH_BONE
 
-	if(biology == BIO_BONE)
+	if((biology & BIO_BONE) && !(biology & BIO_FLESH))
 		description = pick_list(BONE_SCAR_FILE, W.scar_keyword) || "general disfigurement"
 	else // no specific support for flesh w/o bone scars since it's not really useful
 		description = pick_list(FLESH_SCAR_FILE, W.scar_keyword) || "general disfigurement"
