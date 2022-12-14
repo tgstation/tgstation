@@ -56,7 +56,7 @@
 
 		list(
 			"name" = "Flowers",
-			"icon" = "flower",
+			"icon" = "leaf",
 			"products" = list(
 				/obj/item/seeds/aloe = 3,
 				/obj/item/seeds/ambrosia = 3,
@@ -67,18 +67,10 @@
 		),
 
 		list(
-			"name" = "Fungi",
-			"icon" = "mushroom",
+			"name" = "Miscellaneous",
+			"icon" = "question",
 			"products" = list(
 				/obj/item/seeds/chanter = 3,
-				/obj/item/seeds/tower = 3,
-			),
-		),
-
-		list(
-			"name" = "Miscellaneous",
-			"icon" = "leaf",
-			"products" = list(
 				/obj/item/seeds/coffee = 3,
 				/obj/item/seeds/cotton = 3,
 				/obj/item/seeds/grass = 3,
@@ -86,6 +78,7 @@
 				/obj/item/seeds/wheat/rice = 3,
 				/obj/item/seeds/tea = 3,
 				/obj/item/seeds/tobacco = 3,
+				/obj/item/seeds/tower = 3,
 				/obj/item/seeds/wheat = 3,
 			),
 		),
