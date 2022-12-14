@@ -37,6 +37,10 @@
 	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
 		balloon_alert(user, "vault linked")
+	else if(!dna_vault_ref)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 50)
+		balloon_alert(user, "need a database")
+		return
 	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
 
 	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
