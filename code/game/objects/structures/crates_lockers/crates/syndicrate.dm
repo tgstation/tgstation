@@ -11,13 +11,17 @@
 	/// this is what will spawn when it is opened with a syndicrate key
 	var/list/unlock_contents = list()
 
+/// if the crate takes damage it will explode 24% of the time
 /obj/structure/closet/crate/syndicrate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	if(damage_amount >= DAMAGE_PRECISION && prob(25))
-		visible_message(span_danger("The syndicrate's anti-tamper system activates!"))
-		explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 2)
-		qdel(src)
-	else
+	if(created_items)
 		return ..()
+	if(damage_amount < DAMAGE_PRECISION)
+		return ..()
+	if(prob(75))
+		return ..()
+	visible_message(span_danger("The syndicrate's anti-tamper system activates!"))
+	explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 2)
+	qdel(src)
 
 ///ensures that the syndicrate can only be unlocked by opening it with a syndicrate_key
 /obj/structure/closet/crate/syndicrate/attackby(obj/item/item, mob/user, params)

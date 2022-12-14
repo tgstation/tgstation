@@ -87,8 +87,10 @@
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
 	var/crate_tc_value = 30
+	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
+/// generates items that can go inside crates, edit this proc to change what items could go inside your specialized crate
 /datum/uplink_item/bundles_tc/surplus/proc/generate_possible_items(mob/user, datum/uplink_handler/handler)
 	var/list/possible_items = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
@@ -104,6 +106,7 @@
 		possible_items += uplink_item
 	return possible_items
 
+/// picks items from the list given to proc and generates a valid uplink item that is less or equal to the amount of TC it can spend
 /datum/uplink_item/bundles_tc/surplus/proc/pick_possible_item(list/possible_items, tc_budget)
 	var/datum/uplink_item/uplink_item = pick(possible_items)
 	if(prob(100 - uplink_item.surplus))
@@ -112,6 +115,7 @@
 		return null
 	return uplink_item
 
+/// fills the crate that will be given to the traitor, edit this to change the crate and how the item is filled
 /datum/uplink_item/bundles_tc/surplus/proc/fill_crate(obj/structure/closet/crate/surplus_crate, list/possible_items)
 	var/tc_budget = crate_tc_value
 	while(tc_budget)
@@ -121,6 +125,7 @@
 		tc_budget -= uplink_item.cost
 		new uplink_item.item(surplus_crate)
 
+/// overwrites purchase for surplus items to instead spawn this crate and run the previous procs
 /datum/uplink_item/bundles_tc/surplus/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/obj/structure/closet/crate/surplus_crate = new crate_type()
 	if(!istype(surplus_crate))
@@ -148,6 +153,7 @@
 	crate_tc_value = 80
 	crate_type = /obj/structure/closet/crate/syndicrate
 
+/// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
 /datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/closet/crate/syndicrate/surplus_crate, list/possible_items)
 	if(!istype(surplus_crate))
 		return
