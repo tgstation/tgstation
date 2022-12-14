@@ -889,11 +889,15 @@
 	var/recharge_rate = 1000
 	var/energy
 
-/datum/robot_energy_storage/New(obj/item/robot_model/R = null)
+/datum/robot_energy_storage/New(obj/item/robot_model/model)
 	energy = max_energy
-	if(R)
-		R.storages |= src
-	return
+	if(model)
+		model.storages |= src
+		RegisterSignal(model.robot, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+
+/datum/robot_energy_storage/proc/get_status_tab_item(mob/living/silicon/robot/source, list/items)
+	SIGNAL_HANDLER
+	items += "[name]: [energy]/[max_energy]"
 
 /datum/robot_energy_storage/proc/use_charge(amount)
 	if (energy >= amount)
