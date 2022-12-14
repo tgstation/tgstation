@@ -182,12 +182,13 @@
 	name = "eyepatch"
 	desc = "Yarr."
 	icon_state = "eyepatch"
+	base_icon_state = "eyepatch"
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
-	icon_state = icon_state == "eyepatch_flipped" ? "eyepatch" : "eyepatch_flipped"
+	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/monocle
@@ -510,12 +511,13 @@
 	name = "optical thermal eyepatch"
 	desc = "An eyepatch with built-in thermal optics."
 	icon_state = "eyepatch"
+	base_icon_state = "eyepatch"
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/clothing/glasses/thermal/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
-	icon_state = icon_state == "eyepatch_flipped" ? "eyepatch" : "eyepatch_flipped"
+	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/cold

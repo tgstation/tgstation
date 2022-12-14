@@ -151,11 +151,12 @@
 	name = "eyepatch HUD"
 	desc = "The cooler looking cousin of HUDSunglasses."
 	icon_state = "hudpatch"
+	base_icon_state = "hudpatch"
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
-	icon_state = icon_state == "hudpatch_flipped" ? "hudpatch" : "hudpatch_flipped"
+	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/security/sunglasses
