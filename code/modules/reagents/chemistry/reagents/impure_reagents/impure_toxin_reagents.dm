@@ -32,7 +32,7 @@
 	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return ..()
-	eyes.applyOrganDamage(0.5 * REM * delta_time)
+	eyes.applyOrganDamage(0.5 * REM * delta_time, required_organtype = affected_organtype)
 	..()
 
 
@@ -46,7 +46,7 @@
 	liver_damage = 0
 
 /datum/reagent/impurity/chloralax/on_mob_life(mob/living/carbon/owner, delta_time)
-	owner.adjustToxLoss(1 * REM * delta_time, 0)
+	owner.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 
 

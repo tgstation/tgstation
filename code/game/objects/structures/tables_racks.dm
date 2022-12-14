@@ -659,7 +659,7 @@
 	name = "titanium glass table"
 	desc = "A titanium reinforced glass table, with a fresh coat of NT white paint."
 	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
-	icon_state = "titaniumglass_table-o"
+	icon_state = "titaniumglass_table-0"
 	base_icon_state = "titaniumglass_table"
 	custom_materials = list(/datum/material/alloy/titaniumglass = 2000)
 	buildstack = /obj/item/stack/sheet/titaniumglass
@@ -864,9 +864,10 @@
 	if(do_after(user, 50, target = user, progress=TRUE))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
-		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
+		var/obj/structure/rack/R = new /obj/structure/rack(loc)
 		user.visible_message("<span class='notice'>[user] assembles \a [R].\
 			</span>", span_notice("You assemble \a [R]."))
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
+

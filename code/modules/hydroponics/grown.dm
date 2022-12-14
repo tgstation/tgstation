@@ -110,18 +110,27 @@
 	for(var/datum/reagent/reagent in reagents.reagent_list)
 		if(reagent.type != /datum/reagent/consumable/nutriment && reagent.type != /datum/reagent/consumable/nutriment/vitamin)
 			continue
+		var/purity = clamp(seed.lifespan/200 + seed.endurance/200, 0, 1)
+		var/quality_min = 0
+		var/quality_max = DRINK_FANTASTIC
+		var/quality = round(LERP(quality_min, quality_max, purity))
 		if(distill_reagent)
-			reagents.add_reagent(distill_reagent, reagent.volume)
+			var/data = list()
+			var/datum/reagent/consumable/ethanol/booze = distill_reagent
+			data["quality"] = quality
+			data["boozepwr"] = round(initial(booze.boozepwr) * purity)
+			reagents.add_reagent(distill_reagent, reagent.volume, data, added_purity = purity)
 		else
 			var/data = list()
 			data["names"] = list("[initial(name)]" = 1)
 			data["color"] = filling_color
-			data["boozepwr"] = wine_power
+			data["boozepwr"] = round(wine_power * purity)
+			data["quality"] = quality
 			if(wine_flavor)
 				data["tastes"] = list(wine_flavor = 1)
 			else
 				data["tastes"] = list(tastes[1] = 1)
-			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data)
+			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data, added_purity = purity)
 		reagents.del_reagent(reagent.type)
 
 /obj/item/food/grown/on_grind()

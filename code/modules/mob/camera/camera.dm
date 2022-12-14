@@ -8,7 +8,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	see_in_dark = 7
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
-	sight = SEE_SELF | SEE_BLACKNESS
+	sight = SEE_SELF
 	move_on_shuttle = FALSE
 	/// Toggles if the camera can use emotes
 	var/has_emotes = FALSE

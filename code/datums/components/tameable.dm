@@ -56,9 +56,8 @@
 
 	after_tame?.Invoke(tamer)//Run custom behavior if needed
 
-	if(ishostile(parent) && isliving(tamer)) //Kinda shit check but this only applies to hostiles atm
-		var/mob/living/simple_animal/hostile/evil_but_now_not_evil = parent
-		evil_but_now_not_evil.friends = tamer
-		evil_but_now_not_evil.faction = tamer.faction.Copy()
+	if (isliving(parent) && isliving(tamer))
+		var/mob/living/tamed = parent
+		INVOKE_ASYNC(tamed, TYPE_PROC_REF(/mob/living, befriend), tamer)
 
 	qdel(src)
