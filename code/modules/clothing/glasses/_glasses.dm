@@ -184,7 +184,7 @@
 	icon_state = "eyepatch"
 	base_icon_state = "eyepatch"
 	inhand_icon_state = null
-	actions_types = list(/datum/action/item_action/toggle)
+	actions_types = list(/datum/action/item_action/flip)
 
 /obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
@@ -513,7 +513,7 @@
 	icon_state = "eyepatch"
 	base_icon_state = "eyepatch"
 	inhand_icon_state = null
-	actions_types = list(/datum/action/item_action/toggle)
+	actions_types = list(/datum/action/item_action/flip)
 
 /obj/item/clothing/glasses/thermal/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()

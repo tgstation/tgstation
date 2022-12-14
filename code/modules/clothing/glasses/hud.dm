@@ -152,7 +152,7 @@
 	desc = "The cooler looking cousin of HUDSunglasses."
 	icon_state = "hudpatch"
 	base_icon_state = "hudpatch"
-	actions_types = list(/datum/action/item_action/toggle)
+	actions_types = list(/datum/action/item_action/flip)
 
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
