@@ -18,11 +18,6 @@
 
 /obj/item/encryptionkey/examine(mob/user)
 	. = ..()
-	if(!channels.len && !translate_binary && !translated_language)
-		. += span_warning("Has no special codes in it. You should probably tell a coder!")
-
-/obj/item/encryptionkey/examine(mob/user)
-	. = ..()
 	if(LAZYLEN(channels) || translate_binary)
 		var/list/examine_text_list = list()
 		for(var/i in channels)
@@ -32,6 +27,8 @@
 			examine_text_list += "[GLOB.channel_tokens[MODE_BINARY]] - [MODE_BINARY]"
 
 		. += span_notice("It can access the following channels; [jointext(examine_text_list, ", ")].")
+	else
+		. += span_warning("Has no special codes in it. You should probably tell a coder!")
 
 /obj/item/encryptionkey/syndicate
 	name = "syndicate encryption key"
