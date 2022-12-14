@@ -2063,7 +2063,7 @@
 	desc = "For enjoying the most wonderful time of the year."
 	icon_state = "glass_yellow"
 
-/datum/glass_style/juicebox/eggnog
+/datum/glass_style/has_foodtype/juicebox/eggnog
 	required_drink_type = /datum/reagent/consumable/ethanol/eggnog
 	name = "carton of eggnog"
 	desc = "Tasty grape juice in a fun little container. Non-alcoholic!"

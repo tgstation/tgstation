@@ -17,8 +17,6 @@
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	/// affects mood, typically higher for mixed drinks with more complex recipes'
 	var/quality = 0
-	/// Another food copy, what food type this consumable falls under
-	var/foodtypes = NONE
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	current_cycle++

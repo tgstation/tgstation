@@ -90,9 +90,11 @@
 /datum/reagent/consumable/nutriment/soup/meatball_soup
 	name = "Meatball Soup"
 	description = "You've got balls kid, BALLS!"
-	bowl_icon_state = "meatballsoup"
-	foodtypes = MEAT
 	data = list("meat" = 1)
+
+/datum/glass_style/has_foodtype/soup/meatball_soup
+	icon_state = "meatballsoup"
+	drink_type = MEAT
 
 // MELBERT TODO REMOVE ITS FOR TEST
 /obj/item/meatball_maker/Initialize(mapload)
@@ -124,9 +126,12 @@
 /datum/reagent/consumable/nutriment/soup/vegetable_soup
 	name = "Vegetable Soup"
 	description = "A true vegan meal."
-	bowl_icon_state = "vegetablesoup"
 	foodtypes = VEGETABLES
 	data = list("vegetables" = 1)
+
+/datum/glass_style/has_foodtype/soup/vegetable_soup
+	icon_state = "vegetablesoup"
+	drink_type = VEGETABLES
 
 /datum/chemical_reaction/food/soup/vegetable_soup
 	required_reagents = list(/datum/reagent/water = 50)
@@ -149,9 +154,11 @@
 /datum/reagent/consumable/nutriment/soup/nettle
 	name = "nettle soup"
 	description = "To think, the botanist would've beat you to death with one of these."
-	bowl_icon_state = "nettlesoup"
-	foodtypes = VEGETABLES
 	data = list("nettles" = 1)
+
+/datum/glass_style/has_foodtype/soup/nettle
+	icon_state = "nettlesoup"
+	drink_type = VEGETABLES
 
 /datum/chemical_reaction/food/soup/nettlesoup
 	required_reagents = list(/datum/reagent/water = 50)

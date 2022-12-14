@@ -182,11 +182,12 @@
 
 /obj/machinery/oven/range
 	name = "range"
-	desc = "And oven AND a stove, I guess that's why it's called a range!"
+	desc = "And oven AND a stove, I guess that's why it's got a range!"
 	icon_state = "range_off"
 	base_icon_state = "range"
-	pass_flags_self = PASSMACHINE|PASSTABLE|LETPASSTHROW // It's roughly the height of a table.
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	pass_flags_self = PASSMACHINE|PASSTABLE|LETPASSTHROW // Like the griddle, short
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	circuit = /obj/item/circuitboard/machine/oven // Melbert todo
 
 /obj/machinery/oven/range/Initialize(mapload)
 	. = ..()

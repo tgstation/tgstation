@@ -142,6 +142,7 @@
 /obj/item/reagent_containers/cup/bowl/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_cup_change)), CALLBACK(src, PROC_REF(on_cup_reset)))
 
 // empty salad for custom salads
 /obj/item/food/salad/empty
