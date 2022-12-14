@@ -2442,6 +2442,27 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/theater)
+"aBF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/newscaster/directional/east,
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	desc = "Whatever it is, it reeks of foul, putrid froth.";
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
+	name = "Delta-Down";
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/turf/open/floor/wood,
+/area/station/commons/dorms)
 "aBL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15161,18 +15182,6 @@
 /obj/item/clothing/mask/breath,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos/storage/gas)
-"dDe" = (
-/obj/structure/table/reinforced,
-/obj/machinery/newscaster/directional/north,
-/obj/item/clipboard,
-/obj/item/toy/figure/engineer{
-	pixel_x = -6
-	},
-/obj/item/toy/figure/atmos{
-	pixel_x = 6
-	},
-/turf/open/floor/wood,
-/area/station/engineering/break_room)
 "dDk" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -27025,30 +27034,6 @@
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/station/maintenance/department/security)
-"gxk" = (
-/obj/item/paper_bin{
-	pixel_x = -7
-	},
-/obj/item/pen{
-	pixel_x = -7
-	},
-/obj/item/reagent_containers/cup/glass/britcup{
-	pixel_x = 6;
-	pixel_y = -4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/cargo/drone_bay)
 "gxv" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs,
@@ -45886,6 +45871,30 @@
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
+"lde" = (
+/obj/item/paper_bin{
+	pixel_x = -7
+	},
+/obj/item/pen{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/window{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/cargo/drone_bay)
 "ldh" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible,
@@ -50584,6 +50593,23 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"mnh" = (
+/obj/structure/table/reinforced,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = -13;
+	pixel_y = 7
+	},
+/turf/open/floor/wood,
+/area/station/engineering/break_room)
 "mnz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -51573,6 +51599,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_showroom)
+"mzO" = (
+/obj/structure/table/reinforced,
+/obj/machinery/newscaster/directional/north,
+/obj/item/clipboard,
+/obj/item/toy/figure/engineer{
+	pixel_x = -6
+	},
+/obj/item/toy/figure/atmos{
+	pixel_x = 6
+	},
+/turf/open/floor/wood,
+/area/station/engineering/break_room)
 "mzV" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/bot,
@@ -65562,6 +65600,11 @@
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
+"pXB" = (
+/obj/structure/table/reinforced,
+/obj/machinery/coffeemaker/impressa,
+/turf/open/floor/wood,
+/area/station/engineering/break_room)
 "pXK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -79628,27 +79671,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/medical/morgue)
-"twv" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/newscaster/directional/east,
-/obj/effect/spawner/random/structure/table_fancy,
-/obj/item/reagent_containers/cup/glass/bottle/beer{
-	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
-	name = "Delta-Down";
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "tww" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -82157,23 +82179,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"ubg" = (
-/obj/structure/table/reinforced,
-/obj/machinery/airalarm/directional/north,
-/obj/effect/spawner/random/entertainment/cigarette_pack{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/effect/spawner/random/entertainment/cigarette_pack{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/storage/box/coffeepack{
-	pixel_x = -13;
-	pixel_y = 7
-	},
-/turf/open/floor/wood,
-/area/station/engineering/break_room)
 "ubk" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -92832,11 +92837,6 @@
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
-"wBr" = (
-/obj/structure/table/reinforced,
-/obj/machinery/coffeemaker/impressa,
-/turf/open/floor/wood,
-/area/station/engineering/break_room)
 "wBB" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/junction/yjunction{
@@ -122009,7 +122009,7 @@ tsB
 sch
 cKK
 vQj
-dDe
+mzO
 agA
 hHJ
 tgl
@@ -122266,7 +122266,7 @@ lKe
 nZW
 qAz
 vQj
-ubg
+mnh
 agA
 uzb
 jLx
@@ -122523,7 +122523,7 @@ ciD
 vYI
 lpv
 vQj
-wBr
+pXB
 gsf
 miE
 tgl
@@ -139717,7 +139717,7 @@ xeH
 qAV
 xYZ
 vGf
-gxk
+lde
 cAw
 sJd
 khn
@@ -152365,7 +152365,7 @@ aaa
 aad
 vop
 qqe
-twv
+aBF
 yaI
 fNn
 uEo

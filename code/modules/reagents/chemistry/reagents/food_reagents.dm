@@ -922,11 +922,15 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_description = "sweet chocolate"
-	glass_icon_state = "chocolatepudding"
-	glass_name = "chocolate pudding"
-	glass_desc = "Tasty."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
+
+/datum/glass_style/drinking_glass/chocolatepudding
+	required_drink_type = /datum/reagent/consumable/chocolatepudding
+	name = "chocolate pudding"
+	desc = "Tasty."
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "chocolatepudding"
 
 /datum/reagent/consumable/vanillapudding
 	name = "Vanilla Pudding"
@@ -935,10 +939,14 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_description = "sweet vanilla"
-	glass_icon_state = "vanillapudding"
-	glass_name = "vanilla pudding"
-	glass_desc = "Tasty."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/vanillapudding
+	required_drink_type = /datum/reagent/consumable/vanillapudding
+	name = "vanilla pudding"
+	desc = "Tasty."
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "vanillapudding"
 
 /datum/reagent/consumable/laughsyrup
 	name = "Laughin' Syrup"

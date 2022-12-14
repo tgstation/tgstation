@@ -491,11 +491,20 @@
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "piss water"
-	glass_icon_state = "beerglass"
-	glass_name = "glass of beer"
-	glass_desc = "A freezing pint of beer."
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/glass_style/drinking_glass/fakebeer
+	required_drink_type = /datum/reagent/toxin/fakebeer
+
+/datum/glass_style/drinking_glass/fakebeer/New()
+	. = ..()
+	// Copy styles from the beer drinking glass datum
+	var/datum/glass_style/copy_from = /datum/glass_style/drinking_glass/beer
+	name = initial(copy_from.name)
+	desc = initial(copy_from.desc)
+	icon = initial(copy_from.icon)
+	icon_state = initial(copy_from.icon_state)
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	switch(current_cycle)

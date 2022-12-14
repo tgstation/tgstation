@@ -5,12 +5,19 @@
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3
-	glass_icon_state = "glass_red"
-	glass_name = "glass of tomato juice"
-	glass_desc = "Are you sure this is tomato juice?"
-	shot_glass_icon_state = "shotglassred"
 	penetrates_skin = NONE
 	ph = 7.4
+
+/datum/glass_style/shot_glass/blood
+	required_drink_type = /datum/reagent/blood
+	icon_state = "shotglassred"
+
+/datum/glass_style/drinking_glass/blood
+	required_drink_type = /datum/reagent/blood
+	name = "glass of tomato juice"
+	desc = "Are you sure this is tomato juice?"
+	icon_state = "glass_red"
+
 
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -110,10 +117,13 @@
 	color = "#CC4633"
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
-	shot_glass_icon_state = "shotglassred"
 	material = /datum/material/meat
 	ph = 7.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/shot_glass/liquidgibs
+	required_drink_type = /datum/reagent/liquidgibs
+	icon_state = "shotglassred"
 
 /datum/reagent/bone_dust
 	name = "Bone Dust"
@@ -162,11 +172,17 @@
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
 	var/cooling_temperature = 2
-	glass_icon_state = "glass_clear"
-	glass_name = "glass of water"
-	glass_desc = "The father of all refreshments."
-	shot_glass_icon_state = "shotglassclear"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
+
+/datum/glass_style/shot_glass/water
+	required_drink_type = /datum/reagent/water
+	icon_state = "shotglassclear"
+
+/datum/glass_style/drinking_glass/water
+	required_drink_type = /datum/reagent/water
+	name = "glass of water"
+	desc = "The father of all refreshments."
+	icon_state = "glass_clear"
 
 /*
  * Water reaction to turf
@@ -246,12 +262,15 @@
 	name = "Holy Water"
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
-	glass_icon_state = "glass_clear"
-	glass_name = "glass of holy water"
-	glass_desc = "A glass of holy water."
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 	ph = 7.5 //God is alkaline
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
+
+/datum/glass_style/drinking_glass/holywater
+	required_drink_type = /datum/reagent/water/holywater
+	name = "glass of holy water"
+	desc = "A glass of holy water."
+	icon_state = "glass_clear"
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -334,12 +353,18 @@
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "burning water"
 	var/cooling_temperature = 2
-	glass_icon_state = "glass_clear"
-	glass_name = "glass of oxygenated water"
-	glass_desc = "The father of all refreshments. Surely it tastes great, right?"
-	shot_glass_icon_state = "shotglassclear"
 	ph = 6.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/shot_glass/hydrogen_peroxide
+	required_drink_type = /datum/reagent/hydrogen_peroxide
+	icon_state = "shotglassclear"
+
+/datum/glass_style/drinking_glass/hydrogen_peroxide
+	required_drink_type = /datum/reagent/hydrogen_peroxide
+	name = "glass of oxygenated water"
+	desc = "The father of all refreshments. Surely it tastes great, right?"
+	icon_state = "glass_clear"
 
 /*
  * Water reaction to turf
@@ -440,6 +465,7 @@
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
 	taste_description = "sour oranges"
 	ph = 5
+	fallback_icon = 'icons/obj/drinks/drink_effects.dmi'
 	fallback_icon_state = "spraytan_fallback"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1143,15 +1169,18 @@
 	description = "Required for welders. Flammable."
 	color = "#660000" // rgb: 102, 0, 0
 	taste_description = "gross metal"
-	glass_icon_state = "dr_gibb_glass"
-	glass_name = "glass of welder fuel"
-	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
 	penetrates_skin = NONE
 	ph = 4
 	burning_temperature = 1725 //more refined than oil
 	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/alcohol = 4)
+
+/datum/glass_style/drinking_glass/fuel
+	required_drink_type = /datum/reagent/fuel
+	name = "glass of welder fuel"
+	desc = "Unless you're an industrial tool, this is probably not safe for consumption."
+	icon_state = "dr_gibb_glass"
 
 /datum/reagent/fuel/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	. = ..()
@@ -2453,14 +2482,17 @@
 /datum/reagent/yuck
 	name = "Organic Slurry"
 	description = "A mixture of various colors of fluid. Induces vomiting."
-	glass_name = "glass of ...yuck!"
-	glass_desc = "It smells like a carcass, and doesn't look much better."
 	color = "#545000"
 	taste_description = "insides"
 	taste_mult = 4
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/yuck_cycle = 0 //! The `current_cycle` when puking starts.
+
+/datum/glass_style/drinking_glass/yuck
+	required_drink_type = /datum/reagent/yuck
+	name = "glass of ...yuck!"
+	desc = "It smells like a carcass, and doesn't look much better."
 
 /datum/reagent/yuck/on_mob_add(mob/living/affected_mob)
 	. = ..()
@@ -2695,8 +2727,6 @@
 	taste_mult = 1.3
 	taste_description = "tiny legs scuttling down the back of your throat"
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
-	glass_name = "glass of ants"
-	glass_desc = "Bottoms up...?"
 	ph = 4.6 // Ants contain Formic Acid
 	/// How much damage the ants are going to be doing (rises with each tick the ants are in someone's body)
 	var/ant_damage = 0
@@ -2708,8 +2738,13 @@
 		"GET THEM OUT OF ME!!",
 		"HOLY HELL THEY BURN!!",
 		"MY GOD THEY'RE INSIDE ME!!",
-		"GET THEM OUT!!"
-		)
+		"GET THEM OUT!!",
+	)
+
+/datum/glass_style/drinking_glass/ants
+	required_drink_type = /datum/reagent/ants
+	name = "glass of ants"
+	desc = "Bottoms up...?"
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, delta_time)
 	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.025),0.1))) //Scales with time. Roughly 32 brute with 100u.
