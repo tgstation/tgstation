@@ -333,3 +333,30 @@
 		return
 	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
 	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
+
+/datum/station_trait/glass_maint
+	name = "Glass Maintinance"
+	trait_type = STATION_TRAIT_POSITIVE
+	show_in_report = TRUE
+	weight = 5
+
+/datum/station_trait/glass_maint/New()
+	. = ..()
+	report_message = pick(
+		"In an effort to reduce maintenance casualties, glass windows have been fitted in every door.",
+		"We had a spare engineer, so we had them put glass in all maintenance doors.",
+		"To commemorate our miners, we put glass in all the airlocks. Unfortunately, we ran out after completing maintenance.",
+		"In an effort to comply with Space Law section [rand(1,99999)].4, we have outfitted maintenence with glass windows.",
+		"An anomaly caused all the maintenance airlocks to get glass windows.",
+		"An intern went through and added glass to all the maintenance windows in their spare time.",
+		"In an effort to promote brand transparancy, we're adding glass to all maintenance doors effective immediately.",  // my proudest dad joke
+		"We over-ordered glass during construction, so maintenance gets glass windows."
+	)
+
+/datum/station_trait/on_round_start()
+	for(var/area/station/maintenance/A in GLOB.areas)
+		for(var/turf/in_area as anything in A.get_contained_turfs())
+			for(var/obj/machinery/door/airlock/D in in_area)
+				D.opacity = FALSE
+				D.glass = TRUE
+				D.update_icon(ALL, 0)
