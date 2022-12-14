@@ -205,13 +205,13 @@
 	prev.icon_state = "armsy_end"
 	prev.icon_living = "armsy_end"
 
-/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced, required_status)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced, required_bodytype)
 	if(back)
 		return back.adjustBruteLoss(amount, updating_health, forced)
 
 	return ..()
 
-/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustFireLoss(amount, updating_health, forced, required_status)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustFireLoss(amount, updating_health, forced, required_bodytype)
 	if(back)
 		return back.adjustFireLoss(amount, updating_health, forced)
 
@@ -283,7 +283,8 @@
 	if(health < maxHealth * 0.8)
 		return
 
-	if(++current_stacks < stacks_to_grow)
+	current_stacks++
+	if(current_stacks < stacks_to_grow)
 		return
 
 	var/mob/living/simple_animal/hostile/heretic_summon/armsy/prev = new type(drop_location(), FALSE)
