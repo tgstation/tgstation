@@ -78,10 +78,10 @@
 
 ////////////////////////////Cyborg Mothership////////////////////////////
 
-/area/shuttle/ruin/cyborg_mothership
+/area/shuttle/cyborg_mothership
 	name = "Cyborg Mothership"
 	requires_power = TRUE
-	area_limited_icon_smoothing = /area/shuttle/ruin/cyborg_mothership
+	area_limited_icon_smoothing = /area/shuttle/cyborg_mothership
 
 ////////////////////////////White Ship////////////////////////////
 

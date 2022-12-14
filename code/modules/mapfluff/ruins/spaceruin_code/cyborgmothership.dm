@@ -1,22 +1,3 @@
-/obj/docking_port/stationary/cyborg_mothership
-	name = "Cyborg Mothership"
-	shuttle_id = "cyborg_mothership"
-	roundstart_template = /datum/map_template/shuttle/ruin/cyborg_mothership
-	dir = SOUTH
-	width = 23
-	height = 30
-	dwidth = 11
-
-/obj/docking_port/mobile/cyborg_mothership
-	name = "Cyborg Mothership"
-	shuttle_id = "cyborg_mothership"
-	dir = SOUTH
-	dwidth = 11
-	width = 23
-	height = 23
-	launch_status = 0
-	callTime = 250
-
 
 /obj/item/circuitboard/computer/cyborg_mothership
 	name = "#101011"
