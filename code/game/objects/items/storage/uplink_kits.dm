@@ -75,7 +75,7 @@
 			new /obj/item/gun/ballistic/revolver(src) // 13 tc
 			new /obj/item/ammo_box/a357(src) // 4 tc
 			new /obj/item/ammo_box/a357(src)
-			new /obj/item/storage/belt/holster/chameleon // 1 tc
+			new /obj/item/storage/belt/holster/chameleon(src) // 1 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc replaced the emag with the doorjack
 			new /obj/item/grenade/c4(src) // 1 tc
 			new /obj/item/clothing/gloves/color/latex/nitrile(src) // ~1 tc for whole outfit
@@ -94,7 +94,7 @@
 		if(KIT_MURDER)
 			new /obj/item/melee/energy/sword/saber(src) // 8 tc
 			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
-			new /obj/item/card/emag(src) // 4 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/grenade/syndieminibomb(src) // 6 tc
@@ -111,7 +111,7 @@
 		if(KIT_HACKER) //L-L--LOOK AT YOU, HACKER
 			new /obj/item/ai_module/syndicate(src) // 4 tc
 			new /obj/item/card/emag(src) // 4 tc
-			new /obj/item/card/emag/doorjack // 3 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/encryptionkey/binary(src) // 5 tc
 			new /obj/item/ai_module/toy_ai(src) // ~6 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
@@ -120,21 +120,18 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 
-		if(KIT_LORD_SINGULOTH) //can't loose the goose anymore without SM :(
+		if(KIT_LORD_SINGULOTH) //currently disabled, i might return with another anti-engine kit
 			new /obj/item/sbeacondrop(src) // 10 tc
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/card/emag(src) // 4 tc
-			new /obj/item/card/emag/doorjack // 3 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/card/id/advanced/mining(src)
 			new /obj/item/stack/spacecash/c10000(src) // this is technically 10 tc but not really
 			new /obj/item/toy/spinningtoy(src) //lol
-			new /obj/item/pipe_dispenser(src) // ~1 tc needed for engine stuff
-			new /obj/item/storage/box/syndie_kit/supermatter // this is a mistake right? but at the same time. 10 tc
 
 		if(KIT_SABOTAGE)
-			/obj/item/storage/backpack/duffelbag/syndie/sabotage
+			new /obj/item/storage/backpack/duffelbag/syndie/sabotage(src) // 5 tc for 3 c4 and 2 x4
 			new /obj/item/camera_bug(src) // 1 tc
 			new /obj/item/sbeacondrop/powersink(src) // 11 tc
 			new /obj/item/computer_disk/virus/detomatix(src) // 6 tc
@@ -182,6 +179,11 @@
 			new /obj/item/clothing/under/chameleon(src) // 1 tc
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			new /obj/item/reagent_containers/cup/rag(src)
+			new /obj/item/implanter/freedom(src) // 5 tc
+			new /obj/item/flashlight/emp(src) // 2 tc
+			new /obj/item/grenade/c4/x4(src) // 1ish tc
+			new /obj/item/reagent_containers/pill/cyanide(src)
+			new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
 		if(KIT_NINJA)
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
@@ -191,15 +193,18 @@
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/chameleon(src) // 7 tc
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
+			new /obj/item/book/granter/action/spell/smoke(src) // ninja smoke bomb. 1 tc
+			new /obj/item/clothing/shoes/bhop(src) // mining item, lets you jump at people, at least 2 tc
 
 		if(KIT_DARK_LORD)
-			new /obj/item/dualsaber(src) // 16 tc
+			new /obj/item/dualsaber/red(src) // 16 tc
 			new /obj/item/dnainjector/telemut/darkbundle(src) // ~ 4 tc for tk
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 			new /obj/item/clothing/shoes/chameleon/noslip(src) //2 tc ,because slipping while being a dark lord sucks
 			new /obj/item/book/granter/action/spell/summonitem(src) // ~2 tc
-			new /obj/item/multitool(src) // you need that desword to be red
+			new /obj/item/book/granter/action/spell/lightningbolt(src) // 4 tc
 
 		if(KIT_WHITE_WHALE_HOLY_GRAIL) //Unique items that don't appear anywhere else
 			new /obj/item/gun/ballistic/rifle/boltaction/harpoon(src)
@@ -207,6 +212,7 @@
 			new /obj/item/clothing/suit/hooded/carp_costume/spaceproof(src)
 			new /obj/item/clothing/mask/gas/carp(src)
 			new /obj/item/grenade/spawnergrenade/spesscarp(src)
+			new /obj/item/toy/plush/carpplushie/dehy_carp(src) // 1 tc, for use as a personal mount
 
 		if(KIT_MAD_SCIENTIST)
 			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
@@ -229,8 +235,8 @@
 			new /obj/item/clothing/suit/hooded/bee_costume(src) // 0 tc
 			new /obj/item/clothing/mask/animal/small/bee(src) // 0 tc
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
-			new /obj/item/grenade/spawnergrenade/buzzkill(src) // 10 bees are probably about 5 tc
-			new /obj/item/grenade/spawnergrenade/buzzkill(src)
+			new /obj/item/grenade/spawnergrenade/buzzkill(src) // these are the random super bees this is definitely all of the tc budget for this one
+			new /obj/item/grenade/spawnergrenade/buzzkill(src) // 10 tc per grenade
 			new /obj/item/reagent_containers/cup/bottle/beesease(src) // 10 tc?
 			new /obj/item/melee/beesword(src) //priceless
 
@@ -240,13 +246,14 @@
 			new /obj/item/clothing/mask/chameleon(src)
 			new /obj/item/clothing/suit/hooded/wintercoat(src)
 			new /obj/item/clothing/shoes/winterboots(src)
-			new /obj/item/grenade/gluon(src) // whole belt is 22 and gluon is weight 4 so around 2 tc each
+			new /obj/item/grenade/gluon(src) // whole belt is 22 and gluon is weight 4 so lets just go with like 7 total
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/grenade/gluon(src)
-			new /obj/item/dnainjector/geladikinesis(src) // both abilities are probably 4 tc
+			new /obj/item/dnainjector/geladikinesis(src) // both abilities are probably 3 tc total
 			new /obj/item/dnainjector/cryokinesis(src)
-			new /obj/item/gun/energy/temperature/security(src) // ~7 tc
+			new /obj/item/gun/energy/temperature/freeze(src) // ~6 tc
+			new /obj/item/gun/energy/laser/thermal/cryo(src) // ~6 tc
 			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue, 8 tc
 
 		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
