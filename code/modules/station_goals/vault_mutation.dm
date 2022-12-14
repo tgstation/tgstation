@@ -64,39 +64,39 @@
 	. = ..()
 	owner.next_move_modifier /= 0.5
 
-/datum/mutation/human/Nonflammable
-	name = "Nonflammable"
+/datum/mutation/human/Fire_Immunity
+	name = "Fire Immunity"
 	desc = "A mutation within the body that allows it to become nonflammable and withstand higher temperature."
 	text_gain_indication = "Your body feels like it can withstand fire."
 	text_lose_indication = "Your body feels vulnerable to fire again."
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/Nonflammable/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/Fire_Immunity/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
 	acquirer.physiology.burn_mod *= 0.5
 	ADD_TRAIT(acquirer, TRAIT_RESISTHEAT, GENETIC_MUTATION)
 	ADD_TRAIT(acquirer, TRAIT_NOFIRE, GENETIC_MUTATION)
 
-/datum/mutation/human/Nonflammable/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/human/Fire_Immunity/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	owner.physiology.burn_mod /= 0.5
 	REMOVE_TRAIT(owner, TRAIT_RESISTHEAT, GENETIC_MUTATION)
 	REMOVE_TRAIT( owner, TRAIT_NOFIRE, GENETIC_MUTATION)
 
-/datum/mutation/human/Sturdy
-	name = "Sturdy"
+/datum/mutation/human/Quick_Recovery
+	name = "Quick Recovery"
 	desc = "A mutation within the nervouse system that allows it to recover from being knocked down."
 	text_gain_indication = "You feel like you can recover from a fall easier."
 	text_lose_indication = "You feel like recovering from a fall is a challenge again."
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/Sturdy/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/Quick_Recovery/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
 	acquirer.physiology.stun_mod *= 0.5
 
-/datum/mutation/human/Sturdy/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/human/Quick_Recovery/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	owner.physiology.stun_mod /= 0.5
 
@@ -111,10 +111,14 @@
 /datum/mutation/human/Plasmocile/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
 	var/obj/item/organ/internal/lungs/improved_lungs = acquirer.getorganslot(ORGAN_SLOT_LUNGS)
-	ADD_TRAIT(owner, TRAIT_VIRUSIMMUNE, GENETIC_MUTATION)
 	if(improved_lungs)
 		improved_lungs.plas_breath_dam_min *= 0
 		improved_lungs.plas_breath_dam_max *= 0
+		ADD_TRAIT(owner, TRAIT_VIRUSIMMUNE, GENETIC_MUTATION)
+	else
+		to_chat(acquirer, span_alert("Our lungs are missing!"))
+		return
+	RegisterSignal(improved_lungs, COMSIG_ORGAN_REMOVED, PROC_REF(handle_lungs))
 
 /datum/mutation/human/Plasmocile/on_losing(mob/living/carbon/human/owner)
 	. = ..()
@@ -123,4 +127,10 @@
 	if(improved_lungs)
 		improved_lungs.plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 		improved_lungs.plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
+	else
+		return
 
+/datum/mutation/human/Plasmocile/proc/handle_lungs(datum/source, mob/living/carbon/human/loser)
+	SIGNAL_HANDLER
+
+	on_losing(loser)

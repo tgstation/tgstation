@@ -156,9 +156,9 @@
 		/datum/mutation/human/Breathless,
 		/datum/mutation/human/Dextrous,
 		/datum/mutation/human/Quick,
-		/datum/mutation/human/Nonflammable,
+		/datum/mutation/human/Fire_Immunity,
 		/datum/mutation/human/Plasmocile,
-		/datum/mutation/human/Sturdy,
+		/datum/mutation/human/Quick_Recovery,
 		/datum/mutation/human/Tough,
 	)
 	var/list/gained_mutation = list()
@@ -196,7 +196,7 @@
 
 	switch(action)
 		if("gene")
-			upgrade(usr,text2path("/datum/mutation/human/[params["choice"]]"))
+			upgrade(usr,params["choice"])
 			. = TRUE
 
 /obj/machinery/dna_vault/proc/check_goal()
@@ -205,9 +205,17 @@
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
 	var/datum/weakref/human_weakref = WEAKREF(H)
-	if(!(upgrade_type in power_lottery[human_weakref])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
+	var/static/list/associated_mutation = list(
+		"Breathless" = /datum/mutation/human/Breathless,
+		"Dextrous" = /datum/mutation/human/Dextrous,
+		"Quick" = /datum/mutation/human/Quick,
+		"Fire Immunity" = /datum/mutation/human/Fire_Immunity,
+		"Plasmocile" = /datum/mutation/human/Plasmocile,
+		"Quick Recovery" = /datum/mutation/human/Quick_Recovery,
+		"Tough" = /datum/mutation/human/Tough,)
+	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
-	H.dna.add_mutation(upgrade_type, MUT_OTHER, 0)
+	H.dna.add_mutation(associated_mutation[upgrade_type], MUT_OTHER, 0)
 	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
 	power_lottery[human_weakref] = list()
 	use_power(active_power_usage)
