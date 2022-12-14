@@ -10,7 +10,7 @@
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
 
-	if(!target || QDELETED(target))
+	if(QDELETED(target))
 		return
 
 	var/turf/next_step = get_step_towards(controller.pawn, target)
