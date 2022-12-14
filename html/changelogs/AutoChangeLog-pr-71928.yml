@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - rscadd: "lathes now print empty welders and extinguishers"
