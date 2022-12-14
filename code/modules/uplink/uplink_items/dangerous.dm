@@ -95,7 +95,7 @@
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
-	desc = "A brutally modernized Syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
+	desc = "A modernized Syndicate revolver by Waffle Co. that fires brutal .357 Magnum rounds and has 7 chambers."
 	item = /obj/item/gun/ballistic/revolver/syndicate
 	progression_minimum = 30 MINUTES
 	cost = 13
