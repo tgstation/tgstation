@@ -116,10 +116,14 @@
 			if(istype(stack_recipe, /datum/stack_recipe_list))
 				var/datum/stack_recipe_list/stack_recipe_list = stack_recipe
 				for(var/nested_recipe in stack_recipe_list.recipes)
+					if(!nested_recipe)
+						continue
 					var/datum/crafting_recipe/stack/recipe = new/datum/crafting_recipe/stack(stack, nested_recipe)
 					if(recipe.name != "" && recipe.result)
 						GLOB.crafting_recipes += recipe
 			else
+				if(!stack_recipe)
+					continue
 				var/datum/crafting_recipe/stack/recipe = new/datum/crafting_recipe/stack(stack, stack_recipe)
 				if(recipe.name != "" && recipe.result)
 					GLOB.crafting_recipes += recipe
