@@ -243,8 +243,8 @@
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
 	icon = "glass"
 	value = -4
-	gain_text = "<span class='danger'>Your jaw feels loose.</span>"
-	lose_text = "<span class='notice'>Your jaw feels connected again.</span>"
+	gain_text = span_danger("Your jaw feels loose.")
+	lose_text = span_notice("Your jaw feels fitting again.")
 	medical_record_text = "Patient is absurdly easy to knock out. Do not allow them near a boxing ring."
 	hardcore_value = 4
 	mail_goodies = list(
@@ -271,7 +271,7 @@
 		source.visible_message(span_warning("[source] gets knocked out!"),
 							span_userdanger("You are knocked out!"),
 							vision_distance = COMBAT_MESSAGE_RANGE)
-		source.Unconscious(1 SECONDS)
+		source.Unconscious(3 SECONDS)
 
 /datum/quirk/frail
 	name = "Frail"
