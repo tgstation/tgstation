@@ -269,7 +269,8 @@
 		return
 	if(prob(CEILING(actual_damage, 1)))
 		source.visible_message(span_warning("[source] gets knocked out!"),
-							span_userdanger("You are knocked out!"))
+							span_userdanger("You are knocked out!"),
+							vision_distance = COMBAT_MESSAGE_RANGE)
 		source.Unconscious(1 SECONDS)
 
 /datum/quirk/frail
