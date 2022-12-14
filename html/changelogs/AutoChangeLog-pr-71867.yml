@@ -1,4 +1,0 @@
-author: "A.C.M.O."
-delete-after: True
-changes:
-  - bugfix: "Fixed the DNA Infuser's Space Carp infusion, which was not properly granting its organ set bonus. Having all 4 carp organs infused now makes you space-proof as expected."

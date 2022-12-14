@@ -1,4 +1,0 @@
-author: "A.C.M.O."
-delete-after: True
-changes:
-  - bugfix: "Fixed robotic/surplus limbs not taking damage/healing as expected; including via the Var Viewer, Player Panel, and from sources of spread-damage."

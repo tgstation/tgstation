@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	name = "modular microcomputer"
 	desc = "A small portable microcomputer."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "laptop-open"
+	icon_state = "laptop"
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
