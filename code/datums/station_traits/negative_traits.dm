@@ -115,14 +115,12 @@
 
 /datum/station_trait/airlock_sabotage/proc/sabotage_airlocks()
 	SIGNAL_HANDLER
-	var/datum/wires/airlock/airlock_wires
 	for(var/obj/machinery/door/airlock/airlock as anything in GLOB.airlocks)
 		if(!(is_station_level(airlock.z) && prob(25)))
 			continue
-		airlock_wires = airlock.wires
 		for(var/wire in possible_wires)
 			if(prob(possible_wires[wire]))
-				airlock_wires.cut(wire)
+				airlock.wires.cut(wire)
 
 /datum/station_trait/empty_maint
 	name = "Cleaned out maintenance"
