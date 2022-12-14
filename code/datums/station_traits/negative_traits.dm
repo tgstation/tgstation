@@ -117,7 +117,7 @@
 	SIGNAL_HANDLER
 	var/datum/wires/airlock/airlock_wires
 	for(var/obj/machinery/door/airlock/airlock as anything in GLOB.airlocks)
-		if(!(is_station_level(airlock.z) && prob(35)))
+		if(!(is_station_level(airlock.z) && prob(25)))
 			continue
 		airlock_wires = airlock.wires
 		for(var/wire in possible_wires)
