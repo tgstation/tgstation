@@ -26,7 +26,6 @@
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
-	plane = GAME_PLANE
 	layer = TRAM_XING_LAYER
 
 /obj/machinery/door/window/tram

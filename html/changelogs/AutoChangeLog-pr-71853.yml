@@ -1,4 +1,0 @@
-author: "EvilDragonfiend"
-delete-after: True
-changes:
-  - code_imp: "quirk dm files are renamed 'positive_quirks.dm', 'negative_quirks.,dm', and 'neutral_quirks.dm'"
