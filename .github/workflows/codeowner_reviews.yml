@@ -27,3 +27,4 @@ jobs:
         with:
           separator: ' '
           users: ${{ steps.CodeOwnersParser.outputs.owners }}
+          ignoreRemovedUsers: true
