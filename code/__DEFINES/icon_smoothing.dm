@@ -104,9 +104,6 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(58) ///turf/closed/indestructible/riveted/boss
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(59) ///turf/closed/wall/mineral/titanium/survival
 
-// #define MAX_S_TURF SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS //Always match this value with the one above it.
-
-
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
 
@@ -172,14 +169,14 @@ DEFINE_BITFIELD(smoothing_flags, list(
 		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
 			ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_groups); \
 		} \
-		SET_BITFLAG_LIST(smoothing_groups); \
+		SET_SMOOTHING_GROUPS(smoothing_groups); \
 	} \
 \
 	if (canSmoothWith) { \
 		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
 			ASSERT_SORTED_SMOOTHING_GROUPS(canSmoothWith); \
 		} \
-		SET_BITFLAG_LIST(canSmoothWith); \
+		SET_SMOOTHING_GROUPS(canSmoothWith); \
 		if (canSmoothWith[1] == "-") { \
 			smoothing_flags |= SMOOTH_OBJ; \
 		} \
