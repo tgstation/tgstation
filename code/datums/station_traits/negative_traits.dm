@@ -85,6 +85,45 @@
 		if(is_station_level(apc.z) && prob(60))
 			apc.overload_lighting()
 
+/datum/station_trait/airlock_sabotage
+	name = "Airlock Sabotage"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 1
+	show_in_report = TRUE
+	report_message = "Many of the station's airlocks seem to be malfunctioning, be careful around them."
+
+	// I am not sure exactly how this could be reverted except fixing up wires on every on-station airlock
+	can_revert = FALSE
+
+	/// List of wires we can cut, along with the chance of them being cut
+	var/static/possible_wires = list(
+		WIRE_AI = 65,
+		WIRE_SAFETY = 60,
+		WIRE_LIGHT = 50,
+		WIRE_UNRESTRICTED_EXIT = 40,
+		WIRE_SHOCK = 35,
+		WIRE_BOLTS = 35,
+		WIRE_BACKUP1 = 30,
+		WIRE_BACKUP2 = 30,
+		WIRE_POWER1 = 25,
+		WIRE_POWER2 = 25,
+	)
+
+/datum/station_trait/airlock_sabotage/New()
+	. = ..()
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(sabotage_airlocks))
+
+/datum/station_trait/airlock_sabotage/proc/sabotage_airlocks()
+	SIGNAL_HANDLER
+	var/datum/wires/airlock/airlock_wires
+	for(var/obj/machinery/door/airlock/airlock as anything in GLOB.airlocks)
+		if(!(is_station_level(airlock.z) && prob(35)))
+			continue
+		airlock_wires = airlock.wires
+		for(var/wire in possible_wires)
+			if(prob(possible_wires[wire]))
+				airlock_wires.cut(wire)
+
 /datum/station_trait/empty_maint
 	name = "Cleaned out maintenance"
 	trait_type = STATION_TRAIT_NEGATIVE
