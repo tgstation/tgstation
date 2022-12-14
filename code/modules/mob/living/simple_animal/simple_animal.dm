@@ -451,6 +451,7 @@
 	. = ..()
 	. += ""
 	. += "Health: [round((health / maxHealth) * 100)]%"
+	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/simple_animal/proc/drop_loot()
 	if(loot.len)

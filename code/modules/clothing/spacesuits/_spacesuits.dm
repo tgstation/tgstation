@@ -64,19 +64,26 @@
 		cell = new cell(src)
 
 /// Start Processing on the space suit when it is worn to heat the wearer
-/obj/item/clothing/suit/space/equipped(mob/user, slot)
+/obj/item/clothing/suit/space/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
 		update_hud_icon(user) // update the hud
+		RegisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 // On removal stop processing, save battery
-/obj/item/clothing/suit/space/dropped(mob/user)
+/obj/item/clothing/suit/space/dropped(mob/living/user)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	var/mob/living/carbon/human/human = user
-	if(istype(human))
-		human.update_spacesuit_hud_icon("0")
+	UnregisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+	var/mob/living/carbon/carbon_user = user
+	if(istype(carbon_user))
+		carbon_user.update_spacesuit_hud_icon("0")
+
+/obj/item/clothing/suit/space/proc/get_status_tab_item(mob/living/source, list/items)
+	SIGNAL_HANDLER
+	items += "Thermal Regulator: [thermal_on ? "On" : "Off"]"
+	items += "Cell Charge: [cell ? "[round(cell.percent(), 0.1)]%" : "No Cell!"]"
 
 // Space Suit temperature regulation and power usage
 /obj/item/clothing/suit/space/process(delta_time)

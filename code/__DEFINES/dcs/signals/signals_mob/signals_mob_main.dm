@@ -171,3 +171,5 @@
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
+/// from mob/get_status_tab_items(): (list/items)
+#define COMSIG_MOB_GET_STATUS_TAB_ITEMS "mob_get_status_tab_items"

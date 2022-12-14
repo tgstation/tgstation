@@ -832,6 +832,7 @@
 /// Adds this list to the output to the stat browser
 /mob/proc/get_status_tab_items()
 	. = list()
+	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
 
 /**
  * Convert a list of spells into a displyable list for the statpanel
