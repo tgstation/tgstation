@@ -238,6 +238,41 @@
 	quirk_holder.clear_mood_event("family_heirloom_missing")
 	quirk_holder.clear_mood_event("family_heirloom")
 
+/datum/quirk/glassjaw
+	name = "Glass Jaw"
+	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
+	icon = "facegrimace"
+	value = -4
+	mob_trait = TRAIT_EASILY_WOUNDED
+	gain_text = "<span class='danger'>Your jaw feels loose.</span>"
+	lose_text = "<span class='notice'>Your jaw feels connected again.</span>"
+	medical_record_text = "Patient is absurdly easy to knock out. Do not allow them near a boxing ring."
+	hardcore_value = 4
+	mail_goodies = list(
+		/obj/item/clothing/gloves/boxing,
+		/obj/item/clothing/under/shorts/red,
+		/obj/item/clothing/mask/luchador/rudos,
+	)
+
+/datum/quirk/glassjaw/add()
+	RegisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(punch_out))
+
+/datum/quirk/glassjaw/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE)
+
+/datum/quirk/glassjaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked)
+	SIGNAL_HANDLER
+	if((damagetype != BRUTE) || (def_zone != BODY_ZONE_HEAD))
+		return
+	var/actual_damage = damage - (damage * blocked/100)
+	//only roll for knockouts at 5 damage or more
+	if(actual_damage < 5)
+		return
+	if(prob(CEILING(actual_damage, 1)))
+		source.visible_message(span_warning("[source] gets knocked out!"),
+							span_userdanger("You are knocked out!"))
+		source.Unconscious(1 SECONDS)
+
 /datum/quirk/frail
 	name = "Frail"
 	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
