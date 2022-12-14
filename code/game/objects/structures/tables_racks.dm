@@ -659,7 +659,7 @@
 	name = "titanium glass table"
 	desc = "A titanium reinforced glass table, with a fresh coat of NT white paint."
 	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
-	icon_state = "titaniumglass_table-o"
+	icon_state = "titaniumglass_table-0"
 	base_icon_state = "titaniumglass_table"
 	custom_materials = list(/datum/material/alloy/titaniumglass = 2000)
 	buildstack = /obj/item/stack/sheet/titaniumglass
