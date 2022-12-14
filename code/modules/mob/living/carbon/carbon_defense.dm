@@ -117,11 +117,11 @@
 	if(I.damtype == BRUTE && hit_bodypart.can_dismember())
 		var/mangled_state = hit_bodypart.get_mangled_state()
 		var/bio_state = hit_bodypart.biological_state
-		if(mangled_state == BODYPART_MANGLED_BOTH)
+		if((mangled_state & BODYPART_MANGLED_FLESH) && (mangled_state & BODYPART_MANGLED_BONE))
 			extra_wound_details = ", threatening to sever it entirely"
-		else if((mangled_state == BODYPART_MANGLED_FLESH && I.get_sharpness()) || (mangled_state & BODYPART_MANGLED_BONE && (bio_state & BIO_BONE) && !(bio_state & BIO_FLESH)))
+		else if((mangled_state & BODYPART_MANGLED_FLESH && I.get_sharpness()) || ((mangled_state & BODYPART_MANGLED_BONE) && (bio_state & BIO_BONE) && !(bio_state & BIO_FLESH)))
 			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the bone"
-		else if((mangled_state == BODYPART_MANGLED_BONE && I.get_sharpness()) || (mangled_state & BODYPART_MANGLED_FLESH && (bio_state & BIO_FLESH) && !(bio_state & BIO_BONE)))
+		else if((mangled_state & BODYPART_MANGLED_BONE && I.get_sharpness()) || ((mangled_state & BODYPART_MANGLED_FLESH) && (bio_state & BIO_FLESH) && !(bio_state & BIO_BONE)))
 			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining tissue"
 
 	var/message_hit_area = ""

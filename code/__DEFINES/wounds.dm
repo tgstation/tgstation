@@ -90,13 +90,13 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 
 // ~mangling defines
 // With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable (bone only creatures just need the second):
-// 1. Skin is mangled: A critical slash or pierce wound on that limb
+// 1. Flesh is mangled: A critical slash or pierce wound on that limb
 // 2. Bone is mangled: At least a severe bone wound on that limb
 // see [/obj/item/bodypart/proc/get_mangled_state] for more information
-#define BODYPART_MANGLED_NONE 0
-#define BODYPART_MANGLED_BONE 1
-#define BODYPART_MANGLED_FLESH 2
-#define BODYPART_MANGLED_BOTH 3
+#define BODYPART_MANGLED_NONE NONE
+#define BODYPART_MANGLED_BONE (1<<0)
+#define BODYPART_MANGLED_FLESH (1<<1)
+#define BODYPART_MANGLED_BOTH (BODYPART_MANGLED_BONE | BODYPART_MANGLED_FLESH)
 
 
 // ~biology defines
