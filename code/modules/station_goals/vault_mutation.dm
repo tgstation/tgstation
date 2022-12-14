@@ -118,7 +118,8 @@
 	else
 		to_chat(acquirer, span_alert("Our lungs are missing!"))
 		return
-	RegisterSignal(improved_lungs, COMSIG_ORGAN_REMOVED, PROC_REF(handle_lungs))
+	RegisterSignal(acquirer, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(remove_modification))
+	RegisterSignal(acquirer, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(reapply_modification))
 
 /datum/mutation/human/Plasmocile/on_losing(mob/living/carbon/human/owner)
 	. = ..()
@@ -130,7 +131,18 @@
 	else
 		return
 
-/datum/mutation/human/Plasmocile/proc/handle_lungs(datum/source, mob/living/carbon/human/loser)
+/datum/mutation/human/Plasmocile/proc/remove_modification(mob/source, obj/item/organ/old_organ)
 	SIGNAL_HANDLER
 
-	on_losing(loser)
+	if(istype(old_organ, /obj/item/organ/internal/lungs))
+		var/obj/item/organ/internal/lungs/old_pair = old_organ
+		old_pair.plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
+		old_pair.plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
+
+/datum/mutation/human/Plasmocile/proc/reapply_modification(mob/source, obj/item/organ/new_organ)
+	SIGNAL_HANDLER
+
+	if(istype(new_organ, /obj/item/organ/internal/lungs))
+		var/obj/item/organ/internal/lungs/new_pair = new_organ
+		new_pair.plas_breath_dam_min *= 0
+		new_pair.plas_breath_dam_max *= 0
