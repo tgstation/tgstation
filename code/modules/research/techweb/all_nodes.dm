@@ -450,7 +450,6 @@
 		"dish_drive",
 		"fat_sucker",
 		"gibber",
-		"gibber",
 		"griddle",
 		"microwave",
 		"monkey_recycler",
