@@ -1,0 +1,4 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes:
+  - bugfix: "Instant summons spell now safely and reliably retrieves items from inside of anchored containers."

@@ -744,10 +744,14 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (CONFIG_GET(flag/norespawn) && (!check_rights_for(usr.client, R_ADMIN) || tgui_alert(usr, "Respawn configs disabled. Do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes"))
-		return
+	if (CONFIG_GET(flag/norespawn))
+		if (!check_rights_for(usr.client, R_ADMIN))
+			to_chat(usr, span_boldnotice("Respawning is not enabled!"))
+			return
+		else if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+			return
 
-	if ((stat != DEAD || !( SSticker )))
+	if (stat != DEAD)
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 

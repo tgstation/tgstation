@@ -27,8 +27,6 @@
 	COOLDOWN_DECLARE(baton_bash)
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!breakable_by_damage)
-		return FALSE
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
@@ -55,6 +53,8 @@
 	new shield_break_leftover(get_turf(src))
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
+	if(!breakable_by_damage)
+		return TRUE
 	if (atom_integrity <= damage)
 		var/turf/owner_turf = get_turf(owner)
 		owner_turf.visible_message(span_warning("[hitby] destroys [src]!"))

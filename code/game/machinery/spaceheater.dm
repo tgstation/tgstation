@@ -140,8 +140,10 @@
 	if(mode == HEATER_MODE_COOL)
 		delta_temperature *= -1
 	if(delta_temperature)
-		enviroment.temperature += delta_temperature
-		air_update_turf(FALSE, FALSE)
+		for (var/turf/open/turf in ((local_turf.atmos_adjacent_turfs || list()) + local_turf))
+			var/datum/gas_mixture/turf_gasmix = turf.return_air()
+			turf_gasmix.temperature += delta_temperature
+			air_update_turf(FALSE, FALSE)
 	cell.use(required_energy / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()

@@ -6,7 +6,7 @@
 	icon_state = "muzzle_laser"
 
 /obj/effect/projectile/muzzle/laser/blue
-	icon_state = "muzzle_laser_blue"
+	icon_state = "muzzle_blue"
 
 /obj/effect/projectile/muzzle/disabler
 	icon_state = "muzzle_omni"

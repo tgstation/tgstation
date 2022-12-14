@@ -15,6 +15,7 @@
 /obj/machinery/bluespace_vendor
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_off"
+	base_icon_state = "bluespace_vendor"
 	name = "Bluespace Gas Vendor"
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
@@ -42,8 +43,6 @@
 	var/gas_price = 0
 	///Helper for mappers, will automatically connect to the sender (ensure to only place one sender per map)
 	var/map_spawned = TRUE
-	///Base icon name for updating the appearance
-	var/base_icon = "bluespace_vendor"
 	///Current operating mode of the vendor
 	var/mode = BS_MODE_OFF
 
@@ -80,13 +79,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/update_icon_state()
 	switch(mode)
 		if(BS_MODE_OFF)
-			icon_state = "[base_icon]_off"
+			icon_state = "[base_icon_state]_off"
 		if(BS_MODE_IDLE)
-			icon_state = "[base_icon]_idle"
+			icon_state = "[base_icon_state]_idle"
 		if(BS_MODE_PUMPING)
-			icon_state = "[base_icon]_pumping"
+			icon_state = "[base_icon_state]_pumping"
 		if(BS_MODE_OPEN)
-			icon_state = "[base_icon]_open"
+			icon_state = "[base_icon_state]_open"
 	return ..()
 
 /obj/machinery/bluespace_vendor/Exited(atom/movable/gone, direction)
@@ -126,7 +125,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	return TRUE
 
 /obj/machinery/bluespace_vendor/attackby(obj/item/item, mob/living/user)
-	if(!pumping && default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]_off", item))
+	if(!pumping && default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", item))
 		check_mode()
 		return
 	if(default_deconstruction_crowbar(item, FALSE, custom_deconstruct = TRUE))

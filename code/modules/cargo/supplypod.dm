@@ -505,7 +505,7 @@
 /obj/effect/engineglow //Falling pod smoke
 	name = ""
 	icon = 'icons/obj/supplypods.dmi'
-	icon_state = "pod_engineglow"
+	icon_state = "pod_glow_green"
 	desc = ""
 	layer = GASFIRE_LAYER
 	plane = ABOVE_GAME_PLANE
