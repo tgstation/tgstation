@@ -120,11 +120,56 @@
 		"spawn" = surplus_crate,
 	))
 
-/datum/uplink_item/bundles_tc/surplus/super
-	name = "Super Surplus Crate"
-	desc = "A dusty SUPER-SIZED crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
-			Rumored to contain a valuable assortment of items, but you never know. Contents are sorted to always be worth 75 TC."
-	cost = 40
+/datum/uplink_item/bundles_tc/surplus/united
+	name = "United Surplus Crate"
+	desc = "A shiny and large crate to be delivered directly to you via Supply Pod. It has an advanced locking mechanism with an anti-tampering protocol. \
+			It is recommended that you only attempt to open it by having another agent purchase a Surplus Crate Key. Unite and fight. \
+			Rumored to contain a valuable assortment of items based on your current reputation, but you never know. Contents are sorted to always be worth 80 TC. \
+			The Syndicate will only provide one surplus item per agent."
+	cost = 20
+	item = /obj/structure/closet/crate/syndicrate
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = 75
+	crate_tc_value = 80
+
+/datum/uplink_item/bundles_tc/surplus_key
+	name = "United Surplus Crate Key"
+	desc = "This inconscpicous device is actually a key that can open any United Surplus Crate. It can only be used once. \
+			Though initially designed to encourage cooperation, agents quickly discovered that you can turn the key to the crate by yourself.  \
+			The Syndicate will only provide one surplus item per agent."
+	cost = 20
+	item = /obj/item/syndicrate_key
+	progression_minimum = 30 MINUTES
+	stock_key = UPLINK_SHARED_STOCK_SURPLUS
+
+/datum/uplink_item/bundles_tc/surplus/united/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	var/obj/structure/closet/crate/syndicrate/surplus_crate = new()
+
+	var/list/possible_items = list()
+	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
+		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
+		if(src == uplink_item || !uplink_item.item)
+			continue
+		if(!handler.check_if_restricted(uplink_item))
+			continue
+		if(!uplink_item.surplus)
+			continue
+		if(handler.not_enough_reputation(uplink_item))
+			continue
+		possible_items += uplink_item
+
+	var/tc_budget = crate_tc_value
+	while(tc_budget)
+		var/datum/uplink_item/uplink_item = pick(possible_items)
+		if(prob(100 - uplink_item.surplus))
+			continue
+		if(tc_budget < uplink_item.cost)
+			continue
+		tc_budget -= uplink_item.cost
+		new uplink_item.item(surplus_crate)
+
+	podspawn(list(
+		"target" = get_turf(user),
+		"style" = STYLE_SYNDICATE,
+		"spawn" = surplus_crate,
+	))
