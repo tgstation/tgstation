@@ -41,7 +41,7 @@
 		if(isnull(icon_state))
 			continue
 
-		if(LAZYLEN(bad_list) && (icon_state in bad_list[icon]))
+		if(length(bad_list) && (icon_state in bad_list[icon]))
 			continue
 
 		if(icon_exists(icon, icon_state))
