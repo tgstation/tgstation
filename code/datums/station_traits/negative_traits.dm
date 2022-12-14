@@ -96,7 +96,7 @@
 	can_revert = FALSE
 
 	/// List of wires we can cut, along with the chance of them being cut
-	var/static/possible_wires = list(
+	var/static/list/possible_wires = list(
 		WIRE_AI = 65,
 		WIRE_SAFETY = 60,
 		WIRE_LIGHT = 50,
@@ -109,14 +109,11 @@
 		WIRE_POWER2 = 25,
 	)
 
-/datum/station_trait/airlock_sabotage/New()
+/datum/station_trait/airlock_sabotage/on_round_start()
 	. = ..()
-	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(sabotage_airlocks))
-
-/datum/station_trait/airlock_sabotage/proc/sabotage_airlocks()
-	SIGNAL_HANDLER
 	for(var/obj/machinery/door/airlock/airlock as anything in GLOB.airlocks)
-		if(!(is_station_level(airlock.z) && prob(25)))
+		// For whatever reason, some airlocks don't have wires, so the first check is in fact necessary
+		if(!(airlock.wires && is_station_level(airlock.z) && prob(25)))
 			continue
 		for(var/wire in possible_wires)
 			if(prob(possible_wires[wire]))
