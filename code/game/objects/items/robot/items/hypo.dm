@@ -373,6 +373,7 @@
 	name = "cyborg shaker"
 	desc = "Will mix drinks that knock them dead."
 	icon_state = "threemileislandglass"
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	tgui_theme = "syndicate"
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = HACKED_SERVICE_REAGENTS
