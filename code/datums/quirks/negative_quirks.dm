@@ -259,7 +259,7 @@
 /datum/quirk/glassjaw/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE)
 
-/datum/quirk/glassjaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked)
+/datum/quirk/glassjaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
 	SIGNAL_HANDLER
 	if((damagetype != BRUTE) || (def_zone != BODY_ZONE_HEAD))
 		return
@@ -267,7 +267,8 @@
 	//only roll for knockouts at 5 damage or more
 	if(actual_damage < 5)
 		return
-	if(prob(CEILING(actual_damage, 1)))
+	//blunt items are more likely to knock out, but sharp ones are still capable of doing it
+	if(prob(CEILING(actual_damage * (sharpness & SHARP_EDGED|SHARP_POINTY ? 0.65 : 1), 1)))
 		source.visible_message(span_warning("[source] gets knocked out!"),
 							span_userdanger("You are knocked out!"),
 							vision_distance = COMBAT_MESSAGE_RANGE)
