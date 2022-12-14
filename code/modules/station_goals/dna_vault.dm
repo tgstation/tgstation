@@ -148,6 +148,7 @@
 		ui = new(user, src, "DnaVault", name)
 		ui.open()
 
+//Generate a unique set of mutation for each person
 /obj/machinery/dna_vault/proc/roll_powers(mob/user)
 	var/datum/weakref/user_weakref = WEAKREF(user)
 	if((user_weakref in power_lottery) || isdead(user))
