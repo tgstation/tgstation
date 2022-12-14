@@ -8,7 +8,7 @@
 		var/mob/living/source_mob = src
 		source += " ([source_mob.ckey ? source_mob.ckey : "*no key*"])"
 
-	WRITE_FILE(F, "[time_stamp()] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
+	WRITE_FILE(F, "[time_stamp(format = "YYYY-MM-DD hh:mm:ss")] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
 
 /client/proc/investigate_show()
 	set name = "Investigate"
