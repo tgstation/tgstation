@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Made the external smartfridge in the Tramstation pharmacy accessible from inside."

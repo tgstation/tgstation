@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - code_imp: "Makes a lot of the bodypart variables clearer as to what they do. Includes more detailed code comments."
-  - bugfix: "Robotic limbs are no longer immune to being disabled through reaching maximum damage."

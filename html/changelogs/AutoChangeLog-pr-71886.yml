@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Nanotrasen will now no longer mount the HoPline's Ticket Machines on windows for Meta, IceBox, and Tram."
