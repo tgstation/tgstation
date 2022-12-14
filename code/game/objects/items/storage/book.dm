@@ -271,7 +271,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		H.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		to_chat(H, span_notice("Your name appears on the inside cover, in blood."))
 		var/ownername = H.real_name
-		desc += span_warning("The name [ownername] is written in blood inside the cover.")
+
+/obj/item/storage/book/bible/syndicate/examine(mob/user)
+	. = ..()
+	if(ownername)
+		. += span_warning("The name [ownername] is written in blood inside the cover.")
 
 /obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 	if (!user.combat_mode)
