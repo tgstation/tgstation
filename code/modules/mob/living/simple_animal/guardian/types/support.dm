@@ -96,6 +96,7 @@
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	density = FALSE
 	anchored = TRUE
+	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/receiving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)

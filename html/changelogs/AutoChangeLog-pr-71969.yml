@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Dufflebag Curse no longer lasts forever after the bag is destroyed."
+  - bugfix: "Dufflebag Cursing someone already afflicted properly doesn't try to add the curse again"
