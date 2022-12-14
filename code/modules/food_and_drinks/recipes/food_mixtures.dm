@@ -8,9 +8,8 @@
 /datum/crafting_recipe/food/New()
 	if(ispath(result, /obj/item/food))
 		var/obj/item/food/result_food = new result
-		for(var/reagent in result_food.food_reagents)
-			var/datum/reagent/consumable/nutriment = reagent
-			total_nutriment_factor += initial(nutriment.nutriment_factor) * result_food.food_reagents[reagent]
+		for(var/datum/reagent/consumable/nutriment as anything in result_food.food_reagents)
+			total_nutriment_factor += initial(nutriment.nutriment_factor) * result_food.food_reagents[nutriment]
 	real_parts = parts.Copy()
 	parts |= reqs
 

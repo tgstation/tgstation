@@ -51,6 +51,7 @@
 
 /datum/crafting_recipe/stack/New(obj/item/stack/material, datum/stack_recipe/stack_recipe)
 	if(!material || !stack_recipe || !stack_recipe.result_type)
+		stack_trace("Invalid stack recipe [stack_recipe]")
 		return
 	..()
 

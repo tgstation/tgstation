@@ -330,6 +330,15 @@
 			container.emptyStorage()
 		qdel(DL)
 
+/datum/component/personal_crafting/proc/is_recipe_available(datum/crafting_recipe/recipe, mob/user)
+	if(!recipe.always_available && !(recipe.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+		return FALSE
+	if (ispath(recipe.type, /datum/crafting_recipe/food/) != mode) // Skip if food and mode is crafting / Skip if not food and mode is cooking
+		return FALSE
+	if (recipe.category == CAT_CULT && !IS_CULTIST(user)) // Skip blood cult recipes if not cultist
+		return FALSE
+	return TRUE
+
 /datum/component/personal_crafting/proc/component_ui_interact(atom/movable/screen/craft/image, location, control, params, user)
 	SIGNAL_HANDLER
 
@@ -355,17 +364,11 @@
 
 	var/list/surroundings = get_surroundings(user)
 	var/list/craftability = list()
-	for(var/rec in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
-		var/datum/crafting_recipe/R = rec
-
-		if(!R.always_available && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
+		if(!is_recipe_available(recipe, user))
 			continue
-
-		if (ispath(R.type, /datum/crafting_recipe/food/) != mode) // Skip if food and mode is crafting / Skip if not food and mode is cooking
-			continue
-
-		if(check_contents(user, R, surroundings) && check_tools(user, R, surroundings))
-			craftability["[REF(R)]"] = TRUE
+		if(check_contents(user, recipe, surroundings) && check_tools(user, recipe, surroundings))
+			craftability["[REF(recipe)]"] = TRUE
 
 	data["craftability"] = craftability
 	return data
@@ -382,16 +385,8 @@
 		var/mob/living/carbon/carbon = user
 		data["diet"] = carbon.dna.species.get_species_diet()
 
-	for(var/R in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
-		var/datum/crafting_recipe/recipe = R
-
-		if(!recipe.always_available && !(recipe.type in user?.mind?.learned_recipes)) // User doesn't actually know how to make this.
-			continue
-
-		if (ispath(recipe.type, /datum/crafting_recipe/food/) != mode) // Skip if food and mode is crafting / Skip if not food and mode is cooking
-			continue
-
-		if (recipe.category == CAT_CULT && !IS_CULTIST(user)) // Skip blood cult recipes if not cultist
+	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
+		if(!is_recipe_available(recipe, user))
 			continue
 
 		if(recipe.category && !(recipe.category in data["categories"]))
@@ -416,26 +411,25 @@
 			else
 				material_occurences[req] += 1
 
-		data["recipes"] += list(build_crafting_data(R))
+		data["recipes"] += list(build_crafting_data(recipe))
 
 	var/list/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
 
 	// Prepare atom data
-	for(var/path in atoms)
-		var/atom/atom = path
+	for(var/atom/atom as anything in atoms)
 		data["atom_data"] += list(list(
 			"name" = initial(atom.name),
 			"is_reagent" = ispath(atom, /datum/reagent/)
 		))
 
 	// Prepare materials data
-	for(var/atom/path as anything in material_occurences)
-		if(material_occurences[path] == 1)
+	for(var/atom/atom as anything in material_occurences)
+		if(material_occurences[atom] == 1)
 			continue // Don't include materials that appear only once
-		var/id = atoms.Find(path)
+		var/id = atoms.Find(atom)
 		data["material_occurences"] += list(list(
 				"atom_id" = "[id]",
-				"occurences" = material_occurences[path]
+				"occurences" = material_occurences[atom]
 			))
 
 	return data

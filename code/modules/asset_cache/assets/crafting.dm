@@ -29,8 +29,7 @@
 		stack_trace("Atom [atom] with icon '[icon_file]' missing state '[icon_state]'")
 		return
 	#endif
-	var/icon/I = icon(icon_file, icon_state, SOUTH)
-	Insert("a[id]", I)
+	Insert("a[id]", icon(icon_file, icon_state, SOUTH))
 
 ///Adds tool icons to the spritesheet
 /datum/asset/spritesheet/crafting/proc/add_tool_icons()

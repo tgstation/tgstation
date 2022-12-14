@@ -147,8 +147,7 @@
 	)
 
 	for(var/recipe_list in recipe_lists)
-		for(var/R in recipe_list)
-			var/datum/crafting_recipe/recipe = R
+		for(var/datum/crafting_recipe/recipe as anything in recipe_list)
 			var/list_index = recipe_lists.Find(recipe_list)
 			// Result
 			if(!(recipe.result in atom_lists[list_index]))

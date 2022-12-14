@@ -156,7 +156,7 @@ export const PersonalCrafting = (props, context) => {
   const [pages, setPages] = useLocalState(context, 'pages', 1);
   const DEFAULT_CAT_CRAFTING = Object.keys(CATEGORY_ICONS_CRAFTING)[1];
   const DEFAULT_CAT_COOKING = Object.keys(CATEGORY_ICONS_COOKING)[1];
-  const [activeCategory, setCategory] = useLocalState<string | undefined>(
+  const [activeCategory, setCategory] = useLocalState<string>(
     context,
     'category',
     Object.keys(craftability).length
@@ -732,17 +732,11 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
               <Box style={{ 'text-transform': 'capitalize' }}>
                 {item.reqs && (
                   <Box>
-                    <Stack my={1}>
-                      <Stack.Item grow>
-                        <Divider />
-                      </Stack.Item>
-                      <Stack.Item color={'gray'}>
-                        {mode === MODE.cooking ? 'Ingredients' : 'Materials'}
-                      </Stack.Item>
-                      <Stack.Item grow>
-                        <Divider />
-                      </Stack.Item>
-                    </Stack>
+                    <GroupTitle
+                      title={
+                        mode === MODE.cooking ? 'Ingredients' : 'Materials'
+                      }
+                    />
                     {Object.keys(item.reqs).map((atom_id) => (
                       <AtomContent
                         key={atom_id}
@@ -754,15 +748,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
                 )}
                 {item.chem_catalysts && (
                   <Box>
-                    <Stack my={1}>
-                      <Stack.Item grow>
-                        <Divider />
-                      </Stack.Item>
-                      <Stack.Item color={'gray'}>Catalysts</Stack.Item>
-                      <Stack.Item grow>
-                        <Divider />
-                      </Stack.Item>
-                    </Stack>
+                    <GroupTitle title="Catalysts" />
                     {Object.keys(item.chem_catalysts).map((atom_id) => (
                       <AtomContent
                         key={atom_id}
@@ -774,15 +760,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
                 )}
                 {(item.tool_paths || item.tool_behaviors) && (
                   <Box>
-                    <Stack my={1}>
-                      <Stack.Item grow>
-                        <Divider />
-                      </Stack.Item>
-                      <Stack.Item color={'gray'}>Tools</Stack.Item>
-                      <Stack.Item grow>
-                        <Divider />
-                      </Stack.Item>
-                    </Stack>
+                    <GroupTitle title="Tools" />
                     {item.tool_paths &&
                       item.tool_paths.map((tool) => (
                         <AtomContent key={tool} atom_id={tool} amount={1} />
@@ -795,15 +773,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
                 )}
                 {item.machinery && (
                   <Box>
-                    <Stack my={1}>
-                      <Stack.Item grow>
-                        <Divider />
-                      </Stack.Item>
-                      <Stack.Item color={'gray'}>Machinery</Stack.Item>
-                      <Stack.Item grow>
-                        <Divider />
-                      </Stack.Item>
-                    </Stack>
+                    <GroupTitle title="Machinery" />
                     {item.machinery.map((atom_id) => (
                       <AtomContent key={atom_id} atom_id={atom_id} amount={1} />
                     ))}
@@ -812,15 +782,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
               </Box>
               {!!item.steps?.length && (
                 <Box>
-                  <Stack my={1}>
-                    <Stack.Item grow>
-                      <Divider />
-                    </Stack.Item>
-                    <Stack.Item color={'gray'}>Steps</Stack.Item>
-                    <Stack.Item grow>
-                      <Divider />
-                    </Stack.Item>
-                  </Stack>
+                  <GroupTitle title="Steps" />
                   <ul style={{ 'padding-left': '20px' }}>
                     {item.steps.map((step) => (
                       <li key={step}>{step}</li>
@@ -918,5 +880,19 @@ const ToolContent = ({ tool }) => {
         {tool}
       </Box>
     </Box>
+  ) as any;
+};
+
+const GroupTitle = ({ title }) => {
+  return (
+    <Stack my={1}>
+      <Stack.Item grow>
+        <Divider />
+      </Stack.Item>
+      <Stack.Item color={'gray'}>{title}</Stack.Item>
+      <Stack.Item grow>
+        <Divider />
+      </Stack.Item>
+    </Stack>
   ) as any;
 };
