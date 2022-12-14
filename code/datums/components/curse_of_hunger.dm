@@ -32,16 +32,15 @@
 	. = ..()
 	var/obj/item/cursed_item = parent
 	RegisterSignal(cursed_item, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-	//checking slot_equipment_priority is the better way to decide if it should be an equip-curse (alternative being if it has slot_flags)
-	//because it needs to know where to equip to (and stuff like buckets and cones can be on_pickup curses despite having slots to equip to)
-	if(cursed_item.slot_equipment_priority)
-		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
-	else
-		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
+	RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 
 /datum/component/curse_of_hunger/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_POST_UNEQUIP, COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(parent, list(
+		COMSIG_PARENT_EXAMINE,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_ITEM_DROPPED,
+	))
 
 ///signal called on parent being examined
 /datum/component/curse_of_hunger/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -57,23 +56,15 @@
 /datum/component/curse_of_hunger/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 	var/obj/item/at_least_item = parent
-	if(!(at_least_item.slot_flags & slot))
+	// Items with no slot flags curse on pickup (because hand slot)
+	if(at_least_item.slot_flags && !(at_least_item.slot_flags & slot))
 		return
 	the_curse_begins(equipper)
-
-///signal called from a successful unequip of parent
-/datum/component/curse_of_hunger/proc/on_unequip(mob/living/unequipper, force, atom/newloc, no_move, invdrop, silent)
-	SIGNAL_HANDLER
-	the_curse_ends(unequipper)
-
-///signal called from picking up parent
-/datum/component/curse_of_hunger/proc/on_pickup(datum/source, mob/grabber)
-	SIGNAL_HANDLER
-	the_curse_begins(grabber)
 
 ///signal called from dropping parent
 /datum/component/curse_of_hunger/proc/on_drop(datum/source, mob/dropper)
 	SIGNAL_HANDLER
+
 	the_curse_ends(dropper)
 
 /datum/component/curse_of_hunger/proc/the_curse_begins(mob/cursed)
@@ -85,27 +76,24 @@
 	ADD_TRAIT(cursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(cursed_item.type))
 	if(add_dropdel)
 		cursed_item.item_flags |= DROPDEL
-		return
-	if(cursed_item.slot_equipment_priority)
-		RegisterSignal(cursed_item, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequip))
-	else
-		RegisterSignal(cursed_item, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+
+	RegisterSignal(cursed_item, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 
 /datum/component/curse_of_hunger/proc/the_curse_ends(mob/uncursed)
-	var/obj/item/at_least_item = parent
+	var/obj/item/cursed_item = parent
 	STOP_PROCESSING(SSobj, src)
-	REMOVE_TRAIT(parent, TRAIT_NODROP, CURSED_ITEM_TRAIT(parent.type))
-	REMOVE_TRAIT(uncursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(at_least_item.type))
-	REMOVE_TRAIT(uncursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(at_least_item.type))
+	REMOVE_TRAIT(cursed_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(cursed_item.type))
+	REMOVE_TRAIT(uncursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(cursed_item.type))
+	REMOVE_TRAIT(uncursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(cursed_item.type))
 	//remove either one of the signals that could have called this proc
-	UnregisterSignal(parent, list(COMSIG_ITEM_POST_UNEQUIP, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(cursed_item, COMSIG_ITEM_DROPPED)
 
-	var/turf/vomit_turf = get_turf(at_least_item)
+	var/turf/vomit_turf = get_turf(cursed_item)
 	playsound(vomit_turf, 'sound/effects/splat.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/vomit(vomit_turf)
 
-	uncursed.dropItemToGround(at_least_item, force = TRUE)
-	if(!QDELETED(at_least_item)) //gives a head start for the person to get away from the cursed item before it begins hunting again!
+	uncursed.dropItemToGround(cursed_item, force = TRUE)
+	if(!QDELING(cursed_item)) //gives a head start for the person to get away from the cursed item before it begins hunting again!
 		addtimer(CALLBACK(src, PROC_REF(seek_new_target)), 10 SECONDS)
 
 ///proc called after a timer to awaken the AI in the cursed item if it doesn't have a target already.
@@ -166,3 +154,6 @@
 	cursed.visible_message(span_danger("[cursed_item] bites [cursed]!"), span_userdanger("[cursed_item] bites you to sate [cursed_item.p_their()] hunger!"))
 	cursed.apply_damage(60, BRUTE, BODY_ZONE_CHEST, wound_bonus = -20, bare_wound_bonus = 20)
 	current_health = min(current_health + 1, max_health)
+
+#undef HUNGER_THRESHOLD_WARNING
+#undef HUNGER_THRESHOLD_TRY_EATING
