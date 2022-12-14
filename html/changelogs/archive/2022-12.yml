@@ -523,3 +523,28 @@
       Plumbing RCD
   tralezab:
   - qol: Regal rats are on the orbit menu
+2022-12-14:
+  Fikou:
+  - rscadd: lathes now print empty welders and extinguishers
+  Floofies:
+  - bugfix: Fixed a stray-tab typo in "item_heal_robotic"
+  - bugfix: Fixed reagents and other effects which were inappropriately affecting
+      robotic limbs.
+  - code_imp: Refactored all of reagents code to be more readable and maintainable.
+  GoldenAlpharex:
+  - bugfix: Everything that goes on the tram should look a lot less flat now!
+  Jacquerel:
+  - rscadd: The followers of Regal Rats will now respond to simple instructions, if
+      given by their rightful lord. Except frogs. They're too busy licking themselves
+      and watching the colours.
+  JohnFulpWillard:
+  - qol: Experiment handlers now give a more reasonable explanation for why they can't
+      find a server.
+  - admin: Machines being disconnected from techwebs is now logged in research.
+  LemonInTheDark:
+  - rscadd: Adds a grace period for hit detection, between clicking ON someone, and
+      then moving your mouse off before releasing the click. It's short, hopefully
+      it helps with stupid
+  TheWolfbringer:
+  - bugfix: You can now access the coffee beans and cigarettes at Deltastation's Engineering
+      breakroom
