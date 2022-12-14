@@ -241,7 +241,7 @@
 /datum/quirk/glassjaw
 	name = "Glass Jaw"
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
-	icon = "facegrimace"
+	icon = "glass"
 	value = -4
 	gain_text = "<span class='danger'>Your jaw feels loose.</span>"
 	lose_text = "<span class='notice'>Your jaw feels connected again.</span>"
