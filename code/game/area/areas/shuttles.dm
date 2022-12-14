@@ -187,7 +187,7 @@
 /area/shuttle/escape/meteor
 	name = "\proper a meteor with engines strapped to it"
 	luminosity = NONE
-	
+
 /area/shuttle/escape/engine
 	name = "Escape Shuttle Engine"
 
@@ -215,28 +215,33 @@
 /area/shuttle/syndicate_scout
 	name = "Syndicate Scout"
 
-/area/shuttle/caravan
+/area/shuttle/ruin
+	name = "Ruined Shuttle"
+
+/// Special shuttles made for the Caravan Ambush ruin.
+/area/shuttle/ruin/caravan
 	requires_power = TRUE
+	name = "Ruined Caravan Shuttle"
 
-/area/shuttle/caravan/syndicate1
+/area/shuttle/ruin/caravan/syndicate1
 	name = "Syndicate Fighter"
 
-/area/shuttle/caravan/syndicate2
+/area/shuttle/ruin/caravan/syndicate2
 	name = "Syndicate Fighter"
 
-/area/shuttle/caravan/syndicate3
+/area/shuttle/ruin/caravan/syndicate3
 	name = "Syndicate Drop Ship"
 
-/area/shuttle/caravan/pirate
+/area/shuttle/ruin/caravan/pirate
 	name = "Pirate Cutter"
 
-/area/shuttle/caravan/freighter1
+/area/shuttle/ruin/caravan/freighter1
 	name = "Small Freighter"
 
-/area/shuttle/caravan/freighter2
+/area/shuttle/ruin/caravan/freighter2
 	name = "Tiny Freighter"
 
-/area/shuttle/caravan/freighter3
+/area/shuttle/ruin/caravan/freighter3
 	name = "Tiny Freighter"
 
 // ----------- Arena Shuttle

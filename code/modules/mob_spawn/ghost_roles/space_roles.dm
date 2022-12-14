@@ -120,7 +120,8 @@
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/allow_spawn(mob/user, silent = FALSE)
 	if(!(user.ckey in antag_team.players_spawned))
 		return TRUE
-	to_chat(user, span_boldwarning("You have already used up your chance to roll as Battlecruiser."))
+	if(!silent)
+		to_chat(user, span_boldwarning("You have already used up your chance to roll as Battlecruiser."))
 	return FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/special(mob/living/spawned_mob, mob/possesser)
@@ -211,7 +212,7 @@
 	name = "Syndicate Battlecruiser Assault Operative"
 	uniform = /obj/item/clothing/under/syndicate/combat
 	l_pocket = /obj/item/uplink/nuclear
-	r_pocket = /obj/item/modular_computer/tablet/nukeops
+	r_pocket = /obj/item/modular_computer/pda/nukeops
 	belt = /obj/item/storage/belt/military
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = /obj/item/gun/ballistic/automatic/pistol/clandestine

@@ -125,7 +125,7 @@ Striking a noncultist, however, will tear their flesh."}
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"
 	desc = "Use the sword to shear open the flimsy fabric of this reality and teleport to your target."
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "phaseshift"
 	dash_sound = 'sound/magic/enter_blood.ogg'
 	recharge_sound = 'sound/magic/exit_blood.ogg'
@@ -147,7 +147,7 @@ Striking a noncultist, however, will tear their flesh."}
 	breakouttime = 6 SECONDS
 	knockdown = 30
 
-#define CULT_BOLA_PICKUP_STUN 6 SECONDS
+#define CULT_BOLA_PICKUP_STUN (6 SECONDS)
 /obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
 
@@ -363,7 +363,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/reagent_containers/cup/beaker/unholywater
 	name = "flask of unholy water"
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "holyflask"
 	color = "#333333"
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
@@ -371,7 +371,7 @@ Striking a noncultist, however, will tear their flesh."}
 ///how many times can the shuttle be cursed?
 #define MAX_SHUTTLE_CURSES 3
 ///if the max number of shuttle curses are used within this duration, the entire cult gets an achievement
-#define SHUTTLE_CURSE_OMFG_TIMESPAN 10 SECONDS
+#define SHUTTLE_CURSE_OMFG_TIMESPAN (10 SECONDS)
 
 /obj/item/shuttle_curse
 	name = "cursed orb"
@@ -649,6 +649,8 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "Bloody Bond"
 	desc = "Call the bloody halberd back to your hand!"
 	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+
 	button_icon_state = "bloodspear"
 	default_button_position = "6:157,4:-2"
 	var/obj/item/melee/cultblade/halberd/halberd

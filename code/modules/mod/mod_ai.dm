@@ -70,8 +70,8 @@
 #define MOVE_DELAY 2
 #define WEARER_DELAY 1
 #define LONE_DELAY 5
-#define CHARGE_PER_STEP DEFAULT_CHARGE_DRAIN * 2.5
-#define AI_FALL_TIME 1 SECONDS
+#define CHARGE_PER_STEP (DEFAULT_CHARGE_DRAIN * 2.5)
+#define AI_FALL_TIME (1 SECONDS)
 
 /obj/item/mod/control/relaymove(mob/user, direction)
 	if((!active && wearer) || get_charge() < CHARGE_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state > GRAB_PASSIVE))
@@ -90,7 +90,7 @@
 		ADD_TRAIT(wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
 		addtimer(CALLBACK(src, PROC_REF(ai_fall)), AI_FALL_TIME, TIMER_UNIQUE | TIMER_OVERRIDE)
 	var/atom/movable/mover = wearer || src
-	return step(mover, direction)
+	return mover.try_step_multiz(direction)
 
 #undef MOVE_DELAY
 #undef WEARER_DELAY

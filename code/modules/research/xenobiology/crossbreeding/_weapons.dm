@@ -57,7 +57,7 @@ Slimecrossing Weapons
 /obj/item/shield/adamantineshield
 	name = "adamantine shield"
 	desc = "A gigantic shield made of solid adamantium."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/weapons/shields.dmi'
 	icon_state = "adamshield"
 	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
@@ -70,6 +70,7 @@ Slimecrossing Weapons
 	attack_verb_continuous = list("bashes", "pounds", "slams")
 	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
+	breakable_by_damage = FALSE
 
 /obj/item/shield/adamantineshield/Initialize(mapload)
 	. = ..()

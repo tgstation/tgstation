@@ -35,7 +35,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "aP" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -89,7 +89,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/cerulean,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "cj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -204,7 +204,7 @@
 	desc = "The efficacy of this product is doubted."
 	},
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "hK" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/hydroponics/soil,
@@ -334,7 +334,7 @@
 "rE" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "rG" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation)
@@ -353,7 +353,7 @@
 "tl" = (
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "tm" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/airalarm/syndicate{
@@ -383,7 +383,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "vI" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "vP" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
@@ -413,7 +413,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "xh" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/computer/med_data/syndie{
@@ -485,7 +485,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "zp" = (
 /turf/closed/wall,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "zv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -502,7 +502,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "zZ" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
@@ -621,7 +621,7 @@
 "EK" = (
 /obj/item/paper/fluff/ruins/listeningstation/reports/june,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "Fy" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -686,7 +686,7 @@
 	pixel_y = -32
 	},
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "JB" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/listeningstation)
@@ -717,7 +717,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "LR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -776,7 +776,7 @@
 "NY" = (
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "Om" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
@@ -870,7 +870,7 @@
 	pixel_x = -32
 	},
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "TK" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/firealarm/directional/east,
@@ -885,7 +885,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "TO" = (
 /obj/structure/cable,
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -921,7 +921,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "VH" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -975,7 +975,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "Yz" = (
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "YV" = (
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{

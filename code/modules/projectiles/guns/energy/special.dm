@@ -24,6 +24,7 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
+	worn_icon_state = "gun"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 
@@ -375,3 +376,64 @@
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+
+/obj/item/gun/energy/marksman_revolver
+	name = "marksman revolver"
+	desc = "Uses electric pulses to fire microscopic pieces of metal at incredibly high speeds. Alternate fire flips a coin that can be targeted for extra firepower."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "revolver"
+	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
+	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	automatic_charge_overlays = FALSE
+	/// How many coins we can have at a time. Set to 0 for infinite
+	var/max_coins = 4
+	/// How many coins we currently have available
+	var/coin_count = 0
+	/// How long it takes to regen a coin
+	var/coin_regen_rate = 2 SECONDS
+	/// The cooldown for regenning coins
+	COOLDOWN_DECLARE(coin_regen_cd)
+
+/obj/item/gun/energy/marksman_revolver/Initialize(mapload)
+	. = ..()
+	coin_count = max_coins
+
+/obj/item/gun/energy/marksman_revolver/examine(mob/user)
+	. = ..()
+	if(max_coins)
+		. += "It currently has [coin_count] out of [max_coins] coins, and takes [coin_regen_rate/10] seconds to recharge each one."
+	else
+		. += "It has infinite coins available for use."
+
+/obj/item/gun/energy/marksman_revolver/process(delta_time)
+	if(!max_coins || coin_count >= max_coins)
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	if(COOLDOWN_FINISHED(src, coin_regen_cd))
+		if(ismob(loc))
+			var/mob/owner = loc
+			owner.playsound_local(owner, 'sound/machines/ding.ogg', 20)
+		coin_count++
+		COOLDOWN_START(src, coin_regen_cd, coin_regen_rate)
+
+/obj/item/gun/energy/marksman_revolver/afterattack_secondary(atom/target, mob/living/user, params)
+	if(!can_see(user, get_turf(target), length = 9))
+		return ..()
+
+	if(max_coins && coin_count <= 0)
+		to_chat(user, span_warning("You don't have any coins right now!"))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(max_coins)
+		START_PROCESSING(SSobj, src)
+		coin_count = max(0, coin_count - 1)
+
+	var/turf/target_turf = get_offset_target_turf(target, rand(-1, 1), rand(-1, 1)) // choose a random tile adjacent to the clicked one
+	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
+	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
+	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
+	new_coin.preparePixelProjectile(target_turf, user)
+	new_coin.fire()
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

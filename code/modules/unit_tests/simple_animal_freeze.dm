@@ -5,7 +5,6 @@
 	// Use the new basic mobs system instead.
 	// If you are refactoring a simple_animal, REMOVE it from this list
 	var/list/allowed_types = list(
-		/mob/living/simple_animal/axolotl,
 		/mob/living/simple_animal/bot,
 		/mob/living/simple_animal/bot/cleanbot,
 		/mob/living/simple_animal/bot/cleanbot/autopatrol,
@@ -357,20 +356,6 @@
 		/mob/living/simple_animal/pet/cat/original,
 		/mob/living/simple_animal/pet/cat/runtime,
 		/mob/living/simple_animal/pet/cat/space,
-		/mob/living/simple_animal/pet/dog,
-		/mob/living/simple_animal/pet/dog/breaddog,
-		/mob/living/simple_animal/pet/dog/bullterrier,
-		/mob/living/simple_animal/pet/dog/corgi,
-		/mob/living/simple_animal/pet/dog/corgi/exoticcorgi,
-		/mob/living/simple_animal/pet/dog/corgi/ian,
-		/mob/living/simple_animal/pet/dog/corgi/lisa,
-		/mob/living/simple_animal/pet/dog/corgi/narsie,
-		/mob/living/simple_animal/pet/dog/corgi/puppy,
-		/mob/living/simple_animal/pet/dog/corgi/puppy/ian,
-		/mob/living/simple_animal/pet/dog/corgi/puppy/slime,
-		/mob/living/simple_animal/pet/dog/corgi/puppy/void,
-		/mob/living/simple_animal/pet/dog/pug,
-		/mob/living/simple_animal/pet/dog/pug/mcgriff,
 		/mob/living/simple_animal/pet/fox,
 		/mob/living/simple_animal/pet/fox/renault,
 		/mob/living/simple_animal/pet/gondola,

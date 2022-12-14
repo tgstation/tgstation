@@ -13,7 +13,7 @@
 
 /datum/traitor_objective/destroy_heirloom
 	name = "Destroy %ITEM%, the family heirloom that belongs to %TARGET% the %JOB TITLE%"
-	description = "%TARGET% has been on our shitlist for a while and we want to show him we mean business. Find his %ITEM% and destroy it, you'll be rewarded handsomely for doing this"
+	description = "%TARGET% has been on our shitlist for a while and we want to show them we mean business. Find their %ITEM% and destroy it."
 
 	abstract_type = /datum/traitor_objective/destroy_heirloom
 
@@ -132,10 +132,10 @@
 	if(!length(possible_targets))
 		return FALSE
 	var/datum/mind/target_mind = pick(possible_targets)
-	AddComponent(/datum/component/traitor_objective_register, target_mind.current, fail_signals = COMSIG_PARENT_QDELETING)
+	AddComponent(/datum/component/traitor_objective_register, target_mind.current, fail_signals = list(COMSIG_PARENT_QDELETING))
 	var/datum/quirk/item_quirk/family_heirloom/quirk = locate() in target_mind.current.quirks
 	target_item = quirk.heirloom.resolve()
-	AddComponent(/datum/component/traitor_objective_register, target_item, succeed_signals = COMSIG_PARENT_QDELETING)
+	AddComponent(/datum/component/traitor_objective_register, target_item, succeed_signals = list(COMSIG_PARENT_QDELETING))
 	replace_in_name("%TARGET%", target_mind.name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
 	replace_in_name("%ITEM%", target_item.name)

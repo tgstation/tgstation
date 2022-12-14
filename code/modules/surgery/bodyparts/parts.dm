@@ -10,8 +10,6 @@
 	is_dimorphic = TRUE
 	px_x = 0
 	px_y = 0
-	stam_damage_coeff = 1
-	max_stamina_damage = 120
 	grind_results = null
 	wound_resistance = 10
 	bodypart_trait_source = CHEST_TRAIT
@@ -55,7 +53,7 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 500
 	acceptable_bodytype = BODYTYPE_HUMANOID
 
@@ -66,7 +64,7 @@
 	limb_id = BODYPART_ID_LARVA
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
@@ -78,7 +76,6 @@
 	attack_verb_continuous = list("slaps", "punches")
 	attack_verb_simple = list("slap", "punch")
 	max_damage = 50
-	max_stamina_damage = 50
 	aux_layer = HANDS_PART_LAYER
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
@@ -299,7 +296,6 @@
 	attack_verb_simple = list("kick", "stomp")
 	max_damage = 50
 	body_damage_coeff = 0.75
-	max_stamina_damage = 50
 	can_be_disabled = TRUE
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG

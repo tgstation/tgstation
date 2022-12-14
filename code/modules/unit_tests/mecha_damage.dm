@@ -7,7 +7,7 @@
 /datum/unit_test/mecha_damage/Run()
 	// "Loaded Mauler" was chosen deliberately here.
 	// We need a mech that starts with arm equipment and has fair enough armor.
-	var/obj/vehicle/sealed/mecha/demo_mech = allocate(/obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded)
+	var/obj/vehicle/sealed/mecha/demo_mech = allocate(/obj/vehicle/sealed/mecha/marauder/mauler/loaded)
 	// We need to face our guy explicitly, because mechs have directional armor
 	demo_mech.setDir(EAST)
 
@@ -15,7 +15,7 @@
 	var/expected_laser_armor = demo_mech.armor.getRating(LASER)
 	var/expected_bullet_armor = demo_mech.armor.getRating(BULLET)
 
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	dummy.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	// The dummy needs to be targeting an arm. Left is chosen here arbitrarily.
 	dummy.zone_selected = BODY_ZONE_L_ARM

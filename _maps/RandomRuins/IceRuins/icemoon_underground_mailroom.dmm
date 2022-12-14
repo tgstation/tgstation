@@ -227,7 +227,7 @@
 	dir = 4
 	},
 /obj/item/pressure_plate/hologrid{
-	reward = /mob/living/simple_animal/pet/dog/bullterrier
+	reward = /mob/living/basic/pet/dog/bullterrier
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/mailroom)
