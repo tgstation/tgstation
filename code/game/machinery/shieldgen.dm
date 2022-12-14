@@ -116,6 +116,7 @@
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	req_access = list(ACCESS_ENGINEERING)
+	emag_required = EMAG_ACCESS_HAZARD  // uncontrollable gen is a hazard
 	max_integrity = 100
 	var/active = FALSE
 	var/list/deployed_shields
@@ -263,6 +264,7 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
+	emag_required = EMAG_ACCESS_HAZARD
 	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
 	max_integrity = 300

@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
+	emag_required = EMAG_ACCESS_ID_CHECK
 	var/fail_message = "invalid user!"
 	var/selfdestruct = FALSE // Explode when user check is failed.
 	var/force_replace = FALSE // Can forcefully replace other pins.

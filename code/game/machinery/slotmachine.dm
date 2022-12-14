@@ -24,6 +24,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/slot_machine
 	light_color = LIGHT_COLOR_BROWN
+	emag_required = EMAG_ACCESS_HAZARD  // barely a hazard but eh
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE

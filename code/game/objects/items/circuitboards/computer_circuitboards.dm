@@ -477,6 +477,7 @@
 	name = "Supply Console"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/computer/cargo
+	emag_required = EMAG_ACCESS_SYSTEMS
 	var/contraband = FALSE
 
 /obj/item/circuitboard/computer/cargo/multitool_act(mob/living/user)
@@ -506,6 +507,7 @@
 /obj/item/circuitboard/computer/cargo/express
 	name = "Express Supply Console"
 	build_path = /obj/machinery/computer/cargo/express
+	emag_required = EMAG_ACCESS_HAZARD
 
 /obj/item/circuitboard/computer/cargo/express/emag_act(mob/living/user)
 	if(!(obj_flags & EMAGGED))

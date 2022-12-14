@@ -82,6 +82,7 @@
 	name = "\improper P.A.C.M.A.N.-type portable generator"
 	circuit = /obj/item/circuitboard/machine/pacman
 	power_gen = 5000
+	emag_required = EMAG_ACCESS_HAZARD
 	var/sheets = 0
 	var/max_sheets = 50
 	var/sheet_name = ""

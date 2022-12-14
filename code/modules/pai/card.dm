@@ -11,6 +11,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	worn_icon_state = "electronic"
+	emag_required = EMAG_ACCESS_ID_CHECK
 
 	/// Spam alert prevention
 	var/alert_cooldown

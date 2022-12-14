@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	max_integrity = 100
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	emag_required = EMAG_ACCESS_SYSTEMS
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot

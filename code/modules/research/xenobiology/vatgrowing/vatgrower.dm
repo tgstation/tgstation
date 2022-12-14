@@ -6,6 +6,7 @@
 	buffer = 300
 	///category for plumbing RCD
 	category = "Synthesizers"
+	emag_required = EMAG_ACCESS_VISUAL
 
 
 	///List of all microbiological samples in this soup.

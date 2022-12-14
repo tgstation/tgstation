@@ -14,6 +14,8 @@
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_COMMAND)
+	// either id or system required
+	emag_required = EMAG_ACCESS_ID_CHECK | EMAG_ACCESS_SYSTEMS
 	circuit = /obj/item/circuitboard/computer/communications
 	light_color = LIGHT_COLOR_BLUE
 

@@ -8,6 +8,7 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_ENGINE_EQUIP)
+	emag_required = EMAG_ACCESS_ID_CHECK  // suprisingly!
 	circuit = /obj/item/circuitboard/machine/emitter
 
 	use_power = NO_POWER_USE

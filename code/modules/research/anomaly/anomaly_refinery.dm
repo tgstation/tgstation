@@ -18,6 +18,7 @@
 	base_icon_state = "explosive_compressor"
 	icon_state = "explosive_compressor"
 	density = TRUE
+	emag_required = EMAG_ACCESS_HAZARD  // how to kill scientists with their own bomb
 
 	/// The raw core inserted in the machine.
 	var/obj/item/raw_anomaly_core/inserted_core

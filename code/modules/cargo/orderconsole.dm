@@ -4,6 +4,7 @@
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
 	light_color = COLOR_BRIGHT_ORANGE
+	emag_required = EMAG_ACCESS_SYSTEMS
 
 	///Can the supply console send the shuttle back and forth? Used in the UI backend.
 	var/can_send = TRUE

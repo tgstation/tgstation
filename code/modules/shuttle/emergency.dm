@@ -17,6 +17,7 @@
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
 	resistance_flags = INDESTRUCTIBLE
+	emag_required = EMAG_ACCESS_HAZARD
 	var/auth_need = 3
 	var/list/authorized = list()
 	var/list/acted_recently = list()
@@ -591,6 +592,7 @@
 	icon_state = "dorm_available"
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
+	emag_required = EMAG_ACCESS_ID_CHECK
 
 /obj/machinery/computer/shuttle/pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)

@@ -944,6 +944,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = IS_PLAYER_COLORABLE_1
+	emag_required = EMAG_ACCESS_VISUAL
 
 	/// The capacity of the vape.
 	var/chem_volume = 100

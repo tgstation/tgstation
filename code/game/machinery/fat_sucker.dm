@@ -7,6 +7,7 @@
 	state_open = FALSE
 	density = TRUE
 	req_access = list(ACCESS_KITCHEN)
+	emag_required = EMAG_ACCESS_HAZARD
 	var/processing = FALSE
 	var/start_at = NUTRITION_LEVEL_WELL_FED
 	var/stop_at = NUTRITION_LEVEL_STARVING

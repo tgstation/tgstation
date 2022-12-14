@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
 	has_fov = FALSE
+	emag_required = EMAG_ACCESS_HAZARD
 	COOLDOWN_DECLARE(hailer_cooldown)
 	var/aggressiveness = AGGR_BAD_COP
 	var/overuse_cooldown = FALSE

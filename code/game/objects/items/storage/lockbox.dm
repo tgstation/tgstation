@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	req_access = list(ACCESS_ARMORY)
+	emag_required = EMAG_ACCESS_ID_CHECK
 	var/broken = FALSE
 	var/open = FALSE
 	var/icon_locked = "lockbox+l"

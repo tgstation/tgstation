@@ -22,6 +22,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	processing_flags = NONE
+	emag_required = EMAG_ACCESS_DISPENSE
 
 	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.1

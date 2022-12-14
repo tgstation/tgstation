@@ -9,6 +9,7 @@
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/harvester
 	light_color = LIGHT_COLOR_BLUE
+	emag_required = EMAG_ACCESS_HAZARD
 	var/interval = 20
 	var/harvesting = FALSE
 	var/warming_up = FALSE

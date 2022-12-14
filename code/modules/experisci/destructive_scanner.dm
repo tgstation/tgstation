@@ -10,6 +10,7 @@
 	icon_state = "tube_open"
 	circuit = /obj/item/circuitboard/machine/destructive_scanner
 	layer = MOB_LAYER
+	emag_required = EMAG_ACCESS_HAZARD
 	var/scanning = FALSE
 
 /obj/machinery/destructive_scanner/Initialize(mapload)

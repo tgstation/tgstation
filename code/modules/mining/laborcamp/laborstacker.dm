@@ -8,6 +8,7 @@ GLOBAL_LIST(labor_sheet_values)
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
+	emag_required = EMAG_ACCESS_ID_CHECK
 	/// Connected stacking machine
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine
 	/// Needed to send messages to sec radio

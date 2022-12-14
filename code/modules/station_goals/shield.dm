@@ -147,6 +147,7 @@
 	mode = "M-SHIELD"
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	emag_required = EMAG_ACCESS_HAZARD
 	var/kill_range = 14
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)

@@ -27,6 +27,8 @@
 	light_range = 7
 	light_color = COLOR_VIVID_RED
 
+	emag_required = EMAG_ACCESS_HAZARD
+
 	//Trick to get the glowing overlay visible from a distance
 	luminosity = 1
 	//We want to use area sensitivity, let us

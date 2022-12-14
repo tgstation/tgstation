@@ -166,6 +166,7 @@ RSF
 	discriptor = "cookie-units"
 	action_type = "Fabricates"
 	cooldowndelay = 10 SECONDS
+	emag_required = EMAG_ACCESS_HAZARD
 	///Tracks whether or not the cookiesynth is about to print a poisoned cookie
 	var/toxin = FALSE //This might be better suited to some initialize fuckery, but I don't have a good "poisoned" sprite
 

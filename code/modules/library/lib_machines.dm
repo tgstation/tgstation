@@ -279,6 +279,7 @@
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	interface_type = "LibraryConsole"
+	emag_required = EMAG_ACCESS_HAZARD  // memetic hazard
 	///Can spawn secret lore item
 	var/can_spawn_lore = TRUE
 	///The screen we're currently on, sent to the ui

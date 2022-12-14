@@ -33,6 +33,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	icon_screen = "holocontrol"
+	emag_required = EMAG_ACCESS_HAZARD
 
 	//new vars
 	///what area type this holodeck loads into. linked turns into the nearest instance of this area

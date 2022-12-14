@@ -5,6 +5,7 @@
 	desc = "What could be inside?"
 	icon_state = "securecrate"
 	integrity_failure = 0 //no breaking open the crate
+	emag_required = EMAG_ACCESS_HAZARD  // to you
 	var/code = null
 	var/lastattempt = null
 	var/attempts = 10

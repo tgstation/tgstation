@@ -13,6 +13,7 @@
 	icon_keyboard = "tech_key"
 	light_color = LIGHT_COLOR_CYAN
 	req_access = list()
+	emag_required = EMAG_ACCESS_ID_CHECK
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE
 	/// ID of the attached shuttle
 	var/shuttleId

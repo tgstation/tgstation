@@ -64,6 +64,7 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.5
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	emag_required = EMAG_ACCESS_DISPENSE
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
 	///Are we ready to vend?? Is it time??

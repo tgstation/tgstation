@@ -15,6 +15,7 @@
 	circuit = /obj/item/circuitboard/computer/cargo/express
 	blockade_warning = "Bluespace instability detected. Delivery impossible."
 	req_access = list(ACCESS_CARGO)
+	emag_required = EMAG_ACCESS_HAZARD
 	is_express = TRUE
 	interface_type = "CargoExpress"
 

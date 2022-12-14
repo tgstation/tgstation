@@ -393,6 +393,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/dna_lock, /obj/item/mod/module/eradication_lock)
 	cooldown_time = 0.5 SECONDS
+	emag_required = EMAG_ACCESS_ID_CHECK
 	/// The DNA we lock with.
 	var/dna = null
 

@@ -26,6 +26,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	light_power = 1
 	light_color = COLOR_VIBRANT_LIME
 	luminosity = 1
+	emag_required = EMAG_ACCESS_VISUAL
 
 	/// green, amber, or red.
 	var/signal_state = XING_STATE_GREEN

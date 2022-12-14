@@ -43,6 +43,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
+	emag_required = EMAG_ACCESS_HAZARD  // boom
 
 	var/max_uses = 20
 	var/uses = 10

@@ -1,6 +1,7 @@
 /obj/item/assembly/control/elevator
 	name = "elevator controller"
 	desc = "A small device used to call elevators to the current floor."
+	emag_required = EMAG_ACCESS_HAZARD
 	/// A weakref to the lift_master datum we control
 	var/datum/weakref/lift_weakref
 

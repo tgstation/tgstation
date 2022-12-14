@@ -23,6 +23,7 @@
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
+	emag_required = EMAG_ACCESS_AIRLOCK
 
 	var/visible = TRUE
 	var/operating = FALSE

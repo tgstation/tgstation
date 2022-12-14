@@ -27,6 +27,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 0.9
+	emag_required = EMAG_ACCESS_BOT_FRY
 
 	///Will other (noncommissioned) bots salute this bot?
 	var/commissioned = FALSE

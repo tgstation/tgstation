@@ -17,6 +17,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	emag_required = EMAG_ACCESS_HAZARD
 
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
 	/// If the paddles are equipped (1) or on the defib (0)

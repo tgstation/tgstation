@@ -14,6 +14,7 @@
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 90, ACID = 70)
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	emag_required = EMAG_ACCESS_ID_CHECK
 
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

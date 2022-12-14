@@ -13,6 +13,7 @@
 	maptext_x = 7
 	maptext_y = 10
 	layer = HIGH_OBJ_LAYER
+	emag_required = EMAG_ACCESS_VISUAL
 	///Increment the ticket number whenever the HOP presses his button
 	var/ticket_number = 0
 	///What ticket number are we currently serving?

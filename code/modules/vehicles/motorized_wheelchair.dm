@@ -5,6 +5,7 @@
 	overlay_icon = "motorized_wheelchair_overlay"
 	foldabletype = null
 	max_integrity = 150
+	emag_required = EMAG_ACCESS_HAZARD  // how to kill old people
 	///How "fast" the wheelchair goes only affects ramming
 	var/speed = 2
 	///Self explanatory, ratio of how much power we use
@@ -35,7 +36,7 @@
 		speed += M.rating
 	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
 	if(icon_state != chair_icon)
-		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER) 
+		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER)
 
 	icon_state = chair_icon
 

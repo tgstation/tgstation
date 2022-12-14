@@ -33,6 +33,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	density = TRUE
 	desc = "A covered turret that shoots at its enemies."
 	req_access = list(ACCESS_SECURITY) /// Only people with Security access
+	emag_required = EMAG_ACCESS_HAZARD
 	power_channel = AREA_USAGE_EQUIP //drains power from the EQUIPMENT channel
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	max_integrity = 160 //the turret's health
@@ -858,6 +859,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	base_icon_state = "control"
 	density = FALSE
 	req_access = list(ACCESS_AI_UPLOAD)
+	emag_required = EMAG_ACCESS_ID_CHECK
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// Variable dictating if linked turrets are active and will shoot targets
 	var/enabled = TRUE

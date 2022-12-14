@@ -294,6 +294,7 @@
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "megaphone"
+	emag_required = EMAG_ACCESS_HAZARD
 	/// Harm alarm cooldown
 	COOLDOWN_DECLARE(alarm_cooldown)
 

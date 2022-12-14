@@ -8,6 +8,7 @@
 	integrity_failure = 0.5
 	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	buildable_sign = FALSE
+	emag_required = EMAG_ACCESS_VISUAL
 
 	var/panel_open = FALSE
 	var/datum/barsign/chosen_sign

@@ -8,6 +8,8 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/limbgrower
 
+	emag_required = EMAG_ACCESS_SYSTEMS
+
 	/// The category of limbs we're browing in our UI.
 	var/selected_category = SPECIES_HUMAN
 	/// If we're currently printing something.

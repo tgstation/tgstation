@@ -9,6 +9,7 @@
 	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	max_integrity = 200
 	integrity_failure = 0.25
+	emag_required = EMAG_ACCESS_ID_CHECK
 	///The showpiece item inside the case
 	var/obj/item/showpiece = null
 	///This allows for showpieces that can only hold items if they're the same istype as this.

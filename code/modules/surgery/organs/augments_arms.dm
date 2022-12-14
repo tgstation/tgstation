@@ -227,6 +227,7 @@
 /obj/item/organ/internal/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
+	emag_required = EMAG_ACCESS_HAZARD
 	items_to_create = list(
 		/obj/item/screwdriver/cyborg,
 		/obj/item/wrench/cyborg,

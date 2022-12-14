@@ -16,6 +16,7 @@
 	name = "message monitor console"
 	desc = "Used to monitor the crew's PDA messages, as well as request console messages."
 	icon_screen = "comm_logs"
+	emag_required = EMAG_ACCESS_ID_CHECK  // im not 100% but i think this fits
 	circuit = /obj/item/circuitboard/computer/message_monitor
 	light_color = LIGHT_COLOR_GREEN
 	//Server linked to.

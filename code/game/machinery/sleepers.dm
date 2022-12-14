@@ -11,6 +11,7 @@
 
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
+	emag_required = EMAG_ACCESS_HAZARD
 
 	///How much chems is allowed to be in a patient at once, before we force them to wait for the reagent to process.
 	var/efficiency = 1

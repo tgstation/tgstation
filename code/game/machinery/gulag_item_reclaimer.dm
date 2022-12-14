@@ -4,6 +4,7 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_taken"
 	req_access = list(ACCESS_BRIG) //REQACCESS TO ACCESS ALL STORED ITEMS
+	emag_required = EMAG_ACCESS_ID_CHECK
 	density = FALSE
 
 	var/list/stored_items = list()

@@ -31,6 +31,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 0
+	emag_required = EMAG_ACCESS_HAZARD  // not playing around
 
 /*
  * Balloons

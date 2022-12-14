@@ -4,6 +4,7 @@
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
 	req_access = list(ACCESS_CE)
+	emag_required = EMAG_ACCESS_ID_CHECK
 	circuit = /obj/item/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_YELLOW
 	var/obj/machinery/power/apc/active_apc //The APC we're using right now

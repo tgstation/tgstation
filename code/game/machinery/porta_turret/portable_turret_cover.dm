@@ -11,6 +11,7 @@
 	density = FALSE
 	max_integrity = 80
 	use_power = NO_POWER_USE
+	emag_required = EMAG_ACCESS_HAZARD
 	var/obj/machinery/porta_turret/parent_turret = null
 
 /obj/machinery/porta_turret_cover/Destroy()

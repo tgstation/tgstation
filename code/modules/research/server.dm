@@ -115,6 +115,7 @@
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/rdservercontrol
 	req_access = list(ACCESS_RD)
+	emag_required = EMAG_ACCESS_ID_CHECK
 	var/list/servers = list()
 	///Connected techweb node the server is connected to.
 	var/datum/techweb/stored_research

@@ -8,6 +8,7 @@
 	max_integrity = 100
 	pass_flags = PASSTABLE
 	circuit = /obj/item/circuitboard/machine/fax
+	emag_required = EMAG_ACCESS_SYSTEMS
 	/// The unique ID by which the fax will build a list of existing faxes.
 	var/fax_id
 	/// The name of the fax displayed in the list. Not necessarily unique to some EMAG jokes.

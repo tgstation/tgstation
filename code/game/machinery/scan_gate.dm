@@ -24,6 +24,8 @@
 	icon_state = "scangate"
 	circuit = /obj/item/circuitboard/machine/scanner_gate
 
+	emag_required = EMAG_ACCESS_ID_CHECK
+
 	var/scanline_timer
 	///Internal timer to prevent audio spam.
 	var/next_beep = 0

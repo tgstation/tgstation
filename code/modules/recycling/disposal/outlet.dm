@@ -16,6 +16,7 @@
 	icon_state = "outlet"
 	density = TRUE
 	anchored = TRUE
+	emag_required = EMAG_ACCESS_HAZARD
 	var/active = FALSE
 	var/turf/target // this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk

@@ -16,6 +16,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	circuit = /obj/item/circuitboard/machine/announcement_system
 
+	emag_required = EMAG_ACCESS_VISUAL
+
 	var/obj/item/radio/headset/radio
 	var/arrival = "%PERSON has signed up as %RANK"
 	var/arrivalToggle = 1
