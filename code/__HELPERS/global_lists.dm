@@ -63,6 +63,8 @@
 /// Inits crafting recipe lists
 /proc/init_crafting_recipes(list/crafting_recipes)
 	for(var/path in subtypesof(/datum/crafting_recipe))
+		if(ispath(path, /datum/crafting_recipe/stack))
+			continue
 		var/is_cooking = ispath(path, /datum/crafting_recipe/food/)
 		var/datum/crafting_recipe/recipe = new path()
 		recipe.reqs = sort_list(recipe.reqs, GLOBAL_PROC_REF(cmp_crafting_req_priority))
