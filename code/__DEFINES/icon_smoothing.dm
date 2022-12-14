@@ -177,6 +177,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
 			ASSERT_SORTED_SMOOTHING_GROUPS(canSmoothWith); \
 		} \
+		/* S_OBJ is always negative, and we are guaranteed to be sorted. */ \
 		if (canSmoothWith[1] == "-") { \
 			smoothing_flags |= SMOOTH_OBJ; \
 		} \
