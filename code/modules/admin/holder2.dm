@@ -45,6 +45,8 @@ GLOBAL_PROTECT(href_token)
 	/// A lazylist of tagged datums, for quick reference with the View Tags verb
 	var/list/tagged_datums
 
+	var/given_profiling = FALSE
+
 /datum/admins/New(list/datum/admin_rank/ranks, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
@@ -65,9 +67,6 @@ GLOBAL_PROTECT(href_token)
 	src.ranks = ranks
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	href_token = GenerateToken()
-	if(!CONFIG_GET(flag/forbid_admin_profiling))
-		if(rank_flags() & R_DEBUG) //grant profile access, assuming admin profile access is enabled
-			world.SetConfig("APP/admin", ckey, "role=admin")
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
@@ -156,6 +155,8 @@ GLOBAL_PROTECT(href_token)
 	remove_verb(owner, /client/proc/readmin)
 	owner.init_verbs() //re-initialize the verb list
 	GLOB.admins |= client
+
+	try_give_profiling()
 
 /datum/admins/proc/disassociate()
 	if(IsAdminAdvancedProcCall())
@@ -387,6 +388,19 @@ GLOBAL_PROTECT(href_token)
 		combined_flags |= rank.can_edit_rights
 
 	return combined_flags
+
+/datum/admins/proc/try_give_profiling()
+	if (CONFIG_GET(flag/forbid_admin_profiling))
+		return
+
+	if (given_profiling)
+		return
+
+	if (!(rank_flags() & R_DEBUG))
+		return
+
+	given_profiling = TRUE
+	world.SetConfig("APP/admin", owner.ckey, "role=admin")
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin

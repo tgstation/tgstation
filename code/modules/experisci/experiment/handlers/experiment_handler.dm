@@ -73,7 +73,7 @@
 	// on the map as the servers aren't initialized when the non-machines are initializing
 	if (!(config_flags & EXPERIMENT_CONFIG_NO_AUTOCONNECT))
 		var/list/found_servers = get_available_servers(parent)
-		var/obj/machinery/rnd/server/selected_server = found_servers.len ? found_servers[1] : null
+		var/obj/machinery/rnd/server/selected_server = length(found_servers) ? found_servers[1] : null
 		if (selected_server)
 			link_techweb(selected_server.stored_research)
 
@@ -297,7 +297,7 @@
 	if (!turf_source)
 		turf_source = get_turf(parent)
 	var/list/local_servers = list()
-	for (var/obj/machinery/rnd/server/server in SSresearch.servers)
+	for (var/obj/machinery/rnd/server/server as anything in SSresearch.servers)
 		var/turf/turf_server = get_turf(server)
 		if (!turf_source || !turf_server)
 			break
@@ -352,21 +352,22 @@
 
 /datum/component/experiment_handler/ui_data(mob/user)
 	. = list(
-		"always_active" = config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE,
-		"has_start_callback" = !isnull(start_experiment_callback))
+		"always_active" = (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE),
+		"has_start_callback" = !isnull(start_experiment_callback),
+	)
 	.["techwebs"] = list()
 	for (var/datum/techweb/techwebs as anything in SSresearch.techwebs)
 		if(!length(techwebs.techweb_servers)) //no servers, we don't care
+			if(techwebs == linked_web) //disconnect if OUR techweb lost their servers.
+				unlink_techweb()
 			continue
-		var/obj/machinery/rnd/server = techwebs.techweb_servers[1] //get the first machine possible
-		if(!is_valid_z_level(get_turf(user), get_turf(server)))
+		if(!is_valid_z_level(get_turf(techwebs.techweb_servers[1]), get_turf(parent)))
 			continue
 		var/list/data = list(
-			name = server.name,
 			web_id = techwebs.id,
 			web_org = techwebs.organization,
 			selected = (techwebs == linked_web),
-			ref = REF(server),
+			ref = REF(techwebs),
 			all_servers = techwebs.techweb_servers,
 		)
 		.["techwebs"] += list(data)
@@ -392,9 +393,9 @@
 	switch (action)
 		if ("select_server")
 			. = TRUE
-			var/obj/machinery/rnd/server/server = locate(params["ref"])
-			if (server)
-				link_techweb(server.stored_research)
+			var/datum/techweb/new_techweb = locate(params["ref"])
+			if (new_techweb)
+				link_techweb(new_techweb)
 				return
 		if ("clear_server")
 			. = TRUE

@@ -1,5 +1,5 @@
 /obj/item/organ/internal/alien
-	icon_state = "xgibmid2"
+	icon_state = "acid"
 	visual = FALSE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 

@@ -424,7 +424,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 				icon_state = icon_living
 				return
 
-		if(--parrot_sleep_dur) //Zzz
+		parrot_sleep_dur--
+		if(parrot_sleep_dur) //Zzz
 			return
 
 		else
