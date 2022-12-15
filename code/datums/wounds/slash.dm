@@ -101,7 +101,6 @@
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
 	if(no_bleeding)
 		return BLOOD_FLOW_STEADY
-
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 		return BLOOD_FLOW_INCREASING
 	if(limb.current_gauze || clot_rate > 0)
