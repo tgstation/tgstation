@@ -1,8 +1,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored
 	on = TRUE
 	icon_state = "vent_map_siphon_on-3"
-	/// The unique string that represents which atmos chamber to associate with.
-	var/chamber_id
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/Initialize(mapload)
 	id_tag = chamber_id + "_out"
@@ -107,7 +105,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored
 	on = TRUE
 	icon_state = "vent_map_siphon_on-3"
-	var/chamber_id
 
 // Same as the rest, but bigger volume.
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/Initialize(mapload)

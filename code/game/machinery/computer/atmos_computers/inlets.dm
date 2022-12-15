@@ -1,8 +1,7 @@
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored
 	on = TRUE
 	volume_rate = MAX_TRANSFER_RATE
-	/// The unique string that represents which atmos chamber to associate with.
-	var/chamber_id
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/Initialize(mapload)
 	id_tag = chamber_id + "_in"
