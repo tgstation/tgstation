@@ -133,7 +133,6 @@
 			qdel(src)
 			return
 
-
 	//it's ok to not typecheck, humans are the only ones that deal with wounds
 	var/mob/living/carbon/human/human_victim = L?.owner
 	if(human_victim)
