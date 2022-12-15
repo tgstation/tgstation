@@ -13,13 +13,6 @@
 	base_treat_time = 3 SECONDS
 	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE)
 
-	/// Owner doesn't bleed, easier to store this here than keep checking species traits
-	var/no_bleeding = FALSE
-	/// Examine text for when the owner is physically incapable of bleeding
-	var/examine_desc_bleedless
-	/// Occur text for when the owner is physically incapable of bleeding
-	var/occur_text_bleedless
-
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
 	/// If gauzed, what percent of the internal bleeding actually clots of the total absorption rate
@@ -29,20 +22,6 @@
 	var/internal_bleeding_chance
 	/// If we let off blood when hit, the max blood lost is this * the incoming damage
 	var/internal_bleeding_coefficient
-
-//ok so this is ultra stupid, but we need to update examine and shit in case the owner is not a bleeder
-/datum/wound/pierce/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited, attack_direction)
-	//also it's ok to not typecheck, humans are the only ones that deal with wounds
-	var/mob/living/carbon/human/human_victim = L?.owner
-	if(human_victim)
-		no_bleeding = !(NOBLOOD in human_victim.dna.species.species_traits)
-		if(no_bleeding)
-			if(examine_desc_bleedless)
-				examine_desc = examine_desc_bleedless
-			if(occur_text_bleedless)
-				occur_text = occur_text_bleedless
-
-	return ..()
 
 /datum/wound/pierce/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	set_blood_flow(initial_flow)
@@ -129,7 +108,7 @@
 	user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 	if(!do_after(user, base_treat_time * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
-	var/bleeding_wording = (!no_bleeding ? "bleeding" : "holes")
+	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
@@ -150,7 +129,7 @@
 	if(!do_after(user, base_treat_time * self_penalty_mult * improv_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
-	var/bleeding_wording = (!no_bleeding ? "bleeding" : "holes")
+	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	limb.receive_damage(burn = 2 + severity, wound_bonus = CANT_WOUND)
 	if(prob(30))

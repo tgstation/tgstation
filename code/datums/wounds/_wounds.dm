@@ -23,11 +23,15 @@
 	var/treat_text = ""
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
+	/// Examine text for when the owner is physically incapable of bleeding (only used by slash and pierce wounds right now)
+	var/examine_desc_bleedless
 
 	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burns"
 	var/a_or_from = "a"
 	/// The visible message when this happens
 	var/occur_text = ""
+	/// Occur text for when the owner is physically incapable of bleeding (only used by slash and pierce wounds right now)
+	var/occur_text_bleedless
 	/// This sound will be played upon the wound being applied
 	var/sound_effect
 
@@ -62,6 +66,8 @@
 	var/limp_chance
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
+	/// Essentially, keeps track of whether or not this wound is capable of bleeding (in case the owner has the NOBLOOD species trait)
+	var/no_bleeding = FALSE
 
 	/// The minimum we need to roll on [/obj/item/bodypart/proc/check_wounding] to begin suffering this wound, see check_wounding_mods() for more
 	var/threshold_minimum
@@ -126,6 +132,17 @@
 		if((preexisting_wound.type == type) && (preexisting_wound != old_wound))
 			qdel(src)
 			return
+
+
+	//it's ok to not typecheck, humans are the only ones that deal with wounds
+	var/mob/living/carbon/human/human_victim = L?.owner
+	if(human_victim)
+		no_bleeding = (NOBLOOD in human_victim.dna.species.species_traits)
+		if(no_bleeding)
+			if(examine_desc_bleedless)
+				examine_desc = examine_desc_bleedless
+			if(occur_text_bleedless)
+				occur_text = occur_text_bleedless
 
 	set_victim(L.owner)
 	set_limb(L)
