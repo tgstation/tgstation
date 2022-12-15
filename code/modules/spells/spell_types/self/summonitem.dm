@@ -120,7 +120,7 @@
 				var/obj/retrieved_item = item_to_retrieve.loc
 				// Can't bring anchored things
 				if(retrieved_item.anchored)
-					return
+					break
 				// Edge cases for moving certain machinery...
 				if(istype(retrieved_item, /obj/machinery/portable_atmospherics))
 					var/obj/machinery/portable_atmospherics/atmos_item = retrieved_item

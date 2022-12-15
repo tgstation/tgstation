@@ -147,7 +147,7 @@
 	desc = "A fried egg. Would go well with a touch of salt and pepper."
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "friedegg"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/eggyolk = 2 , /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/eggyolk = 1 , /datum/reagent/consumable/nutriment/vitamin = 1)
 	bite_consumption = 1
 	tastes = list("egg" = 4)
 	foodtypes = MEAT | FRIED | BREAKFAST

@@ -47,7 +47,8 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/pneumatic_cannon/process()
-	if(++charge_tick >= charge_ticks && charge_type)
+	charge_tick++
+	if(charge_tick >= charge_ticks && charge_type)
 		fill_with_type(charge_type, charge_amount)
 
 /obj/item/pneumatic_cannon/Destroy()
