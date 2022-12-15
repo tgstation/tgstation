@@ -338,7 +338,7 @@
 	name = "Glass Maintenance"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
-	weight = 5
+	weight = 4
 
 /datum/station_trait/glass_maint/New()
 	. = ..()
