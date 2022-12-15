@@ -352,9 +352,15 @@
 		"We over-ordered glass during construction, so maintenance gets glass windows.")
 
 /datum/station_trait/on_round_start()
-	for(var/area/station/maintenance/A in GLOB.areas)
-		for(var/turf/in_area as anything in A.get_contained_turfs())
-			for(var/obj/machinery/door/airlock/D in in_area)
-				D.opacity = FALSE
-				D.glass = TRUE
-				D.update_icon(ALL, 0)
+	for(var/area/station/maintenance/maint_area in GLOB.the_station_areas)
+		for(var/turf/maint_floor as anything in maint_area.get_contained_turfs())
+
+			if(istype(maint_floor, /turf/open/floor/plating/reinforced))  // keeps reinf status
+				maint_floor.ChangeTurf(/turf/open/floor/glass/reinforced)
+			else
+				maint_floor.ChangeTurf(/turf/open/floor/glass)
+
+			for(var/obj/machinery/door/airlock/affected_airlock in maint_floor)
+				affected_airlock.opacity = FALSE
+				affected_airlock.glass = TRUE
+				affected_airlock.update_icon(ALL)
