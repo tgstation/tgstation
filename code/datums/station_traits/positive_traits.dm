@@ -335,7 +335,7 @@
 	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
 
 /datum/station_trait/glass_maint
-	name = "Glass Maintinance"
+	name = "Glass Maintenance"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
 	weight = 5
