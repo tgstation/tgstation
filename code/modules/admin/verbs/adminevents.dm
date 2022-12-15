@@ -265,8 +265,6 @@
 			message_admins(span_adminnotice("[key_name_admin(usr)] Disabled all current hostile environment sources"))
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
-		else
-			return
 
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
 	set category = "Admin.Events"
