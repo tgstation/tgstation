@@ -1875,12 +1875,6 @@
 	taste_description = "bravado in the face of disaster"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/bacchus_blessing
-	required_drink_type = /datum/reagent/consumable/ethanol/bacchus_blessing
-	name = "Bacchus' Blessing"
-	desc = "You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?"
-	icon_state = "glass_brown2"
-
 /datum/glass_style/drinking_glass/hearty_punch
 	required_drink_type = /datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
@@ -1905,6 +1899,12 @@
 	boozepwr = 300 //I warned you
 	taste_description = "a wall of bricks"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/bacchus_blessing
+	required_drink_type = /datum/reagent/consumable/ethanol/bacchus_blessing
+	name = "Bacchus' Blessing"
+	desc = "You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?"
+	icon_state = "glass_brown2"
 
 /datum/reagent/consumable/ethanol/atomicbomb
 	name = "Atomic Bomb"
