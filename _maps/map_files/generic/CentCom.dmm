@@ -10023,9 +10023,7 @@
 	},
 /area/centcom/tdome/observation)
 "Dz" = (
-/obj/machinery/smartfridge/chemistry/virology/preloaded{
-	pixel_x = 0
-	},
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "DA" = (
