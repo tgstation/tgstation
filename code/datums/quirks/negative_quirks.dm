@@ -249,7 +249,6 @@
 	hardcore_value = 4
 	mail_goodies = list(
 		/obj/item/clothing/gloves/boxing,
-		/obj/item/clothing/under/shorts/red,
 		/obj/item/clothing/mask/luchador/rudos,
 	)
 
@@ -259,13 +258,11 @@
 	if(prob(50))
 		mail_goodies = list(
 			/obj/item/clothing/gloves/boxing,
-			/obj/item/clothing/under/shorts/red,
 			/obj/item/clothing/mask/luchador/rudos,
 		)
 	else
 		mail_goodies = list(
 			/obj/item/clothing/gloves/boxing/blue,
-			/obj/item/clothing/under/shorts/blue,
 			/obj/item/clothing/mask/luchador/tecnicos,
 		)
 
