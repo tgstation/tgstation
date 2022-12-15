@@ -238,10 +238,10 @@
 	quirk_holder.clear_mood_event("family_heirloom_missing")
 	quirk_holder.clear_mood_event("family_heirloom")
 
-/datum/quirk/glassjaw
+/datum/quirk/glass_jaw
 	name = "Glass Jaw"
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
-	icon = "glass"
+	icon = "boxing-glove"
 	value = -4
 	gain_text = span_danger("Your jaw feels loose.")
 	lose_text = span_notice("Your jaw feels fitting again.")
@@ -253,13 +253,13 @@
 		/obj/item/clothing/mask/luchador/rudos,
 	)
 
-/datum/quirk/glassjaw/add()
+/datum/quirk/glass_jaw/add()
 	RegisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(punch_out))
 
-/datum/quirk/glassjaw/remove()
+/datum/quirk/glass_jaw/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE)
 
-/datum/quirk/glassjaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
+/datum/quirk/glass_jaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
 	SIGNAL_HANDLER
 	if((damagetype != BRUTE) || (def_zone != BODY_ZONE_HEAD))
 		return
@@ -269,9 +269,11 @@
 		return
 	//blunt items are more likely to knock out, but sharp ones are still capable of doing it
 	if(prob(CEILING(actual_damage * (sharpness & SHARP_EDGED|SHARP_POINTY ? 0.65 : 1), 1)))
-		source.visible_message(span_warning("[source] gets knocked out!"),
-							span_userdanger("You are knocked out!"),
-							vision_distance = COMBAT_MESSAGE_RANGE)
+		source.visible_message(
+			span_warning("[source] gets knocked out!"),
+			span_userdanger("You are knocked out!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
 		source.Unconscious(3 SECONDS)
 
 /datum/quirk/frail
