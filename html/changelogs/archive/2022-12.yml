@@ -548,3 +548,30 @@
   TheWolfbringer:
   - bugfix: You can now access the coffee beans and cigarettes at Deltastation's Engineering
       breakroom
+2022-12-15:
+  1393F:
+  - bugfix: the pill dropped by the shadowperson legion corpse now has enough mutation
+      toxin to work
+  Fikou:
+  - bugfix: fixes modsuit icons
+  - rscadd: you can flip eyepatches
+  - bugfix: blindfolds now take into consideration both eye colors for their color
+  Melbert:
+  - bugfix: Dufflebag Curse no longer lasts forever after the bag is destroyed.
+  - bugfix: Dufflebag Cursing someone already afflicted properly doesn't try to add
+      the curse again
+  - refactor: Refactored how bar drinks set their icons. Juice boxes now use the same
+      system.
+  ShizCalev:
+  - code_imp: We now unit test all /obj's for missing icons. :)
+  Wayland-Smithy:
+  - bugfix: Instant summons spell now safely and reliably retrieves items from inside
+      of anchored containers.
+  etherware-novice:
+  - bugfix: switching to species without hunger clears hunger moods
+  necromanceranne:
+  - bugfix: Stops strong enough explosions from bricking the objective energy guns
+      permanently.
+  san7890:
+  - bugfix: The message you get when attempting to escape an SM delamination by hiding
+      in a disposals pipe should now make more sense.
