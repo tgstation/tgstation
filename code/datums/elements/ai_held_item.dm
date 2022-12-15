@@ -16,7 +16,7 @@
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_click))
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(atom_exited))
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
-	RegisterSignal(target, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_death))
+	RegisterSignals(target, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_death))
 
 /// Returns the item held in a mob's blackboard, if it has one
 /datum/element/ai_held_item/proc/get_held_item(mob/living/source)
@@ -27,16 +27,11 @@
 /datum/element/ai_held_item/proc/on_click(mob/living/source, mob/living/user)
 	SIGNAL_HANDLER
 
-	// Too much soul to replace with a balloon alert
-	var/additional_text = HAS_TRAIT(user, TRAIT_NAIVE) ? "It looks like [source.p_theyre()] sleeping." : "[source.p_they(capitalized = TRUE)] seem[source.p_s()] to be dead."
-	if (source.stat == DEAD)
-		to_chat(user, span_warning("[source] is cold to the touch. [additional_text]"))
-		return
 	if (user.combat_mode)
 		return
 
 	var/list/friends = source.ai_controller.blackboard[BB_FRIENDS_LIST]
-	if (!friends[WEAKREF(user)])
+	if (!friends || friends[WEAKREF(user)])
 		return // We don't care about this bozo
 	var/obj/item/carried_item = get_held_item(source)
 	if (!carried_item)

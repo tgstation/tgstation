@@ -8,7 +8,7 @@
 	command_desc = "Command your pet to retrieve something you throw or point at."
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "summons"
-	speech_commands = list("heel", "follow")
+	speech_commands = list("fetch")
 	command_feedback = "bounces"
 	/// If true, this command will trigger if the pet sees a friend throw any item, if they're not doing anything else
 	var/trigger_on_throw = TRUE

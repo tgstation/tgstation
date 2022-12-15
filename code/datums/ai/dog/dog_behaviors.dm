@@ -4,7 +4,7 @@
  */
 /datum/ai_behavior/basic_melee_attack/dog
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
-	required_distance = 3
+	required_distance = 1
 
 /datum/ai_behavior/basic_melee_attack/dog/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	var/mob/living/living_pawn = controller.pawn

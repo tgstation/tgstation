@@ -1,5 +1,12 @@
 //Dogs.
 
+/datum/pet_command/follow/dog
+	speech_commands = list("heel", "follow", "walkies")
+
+/datum/pet_command/point_targetting/attack/dog
+	attack_behaviour = /datum/ai_behavior/basic_melee_attack/dog
+
+
 /mob/living/basic/pet/dog
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	response_help_continuous = "pets"
@@ -13,16 +20,27 @@
 	see_in_dark = 5
 	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/dog
-	///In the case 'melee_damage_upper' is somehow raised above 0
+	// The dog attack pet command can raise melee attack above 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
+	/// Instructions you can give to dogs
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/good_boy,
+		/datum/pet_command/follow/dog,
+		/datum/pet_command/point_targetting/attack/dog,
+		/datum/pet_command/point_targetting/fetch,
+	)
 
 /mob/living/basic/pet/dog/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "woofs happily!")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/befriend_petting, tamed_reaction = "%SOURCE% licks at %TARGET% in a friendly manner!", untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 /mob/living/basic/pet/dog/proc/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
 	speech.speak = string_list(list("YAP", "Woof!", "Bark!", "AUUUUUU"))
