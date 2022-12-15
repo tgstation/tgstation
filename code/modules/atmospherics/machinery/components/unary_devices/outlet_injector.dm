@@ -17,6 +17,32 @@
 	///Rate of operation of the device
 	var/volume_rate = 50
 
+	///id of air sensor its connected to via multi tool
+	var/chamber_id
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
+	if (istype(I))
+		to_chat(user, span_notice("You log [src] in the multitool's buffer."))
+		I.buffer = src
+		return TRUE
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		disconnect_chamber()
+
+///called when its either unwrenched or destroyed
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/disconnect_chamber()
+	if(chamber_id != null)
+		GLOB.objects_by_id_tag[chamber_id + "_in"] = null
+		GLOB.objects_by_id_tag -= chamber_id + "_in"
+		chamber_id = null
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
+	. = ..()
+	disconnect_chamber()
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on

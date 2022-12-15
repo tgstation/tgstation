@@ -121,7 +121,7 @@
 				return TRUE
 			target = clamp(target, 0, MAX_TRANSFER_RATE)
 
-			var/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/input = GLOB.objects_by_id_tag["[chamber]_in"]
+			var/obj/machinery/atmospherics/components/unary/outlet_injector/input = GLOB.objects_by_id_tag["[chamber]_in"]
 			input?.volume_rate = clamp(target, 0, min(input.airs[1].volume, MAX_TRANSFER_RATE))
 		if("adjust_output")
 			if (!(chamber in atmos_chambers))

@@ -16,6 +16,7 @@ export const ICON_BY_CATEGORY_NAME = {
   'Devices': 'microchip',
   'Heat Exchange': 'thermometer-half',
   'Station Equipment': 'microchip',
+  'Air Sensors': 'microchip',
 };
 
 const TOOLS = [
@@ -318,7 +319,7 @@ export const RapidPipeDispenser = (props, context) => {
   const { data } = useBackend(context);
   const { category: rootCategoryIndex } = data;
   return (
-    <Window width={450} height={575}>
+    <Window width={500} height={540}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
