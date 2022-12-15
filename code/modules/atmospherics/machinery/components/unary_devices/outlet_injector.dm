@@ -17,7 +17,7 @@
 	///Rate of operation of the device
 	var/volume_rate = 50
 
-	///id of air sensor its connected to via multi tool
+	///id of air sensor its connected to
 	var/chamber_id
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/I)

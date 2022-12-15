@@ -28,7 +28,7 @@
 	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-	///id of air sensor its connected to via multi tool
+	///id of air sensor its connected to
 	var/chamber_id
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
