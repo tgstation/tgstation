@@ -1,4 +1,0 @@
-author: "etherware-novice"
-delete-after: True
-changes:
-  - bugfix: "switching to species without hunger clears hunger moods"
