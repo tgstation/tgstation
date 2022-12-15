@@ -339,7 +339,7 @@
 /area/awaymission/cabin)
 "bc" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/britcup,
+/obj/item/reagent_containers/cup/glass/mug/britcup,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bd" = (

@@ -3,4 +3,4 @@
 	if(!text)
 		return
 	var/html_file = file("[GLOB.log_directory]/[INVESTIGATE_RESEARCH].html")
-	WRITE_FILE(html_file, "[time_stamp()] [text]<br>")
+	WRITE_FILE(html_file, "[time_stamp(format = "YYYY-MM-DD hh:mm:ss")] [text]<br>")

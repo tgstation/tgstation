@@ -801,8 +801,6 @@
 		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/sleeper/fullupgrade
-	name = "Sleeper"
-	icon_state = "medical"
 	build_path = /obj/machinery/sleeper/syndie/fullupgrade
 	req_components = list(
 		/obj/item/stock_parts/matter_bin/bluespace = 1,

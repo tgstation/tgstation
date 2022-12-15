@@ -4,7 +4,7 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
-	icon_state = "core"
+	icon_state = "core_off"
 
 	name = "thermomachine"
 	desc = "Heats or cools gas in connected pipes."
@@ -127,7 +127,7 @@
 	name = "hypertorus_core"
 	desc = "hypertorus_core"
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
-	icon_state = "core"
+	icon_state = "core_off"
 	move_resist = INFINITY
 	anchored = TRUE
 	density = TRUE
@@ -437,7 +437,7 @@
 	name = "HFR box"
 	desc = "If you see this, call the police."
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
-	icon_state = "box"
+	icon_state = "error"
 	///What kind of box are we handling?
 	var/box_type = "impossible"
 	///What's the path of the machine we making

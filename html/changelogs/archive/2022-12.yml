@@ -499,3 +499,79 @@
   - bugfix: Nanotrasen will now no longer mount the HoPline's Ticket Machines on windows
       for Meta, IceBox, and Tram.
   - bugfix: When you examine a mecha, you should now no longer see two integrity messages.
+2022-12-13:
+  Ghommie:
+  - rscdel: Removed object rotation related verbs, overwhelmingly overshadowed by
+      the click shortcuts anyway.
+  Jacquerel:
+  - rscadd: Tell your crew how much you care by ordering a shuttle where half of the
+      seats have been removed so that you can get some angling done before you clock
+      out.
+  LT3:
+  - balance: Getting hit by the tram may now break some of your bones, or more. Be
+      careful!
+  Sealed101:
+  - bugfix: fixed Advanced Scanning Modules Calibration Experiment not registering
+      upgraded machines to its progress
+  SyncIt21:
+  - qol: creating a shard is possible
+  - rscadd: TGUI for RCD Just like Rapid Pipe Dispenser
+  - rscadd: Radial menu for RLD
+  - code_imp: silo link upgrades for both RLD & Plumbing RCD
+  - rscdel: Switch Mode, Window Glass, Airlock action icons for construction console
+  - refactor: FURNISHING , FRAMES & SIMPLE_CIRCUITS are banned upgrades for RLD &
+      Plumbing RCD
+  tralezab:
+  - qol: Regal rats are on the orbit menu
+2022-12-14:
+  Fikou:
+  - rscadd: lathes now print empty welders and extinguishers
+  Floofies:
+  - bugfix: Fixed a stray-tab typo in "item_heal_robotic"
+  - bugfix: Fixed reagents and other effects which were inappropriately affecting
+      robotic limbs.
+  - code_imp: Refactored all of reagents code to be more readable and maintainable.
+  GoldenAlpharex:
+  - bugfix: Everything that goes on the tram should look a lot less flat now!
+  Jacquerel:
+  - rscadd: The followers of Regal Rats will now respond to simple instructions, if
+      given by their rightful lord. Except frogs. They're too busy licking themselves
+      and watching the colours.
+  JohnFulpWillard:
+  - qol: Experiment handlers now give a more reasonable explanation for why they can't
+      find a server.
+  - admin: Machines being disconnected from techwebs is now logged in research.
+  LemonInTheDark:
+  - rscadd: Adds a grace period for hit detection, between clicking ON someone, and
+      then moving your mouse off before releasing the click. It's short, hopefully
+      it helps with stupid
+  TheWolfbringer:
+  - bugfix: You can now access the coffee beans and cigarettes at Deltastation's Engineering
+      breakroom
+2022-12-15:
+  1393F:
+  - bugfix: the pill dropped by the shadowperson legion corpse now has enough mutation
+      toxin to work
+  Fikou:
+  - bugfix: fixes modsuit icons
+  - rscadd: you can flip eyepatches
+  - bugfix: blindfolds now take into consideration both eye colors for their color
+  Melbert:
+  - bugfix: Dufflebag Curse no longer lasts forever after the bag is destroyed.
+  - bugfix: Dufflebag Cursing someone already afflicted properly doesn't try to add
+      the curse again
+  - refactor: Refactored how bar drinks set their icons. Juice boxes now use the same
+      system.
+  ShizCalev:
+  - code_imp: We now unit test all /obj's for missing icons. :)
+  Wayland-Smithy:
+  - bugfix: Instant summons spell now safely and reliably retrieves items from inside
+      of anchored containers.
+  etherware-novice:
+  - bugfix: switching to species without hunger clears hunger moods
+  necromanceranne:
+  - bugfix: Stops strong enough explosions from bricking the objective energy guns
+      permanently.
+  san7890:
+  - bugfix: The message you get when attempting to escape an SM delamination by hiding
+      in a disposals pipe should now make more sense.
