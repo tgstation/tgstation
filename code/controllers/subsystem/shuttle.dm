@@ -468,7 +468,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/checkHostileEnvironment()
 	for(var/datum/d in hostile_environments)
-		if(!istype(d) || QDELETED(d))
+		if(QDELETED(d))
 			hostile_environments -= d
 	emergency_no_escape = hostile_environments.len
 
