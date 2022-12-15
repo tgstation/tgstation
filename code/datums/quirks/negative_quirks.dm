@@ -253,6 +253,22 @@
 		/obj/item/clothing/mask/luchador/rudos,
 	)
 
+/datum/quirk/glass_jaw/New()
+	. = ..()
+	//randomly picks between blue or red equipment for goodies
+	if(prob(50))
+		mail_goodies = list(
+			/obj/item/clothing/gloves/boxing,
+			/obj/item/clothing/under/shorts/red,
+			/obj/item/clothing/mask/luchador/rudos,
+		)
+	else
+		mail_goodies = list(
+			/obj/item/clothing/gloves/boxing/blue,
+			/obj/item/clothing/under/shorts/blue,
+			/obj/item/clothing/mask/luchador/tecnicos,
+		)
+
 /datum/quirk/glass_jaw/add()
 	RegisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(punch_out))
 
