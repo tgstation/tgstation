@@ -140,6 +140,7 @@ SUBSYSTEM_DEF(garbage)
 			fail_counts[i] = 0
 
 #ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
+// 1 from the hard reference in the queue, and 1 from the variable used before this
 #define IS_DELETED(datum, _) (refcount(##datum) == 2)
 #else
 #define IS_DELETED(datum, gcd_at_time) (isnull(##datum) || ##datum.gc_destroyed != gcd_at_time)
