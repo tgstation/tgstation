@@ -210,6 +210,12 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 /datum/controller/master/Initialize(delay, init_sss, tgs_prime)
 	set waitfor = 0
 
+	/**
+	 * The Master Controller sleeps before running initialization logic
+	 * allowing clients which were connected from a previous round to establish a connection
+	 * and load in before it begins the process of initializing all other subsystems;
+	 * thus ensuring that those clients do not drop the connection and need to manually reconnect.
+	 */
 	if(delay)
 		sleep(delay)
 
