@@ -1795,6 +1795,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	VV_DROPDOWN_OPTION(VV_HK_REMOVE_MOOD, "Remove Mood Event")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_HALLUCINATION, "Give Hallucination")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DELUSION_HALLUCINATION, "Give Delusion Hallucination")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_GUARIDAN_SPIRIT, "Give Guardian Spirit")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -1817,6 +1818,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!check_rights(NONE))
 			return
 		admin_give_delusion(usr)
+	if(href_list[VV_HK_GIVE_GUARIDAN_SPIRIT])
+		if(!check_rights(NONE))
+			return
+		admin_give_guardian(usr)
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -2446,3 +2451,26 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	log_admin("[key_name(admin)] gave [src] a delusion hallucination. (Type: [delusion_args[1]])")
 	// Not using the wrapper here because we already have a list / arglist
 	_cause_hallucination(delusion_args)
+
+/mob/living/proc/admin_give_guardian(mob/admin)
+	if(!admin || !check_rights(NONE))
+		return
+	var/client/guardian_client = tgui_input_list(admin, "Pick the player to put in control.", "Guardian Controller", sort_list(GLOB.clients))
+	if(!guardian_client)
+		return
+	var/mob/old_mob = guardian_client.mob
+	var/del_mob = FALSE
+	if((isobserver(old_mob) || tgui_alert(admin, "Do you want to delete [guardian_client]'s old mob?", "Delete?", list("Yes","No")) != "No"))
+		del_mob = TRUE
+	var/picked_type = tgui_input_list(admin, "Pick the guardian type.", "Guardian Controller", subtypesof(/mob/living/simple_animal/hostile/guardian))
+	var/picked_theme = tgui_input_list(admin, "Pick the guardian theme.", "Guardian Controller", list("tech", "magic", "carp", "miner"))
+	var/mob/living/simple_animal/hostile/guardian/summoned_guardian = new picked_type(src, picked_theme)
+	summoned_guardian.set_summoner(src, changed_mind = TRUE)
+	summoned_guardian.key = guardian_client.key
+	guardian_client.init_verbs()
+	if(del_mob)
+		qdel(old_mob)
+	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client] to [src]."))
+	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")
+

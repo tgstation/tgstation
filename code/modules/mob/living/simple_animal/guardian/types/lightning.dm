@@ -13,16 +13,16 @@
 	attack_sound = 'sound/machines/defib_zap.ogg'
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	range = 7
-	playstyle_string = "<span class='holoparasite'>As a <b>lightning</b> type, you will apply lightning chains to targets on attack and have a lightning chain to your summoner. Lightning chains will shock anyone near them.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Tesla, a shocking, lethal source of power.</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Lightning modules active. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a lightning carp! Everyone else goes zap zap.</span>"
-	miner_fluff_string = "<span class='holoparasite'>You encounter... Iron, a conductive master of lightning.</span>"
+	playstyle_string = span_holoparasite("As a <b>lightning</b> type, you will apply lightning chains to targets on attack and have a lightning chain to your summoner. Lightning chains will shock anyone near them.")
+	magic_fluff_string = span_holoparasite("..And draw the Tesla, a shocking, lethal source of power.")
+	tech_fluff_string = span_holoparasite("Boot sequence complete. Lightning modules active. Holoparasite swarm online.")
+	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's a lightning carp! Everyone else goes zap zap.")
+	miner_fluff_string = span_holoparasite("You encounter... Iron, a conductive master of lightning.")
 	var/datum/beam/summonerchain
 	var/list/enemychains = list()
 	var/successfulshocks = 0
 
-/mob/living/simple_animal/hostile/guardian/beam/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/beam/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(. && isliving(target) && target != src && target != summoner)
 		cleardeletedchains()
@@ -86,7 +86,7 @@
 			qdel(chain)
 		enemychains = list()
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(datum/beam/B)
+/mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(datum/beam/B) //fuck you, fuck this
 	. = 0
 	var/list/turfs = list()
 	for(var/E in B.elements)

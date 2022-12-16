@@ -8,11 +8,17 @@
 	attack_verb_simple = "ignite"
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	range = 7
-	playstyle_string = "<span class='holoparasite'>As a <b>chaos</b> type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will cause human targets to see everyone as you.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Wizard, bringer of endless chaos!</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
-	miner_fluff_string = "<span class='holoparasite'>You encounter... Plasma, the bringer of fire.</span>"
+	playstyle_string = span_holoparasite("As a <b>chaos</b> type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will cause human targets to see everyone as you.")
+	magic_fluff_string = span_holoparasite("..And draw the Wizard, bringer of endless chaos!")
+	tech_fluff_string = span_holoparasite("Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.")
+	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.")
+	miner_fluff_string = span_holoparasite("You encounter... Plasma, the bringer of fire.")
+	/// How many fire stacks we clear per second.
+	var/extinguish_amount = 10
+	/// How many fire stacks we give to people we bump into.
+	var/fire_amount = 7
+	/// Duration of our hallucination
+	var/hallucination_duration = 20 SECONDS
 
 /mob/living/simple_animal/hostile/guardian/fire/Initialize(mapload, theme)
 	. = ..()
@@ -25,9 +31,9 @@
 	. = ..()
 	if(summoner)
 		summoner.extinguish_mob()
-		summoner.adjust_fire_stacks(-10 * delta_time)
+		summoner.adjust_fire_stacks(-extinguish_amount * delta_time)
 
-/mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/fire/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(!.)
 		return
@@ -39,7 +45,7 @@
 	living_target.cause_hallucination( \
 		/datum/hallucination/delusion/custom, \
 		"fire holoparasite ([key_name(src)], owned by [key_name(summoner)])", \
-		duration = 20 SECONDS, \
+		duration = hallucination_duration, \
 		affects_us = TRUE, \
 		affects_others = TRUE, \
 		skip_nearby = FALSE, \
@@ -48,21 +54,22 @@
 		custom_icon_state = icon_state, \
 	)
 
-/mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, atom/movable/collided)
 	SIGNAL_HANDLER
-	collision_ignite(AM)
+	collision_ignite(collided)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bumped(atom/movable/AM)
-	..()
-	collision_ignite(AM)
+/mob/living/simple_animal/hostile/guardian/fire/Bumped(atom/movable/collided)
+	. = ..()
+	collision_ignite(collided)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
-	..()
-	collision_ignite(AM)
+/mob/living/simple_animal/hostile/guardian/fire/Bump(atom/movable/collided)
+	. = ..()
+	collision_ignite(collided)
 
-/mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
-	if(isliving(AM))
-		var/mob/living/M = AM
-		if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 7)
-			M.set_fire_stacks(7)
-			M.ignite_mob()
+/mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(atom/movable/collided)
+	if(!isliving(collided))
+		return
+	var/mob/living/collided_mob = collided
+	if(!hasmatchingsummoner(collided_mob) && collided_mob != summoner && collided_mob.fire_stacks < fire_amount)
+		collided_mob.set_fire_stacks(fire_amount)
+		collided_mob.ignite_mob()
