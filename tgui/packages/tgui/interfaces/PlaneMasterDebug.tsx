@@ -9,13 +9,9 @@ import { resolveAsset } from '../assets';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
 import { Connections } from './IntegratedCircuit/Connections';
 
-const CONNECTIONTYPES = ['Relay', 'Filter'] as const;
+type ConnectionType = 'Relay' | 'Filter';
 
-type ConnectionType = typeof CONNECTIONTYPES[number];
-
-const CONNETIONDIRECTIONS = ['Incoming', 'Outgoing'] as const;
-
-type ConnectionDirection = typeof CONNETIONDIRECTIONS[number];
+type ConnectionDirection = 'Incoming' | 'Outgoing';
 
 type ConnectionRef = {
   ref: string;
