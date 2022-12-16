@@ -83,7 +83,7 @@ GLOBAL_VAR(restart_counter)
 	if(NO_INIT_PARAMETER in params)
 		return
 
-	Master.Initialize(1, FALSE, TRUE)
+	Master.Initialize(MASTER_INIT_DELAY, FALSE, TRUE)
 
 	#ifdef UNIT_TESTS
 	HandleTestRun()

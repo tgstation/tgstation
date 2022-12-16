@@ -1,3 +1,12 @@
+
+/**
+ * The Master Controller sleeps before running initialization logic
+ * allowing clients which were connected from a previous round to establish a connection
+ * and load in before it begins the process of initializing all other subsystems;
+ * thus ensuring that those clients do not drop the connection and need to manually reconnect.
+ */
+#define MASTER_INIT_DELAY (1 TICKS)
+
 #define MC_TICK_CHECK ( ( TICK_USAGE > Master.current_ticklimit || src.state != SS_RUNNING ) ? pause() : 0 )
 
 #define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = Master.current_ticklimit; var/split_tick_phases = ##phase_count
