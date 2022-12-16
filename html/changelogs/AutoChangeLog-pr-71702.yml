@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - rscadd: "Tram crossing signals now visually show when they're malfunctioning."
-  - bugfix: "Emagged tram crossing signals will stay emagged after the tram malfunction event."

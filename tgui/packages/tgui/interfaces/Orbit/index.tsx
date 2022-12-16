@@ -5,7 +5,8 @@ import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 import { collateAntagonists, getDisplayColor, getDisplayName, isJobOrNameMatch } from './helpers';
-import { ANTAG2COLOR, JOB2ICON } from './constants';
+import { ANTAG2COLOR } from './constants';
+import { JobToIcon } from '../common/JobToIcon';
 import type { AntagGroup, Observable, OrbitData } from './types';
 
 export const Orbit = (props, context) => {
@@ -225,7 +226,7 @@ const ObservableItem = (
   return (
     <Button
       color={getDisplayColor(item, heatMap, color)}
-      icon={job_icon || (job && JOB2ICON[job]) || null}
+      icon={job_icon || (job && JobToIcon[job]) || null}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
       tooltip={(!!health || !!extra) && <ObservableTooltip item={item} />}
       tooltipPosition="bottom-start">

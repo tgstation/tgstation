@@ -155,6 +155,8 @@
 			approved_types |= T
 
 	var/obj/structure/sign/poster/selected = pick(approved_types)
+	if(length(GLOB.holidays) && prob(30))  // its the holidays! lets get festive
+		selected = /obj/structure/sign/poster/official/festive
 
 	name = initial(selected.name)
 	desc = initial(selected.desc)
@@ -1040,5 +1042,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 	name = "Conserve Power"
 	desc = "A crudely-made poster asking the reader to turn off the power before they leave. Hopefully, it's turned on for their re-opening."
 	icon_state = "gas_power"
+
+/obj/structure/sign/poster/official/festive
+	name = "Festive Notice Poster"
+	desc = "A poster that informs of active holidays. None are today, so you should get back to work."
+	icon_state = "holiday_none"
+
+/obj/structure/sign/poster/official/festive/Initialize()
+	. = ..()
+	if(!length(GLOB.holidays))
+		return
+	var/active_holiday = pick(GLOB.holidays)
+	var/datum/holiday/holi_data = GLOB.holidays[active_holiday]
+
+	name = holi_data.poster_name
+	desc = holi_data.poster_desc
+	icon_state = holi_data.poster_icon
 
 #undef PLACE_SPEED
