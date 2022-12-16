@@ -45,8 +45,6 @@
 	///What reagent the mob injects targets with
 	var/poison_type = /datum/reagent/drug/space_drugs
 
-	var/frog_cell_line = CELL_LINE_TABLE_COCKROACH
-
 /mob/living/basic/frog/Initialize(mapload)
 	. = ..()
 
@@ -66,7 +64,8 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/venomous, poison_type, poison_per_bite)
-	AddElement(/datum/element/swabable, frog_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_FROG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/frog/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
@@ -77,21 +76,17 @@
 
 /datum/ai_controller/basic_controller/frog
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/frog(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/random_speech/frog,
-		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/frog,
 	)
-
-/datum/targetting_datum/basic/frog
-	check_hostile = TRUE
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/frog
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/frog
@@ -100,7 +95,9 @@
 	action_cooldown = 2.5 SECONDS
 
 /datum/ai_controller/basic_controller/frog/trash
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/random_speech/frog,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/frog,
 	)

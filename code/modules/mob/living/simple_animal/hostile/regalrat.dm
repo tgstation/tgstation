@@ -314,7 +314,7 @@
 /// Turns a mouse into an angry mouse
 /datum/action/cooldown/riot/proc/convert_mouse(mob/living/basic/mouse/nearby_mouse)
 	// This mouse is already rat controlled, let's not bother with it.
-	if (istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat) || nearby_mouse.stat == DEAD)
+	if (istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat))
 		return FALSE
 
 	var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
@@ -335,7 +335,7 @@
 /// Turns a roach into an angry roach
 /datum/action/cooldown/riot/proc/convert_roach(mob/living/basic/cockroach/nearby_roach, list/converted_check_list)
 	// No need to convert when not on the same team.
-	if (faction_check(nearby_roach.faction, converted_check_list) || nearby_roach.stat == DEAD)
+	if (faction_check(nearby_roach.faction, converted_check_list))
 		return FALSE
 
 	var/list/minion_commands = mouse_commands
