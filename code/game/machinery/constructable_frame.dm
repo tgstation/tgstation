@@ -89,6 +89,9 @@
 			var/obj/item/part = component_path
 
 			req_component_names[component_path] = initial(part.name)
+		else
+			stack_trace("Invalid component part [component_path] in [type], couldn't get its name")
+			req_component_names[component_path] = "[component_path] (this is a bug)"
 
 /obj/structure/frame/machine/proc/get_req_components_amt()
 	var/amt = 0
