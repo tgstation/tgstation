@@ -351,7 +351,6 @@
 		"In an effort to promote brand transparancy, we're adding glass to all maintenance doors effective immediately.",  // my proudest dad joke
 		"We over-ordered glass during construction, so maintenance gets glass windows.")
 
-/datum/station_trait/on_round_start()
 	for(var/area/station/maintenance/maint_area in GLOB.the_station_areas)
 		for(var/turf/maint_floor as anything in maint_area.get_contained_turfs())
 
