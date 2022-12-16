@@ -321,15 +321,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	switch(healthpercent)
 		if(100 to INFINITY)
 			severity = 0
-		if(80 to 100)
+		if(85 to 100)
 			severity = 1
-		if(60 to 80)
+		if(70 to 85)
 			severity = 2
-		if(40 to 60)
+		if(55 to 70)
 			severity = 3
-		if(20 to 40)
+		if(40 to 55)
 			severity = 4
-		if(1 to 20)
+		if(25 to 40)
 			severity = 5
 		else
 			severity = 6
