@@ -139,6 +139,12 @@ SUBSYSTEM_DEF(garbage)
 			pass_counts[i] = 0
 			fail_counts[i] = 0
 
+#ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
+#define IS_DELETED(datum, _) (refcount(##datum) == 2)
+#else
+#define IS_DELETED(datum, gcd_at_time) (isnull(##datum) || ##datum.gc_destroyed != gcd_at_time)
+#endif
+
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_FILTER)
 	if (level == GC_QUEUE_FILTER)
 		delslasttick = 0
@@ -169,11 +175,16 @@ SUBSYSTEM_DEF(garbage)
 		if(GCd_at_time > cut_off_time)
 			break // Everything else is newer, skip them
 		count++
+
+#ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
+		var/datum/D = L[2]
+#else
 		var/refID = L[2]
 		var/datum/D
 		D = locate(refID)
+#endif
 
-		if (!D || D.gc_destroyed != GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
+		if (IS_DELETED(D, GCd_at_time)) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
@@ -207,7 +218,12 @@ SUBSYSTEM_DEF(garbage)
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
 
-				log_world("## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd --")
+				var/message = "## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd --"
+#if DM_VERSION >= 515
+				message = "[message] (ref count of [refcount(D)])"
+#endif
+				log_world(message)
+
 				#ifdef TESTING
 				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
 					var/client/admin = c
@@ -249,7 +265,12 @@ SUBSYSTEM_DEF(garbage)
 		HardDelete(D)
 		return
 	var/gctime = world.time
+
+#ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
+	var/refid = D
+#else
 	var/refid = text_ref(D)
+#endif
 
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
