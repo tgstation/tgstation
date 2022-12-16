@@ -15,6 +15,8 @@
 /datum/targetting_datum/basic
 	/// When we do our basic faction check, do we look for exact faction matches?
 	var/check_factions_exactly = FALSE
+	/// Only hostile against mobs when damaged?
+	var/check_hostile = FALSE
 
 /datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target)
 	if(isturf(the_target) || !the_target) // bail out on invalids
@@ -35,6 +37,9 @@
 		var/mob/living/L = the_target
 		if(faction_check(living_mob, L) || L.stat)
 			return FALSE
+		else if(check_hostile)
+			if(living_mob.maxHealth == living_mob.health)
+				return FALSE
 		return TRUE
 
 	if(ismecha(the_target)) //Targeting vs mechas
