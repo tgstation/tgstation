@@ -51,10 +51,6 @@
 	var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(target))
 	if(guardian_color)
 		heal_effect.color = guardian_color
-	if(target == summoner)
-		update_health_hud()
-		med_hud_set_health()
-		med_hud_set_status()
 
 /mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
 	set name = "Place Bluespace Beacon"

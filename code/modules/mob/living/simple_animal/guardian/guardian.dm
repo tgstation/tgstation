@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /// Setter for our summoner mob.
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, changed_mind = FALSE)
 	if(summoner)
-		UnregisterSignal(summoner, list(COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+		UnregisterSignal(summoner, list(COMSIG_CARBON_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 		if(changed_mind)
 			faction = list()
 			mind.remove_all_antag_datums()
@@ -98,6 +98,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	remove_all_languages(LANGUAGE_MASTER)
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	update_atom_languages()
+	RegisterSignal(to_who, COMSIG_CARBON_HEALTH_UPDATE, PROC_REF(on_owner_health_update))
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_owner_wabbajacked))
 	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_owner_shapeshifted))
 	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_owner_unshapeshifted))
@@ -127,6 +128,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 // Ha, no
 /mob/living/simple_animal/hostile/guardian/wabbajack(what_to_randomize, change_flags = WABBAJACK)
 	visible_message(span_warning("[src] resists the polymorph!"))
+
+/mob/living/simple_animal/hostile/guardian/proc/on_owner_health_update(mob/living/source)
+	SIGNAL_HANDLER
+
+	update_health_hud()
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
 	if(summoner)
@@ -241,9 +249,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/Life(delta_time = SSMOBS_DT, times_fired) //Dies if the summoner dies
 	. = ..()
-	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
-	med_hud_set_health()
-	med_hud_set_status()
 	if(!QDELETED(summoner))
 		if(summoner.stat == DEAD)
 			forceMove(summoner.loc)
@@ -353,7 +358,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				if(UNCONSCIOUS, HARD_CRIT)
 					to_chat(summoner, span_bolddanger("Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!"))
 					summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
-		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
