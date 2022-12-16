@@ -10,6 +10,7 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
+import { ObjectValues } from 'common/types';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -86,7 +87,12 @@ type StampPosition = {
   yOffset: number;
 };
 
-type InteractionType = 'reading' | 'writing' | 'stamping';
+const INTERACTIONTYPES = {
+  reading: 0,
+  writing: 1,
+  stamping: 2,
+};
+type InteractionType = ObjectValues<typeof INTERACTIONTYPES>;
 
 type PreviewViewProps = {
   scrollableRef: RefObject<HTMLDivElement>;
@@ -99,7 +105,7 @@ const canEdit = (heldItemDetails?: WritingImplement): boolean => {
     return false;
   }
 
-  return heldItemDetails.interaction_mode === 'writing';
+  return heldItemDetails.interaction_mode === INTERACTIONTYPES.writing;
 };
 
 // Regex that finds [____] fields.
@@ -316,7 +322,7 @@ export class PrimaryView extends Component {
     );
 
     const interactMode: InteractionType =
-      held_item_details?.interaction_mode || 'reading';
+      held_item_details?.interaction_mode || INTERACTIONTYPES.reading;
 
     const savableData =
       textAreaText.length || Object.keys(inputFieldData).length;
@@ -344,7 +350,7 @@ export class PrimaryView extends Component {
               textArea={textAreaText}
             />
           </Flex.Item>
-          {interactMode === 'writing' && (
+          {interactMode === INTERACTIONTYPES.writing && (
             <Flex.Item shrink={1} height={TEXTAREA_INPUT_HEIGHT + 'px'}>
               <Section
                 title="Insert Text"
@@ -841,7 +847,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     const dmTextPreviewData = this.createPreviewFromDM();
     let previewText = dmTextPreviewData.text;
 
-    if (interactMode === 'writing') {
+    if (interactMode === INTERACTIONTYPES.writing) {
       previewText += this.createPreviewFromTextArea(
         dmTextPreviewData.newFieldCount
       );
