@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /// Setter for our summoner mob.
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, changed_mind = FALSE)
 	if(summoner)
-		UnregisterSignal(summoner, list(COMSIG_CARBON_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+		UnregisterSignal(summoner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 		if(changed_mind)
 			faction = list()
 			mind.remove_all_antag_datums()
@@ -98,7 +98,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	remove_all_languages(LANGUAGE_MASTER)
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	update_atom_languages()
-	RegisterSignal(to_who, COMSIG_CARBON_HEALTH_UPDATE, PROC_REF(on_owner_health_update))
+	RegisterSignal(to_who, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_owner_health_update))
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_owner_wabbajacked))
 	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_owner_shapeshifted))
 	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_owner_unshapeshifted))
