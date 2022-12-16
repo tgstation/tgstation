@@ -118,8 +118,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The key our internal radio uses
 	var/radio_key = /obj/item/encryptionkey/headset_eng
 
-	///Boolean used for logging if we've been powered
-	var/is_powered = FALSE
+	///Boolean used to log the first activation of the SM.
+	var/activation_logged = FALSE
 
 	///An effect we show to admins and ghosts the percentage of delam we're at
 	var/obj/effect/countdown/supermatter/countdown
@@ -583,9 +583,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/powergain_types in additive_power)
 		internal_energy += additive_power[powergain_types]
 	internal_energy = max(internal_energy, 0)
-	if(internal_energy && !is_powered)
-		stack_trace("Supermatter powered due to unknown causes. Internal energy factors: [json_encode(internal_energy_factors)]")
-		is_powered = TRUE // so we dont spam the log.
+	if(internal_energy && !activation_logged)
+		stack_trace("Supermatter powered for the first time without being logged. Internal energy factors: [json_encode(internal_energy_factors)]")
+		activation_logged = TRUE // so we dont spam the log.
 	return additive_power
 
 /** Log when the supermatter is activated for the first time.
@@ -597,7 +597,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * * how - A datum. How they powered it. Optional.
  */
 /obj/machinery/power/supermatter_crystal/proc/log_activation(who, how)
-	if(is_powered)
+	if(activation_logged)
 		return
 	if(!who)
 		CRASH("Supermatter activated by an unknown source")
@@ -608,7 +608,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		investigate_log("has been powered for the first time by [key_name(who)][how ? " with [how]" : ""].", INVESTIGATE_ENGINE)
 		message_admins("[src] [ADMIN_JMP(src)] has been powered for the first time by [ADMIN_FULLMONTY(who)][how ? " with [how]" : ""].")
-	is_powered = TRUE
+	activation_logged = TRUE
 
 /**
  * Perform calculation for the main zap power multiplier.
