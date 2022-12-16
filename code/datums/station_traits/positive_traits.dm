@@ -342,14 +342,16 @@
 
 /datum/station_trait/glass_maint/New()
 	. = ..()
-	report_message = pick("In an effort to reduce maintenance casualties, glass windows have been fitted in every door.",
+	report_message = pick(
+		"In an effort to reduce maintenance casualties, glass windows have been fitted in every door.",
 		"We had a spare engineer, so we had them put glass in all maintenance doors.",
 		"To commemorate our miners, we put glass in all the airlocks. Unfortunately, we ran out after completing maintenance.",
-		"In an effort to comply with Space Law section [rand(1,99999)].4, we have outfitted maintenence with glass windows.",
+		"In an effort to comply with Space Law section [rand(1,99999)].4, we have outfitted maintenance with glass windows.",
 		"An anomaly caused all the maintenance airlocks to get glass windows.",
 		"An intern went through and added glass to all the maintenance windows in their spare time.",
-		"In an effort to promote brand transparancy, we're adding glass to all maintenance doors effective immediately.",  // my proudest dad joke
-		"We over-ordered glass during construction, so maintenance gets glass windows.")
+		"In an effort to promote brand transparency, we're adding glass to all maintenance doors effective immediately.",  // my proudest dad joke
+		"We over-ordered glass during construction, so maintenance gets glass windows.",
+	)
 
 	for(var/area/station/maintenance/maint_area in GLOB.the_station_areas)
 		for(var/turf/maint_floor as anything in maint_area.get_contained_turfs())
