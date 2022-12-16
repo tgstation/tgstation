@@ -281,7 +281,7 @@
 	if(actual_damage < 5)
 		return
 	//blunt items are more likely to knock out, but sharp ones are still capable of doing it
-	if(prob(CEILING(actual_damage * (sharpness & SHARP_EDGED|SHARP_POINTY ? 0.65 : 1), 1)))
+	if(prob(CEILING(actual_damage * (sharpness & (SHARP_EDGED|SHARP_POINTY) ? 0.65 : 1), 1)))
 		source.visible_message(
 			span_warning("[source] gets knocked out!"),
 			span_userdanger("You are knocked out!"),
