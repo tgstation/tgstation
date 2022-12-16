@@ -10,6 +10,7 @@
 	radial_icon_state = "summons"
 	speech_commands = list("fetch")
 	command_feedback = "bounces"
+	pointed_reaction = "with great interest."
 	/// If true, this command will trigger if the pet sees a friend throw any item, if they're not doing anything else
 	var/trigger_on_throw = TRUE
 	/// If true, this is a poorly trained pet who will eat food you throw instead of bringing it back
@@ -91,8 +92,10 @@
 	var/atom/target = weak_target?.resolve()
 	// We got something to fetch so go fetch it
 	if (target)
-		controller.queue_behavior(/datum/ai_behavior/fetch_seek, BB_CURRENT_PET_TARGET, BB_FETCH_DELIVER_TO)
-		// Then pick it up or eat it
+		if (get_dist(controller.pawn, target) > 1) // We're not there yet
+			controller.queue_behavior(/datum/ai_behavior/fetch_seek, BB_CURRENT_PET_TARGET, BB_FETCH_DELIVER_TO)
+			return SUBTREE_RETURN_FINISH_PLANNING
+		// Pick it up or eat it
 		if (will_eat_targets && IsEdible(target))
 			controller.queue_behavior(/datum/ai_behavior/eat_fetched_snack, BB_CURRENT_PET_TARGET, BB_FETCH_DELIVER_TO)
 		else

@@ -61,7 +61,7 @@
 	radial_icon_state = "puppy_dead"
 	speech_commands = list("play dead") // Don't get too creative here, people talk about dying pretty often
 
-/datum/pet_command/idle/execute_action(datum/ai_controller/controller)
+/datum/pet_command/play_dead/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(/datum/ai_behavior/play_dead)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
@@ -108,7 +108,7 @@
 
 	speech_commands = list("attack", "sic", "kill")
 	command_feedback = "growl"
-	pointed_reaction = "growls"
+	pointed_reaction = "and growls"
 	/// Balloon alert to display if providing an invalid target
 	var/refuse_reaction = "shakes head"
 	/// Attack behaviour to use, generally you will want to override this to add some kind of cooldown
@@ -150,7 +150,7 @@
 	radial_icon_state = "projectile"
 	speech_commands = list("shoot", "blast", "cast")
 	command_feedback = "growl"
-	pointed_reaction = "growls"
+	pointed_reaction = "and growls"
 	/// Blackboard key where a reference to some kind of mob ability is stored
 	var/pet_ability_key
 

@@ -148,5 +148,5 @@
 	// Deciding if they can actually do anything with this target is the behaviour's job
 	set_command_target(parent, pointed_atom)
 	// These are usually hostile actions so should have a record in chat
-	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [pointed_atom] and [pointed_reaction]!"))
+	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [pointed_atom] [pointed_reaction]!"))
 	return TRUE

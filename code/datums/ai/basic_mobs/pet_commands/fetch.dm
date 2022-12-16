@@ -95,6 +95,7 @@
  */
 /datum/ai_behavior/eat_fetched_snack
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	action_cooldown = 0.8 SECONDS
 
 /datum/ai_behavior/eat_fetched_snack/setup(datum/ai_controller/controller, target_key, delivery_key)
 	. = ..()
@@ -113,14 +114,14 @@
 	if(!(isturf(snack.loc) || ishuman(snack.loc)))
 		finish_action(controller, FALSE) // Where did it go?
 
-	var/mob/living/living_pawn = controller.pawn
-	if(!in_range(living_pawn, snack))
+	var/mob/living/basic/basic_pawn = controller.pawn
+	if(!in_range(basic_pawn, snack))
 		return
 
 	if(isturf(snack.loc))
-		snack.attack_animal(living_pawn) // snack attack!
+		basic_pawn.melee_attack(snack) // snack attack!
 	else if(iscarbon(snack.loc) && DT_PROB(10, delta_time))
-		living_pawn.manual_emote("Stares at [snack.loc]'s [snack.name] intently.")
+		basic_pawn.manual_emote("Stares at [snack.loc]'s [snack.name] intently.")
 
 	if(QDELETED(snack)) // we ate it!
 		finish_action(controller, TRUE, target_key, delivery_key)
@@ -144,10 +145,11 @@
 	. = ..()
 	if (!COOLDOWN_FINISHED(src, reset_ignore_cooldown))
 		return FALSE
+	if (!length(controller.blackboard[BB_FETCH_IGNORE_LIST]))
+		return
 
 /datum/ai_behavior/forget_failed_fetches/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
-	if (!length(controller.blackboard[BB_FETCH_IGNORE_LIST]))
-		return
 	COOLDOWN_START(src, reset_ignore_cooldown, cooldown_duration)
 	controller.blackboard[BB_FETCH_IGNORE_LIST] = list()
+	finish_action(controller, TRUE)

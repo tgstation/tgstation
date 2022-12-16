@@ -6,7 +6,6 @@
 /datum/pet_command/point_targetting/attack/dog
 	attack_behaviour = /datum/ai_behavior/basic_melee_attack/dog
 
-
 /mob/living/basic/pet/dog
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	response_help_continuous = "pets"
