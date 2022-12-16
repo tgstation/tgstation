@@ -23,10 +23,7 @@ type Fish = {
 
 type FishAI = 'dumb' | 'zippy' | 'slow';
 
-enum ReelingState {
-  Idle,
-  Reeling,
-}
+type ReelingState = 'Idle' | 'Reeling';
 
 type FishingMinigameProps = {
   difficulty: number;
@@ -51,7 +48,7 @@ class FishingMinigame extends Component<
 > {
   animation_id: number;
   last_frame: number;
-  reeling: ReelingState = ReelingState.Idle;
+  reeling: ReelingState = 'Idle';
   perfect: boolean = true;
   area_height: number = 1000;
   state: FishingMinigameState;
@@ -289,7 +286,7 @@ class FishingMinigame extends Component<
     // Top bound
     if (newPosition < 0) {
       newPosition = 0;
-      if (this.reeling === ReelingState.Reeling) {
+      if (this.reeling === 'Reeling') {
         newVelocity = 0;
       } else {
         newVelocity = -bait.velocity * bounce_coeff;
@@ -302,9 +299,7 @@ class FishingMinigame extends Component<
     }
 
     const acceleration =
-      this.reeling === ReelingState.Reeling
-        ? acceleration_up
-        : acceleration_down;
+      this.reeling === 'Reeling' ? acceleration_up : acceleration_down;
     const velocity_change = acceleration * seconds;
     // Slowdown both ways when on fish
     if (this.fishOnBait(fish, bait)) {
@@ -371,13 +366,13 @@ class FishingMinigame extends Component<
   }
 
   handle_mousedown(event: MouseEvent) {
-    if (this.reeling === ReelingState.Idle) {
-      this.reeling = ReelingState.Reeling;
+    if (this.reeling === 'Idle') {
+      this.reeling = 'Reeling';
     }
   }
 
   handle_mouseup(event: MouseEvent) {
-    this.reeling = ReelingState.Idle;
+    this.reeling = 'Idle';
   }
 
   render() {

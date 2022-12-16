@@ -25,16 +25,13 @@ type AuditLog = {
   vendor: string;
 };
 
-enum SCREENS {
-  users,
-  audit,
-}
+type Screens = 'users' | 'audit';
 
 export const AccountingConsole = (props, context) => {
-  const [screenmode, setScreenmode] = useLocalState(
+  const [screenmode, setScreenmode] = useLocalState<Screens>(
     context,
     'tab_main',
-    SCREENS.users
+    'users'
   );
 
   return (
@@ -45,20 +42,20 @@ export const AccountingConsole = (props, context) => {
           <Stack.Item>
             <Tabs fluid textAlign="center">
               <Tabs.Tab
-                selected={screenmode === SCREENS.users}
-                onClick={() => setScreenmode(SCREENS.users)}>
+                selected={screenmode === 'users'}
+                onClick={() => setScreenmode('users')}>
                 Users
               </Tabs.Tab>
               <Tabs.Tab
-                selected={screenmode === SCREENS.audit}
-                onClick={() => setScreenmode(SCREENS.audit)}>
+                selected={screenmode === 'audit'}
+                onClick={() => setScreenmode('audit')}>
                 Audit
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {screenmode === SCREENS.users && <UsersScreen />}
-            {screenmode === SCREENS.audit && <AuditScreen />}
+            {screenmode === 'users' && <UsersScreen />}
+            {screenmode === 'audit' && <AuditScreen />}
           </Stack.Item>
         </Stack>
       </Window.Content>

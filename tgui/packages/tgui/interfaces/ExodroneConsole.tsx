@@ -47,23 +47,18 @@ type SiteData = {
   events: Array<ExplorationEventData>;
 };
 
-enum DroneStatusEnum {
-  Idle = 'idle',
-  Travel = 'travel',
-  Exploration = 'exploration',
-  Adventure = 'adventure',
-  Busy = 'busy',
-}
-
-enum CargoType {
-  Tool = 'tool',
-  Cargo = 'cargo',
-  Empty = 'empty',
-}
+const DRONESTATUS = {
+  Idle: 'idle',
+  Travel: 'travel',
+  Exploration: 'exploration',
+  Adventure: 'adventure',
+  Busy: 'busy',
+} as const;
 
 type CargoData = {
-  type: CargoType;
+  type: 'tool' | 'cargo' | 'empty';
   name: string;
+  ref: string;
 };
 
 type DroneBasicData = {
@@ -78,7 +73,7 @@ export type AdventureDataProvider = {
 };
 
 type DroneAdventure = AdventureDataProvider & {
-  drone_status: DroneStatusEnum.Adventure;
+  drone_status: typeof DRONESTATUS.Adventure;
 };
 
 type DroneData = {
@@ -94,26 +89,26 @@ type DroneData = {
 };
 
 type DroneBusy = {
-  drone_status: DroneStatusEnum.Busy;
+  drone_status: typeof DRONESTATUS.Busy;
   wait_time_left: number;
   wait_message: string;
 };
 
 type DroneExploration = {
-  drone_status: DroneStatusEnum.Exploration;
+  drone_status: typeof DRONESTATUS.Exploration;
   sites: Array<SiteData>;
   site: SiteData;
   event?: FullEventData;
 };
 
 type DroneIdle = {
-  drone_status: DroneStatusEnum.Idle;
+  drone_status: typeof DRONESTATUS.Idle;
   sites: Array<SiteData>;
   site: null;
 };
 
 type DroneTravel = {
-  drone_status: DroneStatusEnum.Travel;
+  drone_status: typeof DRONESTATUS.Travel;
   travel_time: number;
   travel_time_left: number;
 };
@@ -306,9 +301,12 @@ const EquipmentBox = (
 ) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const { all_tools = {} } = data;
-  const { configurable } = props.drone;
-  const cargo = props.cargo;
-  const boxContents = (cargo) => {
+  const {
+    cargo,
+    drone: { configurable },
+  } = props;
+
+  const boxContents = (cargo: CargoData) => {
     switch (cargo.type) {
       case 'tool': // Tool icon+Remove button if configurable
         return (
@@ -552,7 +550,7 @@ const TravelTargetSelectionScreen = (
     sites &&
     sites.filter((destination) => !site || destination.ref !== site.ref);
   return (
-    (drone.drone_status === DroneStatusEnum.Travel && (
+    (drone.drone_status === DRONESTATUS.Travel && (
       <TravelDimmer drone={drone} />
     )) || (
       <Section
@@ -868,12 +866,12 @@ const DroneScreen = (props: { drone: ActiveDrone & DroneData }) => {
   const { drone } = props;
 
   switch (drone.drone_status) {
-    case DroneStatusEnum.Busy:
+    case DRONESTATUS.Busy:
       return <TimeoutScreen drone={drone} />;
-    case DroneStatusEnum.Idle:
-    case DroneStatusEnum.Travel:
+    case DRONESTATUS.Idle:
+    case DRONESTATUS.Travel:
       return <TravelTargetSelectionScreen drone={drone} />;
-    case DroneStatusEnum.Adventure:
+    case DRONESTATUS.Adventure:
       return (
         <AdventureScreen
           adventure_data={drone.adventure_data}
@@ -881,7 +879,7 @@ const DroneScreen = (props: { drone: ActiveDrone & DroneData }) => {
           drone_max_integrity={drone.drone_max_integrity}
         />
       );
-    case DroneStatusEnum.Exploration:
+    case DRONESTATUS.Exploration:
       if (drone.event) {
         return <EventScreen drone={drone} event={drone.event} />;
       } else {

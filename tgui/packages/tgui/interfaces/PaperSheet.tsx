@@ -86,11 +86,7 @@ type StampPosition = {
   yOffset: number;
 };
 
-enum InteractionType {
-  reading = 0,
-  writing = 1,
-  stamping = 2,
-}
+type InteractionType = 'reading' | 'writing' | 'stamping';
 
 type PreviewViewProps = {
   scrollableRef: RefObject<HTMLDivElement>;
@@ -103,7 +99,7 @@ const canEdit = (heldItemDetails?: WritingImplement): boolean => {
     return false;
   }
 
-  return heldItemDetails.interaction_mode === InteractionType.writing;
+  return heldItemDetails.interaction_mode === 'writing';
 };
 
 // Regex that finds [____] fields.
@@ -319,8 +315,8 @@ export class PrimaryView extends Component {
       ''
     );
 
-    const interactMode =
-      held_item_details?.interaction_mode || InteractionType.reading;
+    const interactMode: InteractionType =
+      held_item_details?.interaction_mode || 'reading';
 
     const savableData =
       textAreaText.length || Object.keys(inputFieldData).length;
@@ -348,7 +344,7 @@ export class PrimaryView extends Component {
               textArea={textAreaText}
             />
           </Flex.Item>
-          {interactMode === InteractionType.writing && (
+          {interactMode === 'writing' && (
             <Flex.Item shrink={1} height={TEXTAREA_INPUT_HEIGHT + 'px'}>
               <Section
                 title="Insert Text"
@@ -840,13 +836,12 @@ export class PreviewView extends Component<PreviewViewProps> {
   render() {
     const { data } = useBackend<PaperContext>(this.context);
     const { paper_color, held_item_details } = data;
-    const interactMode =
-      held_item_details?.interaction_mode || InteractionType.reading;
+    const interactMode = held_item_details?.interaction_mode || 'reading';
 
     const dmTextPreviewData = this.createPreviewFromDM();
     let previewText = dmTextPreviewData.text;
 
-    if (interactMode === InteractionType.writing) {
+    if (interactMode === 'writing') {
       previewText += this.createPreviewFromTextArea(
         dmTextPreviewData.newFieldCount
       );

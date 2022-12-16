@@ -32,26 +32,28 @@ type GreyscaleMenuData = {
   refreshing: boolean;
 };
 
-enum Direction {
-  North = 'north',
-  NorthEast = 'northeast',
-  East = 'east',
-  SouthEast = 'southeast',
-  South = 'south',
-  SouthWest = 'southwest',
-  West = 'west',
-  NorthWest = 'northwest',
-}
+const DIRECTIONS = {
+  North: 'north',
+  NorthEast: 'northeast',
+  East: 'east',
+  SouthEast: 'southeast',
+  South: 'south',
+  SouthWest: 'southwest',
+  West: 'west',
+  NorthWest: 'northwest',
+} as const;
 
-const DirectionAbbreviation: Record<Direction, string> = {
-  [Direction.North]: 'N',
-  [Direction.NorthEast]: 'NE',
-  [Direction.East]: 'E',
-  [Direction.SouthEast]: 'SE',
-  [Direction.South]: 'S',
-  [Direction.SouthWest]: 'SW',
-  [Direction.West]: 'W',
-  [Direction.NorthWest]: 'NW',
+type Directions = keyof typeof DIRECTIONS;
+
+const DirectionAbbreviation: Record<Directions, string> = {
+  'North': 'N',
+  'NorthEast': 'NE',
+  'East': 'E',
+  'SouthEast': 'SE',
+  'South': 'S',
+  'SouthWest': 'SW',
+  'West': 'W',
+  'NorthWest': 'NW',
 };
 
 const ConfigDisplay = (props, context) => {
@@ -128,23 +130,23 @@ const PreviewCompassSelect = (props, context) => {
     <Box>
       <Stack vertical>
         <Flex>
-          <SingleDirection dir={Direction.NorthWest} />
-          <SingleDirection dir={Direction.North} />
-          <SingleDirection dir={Direction.NorthEast} />
+          <SingleDirection dir={DIRECTIONS.NorthWest} />
+          <SingleDirection dir={DIRECTIONS.North} />
+          <SingleDirection dir={DIRECTIONS.NorthEast} />
         </Flex>
         <Flex>
-          <SingleDirection dir={Direction.West} />
+          <SingleDirection dir={DIRECTIONS.West} />
           <Flex.Item grow={1} basis={0}>
             <Button lineHeight={3} m={-0.2} fluid>
               <Icon name="arrows-alt" size={1.5} m="20%" />
             </Button>
           </Flex.Item>
-          <SingleDirection dir={Direction.East} />
+          <SingleDirection dir={DIRECTIONS.East} />
         </Flex>
         <Flex>
-          <SingleDirection dir={Direction.SouthWest} />
-          <SingleDirection dir={Direction.South} />
-          <SingleDirection dir={Direction.SouthEast} />
+          <SingleDirection dir={DIRECTIONS.SouthWest} />
+          <SingleDirection dir={DIRECTIONS.South} />
+          <SingleDirection dir={DIRECTIONS.SouthEast} />
         </Flex>
       </Stack>
     </Box>

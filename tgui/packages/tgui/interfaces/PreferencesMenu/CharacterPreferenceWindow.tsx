@@ -10,13 +10,7 @@ import { MainPage } from './MainPage';
 import { SpeciesPage } from './SpeciesPage';
 import { QuirksPage } from './QuirksPage';
 
-enum Page {
-  Antags,
-  Main,
-  Jobs,
-  Species,
-  Quirks,
-}
+type Page = 'Antags' | 'Main' | 'Jobs' | 'Species' | 'Quirks';
 
 const CharacterProfiles = (props: {
   activeSlot: number;
@@ -46,34 +40,32 @@ const CharacterProfiles = (props: {
 export const CharacterPreferenceWindow = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
 
-  const [currentPage, setCurrentPage] = useLocalState(
+  const [currentPage, setCurrentPage] = useLocalState<Page>(
     context,
     'currentPage',
-    Page.Main
+    'Main'
   );
 
   let pageContents;
 
   switch (currentPage) {
-    case Page.Antags:
+    case 'Antags':
       pageContents = <AntagsPage />;
       break;
-    case Page.Jobs:
+    case 'Jobs':
       pageContents = <JobsPage />;
       break;
-    case Page.Main:
+    case 'Main':
+      pageContents = <MainPage openSpecies={() => setCurrentPage('Species')} />;
+
+      break;
+    case 'Species':
       pageContents = (
-        <MainPage openSpecies={() => setCurrentPage(Page.Species)} />
+        <SpeciesPage closeSpecies={() => setCurrentPage('Main')} />
       );
 
       break;
-    case Page.Species:
-      pageContents = (
-        <SpeciesPage closeSpecies={() => setCurrentPage(Page.Main)} />
-      );
-
-      break;
-    case Page.Quirks:
+    case 'Quirks':
       pageContents = <QuirksPage />;
       break;
     default:
@@ -109,9 +101,9 @@ export const CharacterPreferenceWindow = (props, context) => {
               <Stack.Item grow>
                 <PageButton
                   currentPage={currentPage}
-                  page={Page.Main}
+                  page={'Main'}
                   setPage={setCurrentPage}
-                  otherActivePages={[Page.Species]}>
+                  otherActivePages={['Species']}>
                   Character
                 </PageButton>
               </Stack.Item>
@@ -119,7 +111,7 @@ export const CharacterPreferenceWindow = (props, context) => {
               <Stack.Item grow>
                 <PageButton
                   currentPage={currentPage}
-                  page={Page.Jobs}
+                  page={'Jobs'}
                   setPage={setCurrentPage}>
                   {/*
                     Fun fact: This isn't "Jobs" so that it intentionally
@@ -132,7 +124,7 @@ export const CharacterPreferenceWindow = (props, context) => {
               <Stack.Item grow>
                 <PageButton
                   currentPage={currentPage}
-                  page={Page.Antags}
+                  page={'Antags'}
                   setPage={setCurrentPage}>
                   Antagonists
                 </PageButton>
@@ -141,7 +133,7 @@ export const CharacterPreferenceWindow = (props, context) => {
               <Stack.Item grow>
                 <PageButton
                   currentPage={currentPage}
-                  page={Page.Quirks}
+                  page={'Quirks'}
                   setPage={setCurrentPage}>
                   Quirks
                 </PageButton>

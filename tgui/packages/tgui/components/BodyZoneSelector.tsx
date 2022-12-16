@@ -1,18 +1,21 @@
+import { ObjectValues } from 'common/types';
 import { Component, createRef } from 'inferno';
 import { resolveAsset } from '../assets';
 import { Box } from './Box';
 
-export enum BodyZone {
-  Head = 'head',
-  Chest = 'chest',
-  LeftArm = 'l_arm',
-  RightArm = 'r_arm',
-  LeftLeg = 'l_leg',
-  RightLeg = 'r_leg',
-  Eyes = 'eyes',
-  Mouth = 'mouth',
-  Groin = 'groin',
-}
+export const BODYZONES = {
+  Head: 'head',
+  Chest: 'chest',
+  LeftArm: 'l_arm',
+  RightArm: 'r_arm',
+  LeftLeg: 'l_leg',
+  RightLeg: 'r_leg',
+  Eyes: 'eyes',
+  Mouth: 'mouth',
+  Groin: 'groin',
+} as const;
+
+export type BodyZone = ObjectValues<typeof BODYZONES>;
 
 const bodyZonePixelToZone = (x: number, y: number): BodyZone | null => {
   // TypeScript translation of /atom/movable/screen/zone_sel/proc/get_zone_at
@@ -20,33 +23,33 @@ const bodyZonePixelToZone = (x: number, y: number): BodyZone | null => {
     return null;
   } else if (y < 10) {
     if (x > 10 && x < 15) {
-      return BodyZone.RightLeg;
+      return BODYZONES.RightLeg;
     } else if (x > 17 && x < 22) {
-      return BodyZone.LeftLeg;
+      return BODYZONES.LeftLeg;
     }
   } else if (y < 13) {
     if (x > 8 && x < 11) {
-      return BodyZone.RightArm;
+      return BODYZONES.RightArm;
     } else if (x > 12 && x < 20) {
-      return BodyZone.Groin;
+      return BODYZONES.Groin;
     } else if (x > 21 && x < 24) {
-      return BodyZone.LeftArm;
+      return BODYZONES.LeftArm;
     }
   } else if (y < 22) {
     if (x > 8 && x < 11) {
-      return BodyZone.RightArm;
+      return BODYZONES.RightArm;
     } else if (x > 12 && x < 20) {
-      return BodyZone.Chest;
+      return BODYZONES.Chest;
     } else if (x > 21 && x < 24) {
-      return BodyZone.LeftArm;
+      return BODYZONES.LeftArm;
     }
   } else if (y < 30 && x > 12 && x < 20) {
     if (y > 23 && y < 24 && x > 15 && x < 17) {
-      return BodyZone.Mouth;
+      return BODYZONES.Mouth;
     } else if (y > 25 && y < 27 && x > 14 && x < 18) {
-      return BodyZone.Eyes;
+      return BODYZONES.Eyes;
     } else {
-      return BodyZone.Head;
+      return BODYZONES.Head;
     }
   }
 

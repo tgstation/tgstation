@@ -23,10 +23,7 @@ type StationTraitsData = {
   valid_station_traits: ValidStationTrait[];
 };
 
-enum Tab {
-  SetupFutureStationTraits,
-  ViewStationTraits,
-}
+type Tab = 'SetupFutureStationTraits' | 'ViewStationTraits';
 
 const FutureStationTraitsPage = (props, context) => {
   const { act, data } = useBackend<StationTraitsData>(context);
@@ -206,19 +203,19 @@ const ViewStationTraitsPage = (props, context) => {
 };
 
 export const StationTraitsPanel = (props, context) => {
-  const [currentTab, setCurrentTab] = useLocalState(
+  const [currentTab, setCurrentTab] = useLocalState<Tab>(
     context,
     'station_traits_tab',
-    Tab.ViewStationTraits
+    'ViewStationTraits'
   );
 
   let currentPage;
 
   switch (currentTab) {
-    case Tab.SetupFutureStationTraits:
+    case 'SetupFutureStationTraits':
       currentPage = <FutureStationTraitsPage />;
       break;
-    case Tab.ViewStationTraits:
+    case 'ViewStationTraits':
       currentPage = <ViewStationTraitsPage />;
       break;
     default:
@@ -231,15 +228,15 @@ export const StationTraitsPanel = (props, context) => {
         <Tabs>
           <Tabs.Tab
             icon="eye"
-            selected={currentTab === Tab.ViewStationTraits}
-            onClick={() => setCurrentTab(Tab.ViewStationTraits)}>
+            selected={currentTab === 'ViewStationTraits'}
+            onClick={() => setCurrentTab('ViewStationTraits')}>
             View
           </Tabs.Tab>
 
           <Tabs.Tab
             icon="edit"
-            selected={currentTab === Tab.SetupFutureStationTraits}
-            onClick={() => setCurrentTab(Tab.SetupFutureStationTraits)}>
+            selected={currentTab === 'SetupFutureStationTraits'}
+            onClick={() => setCurrentTab('SetupFutureStationTraits')}>
             Edit
           </Tabs.Tab>
         </Tabs>

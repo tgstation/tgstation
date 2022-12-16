@@ -1,5 +1,6 @@
 import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
+import { ObjectValues } from 'common/types';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, Stack } from '../components';
@@ -208,10 +209,12 @@ const SLOTS: Record<
   },
 };
 
-enum ObscuringLevel {
-  Completely = 1,
-  Hidden = 2,
-}
+const OBSCURITY = {
+  Completely: 1,
+  Hidden: 2,
+} as const;
+
+type ObscuringLevel = ObjectValues<typeof OBSCURITY>;
 
 type Interactable = {
   interacting: BooleanLike;
@@ -311,7 +314,7 @@ export const StripMenu = (props, context) => {
                     content = (
                       <Icon
                         name={
-                          item.obscured === ObscuringLevel.Completely
+                          item.obscured === OBSCURITY.Completely
                             ? 'ban'
                             : 'eye-slash'
                         }

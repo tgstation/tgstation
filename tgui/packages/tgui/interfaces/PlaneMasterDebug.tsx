@@ -9,15 +9,13 @@ import { resolveAsset } from '../assets';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
 import { Connections } from './IntegratedCircuit/Connections';
 
-enum ConnectionType {
-  Relay,
-  Filter,
-}
+const CONNECTIONTYPES = ['Relay', 'Filter'] as const;
 
-enum ConnectionDirection {
-  Incoming,
-  Outgoing,
-}
+type ConnectionType = typeof CONNECTIONTYPES[number];
+
+const CONNETIONDIRECTIONS = ['Incoming', 'Outgoing'] as const;
+
+type ConnectionDirection = typeof CONNETIONDIRECTIONS[number];
 
 type ConnectionRef = {
   ref: string;
@@ -162,9 +160,9 @@ const sortConnectionRefs = function (
   refs = sortBy((connection: ConnectionRef) => connection.sort_by)(refs);
   refs.map((connection, index) => {
     let connectSource = connectSources[connection.ref];
-    if (direction === ConnectionDirection.Outgoing) {
+    if (direction === 'Outgoing') {
       connectSource.source_index = index;
-    } else if (direction === ConnectionDirection.Incoming) {
+    } else if (direction === 'Incoming') {
       connectSource.target_index = index;
     }
   });
@@ -182,9 +180,9 @@ const addConnectionRefs = function (
     const connected = reference[ref];
     let our_plane;
     // If we're incoming, use the target ref, and vis versa
-    if (add_type === ConnectionDirection.Incoming) {
+    if (add_type === 'Incoming') {
       our_plane = plane_info[connected.source_ref];
-    } else if (add_type === ConnectionDirection.Outgoing) {
+    } else if (add_type === 'Outgoing') {
       our_plane = plane_info[connected.target_ref];
     }
     add_to.push({
@@ -204,13 +202,13 @@ const positionPlanes = function (context, connectSources: AssocConnected) {
   // But also so we can set their source/target index nicely
   for (const ref of Object.keys(relay_info)) {
     let connection_source: Connected = relay_info[ref];
-    connection_source.connect_type = ConnectionType.Relay;
+    connection_source.connect_type = 'Relay';
     connection_source.connect_color = 'blue';
     connectSources[ref] = connection_source;
   }
   for (const ref of Object.keys(filter_connect)) {
     let connection_source: Connected = filter_connect[ref];
-    connection_source.connect_type = ConnectionType.Filter;
+    connection_source.connect_type = 'Filter';
     connection_source.connect_color = 'purple';
     connectSources[ref] = connection_source;
   }
@@ -221,40 +219,40 @@ const positionPlanes = function (context, connectSources: AssocConnected) {
     const outgoing_conct: ConnectionRef[] = [] as any;
     addConnectionRefs(
       our_plane.incoming_relays,
-      ConnectionDirection.Incoming,
+      'Incoming',
       incoming_conct,
       relay_info,
       plane_info
     );
     addConnectionRefs(
       our_plane.incoming_filters,
-      ConnectionDirection.Incoming,
+      'Incoming',
       incoming_conct,
       filter_connect,
       plane_info
     );
     addConnectionRefs(
       our_plane.outgoing_relays,
-      ConnectionDirection.Outgoing,
+      'Outgoing',
       outgoing_conct,
       relay_info,
       plane_info
     );
     addConnectionRefs(
       our_plane.outgoing_filters,
-      ConnectionDirection.Outgoing,
+      'Outgoing',
       outgoing_conct,
       filter_connect,
       plane_info
     );
     our_plane.incoming_connections = sortConnectionRefs(
       incoming_conct,
-      ConnectionDirection.Incoming,
+      'Incoming',
       connectSources
     );
     our_plane.outgoing_connections = sortConnectionRefs(
       outgoing_conct,
-      ConnectionDirection.Outgoing,
+      'Outgoing',
       connectSources
     );
   }
@@ -341,7 +339,7 @@ export class PlaneMasterDebug extends Component {
     const { plane_info } = data;
 
     event.preventDefault();
-    if (connection.connect_type === ConnectionType.Relay) {
+    if (connection.connect_type === 'Relay') {
       // Close the connection
       act('disconnect_relay', {
         source: connection.source_ref,
@@ -357,7 +355,7 @@ export class PlaneMasterDebug extends Component {
         target_plane.incoming_relays,
         connection.our_ref
       );
-    } else if (connection.connect_type === ConnectionType.Filter) {
+    } else if (connection.connect_type === 'Filter') {
       // Close the connection
       const filter = connection as Filter & Connected;
       act('disconnect_filter', {
