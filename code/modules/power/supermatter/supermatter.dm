@@ -279,6 +279,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	// PART 4: DAMAGE PROCESSING
 	temp_limit_factors = calculate_temp_limit()
+	damage_archived = damage
 	damage_factors = calculate_damage()
 	if(damage == 0) // Clear any in game forced delams if on full health.
 		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRATEGY_PURGE)
@@ -597,7 +598,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * * how - A datum. How they powered it. Optional.
  */
 /obj/machinery/power/supermatter_crystal/proc/log_activation(who, how)
-	if(activation_logged)
+	if(activation_logged || disable_power_change)
 		return
 	if(!who)
 		CRASH("Supermatter activated by an unknown source")
@@ -722,7 +723,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for (var/damage_type in additive_damage)
 		total_damage += additive_damage[damage_type]
 
-	damage_archived = damage
 	damage += total_damage
 	damage = max(damage, 0)
 	return additive_damage
