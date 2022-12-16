@@ -88,7 +88,7 @@
 /datum/station_trait/airlock_sabotage
 	name = "Airlock Sabotage"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 1
+	weight = 2
 	show_in_report = TRUE
 	report_message = "Many of the station's airlocks seem to be malfunctioning, be careful around them."
 
