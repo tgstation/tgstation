@@ -616,9 +616,9 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }, context) => {
                       data.atom_data[(atom_id as any) - 1]?.is_reagent;
                     const amount = item.reqs[atom_id];
                     return is_reagent
-                      ? name + '\xa0' + amount + 'u'
+                      ? `${name}\xa0${amount}u`
                       : amount > 1
-                        ? name + '\xa0' + amount + 'x'
+                        ? `${name}\xa0${amount}x`
                         : name;
                   })
                 ).join(', ')}
@@ -632,9 +632,9 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }, context) => {
                           data.atom_data[(atom_id as any) - 1]?.is_reagent;
                         const amount = item.chem_catalysts[atom_id];
                         return is_reagent
-                          ? name + '\xa0' + amount + 'u'
+                          ? `${name}\xa0${amount}u`
                           : amount > 1
-                            ? name + '\xa0' + amount + 'x'
+                            ? `${name}\xa0${amount}x`
                             : name;
                       })
                       .join(', ')}
@@ -858,9 +858,7 @@ const AtomContent = ({ atom_id, amount }, context) => {
       />
       <Box inline verticalAlign="middle">
         {name}
-        {is_reagent
-          ? '\xa0' + amount + 'u'
-          : amount > 1 && '\xa0' + amount + 'x'}
+        {is_reagent ? `\xa0${amount}u` : amount > 1 && `\xa0${amount}x`}
       </Box>
     </Box>
   ) as any;
