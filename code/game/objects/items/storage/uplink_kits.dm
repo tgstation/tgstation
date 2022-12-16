@@ -71,7 +71,7 @@
 			new /obj/item/jammer(src)
 
 		if(KIT_GUN)
-			new /obj/item/gun/ballistic/revolver(src)
+			new /obj/item/gun/ballistic/revolver/syndicate(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/card/emag(src)
@@ -250,7 +250,7 @@
 	new /obj/item/pen/sleepy(src)
 	new /obj/item/reagent_containers/pill/cyanide(src)
 	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do.
-	new /obj/item/gun/ballistic/revolver(src)
+	new /obj/item/gun/ballistic/revolver/syndicate(src)
 	new /obj/item/implanter/freedom(src)
 	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
 
