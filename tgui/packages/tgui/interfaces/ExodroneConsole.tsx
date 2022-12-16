@@ -47,14 +47,6 @@ type SiteData = {
   events: Array<ExplorationEventData>;
 };
 
-const DRONESTATUS = {
-  Idle: 'idle',
-  Travel: 'travel',
-  Exploration: 'exploration',
-  Adventure: 'adventure',
-  Busy: 'busy',
-} as const;
-
 type CargoData = {
   type: 'tool' | 'cargo' | 'empty';
   name: string;
@@ -73,7 +65,7 @@ export type AdventureDataProvider = {
 };
 
 type DroneAdventure = AdventureDataProvider & {
-  drone_status: typeof DRONESTATUS.Adventure;
+  drone_status: 'adventure';
 };
 
 type DroneData = {
@@ -89,26 +81,26 @@ type DroneData = {
 };
 
 type DroneBusy = {
-  drone_status: typeof DRONESTATUS.Busy;
+  drone_status: 'busy';
   wait_time_left: number;
   wait_message: string;
 };
 
 type DroneExploration = {
-  drone_status: typeof DRONESTATUS.Exploration;
+  drone_status: 'exploration';
   sites: Array<SiteData>;
   site: SiteData;
   event?: FullEventData;
 };
 
 type DroneIdle = {
-  drone_status: typeof DRONESTATUS.Idle;
+  drone_status: 'idle';
   sites: Array<SiteData>;
   site: null;
 };
 
 type DroneTravel = {
-  drone_status: typeof DRONESTATUS.Travel;
+  drone_status: 'travel';
   travel_time: number;
   travel_time_left: number;
 };
@@ -550,9 +542,7 @@ const TravelTargetSelectionScreen = (
     sites &&
     sites.filter((destination) => !site || destination.ref !== site.ref);
   return (
-    (drone.drone_status === DRONESTATUS.Travel && (
-      <TravelDimmer drone={drone} />
-    )) || (
+    (drone.drone_status === 'travel' && <TravelDimmer drone={drone} />) || (
       <Section
         title="Travel Destinations"
         fill
