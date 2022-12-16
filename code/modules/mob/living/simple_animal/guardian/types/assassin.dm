@@ -35,7 +35,7 @@
 /mob/living/simple_animal/hostile/guardian/assassin/get_status_tab_items()
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, stealth_cooldown))
-		. += "Stealth Cooldown Remaining: [DisplayTimeText(stealth_cooldown - world.time)]"
+		. += "Stealth Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, stealth_cooldown))]"
 
 /mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
 	. = ..()
@@ -85,7 +85,7 @@
 		updatestealthalert()
 		toggle = TRUE
 	else if(!forced)
-		to_chat(src, span_bolddanger("You cannot yet enter stealth, wait another [DisplayTimeText(stealth_cooldown - world.time)]!"))
+		to_chat(src, span_bolddanger("You cannot yet enter stealth, wait another [DisplayTimeText(COOLDOWN_TIMELEFT(src, stealth_cooldown))]!"))
 
 /mob/living/simple_animal/hostile/guardian/assassin/proc/updatestealthalert()
 	if(!COOLDOWN_FINISHED(src, stealth_cooldown))

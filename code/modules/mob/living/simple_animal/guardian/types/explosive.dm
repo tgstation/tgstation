@@ -27,7 +27,7 @@
 /mob/living/simple_animal/hostile/guardian/bomb/get_status_tab_items()
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, bomb_cooldown))
-		. += "Bomb Cooldown Remaining: [DisplayTimeText(bomb_cooldown - world.time)]"
+		. += "Bomb Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, bomb_cooldown))]"
 
 /mob/living/simple_animal/hostile/guardian/bomb/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && isobj(attack_target))
@@ -40,7 +40,7 @@
 		to_chat(src, span_bolddanger("You must be manifested to create bombs!"))
 		return
 	if(!COOLDOWN_FINISHED(src, bomb_cooldown))
-		to_chat(src, span_bolddanger("Your powers are on cooldown! You must wait [DisplayTimeText(bomb_cooldown - world.time)] between bombs."))
+		to_chat(src, span_bolddanger("Your powers are on cooldown! You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, bomb_cooldown))] between bombs."))
 		return
 	to_chat(src, span_bolddanger("Success! Bomb armed!"))
 	COOLDOWN_START(src, bomb_cooldown, bomb_cooldown_time)

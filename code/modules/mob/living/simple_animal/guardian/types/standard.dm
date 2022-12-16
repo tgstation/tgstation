@@ -33,4 +33,4 @@
 		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), target.loc), j)
 
 /mob/living/simple_animal/hostile/guardian/punch/proc/do_attack_sound(atom/playing_from)
-	playsound(playing_from, attack_sound, 50, vary = TRUE)
+	playsound(playing_from, attack_sound, 50, TRUE, TRUE)

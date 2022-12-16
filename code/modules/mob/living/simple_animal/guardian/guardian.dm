@@ -273,7 +273,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
 		. += "Summoner Health: [resulthealth]%"
 	if(!COOLDOWN_FINISHED(src, manifest_cooldown))
-		. += "Manifest/Recall Cooldown Remaining: [DisplayTimeText(manifest_cooldown - world.time)]"
+		. += "Manifest/Recall Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, manifest_cooldown))]"
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	. = ..()

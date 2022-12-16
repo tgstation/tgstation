@@ -41,8 +41,8 @@
 	if(loc == summoner)
 		if(toggle)
 			ranged = initial(ranged)
-			melee_damage_lower = previous_damage
-			melee_damage_upper = previous_damage
+			melee_damage_lower = previous_lower_damage
+			melee_damage_upper = previous_upper_damage
 			previous_lower_damage = 0
 			previous_upper_damage = 0
 			obj_damage = initial(obj_damage)
