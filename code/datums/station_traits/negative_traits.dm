@@ -97,16 +97,16 @@
 
 	/// List of wires we can cut, along with the chance of them being cut
 	var/static/list/possible_wires = list(
-		WIRE_AI = 65,
-		WIRE_SAFETY = 60,
+		WIRE_SAFETY = 65,
 		WIRE_LIGHT = 50,
 		WIRE_UNRESTRICTED_EXIT = 40,
+		WIRE_AI = 35,
 		WIRE_SHOCK = 35,
-		WIRE_BOLTS = 30,
 		WIRE_BACKUP1 = 30,
 		WIRE_BACKUP2 = 30,
 		WIRE_POWER1 = 25,
 		WIRE_POWER2 = 25,
+		WIRE_BOLTS = 20,
 	)
 
 /datum/station_trait/airlock_sabotage/on_round_start()
