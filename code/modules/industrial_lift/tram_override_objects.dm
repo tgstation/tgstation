@@ -16,6 +16,7 @@
 	//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
 
 /obj/structure/window/reinforced/shuttle/tram
+	name = "tram window"
 	icon = 'icons/obj/smooth_structures/tram_window.dmi'
 
 /obj/structure/window/reinforced/shuttle/tram/Initialize(mapload, direct)
