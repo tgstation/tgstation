@@ -1,0 +1,4 @@
+author: "raffclar"
+delete-after: True
+changes:
+  - qol: "Improve NtOS notepad"
