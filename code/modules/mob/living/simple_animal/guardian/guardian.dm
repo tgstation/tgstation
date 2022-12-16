@@ -41,6 +41,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/ectoplasm = 1)
 	AIStatus = AI_OFF
+	can_have_ai = FALSE
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_on = FALSE
@@ -77,6 +78,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, changed_mind = FALSE)
 	if(summoner)
 		UnregisterSignal(summoner, list(COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+		if(changed_mind)
+			faction = list()
+			mind.remove_all_antag_datums()
 		if(!length(summoner.get_all_linked_holoparasites() - src))
 			remove_verb(summoner, list(
 				/mob/living/proc/guardian_comm,
@@ -89,17 +93,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		/mob/living/proc/guardian_recall,
 		/mob/living/proc/guardian_reset,
 	))
-	if(changed_mind)
-		faction = list()
-		mind.remove_all_antag_datums()
+	if(mind && changed_mind)
 		mind.enslave_mind_to_creator(to_who)
-		remove_all_languages(LANGUAGE_MASTER)
-		copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
-		update_atom_languages()
-	Recall(TRUE)
+	remove_all_languages(LANGUAGE_MASTER)
+	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
+	update_atom_languages()
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_owner_wabbajacked))
 	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_owner_shapeshifted))
 	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_owner_unshapeshifted))
+	Recall(TRUE)
 
 /// Signal proc for [COMSIG_LIVING_ON_WABBAJACKED], when our summoner is wabbajacked we should be alerted.
 /mob/living/simple_animal/hostile/guardian/proc/on_owner_wabbajacked(mob/living/source, mob/living/new_mob)
@@ -192,8 +194,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	if(mind)
-		mind.name = "[real_name]"
 	if(!summoner)
 		to_chat(src, span_boldholoparasite("For some reason, somehow, you have no summoner. Please report this bug immediately."))
 		return
@@ -204,6 +204,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(!guardian_color)
 		guardianrename()
 		guardianrecolor()
+
+/mob/living/simple_animal/hostile/guardian/mind_initialize()
+	. = ..()
+	if(!summoner)
+		to_chat(src, span_boldholoparasite("For some reason, somehow, you have no summoner. Please report this bug immediately."))
+		return
+	mind.enslave_mind_to_creator(summoner) //once our mind is created, we become enslaved to our summoner. cant be done in the first run of set_summoner, because by then we dont have a mind yet.
 
 /mob/living/simple_animal/hostile/guardian/proc/guardianrecolor()
 	if(!client)
