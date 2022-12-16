@@ -558,7 +558,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasite bold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasite bold'>The deck refuses to respond to a souless creature such as you.</span>"
-	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
+	var/list/possible_guardians = list("Assassin", "Atmospheric", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
 	var/random = TRUE
 	var/allowmultiple = FALSE
 	var/allowling = TRUE
@@ -604,8 +604,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/pickedtype = /mob/living/simple_animal/hostile/guardian/punch
 	switch(guardiantype)
 
-		if("Chaos")
-			pickedtype = /mob/living/simple_animal/hostile/guardian/fire
+		if("Atmospheric")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/atmospheric
 
 		if("Standard")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/punch
@@ -674,10 +674,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	random = FALSE
 
 /obj/item/guardiancreator/choose/dextrous
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
+	possible_guardians = list("Assassin", "Atmospheric", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
 
 /obj/item/guardiancreator/choose/wizard
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Gravitokinetic")
+	possible_guardians = list("Assassin", "Atmospheric", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Gravitokinetic")
 	allowmultiple = TRUE
 
 /obj/item/guardiancreator/choose/wizard/spawn_guardian(mob/living/user, mob/dead/candidate)
@@ -705,14 +705,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	ling_failure = "<span class='holoparasite bold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
 /obj/item/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
+	possible_guardians = list("Assassin", "Atmospheric", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
 	allowling = FALSE
 
 /obj/item/guardiancreator/tech/choose
 	random = FALSE
 
 /obj/item/guardiancreator/tech/choose/dextrous
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
+	possible_guardians = list("Assassin", "Atmospheric", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
 
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
@@ -721,7 +721,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 <br>
 <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
 <br>
-<b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
+<b>Atmospheric</b>: Creates sparks on touch and continuously expels a gas of its choice. Automatically extinguishes the user if they catch on fire.<br>
 <br>
 <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
 <br>
@@ -746,7 +746,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 <br>
 <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
 <br>
-<b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the guardian. Automatically extinguishes the user if they catch on fire.<br>
+<b>Atmospheric</b>: Creates sparks on touch and continuously expels a gas of its choice. Automatically extinguishes the user if they catch on fire.<br>
 <br>
 <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
 <br>
