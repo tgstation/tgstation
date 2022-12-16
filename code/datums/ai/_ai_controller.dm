@@ -167,9 +167,6 @@ multiple modular subtrees with behaviors
 
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-		if (isdog(pawn))
-			to_chat(world, "process [current_behavior]")
-
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the delta_time passed to ai_controller.process()
 		// Action cooldowns cannot happen faster than delta_time, so delta_time should be the value used in this scenario.
@@ -219,9 +216,6 @@ multiple modular subtrees with behaviors
 	LAZYINITLIST(current_behaviors)
 	LAZYCLEARLIST(planned_behaviors)
 
-	if (isdog(pawn))
-		to_chat(world, "planning")
-
 	if(LAZYLEN(planning_subtrees))
 		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
 
@@ -269,8 +263,6 @@ multiple modular subtrees with behaviors
 
 	if(!behavior.setup(arglist(arguments)))
 		return
-	if (isdog(pawn))
-		to_chat(world, "planned [behavior]")
 	LAZYADDASSOC(current_behaviors, behavior, TRUE)
 	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
@@ -280,8 +272,6 @@ multiple modular subtrees with behaviors
 		behavior_args -= behavior_type
 
 /datum/ai_controller/proc/ProcessBehavior(delta_time, datum/ai_behavior/behavior)
-	if (isdog(pawn))
-		to_chat(world, "processing [behavior]")
 	var/list/arguments = list(delta_time, src)
 	var/list/stored_arguments = behavior_args[behavior.type]
 	if(stored_arguments)

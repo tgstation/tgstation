@@ -92,6 +92,8 @@
 /**
  * The alternate second half of fetching, attack the item if we can eat it.
  * Or make pleading eyes at someone who has picked it up.
+ *
+ * Unfortunately this doesn't work because food can't currently be eaten by mobs.
  */
 /datum/ai_behavior/eat_fetched_snack
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT

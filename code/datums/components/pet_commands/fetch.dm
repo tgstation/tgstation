@@ -10,7 +10,7 @@
 	radial_icon_state = "summons"
 	speech_commands = list("fetch")
 	command_feedback = "bounces"
-	pointed_reaction = "with great interest."
+	pointed_reaction = "with great interest"
 	/// If true, this command will trigger if the pet sees a friend throw any item, if they're not doing anything else
 	var/trigger_on_throw = TRUE
 	/// If true, this is a poorly trained pet who will eat food you throw instead of bringing it back
@@ -22,14 +22,14 @@
 
 /datum/pet_command/point_targetting/fetch/add_new_friend(mob/living/tamer)
 	. = ..()
-	RegisterSignal(tamer, COMSIG_GLOB_CARBON_THROW_THING, PROC_REF(listened_throw))
+	RegisterSignal(tamer, COMSIG_MOB_THROW, PROC_REF(listened_throw))
 
 /datum/pet_command/point_targetting/fetch/remove_friend(mob/living/unfriended)
 	. = ..()
-	UnregisterSignal(unfriended, COMSIG_GLOB_CARBON_THROW_THING)
+	UnregisterSignal(unfriended, COMSIG_MOB_THROW)
 
 /// A friend has thrown something, if we're listening or at least not busy then go get it
-/datum/pet_command/point_targetting/fetch/proc/listened_throw(datum/source, mob/living/carbon/carbon_thrower)
+/datum/pet_command/point_targetting/fetch/proc/listened_throw(mob/living/carbon/thrower)
 	SIGNAL_HANDLER
 
 	var/mob/living/parent = weak_parent.resolve()
@@ -43,13 +43,13 @@
 		return // We have a command and it's not this one
 	if (blackboard[BB_CURRENT_PET_TARGET] || blackboard[BB_FETCH_DELIVER_TO])
 		return // We're already very fetching
-	if (!can_see(parent, carbon_thrower, length = sense_radius))
+	if (!can_see(parent, thrower, length = sense_radius))
 		return // Can't see it
 
-	var/obj/item/thrown_thing = carbon_thrower.get_active_held_item()
+	var/obj/item/thrown_thing = thrower.get_active_held_item()
 	if (!isitem(thrown_thing))
 		return
-	if (blackboard[BB_FETCH_IGNORE_LIST][WEAKREF(thrown_thing)])
+	if (blackboard[BB_FETCH_IGNORE_LIST] && blackboard[BB_FETCH_IGNORE_LIST][WEAKREF(thrown_thing)])
 		return // We're ignoring it already
 
 	RegisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(listen_throw_land))
@@ -95,11 +95,8 @@
 		if (get_dist(controller.pawn, target) > 1) // We're not there yet
 			controller.queue_behavior(/datum/ai_behavior/fetch_seek, BB_CURRENT_PET_TARGET, BB_FETCH_DELIVER_TO)
 			return SUBTREE_RETURN_FINISH_PLANNING
-		// Pick it up or eat it
-		if (will_eat_targets && IsEdible(target))
-			controller.queue_behavior(/datum/ai_behavior/eat_fetched_snack, BB_CURRENT_PET_TARGET, BB_FETCH_DELIVER_TO)
-		else
-			controller.queue_behavior(/datum/ai_behavior/pick_up_item, BB_CURRENT_PET_TARGET, BB_SIMPLE_CARRY_ITEM)
+		// If mobs could attack food you would branch here to call `eat_fetched_snack`, however that's a task for the future
+		controller.queue_behavior(/datum/ai_behavior/pick_up_item, BB_CURRENT_PET_TARGET, BB_SIMPLE_CARRY_ITEM)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	var/datum/weakref/carried_ref = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
