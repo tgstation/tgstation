@@ -72,8 +72,8 @@
 			new /obj/item/jammer(src) // 5 tc
 
 		if(KIT_GUN)
-			new /obj/item/gun/ballistic/revolver(src) // 13 tc
-			new /obj/item/ammo_box/a357(src) // 4 tc
+			new /obj/item/gun/ballistic/revolver/syndicate(src) // 13 tc
+			new /obj/item/ammo_box/a357(src) // 4tc
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/storage/belt/holster/chameleon(src) // 1 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc replaced the emag with the doorjack

@@ -53,11 +53,15 @@
 	if(!broken)
 		broken = TRUE
 		atom_storage.locked = FALSE
-		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
 			visible_message(span_warning("\The [src] is broken by [user] with an electromagnetic card!"))
 			return
+
+/obj/item/storage/lockbox/examine(mob/user)
+	. = ..()
+	if(broken)
+		. += span_notice("It appears to be broken.")
 
 /obj/item/storage/lockbox/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
