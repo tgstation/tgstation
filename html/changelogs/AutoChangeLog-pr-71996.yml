@@ -1,4 +1,0 @@
-author: "etherware-novice"
-delete-after: True
-changes:
-  - refactor: "moved some description edits to examine hooks"

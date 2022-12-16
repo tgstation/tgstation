@@ -575,3 +575,14 @@
   san7890:
   - bugfix: The message you get when attempting to escape an SM delamination by hiding
       in a disposals pipe should now make more sense.
+2022-12-16:
+  Jolly:
+  - qol: MegaSeed vendors had their seeds distributed through 4 categories; Fruits,
+      Vegetables, Flower and Miscellaneous.
+  etherware-novice:
+  - refactor: moved some description edits to examine hooks
+  timothymtorres:
+  - rscadd: Drinking singulo will now ignore supermatter hallucinations and pull objects
+      to you
+  - balance: Change singulo drink recipe to require liquid dark matter instead of
+      radium.
