@@ -168,7 +168,7 @@
 /turf/open/floor/holofloor/snow
 	gender = PLURAL
 	name = "snow"
-	desc = "The puffy snow clumps together to make a solid-looking floor, though still easily destroyed."
+	desc = "The puffy snow clumps together to make a solid-looking floor, though it sinks beneath your feet."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	slowdown = 2
