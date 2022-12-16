@@ -31,7 +31,7 @@
 		return
 
 	var/list/friends = source.ai_controller.blackboard[BB_FRIENDS_LIST]
-	if (!friends || friends[WEAKREF(user)])
+	if (!friends || !friends[WEAKREF(user)])
 		return // We don't care about this bozo
 	var/obj/item/carried_item = get_held_item(source)
 	if (!carried_item)

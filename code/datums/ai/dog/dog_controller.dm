@@ -3,7 +3,7 @@
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
 	)
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_dog
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/dog,

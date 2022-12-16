@@ -99,6 +99,11 @@
 			controller.queue_behavior(/datum/ai_behavior/pick_up_item, BB_CURRENT_PET_TARGET, BB_SIMPLE_CARRY_ITEM)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
+	var/datum/weakref/carried_ref = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
+	var/obj/item/carried_item = carried_ref?.resolve()
+	if (!carried_item)
+		return
+
 	var/datum/weakref/delivery_ref = controller.blackboard[BB_FETCH_DELIVER_TO]
 	var/atom/delivery_target = delivery_ref?.resolve()
 	if (!delivery_target || !can_see(controller.pawn, delivery_target, sense_radius))
@@ -106,10 +111,6 @@
 		controller.blackboard[BB_ACTIVE_PET_COMMAND] = null
 		return
 
-	var/datum/weakref/carried_ref = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
-	var/obj/item/carried_item = carried_ref?.resolve()
-	if (!carried_item)
-		return
 	// We got something to deliver and someone to deliver it to
 	controller.queue_behavior(/datum/ai_behavior/deliver_fetched_item, BB_FETCH_DELIVER_TO, BB_SIMPLE_CARRY_ITEM)
 	return SUBTREE_RETURN_FINISH_PLANNING

@@ -5,7 +5,7 @@
 /datum/ai_behavior/fetch_seek
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
-/datum/ai_behavior/fetch/setup(datum/ai_controller/controller, target_key, delivery_key)
+/datum/ai_behavior/fetch_seek/setup(datum/ai_controller/controller, target_key, delivery_key)
 	. = ..()
 	var/datum/weakref/thing_ref = controller.blackboard[target_key]
 	var/obj/item/fetch_thing = thing_ref?.resolve()
@@ -15,7 +15,7 @@
 		return FALSE
 	controller.set_movement_target(fetch_thing)
 
-/datum/ai_behavior/fetch/perform(delta_time, datum/ai_controller/controller, target_key, delivery_key)
+/datum/ai_behavior/fetch_seek/perform(delta_time, datum/ai_controller/controller, target_key, delivery_key)
 	. = ..()
 	var/datum/weakref/thing_ref = controller.blackboard[target_key]
 	var/obj/item/fetch_thing = thing_ref?.resolve()
@@ -32,7 +32,7 @@
 
 	finish_action(controller, TRUE, target_key, delivery_key)
 
-/datum/ai_behavior/fetch/finish_action(datum/ai_controller/controller, success, target_key, delivery_key)
+/datum/ai_behavior/fetch_seek/finish_action(datum/ai_controller/controller, success, target_key, delivery_key)
 	. = ..()
 	if (success)
 		return
@@ -140,11 +140,14 @@
 	/// Time until we should forget things we failed to pick up
 	COOLDOWN_DECLARE(reset_ignore_cooldown)
 
+/datum/ai_behavior/forget_failed_fetches/setup(datum/ai_controller/controller, ...)
+	. = ..()
+	if (!COOLDOWN_FINISHED(src, reset_ignore_cooldown))
+		return FALSE
+
 /datum/ai_behavior/forget_failed_fetches/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	if (!length(controller.blackboard[BB_FETCH_IGNORE_LIST]))
-		return
-	if (!COOLDOWN_FINISHED(src, reset_ignore_cooldown))
 		return
 	COOLDOWN_START(src, reset_ignore_cooldown, cooldown_duration)
 	controller.blackboard[BB_FETCH_IGNORE_LIST] = list()
