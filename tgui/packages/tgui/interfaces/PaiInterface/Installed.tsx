@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack } from 'tgui/components';
-import { DOOR_JACK, HOST_SCAN, PHOTO_MODE, SOFTWARE_DESC } from './constants';
+import { SOFTWARE_DESC } from './constants';
 import { Data } from './types';
 
 /**
@@ -50,11 +50,7 @@ const InstalledSoftware = (props, context) => {
 
 /** Software info for buttons clicked. */
 const InstalledInfo = (props, context) => {
-  const [currentSelection, setCurrentSelection] = useLocalState(
-    context,
-    'software',
-    ''
-  );
+  const [currentSelection] = useLocalState(context, 'software', '');
   const title = !currentSelection ? 'Select a Program' : currentSelection;
 
   return (
@@ -78,11 +74,7 @@ const InstalledInfo = (props, context) => {
 const SoftwareButtons = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { door_jack, languages, master_name } = data;
-  const [currentSelection, setCurrentSelection] = useLocalState(
-    context,
-    'software',
-    ''
-  );
+  const [currentSelection] = useLocalState(context, 'software', '');
 
   switch (currentSelection) {
     case 'Door Jack':
@@ -91,7 +83,7 @@ const SoftwareButtons = (props, context) => {
           <Button
             disabled={door_jack}
             icon="plug"
-            onClick={() => act(currentSelection, { mode: DOOR_JACK.Cable })}
+            onClick={() => act(currentSelection, { mode: 'Cable' })}
             tooltip="Drops a cable. Insert into a compatible airlock.">
             Extend Cable
           </Button>
@@ -99,14 +91,14 @@ const SoftwareButtons = (props, context) => {
             color="bad"
             disabled={!door_jack}
             icon="door-open"
-            onClick={() => act(currentSelection, { mode: DOOR_JACK.Hack })}
+            onClick={() => act(currentSelection, { mode: 'Hack' })}
             tooltip="Begins overriding the airlock security protocols.">
             Hack Door
           </Button>
           <Button
             disabled={!door_jack}
             icon="unlink"
-            onClick={() => act(currentSelection, { mode: DOOR_JACK.Cancel })}>
+            onClick={() => act(currentSelection, { mode: 'Cancel' })}>
             Cancel
           </Button>
         </>
@@ -116,14 +108,14 @@ const SoftwareButtons = (props, context) => {
         <>
           <Button
             icon="hand-holding-heart"
-            onClick={() => act(currentSelection, { mode: HOST_SCAN.Target })}
+            onClick={() => act(currentSelection, { mode: 'Target' })}
             tooltip="Must be held or scooped up to scan.">
             Scan Holder
           </Button>
           <Button
             disabled={!master_name}
             icon="user-cog"
-            onClick={() => act(currentSelection, { mode: HOST_SCAN.Master })}
+            onClick={() => act(currentSelection, { mode: 'Master' })}
             tooltip="Scans any bound masters.">
             Scan Master
           </Button>
@@ -134,19 +126,19 @@ const SoftwareButtons = (props, context) => {
         <>
           <Button
             icon="camera-retro"
-            onClick={() => act(currentSelection, { mode: PHOTO_MODE.Camera })}
+            onClick={() => act(currentSelection, { mode: 'Camera' })}
             tooltip="Toggles the camera. Click an area to take a photo.">
             Camera
           </Button>
           <Button
             icon="print"
-            onClick={() => act(currentSelection, { mode: PHOTO_MODE.Printer })}
+            onClick={() => act(currentSelection, { mode: 'Printer' })}
             tooltip="Gives a list of stored photos.">
             Printer
           </Button>
           <Button
             icon="search-plus"
-            onClick={() => act(currentSelection, { mode: PHOTO_MODE.Zoom })}
+            onClick={() => act(currentSelection, { mode: 'Zoom' })}
             tooltip="Adjusts zoom level on future photographs.">
             Zoom
           </Button>

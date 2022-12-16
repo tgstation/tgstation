@@ -12,3 +12,5 @@ export type Data = {
   master_name: string | null;
   ram: number;
 };
+
+export type PaiTab = 'System' | 'Directive' | 'Installed' | 'Available';

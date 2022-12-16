@@ -2,7 +2,7 @@ import { BooleanLike, classes } from 'common/react';
 import { Component } from 'inferno';
 import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox, Dimmer, Icon } from '../../components';
 import { calculateProgression, getReputation, Rank } from './calculateReputationLevel';
-import { ObjectiveState } from './constants';
+import { ObjectiveState, OBJECTIVE_STATES } from './constants';
 
 export type Objective = {
   id: number;
@@ -296,7 +296,7 @@ const ObjectiveFunction = (
       canAbort={
         !!handleAbort &&
         !objective.final_objective &&
-        objective.objective_state === ObjectiveState.Active
+        objective.objective_state === OBJECTIVE_STATES.Active
       }
       grow={grow}
       handleCompletion={(event) => {
@@ -372,20 +372,20 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
   } = props;
 
   const objectiveFinished =
-    objectiveState === ObjectiveState.Completed ||
-    objectiveState === ObjectiveState.Failed ||
-    objectiveState === ObjectiveState.Invalid;
+    objectiveState === OBJECTIVE_STATES.Completed ||
+    objectiveState === OBJECTIVE_STATES.Failed ||
+    objectiveState === OBJECTIVE_STATES.Invalid;
 
-  const objectiveFailed = objectiveState !== ObjectiveState.Completed;
+  const objectiveFailed = objectiveState !== OBJECTIVE_STATES.Completed;
   let objectiveCompletionText;
   switch (objectiveState) {
-    case ObjectiveState.Invalid:
+    case OBJECTIVE_STATES.Invalid:
       objectiveCompletionText = 'Invalidated';
       break;
-    case ObjectiveState.Completed:
+    case OBJECTIVE_STATES.Completed:
       objectiveCompletionText = 'Completed';
       break;
-    case ObjectiveState.Failed:
+    case OBJECTIVE_STATES.Failed:
       objectiveCompletionText = 'Failed';
       break;
   }
@@ -437,7 +437,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
               Failing this objective will deduct {telecrystalPenalty} TC.
             </Box>
           )}
-          {finalObjective && objectiveState === ObjectiveState.Inactive && (
+          {finalObjective && objectiveState === OBJECTIVE_STATES.Inactive && (
             <NoticeBox warning mt={1}>
               Taking this objective will lock you out of getting anymore
               objectives! Furthermore, you will be unable to abort this
