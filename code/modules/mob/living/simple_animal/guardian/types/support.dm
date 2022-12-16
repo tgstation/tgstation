@@ -36,14 +36,14 @@
 		. += "Beacon Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, beacon_cooldown))]"
 
 /mob/living/simple_animal/hostile/guardian/healer/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && ismovable(attack_target))
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && isliving(attack_target))
 		heal_target(attack_target)
 		return
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/healer/proc/heal_target(mob/living/target)
 	do_attack_animation(target)
-	playsound(playing_from, attack_sound, 50, TRUE, TRUE, frequency = -1) //play punch in REVERSE
+	playsound(target, attack_sound, 50, TRUE, TRUE, frequency = -1) //play punch in REVERSE
 	target.adjustBruteLoss(-healing_amount)
 	target.adjustFireLoss(-healing_amount)
 	target.adjustOxyLoss(-healing_amount)
@@ -125,7 +125,7 @@
 	teleport_target.visible_message(span_danger("[teleport_target] starts to glow faintly!"), \
 	span_userdanger("You start to faintly glow, and you feel strangely weightless!"))
 	do_attack_animation(teleport_target)
-	playsound(playing_from, attack_sound, 50, TRUE, TRUE, frequency = -1) //play punch in REVERSE
+	playsound(teleport_target, attack_sound, 50, TRUE, TRUE, frequency = -1) //play punch in REVERSE
 	if(!do_mob(src, teleport_target, teleporting_time)) //now start the channel
 		to_chat(src, span_bolddanger("You need to hold still!"))
 		return
