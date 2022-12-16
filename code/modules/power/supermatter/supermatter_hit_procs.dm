@@ -21,7 +21,7 @@
 		if(kiss_power)
 			psy_coeff = 1
 		external_power_immediate += projectile.damage * bullet_energy + kiss_power
-		log_activation(cause = projectile.fired_from, source = projectile.firer)
+		log_activation(who = projectile.firer, how = projectile.fired_from)
 	else
 		external_damage_immediate += projectile.damage * bullet_energy
 		// Stop taking damage at emergency point, yell to players at danger point.
@@ -68,7 +68,7 @@
 			to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
 			new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
 			external_power_trickle += 800
-			log_activation(source = scalpel, cause = user)
+			log_activation(who = user, how = scalpel)
 			scalpel.usesLeft--
 			if (!scalpel.usesLeft)
 				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
@@ -96,7 +96,7 @@
 			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
 			external_damage_immediate += 100
 			external_power_trickle += 500
-			log_activation(source = destabilizing_crystal, cause = user)
+			log_activation(who = user, how = destabilizing_crystal)
 			qdel(destabilizing_crystal)
 		return
 

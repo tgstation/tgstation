@@ -564,7 +564,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_power[SM_POWER_EXTERNAL_IMMEDIATE] = external_power_immediate
 	external_power_immediate = 0
 	additive_power[SM_POWER_HEAT] = gas_heat_power_generation * absorbed_gasmix.temperature / 6
-	additive_power[SM_POWER_HEAT] && log_activation()
+	additive_power[SM_POWER_HEAT] && log_activation(who = "environmental factors")
 
 	// I'm sorry for this, but we need to calculate power lost immediately after power gain.
 	// Helps us prevent cases when someone dumps superhothotgas into the SM and shoots the power to the moon for one tick.
@@ -583,6 +583,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/powergain_types in additive_power)
 		internal_energy += additive_power[powergain_types]
 	internal_energy = max(internal_energy, 0)
+	if(internal_energy && !has_been_powered)
+		stack_trace("Supermatter powered due to unknown causes. Internal energy factors: [json_encode(internal_energy_factors)]")
 	return additive_power
 
 /** Log when the supermatter is activated for the first time.
@@ -590,26 +592,21 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * either directly or indirectly MUST call this.
  *
  * Arguments:
- * * source - Anything
- * * cause - Anything
+ * * who - Either a string or a datum. Whatever gave power to the SM. Mandatory.
+ * * how - A datum. How they powered it. Optional.
  */
-/obj/machinery/power/supermatter_crystal/proc/log_activation(source, cause)
+/obj/machinery/power/supermatter_crystal/proc/log_activation(who, how)
 	if(has_been_powered)
 		return
+	if(!who)
+		CRASH("Supermatter activated by an unknown source")
 
-	var/fired_from_str = cause ? " with [cause]" : ""
-	investigate_log(
-		source \
-			? "has been powered for the first time by [key_name(source)][fired_from_str]." \
-			: "has been powered for the first time.",
-		INVESTIGATE_ENGINE
-	)
-	message_admins(
-		source \
-			? "[src] [ADMIN_JMP(src)] has been powered for the first time by [cause ? ADMIN_FULLMONTY(source) + (fired_from_str) : (cause ? source : "environmental factors")]." \
-			: "[src] [ADMIN_JMP(src)] has been powered for the first time."
-	)
-
+	if(istext(who))
+		investigate_log("has been powered for the first time by [who][how ? " with [how]" : ""].", INVESTIGATE_ENGINE)
+		message_admins("[src] [ADMIN_JMP(src)] has been powered for the first time by [who][how ? " with [how]" : ""].")
+	else
+		investigate_log("has been powered for the first time by [key_name(who)][how ? " with [how]" : ""].", INVESTIGATE_ENGINE)
+		message_admins("[src] [ADMIN_JMP(src)] has been powered for the first time by [ADMIN_FULLMONTY(who)][how ? " with [how]" : ""].")
 	has_been_powered = TRUE
 
 /**
