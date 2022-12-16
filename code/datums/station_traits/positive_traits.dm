@@ -358,4 +358,4 @@
 			for(var/obj/machinery/door/airlock/affected_airlock in maint_floor)
 				affected_airlock.opacity = FALSE
 				affected_airlock.glass = TRUE
-				affected_airlock.update_icon(ALL)
+				affected_airlock.update_appearance(UPDATE_ICON)
