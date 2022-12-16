@@ -2,6 +2,7 @@ import { BooleanLike } from 'common/react';
 import { Box, Icon, Stack, Button, Section, NoticeBox, LabeledList, Collapsible } from '../components';
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
+import { ObjectValues } from 'common/types';
 
 const VOTECONFIGS = {
   None: -1,
@@ -9,7 +10,7 @@ const VOTECONFIGS = {
   Enabled: 1,
 } as const;
 
-type VoteConfig = typeof VOTECONFIGS[keyof typeof VOTECONFIGS];
+type VoteConfig = ObjectValues<typeof VOTECONFIGS>;
 
 type Vote = {
   name: string;
