@@ -26,7 +26,7 @@
 	if(!isliving(target))
 		return
 	var/msg = ""
-	for(i in 1 to 9)
+	for(var/i in 1 to 9)
 		msg += battlecry
 	say("[msg]!!", ignore_spam = TRUE)
 	for(var/j in 1 to 4)
