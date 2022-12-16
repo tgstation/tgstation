@@ -259,16 +259,14 @@
 		update_light()
 
 	if (length(smoothing_groups))
-		#ifdef UNIT_TESTS
-		assert_sorted(smoothing_groups, "[type].smoothing_groups")
-		#endif
+		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
+			assert_sorted(smoothing_groups, "[type].smoothing_groups")
 
 		SET_BITFLAG_LIST(smoothing_groups)
 
 	if (length(canSmoothWith))
-		#ifdef UNIT_TESTS
-		assert_sorted(canSmoothWith, "[type].canSmoothWith")
-		#endif
+		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
+			assert_sorted(canSmoothWith, "[type].canSmoothWith")
 
 		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
 			smoothing_flags |= SMOOTH_OBJ
@@ -1634,7 +1632,7 @@
 
 /obj/item/update_filters()
 	. = ..()
-	update_action_buttons()
+	update_item_action_buttons()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
@@ -1842,11 +1840,16 @@
 		if(!length(forced_gravity))
 			SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
 
-		var/max_grav = 0
-		for(var/i in forced_gravity)//our gravity is the strongest return forced gravity we get
-			max_grav = max(max_grav, i)
-		//cut so we can reuse the list, this is ok since forced gravity movers are exceedingly rare compared to all other movement
-		return max_grav
+		var/positive_grav = 0
+		var/negative_grav = 0
+		//our gravity is sum of the most massive positive and negative numbers returned by the signal
+		//so that adding two forced_gravity elements with an effect size of 1 each doesnt add to 2 gravity
+		//but negative force gravity effects can cancel out positive ones
+		for(var/gravity_influence in forced_gravity)
+			positive_grav = max(positive_grav, gravity_influence)
+			negative_grav = min(negative_grav, gravity_influence)
+
+		return (positive_grav + negative_grav)
 
 	var/area/turf_area = gravity_turf.loc
 

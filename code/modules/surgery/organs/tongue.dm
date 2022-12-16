@@ -9,7 +9,11 @@
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	var/list/languages_possible
 	var/list/languages_native //human mobs can speak with this languages without the accent (letters replaces)
-	var/say_mod = null
+	///changes the verbage of how you speak. (Permille -> says <-, "I just used a verb!")
+	///i hate to say it, but because of sign language, this may have to be a component. and we may have to do some insane shit like putting a component on a component
+	var/say_mod = "says"
+	///for temporary overrides of the above variable.
+	var/temp_say_mod = ""
 
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
@@ -47,12 +51,10 @@
 	return speech_args[SPEECH_MESSAGE]
 
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
-	..()
-	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
-		tongue_owner.dna.species.say_mod = say_mod
+	. = ..()
+	ADD_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 	if (modifies_speech)
 		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-	tongue_owner.UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
 
 	/* This could be slightly simpler, by making the removal of the
 	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
@@ -65,10 +67,9 @@
 
 /obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
-	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
-		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
+	REMOVE_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+	temp_say_mod = ""
 	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
-	tongue_owner.RegisterSignal(tongue_owner, COMSIG_MOB_SAY, TYPE_PROC_REF(/mob/living/carbon/, handle_tongueless_speech))
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
@@ -438,3 +439,46 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/ethereal/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_ethereal
+
+/obj/item/organ/internal/tongue/cat
+	name = "felinid tongue"
+	desc = "A fleshy muscle mostly used for meowing."
+	say_mod = "meows"
+
+/obj/item/organ/internal/tongue/bananium
+	name = "bananium tongue"
+	desc = "A bananium geode mostly used for honking."
+	say_mod = "honks"
+
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
+	icon_state = "gold_horn"
+
+/obj/item/organ/internal/tongue/jelly
+	name = "jelly tongue"
+	desc = "Ah... That's not the sound I expected it to make. Sounds like a Space Autumn Bird."
+	say_mod = "chirps"
+
+/obj/item/organ/internal/tongue/monkey
+	name = "primitive tongue"
+	desc = "For aggressively chimpering. And consuming bananas."
+	say_mod = "chimpers"
+
+/obj/item/organ/internal/tongue/moth
+	name = "moth tongue"
+	desc = "Moths don't have tongues. Someone get god on the phone, tell them I'm not happy."
+	say_mod = "flutters"
+
+/obj/item/organ/internal/tongue/zombie
+	name = "rotting tongue"
+	desc = "Makes you speak like you're at the dentist and you just absolutely refuse to spit because you forgot to mention you were allergic to space shellfish."
+	say_mod = "moans"
+
+/obj/item/organ/internal/tongue/mush
+	name = "mush-tongue-room"
+	desc = "You poof with this. Got it?"
+	say_mod = "poofs"
+
+	icon = 'icons/obj/hydroponics/seeds.dmi'
+	icon_state = "mycelium-angel"

@@ -168,8 +168,9 @@
 	name = "Mind Link Speech"
 	desc = "Send a psychic message to everyone connected to your Link."
 	button_icon_state = "link_speech"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
 
 /datum/action/innate/linked_speech/New(Target)
 	. = ..()
@@ -181,7 +182,7 @@
 	var/datum/component/mind_linker/linker = Target
 	name = "[linker.network_name] Speech"
 	desc = "Send a psychic message to everyone connected to your [linker.network_name]."
-	icon_icon = linker.speech_action_icon
+	button_icon = linker.speech_action_icon
 	button_icon_state = linker.speech_action_icon_state
 	background_icon_state = linker.speech_action_background_icon_state
 

@@ -50,6 +50,13 @@
 	heads_of_staff = TRUE
 
 /datum/traitor_objective/eyesnatching/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+
+	var/list/already_targeting = list() //List of minds we're already targeting. The possible_duplicates is a list of objectives, so let's not mix things
+	for(var/datum/objective/task as anything in handler.primary_objectives)
+		if(!istype(task.target, /datum/mind))
+			continue
+		already_targeting += task.target //Removing primary objective kill targets from the list
+
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
 	if(generating_for.late_joiner)
@@ -57,6 +64,9 @@
 
 	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
 		if(possible_target == generating_for)
+			continue
+
+		if(possible_target in already_targeting)
 			continue
 
 		if(!ishuman(possible_target.current))
@@ -207,8 +217,12 @@
 	if(prob(20))
 		victim.emote("cry")
 	used = TRUE
-	desc += " It has been used up."
 	update_appearance(UPDATE_ICON)
+
+/obj/item/eyesnatcher/examine(mob/user)
+	. = ..()
+	if(used)
+		. += span_notice("It has been used up.")
 
 /obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/internal/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/victim)
 	if(!eyeballies || QDELETED(eyeballies))

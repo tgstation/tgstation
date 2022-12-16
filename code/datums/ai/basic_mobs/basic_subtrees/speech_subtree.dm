@@ -89,3 +89,16 @@
 /datum/ai_planning_subtree/random_speech/cow/wisdom/New()
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
+
+/datum/ai_planning_subtree/random_speech/dog
+	speech_chance = 1
+
+/datum/ai_planning_subtree/random_speech/dog/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	if(!isdog(controller.pawn))
+		return
+
+	// Stay in sync with dog fashion.
+	var/mob/living/basic/pet/dog/dog_pawn = controller.pawn
+	dog_pawn.update_dog_speech(src)
+
+	return ..()

@@ -37,10 +37,14 @@
 	var/list/fitting_z_levels = SSmapping.levels_by_trait(weather_trait)
 	if(!(new_loc.z in fitting_z_levels))
 		return
-	var/datum/component/our_comp = source.AddComponent(/datum/component/area_sound_manager, playlist, list(), COMSIG_MOB_LOGOUT, fitting_z_levels)
-	our_comp.RegisterSignal(SSdcs, sound_change_signals, TYPE_PROC_REF(/datum/component/area_sound_manager, handle_change))
+	var/datum/component/our_comp = source.AddComponent(\
+		/datum/component/area_sound_manager, \
+		area_loop_pairs = playlist, \
+		remove_on = COMSIG_MOB_LOGOUT, \
+		acceptable_zs = fitting_z_levels, \
+	)
+	our_comp.RegisterSignals(SSdcs, sound_change_signals, TYPE_PROC_REF(/datum/component/area_sound_manager, handle_change))
 
 /datum/element/weather_listener/proc/handle_logout(datum/source)
 	SIGNAL_HANDLER
 	source.RemoveElement(/datum/element/weather_listener, weather_type, weather_trait, playlist)
-
