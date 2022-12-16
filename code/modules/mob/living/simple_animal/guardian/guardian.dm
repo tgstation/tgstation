@@ -77,6 +77,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, changed_mind = FALSE)
 	if(summoner)
 		UnregisterSignal(summoner, list(COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+		if(!length(summoner.get_all_linked_holoparasites() - src))
+			remove_verb(summoner, list(
+				/mob/living/proc/guardian_comm,
+				/mob/living/proc/guardian_recall,
+				/mob/living/proc/guardian_reset,
+			))
 	summoner = to_who
 	add_verb(to_who, list(
 		/mob/living/proc/guardian_comm,
@@ -200,12 +206,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		guardianrecolor()
 
 /mob/living/simple_animal/hostile/guardian/proc/guardianrecolor()
-	guardian_color = input(src,"What would you like your color to be?","Choose Your Color","#ffffff") as color|null
+	if(!client)
+		return
+	guardian_color = input(src, "What would you like your color to be?","Choose Your Color","#ffffff") as color|null
 	if(!guardian_color) //redo proc until we get a color
 		to_chat(src, span_warning("Not a valid color, please try again."))
 		guardianrecolor()
 		return
-	light_color = guardian_color
+	set_light_color(guardian_color)
 	if(!recolor_entire_sprite)
 		guardian_color_overlay.color = guardian_color
 		cut_overlay(guardian_color_overlay) //we need to get our new color
@@ -214,6 +222,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		add_atom_colour(guardian_color, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/hostile/guardian/proc/guardianrename()
+	if(!client)
+		return
 	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
 	if(!new_name) //redo proc until we get a good name
 		to_chat(src, span_warning("Not a valid name, please try again."))
@@ -521,9 +531,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	to_chat(src, span_boldholoparasite("Your <font color=\"[chosen_guardian.guardian_color]\">[chosen_guardian.real_name]</font> has been successfully reset."))
 	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
 	chosen_guardian.ghostize(FALSE)
+	chosen_guardian.key = candidate.key
 	chosen_guardian.guardianrecolor()
 	chosen_guardian.guardianrename() //give it a new color and name, to show it's a new person
-	chosen_guardian.key = candidate.key
 	COOLDOWN_START(chosen_guardian, resetting_cooldown, 5 MINUTES)
 	switch(chosen_guardian.theme)
 		if("tech")
@@ -653,8 +663,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		used = FALSE
 		return
 	var/mob/living/simple_animal/hostile/guardian/summoned_guardian = new pickedtype(user, theme)
-	summoned_guardian.set_summoner(user, changed_mind = TRUE)
 	summoned_guardian.key = candidate.key
+	summoned_guardian.set_summoner(user, changed_mind = TRUE)
 	user.log_message("has summoned [key_name(summoned_guardian)], a [guardiantype] holoparasite.", LOG_GAME)
 	summoned_guardian.log_message("was summoned as a [guardiantype] holoparsite.", LOG_GAME)
 	switch(theme)
