@@ -116,6 +116,7 @@
 #include "heretic_rituals.dm"
 #include "holidays.dm"
 #include "human_through_recycler.dm"
+#include "hunger_curse.dm"
 #include "hydroponics_extractor_storage.dm"
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"

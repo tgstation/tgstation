@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Drinking singulo will now ignore supermatter hallucinations and pull objects to you"
+  - balance: "Change singulo drink recipe to require liquid dark matter instead of radium."
