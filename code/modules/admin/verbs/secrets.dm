@@ -130,8 +130,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(!delete_mobs || delete_mobs == "Cancel")
 				return
 
-			log_admin("[key_name(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].")
-			message_admins(span_adminnotice("[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs]."))
+			log_admin("[key_name(holder)] reset the thunderdome to default with delete_mobs marked as [delete_mobs].")
+			message_admins(span_adminnotice("[key_name_admin(holder)] reset the thunderdome to default with delete_mobs marked as [delete_mobs]."))
 
 			var/area/thunderdome = GLOB.areas_by_type[/area/centcom/tdome/arena]
 			if(delete_mobs == "Yes")
