@@ -195,9 +195,7 @@
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
 	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent // Why is this a component?
-	if(!istype(our_supermatter))
-		our_supermatter = null // so we don't runtime on the next line....
-	if(our_supermatter?.has_been_powered)
+	if(istype(our_supermatter))
 		our_supermatter.log_activation(source = atom_source)
 	if(isliving(hit_object))
 		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [atom_source] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
@@ -281,8 +279,7 @@
 			near_mob.show_message(span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 	consume_returns(matter_increase, damage_increase)
 	var/obj/machinery/power/supermatter_crystal/our_crystal = parent
-	if(!our_crystal.has_been_powered)
-		our_crystal.log_activation(source = consumed_object)
+	our_crystal.log_activation(source = consumed_object)
 
 /datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)
 	if(consume_callback)

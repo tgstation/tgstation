@@ -263,8 +263,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_multiplier()
 	if(internal_energy && (last_power_zap + 4 SECONDS - (internal_energy * 0.001)) < world.time)
-		if(!has_been_powered)
-			log_activation()
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
@@ -566,6 +564,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_power[SM_POWER_EXTERNAL_IMMEDIATE] = external_power_immediate
 	external_power_immediate = 0
 	additive_power[SM_POWER_HEAT] = gas_heat_power_generation * absorbed_gasmix.temperature / 6
+	additive_power[SM_POWER_HEAT] && log_activation()
 
 	// I'm sorry for this, but we need to calculate power lost immediately after power gain.
 	// Helps us prevent cases when someone dumps superhothotgas into the SM and shoots the power to the moon for one tick.
@@ -585,6 +584,33 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		internal_energy += additive_power[powergain_types]
 	internal_energy = max(internal_energy, 0)
 	return additive_power
+
+/** Log when the supermatter is activated for the first time.
+ * Everything that can increase [/obj/machinery/power/supermatter_crystal/var/internal_energy]
+ * either directly or indirectly MUST call this.
+ *
+ * Arguments:
+ * * source - Anything
+ * * cause - Anything
+ */
+/obj/machinery/power/supermatter_crystal/proc/log_activation(source, cause)
+	if(has_been_powered)
+		return
+
+	var/fired_from_str = cause ? " with [cause]" : ""
+	investigate_log(
+		source \
+			? "has been powered for the first time by [key_name(source)][fired_from_str]." \
+			: "has been powered for the first time.",
+		INVESTIGATE_ENGINE
+	)
+	message_admins(
+		source \
+			? "[src] [ADMIN_JMP(src)] has been powered for the first time by [cause ? ADMIN_FULLMONTY(source) + (fired_from_str) : (cause ? source : "environmental factors")]." \
+			: "[src] [ADMIN_JMP(src)] has been powered for the first time."
+	)
+
+	has_been_powered = TRUE
 
 /**
  * Perform calculation for the main zap power multiplier.
