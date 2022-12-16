@@ -1028,6 +1028,7 @@
 #include "code\datums\elements\beauty.dm"
 #include "code\datums\elements\bed_tucking.dm"
 #include "code\datums\elements\bsa_blocker.dm"
+#include "code\datums\elements\bugkiller_reagent.dm"
 #include "code\datums\elements\bump_click.dm"
 #include "code\datums\elements\can_barricade.dm"
 #include "code\datums\elements\chemical_transfer.dm"

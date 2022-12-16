@@ -400,6 +400,10 @@
 	ph = 3.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/toxin/pestkiller/on_new(data)
+	. = ..()
+	AddElement(/datum/element/bugkiller_reagent)
+
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!mytray)
@@ -407,12 +411,6 @@
 	if(chems.has_reagent(type, 1))
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1))
 		mytray.adjust_pestlevel(-rand(1,2))
-
-/datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(exposed_mob.mob_biotypes & MOB_BUG)
-		var/damage = min(round(0.4*reac_volume, 0.1),10)
-		exposed_mob.adjustToxLoss(damage)
 
 /datum/reagent/toxin/pestkiller/organic
 	name = "Natural Pest Killer"

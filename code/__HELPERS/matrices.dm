@@ -68,6 +68,21 @@
 		//doesn't have an object argument because this is "Stacking" with the animate call above
 		//3 billion% intentional
 
+/atom/proc/spasm_animation(loops = -1)
+	var/matrix/M1 = matrix(transform)
+	var/matrix/M2 = matrix(transform)
+	var/matrix/M3 = matrix(transform)
+	var/matrix/M4 = matrix(transform)
+	M1.Translate(-1, 0)
+	M2.Translate(0, 1)
+	M3.Translate(1, 0)
+	M4.Translate(0, -1)
+
+	animate(src, transform = transforms[1], time = 0.2, loop = loops)
+	animate(transform = transforms[2], time = 0.1)
+	animate(transform = transforms[3], time = 0.2)
+	animate(transform = transforms[4], time = 0.3)
+
 /**
  * Shear the transform on either or both axes.
  * * x - X axis shearing

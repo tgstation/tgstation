@@ -2,13 +2,14 @@
 	name = "cockroach"
 	desc = "This station is just crawling with bugs."
 	icon_state = "cockroach"
-	icon_dead = "cockroach" //Make this work
+	icon_dead = "cockroach_no_animation"
 	density = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	mob_size = MOB_SIZE_TINY
 	health = 1
 	maxHealth = 1
 	speed = 1.25
+	can_be_held = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 
@@ -31,17 +32,26 @@
 
 /mob/living/basic/cockroach/Initialize(mapload)
 	. = ..()
-	var/static/list/roach_drops = list(/obj/effect/decal/cleanable/insectguts, /obj/item/food/dead_roach)
+	var/static/list/roach_drops = list(/obj/effect/decal/cleanable/insectguts)
 	AddElement(/datum/element/death_drops, roach_drops)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
-	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
+	AddComponent( \
+		/datum/component/squashable, \
+		squash_chance = 50, \
+		squash_damage = 1, \
+		squash_flags = SQUASHED_SHOULD_BE_GIBBED|SQUASHED_ALWAYS_IF_DEAD|SQUASHED_DONT_SQUASH_IN_CONTENTS, \
+	)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NUKEIMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_RADIMMUNE, INNATE_TRAIT)
 
 /mob/living/basic/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return FALSE
+
+// Roach goop is the gibs to drop
+/mob/living/basic/cockroach/spawn_gibs()
+	return
 
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(
@@ -116,7 +126,13 @@
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
-	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = TYPE_PROC_REF(/mob/living/basic/cockroach/hauberoach, on_squish))
+	AddComponent( \
+		/datum/component/squashable, \
+		squash_chance = 100, \
+		squash_damage = 1, \
+		squash_flags = SQUASHED_SHOULD_BE_GIBBED|SQUASHED_ALWAYS_IF_DEAD|SQUASHED_DONT_SQUASH_IN_CONTENTS, \
+		squash_callback = TYPE_PROC_REF(/mob/living/basic/cockroach/hauberoach, on_squish), \
+	)
 
 ///Proc used to override the squashing behavior of the normal cockroach.
 /mob/living/basic/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
@@ -141,19 +157,3 @@
 
 /datum/ai_behavior/basic_melee_attack/hauberoach //Slightly slower, as this is being made in feature freeze ;)
 	action_cooldown = 1 SECONDS
-
-/obj/item/food/dead_roach
-	name = "squashed roach"
-	desc = "Gross..."
-	icon = 'icons/mob/simple/animal.dmi'
-	icon_state = "cockroach"
-	bite_consumption = 10
-	eatverbs = list("chew")
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/liquidgibs = 2)
-	foodtypes = GORE | MEAT | GROSS
-	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
-	preserved_food = TRUE
-
-/obj/item/food/dead_roach/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)

@@ -50,10 +50,17 @@
 	return randname
 
 /datum/species/moth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
-	. = ..()
-	if(chem.type == /datum/reagent/toxin/pestkiller)
+	if(istype(chem, /datum/reagent/toxin/pestkiller))
 		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		return TRUE
+
+	else if(istype(chem, /datum/reagent/consumable/ethanol/bug_spray))
+		H.adjustToxLoss(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		if(DT_PROB(2, delta_time))
+			H.emote("scream")
+
+	return ..()
 
 /datum/species/moth/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
