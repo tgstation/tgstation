@@ -40,7 +40,7 @@
 		to_chat(src, span_bolddanger("You must be manifested to create bombs!"))
 		return
 	if(!COOLDOWN_FINISHED(src, bomb_cooldown))
-		to_chat(src, span_bolddanger("Your powers are on cooldown! You must wait [bomb_cooldown / 1 SECONDS] seconds between bombs."))
+		to_chat(src, span_bolddanger("Your powers are on cooldown! You must wait [DisplayTimeText(bomb_cooldown - world.time)] between bombs."))
 		return
 	to_chat(src, span_bolddanger("Success! Bomb armed!"))
 	COOLDOWN_START(src, bomb_cooldown, bomb_cooldown_time)

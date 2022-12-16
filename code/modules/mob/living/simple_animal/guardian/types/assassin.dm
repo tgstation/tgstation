@@ -55,8 +55,8 @@
 
 /mob/living/simple_animal/hostile/guardian/assassin/ToggleMode(forced = FALSE)
 	if(toggle)
-		melee_damage_lower -= damage_bonus * (HAS_TRAIT(src, TRAIT_FUGU_GLANDED) ? 2 : 1)
-		melee_damage_upper -= damage_bonus * (HAS_TRAIT(src, TRAIT_FUGU_GLANDED) ? 2 : 1)
+		melee_damage_lower -= damage_bonus
+		melee_damage_upper -= damage_bonus
 		armour_penetration = initial(armour_penetration)
 		obj_damage = initial(obj_damage)
 		environment_smash = initial(environment_smash)
@@ -73,8 +73,8 @@
 		if(loc == summoner)
 			to_chat(src, span_bolddanger("You have to be manifested to enter stealth!"))
 			return
-		melee_damage_lower += damage_bonus * (HAS_TRAIT(src, TRAIT_FUGU_GLANDED) ? 2 : 1)
-		melee_damage_upper += damage_bonus * (HAS_TRAIT(src, TRAIT_FUGU_GLANDED) ? 2 : 1)
+		melee_damage_lower += damage_bonus
+		melee_damage_upper += damage_bonus
 		armour_penetration = 100
 		obj_damage = 0
 		environment_smash = ENVIRONMENT_SMASH_NONE

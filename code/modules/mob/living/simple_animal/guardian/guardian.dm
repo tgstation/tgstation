@@ -314,13 +314,31 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		summoner.dust()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
-	if(summoner && hud_used?.healths)
-		var/resulthealth
-		if(iscarbon(summoner))
-			resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) * 100)
+	if(!summoner)
+		return
+	var/severity = 0
+	var/healthpercent = (iscarbon(summoner) ? (abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) : (summoner.health / summoner.maxHealth)) * 100
+	switch(healthpercent)
+		if(100 to INFINITY)
+			severity = 0
+		if(80 to 100)
+			severity = 1
+		if(60 to 80)
+			severity = 2
+		if(40 to 60)
+			severity = 3
+		if(20 to 40)
+			severity = 4
+		if(1 to 20)
+			severity = 5
 		else
-			resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
-		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>")
+			severity = 6
+	if(severity > 0)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+	else
+		clear_fullscreen("brute")
+	if(hud_used?.healths)
+		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[round(healthpercent)]%</font></div>")
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //The spirit is invincible, but passes on damage to the summoner
 	. = amount
