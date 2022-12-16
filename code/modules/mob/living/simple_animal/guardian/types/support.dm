@@ -1,8 +1,5 @@
 //Healer
 /mob/living/simple_animal/hostile/guardian/healer
-	combat_mode = TRUE
-	friendly_verb_continuous = "heals"
-	friendly_verb_simple = "heal"
 	speed = 0
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
@@ -42,7 +39,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/healer/proc/heal_target(mob/living/target)
-	do_attack_animation(target)
+	do_attack_animation(target, ATTACK_EFFECT_PUNCH)
+	target.visible_message(span_notice("[src] heals [target]!"),\
+		span_userdanger("[src] heals you!"), null, COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_notice("You heal [target]!"))
 	playsound(target, attack_sound, 50, TRUE, TRUE, frequency = -1) //play punch in REVERSE
 	target.adjustBruteLoss(-healing_amount)
 	target.adjustFireLoss(-healing_amount)
