@@ -188,7 +188,7 @@
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // 1 tc
-			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
+			new /obj/item/storage/belt/chameleon(src) // worth some fraction of a tc
 			new /obj/item/chameleon(src) // 7 tc
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc

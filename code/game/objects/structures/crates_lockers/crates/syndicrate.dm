@@ -11,7 +11,7 @@
 	/// this is what will spawn when it is opened with a syndicrate key
 	var/list/unlock_contents = list()
 
-/// if the crate takes damage it will explode 24% of the time
+/// if the crate takes damage it will explode 25% of the time
 /obj/structure/closet/crate/syndicrate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(created_items)
 		return ..()
