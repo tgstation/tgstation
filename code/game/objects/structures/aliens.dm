@@ -329,8 +329,8 @@
 /obj/structure/alien/egg
 	name = "egg"
 	desc = "A large mottled egg."
-	var/base_icon = "egg"
 	icon_state = "egg_growing"
+	base_icon_state = "egg"
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 100
@@ -358,11 +358,11 @@
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
 		if(GROWING)
-			icon_state = "[base_icon]_growing"
+			icon_state = "[base_icon_state]_growing"
 		if(GROWN)
-			icon_state = "[base_icon]"
+			icon_state = "[base_icon_state]"
 		if(BURST)
-			icon_state = "[base_icon]_hatched"
+			icon_state = "[base_icon_state]_hatched"
 	return ..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user, list/modifiers)

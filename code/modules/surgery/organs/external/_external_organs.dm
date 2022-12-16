@@ -28,7 +28,7 @@
 	var/datum/sprite_accessory/sprite_datum
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
-	///Set to TRUE to use the mob sprite as item sprite
+	///Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
 	var/use_mob_sprite_as_obj_sprite = FALSE
 
 	///With what DNA block do we mutate in mutate_feature() ? For genetics
@@ -39,12 +39,13 @@
 
 	///The color this organ draws with. Updated by bodypart/inherit_color()
 	var/draw_color
-
 	///Where does this organ inherit it's color from?
 	var/color_source = ORGAN_COLOR_INHERIT
 
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
+	///Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)
+	var/restyle_flags = NONE
 
 /**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
@@ -57,6 +58,9 @@
 
 	if(!(organ_flags & ORGAN_UNREMOVABLE))
 		color = "#[random_color()]" //A temporary random color that gets overwritten on insertion.
+
+	if(restyle_flags)
+		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 
 /obj/item/organ/external/Destroy()
 	if(owner)
@@ -92,6 +96,7 @@
 
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
+
 	if(ownerlimb)
 		remove_from_limb()
 
@@ -127,7 +132,7 @@
 	return ..()
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
-/obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, physique)
+/obj/item/organ/external/proc/generate_and_retrieve_overlays(list/overlay_list, image_dir = SOUTH, image_layer, physique)
 	set_sprite(stored_feature_id)
 	if(!sprite_datum)
 		return
@@ -148,7 +153,7 @@
 	if(use_mob_sprite_as_obj_sprite)
 		icon = icon(sprite_datum.icon, finished_icon_state, SOUTH)
 
-	if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/ | This comment isn't true.
+	if(sprite_datum.color_src)
 		appearance.color = draw_color
 
 	if(sprite_datum.center)
@@ -156,11 +161,27 @@
 
 	overlay_list += appearance
 
-/obj/item/organ/external/proc/set_sprite(sprite_name)
-	stored_feature_id = sprite_name
-	sprite_datum = get_sprite_datum(sprite_name)
-	if(!sprite_datum && sprite_name)
-		CRASH("External organ attempted to load with an invalid sprite datum. Sprite key: [sprite_name].")
+///If you need to change an external_organ for simple one-offs, use this. Pass the accessory type : /datum/accessory/something
+/obj/item/organ/external/proc/simple_change_sprite(accessory_type)
+	var/datum/sprite_accessory/typed_accessory = accessory_type //we only take types for maintainability
+
+	set_sprite(initial(typed_accessory.name))
+
+	if(owner) //are we in a person?
+		owner.update_body_parts()
+	else if(ownerlimb) //are we in a limb?
+		ownerlimb.update_icon_dropped()
+	else if(use_mob_sprite_as_obj_sprite) //are we out in the world, unprotected by flesh?
+		generate_and_retrieve_overlays(list(), image_layer = use_mob_sprite_as_obj_sprite) //both fetches and updates our organ sprite, although we only update
+
+///Change our accessory sprite, using the accesssory name. If you need to change the sprite for something, use simple_change_sprite()
+/obj/item/organ/external/proc/set_sprite(accessory_name)
+	PRIVATE_PROC(TRUE)
+
+	stored_feature_id = accessory_name
+	sprite_datum = get_sprite_datum(accessory_name)
+	if(!sprite_datum && accessory_name)
+		CRASH("External organ attempted to load with an invalid sprite datum. Sprite key: [accessory_name].")
 	cache_key = jointext(generate_icon_cache(), "_")
 
 ///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse)
@@ -250,6 +271,7 @@
 	preference = "feature_lizard_horns"
 
 	dna_block = DNA_HORNS_BLOCK
+	restyle_flags = EXTERNAL_RESTYLE_ENAMEL
 
 /obj/item/organ/external/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
@@ -273,6 +295,7 @@
 	preference = "feature_lizard_frills"
 
 	dna_block = DNA_FRILLS_BLOCK
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 /obj/item/organ/external/frills/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEEARS))
@@ -298,6 +321,7 @@
 	external_bodytypes = BODYTYPE_SNOUTED
 
 	dna_block = DNA_SNOUT_BLOCK
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 /obj/item/organ/external/snout/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(human.head?.flags_inv & HIDESNOUT))
@@ -321,11 +345,12 @@
 	preference = "feature_moth_antennae"
 
 	dna_block = DNA_MOTH_ANTENNAE_BLOCK
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	///Are we burned?
 	var/burnt = FALSE
-	///Store our old sprite here for if our antennae wings are healed
-	var/original_sprite = ""
+	///Store our old datum here for if our antennae are healed
+	var/original_sprite_datum
 
 /obj/item/organ/external/antennae/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -356,8 +381,8 @@
 
 /obj/item/organ/external/antennae/proc/burn_antennae()
 	burnt = TRUE
-	original_sprite = sprite_datum.name
-	set_sprite("Burnt Off")
+	original_sprite_datum = sprite_datum.name
+	simple_change_sprite(/datum/sprite_accessory/moth_antennae/burnt_off)
 
 ///heal our antennae back up!!
 /obj/item/organ/external/antennae/proc/heal_antennae(datum/source, heal_flags)
@@ -368,7 +393,7 @@
 
 	if(heal_flags & (HEAL_LIMBS|HEAL_ORGANS))
 		burnt = FALSE
-		set_sprite(original_sprite)
+		simple_change_sprite(original_sprite_datum)
 
 ///The leafy hair of a podperson
 /obj/item/organ/external/pod_hair
@@ -381,8 +406,10 @@
 
 	feature_key = "pod_hair"
 	preference = "feature_pod_hair"
+	use_mob_sprite_as_obj_sprite = BODY_ADJ_LAYER
 
 	dna_block = DNA_POD_HAIR_BLOCK
+	restyle_flags = EXTERNAL_RESTYLE_PLANT
 
 	color_source = ORGAN_COLOR_OVERRIDE
 

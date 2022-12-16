@@ -111,7 +111,6 @@
 		"status_display_frame",
 		"sticky_tape",
 		"syrup_bottle",
-		"tablet",
 		"tape",
 		"tech_disk",
 		"timer",
@@ -866,6 +865,7 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"paicard",
+		"mecha_camera"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

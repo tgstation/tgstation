@@ -54,7 +54,7 @@
 	backpack_contents = list(
 		/obj/item/storage/box/beanbag = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/bar
+	belt = /obj/item/modular_computer/pda/bar
 	ears = /obj/item/radio/headset/headset_srv
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	shoes = /obj/item/clothing/shoes/laceup

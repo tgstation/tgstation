@@ -162,7 +162,7 @@
 	else
 		set_light_on(FALSE)
 
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
 	..()

@@ -20,8 +20,6 @@
 	var/alignment = ALIGNMENT_GOOD
 	/// Does this require something before being available as an option?
 	var/starter = TRUE
-	/// species traits that block you from picking
-	var/invalidating_qualities = NONE
 	/// The Sect's 'Mana'
 	var/favor = 0 //MANA!
 	/// The max amount of favor the sect can have
@@ -105,12 +103,12 @@
 			return TRUE
 
 	var/heal_amt = 10
-	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, null, BODYTYPE_ORGANIC)
+	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
 
 	if(hurt_limbs.len)
 		for(var/X in hurt_limbs)
 			var/obj/item/bodypart/affecting = X
-			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYTYPE_ORGANIC))
+			if(affecting.heal_damage(heal_amt, heal_amt, BODYTYPE_ORGANIC))
 				blessed.update_damage_overlays()
 		blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
 		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
@@ -176,7 +174,7 @@
 		return TRUE
 
 	//charge(?) and go
-	if(bodypart.heal_damage(5,5,null,BODYTYPE_ROBOTIC))
+	if(bodypart.heal_damage(5,5,BODYTYPE_ROBOTIC))
 		blessed.update_damage_overlays()
 
 	blessed.visible_message(span_notice("[chap] [did_we_charge ? "repairs" : "repairs and charges"] [blessed] with the power of [GLOB.deity]!"))
@@ -258,10 +256,10 @@
 
 	account.adjust_money(-GREEDY_HEAL_COST, "Church Donation: Treatment")
 	var/heal_amt = 30
-	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, null, BODYTYPE_ORGANIC)
+	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
 	if(hurt_limbs.len)
 		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYTYPE_ORGANIC))
+			if(affecting.heal_damage(heal_amt, heal_amt, BODYTYPE_ORGANIC))
 				blessed.update_damage_overlays()
 		blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
 		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
@@ -271,6 +269,33 @@
 
 #undef GREEDY_HEAL_COST
 
+/datum/religion_sect/burden
+	name = "Punished God"
+	quote = "To feel the freedom, you must first understand captivity."
+	desc = "Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, \
+	even addictions. You will learn the secrets of the universe from your defeated shell."
+	tgui_icon = "user-injured"
+	altar_icon_state = "convertaltar-burden"
+	alignment = ALIGNMENT_NEUT
+	candle_overlay = FALSE
+	rites_list = list(/datum/religion_rites/nullrod_transformation)
+
+/datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
+	..()
+	if(!ishuman(new_convert))
+		to_chat(new_convert, span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
+		return
+	new_convert.gain_trauma(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_MAGIC)
+
+/datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display burden level
+	if(!ishuman(burdened))
+		return FALSE
+	var/datum/brain_trauma/special/burdened/burden = burdened.has_trauma_type(/datum/brain_trauma/special/burdened)
+	if(burden)
+		return "You are at burden level [burden.burden_level]/9."
+	return "You are not burdened."
+
+
 /datum/religion_sect/honorbound
 	name = "Honorbound God"
 	quote = "A good, honorable crusade against evil is required."
@@ -279,7 +304,6 @@
 	tgui_icon = "scroll"
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
-	invalidating_qualities = TRAIT_GENELESS
 	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
 	///people who have agreed to join the crusade, and can be deaconized
 	var/list/possible_crusaders = list()
@@ -302,41 +326,7 @@
 	if(!ishuman(new_convert))
 		to_chat(new_convert, span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
 		return FALSE
-	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(new_convert, span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
-		return FALSE
-	var/datum/dna/holy_dna = new_convert.dna
-	holy_dna.add_mutation(/datum/mutation/human/honorbound)
-
-/datum/religion_sect/burden
-	name = "Punished God"
-	quote = "To feel the freedom, you must first understand captivity."
-	desc = "Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, \
-	even addictions. You will learn the secrets of the universe from your defeated shell."
-	tgui_icon = "user-injured"
-	altar_icon_state = "convertaltar-burden"
-	alignment = ALIGNMENT_NEUT
-	invalidating_qualities = TRAIT_GENELESS
-	candle_overlay = FALSE
-
-/datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
-	..()
-	if(!ishuman(new_convert))
-		to_chat(new_convert, span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
-		return
-	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(new_convert, span_warning("[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened."))
-		return
-	var/datum/dna/holy_dna = new_convert.dna
-	holy_dna.add_mutation(/datum/mutation/human/burdened)
-
-/datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display burden level
-	if(!ishuman(burdened))
-		return FALSE
-	var/datum/mutation/human/burdened/burdenmut = burdened.dna.check_mutation(/datum/mutation/human/burdened)
-	if(burdenmut)
-		return "You are at burden level [burdenmut.burden_level]/6."
-	return "You are not burdened."
+	new_convert.gain_trauma(/datum/brain_trauma/special/honorbound, TRAUMA_RESILIENCE_MAGIC)
 
 #define MINIMUM_YUCK_REQUIRED 5
 

@@ -535,25 +535,46 @@
 
 /datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
-	if(iscarbon(exposed_mob) && exposed_mob.stat != DEAD)
-		var/mob/living/carbon/exposed_carbon = exposed_mob
-		var/holycheck = ishumanbasic(exposed_carbon)
-		if(!HAS_TRAIT(exposed_carbon, TRAIT_CAN_USE_FLIGHT_POTION) || reac_volume < 5)
-			if((methods & INGEST) && show_message)
-				to_chat(exposed_carbon, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
-			return
-		if(exposed_carbon.dna.species.has_innate_wings)
-			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
-		else
-			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as wings burst out!"))
-		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
-		if(holycheck)
-			to_chat(exposed_carbon, span_notice("You feel blessed!"))
-			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, FLIGHTPOTION_TRAIT)
-		playsound(exposed_carbon.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
-		exposed_carbon.adjustBruteLoss(20)
-		exposed_carbon.emote("scream")
+	if(!ishuman(exposed_mob) || exposed_mob.stat == DEAD)
+		return
+	var/mob/living/carbon/human/exposed_human = exposed_mob
+	if(!HAS_TRAIT(exposed_human, TRAIT_CAN_USE_FLIGHT_POTION) || reac_volume < 5 || !exposed_human.dna)
+		if((methods & INGEST) && show_message)
+			to_chat(exposed_human, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
+		return
+	if(exposed_human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS))
+		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
+	else
+		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as wings burst out!"))
+	var/obj/item/organ/external/wings/functional/wings = get_wing_choice(exposed_human)
+	wings = new wings()
+	wings.Insert(exposed_human)
+	exposed_human.dna.species.handle_mutant_bodyparts(exposed_human)
+	playsound(exposed_human.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
+	exposed_human.adjustBruteLoss(20)
+	exposed_human.emote("scream")
 
+/datum/reagent/flightpotion/proc/get_wing_choice(mob/living/carbon/human/needs_wings)
+	var/list/wing_types = needs_wings.dna.species.wing_types.Copy()
+	if(wing_types.len == 1 || !needs_wings.client)
+		return wing_types[1]
+	var/list/radial_wings = list()
+	var/list/name2type = list()
+	for(var/obj/item/organ/external/wings/functional/possible_type as anything in wing_types)
+		var/datum/sprite_accessory/accessory = GLOB.wings_list[possible_type.name] //Gets the datum for every wing this species has, then prompts user with a radial menu
+		var/image/img = image(icon = accessory.icon, icon_state = "m_wingsopen_[accessory.icon_state]_BEHIND") //Process the HUD elements
+		img.transform *= 0.5
+		img.pixel_x = -32
+		if(radial_wings[accessory.name])
+			stack_trace("Different wing types with repeated names. Please fix as this may cause issues.")
+		else
+			radial_wings[accessory.name] = img
+			name2type[accessory.name] = possible_type
+	var/wing_name = show_radial_menu(needs_wings, needs_wings, radial_wings, tooltips = TRUE)
+	var/wing_type = name2type[wing_name]
+	if(!wing_type)
+		wing_type = pick(wing_types)
+	return wing_type
 
 /obj/item/jacobs_ladder
 	name = "jacob's ladder"
@@ -793,7 +814,8 @@
 	name = "Scan"
 	desc = "Scan an enemy, to get their location and stagger them, increasing their time between attacks."
 	background_icon_state = "bg_clock"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	overlay_icon_state = "bg_clock_border"
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "scan"
 
 	click_to_activate = TRUE

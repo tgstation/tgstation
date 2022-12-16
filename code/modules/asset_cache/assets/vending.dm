@@ -14,19 +14,18 @@
 			icon_file = initial(item.icon)
 		var/icon_state = initial(item.icon_state)
 
-		#ifdef UNIT_TESTS
-		var/icon_states_list = icon_states(icon_file)
-		if (!(icon_state in icon_states_list))
-			var/icon_states_string
-			for (var/an_icon_state in icon_states_list)
-				if (!icon_states_string)
-					icon_states_string = "[json_encode(an_icon_state)]([text_ref(an_icon_state)])"
-				else
-					icon_states_string += ", [json_encode(an_icon_state)]([text_ref(an_icon_state)])"
+		if (PERFORM_ALL_TESTS(focus_only/invalid_vending_machine_icon_states))
+			var/icon_states_list = icon_states(icon_file)
+			if (!(icon_state in icon_states_list))
+				var/icon_states_string
+				for (var/an_icon_state in icon_states_list)
+					if (!icon_states_string)
+						icon_states_string = "[json_encode(an_icon_state)]([text_ref(an_icon_state)])"
+					else
+						icon_states_string += ", [json_encode(an_icon_state)]([text_ref(an_icon_state)])"
 
-			stack_trace("[item] does not have a valid icon state, icon=[icon_file], icon_state=[json_encode(icon_state)]([text_ref(icon_state)]), icon_states=[icon_states_string]")
-			continue
-		#endif
+				stack_trace("[item] does not have a valid icon state, icon=[icon_file], icon_state=[json_encode(icon_state)]([text_ref(icon_state)]), icon_states=[icon_states_string]")
+				continue
 
 		var/icon/I = icon(icon_file, icon_state, SOUTH)
 		var/c = initial(item.color)

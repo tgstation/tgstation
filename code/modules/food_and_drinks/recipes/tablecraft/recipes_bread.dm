@@ -142,7 +142,7 @@
 		/datum/reagent/blood = 30,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
-	result = /mob/living/simple_animal/pet/dog/breaddog
+	result = /mob/living/basic/pet/dog/breaddog
 	subcategory = CAT_BREAD
 
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////

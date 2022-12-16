@@ -150,7 +150,7 @@
 	desc = "Roach DNA infused into what was once a normal liver."
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 5 // More tolerance for toxins
-	toxLethality = 4 * LIVER_DEFAULT_TOX_LETHALITY // But if they manage to get in you're screwed
+	liver_resistance = 0.25 // But if they manage to get in you're screwed
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "liver"

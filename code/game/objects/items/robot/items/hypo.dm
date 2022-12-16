@@ -302,7 +302,7 @@
 /obj/item/reagent_containers/borghypo/borgshaker
 	name = "cyborg shaker"
 	desc = "An advanced drink synthesizer and mixer."
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
 	possible_transfer_amounts = list(5,10,20)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.

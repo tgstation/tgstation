@@ -140,6 +140,7 @@
 
 /datum/action/innate/hivebot
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/hivebot/foamwall
 	name = "Foam Wall"

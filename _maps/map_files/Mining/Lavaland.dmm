@@ -686,7 +686,7 @@
 	},
 /area/mine/cafeteria)
 "eP" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/left/brown,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
@@ -1665,7 +1665,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
 "kx" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
@@ -1803,7 +1803,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "lg" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -2558,7 +2558,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "oe" = (
-/obj/structure/chair/sofa/corner{
+/obj/structure/chair/sofa/corner/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners{
@@ -2716,7 +2716,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "pe" = (
-/obj/structure/chair/sofa,
+/obj/structure/chair/sofa/middle/brown,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
@@ -5122,7 +5122,7 @@
 	},
 /area/mine/production)
 "Fd" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners{

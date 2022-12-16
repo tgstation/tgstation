@@ -137,24 +137,25 @@
 
 	var/list/visible_turfs = list()
 
-	// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
-	var/cam_location = isliving(active_camera.loc) ? active_camera.loc : active_camera
+	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
+	var/new_cam_turf = get_turf(active_camera)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
 	// Most security cameras will end here as they're not moving.
-	var/newturf = get_turf(cam_location)
-	if(last_camera_turf == newturf)
+	if(last_camera_turf == new_cam_turf)
 		return
 
 	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
-	last_camera_turf = get_turf(cam_location)
+	last_camera_turf = new_cam_turf
 
-	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : view(active_camera.view_range, cam_location)
+	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
+	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, new_cam_turf) : view(active_camera.view_range, new_cam_turf)
 
 	for(var/turf/visible_turf in visible_things)
 		visible_turfs += visible_turf
 
+	//Get coordinates for a rectangle area that contains the turfs we see so we can then clear away the static in the resulting rectangle area
 	var/list/bbox = get_bbox_of_atoms(visible_turfs)
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
@@ -172,7 +173,9 @@
 /datum/computer_file/program/secureye/proc/get_available_cameras()
 	var/list/L = list()
 	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
-		if(!is_station_level(cam.z))//Only show station cameras.
+		//Get the camera's turf in case it's inside something like a borg
+		var/turf/camera_turf = get_turf(cam)
+		if(!is_station_level(camera_turf.z))//Only show station cameras.
 			continue
 		L.Add(cam)
 	var/list/camlist = list()

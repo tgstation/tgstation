@@ -434,7 +434,7 @@
 
 		if(86 to 92)
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
-			user.adjustStaminaLoss(30, updating_health=FALSE)
+			user.adjustStaminaLoss(30, updating_stamina=FALSE)
 			user.adjustBruteLoss(30)
 			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
@@ -446,7 +446,7 @@
 
 		if(68 to 85)
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
-			user.adjustStaminaLoss(30, updating_health=FALSE)
+			user.adjustStaminaLoss(30, updating_stamina=FALSE)
 			user.adjustBruteLoss(10)
 			user.adjust_confusion(10 SECONDS)
 			user.Knockdown(30)
@@ -454,7 +454,7 @@
 
 		if(1 to 67)
 			user.visible_message(span_danger("[user] slams into [hit]!"), span_userdanger("You slam into [hit]!"))
-			user.adjustStaminaLoss(20, updating_health=FALSE)
+			user.adjustStaminaLoss(20, updating_stamina=FALSE)
 			user.adjustBruteLoss(10)
 			user.Knockdown(20)
 			shake_camera(user, 2, 2)
@@ -489,7 +489,7 @@
 		user.Paralyze(10)
 		user.Knockdown(30)
 		W.take_damage(30 * speed)
-		user.adjustStaminaLoss(10 * speed, updating_health=FALSE)
+		user.adjustStaminaLoss(10 * speed, updating_stamina=FALSE)
 		user.adjustBruteLoss(5 * speed)
 
 /datum/component/tackler/proc/delayedSmash(obj/structure/window/W)

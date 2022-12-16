@@ -282,7 +282,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/card/id/advanced
 	ears = /obj/item/radio/headset
-	belt = /obj/item/modular_computer/tablet/pda
+	belt = /obj/item/modular_computer/pda
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	box = /obj/item/storage/box/survival
@@ -357,7 +357,7 @@
 
 		equipped.sec_hud_set_ID()
 
-	var/obj/item/modular_computer/tablet/pda/pda = equipped.get_item_by_slot(pda_slot)
+	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
 
 	if(istype(pda))
 		pda.saved_identification = equipped.real_name

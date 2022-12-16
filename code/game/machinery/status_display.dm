@@ -133,6 +133,9 @@
 		qdel(overlay)
 
 	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message, text_color, header_text_color)
+	// Draw our object visually "in front" of this display, taking advantage of sidemap
+	new_status_display_text.pixel_y = -32
+	new_status_display_text.pixel_z = 32
 	vis_contents += new_status_display_text
 	return new_status_display_text
 

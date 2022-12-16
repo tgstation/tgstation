@@ -58,7 +58,7 @@
 		RegisterSignal(parent, COMSIG_IMPLANT_IMPLANTING, PROC_REF(implanting))
 		RegisterSignal(parent, COMSIG_IMPLANT_OTHER, PROC_REF(old_implant))
 		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, PROC_REF(new_implant))
-	else if(istype(parent, /obj/item/modular_computer/tablet))
+	else if(istype(parent, /obj/item/modular_computer/pda))
 		RegisterSignal(parent, COMSIG_TABLET_CHANGE_ID, PROC_REF(new_ringtone))
 		RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(check_detonate))
 	else if(istype(parent, /obj/item/radio))
@@ -166,20 +166,34 @@
 
 	data["maximum_potential_objectives"] = uplink_handler.maximum_potential_objectives
 	if(uplink_handler.has_objectives)
+		var/list/primary_objectives = list()
+		for(var/datum/objective/task as anything in uplink_handler.primary_objectives)
+			var/list/task_data = list()
+			if(length(primary_objectives) > length(GLOB.phonetic_alphabet))
+				task_data["task_name"] = "DIRECTIVE [length(primary_objectives) + 1]" //The english alphabet is WEAK
+			else
+				task_data["task_name"] = "DIRECTIVE [uppertext(GLOB.phonetic_alphabet[length(primary_objectives) + 1])]"
+			task_data["task_text"] = task.explanation_text
+			primary_objectives += list(task_data)
+
 		var/list/potential_objectives = list()
 		for(var/index in 1 to uplink_handler.potential_objectives.len)
 			var/datum/traitor_objective/objective = uplink_handler.potential_objectives[index]
 			var/list/objective_data = objective.uplink_ui_data(user)
 			objective_data["id"] = index
 			potential_objectives += list(objective_data)
+
 		var/list/active_objectives = list()
 		for(var/index in 1 to uplink_handler.active_objectives.len)
 			var/datum/traitor_objective/objective = uplink_handler.active_objectives[index]
 			var/list/objective_data = objective.uplink_ui_data(user)
 			objective_data["id"] = index
 			active_objectives += list(objective_data)
+
+		data["primary_objectives"] = primary_objectives
 		data["potential_objectives"] = potential_objectives
 		data["active_objectives"] = active_objectives
+		data["completed_final_objective"] = uplink_handler.final_objective
 
 	var/list/stock_list = uplink_handler.item_stock.Copy()
 	var/list/extra_purchasable_stock = list()
@@ -397,7 +411,7 @@
 /datum/component/uplink/proc/setup_unlock_code()
 	unlock_code = generate_code()
 	var/obj/item/P = parent
-	if(istype(parent,/obj/item/modular_computer/tablet))
+	if(istype(parent,/obj/item/modular_computer/pda))
 		unlock_note = "<B>Uplink Passcode:</B> [unlock_code] ([P.name])."
 	else if(istype(parent,/obj/item/radio))
 		unlock_note = "<B>Radio Passcode:</B> [unlock_code] ([P.name], [RADIO_TOKEN_UPLINK] channel)."
@@ -405,7 +419,7 @@
 		unlock_note = "<B>Uplink Degrees:</B> [english_list(unlock_code)] ([P.name])."
 
 /datum/component/uplink/proc/generate_code()
-	if(istype(parent,/obj/item/modular_computer/tablet))
+	if(istype(parent,/obj/item/modular_computer/pda))
 		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 	else if(istype(parent,/obj/item/radio))
 		return pick(GLOB.phonetic_alphabet)

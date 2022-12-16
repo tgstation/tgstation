@@ -48,7 +48,7 @@
 	uniform = /obj/item/clothing/under/rank/medical/virologist
 	suit = /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/tablet/pda/viro
+	belt = /obj/item/modular_computer/pda/viro
 	ears = /obj/item/radio/headset/headset_med
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white

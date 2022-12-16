@@ -2,7 +2,7 @@
 /obj/machinery/door
 	name = "door"
 	desc = "It opens and closes."
-	icon = 'icons/obj/doors/Doorint.dmi'
+	icon = 'icons/obj/doors/doorint.dmi'
 	icon_state = "door1"
 	base_icon_state = "door"
 	opacity = TRUE
@@ -44,6 +44,8 @@
 	var/unres_sides = NONE
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 	var/can_open_with_hands = TRUE /// Whether or not the door can be opened by hand (used for blast doors and shutters)
+	/// Whether or not this door can be opened through a door remote, ever
+	var/opens_with_door_remote = FALSE
 
 /obj/machinery/door/Initialize(mapload)
 	. = ..()

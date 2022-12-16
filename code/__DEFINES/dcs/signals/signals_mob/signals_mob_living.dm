@@ -40,12 +40,18 @@
 #define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
 ///From living/Life(). (deltatime, times_fired)
 #define COMSIG_LIVING_LIFE "living_life"
+///From living/set_resting(): (new_resting, silent, instant)
+#define COMSIG_LIVING_RESTING "living_resting"
 
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
 
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
+
+///from base of mob/living/gib(): (no_brain, no_organs, no_bodyparts)
+///Note that it is fired regardless of whether the mob was dead beforehand or not.
+#define COMSIG_LIVING_GIBBED "living_gibbed"
 
 ///from base of mob/living/Write_Memory(): (dead, gibbed)
 #define COMSIG_LIVING_WRITE_MEMORY "living_write_memory"
@@ -122,3 +128,6 @@
 	#define STOP_SACRIFICE (1<<0)
 	/// Don't send a message for sacrificing this thing, we have our own
 	#define SILENCE_SACRIFICE_MESSAGE (1<<1)
+
+/// From /mob/living/befriend() : (mob/living/new_friend)
+#define COMSIG_LIVING_BEFRIENDED "living_befriended"

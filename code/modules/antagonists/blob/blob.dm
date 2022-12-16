@@ -62,7 +62,7 @@
 /datum/action/innate/blobpop
 	name = "Pop"
 	desc = "Unleash the blob"
-	icon_icon = 'icons/mob/nonhuman-player/blob.dmi'
+	button_icon = 'icons/mob/nonhuman-player/blob.dmi'
 	button_icon_state = "blob"
 
 	/// The time taken before this ability is automatically activated.
@@ -132,3 +132,15 @@
 	blob_icon.Blend(finish_preview_icon(human_icon), ICON_OVERLAY)
 
 	return blob_icon
+
+/atom/proc/can_blob_attack()
+	return !(HAS_TRAIT(src, TRAIT_MAGICALLY_PHASED))
+
+/mob/living/can_blob_attack()
+	. = ..()
+	if(!.)
+		return
+	return !incorporeal_move
+
+/obj/effect/dummy/phased_mob/can_blob_attack()
+	return FALSE
