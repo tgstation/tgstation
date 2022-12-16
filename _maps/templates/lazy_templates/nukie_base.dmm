@@ -1297,9 +1297,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
 	},
-/obj/machinery/smartfridge/chemistry/virology/preloaded{
-	pixel_x = -32
-	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "ol" = (
@@ -2118,6 +2115,10 @@
 	},
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
+"xc" = (
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
+/turf/closed/indestructible/syndicate,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "xe" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 6
@@ -4921,7 +4922,7 @@ Ox
 xu
 xu
 xu
-xu
+xc
 xu
 RT
 fk

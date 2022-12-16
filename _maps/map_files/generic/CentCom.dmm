@@ -2149,10 +2149,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"lh" = (
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
-/turf/open/space/basic,
-/area/space)
 "ln" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/brown,
@@ -2592,17 +2588,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"nh" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space)
 "ni" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -4195,24 +4180,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
-"tW" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("nukiebase" = "Burn Chamber");
-	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
-	dir = 1;
-	name = "Ordnance Chamber Monitor"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/light/cold/directional/west{
-	dir = 2
-	},
-/turf/open/space/basic,
-/area/space)
 "ub" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -15079,7 +15046,7 @@ aa
 aa
 aa
 aa
-lh
+aa
 aa
 aa
 aa
@@ -15336,7 +15303,7 @@ aa
 aa
 aa
 aa
-nh
+aa
 aa
 aa
 aa
@@ -18424,7 +18391,7 @@ aa
 aa
 aa
 aa
-tW
+aa
 aa
 aa
 aa
