@@ -1,5 +1,0 @@
-author: "Salex08"
-delete-after: True
-changes:
-  - bugfix: "fixes a oversight with mining ltsrbt which would allow them to spam buy crates for very low mining points"
-  - qol: "Increases the amount of marker beacons you can buy in a row from 1 to 10"

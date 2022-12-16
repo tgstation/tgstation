@@ -39,9 +39,6 @@
 
 	var/list/random_words_for_testing = list(
 		__NETWORK_TOOLS,
-		__NETWORK_REMOTES,
-		__NETWORK_AIRLOCKS,
-		__NETWORK_DOORS,
 		__NETWORK_CONTROL,
 		__NETWORK_STORAGE,
 		__NETWORK_CARGO,

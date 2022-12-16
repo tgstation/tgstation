@@ -180,7 +180,7 @@
 				if(sending_virus)
 					var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 					if(istype(disk))
-						disk.send_virus(src, target, usr)
+						disk.send_virus(computer, target, usr)
 						return UI_UPDATE
 
 				send_message(usr, list(target))

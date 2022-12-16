@@ -64,7 +64,7 @@
 
 	if(light_amount < 0.2 && !QDELETED(jaunter) && isliving(jaunter)) //heal in the dark
 		var/mob/living/living_jaunter = jaunter
-		living_jaunter.heal_overall_damage((healing_rate * delta_time), (healing_rate * delta_time), 0, BODYTYPE_ORGANIC)
+		living_jaunter.heal_overall_damage((healing_rate * delta_time), (healing_rate * delta_time), BODYTYPE_ORGANIC)
 
 	check_light_level()
 

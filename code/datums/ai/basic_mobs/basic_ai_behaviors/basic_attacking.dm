@@ -9,6 +9,9 @@
 	var/atom/target = weak_target?.resolve()
 	if(!target)
 		return FALSE
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	if (!targetting_datum)
+		return
 	controller.set_movement_target(target)
 
 /datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)

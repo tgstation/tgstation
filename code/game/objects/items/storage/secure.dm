@@ -12,13 +12,6 @@
 	name = "secstorage"
 	desc = "This shouldn't exist. If it does, create an issue report."
 	w_class = WEIGHT_CLASS_NORMAL
-
-	/// icon_state of locked safe
-	var/icon_locking = "secureb"
-	/// icon_state of sparking safe
-	var/icon_sparking = "securespark"
-	/// icon_state of opened safe
-	var/icon_opened = "secure0"
 	/// The code entered by the user
 	var/entered_code
 	/// The code that will open this safe
@@ -32,16 +25,25 @@
 	/// Is this door hackable?
 	var/can_hack_open = TRUE
 
-
 /obj/item/storage/secure/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 14
+	update_appearance()
 
 /obj/item/storage/secure/examine(mob/user)
 	. = ..()
 	if(can_hack_open)
 		. += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
+
+/obj/item/storage/secure/update_icon()
+	..()
+	if(!atom_storage)
+		return
+	if(atom_storage.locked)
+		icon_state = "[initial(icon_state)]_locked"
+	else
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool)
 	if(can_hack_open && atom_storage.locked)
@@ -64,7 +66,7 @@
 	if(lock_hacking)
 		balloon_alert(user, "already hacking!")
 		return
-	if(panel_open == TRUE)
+	if(panel_open)
 		balloon_alert(user, "hacking...")
 		lock_hacking = TRUE
 		if (tool.use_tool(src, user, 400))
@@ -81,7 +83,7 @@
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
-	if (lock_set == 0)
+	if (!lock_set)
 		dat += text("<p>\n<b>5-DIGIT PASSCODE NOT SET.<br>ENTER NEW PASSCODE.</b>")
 	message = text("[]", entered_code)
 	if (!locked)
@@ -100,15 +102,14 @@
 				lock_set = TRUE
 			else if ((entered_code == lock_code) && lock_set)
 				atom_storage.locked = FALSE
-				cut_overlays()
-				add_overlay(icon_opened)
+				update_appearance()
 				entered_code = null
 			else
 				entered_code = "ERROR"
 		else
 			if (href_list["type"] == "R")
 				atom_storage.locked = TRUE
-				cut_overlays()
+				update_appearance()
 				entered_code = null
 				atom_storage.hide_contents(usr)
 			else
@@ -125,7 +126,7 @@
 ///Secure Briefcase
 /obj/item/storage/secure/briefcase
 	name = "secure briefcase"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "secure"
 	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
@@ -161,10 +162,7 @@
 /obj/item/storage/secure/safe
 	name = "secure safe"
 	icon = 'icons/obj/storage/storage.dmi'
-	icon_state = "safe"
-	icon_opened = "safe0"
-	icon_locking = "safeb"
-	icon_sparking = "safespark"
+	icon_state = "wall_safe"
 	desc = "Excellent for securing things away from grubby hands."
 	w_class = WEIGHT_CLASS_GIGANTIC
 	anchored = TRUE
@@ -213,10 +211,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 
 /obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
 	. = ..()
-
 	lock_code = SSid_access.spare_id_safe_code
 	lock_set = TRUE
 	atom_storage.locked = TRUE
+	update_appearance()
 
 /obj/item/storage/secure/safe/caps_spare/PopulateContents()
 	new /obj/item/card/id/advanced/gold/captains_spare(src)

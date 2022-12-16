@@ -1,7 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - qol: "lockboxes have screentips,"
-  - qol: "cargo goodies can be opened with your ID even if it is inside a PDA or Wallet"
-  - bugfix: "captain can no longer open cargo goodies"
-  - imageadd: "secure lockboxes have a broken sprite when emag'd"

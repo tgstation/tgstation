@@ -118,6 +118,9 @@
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
+	/// This item is used to generate a preview image for this set.
+	/// It could be any item, doesn't even necessarily need to be something in the kit
+	var/obj/item/typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/templar
 
 /obj/item/storage/box/holy/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain(src)
@@ -125,6 +128,7 @@
 
 /obj/item/storage/box/holy/clock
 	name = "Forgotten kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/clock
 
 /obj/item/storage/box/holy/clock/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain/clock(src)
@@ -132,6 +136,7 @@
 
 /obj/item/storage/box/holy/student
 	name = "Profane Scholar Kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/studentuni
 
 /obj/item/storage/box/holy/student/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/studentuni(src)
@@ -139,6 +144,7 @@
 
 /obj/item/storage/box/holy/sentinel
 	name = "Stone Sentinel Kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/ancient
 
 /obj/item/storage/box/holy/sentinel/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/ancient(src)
@@ -146,6 +152,7 @@
 
 /obj/item/storage/box/holy/witchhunter
 	name = "Witchhunter Kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/witchhunter
 
 /obj/item/storage/box/holy/witchhunter/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/witchhunter(src)
@@ -153,6 +160,7 @@
 
 /obj/item/storage/box/holy/adept
 	name = "Divine Adept Kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/adept
 
 /obj/item/storage/box/holy/adept/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/adept(src)
@@ -160,6 +168,7 @@
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
+	typepath_for_preview = /obj/item/clothing/suit/hooded/chaplain_hoodie/leader
 
 /obj/item/storage/box/holy/follower/PopulateContents()
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
@@ -167,4 +176,3 @@
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
-
