@@ -866,12 +866,12 @@ const DroneScreen = (props: { drone: ActiveDrone & DroneData }) => {
   const { drone } = props;
 
   switch (drone.drone_status) {
-    case DRONESTATUS.Busy:
+    case 'busy':
       return <TimeoutScreen drone={drone} />;
-    case DRONESTATUS.Idle:
-    case DRONESTATUS.Travel:
+    case 'idle':
+    case 'travel':
       return <TravelTargetSelectionScreen drone={drone} />;
-    case DRONESTATUS.Adventure:
+    case 'adventure':
       return (
         <AdventureScreen
           adventure_data={drone.adventure_data}
@@ -879,7 +879,7 @@ const DroneScreen = (props: { drone: ActiveDrone & DroneData }) => {
           drone_max_integrity={drone.drone_max_integrity}
         />
       );
-    case DRONESTATUS.Exploration:
+    case 'exploration':
       if (drone.event) {
         return <EventScreen drone={drone} event={drone.event} />;
       } else {

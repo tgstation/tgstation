@@ -32,29 +32,26 @@ type GreyscaleMenuData = {
   refreshing: boolean;
 };
 
-const DIRECTIONS = {
-  North: 'north',
-  NorthEast: 'northeast',
-  East: 'east',
-  SouthEast: 'southeast',
-  South: 'south',
-  SouthWest: 'southwest',
-  West: 'west',
-  NorthWest: 'northwest',
+type Direction =
+  | 'north'
+  | 'northeast'
+  | 'east'
+  | 'southeast'
+  | 'south'
+  | 'southwest'
+  | 'west'
+  | 'northwest';
+
+const DirectionAbbreviation: Record<Direction, string> = {
+  'north': 'N',
+  'northeast': 'NE',
+  'east': 'E',
+  'southeast': 'SE',
+  'south': 'S',
+  'southwest': 'SW',
+  'west': 'W',
+  'northwest': 'NW',
 } as const;
-
-type Directions = keyof typeof DIRECTIONS;
-
-const DirectionAbbreviation: Record<Directions, string> = {
-  'North': 'N',
-  'NorthEast': 'NE',
-  'East': 'E',
-  'SouthEast': 'SE',
-  'South': 'S',
-  'SouthWest': 'SW',
-  'West': 'W',
-  'NorthWest': 'NW',
-};
 
 const ConfigDisplay = (props, context) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
@@ -125,37 +122,37 @@ const ColorDisplay = (props, context) => {
 };
 
 const PreviewCompassSelect = (props, context) => {
-  const { act, data } = useBackend<GreyscaleMenuData>(context);
   return (
     <Box>
       <Stack vertical>
         <Flex>
-          <SingleDirection dir={DIRECTIONS.NorthWest} />
-          <SingleDirection dir={DIRECTIONS.North} />
-          <SingleDirection dir={DIRECTIONS.NorthEast} />
+          <SingleDirection dir="northwest" />
+          <SingleDirection dir="north" />
+          <SingleDirection dir="northeast" />
         </Flex>
         <Flex>
-          <SingleDirection dir={DIRECTIONS.West} />
+          <SingleDirection dir="west" />
           <Flex.Item grow={1} basis={0}>
             <Button lineHeight={3} m={-0.2} fluid>
               <Icon name="arrows-alt" size={1.5} m="20%" />
             </Button>
           </Flex.Item>
-          <SingleDirection dir={DIRECTIONS.East} />
+          <SingleDirection dir="east" />
         </Flex>
         <Flex>
-          <SingleDirection dir={DIRECTIONS.SouthWest} />
-          <SingleDirection dir={DIRECTIONS.South} />
-          <SingleDirection dir={DIRECTIONS.SouthEast} />
+          <SingleDirection dir="southwest" />
+          <SingleDirection dir="south" />
+          <SingleDirection dir="southeast" />
         </Flex>
       </Stack>
     </Box>
   );
 };
 
-const SingleDirection = (props, context) => {
+const SingleDirection = (props: { dir: Direction }, context) => {
   const { dir } = props;
   const { data, act } = useBackend<GreyscaleMenuData>(context);
+
   return (
     <Flex.Item grow={1} basis={0}>
       <Button
@@ -174,6 +171,7 @@ const SingleDirection = (props, context) => {
 
 const IconStatesDisplay = (props, context) => {
   const { data, act } = useBackend<GreyscaleMenuData>(context);
+
   return (
     <Section title="Icon States">
       <Flex>
