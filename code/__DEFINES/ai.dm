@@ -26,7 +26,10 @@
 #define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
 
 ///AI flags
+/// Don't move if being pulled
 #define STOP_MOVING_WHEN_PULLED (1<<0)
+/// Don't act if you're dead
+#define STOP_ACTING_WHILE_DEAD	(1<<1)
 
 //Base Subtree defines
 
