@@ -1270,9 +1270,8 @@
 /area/station/hallway/secondary/service)
 "aBv" = (
 /obj/structure/industrial_lift/tram{
-	icon_state = "plating"
+	icon_state = "titanium_white"
 	},
-/obj/structure/grille/tram,
 /obj/structure/window/reinforced/shuttle/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
@@ -7313,10 +7312,9 @@
 /area/station/security/brig)
 "cEt" = (
 /obj/structure/industrial_lift/tram{
-	icon_state = "plating"
+	icon_state = "titanium_white"
 	},
-/obj/structure/grille/tram,
-/obj/structure/window/reinforced/shuttle/tram,
+/obj/structure/tramwall/titanium,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "cEy" = (
@@ -21506,7 +21504,6 @@
 "hQn" = (
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
-/obj/structure/chair/comfy/shuttle,
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
@@ -21646,6 +21643,15 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"hSw" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/noslip/tram_plate,
+/area/station/hallway/primary/tram/center)
 "hSH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -23993,9 +23999,6 @@
 /turf/open/floor/plating/airless,
 /area/lavaland/surface)
 "iJU" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
@@ -27343,6 +27346,13 @@
 "jVw" = (
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"jVQ" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/obj/structure/window/reinforced/shuttle/tram,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "jVT" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -28500,7 +28510,6 @@
 /turf/open/floor/carpet,
 /area/station/cargo/miningdock)
 "kpB" = (
-/obj/structure/chair/comfy/shuttle,
 /obj/structure/fluff/tram_rail,
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
@@ -37463,6 +37472,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
+"nss" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/noslip/tram_plate,
+/area/station/hallway/primary/tram/center)
 "nti" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -46236,14 +46254,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
-"qDb" = (
-/obj/structure/fluff/tram_rail,
-/obj/structure/chair/comfy/shuttle,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "qDh" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/power/tracker,
@@ -51103,12 +51113,11 @@
 /area/station/security/evidence)
 "spf" = (
 /obj/structure/industrial_lift/tram{
-	icon_state = "plating"
+	icon_state = "titanium_white"
 	},
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/grille/tram,
 /obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -53898,18 +53907,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
-"tpa" = (
-/obj/structure/fluff/tram_rail{
-	dir = 1
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "tpc" = (
 /obj/structure/closet/crate/silvercrate,
 /obj/effect/turf_decal/tile/neutral{
@@ -65740,9 +65737,8 @@
 /area/station/science/genetics)
 "xDg" = (
 /obj/structure/industrial_lift/tram{
-	icon_state = "plating"
+	icon_state = "titanium_white"
 	},
-/obj/structure/grille/tram,
 /obj/structure/window/reinforced/shuttle/tram,
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -66797,10 +66793,9 @@
 /area/station/cargo/miningdock)
 "xXi" = (
 /obj/structure/industrial_lift/tram{
-	icon_state = "plating"
+	icon_state = "titanium_white"
 	},
 /obj/structure/fluff/tram_rail,
-/obj/structure/grille/tram,
 /obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -164094,8 +164089,8 @@ wHs
 gej
 nbS
 hQn
-qia
-jcZ
+nss
+biX
 nbS
 sqz
 oej
@@ -165120,11 +165115,11 @@ vyH
 vRL
 vjl
 fld
-cEt
+jVQ
 kpB
 oph
 iJU
-cEt
+jVQ
 jEO
 anS
 uwY
@@ -166149,9 +166144,9 @@ jfC
 waf
 odj
 nbS
-qDb
-qia
-tpa
+kpB
+hSw
+iJU
 nbS
 kXK
 qms

@@ -15,6 +15,9 @@
 	//atmos_sensitive applies connect_loc which 1. reacts to movement in order to 2. unregister and register signals to
 	//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
 
+/obj/structure/window/reinforced/shuttle/tram
+	icon = 'icons/obj/smooth_structures/tram_window.dmi'
+
 /obj/structure/window/reinforced/shuttle/tram/Initialize(mapload, direct)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
