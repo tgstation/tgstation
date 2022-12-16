@@ -101,12 +101,10 @@
 
 		if(KIT_IMPLANTS)
 			new /obj/item/implanter/freedom(src) // 5 tc
-			new /obj/item/implanter/uplink/precharged(src) // 4 tc
+			new /obj/item/implanter/uplink/precharged(src) // 10 tc is inside this thing
 			new /obj/item/implanter/emp(src) // 1 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/implanter/storage(src) // 8 tc
-			new /obj/item/implanter/radio/syndicate(src) // 4 tc
-			new /obj/item/implanter/stealth(src) // 8tc
 
 		if(KIT_HACKER) //L-L--LOOK AT YOU, HACKER
 			new /obj/item/ai_module/syndicate(src) // 4 tc
@@ -189,7 +187,7 @@
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
-				new /obj/item/throwing_star(src) // ~5 tc for all 6
+				new /obj/item/throwing_star(src) // 1 tc
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/chameleon(src) // 7 tc
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
