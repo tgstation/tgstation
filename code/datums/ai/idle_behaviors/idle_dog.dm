@@ -1,5 +1,5 @@
 ///Dog specific idle behavior.
-/datum/idle_behavior/idle_dog/perform_idle_behavior(delta_time, datum/ai_controller/dog/controller)
+/datum/idle_behavior/idle_dog/perform_idle_behavior(delta_time, datum/ai_controller/basic_controller/dog/controller)
 	var/mob/living/living_pawn = controller.pawn
 	if(!isturf(living_pawn.loc) || living_pawn.pulledby)
 		return

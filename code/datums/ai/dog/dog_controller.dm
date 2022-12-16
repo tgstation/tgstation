@@ -1,4 +1,4 @@
-/datum/ai_controller/dog
+/datum/ai_controller/basic_controller/dog
 	blackboard = list(
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
@@ -13,7 +13,7 @@
 /**
  * Same thing but with make tiny corgis and use access cards.
  */
-/datum/ai_controller/dog/corgi
+/datum/ai_controller/basic_controller/dog/corgi
 	blackboard = list(
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
@@ -27,7 +27,7 @@
 		/datum/ai_planning_subtree/pet_planning,
 	)
 
-/datum/ai_controller/dog/corgi/get_access()
+/datum/ai_controller/basic_controller/dog/corgi/get_access()
 	var/mob/living/basic/pet/dog/corgi/corgi_pawn = pawn
 	if(!istype(corgi_pawn))
 		return

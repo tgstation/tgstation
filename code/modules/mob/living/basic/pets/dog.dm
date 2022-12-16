@@ -18,7 +18,7 @@
 	faction = list("neutral")
 	see_in_dark = 5
 	can_be_held = TRUE
-	ai_controller = /datum/ai_controller/dog
+	ai_controller = /datum/ai_controller/basic_controller/dog
 	// The dog attack pet command can raise melee attack above 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -59,7 +59,7 @@
 	butcher_results = list(/obj/item/food/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "corgi"
-	ai_controller = /datum/ai_controller/dog/corgi
+	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	/// Access card for Ian.
@@ -539,6 +539,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		ai_controller?.blackboard[BB_DOG_IS_SLOW] = TRUE
 		is_slow = TRUE
+		speed = 2
 
 /mob/living/basic/pet/dog/corgi/ian/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)

@@ -112,7 +112,6 @@ multiple modular subtrees with behaviors
 	else
 		set_ai_status(AI_STATUS_ON)
 
-
 	if (ai_traits & STOP_ACTING_WHILE_DEAD && istype(new_pawn, /mob))
 		var/mob/hopefully_alive_mob = new_pawn
 		if (hopefully_alive_mob.stat == DEAD)
@@ -167,6 +166,7 @@ multiple modular subtrees with behaviors
 
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
+
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the delta_time passed to ai_controller.process()
 		// Action cooldowns cannot happen faster than delta_time, so delta_time should be the value used in this scenario.
@@ -218,7 +218,6 @@ multiple modular subtrees with behaviors
 
 	if(LAZYLEN(planning_subtrees))
 		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
-
 			if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
 
