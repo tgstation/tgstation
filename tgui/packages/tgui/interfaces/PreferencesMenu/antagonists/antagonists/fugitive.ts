@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 const Fugitive: Antagonist = {
@@ -10,7 +10,7 @@ const Fugitive: Antagonist = {
     before fugitive hunters arrive and start hunting you and your friends down!
     `,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default Fugitive;

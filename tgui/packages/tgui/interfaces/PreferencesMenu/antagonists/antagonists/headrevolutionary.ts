@@ -10,7 +10,7 @@ const HeadRevolutionary: Antagonist = {
   key: 'headrevolutionary',
   name: 'Head Revolutionary',
   description: ['VIVA LA REVOLUTION!', REVOLUTIONARY_MECHANICAL_DESCRIPTION],
-  category: Category.Roundstart,
+  category: 'Roundstart',
 };
 
 export default HeadRevolutionary;

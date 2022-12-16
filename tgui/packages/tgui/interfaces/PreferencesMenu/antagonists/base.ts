@@ -24,12 +24,8 @@ export type Antagonist = {
 
   name: string;
   description: string[];
-  category: Category;
+  category: AntagCategory;
   priority?: number;
 };
 
-export enum Category {
-  Roundstart,
-  Midround,
-  Latejoin,
-}
+export type AntagCategory = 'Roundstart' | 'Midround' | 'Latejoin';

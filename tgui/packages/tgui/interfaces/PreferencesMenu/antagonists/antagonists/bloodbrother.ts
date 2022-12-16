@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 const BloodBrother: Antagonist = {
@@ -11,7 +11,7 @@ const BloodBrother: Antagonist = {
       station.
     `,
   ],
-  category: Category.Roundstart,
+  category: 'Roundstart',
 };
 
 export default BloodBrother;

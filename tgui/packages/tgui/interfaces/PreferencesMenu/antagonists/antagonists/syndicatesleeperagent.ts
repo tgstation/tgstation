@@ -12,7 +12,7 @@ const SyndicateSleeperAgent: Antagonist = {
     `,
     TRAITOR_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Midround,
+  category: 'Midround',
   priority: -1,
 };
 

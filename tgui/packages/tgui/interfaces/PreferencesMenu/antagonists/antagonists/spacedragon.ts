@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 const SpaceDragon: Antagonist = {
@@ -10,7 +10,7 @@ const SpaceDragon: Antagonist = {
       carps, crush walls, and terrorize the station.
     `,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default SpaceDragon;

@@ -1,5 +1,5 @@
 import { multiline } from 'common/string';
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { MALF_AI_MECHANICAL_DESCRIPTION } from './malfai';
 
 const MalfAIMidround: Antagonist = {
@@ -12,7 +12,7 @@ const MalfAIMidround: Antagonist = {
     `,
     MALF_AI_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default MalfAIMidround;

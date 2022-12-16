@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 const Obsessed: Antagonist = {
@@ -11,7 +11,7 @@ const Obsessed: Antagonist = {
     but will they realize they are your next victim in time?
     `,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default Obsessed;

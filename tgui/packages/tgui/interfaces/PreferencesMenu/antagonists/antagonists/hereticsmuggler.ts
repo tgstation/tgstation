@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { HERETIC_MECHANICAL_DESCRIPTION } from './heretic';
 
 const HereticSmuggler: Antagonist = {
@@ -8,7 +8,7 @@ const HereticSmuggler: Antagonist = {
     'A form of heretic that can activate when joining an ongoing shift.',
     HERETIC_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Latejoin,
+  category: 'Latejoin',
 };
 
 export default HereticSmuggler;

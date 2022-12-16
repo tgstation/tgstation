@@ -13,7 +13,7 @@ const Provocateur: Antagonist = {
 
     REVOLUTIONARY_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Latejoin,
+  category: 'Latejoin',
 };
 
 export default Provocateur;

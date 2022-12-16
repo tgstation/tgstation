@@ -8,7 +8,7 @@ const SyndicateInfiltrator: Antagonist = {
     'A form of traitor that can activate when joining an ongoing shift.',
     TRAITOR_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Latejoin,
+  category: 'Latejoin',
   priority: -1,
 };
 

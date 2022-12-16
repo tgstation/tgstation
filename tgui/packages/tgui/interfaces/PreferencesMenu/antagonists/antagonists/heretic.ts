@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 export const HERETIC_MECHANICAL_DESCRIPTION = multiline`
@@ -17,7 +17,7 @@ const Heretic: Antagonist = {
     `,
     HERETIC_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Roundstart,
+  category: 'Roundstart',
 };
 
 export default Heretic;

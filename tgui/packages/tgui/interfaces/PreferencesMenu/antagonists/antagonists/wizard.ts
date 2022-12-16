@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 export const WIZARD_MECHANICAL_DESCRIPTION = multiline`
@@ -13,7 +13,7 @@ const Wizard: Antagonist = {
     `"GREETINGS. WE'RE THE WIZARDS OF THE WIZARD'S FEDERATION."`,
     WIZARD_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Roundstart,
+  category: 'Roundstart',
 };
 
 export default Wizard;

@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 const Revenant: Antagonist = {
@@ -11,7 +11,7 @@ const Revenant: Antagonist = {
       disgruntled ghosts.
     `,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default Revenant;

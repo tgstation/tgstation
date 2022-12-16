@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 export const MALF_AI_MECHANICAL_DESCRIPTION = multiline`
@@ -11,7 +11,7 @@ const MalfAI: Antagonist = {
   key: 'malfai',
   name: 'Malfunctioning AI',
   description: [MALF_AI_MECHANICAL_DESCRIPTION],
-  category: Category.Roundstart,
+  category: 'Roundstart',
 };
 
 export default MalfAI;

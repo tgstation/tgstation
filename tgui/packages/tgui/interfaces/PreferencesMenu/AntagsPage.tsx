@@ -2,7 +2,7 @@ import { binaryInsertWith } from 'common/collections';
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Divider, Flex, Section, Stack, Tooltip } from '../../components';
-import { Antagonist, Category } from './antagonists/base';
+import { AntagCategory, Antagonist } from './antagonists/base';
 import { PreferencesMenuData } from './data';
 
 const requireAntag = require.context(
@@ -11,7 +11,7 @@ const requireAntag = require.context(
   /.ts$/
 );
 
-const antagsByCategory = new Map<Category, Antagonist[]>();
+const antagsByCategory = new Map<AntagCategory, Antagonist[]>();
 
 // This will break at priorities higher than 10, but that almost definitely
 // will not happen.
@@ -37,7 +37,7 @@ for (const antagKey of requireAntag.keys()) {
 const AntagSelection = (
   props: {
     antagonists: Antagonist[];
-    name: string;
+    name: AntagCategory;
   },
   context
 ) => {
@@ -190,17 +190,17 @@ export const AntagsPage = () => {
     <Box className="PreferencesMenu__Antags">
       <AntagSelection
         name="Roundstart"
-        antagonists={antagsByCategory.get(Category.Roundstart)!}
+        antagonists={antagsByCategory.get('Roundstart')!}
       />
 
       <AntagSelection
         name="Midround"
-        antagonists={antagsByCategory.get(Category.Midround)!}
+        antagonists={antagsByCategory.get('Midround')!}
       />
 
       <AntagSelection
         name="Latejoin"
-        antagonists={antagsByCategory.get(Category.Latejoin)!}
+        antagonists={antagsByCategory.get('Latejoin')!}
       />
     </Box>
   );

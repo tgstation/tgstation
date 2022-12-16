@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 const SentientDisease: Antagonist = {
@@ -10,7 +10,7 @@ const SentientDisease: Antagonist = {
       with a deadly plague of your own creation.
     `,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default SentientDisease;

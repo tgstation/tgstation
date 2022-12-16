@@ -15,7 +15,7 @@ const Changeling: Antagonist = {
       arsenal of biological weaponry with the DNA you collect.
     `,
   ],
-  category: Category.Roundstart,
+  category: 'Roundstart',
 };
 
 export default Changeling;

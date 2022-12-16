@@ -17,7 +17,7 @@ const Cultist: Antagonist = {
       those who get in the way, and summon Nar-Sie.
     `,
   ],
-  category: Category.Roundstart,
+  category: 'Roundstart',
 };
 
 export default Cultist;

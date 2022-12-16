@@ -18,7 +18,7 @@ const SpaceNinja: Antagonist = {
       summon more threats to cause chaos on the station!
     `,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default SpaceNinja;

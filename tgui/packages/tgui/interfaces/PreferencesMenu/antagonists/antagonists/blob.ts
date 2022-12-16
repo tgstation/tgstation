@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 export const BLOB_MECHANICAL_DESCRIPTION = multiline`
@@ -12,7 +12,7 @@ const Blob: Antagonist = {
   key: 'blob',
   name: 'Blob',
   description: [BLOB_MECHANICAL_DESCRIPTION],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default Blob;

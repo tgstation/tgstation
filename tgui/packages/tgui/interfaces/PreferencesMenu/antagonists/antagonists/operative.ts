@@ -19,7 +19,7 @@ const Operative: Antagonist = {
 
     OPERATIVE_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Roundstart,
+  category: 'Roundstart',
 };
 
 export default Operative;

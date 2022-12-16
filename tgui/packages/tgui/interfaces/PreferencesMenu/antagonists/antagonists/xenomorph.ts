@@ -10,7 +10,7 @@ const Xenomorph: Antagonist = {
       your way up the caste, including even the Queen!
     `,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default Xenomorph;

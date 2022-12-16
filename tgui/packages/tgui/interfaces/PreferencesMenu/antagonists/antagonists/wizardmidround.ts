@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { WIZARD_MECHANICAL_DESCRIPTION } from './wizard';
 
 const WizardMidround: Antagonist = {
@@ -8,7 +8,7 @@ const WizardMidround: Antagonist = {
     'A form of wizard that is offered to ghosts in the middle of the shift.',
     WIZARD_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default WizardMidround;

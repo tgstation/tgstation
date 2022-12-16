@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { Antagonist } from '../base';
 import { multiline } from 'common/string';
 
 const Nightmare: Antagonist = {
@@ -10,7 +10,7 @@ const Nightmare: Antagonist = {
       Jaunt through the darkness and seek your prey with night vision.
     `,
   ],
-  category: Category.Midround,
+  category: 'Midround',
 };
 
 export default Nightmare;

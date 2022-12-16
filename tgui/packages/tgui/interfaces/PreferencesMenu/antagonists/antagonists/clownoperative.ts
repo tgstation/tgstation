@@ -15,7 +15,7 @@ const ClownOperative: Antagonist = {
 
     OPERATIVE_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Roundstart,
+  category: 'Roundstart',
 };
 
 export default ClownOperative;
