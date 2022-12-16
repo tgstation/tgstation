@@ -190,7 +190,7 @@ SUBSYSTEM_DEF(garbage)
 			++totalgcs
 			pass_counts[level]++
 			#ifdef REFERENCE_TRACKING
-			reference_find_on_fail -= refID //It's deleted we don't care anymore.
+			reference_find_on_fail -= text_ref(D) //It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
 				return
