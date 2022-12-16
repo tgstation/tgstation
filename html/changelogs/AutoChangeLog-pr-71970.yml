@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "The message you get when attempting to escape an SM delamination by hiding in a disposals pipe should now make more sense."

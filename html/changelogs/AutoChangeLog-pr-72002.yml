@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - qol: "you can see your combat mode status as a simple or basic mob, and you can see your health as a basic mob"
+  - qol: "status panel updates three times as fast"
