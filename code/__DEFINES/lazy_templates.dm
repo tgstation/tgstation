@@ -11,4 +11,4 @@
 	"Abductor Ships" = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS, \
 )
 
-GLOBAL_LIST_INIT(lazy_templates, gen_lazy_template_map())
+GLOBAL_LIST_INIT(lazy_templates, generate_lazy_template_map())
