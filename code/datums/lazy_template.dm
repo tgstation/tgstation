@@ -19,7 +19,8 @@
 
 /datum/lazy_template/Destroy(force, ...)
 	if(!force)
-		return
+		stack_trace("Something is trying to delete [type]")
+		return QDEL_HINT_LETMELIVE
 
 	QDEL_LIST(reservations)
 	GLOB.lazy_templates -= key
