@@ -52,7 +52,8 @@
 		\"Please stand by for a message from [company_source]. Message as follows: [company_message] Message ends.\""))
 
 	spawn_option(choice_path, user)
-	if(--uses <= 0)
+	uses--
+	if(uses <= 0)
 		do_sparks(3, source = src)
 		qdel(src)
 		return

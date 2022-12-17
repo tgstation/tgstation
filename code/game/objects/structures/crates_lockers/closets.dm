@@ -341,7 +341,8 @@
 				return FALSE
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
-				if(++mobs_stored >= mob_storage_capacity)
+				mobs_stored++
+				if(mobs_stored >= mob_storage_capacity)
 					return FALSE
 		L.stop_pulling()
 
@@ -555,6 +556,7 @@
 			else
 				O.forceMove(T)
 				close()
+			log_combat(user, O, "stuffed", addition = "inside of [src]")
 	else
 		O.forceMove(T)
 	return 1

@@ -203,8 +203,7 @@
 	var/filter_color = "#8a0c0ca1" //clarified args
 	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", ", consumer of all", " of the feast")
 	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name, comp)
-	var/add_dropdel = FALSE //clarified boolean
-	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger, add_dropdel)
+	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger)
 	return newName //no spoilers!
 
 /datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)

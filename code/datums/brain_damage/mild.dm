@@ -54,7 +54,7 @@
 	if(DT_PROB(1.5, delta_time))
 		owner.emote("drool")
 	else if(owner.stat == CONSCIOUS && DT_PROB(1.5, delta_time))
-		owner.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), forced = "brain damage")
+		owner.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), forced = "brain damage", filterproof = TRUE)
 
 /datum/brain_trauma/mild/dumbness/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)

@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Rush Gland and Brimdust Sac can be used more frequently when implanted."
-  - balance: "An implanted Brimdust Sac will stack the buff on you automatically while on lavaland. Triggering the buff on the station will make you walk slower for a short duration."
-  - balance: "Implanted Bimrdust Sacs no longer set you on fire, nor do they explode if you catch fire."

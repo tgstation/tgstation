@@ -359,14 +359,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			var/new_pressure = clamp(text2num(params["value"]), 0, ATMOS_PUMP_MAX_PRESSURE)
 			vent.internal_pressure_bound = new_pressure
 			if (old_pressure != new_pressure)
-				vent.investigate_log(" internal pressure was set to [new_pressure] by [key_name(user)]", INVESTIGATE_ATMOS)
+				vent.investigate_log("internal pressure was set to [new_pressure] by [key_name(user)]", INVESTIGATE_ATMOS)
 		if ("reset_internal_pressure")
 			if (isnull(vent))
 				return TRUE
 
 			if (vent.internal_pressure_bound != 0)
 				vent.internal_pressure_bound = 0
-				vent.investigate_log(" internal pressure was reset by [key_name(user)]", INVESTIGATE_ATMOS)
+				vent.investigate_log("internal pressure was reset by [key_name(user)]", INVESTIGATE_ATMOS)
 		if ("set_external_pressure")
 			if (isnull(vent))
 				return TRUE
@@ -378,7 +378,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				return TRUE
 
 			vent.external_pressure_bound = new_pressure
-			vent.investigate_log(" external pressure was set to [new_pressure] by [key_name(user)]", INVESTIGATE_ATMOS)
+			vent.investigate_log("external pressure was set to [new_pressure] by [key_name(user)]", INVESTIGATE_ATMOS)
 			vent.update_appearance(UPDATE_ICON)
 		if ("reset_external_pressure")
 			if (isnull(vent))
@@ -388,7 +388,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				return TRUE
 
 			vent.external_pressure_bound = ATMOS_PUMP_MAX_PRESSURE
-			vent.investigate_log(" internal pressure was reset by [key_name(user)]", INVESTIGATE_ATMOS)
+			vent.investigate_log("internal pressure was reset by [key_name(user)]", INVESTIGATE_ATMOS)
 			vent.update_appearance(UPDATE_ICON)
 		if ("scrubbing")
 			if (isnull(scrubber))
@@ -424,7 +424,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 					tlv.vars[name] = -1
 				else
 					tlv.vars[name] = round(value, 0.01)
-				investigate_log(" treshold value for [env]:[name] was set to [value] by [key_name(usr)]",INVESTIGATE_ATMOS)
+				investigate_log("threshold value for [env]:[name] was set to [value] by [key_name(usr)]",INVESTIGATE_ATMOS)
 				var/turf/our_turf = get_turf(src)
 				var/datum/gas_mixture/environment = our_turf.return_air()
 				check_air_dangerlevel(our_turf, environment, environment.temperature)

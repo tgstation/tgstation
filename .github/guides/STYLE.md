@@ -280,6 +280,26 @@ for (var/month in 1 to 12)
 for (var/i in reagents)
 ```
 
+### Don't abuse the increment/decrement operators
+`x++` and `++x` both will increment x, but the former will return x *before* it was incremented, while the latter will return x *after* it was incremented. Great if you want to be clever, or if you were a C programmer in the 70s, but it hurts the readability of code to anyone who isn't familiar with this. The convenience is not nearly good enough to justify this burden.
+
+```dm
+// Bad
+world.log << "You now have [++apples] apples."
+
+// Good
+apples++
+// apples += 1 - Allowed
+world.log << "You now have [apples] apples."
+
+// Bad
+world.log << "[apples--] apples left, taking one."
+
+// Good
+world.log << "[apples] apples left, taking one."
+apples--
+```
+
 ## Procs
 
 ### Getters and setters

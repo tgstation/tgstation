@@ -1770,6 +1770,12 @@
 /obj/machinery/duct,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
+"fr" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "ft" = (
 /obj/structure/closet/crate,
 /obj/item/storage/toolbox/mechanical,
@@ -8924,7 +8930,7 @@
 /obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/cup/glass/britcup,
+/obj/item/reagent_containers/cup/glass/mug/britcup,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
@@ -9968,7 +9974,7 @@
 "Du" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/cup/glass/britcup,
+/obj/item/reagent_containers/cup/glass/mug/britcup,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -10016,6 +10022,10 @@
 	heat_capacity = 1e+006
 	},
 /area/centcom/tdome/observation)
+"Dz" = (
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
+/turf/closed/indestructible/syndicate,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "DA" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
@@ -11265,7 +11275,7 @@
 /area/centcom/syndicate_mothership/control)
 "Hh" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("nukiebase"="Burn Chamber");
+	atmos_chambers = list("nukiebase" = "Burn Chamber");
 	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
 	dir = 1;
 	name = "Ordnance Chamber Monitor"
@@ -16742,15 +16752,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
-"Xe" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 10
-	},
-/obj/machinery/smartfridge/chemistry/virology/preloaded{
-	pixel_x = -32
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "Xf" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -22791,7 +22792,7 @@ kb
 CN
 CN
 CN
-CN
+Dz
 CN
 GI
 jW
@@ -23048,7 +23049,7 @@ ng
 CN
 cj
 VV
-Xe
+fr
 EA
 RK
 jW
