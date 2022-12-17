@@ -22,6 +22,8 @@ SUBSYSTEM_DEF(atoms)
 	/// Atoms that will be deleted once the subsystem is initialized
 	var/list/queued_deletions = list()
 
+	var/init_start_time
+
 	#ifdef PROFILE_MAPLOAD_INIT_ATOM
 	var/list/mapload_init_times = list()
 	#endif
@@ -29,6 +31,7 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INSSATOMS
 
 /datum/controller/subsystem/atoms/Initialize()
+	init_start_time = world.time
 	setupGenetics() //to set the mutations' sequence
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD
@@ -122,7 +125,9 @@ SUBSYSTEM_DEF(atoms)
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)
 	var/the_type = A.type
-	if(QDELING(A))
+
+	// Check init_start_time to not worry about atoms created before the atoms SS that are cleaned up before this
+	if(QDELING(A) && A.gc_destroyed > init_start_time)
 		BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
 		return TRUE
 
