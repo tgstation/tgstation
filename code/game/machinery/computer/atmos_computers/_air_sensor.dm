@@ -16,8 +16,8 @@
 	return ..()
 
 /obj/machinery/air_sensor/Destroy()
-	. = ..()
 	reset()
+	return ..()
 
 /obj/machinery/air_sensor/update_icon_state()
 	icon_state = "gsensor[on]"
