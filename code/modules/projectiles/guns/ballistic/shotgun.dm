@@ -162,6 +162,10 @@
 	secondary_magazine = new secondary_magazine_type(src)
 	update_appearance()
 
+/obj/item/gun/ballistic/shotgun/bulldog/Destroy()
+	QDEL_NULL(secondary_magazine)
+	return ..()
+
 /obj/item/gun/ballistic/shotgun/bulldog/examine(mob/user)
 	. = ..()
 	if(secondary_magazine)
