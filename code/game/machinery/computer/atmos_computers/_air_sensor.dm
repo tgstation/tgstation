@@ -47,7 +47,7 @@
 			var/obj/machinery/atmospherics/components/unary/outlet_injector/injector = I.buffer
 			injector.chamber_id = chamber_id
 			GLOB.objects_by_id_tag[chamber_id + "_in"] = injector
-			to_chat(user, "You connect [injector] to the Input Port")
+			balloon_alert(user, "connected to input")
 
 		else if(istype(I.buffer, /obj/machinery/atmospherics/components/unary/vent_pump))
 			var/obj/machinery/atmospherics/components/unary/vent_pump/pump = I.buffer
