@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
  */
 /obj/effect/collapsing_demonic_portal/proc/drop_loot()
 	visible_message(span_warning("Something slips out of [src]!"))
-	var/loot = rand(1, 28)
+	var/loot = rand(1, 27)
 	switch(loot)
 		if(1)
 			new /obj/item/clothing/suit/hooded/cultrobes/hardened(loc)
