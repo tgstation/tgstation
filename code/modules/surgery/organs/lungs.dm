@@ -299,9 +299,9 @@
 	var/halon_pp = 0
 	var/hypernob_pp = 0
 	var/miasma_pp = 0
+	var/n2o_pp = 0
 	var/nitrium_pp = 0
 	var/pluoxium_pp = 0
-	var/n2o_pp = 0
 	var/trit_pp = 0
 	var/zauker_pp = 0
 
@@ -313,9 +313,9 @@
 		helium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/helium][MOLES])
 		hypernob_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/hypernoblium][MOLES])
 		miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
+		n2o_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
 		nitrium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrium][MOLES])
 		pluoxium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES])
-		n2o_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
 		trit_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/tritium][MOLES])
 		zauker_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/zauker][MOLES])
 
