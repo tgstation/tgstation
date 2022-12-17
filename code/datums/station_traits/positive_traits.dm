@@ -353,11 +353,14 @@
 		"We over-ordered glass during construction, so maintenance gets glass windows.",
 	)
 
-	for(var/area/station/maintenance/maint_area in GLOB.the_station_areas)
+/datum/station_trait/glass_maint/on_round_start()
+
+	for(var/area/station/maintenance/maint_area in GLOB.areas)
 		for(var/turf/maint_floor as anything in maint_area.get_contained_turfs())
-			maint_floor.ChangeTurf(/turf/open/floor/glass)
+			if(istype(maint_floor, /turf/open))
+				maint_floor.ChangeTurf(/turf/open/floor/glass, flags = CHANGETURF_INHERIT_AIR)
 
 			for(var/obj/machinery/door/airlock/affected_airlock in maint_floor)
-				affected_airlock.opacity = FALSE
-				affected_airlock.glass = TRUE
-				affected_airlock.update_appearance(UPDATE_ICON)
+				var/obj/machinery/door/airlock/maintenance/glass/replacement_door = new(maint_floor)
+				replacement_door.name = affected_airlock.name
+				qdel(affected_airlock)
