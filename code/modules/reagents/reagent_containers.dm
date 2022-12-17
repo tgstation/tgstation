@@ -119,12 +119,13 @@
 	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 
 	//TODO change plane & layer
-	//TODO splash sprite
+	//TODO make the overlay removal more reliable
 	//TODO apply to hydroponics plant watering
 	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
 	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
+	//target.flick_overlay_static(splash_animation, 0.9 SECONDS)
 	target.add_overlay(splash_animation)
-	addtimer(CALLBACK(target, .atom/proc/cut_overlay, splash_animation), 0.6 SECONDS)
+	addtimer(CALLBACK(target, .atom/proc/cut_overlay, splash_animation), 1.0 SECONDS)
 
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
