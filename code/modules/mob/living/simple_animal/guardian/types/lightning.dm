@@ -36,26 +36,17 @@
 			enemychains -= C
 		enemychains += Beam(target, "lightning[rand(1,12)]", maxdistance=7, beam_type=/obj/effect/ebeam/chain)
 
-/mob/living/simple_animal/hostile/guardian/beam/Destroy()
+/mob/living/simple_animal/hostile/guardian/beam/summon_effects()
+	summonerchain = Beam(summoner, "lightning[rand(1,12)]", beam_type=/obj/effect/ebeam/chain)
+	while(loc != summoner)
+		if(successfulshocks > 5)
+			successfulshocks = 0
+		if(shockallchains())
+			successfulshocks++
+		SLEEP_CHECK_DEATH(3, src)
+
+/mob/living/simple_animal/hostile/guardian/beam/recall_effects()
 	removechains()
-	return ..()
-
-/mob/living/simple_animal/hostile/guardian/beam/Manifest()
-	. = ..()
-	if(.)
-		if(summoner)
-			summonerchain = Beam(summoner, "lightning[rand(1,12)]", beam_type=/obj/effect/ebeam/chain)
-		while(loc != summoner)
-			if(successfulshocks > 5)
-				successfulshocks = 0
-			if(shockallchains())
-				successfulshocks++
-			SLEEP_CHECK_DEATH(3, src)
-
-/mob/living/simple_animal/hostile/guardian/beam/Recall(forced)
-	. = ..()
-	if(.)
-		removechains()
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/cleardeletedchains()
 	if(summonerchain && QDELETED(summonerchain))

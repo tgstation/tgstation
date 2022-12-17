@@ -144,15 +144,13 @@
 /obj/effect/snare/singularity_pull()
 	return
 
-/mob/living/simple_animal/hostile/guardian/ranged/Manifest(forced)
-	if (toggle)
+/mob/living/simple_animal/hostile/guardian/ranged/summon_effects()
+	if(toggle)
 		incorporeal_move = INCORPOREAL_MOVE_BASIC
-	return ..()
 
-/mob/living/simple_animal/hostile/guardian/ranged/Recall(forced)
+/mob/living/simple_animal/hostile/guardian/ranged/recall_effects()
 	// To stop scout mode from moving when recalled
 	incorporeal_move = FALSE
-	return ..()
 
 /mob/living/simple_animal/hostile/guardian/ranged/AttackingTarget(atom/attacked_target)
 	if(toggle)

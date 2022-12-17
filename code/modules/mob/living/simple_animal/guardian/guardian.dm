@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /// Setter for our summoner mob.
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, different_person = FALSE)
 	if(summoner)
-		cut_summoner(summoner, different_person)
+		cut_summoner(different_person)
 	summoner = to_who
 	update_health_hud()
 	med_hud_set_health()
@@ -102,8 +102,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_summoner_unshapeshifted))
 	Recall(forced = TRUE)
 
-/mob/living/simple_animal/hostile/guardian/proc/cut_summoner(mob/old_summoner, different_person = FALSE)
-	Recall(forced = TRUE)
+/mob/living/simple_animal/hostile/guardian/proc/cut_summoner(different_person = FALSE)
+	forceMove(get_turf(src))
+	recall_effects()
 	UnregisterSignal(summoner, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if(different_person)
 		faction = list()
@@ -262,7 +263,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/on_summoner_death(mob/living/source)
 	SIGNAL_HANDLER
 
-	cut_summoner(summoner)
+	cut_summoner()
 	forceMove(source.loc)
 	to_chat(src, span_danger("Your summoner has died!"))
 	visible_message(span_bolddanger("\The [src] dies along with its user!"))
@@ -273,10 +274,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/on_summoner_deletion(mob/living/source)
 	SIGNAL_HANDLER
 
-	cut_summoner(summoner)
-	to_chat(src, span_danger("Your summoner has died!"))
-	visible_message(span_bolddanger("[src] dies along with its user!"))
-	death(TRUE)
+	cut_summoner()
+	to_chat(src, span_danger("Your summoner is gone!"))
+	qdel(src)
 
 /mob/living/simple_animal/hostile/guardian/get_status_tab_items()
 	. += ..()
@@ -321,7 +321,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return ..()
 
 /mob/living/simple_animal/hostile/guardian/death(gibbed)
-	drop_all_held_items()
 	. = ..()
 	if(!QDELETED(summoner))
 		to_chat(summoner, span_bolddanger("Your [name] died somehow!"))
@@ -456,6 +455,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		new /obj/effect/temp_visual/guardian/phase(loc)
 		COOLDOWN_START(src, manifest_cooldown, 1 SECONDS)
 		reset_perspective()
+		summon_effects()
 		return TRUE
 	return FALSE
 
@@ -463,10 +463,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(!summoner || loc == summoner || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
 		return FALSE
 	new /obj/effect/temp_visual/guardian/phase/out(loc)
-
 	forceMove(summoner)
 	COOLDOWN_START(src, manifest_cooldown, 1 SECONDS)
+	recall_effects()
 	return TRUE
+
+/mob/living/simple_animal/hostile/guardian/proc/summon_effects()
+	return
+
+/mob/living/simple_animal/hostile/guardian/proc/recall_effects()
+	return
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
 	to_chat(src, span_bolddanger("You don't have another mode!"))

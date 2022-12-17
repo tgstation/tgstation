@@ -41,7 +41,7 @@
 
 /mob/living/simple_animal/hostile/guardian/charger/Move()
 	if(charging)
-		new /obj/effect/temp_visual/decoy/fading(loc,src)
+		new /obj/effect/temp_visual/decoy/fading(loc, src)
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/charger/snapback()

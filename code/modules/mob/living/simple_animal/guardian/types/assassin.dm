@@ -46,9 +46,8 @@
 	if(. > 0 && toggle)
 		ToggleMode(forced = TRUE)
 
-/mob/living/simple_animal/hostile/guardian/assassin/Recall(forced)
-	. = ..()
-	if(. && toggle)
+/mob/living/simple_animal/hostile/guardian/assassin/recall_effects()
+	if(toggle)
 		ToggleMode(forced = TRUE)
 
 /mob/living/simple_animal/hostile/guardian/assassin/ToggleMode(forced = FALSE)

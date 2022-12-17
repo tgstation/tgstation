@@ -29,11 +29,8 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/hostile/guardian/dextrous/Recall(forced)
-	if(!summoner || loc == summoner || (manifest_cooldown > world.time && !forced)) //this is stupid, we run the checks twice because parent already does that
-		return FALSE
+/mob/living/simple_animal/hostile/guardian/dextrous/recall_effects()
 	drop_all_held_items()
-	return ..() //lose items, then return
 
 /mob/living/simple_animal/hostile/guardian/dextrous/snapback()
 	if(summoner && !(get_dist(get_turf(summoner),get_turf(src)) <= range))

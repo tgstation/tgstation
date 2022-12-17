@@ -51,17 +51,15 @@
 	do_attack_animation(slammed)
 	add_gravity(slammed, turf_gravity)
 
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/Recall(forced)
-	. = ..()
-	to_chat(src, span_bolddanger("You have released your gravitokinetic powers!"))
-	for(var/gravity_target in gravity_targets)
-		remove_gravity(gravity_target)
-
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/Manifest(forced)
-	. = ..()
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/summon_effects()
 	//just make sure to reapply a gravity immunity wherever you summon. it can be overridden but not by you at least
 	summoner.AddElement(/datum/element/forced_gravity, 1)
 	AddElement(/datum/element/forced_gravity, 1)
+
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/recall_effects()
+	to_chat(src, span_bolddanger("You have released your gravitokinetic powers!"))
+	for(var/gravity_target in gravity_targets)
+		remove_gravity(gravity_target)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
