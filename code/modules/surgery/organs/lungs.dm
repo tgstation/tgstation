@@ -22,6 +22,8 @@
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
+	///Empty breath - Used in the event that `check_breath` gets a null breath.
+	var/datum/gas_mixture/empty_breath = new
 	//Breath damage
 	//These thresholds are checked against what amounts to total_mix_pressure * (gas_type_mols/total_mols)
 
@@ -49,6 +51,8 @@
 	var/helium_speech = FALSE
 	///Whether these lungs react negatively to miasma
 	var/suffers_miasma = TRUE
+	///Set to TRUE if Mob always breathes normally when in vacuum/space
+	var/can_breathe_vacuum = FALSE
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -105,24 +109,24 @@
 	if(HAS_TRAIT(breather, TRAIT_NOBREATH))
 		return
 
-	if(!breath || (breath.total_moles() == 0))
-		if(breather.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
-			return
-		if(breather.health >= breather.crit_threshold)
+	if(!breath)
+		breath = empty_breath
+
+	if(breath.total_moles() == 0)
+		breather.failed_last_breath = TRUE
+		if(can_breathe_vacuum)
+			// Mob can breathe without gas.
+			breather.adjustOxyLoss(-5)
+			breather.failed_last_breath = FALSE
+		else if(breather.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
+			// Mob can't breathe, but a reagent prevents damage & suffocation moodlet.
+			breather.failed_last_breath = FALSE
+		else if(breather.health >= breather.crit_threshold)
+			// Mob can't breathe, and is NOT at critical health.
 			breather.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 		else if(!HAS_TRAIT(breather, TRAIT_NOCRITDAMAGE))
+			// Mob can't breathe, and IS at critical health, and isn't crit-immune.
 			breather.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
-
-		breather.failed_last_breath = TRUE
-		if(safe_oxygen_min)
-			breather.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
-		else if(safe_plasma_min)
-			breather.throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
-		else if(safe_co2_min)
-			breather.throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
-		else if(safe_nitro_min)
-			breather.throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
-		return FALSE
 
 	for(var/gas_id in GLOB.meta_gas_info)
 		breath.assert_gas(gas_id)
