@@ -127,6 +127,7 @@
 	if (cell)
 		QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
+	QDEL_LIST(ammo_type)
 	return ..()
 
 /obj/item/gun/energy/handle_atom_del(atom/A)
