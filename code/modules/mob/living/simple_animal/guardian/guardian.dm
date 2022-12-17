@@ -40,6 +40,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/ectoplasm = 1)
+	del_on_death = TRUE
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
 	light_system = MOVABLE_LIGHT
@@ -268,7 +269,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	source.visible_message(span_bolddanger("[source]'s body is completely consumed by the strain of sustaining [src]!"))
 	source.dust(drop_items = TRUE)
 	death(TRUE)
-	qdel(src)
 
 /mob/living/simple_animal/hostile/guardian/proc/on_summoner_deletion(mob/living/source)
 	SIGNAL_HANDLER
@@ -277,7 +277,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	to_chat(src, span_danger("Your summoner has died!"))
 	visible_message(span_bolddanger("[src] dies along with its user!"))
 	death(TRUE)
-	qdel(src)
 
 /mob/living/simple_animal/hostile/guardian/get_status_tab_items()
 	. += ..()
@@ -324,7 +323,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/death(gibbed)
 	drop_all_held_items()
 	. = ..()
-	if(summoner)
+	if(!QDELETED(summoner))
 		to_chat(summoner, span_bolddanger("Your [name] died somehow!"))
 		summoner.dust()
 
@@ -381,12 +380,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/hostile/guardian/gib()
-	if(summoner)
-		to_chat(summoner, span_bolddanger("Your [src] was blown up!"))
-		summoner.investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-		summoner.gib()
-	ghostize()
-	qdel(src)
+	death(TRUE)
+
+/mob/living/simple_animal/hostile/guardian/dust(just_ash, drop_items, force)
+	death(TRUE)
 
 //HAND HANDLING
 

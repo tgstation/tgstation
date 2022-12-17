@@ -32,19 +32,19 @@
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(isliving(target) && target != src && target != summoner)
+	if(isliving(target) && !hasmatchingsummoner(attacked_target) && target != src && target != summoner && !gravity_targets[target])
 		to_chat(src, span_bolddanger("Your punch has applied heavy gravity to [target]!"))
 		add_gravity(target, punch_gravity)
 		to_chat(target, span_userdanger("Everything feels really heavy!"))
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && isopenturf(attack_target))
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && !gravity_targets[target])
 		slam_turf(attack_target)
 		return
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/slam_turf(turf/open/slammed)
-	if(isgroundlessturf(slammed))
+	if(!isopenturf(slammed) || isgroundlessturf(slammed))
 		to_chat(src, span_warning("You cannot add gravity to this!"))
 		return
 	visible_message(span_danger("[src] slams their fist into the [slammed]!"), span_notice("You modify the gravity of the [slammed]."))
