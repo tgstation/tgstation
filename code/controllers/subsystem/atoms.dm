@@ -126,9 +126,10 @@ SUBSYSTEM_DEF(atoms)
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)
 	var/the_type = A.type
 
-	// Check init_start_time to not worry about atoms created before the atoms SS that are cleaned up before this
-	if(QDELING(A) && A.gc_destroyed > init_start_time)
-		BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
+	if(QDELING(A))
+		// Check init_start_time to not worry about atoms created before the atoms SS that are cleaned up before this
+		if (A.gc_destroyed > init_start_time)
+			BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
 		return TRUE
 
 	// This is handled and battle tested by dreamchecker. Limit to UNIT_TESTS just in case that ever fails.
