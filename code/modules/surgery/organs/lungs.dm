@@ -129,6 +129,8 @@
 	if(!has_moles)
 		if(can_breathe_vacuum)
 			breather.failed_last_breath = FALSE
+			if(breather.health >= breather.crit_threshold)
+				breather.adjustOxyLoss(-5)
 		else
 			. = FALSE
 			breather.failed_last_breath = TRUE
