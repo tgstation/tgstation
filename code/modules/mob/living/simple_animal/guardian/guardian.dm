@@ -79,6 +79,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(summoner)
 		cut_summoner(summoner, different_person)
 	summoner = to_who
+	update_health_hud()
+	med_hud_set_health()
+	med_hud_set_status()
 	add_verb(to_who, list(
 		/mob/living/proc/guardian_comm,
 		/mob/living/proc/guardian_recall,
@@ -358,7 +361,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if(loc == summoner)
 			return FALSE
 		summoner.adjustBruteLoss(amount)
-		if(amount > 0)
+		if(amount > 0 && !QDELETED(summoner))
 			to_chat(summoner, span_bolddanger("Your [name] is under attack! You take damage!"))
 			summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
 			switch(summoner.stat)
