@@ -1,1 +1,1 @@
-/mob/living/basic/frog : /mob/living/simple_animal/hostile/retaliate/frog{@OLD}
+/mob/living/simple_animal/hostile/retaliate/frog : /mob/living/basic/frog{@OLD}
