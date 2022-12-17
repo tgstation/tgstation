@@ -156,6 +156,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /datum/pipe_info/sensor
 	dirtype = PIPE_ONEDIR
+
 /datum/pipe_info/sensor/New(obj/machinery/air_sensor/sensor)
 	id = sensor
 	name = capitalize(replacetext(initial(sensor.name), "gas sensor", ""))
