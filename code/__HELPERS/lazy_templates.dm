@@ -10,3 +10,4 @@
 		if(key in .)
 			stack_trace("Found multiple lazy templates with the same key! '[key]'")
 		.[key] = new template
+	return .
