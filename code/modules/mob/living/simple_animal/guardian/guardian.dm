@@ -70,57 +70,64 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
 	GLOB.parasites += src
 	update_theme(theme)
+	AddElement(/datum/element/simple_flying)
 
 /// Setter for our summoner mob.
-/mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, changed_mind = FALSE)
+/mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, different_person = FALSE)
 	if(summoner)
-		Recall(forced = TRUE)
-		UnregisterSignal(summoner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
-		if(changed_mind)
-			faction = list()
-			mind.remove_all_antag_datums()
-		if(!length(summoner.get_all_linked_holoparasites() - src))
-			remove_verb(summoner, list(
-				/mob/living/proc/guardian_comm,
-				/mob/living/proc/guardian_recall,
-				/mob/living/proc/guardian_reset,
-			))
+		cut_summoner(summoner, different_person)
 	summoner = to_who
 	add_verb(to_who, list(
 		/mob/living/proc/guardian_comm,
 		/mob/living/proc/guardian_recall,
 		/mob/living/proc/guardian_reset,
 	))
-	if(mind && changed_mind)
+	if(mind && different_person)
 		mind.enslave_mind_to_creator(to_who)
 	remove_all_languages(LANGUAGE_MASTER)
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	update_atom_languages()
-	RegisterSignal(to_who, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_owner_health_update))
-	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_owner_wabbajacked))
-	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_owner_shapeshifted))
-	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_owner_unshapeshifted))
+	RegisterSignal(to_who, COMSIG_MOVABLE_MOVED, PROC_REF(snapback))
+	RegisterSignal(to_who, COMSIG_PARENT_QDELETING, PROC_REF(on_summoner_deletion))
+	RegisterSignal(to_who, COMSIG_LIVING_DEATH, PROC_REF(on_summoner_death))
+	RegisterSignal(to_who, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_summoner_health_update))
+	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_summoner_wabbajacked))
+	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_summoner_shapeshifted))
+	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_summoner_unshapeshifted))
 	Recall(forced = TRUE)
 
+/mob/living/simple_animal/hostile/guardian/proc/cut_summoner(mob/old_summoner, different_person = FALSE)
+	Recall(forced = TRUE)
+	UnregisterSignal(summoner, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+	if(different_person)
+		faction = list()
+		mind.remove_all_antag_datums()
+	if(!length(summoner.get_all_linked_holoparasites() - src))
+		remove_verb(summoner, list(
+			/mob/living/proc/guardian_comm,
+			/mob/living/proc/guardian_recall,
+			/mob/living/proc/guardian_reset,
+		))
+	summoner = null
+
 /// Signal proc for [COMSIG_LIVING_ON_WABBAJACKED], when our summoner is wabbajacked we should be alerted.
-/mob/living/simple_animal/hostile/guardian/proc/on_owner_wabbajacked(mob/living/source, mob/living/new_mob)
+/mob/living/simple_animal/hostile/guardian/proc/on_summoner_wabbajacked(mob/living/source, mob/living/new_mob)
 	SIGNAL_HANDLER
 
 	set_summoner(new_mob)
 	to_chat(src, span_holoparasite("Your summoner has changed form!"))
 
 /// Signal proc for [COMSIG_LIVING_SHAPESHIFTED], when our summoner is shapeshifted we should change to the new mob
-/mob/living/simple_animal/hostile/guardian/proc/on_owner_shapeshifted(mob/living/source, mob/living/new_shape)
+/mob/living/simple_animal/hostile/guardian/proc/on_summoner_shapeshifted(mob/living/source, mob/living/new_shape)
 	SIGNAL_HANDLER
 
 	set_summoner(new_shape)
 	to_chat(src, span_holoparasite("Your summoner has shapeshifted into that of a [new_shape]!"))
 
 /// Signal proc for [COMSIG_LIVING_UNSHAPESHIFTED], when our summoner unshapeshifts go back to that mob
-/mob/living/simple_animal/hostile/guardian/proc/on_owner_unshapeshifted(mob/living/source, mob/living/old_summoner)
+/mob/living/simple_animal/hostile/guardian/proc/on_summoner_unshapeshifted(mob/living/source, mob/living/old_summoner)
 	SIGNAL_HANDLER
 
 	set_summoner(old_summoner)
@@ -130,7 +137,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/wabbajack(what_to_randomize, change_flags = WABBAJACK)
 	visible_message(span_warning("[src] resists the polymorph!"))
 
-/mob/living/simple_animal/hostile/guardian/proc/on_owner_health_update(mob/living/source)
+/mob/living/simple_animal/hostile/guardian/proc/on_summoner_health_update(mob/living/source)
 	SIGNAL_HANDLER
 
 	update_health_hud()
@@ -248,36 +255,32 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	to_chat(src, span_notice("Your new name [span_name("[new_name]")] anchors itself in your mind."))
 	fully_replace_character_name(null, new_name)
 
-/mob/living/simple_animal/hostile/guardian/Life(delta_time = SSMOBS_DT, times_fired) //Dies if the summoner dies
-	. = ..()
-	if(!QDELETED(summoner))
-		if(summoner.stat == DEAD)
-			forceMove(summoner.loc)
-			to_chat(src, span_danger("Your summoner has died!"))
-			visible_message(span_bolddanger("\The [src] dies along with its user!"))
-			summoner.visible_message(span_bolddanger("[summoner]'s body is completely consumed by the strain of sustaining [src]!"))
-			for(var/obj/item/W in summoner)
-				if(!summoner.dropItemToGround(W))
-					qdel(W)
-			summoner.dust()
-			death(TRUE)
-			qdel(src)
-	else
-		to_chat(src, span_danger("Your summoner has died!"))
-		visible_message(span_bolddanger("[src] dies along with its user!"))
-		death(TRUE)
-		qdel(src)
-	snapback()
+/mob/living/simple_animal/hostile/guardian/proc/on_summoner_death(mob/living/source)
+	SIGNAL_HANDLER
+
+	cut_summoner(summoner)
+	forceMove(source.loc)
+	to_chat(src, span_danger("Your summoner has died!"))
+	visible_message(span_bolddanger("\The [src] dies along with its user!"))
+	source.visible_message(span_bolddanger("[source]'s body is completely consumed by the strain of sustaining [src]!"))
+	source.dust(drop_items = TRUE)
+	death(TRUE)
+	qdel(src)
+
+/mob/living/simple_animal/hostile/guardian/proc/on_summoner_deletion(mob/living/source)
+	SIGNAL_HANDLER
+
+	cut_summoner(summoner)
+	to_chat(src, span_danger("Your summoner has died!"))
+	visible_message(span_bolddanger("[src] dies along with its user!"))
+	death(TRUE)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/guardian/get_status_tab_items()
 	. += ..()
 	if(summoner)
-		var/resulthealth
-		if(iscarbon(summoner))
-			resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) * 100)
-		else
-			resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
-		. += "Summoner Health: [resulthealth]%"
+		var/resulthealth = (iscarbon(summoner) ? (abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) : (summoner.health / summoner.maxHealth)) * 100
+		. += "Summoner Health: [round(resulthealth, 0.5)]%"
 	if(!COOLDOWN_FINISHED(src, manifest_cooldown))
 		. += "Manifest/Recall Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, manifest_cooldown))]"
 
@@ -286,18 +289,21 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	snapback()
 
 /mob/living/simple_animal/hostile/guardian/proc/snapback()
-	if(summoner)
-		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
-			return
+	SIGNAL_HANDLER
+
+	if(!summoner)
+		return
+	if(get_dist(get_turf(summoner), get_turf(src)) <= range)
+		return
+	else
+		to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
+		visible_message(span_danger("\The [src] jumps back to its user."))
+		if(istype(summoner.loc, /obj/effect))
+			Recall(forced = TRUE)
 		else
-			to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
-			visible_message(span_danger("\The [src] jumps back to its user."))
-			if(istype(summoner.loc, /obj/effect))
-				Recall(forced = TRUE)
-			else
-				new /obj/effect/temp_visual/guardian/phase/out(loc)
-				forceMove(summoner.loc)
-				new /obj/effect/temp_visual/guardian/phase(loc)
+			new /obj/effect/temp_visual/guardian/phase/out(loc)
+			forceMove(summoner.loc)
+			new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return FALSE
@@ -312,9 +318,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	else
 		return ..()
 
-/mob/living/simple_animal/hostile/guardian/death()
+/mob/living/simple_animal/hostile/guardian/death(gibbed)
 	drop_all_held_items()
-	..()
+	. = ..()
 	if(summoner)
 		to_chat(summoner, span_bolddanger("Your [name] died somehow!"))
 		summoner.dust()
@@ -344,7 +350,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	else
 		clear_fullscreen("brute")
 	if(hud_used?.healths)
-		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[round(healthpercent)]%</font></div>")
+		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[round(healthpercent, 0.5)]%</font></div>")
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //The spirit is invincible, but passes on damage to the summoner
 	. = amount
@@ -693,7 +699,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	var/mob/living/simple_animal/hostile/guardian/summoned_guardian = new pickedtype(user, theme)
 	summoned_guardian.key = candidate.key
-	summoned_guardian.set_summoner(user, changed_mind = TRUE)
+	summoned_guardian.set_summoner(user, different_person = TRUE)
 	user.log_message("has summoned [key_name(summoned_guardian)], a [guardiantype] holoparasite.", LOG_GAME)
 	summoned_guardian.log_message("was summoned as a [guardiantype] holoparsite.", LOG_GAME)
 	switch(theme)

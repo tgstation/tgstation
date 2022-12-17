@@ -17,7 +17,7 @@
 	/// Gravity added to turfs.
 	var/turf_gravity = 3
 
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/set_summoner(mob/to_who, changed_mind = FALSE)
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/set_summoner(mob/to_who, different_person = FALSE)
 	if(summoner)
 		summoner.RemoveElement(/datum/element/forced_gravity, 1)
 	. = ..()

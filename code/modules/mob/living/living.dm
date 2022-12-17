@@ -2465,7 +2465,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/picked_type = tgui_input_list(admin, "Pick the guardian type.", "Guardian Controller", subtypesof(/mob/living/simple_animal/hostile/guardian))
 	var/picked_theme = tgui_input_list(admin, "Pick the guardian theme.", "Guardian Controller", list("tech", "magic", "carp", "miner"))
 	var/mob/living/simple_animal/hostile/guardian/summoned_guardian = new picked_type(src, picked_theme)
-	summoned_guardian.set_summoner(src, changed_mind = TRUE)
+	summoned_guardian.set_summoner(src, different_person = TRUE)
 	summoned_guardian.key = guardian_client.key
 	guardian_client.init_verbs()
 	if(del_mob)
