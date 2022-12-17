@@ -40,6 +40,10 @@
 	. = ..()
 	assign_to_area()
 
+/obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
+	. = ..()
+	. += "Link with Air Sensor using Multitool"
+
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
 	if (!istype(multi_tool))

@@ -20,6 +20,10 @@
 	///id of air sensor its connected to
 	var/chamber_id
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/examine(mob/user)
+	. = ..()
+	. += "Link with Air Sensor using Multitool"
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
 	if (!istype(multi_tool))
