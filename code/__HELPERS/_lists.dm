@@ -1100,5 +1100,10 @@
 
 		last_value = value
 
+/**
+ * Converts a list of coordinates, or an assosciative list if passed, into a turf by calling locate(x, y, z) based on the values in the list
+ */
 /proc/coords2turf(list/coords)
+	if("x" in coords)
+		return locate(coords["x"], coords["y"], coords["z"])
 	return locate(coords[1], coords[2], coords[3])
