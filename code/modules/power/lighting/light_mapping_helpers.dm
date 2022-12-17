@@ -146,3 +146,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red/dim, 0)
 
 // ---- Blacklight bulbs
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/blacklight, 0)
+
+// ---- Alarm lights
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/alarm, 0)

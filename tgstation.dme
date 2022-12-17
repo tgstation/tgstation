@@ -4099,6 +4099,7 @@
 #include "code\modules\power\apc\apc_power_proc.dm"
 #include "code\modules\power\apc\apc_tool_act.dm"
 #include "code\modules\power\lighting\light.dm"
+#include "code\modules\power\lighting\light_alarm.dm"
 #include "code\modules\power\lighting\light_construct.dm"
 #include "code\modules\power\lighting\light_items.dm"
 #include "code\modules\power\lighting\light_mapping_helpers.dm"
