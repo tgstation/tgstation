@@ -62,6 +62,6 @@
 
 			pump.chamber_id = chamber_id
 			GLOB.objects_by_id_tag[chamber_id + "_out"] = pump
-			to_chat(user, "You connect [pump] to the Output Port")
+			balloon_alert(user, "connected to output")
 
 		return TRUE
