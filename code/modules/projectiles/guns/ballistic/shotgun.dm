@@ -97,6 +97,10 @@
 	alt_mag_type = alt_mag_type || mag_type
 	alternate_magazine = new alt_mag_type(src)
 
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Destroy()
+	QDEL_NULL(alternate_magazine)
+	return ..()
+
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
 	if(!chambered && magazine.contents.len)
 		rack()
