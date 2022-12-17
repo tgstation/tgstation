@@ -17,8 +17,8 @@
 	/// Possible gases to expel, with their expelling multiplier.
 	var/static/list/possible_gases = list(
 		/datum/gas/oxygen = 5,
-		/datum/gas/nitrogen = 50, //yes 50. we need to crush.
-		/datum/gas/water_vapor = 0.15, //you need incredibly little water vapor for the effects to kick in
+		/datum/gas/nitrogen = 75, //yes 75 times. overpressurizing is hard!.
+		/datum/gas/water_vapor = 0.1, //you need incredibly little water vapor for the effects to kick in
 		/datum/gas/nitrous_oxide = 1.5,
 		/datum/gas/carbon_dioxide = 5,
 		/datum/gas/plasma = 0.25,
