@@ -151,6 +151,7 @@
 	QDEL_NULL(hands)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(alert_control)
+	QDEL_LIST(upgrades)
 	cell = null
 	return ..()
 
