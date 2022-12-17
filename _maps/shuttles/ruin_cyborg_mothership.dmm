@@ -429,7 +429,6 @@
 "wk" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/bot,
-/obj/effect/mob_spawn/corpse/human/assistant,
 /obj/machinery/light/cold/no_nightlight/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/cyborg_mothership)
@@ -900,17 +899,7 @@
 "VQ" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/docking_port/mobile{
-	callTime = 250;
-	shuttle_id = "cyborg_mothership";
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
-	name = "Cyborg Mothership";
-	dwidth = 11;
-	height = 23;
-	width = 23;
-	dir = 2
-	},
+/obj/docking_port/mobile/cyborg_mothership,
 /turf/open/floor/plating,
 /area/shuttle/ruin/cyborg_mothership)
 "VU" = (
