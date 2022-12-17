@@ -39,10 +39,9 @@
 
 	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_NO_LONGER_PULLED), PROC_REF(check_state))
 
-	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
+	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST | MOVEMENT_LOOP_NO_DIR_UPDATE)
 
 	check_state(parent) //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
-
 
 ///Check if we're in hyperspace and our state in hyperspace
 /datum/component/shuttle_cling/proc/check_state()

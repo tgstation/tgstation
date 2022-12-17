@@ -191,7 +191,7 @@
 
 /datum/move_loop/move/move()
 	var/atom/old_loc = moving.loc
-	moving.Move(get_step(moving, direction), direction)
+	moving.Move(get_step(moving, direction), direction, FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	// We cannot rely on the return value of Move(), we care about teleports and it doesn't
 	// Moving also can be null on occasion, if the move deleted it and therefor us
 	return old_loc != moving?.loc
