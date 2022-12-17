@@ -74,7 +74,7 @@
 
 ///Check if we're "holding on" to the shuttle
 /datum/component/shuttle_cling/proc/is_holding_on(atom/movable/movee)
-	if(movee.pulledby)
+	if(movee.pulledby || !isturf(movee.loc))
 		return ALL_GOOD
 	if(!isliving(movee))
 		return SUPER_NOT_HOLDING_ON

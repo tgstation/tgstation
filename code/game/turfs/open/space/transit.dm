@@ -9,6 +9,7 @@
 /turf/open/space/transit/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	RegisterSignal(src, COMSIG_TURF_RESERVATION_RELEASED, PROC_REF(launch_contents))
 
 	for(var/atom/movable/movable in src)
 		throw_atom(movable)
@@ -38,6 +39,13 @@
 	var/turf/location = gone.loc
 	if(istype(location, /turf/open/space) && !istype(location, src.type))//they got forced out of transit area into default space tiles
 		throw_atom(gone) //launch them into game space, away from transitspace
+
+///Get rid of all our contents, called when our reservation is released (which in our case means the shuttle arrived)
+/turf/open/space/transit/proc/launch_contents(datum/turf_reservation/reservation)
+	SIGNAL_HANDLER
+
+	for(var/atom/movable/movable in contents)
+		throw_atom(movable)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
 	if(!AM || istype(AM, /obj/docking_port) || istype(AM, /obj/effect/abstract))
