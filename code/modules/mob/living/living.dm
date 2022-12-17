@@ -2455,12 +2455,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/admin_give_guardian(mob/admin)
 	if(!admin || !check_rights(NONE))
 		return
-	var/client/guardian_client = tgui_input_list(admin, "Pick the player to put in control.", "Guardian Controller", sort_list(GLOB.clients) + "None")
+	var/client/guardian_client = tgui_input_list(admin, "Pick the player to put in control.", "Guardian Controller", sort_list(GLOB.clients))
 	if(!guardian_client)
-		return
-	if(guardian_client == "None")
-		var/mob/living/simple_animal/hostile/guardian/summoned_guardian = new /mob/living/simple_animal/hostile/guardian/punch(src, "tech")
-		summoned_guardian.set_summoner(src, different_person = TRUE)
 		return
 	var/mob/old_mob = guardian_client.mob
 	var/del_mob = FALSE
