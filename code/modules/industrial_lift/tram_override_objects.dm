@@ -27,6 +27,19 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
+/obj/structure/chair/sofa/bench/tram
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/left
+	icon_state = "bench_left"
+	greyscale_config = /datum/greyscale_config/bench_left
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/right
+	icon_state = "bench_right"
+	greyscale_config = /datum/greyscale_config/bench_right
+	greyscale_colors = "#00CCFF"
+
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"

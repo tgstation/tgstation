@@ -1008,6 +1008,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"avA" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/structure/chair/sofa/bench/tram/left,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "avE" = (
 /obj/structure/lattice,
 /turf/open/space/openspace,
@@ -7911,7 +7919,7 @@
 	icon_state = "titanium"
 	},
 /obj/structure/fluff/tram_rail,
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/sofa/bench/tram/left,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "cPW" = (
@@ -21507,6 +21515,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
+/obj/structure/chair/sofa/bench/tram/right,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "hQv" = (
@@ -21643,15 +21652,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron,
 /area/station/security/brig)
-"hSw" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/noslip/tram_plate,
-/area/station/hallway/primary/tram/center)
 "hSH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -24973,10 +24973,10 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/fluff/tram_rail{
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 1
 	},
 /turf/open/openspace,
@@ -33726,6 +33726,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
+"mhm" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/structure/fluff/tram_rail,
+/obj/structure/chair/sofa/bench/tram/right,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "mho" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
@@ -37472,15 +37480,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
-"nss" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/noslip/tram_plate,
-/area/station/hallway/primary/tram/center)
 "nti" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -52221,6 +52220,18 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood,
 /area/station/service/theater)
+"sKd" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/structure/chair/sofa/bench/tram/right{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "sKg" = (
 /turf/closed/wall,
 /area/station/commons/fitness)
@@ -57475,6 +57486,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
+"uDU" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/tram/left{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "uDW" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -64933,18 +64956,6 @@
 "xnj" = (
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
-"xof" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/obj/structure/fluff/tram_rail{
-	dir = 1
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "xom" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -164089,8 +164100,8 @@ wHs
 gej
 nbS
 hQn
-nss
-biX
+qia
+uDU
 nbS
 sqz
 oej
@@ -165887,9 +165898,9 @@ jfC
 kBX
 izU
 cEt
-cPS
+mhm
 qia
-xof
+uDU
 cEt
 izU
 nWl
@@ -166144,9 +166155,9 @@ jfC
 waf
 odj
 nbS
-kpB
-hSw
-iJU
+avA
+qia
+sKd
 nbS
 kXK
 qms
