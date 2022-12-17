@@ -30,17 +30,20 @@
  */
 /datum/lazy_template/proc/lazy_load()
 	RETURN_TYPE(/turf)
-	var/static/list/multiple_allocation_hash
+	// This is a static assosciative list that is used to ensure maps that have variations are correctly varied when spawned
+	// I want to make it to where you can make a range and it'll randomly pick'n'take from the available versions at random
+	// But that can be done later when I have the time
+	var/static/list/multiple_allocation_hash = list()
 
 	var/load_path = "[map_dir]/[map_name].dmm"
 	if(uses_multiple_allocations)
-		var/times = LAZYACCESS(multiple_allocation_hash, type) || 0
+		var/times = multiple_allocation_hash[key] || 0
 		times += 1
-		LAZYSET(multiple_allocation_hash, type, times)
+		multiple_allocation_hash[key] = times
 		load_path = "[map_dir]/[map_name]_[times].dmm"
 
 	if(!load_path || !fexists(load_path))
-		CRASH("lazy_template_pivot [type] has an invalid map_path: '[load_path]'")
+		CRASH("lazy template [type] has an invalid load_path: '[load_path]', check directory and map name!")
 
 	var/datum/map_template/loading = new(path = load_path, cache = TRUE)
 	if(!loading.cached_map)
