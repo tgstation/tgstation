@@ -357,8 +357,12 @@
 
 	for(var/area/station/maintenance/maint_area in GLOB.areas)
 		for(var/turf/maint_floor as anything in maint_area.get_contained_turfs())
-			if(istype(maint_floor, /turf/open))
-				maint_floor.ChangeTurf(/turf/open/floor/glass, flags = CHANGETURF_INHERIT_AIR)
+
+			if(istype(maint_floor, /turf/closed))  // replace walls with fulltile windows to not space everything
+				new /obj/structure/window/reinforced/fulltile(maint_floor)
+				new /obj/structure/grille(maint_floor)  // some protection..
+
+			maint_floor.ChangeTurf(/turf/open/floor/glass, flags = CHANGETURF_INHERIT_AIR)
 
 			for(var/obj/machinery/door/airlock/affected_airlock in maint_floor)
 				var/obj/machinery/door/airlock/maintenance/glass/replacement_door = new(maint_floor)
