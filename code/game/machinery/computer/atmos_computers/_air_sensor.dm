@@ -35,7 +35,7 @@
 
 ///right click with multi tool to disconnect everything
 /obj/machinery/air_sensor/multitool_act_secondary(mob/living/user, obj/item/tool)
-	to_chat(user,"You reset all I/O ports")
+	balloon_alert(user, "reset ports")
 	reset()
 	return TRUE
 
