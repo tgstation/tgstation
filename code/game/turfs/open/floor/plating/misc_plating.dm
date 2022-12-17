@@ -15,8 +15,10 @@
 	icon_state = "alienpod1"
 	base_icon_state = "alienpod1"
 	tiled_dirt = FALSE
+	// Not actually broken, just should never break...yeah.
+	broken = TRUE
 
-/turf/open/floor/plating/abductor/setup_broken_states()
+/turf/open/floor/plating/abductor/broken_states()
 	return list("alienpod1")
 
 /turf/open/floor/plating/abductor/Initialize(mapload)

@@ -16,7 +16,7 @@
 	floor_tile = /obj/item/stack/tile/glass
 	overfloor_placed = FALSE
 
-/turf/open/floor/glass/setup_broken_states()
+/turf/open/floor/glass/broken_states()
 	return list("glass-damaged1", "glass-damaged2", "glass-damaged3")
 
 /turf/open/floor/glass/Initialize(mapload)
