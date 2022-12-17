@@ -590,7 +590,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						if(mode & WRENCH_MODE)
 							PM.wrench_act(user, src)
 				else if(recipe.type == /datum/pipe_info/sensor)
-					to_chat(user, span_notice("You start building a air sensor..."))
+					balloon_alert(user, "building air sensor...")
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						activate()
 						var/datum/pipe_info/sensor/sensor_recipe = recipe
