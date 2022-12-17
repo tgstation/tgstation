@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - bugfix: "crafted foods are logged in the blackbox once more"
