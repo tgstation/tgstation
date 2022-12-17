@@ -76,13 +76,6 @@
 	requires_power = TRUE
 	static_lighting = TRUE
 
-////////////////////////////Cyborg Mothership////////////////////////////
-
-/area/shuttle/cyborg_mothership
-	name = "Cyborg Mothership"
-	requires_power = TRUE
-	area_limited_icon_smoothing = /area/shuttle/cyborg_mothership
-
 ////////////////////////////White Ship////////////////////////////
 
 /area/shuttle/abandoned
@@ -250,6 +243,13 @@
 
 /area/shuttle/ruin/caravan/freighter3
 	name = "Tiny Freighter"
+
+// ----------- Cyborg Mothership
+
+/area/shuttle/ruin/cyborg_mothership
+	name = "Cyborg Mothership"
+	requires_power = TRUE
+	area_limited_icon_smoothing = /area/shuttle/ruin/cyborg_mothership
 
 // ----------- Arena Shuttle
 /area/shuttle/shuttle_arena
