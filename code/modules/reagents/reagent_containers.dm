@@ -119,10 +119,11 @@
 	//TODO change plane & layer
 	//TODO splash sprite
 	//TODO apply to hydroponics plant watering
-	//TODO add sound
+	//TODO recolor based on reagents
 	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
 	target.add_overlay(splash_animation)
 	addtimer(CALLBACK(target, .atom/proc/cut_overlay, splash_animation), 0.6 SECONDS)
+	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
