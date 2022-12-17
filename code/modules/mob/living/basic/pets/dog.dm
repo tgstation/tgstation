@@ -32,6 +32,7 @@
 		/datum/pet_command/follow/dog,
 		/datum/pet_command/point_targetting/attack/dog,
 		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/play_dead,
 	)
 
 /mob/living/basic/pet/dog/Initialize(mapload)
