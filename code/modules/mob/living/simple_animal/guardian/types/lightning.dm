@@ -52,7 +52,7 @@
 				successfulshocks++
 			SLEEP_CHECK_DEATH(3, src)
 
-/mob/living/simple_animal/hostile/guardian/beam/Recall()
+/mob/living/simple_animal/hostile/guardian/beam/Recall(forced)
 	. = ..()
 	if(.)
 		removechains()

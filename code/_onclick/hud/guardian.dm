@@ -136,8 +136,8 @@
 
 /atom/movable/screen/guardian/recall/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Recall()
+		var/mob/living/simple_animal/hostile/guardian/user = usr
+		user.Recall()
 
 /atom/movable/screen/guardian/toggle_mode
 	icon_state = "toggle"
@@ -146,8 +146,8 @@
 
 /atom/movable/screen/guardian/toggle_mode/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.ToggleMode()
+		var/mob/living/simple_animal/hostile/guardian/user = usr
+		user.ToggleMode()
 
 /atom/movable/screen/guardian/toggle_mode/inactive
 	icon_state = "notoggle" //greyed out so it doesn't look like it'll work
@@ -164,8 +164,8 @@
 
 /atom/movable/screen/guardian/communicate/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Communicate()
+		var/mob/living/simple_animal/hostile/guardian/user = usr
+		user.Communicate()
 
 
 /atom/movable/screen/guardian/toggle_light
@@ -175,5 +175,5 @@
 
 /atom/movable/screen/guardian/toggle_light/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.ToggleLight()
+		var/mob/living/simple_animal/hostile/guardian/user = usr
+		user.ToggleLight()

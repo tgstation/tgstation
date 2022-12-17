@@ -1,4 +1,4 @@
-
+#define COMSIG_LIVING_HEALTH_UPDATE COMSIG_CARBON_HEALTH_UPDATE
 GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 #define GUARDIAN_HANDS_LAYER 1
@@ -69,14 +69,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	COOLDOWN_DECLARE(resetting_cooldown)
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
-	GLOB.parasites += src
-	updatetheme(theme)
+	. = ..()
 	AddElement(/datum/element/simple_flying)
-	return ..()
+	GLOB.parasites += src
+	update_theme(theme)
 
 /// Setter for our summoner mob.
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, changed_mind = FALSE)
 	if(summoner)
+		Recall(forced = TRUE)
 		UnregisterSignal(summoner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 		if(changed_mind)
 			faction = list()
@@ -102,7 +103,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_owner_wabbajacked))
 	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_owner_shapeshifted))
 	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_owner_unshapeshifted))
-	Recall(TRUE)
+	Recall(forced = TRUE)
 
 /// Signal proc for [COMSIG_LIVING_ON_WABBAJACKED], when our summoner is wabbajacked we should be alerted.
 /mob/living/simple_animal/hostile/guardian/proc/on_owner_wabbajacked(mob/living/source, mob/living/new_mob)
@@ -155,7 +156,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme
+/mob/living/simple_animal/hostile/guardian/proc/update_theme(theme) //update the guardian's theme
 	if(!theme)
 		theme = pick("magic", "tech", "carp", "miner")
 	switch(theme)//should make it easier to create new stand designs in the future if anyone likes that
@@ -292,7 +293,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
 			visible_message(span_danger("\The [src] jumps back to its user."))
 			if(istype(summoner.loc, /obj/effect))
-				Recall(TRUE)
+				Recall(forced = TRUE)
 			else
 				new /obj/effect/temp_visual/guardian/phase/out(loc)
 				forceMove(summoner.loc)
@@ -530,9 +531,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set category = "Guardian"
 	set desc = "Forcibly recall your guardian."
 	var/list/guardians = get_all_linked_holoparasites()
-	for(var/para in guardians)
-		var/mob/living/simple_animal/hostile/guardian/G = para
-		G.Recall()
+	for(var/mob/living/simple_animal/hostile/guardian/guardian in guardians)
+		guardian.Recall()
 
 /mob/living/proc/guardian_reset()
 	set name = "Reset Guardian Player (5 Minute Cooldown)"

@@ -37,7 +37,7 @@
 	if(!COOLDOWN_FINISHED(src, stealth_cooldown))
 		. += "Stealth Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, stealth_cooldown))]"
 
-/mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(.)
 		if(toggle && (isliving(target) || istype(target, /obj/structure/window) || istype(target, /obj/structure/grille)))
@@ -48,7 +48,7 @@
 	if(. > 0 && toggle)
 		ToggleMode(forced = TRUE)
 
-/mob/living/simple_animal/hostile/guardian/assassin/Recall()
+/mob/living/simple_animal/hostile/guardian/assassin/Recall(forced)
 	. = ..()
 	if(. && toggle)
 		ToggleMode(forced = TRUE)
