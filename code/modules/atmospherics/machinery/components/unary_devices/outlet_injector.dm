@@ -23,7 +23,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, span_notice("You log [src] in the multitool's buffer."))
+		balloon_alert(user, "saved in buffer")
 		I.buffer = src
 		return TRUE
 
