@@ -14,6 +14,10 @@
 	for(var/atom/movable/movable in src)
 		throw_atom(movable)
 
+/turf/open/space/transit/clear_signal_refs()
+	//Signals are NOT removed from turfs upon replacement, and we get replaced ALOT, so unregister our signal
+	UnregisterSignal(src, COMSIG_TURF_RESERVATION_RELEASED)
+
 /turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
 	underlay_appearance.icon_state = "speedspace_ns_[get_transit_state(asking_turf)]"
