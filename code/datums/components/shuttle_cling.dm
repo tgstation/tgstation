@@ -41,8 +41,7 @@
 
 	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
 
-	if(is_holding_on(parent) >= CLINGING)
-		hyperloop.blocked = TRUE //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
+	check_state(parent) //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
 
 
 ///Check if we're in hyperspace and our state in hyperspace
@@ -53,17 +52,25 @@
 		qdel(src)
 		return
 
-	hyperloop.blocked = FALSE
+	var/should_loop = FALSE
 
 	switch(is_holding_on(parent))
 		if(SUPER_NOT_HOLDING_ON)
 			launch_very_hard(parent)
+			should_loop = TRUE
 		if(NOT_HOLDING_ON)
-			hyperloop.delay = not_clinging_move_delay
+			hyperloop.set_delay(not_clinging_move_delay)
+			should_loop = TRUE
 		if(CLINGING)
-			hyperloop.delay = clinging_move_delay
+			hyperloop.set_delay(clinging_move_delay)
+			should_loop = TRUE
 		if(ALL_GOOD)
-			hyperloop.blocked = TRUE
+			should_loop = FALSE
+
+	if(should_loop && hyperloop.paused)
+		hyperloop.resume_loop()
+	else if(!should_loop && !hyperloop.paused)
+		hyperloop.pause_loop()
 
 ///Check if we're "holding on" to the shuttle
 /datum/component/shuttle_cling/proc/is_holding_on(atom/movable/movee)
