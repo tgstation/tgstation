@@ -310,9 +310,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
 	if(istype(target, /obj/machinery/air_sensor))
-		if(do_after(user, destroy_speed, target))
-			qdel(target)
+		if(!do_after(user, destroy_speed, target))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		
+		qdel(target)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!istype(target, /obj/machinery/atmospherics))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
