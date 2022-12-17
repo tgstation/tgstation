@@ -163,9 +163,9 @@
 	// iterate over turfs in the border and clear them from active atmos processing
 	for(var/turf/border_turf as anything in border)
 		SSair.remove_from_active(border_turf)
-		for(var/turf/sub_turf as anything in turf_to_disable.atmos_adjacent_turfs)
+		for(var/turf/sub_turf as anything in border_turf.atmos_adjacent_turfs)
 			sub_turf.atmos_adjacent_turfs -= turf_to_disable
-		turf_to_disable.atmos_adjacent_turfs?.Cut()
+		border_turf.atmos_adjacent_turfs?.Cut()
 
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
