@@ -40,8 +40,8 @@
 		chamber_id = null
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
-	. = ..()
 	disconnect_chamber()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
