@@ -1,6 +1,12 @@
 #ifdef REFERENCE_TRACKING
 
 /datum/proc/find_references(skip_alert)
+	var/static/found_references = FALSE
+	if (found_references)
+		return
+
+	found_references = TRUE
+
 	running_find_references = type
 	if(usr?.client)
 		if(usr.client.running_find_references)
