@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "ERTs should now be properly grouped in the orbit UI"
-  - bugfix: "Orbit heatmap should be now working properly."

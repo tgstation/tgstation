@@ -586,3 +586,34 @@
       to you
   - balance: Change singulo drink recipe to require liquid dark matter instead of
       radium.
+2022-12-17:
+  Fikou:
+  - qol: you can see your combat mode status as a simple or basic mob, and you can
+      see your health as a basic mob
+  - qol: status panel updates three times as fast
+  - bugfix: shipping containers go above mobs
+  - bugfix: fixes hollow survival pod window spawners
+  Guillaume Prata:
+  - qol: After 3 years of complaints at CentCom's uniform department. Paramedics have
+      been given a jumpsuit/skirt that can be adjusted around their waist instead
+      of just folding it's sleeves, making surgery easier for their fellow doctors.
+  Holoo-1:
+  - bugfix: Moves virology fridge on nukie base in to a wall
+  LemonInTheDark:
+  - code_imp: Roundstart "starting" should be much snappier now
+  NamelessFairy:
+  - admin: Stuffing people inside lockers is now logged.
+  - spellcheck: Admin fax report names now default to standard report rather than
+      standart.
+  - rscdel: Central Command can no longer be faxed directly from fax machines.
+  - spellcheck: Replaced the ability to contact central command directly by being
+      able to contact a randomly selected nanotrasen department.
+  PositiveEntropy, AxieTheAxolotl:
+  - imageadd: Resprites every revolver!
+  - imageadd: Adds the Syndicate Revolver, a visually new, but mechanically identical
+      .357 revolver to uplinks!
+  jlsnow301:
+  - bugfix: ERTs should now be properly grouped in the orbit UI
+  - bugfix: Orbit heatmap should be now working properly.
+  raffclar:
+  - qol: Improve NtOS notepad
