@@ -31,6 +31,9 @@
 #define ATMOS_GAS_MONITOR_DISTRO "distro"
 #define ATMOS_GAS_MONITOR_WASTE "waste"
 
+#define CHAMBER_INPUT_FROM_ID(chamber_id) (chamber_id + "_in")
+#define CHAMBER_OUTPUT_FROM_ID(chamber_id) (chamber_id + "_out")
+
 // Human-readble names of these funny tags.
 GLOBAL_LIST_INIT(station_gas_chambers, list(
 	ATMOS_GAS_MONITOR_O2 = "Oxygen Supply",

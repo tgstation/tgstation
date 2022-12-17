@@ -3,7 +3,7 @@
 	icon_state = "vent_map_siphon_on-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/Initialize(mapload)
-	id_tag = chamber_id + "_out"
+	id_tag = CHAMBER_OUTPUT_FROM_ID(chamber_id)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output
@@ -108,7 +108,7 @@
 
 // Same as the rest, but bigger volume.
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/Initialize(mapload)
-	id_tag = chamber_id + "_out"
+	id_tag = CHAMBER_OUTPUT_FROM_ID(chamber_id)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output

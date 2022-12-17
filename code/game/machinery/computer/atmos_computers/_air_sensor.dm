@@ -24,12 +24,14 @@
 	return ..()
 
 /obj/machinery/air_sensor/proc/reset()
-	if(GLOB.objects_by_id_tag[chamber_id + "_in"] != null)
-		var/obj/machinery/atmospherics/components/unary/outlet_injector/injector = GLOB.objects_by_id_tag[chamber_id + "_in"]
+	var/input_id = CHAMBER_INPUT_FROM_ID(chamber_id)
+	if(GLOB.objects_by_id_tag[input_id] != null)
+		var/obj/machinery/atmospherics/components/unary/outlet_injector/injector = GLOB.objects_by_id_tag[input_id]
 		injector.disconnect_chamber()
 
-	if(GLOB.objects_by_id_tag[chamber_id + "_out"] != null)
-		var/obj/machinery/atmospherics/components/unary/vent_pump/pump  = GLOB.objects_by_id_tag[chamber_id + "_out"]
+	var/output_id = CHAMBER_OUTPUT_FROM_ID(chamber_id)
+	if(GLOB.objects_by_id_tag[output_id] != null)
+		var/obj/machinery/atmospherics/components/unary/vent_pump/pump  = GLOB.objects_by_id_tag[output_id]
 		pump.disconnect_chamber()
 
 
@@ -46,24 +48,24 @@
 		return .
 
 	if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/outlet_injector))
-		var/obj/machinery/atmospherics/components/unary/outlet_injector/injector = multi_tool.buffer
-		injector.chamber_id = chamber_id
-		GLOB.objects_by_id_tag[chamber_id + "_in"] = injector
+		var/obj/machinery/atmospherics/components/unary/outlet_injector/input = multi_tool.buffer
+		input.chamber_id = chamber_id
+		GLOB.objects_by_id_tag[CHAMBER_INPUT_FROM_ID(chamber_id)] = input
 		balloon_alert(user, "connected to input")
 
 	else if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/vent_pump))
-		var/obj/machinery/atmospherics/components/unary/vent_pump/pump = multi_tool.buffer
+		var/obj/machinery/atmospherics/components/unary/vent_pump/output = multi_tool.buffer
 
 		//so its no longer controlled by air alarm
-		pump.disconnect_from_area()
+		output.disconnect_from_area()
 		//configuration copied from /obj/machinery/atmospherics/components/unary/vent_pump/siphon
-		pump.pump_direction = ATMOS_DIRECTION_SIPHONING
-		pump.pressure_checks = ATMOS_INTERNAL_BOUND
-		pump.internal_pressure_bound = 4000
-		pump.external_pressure_bound = 0
+		output.pump_direction = ATMOS_DIRECTION_SIPHONING
+		output.pressure_checks = ATMOS_INTERNAL_BOUND
+		output.internal_pressure_bound = 4000
+		output.external_pressure_bound = 0
 
-		pump.chamber_id = chamber_id
-		GLOB.objects_by_id_tag[chamber_id + "_out"] = pump
+		output.chamber_id = chamber_id
+		GLOB.objects_by_id_tag[CHAMBER_OUTPUT_FROM_ID(chamber_id)] = output
 		balloon_alert(user, "connected to output")
 
 	return TRUE
