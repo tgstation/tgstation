@@ -107,20 +107,22 @@ jobs:
         run: |
           ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>.+)$")]' .github/alternate_byond_versions.txt)
           echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
-  #run_all_tests:
-  #  if: "!contains(github.event.head_commit.message, '[ci skip]')"
-  #  name: Integration Tests
-  #  needs: [find_all_maps]
-  #  strategy:
-  #    fail-fast: false
-  #    matrix:
-  #      map: ${{ fromJSON(needs.find_all_maps.outputs.maps).paths }}
-  #  concurrency:
-  #    group: run_all_tests-${{ github.ref }}-${{ matrix.map }}
-  #    cancel-in-progress: true
-  #  uses: ./.github/workflows/run_integration_tests.yml
-  #  with:
-  #    map: ${{ matrix.map }}
+  run_all_tests:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Integration Tests
+    needs: [find_all_maps]
+    strategy:
+      fail-fast: false
+      matrix:
+        map: ${{ fromJSON(needs.find_all_maps.outputs.maps).paths }}
+    concurrency:
+      group: run_all_tests-${{ github.ref }}-${{ matrix.map }}
+      cancel-in-progress: true
+    # uses: ./.github/workflows/run_integration_tests.yml
+    uses:
+      - run: echo later
+    with:
+      map: ${{ matrix.map }}
   run_alternate_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]'"
     name: Alternate Tests
