@@ -1,4 +1,4 @@
-#define MASTER_INIT_DELAY (1 TICKS)
+#define MASTER_INIT_DELAY (1 DECISECONDS)
 
 #define MC_TICK_CHECK ( ( TICK_USAGE > Master.current_ticklimit || src.state != SS_RUNNING ) ? pause() : 0 )
 
