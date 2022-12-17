@@ -20,12 +20,14 @@
 	///id of air sensor its connected to
 	var/chamber_id
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/I)
+/obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
-	if (istype(I))
-		balloon_alert(user, "saved in buffer")
-		I.buffer = src
-		return TRUE
+	if (!istype(multi_tool))
+		return .
+
+	balloon_alert(user, "saved in buffer")
+	multi_tool.buffer = src
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/wrench_act(mob/living/user, obj/item/I)
 	. = ..()

@@ -40,14 +40,16 @@
 	. = ..()
 	assign_to_area()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/I)
+/obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
-	if (istype(I))
-		balloon_alert(user, "saved in buffer")
-		I.buffer = src
-		return TRUE
+	if (!istype(multi_tool))
+		return .
 
-/obj/machinery/atmospherics/components/unary/vent_pump/wrench_act(mob/living/user, obj/item/I)
+	balloon_alert(user, "saved in buffer")
+	multi_tool.buffer = src
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/vent_pump/wrench_act(mob/living/user, obj/item/wrench)
 	. = ..()
 	if(.)
 		disconnect_chamber()
