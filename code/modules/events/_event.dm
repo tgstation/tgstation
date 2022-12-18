@@ -114,7 +114,6 @@ Runs the event
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/E = new typepath(TRUE, src)
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
-	E.control = src
 	occurrences++
 
 	if(announce_chance_override != null)
