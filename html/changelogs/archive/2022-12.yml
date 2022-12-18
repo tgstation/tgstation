@@ -617,3 +617,14 @@
   - bugfix: Orbit heatmap should be now working properly.
   raffclar:
   - qol: Improve NtOS notepad
+2022-12-18:
+  ShizCalev:
+  - bugfix: Camo deagles have the proper icons again.
+  SkeletalElite:
+  - bugfix: The HOS and syndicate berets have had their missing armor and strip delay
+      readded
+  Tattle:
+  - bugfix: crafted foods are logged in the blackbox once more
+  Time-Green:
+  - bugfix: Podperson hair isnt fugly anymore
+  - code_imp: External organs now support different colors for different layers
