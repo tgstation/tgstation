@@ -1,4 +1,3 @@
-#define COMSIG_LIVING_HEALTH_UPDATE COMSIG_CARBON_HEALTH_UPDATE
 GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 #define GUARDIAN_HANDS_LAYER 1
