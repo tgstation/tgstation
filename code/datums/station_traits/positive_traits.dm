@@ -356,7 +356,6 @@
 /datum/station_trait/glass_maint/on_round_start()
 	for(var/area/station/maintenance/maint_area in GLOB.areas)
 		for(var/turf/maint_floor as anything in maint_area.get_contained_turfs())
-
 			if(istype(maint_floor, /turf/closed))  // replace walls with fulltile windows to not space everything
 				new /obj/structure/window/reinforced/fulltile(maint_floor)
 				new /obj/structure/grille(maint_floor)  // some protection..
