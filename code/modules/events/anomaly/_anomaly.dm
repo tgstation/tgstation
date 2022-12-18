@@ -7,6 +7,20 @@
 	weight = 15
 	category = EVENT_CATEGORY_ANOMALIES
 	description = "This anomaly shocks and explodes. This is the base type."
+	///The admin-chosen spawn location.
+	var/turf/spawn_location
+	///The area the anomaly will hit in, based on spawn_location
+	var/area/spawn_area
+
+/datum/round_event_control/anomaly/admin_setup(mob/admin)
+	. = ..()
+
+	if(!check_rights(R_FUN))
+		return ADMIN_CANCEL_EVENT
+
+	if(tgui_alert(usr, "Spawn anomaly at your current location?", "Anomaly Alert", list("Yes", "No")) == "Yes")
+		spawn_location = get_turf(usr)
+		spawn_area = get_area(spawn_location)
 
 /datum/round_event/anomaly
 	var/area/impact_area
@@ -14,16 +28,32 @@
 	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
 	announce_when = 1
 
-/datum/round_event/anomaly/setup()
-	impact_area = placer.findValidArea()
-
-/datum/round_event/anomaly/announce(fake)
-	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
+/datum/round_event/anomaly/announce(fake) //force a parent call for all subtypes
+	var/datum/round_event_control/anomaly/anomaly_event = control
+	if(anomaly_event.spawn_area)
+		impact_area = anomaly_event.spawn_area
+	else
+		impact_area = placer.findValidArea()
 
 /datum/round_event/anomaly/start()
-	var/turf/anomaly_turf = placer.findValidTurf(impact_area)
+	var/turf/anomaly_turf
+
+	var/datum/round_event_control/anomaly/anomaly_event = control
+	if(anomaly_event.spawn_location)
+		anomaly_turf = anomaly_event.spawn_location
+	else
+		anomaly_turf = placer.findValidTurf(impact_area) //Currently this crashes with pyro anomalies because impact_area is null at the time
+		//this is because some anomalies call start before announce, and some don't, so things can get mixed up
+		//we can't get the area in setup because control isn't set
+		//add post_setup
+
 	var/newAnomaly
 	if(anomaly_turf)
 		newAnomaly = new anomaly_path(anomaly_turf)
 	if (newAnomaly)
 		announce_to_ghosts(newAnomaly)
+
+/datum/round_event/anomaly/end()
+	var/datum/round_event_control/anomaly/anomaly_event = control
+	anomaly_event.spawn_location = null
+	anomaly_event.spawn_area = null

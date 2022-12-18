@@ -13,4 +13,6 @@
 	anomaly_path = /obj/effect/anomaly/hallucination
 
 /datum/round_event/anomaly/anomaly_hallucination/announce(fake)
+	. = ..()
+
 	priority_announce("Hallucinatory event hitting the station. Expected location: [impact_area.name].", "Anomaly Alert")
