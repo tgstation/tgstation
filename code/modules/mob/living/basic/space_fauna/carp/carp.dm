@@ -4,7 +4,6 @@
  * A migratory dwarf fortress reference who swim through space and sometimes bump into the space station.
  * Can be created in dehydrated form by traitors, and are also summoned through rifts by space dragons.
  *
- * Have a limited ability to open teleportation rifts themselves, helping them migrate through the space station without spacing it.
  * Begin regenerating their health after a short time without taking any damage, and will try to run away to do this if they get hurt.
  * Lethally attracted to loose plastic.
  *
