@@ -173,21 +173,19 @@
 	//Too little oxygen!
 	if(safe_oxygen_min)
 		if(!can_breathe_vacuum && (O2_pp < safe_oxygen_min))
-			if(has_moles)
-				gas_breathed = handle_too_little_breath(breather, O2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
+			gas_breathed = handle_too_little_breath(breather, O2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
 			breather.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
-			if(has_moles)
-				gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
+			gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
 			breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 	//Exhale
 	if(has_moles)
 		breath_gases[/datum/gas/oxygen][MOLES] -= gas_breathed
 		breath_gases[/datum/gas/carbon_dioxide][MOLES] += gas_breathed
-		gas_breathed = 0
+	gas_breathed = 0
 
 	//-- NITROGEN --//
 	//Too much nitrogen!
@@ -201,21 +199,19 @@
 	//Too little nitrogen!
 	if(safe_nitro_min)
 		if(!can_breathe_vacuum && (N2_pp < safe_nitro_min))
-			if(has_moles)
-				gas_breathed = handle_too_little_breath(breather, N2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
+			gas_breathed = handle_too_little_breath(breather, N2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
 			breather.throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
-			if(has_moles)
-				gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
+			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
 			breather.clear_alert(ALERT_NOT_ENOUGH_NITRO)
 	//Exhale
 	if(has_moles)
 		breath_gases[/datum/gas/nitrogen][MOLES] -= gas_breathed
 		breath_gases[/datum/gas/carbon_dioxide][MOLES] += gas_breathed
-		gas_breathed = 0
+	gas_breathed = 0
 
 	//-- CO2 --//
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
@@ -238,21 +234,19 @@
 	//Too little CO2!
 	if(safe_co2_min)
 		if(!can_breathe_vacuum && (CO2_pp < safe_co2_min))
-			if(has_moles)
-				gas_breathed = handle_too_little_breath(breather, CO2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
+			gas_breathed = handle_too_little_breath(breather, CO2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
 			breather.throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
-			if(has_moles)
-				gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
+			gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
 			breather.clear_alert(ALERT_NOT_ENOUGH_CO2)
 	//Exhale
 	if(has_moles)
 		breath_gases[/datum/gas/carbon_dioxide][MOLES] -= gas_breathed
 		breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
-		gas_breathed = 0
+	gas_breathed = 0
 
 
 	//-- PLASMA --//
@@ -267,21 +261,19 @@
 	//Too little plasma!
 	if(safe_plasma_min)
 		if(!can_breathe_vacuum && (Plasma_pp < safe_plasma_min))
-			if(has_moles)
-				gas_breathed = handle_too_little_breath(breather, Plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
+			gas_breathed = handle_too_little_breath(breather, Plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
 			breather.throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
-			if(has_moles)
-				gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
+			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
 			breather.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
 	//Exhale
 	if(has_moles)
 		breath_gases[/datum/gas/plasma][MOLES] -= gas_breathed
 		breath_gases[/datum/gas/carbon_dioxide][MOLES] += gas_breathed
-		gas_breathed = 0
+	gas_breathed = 0
 
 
 	//-- TRACES --//
@@ -393,10 +385,8 @@
 		breath_gases[/datum/gas/hypernoblium][MOLES] -= gas_breathed
 
 	//-- MIASMA --//
-	if(!miasma_pp)
-		// Clear out moods when no miasma at all
-		owner.clear_mood_event("smell")
-	else if (!suffers_miasma)
+	if(!miasma_pp || !suffers_miasma)
+		// Clear out moods when immune to miasma, or if there's no miasma at all.
 		owner.clear_mood_event("smell")
 	else
 		//Miasma sickness
