@@ -9,8 +9,6 @@
 	description = "This anomaly shocks and explodes. This is the base type."
 	///The admin-chosen spawn location.
 	var/turf/spawn_location
-	///The area the anomaly will hit in, based on spawn_location
-	var/area/spawn_area
 
 /datum/round_event_control/anomaly/admin_setup(mob/admin)
 	. = ..()
@@ -20,7 +18,6 @@
 
 	if(tgui_alert(usr, "Spawn anomaly at your current location?", "Anomaly Alert", list("Yes", "No")) == "Yes")
 		spawn_location = get_turf(usr)
-		spawn_area = get_area(spawn_location)
 
 /datum/round_event/anomaly
 	var/area/impact_area
@@ -29,9 +26,12 @@
 	announce_when = 1
 
 /datum/round_event/anomaly/setup()
+
+	end_when = start_when + 1 //Admin vars are cleared on end(), so we make sure the anomaly spawns before then.
+
 	var/datum/round_event_control/anomaly/anomaly_event = control
-	if(anomaly_event.spawn_area)
-		impact_area = anomaly_event.spawn_area
+	if(anomaly_event.spawn_location)
+		impact_area = get_area(anomaly_event.spawn_location)
 	else
 		impact_area = placer.findValidArea()
 
@@ -56,4 +56,3 @@
 /datum/round_event/anomaly/end()
 	var/datum/round_event_control/anomaly/anomaly_event = control
 	anomaly_event.spawn_location = null
-	anomaly_event.spawn_area = null
