@@ -251,6 +251,7 @@
 		return
 	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /**
  * Resolves the weakref of the pai's master.
