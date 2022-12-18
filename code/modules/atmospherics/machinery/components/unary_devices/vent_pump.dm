@@ -34,6 +34,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
+		var/static/list/multitool_tips = list(
+			TOOL_MULTITOOL = list(
+				SCREENTIP_CONTEXT_LMB = "Log it to link later with an air sensor",
+			)
+		)
+		AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
 	. = ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
@@ -42,7 +48,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	. = ..()
-	. += "Link with Air Sensor using Multitool"
+	. += span_notice("You can link it with an air sensor using a Multitool")
 
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()

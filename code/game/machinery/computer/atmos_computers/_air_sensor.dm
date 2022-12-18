@@ -13,6 +13,14 @@
 
 /obj/machinery/air_sensor/Initialize(mapload)
 	id_tag = chamber_id + "_sensor"
+	var/static/list/multitool_tips = list(
+		TOOL_MULTITOOL = list(
+			SCREENTIP_CONTEXT_LMB = "Link logged injectors/vents with this air sensor",
+			SCREENTIP_CONTEXT_RMB = "To reset all I/O ports",
+		)
+	)
+	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
+
 	return ..()
 
 /obj/machinery/air_sensor/Destroy()
