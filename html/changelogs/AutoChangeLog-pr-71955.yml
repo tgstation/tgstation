@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "Non-human characters will not sometimes display an incorrect level of blood loss on examine."
