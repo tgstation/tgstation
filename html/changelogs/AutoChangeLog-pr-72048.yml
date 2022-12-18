@@ -1,0 +1,4 @@
+author: "carshalash"
+delete-after: True
+changes:
+  - balance: "Gatfruit seeds will no longer drop from ice portals."
