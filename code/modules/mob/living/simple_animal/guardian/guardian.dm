@@ -854,6 +854,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = span_holoparasite("This shard seems to have lost all its power...")
 	failure_message = span_boldholoparasite("The shard hasn't reacted at all. Maybe try again later...")
 	ling_failure = span_boldholoparasite("The power of the shard seems to not react with your horrifying, mutated body.")
+	possible_guardians = list("Charger", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/guardiancreator/miner/choose
 	random = FALSE
