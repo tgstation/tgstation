@@ -35,6 +35,9 @@
 	else
 		impact_area = placer.findValidArea()
 
+/datum/round_event/anomaly/announce(fake)
+	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
+
 /datum/round_event/anomaly/start()
 	var/turf/anomaly_turf
 
