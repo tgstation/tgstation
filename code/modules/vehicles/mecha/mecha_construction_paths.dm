@@ -413,7 +413,7 @@
 	return list(
 		list(
 			"key" = /obj/item/stack/conveyor,
-			"amount" = 4,
+			"amount" = 5,
 			"desc" = "The treads can be added using 4 sheets of conveyor belts.",
 			"forward_message" = "added tread systems",
 		),
