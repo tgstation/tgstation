@@ -38,40 +38,41 @@
 	var/previous_upper_damage = 0
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleMode()
-	if(loc == summoner)
-		if(toggle)
-			ranged = initial(ranged)
-			melee_damage_lower = previous_lower_damage
-			melee_damage_upper = previous_upper_damage
-			previous_lower_damage = 0
-			previous_upper_damage = 0
-			obj_damage = initial(obj_damage)
-			environment_smash = initial(environment_smash)
-			alpha = 255
-			range = initial(range)
-			to_chat(src, span_bolddanger("You switch to combat mode."))
-			toggle = FALSE
-		else
-			ranged = 0
-			previous_lower_damage = melee_damage_lower
-			melee_damage_lower = 0
-			previous_upper_damage = melee_damage_upper
-			melee_damage_upper = 0
-			obj_damage = 0
-			environment_smash = ENVIRONMENT_SMASH_NONE
-			alpha = 45
-			range = 255
-			to_chat(src, span_bolddanger("You switch to scout mode."))
-			toggle = TRUE
-	else
+	if(loc != summoner)
 		to_chat(src, span_bolddanger("You have to be recalled to toggle modes!"))
+		return
+	if(toggle)
+		ranged = initial(ranged)
+		melee_damage_lower = previous_lower_damage
+		melee_damage_upper = previous_upper_damage
+		previous_lower_damage = 0
+		previous_upper_damage = 0
+		obj_damage = initial(obj_damage)
+		environment_smash = initial(environment_smash)
+		alpha = 255
+		range = initial(range)
+		to_chat(src, span_bolddanger("You switch to combat mode."))
+		toggle = FALSE
+	else
+		ranged = 0
+		previous_lower_damage = melee_damage_lower
+		melee_damage_lower = 0
+		previous_upper_damage = melee_damage_upper
+		melee_damage_upper = 0
+		obj_damage = 0
+		environment_smash = ENVIRONMENT_SMASH_NONE
+		alpha = 45
+		range = 255
+		to_chat(src, span_bolddanger("You switch to scout mode."))
+		toggle = TRUE
+
 
 /mob/living/simple_animal/hostile/guardian/ranged/Shoot(atom/targeted_atom)
 	. = ..()
-	if(istype(., /obj/projectile))
-		var/obj/projectile/shot_projectile = .
-		if(guardian_color)
-			shot_projectile.color = guardian_color
+	if(!istype(., /obj/projectile))
+		return
+	var/obj/projectile/shot_projectile = .
+	shot_projectile.color = guardian_color
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
 	var/msg

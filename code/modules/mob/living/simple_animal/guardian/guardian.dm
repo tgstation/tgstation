@@ -296,15 +296,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	if(get_dist(get_turf(summoner), get_turf(src)) <= range)
 		return
+	to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
+	visible_message(span_danger("\The [src] jumps back to its user."))
+	if(istype(summoner.loc, /obj/effect))
+		Recall(forced = TRUE)
 	else
-		to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
-		visible_message(span_danger("\The [src] jumps back to its user."))
-		if(istype(summoner.loc, /obj/effect))
-			Recall(forced = TRUE)
-		else
-			new /obj/effect/temp_visual/guardian/phase/out(loc)
-			forceMove(summoner.loc)
-			new /obj/effect/temp_visual/guardian/phase(loc)
+		new /obj/effect/temp_visual/guardian/phase/out(loc)
+		forceMove(summoner.loc)
+		new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return FALSE

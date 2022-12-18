@@ -49,8 +49,7 @@
 	target.adjustOxyLoss(-healing_amount)
 	target.adjustToxLoss(-healing_amount)
 	var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(target))
-	if(guardian_color)
-		heal_effect.color = guardian_color
+	heal_effect.color = guardian_color
 
 /mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
 	set name = "Place Bluespace Beacon"
@@ -88,8 +87,7 @@
 
 /obj/structure/receiving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/spawning_guardian)
 	. = ..()
-	if(spawning_guardian?.guardian_color)
-		add_atom_colour(spawning_guardian.guardian_color, FIXED_COLOUR_PRIORITY)
+	add_atom_colour(spawning_guardian?.guardian_color, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/receiving_pad/proc/disappear()
 	visible_message(span_notice("[src] vanishes!"))
