@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/book/granter/action/spell/barnyard,
 	/obj/item/book/granter/action/spell/charge,
 	/obj/item/book/granter/action/spell/summonitem,
+	/obj/item/book/granter/action/spell/lightningbolt,
 	/obj/item/gun/magic/wand/nothing,
 	/obj/item/gun/magic/wand/death,
 	/obj/item/gun/magic/wand/resurrection,
