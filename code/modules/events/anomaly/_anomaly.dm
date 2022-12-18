@@ -45,10 +45,7 @@
 	if(anomaly_event.spawn_location)
 		anomaly_turf = anomaly_event.spawn_location
 	else
-		anomaly_turf = placer.findValidTurf(impact_area) //Currently this crashes with pyro anomalies because impact_area is null at the time
-		//this is because some anomalies call start before announce, and some don't, so things can get mixed up
-		//we can't get the area in setup because control isn't set
-		//add post_setup
+		anomaly_turf = placer.findValidTurf(impact_area)
 
 	var/newAnomaly
 	if(anomaly_turf)
