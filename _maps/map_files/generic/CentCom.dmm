@@ -6156,7 +6156,7 @@
 "sj" = (
 /obj/docking_port/stationary{
 	dwidth = 1;
-	height = 4;
+	height = 5;
 	name = "recovery ship";
 	shuttle_id = "pod_4_away";
 	width = 3
@@ -11275,7 +11275,7 @@
 /area/centcom/syndicate_mothership/control)
 "Hh" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("nukiebase" = "Burn Chamber");
+	atmos_chambers = list("nukiebase"="Burn Chamber");
 	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
 	dir = 1;
 	name = "Ordnance Chamber Monitor"
@@ -14234,7 +14234,7 @@
 "Qt" = (
 /obj/docking_port/stationary{
 	dwidth = 1;
-	height = 4;
+	height = 5;
 	name = "recovery ship";
 	shuttle_id = "pod_3_away";
 	width = 3
@@ -17317,7 +17317,7 @@
 /obj/docking_port/stationary{
 	dir = 4;
 	dwidth = 1;
-	height = 4;
+	height = 5;
 	name = "recovery ship";
 	shuttle_id = "pod_2_away";
 	width = 3
