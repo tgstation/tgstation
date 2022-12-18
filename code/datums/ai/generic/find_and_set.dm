@@ -102,21 +102,14 @@
 /datum/ai_behavior/find_and_set/nearest_wall/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/living_pawn = controller.pawn
 
-	var/minimum_range = INFINITY
 	var/list/nearby_walls = list()
 	for (var/turf/closed/new_wall in oview(search_range, controller.pawn))
 		if (isindestructiblewall(new_wall))
 			continue
-		var/dist = get_dist(living_pawn, new_wall)
-		if (dist > minimum_range)
-			continue
-		if (dist < minimum_range)
-			minimum_range = dist
-			nearby_walls = list()
 		nearby_walls += new_wall
 
 	if(nearby_walls.len)
-		return pick(nearby_walls)
+		return get_closest_atom(/turf/closed/, nearby_walls, living_pawn)
 
 /**
  * Variant of find and set which returns corpses who share your faction
