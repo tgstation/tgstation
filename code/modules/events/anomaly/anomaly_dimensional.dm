@@ -13,6 +13,4 @@
 	anomaly_path = /obj/effect/anomaly/dimensional
 
 /datum/round_event/anomaly/anomaly_dimensional/announce(fake)
-	. = ..()
-
 	priority_announce("Localized dimensional instability detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")

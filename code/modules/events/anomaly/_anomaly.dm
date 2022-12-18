@@ -28,7 +28,7 @@
 	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
 	announce_when = 1
 
-/datum/round_event/anomaly/announce(fake) //force a parent call for all subtypes
+/datum/round_event/anomaly/setup()
 	var/datum/round_event_control/anomaly/anomaly_event = control
 	if(anomaly_event.spawn_area)
 		impact_area = anomaly_event.spawn_area
