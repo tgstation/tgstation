@@ -29,6 +29,8 @@
 	var/unlock_code
 	/// Used for pen uplink
 	var/list/previous_attempts
+	///Range the uplink will spawn a inactive telecrystal signal
+	var/signal_creation_range = 10
 
 	// Not modular variables. These variables should be removed sometime in the future
 
@@ -260,6 +262,7 @@
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item, parent)
+			summon_signal()
 		if("lock")
 			if(!lockable)
 				return TRUE
@@ -303,6 +306,7 @@
 			if(!objective.finish_objective(ui.user))
 				return
 			uplink_handler.complete_objective(objective)
+			summon_signal()
 		if("objective_abort")
 			uplink_handler.abort_objective(objective)
 	return TRUE
@@ -440,3 +444,16 @@
 
 	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.
+
+/datum/component/uplink/proc/summon_signal()
+	. = ..()
+	var/list/to_summon_in = list()
+	for(var/turf/summon_turf in range(signal_creation_range))
+		to_summon_in += summon_turf
+
+	var/atom/summoned_object_type = pick(/obj/effect/abstract/inactive_telecrystal_signal)
+	var/turf/spawn_place = pick(to_summon_in)
+
+	var/atom/summoned_object = new summoned_object_type(spawn_place)
+
+	summoned_object.flags_1 |= ADMIN_SPAWNED_1
