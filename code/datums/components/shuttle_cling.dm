@@ -37,14 +37,14 @@
 
 	ADD_TRAIT(parent, TRAIT_HYPERSPACED, src)
 
-	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_NO_LONGER_PULLED), PROC_REF(check_state))
+	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_NO_LONGER_PULLED), PROC_REF(update_state))
 
 	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST | MOVEMENT_LOOP_NO_DIR_UPDATE)
 
-	check_state(parent) //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
+	update_state(parent) //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
 
 ///Check if we're in hyperspace and our state in hyperspace
-/datum/component/shuttle_cling/proc/check_state()
+/datum/component/shuttle_cling/proc/update_state()
 	SIGNAL_HANDLER
 
 	if(!is_on_hyperspace(parent))
@@ -60,12 +60,15 @@
 		if(NOT_HOLDING_ON)
 			hyperloop.set_delay(not_clinging_move_delay)
 			should_loop = TRUE
+			hyperloop.direction = direction //we're not close to anything so reset direction if we got diagonalized
 		if(CLINGING)
 			hyperloop.set_delay(clinging_move_delay)
 			should_loop = TRUE
+			update_drift_direction(parent)
 		if(ALL_GOOD)
 			should_loop = FALSE
 
+	//Do pause/unpause/nothing for the hyperloop
 	if(should_loop && hyperloop.paused)
 		hyperloop.resume_loop()
 	else if(!should_loop && !hyperloop.paused)
@@ -75,7 +78,10 @@
 /datum/component/shuttle_cling/proc/is_holding_on(atom/movable/movee)
 	if(movee.pulledby || !isturf(movee.loc))
 		return ALL_GOOD
+
 	if(!isliving(movee))
+		if(is_tile_solid(get_step(movee, direction))) //something is blocking us so do the cool drift
+			return CLINGING
 		return SUPER_NOT_HOLDING_ON
 
 	var/mob/living/living = movee
@@ -105,6 +111,40 @@
 ///Launch the atom very hard, away from hyperspace
 /datum/component/shuttle_cling/proc/launch_very_hard(atom/movable/byebye)
 	byebye.safe_throw_at(get_edge_target_turf(byebye, direction), 200, 1, spin = TRUE, force = MOVE_FORCE_EXTREMELY_STRONG)
+
+///Check if we arent just being blocked, and if we are give us some diagonal push so we cant just infinitely cling to the front
+/datum/component/shuttle_cling/proc/update_drift_direction(atom/movable/clinger)
+	var/turf/potential_blocker = get_step(clinger, direction)
+	//We are not being blocked, so just give us cardinal drift
+	if(!is_tile_solid(potential_blocker))
+		hyperloop.direction = direction
+		return
+
+	//We're already moving diagonally
+	if(hyperloop.direction != direction)
+		var/side_dir = hyperloop.direction - direction
+
+		if(is_tile_solid(get_step(clinger, side_dir)))
+			hyperloop.direction = direction + turn(side_dir, 180) //We're bumping a wall to the side, so switch to the other side_dir (yes this adds pingpong protocol)
+		return
+
+	//Get the directions from the side of our current drift direction (so if we have drift south, get all cardinals and remove north and south, leaving only east and west)
+	var/side_dirs = shuffle(GLOB.cardinals - direction - turn(direction, 180))
+
+	//We check if one side is solid
+	if(!is_tile_solid(get_step(clinger, side_dirs[1])))
+		hyperloop.direction = direction + side_dirs[1]
+	else //if one side isnt solid, send it to the other side (it can also be solid but we dont care cause we're boxed in then and not like itll matter much then)
+		hyperloop.direction = direction + side_dirs[2]
+
+///Check if it's a closed turf or contains a dense object
+/datum/component/shuttle_cling/proc/is_tile_solid(turf/maybe_solid)
+	if(isclosedturf(maybe_solid))
+		return TRUE
+	for(var/obj/blocker in maybe_solid.contents)
+		if(blocker.density)
+			return TRUE
+	return FALSE
 
 /datum/component/shuttle_cling/Destroy(force, silent)
 	REMOVE_TRAIT(parent, TRAIT_HYPERSPACED, src)
