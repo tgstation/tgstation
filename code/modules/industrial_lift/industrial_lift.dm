@@ -13,8 +13,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
-	canSmoothWith = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
+	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
+	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered

@@ -191,6 +191,13 @@
 		"What a %HIGHFIVE_TYPE! %PROTAGONIST %MOOD.",
 		"Wow! %PROTAGONIST %MOOD!"
 	],
+	"helped_up_names":[
+		"%PROTAGONIST gentlemanly helping up %DEUTERAGONIST."
+	],
+	"helped_up_starts":[
+		"%PROTAGONIST helping up %DEUTERAGONIST",
+		"%DEUTERAGONIST taking the hand offered graciously by %PROTAGONIST to get up"
+	],
 	"borged_names":[
 		"The borging of %PROTAGONIST."
 	],

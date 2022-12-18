@@ -68,10 +68,18 @@
 /// Called by carbons after they connect the tank to their breathing apparatus.
 /obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
 	breathing_mob = carbon_target
+	RegisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /// Called by carbons after they disconnect the tank from their breathing apparatus.
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
+	UnregisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+
+/obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)
+	SIGNAL_HANDLER
+	items += "Internal Atmosphere Info: [name]"
+	items += "Tank Pressure: [air_contents.return_pressure()] kPa"
+	items += "Distribution Pressure: [distribute_pressure] kPa"
 
 /// Attempts to toggle the mob's internals on or off using this tank. Returns TRUE if successful.
 /obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
@@ -106,7 +114,6 @@
 	return
 
 /obj/item/tank/Destroy()
-	UnregisterSignal(air_contents, COMSIG_GASMIX_MERGED)
 	air_contents = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -121,7 +128,7 @@
 			. += span_notice("If you want any more information you'll need to get closer.")
 		return
 
-	. += span_notice("The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.")
+	. += span_notice("The pressure gauge reads [round(air_contents.return_pressure(),0.01)] kPa.")
 
 	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive

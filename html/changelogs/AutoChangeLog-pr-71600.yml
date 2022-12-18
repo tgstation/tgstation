@@ -1,0 +1,6 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - rscadd: "Added the *hand emote, which you can offer to someone standing up in order to give them the possibility to grab onto your hand and let you drag them away, or to someone lying down to help them back up, which always makes everyone involved a little happier!"
+  - refactor: "De-hardcoded and genericized a lot of the offering status effect and alert code, to make it require a lot less copy-paste to handle new cases."
+  - bugfix: "Offering a kiss no longer requires the receiver to have free hands to accept said kiss!"

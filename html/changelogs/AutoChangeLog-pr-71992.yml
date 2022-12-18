@@ -1,0 +1,4 @@
+author: "TheBoondock"
+delete-after: True
+changes:
+  - balance: "fixed chameleon vest not being able to hold any kind of gun"

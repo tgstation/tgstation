@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Machine frames will no longer ask for \"s\" in place of some components"
