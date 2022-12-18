@@ -643,6 +643,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	..()
 	if(.)
 		return
+	if(!usr.canUseTopic(src, be_close = TRUE))
+		return
 
 	switch(action)
 		if("root_category")
@@ -1236,6 +1238,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/plumbing/ui_act(action, params)
 	. = ..()
 	if(.)
+		return
+	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 
 	switch(action)
