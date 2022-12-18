@@ -309,7 +309,7 @@
 	name = "Syndicate Ship Captain"
 	uniform = /obj/item/clothing/under/syndicate/combat
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	head = /obj/item/clothing/head/hos/beret/syndicate
+	head = /obj/item/clothing/head/hats/hos/beret/syndicate
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	r_pocket = /obj/item/knife/combat/survival
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id

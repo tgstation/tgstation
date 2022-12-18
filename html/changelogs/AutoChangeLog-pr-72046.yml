@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - balance: "limits the power miners the dusty shard can summon to charger, protector, ranged, standard and support"

@@ -192,6 +192,14 @@
 	SSfoam.queue_spread(foam)
 
 
+// Short-lived foam
+/// A foam variant which dissipates quickly.
+/obj/effect/particle_effect/fluid/foam/short_life
+	lifetime = 1 SECONDS
+
+/datum/effect_system/fluid_spread/foam/short
+	effect_type = /obj/effect/particle_effect/fluid/foam/short_life
+
 // Long lasting foam
 /// A foam variant which lasts for an extended amount of time.
 /obj/effect/particle_effect/fluid/foam/long_life

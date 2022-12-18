@@ -275,7 +275,7 @@
 	SIGNAL_HANDLER
 
 	// only accept valid ingredients
-	if (!valid_ingredient(held_item))
+	if (isnull(held_item) || !valid_ingredient(held_item))
 		return NONE
 
 	context[SCREENTIP_CONTEXT_LMB] = "[screentip_verb] [held_item]"

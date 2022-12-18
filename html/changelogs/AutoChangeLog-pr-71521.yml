@@ -1,9 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes:
-  - bugfix: "fixed supermatter rays glowing with an additional yellow ray on special delams. Will only glow blue or purple for tesla and singuloose respectively."
-  - bugfix: "got rid of the blue causality box thing from singulo delams."
-  - rscdel: "excised the currently broken supermatter ray size animation."
-  - refactor: "refactored how the supermatter light visual effects work."
-  - code_imp: "made the disable_gas var on supermatter preserve the current variables instead of zeroing them."
-  - code_imp: "registered the supermatter filters on the filter debug menu."

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 #nb: must be bash to support shopt globstar
-shopt -s globstar
+shopt -s globstar extglob
 
 #ANSI Escape Codes for colors to increase contrast of errors
 RED="\033[0;31m"
@@ -19,15 +19,15 @@ if command -v rg >/dev/null 2>&1; then
 	if [ ! rg -P '' >/dev/null 2>&1 ] ; then
 		pcre2_support=0
 	fi
-	code_files="-g *.dm"
-	map_files="-g *.dmm"
-	ignore_515_proc_marker='-g !__byond_version_compat.dm'
+	code_files="code/**/**.dm"
+	map_files="_maps/**/**.dmm"
+	code_x_515="code/**/!(__byond_version_compat).dm"
 else
 	pcre2_support=0
 	grep=grep
-	code_files="-r --include=*.dm"
-	map_files="-r --include=*.dmm"
-	ignore_515_proc_marker="--exclude=__byond_version_compat.dm"
+	code_files="-r --include=code/**/**.dm"
+	map_files="-r --include=_maps/**/**.dmm"
+	code_x_515="-r --include=code/**/!(__byond_version_compat).dm"
 fi
 
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
@@ -247,7 +247,9 @@ fi;
 
 section "unit tests"
 part "mob/living/carbon/human usage"
-if $grep 'mob/living/carbon/human[, (){}]' $code_files; then
+if $grep 'allocate\(/mob/living/carbon/human[,\)]' code/modules/unit_tests/**/**.dm ||
+	$grep 'new /mob/living/carbon/human\s?\(' ||
+	$grep 'var/mob/living/carbon/human/\w+\s?=\s?new' ; then
 	echo
 	echo -e "${RED}ERROR: Usage of mob/living/carbon/human detected in a unit test, please use mob/living/carbon/human/consistent.${NC}"
 	st=1
@@ -267,7 +269,7 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
     st=1
 fi;
 part "balloon_alert sanity"
-if $grep 'balloon_alert\(".+"\)' $code_files; then
+if $grep 'balloon_alert\(".*"\)' $code_files; then
 	echo
 	echo -e "${RED}ERROR: Found a balloon alert with improper arguments.${NC}"
 	st=1
@@ -312,7 +314,7 @@ done
 
 section "515 Proc Syntax"
 part "proc ref syntax"
-if $grep '\.proc/' $code_files $ignore_515_proc_marker; then
+if $grep '\.proc/' $code_x_515 ; then
     echo
     echo -e "${RED}ERROR: Outdated proc reference use detected in code, please use proc reference helpers.${NC}"
     st=1

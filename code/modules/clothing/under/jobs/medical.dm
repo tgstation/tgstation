@@ -114,7 +114,6 @@
 	name = "paramedic jumpsuit"
 	icon_state = "paramedic"
 	inhand_icon_state = "w_suit"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/medical/paramedic/skirt
 	name = "paramedic jumpskirt"

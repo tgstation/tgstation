@@ -2,10 +2,10 @@
 /datum/species/human/felinid
 	name = "Felinid"
 	id = SPECIES_FELINE
-	say_mod = "meows"
 
 	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
 
+	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
 	external_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",

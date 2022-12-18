@@ -52,6 +52,7 @@
 //#define SEE_THRU (1<<9)
 /// render dark tiles as blackness (Note, this basically means we draw dark tiles to plane 0)
 /// we can then hijack that plane with a plane master, and start drawing it anywhere we want
+/// NOTE: this does not function with the SIDE_MAP map format. So we can't. :(
 //#define SEE_BLACKNESS (1<<10)
 
 /// Bitfield of sight flags that show things "inside" the blackness plane

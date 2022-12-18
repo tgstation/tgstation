@@ -26,7 +26,6 @@
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
-	plane = GAME_PLANE
 	layer = TRAM_XING_LAYER
 
 /obj/machinery/door/window/tram
@@ -61,7 +60,6 @@
 	if(!open())
 		return
 	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
-		say("Emergency exit activated!")
 		return PROCESS_KILL
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)

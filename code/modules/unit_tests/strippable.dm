@@ -57,5 +57,5 @@
 	ADD_TRAIT(rouny, TRAIT_PRESERVE_UI_WITHOUT_CLIENT, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(rouny, ui_state), UI_INTERACTIVE, "Being within range as a xeno was not interactive.")
 
-	var/mob/living/simple_animal/pet/dog/corgi/corgi = allocate(/mob/living/simple_animal/pet/dog/corgi, run_loc_floor_bottom_left)
+	var/mob/living/basic/pet/dog/corgi/corgi = allocate(/mob/living/basic/pet/dog/corgi, run_loc_floor_bottom_left)
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(corgi, ui_state), UI_UPDATE, "Being within range as a corgi was not update-only.")

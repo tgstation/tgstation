@@ -246,7 +246,7 @@
 	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		adjust_nutrition(-10 * delta_time)
 		amount_grown++
-		update_action_buttons_icon()
+		update_mob_action_buttons()
 
 	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
 		if(is_adult && loc.AllowDrop())
@@ -326,7 +326,7 @@
 
 					var/ally = FALSE
 					for(var/F in faction)
-						if(F == "neutral") //slimes are neutral so other mobs not target them, but they can target neutral mobs
+						if(F == FACTION_NEUTRAL) //slimes are neutral so other mobs not target them, but they can target neutral mobs
 							continue
 						if(F in L.faction)
 							ally = TRUE

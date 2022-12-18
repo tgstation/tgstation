@@ -8,7 +8,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans
 	name = "soda can"
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/soda.dmi'
 	reagent_flags = NONE
 	spillable = FALSE
 	custom_price = PAYCHECK_CREW * 0.9
