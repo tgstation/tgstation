@@ -354,7 +354,6 @@
 	)
 
 /datum/station_trait/glass_maint/on_round_start()
-
 	for(var/area/station/maintenance/maint_area in GLOB.areas)
 		for(var/turf/maint_floor as anything in maint_area.get_contained_turfs())
 
