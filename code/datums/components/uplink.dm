@@ -136,7 +136,7 @@
 	if(unlock_code)
 		examine_list += span_warning("The code to unlock it is [unlock_code].")
 	if(failsafe_code)
-		examine_list += span_warning("The failsafe code is [failsafe_code]")
+		examine_list += span_warning("The failsafe code is [failsafe_code].")
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
 	SIGNAL_HANDLER
