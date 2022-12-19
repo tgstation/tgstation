@@ -447,7 +447,6 @@
 	qdel(parent) //Alternatively could brick the uplink.
 
 /datum/component/uplink/proc/summon_signal()
-	. = ..()
 	var/list/to_summon_in = list()
 	for(var/turf/summon_turf in range(signal_creation_range))
 		to_summon_in += summon_turf
