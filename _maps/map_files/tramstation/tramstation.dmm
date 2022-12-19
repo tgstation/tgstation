@@ -929,7 +929,7 @@
 "asv" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/glass/reinforced/tram,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "asw" = (
 /obj/machinery/computer/monitor{
@@ -12643,7 +12643,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
-/turf/open/floor/glass/reinforced/tram,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "ezX" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -23638,7 +23638,7 @@
 /obj/structure/fluff/tram_rail/floor,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/glass/reinforced/tram,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "iCA" = (
 /obj/structure/fluff{
@@ -26663,7 +26663,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/glass/reinforced/tram,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "jJO" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -30579,7 +30579,7 @@
 "kYX" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/turf/open/floor/glass/reinforced/tram,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "kYZ" = (
 /obj/machinery/airalarm/server{
@@ -30591,10 +30591,6 @@
 	},
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
-"kZb" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/glass/reinforced/tram,
-/area/station/hallway/primary/tram/right)
 "kZh" = (
 /turf/open/floor/eighties/red,
 /area/station/commons/fitness/recreation/entertainment)
@@ -57730,7 +57726,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/glass/reinforced/tram,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "uIO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60512,7 +60508,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/fluff/tram_rail/floor,
 /obj/structure/cable,
-/turf/open/floor/glass/reinforced/tram,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "vKb" = (
 /obj/structure/lattice,
@@ -63560,7 +63556,7 @@
 "wQO" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/glass/reinforced/tram,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "wQP" = (
 /turf/closed/wall,
@@ -175147,11 +175143,11 @@ wkz
 xHd
 xPU
 nXJ
-kZb
+iDv
 wQO
 oSW
 ezQ
-kZb
+iDv
 qsl
 aNP
 czl

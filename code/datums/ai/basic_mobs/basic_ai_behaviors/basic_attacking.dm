@@ -1,6 +1,6 @@
 /datum/ai_behavior/basic_melee_attack
 	action_cooldown = 0.6 SECONDS
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -9,6 +9,9 @@
 	var/atom/target = weak_target?.resolve()
 	if(!target)
 		return FALSE
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	if (!targetting_datum)
+		return
 	controller.set_movement_target(target)
 
 /datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)

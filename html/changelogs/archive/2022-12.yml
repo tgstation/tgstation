@@ -523,3 +523,154 @@
       Plumbing RCD
   tralezab:
   - qol: Regal rats are on the orbit menu
+2022-12-14:
+  Fikou:
+  - rscadd: lathes now print empty welders and extinguishers
+  Floofies:
+  - bugfix: Fixed a stray-tab typo in "item_heal_robotic"
+  - bugfix: Fixed reagents and other effects which were inappropriately affecting
+      robotic limbs.
+  - code_imp: Refactored all of reagents code to be more readable and maintainable.
+  GoldenAlpharex:
+  - bugfix: Everything that goes on the tram should look a lot less flat now!
+  Jacquerel:
+  - rscadd: The followers of Regal Rats will now respond to simple instructions, if
+      given by their rightful lord. Except frogs. They're too busy licking themselves
+      and watching the colours.
+  JohnFulpWillard:
+  - qol: Experiment handlers now give a more reasonable explanation for why they can't
+      find a server.
+  - admin: Machines being disconnected from techwebs is now logged in research.
+  LemonInTheDark:
+  - rscadd: Adds a grace period for hit detection, between clicking ON someone, and
+      then moving your mouse off before releasing the click. It's short, hopefully
+      it helps with stupid
+  TheWolfbringer:
+  - bugfix: You can now access the coffee beans and cigarettes at Deltastation's Engineering
+      breakroom
+2022-12-15:
+  1393F:
+  - bugfix: the pill dropped by the shadowperson legion corpse now has enough mutation
+      toxin to work
+  Fikou:
+  - bugfix: fixes modsuit icons
+  - rscadd: you can flip eyepatches
+  - bugfix: blindfolds now take into consideration both eye colors for their color
+  Melbert:
+  - bugfix: Dufflebag Curse no longer lasts forever after the bag is destroyed.
+  - bugfix: Dufflebag Cursing someone already afflicted properly doesn't try to add
+      the curse again
+  - refactor: Refactored how bar drinks set their icons. Juice boxes now use the same
+      system.
+  ShizCalev:
+  - code_imp: We now unit test all /obj's for missing icons. :)
+  Wayland-Smithy:
+  - bugfix: Instant summons spell now safely and reliably retrieves items from inside
+      of anchored containers.
+  etherware-novice:
+  - bugfix: switching to species without hunger clears hunger moods
+  necromanceranne:
+  - bugfix: Stops strong enough explosions from bricking the objective energy guns
+      permanently.
+  san7890:
+  - bugfix: The message you get when attempting to escape an SM delamination by hiding
+      in a disposals pipe should now make more sense.
+2022-12-16:
+  Jolly:
+  - qol: MegaSeed vendors had their seeds distributed through 4 categories; Fruits,
+      Vegetables, Flower and Miscellaneous.
+  etherware-novice:
+  - refactor: moved some description edits to examine hooks
+  timothymtorres:
+  - rscadd: Drinking singulo will now ignore supermatter hallucinations and pull objects
+      to you
+  - balance: Change singulo drink recipe to require liquid dark matter instead of
+      radium.
+2022-12-17:
+  Fikou:
+  - qol: you can see your combat mode status as a simple or basic mob, and you can
+      see your health as a basic mob
+  - qol: status panel updates three times as fast
+  - bugfix: shipping containers go above mobs
+  - bugfix: fixes hollow survival pod window spawners
+  Guillaume Prata:
+  - qol: After 3 years of complaints at CentCom's uniform department. Paramedics have
+      been given a jumpsuit/skirt that can be adjusted around their waist instead
+      of just folding it's sleeves, making surgery easier for their fellow doctors.
+  Holoo-1:
+  - bugfix: Moves virology fridge on nukie base in to a wall
+  LemonInTheDark:
+  - code_imp: Roundstart "starting" should be much snappier now
+  NamelessFairy:
+  - admin: Stuffing people inside lockers is now logged.
+  - spellcheck: Admin fax report names now default to standard report rather than
+      standart.
+  - rscdel: Central Command can no longer be faxed directly from fax machines.
+  - spellcheck: Replaced the ability to contact central command directly by being
+      able to contact a randomly selected nanotrasen department.
+  PositiveEntropy, AxieTheAxolotl:
+  - imageadd: Resprites every revolver!
+  - imageadd: Adds the Syndicate Revolver, a visually new, but mechanically identical
+      .357 revolver to uplinks!
+  jlsnow301:
+  - bugfix: ERTs should now be properly grouped in the orbit UI
+  - bugfix: Orbit heatmap should be now working properly.
+  raffclar:
+  - qol: Improve NtOS notepad
+2022-12-18:
+  ShizCalev:
+  - bugfix: Camo deagles have the proper icons again.
+  SkeletalElite:
+  - bugfix: The HOS and syndicate berets have had their missing armor and strip delay
+      readded
+  Tattle:
+  - bugfix: crafted foods are logged in the blackbox once more
+  Time-Green:
+  - bugfix: Podperson hair isnt fugly anymore
+  - code_imp: External organs now support different colors for different layers
+2022-12-19:
+  Fikou:
+  - bugfix: fixes timid kudzu being weird on multi z
+  - balance: limits the power miners the dusty shard can summon to charger, protector,
+      ranged, standard and support
+  GoldenAlpharex:
+  - rscadd: Added the *hand emote, which you can offer to someone standing up in order
+      to give them the possibility to grab onto your hand and let you drag them away,
+      or to someone lying down to help them back up, which always makes everyone involved
+      a little happier!
+  - refactor: De-hardcoded and genericized a lot of the offering status effect and
+      alert code, to make it require a lot less copy-paste to handle new cases.
+  - bugfix: Offering a kiss no longer requires the receiver to have free hands to
+      accept said kiss!
+  Jacquerel:
+  - bugfix: Rats will once again attempt to attack windows or other dense objects
+      separating them from their targets.
+  - rscadd: Mice will now run away from you, you have to catch them if you want to
+      eat them. Use those traps!
+  - rscadd: Rabbits, Sheep, and Pigs likewise won't just sit there and let you pulverise
+      them if they can see an escape route.
+  JohnFulpWillard:
+  - bugfix: Gibbers no longer show up twice in their techweb node.
+  Melbert:
+  - bugfix: Detective Scanner can scan stuff that contains blood again.
+  Profakos:
+  - bugfix: in the round end report, progression points are converted to reputation
+  ShizCalev:
+  - spellcheck: Corrected some grammar issues with messages displayed when shoving
+      people into lockers.
+  - admin: Fixed shoving people into a locker not being combat logged properly.
+  TheBoondock:
+  - balance: fixed chameleon vest not being able to hold any kind of gun
+  Thunder12345:
+  - bugfix: Machine frames will no longer ask for "s" in place of some components
+  carshalash:
+  - balance: Gatfruit seeds will no longer drop from ice portals.
+  flowercuco:
+  - bugfix: CentComm has noticed that the research director has been hoarding turtlenecks,
+      corrective action has been taken
+  lizardqueenlexi:
+  - bugfix: Non-human characters will not sometimes display an incorrect level of
+      blood loss on examine.
+  san7890:
+  - bugfix: When you unwrench a flag, you should now no longer see the big flashy
+      red ERROR sign.
