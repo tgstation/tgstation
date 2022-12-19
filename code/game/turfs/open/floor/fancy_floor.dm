@@ -802,7 +802,7 @@
 
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'
-	icon_state = "0"
+	icon_state = "space"
 	floor_tile = /obj/item/stack/tile/fakespace
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
@@ -810,12 +810,8 @@
 /turf/open/floor/fakespace/setup_broken_states()
 	return list("damaged")
 
-/turf/open/floor/fakespace/Initialize(mapload)
-	. = ..()
-	icon_state = SPACE_ICON_STATE(x, y, z)
-
 /turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
+	underlay_appearance.icon_state = "space"
 	SET_PLANE(underlay_appearance, PLANE_SPACE, src)
 	return TRUE

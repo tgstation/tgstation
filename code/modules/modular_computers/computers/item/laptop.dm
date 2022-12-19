@@ -7,7 +7,6 @@
 	icon_state_powered = "laptop"
 	icon_state_unpowered = "laptop-off"
 	icon_state_menu = "menu"
-	display_overlays = FALSE
 
 	hardware_flag = PROGRAM_LAPTOP
 	max_idle_programs = 3
@@ -111,7 +110,6 @@
 		w_class = w_class_open
 
 	screen_on = !screen_on
-	display_overlays = screen_on
 	update_appearance()
 
 

@@ -609,7 +609,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "tn" = (
-/obj/structure/chair/sofa/right,
+/obj/structure/chair/sofa/right/brown,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "tB" = (
@@ -942,7 +942,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "FR" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/left/brown,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "FZ" = (

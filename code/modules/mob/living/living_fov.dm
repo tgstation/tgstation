@@ -94,7 +94,7 @@
 	plane = FULLSCREEN_PLANE
 
 /// Plays a visual effect representing a sound cue for people with vision obstructed by FOV or blindness
-/proc/play_fov_effect(atom/center, range, icon_state, dir = SOUTH, ignore_self = FALSE, angle = 0, list/override_list)
+/proc/play_fov_effect(atom/center, range, icon_state, dir = SOUTH, ignore_self = FALSE, angle = 0, time = 1.5 SECONDS, list/override_list)
 	var/turf/anchor_point = get_turf(center)
 	var/image/fov_image/fov_image
 	var/list/clients_shown
@@ -123,7 +123,7 @@
 		//when added as an image mutable_appearances act identically. we just make it an MA becuase theyre faster to change appearance
 
 	if(clients_shown)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), fov_image, clients_shown), 30)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), fov_image, clients_shown), time)
 
 /atom/movable/screen/fov_blocker
 	icon = 'icons/effects/fov/field_of_view.dmi'

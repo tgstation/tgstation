@@ -1,5 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - bugfix: "Fix unnecessary mole scaling with gas turbine gas thermal energy loss from work done."
-  - bugfix: "The gas turbine no longer creates power from thermal energy it can't take."

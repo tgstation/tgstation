@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - code_imp: "We now unit test all /obj's for missing icons. :)"

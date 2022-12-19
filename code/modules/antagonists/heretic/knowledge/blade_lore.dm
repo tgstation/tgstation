@@ -410,7 +410,7 @@
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
 
 	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
-	steel_spell?.cooldown_time /= 3
+	steel_spell?.cooldown_time /= 2
 
 /datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER

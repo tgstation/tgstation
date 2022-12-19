@@ -701,6 +701,8 @@
 	LAZYINITLIST(impacted)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
+	if(firer)
+		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
 	//If no angle needs to resolve it from xo/yo!
 	if(shrapnel_type && LAZYLEN(embedding))
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)

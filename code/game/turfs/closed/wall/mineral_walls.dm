@@ -186,7 +186,7 @@
 	name = "bamboo wall"
 	desc = "A wall with a bamboo finish."
 	icon = 'icons/turf/walls/bamboo_wall.dmi'
-	icon_state = "bamboo"
+	icon_state = "wall-0"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_BAMBOO_WALLS, SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)

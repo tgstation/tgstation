@@ -8,7 +8,7 @@
 	/// type is spawned 5 at a time and replaces this cake when processed by cutting tool
 	var/obj/item/food/cakeslice/slice_type
 	/// changes yield of sliced cake, default for cake is 5
-	var/obj/item/food/cake/yield = 5
+	var/yield = 5
 
 /obj/item/food/cake/Initialize(mapload)
 	. = ..()

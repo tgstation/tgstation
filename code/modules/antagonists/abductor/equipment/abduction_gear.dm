@@ -56,7 +56,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.update_worn_oversuit()
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
 	if(slot & ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.

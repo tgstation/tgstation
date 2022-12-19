@@ -9,7 +9,7 @@ type BiogeneratorData = {
   beaker: BooleanLike;
   reagent_color: string;
   biomass: number;
-  max_biomass: number;
+  max_visual_biomass: number;
   can_process: BooleanLike;
   beakerCurrentVolume: number;
   beakerMaxVolume: number;
@@ -39,7 +39,7 @@ export const Biogenerator = (props, context) => {
     beaker,
     reagent_color,
     biomass,
-    max_biomass,
+    max_visual_biomass,
     can_process,
     beakerCurrentVolume,
     beakerMaxVolume,
@@ -79,14 +79,14 @@ export const Biogenerator = (props, context) => {
                   <ProgressBar
                     value={biomass}
                     minValue={0}
-                    maxValue={max_biomass}
+                    maxValue={max_visual_biomass}
                     color="good">
                     <Box
                       lineHeight={1.9}
                       style={{
                         'text-shadow': '1px 1px 0 black',
                       }}>
-                      {`${biomass} of ${max_biomass} units`}
+                      {`${parseFloat(biomass.toFixed(2))} units`}
                     </Box>
                   </ProgressBar>
                 </LabeledList.Item>
@@ -214,9 +214,9 @@ const ItemList = (props, context) => {
           fluid
           align="right"
           content={
-            Math.ceil((item.cost * item.amount) / props.efficiency) +
-            ' ' +
-            'BIO'
+            parseFloat(
+              ((item.cost * item.amount) / props.efficiency).toFixed(2)
+            ) + ' BIO'
           }
           disabled={item.disabled}
           onClick={() =>

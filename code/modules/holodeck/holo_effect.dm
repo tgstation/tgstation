@@ -88,9 +88,9 @@
 		/mob/living/basic/rabbit,
 	)
 	mobtype += pick(
-		/mob/living/simple_animal/pet/dog/corgi,
-		/mob/living/simple_animal/pet/dog/corgi/puppy,
-		/mob/living/simple_animal/pet/dog/pug,
+		/mob/living/basic/pet/dog/corgi,
+		/mob/living/basic/pet/dog/corgi/puppy,
+		/mob/living/basic/pet/dog/pug,
 	)
 	mobtype += pick(
 		/mob/living/simple_animal/pet/cat,

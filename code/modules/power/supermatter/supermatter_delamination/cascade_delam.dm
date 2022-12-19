@@ -13,9 +13,9 @@
 	return TRUE
 
 /datum/sm_delam/cascade/delam_progress(obj/machinery/power/supermatter_crystal/sm)
-	. = ..()
-	if(!.)
+	if(!..())
 		return FALSE
+
 	sm.radio.talk_into(
 		sm,
 		"DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.",
@@ -30,6 +30,8 @@
 	)
 	for(var/mob/victim as anything in GLOB.player_list)
 		to_chat(victim, span_danger(pick(messages)))
+
+	return TRUE
 
 /datum/sm_delam/cascade/on_select(obj/machinery/power/supermatter_crystal/sm)
 	message_admins("[sm] is heading towards a cascade. [ADMIN_VERBOSEJMP(sm)]")

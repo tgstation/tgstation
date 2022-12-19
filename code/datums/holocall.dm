@@ -203,7 +203,7 @@
 
 /datum/action/innate/end_holocall
 	name = "End Holocall"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_off"
 	var/datum/holocall/hcall
 
@@ -377,7 +377,7 @@
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
 
 /datum/preset_holoimage/corgi
-	nonhuman_mobtype = /mob/living/simple_animal/pet/dog/corgi
+	nonhuman_mobtype = /mob/living/basic/pet/dog/corgi
 
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown

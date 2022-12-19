@@ -1867,7 +1867,7 @@
 "gF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded,
+/obj/vehicle/sealed/mecha/marauder/mauler/loaded,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "gH" = (

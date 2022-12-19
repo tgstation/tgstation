@@ -19,8 +19,8 @@
 
 /datum/computer_file/program/revelation/proc/activate()
 	if(computer)
-		if(istype(computer, /obj/item/modular_computer/tablet/integrated)) //If this is a borg's integrated tablet
-			var/obj/item/modular_computer/tablet/integrated/modularInterface = computer
+		if(istype(computer, /obj/item/modular_computer/pda/silicon)) //If this is a borg's integrated tablet
+			var/obj/item/modular_computer/pda/silicon/modularInterface = computer
 			to_chat(modularInterface.silicon_owner,span_userdanger("SYSTEM PURGE DETECTED/"))
 			addtimer(CALLBACK(modularInterface.silicon_owner, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
 			return

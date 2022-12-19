@@ -717,7 +717,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "LR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -885,7 +885,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "TO" = (
 /obj/structure/cable,
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /turf/open/floor/plating,

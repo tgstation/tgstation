@@ -3,9 +3,11 @@ on:
   push:
     branches:
     - master
+    - 'project/**'
   pull_request:
     branches:
     - master
+    - 'project/**'
 jobs:
   run_linters:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"

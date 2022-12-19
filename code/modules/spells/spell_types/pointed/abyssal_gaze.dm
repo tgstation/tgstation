@@ -4,7 +4,9 @@
 	desc = "This spell instills a deep terror in your target, temporarily chilling and blinding it."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	background_icon_state = "bg_demon"
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	overlay_icon_state = "bg_demon_border"
+
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "abyssal_gaze"
 
 	school = SCHOOL_EVOCATION

@@ -16,6 +16,10 @@
 	var/valve_open = FALSE
 	var/toggle = TRUE
 
+/obj/item/transfer_valve/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FRIED, PROC_REF(on_fried))
+
 /obj/item/transfer_valve/Destroy()
 	attached_device = null
 	return ..()
@@ -224,6 +228,12 @@
 */
 /obj/item/transfer_valve/proc/c_state()
 	return
+
+///Signal when deep fried, so it can have an explosive reaction!
+/obj/item/transfer_valve/proc/on_fried(datum/source, fry_time)
+	SIGNAL_HANDLER
+	log_bomber(null, "TTV valve opened via deepfrying", src, "last fingerprints = [fingerprintslast]")
+	toggle_valve()
 
 /obj/item/transfer_valve/ui_state(mob/user)
 	return GLOB.hands_state

@@ -49,7 +49,7 @@
 		result.reagents?.multiply_reagents(efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
 		source.reagents?.trans_to(result, source.reagents.total_volume)
 
-		SSblackbox.record_feedback("tally", "food_made", 1, result.type)
+		BLACKBOX_LOG_FOOD_MADE(result.type)
 
 	qdel(source)
 

@@ -208,7 +208,7 @@
 
 	back = /obj/item/mod/control/pre_equipped/empty/elite
 	uniform = /obj/item/clothing/under/syndicate
-	l_hand = /obj/item/modular_computer/tablet/nukeops
+	l_hand = /obj/item/modular_computer/pda/nukeops
 	r_hand = /obj/item/shield/energy
 
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
