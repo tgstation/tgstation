@@ -572,7 +572,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return airlock_electronics.ui_static_data(user)
 
 /obj/item/construction/rcd/ui_data(mob/user)
-	var/list/data = ..(user)
+	var/list/data = ..()
 
 	//main categories
 	data["selected_root"] = root_category
@@ -634,7 +634,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return data
 
 /obj/item/construction/rcd/ui_act(action, params)
-	..()
+	. = ..()
 	if(.)
 		return
 
