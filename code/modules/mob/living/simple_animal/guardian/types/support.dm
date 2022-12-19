@@ -85,7 +85,7 @@
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
-/obj/structure/receiving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/spawning_guardian)
+/obj/structure/receiving_pad/New(loc, mob/living/simple_animal/hostile/guardian/spawning_guardian)
 	. = ..()
 	add_atom_colour(spawning_guardian?.guardian_color, FIXED_COLOUR_PRIORITY)
 
