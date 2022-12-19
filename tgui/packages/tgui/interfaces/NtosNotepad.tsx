@@ -34,12 +34,7 @@ const PartiallyUnderlined = (props: PartiallyUnderlinedProps) => {
   );
 };
 
-enum Dialogs {
-  NONE = 0,
-  UNSAVED_CHANGES = 1,
-  OPEN = 2,
-  ABOUT = 3,
-}
+type Dialogs = 'NONE' | 'UNSAVED_CHANGES' | 'OPEN' | 'ABOUT';
 
 type MenuBarProps = {
   onSave: () => void;
@@ -388,7 +383,7 @@ export const NtosNotepad = (props, context) => {
   const [activeDialog, setActiveDialog] = useLocalState<Dialogs>(
     context,
     'activeDialog',
-    Dialogs.NONE
+    'NONE'
   );
   const [retryAction, setRetryAction] = useLocalState<RetryActionType | null>(
     context,
@@ -405,14 +400,14 @@ export const NtosNotepad = (props, context) => {
     'wordWrap',
     true
   );
-  const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
+  const handleCloseDialog = () => setActiveDialog('NONE');
   const handleSave = (newDocumentName: string = documentName) => {
     logger.log(`Saving the document as ${newDocumentName}`);
     act('UpdateNote', { newnote: text });
     setOriginalText(text);
     setDocumentName(newDocumentName);
     logger.log('Attempting to retry previous action');
-    setActiveDialog(Dialogs.NONE);
+    setActiveDialog('NONE');
 
     // Retry the previous action now that we've saved. The previous action could be to
     // close the application, a new document being created or
@@ -431,7 +426,7 @@ export const NtosNotepad = (props, context) => {
     if (!retrying && originalText !== text) {
       logger.log('Unsaved changes. Asking client to save');
       setRetryAction(() => action);
-      setActiveDialog(Dialogs.UNSAVED_CHANGES);
+      setActiveDialog('UNSAVED_CHANGES');
       return true;
     }
 
@@ -454,7 +449,7 @@ export const NtosNotepad = (props, context) => {
   };
   const noSave = () => {
     logger.log('Discarding unsaved changes');
-    setActiveDialog(Dialogs.NONE);
+    setActiveDialog('NONE');
     if (retryAction) {
       retryAction(true);
     }
@@ -481,11 +476,11 @@ export const NtosNotepad = (props, context) => {
             setShowStatusBar={setShowStatusBar}
             wordWrap={wordWrap}
             setWordWrap={setWordWrap}
-            aboutNotepadDialog={() => setActiveDialog(Dialogs.ABOUT)}
+            aboutNotepadDialog={() => setActiveDialog('ABOUT')}
           />
           <Section fill>
             <NotePadTextArea
-              maintainFocus={activeDialog === Dialogs.NONE}
+              maintainFocus={activeDialog === 'NONE'}
               text={text}
               wordWrap={wordWrap}
               setText={setText}
@@ -495,7 +490,7 @@ export const NtosNotepad = (props, context) => {
           {showStatusBar && <StatusBar statuses={statuses} />}
         </Box>
       </NtosWindow.Content>
-      {activeDialog === Dialogs.UNSAVED_CHANGES && (
+      {activeDialog === 'UNSAVED_CHANGES' && (
         <UnsavedChangesDialog
           documentName={documentName}
           onSave={handleSave}
@@ -503,7 +498,7 @@ export const NtosNotepad = (props, context) => {
           onDiscard={noSave}
         />
       )}
-      {activeDialog === Dialogs.ABOUT && (
+      {activeDialog === 'ABOUT' && (
         <AboutDialog close={handleCloseDialog} clientName={config.user.name} />
       )}
     </NtosWindow>

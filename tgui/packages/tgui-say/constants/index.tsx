@@ -2,18 +2,18 @@
 export const CHANNELS = ['Say', 'Radio', 'Me', 'OOC'] as const;
 
 /** Window sizes in pixels */
-export enum WINDOW_SIZES {
-  small = 30,
-  medium = 50,
-  large = 70,
-  width = 231,
-}
+export const WINDOW_SIZES = {
+  small: 30,
+  medium: 50,
+  large: 70,
+  width: 231,
+} as const;
 
 /** Line lengths for autoexpand */
-export enum LINE_LENGTHS {
-  small = 20,
-  medium = 35,
-}
+export const LINE_LENGTHS = {
+  small: 20,
+  medium: 35,
+} as const;
 
 /**
  * Radio prefixes.

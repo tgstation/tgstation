@@ -1,21 +1,17 @@
-export enum Gender {
-  Male = 'male',
-  Female = 'female',
-  Other = 'plural',
-}
+export type Gender = 'Male' | 'Female' | 'Other';
 
-export const GENDERS = {
-  [Gender.Male]: {
+export const GENDERS: Record<Gender, { icon: string; text: string }> = {
+  Male: {
     icon: 'male',
     text: 'Male',
   },
 
-  [Gender.Female]: {
+  Female: {
     icon: 'female',
     text: 'Female',
   },
 
-  [Gender.Other]: {
+  Other: {
     icon: 'tg-non-binary',
     text: 'Other',
   },
