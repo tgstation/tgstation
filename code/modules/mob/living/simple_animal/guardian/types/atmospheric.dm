@@ -22,15 +22,17 @@
 		/datum/gas/nitrous_oxide = 1.5,
 		/datum/gas/carbon_dioxide = 5,
 		/datum/gas/plasma = 0.25,
+		/datum/gas/bz = 1,
 	)
 	/// Gas colors, used for the particles.
 	var/static/list/gas_colors = list(
-		/datum/gas/oxygen = "#63BFDD",
-		/datum/gas/nitrogen = "#777777",
-		/datum/gas/water_vapor = "#96ADCF",
-		/datum/gas/nitrous_oxide = "#FEFEFE",
-		/datum/gas/carbon_dioxide = "#222222",
-		/datum/gas/plasma = "#B233CC",
+		/datum/gas/oxygen = "#63BFDD", //color of frozen oxygen
+		/datum/gas/nitrogen = "#777777", //grey (grey)
+		/datum/gas/water_vapor = "#96ADCF", //water is slightly blue
+		/datum/gas/nitrous_oxide = "#FEFEFE", //white like the sprite
+		/datum/gas/carbon_dioxide = "#222222", //black like coal
+		/datum/gas/plasma = "#B233CC", //color of the plasma sprite
+		/datum/gas/bz = "#FAFF00", //color of the bz metabolites reagent
 	)
 
 /mob/living/simple_animal/hostile/guardian/atmospheric/Initialize(mapload, theme)
@@ -87,6 +89,8 @@
 	if(!particles)
 		particles = new /particles/smoke/steam()
 		particles.position = list(-1, 8, 0)
+		particles.fadein = 5
+		particles.height = 200
 	particles.color = gas_colors[gas_type]
 
 /mob/living/simple_animal/hostile/guardian/atmospheric/proc/stop_pressure(datum/source)
