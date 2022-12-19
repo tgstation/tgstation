@@ -5,65 +5,67 @@
 	icon_state = "medipen_refiller"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medipen_refiller
-	/// list of medipen subtypes it can refill
-	var/list/allowed = list(/obj/item/reagent_containers/hypospray/medipen = /datum/reagent/medicine/epinephrine,
-						    /obj/item/reagent_containers/hypospray/medipen/atropine = /datum/reagent/medicine/atropine,
-						    /obj/item/reagent_containers/hypospray/medipen/salbutamol = /datum/reagent/medicine/salbutamol,
-						    /obj/item/reagent_containers/hypospray/medipen/oxandrolone = /datum/reagent/medicine/oxandrolone,
-						    /obj/item/reagent_containers/hypospray/medipen/salacid = /datum/reagent/medicine/sal_acid,
-						    /obj/item/reagent_containers/hypospray/medipen/penacid = /datum/reagent/medicine/pen_acid)
-	/// var to prevent glitches in the animation
-	var/busy = FALSE
+
+	///List of medipen subtypes it can refill and the chems needed for it to work.
+	var/static/list/allowed = list(
+		/obj/item/reagent_containers/hypospray/medipen = /datum/reagent/medicine/epinephrine,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = /datum/reagent/medicine/atropine,
+		/obj/item/reagent_containers/hypospray/medipen/salbutamol = /datum/reagent/medicine/salbutamol,
+		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = /datum/reagent/medicine/oxandrolone,
+		/obj/item/reagent_containers/hypospray/medipen/salacid = /datum/reagent/medicine/sal_acid,
+		/obj/item/reagent_containers/hypospray/medipen/penacid = /datum/reagent/medicine/pen_acid,
+	)
 
 /obj/machinery/medipen_refiller/Initialize(mapload)
 	. = ..()
-	create_reagents(100, TRANSPARENT)
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		reagents.maximum_volume += 100 * B.rating
 	AddComponent(/datum/component/plumbing/simple_demand)
-
+	CheckParts()
 
 /obj/machinery/medipen_refiller/RefreshParts()
 	. = ..()
 	var/new_volume = 100
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		new_volume += 100 * B.rating
+	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
+		new_volume += (100 * bin.rating)
 	if(!reagents)
 		create_reagents(new_volume, TRANSPARENT)
 	reagents.maximum_volume = new_volume
 	return TRUE
 
-///  handles the messages and animation, calls refill to end the animation
-/obj/machinery/medipen_refiller/attackby(obj/item/I, mob/user, params)
-	if(busy)
-		to_chat(user, span_danger("The machine is busy."))
+/obj/machinery/medipen_refiller/attackby(obj/item/weapon, mob/user, params)
+	if(DOING_INTERACTION(user, src))
+		balloon_alert(user, "already interacting!")
 		return
-	if(is_reagent_container(I) && I.is_open_container())
-		var/obj/item/reagent_containers/RC = I
-		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
+	if(is_reagent_container(weapon) && weapon.is_open_container())
+		var/obj/item/reagent_containers/reagent_container = weapon
+		var/units = reagent_container.reagents.trans_to(src, reagent_container.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
-			to_chat(user, span_notice("You transfer [units] units of the solution to the [name]."))
-			return
+			balloon_alert(user, "[units] units transfered")
 		else
-			to_chat(user, span_danger("The [name] is full."))
-			return
-	if(istype(I, /obj/item/reagent_containers/hypospray/medipen))
-		var/obj/item/reagent_containers/hypospray/medipen/P = I
-		if(!(LAZYFIND(allowed, P.type)))
-			to_chat(user, span_danger("Error! Unknown schematics."))
-			return
-		if(P.reagents?.reagent_list.len)
-			to_chat(user, span_notice("The medipen is already filled."))
-			return
-		if(reagents.has_reagent(allowed[P.type], 10))
-			busy = TRUE
-			add_overlay("active")
-			addtimer(CALLBACK(src, PROC_REF(refill), P, user), 20)
-			qdel(P)
-			return
-		to_chat(user, span_danger("There aren't enough reagents to finish this operation."))
+			balloon_alert(user, "reagent storage full!")
 		return
-	..()
+	if(istype(weapon, /obj/item/reagent_containers/hypospray/medipen))
+		var/obj/item/reagent_containers/hypospray/medipen/medipen = weapon
+		if(!(LAZYFIND(allowed, medipen.type)))
+			balloon_alert(user, "medipen incompatible!")
+			return
+		if(medipen.reagents?.reagent_list.len)
+			balloon_alert(user, "medipen full!")
+			return
+		if(!reagents.has_reagent(allowed[medipen.type], 10))
+			balloon_alert(user, "not enough reagents!")
+			return
+		add_overlay("active")
+		if(!do_after(user, 2 SECONDS, src))
+			cut_overlays()
+			return
+		medipen.reagents.maximum_volume = initial(medipen.reagents.maximum_volume)
+		medipen.add_initial_reagents()
+		reagents.remove_reagent(allowed[medipen.type], 10)
+		balloon_alert(user, "refilled")
+		use_power(active_power_usage)
+		cut_overlays()
+		return
+	return ..()
 
 /obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, span_notice("You start furiously plunging [name]."))
@@ -73,25 +75,12 @@
 		reagents.clear_reagents()
 
 /obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/medipen_refiller/crowbar_act(mob/user, obj/item/I)
-	..()
-	default_deconstruction_crowbar(I)
+/obj/machinery/medipen_refiller/crowbar_act(mob/living/user, obj/item/tool)
+	default_deconstruction_crowbar(tool)
 	return TRUE
 
-/obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!.)
-		return default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I)
-
-/// refills the medipen
-/obj/machinery/medipen_refiller/proc/refill(obj/item/reagent_containers/hypospray/medipen/P, mob/user)
-	new P.type(loc)
-	reagents.remove_reagent(allowed[P.type], 10)
-	cut_overlays()
-	busy = FALSE
-	to_chat(user, span_notice("Medipen refilled."))
-	use_power(active_power_usage)
+/obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", tool)
