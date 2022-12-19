@@ -38,7 +38,28 @@
 	run_loc_floor_bottom_left.ScrapeAway()
 	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, EXPECTED_FLOOR_TYPE, "Rock wall should've been scraped off, back into the expected type")
 
-/datum/unit_test/baseturfs_placed_on_top/Destroy()
+/// Validates that specially placed baseturfs BELOW tear down properly
+TEST_FOCUS(/datum/unit_test/baseturfs_placed_on_bottom)
+
+/datum/unit_test/baseturfs_placed_on_bottom/Run()
+	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, EXPECTED_FLOOR_TYPE, "run_loc_floor_bottom_left should be an iron floor")
+
+	// Do this instead of ChangeTurf to guarantee that baseturfs is completely default on-init behavior
+	new EXPECTED_FLOOR_TYPE(run_loc_floor_bottom_left)
+
+	run_loc_floor_bottom_left.PlaceOnBottom(fake_turf_type = /turf/closed/wall/rock)
+	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, EXPECTED_FLOOR_TYPE, "PlaceOnBottom shouldn't have changed turf")
+
+	run_loc_floor_bottom_left.ScrapeAway()
+	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/open/floor/plating, "Iron floors should scrape away to plating")
+
+	run_loc_floor_bottom_left.ScrapeAway()
+	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/closed/wall/rock, "Plating should've scraped down to a rock wall")
+
+	run_loc_floor_bottom_left.ScrapeAway()
+	TEST_ASSERT_EQUAL(run_loc_floor_bottom_left.type, /turf/open/space, "Rock wall should've scraped off to space")
+
+/datum/unit_test/baseturfs_placed_on_bottom/Destroy()
 	new EXPECTED_FLOOR_TYPE(run_loc_floor_bottom_left)
 	return ..()
 
