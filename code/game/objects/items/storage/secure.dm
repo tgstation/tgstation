@@ -41,7 +41,7 @@
 	if(!atom_storage)
 		return
 	if(atom_storage.locked)
-		icon_state = "[initial(icon_state)]+b"
+		icon_state = "[initial(icon_state)]+_locked"
 	else
 		icon_state = "[initial(icon_state)]"
 
