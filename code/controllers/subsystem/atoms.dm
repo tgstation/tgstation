@@ -167,9 +167,15 @@ SUBSYSTEM_DEF(atoms)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	set_tracked_initalized(INITIALIZATION_INSSATOMS)
+	INIT_COST(GLOB.post_init_cost, GLOB.post_init_count)
+	SET_COST("[time_stamp()]: SET another tracked initailized")
+	EXPORT_STATS_TO_FILE_LATER("lemon.log", GLOB.post_init_cost, GLOB.post_init_count)
 
 /datum/controller/subsystem/atoms/proc/map_loader_stop()
 	clear_tracked_initalize()
+	INIT_COST(GLOB.post_init_cost, GLOB.post_init_count)
+	SET_COST("[time_stamp()]: CLEARED another tracked initailized")
+	EXPORT_STATS_TO_FILE_LATER("lemon.log", GLOB.post_init_cost, GLOB.post_init_count)
 
 /// Use this to set initialized to prevent error states where old_initialized is overriden. It keeps happening and it's cheesing me off
 /datum/controller/subsystem/atoms/proc/set_tracked_initalized(value)
