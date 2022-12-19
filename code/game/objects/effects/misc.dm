@@ -127,25 +127,28 @@
 	layer = RIPPLE_LAYER
 	plane = ABOVE_GAME_PLANE
 	///Delay until it becomes active
-	var/activation_min_delay
+//	var/activation_min_delay
 	///Random delay added on top of the activation delay
-	var/activation_time
+//	var/activation_time
 
-/obj/effect/abstract/inactive_telecrystal_signal/Initialize(mapload, new_lifespan)
+/obj/effect/abstract/inactive_telecrystal_signal/Initialize(mapload)
 	. = ..()
-	activation_min_delay = rand(180 SECONDS, 300 SECONDS)
-	activation_time = world.time + activation_min_delay
+	addtimer(CALLBACK(src, PROC_REF(activate_signal), 30 SECONDS))
+//	activation_min_delay = 180 SECONDS
+//	activation_time = world.time + activation_min_delay
 
-/obj/effect/abstract/inactive_telecrystal_signal/process(delta_time)
-	if(activation_time < world.time)
-		new /obj/effect/abstract/active_telecrystal_signal(loc)
-		qdel(src)
+/obj/effect/abstract/inactive_telecrystal_signal/proc/activate_signal()
+	new /obj/effect/abstract/active_telecrystal_signal(loc)
+	qdel(src)
+//	if(activation_time < world.time)
+//		new /obj/effect/abstract/active_telecrystal_signal(loc)
+//		qdel(src)
 
 /obj/effect/abstract/active_telecrystal_signal
 	name = "faint telecrystal teleportation signal"
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
-	icon_state = "wave3"
+	icon_state = "shield-red"
 	layer = RIPPLE_LAYER
 	plane = ABOVE_GAME_PLANE
 
