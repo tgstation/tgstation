@@ -1,4 +1,4 @@
-/mob/living/basic/ghost
+/mob/living/basic/ghost //PORT OF /mob/living/simple_animal/hostile/retaliate/ghost TO BASIC MOBS
 	name = "ghost"
 	desc = "A soul of the dead, spooky."
 	icon = 'icons/mob/simple/mob.dmi'
@@ -13,8 +13,8 @@
 	health = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	response_harm_continuous = "grips"
-	response_harm_simple = "grip"
+	attack_verb_continuous = "grips"
+	attack_verb_simple = "grip"
 	unsuitable_atmos_damage = 0
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	death_message = "wails, disintegrating into a pile of ectoplasm!"
@@ -22,6 +22,8 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 1 // same glowing as visible player ghosts
 	light_power = 2
+	ai_controller = /datum/ai_controller/basic_controller/ghost
+
 	///What hairstyle will this ghost have
 	var/ghost_hairstyle
 	///What color will this ghost's hair be
@@ -39,11 +41,14 @@
 	///What will this ghost drop on death
 	var/list/death_loot = list(/obj/item/ectoplasm)
 
-/mob/living/basic/ghost/Initialize(mapload)
+/mob/living/basic/ghost/Initialize(mapload) //Make this thing delete on death so it actually dies properly.
 	. = ..()
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/ai_flee_while_injured)
 	give_hair()
+
 	if(random)
 		switch(rand(0,1))
 			if(0)
