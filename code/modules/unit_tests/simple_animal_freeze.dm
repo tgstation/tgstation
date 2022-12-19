@@ -181,7 +181,7 @@
 		/mob/living/simple_animal/hostile/guardian/explosive,
 		/mob/living/simple_animal/hostile/guardian/charger,
 		/mob/living/simple_animal/hostile/guardian/dextrous,
-		/mob/living/simple_animal/hostile/guardian/fire,
+		/mob/living/simple_animal/hostile/guardian/gaseous,
 		/mob/living/simple_animal/hostile/guardian/gravitokinetic,
 		/mob/living/simple_animal/hostile/guardian/support,
 		/mob/living/simple_animal/hostile/guardian/protector,
