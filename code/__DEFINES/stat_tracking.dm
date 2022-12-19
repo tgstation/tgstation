@@ -38,6 +38,10 @@
 
 #define SET_COST_LINE(...) SET_COST("[__LINE__]")
 
+/// A quick helper for running the code as a statement and profiling its cost.
+/// For example, `SET_COST_STMT(var/x = do_work())`
+#define SET_COST_STMT(code...) ##code; SET_COST("[__LINE__] - [#code]")
+
 #define EXPORT_STATS_TO_FILE_LATER(filename, costs, counts) \
 	do { \
 		var/static/last_export = 0; \
