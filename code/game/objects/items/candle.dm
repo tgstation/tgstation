@@ -7,6 +7,7 @@
 	icon_state = "candle1"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
+	light_system = MOVABLE_LIGHT
 	light_color = LIGHT_COLOR_FIRE
 	heat = 1000
 	/// How many seconds it burns for
