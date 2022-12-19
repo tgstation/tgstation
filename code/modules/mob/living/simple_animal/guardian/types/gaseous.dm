@@ -85,7 +85,7 @@
 	if(!picked_gas || !gas_type)
 		return
 	to_chat(src, span_bolddanger("You are now expelling [picked_gas]."))
-	investigate_log("controlled by [key_name(user)] set their gas type to [picked_gas].", INVESTIGATE_ATMOS)
+	investigate_log("controlled by [key_name(src)] set their gas type to [picked_gas].", INVESTIGATE_ATMOS)
 	expelled_gas = gas_type
 	if(!particles)
 		particles = new /particles/smoke/steam()
