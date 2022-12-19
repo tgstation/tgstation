@@ -130,6 +130,8 @@
 		load_tc(user, item)
 
 /datum/component/uplink/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	if(user != owner)
 		return
 	examine_list += span_warning("\The [parent] contains your hidden uplink.")
