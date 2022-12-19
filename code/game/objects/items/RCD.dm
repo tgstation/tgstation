@@ -192,7 +192,10 @@ RLD
 
 ///shared action for toggling silo link rcd,rld & plumbing
 /obj/item/construction/ui_act(action, list/params)
-	..()
+	. = ..()
+	if(.)
+		return
+
 	if(action == "toggle_silo")
 		if(silo_mats)
 			if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link
@@ -203,7 +206,6 @@ RLD
 		else
 			to_chat(usr, span_warning("[src] doesn't have remote storage connection."))
 		return TRUE
-	return FALSE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	if(!silo_mats || !silo_mats.mat_container || !silo_link)
@@ -559,14 +561,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		get_asset_datum(/datum/asset/spritesheet/rcd),
 	)
 
+/obj/item/construction/rcd/ui_host(mob/user)
+	return owner || ..()
+
 /obj/item/construction/rcd/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "RapidConstructionDevice", name)
 		ui.open()
-
-/obj/item/construction/rcd/ui_host(mob/user)
-	return owner || ..()
 
 /obj/item/construction/rcd/ui_static_data(mob/user)
 	return airlock_electronics.ui_static_data(user)
@@ -912,7 +914,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		display_options[option] = icon(original_options[option])
 
 /obj/item/construction/rld/attack_self(mob/user)
-	..()
+	. = ..()
 
 	if((upgrade & RCD_UPGRADE_SILO_LINK) && display_options["Silo Link"] == null) //silo upgrade instaled but option was not updated then update it just one
 		display_options["Silo Link"] = icon(icon = 'icons/obj/mining.dmi', icon_state = "silo")
@@ -1160,6 +1162,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return ..()
 
 /obj/item/construction/plumbing/attack_self(mob/user)
+	. = ..()
 	ui_interact(user)
 
 /obj/item/construction/plumbing/examine(mob/user)
@@ -1230,8 +1233,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/plumbing/ui_act(action, params)
 	. = ..()
 	if(.)
-		return
-	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 
 	switch(action)
