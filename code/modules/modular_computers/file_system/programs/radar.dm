@@ -392,13 +392,13 @@
 /datum/computer_file/program/radar/telecrystal_signal_tracker
 	filename = "telecrystalsignaltrackerr"
 	filedesc = "Telecrystal Signal Tracker"
-	extended_desc = "This program allows for tracking of faint telecrystal teleportation signals."
+	extended_desc = "This program allows for tracking of faint telecrystal communication/teleportation signals."
 	requires_ntnet = TRUE
 	transfer_access = list(ACCESS_DETECTIVE)
 	available_on_ntnet = TRUE
-	program_icon = "broom"
-	size = 2
-	detomatix_resistance = DETOMATIX_RESIST_MINOR
+	program_icon = "wave-square"
+	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
+	size = 5
 
 /datum/computer_file/program/radar/telecrystal_signal_tracker/find_atom()
 	return locate(selected) in GLOB.telecrystal_teleportation_signal

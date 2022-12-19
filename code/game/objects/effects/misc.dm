@@ -1,3 +1,6 @@
+#define MIN_SIGNAL_ACTIVATION_TIME (120 SECONDS)
+#define MAX_SIGNAL_ACTIVATION_TIME (180 SECONDS)
+
 //The effect when you wrap a dead body in gift wrap
 /obj/effect/spresent
 	name = "strange present"
@@ -120,37 +123,18 @@
 
 
 /obj/effect/abstract/inactive_telecrystal_signal
-	name = "faint telecrystal teleportation signal"
-	icon = 'icons/effects/effects.dmi'
-	anchored = TRUE
-	icon_state = "wave3"
-	layer = RIPPLE_LAYER
-	plane = ABOVE_GAME_PLANE
-	///Delay until it becomes active
-//	var/activation_min_delay
-	///Random delay added on top of the activation delay
-//	var/activation_time
+	name = "faint inactive telecrystal signal"
 
 /obj/effect/abstract/inactive_telecrystal_signal/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(activate_signal), 30 SECONDS))
-//	activation_min_delay = 180 SECONDS
-//	activation_time = world.time + activation_min_delay
+	addtimer(CALLBACK(src, PROC_REF(activate_signal)), rand(MIN_SIGNAL_ACTIVATION_TIME, MAX_SIGNAL_ACTIVATION_TIME))
 
 /obj/effect/abstract/inactive_telecrystal_signal/proc/activate_signal()
 	new /obj/effect/abstract/active_telecrystal_signal(loc)
 	qdel(src)
-//	if(activation_time < world.time)
-//		new /obj/effect/abstract/active_telecrystal_signal(loc)
-//		qdel(src)
 
 /obj/effect/abstract/active_telecrystal_signal
-	name = "faint telecrystal teleportation signal"
-	icon = 'icons/effects/effects.dmi'
-	anchored = TRUE
-	icon_state = "shield-red"
-	layer = RIPPLE_LAYER
-	plane = ABOVE_GAME_PLANE
+	name = "faint active telecrystal signal"
 
 /obj/effect/abstract/active_telecrystal_signal/Initialize(mapload)
 	. = ..()

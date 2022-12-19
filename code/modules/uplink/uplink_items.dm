@@ -65,8 +65,10 @@
 	var/restricted = FALSE
 	/// Can this item be deconstructed to unlock certain techweb research nodes?
 	var/illegal_tech = TRUE
-	// String to be shown instead of the price, e.g for the Random item.
+	/// String to be shown instead of the price, e.g for the Random item.
 	var/cost_override_string = ""
+	/// Var which determinates if a purchase will leave a faint telecrystal signal behind to be tracked
+	var/leaves_faint_telecrystal_signal = TRUE
 
 /datum/uplink_item/New()
 	. = ..()

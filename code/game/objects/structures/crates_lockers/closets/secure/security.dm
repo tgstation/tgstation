@@ -169,6 +169,7 @@
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
+	new /obj/item/modular_computer/laptop/preset/signal_tracker(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"

@@ -30,7 +30,7 @@
 	/// Used for pen uplink
 	var/list/previous_attempts
 	///Range the uplink will spawn a inactive telecrystal signal
-	var/signal_creation_range = 10
+	var/signal_creation_range = 5
 
 	// Not modular variables. These variables should be removed sometime in the future
 
@@ -261,8 +261,9 @@
 				if(!ispath(item_path, /datum/uplink_item))
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
+			if(item.leaves_faint_telecrystal_signal)
+				summon_signal()
 			uplink_handler.purchase_item(ui.user, item, parent)
-			summon_signal()
 		if("lock")
 			if(!lockable)
 				return TRUE

@@ -39,6 +39,7 @@
 	// Don't add telecrystals to the purchase_log since
 	// it's just used to buy more items (including itself!)
 	purchase_log_vis = FALSE
+	leaves_faint_telecrystal_signal = FALSE
 
 /datum/uplink_item/bundles_tc/telecrystal/five
 	name = "5 Raw Telecrystals"
