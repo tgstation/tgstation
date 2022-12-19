@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - spellcheck: "Corrected some grammar issues with messages displayed when shoving people into lockers."
-  - admin: "Fixed shoving people into a locker not being combat logged properly."
