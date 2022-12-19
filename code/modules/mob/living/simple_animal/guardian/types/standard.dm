@@ -1,5 +1,5 @@
 //Standard
-/mob/living/simple_animal/hostile/guardian/punch
+/mob/living/simple_animal/hostile/guardian/standard
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	obj_damage = 80
@@ -13,7 +13,7 @@
 	/// The text we shout when attacking.
 	var/battlecry = "AT"
 
-/mob/living/simple_animal/hostile/guardian/punch/verb/Battlecry()
+/mob/living/simple_animal/hostile/guardian/standard/verb/Battlecry()
 	set name = "Set Battlecry"
 	set category = "Guardian"
 	set desc = "Choose what you shout as you punch people."
@@ -21,7 +21,7 @@
 	if(input)
 		battlecry = input
 
-/mob/living/simple_animal/hostile/guardian/punch/AttackingTarget(atom/attacked_target)
+/mob/living/simple_animal/hostile/guardian/standard/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(!isliving(target))
 		return
@@ -32,5 +32,5 @@
 	for(var/j in 1 to 4)
 		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), target.loc), j)
 
-/mob/living/simple_animal/hostile/guardian/punch/proc/do_attack_sound(atom/playing_from)
+/mob/living/simple_animal/hostile/guardian/standard/proc/do_attack_sound(atom/playing_from)
 	playsound(playing_from, attack_sound, 50, TRUE, TRUE)

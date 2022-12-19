@@ -1,5 +1,5 @@
 //Healer
-/mob/living/simple_animal/hostile/guardian/healer
+/mob/living/simple_animal/hostile/guardian/support
 	speed = 0
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
@@ -22,23 +22,23 @@
 	/// Cooldown between creating beacons.
 	COOLDOWN_DECLARE(beacon_cooldown)
 
-/mob/living/simple_animal/hostile/guardian/healer/Initialize(mapload)
+/mob/living/simple_animal/hostile/guardian/support/Initialize(mapload)
 	. = ..()
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.show_to(src)
 
-/mob/living/simple_animal/hostile/guardian/healer/get_status_tab_items()
+/mob/living/simple_animal/hostile/guardian/support/get_status_tab_items()
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, beacon_cooldown))
 		. += "Beacon Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, beacon_cooldown))]"
 
-/mob/living/simple_animal/hostile/guardian/healer/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/simple_animal/hostile/guardian/support/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && isliving(attack_target))
 		heal_target(attack_target)
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/guardian/healer/proc/heal_target(mob/living/target)
+/mob/living/simple_animal/hostile/guardian/support/proc/heal_target(mob/living/target)
 	do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 	target.visible_message(span_notice("[src] heals [target]!"),\
 		span_userdanger("[src] heals you!"), null, COMBAT_MESSAGE_RANGE, src)
@@ -51,7 +51,7 @@
 	var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(target))
 	heal_effect.color = guardian_color
 
-/mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
+/mob/living/simple_animal/hostile/guardian/support/verb/Beacon()
 	set name = "Place Bluespace Beacon"
 	set category = "Guardian"
 	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work at extreme distances."
@@ -93,10 +93,10 @@
 	visible_message(span_notice("[src] vanishes!"))
 	qdel(src)
 
-/mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/target)
+/mob/living/simple_animal/hostile/guardian/support/AltClickOn(atom/movable/target)
 	teleport_to_beacon(target)
 
-/mob/living/simple_animal/hostile/guardian/healer/proc/teleport_to_beacon(atom/movable/teleport_target)
+/mob/living/simple_animal/hostile/guardian/support/proc/teleport_to_beacon(atom/movable/teleport_target)
 	if(!istype(teleport_target))
 		return
 	if(!beacon)

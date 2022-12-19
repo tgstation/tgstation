@@ -4,7 +4,7 @@
 	layer = LYING_MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
 
-/mob/living/simple_animal/hostile/guardian/beam
+/mob/living/simple_animal/hostile/guardian/lightning
 	melee_damage_lower = 7
 	melee_damage_upper = 7
 	attack_verb_continuous = "shocks"
@@ -22,7 +22,7 @@
 	var/list/enemychains = list()
 	var/successfulshocks = 0
 
-/mob/living/simple_animal/hostile/guardian/beam/AttackingTarget(atom/attacked_target)
+/mob/living/simple_animal/hostile/guardian/lightning/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(. && isliving(target) && target != src && target != summoner)
 		cleardeletedchains()
@@ -36,7 +36,7 @@
 			enemychains -= C
 		enemychains += Beam(target, "lightning[rand(1,12)]", maxdistance=7, beam_type=/obj/effect/ebeam/chain)
 
-/mob/living/simple_animal/hostile/guardian/beam/summon_effects()
+/mob/living/simple_animal/hostile/guardian/lightning/summon_effects()
 	summonerchain = Beam(summoner, "lightning[rand(1,12)]", beam_type=/obj/effect/ebeam/chain)
 	while(loc != summoner)
 		if(successfulshocks > 5)
@@ -45,10 +45,10 @@
 			successfulshocks++
 		SLEEP_CHECK_DEATH(3, src)
 
-/mob/living/simple_animal/hostile/guardian/beam/recall_effects()
+/mob/living/simple_animal/hostile/guardian/lightning/recall_effects()
 	removechains()
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/cleardeletedchains()
+/mob/living/simple_animal/hostile/guardian/lightning/proc/cleardeletedchains()
 	if(summonerchain && QDELETED(summonerchain))
 		summonerchain = null
 	if(enemychains.len)
@@ -57,7 +57,7 @@
 			if(!chain || QDELETED(cd))
 				enemychains -= chain
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/shockallchains()
+/mob/living/simple_animal/hostile/guardian/lightning/proc/shockallchains()
 	. = 0
 	cleardeletedchains()
 	if(summoner)
@@ -68,7 +68,7 @@
 		for(var/chain in enemychains)
 			. += chainshock(chain)
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/removechains()
+/mob/living/simple_animal/hostile/guardian/lightning/proc/removechains()
 	if(summonerchain)
 		qdel(summonerchain)
 		summonerchain = null
@@ -77,7 +77,7 @@
 			qdel(chain)
 		enemychains = list()
 
-/mob/living/simple_animal/hostile/guardian/beam/proc/chainshock(datum/beam/B) //fuck you, fuck this
+/mob/living/simple_animal/hostile/guardian/lightning/proc/chainshock(datum/beam/B) //fuck you, fuck this
 	. = 0
 	var/list/turfs = list()
 	for(var/E in B.elements)

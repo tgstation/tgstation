@@ -660,26 +660,26 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			to_chat(user, "[failure_message]" )
 			used = FALSE
 			return
-	var/pickedtype = /mob/living/simple_animal/hostile/guardian/punch
+	var/pickedtype = /mob/living/simple_animal/hostile/guardian/standard
 	switch(guardiantype)
 
 		if("Chaos")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/fire
 
 		if("Standard")
-			pickedtype = /mob/living/simple_animal/hostile/guardian/punch
+			pickedtype = /mob/living/simple_animal/hostile/guardian/standard
 
 		if("Ranged")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/ranged
 
 		if("Support")
-			pickedtype = /mob/living/simple_animal/hostile/guardian/healer
+			pickedtype = /mob/living/simple_animal/hostile/guardian/support
 
 		if("Explosive")
-			pickedtype = /mob/living/simple_animal/hostile/guardian/bomb
+			pickedtype = /mob/living/simple_animal/hostile/guardian/explosive
 
 		if("Lightning")
-			pickedtype = /mob/living/simple_animal/hostile/guardian/beam
+			pickedtype = /mob/living/simple_animal/hostile/guardian/lightning
 
 		if("Protector")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/protector
