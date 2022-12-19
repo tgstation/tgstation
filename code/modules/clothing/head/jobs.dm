@@ -97,14 +97,12 @@
 	armor = list(MELEE = 25, BULLET = 5, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 30, ACID = 50, WOUND = 5)
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
-	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
+	COOLDOWN_DECLARE(candy_cooldown)
 
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
-
 	create_storage(type = /datum/storage/pockets/small/fedora/detective)
-
 	new /obj/item/reagent_containers/cup/glass/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
@@ -115,13 +113,18 @@
 	. = ..()
 	if(loc != user || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		return
-	if(candy_cooldown < world.time)
-		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-		user.put_in_hands(CC)
-		to_chat(user, span_notice("You slip a candy corn from your hat."))
-		candy_cooldown = world.time+1200
-	else
+	if(!COOLDOWN_FINISHED(src, candy_cooldown))
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+		return
+	var/obj/item/food/candy_corn/candy_corn = new /obj/item/food/candy_corn(src)
+	user.put_in_hands(candy_corn)
+	to_chat(user, span_notice("You slip a candy corn from your hat."))
+	COOLDOWN_START(src, candy_cooldown, 2 MINUTES)
+
+/obj/item/clothing/head/fedora/det_hat/noir
+	name = "noir fedora"
+	icon_state = "fedora"
+	inhand_icon_state = "fedora"
 
 //Mime
 /obj/item/clothing/head/beret
