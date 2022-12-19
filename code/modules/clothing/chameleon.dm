@@ -417,6 +417,7 @@
 
 /obj/item/clothing/suit/chameleon/Initialize(mapload)
 	. = ..()
+	allowed = GLOB.security_vest_allowed //should at least act like a vest
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/suit
 	chameleon_action.chameleon_name = "Suit"

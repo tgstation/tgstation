@@ -2630,11 +2630,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/gun/ballistic/revolver{
+/obj/item/gun/ballistic/revolver/syndicate{
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/gun/ballistic/revolver{
+/obj/item/gun/ballistic/revolver/syndicate{
 	pixel_x = -1;
 	pixel_y = 2
 	},
@@ -2691,7 +2691,7 @@
 	},
 /obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare,
 /obj/item/clothing/head/hats/hos/syndicate,
-/obj/item/clothing/head/hos/beret/syndicate,
+/obj/item/clothing/head/hats/hos/beret/syndicate,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate,
 /obj/item/storage/belt/military/assault,

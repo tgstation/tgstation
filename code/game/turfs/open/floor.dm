@@ -11,8 +11,8 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	flags_1 = NO_SCREENTIPS_1
 	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
-	canSmoothWith = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
+	canSmoothWith = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
@@ -317,6 +317,7 @@
 				new_airlock.electronics.unres_sides = the_rcd.airlock_electronics.unres_sides
 				new_airlock.electronics.passed_name = the_rcd.airlock_electronics.passed_name
 				new_airlock.electronics.passed_cycle_id = the_rcd.airlock_electronics.passed_cycle_id
+				new_airlock.electronics.shell = the_rcd.airlock_electronics.shell
 			if(new_airlock.electronics.one_access)
 				new_airlock.req_one_access = new_airlock.electronics.accesses
 			else

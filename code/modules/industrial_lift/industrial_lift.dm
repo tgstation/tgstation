@@ -13,8 +13,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
-	canSmoothWith = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
+	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
+	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered
@@ -389,7 +389,7 @@ GLOBAL_LIST_EMPTY(lifts)
 					continue
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-				var/damage = rand(5, 10) * collision_lethality
+				var/damage = rand(9, 28) * collision_lethality
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
@@ -781,7 +781,6 @@ GLOBAL_LIST_EMPTY(lifts)
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "titanium_yellow"
 	layer = TRAM_FLOOR_LAYER
-	plane = GAME_PLANE
 	base_icon_state = null
 	smoothing_flags = NONE
 	smoothing_groups = null

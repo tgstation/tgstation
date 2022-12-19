@@ -430,18 +430,6 @@
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
-	var/integrity = atom_integrity*100/max_integrity
-	switch(integrity)
-		if(85 to 100)
-			. += "It's fully intact."
-		if(65 to 85)
-			. += "It's slightly damaged."
-		if(45 to 65)
-			. += "It's badly damaged."
-		if(25 to 45)
-			. += "It's heavily damaged."
-		else
-			. += "It's falling apart."
 	if(LAZYLEN(flat_equipment))
 		. += "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME as anything in flat_equipment)
@@ -460,6 +448,24 @@
 					continue
 				. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
 				break //in case user is holding two guns
+
+/obj/vehicle/sealed/mecha/generate_integrity_message()
+	var/examine_text = ""
+	var/integrity = atom_integrity*100/max_integrity
+
+	switch(integrity)
+		if(85 to 100)
+			examine_text = "It's fully intact."
+		if(65 to 85)
+			examine_text = "It's slightly damaged."
+		if(45 to 65)
+			examine_text = "It's badly damaged."
+		if(25 to 45)
+			examine_text = "It's heavily damaged."
+		else
+			examine_text = "It's falling apart."
+
+	return examine_text
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/vehicle/sealed/mecha/process(delta_time)

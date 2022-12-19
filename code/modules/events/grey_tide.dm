@@ -6,13 +6,6 @@
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Bolts open all doors in one or more departments."
 
-/datum/round_event_control/grey_tide/can_spawn_event(players_amt)
-	. = ..()
-
-	for(var/datum/round_event/running_event in SSevents.running)
-		if(istype(running_event, /datum/round_event/grey_tide)) //Two of these at once messes up the list
-			return FALSE
-
 /datum/round_event/grey_tide
 	announce_when = 50
 	end_when = 20
