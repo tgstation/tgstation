@@ -8,6 +8,12 @@
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = /datum/dog_fashion/head/santa
 
+/obj/item/clothing/head/helmet/space/santahat/beardless
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	icon_state = "santahatnorm"
+	inhand_icon_state = "that"
+
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
 	desc = "Festive!"
