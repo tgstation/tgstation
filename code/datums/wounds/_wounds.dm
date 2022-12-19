@@ -23,15 +23,11 @@
 	var/treat_text = ""
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
-	/// Examine text for when the owner is physically incapable of bleeding (only used by slash and pierce wounds right now)
-	var/examine_desc_bleedless
 
 	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burns"
 	var/a_or_from = "a"
 	/// The visible message when this happens
 	var/occur_text = ""
-	/// Occur text for when the owner is physically incapable of bleeding (only used by slash and pierce wounds right now)
-	var/occur_text_bleedless
 	/// This sound will be played upon the wound being applied
 	var/sound_effect
 
@@ -133,20 +129,14 @@
 			qdel(src)
 			return
 
-	//it's ok to not typecheck, humans are the only ones that deal with wounds
-	var/mob/living/carbon/human/human_victim = L?.owner
-	if(human_victim)
-		no_bleeding = (NOBLOOD in human_victim.dna.species.species_traits)
-		if(no_bleeding)
-			if(examine_desc_bleedless)
-				examine_desc = examine_desc_bleedless
-			if(occur_text_bleedless)
-				occur_text = occur_text_bleedless
-
 	set_victim(L.owner)
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
+	//it's ok to not typecheck, humans are the only ones that deal with wounds
+	var/mob/living/carbon/human/human_victim = victim
+	no_bleeding = (NOBLOOD in human_victim?.dna.species.species_traits)
+	update_descriptions()
 	limb.update_wounds()
 	if(status_effect_type)
 		victim.apply_status_effect(status_effect_type, src)
@@ -176,6 +166,10 @@
 	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)
 		second_wind()
+
+// Updates descriptive texts for the wound, in case it can get altered for whatever reason
+/datum/wound/proc/update_descriptions()
+	return
 
 /datum/wound/proc/null_victim()
 	SIGNAL_HANDLER

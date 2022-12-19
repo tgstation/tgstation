@@ -271,14 +271,12 @@
 	else if(demotes_to)
 		to_chat(user, span_green("You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts."))
 
-
 /datum/wound/slash/moderate
 	name = "Rough Abrasion"
 	desc = "Patient's skin has been badly scraped, generating moderate blood loss."
 	treat_text = "Application of clean bandages or first-aid grade sutures, followed by food and rest."
 	examine_desc = "has an open cut"
 	occur_text = "is cut open, slowly leaking blood"
-	occur_text_bleedless = "is cut open"
 	sound_effect = 'sound/effects/wounds/blood1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 2
@@ -289,13 +287,17 @@
 	status_effect_type = /datum/status_effect/wound/slash/moderate
 	scar_keyword = "slashmoderate"
 
+/datum/wound/slash/moderate/update_descriptions()
+	. = ..()
+	if(no_bleeding)
+		occur_text = "is cut open"
+
 /datum/wound/slash/severe
 	name = "Open Laceration"
 	desc = "Patient's skin is ripped clean open, allowing significant blood loss."
 	treat_text = "Speedy application of first-aid grade sutures and clean bandages, followed by vitals monitoring to ensure recovery."
 	examine_desc = "has a severe cut"
 	occur_text = "is ripped open, veins spurting blood"
-	occur_text_bleedless = "is ripped open"
 	sound_effect = 'sound/effects/wounds/blood2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 3.25
@@ -306,6 +308,11 @@
 	demotes_to = /datum/wound/slash/moderate
 	status_effect_type = /datum/status_effect/wound/slash/severe
 	scar_keyword = "slashsevere"
+
+/datum/wound/slash/severe/update_descriptions()
+	. = ..()
+	if(no_bleeding)
+		occur_text = "is ripped open"
 
 /datum/wound/slash/critical
 	name = "Weeping Avulsion"
@@ -337,5 +344,9 @@
 /datum/wound/slash/critical/cleave
 	name = "Burning Avulsion"
 	examine_desc = "is ruptured, spraying blood wildly"
-	examine_desc_bleedless = "is ruptured"
 	clot_rate = 0.01
+
+/datum/wound/slash/critical/cleave/update_descriptions()
+	. = ..()
+	if(no_bleeding)
+		occur_text = "is ruptured"

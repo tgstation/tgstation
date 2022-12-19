@@ -145,9 +145,7 @@
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
 	treat_text = "Treat affected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // space is cold in ss13, so it's like an ice pack!
 	examine_desc = "has a small, circular hole, gently bleeding"
-	examine_desc_bleedless = "has a small, circular hole"
 	occur_text = "spurts out a thin stream of blood"
-	occur_text_bleedless = "splits a small hole open"
 	sound_effect = 'sound/effects/wounds/pierce1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 1.5
@@ -159,13 +157,18 @@
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
 
+/datum/wound/pierce/moderate/update_descriptions()
+	. = ..()
+	if(no_bleeding)
+		examine_desc = "has a small, circular hole"
+		occur_text = "splits a small hole open"
+
 /datum/wound/pierce/severe
 	name = "Open Puncture"
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and reduced limb stability."
 	treat_text = "Repair punctures in skin by suture or cautery, extreme cold may also work."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
-	occur_text_bleedless = "tears a hole open"
 	sound_effect = 'sound/effects/wounds/pierce2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 2.25
@@ -176,6 +179,11 @@
 	threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
+
+/datum/wound/pierce/severe/update_descriptions()
+	. = ..()
+	if(no_bleeding)
+		occur_text = "tears a hole open"
 
 /datum/wound/pierce/critical
 	name = "Ruptured Cavity"
