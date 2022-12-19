@@ -13,16 +13,6 @@
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
 
-/obj/machinery/light/alarm/examine(mob/user)
-	. = ..()
-	if(status == LIGHT_OK)
-		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_RED)
-			. += span_alert("There is currently a Code Red situation on the station!")
-		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
-			. += span_alert("There is currently a Code Delta situation on the station!")
-		if(SSsecurity_level.get_current_level_as_number() <= SEC_LEVEL_BLUE)
-			. += span_notice("There is currently no emergencies on the station.")
-
 /obj/machinery/light/alarm/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(emergency))
