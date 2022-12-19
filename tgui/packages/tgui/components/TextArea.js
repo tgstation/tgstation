@@ -186,7 +186,7 @@ export class TextArea extends Component {
       ...boxProps
     } = this.props;
     // Box props
-    const { className, fluid, ...rest } = boxProps;
+    const { className, fluid, nowrap, ...rest } = boxProps;
     const { scrolledAmount } = this.state;
     return (
       <Box
@@ -216,6 +216,7 @@ export class TextArea extends Component {
           className={classes([
             'TextArea__textarea',
             scrollbar && 'TextArea__textarea--scrollable',
+            nowrap && 'TextArea__nowrap',
           ])}
           placeholder={placeholder}
           onChange={this.handleOnChange}

@@ -185,3 +185,8 @@
 	if(user.incapacitated())
 		return
 	return relaydrive(user, direction)
+
+/mob/living/basic/get_status_tab_items()
+	. = ..()
+	. += "Health: [round((health / maxHealth) * 100)]%"
+	. += "Combat Mode: [combat_mode ? "On" : "Off"]"

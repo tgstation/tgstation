@@ -276,7 +276,7 @@ Behavior that's still missing from this component that original food items had t
 
 	this_food.reagents.maximum_volume = ROUND_UP(this_food.reagents.maximum_volume) // Just because I like whole numbers for this.
 
-	SSblackbox.record_feedback("tally", "food_made", 1, type)
+	BLACKBOX_LOG_FOOD_MADE(this_food.type)
 
 ///Makes sure the thing hasn't been destroyed or fully eaten to prevent eating phantom edibles
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
