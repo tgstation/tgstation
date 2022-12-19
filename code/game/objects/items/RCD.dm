@@ -379,9 +379,8 @@ RLD
 	var/design_category = "Structures"
 	var/root_category = "Construction"
 	var/closed = FALSE
-	///used by construction_console
-	var/ui_always_active = FALSE
-
+	///owner of this rcd. It can either be an construction console or an player
+	var/owner
 	var/mode = RCD_FLOORWALL
 	var/construction_mode = RCD_FLOORWALL
 	var/ranged = FALSE
@@ -555,7 +554,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	GLOB.rcd_list -= src
 	. = ..()
 
-
 /obj/item/construction/rcd/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/rcd),
@@ -567,12 +565,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		ui = new(user, src, "RapidConstructionDevice", name)
 		ui.open()
 
-/**
- * if ui_always_active = TRUE display & update window even if nothing changed, required for construction_console else window wont show up
- * else use parent method to decide the state for normal usage
- */
-/obj/item/construction/rcd/ui_state(mob/user)
-	return ui_always_active ? GLOB.always_state : ..()
+/obj/item/construction/rcd/ui_host(mob/user)
+	return owner || ..()
 
 /obj/item/construction/rcd/ui_static_data(mob/user)
 	return airlock_electronics.ui_static_data(user)
@@ -642,8 +636,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/ui_act(action, params)
 	..()
 	if(.)
-		return
-	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 
 	switch(action)
