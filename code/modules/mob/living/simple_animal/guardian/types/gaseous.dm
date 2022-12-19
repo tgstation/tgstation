@@ -1,15 +1,15 @@
-//Atmospheric
-/mob/living/simple_animal/hostile/guardian/atmospheric
+//Gaseous
+/mob/living/simple_animal/hostile/guardian/gaseous
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 0)
 	range = 7
-	playstyle_string = span_holoparasite("As an <b>atmospheric</b> type, you have only light damage resistance, but you can expel gas in an area. In addition, your punches cause sparks, and you make your summoner inflammable.")
-	magic_fluff_string = span_holoparasite("..And draw the Atmospheric Technician, flooding the area with air!")
+	playstyle_string = span_holoparasite("As a <b>gaseous</b> type, you have only light damage resistance, but you can expel gas in an area. In addition, your punches cause sparks, and you make your summoner inflammable.")
+	magic_fluff_string = span_holoparasite("..And draw the Atmospheric Technician, flooding the area with gas!")
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Atmospheric modules activated. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.")
 	miner_fluff_string = span_holoparasite("You encounter... Plasma, the bringer of fire.")
-	toggle_button_type = /atom/movable/screen/guardian/toggle_mode/atmospheric
+	toggle_button_type = /atom/movable/screen/guardian/toggle_mode/gases
 	/// Gas being expelled.
 	var/expelled_gas = null
 	/// How much gas we expel per second.
@@ -35,29 +35,29 @@
 		/datum/gas/bz = "#FAFF00", //color of the bz metabolites reagent
 	)
 
-/mob/living/simple_animal/hostile/guardian/atmospheric/Initialize(mapload, theme)
+/mob/living/simple_animal/hostile/guardian/gaseous/Initialize(mapload, theme)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure))
 
-/mob/living/simple_animal/hostile/guardian/atmospheric/AttackingTarget(atom/attacked_target)
+/mob/living/simple_animal/hostile/guardian/gaseous/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(!isliving(target))
 		return
 	do_sparks(1, TRUE, target)
 
-/mob/living/simple_animal/hostile/guardian/atmospheric/Recall(forced)
+/mob/living/simple_animal/hostile/guardian/gaseous/Recall(forced)
 	expelled_gas = null
 	QDEL_NULL(particles) //need to delete before putting in another object
 	. = ..()
 	if(.)
 		UnregisterSignal(summoner, COMSIG_ATOM_PRE_PRESSURE_PUSH)
 
-/mob/living/simple_animal/hostile/guardian/atmospheric/Manifest(forced)
+/mob/living/simple_animal/hostile/guardian/gaseous/Manifest(forced)
 	. = ..()
 	if(.)
 		RegisterSignal(summoner, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure))
 
-/mob/living/simple_animal/hostile/guardian/atmospheric/Life(delta_time, times_fired)
+/mob/living/simple_animal/hostile/guardian/gaseous/Life(delta_time, times_fired)
 	. = ..()
 	summoner.extinguish_mob()
 	summoner.adjust_fire_stacks(-10 * delta_time)
@@ -71,7 +71,7 @@
 	var/turf/open/our_turf = get_turf(src)
 	our_turf.assume_air(mix_to_spawn)
 
-/mob/living/simple_animal/hostile/guardian/atmospheric/ToggleMode()
+/mob/living/simple_animal/hostile/guardian/gaseous/ToggleMode()
 	var/list/gases = list("None")
 	for(var/datum/gas/gas as anything in possible_gases)
 		gases[initial(gas.name)] = gas
@@ -85,6 +85,7 @@
 	if(!picked_gas || !gas_type)
 		return
 	to_chat(src, span_bolddanger("You are now expelling [picked_gas]."))
+	investigate_log("controlled by [key_name(user)] set their gas type to [picked_gas].", INVESTIGATE_ATMOS)
 	expelled_gas = gas_type
 	if(!particles)
 		particles = new /particles/smoke/steam()
@@ -93,6 +94,6 @@
 		particles.height = 200
 	particles.color = gas_colors[gas_type]
 
-/mob/living/simple_animal/hostile/guardian/atmospheric/proc/stop_pressure(datum/source)
+/mob/living/simple_animal/hostile/guardian/gaseous/proc/stop_pressure(datum/source)
 	SIGNAL_HANDLER
 	return COMSIG_ATOM_BLOCKS_PRESSURE

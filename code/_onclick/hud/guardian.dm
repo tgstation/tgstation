@@ -157,8 +157,8 @@
 	name = "Toggle Stealth"
 	desc = "Enter or exit stealth."
 
-/atom/movable/screen/guardian/toggle_mode/atmospheric
-	icon_state = "atmospheric"
+/atom/movable/screen/guardian/toggle_mode/gases
+	icon_state = "gases"
 	name = "Toggle Gas"
 	desc = "Switch between possible gases."
 
