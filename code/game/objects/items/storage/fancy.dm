@@ -218,7 +218,36 @@
 
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
+	atom_storage.display_contents = FALSE
 	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	register_context()
+
+/obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+
+/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
+	. = ..()
+	var/obj/item/lighting = locate(/obj/item/lighter) in contents
+	if(lighting)
+		quick_remove_item(lighting, user)
+	else
+		quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+
+/// Removes an item from the packet if there is one
+/obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user)
+	var/obj/item/finger = locate(grabbies) in contents
+	if(finger)
+		atom_storage.attempt_remove(finger, drop_location())
+		user.put_in_hands(finger)
+
+/obj/item/storage/fancy/cigarettes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/obj/item/lighting = locate(/obj/item/lighter) in contents
+	if(lighting)
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Remove lighter"
+	context[SCREENTIP_CONTEXT_RMB] = "Remove [contents_tag]"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
