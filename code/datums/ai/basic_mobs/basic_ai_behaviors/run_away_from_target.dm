@@ -21,7 +21,7 @@
 	var/atom/target = weak_target?.resolve()
 	var/escaped =  !target || !can_see(controller.pawn, target, run_distance) // If we can't see it we got away
 	if (escaped)
-		finish_action(controller, succeeded = TRUE)
+		finish_action(controller, succeeded = TRUE, target_key = target_key, hiding_location_key = hiding_location_key)
 		return
 	if (!in_range(controller.pawn, controller.current_movement_target))
 		return
@@ -31,3 +31,7 @@
 	var/run_direction = get_dir(controller.pawn, get_step_away(controller.pawn, target))
 	var/turf/target_destination = get_ranged_target_turf(controller.pawn, run_direction, run_distance)
 	set_movement_target(controller, target_destination)
+
+/datum/ai_behavior/run_away_from_target/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
+	. = ..()
+	controller.blackboard[target_key] = null

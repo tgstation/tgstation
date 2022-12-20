@@ -36,7 +36,7 @@
 	/// Probability that, if we successfully bite a shocked cable, that we will die to it.
 	var/cable_zap_prob = 85
 
-/mob/living/basic/mouse/Initialize(mapload)
+/mob/living/basic/mouse/Initialize(mapload, tame = FALSE)
 	. = ..()
 	if(contributes_to_ratcap)
 		SSmobs.cheeserats |= src
@@ -48,6 +48,10 @@
 		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
+	if (!tame)
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	else
+		faction += FACTION_NEUTRAL
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -137,6 +141,14 @@
 	if(ishuman(entered) && stat == CONSCIOUS)
 		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
 
+/// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
+/mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+	new /obj/effect/temp_visual/heart(loc)
+	visible_message(span_notice("[src] becomes accustomed to your presence."))
+	faction += FACTION_NEUTRAL
+	try_consume_cheese(cheese)
+	ai_controller.CancelActions() // Interrupt any current fleeing
+
 /// Attempts to consume a piece of cheese, causing a few effects.
 /mob/living/basic/mouse/proc/try_consume_cheese(obj/item/food/cheese/cheese)
 	// Royal cheese will evolve us into a regal rat
@@ -183,7 +195,7 @@
 
 /// Creates a new mouse based on this mouse's subtype.
 /mob/living/basic/mouse/proc/create_a_new_rat()
-	new /mob/living/basic/mouse(loc)
+	new /mob/living/basic/mouse(loc, TRUE)
 
 /// Biting into a cable will cause a mouse to get shocked and die if applicable. Or do nothing if they're lucky.
 /mob/living/basic/mouse/proc/try_bite_cable(obj/structure/cable/cable)
