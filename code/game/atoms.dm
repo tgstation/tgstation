@@ -185,8 +185,6 @@
  * result is that the Intialize proc is called.
  *
  */
-GLOBAL_LIST_EMPTY(post_init_cost)
-GLOBAL_LIST_EMPTY(post_init_count)
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && src.type == GLOB._preloader_path)//in case the instanciated atom is creating other atoms in New()
@@ -198,10 +196,6 @@ GLOBAL_LIST_EMPTY(post_init_count)
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-	else if (SSinit_profiler.initialized) // Yes I know but this is temporary
-		INIT_COST(GLOB.post_init_cost, GLOB.post_init_count)
-		SET_COST("[time_stamp()]: [type] failed to init")
-		EXPORT_STATS_TO_FILE_LATER("lemon.log", GLOB.post_init_cost, GLOB.post_init_count)
 
 /**
  * The primary method that objects are setup in SS13 with
