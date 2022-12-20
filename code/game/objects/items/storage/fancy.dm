@@ -218,13 +218,11 @@
 
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
-	atom_storage.quickdraw = TRUE
 	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Alt-click to extract contents.")
 	if(spawn_coupon)
 		. += span_notice("There's a coupon on the back of the pack! You can tear it off once it's empty.")
 
