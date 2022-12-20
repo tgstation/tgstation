@@ -419,15 +419,23 @@
 		unlock_note = "<B>Uplink Degrees:</B> [english_list(unlock_code)] ([P.name])."
 
 /datum/component/uplink/proc/generate_code()
-	if(istype(parent,/obj/item/modular_computer/pda))
-		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
-	else if(istype(parent,/obj/item/radio))
-		return pick(GLOB.phonetic_alphabet)
-	else if(istype(parent,/obj/item/pen))
-		var/list/L = list()
+	var/returnable_code = ""
+
+	if(istype(parent, /obj/item/modular_computer/pda))
+		returnable_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+
+	else if(istype(parent, /obj/item/radio))
+		returnable_code = pick(GLOB.phonetic_alphabet)
+
+	else if(istype(parent, /obj/item/pen))
+		returnable_code = list()
 		for(var/i in 1 to PEN_ROTATIONS)
-			L += rand(1, 360)
-		return L
+			returnable_code += rand(1, 360)
+
+	if(unlock_code == returnable_code)
+		return generate_code() // Not really a good idea to have the same code twice in a row (prevents failsafe code being the same as your unlock code)
+
+	return returnable_code
 
 /datum/component/uplink/proc/failsafe(mob/living/carbon/user)
 	if(!parent)
