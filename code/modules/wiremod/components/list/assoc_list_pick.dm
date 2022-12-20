@@ -17,7 +17,7 @@
 
 
 	var/datum/port/output/output
-	var/datum/port/output/succes
+	var/datum/port/output/success
 	var/datum/port/output/failure
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
@@ -38,7 +38,7 @@
 	output = add_output_port("Picked Item", PORT_TYPE_NUMBER)
 	trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL)
 	failure = add_output_port("On Failure", PORT_TYPE_SIGNAL)
-	succes = add_output_port("On Succes", PORT_TYPE_SIGNAL)
+	success = add_output_port("On Success", PORT_TYPE_SIGNAL)
 
 
 /obj/item/circuit_component/assoc_list_pick/pre_input_received(datum/port/input/port)
@@ -63,7 +63,7 @@
 	var/picked = tgui_input_list(user, message = message || "circuit input", items = showed_list)
 	if(showed_list[picked])
 		output.set_output(showed_list[picked])
-		succes.set_output(COMPONENT_SIGNAL)
+		success.set_output(COMPONENT_SIGNAL)
 	else
 		failure.set_output(COMPONENT_SIGNAL)
 
