@@ -51,7 +51,7 @@
 #define EXPORT_STATS_TO_JSON_LATER(filename, costs, counts) EXPORT_STATS_TO_FILE_LATER(filename, costs, counts, stat_tracking_export_to_json_later)
 #define EXPORT_STATS_TO_CSV_LATER(filename, costs, counts) EXPORT_STATS_TO_FILE_LATER(filename, costs, counts, stat_tracking_export_to_csv_later)
 
-#define EXPORT_STATS_TO_FILE_LATER(filename, costs, counts, proc)
+#define EXPORT_STATS_TO_FILE_LATER(filename, costs, counts, proc) \
 	do { \
 		var/static/last_export = 0; \
 		if (world.time - last_export > 1.1 SECONDS) { \
