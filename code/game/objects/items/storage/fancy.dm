@@ -228,9 +228,9 @@
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/user)
 	. = ..()
-	var/obj/item/lighting = locate(/obj/item/lighter) in contents
-	if(lighting)
-		quick_remove_item(lighting, user)
+	var/obj/item/lighter = locate(/obj/item/lighter) in contents
+	if(lighter)
+		quick_remove_item(lighter, user)
 	else
 		quick_remove_item(/obj/item/clothing/mask/cigarette, user)
 
@@ -243,9 +243,9 @@
 
 /obj/item/storage/fancy/cigarettes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	var/obj/item/lighting = locate(/obj/item/lighter) in contents
-	if(lighting)
-		context[SCREENTIP_CONTEXT_ALT_RMB] = "Remove lighter"
+	var/obj/item/lighter = locate(/obj/item/lighter) in contents
+	if(lighter)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove lighter"
 	context[SCREENTIP_CONTEXT_RMB] = "Remove [contents_tag]"
 	return CONTEXTUAL_SCREENTIP_SET
 
