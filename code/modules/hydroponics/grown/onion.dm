@@ -65,7 +65,7 @@
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/food/onion_slice/make_microwavable()
+/obj/item/food/onion_slice/MakeMicrowaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/onionrings)
 
 /obj/item/food/onion_slice/red

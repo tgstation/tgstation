@@ -10,7 +10,10 @@
 	desc = "A slab of meat."
 	icon_state = "meat"
 	bite_consumption = 3
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/cooking_oil = 2) //Meat has fats that a food processor can process into cooking oil
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/cooking_oil = 2,
+	) //Meat has fats that a food processor can process into cooking oil
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
 	///Legacy code, handles the coloring of the overlay of the cutlets made from this.
@@ -44,7 +47,10 @@
 /obj/item/food/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
 	desc = "Because jello wasn't offensive enough to vegans."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/slimejelly = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/toxin/slimejelly = 3,
+	)
 	tastes = list("slime" = 1, "jelly" = 1)
 	foodtypes = MEAT | RAW | TOXIC
 	venue_value = FOOD_MEAT_MUTANT_RARE
@@ -52,7 +58,10 @@
 /obj/item/food/meat/slab/human/mutant/golem
 	icon_state = "golemmeat"
 	desc = "Edible rocks, welcome to the future."
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/iron = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/iron = 3,
+	)
 	tastes = list("rock" = 1)
 	foodtypes = MEAT | RAW | GROSS
 	venue_value = FOOD_MEAT_MUTANT_RARE
@@ -89,7 +98,10 @@
 /obj/item/food/meat/slab/human/mutant/fly
 	icon_state = "flymeat"
 	desc = "Nothing says tasty like maggot filled radioactive mutant flesh."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/uranium = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/uranium = 3,
+	)
 	tastes = list("maggots" = 1, "the inside of a reactor" = 1)
 	foodtypes = MEAT | RAW | GROSS | BUGS | GORE
 	venue_value = FOOD_MEAT_MUTANT
@@ -133,7 +145,7 @@
 	name = "synthmeat"
 	icon_state = "meat_old"
 	desc = "A synthetic slab of meat."
-	foodtypes = RAW | MEAT //hurr durr chemicals we're harmed in the production of this meat thus its non-vegan.
+	foodtypes = RAW | MEAT //hurr durr chemicals were harmed in the production of this meat thus its non-vegan.
 	venue_value = FOOD_PRICE_WORTHLESS
 
 /obj/item/food/meat/slab/synthmeat/MakeGrillable()
@@ -213,7 +225,12 @@
 	name = "bear meat"
 	desc = "A very manly slab of meat."
 	icon_state = "bearmeat"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/medicine/morphine = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/cooking_oil = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 16,
+		/datum/reagent/medicine/morphine = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/cooking_oil = 6,
+	)
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtypes = RAW | MEAT
 
@@ -231,7 +248,10 @@
 	name = "xeno meat"
 	desc = "A slab of meat."
 	icon_state = "xenomeat"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
 	bite_consumption = 4
 	tastes = list("meat" = 1, "acid" = 1)
 	foodtypes = RAW | MEAT
@@ -246,7 +266,11 @@
 	name = "spider meat"
 	desc = "A slab of spider meat. That is so Kafkaesque."
 	icon_state = "spidermeat"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/toxin = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/toxin = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("cobwebs" = 1)
 	foodtypes = RAW | MEAT | TOXIC
 
@@ -259,7 +283,11 @@
 /obj/item/food/meat/slab/goliath
 	name = "goliath meat"
 	desc = "A slab of goliath meat. It's not very edible now, but it cooks great in lava."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/toxin = 5, /datum/reagent/consumable/cooking_oil = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/toxin = 5,
+		/datum/reagent/consumable/cooking_oil = 3,
+	)
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
 	foodtypes = RAW | MEAT | TOXIC
@@ -281,14 +309,21 @@
 /obj/item/food/meat/slab/gorilla
 	name = "gorilla meat"
 	desc = "Much meatier than monkey meat."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/cooking_oil = 5) //Plenty of fat!
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/cooking_oil = 5, //Plenty of fat!
+	)
 
 /obj/item/food/meat/rawbacon
 	name = "raw piece of bacon"
 	desc = "A raw piece of bacon."
 	icon_state = "baconb"
 	bite_consumption = 2
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/cooking_oil = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/cooking_oil = 3,
+	)
 	tastes = list("bacon" = 1)
 	foodtypes = RAW | MEAT
 
@@ -299,7 +334,11 @@
 	name = "piece of bacon"
 	desc = "A delicious piece of bacon."
 	icon_state = "baconcookedb"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/cooking_oil = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/cooking_oil = 2,
+	)
 	tastes = list("bacon" = 1)
 	foodtypes = MEAT | BREAKFAST
 	burns_on_grill = TRUE
@@ -307,7 +346,11 @@
 /obj/item/food/meat/slab/gondola
 	name = "gondola meat"
 	desc = "According to legends of old, consuming raw gondola flesh grants one inner peace."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/gondola_mutation_toxin = 5, /datum/reagent/consumable/cooking_oil = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/gondola_mutation_toxin = 5,
+		/datum/reagent/consumable/cooking_oil = 3,
+	)
 	tastes = list("meat" = 4, "tranquility" = 1)
 	foodtypes = RAW | MEAT
 
@@ -321,7 +364,10 @@
 	name = "penguin meat"
 	icon_state = "birdmeat"
 	desc = "A slab of penguin meat."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/cooking_oil = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/cooking_oil = 3,
+	)
 	tastes = list("beef" = 1, "cod fish" = 1)
 
 /obj/item/food/meat/slab/penguin/MakeProcessable()
@@ -336,7 +382,10 @@
 	desc = "A pile of raw crab meat."
 	icon_state = "crabmeatraw"
 	bite_consumption = 3
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/cooking_oil = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/cooking_oil = 3,
+	)
 	tastes = list("raw crab" = 1)
 	foodtypes = RAW | MEAT
 
@@ -347,7 +396,11 @@
 	name = "crab meat"
 	desc = "Some deliciously cooked crab meat."
 	icon_state = "crabmeat"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/cooking_oil = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/cooking_oil = 2,
+	)
 	tastes = list("crab" = 1)
 	foodtypes = SEAFOOD
 	burns_on_grill = TRUE
@@ -371,6 +424,7 @@
 
 /obj/item/food/meat/slab/pig
 	name = "raw pork"
+	desc = "A slab of raw pork. This little piggy went to the butcher's."
 	icon_state = "pig_meat"
 	tastes = list("pig" = 1)
 	foodtypes = RAW | MEAT | GORE
@@ -384,7 +438,10 @@
 	name = "steak"
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	foodtypes = MEAT
 	tastes = list("meat" = 1)
 	burns_on_grill = TRUE
@@ -479,6 +536,7 @@
 
 /obj/item/food/meat/steak/plain/pig
 	name = "pork chops"
+	desc = "A pork chop. Quit bustin' my chops!"
 	icon_state = "pigsteak"
 	tastes = list("pig" = 1)
 	foodtypes = MEAT
@@ -513,8 +571,6 @@
 
 /obj/item/food/meat/rawcutlet/plain
 	foodtypes = MEAT
-
-/obj/item/food/meat/rawcutlet/plain
 
 /obj/item/food/meat/rawcutlet/plain/human
 	tastes = list("tender meat" = 1)
@@ -553,6 +609,7 @@
 
 /obj/item/food/meat/rawcutlet/bear/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/bear, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+
 /obj/item/food/meat/rawcutlet/xeno
 	name = "raw xeno cutlet"
 	tastes = list("meat" = 1, "acid" = 1)
@@ -566,12 +623,14 @@
 
 /obj/item/food/meat/rawcutlet/spider/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/spider, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+
 /obj/item/food/meat/rawcutlet/gondola
 	name = "raw gondola cutlet"
 	tastes = list("meat" = 1, "tranquility" = 1)
 
 /obj/item/food/meat/rawcutlet/gondola/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/gondola, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+
 /obj/item/food/meat/rawcutlet/penguin
 	name = "raw penguin cutlet"
 	tastes = list("beef" = 1, "cod fish" = 1)
