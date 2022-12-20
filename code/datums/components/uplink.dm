@@ -134,7 +134,7 @@
 
 	if(user != owner)
 		return
-	examine_list += span_warning("\The [parent] contains your hidden uplink.")
+	examine_list += span_warning("[parent] contains your hidden uplink.")
 	if(unlock_code)
 		examine_list += span_warning("The code to unlock it is [unlock_code].")
 	if(failsafe_code)
