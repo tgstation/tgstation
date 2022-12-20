@@ -419,8 +419,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(.)
 		return
 
-	if(!usr.canUseTopic(src, be_close = TRUE))
-		return
 	var/playeffect = TRUE
 	switch(action)
 		if("color")

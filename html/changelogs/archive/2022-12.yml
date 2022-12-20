@@ -628,3 +628,65 @@
   Time-Green:
   - bugfix: Podperson hair isnt fugly anymore
   - code_imp: External organs now support different colors for different layers
+2022-12-19:
+  Fikou:
+  - bugfix: fixes timid kudzu being weird on multi z
+  - balance: limits the power miners the dusty shard can summon to charger, protector,
+      ranged, standard and support
+  GoldenAlpharex:
+  - rscadd: Added the *hand emote, which you can offer to someone standing up in order
+      to give them the possibility to grab onto your hand and let you drag them away,
+      or to someone lying down to help them back up, which always makes everyone involved
+      a little happier!
+  - refactor: De-hardcoded and genericized a lot of the offering status effect and
+      alert code, to make it require a lot less copy-paste to handle new cases.
+  - bugfix: Offering a kiss no longer requires the receiver to have free hands to
+      accept said kiss!
+  Jacquerel:
+  - bugfix: Rats will once again attempt to attack windows or other dense objects
+      separating them from their targets.
+  - rscadd: Mice will now run away from you, you have to catch them if you want to
+      eat them. Use those traps!
+  - rscadd: Rabbits, Sheep, and Pigs likewise won't just sit there and let you pulverise
+      them if they can see an escape route.
+  JohnFulpWillard:
+  - bugfix: Gibbers no longer show up twice in their techweb node.
+  Melbert:
+  - bugfix: Detective Scanner can scan stuff that contains blood again.
+  Profakos:
+  - bugfix: in the round end report, progression points are converted to reputation
+  ShizCalev:
+  - spellcheck: Corrected some grammar issues with messages displayed when shoving
+      people into lockers.
+  - admin: Fixed shoving people into a locker not being combat logged properly.
+  TheBoondock:
+  - balance: fixed chameleon vest not being able to hold any kind of gun
+  Thunder12345:
+  - bugfix: Machine frames will no longer ask for "s" in place of some components
+  carshalash:
+  - balance: Gatfruit seeds will no longer drop from ice portals.
+  flowercuco:
+  - bugfix: CentComm has noticed that the research director has been hoarding turtlenecks,
+      corrective action has been taken
+  lizardqueenlexi:
+  - bugfix: Non-human characters will not sometimes display an incorrect level of
+      blood loss on examine.
+  san7890:
+  - bugfix: When you unwrench a flag, you should now no longer see the big flashy
+      red ERROR sign.
+2022-12-20:
+  Jacquerel:
+  - bugfix: Rats won't continue attacking someone they've been ordered to kill past
+      the point of death.
+  MidoriWroth:
+  - rscadd: Adds 32 new foods!
+  - rscadd: You can make vinegar from equal parts water/sugar/wine
+  - rscadd: Tortillas can now be grilled to make hard-shell tacos, which can be used
+      to make the new tacos or custom tacos all-together.
+  - balance: Uncooked rice is now made from mixing 10 units rice/water in any container,
+      no longer requiring a bowl to do so. Recipes that previously used bowls of rice
+      now need boiled rice and a bowl, instead.
+  fikou:
+  - rscdel: chaos holoparasite
+  - rscadd: gaseous holoparasite, it can expel various gases from its body and stabilizes
+      the users temperature

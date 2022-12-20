@@ -1,0 +1,4 @@
+author: "EvilDragonfiend"
+delete-after: True
+changes:
+  - bugfix: "vendor no longer shows glass icons in a specific condition"

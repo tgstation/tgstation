@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "Mice will now run away from you, you have to catch them if you want to eat them. Use those traps!"
-  - rscadd: "Rabbits, Sheep, and Pigs likewise won't just sit there and let you pulverise them if they can see an escape route."
