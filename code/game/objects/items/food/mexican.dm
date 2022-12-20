@@ -150,11 +150,6 @@
 	name = "fish taco"
 	desc = "A taco with fish, cheese, and cabbage."
 	icon_state = "fishtaco"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 2,
-		/datum/reagent/consumable/nutriment/protein = 3,
-		/datum/reagent/consumable/nutriment/vitamin = 2,
-	)
 	tastes = list("taco" = 4, "fish" = 2, "cheese" = 2, "cabbage" = 1)
 	foodtypes = SEAFOOD | DAIRY | GRAIN | VEGETABLES
 
