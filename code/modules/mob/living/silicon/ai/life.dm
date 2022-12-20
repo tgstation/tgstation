@@ -62,6 +62,7 @@
 	update_stat()
 	diag_hud_set_health()
 	disconnect_shell()
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/silicon/ai/update_stat()
 	if(status_flags & GODMODE)

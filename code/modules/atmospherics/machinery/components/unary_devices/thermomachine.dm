@@ -198,7 +198,8 @@
 		return
 	color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
 	set_pipe_color(GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]])
-	visible_message("<span class='notice'>You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]].")
+	visible_message(span_notice("[user] set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."), ignored_mobs = user)
+	to_chat(user, span_notice("You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."))
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

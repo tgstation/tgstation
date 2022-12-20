@@ -40,7 +40,7 @@
 
 	if(!isnum(held_index))
 		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
-		
+
 	var/oindex = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
@@ -406,17 +406,6 @@
 			var/turf/target = get_turf(loc)
 			I.safe_throw_at(target,I.throw_range,I.throw_speed,src, force = move_force)
 
-/mob/living/carbon/get_status_tab_items()
-	. = ..()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
-	if(vessel)
-		. += "Plasma Stored: [vessel.stored_plasma]/[vessel.max_plasma]"
-	var/obj/item/organ/internal/heart/vampire/darkheart = getorgan(/obj/item/organ/internal/heart/vampire)
-	if(darkheart)
-		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."
-	if(locate(/obj/item/assembly/health) in src)
-		. += "Health: [health]"
-
 /mob/living/carbon/attack_ui(slot, params)
 	if(!has_hand_for_held_index(active_hand_index))
 		return 0
@@ -536,7 +525,7 @@
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
-	SEND_SIGNAL(src, COMSIG_CARBON_HEALTH_UPDATE)
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()

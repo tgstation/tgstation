@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(SSmapping.z_level_to_plane_offset[z])
 		var/area/thisarea = get_area(W)
 		if(thisarea.lighting_effects)
-			W.add_overlay(thisarea.lighting_effects[SSmapping.z_level_to_plane_offset[z]])
+			W.add_overlay(thisarea.lighting_effects[SSmapping.z_level_to_plane_offset[z] + 1])
 
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
