@@ -1,8 +1,6 @@
 GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
-#define GUARDIAN_COLOR_LAYER 2
-#define GUARDIAN_HANDS_LAYER 1
-#define GUARDIAN_TOTAL_LAYERS 2
+#define SUMMONER_HEALTH_PERCENTAGE ((iscarbon(summoner) ? (abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) : (summoner.health / summoner.maxHealth)) * 100)
 
 /mob/living/simple_animal/hostile/guardian
 	name = "Guardian Spirit"
@@ -311,8 +309,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/get_status_tab_items()
 	. += ..()
 	if(summoner)
-		var/resulthealth = (iscarbon(summoner) ? (abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) : (summoner.health / summoner.maxHealth)) * 100
-		. += "Summoner Health: [round(resulthealth, 0.5)]%"
+		var/healthpercent = SUMMONER_HEALTH_PERCENTAGE
+		. += "Summoner Health: [round(healthpercent, 0.5)]%"
 	if(!COOLDOWN_FINISHED(src, manifest_cooldown))
 		. += "Manifest/Recall Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, manifest_cooldown))]"
 
@@ -359,7 +357,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(!summoner)
 		return
 	var/severity = 0
-	var/healthpercent = (iscarbon(summoner) ? (abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) : (summoner.health / summoner.maxHealth)) * 100
+	var/healthpercent = SUMMONER_HEALTH_PERCENTAGE
 	switch(healthpercent)
 		if(100 to INFINITY)
 			severity = 0
@@ -621,3 +619,5 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /// Returns true if this holoparasite has the same summoner as the passed holoparasite.
 /mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/other_guardian)
 	return istype(other_guardian) && other_guardian.summoner == summoner
+
+#undef SUMMONER_HEALTH_PERCENTAGE

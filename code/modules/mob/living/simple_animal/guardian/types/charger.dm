@@ -28,12 +28,13 @@
 		chargealert = null
 
 /mob/living/simple_animal/hostile/guardian/charger/OpenFire(atom/target)
-	if(!charging)
-		visible_message(span_danger("<b>[src]</b> [ranged_message] at [target]!"))
-		COOLDOWN_START(src, ranged_cooldown, ranged_cooldown_time)
-		clear_alert(ALERT_CHARGE)
-		chargealert = null
-		Shoot(target)
+	if(charging)
+		return
+	visible_message(span_danger("<b>[src]</b> [ranged_message] at [target]!"))
+	COOLDOWN_START(src, ranged_cooldown, ranged_cooldown_time)
+	clear_alert(ALERT_CHARGE)
+	chargealert = null
+	Shoot(target)
 
 /mob/living/simple_animal/hostile/guardian/charger/Shoot(atom/targeted_atom)
 	charging = TRUE
@@ -54,16 +55,13 @@
 /mob/living/simple_animal/hostile/guardian/charger/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!charging)
 		return ..()
-	if(!isliving(hit_atom) || hit_atom == summoner)
+	if(!isliving(hit_atom) || hit_atom == summoner || hasmatchingsummoner(hit_atom))
 		return
 	var/mob/living/hit_mob = hit_atom
-	var/blocked = hasmatchingsummoner(hit_mob)
-	if(!blocked && ishuman(hit_mob))
+	if(ishuman(hit_mob))
 		var/mob/living/carbon/human/hit_human = hit_mob
-		if(hit_human.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
-			blocked = TRUE
-	if(blocked)
-		return
+		if(hit_human.check_shields(src, 90, name, attack_type = THROWN_PROJECTILE_ATTACK))
+			return
 	hit_mob.drop_all_held_items()
 	hit_mob.visible_message(span_danger("[src] slams into [hit_mob]!"), span_userdanger("[src] slams into you!"))
 	hit_mob.apply_damage(20, BRUTE)

@@ -80,7 +80,10 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 			return
 	used = TRUE
 	to_chat(user, use_message)
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the [random ? "" : (initial(guardian_path.creator_name) + " ")][mob_name] of [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
+	var/guardian_type_name = "a random"
+	if(!random)
+		guardian_type_name = "the " + lowertext(initial(guardian_path.creator_name))
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as [guardian_type_name] [mob_name] of [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick(candidates)
 		spawn_guardian(user, candidate, guardian_path)

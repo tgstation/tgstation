@@ -20,12 +20,14 @@
 	/// Gravity added to turfs.
 	var/turf_gravity = 3
 
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/Initialize(mapload, theme)
+	. = ..()
+	AddElement(/datum/element/forced_gravity, 1)
+
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/set_summoner(mob/to_who, different_person = FALSE)
 	if(summoner)
 		summoner.RemoveElement(/datum/element/forced_gravity, 1)
-	. = ..()
-	to_who.AddElement(/datum/element/forced_gravity, 1)
-	AddElement(/datum/element/forced_gravity, 1)
+	return ..()
 
 ///Removes gravity from affected mobs upon guardian death to prevent permanent effects
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/death()
@@ -53,11 +55,6 @@
 	visible_message(span_danger("[src] slams their fist into the [slammed]!"), span_notice("You modify the gravity of the [slammed]."))
 	do_attack_animation(slammed)
 	add_gravity(slammed, turf_gravity)
-
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/summon_effects()
-	//just make sure to reapply a gravity immunity wherever you summon. it can be overridden but not by you at least
-	summoner.AddElement(/datum/element/forced_gravity, 1)
-	AddElement(/datum/element/forced_gravity, 1)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/recall_effects()
 	to_chat(src, span_bolddanger("You have released your gravitokinetic powers!"))
