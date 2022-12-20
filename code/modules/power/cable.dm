@@ -151,6 +151,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		icon_state = "l[cable_layer]-noconnection"
 		return ..()
 
+	// TODO: stop doing this shit in update_icon_state, this should be event based for the love of all that is holy
 	var/list/dir_icon_list = list()
 	for(var/check_dir in GLOB.cardinals)
 		if(linked_dirs & check_dir)

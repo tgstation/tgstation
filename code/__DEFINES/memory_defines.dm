@@ -60,6 +60,8 @@
 #define MEMORY_BOMB_PRIMED "bomb"
 /// A memory of pulling off either a high five or a high ten
 #define MEMORY_HIGH_FIVE "highfive"
+/// A memory of being elegantly helped up!
+#define MEMORY_HELPED_UP "helped_up"
 /// A memory of getting borged
 #define MEMORY_BORGED "borged"
 /// A memory of dying! includes time of death

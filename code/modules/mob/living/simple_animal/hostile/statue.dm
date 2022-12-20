@@ -145,7 +145,7 @@
 	return . - creator
 
 /mob/living/simple_animal/hostile/netherworld/statue/sentience_act()
-	faction -= "neutral"
+	faction -= FACTION_NEUTRAL
 
 // Statue powers
 
