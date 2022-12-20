@@ -113,12 +113,13 @@ export const IVDrip = (props, context) => {
               </LabeledList.Item>
             )}
             {!!data.connected &&
-              (data.mode && data.useInternalStorage ? ( // Plumbing drip injects with the rate from network
+              (data.mode && data.useInternalStorage && !data.injectOnly ? ( // Plumbing drip injects with the rate from network
                 <LabeledList.Item label="Transfer Rate">
                   Controlled by the plumbing network
                 </LabeledList.Item>
               ) : (
                 ((!data.mode && data.useInternalStorage) || // Transfer rate controls always work for blood drawing
+                  (data.mode && data.injectOnly) || // Saline drip injection
                   !!data.containerAttached) && (
                   <LabeledList.Item
                     label="Transfer Rate"
