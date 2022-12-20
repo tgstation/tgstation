@@ -71,12 +71,14 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		if(possible_guardian in possible_guardians)
 			continue
 		radial_options -= possible_guardian
-	var/mob/living/simple_animal/hostile/guardian/guardian_path = show_radial_menu(user, src, radial_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 42, require_near = TRUE)
-	if(!(guardian_path in possible_guardians))
-		return //fuck u
+	var/mob/living/simple_animal/hostile/guardian/guardian_path
+	if(random)
+		guardian_path = pick(possible_guardians)
+	else
+		guardian_path = show_radial_menu(user, src, radial_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 42, require_near = TRUE)
 	used = TRUE
 	to_chat(user, use_message)
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the [initial(guardian_path.creator_name)] [mob_name] of [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the [random ? "" : (initial(guardian_path.creator_name) + " ")][mob_name] of [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick(candidates)
 		spawn_guardian(user, candidate, guardian_path)
