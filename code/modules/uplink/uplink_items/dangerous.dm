@@ -95,7 +95,7 @@
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
-	desc = "A high-powered 7 round revolver chambered in .357. Favoured by the Syndicate for its stopping power."
+	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
 	item = /obj/item/gun/ballistic/revolver/syndicate
 	progression_minimum = 30 MINUTES
 	cost = 13

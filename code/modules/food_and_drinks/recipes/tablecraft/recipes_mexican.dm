@@ -124,3 +124,69 @@
 	)
 	result = /obj/item/food/chipsandsalsa
 	subcategory = CAT_MEXICAN
+
+/datum/crafting_recipe/food/classic_chimichanga
+	name = "Classic Chimichanga"
+	reqs = list(
+		/obj/item/food/tortilla = 1,
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/classic_chimichanga
+	subcategory = CAT_MEXICAN
+
+/datum/crafting_recipe/food/vegetarian_chimichanga
+	name = "Vegetarian Chimichanga"
+	reqs = list(
+		/obj/item/food/tortilla = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/chili = 1,
+	)
+	result = /obj/item/food/vegetarian_chimichanga
+	subcategory = CAT_MEXICAN
+
+/datum/crafting_recipe/food/classic_hard_shell_taco
+	name = "Classic Hard-Shell Taco"
+	reqs = list(
+		/obj/item/food/hard_taco_shell = 1,
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/cabbage = 1,
+	)
+	result = /obj/item/food/classic_hard_shell_taco
+	subcategory = CAT_MEXICAN
+
+/datum/crafting_recipe/food/plain_hard_shell_taco
+	name = "Plain Hard-Shell Taco"
+	reqs = list(
+		/obj/item/food/hard_taco_shell = 1,
+		/obj/item/food/meat/cutlet = 1,
+	)
+	result = /obj/item/food/plain_hard_shell_taco
+	subcategory = CAT_MEXICAN
+
+/datum/crafting_recipe/food/refried_beans
+	name = "Refried Beans"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/grown/soybeans = 2,
+		/datum/reagent/water = 5,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/refried_beans
+	subcategory = CAT_MEXICAN
+
+/datum/crafting_recipe/food/spanish_rice
+	name = "Spanish Rice"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/boiledrice = 1,
+		/obj/item/food/grown/tomato = 1,
+		/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/blackpepper = 1,
+	)
+	result = /obj/item/food/spanish_rice
+	subcategory = CAT_MEXICAN

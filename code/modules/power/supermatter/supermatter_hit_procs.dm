@@ -50,7 +50,7 @@
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100
-	investigate_log("consumed by singularity.", INVESTIGATE_ENGINE)
+	investigate_log("was consumed by a singularity.", INVESTIGATE_ENGINE)
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message(span_userdanger("[src] is consumed by the singularity!"))
 	var/turf/sm_turf = get_turf(src)
@@ -109,7 +109,7 @@
 		if(do_after(user, 3 SECONDS, src))
 			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
 			user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
-			investigate_log("[key_name(user)] attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
+			user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
 			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
 			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
 			external_damage_immediate += 100

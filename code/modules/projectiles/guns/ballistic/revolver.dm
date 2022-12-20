@@ -97,11 +97,6 @@
 	if(last_fire && last_fire + 15 SECONDS > world.time)
 		. = span_notice("[user] touches the end of [src] to \the [A], using the residual heat to ignite it in a puff of smoke. What a badass.")
 
-/obj/item/gun/ballistic/revolver/syndicate
-	name = "\improper S-357"
-	desc = "A 7 round revolver chambered in .357. It has 'Scarborough Arms' engraved on it"
-	icon_state = "syndicate_revolver"
-
 /obj/item/gun/ballistic/revolver/c38
 	name = "\improper .38 revolver"
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
@@ -129,11 +124,16 @@
 		"Police Positive Special" = "c38_police",
 		"Blued Steel" = "c38_blued",
 		"Stainless Steel" = "c38_stainless",
-		"Gold Trim" = "c38_gold",
-		"Leopard Spots" = "c38_leopard",
+		"Gold Trim" = "c38_trim",
+		"Golden" = "c38_gold",
 		"The Peacemaker" = "c38_peacemaker",
 		"Black Panther" = "c38_panther"
 	)
+
+/obj/item/gun/ballistic/revolver/syndicate
+	name = "\improper Syndicate Revolver"
+	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
+	icon_state = "revolversyndie"
 
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"

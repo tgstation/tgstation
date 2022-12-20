@@ -47,6 +47,10 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
+/obj/item/organ/internal/tongue/carp/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+
 /obj/item/organ/internal/tongue/carp/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	. = ..()
 	if(!ishuman(tongue_owner))

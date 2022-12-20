@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Santa now spawns with the actual space capable hat again!"
+  - bugfix: "Fixed the claustrophobia trait not recognizing Santa's real hat."

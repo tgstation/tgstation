@@ -13,7 +13,7 @@
 
 /datum/traitor_objective/destroy_heirloom
 	name = "Destroy %ITEM%, the family heirloom that belongs to %TARGET% the %JOB TITLE%"
-	description = "%TARGET% has been on our shitlist for a while and we want to show him we mean business. Find his %ITEM% and destroy it, you'll be rewarded handsomely for doing this"
+	description = "%TARGET% has been on our shitlist for a while and we want to show them we mean business. Find their %ITEM% and destroy it."
 
 	abstract_type = /datum/traitor_objective/destroy_heirloom
 
