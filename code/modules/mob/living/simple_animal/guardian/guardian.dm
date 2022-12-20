@@ -274,6 +274,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/mutable_appearance/guardian_color_overlay = guardian_overlays[GUARDIAN_COLOR_LAYER]
 		remove_overlay(GUARDIAN_COLOR_LAYER)
 		guardian_color_overlay.color = guardian_color
+		guardian_overlays[GUARDIAN_COLOR_LAYER] = guardian_color_overlay
 		apply_overlay(GUARDIAN_COLOR_LAYER)
 	else
 		add_atom_colour(guardian_color, FIXED_COLOUR_PRIORITY)
