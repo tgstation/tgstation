@@ -104,7 +104,7 @@
 		var/turf/snare_loc = get_turf(src)
 		var/obj/effect/snare/new_snare = new /obj/effect/snare(snare_loc, src)
 		new_snare.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
-		snares |= new_snare
+		snares += new_snare
 		to_chat(src, span_bolddanger("Surveillance snare deployed!"))
 	else
 		to_chat(src, span_bolddanger("You have too many snares deployed. Remove some first."))
@@ -134,9 +134,15 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+/obj/effect/snare/Destroy(force)
+	var/mob/living/simple_animal/hostile/guardian/ranged/spawning_guardian = guardian_ref?.resolve()
+	if(spawning_guardian)
+		spawning_guardian.snares -= src
+	return ..()
+
 /obj/effect/snare/proc/on_entered(datum/source, crossed_object)
 	SIGNAL_HANDLER
-	var/mob/living/simple_animal/hostile/guardian/spawning_guardian = guardian_ref?.resolve()
+	var/mob/living/simple_animal/hostile/guardian/ranged/spawning_guardian = guardian_ref?.resolve()
 	if(!spawning_guardian)
 		qdel(src)
 		return
