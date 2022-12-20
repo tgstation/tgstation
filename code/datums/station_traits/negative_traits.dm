@@ -283,7 +283,7 @@
 	max_occurrences_modifier = 2
 
 /datum/station_trait/cramped_escape_pods
-	name = "Cramped escape pods"
+	name = "Cramped Escape Pods"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	show_in_report = TRUE

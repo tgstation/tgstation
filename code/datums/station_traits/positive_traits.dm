@@ -335,7 +335,7 @@
 	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
 
 /datum/station_trait/luxury_escape_pods
-	name = "Luxury escape pods"
+	name = "Luxury Escape Pods"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
