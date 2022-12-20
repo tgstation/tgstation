@@ -680,7 +680,7 @@
 	icon_state = "wall_safe_locked"
 	var/unlocked = FALSE
 
-/obj/item/storage/pod/update_icon()
+/obj/item/storage/pod/update_icon_state()
 	. = ..()
 	icon_state = "wall_safe[unlocked ? "" : "_locked"]"
 
