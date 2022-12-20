@@ -163,6 +163,58 @@
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type, food_flags, TYPE_PROC_REF(/obj/item/food/fortunecookie, get_fortune))
 
+/obj/item/food/cookie/sugar
+	name = "sugar cookie"
+	desc = "Just like your little sister used to make."
+	icon_state = "sugarcookie"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/sugar = 6,
+	)
+	tastes = list("sweetness" = 1)
+	foodtypes = GRAIN | JUNKFOOD | SUGAR
+
+/obj/item/food/cookie/sugar/Initialize(mapload)
+	. = ..()
+	if(check_holidays(FESTIVE_SEASON))
+		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
+		desc = "A sugar cookie in the shape of a [shape]. I hope Santa likes it!"
+		icon_state = "sugarcookie_[shape]"
+
+/obj/item/food/chococornet
+	name = "chocolate cornet"
+	desc = "Which side's the head, the fat end or the thin end?"
+	icon_state = "chococornet"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("biscuit" = 3, "chocolate" = 1)
+	foodtypes = GRAIN | JUNKFOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cookie/oatmeal
+	name = "oatmeal cookie"
+	desc = "The best of both cookie and oat."
+	icon_state = "oatmealcookie"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("cookie" = 2, "oat" = 1)
+	foodtypes = GRAIN
+
+/obj/item/food/cookie/raisin
+	name = "raisin cookie"
+	desc = "Why would you put raisins on a cookie?"
+	icon_state = "raisincookie"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("cookie" = 1, "raisins" = 1)
+	foodtypes = GRAIN | FRUIT
+
 /obj/item/food/poppypretzel
 	name = "poppy pretzel"
 	desc = "It's all twisted up!"
@@ -227,65 +279,13 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/cookie/sugar
-	name = "sugar cookie"
-	desc = "Just like your little sister used to make."
-	icon_state = "sugarcookie"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 4,
-		/datum/reagent/consumable/sugar = 6,
-	)
-	tastes = list("sweetness" = 1)
-	foodtypes = GRAIN | JUNKFOOD | SUGAR
-
-/obj/item/food/cookie/sugar/Initialize(mapload)
-	. = ..()
-	if(check_holidays(FESTIVE_SEASON))
-		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
-		desc = "A sugar cookie in the shape of a [shape]. I hope Santa likes it!"
-		icon_state = "sugarcookie_[shape]"
-
-/obj/item/food/chococornet
-	name = "chocolate cornet"
-	desc = "Which side's the head, the fat end or the thin end?"
-	icon_state = "chococornet"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/nutriment/vitamin = 2,
-	)
-	tastes = list("biscuit" = 3, "chocolate" = 1)
-	foodtypes = GRAIN | JUNKFOOD
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/cookie/oatmeal
-	name = "oatmeal cookie"
-	desc = "The best of both cookie and oat."
-	icon_state = "oatmealcookie"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/nutriment/vitamin = 2,
-	)
-	tastes = list("cookie" = 2, "oat" = 1)
-	foodtypes = GRAIN
-
-/obj/item/food/cookie/raisin
-	name = "raisin cookie"
-	desc = "Why would you put raisins on a cookie?"
-	icon_state = "raisincookie"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/nutriment/vitamin = 2,
-	)
-	tastes = list("cookie" = 1, "raisins" = 1)
-	foodtypes = GRAIN | FRUIT
-
 /obj/item/food/cherrycupcake
 	name = "cherry cupcake"
 	desc = "A sweet cupcake with cherry bits."
 	icon_state = "cherrycupcake"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
-		,/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("cake" = 3, "cherry" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
@@ -296,10 +296,6 @@
 	name = "blue cherry cupcake"
 	desc = "Blue cherries inside a delicious cupcake."
 	icon_state = "bluecherrycupcake"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/nutriment/vitamin = ,
-	)
 	tastes = list("cake" = 3, "blue cherry" = 1)
 
 /obj/item/food/honeybun
