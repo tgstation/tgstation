@@ -379,7 +379,7 @@
 			data["has_cache"] = !!(scan?.cache)
 
 			var/cooldown_number = (COOLDOWN_TIMELEFT(src, newscaster_cooldown))
-			var/active_newscaster_cooldown = !!(COOLDOWN_FINISHED(src, newscaster_cooldown))
+			var/active_newscaster_cooldown = COOLDOWN_FINISHED(src, newscaster_cooldown)
 			data["active_newscaster_cooldown"] = active_newscaster_cooldown
 			var/tooltip_message = ""
 			if(active_newscaster_cooldown)
