@@ -136,7 +136,6 @@
 /obj/item/food/taco/plain
 	name = "plain taco"
 	desc = "A traditional taco with meat and cheese, minus the rabbit food."
-	icon = 'icons/obj/food/mexican.dmi'
 	icon_state = "taco_plain"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
@@ -146,6 +145,18 @@
 	tastes = list("taco" = 4, "meat" = 2, "cheese" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
+
+/obj/item/food/taco/fish
+	name = "fish taco"
+	desc = "A taco with fish, cheese, and cabbage."
+	icon_state = "fishtaco"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("taco" = 4, "fish" = 2, "cheese" = 2, "cabbage" = 1)
+	foodtypes = SEAFOOD | DAIRY | GRAIN | VEGETABLES
 
 /obj/item/food/enchiladas
 	name = "enchiladas"
