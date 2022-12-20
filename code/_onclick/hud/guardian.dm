@@ -69,7 +69,7 @@
 		static_inventory += using
 
 	pull_icon = new /atom/movable/screen/pull()
-	pull_icon.icon = 'icons/hud/guardian.dmi'
+	pull_icon.icon = ui_style
 	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_living_pull
 	pull_icon.hud = src
