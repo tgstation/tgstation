@@ -5,7 +5,6 @@
 	// Use the new basic mobs system instead.
 	// If you are refactoring a simple_animal, REMOVE it from this list
 	var/list/allowed_types = list(
-		/mob/living/simple_animal/axolotl,
 		/mob/living/simple_animal/bot,
 		/mob/living/simple_animal/bot/cleanbot,
 		/mob/living/simple_animal/bot/cleanbot/autopatrol,
@@ -182,7 +181,7 @@
 		/mob/living/simple_animal/hostile/guardian/bomb,
 		/mob/living/simple_animal/hostile/guardian/charger,
 		/mob/living/simple_animal/hostile/guardian/dextrous,
-		/mob/living/simple_animal/hostile/guardian/fire,
+		/mob/living/simple_animal/hostile/guardian/gaseous,
 		/mob/living/simple_animal/hostile/guardian/gravitokinetic,
 		/mob/living/simple_animal/hostile/guardian/healer,
 		/mob/living/simple_animal/hostile/guardian/protector,

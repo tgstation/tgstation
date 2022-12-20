@@ -104,7 +104,7 @@
 			receivers[current_time] += viewer
 	for(var/atom/filtered_atom as anything in filtered)
 		show_image(saved_appearances["[filtered_atom.icon]-[filtered_atom.icon_state]"] || generate_appearance(filtered_atom), filtered_atom, current_time)
-	addtimer(CALLBACK(src, .proc/fade_images, current_time), image_expiry_time)
+	addtimer(CALLBACK(src, PROC_REF(fade_images), current_time), image_expiry_time)
 
 /datum/component/echolocation/proc/show_image(image/input_appearance, atom/input, current_time)
 	var/image/final_image = image(input_appearance)
@@ -149,7 +149,7 @@
 /datum/component/echolocation/proc/fade_images(from_when)
 	for(var/image_echo in images[from_when])
 		animate(image_echo, alpha = 0, time = fade_out_time)
-	addtimer(CALLBACK(src, .proc/delete_images, from_when), fade_out_time)
+	addtimer(CALLBACK(src, PROC_REF(delete_images), from_when), fade_out_time)
 
 /datum/component/echolocation/proc/delete_images(from_when)
 	for(var/mob/living/echolocate_receiver as anything in receivers[from_when])

@@ -30,14 +30,15 @@
 
 /obj/item/food/muffin/moffin
 	name = "moffin"
-	icon_state = "moffin"
+	icon_state = "moffin_1"
+	base_icon_state = "moffin"
 	desc = "A delicious and spongy little cake."
 	tastes = list("muffin" = 3, "dust" = 1, "lint" = 1)
 	foodtypes = CLOTH | GRAIN | SUGAR | BREAKFAST
 
 /obj/item/food/muffin/moffin/Initialize(mapload)
 	. = ..()
-	icon_state = "[icon_state]_[rand(1, 3)]"
+	icon_state = "[base_icon_state]_[rand(1, 3)]"
 
 /obj/item/food/muffin/moffin/examine(mob/user)
 	. = ..()
@@ -349,4 +350,50 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 3)
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/peanut_butter_brownie_batter
+	name = "raw peanut butter brownie batter"
+	desc = "A sticky mixture of raw peanut butter brownie batter, cook it in the oven!"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "peanut_butter_brownie_batter"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/peanut_butter = 4)
+	tastes = list("raw brownie batter" = 1)
+	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
+
+/obj/item/food/peanut_butter_brownie_batter/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/peanut_butter_brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
+
+/obj/item/food/peanut_butter_brownie_sheet
+	name = "peanut butter brownie sheet"
+	desc = "An uncut sheet of cooked peanut butter brownie, use a knife to cut it!."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "peanut_butter_brownie_sheet"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 24, /datum/reagent/consumable/sugar = 16, /datum/reagent/consumable/peanut_butter = 20)
+	tastes = list("brownie" = 1, "chocolatey goodness" = 1, "peanut butter" = 1)
+	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
+
+/obj/item/food/peanut_butter_brownie_sheet/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/peanut_butter_brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
+
+/obj/item/food/peanut_butter_brownie
+	name = "peanut butter brownie"
+	desc = "A square slice of delicious, chewy peanut butter brownie. Often the target of potheads."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "peanut_butter_brownie"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/sugar = 4, /datum/reagent/consumable/peanut_butter = 5)
+	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
+	foodtypes = GRAIN | JUNKFOOD | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/crunchy_peanut_butter_tart
+	name = "crunchy peanut butter tart"
+	desc = "A miniature pie with a peanut butter filling, creamy icing, and topping of chopped nuts."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "crunchy_peanut_butter_tart"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/sugar = 6, /datum/reagent/consumable/peanut_butter = 5)
+	tastes = list("peanut butter" = 1, "peanuts" = 1, "cream" = 1)
+	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
 	w_class = WEIGHT_CLASS_SMALL

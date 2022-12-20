@@ -166,7 +166,7 @@
 		injury_mod += wound.threshold_penalty
 
 	var/part_mod = -wound_resistance
-	if(get_damage(TRUE) >= max_damage)
+	if(get_damage() >= max_damage)
 		part_mod += disabled_wound_penalty
 
 	injury_mod += part_mod

@@ -231,7 +231,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/atom/game_renderer = mod.wearer.hud_used.get_plane_master(RENDER_PLANE_GAME)
+	var/atom/game_renderer = mod.wearer.hud_used.get_plane_master(MUTATE_PLANE(RENDER_PLANE_GAME, mod.wearer))
 	var/matrix/render_matrix = matrix(game_renderer.transform)
 	render_matrix.Scale(1.25, 1.25)
 	animate(game_renderer, launch_time, transform = render_matrix)

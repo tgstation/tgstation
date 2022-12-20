@@ -477,7 +477,7 @@
 	icon_state = "mecha_weapon_bay"
 
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
-	if(istype(M, /obj/vehicle/sealed/mecha/combat))
+	if(M.mech_type & EXOSUIT_MODULE_COMBAT)
 		to_chat(user, span_warning("[M] does not have the correct bolt configuration!"))
 		return
 	return ..()

@@ -9,7 +9,7 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	speak_emote = list("barks", "woofs")
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	see_in_dark = 5
 	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/dog
@@ -592,7 +592,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_state = "narsian"
 	icon_living = "narsian"
 	icon_dead = "narsian_dead"
-	faction = list("neutral", "cult")
+	faction = list(FACTION_NEUTRAL, "cult")
 	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
 	unique_pet = TRUE
@@ -711,13 +711,13 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_dead = "void_puppy_dead"
 	nofur = TRUE
 	held_state = "void_puppy"
+	unsuitable_atmos_damage = 0
+	minimum_survivable_temperature = TCMB
+	maximum_survivable_temperature = T0C + 40
 
 /mob/living/basic/pet/dog/corgi/puppy/void/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
-	RemoveElement(/datum/element/atmos_requirements)
-	RemoveElement(/datum/element/basic_body_temp_sensitive)
-	AddElement(/datum/element/basic_body_temp_sensitive, TCMB, T0C + 40)
 
 /mob/living/basic/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return 1 //Void puppies can navigate space.

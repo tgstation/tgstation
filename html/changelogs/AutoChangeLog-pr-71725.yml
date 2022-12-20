@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Mining point cards have slightly more readable buttons now, and also can be reused even after running out of points."

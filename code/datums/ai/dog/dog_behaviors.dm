@@ -133,7 +133,7 @@
 
 /datum/ai_behavior/play_dead/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/simple_pawn = controller.pawn
+	var/mob/living/basic/simple_pawn = controller.pawn
 	if(!istype(simple_pawn))
 		return
 
@@ -150,7 +150,7 @@
 
 /datum/ai_behavior/play_dead/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	var/mob/living/simple_animal/simple_pawn = controller.pawn
+	var/mob/living/basic/simple_pawn = controller.pawn
 	if(!istype(simple_pawn) || simple_pawn.stat) // imagine actually dying while playing dead. hell, imagine being the kid waiting for your pup to get back up :(
 		return
 	controller.blackboard[BB_DOG_PLAYING_DEAD] = FALSE
@@ -163,7 +163,7 @@
 /// This behavior involves either eating a snack we can reach, or begging someone holding a snack
 /datum/ai_behavior/harass
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
-	required_distance = 3
+	required_distance = 1
 
 /datum/ai_behavior/harass/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
