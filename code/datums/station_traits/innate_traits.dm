@@ -62,11 +62,11 @@
 
 	if(!ishuman(spawned)) //only humans wear stuff
 		return
-	if(is_type_in_list(job, blacklisted_roles)) //clowns stay clownin
-		return
+	var/mob/living/carbon/human/crewmember = spawned
 	if(crewmember.dna.species.outfit_important_for_life) //sorry plasmamen
 		return
-	var/mob/living/carbon/human/crewmember = spawned
+	if(is_type_in_list(job, blacklisted_roles)) //clowns stay clownin
+		return
 	var/list/department_to_jumpsuit = variation_to_dept[variation]
 	if(!department_to_jumpsuit)
 		return
