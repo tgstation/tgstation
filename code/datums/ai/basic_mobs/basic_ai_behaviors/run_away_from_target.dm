@@ -30,4 +30,4 @@
 /datum/ai_behavior/run_away_from_target/proc/plot_path_away_from(datum/ai_controller/controller, atom/target)
 	var/run_direction = get_dir(controller.pawn, get_step_away(controller.pawn, target))
 	var/turf/target_destination = get_ranged_target_turf(controller.pawn, run_direction, run_distance)
-	controller.set_movement_target(target_destination)
+	set_movement_target(controller, target_destination)

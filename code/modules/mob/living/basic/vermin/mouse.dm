@@ -349,8 +349,20 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
 	)
 
+/// Don't look for anything to run away from if you are distracted by being adjacent to cheese
 /datum/ai_planning_subtree/flee_target/mouse
 	flee_behaviour = /datum/ai_behavior/run_away_from_target/mouse
+
+/datum/ai_planning_subtree/flee_target/mouse
+
+/datum/ai_planning_subtree/flee_target/mouse/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	var/datum/weakref/hunting_weakref = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
+	var/atom/hunted_cheese = hunting_weakref?.resolve()
+	if (!QDELETED(hunted_cheese))
+		return // We see some cheese, which is more important than our life
+	return ..()
+
+/datum/ai_planning_subtree/flee_target/mouse/select
 
 /datum/ai_behavior/run_away_from_target/mouse
 	run_distance = 3 // Mostly exists in small tunnels, don't get ahead of yourself

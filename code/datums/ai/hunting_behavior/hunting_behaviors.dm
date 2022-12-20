@@ -31,12 +31,6 @@
 	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED) || living_pawn.stat != CONSCIOUS)
 		return
 
-	// We're targeting something else for another reason
-	var/datum/weakref/target_weakref = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	var/atom/target = target_weakref?.resolve()
-	if(!QDELETED(target))
-		return
-
 	var/datum/weakref/hunting_weakref = controller.blackboard[target_key]
 	var/atom/hunted = hunting_weakref?.resolve()
 	// We're not hunting anything, look around for something
@@ -85,7 +79,10 @@
 /datum/ai_behavior/hunt_target/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
 	var/datum/weakref/hunting_weakref = controller.blackboard[hunting_target_key]
-	controller.set_movement_target(hunting_weakref?.resolve())
+	var/atom/hunt_target = hunting_weakref?.resolve()
+	if (QDELETED(hunt_target))
+		return FALSE
+	set_movement_target(controller, hunt_target)
 
 /datum/ai_behavior/hunt_target/perform(delta_time, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
