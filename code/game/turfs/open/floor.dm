@@ -82,7 +82,7 @@
 		if(EXPLODE_HEAVY)
 			switch(rand(1, 3))
 				if(1)
-					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+					if (!ispath(baseturf_at_depth(2), /turf/open/floor))
 						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 						ReplaceWithLattice()
 					else
@@ -235,8 +235,6 @@
 		if(STAGE_FIVE to INFINITY)
 			if(prob(70))
 				sheer = TRUE
-			else if(prob(50) && (/turf/open/space in baseturfs))
-				ReplaceWithLattice()
 	if(sheer)
 		if(has_tile())
 			remove_tile(null, TRUE, TRUE, TRUE)
