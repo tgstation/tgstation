@@ -807,6 +807,7 @@
 
 
 /datum/memory/helped_up
+	story_value = STORY_VALUE_OKAY
 
 /datum/memory/helped_up/get_names()
 	return list("[protagonist_name] gentlemanly helping up [deuteragonist_name].")
@@ -814,5 +815,5 @@
 /datum/memory/helped_up/get_starts()
 	return list(
 		"[protagonist_name] helping up [deuteragonist_name]",
-		"[deuteragonist_name] taking the hand offered graciously by[protagonist_name] to get up",
+		"[deuteragonist_name] taking the hand offered graciously by [protagonist_name] to get up",
 	)

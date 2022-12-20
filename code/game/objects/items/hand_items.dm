@@ -439,8 +439,8 @@
 		offerer.visible_message(span_notice("[offerer] helps [taker] up!"), span_nicegreen("You help [taker] up!"), span_hear("You hear someone helping someone else up!"), ignored_mobs = taker)
 		to_chat(taker, span_nicegreen("You take [offerer]'s hand, letting [offerer.p_them()] help your up! How nice of them!"))
 
-		offerer.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker, story_value = STORY_VALUE_OKAY)
-		taker.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker, story_value = STORY_VALUE_OKAY)
+		offerer.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
+		taker.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
 
 		offerer.add_mood_event("helping_up", /datum/mood_event/helped_up, taker, TRUE) // Different IDs because you could be helped up and then help someone else up.
 		taker.add_mood_event("helped_up", /datum/mood_event/helped_up, offerer, FALSE)
