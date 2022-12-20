@@ -238,7 +238,7 @@
 				if(!istype(account))
 					say("Invalid bank account.")
 					return
-				access = id_card.GetAccess()
+				var/list/access = id_card.GetAccess()
 				if(pack.access_view && !(pack.access_view in access))
 					say("[id_card] lacks the requisite access for this purchase.")
 					return
