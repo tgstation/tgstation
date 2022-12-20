@@ -497,8 +497,8 @@
 
 // Kinda roundabout, essentially if we're dense, we respect real_explosion_block
 // Otherwise, we block nothing
-/obj/machinery/door/set_explosion_block(new_block)
-	real_explosion_block = new_block
+/obj/machinery/door/set_explosion_block(explosion_block)
+	real_explosion_block = explosion_block
 	if(density)
 		return ..()
 	return ..(0)

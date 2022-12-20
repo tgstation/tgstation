@@ -1815,15 +1815,8 @@
 	pixel_y = pixel_y + base_pixel_y - .
 
 // Not a valid operation, turfs and movables handle block differently
-/atom/proc/set_explosion_block(new_block)
+/atom/proc/set_explosion_block(explosion_block)
 	return
-
-/atom/movable/set_explosion_block(new_block)
-	var/old_block = explosion_block
-	explosive_resistance -= old_block
-	explosion_block = new_block
-	explosive_resistance += new_block
-	SEND_SIGNAL(src, COMSIG_MOVABLE_EXPLOSION_BLOCK_CHANGED, old_block, new_block)
 
 /**
  * Returns true if this atom has gravity for the passed in turf

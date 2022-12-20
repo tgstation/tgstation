@@ -742,7 +742,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	temperature += temp
 
 // I'm sorry, this is the only way that both makes sense and is cheap
-/turf/set_explosion_block(new_block)
+/turf/set_explosion_block(explosion_block)
 	explosive_resistance -= get_explosive_block()
-	inherent_explosive_resistance = new_block
+	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()

@@ -1141,6 +1141,13 @@
 
 	return TRUE
 
+/atom/movable/set_explosion_block(explosion_block)
+	var/old_block = src.explosion_block
+	explosive_resistance -= old_block
+	src.explosion_block = explosion_block
+	explosive_resistance += explosion_block
+	SEND_SIGNAL(src, COMSIG_MOVABLE_EXPLOSION_BLOCK_CHANGED, old_block, explosion_block)
+
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = FALSE
 	var/hitpush = TRUE
