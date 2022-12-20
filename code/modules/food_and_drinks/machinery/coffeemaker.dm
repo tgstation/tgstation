@@ -427,7 +427,7 @@
 /obj/item/coffee_cartridge
 	name = "coffeemaker cartridge- Caffè Generico"
 	desc = "A coffee cartridge manufactured by Piccionaia Coffee, for use with the Modello 3 system."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/cartridges.dmi'
 	icon_state = "cartridge_basic"
 	var/charges = 4
 	var/list/drink_type = list(/datum/reagent/consumable/coffee = 120)
