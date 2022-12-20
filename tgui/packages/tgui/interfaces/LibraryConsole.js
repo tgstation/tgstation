@@ -483,12 +483,14 @@ export const SearchAndDisplay = (props, context) => {
 export const Upload = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    can_db_request,
-    has_scanner,
-    has_cache,
-    cache_title,
+    active_newscaster_cooldown,
     cache_author,
     cache_content,
+    cache_title,
+    can_db_request,
+    has_cache,
+    has_scanner,
+    upload_tooltip_message,
   } = data;
   const [uploadToDB, setUploadToDB] = useLocalState(context, 'UploadDB', false);
   if (!has_scanner) {
@@ -571,7 +573,10 @@ export const Upload = (props, context) => {
           <Stack>
             <Stack.Item grow>
               <Button
+                disabled={!active_newscaster_cooldown}
                 fluid
+                tooltip={upload_tooltip_message}
+                tooltipPosition="top"
                 icon="newspaper"
                 content="Newscaster"
                 fontSize="30px"
