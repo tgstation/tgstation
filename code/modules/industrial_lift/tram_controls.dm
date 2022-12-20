@@ -1,6 +1,7 @@
 /obj/machinery/computer/tram_controls
 	name = "tram controls"
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
+	icon_state = "tram_controls"
 	base_icon_state = "tram_"
 	icon_screen = "tram_Central Wing_idle"
 	icon_keyboard = null

@@ -27351,11 +27351,6 @@
 	icon_state = "titanium_white"
 	},
 /obj/structure/window/reinforced/shuttle/tram,
-/obj/machinery/computer/tram_controls{
-	icon_keyboard = null;
-	icon_state = "tram_controls";
-	dir = 1
-	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "jVT" = (
@@ -39882,6 +39877,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
+/obj/machinery/computer/tram_controls,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "opr" = (
@@ -57437,17 +57433,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"uDj" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
-/obj/structure/window/reinforced/shuttle/tram,
-/obj/machinery/computer/tram_controls{
-	icon_keyboard = null;
-	icon_state = "tram_controls"
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "uDm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -165138,7 +165123,7 @@ vyH
 vRL
 vjl
 fld
-uDj
+jVQ
 kpB
 oph
 iJU
