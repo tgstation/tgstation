@@ -102,8 +102,7 @@
 	set desc = "Set an invisible snare that will alert you when living creatures walk over it. Max of 5"
 	if(length(snares) < max_snares)
 		var/turf/snare_loc = get_turf(src)
-		var/obj/effect/snare/new_snare = new /obj/effect/snare(snare_loc)
-		new_snare.spawner = src
+		var/obj/effect/snare/new_snare = new /obj/effect/snare(snare_loc, src)
 		new_snare.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
 		snares |= new_snare
 		to_chat(src, span_bolddanger("Surveillance snare deployed!"))
@@ -124,11 +123,12 @@
 /obj/effect/snare
 	name = "snare"
 	desc = "You shouldn't be seeing this!"
-	var/mob/living/simple_animal/hostile/guardian/spawner
 	invisibility = INVISIBILITY_ABSTRACT
+	var/datum/weakref/guardian_ref
 
-/obj/effect/snare/Initialize(mapload)
+/obj/effect/snare/Initialize(mapload, spawning_guardian)
 	. = ..()
+	guardian_ref = WEAKREF(spawning_guardian)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -136,11 +136,16 @@
 
 /obj/effect/snare/proc/on_entered(datum/source, crossed_object)
 	SIGNAL_HANDLER
-	if(isliving(crossed_object) && spawner && spawner.summoner && crossed_object != spawner && !spawner.hasmatchingsummoner(crossed_object))
-		to_chat(spawner.summoner, span_bolddanger("[crossed_object] has crossed [name]."))
-		var/list/guardians = spawner.summoner.get_all_linked_holoparasites()
-		for(var/para in guardians)
-			to_chat(para, span_danger("[crossed_object] has crossed [name]."))
+	var/mob/living/simple_animal/hostile/guardian/spawning_guardian = guardian_ref?.resolve()
+	if(!spawning_guardian)
+		qdel(src)
+		return
+	if(!isliving(crossed_object) || crossed_object == spawning_guardian || spawning_guardian.hasmatchingsummoner(crossed_object))
+		return
+	to_chat(spawning_guardian.summoner, span_bolddanger("[crossed_object] has crossed [name]."))
+	var/list/guardians = spawning_guardian.summoner.get_all_linked_holoparasites()
+	for(var/guardian in guardians)
+		to_chat(guardian, span_danger("[crossed_object] has crossed [name]."))
 
 /obj/effect/snare/singularity_act()
 	return
