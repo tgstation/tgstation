@@ -1,7 +1,0 @@
-author: "MidoriWroth"
-delete-after: True
-changes:
-  - rscadd: "Adds 32 new foods!"
-  - rscadd: "You can make vinegar from equal parts water/sugar/wine"
-  - rscadd: "Tortillas can now be grilled to make hard-shell tacos, which can be used to make the new tacos or custom tacos all-together."
-  - balance: "Uncooked rice is now made from mixing 10 units rice/water in any container, no longer requiring a bowl to do so. Recipes that previously used bowls of rice now need boiled rice and a bowl, instead."
