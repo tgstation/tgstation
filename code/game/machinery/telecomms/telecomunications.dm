@@ -141,6 +141,10 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	icon_state = "[initial(icon_state)][panel_open ? "_o" : null][on ? null : "_off"]"
 	return ..()
 
+/obj/machinery/telecomms/on_set_panel_open(old_value)
+	update_appearance()
+	return ..()
+
 /obj/machinery/telecomms/proc/update_power()
 	var/old_on = on
 	if(toggled)

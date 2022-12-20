@@ -131,7 +131,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(nbuild)
 		buildstage = AIRALARM_BUILD_NO_CIRCUIT
-		panel_open = TRUE
+		set_panel_open(TRUE)
 
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
@@ -723,7 +723,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if(buildstage != AIRALARM_BUILD_COMPLETE)
 		return
 	tool.play_tool_sound(src)
-	panel_open = !panel_open
+	toggle_panel_open()
 	to_chat(user, span_notice("The wires have been [panel_open ? "exposed" : "unexposed"]."))
 	update_appearance()
 	return TRUE

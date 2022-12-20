@@ -545,6 +545,21 @@
 /obj/machinery/proc/on_set_is_operational(old_value)
 	return
 
+///Called when we want to change the value of the `panel_open` variable. Boolean.
+/obj/machinery/proc/set_panel_open(new_value)
+	if(panel_open == new_value)
+		return
+	var/old_value = panel_open
+	panel_open = new_value
+	on_set_panel_open(old_value)
+
+///Called when the value of `panel_open` changes, so we can react to it.
+/obj/machinery/proc/on_set_panel_open(old_value)
+	return
+
+/// Toggles the panel_open var. Defined for convienience
+/obj/machinery/proc/toggle_panel_open()
+	set_panel_open(!panel_open)
 
 /obj/machinery/can_interact(mob/user)
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
@@ -852,12 +867,11 @@
 		return FALSE
 
 	screwdriver.play_tool_sound(src, 50)
-	if(!panel_open)
-		panel_open = TRUE
+	toggle_panel_open()
+	if(panel_open)
 		icon_state = icon_state_open
 		to_chat(user, span_notice("You open the maintenance hatch of [src]."))
 	else
-		panel_open = FALSE
 		icon_state = icon_state_closed
 		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
 	return TRUE
