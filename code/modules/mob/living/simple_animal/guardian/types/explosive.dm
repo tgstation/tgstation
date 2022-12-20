@@ -4,7 +4,7 @@
 		UnregisterSignal(A, COMSIG_PARENT_EXAMINE); \
 	} while (0)
 
-//Bomb
+//Explosive
 /mob/living/simple_animal/hostile/guardian/explosive
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -15,6 +15,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Explosive modules active. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.")
 	miner_fluff_string = span_holoparasite("You encounter... Gibtonite, an explosive fighter.")
+	creator_name = "Explosive"
+	creator_desc = "High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay."
+	creator_icon = "explosive"
 	/// Static list of signals that activate the boom.
 	var/static/list/boom_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
 	/// After this amount of time passses, boom deactivates.

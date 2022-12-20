@@ -9,6 +9,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Atmospheric modules activated. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.")
 	miner_fluff_string = span_holoparasite("You encounter... Plasma, the bringer of fire.")
+	creator_name = "Gaseous"
+	creator_desc = "Creates sparks on touch and continuously expels a gas of its choice. Automatically extinguishes the user if they catch on fire."
+	creator_icon = "gaseous"
 	toggle_button_type = /atom/movable/screen/guardian/toggle_mode/gases
 	/// Gas being expelled.
 	var/expelled_gas = null

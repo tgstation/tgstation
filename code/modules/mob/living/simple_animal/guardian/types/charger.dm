@@ -12,6 +12,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Charge modules loaded. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...")
 	miner_fluff_string = span_holoparasite("You encounter... Titanium, a lightweight, agile fighter.")
+	creator_name = "Charger"
+	creator_desc = "Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding."
+	creator_icon = "charger"
 	var/charging = FALSE
 	var/atom/movable/screen/alert/chargealert
 

@@ -1,5 +1,6 @@
 //Standard
 /mob/living/simple_animal/hostile/guardian/standard
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	obj_damage = 80
@@ -10,6 +11,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Standard combat modules loaded. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught one! It's really boring and standard. Better punch some walls to ease the tension.")
 	miner_fluff_string = span_holoparasite("You encounter... Adamantine, a powerful attacker.")
+	creator_name = "Standard"
+	creator_desc = "Devastating close combat attacks and high damage resistance. Can smash through weak walls."
+	creator_icon = "standard"
 	/// The text we shout when attacking.
 	var/battlecry = "AT"
 

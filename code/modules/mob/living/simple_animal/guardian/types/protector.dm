@@ -9,6 +9,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Protector modules loaded. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught one! Wait, no... it caught you! The fisher has become the fishy.")
 	miner_fluff_string = span_holoparasite("You encounter... Uranium, a very resistant guardian.")
+	creator_name = "Protector"
+	creator_desc = "Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage but moves slightly slower."
+	creator_icon = "protector"
 	toggle_button_type = /atom/movable/screen/guardian/toggle_mode
 	/// Damage removed in protecting mode.
 	var/damage_penalty = 13

@@ -8,6 +8,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Dextrous combat modules loaded. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught one! It can hold stuff in its fins, sort of.")
 	miner_fluff_string = span_holoparasite("You encounter... Gold, a malleable constructor.")
+	creator_name = "Dextrous"
+	creator_desc = "Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item."
+	creator_icon = "dextrous"
 	dextrous = TRUE
 	held_items = list(null, null)
 	var/obj/item/internal_storage //what we're storing within ourself

@@ -12,6 +12,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's an assassin carp! Just when you thought it was safe to go back to the water... which is unhelpful, because we're in space.")
 	miner_fluff_string = span_holoparasite("You encounter... Glass, a sharp, fragile attacker.")
+	creator_name = "Assassin"
+	creator_desc = "Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth."
+	creator_icon = "assassin"
 	toggle_button_type = /atom/movable/screen/guardian/toggle_mode/assassin
 	/// Is it in stealth mode?
 	var/toggle = FALSE

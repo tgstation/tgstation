@@ -23,6 +23,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one, it's a ranged carp. This fishy can watch people pee in the ocean.")
 	miner_fluff_string = span_holoparasite("You encounter... Diamond, a powerful projectile thrower.")
+	creator_name = "Ranged"
+	creator_desc = "Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; where it cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode."
+	creator_icon = "ranged"
 	see_invisible = SEE_INVISIBLE_LIVING
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	toggle_button_type = /atom/movable/screen/guardian/toggle_mode

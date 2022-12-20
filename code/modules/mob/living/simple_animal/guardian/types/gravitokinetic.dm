@@ -8,6 +8,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Gravitokinetic modules loaded. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's a gravitokinetic carp! Now do you understand the gravity of the situation?")
 	miner_fluff_string = span_holoparasite("You encounter... Bananium, a master of gravity business.")
+	creator_name = "Gravitokinetic"
+	creator_desc = "Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but this will affect the user."
+	creator_icon = "gravitokinetic"
 	/// Targets we have applied our effects on.
 	var/list/gravity_targets = list()
 	/// Distance in which our ability works

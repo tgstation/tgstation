@@ -1,14 +1,17 @@
-//Healer
+//Support
 /mob/living/simple_animal/hostile/guardian/support
 	speed = 0
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	playstyle_string = span_holoparasite("As a <b>support</b> type, you may right-click to heal targets. In addition, alt-clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.")
-	magic_fluff_string = span_holoparasite("..And draw the CMO, a potent force of life... and death.")
+	magic_fluff_string = span_holoparasite("..And draw the Chief Medical Officer, a potent force of life... and death.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught a support carp. It's a kleptocarp!")
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Support modules active. Holoparasite swarm online.")
 	miner_fluff_string = span_holoparasite("You encounter... Bluespace, the master of support.")
+	creator_name = "Support"
+	creator_desc = "Does medium damage, but can heal its targets and create beacons to teleport people and things to."
+	creator_icon = "support"
 	/// Is it in healing mode?
 	var/toggle = FALSE
 	/// How much we heal per hit.

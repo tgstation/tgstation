@@ -1,7 +1,8 @@
 GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
+#define GUARDIAN_COLOR_LAYER 2
 #define GUARDIAN_HANDS_LAYER 1
-#define GUARDIAN_TOTAL_LAYERS 1
+#define GUARDIAN_TOTAL_LAYERS 2
 
 /mob/living/simple_animal/hostile/guardian
 	name = "Guardian Spirit"
@@ -48,19 +49,41 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	hud_type = /datum/hud/guardian
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	faction = list()
-	var/mutable_appearance/guardian_color_overlay
+
+	/// The guardian's color, used for their sprite, chat, and some effects made by it.
 	var/guardian_color
-	var/recolor_entire_sprite
-	var/theme
+	/// Do we recolor our entire sprite with our guardian color, rather than just having an overlay?
+	var/recolor_entire_sprite = FALSE
+	/// List of overlays we use.
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
+
+	/// The summoner of the guardian, the one it's intended to guard!
 	var/mob/living/summoner
-	var/range = 10 //how far from the user the spirit can be
-	var/toggle_button_type = /atom/movable/screen/guardian/toggle_mode/inactive //what sort of toggle button the hud uses
+	/// How far from the summoner the guardian can be.
+	var/range = 10
+
+	/// Which toggle button the HUD uses.
+	var/toggle_button_type = /atom/movable/screen/guardian/toggle_mode/inactive
+	/// Name used by the guardian creator.
+	var/creator_name = "Error"
+	/// Description used by the guardian creator.
+	var/creator_desc = "This shouldn't be here! Report it on GitHub!"
+	/// Icon used by the guardian creator.
+	var/creator_icon = "fuck"
+
+	/// A string explaining to the guardian what they can do.
 	var/playstyle_string = span_boldholoparasite("You are a Guardian without any type. You shouldn't exist!")
+	/// The fluff string we actually use.
+	var/used_fluff_string
+	/// Fluff string from tarot cards.
 	var/magic_fluff_string = span_holoparasite("You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!")
+	/// Fluff string from holoparasite injectors.
 	var/tech_fluff_string = span_holoparasite("BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!")
+	/// Fluff string from holocarp fishsticks.
 	var/carp_fluff_string = span_holoparasite("CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP")
+	/// Fluff string from the dusty shard.
 	var/miner_fluff_string = span_holoparasite("You encounter... Mythril, it shouldn't exist... Submit a bug report!")
+
 	/// Are we forced to not be able to manifest/recall?
 	var/locked = FALSE
 	/// Cooldown between manifests/recalls.
@@ -178,6 +201,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_state = "magicbase"
 			icon_living = "magicbase"
 			icon_dead = "magicbase"
+			used_fluff_string = magic_fluff_string
 		if("tech")
 			name = "Holoparasite"
 			real_name = "Holoparasite"
@@ -185,6 +209,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_state = "techbase"
 			icon_living = "techbase"
 			icon_dead = "techbase"
+			used_fluff_string = tech_fluff_string
 		if("miner")
 			name = "Power Miner"
 			real_name = "Power Miner"
@@ -192,6 +217,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_state = "minerbase"
 			icon_living = "minerbase"
 			icon_dead = "minerbase"
+			used_fluff_string = miner_fluff_string
 		if("carp")
 			name = "Holocarp"
 			real_name = "Holocarp"
@@ -206,9 +232,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			attack_sound = 'sound/weapons/bite.ogg'
 			attack_vis_effect = ATTACK_EFFECT_BITE
 			recolor_entire_sprite = TRUE
+			used_fluff_string = carp_fluff_string
 	if(!recolor_entire_sprite) //we want this to proc before stand logs in, so the overlay isn't gone for some reason
-		guardian_color_overlay = mutable_appearance(icon, theme)
-		add_overlay(guardian_color_overlay)
+		guardian_overlays[GUARDIAN_COLOR_LAYER] = mutable_appearance(icon, theme)
+		apply_overlay(GUARDIAN_COLOR_LAYER)
 
 /mob/living/simple_animal/hostile/guardian/Login() //if we have a mind, set its name to ours when it logs in
 	. = ..()
@@ -222,8 +249,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	to_chat(src, span_holoparasite("While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to [summoner.p_them()] as you feed upon [summoner.p_them()] to sustain yourself."))
 	to_chat(src, playstyle_string)
 	if(!guardian_color)
+		locked = TRUE
 		guardianrename()
 		guardianrecolor()
+		locked = FALSE
 
 /mob/living/simple_animal/hostile/guardian/mind_initialize()
 	. = ..()
@@ -242,9 +271,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	set_light_color(guardian_color)
 	if(!recolor_entire_sprite)
+		var/mutable_appearance/guardian_color_overlay = guardian_overlays[GUARDIAN_COLOR_LAYER]
+		remove_overlay(GUARDIAN_COLOR_LAYER)
 		guardian_color_overlay.color = guardian_color
-		cut_overlay(guardian_color_overlay) //we need to get our new color
-		add_overlay(guardian_color_overlay)
+		apply_overlay(GUARDIAN_COLOR_LAYER)
 	else
 		add_atom_colour(guardian_color, FIXED_COLOUR_PRIORITY)
 
@@ -571,21 +601,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
 	chosen_guardian.ghostize(FALSE)
 	chosen_guardian.key = candidate.key
-	chosen_guardian.guardianrecolor()
-	chosen_guardian.guardianrename() //give it a new color and name, to show it's a new person
 	COOLDOWN_START(chosen_guardian, resetting_cooldown, 5 MINUTES)
-	switch(chosen_guardian.theme)
-		if("tech")
-			to_chat(src, span_holoparasite("<font color=\"[chosen_guardian.guardian_color]\"><b>[chosen_guardian.real_name]</b></font> is now online!"))
-		if("magic")
-			to_chat(src, span_holoparasite("<font color=\"[chosen_guardian.guardian_color]\"><b>[chosen_guardian.real_name]</b></font> has been summoned!"))
-		if("carp")
-			to_chat(src, span_holoparasite("<font color=\"[chosen_guardian.guardian_color]\"><b>[chosen_guardian.real_name]</b></font> has been caught!"))
-		if("miner")
-			to_chat(src, span_holoparasite("<font color=\"[chosen_guardian.guardian_color]\"><b>[chosen_guardian.real_name]</b></font> has appeared!"))
-	guardians -= chosen_guardian
-	if(!length(guardians))
-		remove_verb(src, /mob/living/proc/guardian_reset)
+	chosen_guardian.guardianrename() //give it a new color and name, to show it's a new person
+	chosen_guardian.guardianrecolor()
 
 ////////parasite tracking/finding procs
 

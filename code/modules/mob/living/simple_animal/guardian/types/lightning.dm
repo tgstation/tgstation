@@ -1,9 +1,9 @@
-//Beam
 /obj/effect/ebeam/chain
 	name = "lightning chain"
 	layer = LYING_MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
 
+//Lightning
 /mob/living/simple_animal/hostile/guardian/lightning
 	melee_damage_lower = 7
 	melee_damage_upper = 7
@@ -18,6 +18,9 @@
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Lightning modules active. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's a lightning carp! Everyone else goes zap zap.")
 	miner_fluff_string = span_holoparasite("You encounter... Iron, a conductive master of lightning.")
+	creator_name = "Lightning"
+	creator_desc = "Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage."
+	creator_icon = "lightning"
 	var/datum/beam/summonerchain
 	var/list/enemychains = list()
 	var/successfulshocks = 0
