@@ -111,7 +111,7 @@ In order to prevent freezing the server with infinite loops, auxlua enforces an 
 
 To avoid exceeding the execution limit, call `sleep()` or `coroutine.yield()` before the execution limit is reached.
 
-### over_exec_usage(fraction)
+### over_exec_usage(fraction = 0.95)
 
 This function returns whether the current run of the Lua VM has executed for longer than the specified fraction of the execution limit. You can use this function to branch to a call to `sleep()` or `coroutine.yield()` to maximize the amount of work done in a single run of the Lua VM. If nil, `fraction` will default to 0.95, otherwise, it will be clamped to the range \[0, 1\].
 
