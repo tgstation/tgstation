@@ -987,7 +987,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/list/choices = LAZY_TEMPLATE_KEY_LIST_ALL
+	var/list/choices = LAZY_TEMPLATE_KEY_LIST_ALL()
 	var/choice = tgui_input_list(usr, "Key?", "Lazy Loader", choices)
 	if(!choice)
 		return
