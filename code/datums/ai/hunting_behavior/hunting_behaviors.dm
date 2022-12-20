@@ -85,7 +85,7 @@
 /datum/ai_behavior/hunt_target/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
 	var/datum/weakref/hunting_weakref = controller.blackboard[hunting_target_key]
-	controller.current_movement_target = hunting_weakref?.resolve()
+	controller.set_movement_target(hunting_weakref?.resolve())
 
 /datum/ai_behavior/hunt_target/perform(delta_time, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()

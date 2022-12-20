@@ -167,8 +167,8 @@
 		id.update_icon()
 
 		if(worn)
-			if(istype(worn, /obj/item/modular_computer/tablet/pda))
-				var/obj/item/modular_computer/tablet/pda/PDA = worn
+			if(istype(worn, /obj/item/modular_computer/pda))
+				var/obj/item/modular_computer/pda/PDA = worn
 				PDA.InsertID(id, H)
 
 			else if(istype(worn, /obj/item/storage/wallet))

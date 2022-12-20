@@ -21,7 +21,7 @@
 /obj/structure/plasticflaps/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
 		return ..()
-	SSvis_overlays.remove_vis_overlay(managed_vis_overlays)
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	gen_overlay()
 	return ..()
 

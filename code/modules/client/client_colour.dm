@@ -213,6 +213,11 @@
 /datum/client_colour/rave
 	priority = PRIORITY_LOW
 
+/datum/client_colour/psyker
+	priority = PRIORITY_ABSOLUTE
+	override = TRUE
+	colour = list(0.8,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+
 #undef PRIORITY_ABSOLUTE
 #undef PRIORITY_HIGH
 #undef PRIORITY_NORMAL

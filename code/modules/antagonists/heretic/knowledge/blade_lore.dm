@@ -254,7 +254,7 @@
 	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
 	RegisterSignal(user, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, PROC_REF(on_wound_gain))
-	RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, PROC_REF(on_health_update))
+	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_update))
 
 	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
 
@@ -264,7 +264,7 @@
 		REMOVE_TRAIT(user, TRAIT_HARDLY_WOUNDED, type)
 		REMOVE_TRAIT(user, TRAIT_BATON_RESISTANCE, type)
 
-	UnregisterSignal(user, list(COMSIG_PARENT_EXAMINE, COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_HEALTH_UPDATE))
+	UnregisterSignal(user, list(COMSIG_PARENT_EXAMINE, COMSIG_CARBON_GAIN_WOUND, COMSIG_LIVING_HEALTH_UPDATE))
 
 /datum/heretic_knowledge/duel_stance/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -410,7 +410,7 @@
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
 
 	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
-	steel_spell?.cooldown_time /= 3
+	steel_spell?.cooldown_time /= 2
 
 /datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER

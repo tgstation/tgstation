@@ -3581,7 +3581,6 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "lJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/suit/space/nasavoid/old,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -3589,8 +3588,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/closet,
-/obj/item/clothing/head/helmet/space/nasavoid/old,
+/obj/machinery/suit_storage_unit/void_old,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "lK" = (
@@ -3923,10 +3921,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/mining)
 "mL" = (
-/obj/structure/closet,
-/obj/item/tank/jetpack/void,
-/obj/item/clothing/head/helmet/space/nasavoid/old,
-/obj/item/clothing/suit/space/nasavoid,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -3935,6 +3929,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/suit_storage_unit/void_old/jetpack,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "mM" = (

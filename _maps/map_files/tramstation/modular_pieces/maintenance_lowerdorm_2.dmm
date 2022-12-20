@@ -56,7 +56,7 @@
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/maintenance/department/crew_quarters/dorms)
 "fL" = (
-/mob/living/simple_animal/pet/dog/bullterrier{
+/mob/living/basic/pet/dog/bullterrier{
 	desc = "walter";
 	name = "walter"
 	},

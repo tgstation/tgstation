@@ -23,8 +23,7 @@
 /obj/item/organ/internal/lungs/carp
 	name = "mutated carp-lungs"
 	desc = "Carp DNA infused into what was once some normal lungs."
-	safe_oxygen_max = 16
-	safe_oxygen_min = 0
+	safe_oxygen_min = 0 //we don't breathe this!
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "lungs"
@@ -48,16 +47,19 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
+/obj/item/organ/internal/tongue/carp/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+
 /obj/item/organ/internal/tongue/carp/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	. = ..()
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
 	var/datum/species/rec_species = human_receiver.dna.species
-	if(!(rec_species.no_equip_flags & ITEM_SLOT_MASK))
-		rec_species.no_equip_flags += ITEM_SLOT_MASK
+	rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
-	head.unarmed_damage_low = 10 // Yeah, biteing is pretty weak, blame the monkey super-nerf
+	head.unarmed_damage_low = 10
 	head.unarmed_damage_high = 15
 	head.unarmed_stun_threshold = 15
 
@@ -67,8 +69,7 @@
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
 	var/datum/species/rec_species = human_receiver.dna.species
-	if(!(initial(rec_species.no_equip_flags) & ITEM_SLOT_MASK))
-		rec_species.no_equip_flags -= ITEM_SLOT_MASK
+	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = initial(head.unarmed_damage_low)
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
@@ -76,7 +77,7 @@
 
 /obj/item/organ/internal/tongue/carp/on_life(delta_time, times_fired)
 	. = ..()
-	if(!prob(1))
+	if(owner.stat != CONSCIOUS || !prob(0.1))
 		return
 	owner.emote("cough")
 	var/turf/tooth_fairy = get_turf(owner)
@@ -110,8 +111,8 @@
 
 /obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/brain_owner, special, drop_if_replaced, no_id_transfer)
 	. = ..()
-	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE)
-	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, .proc/satisfied_nomad)
+	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
+	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(satisfied_nomad))
 
 //technically you could get around the mood issue by extracting and reimplanting the brain but it will be far easier to just go one z there and back
 /obj/item/organ/internal/brain/carp/Remove(mob/living/carbon/brain_owner, special, no_id_transfer)
@@ -128,7 +129,7 @@
 /obj/item/organ/internal/brain/carp/proc/satisfied_nomad()
 	SIGNAL_HANDLER
 	owner.clear_mood_event("nomad")
-	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE)
+	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /// makes you cold resistant, but heat-weak.
 /obj/item/organ/internal/heart/carp
@@ -146,5 +147,9 @@
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "skin has small patches of scales growing...")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+
+#undef CARP_ORGAN_COLOR
+#undef CARP_SCLERA_COLOR
+#undef CARP_PUPIL_COLOR
 
 #undef CARP_COLORS

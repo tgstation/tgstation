@@ -23,7 +23,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
-	faction = list("neutral", "silicon", "turret")
+	faction = list(FACTION_NEUTRAL, "silicon", "turret")
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 0.9
@@ -1039,7 +1039,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	QDEL_LIST(path_images)
-	if(newpath)
+	if(length(newpath))
 		var/mutable_appearance/path_image = new /mutable_appearance()
 		path_image.icon = path_image_icon
 		path_image.icon_state = path_image_icon_state

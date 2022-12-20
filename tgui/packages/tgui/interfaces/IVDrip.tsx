@@ -113,24 +113,31 @@ export const IVDrip = (props, context) => {
               </LabeledList.Item>
             )}
             {!!data.connected &&
-              (!!data.containerAttached || data.useInternalStorage) && (
-                <LabeledList.Item
-                  label="Transfer Rate"
-                  buttons={'Units / Second'}>
-                  <Slider
-                    step={data.transferStep}
-                    my={1}
-                    value={data.transferRate}
-                    minValue={data.minInjectRate}
-                    maxValue={data.maxInjectRate}
-                    onDrag={(e, value) =>
-                      act('changeRate', {
-                        rate: value,
-                      })
-                    }
-                  />
+              (data.mode && data.useInternalStorage ? ( // Plumbing drip injects with the rate from network
+                <LabeledList.Item label="Transfer Rate">
+                  Controlled by the plumbing network
                 </LabeledList.Item>
-              )}
+              ) : (
+                ((!data.mode && data.useInternalStorage) || // Transfer rate controls always work for blood drawing
+                  !!data.containerAttached) && (
+                  <LabeledList.Item
+                    label="Transfer Rate"
+                    buttons={'Units / Second'}>
+                    <Slider
+                      step={data.transferStep}
+                      my={1}
+                      value={data.transferRate}
+                      minValue={data.minInjectRate}
+                      maxValue={data.maxInjectRate}
+                      onDrag={(e, value) =>
+                        act('changeRate', {
+                          rate: value,
+                        })
+                      }
+                    />
+                  </LabeledList.Item>
+                )
+              ))}
           </LabeledList>
         </Section>
       </Window.Content>

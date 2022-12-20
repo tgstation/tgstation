@@ -49,12 +49,8 @@
 /datum/action/cooldown/spell/touch/PreActivate(atom/target)
 	return Activate(target)
 
-/datum/action/cooldown/spell/touch/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
-	. = ..()
-	if(!button)
-		return
-	if(attached_hand)
-		button.color = COLOR_GREEN
+/datum/action/cooldown/spell/touch/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return !!attached_hand
 
 /datum/action/cooldown/spell/touch/set_statpanel_format()
 	. = ..()
@@ -125,6 +121,7 @@
 		reset_spell_cooldown()
 	else
 		StartCooldown()
+		build_all_button_icons()
 
 /// Registers all signal procs for the hand.
 /datum/action/cooldown/spell/touch/proc/register_hand_signals()

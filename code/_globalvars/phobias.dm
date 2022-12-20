@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/gun/magic/staff/honk,
 		/obj/item/instrument/bikehorn,
 		/obj/item/megaphone/clown,
-		/obj/item/modular_computer/tablet/pda/clown,
+		/obj/item/modular_computer/pda/clown,
 		/obj/item/pneumatic_cannon/pie,
 		/obj/item/stack/ore/bananium,
 		/obj/item/stack/tile/mineral/bananium,
@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/structure/mecha_wreckage/honker,
 		/obj/structure/statue/bananium,
 		/obj/vehicle/sealed/car/clowncar,
-		/obj/vehicle/sealed/mecha/combat/honker,
+		/obj/vehicle/sealed/mecha/honker,
 	)),
 
 	"greytide" = (typecacheof(list(

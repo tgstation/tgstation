@@ -335,7 +335,7 @@ That said, there is some nuance here so I'ma get into that.
 - `SEE_BLACKNESS`: This relates heavily to [planes](#planes), essentially typically the "blackness" (that darkness that masks things that you can't see) 
 is rendered separately, out of our control as "users". 
 However, if the `SEE_BLACKNESS` flag is set, it will instead render on plane 0, the default BYOND plane.
-This allows us to capture it, and say, blur it, or redraw it elsewhere. Very very powerful, we always have this flag set.
+This allows us to capture it, and say, blur it, or redraw it elsewhere. This is in theory very powerful, but not possible with the 'side_map' [map format](https://www.byond.com/docs/ref/#/world/var/map_format) 
 
 ## BYOND Lighting
 

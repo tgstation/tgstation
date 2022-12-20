@@ -67,7 +67,7 @@
 	update_current_power_usage()
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/rnd/server/emp_act()
+/obj/machinery/rnd/server/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return

@@ -28,7 +28,7 @@
 	attack_sound = "goose"
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("honks")
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	attack_same = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/random_retaliate = TRUE
@@ -88,6 +88,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
+	faction = list(FACTION_NEUTRAL, FACTION_MAINT_CREATURES)
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
 	var/vomiting = FALSE
@@ -247,7 +248,7 @@
 	name = "Vomit"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "vomit"
-	icon_icon = 'icons/mob/simple/animal.dmi'
+	button_icon = 'icons/mob/simple/animal.dmi'
 	cooldown_time = 250
 
 /datum/action/cooldown/vomit/Activate(atom/target)

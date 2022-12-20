@@ -212,7 +212,7 @@
 	name = "Syndicate Battlecruiser Assault Operative"
 	uniform = /obj/item/clothing/under/syndicate/combat
 	l_pocket = /obj/item/uplink/nuclear
-	r_pocket = /obj/item/modular_computer/tablet/nukeops
+	r_pocket = /obj/item/modular_computer/pda/nukeops
 	belt = /obj/item/storage/belt/military
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = /obj/item/gun/ballistic/automatic/pistol/clandestine
