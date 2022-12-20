@@ -218,8 +218,8 @@
 		))
 
 	var/list/remaining_stock = list()
-	for(var/datum/uplink_item/item as anything in stock_list)
-		remaining_stock[item.type] = stock_list[item]
+	for(var/item as anything in stock_list)
+		remaining_stock[item] = stock_list[item]
 	data["extra_purchasable"] = extra_purchasable
 	data["extra_purchasable_stock"] = extra_purchasable_stock
 	data["current_stock"] = remaining_stock

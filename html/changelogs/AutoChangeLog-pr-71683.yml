@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "Podperson hair isnt fugly anymore"
-  - code_imp: "External organs now support different colors for different layers"
