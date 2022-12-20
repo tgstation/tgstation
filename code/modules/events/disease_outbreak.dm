@@ -58,8 +58,21 @@
 	///Disease recipient candidates, passed from the round_event_control object
 	var/list/afflicted = list()
 
+/datum/round_event/disease_outbreak/proc/status_alarm() //Makes the status displays show biohazard warning for those who missed the announcement.
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(!frequency)
+		return
+
+	var/datum/signal/signal = new
+	signal.data["command"] = "alert"
+	signal.data["picture_state"] = "biohazard"
+
+	var/atom/movable/virtualspeaker/virt = new(null)
+	frequency.post_signal(virt, signal)
+
 /datum/round_event/disease_outbreak/announce(fake)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK7)
+	status_alarm()
 
 /datum/round_event/disease_outbreak/setup()
 	announce_when = rand(60, 180)

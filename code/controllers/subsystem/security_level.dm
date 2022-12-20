@@ -14,6 +14,18 @@ SUBSYSTEM_DEF(security_level)
 	current_security_level = available_levels[number_level_to_text(SEC_LEVEL_GREEN)]
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/proc/status_alarm(alert_code) //Makes the status displays show the current security level for those who missed the announcement.
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(!frequency)
+		return
+
+	var/datum/signal/signal = new
+	signal.data["command"] = "alert"
+	signal.data["picture_state"] = alert_code
+
+	var/atom/movable/virtualspeaker/virt = new(null)
+	frequency.post_signal(virt, signal)
+
 /datum/controller/subsystem/security_level/fire(resumed)
 	if(!current_security_level.looping_sound) // No sound? No play.
 		can_fire = FALSE
@@ -40,6 +52,8 @@ SUBSYSTEM_DEF(security_level)
 		CRASH("set_level was called with an invalid security level([new_level])")
 
 	announce_security_level(selected_level) // We want to announce BEFORE updating to the new level
+
+	status_alarm("[new_level]alert")
 
 	var/old_shuttle_call_time_mod = current_security_level.shuttle_call_time_mod // Need this before we set the new one
 

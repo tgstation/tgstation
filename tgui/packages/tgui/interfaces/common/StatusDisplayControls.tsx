@@ -45,19 +45,13 @@ export const StatusDisplayControls = (props, context) => {
 
       <Section title="Graphics">
         <Button
-          icon="flag"
-          content="Logo"
-          onClick={() => act('setStatusPicture', { picture: 'default' })}
+          icon="exclamation"
+          content="Security Alert Level"
+          onClick={() => act('setStatusPicture', { picture: 'currentalert' })}
         />
 
         <Button
-          icon="bell-o"
-          content="Red Alert"
-          onClick={() => act('setStatusPicture', { picture: 'redalert' })}
-        />
-
-        <Button
-          icon="exclamation-triangle"
+          icon="lock"
           content="Lockdown"
           onClick={() => act('setStatusPicture', { picture: 'lockdown' })}
         />
@@ -66,6 +60,18 @@ export const StatusDisplayControls = (props, context) => {
           icon="biohazard"
           content="Biohazard"
           onClick={() => act('setStatusPicture', { picture: 'biohazard' })}
+        />
+
+        <Button
+          icon="radiation"
+          content="Radiation"
+          onClick={() => act('setStatusPicture', { picture: 'radiation' })}
+        />
+
+        <Button
+          icon="flag"
+          content="Logo"
+          onClick={() => act('setStatusPicture', { picture: 'default' })}
         />
       </Section>
 
