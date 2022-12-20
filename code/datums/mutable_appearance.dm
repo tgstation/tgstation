@@ -24,25 +24,25 @@
  * offset_const - A constant to offset our plane by, so it renders on the right "z layer"
 **/
 /proc/mutable_appearance(icon, icon_state = "", layer = FLOAT_LAYER, atom/offset_spokesman, plane = FLOAT_PLANE, alpha = 255, appearance_flags = NONE, offset_const)
-	var/mutable_appearance/MA = new()
-	MA.icon = icon
-	MA.icon_state = icon_state
-	MA.layer = layer
-	MA.alpha = alpha
-	MA.appearance_flags |= appearance_flags
+	var/mutable_appearance/appearance = new()
+	appearance.icon = icon
+	appearance.icon_state = icon_state
+	appearance.layer = layer
+	appearance.alpha = alpha
+	appearance.appearance_flags |= appearance_flags
 	if(plane != FLOAT_PLANE)
 		// You need to pass in some non null object to reference
 		if(isatom(offset_spokesman))
 			// Note, we are ok with null turfs, that's not an error condition we'll just default to 0, the error would be
 			// Not passing ANYTHING in, key difference
-			SET_PLANE_EXPLICIT(MA, plane, offset_spokesman)
+			SET_PLANE_EXPLICIT(appearance, plane, offset_spokesman)
 		// That or I'll let you pass in a static offset. Don't be stupid now
 		else if(!isnull(offset_const))
-			SET_PLANE_W_SCALAR(MA, plane, offset_const)
+			SET_PLANE_W_SCALAR(appearance, plane, offset_const)
 		// otherwise if you're setting plane you better have the guts to back it up
 		else
 			stack_trace("No plane offset passed in as context for a non floating mutable appearance, things are gonna go to hell on multiz maps")
 	else if(!isnull(offset_spokesman) && !isatom(offset_spokesman))
 		stack_trace("Why did you pass in offset_spokesman as [offset_spokesman]? We need an atom to properly offset planes")
 
-	return MA
+	return appearance
