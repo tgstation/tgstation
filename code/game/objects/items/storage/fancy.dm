@@ -243,8 +243,7 @@
 
 /obj/item/storage/fancy/cigarettes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	var/obj/item/lighter = locate(/obj/item/lighter) in contents
-	if(lighter)
+	if(locate(/obj/item/lighter) in contents)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove lighter"
 	context[SCREENTIP_CONTEXT_RMB] = "Remove [contents_tag]"
 	return CONTEXTUAL_SCREENTIP_SET
