@@ -22701,10 +22701,10 @@
 	},
 /obj/item/fish/angelfish,
 /obj/item/fish/guppy,
-/obj/item/food/salad/boiledrice,
-/obj/item/food/salad/boiledrice,
-/obj/item/food/salad/boiledrice,
-/obj/item/food/salad/boiledrice,
+/obj/item/food/boiledrice,
+/obj/item/food/boiledrice,
+/obj/item/food/boiledrice,
+/obj/item/food/boiledrice,
 /turf/open/floor/iron/kitchen/herringbone,
 /area/station/service/kitchen/diner)
 "gir" = (
