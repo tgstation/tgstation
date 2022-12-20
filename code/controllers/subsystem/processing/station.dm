@@ -38,8 +38,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		var/list/forced_traits_text_paths = json_decode(forced_traits_contents)
 		forced_traits_text_paths = SANITIZE_LIST(forced_traits_text_paths)
 		for(var/trait_text_path in forced_traits_text_paths)
-			var/station_trait_path = text2path(trait_text_path)
-			if(!ispath(station_trait_path, /datum/station_trait) || station_trait_path == /datum/station_trait)
+			var/datum/station_trait/station_trait_path = text2path(trait_text_path)
+			if(!ispath(station_trait_path, /datum/station_trait) || station_trait_path == /datum/station_trait || initial(station_trait_path.trait_flags) & STATION_TRAIT_ABSTRACT)
 				var/message = "Invalid station trait path [station_trait_path] was requested in the future station traits!"
 				log_game(message)
 				message_admins(message)
@@ -57,7 +57,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 			setup_trait(trait_typepath)
 			continue
 
-		if(initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT)
+		if(initial(trait_typepath.trait_flags) & (STATION_TRAIT_ABSTRACT|STATION_TRAIT_NORANDOM))
 			continue //Dont add abstract ones to it
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
