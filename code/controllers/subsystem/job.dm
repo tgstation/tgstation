@@ -551,7 +551,7 @@ SUBSYSTEM_DEF(job)
 		if(related_policy)
 			to_chat(player_client, related_policy)
 
-	if(ishuman(equipping) && equipping.mind)
+	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping
 		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
 
