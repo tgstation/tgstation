@@ -579,7 +579,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		valve_open = !valve_open
 		timing = FALSE
 
-	var/visual_update = FALSE
 	// Handle gas transfer.
 	if(valve_open)
 		var/turf/location = get_turf(src)
@@ -587,17 +586,14 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		excited = TRUE
 
 		if(air_contents.release_gas_to(target_air, release_pressure))
-			visual_update = TRUE
 			if(!holding)
 				air_update_turf(FALSE, FALSE)
 
 	// A bit different than other atmos devices. Wont stop if currently taking damage.
 	if(take_atmos_damage())
-		visual_update = TRUE
 		excited = TRUE
 
-	if(visual_update)
-		update_appearance()
+	update_appearance()
 	return ..()
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
