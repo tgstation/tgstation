@@ -1,4 +1,0 @@
-author: "Zonespace27"
-delete-after: True
-changes:
-  - admin: "ERTs can now have a custom shuttle that they can spawn on, on a toggle while creating said ERT."

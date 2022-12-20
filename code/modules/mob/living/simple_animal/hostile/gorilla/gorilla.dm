@@ -43,8 +43,8 @@
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
 
-// Gorillas like to dismember limbs from unconcious mobs.
-// Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
+// Gorillas like to dismember limbs from unconscious mobs.
+// Returns null when the target is not an unconscious carbon mob; a list of limbs (possibly empty) otherwise.
 /mob/living/simple_animal/hostile/gorilla/proc/get_target_bodyparts(atom/hit_target)
 	if(!iscarbon(hit_target))
 		return
@@ -122,7 +122,7 @@
 	desc = "Cargo's pet gorilla. They seem to have an 'I love Mom' tattoo."
 	maxHealth = 200
 	health = 200
-	faction = list("neutral", "monkey", "jungle")
+	faction = list(FACTION_NEUTRAL, "monkey", "jungle")
 	gold_core_spawnable = NO_SPAWN
 	unique_name = FALSE
 	/// Whether we're currently being polled over

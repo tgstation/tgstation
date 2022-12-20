@@ -53,7 +53,7 @@
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("You're punched by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))
-	adjustBruteLoss(15)
+	apply_damage(15, damagetype = BRUTE)
 
 /mob/living/basic/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..()) //successful monkey bite.
@@ -135,10 +135,8 @@
 		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
 	return TRUE
 
-/mob/living/basic/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
-	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src, 0, piercing_hit)
-	return BULLET_ACT_HIT
+/mob/living/basic/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
+	return 0
 
 /mob/living/basic/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
@@ -151,7 +149,7 @@
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			if(prob(bomb_armor))
-				adjustBruteLoss(500)
+				apply_damage(500, damagetype = BRUTE)
 			else
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 				gib()
@@ -160,16 +158,16 @@
 			var/bloss = 60
 			if(prob(bomb_armor))
 				bloss = bloss / 1.5
-			adjustBruteLoss(bloss)
+			apply_damage(bloss, damagetype = BRUTE)
 
 		if (EXPLODE_LIGHT)
 			var/bloss = 30
 			if(prob(bomb_armor))
 				bloss = bloss / 1.5
-			adjustBruteLoss(bloss)
+			apply_damage(bloss, damagetype = BRUTE)
 
 /mob/living/basic/blob_act(obj/structure/blob/B)
-	adjustBruteLoss(20)
+	apply_damage(20, damagetype = BRUTE)
 	return
 
 /mob/living/basic/do_attack_animation(atom/A, visual_effect_icon, used_item, no_effect)

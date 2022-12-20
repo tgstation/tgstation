@@ -3,12 +3,17 @@
 	name = "tail"
 	desc = "A severed tail. What did you cut this off of?"
 	icon_state = "severedtail"
+
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+
 	feature_key = "tail"
 	render_key = "tail"
+
 	dna_block = DNA_TAIL_BLOCK
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
+
 	///Does this tail have a wagging sprite, and is it currently wagging?
 	var/wag_flags = NONE
 	///The original owner of this tail

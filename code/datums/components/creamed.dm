@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/carbon/human,
-	/mob/living/simple_animal/pet/dog/corgi,
+	/mob/living/basic/pet/dog/corgi,
 	/mob/living/silicon/ai)))
 
 /**

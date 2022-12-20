@@ -1,5 +1,8 @@
 ###Files and folders specified here will never be tracked.
 
+# Local overrides--you can use this to change the config for your dev environment (like setting up SQL) without worrying about committing it
+/config/dev_overrides.txt
+
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*

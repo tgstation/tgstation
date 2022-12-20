@@ -235,6 +235,18 @@
 	return TRUE
 
 /*
+ * Attempts to move using zMove if direction is UP or DOWN, step if not
+ *
+ * Args:
+ * direction: The direction to go
+ * z_move_flags: bitflags used for checks in zMove and can_z_move
+*/
+/atom/movable/proc/try_step_multiz(direction, z_move_flags = ZMOVE_FLIGHT_FLAGS)
+	if(direction == UP || direction == DOWN)
+		return zMove(direction, null, z_move_flags)
+	return step(src, direction)
+
+/*
  * The core multi-z movement proc. Used to move a movable through z levels.
  * If target is null, it'll be determined by the can_z_move proc, which can potentially return null if
  * conditions aren't met (see z_move_flags defines in __DEFINES/movement.dm for info) or if dir isn't set.

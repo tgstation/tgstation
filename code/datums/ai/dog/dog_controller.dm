@@ -1,17 +1,22 @@
 /datum/ai_controller/dog
-	blackboard = list(\
-		BB_SIMPLE_CARRY_ITEM = null,\
-		BB_FETCH_TARGET = null,\
-		BB_FETCH_DELIVER_TO = null,\
-		BB_DOG_FRIENDS = list(),\
-		BB_FETCH_IGNORE_LIST = list(),\
-		BB_DOG_ORDER_MODE = DOG_COMMAND_NONE,\
-		BB_DOG_PLAYING_DEAD = FALSE,\
-		BB_DOG_HARASS_TARGET = null,\
-		BB_DOG_HARASS_FRUSTRATION = null,\
-		BB_VISION_RANGE = AI_DOG_VISION_RANGE)
+	blackboard = list(
+		BB_SIMPLE_CARRY_ITEM = null,
+		BB_FETCH_TARGET = null,
+		BB_FETCH_DELIVER_TO = null,
+		BB_DOG_FRIENDS = list(),
+		BB_FETCH_IGNORE_LIST = list(),
+		BB_DOG_ORDER_MODE = DOG_COMMAND_NONE,
+		BB_DOG_PLAYING_DEAD = FALSE,
+		BB_DOG_HARASS_TARGET = null,
+		BB_DOG_HARASS_FRUSTRATION = null,
+		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
+	)
 	ai_movement = /datum/ai_movement/jps
-	planning_subtrees = list(/datum/ai_planning_subtree/dog)
+	idle_behavior = /datum/idle_behavior/idle_dog
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/dog,
+		/datum/ai_planning_subtree/dog,
+	)
 
 	COOLDOWN_DECLARE(heel_cooldown)
 	COOLDOWN_DECLARE(command_cooldown)
@@ -51,13 +56,6 @@
 		return FALSE
 	return ..()
 
-/datum/ai_controller/dog/get_access()
-	var/mob/living/simple_animal/simple_pawn = pawn
-	if(!istype(simple_pawn))
-		return
-
-	return simple_pawn.access_card
-
 /// Someone has thrown something, see if it's someone we care about and start listening to the thrown item so we can see if we want to fetch it when it lands
 /datum/ai_controller/dog/proc/listened_throw(datum/source, mob/living/carbon/carbon_thrower)
 	SIGNAL_HANDLER
@@ -86,7 +84,7 @@
 	var/mob/living/living_pawn = pawn
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return
-	current_movement_target = thrown_thing
+	set_movement_target(thrown_thing)
 	blackboard[BB_FETCH_TARGET] = thrown_thing
 	blackboard[BB_FETCH_DELIVER_TO] = throwing_datum.thrower
 	if(living_pawn.buckled)
@@ -272,7 +270,7 @@
 			if(pointed_item.obj_flags & ABSTRACT)
 				return
 			pawn.visible_message(span_notice("[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and barks excitedly!"))
-			current_movement_target = pointed_movable
+			set_movement_target(pointed_movable)
 			blackboard[BB_FETCH_TARGET] = pointed_movable
 			blackboard[BB_FETCH_DELIVER_TO] = pointing_friend
 			if(living_pawn.buckled)
@@ -280,8 +278,42 @@
 			queue_behavior(/datum/ai_behavior/fetch)
 		if(DOG_COMMAND_ATTACK)
 			pawn.visible_message(span_notice("[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and growls intensely!"))
-			current_movement_target = pointed_movable
+			set_movement_target(pointed_movable)
 			blackboard[BB_DOG_HARASS_TARGET] = WEAKREF(pointed_movable)
 			if(living_pawn.buckled)
 				queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something
 			queue_behavior(/datum/ai_behavior/harass)
+
+
+/**
+ * Same thing but with make tiny corgis and use access cards.
+ */
+/datum/ai_controller/dog/corgi
+	blackboard = list(
+		BB_SIMPLE_CARRY_ITEM = null,
+		BB_FETCH_TARGET = null,
+		BB_FETCH_DELIVER_TO = null,
+		BB_DOG_FRIENDS = list(),
+		BB_FETCH_IGNORE_LIST = list(),
+		BB_DOG_ORDER_MODE = DOG_COMMAND_NONE,
+		BB_DOG_PLAYING_DEAD = FALSE,
+		BB_DOG_HARASS_TARGET = null,
+		BB_DOG_HARASS_FRUSTRATION = null,
+		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
+
+		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/dog),
+		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/pet/dog/corgi/puppy = 95, /mob/living/basic/pet/dog/corgi/puppy/void = 5),
+	)
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/dog,
+		/datum/ai_planning_subtree/make_babies,
+		/datum/ai_planning_subtree/dog,
+	)
+
+/datum/ai_controller/dog/corgi/get_access()
+	var/mob/living/basic/pet/dog/corgi/corgi_pawn = pawn
+	if(!istype(corgi_pawn))
+		return
+
+	return corgi_pawn.access_card

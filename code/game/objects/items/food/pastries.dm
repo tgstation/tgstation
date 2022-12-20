@@ -30,14 +30,15 @@
 
 /obj/item/food/muffin/moffin
 	name = "moffin"
-	icon_state = "moffin"
+	icon_state = "moffin_1"
+	base_icon_state = "moffin"
 	desc = "A delicious and spongy little cake."
 	tastes = list("muffin" = 3, "dust" = 1, "lint" = 1)
 	foodtypes = CLOTH | GRAIN | SUGAR | BREAKFAST
 
 /obj/item/food/muffin/moffin/Initialize(mapload)
 	. = ..()
-	icon_state = "[icon_state]_[rand(1, 3)]"
+	icon_state = "[base_icon_state]_[rand(1, 3)]"
 
 /obj/item/food/muffin/moffin/examine(mob/user)
 	. = ..()
@@ -339,7 +340,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/brownie_sheet/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 
 /obj/item/food/brownie
 	name = "brownie"

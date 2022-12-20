@@ -24,6 +24,7 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
+	worn_icon_state = "gun"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 
@@ -336,6 +337,12 @@
 	name = "security temperature gun"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	pin = /obj/item/firing_pin
+
+/obj/item/gun/energy/temperature/freeze
+	name = "cryogenic temperature gun"
+	desc = "A gun that reduces temperatures. Only for those with ice in their veins."
+	pin = /obj/item/firing_pin
+	ammo_type = list(/obj/item/ammo_casing/energy/temp)
 
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"

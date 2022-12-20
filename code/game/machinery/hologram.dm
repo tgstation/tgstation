@@ -209,7 +209,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
 	if(isAI(user))
-		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :2 to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
+		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
 	else if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
 
@@ -547,7 +547,7 @@ Possible to do for anyone motivated enough:
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(speaker && LAZYLEN(masters) && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
@@ -559,13 +559,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			if(speaker == holocall_to_update.hologram && holocall_to_update.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 				holocall_to_update.user.create_chat_message(speaker, message_language, raw_message, spans)
 			else
-				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
+				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message, sanitize = FALSE)
 
 	if(record_mode && speaker == record_user)
-		record_message(speaker,raw_message,message_language)
+		record_message(speaker, raw_message, message_language)
 
 /obj/machinery/holopad/proc/SetLightsAndPower()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)

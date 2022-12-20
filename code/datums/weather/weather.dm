@@ -114,15 +114,7 @@
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	SSweather.processing |= src
 	update_areas()
-	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
-			var/turf/mob_turf = get_turf(player)
-			if(!mob_turf)
-				continue
-			if(telegraph_message)
-				to_chat(player, telegraph_message)
-			if(telegraph_sound)
-				SEND_SOUND(player, sound(telegraph_sound))
+	send_alert(telegraph_message, telegraph_sound)
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
 /**
@@ -138,15 +130,7 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type))
 	stage = MAIN_STAGE
 	update_areas()
-	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
-			var/turf/mob_turf = get_turf(player)
-			if(!mob_turf)
-				continue
-			if(weather_message)
-				to_chat(player, weather_message)
-			if(weather_sound)
-				SEND_SOUND(player, sound(weather_sound))
+	send_alert(weather_message, weather_sound)
 	if(!perpetual)
 		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 
@@ -163,15 +147,7 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_WINDDOWN(type))
 	stage = WIND_DOWN_STAGE
 	update_areas()
-	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
-			var/turf/mob_turf = get_turf(player)
-			if(!mob_turf)
-				continue
-			if(end_message)
-				to_chat(player, end_message)
-			if(end_sound)
-				SEND_SOUND(player, sound(end_sound))
+	send_alert(end_message, end_sound)
 	addtimer(CALLBACK(src, PROC_REF(end)), end_duration)
 
 /**
@@ -188,6 +164,22 @@
 	stage = END_STAGE
 	SSweather.processing -= src
 	update_areas()
+
+// handles sending all alerts
+/datum/weather/proc/send_alert(alert_msg, alert_sfx)
+	for(var/z_level in impacted_z_levels)
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
+			if(!can_get_alert(player))
+				continue
+			if(alert_msg)
+				to_chat(player, alert_msg)
+			if(alert_sfx)
+				SEND_SOUND(player, sound(alert_sfx))
+
+// the checks for if a mob should recieve alerts, returns TRUE if can
+/datum/weather/proc/can_get_alert(mob/player)
+	var/turf/mob_turf = get_turf(player)
+	return !isnull(mob_turf)
 
 /**
  * Returns TRUE if the living mob can be affected by the weather

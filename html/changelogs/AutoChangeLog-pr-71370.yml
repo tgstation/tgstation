@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "two handed items will no longer leave a ghost at your feet when inserted into something"

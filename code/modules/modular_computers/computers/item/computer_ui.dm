@@ -50,30 +50,24 @@
 	. = ..()
 	var/list/data = list()
 
-	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet)
+	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
 
 	return data
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["device_theme"] = device_theme
-	data["login"] = list()
 
-	if(computer_id_slot)
-		var/stored_name = saved_identification
-		var/stored_title = saved_job
-		if(!stored_name)
-			stored_name = "Unknown"
-		if(!stored_title)
-			stored_title = "Unknown"
-		data["login"] = list(
-			IDName = saved_identification,
-			IDJob = saved_job,
-		)
-		data["proposed_login"] = list(
-			IDName = computer_id_slot.registered_name,
-			IDJob = computer_id_slot.assignment,
-		)
+	data["login"] = list(
+		IDName = saved_identification || "Unknown",
+		IDJob = saved_job || "Unknown",
+	)
+
+	data["proposed_login"] = list(
+		IDName = computer_id_slot?.registered_name,
+		IDJob = computer_id_slot?.assignment,
+	)
+
 
 	data["removable_media"] = list()
 	if(inserted_disk)
@@ -166,18 +160,26 @@
 				if("Eject Disk")
 					if(!inserted_disk)
 						return
+
 					user.put_in_hands(inserted_disk)
 					inserted_disk = null
 					playsound(src, 'sound/machines/card_slide.ogg', 50)
+					return TRUE
+
 				if("intelliCard")
 					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 					if(!airestore_app)
 						return
+
 					if(airestore_app.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
+						return TRUE
+
 				if("ID")
 					if(RemoveID())
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
+						return TRUE
+
 		if("PC_Imprint_ID")
 			saved_identification = computer_id_slot.registered_name
 			saved_job = computer_id_slot.assignment
@@ -190,6 +192,7 @@
 					usr.put_in_hands(inserted_pai)
 					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
 					inserted_pai = null
+					update_appearance(UPDATE_ICON)
 				if("interact")
 					inserted_pai.attack_self(usr)
 			return UI_UPDATE

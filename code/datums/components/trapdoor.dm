@@ -224,7 +224,7 @@
 	var/list/stored_decals = list()
 
 
-/obj/item/assembly/trapdoor/pulsed(radio, mob/pulser)
+/obj/item/assembly/trapdoor/pulsed(mob/pulser)
 	. = ..()
 	if(linked)
 		return
@@ -307,7 +307,7 @@
 		return TRUE
 
 	if(!internals.linked)
-		internals.pulsed(pulser = user)
+		internals.pulsed(user)
 		// The pulse linked successfully
 		if(internals.linked)
 			user.balloon_alert(user, "linked")
@@ -325,7 +325,7 @@
 	icon_state = "trapdoor_pressed"
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), trapdoor_cooldown_time)
 	COOLDOWN_START(src, trapdoor_cooldown, trapdoor_cooldown_time)
-	internals.pulsed(pulser = user)
+	internals.pulsed(user)
 	return TRUE
 
 #undef TRAPDOOR_LINKING_SEARCH_RANGE

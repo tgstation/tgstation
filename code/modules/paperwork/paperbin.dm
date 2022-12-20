@@ -152,7 +152,7 @@
 /obj/item/paper_bin/update_overlays()
 	. = ..()
 
-	var/static/reference_paper
+	var/static/obj/item/paper/reference_paper
 	if (isnull(reference_paper))
 		reference_paper = new /obj/item/paper
 
@@ -163,6 +163,9 @@
 		bin_overlay = mutable_appearance(icon, bin_overlay_string)
 
 	if(total_paper > 0)
+		if(total_paper > length(paper_stack))
+			SET_PLANE_EXPLICIT(reference_paper, initial(reference_paper.plane), src)
+			reference_paper.update_appearance() // Ensures all our overlays are on the right plane
 		for(var/paper_number in 1 to total_paper)
 			if(paper_number != total_paper && paper_number % PAPERS_PER_OVERLAY != 0) //only top paper and every nth paper get overlays
 				continue

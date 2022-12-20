@@ -91,6 +91,7 @@
 	update_node_status(BN)
 	if(remove_tech)
 		SSresearch.techweb_nodes_experimental -= bepis_id
+		log_research("[BN.display_name] has been removed from experimental nodes through the BEPIS techweb's \"remove tech\" feature.")
 
 /datum/techweb/Destroy()
 	researched_nodes = null
@@ -296,7 +297,7 @@
 /datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
 	available_experiments -= completed_experiment
 	completed_experiments[completed_experiment.type] = completed_experiment
-	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb id [id]")
+	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization]")
 
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
@@ -311,8 +312,11 @@
 	if(!force)
 		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))) || !have_experiments_for_node(node))
 			return FALSE
+	var/log_message = "[id]/[organization] researched node [node.id]"
 	if(auto_adjust_cost)
-		remove_point_list(node.get_price(src))
+		var/node_cost = node.get_price(src)
+		remove_point_list(node_cost)
+		log_message += " at the cost of [node_cost]"
 	researched_nodes[node.id] = TRUE //Add to our researched list
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
@@ -328,6 +332,12 @@
 	if(get_that_dosh)
 		var/datum/bank_account/science_department_bank_account = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		science_department_bank_account?.adjust_money(SSeconomy.techweb_bounty)
+		log_message += ", gaining [SSeconomy.techweb_bounty] to [science_department_bank_account] for it."
+
+	// Avoid logging the same 300+ lines at the beginning of every round
+	if (MC_RUNNING())
+		log_research(log_message)
+
 	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)

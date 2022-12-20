@@ -1,4 +1,0 @@
-author: "SkeletalElite"
-delete-after: True
-changes:
-  - bugfix: "Riot darts no longer do damage with no pen inserted if recovered after being fired while modified to accept pens."

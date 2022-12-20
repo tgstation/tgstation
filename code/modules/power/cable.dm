@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
 	var/cable_color = CABLE_COLOR_YELLOW
+	var/is_fully_initialized = FALSE
 
 /obj/structure/cable/layer1
 	color = CABLE_HEX_COLOR_RED
@@ -54,6 +55,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		var/turf/turf_loc = loc
 		turf_loc.add_blueprints_preround(src)
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/cable/LateInitialize()
+	update_appearance(UPDATE_ICON)
+	is_fully_initialized = TRUE
 
 /obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
@@ -102,9 +108,13 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
 				C.linked_dirs |= inverse
-				C.update_appearance()
 
-	update_appearance()
+				// We will update on LateInitialize otherwise.
+				if (C.is_fully_initialized)
+					C.update_appearance(UPDATE_ICON)
+
+	if (is_fully_initialized)
+		update_appearance(UPDATE_ICON)
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()

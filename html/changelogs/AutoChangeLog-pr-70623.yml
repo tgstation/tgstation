@@ -1,7 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Bots will now \"notice\" you if you're standing right next to them"
-  - bugfix: "Bot paths will now draw above things like pipes, rather then below them"
-  - refactor: "Changed how pathfinding paths get generated"
-  - refactor: "Made pathfinding and bot searching significantly faster"

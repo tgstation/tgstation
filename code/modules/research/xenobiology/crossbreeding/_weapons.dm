@@ -57,7 +57,7 @@ Slimecrossing Weapons
 /obj/item/shield/adamantineshield
 	name = "adamantine shield"
 	desc = "A gigantic shield made of solid adamantium."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/weapons/shields.dmi'
 	icon_state = "adamshield"
 	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE

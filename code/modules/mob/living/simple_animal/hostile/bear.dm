@@ -132,7 +132,7 @@
 	icon_living = "butterbear"
 	icon_dead = "butterbear_dead"
 	desc = "I can't believe its not a bear!"
-	faction = list("neutral", "russian")
+	faction = list(FACTION_NEUTRAL, "russian")
 	obj_damage = 11
 	melee_damage_lower = 0
 	melee_damage_upper = 0

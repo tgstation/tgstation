@@ -274,6 +274,27 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 
+/obj/item/reagent_containers/cup/beaker/meta/omnizine
+	list_reagents = list(/datum/reagent/medicine/omnizine = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/sal_acid
+	list_reagents = list(/datum/reagent/medicine/sal_acid = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/oxandrolone
+	list_reagents = list(/datum/reagent/medicine/oxandrolone = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/pen_acid
+	list_reagents = list(/datum/reagent/medicine/pen_acid = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/atropine
+	list_reagents = list(/datum/reagent/medicine/atropine = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/salbutamol
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/rezadone
+	list_reagents = list(/datum/reagent/medicine/rezadone = 180)
+
 /obj/item/reagent_containers/cup/beaker/cryoxadone
 	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 
@@ -482,11 +503,6 @@
 		grinded = I
 		return
 	to_chat(user, span_warning("You can't grind this!"))
-
-/obj/item/reagent_containers/cup/saline
-	name = "saline canister"
-	volume = 5000
-	list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)
 
 //Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer
 /obj/item/reagent_containers/cup/coffeepot

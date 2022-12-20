@@ -76,8 +76,8 @@
 			bug.balloon_alert(user, "the bug materializes in your hand")
 			bug.target_area_type = applicable_heads[target_office.title]
 			AddComponent(/datum/component/traitor_objective_register, bug, \
-				succeed_signals = COMSIG_TRAITOR_BUG_PLANTED_GROUND, \
-				fail_signals = COMSIG_PARENT_QDELETING, \
+				succeed_signals = list(COMSIG_TRAITOR_BUG_PLANTED_GROUND), \
+				fail_signals = list(COMSIG_PARENT_QDELETING), \
 				penalty = TRUE)
 
 /datum/traitor_objective/bug_room/generate_objective(datum/mind/generating_for, list/possible_duplicates)

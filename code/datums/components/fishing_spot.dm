@@ -41,7 +41,7 @@
 	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked_item)
 		user.balloon_alert(user, "already fishing")
 		return COMPONENT_NO_AFTERATTACK
-	var/denial_reason = fish_source.can_fish(rod, user)
+	var/denial_reason = fish_source.reason_we_cant_fish(rod, user)
 	if(denial_reason)
 		to_chat(user, span_warning(denial_reason))
 		return COMPONENT_NO_AFTERATTACK

@@ -105,11 +105,10 @@ There are several things that need to be remembered:
 		var/woman
 		if(!uniform_overlay)
 			//BEGIN SPECIES HANDLING
-			if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-				icon_file = DIGITIGRADE_UNIFORM_FILE
 			if((dna?.species.bodytype & BODYTYPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
 				icon_file = MONKEY_UNIFORM_FILE
-
+			else if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+				icon_file = DIGITIGRADE_UNIFORM_FILE
 			//Female sprites have lower priority than digitigrade sprites
 			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 				woman = TRUE
@@ -815,7 +814,6 @@ generate/load female uniform sprites matching all previously decided variables
 					missing_eyes.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
 					missing_eyes.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
 				add_overlay(missing_eyes)
-
 	update_worn_head()
 	update_worn_mask()
 

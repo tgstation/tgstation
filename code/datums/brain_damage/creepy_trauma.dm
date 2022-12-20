@@ -6,7 +6,7 @@
 	lose_text = "<span class='warning'>The voices in your head fall silent.</span>"
 	can_gain = TRUE
 	random_gain = FALSE
-	resilience = TRAUMA_RESILIENCE_SURGERY
+	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 	var/mob/living/obsession
 	var/datum/objective/spendtime/attachedobsessedobj
 	var/datum/antagonist/obsessed/antagonist

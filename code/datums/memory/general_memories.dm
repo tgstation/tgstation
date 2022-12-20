@@ -804,3 +804,15 @@
 
 /datum/memory/bomb_defuse_success/get_moods()
 	return list("[protagonist_name] [mood_verb] as they snip a wire on [antagonist_name].")
+
+
+/datum/memory/helped_up
+
+/datum/memory/helped_up/get_names()
+	return list("[protagonist_name] gentlemanly helping up [deuteragonist_name].")
+
+/datum/memory/helped_up/get_starts()
+	return list(
+		"[protagonist_name] helping up [deuteragonist_name]",
+		"[deuteragonist_name] taking the hand offered graciously by[protagonist_name] to get up",
+	)

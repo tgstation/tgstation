@@ -12,7 +12,7 @@
 	opacity = TRUE
 	density = TRUE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
+	plane = WALL_PLANE_UPPER
 	base_icon_state = "smoothrocks"
 
 	// This is static
@@ -35,8 +35,8 @@
 
 
 /turf/closed/mineral/Initialize(mapload)
-	var/static/list/smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MINERAL_WALLS)
-	var/static/list/canSmoothWith = list(SMOOTH_GROUP_MINERAL_WALLS)
+	var/static/list/smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
+	var/static/list/canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
 
 	// The cost of the list() being in the type def is very large for something as common as minerals
 	src.smoothing_groups = smoothing_groups
@@ -51,10 +51,15 @@
 		return
 
 	var/mob/living/bumping = bumped_atom
+	if(!ISADVANCEDTOOLUSER(bumping)) // Unadvanced tool users can't mine anyway (this is a lie). This just prevents message spam from attackby()
+		return
+
 	var/obj/item/held_item = bumping.get_active_held_item()
 	// !held_item exists to be nice to snow. the other bit is for pickaxes obviously
-	if(!held_item || held_item.tool_behaviour == TOOL_MINING)
+	if(!held_item)
 		INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, ClickOn), src)
+	else if(held_item.tool_behaviour == TOOL_MINING)
+		attackby(held_item, bumping)
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
@@ -149,11 +154,6 @@
 	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 	mined.update_visuals()
-
-/turf/closed/mineral/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
-		gets_drilled(user)
-	..()
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	balloon_alert(user, "digging...")
@@ -334,7 +334,7 @@
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	defer_change = TRUE
 	turf_type = /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
@@ -435,7 +435,7 @@
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	defer_change = TRUE
 	turf_type = /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
@@ -565,7 +565,7 @@
 	icon_state = "rock2"
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	baseturfs = /turf/open/misc/ashplanet/wateryrock
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	turf_type = /turf/open/misc/ashplanet/rocky
@@ -577,7 +577,7 @@
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	baseturfs = /turf/open/misc/asteroid/snow
 	initial_gas_mix = FROZEN_ATMOS
 	turf_type = /turf/open/misc/asteroid/snow
@@ -665,7 +665,7 @@
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null)
 	if(stage == GIBTONITE_UNSTRUCK)
 		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_inactive", ON_EDGED_TURF_LAYER) //shows in gaps between pulses if there are any
-		SET_PLANE(activated_overlay, GAME_PLANE_UPPER, src)
+		SET_PLANE(activated_overlay, WALL_PLANE_UPPER, src)
 		add_overlay(activated_overlay)
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"

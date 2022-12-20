@@ -110,18 +110,18 @@
 			client.images -= current_image
 		pipes_shown.len = 0
 		pipetracker = null
-		for(var/atom/movable/screen/plane_master/lighting in hud_used.get_true_plane_masters(LIGHTING_PLANE))
+		for(var/atom/movable/screen/plane_master/lighting as anything in hud_used.get_true_plane_masters(LIGHTING_PLANE))
 			lighting.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#4d4d4d")
-		for(var/atom/movable/screen/plane_master/pipecrawl in hud_used.get_true_plane_masters(PIPECRAWL_IMAGES_PLANE))
+		for(var/atom/movable/screen/plane_master/pipecrawl as anything in hud_used.get_true_plane_masters(PIPECRAWL_IMAGES_PLANE))
 			pipecrawl.hide_plane(src)
 		return
 
 	// We're gonna color the lighting plane to make it darker while ventcrawling, so things look nicer
 	// This is a bit hacky but it makes the background darker, which has a nice effect
-	for(var/atom/movable/screen/plane_master/lighting in hud_used.get_true_plane_masters(LIGHTING_PLANE))
+	for(var/atom/movable/screen/plane_master/lighting as anything in hud_used.get_true_plane_masters(LIGHTING_PLANE))
 		lighting.add_atom_colour("#4d4d4d", TEMPORARY_COLOUR_PRIORITY)
 
-	for(var/atom/movable/screen/plane_master/pipecrawl in hud_used.get_true_plane_masters(PIPECRAWL_IMAGES_PLANE))
+	for(var/atom/movable/screen/plane_master/pipecrawl as anything in hud_used.get_true_plane_masters(PIPECRAWL_IMAGES_PLANE))
 		pipecrawl.unhide_plane(src)
 
 	var/obj/machinery/atmospherics/current_location = loc

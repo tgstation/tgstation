@@ -105,11 +105,11 @@
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
 	update_tram_doors(CLOSE_DOORS)
-	update_tram_doors(UNLOCK_DOORS)
 	addtimer(CALLBACK(src, PROC_REF(dispatch_tram), to_where), 2 SECONDS)
 
 /datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/to_where)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
+	update_tram_doors(UNLOCK_DOORS)
 
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
 		if(tram_part.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs

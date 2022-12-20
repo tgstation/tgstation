@@ -271,7 +271,7 @@
 		target.Move(target_shove_turf, shove_dir)
 		if(get_turf(target) == target_old_turf)
 			shove_blocked = TRUE
-	
+
 	if(!shove_blocked)
 		target.setGrabState(GRAB_PASSIVE)
 
@@ -640,11 +640,11 @@
 	var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
 		. = TRUE
-	if(health <= hardcrit_threshold)
+	if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 		. = FALSE
 
 
-/mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	. = ..()
 	check_passout(.)
 
@@ -653,7 +653,7 @@
 	if(!limb)
 		return
 
-/mob/living/carbon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	. = ..()
 	check_passout(.)
 

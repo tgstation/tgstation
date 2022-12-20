@@ -588,6 +588,7 @@
 				to_chat(src, span_notice("You stand up."))
 			get_up(instant)
 
+	SEND_SIGNAL(src, COMSIG_LIVING_RESTING, new_resting, silent, instant)
 	update_resting()
 
 
@@ -690,11 +691,12 @@
 	if(status_flags & GODMODE)
 		return
 	set_health(maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss())
-	staminaloss = getStaminaLoss()
 	update_stat()
 	med_hud_set_health()
 	med_hud_set_status()
 	update_health_hud()
+	update_stamina()
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/update_health_hud()
 	var/severity = 0
@@ -868,6 +870,25 @@
 	updatehealth()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
+
+/**
+ * Called by strange_reagent, with the amount of healing the strange reagent is doing
+ * It uses the healing amount on brute/fire damage, and then uses the excess healing for revive
+ */
+/mob/living/proc/do_strange_reagent_revival(healing_amount)
+	var/brute_loss = getBruteLoss()
+	if(brute_loss)
+		var/brute_healing = min(healing_amount * 0.5, brute_loss) // 50% of the healing goes to brute
+		setBruteLoss(round(brute_loss - brute_healing, DAMAGE_PRECISION), updating_health=FALSE, forced=TRUE)
+		healing_amount = max(0, healing_amount - brute_healing)
+
+	var/fire_loss = getFireLoss()
+	if(fire_loss && healing_amount)
+		var/fire_healing = min(healing_amount, fire_loss) // rest of the healing goes to fire
+		setFireLoss(round(fire_loss - fire_healing, DAMAGE_PRECISION), updating_health=TRUE, forced=TRUE)
+		healing_amount = max(0, healing_amount - fire_healing)
+
+	revive(NONE, excess_healing=max(healing_amount, 0), force_grab_ghost=FALSE) // and any excess healing is passed along
 
 /// Checks if we are actually able to ressuscitate this mob.
 /// (We don't want to revive then to have them instantly die again)
@@ -1344,9 +1365,9 @@
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 				/mob/living/simple_animal/hostile/gorilla,
 				/mob/living/simple_animal/parrot,
-				/mob/living/simple_animal/pet/dog/corgi,
+				/mob/living/basic/pet/dog/corgi,
 				/mob/living/simple_animal/crab,
-				/mob/living/simple_animal/pet/dog/pug,
+				/mob/living/basic/pet/dog/pug,
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/basic/mouse,
 				/mob/living/simple_animal/chicken,
@@ -1355,7 +1376,7 @@
 				/mob/living/simple_animal/pet/fox,
 				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,
-				/mob/living/simple_animal/pet/dog/breaddog,
+				/mob/living/basic/pet/dog/breaddog,
 				/mob/living/simple_animal/chick,
 			)
 			new_mob = new picked_animal(loc)
@@ -2383,6 +2404,18 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/played_game()
 	. = ..()
 	add_mood_event("gaming", /datum/mood_event/gaming)
+
+/// Proc for giving a mob a new 'friend', generally used for AI control and targetting
+/mob/living/proc/befriend(mob/living/new_friend)
+	SHOULD_CALL_PARENT(TRUE)
+	faction |= REF(new_friend)
+	if (ai_controller)
+		var/list/friends = ai_controller.blackboard[BB_FRIENDS_LIST]
+		if (!friends)
+			friends = list()
+		friends[WEAKREF(new_friend)] = TRUE
+		ai_controller.blackboard[BB_FRIENDS_LIST] = friends
+	SEND_SIGNAL(src, COMSIG_LIVING_BEFRIENDED, new_friend)
 
 /// Admin only proc for making the mob hallucinate a certain thing
 /mob/living/proc/admin_give_hallucination(mob/admin)

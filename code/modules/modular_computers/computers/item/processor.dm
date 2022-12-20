@@ -14,8 +14,8 @@
 
 /obj/item/modular_computer/processor/UpdateDisplay()
 	. = ..()
-	//update the name with us
-	machinery_computer.name = name
+	//update our name to match the computer's
+	name = machinery_computer.name
 
 /obj/item/modular_computer/processor/Initialize(mapload)
 	if(!istype(loc, /obj/machinery/modular_computer))

@@ -180,7 +180,7 @@
 				if(sending_virus)
 					var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 					if(istype(disk))
-						disk.send_virus(src, target, usr)
+						disk.send_virus(computer, target, usr)
 						return UI_UPDATE
 
 				send_message(usr, list(target))
@@ -405,6 +405,6 @@
 				send_message(usr, list(locate(href_list["target"])))
 			if("mess_us_up")
 				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
-					var/obj/item/modular_computer/tablet/comp = computer
+					var/obj/item/modular_computer/pda/comp = computer
 					comp.explode(usr, from_message_menu = TRUE)
 					return

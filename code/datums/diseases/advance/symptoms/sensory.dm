@@ -66,7 +66,7 @@
 			var/mob/living/carbon/C = M
 			if(prob(10))
 				if(trauma_heal_severe)
-					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY)
 				else
 					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 

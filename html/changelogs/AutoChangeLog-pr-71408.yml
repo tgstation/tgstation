@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - refactor: "Removed mutant_bodyparts.dmi and distributed its sprites in a more sensible and granular manner."
