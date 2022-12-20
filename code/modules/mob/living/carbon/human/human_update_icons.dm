@@ -84,7 +84,7 @@ There are several things that need to be remembered:
 		var/obj/item/clothing/under/uniform = w_uniform
 		update_hud_uniform(uniform)
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_ICLOTHING)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_ICLOTHING)
 			return
 
 		var/target_overlay = uniform.icon_state
@@ -186,7 +186,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = gloves
 		update_hud_gloves(worn_item)
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_GLOVES)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_GLOVES)
 			return
 
 		var/icon_file
@@ -215,7 +215,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = glasses
 		update_hud_glasses(worn_item)
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_EYES)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EYES)
 			return
 
 		var/icon_file
@@ -244,7 +244,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = ears
 		update_hud_ears(worn_item)
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_EARS)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EARS)
 			return
 
 		var/icon_file
@@ -269,7 +269,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_neck
 		update_hud_neck(wear_neck)
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_NECK)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_NECK)
 			return
 
 		var/icon_file
@@ -298,7 +298,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = shoes
 		var/icon_file
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_FEET)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET)
 			return
 
 		update_hud_shoes(worn_item)
@@ -336,7 +336,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = s_store
 		update_hud_s_store(worn_item)
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_SUITSTORE)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_SUITSTORE)
 			return
 
 		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
@@ -356,7 +356,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = head
 		update_hud_head(worn_item)
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_HEAD)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_HEAD)
 			return
 
 		var/icon_file
@@ -383,7 +383,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = belt
 		update_hud_belt(worn_item)
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_BELT)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_BELT)
 			return
 
 		var/icon_file
@@ -464,7 +464,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_mask
 		update_hud_wear_mask(worn_item)
 
-		if(check_obscured_slots(TRUE) & ITEM_SLOT_MASK)
+		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_MASK)
 			return
 
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
