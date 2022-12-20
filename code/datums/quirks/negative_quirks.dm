@@ -238,6 +238,57 @@
 	quirk_holder.clear_mood_event("family_heirloom_missing")
 	quirk_holder.clear_mood_event("family_heirloom")
 
+/datum/quirk/glass_jaw
+	name = "Glass Jaw"
+	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
+	icon = "boxing-glove"
+	value = -4
+	gain_text = span_danger("Your jaw feels loose.")
+	lose_text = span_notice("Your jaw feels fitting again.")
+	medical_record_text = "Patient is absurdly easy to knock out. Do not allow them near a boxing ring."
+	hardcore_value = 4
+	mail_goodies = list(
+		/obj/item/clothing/gloves/boxing,
+		/obj/item/clothing/mask/luchador/rudos,
+	)
+
+/datum/quirk/glass_jaw/New()
+	. = ..()
+	//randomly picks between blue or red equipment for goodies
+	if(prob(50))
+		mail_goodies = list(
+			/obj/item/clothing/gloves/boxing,
+			/obj/item/clothing/mask/luchador/rudos,
+		)
+	else
+		mail_goodies = list(
+			/obj/item/clothing/gloves/boxing/blue,
+			/obj/item/clothing/mask/luchador/tecnicos,
+		)
+
+/datum/quirk/glass_jaw/add()
+	RegisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(punch_out))
+
+/datum/quirk/glass_jaw/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE)
+
+/datum/quirk/glass_jaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
+	SIGNAL_HANDLER
+	if((damagetype != BRUTE) || (def_zone != BODY_ZONE_HEAD))
+		return
+	var/actual_damage = damage - (damage * blocked/100)
+	//only roll for knockouts at 5 damage or more
+	if(actual_damage < 5)
+		return
+	//blunt items are more likely to knock out, but sharp ones are still capable of doing it
+	if(prob(CEILING(actual_damage * (sharpness & (SHARP_EDGED|SHARP_POINTY) ? 0.65 : 1), 1)))
+		source.visible_message(
+			span_warning("[source] gets knocked out!"),
+			span_userdanger("You are knocked out!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
+		source.Unconscious(3 SECONDS)
+
 /datum/quirk/frail
 	name = "Frail"
 	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
