@@ -1,6 +1,6 @@
 // Pre-packaged meals, canned, wrapped, and vended
 
-// --- Cans
+// Cans
 /obj/item/food/canned
 	name = "Canned Air"
 	desc = "If you ever wondered where air came from..."
@@ -141,7 +141,7 @@
 	qdel(src)
 
 
-// --- DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
+// DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
 /obj/item/food/ready_donk
 	name = "\improper Ready-Donk: Bachelor Chow"
 	desc = "A quick Donk-dinner: now with flavour!"
@@ -211,7 +211,7 @@
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
 
 
-// --- Rations
+// Rations
 /obj/item/food/rationpack
 	name = "ration pack"
 	desc = "A square bar that sadly <i>looks</i> like chocolate, packaged in a nondescript grey wrapper. Has saved soldiers' lives before - usually by stopping bullets."
