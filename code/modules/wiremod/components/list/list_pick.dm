@@ -6,7 +6,7 @@
 
 /obj/item/circuit_component/list_pick
 	display_name = "List Pick"
-	desc = "A component that lets a user pick 1 element from a list. returns the selected element"
+	desc = "A component that lets a user pick 1 element from a list. Returns the selected element."
 	category = "List"
 
 	var/datum/port/input/option/list_options
@@ -51,7 +51,8 @@
 /obj/item/circuit_component/list_pick/input_received(datum/port/input/port)
 	if(parent.Adjacent(user.value))
 		return
-	if(istype(user.value,/mob))
+
+	if(ismob(user.value))
 		trigger_output.set_output(COMPONENT_SIGNAL)
 		INVOKE_ASYNC(src, PROC_REF(show_list), user.value, input_name.value, input_list.value)
 
