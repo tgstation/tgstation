@@ -7,6 +7,7 @@
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	layer = SIGN_LAYER
 
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 
