@@ -92,7 +92,7 @@
 		else
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 			msg = "You deactivate your night vision."
-
+	sync_lighting_plane_alpha()
 	to_chat(src, span_notice(msg))
 
 
@@ -116,7 +116,6 @@
 	var/picked_snare = tgui_input_list(src, "Pick which snare to remove.", "Remove Snare", sort_names(snares))
 	if(isnull(picked_snare))
 		return
-	snares -= picked_snare
 	qdel(picked_snare)
 	to_chat(src, span_bolddanger("Snare disarmed."))
 
