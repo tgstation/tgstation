@@ -76,6 +76,8 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		guardian_path = pick(possible_guardians)
 	else
 		guardian_path = show_radial_menu(user, src, radial_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 42, require_near = TRUE)
+		if(!guardian_path)
+			return
 	used = TRUE
 	to_chat(user, use_message)
 	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the [random ? "" : (initial(guardian_path.creator_name) + " ")][mob_name] of [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
