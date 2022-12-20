@@ -20,6 +20,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// 2. A string of comma-separated paths. This refers to a list, from first to last,
 	/// of the baseturfs to use. This is used when the baseturfs of a turf are NOT resolvable just by the initial values.
 	/// For example, if you place a wall on top of lava, we want the baseturf to be lava, not the default plating.
+	/// When the string eventually runs out, we go back to using the initial value of the turf.
 	/// This shouldn't be modified directly, use the helper procs.
 	var/list/baseturfs = /turf/baseturf_bottom
 
