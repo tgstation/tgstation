@@ -86,6 +86,7 @@
 	poster_item_name = "seditious poster"
 	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its seditious themes are likely to demoralise NanoTrasen employees."
 	poster_item_icon_state = "rolled_traitor"
+	festive_variant = /obj/structure/sign/poster/traitor/festive
 	// This stops people hiding their sneaky posters behind signs
 	layer = CORGI_ASS_PIN_LAYER
 	/// Proximity sensor to make people sad if they're nearby
@@ -96,8 +97,8 @@
 	demoraliser = new(src, 7, TRUE, mood_category)
 	return ..()
 
-/obj/structure/sign/poster/traitor/attackby(obj/item/I, mob/user, params)
-	if (I.tool_behaviour == TOOL_WIRECUTTER)
+/obj/structure/sign/poster/traitor/attackby(obj/item/tool, mob/user, params)
+	if (tool.tool_behaviour == TOOL_WIRECUTTER)
 		QDEL_NULL(demoraliser)
 	return ..()
 
@@ -155,3 +156,10 @@
 	name = "They Are Poisoning You"
 	desc = "This poster claims that in the modern age it is impossible to die of starvation. 'That feeling you get when you haven't eaten in a while isn't hunger, it's withdrawal.'"
 	icon_state = "traitor_hungry"
+
+/// syndicate can get festive too
+/obj/structure/sign/poster/traitor/festive
+	name = "Working For The Holidays."
+	desc = "Don't you know it's a holiday? What are you doing at work?"
+	icon_state = "traitor_festive"
+	never_random = TRUE

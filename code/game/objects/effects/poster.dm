@@ -14,7 +14,7 @@
 /obj/item/poster
 	name = "poorly coded poster"
 	desc = "You probably shouldn't be holding this."
-	icon = 'icons/obj/contraband.dmi'
+	icon = 'icons/obj/poster.dmi'
 	force = 0
 	resistance_flags = FLAMMABLE
 	var/poster_type
@@ -101,7 +101,7 @@
 	name = "poster"
 	var/original_name
 	desc = "A large piece of space-resistant printed paper."
-	icon = 'icons/obj/contraband.dmi'
+	icon = 'icons/obj/poster.dmi'
 	anchored = TRUE
 	buildable_sign = FALSE //Cannot be unwrenched from a wall.
 	var/ruined = FALSE
@@ -116,6 +116,8 @@
 	var/poster_item_type = /obj/item/poster
 	///A sharp shard of material can be hidden inside of a poster, attempts to embed when it is torn down.
 	var/datum/weakref/trap
+	/// What the poster changes into if it is a holiday, defaults to a normal, festive holiday poster
+	var/festive_variant = /obj/structure/sign/poster/official/festive
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
@@ -149,14 +151,13 @@
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
 	var/list/approved_types = list()
-	for(var/t in poster_types)
-		var/obj/structure/sign/poster/T = t
-		if(initial(T.icon_state) && !initial(T.never_random))
-			approved_types |= T
+	for(var/obj/structure/sign/poster/type_of_poster as anything in poster_types)
+		if(initial(type_of_poster.icon_state) && !initial(type_of_poster.never_random))
+			approved_types |= type_of_poster
 
 	var/obj/structure/sign/poster/selected = pick(approved_types)
 	if(length(GLOB.holidays) && prob(30))  // its the holidays! lets get festive
-		selected = /obj/structure/sign/poster/official/festive
+		selected = initial(selected.festive_variant)
 
 	name = initial(selected.name)
 	desc = initial(selected.desc)
@@ -167,9 +168,9 @@
 	ruined = initial(selected.ruined)
 	update_appearance()
 
-/obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER)
-		I.play_tool_sound(src, 100)
+/obj/structure/sign/poster/attackby(obj/item/tool, mob/user, params)
+	if(tool.tool_behaviour == TOOL_WIRECUTTER)
+		tool.play_tool_sound(src, 100)
 		if(ruined)
 			to_chat(user, span_notice("You remove the remnants of the poster."))
 			qdel(src)
