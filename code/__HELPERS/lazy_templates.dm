@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(lazy_templates, generate_lazy_template_map())
+
 /**
  * Iterates through all lazy template datums that exist and returns a list of them as an associative list of key -> instance.
  *

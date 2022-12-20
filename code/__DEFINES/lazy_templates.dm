@@ -9,5 +9,3 @@
 	"Ninja Holding" = LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY, \
 	"Abductor Ships" = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS, \
 )
-
-GLOBAL_LIST_INIT(lazy_templates, generate_lazy_template_map())
