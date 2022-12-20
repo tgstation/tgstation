@@ -201,8 +201,6 @@
 		data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
 		data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
 	data["theme"] = traitor_flavor["ui_theme"]
-	data["code"] = uplink?.unlock_code
-	data["failsafe_code"] = uplink?.failsafe_code
 	data["intro"] = traitor_flavor["introduction"]
 	data["allies"] = traitor_flavor["allies"]
 	data["goal"] = traitor_flavor["goal"]
@@ -210,6 +208,18 @@
 	if(uplink)
 		data["uplink_intro"] = traitor_flavor["uplink"]
 		data["uplink_unlock_info"] = uplink.unlock_text
+
+		var/unlock_code_string = ""
+		var/failsafe_code_string = ""
+		if(uplink.unlock_code)
+			unlock_code_string = "Code: [uplink.unlock_code]"
+
+		if(uplink.failsafe_code)
+			failsafe_code_string = "Failsafe: [uplink.failsafe_code]"
+
+		data["code"] = unlock_code_string
+		data["failsafe_code"] = failsafe_code_string
+
 	data["objectives"] = get_objectives()
 	return data
 

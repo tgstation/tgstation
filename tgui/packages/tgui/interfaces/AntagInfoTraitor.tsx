@@ -136,9 +136,9 @@ const UplinkSection = (props, context) => {
             <Stack.Item bold>
               {uplink_intro}
               <br />
-              <span style={goalstyle}>Code: {code}</span>
+              <span style={goalstyle}>{code}</span>
               <br />
-              <span style={badstyle}>Failsafe: {failsafe_code}</span>
+              <span style={badstyle}>{failsafe_code}</span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item mt="1%">
