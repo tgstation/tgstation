@@ -44,7 +44,7 @@ For example, if:
 
 ### Threat variety
 
-Threats are split between **heavy** rulesets and **light** rulesets. A heavy ruleset includes major threats like space dragons or blobs, while light rulesets are ones that don't often cause shuttle calls when rolled, such as revenants or traitors (sleeper agents).
+Threats are split between **heavy** rulesets and **light** rulesets. A heavy ruleset includes major threats like space dragons or blobs, while light rulesets are ones that don't often cause shuttle calls when rolled, such as traitors (sleeper agents).
 
 When a midround roll occurs, the decision to choose between light or heavy depends on the current round time. If it is less than `midround_light_upper_bound` (configurable), then it is guaranteed to be a light ruleset. If it is more than `midround_heavy_lower_bound`, then it is guaranteed to be a heavy ruleset. If it is any point in between, it will interpolate the value between those. This means that the longer the round goes on, the more likely you are to get a heavy ruleset.
 

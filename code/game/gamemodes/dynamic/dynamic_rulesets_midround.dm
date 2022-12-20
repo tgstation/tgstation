@@ -719,52 +719,6 @@
 	create_midwife_eggs(spawncount)
 	return ..()
 
-/// Revenant ruleset
-/datum/dynamic_ruleset/midround/from_ghosts/revenant
-	name = "Revenant"
-	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
-	antag_datum = /datum/antagonist/revenant
-	antag_flag = ROLE_REVENANT
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
-	required_candidates = 1
-	weight = 4
-	cost = 5
-	minimum_players = 15
-	repeatable = TRUE
-	var/dead_mobs_required = 20
-	var/need_extra_spawns_value = 15
-	var/list/spawn_locs = list()
-
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat=0)
-	if(GLOB.dead_mob_list.len < dead_mobs_required)
-		return FALSE
-	return ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/execute()
-	for(var/mob/living/corpse in GLOB.dead_mob_list) //look for any dead bodies
-		var/turf/corpse_turf = get_turf(corpse)
-		if(corpse_turf && is_station_level(corpse_turf.z))
-			spawn_locs += corpse_turf
-	if(!spawn_locs.len || spawn_locs.len < need_extra_spawns_value) //look for any morgue trays, crematoriums, ect if there weren't alot of dead bodies on the station to pick from
-		for(var/obj/structure/bodycontainer/corpse_container in GLOB.bodycontainers)
-			var/turf/container_turf = get_turf(corpse_container)
-			if(container_turf && is_station_level(container_turf.z))
-				spawn_locs += container_turf
-	if(!spawn_locs.len) //If we can't find any valid spawnpoints, try the carp spawns
-		for(var/obj/effect/landmark/carpspawn/carp_spawnpoint in GLOB.landmarks_list)
-			if(isturf(carp_spawnpoint.loc))
-				spawn_locs += carp_spawnpoint.loc
-	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
-		return FALSE
-	. = ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/generate_ruleset_body(mob/applicant)
-	var/mob/living/simple_animal/revenant/revenant = new(pick(spawn_locs))
-	revenant.key = applicant.key
-	message_admins("[ADMIN_LOOKUPFLW(revenant)] has been made into a revenant by the midround ruleset.")
-	log_game("[key_name(revenant)] was spawned as a revenant by the midround ruleset.")
-	return revenant
-
 /// Sentient Disease ruleset
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
 	name = "Sentient Disease"
@@ -821,7 +775,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
-	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5).
+	cost = 3 // Doesn't have the same impact on rounds as dragons, sentient disease (10) or syndicate infiltrators (5).
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_living/obsessed/trim_candidates()

@@ -478,7 +478,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 /obj/effect/meteor/tunguska/Move()
 	. = ..()
 	if(.)
-		new /obj/effect/temp_visual/revenant(get_turf(src))
+		new /obj/effect/temp_visual/tunguska(get_turf(src))
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()

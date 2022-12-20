@@ -585,12 +585,6 @@
 	icon_state = "base"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/healths/revenant
-	name = "essence"
-	icon = 'icons/mob/actions/backgrounds.dmi'
-	icon_state = "bg_revenant"
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
 /atom/movable/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll

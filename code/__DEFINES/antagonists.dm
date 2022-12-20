@@ -274,4 +274,3 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define OBJECTIVE_WEIGHT_BIG 15
 #define OBJECTIVE_WEIGHT_HUGE 20
 
-#define REVENANT_NAME_FILE "revenant_names.json"

@@ -13,7 +13,7 @@
  * Parent class for morgue and crematorium
  * For overriding only
  */
-GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants and other ghosties.
+GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for ghosties.
 
 /obj/structure/bodycontainer
 	icon = 'icons/obj/stationobjs.dmi'
@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		update_appearance()
 
 		for(var/mob/living/M in conts)
-			if(M.incorporeal_move) //can't cook revenants!
+			if(M.incorporeal_move) //can't cook ghosts!
 				continue
 			if (M.stat != DEAD)
 				M.emote("scream")

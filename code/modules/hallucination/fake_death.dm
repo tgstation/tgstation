@@ -36,7 +36,6 @@
 				"coders",
 				"heretics",
 				"myself",
-				"revenants",
 				"revs",
 				"sec",
 				"ss13",

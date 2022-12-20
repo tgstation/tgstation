@@ -247,11 +247,11 @@
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
 
-/obj/effect/temp_visual/revenant
+/obj/effect/temp_visual/tunguska
 	name = "spooky lights"
 	icon_state = "purplesparkles"
 
-/obj/effect/temp_visual/revenant/cracks
+/obj/effect/temp_visual/tunguska/cracks
 	name = "glowing cracks"
 	icon_state = "purplecrack"
 	duration = 6
