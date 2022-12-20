@@ -8,3 +8,6 @@
 
 /obj/item/computer_disk/maintenance/camera
 	starting_programs = list(/datum/computer_file/program/maintenance/camera)
+
+/obj/item/computer_disk/maintenance/modsuit_control
+	starting_programs = list(/datum/computer_file/program/maintenance/modsuit_control)
