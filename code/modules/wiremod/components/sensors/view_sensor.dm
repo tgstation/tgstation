@@ -53,13 +53,10 @@
 			result.set_output(null)
 			return
 
-	var/range_val = range.value || 0
+	var/range_value = clamp(range.value, 0, maximum_range)
 	var/object_list = list()
 
-	if(range_val > maximum_range)
-		range_val = maximum_range
-
-	for(var/atom/movable/target in view(range_val, get_turf(parent.shell)))
+	for(var/atom/movable/target in view(range_value, get_turf(parent.shell)))
 		if(target.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
 			continue
 		if(target.invisibility > see_invisible)
