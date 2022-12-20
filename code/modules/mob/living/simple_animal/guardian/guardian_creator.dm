@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	/// Are we used or in the process of being used? If yes, then we can't be used.
 	var/used = FALSE
 	/// The visuals we give to the guardian we spawn.
-	var/theme = "magic"
+	var/theme = GUARDIAN_THEME_MAGIC
 	/// The name of the guardian, for UI/message stuff.
 	var/mob_name = "Guardian Spirit"
 	/// Message sent when you use it.
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
 	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "combat_hypo"
-	theme = "tech"
+	theme = GUARDIAN_THEME_TECH
 	mob_name = "Holoparasite"
 	use_message = span_holoparasite("You start to power on the injector...")
 	used_message = span_holoparasite("The injector has already been used.")
@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "fishfingers"
-	theme = "carp"
+	theme = GUARDIAN_THEME_CARP
 	mob_name = "Holocarp"
 	use_message = span_holoparasite("You put the fishsticks in your mouth...")
 	used_message = span_holoparasite("Someone's already taken a bite out of these fishsticks! Ew.")
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	desc = "Seems to be a very old rock, may have originated from a strange meteor."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "dustyshard"
-	theme = "miner"
+	theme = GUARDIAN_THEME_MINER
 	mob_name = "Power Miner"
 	use_message = span_holoparasite("You pierce your skin with the shard...")
 	used_message = span_holoparasite("This shard seems to have lost all its power...")

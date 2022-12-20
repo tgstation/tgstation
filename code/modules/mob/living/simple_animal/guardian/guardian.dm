@@ -192,9 +192,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/update_theme(theme) //update the guardian's theme
 	if(!theme)
-		theme = pick("magic", "tech", "carp", "miner")
+		theme = pick(GUARDIAN_THEME_MAGIC, GUARDIAN_THEME_TECH, GUARDIAN_THEME_CARP, GUARDIAN_THEME_MINER)
 	switch(theme)//should make it easier to create new stand designs in the future if anyone likes that
-		if("magic")
+		if(GUARDIAN_THEME_MAGIC)
 			name = "Guardian Spirit"
 			real_name = "Guardian Spirit"
 			bubble_icon = "guardian"
@@ -202,7 +202,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_living = "magicbase"
 			icon_dead = "magicbase"
 			used_fluff_string = magic_fluff_string
-		if("tech")
+		if(GUARDIAN_THEME_TECH)
 			name = "Holoparasite"
 			real_name = "Holoparasite"
 			bubble_icon = "holo"
@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_living = "techbase"
 			icon_dead = "techbase"
 			used_fluff_string = tech_fluff_string
-		if("miner")
+		if(GUARDIAN_THEME_MINER)
 			name = "Power Miner"
 			real_name = "Power Miner"
 			bubble_icon = "guardian"
@@ -218,7 +218,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_living = "minerbase"
 			icon_dead = "minerbase"
 			used_fluff_string = miner_fluff_string
-		if("carp")
+		if(GUARDIAN_THEME_CARP)
 			name = "Holocarp"
 			real_name = "Holocarp"
 			bubble_icon = "holo"

@@ -93,6 +93,7 @@
 #include "code\__DEFINES\generators.dm"
 #include "code\__DEFINES\ghost.dm"
 #include "code\__DEFINES\gravity.dm"
+#include "code\__DEFINES\guardian_defines.dm"
 #include "code\__DEFINES\hud.dm"
 #include "code\__DEFINES\icon_smoothing.dm"
 #include "code\__DEFINES\id_cards.dm"
