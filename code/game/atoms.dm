@@ -740,6 +740,24 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
 
+/// Wrapper for _update_appearance that is only called when APPEARANCE_SUCCESS_TRACKING is defined
+#ifdef APPEARANCE_SUCCESS_TRACKING
+/atom/proc/wrap_update_appearance(file, line, updates)
+	INIT_COST_STATIC()
+	EXPORT_STATS_TO_CSV_LATER("appearance_efficency.csv", _costs, _counting)
+	var/old_appearance = appearance
+
+	_update_appearance(updates)
+	// We're checking to see if update_appearance DID anything to our appearance
+	// If it didn't, or it produced the same thing, we'll mark it as such so it can potentially be opitmized
+	if(old_appearance == appearance)
+		SET_COST("SAME [file] [line]")
+		return FALSE
+	else
+		SET_COST("DIFFERENT [file] [line]")
+		return TRUE
+#endif
+
 /**
  * Updates the appearence of the icon
  *

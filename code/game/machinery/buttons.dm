@@ -22,7 +22,7 @@
 	. = ..()
 	if(built)
 		setDir(ndir)
-		panel_open = TRUE
+		set_panel_open(TRUE)
 		update_appearance()
 
 	if(!built && !device && device_type)

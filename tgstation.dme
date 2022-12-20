@@ -38,6 +38,7 @@
 #include "code\__DEFINES\alerts.dm"
 #include "code\__DEFINES\antagonists.dm"
 #include "code\__DEFINES\apc_defines.dm"
+#include "code\__DEFINES\appearance.dm"
 #include "code\__DEFINES\aquarium.dm"
 #include "code\__DEFINES\art.dm"
 #include "code\__DEFINES\assemblies.dm"

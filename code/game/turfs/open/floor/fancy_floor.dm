@@ -423,6 +423,10 @@
 	desc = "A glow-in-the-dark floor used to test emissive turfs."
 	floor_tile = /obj/item/stack/tile/emissive_test
 
+/turf/open/floor/emissive_test/smooth_icon()
+	. = ..()
+	update_appearance(~UPDATE_SMOOTHING)
+
 /turf/open/floor/emissive_test/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
