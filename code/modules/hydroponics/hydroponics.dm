@@ -844,6 +844,11 @@
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+				var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash", FLOOR_CLEAN_LAYER, src, ABOVE_GAME_PLANE)
+				splash_animation.pixel_y = -7 //line it up to land inside of the tray
+				splash_animation.color = mix_color_from_reagents(reagent_source.reagents.reagent_list)
+				src.add_overlay(splash_animation)
+				addtimer(CALLBACK(src, .atom/proc/cut_overlay, splash_animation), 1.0 SECONDS)
 
 		if(visi_msg)
 			visible_message(span_notice("[visi_msg]."))
