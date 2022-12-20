@@ -7,7 +7,7 @@
 
 /datum/station_trait/trek
 	name = "Exploratory Uniforms"
-	trait_type = STATION_TRAIT_ABSTRACT
+	trait_type = STATION_TRAIT_NORANDOM
 	weight = 0
 	show_in_report = TRUE
 	report_message = "We've issued some uniforms better suited to boldly go where no spaceman has gone before."
