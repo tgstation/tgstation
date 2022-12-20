@@ -726,6 +726,10 @@
 	suffix = "corvette"
 	name = "SBC Starfury Corvette"
 
+/datum/map_template/shuttle/ruin/cyborg_mothership
+	suffix = "cyborg_mothership"
+	name = "Cyborg Mothership"
+
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"
 	name = "Small Freighter"
