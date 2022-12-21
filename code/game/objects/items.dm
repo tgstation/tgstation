@@ -885,7 +885,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(ismob(location))
 		var/mob/pyromanic = location
 		var/success = FALSE
-		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || src == pyromanic.get_item_by_slot(ITEM_SLOT_HANDS))
+		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || (src in pyromanic.held_items))
 			success = TRUE
 		if(success)
 			location = get_turf(pyromanic)
