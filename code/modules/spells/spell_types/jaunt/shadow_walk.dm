@@ -77,7 +77,7 @@
 	. = ..()
 	if(loc != oldloc)
 		if(check_light_level(loc))
-			eject_jaunter(TRUE) //If the warning is already given and the cooldown is done, move them and eject them.
+			eject_jaunter(TRUE)
 
 /obj/effect/dummy/phased_mob/shadow/phased_check(mob/living/user, direction)
 	. = ..()
@@ -100,12 +100,11 @@
 
 	return ..()
 
-
 /**
  * Checks the light level. If above the minimum acceptable amount (0.2), returns TRUE.
  *
  * Checks the light level of a given location to see if it is too bright to
- * continue a jaunt in.
+ * continue a jaunt in. Returns FALSE if it's acceptably dark, and TRUE if it is too bright.
  *
  * * location_to_check - The location to have its light level checked.
  */
@@ -120,19 +119,18 @@
  * Checks if the user should recieve a warning that they're moving into light.
  *
  * Checks the cooldown for the warning message on moving into the light.
- * If the cooldown is complete, returns TRUE.
- * Used in relay_move/phased_check
+ * If the message has been displayed, and the cooldown (delay period) is complete, returns TRUE.
  */
 
 /obj/effect/dummy/phased_mob/shadow/proc/light_step_warning()
-	if(!light_alert_given) //To prevent you from accidentally flying into lit rooms.
+	if(!light_alert_given) //Give the user a warning that they're leaving the darkness
 		balloon_alert(jaunter, "leaving the shadows...")
 		light_alert_given = TRUE
-		COOLDOWN_START(src, light_step_cooldown, 1 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(reactivate_light_alert)), 1.5 SECONDS) //You get a .5 second window to bypass the warning before it comes back
+		COOLDOWN_START(src, light_step_cooldown, 0.75 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(reactivate_light_alert)), 1.25 SECONDS) //You get a .5 second window to bypass the warning before it comes back
 		return FALSE
 
-	if(!COOLDOWN_FINISHED(src, light_step_cooldown)) //If it's been 1 second since the warning was given, we continue
+	if(!COOLDOWN_FINISHED(src, light_step_cooldown))
 		return FALSE
 
 	light_alert_given = FALSE
@@ -141,8 +139,8 @@
 /**
  * Sets light_alert_given to false.
  *
- * Sets light_alert_given to false, making it pop up and intercept movement into light again.
- * Added in its own proc to reset the alert without having to call light_step_warning.
+ * Sets light_alert_given to false, making the light alert pop up and intercept movement once again.
+ * Added in its own proc to reset the alert without having to call light_step_warning().
  */
 
 /obj/effect/dummy/phased_mob/shadow/proc/reactivate_light_alert()
