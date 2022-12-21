@@ -94,7 +94,6 @@
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
-	armor = list(MELEE = 25, BULLET = 5, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 30, ACID = 50, WOUND = 5)
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	var/candy_cooldown = 0
