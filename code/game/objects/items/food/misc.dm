@@ -57,7 +57,7 @@
 
 /obj/item/food/popcorn/caramel
 	name = "caramel popcorn"
-	icon_state = "caramel_popcorn"
+	icon_state = "сaramelpopcorn"
 	desc = "Caramel-covered popcorn. Sweet!"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
