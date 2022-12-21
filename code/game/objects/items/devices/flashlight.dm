@@ -369,6 +369,10 @@
 
 	return TRUE
 
+/obj/item/flashlight/flare/fire_act(exposed_temperature, exposed_volume)
+	ignition()
+	return ..()
+
 /obj/item/flashlight/flare/attack_self(mob/user)
 	if(ignition(user))
 		user.visible_message(span_notice("[user] lights \the [src]."), span_notice("You light \the [src]!"))
@@ -409,10 +413,6 @@
 	else
 		return ..()
 
-/obj/item/flashlight/flare/candle/fire_act(exposed_temperature, exposed_volume)
-	ignition()
-	return ..()
-
 /obj/item/flashlight/flare/candle/attack_self(mob/user)
 	if(on && fuel != INFINITY) // can't extinguish eternal candles
 		turn_off()
@@ -421,9 +421,6 @@
 /obj/item/flashlight/flare/candle/process(delta_time)
 	. = ..()
 	update_appearance()
-	if(!fuel)
-		new /obj/item/trash/candle(loc)
-		qdel(src)
 
 /obj/item/flashlight/flare/candle/infinite
 	fuel = INFINITY
