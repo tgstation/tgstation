@@ -16,7 +16,7 @@
 	var/static/list/multitool_tips = list(
 		TOOL_MULTITOOL = list(
 			SCREENTIP_CONTEXT_LMB = "Link logged injectors/vents with this air sensor",
-			SCREENTIP_CONTEXT_RMB = "To reset all I/O ports",
+			SCREENTIP_CONTEXT_RMB = "Reset all I/O ports",
 		)
 	)
 	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
