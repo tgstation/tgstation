@@ -1,0 +1,4 @@
+author: "Big chungus wholesome 100"
+delete-after: True
+changes:
+  - bugfix: "Amputated and reattached limbs now get wounded based on their own biology, not the current owner's biology."
