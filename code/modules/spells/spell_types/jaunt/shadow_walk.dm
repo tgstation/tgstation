@@ -46,10 +46,15 @@
 	name = "shadows"
 	/// The amount that shadow heals us per SSobj tick (times delta_time)
 	var/healing_rate = 1.5
+	/// When cooldown is active, you are prevented from moving into tiles that would eject you from your jaunt
+	COOLDOWN_DECLARE(light_step_cooldown)
+	/// Has the jaunter recently recieved a warning about light?
+	var/light_alert_given = FALSE
 
 /obj/effect/dummy/phased_mob/shadow/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	COOLDOWN_START(src, light_step_cooldown, 3 SECONDS) //Kick-start the cooldown and give a grace period to allow for shadow dancing.
 
 /obj/effect/dummy/phased_mob/shadow/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -57,34 +62,71 @@
 
 /obj/effect/dummy/phased_mob/shadow/process(delta_time)
 	var/turf/T = get_turf(src)
-	var/light_amount = T.get_lumcount()
 	if(!jaunter || jaunter.loc != src)
 		qdel(src)
 		return
 
-	if(light_amount < 0.2 && !QDELETED(jaunter) && isliving(jaunter)) //heal in the dark
+	if(check_light_level(T))
+		eject_jaunter(TRUE)
+
+	if(!QDELETED(jaunter) && isliving(jaunter)) //heal in the dark
 		var/mob/living/living_jaunter = jaunter
 		living_jaunter.heal_overall_damage((healing_rate * delta_time), (healing_rate * delta_time), BODYTYPE_ORGANIC)
-
-	check_light_level()
 
 /obj/effect/dummy/phased_mob/shadow/relaymove(mob/living/user, direction)
 	var/turf/oldloc = loc
 	. = ..()
 	if(loc != oldloc)
-		check_light_level()
+		if(check_light_level(loc))
+			if(!light_step_warning()) //Intercept to see if we should relay the move attempt or not.
+				return FALSE
+			eject_jaunter(TRUE) //If the warning is already given and the cooldown is done, move them and eject them.
 
 /obj/effect/dummy/phased_mob/shadow/phased_check(mob/living/user, direction)
 	. = ..()
 	if(. && isspaceturf(.))
 		to_chat(user, span_warning("It really would not be wise to go into space."))
 		return FALSE
+	if(check_light_level(.))
+		if(!light_step_warning())
+			return FALSE
 
-/obj/effect/dummy/phased_mob/shadow/proc/check_light_level()
-	var/turf/T = get_turf(src)
+
+/**
+ * Checks the light level. If above the minimum (0.2), returns TRUE.
+ *
+ * Checks the light level of a given location to see if it is too bright to
+ * continue a jaunt in.
+ *
+ * * location_to_check - The location to have its light level checked.
+ */
+
+/obj/effect/dummy/phased_mob/shadow/proc/check_light_level(location_to_check)
+	var/turf/T = get_turf(location_to_check)
 	var/light_amount = T.get_lumcount()
 	if(light_amount > 0.2) // jaunt ends
-		eject_jaunter(TRUE)
+		return TRUE
+
+/**
+ * Checks if the user should recieve a warning that they're moving into light.
+ *
+ * Checks the cooldown for the warning message on moving into the light.
+ * If the cooldown is complete, returns TRUE.
+ * Used in relay_move/phased_check
+ */
+
+/obj/effect/dummy/phased_mob/shadow/proc/light_step_warning()
+	if(!light_alert_given) //To prevent you from accidentally flying into lit rooms.
+		balloon_alert(jaunter, "leaving the shadows...")
+		light_alert_given = TRUE
+		COOLDOWN_START(src, light_step_cooldown, 1 SECONDS)
+		return FALSE
+
+	if(COOLDOWN_FINISHED(src, light_step_cooldown)) //If it's been 1 second since the warning was given, we continue
+		return FALSE
+
+	light_alert_given = FALSE
+	return TRUE //Our jaunter is ignoring the warning, so we proceed
 
 /obj/effect/dummy/phased_mob/shadow/eject_jaunter(forced_out = FALSE)
 	var/turf/reveal_turf = get_turf(src)
