@@ -64,6 +64,7 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.5
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
 	///Are we ready to vend?? Is it time??
@@ -236,6 +237,13 @@
 
 /obj/machinery/vending/can_speak()
 	return !shut_up
+
+/obj/machinery/vending/emp_act(severity)
+	. = ..()
+	var/datum/language_holder/vending_languages = get_language_holder()
+	var/datum/wires/vending/vending_wires = wires
+	// if the language wire got pulsed during an EMP, this will make sure the language_iterator is synched correctly
+	vending_languages.selected_language = vending_languages.spoken_languages[vending_wires.language_iterator]
 
 //Better would be to make constructable child
 /obj/machinery/vending/RefreshParts()
@@ -1037,7 +1045,7 @@
 		message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
 		return
 	if (R.amount <= 0)
-		say("Sold out of [R.name].")
+		speak("Sold out of [R.name].")
 		flick(icon_deny,src)
 		vend_ready = TRUE
 		return
@@ -1047,22 +1055,22 @@
 			var/mob/living/L = usr
 			C = L.get_idcard(TRUE)
 		if(!C)
-			say("No card found.")
+			speak("No card found.")
 			flick(icon_deny,src)
 			vend_ready = TRUE
 			return
 		else if (!C.registered_account)
-			say("No account found.")
+			speak("No account found.")
 			flick(icon_deny,src)
 			vend_ready = TRUE
 			return
 		else if(!C.registered_account.account_job)
-			say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
+			speak("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
 			flick(icon_deny, src)
 			vend_ready = TRUE
 			return
 		else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
-			say("You are not of legal age to purchase [R.name].")
+			speak("You are not of legal age to purchase [R.name].")
 			if(!(usr in GLOB.narcd_underages))
 				if (isnull(sec_radio))
 					sec_radio = new
@@ -1081,7 +1089,7 @@
 		if(LAZYLEN(R.returned_products))
 			price_to_use = 0 //returned items are free
 		if(price_to_use && !account.adjust_money(-price_to_use, "Vending: [R.name]"))
-			say("You do not possess the funds to purchase [R.name].")
+			speak("You do not possess the funds to purchase [R.name].")
 			flick(icon_deny,src)
 			vend_ready = TRUE
 			return
@@ -1092,7 +1100,8 @@
 			SSeconomy.track_purchase(account, price_to_use, name)
 			log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [R].")
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
-		say("Thank you for shopping with [src]!")
+		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
+		speak(vend_response)
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
 		last_shopper = REF(usr)
@@ -1279,13 +1288,13 @@
 /obj/machinery/vending/custom/canLoadItem(obj/item/I, mob/user)
 	. = FALSE
 	if(I.flags_1 & HOLOGRAM_1)
-		say("This vendor cannot accept nonexistent items.")
+		speak("This vendor cannot accept nonexistent items.")
 		return
 	if(loaded_items >= max_loaded_items)
-		say("There are too many items in stock.")
+		speak("There are too many items in stock.")
 		return
 	if(isstack(I))
-		say("Loose items may cause problems, try to use it inside wrapping paper.")
+		speak("Loose items may cause problems, try to use it inside wrapping paper.")
 		return
 	if(I.custom_price)
 		return TRUE
@@ -1340,7 +1349,7 @@
 		var/obj/item/card/id/C = L.get_idcard(TRUE)
 		if(C?.registered_account)
 			linked_account = C.registered_account
-			say("\The [src] has been linked to [C].")
+			speak("\The [src] has been linked to [C].")
 
 	if(compartmentLoadAccessCheck(user))
 		if(istype(I, /obj/item/pen))
@@ -1402,7 +1411,7 @@
 		[dispensed_item] by [payee.account_holder], owned by [linked_account.account_holder].")
 		/// Make an alert
 		if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
-			say("Thank you for your patronage [user]!")
+			speak("Thank you for your patronage [user]!")
 			purchase_message_cooldown = world.time + 5 SECONDS
 			last_shopper = REF(usr)
 	/// Remove the item

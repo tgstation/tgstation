@@ -100,6 +100,7 @@
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	initial_language_holder = /datum/language_holder/synthetic
 
 	var/machine_stat = NONE
 	var/use_power = IDLE_POWER_USE
@@ -171,6 +172,9 @@
 	if((resistance_flags & INDESTRUCTIBLE) && component_parts){ // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
 		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
 	}
+
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
+		randomize_language_if_on_station()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -305,6 +309,10 @@
 	if(use_power && !machine_stat && !(. & EMP_PROTECT_SELF))
 		use_power(7500/severity)
 		new /obj/effect/temp_visual/emp(loc)
+
+		if(prob(70/severity))
+			var/datum/language_holder/machine_languages = get_language_holder()
+			machine_languages.selected_language = machine_languages.get_random_spoken_language()
 
 /**
  * Opens the machine.
