@@ -79,7 +79,7 @@
 		return FALSE
 
 	LAZYADD(new_atom_host.light_sources, src)
-	if(ismovable(new_atom_host) && new_atom_host == source_atom)
+	if(ismovable(new_atom_host))
 		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, PROC_REF(update_host_lights))
 	return TRUE
 
@@ -89,7 +89,7 @@
 		return FALSE
 
 	LAZYREMOVE(old_atom_host.light_sources, src)
-	if(ismovable(old_atom_host) && old_atom_host == source_atom)
+	if(ismovable(old_atom_host))
 		UnregisterSignal(old_atom_host, COMSIG_MOVABLE_MOVED)
 	return TRUE
 
