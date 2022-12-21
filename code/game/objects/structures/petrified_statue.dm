@@ -67,11 +67,21 @@
 	return ..()
 
 /obj/structure/statue/petrified/deconstruct(disassembled = TRUE)
+	var/destruction_message = "[src] shatters!"
 	if(!disassembled)
 		if(petrified_mob)
 			petrified_mob.investigate_log("has been dusted by statue deconstruction.", INVESTIGATE_DEATHS)
+			if(iscarbon(petrified_mob))
+				var/mob/living/carbon/petrified_carbon = petrified_mob
+				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.getorganslot(ORGAN_SLOT_BRAIN)
+				carbon_brain.Remove(petrified_carbon)
+				carbon_brain.forceMove(get_turf(src))
+				carbon_brain.name = "petrified [carbon_brain.name]"
+				carbon_brain.desc = "[carbon_brain.desc] This one seems a bit more... smooth than a normal brain. Probably'd still work."
+				carbon_brain.add_atom_colour(list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)), FIXED_COLOUR_PRIORITY)
+				destruction_message = "[src] shatters, a solid brain tumbling out!"
 			petrified_mob.dust()
-	visible_message(span_danger("[src] shatters!"))
+	visible_message(span_danger(destruction_message))
 	qdel(src)
 
 

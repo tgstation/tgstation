@@ -168,8 +168,8 @@
  * Triggered by attempting to operate an emagged anomaly refinery.
  */
 /obj/machinery/research/anomaly_refinery/proc/error_test()
-	message_admins("[src] was emagged and ejected a TTV")
-	investigate_log("was emagged and ejected a TTV", INVESTIGATE_RESEARCH)
+	message_admins("[src] was emagged and ejected a TTV.")
+	investigate_log("was emagged and ejected a TTV.", INVESTIGATE_RESEARCH)
 	obj_flags &= ~EMAGGED
 
 	say("Issue resolved. Have a nice day!")

@@ -122,7 +122,7 @@
 	desc = "Cargo's pet gorilla. They seem to have an 'I love Mom' tattoo."
 	maxHealth = 200
 	health = 200
-	faction = list("neutral", "monkey", "jungle")
+	faction = list(FACTION_NEUTRAL, "monkey", "jungle")
 	gold_core_spawnable = NO_SPAWN
 	unique_name = FALSE
 	/// Whether we're currently being polled over

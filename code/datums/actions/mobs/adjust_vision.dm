@@ -35,5 +35,4 @@
 			living_owner.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		else
 			living_owner.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-			living_owner.sight &= ~SEE_BLACKNESS
 	living_owner.update_sight()

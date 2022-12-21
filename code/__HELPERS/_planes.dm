@@ -16,7 +16,7 @@
 
 /// Takes a z reference that we are unsure of, sanity checks it
 /// Returns either its offset, or 0 if it's not a valid ref
-#define GET_TURF_PLANE_OFFSET(z_reference) ((SSmapping.max_plane_offset && isatom(z_reference)) ? GET_Z_PLANE_OFFSET(z_reference.z) : 0)
+#define GET_TURF_PLANE_OFFSET(z_reference) ((SSmapping.max_plane_offset && isatom(z_reference) && z_reference.z) ? GET_Z_PLANE_OFFSET(z_reference.z) : 0)
 /// Essentially just an unsafe version of GET_TURF_PLANE_OFFSET()
 /// Takes a z value we returns its offset with a list lookup
 /// Will runtime during parts of init. Be careful :)
@@ -46,6 +46,9 @@
 			var/turf/_our_turf = get_turf(source);\
 			if(_our_turf){\
 				thing.plane = GET_NEW_PLANE(_cached_plane, GET_Z_PLANE_OFFSET(_our_turf.z));\
+			}\
+			else {\
+				thing.plane = new_value;\
 			}\
 		}\
 		else {\

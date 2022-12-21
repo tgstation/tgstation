@@ -72,11 +72,11 @@
 /datum/ai_behavior/use_in_hand/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
-	var/obj/item/held = pawn.get_item_by_slot(pawn.get_active_hand())
+	var/obj/item/held = pawn.get_active_held_item()
 	if(!held)
 		finish_action(controller, FALSE)
 		return
-	pawn.activate_hand(pawn.get_active_hand())
+	pawn.activate_hand()
 	finish_action(controller, TRUE)
 
 /// Use the currently held item, or unarmed, on a weakref to an object in the world

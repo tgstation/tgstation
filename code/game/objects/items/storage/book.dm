@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 /obj/item/storage/book/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/book.dmi'
 	icon_state = "bible"
 	inhand_icon_state = "bible"
 	worn_icon_state = "bible"
@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 	var/list/skins = list()
 	for(var/i in 1 to GLOB.biblestates.len)
-		var/image/bible_image = image(icon = 'icons/obj/storage/storage.dmi', icon_state = GLOB.biblestates[i])
+		var/image/bible_image = image(icon = 'icons/obj/storage/book.dmi', icon_state = GLOB.biblestates[i])
 		skins += list("[GLOB.biblenames[i]]" = bible_image)
 
 	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE)
@@ -261,6 +261,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches")
 	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch")
 	var/uses = 1
+	var/ownername
 
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)
@@ -270,8 +271,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
 		H.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		to_chat(H, span_notice("Your name appears on the inside cover, in blood."))
-		var/ownername = H.real_name
-		desc += span_warning("The name [ownername] is written in blood inside the cover.")
+		ownername = H.real_name
+
+/obj/item/storage/book/bible/syndicate/examine(mob/user)
+	. = ..()
+	if(ownername)
+		. += span_warning("The name [ownername] is written in blood inside the cover.")
 
 /obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 	if (!user.combat_mode)
