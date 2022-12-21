@@ -13,7 +13,7 @@
 	mail_goodies = list(/obj/item/cane)
 	var/datum/weakref/backpack
 
-/datum/quirk/badback/add()
+/datum/quirk/badback/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/storage/backpack/equipped_backpack = human_holder.back
 	if(istype(equipped_backpack))
@@ -89,10 +89,10 @@
 	hardcore_value = 15
 	mail_goodies = list(/obj/item/clothing/glasses/sunglasses, /obj/item/cane/white)
 
-/datum/quirk/item_quirk/blindness/add_unique()
+/datum/quirk/item_quirk/blindness/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/clothing/glasses/blindfold/white, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
-/datum/quirk/item_quirk/blindness/add()
+/datum/quirk/item_quirk/blindness/add(client/client_source)
 	quirk_holder.become_blind(QUIRK_TRAIT)
 
 /datum/quirk/item_quirk/blindness/remove()
@@ -115,7 +115,7 @@
 	processing_quirk = TRUE
 	mail_goodies = list(/obj/item/storage/pill_bottle/mannitol/braintumor)
 
-/datum/quirk/item_quirk/brainproblems/add_unique()
+/datum/quirk/item_quirk/brainproblems/add_unique(client/client_source)
 	give_item_to_holder(
 		/obj/item/storage/pill_bottle/mannitol/braintumor,
 		list(
@@ -148,7 +148,7 @@
 	hardcore_value = 12
 	mail_goodies = list(/obj/item/clothing/mask/whistle)
 
-/datum/quirk/item_quirk/deafness/add_unique()
+/datum/quirk/item_quirk/deafness/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/clothing/accessory/deaf_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/depression
@@ -177,7 +177,7 @@
 	var/datum/weakref/heirloom
 	mail_goodies = list(/obj/item/storage/secure/briefcase)
 
-/datum/quirk/item_quirk/family_heirloom/add_unique()
+/datum/quirk/item_quirk/family_heirloom/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/heirloom_type
 
@@ -266,7 +266,7 @@
 			/obj/item/clothing/mask/luchador/tecnicos,
 		)
 
-/datum/quirk/glass_jaw/add()
+/datum/quirk/glass_jaw/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(punch_out))
 
 /datum/quirk/glass_jaw/remove()
@@ -332,7 +332,7 @@
 	hardcore_value = 3
 	mail_goodies = list(/obj/effect/spawner/random/entertainment/plushie_delux)
 
-/datum/quirk/hypersensitive/add()
+/datum/quirk/hypersensitive/add(client/client_source)
 	if (quirk_holder.mob_mood)
 		quirk_holder.mob_mood.mood_modifier += 0.5
 
@@ -362,23 +362,27 @@
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
 	hardcore_value = 5
 	mail_goodies = list(/obj/item/clothing/glasses/regular) // extra pair if orginal one gets broken by somebody mean
-	var/glasses
 
-/datum/quirk/item_quirk/nearsighted/add_unique()
-	glasses = glasses || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/glasses)
-	switch(glasses)
+/datum/quirk/item_quirk/nearsighted/add_unique(client/client_source)
+	var/glasses_name = client_source?.prefs.read_preference(/datum/preference/choiced/glasses) || "Regular"
+	var/obj/item/clothing/glasses/glasses_type
+	switch(glasses_name)
 		if ("Thin")
-			glasses = /obj/item/clothing/glasses/regular/thin
+			glasses_type = /obj/item/clothing/glasses/regular/thin
 		if ("Circle")
-			glasses = /obj/item/clothing/glasses/regular/circle
+			glasses_type = /obj/item/clothing/glasses/regular/circle
 		if ("Hipster")
-			glasses = /obj/item/clothing/glasses/regular/hipster
+			glasses_type = /obj/item/clothing/glasses/regular/hipster
 		else
-			glasses = /obj/item/clothing/glasses/regular
+			glasses_type = /obj/item/clothing/glasses/regular
 
-	give_item_to_holder(glasses, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(glasses_type, list(
+		LOCATION_EYES = ITEM_SLOT_EYES,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS,
+	))
 
-/datum/quirk/item_quirk/nearsighted/add()
+/datum/quirk/item_quirk/nearsighted/add(client/client_source)
 	quirk_holder.become_nearsighted(QUIRK_TRAIT)
 
 /datum/quirk/item_quirk/nearsighted/remove()
@@ -393,7 +397,7 @@
 	hardcore_value = 5
 	mail_goodies = list(/obj/effect/spawner/random/engineering/flashlight)
 
-/datum/quirk/nyctophobia/add()
+/datum/quirk/nyctophobia/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 
 /datum/quirk/nyctophobia/remove()
@@ -455,7 +459,7 @@
 	hardcore_value = 15
 	mail_goodies = list(/obj/vehicle/ridden/wheelchair/motorized) //yes a fullsized unfolded motorized wheelchair does fit
 
-/datum/quirk/paraplegic/add_unique()
+/datum/quirk/paraplegic/add_unique(client/client_source)
 	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
 		quirk_holder.buckled.unbuckle_mob(quirk_holder)
 
@@ -463,7 +467,7 @@
 	var/obj/structure/chair/spawn_chair = locate() in holder_turf
 
 	var/obj/vehicle/ridden/wheelchair/wheels
-	if(quirk_holder.client?.get_award_status(/datum/award/score/hardcore_random) >= 5000) //More than 5k score? you unlock the gamer wheelchair.
+	if(client_source?.get_award_status(/datum/award/score/hardcore_random) >= 5000) //More than 5k score? you unlock the gamer wheelchair.
 		wheels = new /obj/vehicle/ridden/wheelchair/gold(holder_turf)
 	else
 		wheels = new(holder_turf)
@@ -478,7 +482,7 @@
 		if(dropped_item.fingerprintslast == quirk_holder.ckey)
 			quirk_holder.put_in_hands(dropped_item)
 
-/datum/quirk/paraplegic/add()
+/datum/quirk/paraplegic/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
@@ -516,7 +520,7 @@
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
 
-/datum/quirk/prosthetic_limb/add_unique()
+/datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/bodypart/prosthetic
@@ -547,7 +551,7 @@
 	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs."
 	hardcore_value = 6
 
-/datum/quirk/quadruple_amputee/add_unique()
+/datum/quirk/quadruple_amputee/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/left/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot/surplus)
@@ -585,7 +589,7 @@
 	/// Weakref to the trauma we give out
 	var/datum/weakref/added_trama_ref
 
-/datum/quirk/insanity/add()
+/datum/quirk/insanity/add(client/client_source)
 	if(!iscarbon(quirk_holder))
 		return
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
@@ -628,7 +632,7 @@
 	mail_goodies = list(/obj/item/storage/pill_bottle/psicodine)
 	var/dumb_thing = TRUE
 
-/datum/quirk/social_anxiety/add()
+/datum/quirk/social_anxiety/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, PROC_REF(eye_contact))
 	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, PROC_REF(looks_at_floor))
 	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, PROC_REF(handle_speech))
@@ -751,7 +755,7 @@
 	var/next_process = 0 //! ticker for processing
 	var/drug_flavour_text = "Better hope you don't run out..."
 
-/datum/quirk/item_quirk/junkie/add_unique()
+/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	if(!reagent_type)
@@ -897,7 +901,7 @@
 	var/list/blacklist = list(/datum/reagent/medicine/c2,/datum/reagent/medicine/epinephrine,/datum/reagent/medicine/adminordrazine,/datum/reagent/medicine/omnizine/godblood,/datum/reagent/medicine/cordiolis_hepatico,/datum/reagent/medicine/synaphydramine,/datum/reagent/medicine/diphenhydramine)
 	var/allergy_string
 
-/datum/quirk/item_quirk/allergic/add_unique()
+/datum/quirk/item_quirk/allergic/add_unique(client/client_source)
 	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist
 	var/list/allergy_chem_names = list()
 	for(var/i in 0 to 5)
@@ -958,7 +962,7 @@
 	hardcore_value = 1
 	mail_goodies = list(/obj/item/reagent_containers/spray/pepper) // show me on the doll where the bad man touched you
 
-/datum/quirk/bad_touch/add()
+/datum/quirk/bad_touch/add(client/client_source)
 	RegisterSignals(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT), PROC_REF(uncomfortable_touch))
 
 /datum/quirk/bad_touch/remove()
@@ -1067,7 +1071,7 @@
 	mail_goodies = list(/obj/item/paper/pamphlet/cybernetics)
 	var/cybernetics_level = 0
 
-/datum/quirk/body_purist/add()
+/datum/quirk/body_purist/add(client/client_source)
 	check_cybernetics()
 	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
 	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_lose))
