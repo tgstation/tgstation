@@ -950,22 +950,38 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potlightpink"
 
-/obj/item/slimepotion/genderchange/attack(mob/living/L, mob/user)
-	if(!istype(L) || L.stat == DEAD)
+/obj/item/slimepotion/genderchange/attack(mob/living/gendered_thing, mob/user)
+	if(!istype(gendered_thing) || gendered_thing.stat == DEAD)
 		to_chat(user, span_warning("The potion can only be used on living things!"))
 		return
 
-	if(L.gender != MALE && L.gender != FEMALE)
+	if(gendered_thing.gender != MALE && gendered_thing.gender != FEMALE)
 		to_chat(user, span_warning("The potion can only be used on gendered things!"))
 		return
-
-	if(L.gender == MALE)
-		L.gender = FEMALE
-		L.visible_message(span_boldnotice("[L] suddenly looks more feminine!"), span_boldwarning("You suddenly feel more feminine!"))
+	if(gendered_thing.mind)
+		to_chat(user, span_notice("You offer the [name] to [gendered_thing]."))
+		if(tgui_alert(gendered_thing, "Do you accept the [name], knowing that it will permanently change your gender?", "Gender Changer", list("Yes", "No")) == "Yes")
+			if(user.canUseTopic(src, be_close = TRUE) && user.canUseTopic(gendered_thing, be_close = TRUE))
+				to_chat(user, span_notice("Your [name] is consumed by [gendered_thing]."))
+				to_chat(gendered_thing, span_notice("You feel different."))
+				gender_swap(gendered_thing, user)
+			else
+				to_chat(user, span_warning("You were too far away from [gendered_thing]."))
+				to_chat(gendered_thing, span_warning("You were too far away from [user]."))
+		else
+			to_chat(user, span_warning("[gendered_thing] refused the potion."))
+			return
 	else
-		L.gender = MALE
-		L.visible_message(span_boldnotice("[L] suddenly looks more masculine!"), span_boldwarning("You suddenly feel more masculine!"))
-	L.regenerate_icons()
+		gender_swap(gendered_thing, user)
+
+/obj/item/slimepotion/genderchange/proc/gender_swap(mob/living/gendered_thing, mob/user)
+	if(gendered_thing.gender == MALE)
+		gendered_thing.gender = FEMALE
+		gendered_thing.visible_message(span_boldnotice("[gendered_thing] suddenly looks more feminine!"), span_boldwarning("You suddenly feel more feminine!"))
+	else
+		gendered_thing.gender = MALE
+		gendered_thing.visible_message(span_boldnotice("[gendered_thing] suddenly looks more masculine!"), span_boldwarning("You suddenly feel more masculine!"))
+	gendered_thing.regenerate_icons()
 	qdel(src)
 
 /obj/item/slimepotion/slime/renaming
