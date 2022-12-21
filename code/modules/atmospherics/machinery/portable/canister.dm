@@ -383,7 +383,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		. += mutable_appearance(canister_overlay_file, "can-connector")
 
 	var/light_state = get_pressure_state(air_contents.return_pressure())
-	if(light_state != "-1") //happens when pressure is below 10kpa which means no light
+	if(light_state) //happens when pressure is below 10kpa which means no light
 		. += mutable_appearance(canister_overlay_file, light_state)
 		. += emissive_appearance(canister_overlay_file, "[light_state]-light", src, alpha = src.alpha)
 
