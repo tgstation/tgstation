@@ -983,7 +983,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/force_load_lazy_template()
 	set name = "Load/Jump Lazy Template"
-	set category = "Admin.Mapping"
+	set category = "Admin.Events"
 	if(!check_rights(R_ADMIN))
 		return
 
