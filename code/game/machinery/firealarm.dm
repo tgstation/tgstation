@@ -59,8 +59,7 @@
 
 	AddElement( \
 		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Turn on", \
-		rmb_text = "Turn off", \
+		lmb_text = "Turn on/off", \
 	)
 
 /obj/machinery/firealarm/Destroy()
@@ -230,14 +229,10 @@
 		return
 	. = ..()
 	add_fingerprint(user)
-	alarm(user)
-
-/obj/machinery/firealarm/attack_hand_secondary(mob/user, list/modifiers)
-	if(buildstage != 2)
-		return ..()
-	add_fingerprint(user)
-	reset(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(my_area.fire)
+		reset(user)
+	else
+		alarm(user)
 
 /obj/machinery/firealarm/attack_ai(mob/user)
 	return attack_hand(user)
