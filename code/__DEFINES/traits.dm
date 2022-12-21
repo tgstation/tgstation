@@ -441,6 +441,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
 #define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
 
+/// If applied to a mob, nearby dogs will have a small chance to nonharmfully harass said mob
+#define TRAIT_HATED_BY_DOGS "hated_by_dogs"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
