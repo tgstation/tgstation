@@ -27,16 +27,16 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/pass_through_floors = FALSE
 
 	///what movables on our platform that we are moving
-	var/list/atom/movable/lift_load
-	///lazylist of weakrefs to the contents we have when we're first created. stored so that admins can clear the tram to its initial state
+	var/list/atom/movable/lift_load = list()
+	///weakrefs to the contents we have when we're first created. stored so that admins can clear the tram to its initial state
 	///if someone put a bunch of stuff onto it.
-	var/list/datum/weakref/initial_contents
+	var/list/datum/weakref/initial_contents = list()
 
 	///what glide_size we set our moving contents to.
 	var/glide_size_override = 8
-	///lazy list of movables inside lift_load who had their glide_size changed since our last movement.
+	///movables inside lift_load who had their glide_size changed since our last movement.
 	///used so that we dont have to change the glide_size of every object every movement, which scales to cost more than you'd think
-	var/list/atom/movable/changed_gliders
+	var/list/atom/movable/changed_gliders = list()
 
 	///master datum that controls our movement. in general /industrial_lift subtypes control moving themselves, and
 	/// /datum/lift_master instances control moving the entire tram and any behavior associated with that.
@@ -117,8 +117,10 @@ GLOBAL_LIST_EMPTY(lifts)
 		return
 	if(isliving(potential_rider) && HAS_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED))
 		REMOVE_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
-	LAZYREMOVE(lift_load, potential_rider)
-	LAZYREMOVE(changed_gliders, potential_rider)
+
+	lift_load -= potential_rider
+	changed_gliders -= potential_rider
+
 	UnregisterSignal(potential_rider, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/new_lift_contents)
@@ -131,7 +133,8 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	if(isliving(new_lift_contents) && !HAS_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED))
 		ADD_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
-	LAZYADD(lift_load, new_lift_contents)
+
+	lift_load += new_lift_contents
 	RegisterSignal(new_lift_contents, COMSIG_PARENT_QDELETING, PROC_REF(RemoveItemFromLift))
 
 	return TRUE
@@ -149,14 +152,14 @@ GLOBAL_LIST_EMPTY(lifts)
 				if(!new_initial_contents)
 					continue
 
-				LAZYADD(initial_contents, new_initial_contents)
+				initial_contents += new_initial_contents
 
 ///signal handler for COMSIG_MOVABLE_UPDATE_GLIDE_SIZE: when a movable in lift_load changes its glide_size independently.
 ///adds that movable to a lazy list, movables in that list have their glide_size updated when the tram next moves
 /obj/structure/industrial_lift/proc/on_changed_glide_size(atom/movable/moving_contents, new_glide_size)
 	SIGNAL_HANDLER
 	if(new_glide_size != glide_size_override)
-		LAZYADD(changed_gliders, moving_contents)
+		changed_gliders += moving_contents
 
 
 ///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them. makes movement more efficient.
@@ -238,9 +241,9 @@ GLOBAL_LIST_EMPTY(lifts)
 
 		lift_master_datum.lift_platforms -= other_lift
 		if(other_lift.lift_load)
-			LAZYOR(lift_load, other_lift.lift_load)
+			lift_load |= other_lift.lift_load
 		if(other_lift.initial_contents)
-			LAZYOR(initial_contents, other_lift.initial_contents)
+			initial_contents |= other_lift.initial_contents
 
 		qdel(other_lift)
 
@@ -444,12 +447,15 @@ GLOBAL_LIST_EMPTY(lifts)
 		return FALSE
 
 	for(var/atom/movable/mover as anything in changed_gliders)
+		if(QDELETED(mover))
+			movers -= mover
+			continue
+
 		if(mover.glide_size != glide_size_override)
 			mover.set_glide_size(glide_size_override)
 
-		LAZYREMOVE(changed_gliders, mover)
+	changed_gliders.Cut()
 
-	if(different_areas)
 	for(var/atom/movable/mover as anything in movers)
 		if(QDELETED(mover))
 			movers -= mover
@@ -465,11 +471,6 @@ GLOBAL_LIST_EMPTY(lifts)
 		mover.loc = (mover_new_loc = get_step(mover, movement_direction))
 		mover_new_area = mover_new_loc.loc
 
-	else
-		for(var/atom/movable/mover as anything in movers)
-			if(QDELETED(mover))
-				movers -= mover
-				continue
 
 		if(mover_old_area != mover_new_area)
 			mover_old_area.Exited(mover, movement_direction)
@@ -482,6 +483,8 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /**
  * reset the contents of this lift platform to its original state in case someone put too much shit on it.
+ * everything that is considered foreign is deleted, you can configure what is considered foreign.
+ *
  * used by an admin via calling reset_lift_contents() on our lift_master_datum.
  *
  * Arguments:
@@ -818,7 +821,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			glider.set_glide_size(glide_size_override)
 			RegisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(on_changed_glide_size))
 		else
-			LAZYREMOVE(changed_gliders, glider)
+			changed_gliders -= glider
 			UnregisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 
 	src.travelling = travelling
