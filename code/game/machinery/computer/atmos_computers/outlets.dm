@@ -4,7 +4,9 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/Initialize(mapload)
 	id_tag = CHAMBER_OUTPUT_FROM_ID(chamber_id)
-	return ..()
+	. = ..()
+	//we dont want people messing with these special vents using the air alarm interface
+	disconnect_from_area()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output
 	name = "plasma tank output inlet"
@@ -109,7 +111,9 @@
 // Same as the rest, but bigger volume.
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/Initialize(mapload)
 	id_tag = CHAMBER_OUTPUT_FROM_ID(chamber_id)
-	return ..()
+	. = ..()
+	//we dont want people messing with these special vents using the air alarm interface
+	disconnect_from_area()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output
 	name = "air mix tank output inlet"
