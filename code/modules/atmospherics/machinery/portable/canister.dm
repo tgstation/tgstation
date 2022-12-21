@@ -599,6 +599,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(take_atmos_damage())
 		update_appearance()
 		excited = TRUE
+		return ..() //we have already updated appearance so dont need to update again below
 
 	var/new_pressure_state = get_pressure_state(air_contents.return_pressure())
 	if(current_pressure_state != new_pressure_state) //update apperance only when its pressure changes significantly from its current value
