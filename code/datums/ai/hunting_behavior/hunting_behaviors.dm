@@ -80,7 +80,7 @@
 	. = ..()
 	var/datum/weakref/hunting_weakref = controller.blackboard[hunting_target_key]
 	var/atom/hunt_target = hunting_weakref?.resolve()
-	if (QDELETED(hunt_target))
+	if (isnull(hunt_target))
 		return FALSE
 	set_movement_target(controller, hunt_target)
 
@@ -90,7 +90,7 @@
 	var/datum/weakref/hunting_weakref = controller.blackboard[hunting_target_key]
 	var/atom/hunted = hunting_weakref?.resolve()
 
-	if(QDELETED(hunted))
+	if(isnull(hunted))
 		//Target is gone for some reason. forget about this task!
 		controller[hunting_target_key] = null
 		finish_action(controller, FALSE, hunting_target_key)
