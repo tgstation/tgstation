@@ -147,7 +147,6 @@
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
 /mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
 	new /obj/effect/temp_visual/heart(loc)
-	visible_message(span_notice("[src] becomes accustomed to your presence."))
 	faction += FACTION_NEUTRAL
 	try_consume_cheese(cheese)
 	ai_controller.CancelActions() // Interrupt any current fleeing
