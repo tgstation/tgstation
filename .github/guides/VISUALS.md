@@ -637,7 +637,7 @@ This combined with us being unable to modify bounds means that if one bit of the
 If A wants to be above B and below C, but B wants to be below A and above C, we'll be unable to resolve the rendering properly, leading to flickering depending on other aspects of the layering.
 This can just sort of spread. Very hard to debug.
  
-### [`SIDE_MAP `](https://www.byond.com/docs/ref/#/{notes}/side) (Check [the Main Page](https://www.byond.com/docs/ref/#/world/var/map_format) too!)
+### [`SIDE_MAP `](https://www.byond.com/docs/ref/#/{notes}/side) (Check [the main page](https://www.byond.com/docs/ref/#/world/var/map_format) too!)
 
 Our current rendering format, used in preparation for moving more things to 3/4ths.
 
