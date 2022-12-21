@@ -564,7 +564,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		else
 			shielding_powered = FALSE
 
-///return the icon_state for the canister's indicator light based on its current pressure reading
+///return the icon_state component for the canister's indicator light based on its current pressure reading
 /obj/machinery/portable_atmospherics/canister/proc/get_pressure_state(air_pressure)
 	switch(air_pressure)
 		if((40 * ONE_ATMOSPHERE) to INFINITY)
