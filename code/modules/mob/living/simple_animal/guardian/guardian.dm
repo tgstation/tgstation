@@ -35,8 +35,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	butcher_results = list(/obj/item/ectoplasm = 1)
 	del_on_death = TRUE
+	loot = list(/obj/effect/temp_visual/guardian/phase/out)
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
 	light_system = MOVABLE_LIGHT
