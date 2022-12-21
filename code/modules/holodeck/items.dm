@@ -92,6 +92,7 @@
 	if(get_dist(src,user)<2)
 		if(user.transferItemToLoc(W, drop_location()))
 			visible_message(span_warning("[user] dunks [W] into \the [src]!"))
+			playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 
 /obj/structure/holohoop/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -105,6 +106,7 @@
 		L.forceMove(loc)
 		L.Paralyze(100)
 		visible_message(span_danger("[user] dunks [L] into \the [src]!"))
+		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 		user.stop_pulling()
 	else
 		..()
@@ -114,14 +116,13 @@
 		if(prob(50))
 			AM.forceMove(get_turf(src))
 			visible_message(span_warning("Swish! [AM] lands in [src]."))
+			playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 			return
 		else
 			visible_message(span_danger("[AM] bounces off of [src]'s rim!"))
 			return ..()
 	else
 		return ..()
-
-
 
 //
 // Machines
