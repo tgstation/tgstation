@@ -127,7 +127,7 @@
 		balloon_alert(jaunter, "leaving the shadows...")
 		light_alert_given = TRUE
 		COOLDOWN_START(src, light_step_cooldown, 0.75 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(reactivate_light_alert)), 1.25 SECONDS) //You get a .5 second window to bypass the warning before it comes back
+		addtimer(CALLBACK(src, PROC_REF(reactivate_light_alert)), 1 SECONDS) //You get a .5 second window to bypass the warning before it comes back
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, light_step_cooldown))
