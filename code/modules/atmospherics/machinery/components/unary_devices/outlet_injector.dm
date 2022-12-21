@@ -31,7 +31,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/examine(mob/user)
 	. = ..()
-	. += span_notice("You can link it with an air sensor using a Multitool")
+	. += span_notice("You can link it with an air sensor using a multitool.")
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
