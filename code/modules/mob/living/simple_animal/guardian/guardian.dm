@@ -93,6 +93,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /// Setter for our summoner mob.
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, different_person = FALSE)
+	if(QDELETED(to_who))
+		qdel(src) //no gettin off scot-free pal.........
+		return
 	if(summoner)
 		cut_summoner(different_person)
 	summoner = to_who
@@ -129,7 +132,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(different_person)
 		summoner.faction -= "[REF(src)]"
 		faction -= summoner.faction
-		mind.remove_all_antag_datums()
+		mind?.remove_all_antag_datums()
 	if(!length(summoner.get_all_linked_holoparasites() - src))
 		remove_verb(summoner, list(
 			/mob/living/proc/guardian_comm,

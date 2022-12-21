@@ -27,7 +27,7 @@
 
 /mob/living/simple_animal/hostile/guardian/standard/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(!isliving(target))
+	if(!isliving(target) || attacked_target == src)
 		return
 	var/msg = ""
 	for(var/i in 1 to 9)
