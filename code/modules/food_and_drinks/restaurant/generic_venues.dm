@@ -83,7 +83,7 @@
 	)
 
 /datum/venue/bar/get_food_appearance(order)
-	var/datum/reagent/reagent_to_order = order
+	var/datum/reagent/reagent_to_order = new order
 	// Default the icon to the fallback icon
 	var/glass_visual_icon = initial(reagent_to_order.fallback_icon)
 	var/glass_visual_icon_state = initial(reagent_to_order.fallback_icon_state)
