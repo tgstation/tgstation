@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Fixed secure briefcase and wall safes not sending icon update signals properly"
