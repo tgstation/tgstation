@@ -54,7 +54,6 @@
 /obj/effect/dummy/phased_mob/shadow/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	COOLDOWN_START(src, light_step_cooldown, 1 SECONDS) //Kick-start the cooldown and give a grace period to allow for shadow dancing.
 
 /obj/effect/dummy/phased_mob/shadow/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -89,9 +88,21 @@
 		if(!light_step_warning())
 			return FALSE
 
+/obj/effect/dummy/phased_mob/shadow/eject_jaunter(forced_out = FALSE)
+	var/turf/reveal_turf = get_turf(src)
+
+	if(istype(reveal_turf))
+		if(forced_out)
+			reveal_turf.visible_message(span_boldwarning("[jaunter] is revealed by the light!"))
+		else
+			reveal_turf.visible_message(span_boldwarning("[jaunter] emerges from the darkness!"))
+		playsound(reveal_turf, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+
+	return ..()
+
 
 /**
- * Checks the light level. If above the minimum (0.2), returns TRUE.
+ * Checks the light level. If above the minimum acceptable amount (0.2), returns TRUE.
  *
  * Checks the light level of a given location to see if it is too bright to
  * continue a jaunt in.
@@ -118,6 +129,7 @@
 		balloon_alert(jaunter, "leaving the shadows...")
 		light_alert_given = TRUE
 		COOLDOWN_START(src, light_step_cooldown, 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(reactivate_light_alert)), 1.5 SECONDS) //You get a .5 second window to bypass the warning before it comes back
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, light_step_cooldown)) //If it's been 1 second since the warning was given, we continue
@@ -126,14 +138,12 @@
 	light_alert_given = FALSE
 	return TRUE //Our jaunter is ignoring the warning, so we proceed
 
-/obj/effect/dummy/phased_mob/shadow/eject_jaunter(forced_out = FALSE)
-	var/turf/reveal_turf = get_turf(src)
+/**
+ * Sets light_alert_given to false.
+ *
+ * Sets light_alert_given to false, making it pop up and intercept movement into light again.
+ * Added in its own proc to reset the alert without having to call light_step_warning.
+ */
 
-	if(istype(reveal_turf))
-		if(forced_out)
-			reveal_turf.visible_message(span_boldwarning("[jaunter] is revealed by the light!"))
-		else
-			reveal_turf.visible_message(span_boldwarning("[jaunter] emerges from the darkness!"))
-		playsound(reveal_turf, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-
-	return ..()
+/obj/effect/dummy/phased_mob/shadow/proc/reactivate_light_alert()
+	light_alert_given = FALSE
