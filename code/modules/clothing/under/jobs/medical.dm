@@ -78,7 +78,6 @@
 
 /obj/item/clothing/under/rank/medical/scrubs
 	name = "medical scrubs"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/medical/scrubs/blue
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
