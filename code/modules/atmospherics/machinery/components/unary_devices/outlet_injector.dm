@@ -50,9 +50,7 @@
 ///called when its either unwrenched or destroyed
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/disconnect_chamber()
 	if(chamber_id != null)
-		var/input_id = CHAMBER_INPUT_FROM_ID(chamber_id)
-		GLOB.objects_by_id_tag[input_id] = null
-		GLOB.objects_by_id_tag -= input_id
+		GLOB.objects_by_id_tag -= CHAMBER_INPUT_FROM_ID(chamber_id)
 		chamber_id = null
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()

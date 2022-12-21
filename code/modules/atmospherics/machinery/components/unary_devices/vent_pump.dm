@@ -67,9 +67,7 @@
 ///called when its either unwrenched or destroyed
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_chamber()
 	if(chamber_id != null)
-		var/output_id = CHAMBER_OUTPUT_FROM_ID(chamber_id)
-		GLOB.objects_by_id_tag[output_id] = null
-		GLOB.objects_by_id_tag -= output_id
+		GLOB.objects_by_id_tag -= CHAMBER_OUTPUT_FROM_ID(chamber_id)
 		chamber_id = null
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
