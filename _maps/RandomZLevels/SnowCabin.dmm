@@ -2296,7 +2296,7 @@
 /turf/closed/wall/mineral/snow,
 /area/awaymission/cabin/caves/mountain)
 "hP" = (
-/obj/item/candle/infinite,
+/obj/item/flashlight/flare/candle/infinite,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hQ" = (

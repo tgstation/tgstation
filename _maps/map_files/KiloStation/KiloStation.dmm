@@ -39520,7 +39520,7 @@
 /area/station/science/genetics)
 "lhT" = (
 /obj/structure/table,
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -41969,7 +41969,7 @@
 /area/station/cargo/warehouse)
 "lSY" = (
 /obj/effect/spawner/random/structure/table,
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_x = -5
 	},
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage{

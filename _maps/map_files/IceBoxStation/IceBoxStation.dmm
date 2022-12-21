@@ -18482,11 +18482,11 @@
 "fAo" = (
 /obj/structure/table/wood,
 /obj/item/clothing/under/suit/red,
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_x = 8;
 	pixel_y = 4
 	},
@@ -29962,7 +29962,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
 "jew" = (
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_x = -7;
 	pixel_y = 3
 	},
@@ -36147,7 +36147,7 @@
 /area/mine/living_quarters)
 "kYE" = (
 /obj/structure/table,
-/obj/item/candle,
+/obj/item/flashlight/flare/candle,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "kYF" = (
@@ -41850,7 +41850,7 @@
 	pixel_x = -1;
 	pixel_y = 6
 	},
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_x = -11;
 	pixel_y = 11
 	},

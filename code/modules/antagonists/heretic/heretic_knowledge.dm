@@ -574,7 +574,7 @@
 
 	var/static/list/potential_easy_items = list(
 		/obj/item/shard,
-		/obj/item/candle,
+		/obj/item/flashlight/flare/candle,
 		/obj/item/book,
 		/obj/item/pen,
 		/obj/item/paper,

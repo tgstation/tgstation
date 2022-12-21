@@ -802,7 +802,7 @@
 /area/shuttle/escape)
 "Hi" = (
 /obj/structure/table/wood/fancy,
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	desc = "A synthetic candle that won't melt down.";
 	name = "crimson red candle";
 	pixel_x = 1;

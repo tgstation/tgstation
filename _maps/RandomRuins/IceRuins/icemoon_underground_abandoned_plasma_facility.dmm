@@ -1628,7 +1628,7 @@
 "Ak" = (
 /obj/structure/bed/maint,
 /obj/item/bedsheet/dorms,
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_x = 12;
 	pixel_y = 9
 	},

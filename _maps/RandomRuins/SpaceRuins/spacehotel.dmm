@@ -577,7 +577,7 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/siding/wood{
@@ -3665,7 +3665,7 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
 /turf/open/floor/iron/grimy,
@@ -4378,7 +4378,7 @@
 "WZ" = (
 /obj/structure/table/wood,
 /obj/structure/table/wood/fancy,
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
 /turf/open/floor/wood,

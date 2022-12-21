@@ -20506,7 +20506,7 @@
 /area/station/maintenance/port/central)
 "hvC" = (
 /obj/structure/table/wood,
-/obj/item/candle,
+/obj/item/flashlight/flare/candle,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
