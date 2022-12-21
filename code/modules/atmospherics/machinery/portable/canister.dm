@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/protected_contents = FALSE
 
 	///used while processing to update appearance only when its pressure state changes
-	var/current_pressure_state = "-1"
+	var/current_pressure_state
 
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
