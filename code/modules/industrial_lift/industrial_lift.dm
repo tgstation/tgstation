@@ -429,10 +429,12 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	var/turf/our_dest = get_step(src, movement_direction)
 
-	var/area/our_area = get_area(src)
-	var/area/their_area = get_area(our_dest)
-	var/different_areas = our_area != their_area
+	//vars updated per mover
 	var/turf/mover_old_loc
+	var/turf/mover_old_area
+
+	var/turf/mover_new_loc
+	var/turf/mover_new_area
 
 	if(glide_size != glide_size_override)
 		set_glide_size(glide_size_override)
@@ -448,21 +450,20 @@ GLOBAL_LIST_EMPTY(lifts)
 		LAZYREMOVE(changed_gliders, mover)
 
 	if(different_areas)
-		for(var/atom/movable/mover as anything in movers)
-			if(QDELETED(mover))
-				movers -= mover
-				continue
+	for(var/atom/movable/mover as anything in movers)
+		if(QDELETED(mover))
+			movers -= mover
+			continue
 
-			//we dont need to call Entered() and Exited() for origin and destination here for each mover because
-			//all of them are considered to be on top of us, so the turfs and anything on them can only perceive us,
-			//which is why the platform itself uses forceMove()
-			mover_old_loc = mover.loc
+		//another O(n) set of read operations, not ideal given datum var read times.
+		//ideally we would only need to do this check once per tile with contents (which is constant per tram, while contents can scale infinitely)
+		//and then the only O(n) process is calling these procs for each contents that actually changes areas
+		//but that approach is probably a lot buggier. itd be nice to have it figured out though
+		mover_old_loc = mover.loc
+		mover_old_area = mover_old_loc.loc
 
-			our_area.Exited(mover, movement_direction)
-			mover.loc = get_step(mover, movement_direction)
-			their_area.Entered(mover, our_area)
-
-			mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
+		mover.loc = (mover_new_loc = get_step(mover, movement_direction))
+		mover_new_area = mover_new_loc.loc
 
 	else
 		for(var/atom/movable/mover as anything in movers)
@@ -470,10 +471,12 @@ GLOBAL_LIST_EMPTY(lifts)
 				movers -= mover
 				continue
 
-			mover_old_loc = mover.loc
-			mover.loc = get_step(mover, movement_direction)
+		if(mover_old_area != mover_new_area)
+			mover_old_area.Exited(mover, movement_direction)
+			mover_new_area.Entered(mover, mover_new_area)
 
-			mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
+		mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
+
 
 	return TRUE
 
