@@ -116,8 +116,6 @@
 	var/poster_item_type = /obj/item/poster
 	///A sharp shard of material can be hidden inside of a poster, attempts to embed when it is torn down.
 	var/datum/weakref/trap
-	/// What the poster changes into if it is a holiday, defaults to a normal, festive holiday poster
-	var/festive_variant = /obj/structure/sign/poster/official/festive
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
@@ -156,8 +154,6 @@
 			approved_types |= type_of_poster
 
 	var/obj/structure/sign/poster/selected = pick(approved_types)
-	if(length(GLOB.holidays) && prob(30))  // its the holidays! lets get festive
-		selected = initial(selected.festive_variant)
 
 	name = initial(selected.name)
 	desc = initial(selected.desc)
@@ -166,7 +162,22 @@
 	poster_item_desc = initial(selected.poster_item_desc)
 	poster_item_icon_state = initial(selected.poster_item_icon_state)
 	ruined = initial(selected.ruined)
+	if(length(GLOB.holidays) && prob(30)) // its the holidays! lets get festive
+		apply_holiday()
 	update_appearance()
+
+/// allows for posters to become festive posters during holidays
+/obj/structure/sign/poster/proc/apply_holiday()
+	if(!length(GLOB.holidays))
+		return
+	var/active_holiday = pick(GLOB.holidays)
+	var/datum/holiday/holi_data = GLOB.holidays[active_holiday]
+
+	if(holi_data.poster_name == "generic celebration poster")
+		return
+	name = holi_data.poster_name
+	desc = holi_data.poster_desc
+	icon_state = holi_data.poster_icon
 
 /obj/structure/sign/poster/attackby(obj/item/tool, mob/user, params)
 	if(tool.tool_behaviour == TOOL_WIRECUTTER)
@@ -1048,16 +1059,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 	name = "Festive Notice Poster"
 	desc = "A poster that informs of active holidays. None are today, so you should get back to work."
 	icon_state = "holiday_none"
-
-/obj/structure/sign/poster/official/festive/Initialize()
-	. = ..()
-	if(!length(GLOB.holidays))
-		return
-	var/active_holiday = pick(GLOB.holidays)
-	var/datum/holiday/holi_data = GLOB.holidays[active_holiday]
-
-	name = holi_data.poster_name
-	desc = holi_data.poster_desc
-	icon_state = holi_data.poster_icon
 
 #undef PLACE_SPEED

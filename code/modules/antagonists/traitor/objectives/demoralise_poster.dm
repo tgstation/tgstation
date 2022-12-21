@@ -86,11 +86,16 @@
 	poster_item_name = "seditious poster"
 	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its seditious themes are likely to demoralise NanoTrasen employees."
 	poster_item_icon_state = "rolled_traitor"
-	festive_variant = /obj/structure/sign/poster/traitor/festive
 	// This stops people hiding their sneaky posters behind signs
 	layer = CORGI_ASS_PIN_LAYER
 	/// Proximity sensor to make people sad if they're nearby
 	var/datum/proximity_monitor/advanced/demoraliser/demoraliser
+
+/obj/structure/sign/poster/traitor/apply_holiday()
+	var/obj/structure/sign/poster/traitor/holi_data = /obj/structure/sign/poster/traitor/festive
+	name = initial(holi_data.name)
+	desc = initial(holi_data.desc)
+	icon_state = initial(holi_data.icon_state)
 
 /obj/structure/sign/poster/traitor/on_placed_poster(mob/user)
 	var/datum/demoralise_moods/poster/mood_category = new()
