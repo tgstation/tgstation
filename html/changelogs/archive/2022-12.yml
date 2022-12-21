@@ -690,3 +690,40 @@
   - rscdel: chaos holoparasite
   - rscadd: gaseous holoparasite, it can expel various gases from its body and stabilizes
       the users temperature
+2022-12-21:
+  ATHATH:
+  - bugfix: Pillow smothering now checks to see if the SMOTHEREE has a head, not the
+      SMOTHERER.
+  EvilDragonfiend:
+  - bugfix: vendor no longer shows glass icons in a specific condition
+  Fat bugs bunny:
+  - rscadd: Added a glass jaw quirk, that leaves you prone to being knocked out when
+      hit on the head.
+  LT3:
+  - qol: Tramstation medbay treatment center now has a tram collision counter.
+  Rhials:
+  - bugfix: briefcases no longer disappear after being unlocked
+  ShizCalev:
+  - spellcheck: Fixed the thermomachine stating "You set the color" for everyone that
+      could see it.
+  - bugfix: Santa now spawns with the actual space capable hat again!
+  - bugfix: Fixed the claustrophobia trait not recognizing Santa's real hat.
+  - bugfix: Fixed secure briefcase and wall safes not sending icon update signals
+      properly
+  SyncIt21:
+  - bugfix: ghosts cant mess with RCD & PLumbing RCD
+  etherware-novice:
+  - qol: examine your uplink for code
+  - rscadd: lawyer-based photocopier blanks
+  flowercuco:
+  - qol: added makeshift surgery screentip
+  - qol: you no longer have to go in and out of harm intent to do surgery with a bedsheet
+  san7890:
+  - admin: The "Reset Thunderdome" option in the Secrets Menu now respects you closing
+      out of the confirmation screen as a way of cancelling your potential thunderdome
+      reset, rather than proceeding immediately. It should also be easier to comprehend
+      as well.
+  timothymtorres:
+  - rscadd: Add space vines prevent solar panels from working (except ones with the
+      transparent mutation)
+  - rscadd: Add new space ruin - Cyborg Mothership. All hail the master race!
