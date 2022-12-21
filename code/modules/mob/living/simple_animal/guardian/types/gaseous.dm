@@ -15,17 +15,17 @@
 	toggle_button_type = /atom/movable/screen/guardian/toggle_mode/gases
 	/// Gas being expelled.
 	var/expelled_gas = null
-	/// How much gas we expel per second.
-	var/gas_rate = 10
-	/// Possible gases to expel, with their expelling multiplier.
+	/// Rate of temperature stabilization per second.
+	var/temp_stabilization_rate = 0.1
+	/// Possible gases to expel, with how much moles they create.
 	var/static/list/possible_gases = list(
-		/datum/gas/oxygen = 5,
-		/datum/gas/nitrogen = 75, //yes 75 times. overpressurizing is hard!.
-		/datum/gas/water_vapor = 0.1, //you need incredibly little water vapor for the effects to kick in
-		/datum/gas/nitrous_oxide = 1.5,
-		/datum/gas/carbon_dioxide = 5,
-		/datum/gas/plasma = 0.25,
-		/datum/gas/bz = 1,
+		/datum/gas/oxygen = 50,
+		/datum/gas/nitrogen = 750, //overpressurizing is hard!.
+		/datum/gas/water_vapor = 1, //you need incredibly little water vapor for the effects to kick in
+		/datum/gas/nitrous_oxide = 15,
+		/datum/gas/carbon_dioxide = 50,
+		/datum/gas/plasma = 3,
+		/datum/gas/bz = 10,
 	)
 	/// Gas colors, used for the particles.
 	var/static/list/gas_colors = list(
@@ -64,13 +64,13 @@
 	. = ..()
 	if(summoner)
 		summoner.extinguish_mob()
-		summoner.adjust_fire_stacks(-10 * delta_time)
-		summoner.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), 0.1 * delta_time))
+		summoner.set_fire_stacks(0, remove_wet_stacks = FALSE)
+		summoner.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), temp_stabilization_rate * delta_time))
 	if(!expelled_gas)
 		return
 	var/datum/gas_mixture/mix_to_spawn = new()
 	mix_to_spawn.add_gas(expelled_gas)
-	mix_to_spawn.gases[expelled_gas][MOLES] = gas_rate * possible_gases[expelled_gas] * delta_time
+	mix_to_spawn.gases[expelled_gas][MOLES] = possible_gases[expelled_gas] * delta_time
 	mix_to_spawn.temperature = T20C
 	var/turf/open/our_turf = get_turf(src)
 	our_turf.assume_air(mix_to_spawn)
