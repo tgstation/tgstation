@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/image/window
 
 	var/shielding_powered = FALSE
-	///used to check if shielding was disabled during processing
+	///used to check if shielding state changed during processing
 	var/shielding_state = FALSE
 
 	var/obj/item/stock_parts/cell/internal_cell
