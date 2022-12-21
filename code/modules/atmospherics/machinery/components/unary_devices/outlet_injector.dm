@@ -24,7 +24,7 @@
 	. = ..()
 	var/static/list/multitool_tips = list(
 		TOOL_MULTITOOL = list(
-			SCREENTIP_CONTEXT_LMB = "Log it to link later with an air sensor",
+			SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
 		)
 	)
 	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
