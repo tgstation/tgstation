@@ -136,6 +136,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/rack_parts,
+		/obj/item/reagent_containers/cup/rag,
 	)
 	/// whitelisted drone items, recursive/includes descendants
 	var/list/drone_item_whitelist_recursive = list(
@@ -159,7 +160,6 @@
 		/obj/item/clothing/head,
 		/obj/item/clothing/mask,
 		/obj/item/storage/box/lights,
-		/obj/item/reagent_containers/cup/rag,
 		/obj/item/lightreplacer,
 	)
 	/// machines whitelisted from being shy with
