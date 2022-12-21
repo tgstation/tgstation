@@ -35,10 +35,11 @@
 /mob/living/simple_animal/hostile/guardian/dextrous/recall_effects()
 	drop_all_held_items()
 
-/mob/living/simple_animal/hostile/guardian/dextrous/snapback()
-	if(summoner && !(get_dist(get_turf(summoner),get_turf(src)) <= range))
-		drop_all_held_items()
-		..() //lose items, then return
+/mob/living/simple_animal/hostile/guardian/dextrous/check_distance()
+	if(!summoner || get_dist(get_turf(summoner), get_turf(src)) <= range)
+		return
+	drop_all_held_items()
+	..() //lose items, then return
 
 //SLOT HANDLING BULLSHIT FOR INTERNAL STORAGE
 /mob/living/simple_animal/hostile/guardian/dextrous/doUnEquip(obj/item/equipped_item, force, newloc, no_move, invdrop = TRUE, silent = FALSE)

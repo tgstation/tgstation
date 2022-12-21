@@ -48,7 +48,7 @@
 		new /obj/effect/temp_visual/decoy/fading(loc, src)
 	return ..()
 
-/mob/living/simple_animal/hostile/guardian/charger/snapback()
+/mob/living/simple_animal/hostile/guardian/charger/check_distance()
 	if(!charging)
 		..()
 

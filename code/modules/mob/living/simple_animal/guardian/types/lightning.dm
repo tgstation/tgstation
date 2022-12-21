@@ -39,7 +39,7 @@
 			enemychains -= C
 		enemychains += Beam(target, "lightning[rand(1,12)]", maxdistance=7, beam_type=/obj/effect/ebeam/chain)
 
-/mob/living/simple_animal/hostile/guardian/lightning/summon_effects()
+/mob/living/simple_animal/hostile/guardian/lightning/manifest_effects()
 	summonerchain = Beam(summoner, "lightning[rand(1,12)]", beam_type=/obj/effect/ebeam/chain)
 	while(loc != summoner)
 		if(successfulshocks > 5)

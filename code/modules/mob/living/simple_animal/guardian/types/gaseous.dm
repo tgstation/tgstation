@@ -48,23 +48,24 @@
 		return
 	do_sparks(1, TRUE, target)
 
-/mob/living/simple_animal/hostile/guardian/gaseous/Recall(forced)
+/mob/living/simple_animal/hostile/guardian/gaseous/recall(forced)
 	expelled_gas = null
 	QDEL_NULL(particles) //need to delete before putting in another object
 	. = ..()
-	if(.)
+	if(. && summoner)
 		UnregisterSignal(summoner, COMSIG_ATOM_PRE_PRESSURE_PUSH)
 
-/mob/living/simple_animal/hostile/guardian/gaseous/Manifest(forced)
+/mob/living/simple_animal/hostile/guardian/gaseous/manifest(forced)
 	. = ..()
-	if(.)
+	if(. && summoner)
 		RegisterSignal(summoner, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure))
 
 /mob/living/simple_animal/hostile/guardian/gaseous/Life(delta_time, times_fired)
 	. = ..()
-	summoner.extinguish_mob()
-	summoner.adjust_fire_stacks(-10 * delta_time)
-	summoner.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), 0.1 * delta_time))
+	if(summoner)
+		summoner.extinguish_mob()
+		summoner.adjust_fire_stacks(-10 * delta_time)
+		summoner.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), 0.1 * delta_time))
 	if(!expelled_gas)
 		return
 	var/datum/gas_mixture/mix_to_spawn = new()
@@ -74,7 +75,7 @@
 	var/turf/open/our_turf = get_turf(src)
 	our_turf.assume_air(mix_to_spawn)
 
-/mob/living/simple_animal/hostile/guardian/gaseous/ToggleMode()
+/mob/living/simple_animal/hostile/guardian/gaseous/toggle_modes()
 	var/list/gases = list("None")
 	for(var/datum/gas/gas as anything in possible_gases)
 		gases[initial(gas.name)] = gas

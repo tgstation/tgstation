@@ -37,7 +37,7 @@
 		flash_overlay.color = guardian_color
 		flick_overlay_view(flash_overlay, 0.5 SECONDS)
 
-/mob/living/simple_animal/hostile/guardian/protector/ToggleMode()
+/mob/living/simple_animal/hostile/guardian/protector/toggle_modes()
 	if(COOLDOWN_FINISHED(src, manifest_cooldown))
 		return
 	COOLDOWN_START(src, manifest_cooldown, 1 SECONDS)
@@ -61,13 +61,13 @@
 		to_chat(src, span_bolddanger("You switch to protection mode."))
 		toggle = TRUE
 
-/mob/living/simple_animal/hostile/guardian/protector/snapback() //snap to what? snap to the guardian!
-	if(get_dist(summoner, src) <= range)
+/mob/living/simple_animal/hostile/guardian/protector/check_distance() //snap to what? snap to the guardian!
+	if(!summoner || get_dist(summoner, src) <= range)
 		return
 	if(istype(summoner.loc, /obj/effect))
 		to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
 		visible_message(span_danger("\The [src] jumps back to its user."))
-		Recall(forced = TRUE)
+		recall(forced = TRUE)
 		return
 	to_chat(summoner, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[guardian_color]\"><b>[real_name]</b></font>!"))
 	summoner.visible_message(span_danger("\The [summoner] jumps back to [summoner.p_their()] protector."))

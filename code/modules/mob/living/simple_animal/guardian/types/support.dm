@@ -105,7 +105,7 @@
 	if(!beacon)
 		to_chat(src, span_bolddanger("You need a beacon placed to warp things!"))
 		return
-	if(loc == summoner)
+	if(!is_deployed())
 		to_chat(src, span_bolddanger("You must be manifested to warp a target!"))
 		return
 	if(!Adjacent(teleport_target))

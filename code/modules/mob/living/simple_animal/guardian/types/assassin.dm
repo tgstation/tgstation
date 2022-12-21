@@ -42,18 +42,18 @@
 	. = ..()
 	if(.)
 		if(toggle && (isliving(target) || istype(target, /obj/structure/window) || istype(target, /obj/structure/grille)))
-			ToggleMode(forced = TRUE)
+			toggle_modes(forced = TRUE)
 
 /mob/living/simple_animal/hostile/guardian/assassin/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && toggle)
-		ToggleMode(forced = TRUE)
+		toggle_modes(forced = TRUE)
 
 /mob/living/simple_animal/hostile/guardian/assassin/recall_effects()
 	if(toggle)
-		ToggleMode(forced = TRUE)
+		toggle_modes(forced = TRUE)
 
-/mob/living/simple_animal/hostile/guardian/assassin/ToggleMode(forced = FALSE)
+/mob/living/simple_animal/hostile/guardian/assassin/toggle_modes(forced = FALSE)
 	if(toggle)
 		melee_damage_lower -= damage_bonus
 		melee_damage_upper -= damage_bonus
@@ -70,7 +70,7 @@
 		updatestealthalert()
 		toggle = FALSE
 	else if(COOLDOWN_FINISHED(src, stealth_cooldown))
-		if(loc == summoner)
+		if(!is_deployed())
 			to_chat(src, span_bolddanger("You have to be manifested to enter stealth!"))
 			return
 		melee_damage_lower += damage_bonus

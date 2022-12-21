@@ -24,9 +24,12 @@
 	. = ..()
 	AddElement(/datum/element/forced_gravity, 1)
 
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/set_summoner(mob/to_who, different_person = FALSE)
-	if(summoner)
-		summoner.RemoveElement(/datum/element/forced_gravity, 1)
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/set_summoner(mob/to_who, different_person)
+	. = ..()
+	to_who.AddElement(/datum/element/forced_gravity, 1)
+
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/cut_summoner(different_person)
+	summoner.RemoveElement(/datum/element/forced_gravity, 1)
 	return ..()
 
 ///Removes gravity from affected mobs upon guardian death to prevent permanent effects

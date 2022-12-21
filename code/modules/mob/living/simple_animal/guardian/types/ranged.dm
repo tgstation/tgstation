@@ -40,8 +40,8 @@
 	/// Upper damage before scouting.
 	var/previous_upper_damage = 0
 
-/mob/living/simple_animal/hostile/guardian/ranged/ToggleMode()
-	if(loc != summoner)
+/mob/living/simple_animal/hostile/guardian/ranged/toggle_modes()
+	if(is_deployed() && summoner)
 		to_chat(src, span_bolddanger("You have to be recalled to toggle modes!"))
 		return
 	if(toggle)
@@ -77,7 +77,7 @@
 	var/obj/projectile/shot_projectile = .
 	shot_projectile.color = guardian_color
 
-/mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
+/mob/living/simple_animal/hostile/guardian/ranged/toggle_light()
 	var/msg
 	switch(lighting_alpha)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
@@ -147,10 +147,13 @@
 		return
 	if(!isliving(crossed_object) || crossed_object == spawning_guardian || spawning_guardian.hasmatchingsummoner(crossed_object))
 		return
-	to_chat(spawning_guardian.summoner, span_bolddanger("[crossed_object] has crossed [name]."))
-	var/list/guardians = spawning_guardian.summoner.get_all_linked_holoparasites()
+	send_message(spawning_guardian.summoner || spawning_guardian, crossed_object)
+
+/obj/effect/snare/proc/send_message(mob/living/recipient, crossed_object)
+	to_chat(recipient, span_bolddanger("[crossed_object] has crossed [name]."))
+	var/list/guardians = recipient.get_all_linked_holoparasites()
 	for(var/guardian in guardians)
-		to_chat(guardian, span_danger("[crossed_object] has crossed [name]."))
+		send_message(guardian, crossed_object)
 
 /obj/effect/snare/singularity_act()
 	return
@@ -158,7 +161,7 @@
 /obj/effect/snare/singularity_pull()
 	return
 
-/mob/living/simple_animal/hostile/guardian/ranged/summon_effects()
+/mob/living/simple_animal/hostile/guardian/ranged/manifest_effects()
 	if(toggle)
 		incorporeal_move = INCORPOREAL_MOVE_BASIC
 

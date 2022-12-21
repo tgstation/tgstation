@@ -2456,21 +2456,50 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/admin_give_guardian(mob/admin)
 	if(!admin || !check_rights(NONE))
 		return
-	var/client/guardian_client = tgui_input_list(admin, "Pick the player to put in control.", "Guardian Controller", sort_list(GLOB.clients))
+	var/del_mob = FALSE
+	var/mob/old_mob
+	var/ai_control = FALSE
+	var/list/possible_players = list("None", "Poll Ghosts") + sort_list(GLOB.clients)
+	var/client/guardian_client = tgui_input_list(admin, "Pick the player to put in control.", "Guardian Controller", possible_players)
 	if(!guardian_client)
 		return
-	var/mob/old_mob = guardian_client.mob
-	var/del_mob = FALSE
-	if((isobserver(old_mob) || tgui_alert(admin, "Do you want to delete [guardian_client]'s old mob?", "Delete?", list("Yes","No")) != "No"))
-		del_mob = TRUE
+	else if(guardian_client == "None")
+		guardian_client = null
+		ai_control = (tgui_alert(admin, "Do you want to give the spirit AI control?", "Guardian Controller", list("Yes", "No")) == "Yes")
+	else if(guardian_client == "Poll Ghosts")
+		var/list/candidates = poll_ghost_candidates("Do you want to play as an admin created Guardian Spirit of [real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
+		if(LAZYLEN(candidates))
+			var/mob/dead/observer/candidate = pick(candidates)
+			guardian_client = candidate.client
+		else
+			tgui_alert(admin, "No ghost candidates.", "Guardian Controller")
+			return
+	else
+		old_mob = guardian_client.mob
+		if(isobserver(old_mob) || tgui_alert(admin, "Do you want to delete [guardian_client]'s old mob?", "Guardian Controller", list("Yes"," No")) == "Yes")
+			del_mob = TRUE
 	var/picked_type = tgui_input_list(admin, "Pick the guardian type.", "Guardian Controller", subtypesof(/mob/living/simple_animal/hostile/guardian))
-	var/picked_theme = tgui_input_list(admin, "Pick the guardian theme.", "Guardian Controller", list(GUARDIAN_THEME_TECH, GUARDIAN_THEME_MAGIC, GUARDIAN_THEME_CARP, GUARDIAN_THEME_MINER))
+	var/picked_theme = tgui_input_list(admin, "Pick the guardian theme.", "Guardian Controller", list(GUARDIAN_THEME_TECH, GUARDIAN_THEME_MAGIC, GUARDIAN_THEME_CARP, GUARDIAN_THEME_MINER, "Random"))
+	if(picked_theme == "Random")
+		picked_theme = null //holopara code handles not having a theme by giving a random one
+	var/picked_name = tgui_input_text(admin, "Name the guardian, leave empty to let player name it.", "Guardian Controller")
+	var/picked_color = input(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", "#ffffff") as color|null
+	if(tgui_alert(admin, "Confirm creation.", "Guardian Controller", list("Yes", "No")) != "Yes")
+		return
 	var/mob/living/simple_animal/hostile/guardian/summoned_guardian = new picked_type(src, picked_theme)
 	summoned_guardian.set_summoner(src, different_person = TRUE)
-	summoned_guardian.key = guardian_client.key
-	guardian_client.init_verbs()
+	if(picked_name)
+		summoned_guardian.fully_replace_character_name(null, picked_name)
+	if(picked_color)
+		summoned_guardian.set_guardian_color(picked_color)
+	summoned_guardian.key = guardian_client?.key
+	guardian_client?.init_verbs()
 	if(del_mob)
 		qdel(old_mob)
+	if(ai_control)
+		summoned_guardian.can_have_ai = TRUE
+		summoned_guardian.toggle_ai(AI_ON)
+		summoned_guardian.manifest()
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")

@@ -39,9 +39,6 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/explosive/proc/plant_bomb(obj/planting_on)
-	if(loc == summoner)
-		to_chat(src, span_bolddanger("You must be manifested to create bombs!"))
-		return
 	if(!COOLDOWN_FINISHED(src, bomb_cooldown))
 		to_chat(src, span_bolddanger("Your powers are on cooldown! You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, bomb_cooldown))] between bombs."))
 		return
