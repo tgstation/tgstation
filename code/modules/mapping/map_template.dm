@@ -164,8 +164,7 @@
 	for(var/turf/border_turf as anything in border)
 		SSair.remove_from_active(border_turf)
 		for(var/turf/sub_turf as anything in border_turf.atmos_adjacent_turfs)
-			if(sub_turf.atmos_adjacent_turfs)
-				sub_turf.atmos_adjacent_turfs -= border_turf
+			sub_turf.atmos_adjacent_turfs?.Remove(border_turf)
 		border_turf.atmos_adjacent_turfs?.Cut()
 
 	// Accept cached maps, but don't save them automatically - we don't want
