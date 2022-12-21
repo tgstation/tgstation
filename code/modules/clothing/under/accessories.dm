@@ -464,6 +464,7 @@
 	examine_list += "The dogtag has a listing of allergies : [display]"
 
 
+/// Reskins for the pride pin accessory, mapped by display name to icon state
 GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Rainbow Pride" = "pride",
 	"Bisexual Pride" = "pride_bi",
