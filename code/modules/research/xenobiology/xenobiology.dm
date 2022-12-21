@@ -949,6 +949,7 @@
 	desc = "An interesting chemical mix that changes the biological gender of what its applied to. Cannot be used on things that lack gender entirely."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potlightpink"
+	COOLDOWN_DECLARE(offer_cd)
 
 /obj/item/slimepotion/genderchange/attack(mob/living/gendered_thing, mob/user)
 	if(!istype(gendered_thing) || gendered_thing.stat == DEAD)
@@ -958,7 +959,7 @@
 	if(gendered_thing.gender != MALE && gendered_thing.gender != FEMALE)
 		to_chat(user, span_warning("The potion can only be used on gendered things!"))
 		return
-	if(gendered_thing.mind && gendered_thing != user)
+	if(gendered_thing.mind && gendered_thing != user && COOLDOWN_FINISHED(src, offer_cd))
 		gendered_thing.balloon_alert(user, "offering gender potion...")
 		if(tgui_alert(gendered_thing, "Do you accept [src], knowing that it will permanently change your gender?", "Gender Changer", list("Yes", "No")) == "Yes")
 			if(user.canUseTopic(src, be_close = TRUE) && user.canUseTopic(gendered_thing, be_close = TRUE))
@@ -968,8 +969,10 @@
 			else
 				to_chat(user, span_warning("You were too far away from [gendered_thing]."))
 				to_chat(gendered_thing, span_warning("You were too far away from [user]."))
+			COOLDOWN_START(src, offer_cd, 5 SECONDS)
 		else
 			to_chat(user, span_warning("[gendered_thing] refused [src]."))
+			COOLDOWN_START(src, offer_cd, 5 SECONDS)
 			return
 	else
 		gender_swap(gendered_thing, user)
