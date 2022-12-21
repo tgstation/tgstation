@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/protected_contents = FALSE
 
 	///used while processing to update appearance only when its pressure state changes
-	var/current_pressure_state = 1
+	var/current_pressure_state = "-1"
 
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
@@ -383,9 +383,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		. += mutable_appearance(canister_overlay_file, "can-connector")
 
 	var/light_state = get_pressure_state(air_contents.return_pressure())
-	if(light_state != -1) //happens when pressure is below 10kpa which means no light
-		. += mutable_appearance(canister_overlay_file, "can-[light_state]")
-		. += emissive_appearance(canister_overlay_file, "can-[light_state]-light", src, alpha = src.alpha)
+	if(light_state != "-1") //happens when pressure is below 10kpa which means no light
+		. += mutable_appearance(canister_overlay_file, light_state)
+		. += emissive_appearance(canister_overlay_file, "[light_state]-light", src, alpha = src.alpha)
 
 	update_window()
 
@@ -568,15 +568,15 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/proc/get_pressure_state(air_pressure)
 	switch(air_pressure)
 		if((40 * ONE_ATMOSPHERE) to INFINITY)
-			return 3
+			return "can-3"
 		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
-			return 2
+			return "can-2"
 		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
-			return 1
+			return "can-1"
 		if((10) to (5 * ONE_ATMOSPHERE))
-			return 0
+			return "can-0"
 		else
-			return -1
+			return "-1"
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	if(machine_stat & BROKEN)
@@ -597,6 +597,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	// A bit different than other atmos devices. Wont stop if currently taking damage.
 	if(take_atmos_damage())
+		update_appearance()
 		excited = TRUE
 
 	var/new_pressure_state = get_pressure_state(air_contents.return_pressure())
