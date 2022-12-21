@@ -511,8 +511,8 @@
 /datum/quirk/item_quirk/pride_pin/add_unique()
 	var/obj/item/clothing/accessory/pride/pin = new(get_turf(quirk_holder))
 
-	pride_choice = quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/pride_pin) || assoc_to_keys(GLOB.pride_pin_reskins)[1]
-	pride_reskin = GLOB.pride_pin_reskins[pride_choice]
+	var/pride_choice = quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/pride_pin) || assoc_to_keys(GLOB.pride_pin_reskins)[1]
+	var/pride_reskin = GLOB.pride_pin_reskins[pride_choice]
 
 	pin.current_skin = pride_choice
 	pin.icon_state = pride_reskin

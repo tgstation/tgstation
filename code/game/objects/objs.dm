@@ -17,7 +17,8 @@
 
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
-	var/infinite_reskin = FALSE //If set to true, we can reskin this item as much as we want.
+	///If set to true, we can reskin this item as much as we want.
+	var/infinite_reskin = FALSE
 
 	// Access levels, used in modules\jobs\access.dm
 	var/list/req_access
