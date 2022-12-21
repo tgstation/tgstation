@@ -500,7 +500,7 @@
 /datum/quirk/item_quirk/pride_pin
 	name = "Pride Pin"
 	desc = "Show off your pride with this changing pride pin!"
-	icon = "thumbtack"
+	icon = "rainbow"
 	value = 0
 	gain_text = "<span class='notice'>You feel fruity.</span>"
 	lose_text = "<span class='danger'>You feel only slightly less fruity than before.</span>"
