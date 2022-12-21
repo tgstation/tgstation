@@ -82,8 +82,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/image/window
 
 	var/shielding_powered = FALSE
-	///used to check if shielding state changed during processing
-	var/shielding_state = FALSE
 
 	var/obj/item/stock_parts/cell/internal_cell
 
@@ -601,12 +599,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(take_atmos_damage())
 		update_appearance()
 		excited = TRUE
-		return ..() //we have already updated appearance so dont need to update again below
-
-	//if shield state changed during processing then update appearance & leave
-	if(shielding_state != shielding_powered)
-		update_appearance()
-		shielding_state = shielding_powered
 		return ..() //we have already updated appearance so dont need to update again below
 
 	var/new_pressure_state = get_pressure_state(air_contents.return_pressure())
