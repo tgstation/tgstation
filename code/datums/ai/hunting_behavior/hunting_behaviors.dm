@@ -34,7 +34,7 @@
 	var/datum/weakref/hunting_weakref = controller.blackboard[target_key]
 	var/atom/hunted = hunting_weakref?.resolve()
 	// We're not hunting anything, look around for something
-	if(QDELETED(hunted))
+	if(isnull(hunted))
 		controller.queue_behavior(finding_behavior, target_key, hunt_targets, hunt_range)
 
 	// We ARE hunting something, execute the hunt.

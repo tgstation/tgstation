@@ -26,7 +26,7 @@
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
 	var/atom/target = target_ref?.resolve()
-	if (QDELETED(target))
+	if (isnull(target))
 		return FALSE
 	set_movement_target(controller, target)
 

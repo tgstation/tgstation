@@ -29,6 +29,8 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
 
+	/// Whether this rat spawned friendly to players
+	var/tame = FALSE
 	/// What color our mouse is. Brown, gray and white - leave blank for random.
 	var/body_color
 	/// Does this mouse contribute to the ratcap?
@@ -42,16 +44,17 @@
 		SSmobs.cheeserats |= src
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
+	src.tame = tame
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
 		held_state = "mouse_[body_color]" // not handled by variety element
 		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
-	if (!tame)
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
-	else
+	if (tame)
 		faction += FACTION_NEUTRAL
+	else
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -195,7 +198,7 @@
 
 /// Creates a new mouse based on this mouse's subtype.
 /mob/living/basic/mouse/proc/create_a_new_rat()
-	new /mob/living/basic/mouse(loc, TRUE)
+	new /mob/living/basic/mouse(loc, /* tame = */ TRUE)
 
 /// Biting into a cable will cause a mouse to get shocked and die if applicable. Or do nothing if they're lucky.
 /mob/living/basic/mouse/proc/try_bite_cable(obj/structure/cable/cable)
@@ -246,7 +249,7 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
-	faction = list(FACTION_RAT, FACTION_MAINT_CREATURES, FACTION_NEUTRAL)
+	tame = TRUE
 
 /mob/living/basic/mouse/brown/tom/Initialize(mapload)
 	. = ..()
@@ -370,7 +373,7 @@
 /datum/ai_planning_subtree/flee_target/mouse/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/datum/weakref/hunting_weakref = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
 	var/atom/hunted_cheese = hunting_weakref?.resolve()
-	if (!QDELETED(hunted_cheese))
+	if (!isnull(hunted_cheese))
 		return // We see some cheese, which is more important than our life
 	return ..()
 
