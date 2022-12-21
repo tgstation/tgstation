@@ -300,11 +300,20 @@
 	var/on_damage = 7
 	/// Type of atom thats spawns after fuel is used up
 	var/trash_type = /obj/item/trash/flare
+	/// If the light source can be extinguished
+	var/can_be_extinguished = FALSE
 
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
 	if(randomize_fuel)
 		fuel = rand(25 MINUTES, 35 MINUTES)
+	if(on)
+		attack_verb_continuous = string_list(list("burns", "singes"))
+		attack_verb_simple = string_list(list("burn", "singe"))
+		hitsound = 'sound/items/welder.ogg'
+		force = on_damage
+		damtype = BURN
+		update_brightness()
 
 /obj/item/flashlight/flare/toggle_light()
 	if(on || !fuel)
@@ -314,6 +323,8 @@
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
 	hitsound = 'sound/items/welder.ogg'
+	force = on_damage
+	damtype = BURN
 	. = ..()
 
 /obj/item/flashlight/flare/proc/turn_off()
@@ -327,7 +338,7 @@
 	update_brightness()
 
 /obj/item/flashlight/flare/extinguish()
-	if(fuel != INFINITY)
+	if(fuel != INFINITY && can_be_extinguished)
 		turn_off()
 	return ..()
 
@@ -362,8 +373,6 @@
 	if(!toggle_light())
 		return FALSE
 
-	force = on_damage
-	damtype = BURN
 	if(fuel != INFINITY)
 		START_PROCESSING(SSobj, src)
 
@@ -393,6 +402,7 @@
 	fuel = 35 MINUTES
 	randomize_fuel = FALSE
 	trash_type = /obj/item/trash/candle
+	can_be_extinguished = TRUE
 
 /obj/item/flashlight/flare/candle/update_icon_state()
 	. = ..()
@@ -414,7 +424,7 @@
 		return ..()
 
 /obj/item/flashlight/flare/candle/attack_self(mob/user)
-	if(on && fuel != INFINITY) // can't extinguish eternal candles
+	if(on && fuel != INFINITY && !can_be_extinguished) // can't extinguish eternal candles
 		turn_off()
 		user.visible_message(span_notice("[user] snuffs [src]."))
 
@@ -423,9 +433,11 @@
 	update_appearance()
 
 /obj/item/flashlight/flare/candle/infinite
+	name = "eternal candle"
 	fuel = INFINITY
 	on = TRUE
 	randomize_fuel = FALSE
+	can_be_extinguished = FALSE
 
 /obj/item/flashlight/flare/torch
 	name = "torch"
@@ -440,6 +452,7 @@
 	on_damage = 10
 	slot_flags = null
 	trash_type = /obj/effect/decal/cleanable/ash
+	can_be_extinguished = TRUE
 
 /obj/item/flashlight/lantern
 	name = "lantern"
