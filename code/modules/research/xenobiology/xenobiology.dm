@@ -959,8 +959,8 @@
 		to_chat(user, span_warning("The potion can only be used on gendered things!"))
 		return
 	if(gendered_thing.mind && gendered_thing != user)
-		to_chat(user, span_notice("You offer the [name] to [gendered_thing]."))
-		if(tgui_alert(gendered_thing, "Do you accept the [name], knowing that it will permanently change your gender?", "Gender Changer", list("Yes", "No")) == "Yes")
+		gendered_thing.balloon_alert(user, "offering gender potion...")
+		if(tgui_alert(gendered_thing, "Do you accept [src], knowing that it will permanently change your gender?", "Gender Changer", list("Yes", "No")) == "Yes")
 			if(user.canUseTopic(src, be_close = TRUE) && user.canUseTopic(gendered_thing, be_close = TRUE))
 				to_chat(user, span_notice("Your [name] is consumed by [gendered_thing]."))
 				to_chat(gendered_thing, span_notice("You consume the [name]."))
@@ -969,7 +969,7 @@
 				to_chat(user, span_warning("You were too far away from [gendered_thing]."))
 				to_chat(gendered_thing, span_warning("You were too far away from [user]."))
 		else
-			to_chat(user, span_warning("[gendered_thing] refused the potion."))
+			to_chat(user, span_warning("[gendered_thing] refused [src]."))
 			return
 	else
 		gender_swap(gendered_thing, user)
