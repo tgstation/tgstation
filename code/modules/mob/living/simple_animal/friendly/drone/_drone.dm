@@ -159,6 +159,8 @@
 		/obj/item/clothing/head,
 		/obj/item/clothing/mask,
 		/obj/item/storage/box/lights,
+		/obj/item/reagent_containers/cup/rag,
+		/obj/item/lightreplacer,
 	)
 	/// machines whitelisted from being shy with
 	var/list/shy_machine_whitelist = list(
