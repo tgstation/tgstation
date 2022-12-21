@@ -6,89 +6,89 @@ GLOBAL_PROTECT(admin_verbs_default)
 	return list(
 	/client/proc/deadmin, /*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/cmd_admin_say, /*admin-only ooc chat*/
-	/client/proc/hide_verbs, /*hides all our adminverbs*/
-	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
-	/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/secrets,
-	/client/proc/reload_admins,
-	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context, /*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel, /*admin-pm list*/
-	/client/proc/stop_sounds,
-	/client/proc/mark_datum_mapview,
-	/client/proc/tag_datum_mapview,
 	/client/proc/debugstatpanel,
+	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
 	/client/proc/fix_air, /*resets air in designated radius to its default atmos composition*/
-	/client/proc/requests
+	/client/proc/hide_verbs, /*hides all our adminverbs*/
+	/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/
+	/client/proc/mark_datum_mapview,
+	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
+	/client/proc/reload_admins,
+	/client/proc/requests,
+	/client/proc/secrets,
+	/client/proc/stop_sounds,
+	/client/proc/tag_datum_mapview,
 	)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 GLOBAL_PROTECT(admin_verbs_admin)
 /world/proc/AVerbsAdmin()
 	return list(
-	/client/proc/invisimin, /*allows our mob to go invisible/visible*/
-// /datum/admins/proc/show_traitor_panel, /*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
+// Admin datums
+	/datum/admins/proc/access_news_network, /*allows access of newscasters*/
+	/datum/admins/proc/announce, /*priority announce something to all clients.*/
+	/datum/admins/proc/display_tags,
+	/datum/admins/proc/fishing_calculator,
+	/datum/admins/proc/known_alts_panel,
 	/datum/admins/proc/show_lag_switch_panel,
+	/datum/admins/proc/open_borgopanel,
+	/datum/admins/proc/open_shuttlepanel, /* Opens shuttle manipulator UI */
+	/datum/admins/proc/paintings_manager,
+	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
 	/datum/admins/proc/show_player_panel, /*shows an interface for individual players, with various links (links require additional flags*/
-	/datum/verbs/menu/Admin/verb/playerpanel,
-	/client/proc/game_panel, /*game panel, allows to change game-mode etc*/
-	/client/proc/check_ai_laws, /*shows AI and borg laws*/
-	/client/proc/ghost_pool_protection, /*opens a menu for toggling ghost roles*/
-	/datum/admins/proc/toggleooc, /*toggles ooc on/off for everyone*/
-	/datum/admins/proc/toggleoocdead, /*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/toggleenter, /*toggles whether people can join the current game*/
 	/datum/admins/proc/toggleguests, /*toggles whether guests can join the current game*/
-	/datum/admins/proc/announce, /*priority announce something to all clients.*/
-	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
-	/client/proc/admin_ghost, /*allows us to ghost/reenter body at will*/
-	/client/proc/toggle_view_range, /*changes how far we can see*/
-	/client/proc/getserverlogs, /*for accessing server logs*/
-	/client/proc/getcurrentlogs, /*for accessing server logs for the current round*/
-	/client/proc/cmd_admin_subtle_message, /*send a message to somebody as a 'voice in their head'*/
-	/client/proc/cmd_admin_headset_message, /*send a message to somebody through their headset as CentCom*/
-	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
-	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
-	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
-	/client/proc/check_antagonists, /*shows all antags*/
-	/datum/admins/proc/access_news_network, /*allows access of newscasters*/
-	/client/proc/jumptocoord, /*we ghost and jump to a coordinate*/
-	/client/proc/Getmob, /*teleports a mob to our location*/
-	/client/proc/Getkey, /*teleports a mob with a certain ckey to our location*/
-// /client/proc/sendmob, /*sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage
-	/client/proc/jumptoarea,
-	/client/proc/jumptokey, /*allows us to jump to the location of a mob with a certain ckey*/
-	/client/proc/jumptomob, /*allows us to jump to a specific mob*/
-	/client/proc/jumptoturf, /*allows us to jump to a specific turf*/
+	/datum/admins/proc/toggleooc, /*toggles ooc on/off for everyone*/
+	/datum/admins/proc/toggleoocdead, /*toggles ooc on/off for everyone who is dead*/
+	/datum/admins/proc/trophy_manager,
+	/datum/admins/proc/view_all_circuits,
+	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
+// Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
 	/client/proc/admin_disable_shuttle, /*allows us to disable the emergency shuttle admin-wise so that it cannot be called*/
 	/client/proc/admin_enable_shuttle,  /*undoes the above*/
-	/client/proc/cmd_admin_direct_narrate, /*send text directly to a player with no padding. Useful for narratives and fluff-text*/
-	/client/proc/cmd_admin_world_narrate, /*sends text to all players with no padding*/
-	/client/proc/cmd_admin_local_narrate, /*sends text to all mobs within view of atom*/
-	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_change_command_name,
+	/client/proc/admin_ghost, /*allows us to ghost/reenter body at will*/
+	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
-	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
-	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
-	/datum/admins/proc/open_shuttlepanel, /* Opens shuttle manipulator UI */
-	/client/proc/respawn_character,
-	/datum/admins/proc/open_borgopanel,
-	/datum/admins/proc/view_all_circuits,
-	/datum/admins/proc/known_alts_panel,
-	/datum/admins/proc/paintings_manager,
-	/datum/admins/proc/display_tags,
-	/datum/admins/proc/fishing_calculator,
+	/client/proc/cmd_admin_create_centcom_report,
+	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
+	/client/proc/cmd_admin_direct_narrate, /*send text directly to a player with no padding. Useful for narratives and fluff-text*/
+	/client/proc/cmd_admin_headset_message, /*send a message to somebody through their headset as CentCom*/
+	/client/proc/cmd_admin_local_narrate, /*sends text to all mobs within view of atom*/
+	/client/proc/cmd_admin_subtle_message, /*send a message to somebody as a 'voice in their head'*/
+	/client/proc/cmd_admin_world_narrate, /*sends text to all players with no padding*/
+	/client/proc/cmd_change_command_name,
+	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
+	/client/proc/check_ai_laws, /*shows AI and borg laws*/
+	/client/proc/check_antagonists, /*shows all antags*/
+	/client/proc/fax_panel, /*send a paper to fax*/
+	/client/proc/force_load_lazy_template,
+	/client/proc/game_panel, /*game panel, allows to change game-mode etc*/
+	/client/proc/Getmob, /*teleports a mob to our location*/
+	/client/proc/Getkey, /*teleports a mob with a certain ckey to our location*/
+	/client/proc/getserverlogs, /*for accessing server logs*/
+	/client/proc/getcurrentlogs, /*for accessing server logs for the current round*/
+	/client/proc/ghost_pool_protection, /*opens a menu for toggling ghost roles*/
+	/client/proc/invisimin, /*allows our mob to go invisible/visible*/
+	/client/proc/jumptoarea,
+	/client/proc/jumptokey, /*allows us to jump to the location of a mob with a certain ckey*/
+	/client/proc/jumptomob, /*allows us to jump to a specific mob*/
+	/client/proc/jumptoturf, /*allows us to jump to a specific turf*/
+	/client/proc/jumptocoord, /*we ghost and jump to a coordinate*/
 	/client/proc/list_bombers,
-	/client/proc/list_signalers,
-	/client/proc/list_law_changes,
-	/client/proc/show_manifest,
 	/client/proc/list_dna,
 	/client/proc/list_fingerprints,
+	/client/proc/list_law_changes,
+	/client/proc/list_signalers,
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
-	/client/proc/fax_panel, /*send a paper to fax*/
-	/datum/admins/proc/trophy_manager,
-	/client/proc/force_load_lazy_template,
+	/client/proc/respawn_character,
+	/client/proc/show_manifest,
+	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
+	/client/proc/toggle_view_range, /*changes how far we can see*/
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
