@@ -54,7 +54,7 @@
 /obj/effect/dummy/phased_mob/shadow/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	COOLDOWN_START(src, light_step_cooldown, 3 SECONDS) //Kick-start the cooldown and give a grace period to allow for shadow dancing.
+	COOLDOWN_START(src, light_step_cooldown, 1 SECONDS) //Kick-start the cooldown and give a grace period to allow for shadow dancing.
 
 /obj/effect/dummy/phased_mob/shadow/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -78,8 +78,6 @@
 	. = ..()
 	if(loc != oldloc)
 		if(check_light_level(loc))
-			if(!light_step_warning()) //Intercept to see if we should relay the move attempt or not.
-				return FALSE
 			eject_jaunter(TRUE) //If the warning is already given and the cooldown is done, move them and eject them.
 
 /obj/effect/dummy/phased_mob/shadow/phased_check(mob/living/user, direction)
@@ -122,7 +120,7 @@
 		COOLDOWN_START(src, light_step_cooldown, 1 SECONDS)
 		return FALSE
 
-	if(COOLDOWN_FINISHED(src, light_step_cooldown)) //If it's been 1 second since the warning was given, we continue
+	if(!COOLDOWN_FINISHED(src, light_step_cooldown)) //If it's been 1 second since the warning was given, we continue
 		return FALSE
 
 	light_alert_given = FALSE
