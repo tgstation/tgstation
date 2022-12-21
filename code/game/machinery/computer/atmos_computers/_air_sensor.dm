@@ -15,7 +15,7 @@
 	id_tag = chamber_id + "_sensor"
 	var/static/list/multitool_tips = list(
 		TOOL_MULTITOOL = list(
-			SCREENTIP_CONTEXT_LMB = "Link logged injectors/vents with this air sensor",
+			SCREENTIP_CONTEXT_LMB = "Link logged injectors/vents",
 			SCREENTIP_CONTEXT_RMB = "Reset all I/O ports",
 		)
 	)
