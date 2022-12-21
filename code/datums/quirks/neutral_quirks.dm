@@ -505,8 +505,6 @@
 	gain_text = "<span class='notice'>You feel fruity.</span>"
 	lose_text = "<span class='danger'>You feel only slightly less fruity than before.</span>"
 	medical_record_text = "Patient appears to be fruity."
-	var/pride_choice
-	var/pride_reskin
 
 /datum/quirk/item_quirk/pride_pin/add_unique()
 	var/obj/item/clothing/accessory/pride/pin = new(get_turf(quirk_holder))
