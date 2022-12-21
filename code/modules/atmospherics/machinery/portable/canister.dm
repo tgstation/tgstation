@@ -603,7 +603,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		excited = TRUE
 		return ..() //we have already updated appearance so dont need to update again below
 
-	//if shield ran out of power after being on for a long time & no damage was done to it then state has changed so update & leave
+	//if shield ran out of power after being on for a long time & no damage was done to the canister then state has changed so update & leave
 	if(shielding_state != shielding_powered)
 		update_appearance()
 		shielding_state = shielding_powered
