@@ -438,6 +438,7 @@ Possible to do for anyone motivated enough:
 		if(!LAZYLEN(holo_calls))
 			set_can_hear_flags(CAN_HEAR_ACTIVE_HOLOCALLS, FALSE)
 
+	update_appearance(UPDATE_ICON_STATE)
 	return TRUE
 
 /**
@@ -487,7 +488,7 @@ Possible to do for anyone motivated enough:
 	if(outgoing_call)
 		outgoing_call.Check()
 
-	ringing = FALSE
+	var/are_ringing = FALSE
 
 	for(var/datum/holocall/holocall as anything in holo_calls)
 		if(holocall.connected_holopad == src)
@@ -503,9 +504,11 @@ Possible to do for anyone motivated enough:
 			holocall.Disconnect(src)//can't answer calls while calling
 		else
 			playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
-			ringing = TRUE
+			are_ringing = TRUE
 
-	update_appearance(UPDATE_ICON_STATE)
+	if(ringing != are_ringing)
+		update_appearance(UPDATE_ICON_STATE)
+		ringing = are_ringing
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
