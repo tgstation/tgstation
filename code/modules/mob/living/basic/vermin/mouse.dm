@@ -29,7 +29,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
 
-	/// Whether this rat spawned friendly to players
+	/// Whether this rat is friendly to players
 	var/tame = FALSE
 	/// What color our mouse is. Brown, gray and white - leave blank for random.
 	var/body_color
@@ -51,15 +51,17 @@
 		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
-	if (tame)
-		faction += FACTION_NEUTRAL
-	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
-
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	make_tameable()
+
+/mob/living/basic/mouse/proc/make_tameable()
+	if (tame)
+		faction |= FACTION_NEUTRAL
+	else
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -147,7 +149,8 @@
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
 /mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
 	new /obj/effect/temp_visual/heart(loc)
-	faction += FACTION_NEUTRAL
+	faction |= FACTION_NEUTRAL
+	tame = TRUE
 	try_consume_cheese(cheese)
 	ai_controller.CancelActions() // Interrupt any current fleeing
 
@@ -197,7 +200,7 @@
 
 /// Creates a new mouse based on this mouse's subtype.
 /mob/living/basic/mouse/proc/create_a_new_rat()
-	new /mob/living/basic/mouse(loc, /* tame = */ TRUE)
+	new /mob/living/basic/mouse(loc, /* tame = */ tame)
 
 /// Biting into a cable will cause a mouse to get shocked and die if applicable. Or do nothing if they're lucky.
 /mob/living/basic/mouse/proc/try_bite_cable(obj/structure/cable/cable)
@@ -248,7 +251,10 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/mouse/brown/tom/make_tameable()
 	tame = TRUE
+	return ..()
 
 /mob/living/basic/mouse/brown/tom/Initialize(mapload)
 	. = ..()
@@ -257,7 +263,7 @@
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 
 /mob/living/basic/mouse/brown/tom/create_a_new_rat()
-	new /mob/living/basic/mouse/brown(loc) // dominant gene
+	new /mob/living/basic/mouse/brown(loc, /* tame = */ tame) // dominant gene
 
 /mob/living/basic/mouse/rat
 	name = "rat"
@@ -270,6 +276,9 @@
 	health = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse/rat
+
+/mob/living/basic/mouse/rat/make_tameable()
+	return // Unlike in real life, space rats are horrible creatures who don't like you
 
 /mob/living/basic/mouse/rat/create_a_new_rat()
 	new /mob/living/basic/mouse/rat(loc)
