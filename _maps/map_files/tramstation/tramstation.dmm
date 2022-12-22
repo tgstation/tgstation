@@ -36805,10 +36805,6 @@
 "njs" = (
 /obj/effect/landmark/tram/middle_part,
 /obj/structure/industrial_lift/tram,
-/obj/effect/landmark/tram/middle_part,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "njt" = (
@@ -41495,11 +41491,6 @@
 /area/station/command/bridge)
 "oZd" = (
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/shuttle/tram,
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/grille/tram,
 /obj/structure/window/reinforced/shuttle/tram,
 /obj/machinery/computer/tram_controls/directional/south,
 /turf/open/openspace,
@@ -51873,11 +51864,6 @@
 /area/station/command/heads_quarters/ce)
 "sGy" = (
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/shuttle/tram,
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/grille/tram,
 /obj/structure/window/reinforced/shuttle/tram,
 /obj/machinery/computer/tram_controls/directional/north,
 /turf/open/openspace,
