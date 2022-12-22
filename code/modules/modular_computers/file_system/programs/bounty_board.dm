@@ -30,7 +30,7 @@
 			data["user"]["department"] = current_user.account_job.paycheck_department
 		else
 			data["user"]["job"] = "No Job"
-			data["user"]["department"] = "No Department"
+			data["user"]["department"] = DEPARTMENT_UNASSIGNED
 	else
 		data["user"] = list()
 		data["user"]["name"] = user.name

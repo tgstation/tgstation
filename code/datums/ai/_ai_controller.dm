@@ -19,6 +19,8 @@ multiple modular subtrees with behaviors
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
 	var/atom/current_movement_target
+	///Identifier for what last touched our movement target, so it can be cleared conditionally
+	var/movement_target_source
 	///This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.
 	var/list/blackboard = list()
 	///Stored arguments for behaviors given during their initial creation
@@ -64,7 +66,8 @@ multiple modular subtrees with behaviors
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
-/datum/ai_controller/proc/set_movement_target(atom/target, datum/ai_movement/new_movement)
+/datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
+	movement_target_source = source
 	current_movement_target = target
 	if(new_movement)
 		change_ai_movement_type(new_movement)
@@ -248,9 +251,14 @@ multiple modular subtrees with behaviors
 		CRASH("Behavior [behavior_type] not found.")
 	var/list/arguments = args.Copy()
 	arguments[1] = src
+
+	if(LAZYACCESS(current_behaviors, behavior)) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
+		LAZYADDASSOC(planned_behaviors, behavior, TRUE)
+		return
+
 	if(!behavior.setup(arglist(arguments)))
 		return
-	LAZYADD(current_behaviors, behavior)
+	LAZYADDASSOC(current_behaviors, behavior, TRUE)
 	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
 	if(length(arguments))

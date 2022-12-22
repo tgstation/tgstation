@@ -41,7 +41,7 @@
 		to_chat(user, span_info("[src] is only effective on the dead."))
 		return
 
-	target_animal.faction = list("neutral")
+	target_animal.faction = list(FACTION_NEUTRAL)
 	target_animal.revive(HEAL_ALL)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/target_hostile = target_animal

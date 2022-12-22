@@ -73,6 +73,7 @@
 			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
 		else
 			purchase_log = new(owner, src)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	src.lockable = lockable
 	src.active = enabled
 	if(!uplink_handler_override)
@@ -128,6 +129,17 @@
 	if(istype(item, /obj/item/stack/telecrystal))
 		load_tc(user, item)
 
+/datum/component/uplink/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(user != owner)
+		return
+	examine_list += span_warning("[parent] contains your hidden uplink\
+		[unlock_code ? ", the code to unlock it is [span_boldwarning(unlock_code)]" : null].")
+
+	if(failsafe_code)
+		examine_list += span_warning("The failsafe code is [span_boldwarning(failsafe_code)].")
+
 /datum/component/uplink/proc/interact(datum/source, mob/user)
 	SIGNAL_HANDLER
 
@@ -166,20 +178,34 @@
 
 	data["maximum_potential_objectives"] = uplink_handler.maximum_potential_objectives
 	if(uplink_handler.has_objectives)
+		var/list/primary_objectives = list()
+		for(var/datum/objective/task as anything in uplink_handler.primary_objectives)
+			var/list/task_data = list()
+			if(length(primary_objectives) > length(GLOB.phonetic_alphabet))
+				task_data["task_name"] = "DIRECTIVE [length(primary_objectives) + 1]" //The english alphabet is WEAK
+			else
+				task_data["task_name"] = "DIRECTIVE [uppertext(GLOB.phonetic_alphabet[length(primary_objectives) + 1])]"
+			task_data["task_text"] = task.explanation_text
+			primary_objectives += list(task_data)
+
 		var/list/potential_objectives = list()
 		for(var/index in 1 to uplink_handler.potential_objectives.len)
 			var/datum/traitor_objective/objective = uplink_handler.potential_objectives[index]
 			var/list/objective_data = objective.uplink_ui_data(user)
 			objective_data["id"] = index
 			potential_objectives += list(objective_data)
+
 		var/list/active_objectives = list()
 		for(var/index in 1 to uplink_handler.active_objectives.len)
 			var/datum/traitor_objective/objective = uplink_handler.active_objectives[index]
 			var/list/objective_data = objective.uplink_ui_data(user)
 			objective_data["id"] = index
 			active_objectives += list(objective_data)
+
+		data["primary_objectives"] = primary_objectives
 		data["potential_objectives"] = potential_objectives
 		data["active_objectives"] = active_objectives
+		data["completed_final_objective"] = uplink_handler.final_objective
 
 	var/list/stock_list = uplink_handler.item_stock.Copy()
 	var/list/extra_purchasable_stock = list()
@@ -204,8 +230,8 @@
 		))
 
 	var/list/remaining_stock = list()
-	for(var/datum/uplink_item/item as anything in stock_list)
-		remaining_stock[item.type] = stock_list[item]
+	for(var/item as anything in stock_list)
+		remaining_stock[item] = stock_list[item]
 	data["extra_purchasable"] = extra_purchasable
 	data["extra_purchasable_stock"] = extra_purchasable_stock
 	data["current_stock"] = remaining_stock

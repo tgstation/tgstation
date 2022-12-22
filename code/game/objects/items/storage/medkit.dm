@@ -11,6 +11,7 @@
 /obj/item/storage/medkit
 	name = "medkit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
+	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "medkit"
 	inhand_icon_state = "medkit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -35,7 +36,8 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
-		/obj/item/reagent_containers/hypospray/medipen = 1)
+		/obj/item/reagent_containers/hypospray/medipen = 1,
+	)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/emergency
@@ -52,7 +54,8 @@
 		/obj/item/stack/medical/suture/emergency = 1,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
-		/obj/item/storage/pill_bottle/iron = 1)
+		/obj/item/storage/pill_bottle/iron = 1,
+	)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/surgery
@@ -115,8 +118,8 @@
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
-		/obj/item/stack/sticky_tape //surgical tape
-		))
+		/obj/item/stack/sticky_tape, //surgical tape
+	))
 
 /obj/item/storage/medkit/surgery/PopulateContents()
 	if(empty)
@@ -130,7 +133,8 @@
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
-		/obj/item/cautery = 1)
+		/obj/item/cautery = 1,
+	)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/ancient
@@ -549,6 +553,7 @@
 /obj/item/storage/organbox
 	name = "organ transport box"
 	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "organbox"
 	base_icon_state = "organbox"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'

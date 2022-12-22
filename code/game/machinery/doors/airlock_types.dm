@@ -503,8 +503,7 @@
 	return (IS_CULTIST(user) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/cult/on_break()
-	if(!panel_open)
-		panel_open = TRUE
+	set_panel_open(TRUE)
 
 /obj/machinery/door/airlock/cult/isElectrified()
 	return FALSE

@@ -232,6 +232,8 @@
 	if(can_buy(BLOB_EXPAND_COST))
 		var/attacksuccess = FALSE
 		for(var/mob/living/L in T)
+			if(!L.can_blob_attack())
+				continue
 			if(ROLE_BLOB in L.faction) //no friendly/dead fire
 				continue
 			if(L.stat != DEAD)

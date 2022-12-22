@@ -263,8 +263,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	for(var/turf/closed/holo_turf in linked)
 		for(var/baseturf in holo_turf.baseturfs)
 			if(ispath(baseturf, /turf/open/floor/holofloor))
-				holo_turf.baseturfs -= baseturf
-				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
+				var/list/copy = holo_turf.baseturfs.Copy()
+				copy -= baseturf
+				copy += /turf/open/floor/holofloor/plating
+				holo_turf.baseturfs = baseturfs_string_list(copy, holo_turf)
 
 ///finalizes objects in the spawned list
 /obj/machinery/computer/holodeck/proc/finish_spawn()

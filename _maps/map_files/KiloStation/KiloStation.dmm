@@ -6332,7 +6332,7 @@
 	name = "Teleporter Shutter Toggle";
 	pixel_x = -6;
 	pixel_y = 8;
-	req_access = list("command")
+	req_access = list("teleporter")
 	},
 /obj/machinery/button/door{
 	id = "evashutter";
@@ -29945,7 +29945,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "teleshutter";
 	name = "Teleporter Shutter Toggle";
-	req_access = list("command")
+	req_access = list("teleporter")
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
@@ -31408,7 +31408,23 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/pdapainter/supply,
+/obj/structure/table,
+/obj/item/storage/wallet,
+/obj/effect/spawner/random/entertainment/coin,
+/obj/effect/spawner/random/entertainment/coin,
+/obj/item/gps{
+	gpstag = "QM0";
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/pen/blue{
+	pixel_x = -5;
+	pixel_y = -10
+	},
+/obj/item/pen/red{
+	pixel_x = 1;
+	pixel_y = -10
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/qm)
 "iNU" = (
@@ -34142,28 +34158,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "jGg" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/west,
 /obj/item/radio/intercom/directional/north,
-/obj/item/storage/wallet,
-/obj/effect/spawner/random/entertainment/coin,
-/obj/item/gps{
-	gpstag = "QM0";
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/effect/spawner/random/entertainment/coin,
-/obj/item/pen/blue{
-	pixel_x = -5;
-	pixel_y = -10
-	},
-/obj/item/pen/red{
-	pixel_x = 1;
-	pixel_y = -10
-	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/qm)
 "jGt" = (
@@ -67355,7 +67355,7 @@
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 11;
-	height = 22;
+	height = 24;
 	name = "SS13: Auxiliary Dock, Station-Fore";
 	shuttle_id = "whiteship_home";
 	width = 35
@@ -80528,7 +80528,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "teleshutter";
 	name = "Teleporter Shutter Toggle";
-	req_access = list("command")
+	req_access = list("teleporter")
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
