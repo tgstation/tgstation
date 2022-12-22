@@ -238,7 +238,10 @@
 				if(!istype(account))
 					say("Invalid bank account.")
 					return
-
+				var/list/access = id_card.GetAccess()
+				if(pack.access_view && !(pack.access_view in access))
+					say("[id_card] lacks the requisite access for this purchase.")
+					return
 			var/reason = ""
 			if(requestonly && !self_paid)
 				reason = tgui_input_text(usr, "Reason", name)

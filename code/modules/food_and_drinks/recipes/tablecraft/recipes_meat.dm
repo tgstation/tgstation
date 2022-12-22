@@ -172,7 +172,8 @@
 /datum/crafting_recipe/food/ricepork
 	name = "Rice and Pork"
 	reqs = list(
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/meat/cutlet = 2
 	)
 	result = /obj/item/food/salad/ricepork
@@ -211,7 +212,8 @@
 /datum/crafting_recipe/food/gumbo
 	name = "Black eyed gumbo"
 	reqs = list(
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/grown/peas = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/meat/cutlet = 1
@@ -281,4 +283,15 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	result = /obj/item/food/canned/envirochow
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/meatloaf
+	name = "Meatloaf"
+	reqs = list(
+		/obj/item/food/meat/slab = 3,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/ketchup = 10,
+	)
+	result = /obj/item/food/raw_meatloaf
 	subcategory = CAT_MEAT

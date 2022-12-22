@@ -153,7 +153,7 @@
 
 /obj/machinery/electrolyzer/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
-	panel_open = !panel_open
+	toggle_panel_open()
 	user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
 	update_appearance()
 	return TRUE

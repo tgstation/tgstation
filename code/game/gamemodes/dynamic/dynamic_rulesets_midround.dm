@@ -338,6 +338,7 @@
 	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WIZARDDEN)
 	if (!check_candidates())
 		return FALSE
 	if(GLOB.wizardstart.len == 0)
