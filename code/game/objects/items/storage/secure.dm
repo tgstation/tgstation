@@ -157,7 +157,6 @@
 /obj/item/storage/secure/briefcase/riches
 
 /obj/item/storage/secure/briefcase/riches/PopulateContents()
-	..()
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/gun/ballistic/automatic/pistol(src)
 	new /obj/item/suppressor(src)
