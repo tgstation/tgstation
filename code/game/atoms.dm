@@ -258,20 +258,7 @@
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()
 
-	if (length(smoothing_groups))
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
-			assert_sorted(smoothing_groups, "[type].smoothing_groups")
-
-		SET_BITFLAG_LIST(smoothing_groups)
-
-	if (length(canSmoothWith))
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
-			assert_sorted(canSmoothWith, "[type].canSmoothWith")
-
-		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
-			smoothing_flags |= SMOOTH_OBJ
-
-		SET_BITFLAG_LIST(canSmoothWith)
+	SETUP_SMOOTHING()
 
 	if(uses_integrity)
 		if (islist(armor))
@@ -752,6 +739,24 @@
 
 	. = list()
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
+
+/// Wrapper for _update_appearance that is only called when APPEARANCE_SUCCESS_TRACKING is defined
+#ifdef APPEARANCE_SUCCESS_TRACKING
+/atom/proc/wrap_update_appearance(file, line, updates)
+	INIT_COST_STATIC()
+	EXPORT_STATS_TO_CSV_LATER("appearance_efficency.csv", _costs, _counting)
+	var/old_appearance = appearance
+
+	_update_appearance(updates)
+	// We're checking to see if update_appearance DID anything to our appearance
+	// If it didn't, or it produced the same thing, we'll mark it as such so it can potentially be opitmized
+	if(old_appearance == appearance)
+		SET_COST("SAME [file] [line]")
+		return FALSE
+	else
+		SET_COST("DIFFERENT [file] [line]")
+		return TRUE
+#endif
 
 /**
  * Updates the appearence of the icon

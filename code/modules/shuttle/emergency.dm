@@ -545,6 +545,7 @@
 				// unless the shuttle is "hijacked"
 				var/destination_dock = "emergency_away"
 				if(is_hijacked() || elimination_hijack())
+					SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 					destination_dock = "emergency_syndicate"
 					minor_announce("Corruption detected in \
 						shuttle navigation protocols. Please contact your \
@@ -680,7 +681,7 @@
 	icon_state = "wall_safe_locked"
 	var/unlocked = FALSE
 
-/obj/item/storage/pod/update_icon()
+/obj/item/storage/pod/update_icon_state()
 	. = ..()
 	icon_state = "wall_safe[unlocked ? "" : "_locked"]"
 

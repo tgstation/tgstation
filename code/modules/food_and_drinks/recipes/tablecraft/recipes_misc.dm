@@ -49,16 +49,6 @@
 	result = /obj/item/food/chocoorange
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/loadedbakedpotato
-	name = "Loaded baked potato"
-	time = 40
-	reqs = list(
-		/obj/item/food/grown/potato = 1,
-		/obj/item/food/cheese/wedge = 1
-	)
-	result = /obj/item/food/loadedbakedpotato
-	subcategory = CAT_MISCFOOD
-
 /datum/crafting_recipe/food/cheesyfries
 	name = "Cheesy fries"
 	reqs = list(
@@ -141,9 +131,10 @@
 /datum/crafting_recipe/food/ricepudding
 	name = "Rice pudding"
 	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/sugar = 5,
-		/obj/item/food/salad/boiledrice = 1
+		/obj/item/food/boiledrice = 1
 	)
 	result = /obj/item/food/salad/ricepudding
 	subcategory = CAT_MISCFOOD
@@ -151,9 +142,10 @@
 /datum/crafting_recipe/food/risotto
 	name = "Risotto"
 	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/cheese/wedge = 1,
 		/datum/reagent/consumable/ethanol/wine = 5,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/food/salad/risotto
@@ -252,7 +244,7 @@
 	name = "Stuffed cabbage"
 	reqs = list(
 		/obj/item/food/meat/cutlet = 2,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/grown/tomato = 1,
 	)
@@ -274,7 +266,7 @@
 /datum/crafting_recipe/food/onigiri
 	name = "Onigiri"
 	reqs = list(
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/seaweedsheet = 1,
 	)
 	result = /obj/item/food/onigiri
@@ -286,7 +278,6 @@
 		/obj/item/food/grown/potato = 2,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/butter = 1,
-		/datum/reagent/consumable/milk = 1,
 	)
 	result = /obj/item/food/mashed_potatoes
 	subcategory = CAT_MISCFOOD
@@ -341,4 +332,102 @@
 		/datum/reagent/consumable/salt = 3,
 	)
 	result = /obj/item/food/popcorn/salty
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/buttered_baked_potato
+	name = "Buttered baked potato"
+	reqs = list(
+		/obj/item/food/baked_potato = 1,
+		/obj/item/food/butter = 1,
+	)
+	result = /obj/item/food/buttered_baked_potato
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/loaded_baked_potato
+	name = "Loaded baked potato"
+	reqs = list(
+		/obj/item/food/baked_potato = 1,
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/grown/cabbage = 1,
+	)
+	result = /obj/item/food/loaded_baked_potato
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/cheese_pierogi
+	name = "Cheese pierogi"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/cheese/wedge = 1,
+	)
+	result = /obj/item/food/cheese_pierogi
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/meat_pierogi
+	name = "Meat pierogi"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/meat/cutlet = 1,
+	)
+	result = /obj/item/food/meat_pierogi
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/raw_meat_calzone
+	name = "Meat calzone"
+	reqs = list(
+		/obj/item/food/flatdough = 1,
+		/obj/item/food/cheese/wedge = 2,
+		/obj/item/food/meat/rawcutlet = 3,
+		/obj/item/food/grown/tomato = 1,
+	)
+	result = /obj/item/food/raw_meat_calzone
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/raw_vegetarian_calzone
+	name = "Vegetarian calzone"
+	reqs = list(
+		/obj/item/food/flatdough = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/raw_vegetarian_calzone
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/caramel_truffle
+	name = "Caramel truffle"
+	reqs = list(
+		/obj/item/food/chocolatebar = 1,
+		/datum/reagent/consumable/caramel = 5,
+	)
+	result = /obj/item/food/caramel_truffle
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/chocolate_truffle
+	name = "Chocolate truffle"
+	reqs = list(
+		/obj/item/food/chocolatebar = 1,
+		/datum/reagent/consumable/sugar = 5,
+	)
+	result = /obj/item/food/chocolate_truffle
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/peanut_truffle
+	name = "Peanut truffle"
+	reqs = list(
+		/obj/item/food/chocolatebar = 1,
+		/obj/item/food/grown/peanut = 1,
+	)
+	result = /obj/item/food/peanut_truffle
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/peanut_butter_cup
+	name = "Peanut butter cup"
+	reqs = list(
+		/obj/item/food/chocolatebar = 1,
+		/datum/reagent/consumable/peanut_butter = 5,
+	)
+	result = /obj/item/food/peanut_butter_cup
 	subcategory = CAT_MISCFOOD
