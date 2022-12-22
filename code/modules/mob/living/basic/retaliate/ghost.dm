@@ -48,32 +48,29 @@
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/ai_retaliate)
 
-	if(ghost_hairstyle || ghost_facial_hair) //If we have pre-determined hair, generate it with the values we already have
-		give_identity(FALSE)
-	else
-		give_identity(random_identity)
+	give_identity()
 
 /**
- * Generates hair, facial hair, and a random name for ghosts.
+ * Generates hair, facial hair, and a random name for ghosts if one is needed.
  *
- * Picks a random hair type, hair color, facial hair type, facial hair color.
- * Adds results as an overlay on the ghost. If random is true, a random identity
- * will be generated (hair/facial/name). If false, it will use
- *
- * * random - Do we give this mob random hair and a random name?
+ * Handles generating the mutable_appearance objects for a ghost's hair/facial hair,
+ * as well as assigning a random name if needed. If random_identity is false, it will only create and display
+ * the hair as defined by ghost_hairstyle/ghost_facial_hairstyle variables, without changing the name.
+ * If random_identity is true, hair/facial/name will all be randomly generated and displayed.
+ * When creating a ghost with a custom identity (for away missions, ruins, etc.) be sure random_identity is false.
  */
 
-/mob/living/basic/ghost/proc/give_identity(random)
-	if(random)
-		ghost_hairstyle = random_hairstyle()
+/mob/living/basic/ghost/proc/give_identity()
+	if(random_identity)
+		ghost_hairstyle = random_hairstyle() //This only gives us the hairstyle name, not the icon_state (which we need).
 		ghost_hair_color = "#[random_color()]"
 
-		if(prob(50)) //Sometimes we have facial hair, sometimes we don't
+		if(prob(50)) //Only a chance at also getting facial hair
 			ghost_facial_hairstyle = random_facial_hairstyle()
 			ghost_facial_hair_color = ghost_hair_color
 
 	if(ghost_hairstyle != null)
-		var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[ghost_hairstyle] //We do this so we can grab the icon_state name
+		var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[ghost_hairstyle] //We use the hairstyle name to get the sprite accessory, which we copy the icon_state from.
 		ghost_hair = mutable_appearance('icons/mob/species/human/human_face.dmi', "[hair_style.icon_state]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
@@ -86,7 +83,7 @@
 		ghost_facial_hair.color = ghost_facial_hair_color
 		add_overlay(ghost_facial_hair)
 
-	if(random)
+	if(random_identity)
 		switch(rand(0,1))
 			if(0)
 				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
