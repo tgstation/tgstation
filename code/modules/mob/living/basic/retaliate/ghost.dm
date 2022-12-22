@@ -49,7 +49,7 @@
 	AddElement(/datum/element/ai_retaliate)
 
 	if(ghost_hairstyle || ghost_facial_hair) //If we have pre-determined hair, generate it with the values we already have
-		give_identity(FALSE) //Option exists so mappers can make ghosts with customized identities.
+		give_identity(FALSE) //Option exists so mappers can make ghosts with custom identities.
 	else
 		give_identity(random_identity)
 
@@ -92,13 +92,13 @@
 
 /datum/ai_controller/basic_controller/ghost
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list( //review
+	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/ghost,
 	)
