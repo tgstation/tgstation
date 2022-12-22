@@ -37166,7 +37166,6 @@
 /obj/structure/cable/layer3,
 /mob/living/simple_animal/bot/secbot/pingsky,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "jvQ" = (
@@ -40625,7 +40624,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "lcU" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -45170,7 +45168,6 @@
 	},
 /obj/structure/cable/layer3,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "neL" = (
@@ -45695,7 +45692,6 @@
 /obj/machinery/holopad/secure,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
@@ -50095,7 +50091,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable/layer3,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
