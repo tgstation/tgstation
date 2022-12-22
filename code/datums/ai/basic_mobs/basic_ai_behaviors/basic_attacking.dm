@@ -45,6 +45,10 @@
 	action_cooldown = 0.6 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 3
+	/// How many shots to fire
+	var/shots = 1
+	/// The interval between individual shots in a burst
+	var/burst_interval = 0.2 SECONDS
 
 /datum/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -70,10 +74,13 @@
 
 	controller.blackboard[hiding_location_key] = WEAKREF(hiding_target)
 
-	if(hiding_target) //Shoot it!
-		basic_mob.RangedAttack(hiding_target)
+	if(shots>1)
+		var/atom/burst_target = hiding_target ? hiding_target : target
+		var/datum/callback/callback = CALLBACK(basic_mob, TYPE_PROC_REF(/mob/living/basic,RangedAttack), burst_target)
+		for(var/i in 1 to shots)
+			addtimer(callback, (i - 1) * burst_interval)
 	else
-		basic_mob.RangedAttack(target)
+		basic_mob.RangedAttack(hiding_target ? hiding_target : target)
 
 /datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
