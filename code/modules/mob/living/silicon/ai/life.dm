@@ -5,8 +5,6 @@
 
 	update_gravity(has_gravity())
 
-	handle_status_effects(delta_time, times_fired)
-
 	handle_traits(delta_time, times_fired)
 
 	if(malfhack?.aidisabled)

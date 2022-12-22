@@ -407,10 +407,6 @@
 		if(HM?.timeout)
 			dna.remove_mutation(HM.type)
 
-// This updates all special effects that really should be status effect datums: Druggy, Hallucinations, Drunkenness, Mute, etc..
-/mob/living/carbon/handle_status_effects(delta_time, times_fired)
-	. = ..()
-
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	var/areatemp = get_temperature(environment)
