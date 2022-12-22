@@ -83,6 +83,7 @@
 	)
 
 /datum/venue/bar/get_food_appearance(order)
+	// we have to instantiate the object here because there's no current way to run initial() to read the typepath (unchangeable static variable).
 	var/datum/reagent/reagent_to_order = new order
 	// Default the icon to the fallback icon
 	var/glass_visual_icon = initial(reagent_to_order.fallback_icon)
