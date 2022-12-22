@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	gas_path = /datum/gas/water_vapor
 	heat_modifier = 11
 	power_transmission = -0.25
-	heat_power_generation = 1
+	heat_power_generation = 4
 
 /datum/sm_gas/hypernoblium
 	gas_path = /datum/gas/hypernoblium
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	gas_path = /datum/gas/bz
 	heat_modifier = 4
 	power_transmission = -0.2
-	heat_power_generation = 1
+	heat_power_generation = 2
 	desc = "Will emit nuclear particles at compositions above 40%"
 
 /// Start to emit radballs at a maximum of 30% chance per tick
@@ -184,8 +184,8 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 /datum/sm_gas/hydrogen
 	gas_path = /datum/gas/hydrogen
 	heat_modifier = 9
-	power_transmission = 2.5
-	heat_resistance = 1
+	power_transmission = 1
+	heat_resistance = 29
 	heat_power_generation = 1
 
 /datum/sm_gas/healium
@@ -226,4 +226,5 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	gas_path = /datum/gas/antinoblium
 	heat_modifier = 14
 	power_transmission = -0.5
+	powerloss_inhibition = 3
 	heat_power_generation = 1

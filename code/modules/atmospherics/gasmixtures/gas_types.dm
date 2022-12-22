@@ -108,7 +108,7 @@
 
 /datum/gas/water_vapor
 	id = "water_vapor"
-	specific_heat = 40
+	specific_heat = 100
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_GAS_VISIBLE
@@ -157,7 +157,7 @@
 
 /datum/gas/tritium
 	id = "tritium"
-	specific_heat = 10
+	specific_heat = 300
 	name = "Tritium"
 	gas_overlay = "tritium"
 	moles_visible = MOLES_GAS_VISIBLE
@@ -212,7 +212,7 @@
 
 /datum/gas/hydrogen
 	id = "hydrogen"
-	specific_heat = 15
+	specific_heat = 300
 	name = "Hydrogen"
 	dangerous = TRUE
 	fusion_power = 2
@@ -255,7 +255,7 @@
 
 /datum/gas/halon
 	id = "halon"
-	specific_heat = 175
+	specific_heat = 500
 	name = "Halon"
 	dangerous = TRUE
 	gas_overlay = "halon"
@@ -266,7 +266,7 @@
 
 /datum/gas/helium
 	id = "helium"
-	specific_heat = 15
+	specific_heat = 250
 	name = "Helium"
 	fusion_power = 7
 	rarity = 50
