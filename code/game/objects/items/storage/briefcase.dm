@@ -72,16 +72,3 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/suppressor/specialoffer(src)
-
-/// A briefcase that contains various sought-after spoils
-/obj/item/storage/briefcase/riches
-
-/obj/item/storage/briefcase/riches/PopulateContents()
-	..()
-	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/gun/ballistic/automatic/pistol(src)
-	new /obj/item/suppressor(src)
-	new /obj/item/melee/baton/telescopic(src)
-	new /obj/item/clothing/mask/balaclava(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/soap/nanotrasen(src)
