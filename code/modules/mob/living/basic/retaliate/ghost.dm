@@ -57,14 +57,14 @@
  * Generates hair, facial hair, and a random name for ghosts.
  *
  * Picks a random hair type, hair color, facial hair type, facial hair color.
- * Adds results as an overlay on the ghost. If random_identity is true, a random identity
+ * Adds results as an overlay on the ghost. If random is true, a random identity
  * will be generated (hair/facial/name). If false, it will use
  *
- * * random_identity - Do we give this mob random hair and a random name?
+ * * random - Do we give this mob random hair and a random name?
  */
 
-/mob/living/basic/ghost/proc/give_identity(random_identity)
-	if(random_identity)
+/mob/living/basic/ghost/proc/give_identity(random)
+	if(random)
 		ghost_hairstyle = random_hairstyle()
 		ghost_hair_color = "#[random_color()]"
 
@@ -86,7 +86,7 @@
 		ghost_facial_hair.color = ghost_facial_hair_color
 		add_overlay(ghost_facial_hair)
 
-	if(random_identity)
+	if(random)
 		switch(rand(0,1))
 			if(0)
 				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
