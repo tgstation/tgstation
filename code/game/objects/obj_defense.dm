@@ -74,7 +74,7 @@
 		return FALSE
 	else
 		var/turf/current_turf = get_turf(src) //we want to save the turf to play the sound there, cause being destroyed deletes us!
-		var/play_soundeffect = !!user.environment_smash
+		var/play_soundeffect = user.environment_smash
 		if(user.obj_damage)
 			. = attack_generic(user, user.obj_damage, user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		else
