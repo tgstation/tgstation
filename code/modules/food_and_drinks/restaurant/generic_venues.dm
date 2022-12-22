@@ -83,14 +83,14 @@
 	)
 
 /datum/venue/bar/get_food_appearance(order)
-	var/datum/reagent/reagent_to_order = order
+	var/datum/reagent/reagent_to_order = new order
 	// Default the icon to the fallback icon
 	var/glass_visual_icon = initial(reagent_to_order.fallback_icon)
 	var/glass_visual_icon_state = initial(reagent_to_order.fallback_icon_state)
 
 	// Look for a glass style based on this reagent type
 	for(var/potential_container in GLOB.glass_style_singletons)
-		var/datum/glass_style/draw_as = GLOB.glass_style_singletons[potential_container][initial(reagent_to_order.type)]
+		var/datum/glass_style/draw_as = GLOB.glass_style_singletons[potential_container][reagent_to_order.type]
 		if(isnull(draw_as))
 			continue
 
