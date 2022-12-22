@@ -36805,7 +36805,10 @@
 "njs" = (
 /obj/effect/landmark/tram/middle_part,
 /obj/structure/industrial_lift/tram,
-/obj/machinery/computer/tram_controls,
+/obj/effect/landmark/tram/middle_part,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "njt" = (
@@ -41490,6 +41493,17 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"oZd" = (
+/obj/structure/industrial_lift/tram/white,
+/obj/structure/window/reinforced/shuttle/tram,
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
+/obj/machinery/computer/tram_controls/directional/south,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "oZm" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -51860,6 +51874,12 @@
 "sGy" = (
 /obj/structure/industrial_lift/tram/white,
 /obj/structure/window/reinforced/shuttle/tram,
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
+/obj/machinery/computer/tram_controls/directional/north,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "sGF" = (
@@ -164975,7 +164995,7 @@ vyH
 vRL
 vjl
 fld
-sGy
+oZd
 rrF
 njs
 xZu
