@@ -3399,9 +3399,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "btS" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/structure/fluff/tram_rail,
 /obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
@@ -6182,9 +6180,7 @@
 /turf/open/floor/iron/stairs/medium,
 /area/station/engineering/transit_tube)
 "cmw" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/structure/tramwall/titanium,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -7901,9 +7897,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "cQq" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/machinery/door/window/tram/right{
 	dir = 1
 	},
@@ -17505,9 +17499,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "gqn" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/tramwall/titanium,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -22983,9 +22975,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "itV" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
@@ -31003,9 +30993,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "liQ" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/machinery/door/window/tram/left{
 	dir = 1
 	},
@@ -31609,9 +31597,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "ltK" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/structure/window/reinforced/shuttle/tram,
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -35786,9 +35772,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/tram/right)
 "mRi" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/machinery/door/window/tram/right,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -36386,9 +36370,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "nbS" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/structure/tramwall/titanium,
 /obj/machinery/destination_sign{
 	dir = 1;
@@ -51902,9 +51884,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "sGy" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -55909,9 +55889,7 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "ucQ" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/machinery/door/window/tram/left,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -64591,9 +64569,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "xgy" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
+/obj/structure/industrial_lift/tram/white,
 /obj/structure/window/reinforced/shuttle/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
@@ -164258,11 +164234,11 @@ vyH
 qGw
 bqI
 izU
-gqn
+cmw
 mQW
 qia
 pmD
-gqn
+cmw
 izU
 gYR
 vJF
@@ -165800,7 +165776,7 @@ vyH
 jfC
 kBX
 izU
-gqn
+cmw
 ePF
 qia
 vqF
