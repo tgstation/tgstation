@@ -3,7 +3,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 8;
 	name = "Hopping Jezzertons"
 	},
@@ -535,7 +535,7 @@
 /area/shuttle/escape)
 "Db" = (
 /obj/effect/turf_decal/tile/green/diagonal_edge,
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/floor/iron/diagonal,
 /area/shuttle/escape)
 "DO" = (
@@ -732,15 +732,15 @@
 /obj/structure/rack{
 	name = "SPARE B-BALLS"
 	},
-/obj/item/toy/beach_ball/holoball{
+/obj/item/toy/basketball{
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/item/toy/beach_ball/holoball{
+/obj/item/toy/basketball{
 	pixel_x = -5;
 	pixel_y = -3
 	},
-/obj/item/toy/beach_ball/holoball{
+/obj/item/toy/basketball{
 	pixel_x = 1;
 	pixel_y = 6
 	},
@@ -853,7 +853,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 4;
 	name = "A La Penners"
 	},

@@ -8,7 +8,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green,
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 1;
 	layer = 4.1
 	},
@@ -73,7 +73,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "k" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	layer = 3.9
 	},
 /obj/effect/turf_decal/tile/red{
@@ -197,7 +197,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "L" = (
