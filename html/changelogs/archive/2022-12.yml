@@ -727,3 +727,38 @@
   - rscadd: Add space vines prevent solar panels from working (except ones with the
       transparent mutation)
   - rscadd: Add new space ruin - Cyborg Mothership. All hail the master race!
+2022-12-22:
+  Big chungus wholesome 100:
+  - bugfix: Amputated and reattached limbs now get wounded based on their own biology,
+      not the current owner's biology.
+  Guillaume Prata:
+  - bugfix: The Quartermaster has their own garment bag now, like everyone else at
+      Command.
+  Guillaume Prata, Imaginos16:
+  - bugfix: You can now adjust medical scrubs for easier surgery on your fellow doctors.
+  Melbert:
+  - bugfix: Nar'Sie will no longer bring upon the construct apocalypse when they encounter
+      a chicken after one of the invokers were destroyed
+  - bugfix: The Singularity should no longer stop gibbing people when whoever created
+      it was destroyed
+  NamelessFairy:
+  - qol: You can now reduce the range of View Sensor circuits.
+  Watermelon914:
+  - bugfix: Fixed final objectives not displaying the UI buttons.
+  Y0SH1M4S73R:
+  - admin: Adds a new function for admin lua scripting, "over_exec_time", for checking
+      if lua code is running close to the execution limit. Details are available in
+      the lua editor's help menu.
+  - admin: The execution limit is described in detail in the lua editor's help menu.
+  ZephyrTFA:
+  - admin: New mapping verb to load lazy templates as needed. In your admin tab under
+      the Mapping category.
+  san7890:
+  - qol: The Traitor's Antagonist Panel's Unlock and Failsafe entries will only appear
+      if there is an Unlock/Failsafe Code to display.
+  timothymtorres:
+  - rscadd: Add language variety to machines that speak.  You can also pulse the vendor
+      language wire to make it switch languages or EMP a machine to get the same effect.
+  - rscadd: Shambling cola vendors will now speak a different language each time they
+      talk. Syndicate vendors will now speak codespeak.  Beach vendors will now speak
+      beachbum.

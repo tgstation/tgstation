@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "Add language variety to machines that speak.  You can also pulse the vendor language wire to make it switch languages or EMP a machine to get the same effect."
-  - rscadd: "Shambling cola vendors will now speak a different language each time they talk. Syndicate vendors will now speak codespeak.  Beach vendors will now speak beachbum."

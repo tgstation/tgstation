@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Nar'Sie will no longer bring upon the construct apocalypse when they encounter a chicken after one of the invokers were destroyed"
-  - bugfix: "The Singularity should no longer stop gibbing people when whoever created it was destroyed"

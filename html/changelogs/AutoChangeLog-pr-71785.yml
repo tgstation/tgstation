@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - admin: "New mapping verb to load lazy templates as needed. In your admin tab under the Mapping category."

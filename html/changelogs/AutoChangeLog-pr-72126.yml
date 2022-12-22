@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - bugfix: "Fixed final objectives not displaying the UI buttons."
