@@ -17,7 +17,8 @@
 	. = ..()
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(emergency))
 
-/obj/machinery/light/attackby(obj/item/tool, mob/living/user, params) //If people decide to stick a new lightbulb in it, it will not turn on by itself
+/obj/machinery/light/alarm/attackby(obj/item/tool, mob/living/user, params) //If people decide to stick a new lightbulb in it, it will not turn on by itself
+	. = ..()
 	on = (status == LIGHT_OK && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 	update()
 

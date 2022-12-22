@@ -14,18 +14,6 @@ SUBSYSTEM_DEF(security_level)
 	current_security_level = available_levels[number_level_to_text(SEC_LEVEL_GREEN)]
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/proc/status_alarm(alert_code) //Makes the status displays show the current security level for those who missed the announcement.
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(!frequency)
-		return
-
-	var/datum/signal/signal = new
-	signal.data["command"] = "alert"
-	signal.data["picture_state"] = alert_code
-
-	var/atom/movable/virtualspeaker/virt = new(null)
-	frequency.post_signal(virt, signal)
-
 /datum/controller/subsystem/security_level/fire(resumed)
 	if(!current_security_level.looping_sound) // No sound? No play.
 		can_fire = FALSE

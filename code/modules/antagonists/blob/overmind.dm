@@ -125,18 +125,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		return FALSE
 	return TRUE
 
-/mob/camera/blob/proc/status_alarm() //Makes the status displays show the biohazard warning for those who missed the announcement.
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(!frequency)
-		return
-
-	var/datum/signal/signal = new
-	signal.data["command"] = "alert"
-	signal.data["picture_state"] = "biohazard"
-
-	var/atom/movable/virtualspeaker/virt = new(null)
-	frequency.post_signal(virt, signal)
-
 /mob/camera/blob/process()
 	if(!blob_core)
 		if(!placed)
@@ -166,7 +154,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	if(announcement_time && (world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
-		status_alarm()
+		status_alarm("biohazard")
 		has_announced = TRUE
 
 /mob/camera/blob/proc/victory()
