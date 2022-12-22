@@ -82,15 +82,6 @@
 	tastes = list("caramel" = 2, "popcorn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 
-/obj/item/food/loadedbakedpotato
-	name = "loaded baked potato"
-	desc = "Totally baked."
-	icon_state = "loadedbakedpotato"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("potato" = 1)
-	foodtypes = VEGETABLES | DAIRY
-	w_class = WEIGHT_CLASS_SMALL
-
 /obj/item/food/fries
 	name = "space fries"
 	desc = "AKA: French Fries, Freedom Fries, etc."
@@ -948,5 +939,128 @@
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/baked_potato
+	name = "baked potato"
+	desc = "A piping hot potato baked in an oven. A bit bland by itself."
+	icon_state = "baked_potato"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("baked potato" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
 
+/obj/item/food/buttered_baked_potato
+	name = "buttered baked potato"
+	desc = "A piping hot baked potato, now with a slice of butter mixed in. Perfection."
+	icon_state = "buttered_baked_potato"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("baked potato" = 1)
+	foodtypes = VEGETABLES | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/loaded_baked_potato
+	name = "loaded baked potato"
+	desc = "A piping hot baked potato, with the insides scooped out and mixed with bacon bits, cheese, and cabbage."
+	icon_state = "loaded_baked_potato"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment/protein = 4)
+	tastes = list("baked potato" = 1, "bacon" = 1, "cheese" = 1, "cabbage" = 1)
+	foodtypes = VEGETABLES | DAIRY | MEAT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cheese_pierogi
+	name = "cheese pierogi"
+	desc = "A dumpling made by wrapping unleavened dough around a savoury or sweet filling and cooking in boiling water. This one is filled with a potato and cheese mixture."
+	icon_state = "cheese_pierogi"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("potato" = 1, "cheese" = 1)
+	foodtypes = GRAIN | VEGETABLES | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/meat_pierogi
+	name = "meat pierogi"
+	desc = "A dumpling made by wrapping unleavened dough around a savoury or sweet filling and cooking in boiling water. This one is filled with a potato and meat mixture."
+	icon_state = "meat_pierogi"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("potato" = 1, "cheese" = 1)
+	foodtypes = GRAIN | VEGETABLES | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/raw_meat_calzone
+	name = "raw meat calzone"
+	desc = "A raw calzone, ready to be put in the oven."
+	icon_state = "raw_calzone"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("raw dough" = 1, "raw meat" = 1, "cheese" = 1, "tomato sauce" = 1)
+	foodtypes = GRAIN | RAW | DAIRY | MEAT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/raw_meat_calzone/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/meat_calzone, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
+
+/obj/item/food/meat_calzone
+	name = "meat calzone"
+	desc = "A calzone filled with cheese, meat, and a tomato sauce. Don't burn your tongue!."
+	icon_state = "meat_calzone"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment/protein = 6)
+	tastes = list("baked dough" = 1, "juicy meat" = 1, "melted cheese" = 1, "tomato sauce" = 1)
+	foodtypes = GRAIN | DAIRY | MEAT
+	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
+
+/obj/item/food/raw_vegetarian_calzone
+	name = "raw vegetarian calzone"
+	desc = "A raw calzone, ready to be put in the oven."
+	icon_state = "raw_calzone"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("raw dough" = 1, "vegetables" = 1, "tomato sauce" = 1)
+	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/raw_vegetarian_calzone/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/vegetarian_calzone, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
+
+/obj/item/food/vegetarian_calzone
+	name = "vegetarian calzone"
+	desc = "A calzone filled with mixed vegetables and a tomato sauce. A healthier, yet less satisfying alternative."
+	icon_state = "vegetarian_calzone"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 8)
+	tastes = list("baked dough" = 1, "baked vegetables" = 1, "tomato sauce" = 1)
+	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
+
+/obj/item/food/caramel_truffle
+	name = "caramel truffle"
+	desc = "A bite-sized chocolate truffle with a chewy caramel filling."
+	icon_state = "caramel_truffle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("chocolate" = 1, "chewy caramel" = 1)
+	foodtypes = DAIRY | SUGAR | JUNKFOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/chocolate_truffle
+	name = "chocolate truffle"
+	desc = "A bite-sized chocolate truffle with a rich chocolate mousse filling."
+	icon_state = "chocolate_truffle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("chocolate" = 1)
+	foodtypes = DAIRY | SUGAR | JUNKFOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/peanut_truffle
+	name = "peanut truffle"
+	desc = "A bite-sized chocolate truffle with crunchy peanuts mixed in."
+	icon_state = "peanut_truffle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("chocolate" = 1, "peanuts" = 1)
+	foodtypes = DAIRY | SUGAR | JUNKFOOD | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/peanut_butter_cup
+	name = "peanut butter cup"
+	desc = "An ultra-sweet chocolate treat with a savory peanut butter filling."
+	icon_state = "peanut_butter_cup"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("chocolate" = 1, "peanut butter" = 1)
+	foodtypes = DAIRY | SUGAR | JUNKFOOD | NUTS
+	w_class = WEIGHT_CLASS_SMALL

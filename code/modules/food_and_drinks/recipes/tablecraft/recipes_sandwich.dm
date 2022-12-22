@@ -105,3 +105,13 @@
 	result = /obj/item/food/peanut_butter_banana_sandwich
 	subcategory = CAT_SANDWICH
 
+/datum/crafting_recipe/food/philly_cheesesteak
+	name = "Philly Cheesesteak"
+	reqs = list(
+		/obj/item/food/breadslice/plain = 2,
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/philly_cheesesteak
+	subcategory = CAT_SANDWICH

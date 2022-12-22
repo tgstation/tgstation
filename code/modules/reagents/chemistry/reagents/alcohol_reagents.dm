@@ -1445,6 +1445,32 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "concentrated matter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/static/list/ray_filter = list(type = "rays", size = 40, density = 15, color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = 15)
+
+/datum/reagent/consumable/ethanol/singulo/on_mob_metabolize(mob/living/drinker)
+	ADD_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
+
+/datum/reagent/consumable/ethanol/singulo/on_mob_end_metabolize(mob/living/drinker)
+	REMOVE_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
+	drinker.remove_filter("singulo_rays")
+
+/datum/reagent/consumable/ethanol/singulo/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(DT_PROB(2.5, delta_time))
+		// 20u = 1x1, 45u = 2x2, 80u = 3x3
+		var/volume_to_radius = FLOOR(sqrt(volume/5), 1) - 1
+		var/suck_range = clamp(volume_to_radius, 0, 3)
+
+		if(!suck_range)
+			return ..()
+
+		var/turf/gravity_well_turf = get_turf(drinker)
+		goonchem_vortex(gravity_well_turf, 0, suck_range)
+		playsound(get_turf(drinker), 'sound/effects/supermatter.ogg', 150, TRUE)
+		drinker.add_filter("singulo_rays", 1, ray_filter)
+		animate(drinker.get_filter("singulo_rays"), offset = 10, time = 1.5 SECONDS, loop = -1)
+		addtimer(CALLBACK(drinker, TYPE_PROC_REF(/atom/, remove_filter), "singulo_rays"), 1.5 SECONDS)
+		drinker.emote("burp")
+	return ..()
 
 /datum/glass_style/drinking_glass/singulo
 	required_drink_type = /datum/reagent/consumable/ethanol/singulo
