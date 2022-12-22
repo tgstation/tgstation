@@ -66,19 +66,21 @@
 		forceMove(blob_core.drop_location())
 
 /mob/camera/blob/proc/jump_to_node()
-	if(GLOB.blob_nodes.len)
-		var/list/nodes = list()
-		for(var/i in 1 to GLOB.blob_nodes.len)
-			var/obj/structure/blob/special/node/B = GLOB.blob_nodes[i]
-			nodes["Blob Node #[i] ([get_area_name(B)])"] = B
-		var/node_name = tgui_input_list(src, "Choose a node to jump to", "Node Jump", nodes)
-		if(isnull(node_name))
-			return FALSE
-		if(isnull(nodes[node_name]))
-			return FALSE
-		var/obj/structure/blob/special/node/chosen_node = nodes[node_name]
-		if(chosen_node)
-			forceMove(chosen_node.loc)
+	if(!length(GLOB.blob_nodes))
+		return FALSE
+
+	var/list/nodes = list()
+	for(var/i in 1 to GLOB.blob_nodes.len)
+		var/obj/structure/blob/special/node/B = GLOB.blob_nodes[i]
+		nodes["Blob Node #[i] ([get_area_name(B)])"] = B
+
+	var/node_name = tgui_input_list(src, "Choose a node to jump to", "Node Jump", nodes)
+	if(isnull(node_name) || isnull(nodes[node_name]))
+		return FALSE
+
+	var/obj/structure/blob/special/node/chosen_node = nodes[node_name]
+	if(chosen_node)
+		forceMove(chosen_node.loc)
 
 /mob/camera/blob/proc/createSpecial(price, blobstrain, minSeparation, needsNode, turf/T)
 	if(!T)
@@ -136,50 +138,66 @@
 		S = createSpecial(BLOB_UPGRADE_STRONG_COST, /obj/structure/blob/shield, 0, FALSE, T)
 		S?.balloon_alert(src, "upgraded to [S.name]!")
 
+/** Preliminary check before polling ghosts. */
 /mob/camera/blob/proc/create_blobbernaut()
-	var/turf/T = get_turf(src)
-	var/obj/structure/blob/special/factory/B = locate(/obj/structure/blob/special/factory) in T
-	if(!B)
+	var/turf/current_turf = get_turf(src)
+	var/obj/structure/blob/special/factory/factory = locate(/obj/structure/blob/special/factory) in current_turf
+	if(!factory)
 		to_chat(src, span_warning("You must be on a factory blob!"))
 		return
-	if(B.naut) //if it already made a blobbernaut, it can't do it again
+	if(factory.naut) //if it already made a blobbernaut, it can't do it again
 		to_chat(src, span_warning("This factory blob is already sustaining a blobbernaut."))
 		return
-	if(B.get_integrity() < B.max_integrity * 0.5)
+	if(factory.get_integrity() < factory.max_integrity * 0.5)
 		to_chat(src, span_warning("This factory blob is too damaged to sustain a blobbernaut."))
 		return
 	if(!can_buy(BLOBMOB_BLOBBERNAUT_RESOURCE_COST))
 		return
 
-	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
+	factory.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
 	to_chat(src, span_notice("You attempt to produce a blobbernaut."))
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
-	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a blobbernaut now.
-		B.modify_max_integrity(initial(B.max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
-		B.update_appearance()
-		B.visible_message(span_warning("<b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b>"))
-		playsound(B.loc, 'sound/effects/splat.ogg', 50, TRUE)
-		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
-		flick("blobbernaut_produce", blobber)
-		B.naut = blobber
-		blobber.factory = B
-		blobber.overmind = src
-		blobber.update_icons()
-		blobber.adjustHealth(blobber.maxHealth * 0.5)
-		blob_mobs += blobber
-		var/mob/dead/observer/C = pick(candidates)
-		blobber.key = C.key
-		SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
-		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
-		to_chat(blobber, "<b>You are a blobbernaut!</b>")
-		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed.")
-		to_chat(blobber, "You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally")
-		to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-		to_chat(blobber, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
-	else
+	pick_blobbernaut_candidate(factory)
+
+/** Polls ghosts to get a blobbernaut candidate. */
+/mob/camera/blob/proc/pick_blobbernaut_candidate(obj/structure/blob/special/factory/factory)
+	if(!factory)
+		return
+
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50)
+
+	if(!length(candidates))
 		to_chat(src, span_warning("You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later."))
 		add_points(BLOBMOB_BLOBBERNAUT_RESOURCE_COST)
-		B.naut = null
+		factory.naut = null //players must answer rapidly
+		return FALSE
+
+	factory.modify_max_integrity(initial(factory.max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
+	factory.update_appearance()
+	factory.visible_message(span_warning("<b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b>"))
+	playsound(factory.loc, 'sound/effects/splat.ogg', 50, TRUE)
+
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(factory))
+	flick("blobbernaut_produce", blobber)
+
+	factory.naut = blobber
+	blobber.factory = factory
+	blobber.overmind = src
+	blobber.update_icons()
+	blobber.adjustHealth(blobber.maxHealth * 0.5)
+	blob_mobs += blobber
+
+	var/mob/dead/observer/player = pick(candidates)
+	blobber.key = player.key
+	blobber.mind?.add_antag_datum(/datum/antagonist/blob)
+
+	SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
+	SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
+	to_chat(blobber, "<b>You are a blobbernaut!</b>")
+	to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed.")
+	to_chat(blobber, "You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally")
+	to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+	to_chat(blobber, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
+
 
 /mob/camera/blob/proc/relocate_core()
 	var/turf/T = get_turf(src)
@@ -229,50 +247,51 @@
 	if(!possibleblobs.len)
 		to_chat(src, span_warning("There is no blob adjacent to the target tile!"))
 		return
-	if(can_buy(BLOB_EXPAND_COST))
-		var/attacksuccess = FALSE
-		for(var/mob/living/L in T)
-			if(!L.can_blob_attack())
-				continue
-			if(ROLE_BLOB in L.faction) //no friendly/dead fire
-				continue
-			if(L.stat != DEAD)
-				attacksuccess = TRUE
-			blobstrain.attack_living(L, possibleblobs)
-		var/obj/structure/blob/B = locate() in T
-		if(B)
-			if(attacksuccess) //if we successfully attacked a turf with a blob on it, only give an attack refund
-				B.blob_attack_animation(T, src)
+	if(!can_buy(BLOB_EXPAND_COST))
+		return FALSE
+	var/attacksuccess = FALSE
+	for(var/mob/living/L in T)
+		if(!L.can_blob_attack())
+			continue
+		if(ROLE_BLOB in L.faction) //no friendly/dead fire
+			continue
+		if(L.stat != DEAD)
+			attacksuccess = TRUE
+		blobstrain.attack_living(L, possibleblobs)
+	var/obj/structure/blob/B = locate() in T
+	if(B)
+		if(attacksuccess) //if we successfully attacked a turf with a blob on it, only give an attack refund
+			B.blob_attack_animation(T, src)
+			add_points(BLOB_ATTACK_REFUND)
+		else
+			to_chat(src, span_warning("There is a blob there!"))
+			add_points(BLOB_EXPAND_COST) //otherwise, refund all of the cost
+	else
+		var/list/cardinalblobs = list()
+		var/list/diagonalblobs = list()
+		for(var/I in possibleblobs)
+			var/obj/structure/blob/IB = I
+			if(get_dir(IB, T) in GLOB.cardinals)
+				cardinalblobs += IB
+			else
+				diagonalblobs += IB
+		var/obj/structure/blob/OB
+		if(cardinalblobs.len)
+			OB = pick(cardinalblobs)
+			if(!OB.expand(T, src))
+				add_points(BLOB_ATTACK_REFUND) //assume it's attacked SOMETHING, possibly a structure
+		else
+			OB = pick(diagonalblobs)
+			if(attacksuccess)
+				OB.blob_attack_animation(T, src)
+				playsound(OB, 'sound/effects/splat.ogg', 50, TRUE)
 				add_points(BLOB_ATTACK_REFUND)
 			else
-				to_chat(src, span_warning("There is a blob there!"))
-				add_points(BLOB_EXPAND_COST) //otherwise, refund all of the cost
-		else
-			var/list/cardinalblobs = list()
-			var/list/diagonalblobs = list()
-			for(var/I in possibleblobs)
-				var/obj/structure/blob/IB = I
-				if(get_dir(IB, T) in GLOB.cardinals)
-					cardinalblobs += IB
-				else
-					diagonalblobs += IB
-			var/obj/structure/blob/OB
-			if(cardinalblobs.len)
-				OB = pick(cardinalblobs)
-				if(!OB.expand(T, src))
-					add_points(BLOB_ATTACK_REFUND) //assume it's attacked SOMETHING, possibly a structure
-			else
-				OB = pick(diagonalblobs)
-				if(attacksuccess)
-					OB.blob_attack_animation(T, src)
-					playsound(OB, 'sound/effects/splat.ogg', 50, TRUE)
-					add_points(BLOB_ATTACK_REFUND)
-				else
-					add_points(BLOB_EXPAND_COST) //if we're attacking diagonally and didn't hit anything, refund
-		if(attacksuccess)
-			last_attack = world.time + CLICK_CD_MELEE
-		else
-			last_attack = world.time + CLICK_CD_RAPID
+				add_points(BLOB_EXPAND_COST) //if we're attacking diagonally and didn't hit anything, refund
+	if(attacksuccess)
+		last_attack = world.time + CLICK_CD_MELEE
+	else
+		last_attack = world.time + CLICK_CD_RAPID
 
 /mob/camera/blob/proc/rally_spores(turf/T)
 	to_chat(src, "You rally your spores.")
