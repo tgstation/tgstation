@@ -1,4 +1,0 @@
-author: "tf-4"
-delete-after: True
-changes:
-  - bugfix: "Light replacers will no longer turn invisible."

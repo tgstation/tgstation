@@ -96,6 +96,10 @@
 	if(panel_open && display_panel)
 		. += "[base_icon_state]-open"
 
+/obj/machinery/space_heater/on_set_panel_open()
+	update_appearance()
+	return ..()
+	
 /obj/machinery/space_heater/process_atmos()
 	if(!on || !is_operational)
 		if (on) // If it's broken, turn it off too
@@ -140,8 +144,10 @@
 	if(mode == HEATER_MODE_COOL)
 		delta_temperature *= -1
 	if(delta_temperature)
-		enviroment.temperature += delta_temperature
-		air_update_turf(FALSE, FALSE)
+		for (var/turf/open/turf in ((local_turf.atmos_adjacent_turfs || list()) + local_turf))
+			var/datum/gas_mixture/turf_gasmix = turf.return_air()
+			turf_gasmix.temperature += delta_temperature
+			air_update_turf(FALSE, FALSE)
 	cell.use(required_energy / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
@@ -273,8 +279,7 @@
 
 /obj/machinery/space_heater/constructed/Initialize(mapload)
 	. = ..()
-	panel_open = TRUE
-	update_appearance()
+	set_panel_open(TRUE)
 
 /obj/machinery/space_heater/proc/toggle_power(user)
 	on = !on

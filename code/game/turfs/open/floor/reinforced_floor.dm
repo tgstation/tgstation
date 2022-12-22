@@ -193,7 +193,7 @@
 	desc = "The air smells strange over this sinister flooring."
 	icon_state = "cult"
 	floor_tile = null
-	var/obj/effect/cult_turf/overlay/floor/bloodcult/realappearance
+	var/obj/effect/cult_turf/realappearance
 
 
 /turf/open/floor/engine/cult/Initialize(mapload)
@@ -203,7 +203,7 @@
 	if (!mapload)
 		new /obj/effect/temp_visual/cult/turf/floor(src)
 
-	realappearance = new /obj/effect/cult_turf/overlay/floor/bloodcult(src)
+	realappearance = new /obj/effect/cult_turf(src)
 	realappearance.linked = src
 
 /turf/open/floor/engine/cult/Destroy()

@@ -10,13 +10,73 @@
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP) //Whatever is receiving will verify themselves for adjacency.
 		return
-	if(over == src)
-		return usr.client.Click(src, src_location, src_control, params)
+	var/proximity_check = usr.client.check_drag_proximity(src, over, src_location, over_location, src_control, over_control, params)
+	if(proximity_check)
+		return proximity_check
+
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 
 	over.MouseDrop_T(src,usr, params)
 	return
+
+/// Handles treating drags as clicks if they're within some conditions
+/// Does some other stuff adjacent to trying to figure out what the user actually "wanted" to click
+/// Returns TRUE if it caused a click, FALSE otherwise
+/client/proc/check_drag_proximity(atom/dragging, atom/over, src_location, over_location, src_control, over_control, params)
+	// We will swap which thing we're trying to check for clickability based off the type
+	// Assertion is if you drag a turf to anything else, you really just wanted to click the anything else
+	// And slightly misseed. I'm not interested in making this game pixel percise, so if it fits our other requirements
+	// Lets just let that through yeah?
+	var/atom/attempt_click = dragging
+	var/atom/click_from = over
+	var/location_to_use = src_location
+	var/control_to_use = src_control
+	if(isturf(attempt_click) && !isturf(over))
+		// swapppp
+		attempt_click = over
+		click_from = dragging
+		location_to_use = over_location
+		control_to_use = over_control
+
+	if(is_drag_clickable(attempt_click, click_from, params))
+		Click(attempt_click, location_to_use, control_to_use, params)
+		return TRUE
+	return FALSE
+
+/// Distance in pixels that we consider "acceptable" from the initial click to the release
+/// Note: this does not account for the position of the object, just where it is on the screen
+#define LENIENCY_DISTANCE 16
+/// Accepted time in seconds between the initial click and drag release
+/// Go higher then this and we just don't care anymore
+#define LENIENCY_TIME (0.1 SECONDS)
+
+/// Does the logic for checking if a drag counts as a click or not
+/// Returns true if it does, false otherwise
+/client/proc/is_drag_clickable(atom/dragging, atom/over, params)
+	if(dragging == over)
+		return TRUE
+	if(world.time - drag_start > LENIENCY_TIME) // Time's up bestie
+		return FALSE
+	if(!get_turf(dragging)) // If it isn't in the world, drop it. This is for things that can move, and we assume hud elements will not have this problem
+		return FALSE
+	// Basically, are you trying to buckle someone down, or drag them onto you?
+	// If so, we know you must be right about what you want
+	if(ismovable(over))
+		var/atom/movable/over_movable = over
+		// The buckle bit will cover most mobs, for stupid reasons. still useful here tho
+		if(over_movable.can_buckle || over_movable == eye)
+			return FALSE
+
+	var/list/modifiers = params2list(params)
+	var/list/old_offsets = screen_loc_to_offset(LAZYACCESS(drag_details, SCREEN_LOC), view)
+	var/list/new_offsets = screen_loc_to_offset(LAZYACCESS(modifiers, SCREEN_LOC), view)
+
+	var/distance = sqrt(((old_offsets[1] - new_offsets[1]) ** 2) + ((old_offsets[2] - new_offsets[2]) ** 2))
+	if(distance > LENIENCY_DISTANCE)
+		return FALSE
+
+	return TRUE
 
 // receive a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user, params)
@@ -96,6 +156,9 @@
 		else
 			middragtime = 0
 			middle_drag_atom_ref = null
+	if(!drag_start) // If we're just starting to drag
+		drag_start = world.time
+		drag_details = modifiers.Copy()
 	mouseParams = params
 	mouse_location_ref = WEAKREF(over_location)
 	mouse_object_ref = WEAKREF(over_object)
@@ -115,3 +178,5 @@
 		middragtime = 0
 		middle_drag_atom_ref = null
 	..()
+	drag_start = 0
+	drag_details = null

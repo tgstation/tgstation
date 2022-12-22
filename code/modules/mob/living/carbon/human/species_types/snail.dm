@@ -1,7 +1,10 @@
 /datum/species/snail
 	name = "Snailperson"
 	id = SPECIES_SNAIL
-	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
+	species_traits = list(
+		MUTCOLORS,
+		NO_UNDERWEAR,
+	)
 	inherent_traits = list(
 		TRAIT_NOSLIPALL,
 	)

@@ -77,11 +77,11 @@
 			if(w == 23 || h == 23)
 				to_chat(ai, span_notice("Small note: 23x23 Portraits are accepted, but they do not fit perfectly inside the display frame."))
 				MA.pixel_x = 5
-				MA.pixel_y = 5
+				MA.pixel_z = 5
 			else if(w == 24 || h == 24)
 				to_chat(ai, span_notice("Portrait Accepted. Enjoy!"))
 				MA.pixel_x = 4
-				MA.pixel_y = 4
+				MA.pixel_z = 4
 			else
 				to_chat(ai, span_warning("Sorry, only 23x23 and 24x24 Portraits are accepted."))
 				return

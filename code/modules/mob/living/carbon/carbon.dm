@@ -1,6 +1,6 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
-	create_reagents(1000, REAGENT_HOLDER_ALIVE)
+	create_carbon_reagents()
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	register_context()
 
@@ -37,6 +37,9 @@
 
 	if(!held_index)
 		held_index = (active_hand_index % held_items.len)+1
+
+	if(!isnum(held_index))
+		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
 
 	var/oindex = active_hand_index
 	active_hand_index = held_index
@@ -201,6 +204,12 @@
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
+
+/mob/living/carbon/proc/create_carbon_reagents()
+	if (!isnull(reagents))
+		return
+
+	create_reagents(1000, REAGENT_HOLDER_ALIVE)
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
@@ -397,17 +406,6 @@
 			var/turf/target = get_turf(loc)
 			I.safe_throw_at(target,I.throw_range,I.throw_speed,src, force = move_force)
 
-/mob/living/carbon/get_status_tab_items()
-	. = ..()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
-	if(vessel)
-		. += "Plasma Stored: [vessel.stored_plasma]/[vessel.max_plasma]"
-	var/obj/item/organ/internal/heart/vampire/darkheart = getorgan(/obj/item/organ/internal/heart/vampire)
-	if(darkheart)
-		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."
-	if(locate(/obj/item/assembly/health) in src)
-		. += "Health: [health]"
-
 /mob/living/carbon/attack_ui(slot, params)
 	if(!has_hand_for_held_index(active_hand_index))
 		return 0
@@ -527,7 +525,7 @@
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
-	SEND_SIGNAL(src, COMSIG_CARBON_HEALTH_UPDATE)
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
@@ -604,7 +602,7 @@
 		set_invis_see(see_override)
 
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		new_sight = SEE_BLACKNESS
+		new_sight = NONE
 
 	set_sight(new_sight)
 	return ..()
@@ -873,7 +871,7 @@
 		return FALSE
 
 	// And we can't heal them if they're missing their liver
-	if(!getorganslot(ORGAN_SLOT_LIVER))
+	if(!HAS_TRAIT(src, TRAIT_NOMETABOLISM) && !getorganslot(ORGAN_SLOT_LIVER))
 		return FALSE
 
 	return ..()
@@ -973,11 +971,14 @@
 		to_chat(user, span_notice("You retrieve some of [src]\'s internal organs!"))
 	remove_all_embedded_objects()
 
-/mob/living/carbon/proc/create_bodyparts()
+/// Creates body parts for this carbon completely from scratch.
+/// Optionally takes a map of body zones to what type to instantiate instead of them.
+/mob/living/carbon/proc/create_bodyparts(list/overrides)
 	var/l_arm_index_next = -1
 	var/r_arm_index_next = 0
-	for(var/bodypart_path in bodyparts)
-		var/obj/item/bodypart/bodypart_instance = new bodypart_path()
+	for(var/obj/item/bodypart/bodypart_path as anything in bodyparts)
+		var/real_body_part_path = overrides?[initial(bodypart_path.body_zone)] || bodypart_path
+		var/obj/item/bodypart/bodypart_instance = new real_body_part_path()
 		bodypart_instance.set_owner(src)
 		bodyparts.Remove(bodypart_path)
 		add_bodypart(bodypart_instance)
@@ -1250,14 +1251,6 @@
 
 /mob/living/carbon/is_face_visible()
 	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
-
-/**
- * get_biological_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums
- *
- * go look at the species def for more info [/datum/species/proc/get_biological_state]
- */
-/mob/living/carbon/proc/get_biological_state()
-	return BIO_FLESH_BONE
 
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)

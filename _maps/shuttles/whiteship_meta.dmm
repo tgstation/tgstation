@@ -288,7 +288,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged{
+/mob/living/basic/syndicate/ranged{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
@@ -1725,7 +1725,7 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/hostile/syndicate/melee{
+/mob/living/basic/syndicate/melee{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,
@@ -1786,7 +1786,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/hostile/syndicate/melee{
+/mob/living/basic/syndicate/melee{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,
@@ -1805,7 +1805,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/syndicate/melee{
+/mob/living/basic/syndicate/melee{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,

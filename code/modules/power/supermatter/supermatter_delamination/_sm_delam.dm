@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 	sm.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
-		size = sm.internal_energy ? clamp((sm.damage/100) * sm.internal_energy, 50, 125) : 1,
+		size = clamp(sm.internal_energy / 30, 1, 125),
 		color = (sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR),
 		factor = clamp(sm.damage/600, 1, 10),
 		density = clamp(sm.damage/10, 12, 100)

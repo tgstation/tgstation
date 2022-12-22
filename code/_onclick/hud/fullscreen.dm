@@ -14,7 +14,8 @@
 		screen.update_for_view(client.view)
 		client.screen += screen
 
-	SET_PLANE_EXPLICIT(screen, PLANE_TO_TRUE(screen.plane), src)
+	if(screen.needs_offsetting)
+		SET_PLANE_EXPLICIT(screen, PLANE_TO_TRUE(screen.plane), src)
 
 	return screen
 
@@ -66,10 +67,10 @@
 /mob/proc/relayer_fullscreens()
 	var/turf/our_lad = get_turf(src)
 	var/offset = GET_TURF_PLANE_OFFSET(our_lad)
-	var/atom/movable/screen/fullscreen/screen
 	for(var/category in screens)
-		screen = screens[category]
-		screen.plane = GET_NEW_PLANE(initial(screen.plane), offset)
+		var/atom/movable/screen/fullscreen/screen = screens[category]
+		if(screen.needs_offsetting)
+			screen.plane = GET_NEW_PLANE(initial(screen.plane), offset)
 
 /atom/movable/screen/fullscreen
 	icon = 'icons/hud/screen_full.dmi'
@@ -81,6 +82,7 @@
 	var/view = 7
 	var/severity = 0
 	var/show_when_dead = FALSE
+	var/needs_offsetting = TRUE
 
 /atom/movable/screen/fullscreen/proc/update_for_view(client_view)
 	if (screen_loc == "CENTER-7,CENTER-7" && view != client_view)
@@ -198,18 +200,17 @@
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_OVERLAY
 	show_when_dead = TRUE
+	needs_offsetting = FALSE
 
 //Provides darkness to the back of the lighting plane
 /atom/movable/screen/fullscreen/lighting_backdrop/lit
 	invisibility = INVISIBILITY_LIGHTING
 	layer = BACKGROUND_LAYER+21
 	color = "#000"
-	show_when_dead = TRUE
 
 //Provides whiteness in case you don't see lights so everything is still visible
 /atom/movable/screen/fullscreen/lighting_backdrop/unlit
 	layer = BACKGROUND_LAYER+20
-	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/see_through_darkness
 	icon_state = "nightvision"
