@@ -18972,6 +18972,14 @@
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/mid)
+"gRD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/xmastree,
+/turf/open/floor/carpet,
+/area/station/service/chapel)
 "gRL" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -152978,7 +152986,7 @@ gyt
 iUs
 iUs
 iUs
-iUs
+gRD
 iUs
 dCz
 jKx
