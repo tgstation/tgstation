@@ -9,6 +9,7 @@
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	combat_mode = TRUE
+	basic_mob_flags = DEL_ON_DEATH
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 15
@@ -41,16 +42,11 @@
 	///What will this ghost drop on death
 	var/list/death_loot = list(/obj/item/ectoplasm)
 
-/mob/living/basic/ghost/Initialize(mapload) //Make this thing delete on death so it actually dies properly.
+/mob/living/basic/ghost/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/ai_flee_while_injured)
-
-	var/datum/action/cooldown/mob_cooldown/haunt_area/haunt_action = new(src)
-	haunt_action.Grant(src)
-	ai_controller.blackboard[BB_GHOST_HAUNT] = haunt_action
 
 	give_hair()
 
@@ -80,22 +76,17 @@
 		ghost_facial_hair.color = ghost_facial_hair_color
 		add_overlay(ghost_facial_hair)
 
-
-//VERY RAW.
 /datum/ai_controller/basic_controller/ghost
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
 	)
 
-	ai_movement = /datum/ai_movement/basic_avoidance //change
-	idle_behavior = /datum/idle_behavior/idle_random_walk //come up with soemthing cooler
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list( //review
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/ghost,
-		/datum/ai_planning_subtree/haunt_area,
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/ghost
@@ -103,30 +94,3 @@
 
 /datum/ai_behavior/basic_melee_attack/ghost
 	action_cooldown = 2 SECONDS
-
-/datum/ai_planning_subtree/haunt_area
-
-/datum/ai_planning_subtree/haunt_area/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	. = ..()
-
-	if(controller.blackboard[BB_BASIC_MOB_FLEEING]) //If we're running away from a target, we're not going to try being spooky.
-		return
-
-	if(!controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]) //Only cause spooks if we're attacking someone.
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/try_mob_ability, BB_GHOST_HAUNT, get_turf(src))
-	return SUBTREE_RETURN_FINISH_PLANNING
-
-/datum/action/cooldown/mob_cooldown/haunt_area
-	name = "Haunt Area"
-	desc = "Cause some spooky occurences in your area."
-
-/datum/action/cooldown/mob_cooldown/haunt_area/Activate(atom/target_atom)
-	StartCooldownSelf(60 SECONDS)
-
-	var/area/area_to_haunt = get_area(target_atom)
-
-	for(var/obj/machinery/light/light_to_flicker in area_to_haunt.lights)
-		light_to_flicker.flicker(20)
-

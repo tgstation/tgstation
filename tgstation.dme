@@ -3621,7 +3621,7 @@
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_ai.dm"
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_moonicorn.dm"
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_wisdom.dm"
-#include "code\modules\mob\living\basic\ghost\ghost.dm"
+#include "code\modules\mob\living\basic\retaliate\ghost.dm"
 #include "code\modules\mob\living\basic\lavaland\mining.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\_bileworm.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_actions.dm"
