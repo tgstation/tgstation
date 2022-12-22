@@ -95,7 +95,7 @@
 
 /datum/ai_controller/basic_controller/ghost
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
