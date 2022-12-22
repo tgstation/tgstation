@@ -9,7 +9,7 @@
 	var/element_flags = NONE
 	/**
 	  * The index of the first attach argument to consider for duplicate elements
-	  * 
+	  *
 	  * All arguments from this index onwards (1 based) are hashed into the key to determine
 	  * if this is a new unique element or one already exists
 	  *
@@ -52,10 +52,11 @@
 /datum/proc/_AddElement(list/arguments)
 	if(QDELING(src))
 		CRASH("We just tried to add an element to a qdeleted datum, something is fucked")
+	var/element_type = arguments[1]
 	var/datum/element/ele = SSdcs.GetElement(arguments)
 	arguments[1] = src
 	if(ele.Attach(arglist(arguments)) == ELEMENT_INCOMPATIBLE)
-		CRASH("Incompatible [arguments[1]] assigned to a [type]! args: [json_encode(args)]")
+		CRASH("Incompatible element [element_type] was assigned to a [type]! args: [json_encode(args)]")
 
 /**
  * Finds the singleton for the element type given and detaches it from src
