@@ -89,6 +89,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	var/protected_contents = FALSE
 
+	///used while processing to update appearance only when its pressure state changes
+	var/current_pressure_state
+
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
 
@@ -379,21 +382,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(connected_port)
 		. += mutable_appearance(canister_overlay_file, "can-connector")
 
-	var/air_pressure = air_contents.return_pressure()
-
-	switch(air_pressure)
-		if((40 * ONE_ATMOSPHERE) to INFINITY)
-			. += mutable_appearance(canister_overlay_file, "can-3")
-			. += emissive_appearance(canister_overlay_file, "can-3-light", src, alpha = src.alpha)
-		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
-			. += mutable_appearance(canister_overlay_file, "can-2")
-			. += emissive_appearance(canister_overlay_file, "can-2-light", src, alpha = src.alpha)
-		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
-			. += mutable_appearance(canister_overlay_file, "can-1")
-			. += emissive_appearance(canister_overlay_file, "can-1-light", src, alpha = src.alpha)
-		if((10) to (5 * ONE_ATMOSPHERE))
-			. += mutable_appearance(canister_overlay_file, "can-0")
-			. += emissive_appearance(canister_overlay_file, "can-0-light", src, alpha = src.alpha)
+	var/light_state = get_pressure_state(air_contents.return_pressure())
+	if(light_state) //happens when pressure is below 10kpa which means no light
+		. += mutable_appearance(canister_overlay_file, light_state)
+		. += emissive_appearance(canister_overlay_file, "[light_state]-light", src, alpha = src.alpha)
 
 	update_window()
 
@@ -572,6 +564,20 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		else
 			shielding_powered = FALSE
 
+///return the icon_state component for the canister's indicator light based on its current pressure reading
+/obj/machinery/portable_atmospherics/canister/proc/get_pressure_state(air_pressure)
+	switch(air_pressure)
+		if((40 * ONE_ATMOSPHERE) to INFINITY)
+			return "can-3"
+		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
+			return "can-2"
+		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
+			return "can-1"
+		if((10) to (5 * ONE_ATMOSPHERE))
+			return "can-0"
+		else
+			return null
+
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	if(machine_stat & BROKEN)
 		return PROCESS_KILL
@@ -579,7 +585,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		valve_open = !valve_open
 		timing = FALSE
 
-	var/visual_update = FALSE
 	// Handle gas transfer.
 	if(valve_open)
 		var/turf/location = get_turf(src)
@@ -587,17 +592,20 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		excited = TRUE
 
 		if(air_contents.release_gas_to(target_air, release_pressure))
-			visual_update = TRUE
 			if(!holding)
 				air_update_turf(FALSE, FALSE)
 
 	// A bit different than other atmos devices. Wont stop if currently taking damage.
 	if(take_atmos_damage())
-		visual_update = TRUE
-		excited = TRUE
-
-	if(visual_update)
 		update_appearance()
+		excited = TRUE
+		return ..() //we have already updated appearance so dont need to update again below
+
+	var/new_pressure_state = get_pressure_state(air_contents.return_pressure())
+	if(current_pressure_state != new_pressure_state) //update apperance only when its pressure changes significantly from its current value
+		update_appearance()
+		current_pressure_state = new_pressure_state
+
 	return ..()
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
