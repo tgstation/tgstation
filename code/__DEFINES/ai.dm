@@ -242,7 +242,3 @@
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
-
-///Ghost AI ability keys
-
-#define BB_GHOST_HAUNT "BB_ghost_haunt"
