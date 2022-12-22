@@ -91,7 +91,7 @@
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
-			panel_open = !panel_open
+			toggle_panel_open()
 			I.play_tool_sound(src)
 			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return

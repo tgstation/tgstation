@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "After a recent mishap with a high-ranking Syndicate operative, the uplink's unlock code and failsafe code (the one that makes it blow up if you say it) should never turn out to be the same."
