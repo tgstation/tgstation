@@ -770,7 +770,6 @@
 	name = "Paprika's bed"
 	},
 /mob/living/basic/carp/pet/cayenne{
-	aggro_vision_range = 1;
 	desc = "It's Paprika! One of the Spider Clan's lovable Space Carp!";
 	faction = list("neutral");
 	name = "Paprika";
