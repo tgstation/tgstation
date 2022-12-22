@@ -129,7 +129,7 @@
 	if(give_objectives)
 		forge_objectives()
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are able to transform our body after all.
-	if(prob(2) || check_holidays(APRIL_FOOLS))
+	if(prob(2))
 		owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler_alt.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	else
 		owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
