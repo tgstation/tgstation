@@ -36,14 +36,9 @@
 	if(can_hack_open)
 		. += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
 
-/obj/item/storage/secure/update_icon()
-	..()
-	if(!atom_storage)
-		return
-	if(atom_storage.locked)
-		icon_state = "[initial(icon_state)]_locked"
-	else
-		icon_state = "[initial(icon_state)]"
+/obj/item/storage/secure/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][atom_storage?.locked ? "_locked" : null]"
 
 /obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool)
 	if(can_hack_open && atom_storage.locked)

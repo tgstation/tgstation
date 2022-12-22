@@ -113,20 +113,20 @@
 			det_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(A)
 
 			// Only get reagents from non-mobs.
-			if(A.reagents && A.reagents.reagent_list.len)
+			for(var/datum/reagent/present_reagent as anything in A.reagents?.reagent_list)
+				LAZYADD(det_data[DETSCAN_CATEGORY_DRINK], \
+					"Reagent: <font color='red'>[present_reagent.name]</font> Volume: <font color='red'>[present_reagent.volume]</font>")
 
-				for(var/datum/reagent/R in A.reagents.reagent_list)
-					LAZYADD(det_data[DETSCAN_CATEGORY_DRINK], \
-						"Reagent: <font color='red'>[R.name]</font> Volume: <font color='red'>[reagents[R.volume]]</font>")
+				// Get blood data from the blood reagent.
+				if(!istype(present_reagent, /datum/reagent/blood))
+					continue
 
-					// Get blood data from the blood reagent.
-					if(istype(R, /datum/reagent/blood))
+				var/blood_DNA = present_reagent.data["blood_DNA"]
+				var/blood_type = present_reagent.data["blood_type"]
+				if(!blood_DNA || !blood_type)
+					continue
 
-						if(R.data["blood_DNA"] && R.data["blood_type"])
-							var/blood_DNA = R.data["blood_DNA"]
-							var/blood_type = R.data["blood_type"]
-							LAZYINITLIST(blood)
-							blood[blood_DNA] = blood_type
+				LAZYSET(blood, blood_DNA, blood_type)
 
 		if(istype(A, /obj/item/card/id))
 			var/obj/item/card/id/user_id = A

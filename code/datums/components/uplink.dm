@@ -73,6 +73,7 @@
 			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
 		else
 			purchase_log = new(owner, src)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	src.lockable = lockable
 	src.active = enabled
 	if(!uplink_handler_override)
@@ -127,6 +128,17 @@
 
 	if(istype(item, /obj/item/stack/telecrystal))
 		load_tc(user, item)
+
+/datum/component/uplink/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(user != owner)
+		return
+	examine_list += span_warning("[parent] contains your hidden uplink\
+		[unlock_code ? ", the code to unlock it is [span_boldwarning(unlock_code)]" : null].")
+
+	if(failsafe_code)
+		examine_list += span_warning("The failsafe code is [span_boldwarning(failsafe_code)].")
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -218,8 +230,8 @@
 		))
 
 	var/list/remaining_stock = list()
-	for(var/datum/uplink_item/item as anything in stock_list)
-		remaining_stock[item.type] = stock_list[item]
+	for(var/item as anything in stock_list)
+		remaining_stock[item] = stock_list[item]
 	data["extra_purchasable"] = extra_purchasable
 	data["extra_purchasable_stock"] = extra_purchasable_stock
 	data["current_stock"] = remaining_stock

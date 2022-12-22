@@ -594,7 +594,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		for(var/line in lines)
 			// We do this here to avoid needing to check at each return statement
 			// No harm in it anyway
-			CHECK_TICK
+			MAPLOADING_CHECK_TICK
 
 			switch(line[length(line)])
 				if(";") // Var edit, we'll apply it
@@ -734,7 +734,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 			//then fill the members_attributes list with the corresponding variables
 			members_attributes += fields
-			CHECK_TICK
+			MAPLOADING_CHECK_TICK
 
 		//check and see if we can just skip this turf
 		//So you don't have to understand this horrid statement, we can do this if

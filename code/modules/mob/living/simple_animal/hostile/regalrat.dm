@@ -305,6 +305,7 @@
 /datum/action/cooldown/riot/proc/make_minion(mob/living/new_minion, minion_desc, list/command_list = mouse_commands)
 	if (isbasicmob(new_minion)) // One day this will work for frogs too
 		new_minion.AddComponent(/datum/component/obeys_commands, command_list)
+		qdel(new_minion.GetComponent(/datum/component/tameable)) // Rats don't share
 	new_minion.befriend(owner)
 	new_minion.faction = owner.faction.Copy()
 	// Give a hint in description too
