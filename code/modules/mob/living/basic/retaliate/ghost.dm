@@ -1,4 +1,4 @@
-/mob/living/basic/ghost //PORT OF /mob/living/simple_animal/hostile/retaliate/ghost TO BASIC MOBS
+/mob/living/basic/ghost
 	name = "ghost"
 	desc = "A soul of the dead, spooky."
 	icon = 'icons/mob/simple/mob.dmi'
@@ -49,7 +49,7 @@
 	AddElement(/datum/element/ai_retaliate)
 
 	if(ghost_hairstyle || ghost_facial_hair) //If we have pre-determined hair, generate it with the values we already have
-		give_identity(FALSE) //Option exists so mappers can make ghosts with custom identities.
+		give_identity(FALSE)
 	else
 		give_identity(random_identity)
 
@@ -60,7 +60,7 @@
  * Adds results as an overlay on the ghost. If random_identity is true, a random identity
  * will be generated (hair/facial/name). If false, it will use
  *
- * * random_identity - Will we only generate hair overlays or will we pick random hair/name
+ * * random_identity - Do we give this mob random hair and a random name?
  */
 
 /mob/living/basic/ghost/proc/give_identity(random_identity)
@@ -73,7 +73,7 @@
 			ghost_facial_hair_color = ghost_hair_color
 
 	if(ghost_hairstyle != null)
-		var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[ghost_hairstyle]
+		var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[ghost_hairstyle] //We do this so we can grab the icon_state name
 		ghost_hair = mutable_appearance('icons/mob/species/human/human_face.dmi', "[hair_style.icon_state]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
