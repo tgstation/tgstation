@@ -192,6 +192,7 @@
 	name = "Heterochromatic"
 	desc = "One of your eyes is a different color than the other!"
 	icon = "eye-low-vision" // Ignore the icon name, its actually a fairly good representation of different color eyes
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	value = 0
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
 

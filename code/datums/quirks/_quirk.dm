@@ -1,20 +1,29 @@
 //every quirk in this folder should be coded around being applied on spawn
 //these are NOT "mob quirks" like GOTTAGOFAST, but exist as a medium to apply them and other different effects
 /datum/quirk
+	/// The name of the quirk
 	var/name = "Test Quirk"
+	/// The description of the quirk
 	var/desc = "This is a test quirk."
+	/// What the quirk is worth in preferences, zero = neutral / free
 	var/value = 0
-	var/human_only = TRUE
-	var/gain_text
-	var/lose_text
-	var/medical_record_text //This text will appear on medical records for the trait. Not yet implemented
-	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
-	var/mob_trait //if applicable, apply and remove this mob trait
-	/// Amount of points this trait is worth towards the hardcore character mode; minus points implies a positive quirk, positive means its hard. This is used to pick the quirks assigned to a hardcore character. 0 means its not available to hardcore draws.
-	var/hardcore_value = 0
+	/// Flags related to this quirk.
+	var/quirk_flags = QUIRK_HUMAN_ONLY
+	/// Reference to the mob currently tied to this quirk datum. Quirks are not singletons.
 	var/mob/living/quirk_holder
-	/// This quirk should START_PROCESSING when added and STOP_PROCESSING when removed.
-	var/processing_quirk = FALSE
+	/// Text displayed when this quirk is assigned to a mob (and not transferred)
+	var/gain_text
+	/// Text displayed when this quirk is removed from a mob (and not transferred)
+	var/lose_text
+	///This text will appear on medical records for the trait.
+	var/medical_record_text
+	/// if applicable, apply and remove this mob trait
+	var/mob_trait
+	/// Amount of points this trait is worth towards the hardcore character mode.
+	/// Minus points implies a positive quirk, positive means its hard.
+	/// This is used to pick the quirks assigned to a hardcore character.
+	//// 0 means its not available to hardcore draws.
+	var/hardcore_value = 0
 	/// When making an abstract quirk (in OOP terms), don't forget to set this var to the type path for that abstract quirk.
 	var/abstract_parent_type = /datum/quirk
 	/// The icon to show in the preferences menu.
@@ -49,7 +58,7 @@
 	if(!new_holder)
 		CRASH("Quirk attempted to be added to null mob.")
 
-	if(human_only && !ishuman(new_holder))
+	if((quirk_flags & QUIRK_HUMAN_ONLY) && !ishuman(new_holder))
 		CRASH("Human only quirk attempted to be added to non-human mob.")
 
 	if(new_holder.has_quirk(type))
@@ -68,7 +77,7 @@
 
 	add(client_source)
 
-	if(processing_quirk)
+	if(quirk_flags & QUIRK_PROCESSES)
 		START_PROCESSING(SSquirks, src)
 
 	if(!quirk_transfer)
@@ -100,7 +109,7 @@
 	if(mob_trait)
 		REMOVE_TRAIT(quirk_holder, mob_trait, QUIRK_TRAIT)
 
-	if(processing_quirk)
+	if(quirk_flags & QUIRK_PROCESSES)
 		STOP_PROCESSING(SSquirks, src)
 
 	remove()
@@ -221,9 +230,7 @@
 	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
 /mob/living/proc/cleanse_quirk_datums() //removes all trait datums
-	for(var/V in quirks)
-		var/datum/quirk/T = V
-		qdel(T)
+	QDEL_LIST(quirks)
 
 /mob/living/proc/transfer_quirk_datums(mob/living/to_mob)
 	// We could be done before the client was moved or after the client was moved
