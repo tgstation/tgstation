@@ -6813,8 +6813,8 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/item/chair,
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/autolathe,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
 "cyS" = (
@@ -6830,9 +6830,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/command/corporate_showroom)
-"cyW" = (
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "cyX" = (
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/door/airlock/medical{
@@ -18066,13 +18063,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"gKt" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "gKw" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/yellow{
@@ -109846,16 +109836,16 @@ tCS
 xzs
 vQV
 lnT
-gKt
-gKt
-gKt
-gKt
+fbf
+fbf
+fbf
+fbf
 rPe
 rPe
-gKt
-gKt
-gKt
-gKt
+fbf
+fbf
+fbf
+fbf
 dhi
 rPe
 vjB
@@ -110871,7 +110861,7 @@ xID
 hTV
 brE
 vtp
-gKt
+fbf
 shV
 sGC
 stl
@@ -112456,9 +112446,9 @@ qDt
 ruP
 eJX
 eJX
-cyW
-cyW
-cyW
+eJX
+eJX
+eJX
 eJX
 eJX
 nzo

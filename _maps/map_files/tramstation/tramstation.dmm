@@ -790,6 +790,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/machinery/autolathe,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "aoY" = (

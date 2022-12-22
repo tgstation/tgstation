@@ -70871,6 +70871,10 @@
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"vSS" = (
+/obj/machinery/autolathe,
+/turf/open/floor/iron,
+/area/station/cargo/lobby)
 "vSX" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -233119,7 +233123,7 @@ vlL
 qxQ
 eBe
 hnC
-qmi
+vSS
 aSh
 ycQ
 nZh
