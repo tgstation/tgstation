@@ -2799,9 +2799,7 @@
 /turf/open/floor/carpet,
 /area/station/service/chapel)
 "biX" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
@@ -8418,9 +8416,7 @@
 "cZX" = (
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/chair/sofa/bench/tram/right,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -13471,9 +13467,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "ePF" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
 /obj/structure/chair/sofa/bench/tram/right,
 /turf/open/openspace,
@@ -35742,9 +35736,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "mQW" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
 /obj/structure/chair/sofa/bench/tram/left,
 /turf/open/openspace,
@@ -36071,9 +36063,7 @@
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/service/kitchen/coldroom)
 "mXp" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/effect/landmark/lift_id,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
@@ -36814,9 +36804,7 @@
 /area/station/command/bridge)
 "njs" = (
 /obj/effect/landmark/tram/middle_part,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/machinery/computer/tram_controls,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
@@ -39956,9 +39944,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 1
 	},
@@ -42212,9 +42198,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "pmD" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
@@ -44873,9 +44857,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "qia" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qif" = (
@@ -48312,9 +48294,7 @@
 /area/station/medical/storage)
 "rrF" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "rrM" = (
@@ -49084,9 +49064,7 @@
 /area/station/security/prison/safe)
 "rEn" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/chair/sofa/bench/tram/left,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -49892,9 +49870,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "rPU" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -50814,9 +50790,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "sjd" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
@@ -59334,9 +59308,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation/entertainment)
 "vqF" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
@@ -66819,9 +66791,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "xZx" = (
