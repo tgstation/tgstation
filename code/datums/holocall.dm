@@ -325,29 +325,14 @@
 		. = image(mannequin)
 		unset_busy_human_dummy("HOLODISK_PRESET")
 
-/obj/item/disk/holodisk/example
-	preset_image_type = /datum/preset_holoimage/clown
-	preset_record_text = {"
-	NAME Clown
-	DELAY 10
-	SAY Why did the chaplain cross the maint ?
-	DELAY 20
-	SAY He wanted to get to the other side!
-	SOUND clownstep
-	DELAY 30
-	LANGUAGE /datum/language/narsie
-	SAY Helped him get there!
-	DELAY 10
-	SAY ALSO IM SECRETLY A GORILLA
-	DELAY 10
-	PRESET /datum/preset_holoimage/gorilla
-	NAME Gorilla
-	LANGUAGE /datum/language/common
-	SAY OOGA
-	DELAY 20"}
+/datum/preset_holoimage/clown
+	outfit_type = /datum/outfit/job/clown
 
 /datum/preset_holoimage/engineer
 	outfit_type = /datum/outfit/job/engineer
+
+/datum/preset_holoimage/corgi
+	nonhuman_mobtype = /mob/living/basic/pet/dog/corgi
 
 /datum/preset_holoimage/engineer/mod
 	outfit_type = /datum/outfit/job/engineer/mod
@@ -373,14 +358,35 @@
 /datum/preset_holoimage/nanotrasenprivatesecurity
 	outfit_type = /datum/outfit/nanotrasensoldiercorpse2
 
-/datum/preset_holoimage/gorilla
-	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
+/datum/preset_holoimage/hivebot
+	nonhuman_mobtype = /mob/living/simple_animal/hostile/hivebot
 
-/datum/preset_holoimage/corgi
-	nonhuman_mobtype = /mob/living/basic/pet/dog/corgi
+/datum/preset_holoimage/ai
+	nonhuman_mobtype = /mob/living/silicon/ai
 
-/datum/preset_holoimage/clown
-	outfit_type = /datum/outfit/job/clown
+/datum/preset_holoimage/robot
+	nonhuman_mobtype = /mob/living/silicon/robot
+
+/obj/item/disk/holodisk/example
+	preset_image_type = /datum/preset_holoimage/clown
+	preset_record_text = {"
+	NAME Clown
+	DELAY 10
+	SAY Why did the chaplain cross the maint ?
+	DELAY 20
+	SAY He wanted to get to the other side!
+	SOUND clownstep
+	DELAY 30
+	LANGUAGE /datum/language/narsie
+	SAY Helped him get there!
+	DELAY 10
+	SAY ALSO IM SECRETLY A GORILLA
+	DELAY 10
+	PRESET /datum/preset_holoimage/gorilla
+	NAME Gorilla
+	LANGUAGE /datum/language/common
+	SAY OOGA
+	DELAY 20"}
 
 /obj/item/disk/holodisk/donutstation/whiteship
 	name = "Blackbox Print-out #DS024"

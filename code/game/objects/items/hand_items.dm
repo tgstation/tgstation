@@ -127,7 +127,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
-	if((target.get_biological_state() != BIO_FLESH_BONE && target.get_biological_state() != BIO_JUST_FLESH) || !IS_ORGANIC_LIMB(the_head))
+	if(!(the_head.biological_state & BIO_FLESH) || !IS_ORGANIC_LIMB(the_head))
 		to_chat(user, span_warning("You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!"))
 		return
 
@@ -313,7 +313,7 @@
 	user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [table]!")]</b>", "<b>[span_danger("You slam your fist down on [table]!")]</b>")
 	qdel(src)
 
-/obj/item/hand_item/slapper/on_offered(mob/living/carbon/offerer)
+/obj/item/hand_item/slapper/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	. = TRUE
 
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
@@ -362,6 +362,109 @@
 		offerer.add_mood_event("high_five", /datum/mood_event/high_five)
 		taker.add_mood_event("high_five", /datum/mood_event/high_five)
 	qdel(src)
+
+
+/obj/item/hand_item/hand
+	name = "hand"
+	desc = "Sometimes, you just want to act gentlemanly."
+	icon_state = "latexballon"
+	inhand_icon_state = "nothing"
+
+
+/obj/item/hand_item/hand/pre_attack(mob/living/carbon/help_target, mob/living/carbon/helper, params)
+	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
+		return ..()
+
+	if(helper.resting)
+		to_chat(helper, span_warning("You can't act gentlemanly when you're lying down!"))
+		return TRUE
+
+
+/obj/item/hand_item/hand/pre_attack_secondary(mob/living/carbon/help_target, mob/living/carbon/helper, params)
+	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
+		return ..()
+
+	if(helper.resting)
+		to_chat(helper, span_warning("You can't act gentlemanly when you're lying down!"))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return SECONDARY_ATTACK_CALL_NORMAL
+
+
+/obj/item/hand_item/hand/attack(mob/living/carbon/target_mob, mob/living/carbon/user, params)
+	if(!loc.Adjacent(target_mob) || !istype(user) || !istype(target_mob))
+		return TRUE
+
+	user.give(target_mob)
+	return TRUE
+
+
+/obj/item/hand_item/hand/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
+	. = TRUE
+
+	if(!istype(offerer))
+		return
+
+	if(offerer.body_position == LYING_DOWN)
+		to_chat(offerer, span_warning("You can't act gentlemanly when you're lying down!"))
+		return
+
+	if(!offered)
+		offered = locate(/mob/living/carbon) in orange(1, offerer)
+
+	if(offered && istype(offered) && offered.body_position == LYING_DOWN)
+		offerer.visible_message(span_notice("[offerer] offers [offerer.p_their()] hand to [offered], looking to help them up!"),
+			span_notice("You offer [offered] your hand, to try to help them up!"), null, 2)
+
+		offerer.apply_status_effect(/datum/status_effect/offering/no_item_received/needs_resting, src, /atom/movable/screen/alert/give/hand/helping, offered)
+		return
+
+	offerer.visible_message(span_notice("[offerer] extends out [offerer.p_their()] hand."),
+		span_notice("You extend out your hand."), null, 2)
+
+	offerer.apply_status_effect(/datum/status_effect/offering/no_item_received, src, /atom/movable/screen/alert/give/hand)
+	return
+
+
+/obj/item/hand_item/hand/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	. = TRUE
+
+	if(taker.body_position == LYING_DOWN)
+		taker.help_shake_act(offerer)
+
+		if(taker.body_position == LYING_DOWN)
+			return // That didn't help them. Awkwaaaaard.
+
+		offerer.visible_message(span_notice("[offerer] helps [taker] up!"), span_nicegreen("You help [taker] up!"), span_hear("You hear someone helping someone else up!"), ignored_mobs = taker)
+		to_chat(taker, span_nicegreen("You take [offerer]'s hand, letting [offerer.p_them()] help your up! How nice of them!"))
+
+		offerer.mind.add_memory(MEMORY_HELPED_UP, list(DETAIL_DEUTERAGONIST = taker), story_value = STORY_VALUE_OKAY)
+		taker.mind.add_memory(MEMORY_HELPED_UP, list(DETAIL_DEUTERAGONIST = offerer), story_value = STORY_VALUE_OKAY)
+
+		offerer.add_mood_event("helping_up", /datum/mood_event/helped_up, taker, TRUE) // Different IDs because you could be helped up and then help someone else up.
+		taker.add_mood_event("helped_up", /datum/mood_event/helped_up, offerer, FALSE)
+
+		qdel(src)
+		return
+
+	if(taker.buckled?.buckle_prevents_pull)
+		return // Can't start pulling them if they're buckled and that prevents pulls.
+
+	// We do a little switcheroo to ensure that it displays the pulling message that mentions
+	// taking taker by their hands.
+	var/offerer_zone_selected = offerer.zone_selected
+	offerer.zone_selected = "r_arm"
+	var/did_we_pull = offerer.start_pulling(taker) // Will return either null or FALSE. We only want to silence FALSE.
+	offerer.zone_selected = offerer_zone_selected
+
+	if(did_we_pull == FALSE)
+		return // That didn't work for one reason or the other. No need to display anything.
+
+	to_chat(offerer, span_notice("[taker] takes your hand, allowing you to pull [taker.p_them()] along."))
+	to_chat(taker, span_notice("You take [offerer]'s hand, which allows [offerer.p_them()] to pull you along. How polite!"))
+
+	qdel(src)
+
 
 /obj/item/hand_item/stealer
 	name = "steal"
@@ -427,14 +530,14 @@
 	blown_kiss.fire()
 	qdel(src)
 
-/obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer)
+/obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
 		return TRUE
 
 	cheek_kiss = (offerer.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 	offerer.visible_message(span_notice("[offerer] leans in slightly, offering a kiss[cheek_kiss ? " on the cheek" : ""]!"),
 		span_notice("You lean in slightly, indicating you'd like to offer a kiss[cheek_kiss ? " on the cheek" : ""]!"), null, 2)
-	offerer.apply_status_effect(/datum/status_effect/offering, src)
+	offerer.apply_status_effect(/datum/status_effect/offering/no_item_received, src)
 	return TRUE
 
 /obj/item/hand_item/kisser/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)

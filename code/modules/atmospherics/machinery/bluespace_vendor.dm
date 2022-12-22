@@ -57,7 +57,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	. = ..()
 
 	if(nbuild)
-		panel_open = TRUE
+		set_panel_open(TRUE)
 
 	update_appearance()
 

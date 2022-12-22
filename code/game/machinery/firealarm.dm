@@ -42,7 +42,7 @@
 	. = ..()
 	if(building)
 		buildstage = 0
-		panel_open = TRUE
+		set_panel_open(TRUE)
 	if(name == initial(name))
 		name = "[get_area_name(src)] [initial(name)]"
 	update_appearance()
@@ -256,7 +256,7 @@
 
 	if(tool.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
 		tool.play_tool_sound(src)
-		panel_open = !panel_open
+		toggle_panel_open()
 		to_chat(user, span_notice("The wires have been [panel_open ? "exposed" : "unexposed"]."))
 		update_appearance()
 		return
