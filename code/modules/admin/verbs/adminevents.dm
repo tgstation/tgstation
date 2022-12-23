@@ -248,7 +248,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	switch(tgui_alert(usr, "Select an Option", "Hostie Environment Manager", list("Enable", "Disable", "Clear All")))
+	switch(tgui_alert(usr, "Select an Option", "Hostile Environment Manager", list("Enable", "Disable", "Clear All")))
 		if("Enable")
 			if (SSshuttle.hostile_environments["Admin"] == TRUE)
 				to_chat(usr, span_warning("Error, admin hostile environment already enabled."))
