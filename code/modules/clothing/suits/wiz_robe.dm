@@ -5,7 +5,7 @@
 	worn_icon = 'icons/mob/clothing/head/wizard.dmi'
 	icon_state = "wizard"
 	inhand_icon_state = "wizhat"
-	armor_type = /datum/armor/head_wizard
+	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 100, FIRE = 100, ACID = 100,  WOUND = 20)
 	strip_delay = 50
 	equip_delay_other = 50
 	clothing_flags = SNUG_FIT | CASTING_CLOTHES
@@ -34,7 +34,7 @@
 	name = "wizard hat"
 	desc = "It has WIZZARD written across it in sequins. Comes with a cool beard."
 	icon_state = "wizard-fake"
-	armor_type = /datum/armor/none
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FLAMMABLE
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
@@ -67,7 +67,7 @@
 	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = "wizrobe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor_type = /datum/armor/suit_wizrobe
+	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 100, FIRE = 100, ACID = 100, WOUND = 20)
 	allowed = list(/obj/item/teleportation_scroll, /obj/item/highfrequencyblade/wizard)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
@@ -122,14 +122,14 @@
 	desc = "A rather dull blue robe meant to mimic real wizard robes."
 	icon_state = "wizard-fake"
 	inhand_icon_state = "wizrobe"
-	armor_type = /datum/armor/none
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "witch hat"
 	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
 	icon_state = "marisa"
-	armor_type = /datum/armor/none
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
@@ -137,7 +137,7 @@
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
 	inhand_icon_state = null
-	armor_type = /datum/armor/none
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/paper
@@ -148,18 +148,6 @@
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/suit_wizrobe
-	melee = 30
-	bullet = 20
-	laser = 20
-	energy = 30
-	bomb = 20
-	bio = 100
-	fire = 100
-	acid = 100
-	wound = 20
 
 /obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)
 	stickmen()

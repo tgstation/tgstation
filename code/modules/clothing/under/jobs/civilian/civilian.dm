@@ -98,7 +98,7 @@
 	name = "botanist's jumpsuit"
 	icon_state = "hydroponics"
 	inhand_icon_state = "g_suit"
-	armor_type = /datum/armor/civilian_hydroponics
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/civilian/hydroponics/skirt
 	name = "botanist's jumpskirt"
@@ -115,7 +115,7 @@
 	name = "janitor's jumpsuit"
 	icon_state = "janitor"
 	inhand_icon_state = "janitor"
-	armor_type = /datum/armor/civilian_janitor
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/civilian/janitor/skirt
 	name = "janitor's jumpskirt"
@@ -139,10 +139,6 @@
 	desc = "Slick threads."
 	name = "Lawyer suit"
 	can_adjust = FALSE
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/civilian_janitor
-	bio = 10
 
 /obj/item/clothing/under/rank/civilian/lawyer/dye_item(dye_color, dye_key_override)
 	if(dye_color == DYE_COSMIC || dye_color == DYE_SYNDICATE)
