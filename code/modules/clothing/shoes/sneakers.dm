@@ -29,7 +29,7 @@
 /obj/item/clothing/shoes/sneakers/blue
 	name = "blue shoes"
 	greyscale_colors = "#4f88df#ffffff"
-	armor_type = /datum/armor/sneakers_blue
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 95, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/shoes/sneakers/green
 	name = "green shoes"
@@ -51,7 +51,7 @@
 /obj/item/clothing/shoes/sneakers/white
 	name = "white shoes"
 	greyscale_colors = "#ffffff#ffffff"
-	armor_type = /datum/armor/sneakers_white
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 95, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/shoes/sneakers/rainbow
 	name = "rainbow shoes"
@@ -75,10 +75,6 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_orange_inhand_right
 	flags_1 = NONE
 	var/obj/item/restraints/handcuffs/attached_cuffs
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/sneakers_white
-	bio = 95
 
 /obj/item/clothing/shoes/sneakers/orange/Initialize(mapload)
 	. = ..()
