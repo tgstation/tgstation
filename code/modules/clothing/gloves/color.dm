@@ -8,7 +8,7 @@
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
 	siemens_coefficient = 0
-	armor_type = /datum/armor/color_yellow
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	resistance_flags = NONE
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
@@ -26,10 +26,6 @@
 	desc = "What is the number one problem facing our station today?"
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "sprayoncan"
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/color_yellow
-	bio = 50
 
 /obj/item/toy/sprayoncan/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(iscarbon(target) && proximity)
@@ -50,13 +46,9 @@
 	icon_state = "sprayon"
 	inhand_icon_state = null
 	item_flags = DROPDEL
-	armor_type = /datum/armor/none
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = ACID_PROOF
 	var/charges_remaining = 10
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/color_yellow
-	bio = 50
 
 /obj/item/clothing/gloves/color/yellow/sprayon/Initialize(mapload)
 	.=..()
@@ -83,13 +75,9 @@
 	inhand_icon_state = "ygloves"
 	greyscale_colors = null
 	siemens_coefficient = 1 //Set to a default of 1, gets overridden in Initialize()
-	armor_type = /datum/armor/color_fyellow
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 25, FIRE = 0, ACID = 0)
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/cut
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/color_fyellow
-	bio = 25
 
 /obj/item/clothing/gloves/color/fyellow/Initialize(mapload)
 	. = ..()
@@ -98,10 +86,6 @@
 /obj/item/clothing/gloves/color/fyellow/old
 	desc = "Old and worn out insulated gloves, hopefully they still work."
 	name = "worn out insulated gloves"
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/color_yellow
-	bio = 50
 
 /obj/item/clothing/gloves/color/fyellow/old/Initialize(mapload)
 	. = ..()
@@ -160,7 +144,7 @@
 	name = "insulated gloves"
 	desc = "These gloves provide protection against electric shock."
 	siemens_coefficient = 0
-	armor_type = /datum/armor/red_insulated
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/rainbow
@@ -228,7 +212,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 60
-	armor_type = /datum/armor/color_captain
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 70, ACID = 50)
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/chief_engineer
@@ -251,7 +235,7 @@
 	inhand_icon_state = "latex_gloves"
 	greyscale_colors = null
 	siemens_coefficient = 0.3
-	armor_type = /datum/armor/color_latex
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = NONE
 
@@ -271,7 +255,7 @@
 	icon_state = "clockwork_gauntlets"
 	greyscale_colors = "#db6f05"
 	siemens_coefficient = 0.8
-	armor_type = /datum/armor/latex_engineering
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 70, FIRE = 0, ACID = 0)
 	clothing_traits = list(TRAIT_QUICK_BUILD)
 	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 

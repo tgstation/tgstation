@@ -180,7 +180,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
-	armor_type = /datum/armor/hooded_cult_hoodie
+	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 40, BOMB = 25, BIO = 10, FIRE = 10, ACID = 10)
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -195,7 +195,7 @@ Striking a noncultist, however, will tear their flesh."}
 	inhand_icon_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor_type = /datum/armor/hooded_cultrobes
+	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 40, BOMB = 25, BIO = 10, FIRE = 10, ACID = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -220,17 +220,6 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/clothing/suit/hooded/cultrobes/alt/ghost
 	item_flags = DROPDEL
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/hooded_cultrobes
-	melee = 40
-	bullet = 30
-	laser = 40
-	energy = 40
-	bomb = 25
-	bio = 10
-	fire = 10
-	acid = 10
-
 /obj/item/clothing/suit/hooded/cultrobes/alt/ghost/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
@@ -241,7 +230,7 @@ Striking a noncultist, however, will tear their flesh."}
 	inhand_icon_state = null
 	desc = "A helm worn by the followers of Nar'Sie."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
-	armor_type = /datum/armor/wizard_magus
+	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, FIRE = 10, ACID = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/magusred
@@ -253,7 +242,7 @@ Striking a noncultist, however, will tear their flesh."}
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor_type = /datum/armor/suit_magusred
+	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, FIRE = 10, ACID = 10)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/hooded/cultrobes/hardened
@@ -263,7 +252,7 @@ Striking a noncultist, however, will tear their flesh."}
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals)
-	armor_type = /datum/armor/cultrobes_hardened
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/hardened
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
@@ -276,7 +265,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	inhand_icon_state = null
-	armor_type = /datum/armor/cult_hoodie_hardened
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -294,17 +283,6 @@ Striking a noncultist, however, will tear their flesh."}
 	max = 40
 	prefix = "darkened"
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_hardened
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 60
-	bomb = 50
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/item/sharpener/cult/update_icon_state()
 	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
 	return ..()
@@ -315,19 +293,8 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "cult_armor"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
-	armor_type = /datum/armor/cultrobes_cult_shield
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, FIRE = 50, ACID = 60)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cultrobes_cult_shield
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 50
-	bomb = 50
-	bio = 30
-	fire = 50
-	acid = 60
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/setup_shielding()
 	AddComponent(/datum/component/shielded, recharge_start_delay = 0 SECONDS, shield_icon_file = 'icons/effects/cult/effects.dmi', shield_icon = "shield-cult", run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))
@@ -343,18 +310,7 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "empowered cultist helmet"
 	desc = "Empowered helmet which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"
-	armor_type = /datum/armor/cult_hoodie_cult_shield
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_cult_shield
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 50
-	bomb = 50
-	bio = 30
-	fire = 50
-	acid = 60
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, FIRE = 50, ACID = 60)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
 	..()
@@ -369,23 +325,15 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "flagellant's robes"
 	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage. Provides an even greater speed boost if its hood is worn."
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor_type = /datum/armor/cultrobes_berserker
+	armor = list(MELEE = -45, BULLET = -45, LASER = -45,ENERGY = -55, BOMB = -45, BIO = 0, FIRE = 0, ACID = 0)
 	slowdown = -0.3 //the hood gives an additional -0.3 if you have it flipped up, for a total of -0.6
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 	name = "flagellant's hood"
 	desc = "A blood-soaked hood infused with dark magic."
-	armor_type = /datum/armor/cult_hoodie_berserkerhood
+	armor = list(MELEE = -45, BULLET = -45, LASER = -45,ENERGY = -55, BOMB = -45, BIO = 0, FIRE = 0, ACID = 0)
 	slowdown = -0.3
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
@@ -402,14 +350,6 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "blindfold"
 	inhand_icon_state = "blindfold"
 	flash_protect = FLASH_PROTECTION_WELDER
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()
@@ -444,14 +384,6 @@ Striking a noncultist, however, will tear their flesh."}
 	var/static/first_curse_time
 	///curse messages that have already been used
 	var/static/list/remaining_curses
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!IS_CULTIST(user))
@@ -523,14 +455,6 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state ="shifter"
 	var/uses = 4
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
-
 /obj/item/cult_shift/examine(mob/user)
 	. = ..()
 	if(uses)
@@ -591,14 +515,6 @@ Striking a noncultist, however, will tear their flesh."}
 	slot_flags = null
 	on = TRUE
 	var/charges = 5
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
 
 /obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
@@ -661,14 +577,6 @@ Striking a noncultist, however, will tear their flesh."}
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/halberd/halberd_act
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
 
 /obj/item/melee/cultblade/halberd/Initialize(mapload)
 	. = ..()
@@ -748,14 +656,6 @@ Striking a noncultist, however, will tear their flesh."}
 	var/obj/item/melee/cultblade/halberd/halberd
 	var/cooldown = 0
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
-
 /datum/action/innate/cult/halberd/Grant(mob/user, obj/blood_halberd)
 	. = ..()
 	halberd = blood_halberd
@@ -784,14 +684,6 @@ Striking a noncultist, however, will tear their flesh."}
 	mag_type = /obj/item/ammo_box/magazine/internal/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
-
 /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user)
 	. = ..()
 	if(!IS_CULTIST(user))
@@ -819,14 +711,6 @@ Striking a noncultist, however, will tear their flesh."}
 	nondirectional_sprite = TRUE
 	damage_type = BRUTE
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
 
 /obj/projectile/magic/arcane_barrage/blood/Bump(atom/target)
 	var/turf/T = get_turf(target)
@@ -863,14 +747,6 @@ Striking a noncultist, however, will tear their flesh."}
 	var/charging = FALSE
 	var/firing = FALSE
 	var/angle
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
 
 /obj/item/blood_beam/Initialize(mapload)
 	. = ..()
@@ -986,14 +862,6 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("bump", "prod")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/illusions = 2
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(IS_CULTIST(owner))

@@ -20,16 +20,11 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	armor_type = /datum/armor/item_knife
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/item_knife
-	fire = 50
-	acid = 50
 
 /obj/item/knife/Initialize(mapload)
 	. = ..()
@@ -74,11 +69,6 @@
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/item_knife
-	fire = 50
-	acid = 50
-
 /obj/item/knife/bloodletter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!isliving(target) || !proximity_flag)
@@ -113,11 +103,6 @@
 	inhand_icon_state = "huntingknife"
 	icon_state = "huntingknife"
 	wound_bonus = 10
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/item_knife
-	fire = 50
-	acid = 50
 
 /obj/item/knife/hunting/set_butchering()
 	AddComponent(/datum/component/butchering, \
@@ -177,7 +162,7 @@
 	throwforce = 12
 	attack_verb_continuous = list("shanks", "shivs")
 	attack_verb_simple = list("shank", "shiv")
-	armor_type = /datum/armor/none
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	custom_materials = list(/datum/material/glass=400)
 
 /obj/item/knife/shiv/plasma
@@ -187,7 +172,7 @@
 	desc = "A makeshift plasma glass shiv."
 	force = 9
 	throwforce = 13
-	armor_type = /datum/armor/shiv_plasma
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 	custom_materials = list(/datum/material/glass=400, /datum/material/plasma=200)
 
 /obj/item/knife/shiv/titanium
@@ -198,7 +183,7 @@
 	throwforce = 14
 	throw_range = 7
 	wound_bonus = 10
-	armor_type = /datum/armor/shiv_titanium
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 	custom_materials = list(/datum/material/glass=400, /datum/material/titanium=200)
 
 /obj/item/knife/shiv/plastitanium
@@ -212,7 +197,7 @@
 	throw_range = 8
 	wound_bonus = 10
 	bare_wound_bonus = 20
-	armor_type = /datum/armor/shiv_plastitanium
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 0, FIRE = 75, ACID = 75)
 	custom_materials = list(/datum/material/glass=400, /datum/material/alloy/plastitanium=200)
 
 /obj/item/knife/shiv/carrot
@@ -222,16 +207,6 @@
 	icon = 'icons/obj/kitchen.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	custom_materials = null
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/shiv_plastitanium
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 50
-	fire = 75
-	acid = 75
 
 /obj/item/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!"))
