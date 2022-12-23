@@ -20,7 +20,7 @@
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
 	max_integrity = 300
-	// ARMOR TODO armor = list(ENERGY = 100, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/machinery_bluespace_vendor
 	layer = OBJ_LAYER
 
 	///The bluespace sender that this vendor is connected to
@@ -52,6 +52,12 @@
 	mode = BS_MODE_OPEN
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_bluespace_vendor
+	energy = 100
+	fire = 80
+	acid = 30
 
 /obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
 	. = ..()

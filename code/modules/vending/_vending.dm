@@ -59,7 +59,7 @@
 	verb_exclaim = "beeps"
 	max_integrity = 300
 	integrity_failure = 0.33
-	// ARMOR TODO armor = list(MELEE = 20, FIRE = 50, ACID = 70)
+	armor_type = /datum/armor/machinery_vending
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
 	light_power = 0.5
@@ -199,6 +199,12 @@
  * * FALSE - if the machine was maploaded on a zlevel that doesn't pass the is_station_level check
  * * TRUE - all other cases
  */
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_vending
+	melee = 20
+	fire = 50
+	acid = 70
+
 /obj/machinery/vending/Initialize(mapload)
 	var/build_inv = FALSE
 	if(!refill_canister)
@@ -1276,6 +1282,12 @@
 	var/list/base64_cache = list()
 	panel_type = "panel20"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_vending
+	melee = 20
+	fire = 50
+	acid = 70
+
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
 	if(!isliving(user))
@@ -1432,6 +1444,12 @@
 	machine_name = "Custom Vendor"
 	icon_state = "refill_custom"
 	custom_premium_price = PAYCHECK_CREW
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_vending
+	melee = 20
+	fire = 50
+	acid = 70
 
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
 	icon_state = "greed"

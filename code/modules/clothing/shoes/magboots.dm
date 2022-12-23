@@ -6,11 +6,15 @@
 	var/magboot_state = "magboots"
 	var/magpulse = FALSE
 	var/slowdown_active = 2
-	// ARMOR TODO armor = list(BIO = 90)
+	armor_type = /datum/armor/shoes_magboots
 	actions_types = list(/datum/action/item_action/toggle)
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = FIRE_PROOF
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_magboots
+	bio = 90
 
 /obj/item/clothing/shoes/magboots/equipped(mob/user, slot)
 	. = ..()

@@ -23,8 +23,13 @@
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE //doesn't affect stats of the weapon as to avoid gamering your opponent with a dope weapon
-	// ARMOR TODO armor = list(FIRE = 100, ACID = 50)
+	armor_type = /datum/armor/item_ceremonial_blade
 	resistance_flags = FIRE_PROOF
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_ceremonial_blade
+	fire = 100
+	acid = 50
 
 /obj/item/ceremonial_blade/Initialize(mapload)
 	. = ..()

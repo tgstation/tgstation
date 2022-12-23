@@ -21,8 +21,13 @@
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
-	// ARMOR TODO armor = list(FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_crowbar
 	var/force_opens = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
 
 /obj/item/crowbar/Initialize(mapload)
 	. = ..()
@@ -66,6 +71,11 @@
 	desc = "It's a bulky crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
 	w_class = WEIGHT_CLASS_BULKY
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
+
 /obj/item/crowbar/large/heavy //from space ruin
 	name = "heavy crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
@@ -78,6 +88,11 @@
 	desc = "It's an old crowbar. Much larger than the pocket sized ones, carrying a lot more heft. They don't make 'em like they used to."
 	throwforce = 10
 	throw_speed = 2
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
 
 /obj/item/crowbar/large/old/Initialize(mapload)
 	. = ..()
@@ -98,6 +113,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
@@ -129,6 +149,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	force_opens = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
 
 /obj/item/crowbar/power/examine()
 	. = ..()
@@ -177,10 +202,15 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
 	toolspeed = 1.25
-	// ARMOR TODO armor = list(BOMB = 100, FIRE = 100)
+	armor_type = /datum/armor/crowbar_mechremoval
 	resistance_flags = FIRE_PROOF
 	bare_wound_bonus = 15
 	wound_bonus = 10
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/crowbar_mechremoval
+	bomb = 100
+	fire = 100
 
 /obj/item/crowbar/mechremoval/Initialize(mapload)
 	. = ..()

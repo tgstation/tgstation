@@ -6,7 +6,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
-	// ARMOR TODO armor = list(BIO = 10, WOUND = 5)
+	armor_type = /datum/armor/clothing_under
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -21,6 +21,11 @@
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/clothing_under
+	bio = 10
+	wound = 5
 
 /obj/item/clothing/under/Initialize(mapload)
 	. = ..()
@@ -358,6 +363,11 @@
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/clothing_under
+	bio = 10
+	wound = 5
 
 /obj/item/clothing/under/proc/dump_attachment()
 	if(!attached_accessory)

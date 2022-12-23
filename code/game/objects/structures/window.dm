@@ -10,7 +10,7 @@
 	max_integrity = 50
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
-	// ARMOR TODO armor = list(MELEE = 50, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/structure_window
 	can_atmos_pass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
@@ -33,6 +33,12 @@
 	var/hit_sound = 'sound/effects/glasshit.ogg'
 	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
 	var/bloodied = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_window
+	melee = 50
+	fire = 80
+	acid = 100
 
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
@@ -440,7 +446,7 @@
 	icon_state = "rwindow"
 	reinf = TRUE
 	heat_resistance = 1600
-	// ARMOR TODO armor = list(MELEE = 80, BOMB = 25, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/window_reinforced
 	max_integrity = 75
 	explosion_block = 1
 	damage_deflection = 11
@@ -453,6 +459,13 @@
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 //2021 AND STILLLL GOING STRONG
 //2022 BABYYYYY ~lewc
+/// Automatically generated armor datum, errors may exist
+/datum/armor/window_reinforced
+	melee = 80
+	bomb = 25
+	fire = 80
+	acid = 100
+
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
 	switch(state)
 		if(RWINDOW_SECURE)
@@ -563,11 +576,19 @@
 	icon_state = "plasmawindow"
 	reinf = FALSE
 	heat_resistance = 25000
-	// ARMOR TODO armor = list(MELEE = 80, BULLET = 5, BOMB = 45, FIRE = 99, ACID = 100)
+	armor_type = /datum/armor/window_plasma
 	max_integrity = 200
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_MEDIUM_INSULATION
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/window_plasma
+	melee = 80
+	bullet = 5
+	bomb = 45
+	fire = 99
+	acid = 100
 
 /obj/structure/window/plasma/Initialize(mapload, direct)
 	. = ..()
@@ -600,12 +621,20 @@
 	icon_state = "plasmarwindow"
 	reinf = TRUE
 	heat_resistance = 50000
-	// ARMOR TODO armor = list(MELEE = 80, BULLET = 20, BOMB = 60, FIRE = 99, ACID = 100)
+	armor_type = /datum/armor/reinforced_plasma
 	max_integrity = 500
 	damage_deflection = 21
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
 	rad_insulation = RAD_HEAVY_INSULATION
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/reinforced_plasma
+	melee = 80
+	bullet = 20
+	bomb = 60
+	fire = 99
+	acid = 100
 
 /obj/structure/window/reinforced/plasma/block_superconductivity()
 	return TRUE
@@ -716,6 +745,14 @@
 	glass_amount = 2
 
 //there is a sub shuttle window in survival_pod.dm for mining pods
+/// Automatically generated armor datum, errors may exist
+/datum/armor/reinforced_plasma
+	melee = 80
+	bullet = 20
+	bomb = 60
+	fire = 99
+	acid = 100
+
 /obj/structure/window/reinforced/shuttle//this is called reinforced because it is reinforced w/titanium
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
@@ -769,7 +806,7 @@
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	heat_resistance = 1600
-	// ARMOR TODO armor = list(MELEE = 95, BOMB = 50, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/plasma_plastitanium
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
@@ -778,6 +815,13 @@
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
 	rad_insulation = RAD_EXTREME_INSULATION
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/plasma_plastitanium
+	melee = 95
+	bomb = 50
+	fire = 80
+	acid = 100
 
 /obj/structure/window/reinforced/plasma/plastitanium/spawnDebris(location)
 	. = list()
@@ -818,6 +862,13 @@
 	hit_sound = 'sound/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/plasma_plastitanium
+	melee = 95
+	bomb = 50
+	fire = 80
+	acid = 100
 
 /obj/structure/window/paperframe/Initialize(mapload)
 	. = ..()

@@ -144,7 +144,16 @@ Slimecrossing Items
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, FIRE = -80, ACID = 30)
+	armor_type = /datum/armor/structure_ice_stasis
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_ice_stasis
+	melee = 30
+	bullet = 50
+	laser = -50
+	energy = -50
+	fire = -80
+	acid = 30
 
 /obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
@@ -163,6 +172,15 @@ Slimecrossing Items
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "capturedevice"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_ice_stasis
+	melee = 30
+	bullet = 50
+	laser = -50
+	energy = -50
+	fire = -80
+	acid = 30
 
 /obj/item/capturedevice/attack(mob/living/M, mob/user)
 	if(length(contents))

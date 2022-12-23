@@ -7,11 +7,15 @@
 	clothing_flags = MASKINTERNALS
 	visor_flags = MASKINTERNALS
 	w_class = WEIGHT_CLASS_SMALL
-	// ARMOR TODO armor = list(BIO = 50)
+	armor_type = /datum/armor/mask_breath
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/mask_breath
+	bio = 50
 
 /obj/item/clothing/mask/breath/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is wrapping \the [src]'s tube around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -34,5 +38,5 @@
 	name = "medical mask"
 	icon_state = "medical"
 	inhand_icon_state = "m_mask"
-	// ARMOR TODO armor = list(BIO = 90)
+	armor_type = /datum/armor/breath_medical
 	equip_delay_other = 10

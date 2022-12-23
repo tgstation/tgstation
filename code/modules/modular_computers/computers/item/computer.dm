@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	// ARMOR TODO armor = list(BULLET = 20, LASER = 20, ENERGY = 100)
+	armor_type = /datum/armor/item_modular_computer
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
 	///The ID currently stored in the computer.
@@ -109,6 +109,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/stored_paper = 10
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_modular_computer
+	bullet = 20
+	laser = 20
+	energy = 100
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()

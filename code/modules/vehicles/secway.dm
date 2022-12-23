@@ -4,12 +4,19 @@
 	desc = "A brave security cyborg gave its life to help you look like a complete tool."
 	icon_state = "secway"
 	max_integrity = 60
-	// ARMOR TODO armor = list(MELEE = 10, LASER = 10, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/ridden_secway
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
 
 	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.
 	var/obj/item/food/grown/banana/eddie_murphy
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/ridden_secway
+	melee = 10
+	laser = 10
+	fire = 60
+	acid = 60
 
 /obj/vehicle/ridden/secway/Initialize(mapload)
 	. = ..()

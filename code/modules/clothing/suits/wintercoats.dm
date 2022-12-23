@@ -10,7 +10,11 @@
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
-	// ARMOR TODO armor = list(BIO = 10)
+	armor_type = /datum/armor/hooded_wintercoat
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/hooded_wintercoat
+	bio = 10
 
 /obj/item/clothing/suit/hooded/wintercoat/Initialize(mapload)
 	. = ..()
@@ -36,7 +40,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
-	// ARMOR TODO armor = list(BIO = 10)
+	armor_type = /datum/armor/hooded_winterhood
 
 // An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
 // Slight extra armor, bulky size, slows you down, can carry a large oxygen tank, won't burn off.
@@ -46,7 +50,7 @@
 	icon_state = "coateva"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.75
-	// ARMOR TODO armor = list(MELEE = 10, LASER = 10, ENERGY = 10, BIO = 50, FIRE = 50, ACID = 20)
+	armor_type = /datum/armor/wintercoat_eva
 	strip_delay = 6 SECONDS
 	equip_delay_other = 6 SECONDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT // Protects very cold.
@@ -56,6 +60,15 @@
 	resistance_flags = NONE
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/eva
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/wintercoat_eva
+	melee = 10
+	laser = 10
+	energy = 10
+	bio = 50
+	fire = 50
+	acid = 20
+
 /obj/item/clothing/suit/hooded/wintercoat/eva/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/tank/internals
@@ -64,7 +77,7 @@
 	name = "\proper Endotherm winter hood"
 	desc = "A thickly padded hood attached to an even thicker coat."
 	icon_state = "hood_eva"
-	// ARMOR TODO armor = list(MELEE = 10, LASER = 10, ENERGY = 10, BIO = 50, FIRE = 50, ACID = 20)
+	armor_type = /datum/armor/winterhood_eva
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL|SNUG_FIT // Snug fit doesn't really matter, but might as well
@@ -76,8 +89,19 @@
 	desc = "A luxurious winter coat woven in the bright green and gold colours of Central Command. It has a small pin in the shape of the Nanotrasen logo for a zipper."
 	icon_state = "coatcentcom"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, FIRE = 10, ACID = 60)
+	armor_type = /datum/armor/wintercoat_centcom
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/centcom
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/wintercoat_centcom
+	melee = 35
+	bullet = 40
+	laser = 40
+	energy = 50
+	bomb = 35
+	bio = 10
+	fire = 10
+	acid = 60
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize(mapload)
 	. = ..()
@@ -85,7 +109,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/centcom
 	icon_state = "hood_centcom"
-	// ARMOR TODO armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, FIRE = 10, ACID = 60)
+	armor_type = /datum/armor/winterhood_centcom
 
 // Captain
 /obj/item/clothing/suit/hooded/wintercoat/captain
@@ -95,8 +119,17 @@
 			Extremely lavish, and extremely durable."
 	icon_state = "coatcaptain"
 	inhand_icon_state = "coatcaptain"
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, ACID = 50)
+	armor_type = /datum/armor/wintercoat_captain
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/wintercoat_captain
+	melee = 25
+	bullet = 30
+	laser = 30
+	energy = 40
+	bomb = 25
+	acid = 50
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize(mapload)
 	. = ..()
@@ -104,7 +137,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "hood_captain"
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, ACID = 50)
+	armor_type = /datum/armor/winterhood_captain
 
 // Head of Personnel
 /obj/item/clothing/suit/hooded/wintercoat/hop
@@ -112,7 +145,7 @@
 	desc = "A cozy winter coat, covered in thick fur. The breast features a proud yellow chevron, reminding everyone that you're the second banana."
 	icon_state = "coathop"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(MELEE = 10, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 10, ACID = 35)
+	armor_type = /datum/armor/wintercoat_hop
 	allowed = list(
 		/obj/item/melee/baton/telescopic,
 	)
@@ -168,8 +201,17 @@
 	desc = "A red, armour-padded winter coat. It glitters with a mild ablative coating and a robust air of authority.  The zipper tab is a pair of jingly little handcuffs that get annoying after the first ten seconds."
 	icon_state = "coatsecurity"
 	inhand_icon_state = "coatsecurity"
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, ACID = 45)
+	armor_type = /datum/armor/wintercoat_security
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/wintercoat_security
+	melee = 25
+	bullet = 15
+	laser = 30
+	energy = 40
+	bomb = 25
+	acid = 45
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize(mapload)
 	. = ..()
@@ -178,7 +220,7 @@
 /obj/item/clothing/head/hooded/winterhood/security
 	desc = "A red, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
 	icon_state = "hood_security"
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, ACID = 45)
+	armor_type = /datum/armor/winterhood_security
 
 // Medical Doctor
 /obj/item/clothing/suit/hooded/wintercoat/medical
@@ -199,13 +241,13 @@
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
 	)
-	// ARMOR TODO armor = list(BIO = 40, FIRE = 10, ACID = 20)
+	armor_type = /datum/armor/wintercoat_medical
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical
 
 /obj/item/clothing/head/hooded/winterhood/medical
 	desc = "A white winter coat hood."
 	icon_state = "hood_medical"
-	// ARMOR TODO armor = list(BIO = 40, FIRE = 10, ACID = 20)
+	armor_type = /datum/armor/winterhood_medical
 
 // Chief Medical Officer
 /obj/item/clothing/suit/hooded/wintercoat/medical/cmo
@@ -213,8 +255,14 @@
 	desc = "A winter coat in a vibrant shade of blue with a small silver caduceus instead of a plastic zipper tab. The normal liner is replaced with an exceptionally thick, soft layer of fur."
 	icon_state = "coatcmo"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(BIO = 50, FIRE = 20, ACID = 30)
+	armor_type = /datum/armor/medical_cmo
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/cmo
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/medical_cmo
+	bio = 50
+	fire = 20
+	acid = 30
 
 /obj/item/clothing/suit/hooded/wintercoat/medical/cmo/Initialize(mapload)
 	. = ..()
@@ -225,7 +273,7 @@
 /obj/item/clothing/head/hooded/winterhood/medical/cmo
 	desc = "A blue winter coat hood."
 	icon_state = "hood_cmo"
-	// ARMOR TODO armor = list(BIO = 50, FIRE = 20, ACID = 30)
+	armor_type = /datum/armor/medical_cmo
 
 // Chemist
 /obj/item/clothing/suit/hooded/wintercoat/medical/chemistry
@@ -234,6 +282,12 @@
 	icon_state = "coatchemistry"
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/chemistry
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/medical_cmo
+	bio = 50
+	fire = 20
+	acid = 30
 
 /obj/item/clothing/suit/hooded/wintercoat/medical/chemistry/Initialize(mapload)
 	. = ..()
@@ -250,6 +304,12 @@
 	icon_state = "coatviro"
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/viro
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/medical_cmo
+	bio = 50
+	fire = 20
+	acid = 30
 
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro/Initialize(mapload)
 	. = ..()
@@ -290,14 +350,14 @@
 		/obj/item/storage/bag/xeno,
 		/obj/item/storage/pill_bottle,
 	)
-	// ARMOR TODO armor = list(BOMB = 10, FIRE = 20)
+	armor_type = /datum/armor/wintercoat_science
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/head/hooded/winterhood/science
 	desc = "A white winter coat hood. This one will keep your brain warm. About as much as the others, really."
 	icon_state = "hood_science"
-	// ARMOR TODO armor = list(BOMB = 10, FIRE = 20)
+	armor_type = /datum/armor/winterhood_science
 
 // Research Director
 /obj/item/clothing/suit/hooded/wintercoat/science/rd
@@ -305,8 +365,13 @@
 	desc = "A thick arctic winter coat with an outdated atomic model instead of a plastic zipper tab. Most in the know are heavily aware that Bohr's model of the atom was outdated by the time of the 1930s when the Heisenbergian and Schrodinger models were generally accepted for true. Nevertheless, we still see its use in anachronism, roleplaying, and, in this case, as a zipper tab. At least it should keep you warm on your ivory pillar."
 	icon_state = "coatrd"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(BOMB = 20, FIRE = 30)
+	armor_type = /datum/armor/science_rd
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/rd
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/science_rd
+	bomb = 20
+	fire = 30
 
 /obj/item/clothing/suit/hooded/wintercoat/science/rd/Initialize(mapload)
 	. = ..()
@@ -317,7 +382,7 @@
 /obj/item/clothing/head/hooded/winterhood/science/rd
 	desc = "A white winter coat hood. It smells faintly of hair gel."
 	icon_state = "hood_rd"
-	// ARMOR TODO armor = list(BOMB = 20, FIRE = 30)
+	armor_type = /datum/armor/science_rd
 
 // Roboticist
 /obj/item/clothing/suit/hooded/wintercoat/science/robotics
@@ -357,9 +422,13 @@
 		/obj/item/storage/bag/construction,
 		/obj/item/t_scanner,
 	)
-	// ARMOR TODO armor = list(FIRE = 20)
+	armor_type = /datum/armor/wintercoat_engineering
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
 	species_exception = list(/datum/species/golem/uranium)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/wintercoat_engineering
+	fire = 20
 
 /obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -369,7 +438,11 @@
 /obj/item/clothing/head/hooded/winterhood/engineering
 	desc = "A yellow winter coat hood. Definitely not a replacement for a hard hat."
 	icon_state = "hood_engineer"
-	// ARMOR TODO armor = list(FIRE = 20)
+	armor_type = /datum/armor/winterhood_engineering
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/winterhood_engineering
+	fire = 20
 
 /obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -382,8 +455,13 @@
 	desc = "A white winter coat with reflective green and yellow stripes. Stuffed with asbestos, treated with fire retardant PBDE, lined with a micro thin sheet of lead foil and snugly fitted to your body's measurements. This baby's ready to save you from anything except the thyroid cancer and systemic fibrosis you'll get from wearing it. The zipper tab is a tiny golden wrench."
 	icon_state = "coatce"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(FIRE = 30, ACID = 10)
+	armor_type = /datum/armor/engineering_ce
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/ce
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/engineering_ce
+	fire = 30
+	acid = 10
 
 /obj/item/clothing/suit/hooded/wintercoat/engineering/ce/Initialize(mapload)
 	. = ..()
@@ -394,7 +472,7 @@
 /obj/item/clothing/head/hooded/winterhood/engineering/ce
 	desc = "A white winter coat hood. Feels surprisingly heavy. The tag says that it's not child safe."
 	icon_state = "hood_ce"
-	// ARMOR TODO armor = list(FIRE = 30, ACID = 10)
+	armor_type = /datum/armor/engineering_ce
 
 // Atmospherics Technician
 /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
@@ -429,6 +507,11 @@
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/cargo/qm
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/engineering_ce
+	fire = 30
+	acid = 10
+
 /obj/item/clothing/suit/hooded/wintercoat/cargo/qm/Initialize(mapload)
 	. = ..()
 	allowed += list(
@@ -454,13 +537,13 @@
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
 	)
-	// ARMOR TODO armor = list(MELEE = 10)
+	armor_type = /datum/armor/wintercoat_miner
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
 
 /obj/item/clothing/head/hooded/winterhood/miner
 	desc = "A dusty winter coat hood."
 	icon_state = "hood_miner"
-	// ARMOR TODO armor = list(MELEE = 10)
+	armor_type = /datum/armor/winterhood_miner
 
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
@@ -472,6 +555,10 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 //In case colors are changed after initialization
+/// Automatically generated armor datum, errors may exist
+/datum/armor/winterhood_miner
+	melee = 10
+
 /obj/item/clothing/suit/hooded/wintercoat/custom/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
 	. = ..()
 	if(hood)

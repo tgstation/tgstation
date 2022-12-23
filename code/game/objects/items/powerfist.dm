@@ -20,7 +20,7 @@
 	throwforce = 10
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	// ARMOR TODO armor = list(FIRE = 100, ACID = 40)
+	armor_type = /datum/armor/melee_powerfist
 	resistance_flags = FIRE_PROOF
 	/// Delay between attacks
 	var/click_delay = 0.15 SECONDS
@@ -30,6 +30,11 @@
 	var/gas_per_fist = 3
 	/// Tank used for the gauntlet's piston-ram.
 	var/obj/item/tank/internals/tank
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/melee_powerfist
+	fire = 100
+	acid = 40
 
 /obj/item/melee/powerfist/examine(mob/user)
 	. = ..()

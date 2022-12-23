@@ -13,7 +13,7 @@
 	plane = GAME_PLANE_UPPER
 	density = TRUE
 	max_integrity = 300
-	// ARMOR TODO armor = list(ENERGY = 100, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/binary_crystallizer
 	circuit = /obj/item/circuitboard/machine/crystallizer
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	vent_movement = NONE
@@ -30,6 +30,12 @@
 	var/datum/gas_recipe/selected_recipe = null
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/binary_crystallizer
+	energy = 100
+	fire = 80
+	acid = 30
 
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize(mapload)
 	. = ..()

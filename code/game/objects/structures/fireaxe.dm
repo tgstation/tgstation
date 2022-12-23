@@ -5,7 +5,7 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	// ARMOR TODO armor = list(MELEE = 50, BULLET = 20, ENERGY = 100, BOMB = 10, FIRE = 90, ACID = 50)
+	armor_type = /datum/armor/structure_fireaxecabinet
 	max_integrity = 150
 	integrity_failure = 0.33
 	/// Do we need to be unlocked to be opened.
@@ -20,6 +20,15 @@
 	var/item_overlay = "axe"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_fireaxecabinet
+	melee = 50
+	bullet = 20
+	energy = 100
+	bomb = 10
+	fire = 90
+	acid = 50
 
 /obj/structure/fireaxecabinet/Initialize(mapload)
 	. = ..()

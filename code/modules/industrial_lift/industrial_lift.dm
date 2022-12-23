@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	base_icon_state = "catwalk"
 	density = FALSE
 	anchored = TRUE
-	// ARMOR TODO armor = list(MELEE = 50, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/structure_industrial_lift
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
@@ -66,6 +66,12 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/radial_travel = TRUE
 	/// A lazylist of REFs to all mobs which have a radial open currently
 	var/list/current_operators
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
 
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
@@ -721,6 +727,12 @@ GLOBAL_LIST_EMPTY(lifts)
 	lift_id = DEBUG_LIFT_ID
 	radial_travel = TRUE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
+
 /obj/structure/industrial_lift/debug/open_lift_radial(mob/living/user)
 	var/starting_position = loc
 	if (!can_open_lift_radial(user,starting_position))
@@ -804,6 +816,12 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/tram/white
 	icon_state = "titanium_white"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()

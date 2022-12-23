@@ -17,7 +17,7 @@
 	icon_state = "fire0"
 	max_integrity = 250
 	integrity_failure = 0.4
-	// ARMOR TODO armor = list(FIRE = 90, ACID = 30)
+	armor_type = /datum/armor/machinery_firealarm
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON
@@ -37,6 +37,11 @@
 	var/area/my_area = null
 	///looping sound datum for our fire alarm siren.
 	var/datum/looping_sound/firealarm/soundloop
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_firealarm
+	fire = 90
+	acid = 30
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
@@ -437,6 +442,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	desc = "Cuban Pete is in the house!"
 	var/static/party_overlay
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_firealarm
+	fire = 90
+	acid = 30
+
 /obj/machinery/firealarm/partyalarm/reset()
 	if (machine_stat & (NOPOWER|BROKEN))
 		return
@@ -472,6 +482,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	var/datum/port/output/reset
 
 	var/obj/machinery/firealarm/attached_alarm
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_firealarm
+	fire = 90
+	acid = 30
 
 /obj/item/circuit_component/firealarm/populate_ports()
 	alarm_trigger = add_input_port("Set", PORT_TYPE_SIGNAL)

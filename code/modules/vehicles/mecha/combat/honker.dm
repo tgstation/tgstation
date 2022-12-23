@@ -6,7 +6,7 @@
 	movedelay = 3
 	max_integrity = 140
 	force = 30
-	// ARMOR TODO armor = list(MELEE = -20, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/mecha_honker
 	max_temperature = 25000
 	destruction_sleep_duration = 40
 	exit_delay = 40
@@ -22,6 +22,12 @@
 	)
 	var/squeak = TRUE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/mecha_honker
+	melee = -20
+	fire = 100
+	acid = 100
+
 /obj/vehicle/sealed/mecha/honker/play_stepsound()
 	if(squeak)
 		playsound(src, SFX_CLOWN_STEP, 70, 1)
@@ -35,7 +41,7 @@
 	name = "\improper Dark H.O.N.K"
 	icon_state = "darkhonker"
 	max_integrity = 300
-	// ARMOR TODO armor = list(MELEE = 40, BULLET = 40, LASER = 50, ENERGY = 35, BOMB = 20, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/honker_dark
 	max_temperature = 35000
 	operation_req_access = list(ACCESS_SYNDICATE)
 	internals_req_access = list(ACCESS_SYNDICATE)
@@ -54,6 +60,16 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/honker_dark
+	melee = 40
+	bullet = 40
+	laser = 50
+	energy = 35
+	bomb = 20
+	fire = 100
+	acid = 100
 
 /obj/vehicle/sealed/mecha/honker/dark/add_cell(obj/item/stock_parts/cell/C)
 	if(C)

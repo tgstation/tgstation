@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = ACID_PROOF
-	// ARMOR TODO armor = list(MELEE = 30, BOMB = 10, FIRE = 70, ACID = 100)
+	armor_type = /datum/armor/structure_displaycase
 	max_integrity = 200
 	integrity_failure = 0.25
 	///The showpiece item inside the case
@@ -28,6 +28,13 @@
 	var/datum/alarm_handler/alarm_manager
 	///Used for subtypes that have a UI in them. The examine on click while adjecent will not fire, as we already get a popup
 	var/autoexamine_while_closed = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_displaycase
+	melee = 30
+	bomb = 10
+	fire = 70
+	acid = 100
 
 /obj/structure/displaycase/Initialize(mapload)
 	. = ..()
@@ -227,6 +234,13 @@
 	var/obj/item/electronics/airlock/electronics
 
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_displaycase
+	melee = 30
+	bomb = 10
+	fire = 70
+	acid = 100
+
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH) //The player can only deconstruct the wooden frame
 		to_chat(user, span_notice("You start disassembling [src]..."))
@@ -306,6 +320,13 @@
 	var/historian_mode = FALSE
 	///the trophy message
 	var/trophy_message = ""
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_displaycase
+	melee = 30
+	bomb = 10
+	fire = 70
+	acid = 100
 
 /obj/structure/displaycase/trophy/Initialize(mapload)
 	. = ..()
@@ -423,6 +444,13 @@
 /obj/item/showpiece_dummy
 	name = "holographic replica"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_displaycase
+	melee = 30
+	bomb = 10
+	fire = 70
+	acid = 100
+
 /obj/item/showpiece_dummy/Initialize(mapload, path)
 	. = ..()
 	var/obj/item/item_path = path
@@ -447,6 +475,13 @@
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_displaycase
+	melee = 30
+	bomb = 10
+	fire = 70
+	acid = 100
 
 /obj/structure/displaycase/forsale/update_icon_state()
 	icon_state = "[initial(icon_state)][broken ? "_broken" : (open ? "_open" : (!showpiece ? "_empty" : null))]"

@@ -7,7 +7,7 @@
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 10, BOMB = 20, BIO = 50, FIRE = 100, ACID = 50, WOUND = 10) // surprisingly robust against head trauma
+	armor_type = /datum/armor/utility_hardhat
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
@@ -24,6 +24,18 @@
 	///Whether the headlamp is on or off.
 	var/on = FALSE
 
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/head/utility/hardhat/Initialize(mapload)
 	. = ..()
@@ -110,6 +122,18 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/head/utility/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
@@ -128,6 +152,18 @@
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	visor_flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/head/utility/hardhat/weldhat/Initialize(mapload)
 	. = ..()
@@ -205,6 +241,18 @@
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
 	if(isnull(.))
@@ -237,6 +285,18 @@
 	hat_type = "blumpkin"
 	light_color = "#76ff8e"
 	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin/turn_on(mob/user)
 	. = ..()

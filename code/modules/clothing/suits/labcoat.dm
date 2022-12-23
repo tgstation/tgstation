@@ -28,7 +28,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		)
-	// ARMOR TODO armor = list(BIO = 50, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/toggle_labcoat
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/toggle/labcoat/cmo
@@ -36,6 +36,12 @@
 	desc = "Bluer than the standard model."
 	icon_state = "labcoat_cmo"
 	inhand_icon_state = null
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/toggle_labcoat
+	bio = 50
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/suit/toggle/labcoat/cmo/Initialize(mapload)
 	. = ..()
@@ -65,6 +71,12 @@
 	desc = "A suit that protects against minor chemical spills. Has an orange stripe on the shoulder."
 	icon_state = "labcoat_chem"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/toggle_labcoat
+	bio = 50
+	fire = 50
+	acid = 50
+
 /obj/item/clothing/suit/toggle/labcoat/chemist/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/chemistry
@@ -74,6 +86,12 @@
 	desc = "A suit that protects against minor chemical spills. Has a green stripe on the shoulder."
 	icon_state = "labcoat_vir"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/toggle_labcoat
+	bio = 50
+	fire = 50
+	acid = 50
+
 /obj/item/clothing/suit/toggle/labcoat/virologist/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/bio
@@ -82,6 +100,12 @@
 	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_sci"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/toggle_labcoat
+	bio = 50
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/suit/toggle/labcoat/science/Initialize(mapload)
 	. = ..()

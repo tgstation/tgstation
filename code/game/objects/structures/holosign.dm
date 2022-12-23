@@ -6,9 +6,17 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
 	max_integrity = 1
-	// ARMOR TODO armor = list(BULLET = 50, LASER = 50, ENERGY = 50, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/structure_holosign
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
@@ -59,6 +67,14 @@
 	max_integrity = 20
 	var/allow_walk = TRUE //can we pass through it on walk intent
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
+
 /obj/structure/holosign/barrier/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
@@ -75,6 +91,14 @@
 	desc = "When it says walk it means walk."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "holosign"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holosign/barrier/wetsign/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -109,6 +133,14 @@
 	max_integrity = 150
 	icon_state = "holo_tram"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
+
 /obj/structure/holosign/barrier/atmos/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
@@ -128,6 +160,14 @@
 	max_integrity = 10
 	allow_walk = FALSE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
+
 /obj/structure/holosign/barrier/cyborg/bullet_act(obj/projectile/P)
 	take_damage((P.damage / 5) , BRUTE, MELEE, 1) //Doesn't really matter what damage flag it is.
 	if(istype(P, /obj/projectile/energy/electrode))
@@ -143,6 +183,14 @@
 	alpha = 125 //lazy :)
 	var/force_allaccess = FALSE
 	var/buzzcd = 0
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holosign/barrier/medical/examine(mob/user)
 	. = ..()
@@ -188,6 +236,14 @@
 	desc = "A powerful energy field that blocks movement. Energy arcs off it."
 	max_integrity = 20
 	var/shockcd = 0
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/projectile/P)
 	take_damage(P.damage, BRUTE, MELEE, 1) //Yeah no this doesn't get projectile resistance.

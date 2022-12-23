@@ -25,7 +25,7 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 75
 	max_integrity = 200
-	// ARMOR TODO armor = list(FIRE = 100, ACID = 70)
+	armor_type = /datum/armor/item_dualsaber
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
 	bare_wound_bonus = 20
@@ -34,6 +34,11 @@
 	var/two_hand_force = 34
 	var/hacked = FALSE
 	var/list/possible_colors = list("red", "blue", "green", "purple")
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_dualsaber
+	fire = 100
+	acid = 70
 
 /obj/item/dualsaber/Initialize(mapload)
 	. = ..()
@@ -187,6 +192,11 @@
 
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_dualsaber
+	fire = 100
+	acid = 70
 
 /obj/item/dualsaber/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_MULTITOOL)

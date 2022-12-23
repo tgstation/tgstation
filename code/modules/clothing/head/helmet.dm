@@ -5,7 +5,7 @@
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "helmet"
 	inhand_icon_state = "helmet"
-	// ARMOR TODO armor = list(MELEE = 35, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 25, FIRE = 50, ACID = 50, WOUND = 10)
+	armor_type = /datum/armor/head_helmet
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -17,11 +17,33 @@
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/head_helmet
+	melee = 35
+	bullet = 30
+	laser = 30
+	energy = 40
+	bomb = 25
+	fire = 50
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/sec
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/head_helmet
+	melee = 35
+	bullet = 30
+	laser = 30
+	energy = 40
+	bomb = 25
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
@@ -56,8 +78,19 @@
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "helmetalt"
 	inhand_icon_state = "helmet"
-	// ARMOR TODO armor = list(MELEE = 15, BULLET = 60, LASER = 10, ENERGY = 10, BOMB = 40, FIRE = 50, ACID = 50, WOUND = 5)
+	armor_type = /datum/armor/helmet_alt
 	dog_fashion = null
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/helmet_alt
+	melee = 15
+	bullet = 60
+	laser = 10
+	energy = 10
+	bomb = 40
+	fire = 50
+	acid = 50
+	wound = 5
 
 /obj/item/clothing/head/helmet/alt/Initialize(mapload)
 	. = ..()
@@ -68,11 +101,23 @@
 	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."
 	icon_state = "marine_command"
 	inhand_icon_state = "marine_helmet"
-	// ARMOR TODO armor = list(MELEE = 50, BULLET = 50, LASER = 30, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 40, ACID = 50, WOUND = 20)
+	armor_type = /datum/armor/helmet_marine
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/helmet_marine
+	melee = 50
+	bullet = 50
+	laser = 30
+	energy = 25
+	bomb = 50
+	bio = 100
+	fire = 40
+	acid = 50
+	wound = 20
 
 /obj/item/clothing/head/helmet/marine/Initialize(mapload)
 	. = ..()
@@ -110,6 +155,18 @@
 	///chat message when the visor is toggled up.
 	var/alt_toggle_message
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/helmet_marine
+	melee = 50
+	bullet = 50
+	laser = 30
+	energy = 25
+	bomb = 50
+	bio = 100
+	fire = 40
+	acid = 50
+	wound = 20
+
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
 	. = ..()
 	if(.)
@@ -139,7 +196,7 @@
 	inhand_icon_state = "riot_helmet"
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
-	// ARMOR TODO armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, FIRE = 80, ACID = 80, WOUND = 15)
+	armor_type = /datum/armor/toggleable_riot
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
@@ -159,6 +216,16 @@
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/toggleable_riot
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 15
 
 /obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
 	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
@@ -191,7 +258,7 @@
 	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
 	icon_state = "swatsyndie"
 	inhand_icon_state = "swatsyndie_helmet"
-	// ARMOR TODO armor = list(MELEE = 40, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 50, BIO = 90, FIRE = 100, ACID = 100, WOUND = 15)
+	armor_type = /datum/armor/helmet_swat
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -220,7 +287,7 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	icon_state = "thunderdome"
 	inhand_icon_state = "thunderdome_helmet"
-	// ARMOR TODO armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/helmet_thunderdome
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -231,14 +298,14 @@
 /obj/item/clothing/head/helmet/thunderdome/holosuit
 	cold_protection = null
 	heat_protection = null
-	// ARMOR TODO armor = list(MELEE = 10, BULLET = 10)
+	armor_type = /datum/armor/thunderdome_holosuit
 
 /obj/item/clothing/head/helmet/roman
 	name = "\improper Roman helmet"
 	desc = "An ancient helmet made of bronze and leather."
 	flags_inv = HIDEEARS|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
-	// ARMOR TODO armor = list(MELEE = 25, LASER = 25, ENERGY = 10, BOMB = 10, FIRE = 100, ACID = 50, WOUND = 5)
+	armor_type = /datum/armor/helmet_roman
 	resistance_flags = FIRE_PROOF
 	icon_state = "roman"
 	inhand_icon_state = "roman_helmet"
@@ -273,7 +340,7 @@
 	icon_state = "redtaghelm"
 	flags_cover = HEADCOVERSEYES
 	inhand_icon_state = "redtag_helmet"
-	// ARMOR TODO armor = list(MELEE = 15, BULLET = 10, LASER = 20,ENERGY = 10, BOMB = 20, ACID = 50)
+	armor_type = /datum/armor/helmet_redtaghelm
 	// Offer about the same protection as a hardhat.
 	dog_fashion = null
 
@@ -283,7 +350,7 @@
 	icon_state = "bluetaghelm"
 	flags_cover = HEADCOVERSEYES
 	inhand_icon_state = "bluetag_helmet"
-	// ARMOR TODO armor = list(MELEE = 15, BULLET = 10, LASER = 20,ENERGY = 10, BOMB = 20, ACID = 50)
+	armor_type = /datum/armor/helmet_bluetaghelm
 	// Offer about the same protection as a hardhat.
 	dog_fashion = null
 
@@ -292,7 +359,7 @@
 	desc = "A classic metal helmet."
 	icon_state = "knight_green"
 	inhand_icon_state = "knight_helmet"
-	// ARMOR TODO armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, FIRE = 80, ACID = 80) // no wound armor cause getting domed in a bucket head sounds like concussion city
+	armor_type = /datum/armor/helmet_knight
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
@@ -312,7 +379,7 @@
 	desc = "A classic medieval helmet, if you hold it upside down you could see that it's actually a bucket."
 	icon_state = "knight_greyscale"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(MELEE = 35, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, FIRE = 40, ACID = 40)
+	armor_type = /datum/armor/knight_greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
 /obj/item/clothing/head/helmet/skull
@@ -320,7 +387,7 @@
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES
-	// ARMOR TODO armor = list(MELEE = 35, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/helmet_skull
 	icon_state = "skull"
 	inhand_icon_state = null
 	strip_delay = 100
@@ -331,7 +398,7 @@
 	icon_state = "durathread"
 	inhand_icon_state = "durathread_helmet"
 	resistance_flags = FLAMMABLE
-	// ARMOR TODO armor = list(MELEE = 20, BULLET = 10, LASER = 30, ENERGY = 40, BOMB = 15, FIRE = 40, ACID = 50, WOUND = 5)
+	armor_type = /datum/armor/helmet_durathread
 	strip_delay = 60
 
 /obj/item/clothing/head/helmet/rus_helmet
@@ -339,7 +406,17 @@
 	desc = "It can hold a bottle of vodka."
 	icon_state = "rus_helmet"
 	inhand_icon_state = "rus_helmet"
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 30, ENERGY = 10, BOMB = 10, FIRE = 20, ACID = 50, WOUND = 5)
+	armor_type = /datum/armor/helmet_rus_helmet
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/helmet_rus_helmet
+	melee = 25
+	bullet = 30
+	energy = 10
+	bomb = 10
+	fire = 20
+	acid = 50
+	wound = 5
 
 /obj/item/clothing/head/helmet/rus_helmet/Initialize(mapload)
 	. = ..()
@@ -354,14 +431,14 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 50, FIRE = -10, ACID = 50, WOUND = 5)
+	armor_type = /datum/armor/helmet_rus_ushanka
 
 /obj/item/clothing/head/helmet/elder_atmosian
 	name = "\improper Elder Atmosian Helmet"
 	desc = "A superb helmet made with the toughest and rarest materials available to man."
 	icon_state = "h2helmet"
 	inhand_icon_state = "h2_helmet"
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 85, BIO = 10, FIRE = 65, ACID = 40, WOUND = 15)
+	armor_type = /datum/armor/helmet_elder_atmosian
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH

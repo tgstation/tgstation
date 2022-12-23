@@ -31,7 +31,7 @@
 	icon_state = "space"
 	inhand_icon_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
-	// ARMOR TODO armor = list(BIO = 100, FIRE = 50, ACID = 65)
+	armor_type = /datum/armor/space_eva
 
 /obj/item/clothing/head/helmet/space/eva
 	name = "EVA helmet"
@@ -39,7 +39,13 @@
 	inhand_icon_state = "space_helmet"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	flash_protect = FLASH_PROTECTION_NONE
-	// ARMOR TODO armor = list(BIO = 100, FIRE = 50, ACID = 65)
+	armor_type = /datum/armor/space_eva
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/space_eva
+	bio = 100
+	fire = 50
+	acid = 65
 
 /obj/item/clothing/head/helmet/space/eva/examine(mob/user)
 	. = ..()
@@ -65,7 +71,7 @@
 	desc = "A bulky, air-tight helmet meant to protect the user during emergency situations. It doesn't look very durable."
 	icon_state = "syndicate-helm-orange"
 	inhand_icon_state = "syndicate-helm-orange" //resprite?
-	// ARMOR TODO armor = list(MELEE = 5)
+	armor_type = /datum/armor/space_fragile
 	strip_delay = 65
 
 /obj/item/clothing/suit/space/fragile
@@ -75,8 +81,12 @@
 	icon_state = "syndicate-orange"
 	inhand_icon_state = "syndicate-orange"
 	slowdown = 2
-	// ARMOR TODO armor = list(MELEE = 5)
+	armor_type = /datum/armor/space_fragile
 	strip_delay = 65
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/space_fragile
+	melee = 5
 
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!torn && prob(50))

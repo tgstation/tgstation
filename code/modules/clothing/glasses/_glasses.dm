@@ -148,8 +148,13 @@
 	inhand_icon_state = "glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
-	// ARMOR TODO armor = list(FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/glasses_science
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)
@@ -185,6 +190,11 @@
 	base_icon_state = "eyepatch"
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
@@ -235,6 +245,11 @@
 	icon_state = "glasses"
 	inhand_icon_state = "glasses"
 	vision_correction = TRUE //corrects nearsightedness
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
@@ -374,6 +389,11 @@
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
+
 /obj/item/clothing/glasses/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
@@ -390,6 +410,11 @@
 	tint = 3
 	darkness_view = 1
 	dog_fashion = /datum/dog_fashion/head
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -412,6 +437,11 @@
 	icon_state = "blindfoldwhite"
 	inhand_icon_state = null
 	var/colored_before = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/glasses/blindfold/white/visual_equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && (slot & ITEM_SLOT_EYES))
@@ -451,6 +481,11 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
+
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -461,6 +496,11 @@
 	name = "syndicate xray goggles"
 	desc = "A pair of xray goggles manufactured by the Syndicate."
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -499,6 +539,11 @@
 	icon_state = "thermoncle"
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
+
 /obj/item/clothing/glasses/thermal/monocle/examine(mob/user) //Different examiners see a different description!
 	if(user.gender == MALE)
 		desc = replacetext(desc, "person", "man")
@@ -514,6 +559,11 @@
 	base_icon_state = "eyepatch"
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/glasses/thermal/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
@@ -573,6 +623,11 @@
 	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
 	var/xray = FALSE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
+
 /obj/item/clothing/glasses/debug/equipped(mob/user, slot)
 	. = ..()
 	if(!(slot & ITEM_SLOT_EYES))
@@ -622,6 +677,11 @@
 	inhand_icon_state = "salesman"
 	///Tells us who the current wearer([BIGSHOT]) is.
 	var/mob/living/carbon/human/bigshot
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/glasses/salesman/equipped(mob/living/carbon/human/user, slot)
 	..()

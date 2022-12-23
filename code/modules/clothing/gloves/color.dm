@@ -8,7 +8,7 @@
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
 	siemens_coefficient = 0
-	// ARMOR TODO armor = list(BIO = 50)
+	armor_type = /datum/armor/color_yellow
 	resistance_flags = NONE
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
@@ -26,6 +26,10 @@
 	desc = "What is the number one problem facing our station today?"
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "sprayoncan"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/color_yellow
+	bio = 50
 
 /obj/item/toy/sprayoncan/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(iscarbon(target) && proximity)
@@ -49,6 +53,10 @@
 	armor_type = /datum/armor/none
 	resistance_flags = ACID_PROOF
 	var/charges_remaining = 10
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/color_yellow
+	bio = 50
 
 /obj/item/clothing/gloves/color/yellow/sprayon/Initialize(mapload)
 	.=..()
@@ -86,6 +94,10 @@
 /obj/item/clothing/gloves/color/fyellow/old
 	desc = "Old and worn out insulated gloves, hopefully they still work."
 	name = "worn out insulated gloves"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/color_yellow
+	bio = 50
 
 /obj/item/clothing/gloves/color/fyellow/old/Initialize(mapload)
 	. = ..()
@@ -144,7 +156,7 @@
 	name = "insulated gloves"
 	desc = "These gloves provide protection against electric shock."
 	siemens_coefficient = 0
-	// ARMOR TODO armor = list(BIO = 50)
+	armor_type = /datum/armor/red_insulated
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/rainbow
@@ -212,7 +224,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 60
-	// ARMOR TODO armor = list(BIO = 90, FIRE = 70, ACID = 50)
+	armor_type = /datum/armor/color_captain
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/chief_engineer
@@ -235,7 +247,7 @@
 	inhand_icon_state = "latex_gloves"
 	greyscale_colors = null
 	siemens_coefficient = 0.3
-	// ARMOR TODO armor = list(BIO = 100)
+	armor_type = /datum/armor/color_latex
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = NONE
 
@@ -255,7 +267,7 @@
 	icon_state = "clockwork_gauntlets"
 	greyscale_colors = "#db6f05"
 	siemens_coefficient = 0.8
-	// ARMOR TODO armor = list(BIO = 70)
+	armor_type = /datum/armor/latex_engineering
 	clothing_traits = list(TRAIT_QUICK_BUILD)
 	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 

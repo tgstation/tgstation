@@ -16,7 +16,7 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
-	// ARMOR TODO armor = list(FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/item_defibrillator
 
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
 	/// If the paddles are equipped (1) or on the defib (0)
@@ -43,6 +43,11 @@
 	var/nocell_state = "defibunit-nocell"
 	/// The icon state for the emagged overlay, not applied if null
 	var/emagged_state = "defibunit-emagged"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
 
 /obj/item/defibrillator/get_cell()
 	return cell
@@ -290,6 +295,11 @@
 	nocell_state = "defibcompact-nocell"
 	emagged_state = "defibcompact-emagged"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
+
 /obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
 	if(slot & user.getBeltSlot())
 		return TRUE
@@ -315,6 +325,11 @@
 
 /obj/item/defibrillator/compact/combat/loaded
 	cell_removable = FALSE // Don't let people just have an infinite power cell
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize(mapload)
 	. = ..()
@@ -359,6 +374,11 @@
 	var/req_defib = TRUE // Whether or not the paddles require a defibrilator object
 	var/recharge_time = 6 SECONDS // Only applies to defibs that do not require a defibrilator. See: do_success()
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
 
 /obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
@@ -684,6 +704,11 @@
 	icon_state = "defibpaddles0"
 	inhand_icon_state = "defibpaddles0"
 	req_defib = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
 
 /obj/item/shockpaddles/cyborg/attack(mob/M, mob/user)
 	if(iscyborg(user))

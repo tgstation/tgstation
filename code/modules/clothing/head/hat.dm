@@ -8,7 +8,7 @@
 	desc = "It's good to be emperor."
 	inhand_icon_state = "that"
 	flags_inv = 0
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/hats_centhat
 	strip_delay = 80
 
 /obj/item/clothing/head/costume/constable
@@ -46,7 +46,7 @@
 	desc = "These were once used by plague doctors. Will protect you from exposure to the Pestilence."
 	icon_state = "plaguedoctor"
 	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
-	// ARMOR TODO armor = list(BIO = 100)
+	armor_type = /datum/armor/bio_hood_plague
 	flags_inv = NONE
 
 /obj/item/clothing/head/costume/nursehat
@@ -84,7 +84,7 @@
 	icon_state = "cowboy"
 	worn_icon_state = "hunter"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 15)
+	armor_type = /datum/armor/head_cowboy
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/cowboy/black
@@ -181,7 +181,7 @@
 	desc = "A cap for a party coordinator, stylish!."
 	icon_state = "capcap"
 	inhand_icon_state = "that"
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/hats_coordinator
 
 /obj/item/clothing/head/costume/jackbros
 	name = "frosty hat"
@@ -201,7 +201,7 @@
 	desc = "Worn by the finest of CentCom commanders. Inside the lining of the cap, lies two faint initials."
 	inhand_icon_state = "that"
 	flags_inv = 0
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/hats_centcom_cap
 	strip_delay = (8 SECONDS)
 
 /obj/item/clothing/head/fedora/human_leather
@@ -224,6 +224,16 @@
 	var/upsprite = "ushankaup"
 	///Sprite visible when the ushanka flaps are folded down.
 	var/downsprite = "ushankadown"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/hats_centcom_cap
+	melee = 30
+	bullet = 15
+	laser = 30
+	energy = 40
+	bomb = 25
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/head/costume/ushanka/attack_self(mob/user)
 	if(earflaps)

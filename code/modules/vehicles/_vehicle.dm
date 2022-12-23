@@ -4,7 +4,7 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "error"
 	max_integrity = 300
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 30, LASER = 30, BOMB = 30, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/obj_vehicle
 	layer = VEHICLE_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
 	density = TRUE
@@ -35,6 +35,15 @@
 	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/obj_vehicle
+	melee = 30
+	bullet = 30
+	laser = 30
+	bomb = 30
+	fire = 60
+	acid = 60
 
 /obj/vehicle/Initialize(mapload)
 	. = ..()

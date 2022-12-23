@@ -5,9 +5,18 @@
 	secure = TRUE
 	locked = TRUE
 	max_integrity = 500
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/crate_secure
 	var/tamperproof = 0
 	damage_deflection = 25
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/crate_secure
+	melee = 30
+	bullet = 50
+	laser = 50
+	energy = 100
+	fire = 80
+	acid = 80
 
 /obj/structure/closet/crate/secure/Initialize(mapload)
 	. = ..()
@@ -47,6 +56,15 @@
 	name = "secure hydroponics crate"
 	icon_state = "hydrosecurecrate"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/crate_secure
+	melee = 30
+	bullet = 50
+	laser = 50
+	energy = 100
+	fire = 80
+	acid = 80
+
 /obj/structure/closet/crate/secure/freezer //for consistency with other "freezer" closets/crates
 	desc = "An insulated crate with a lock on it, used to secure perishables."
 	name = "secure kitchen crate"
@@ -57,6 +75,15 @@
 	desc = "An insulated crate with a lock on it, used to secure pizza."
 	req_access = list(ACCESS_KITCHEN)
 	tamperproof = 10
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/crate_secure
+	melee = 30
+	bullet = 50
+	laser = 50
+	energy = 100
+	fire = 80
+	acid = 80
 
 /obj/structure/closet/crate/secure/freezer/pizza/PopulateContents()
 	. = ..()
@@ -84,6 +111,15 @@
 	var/privacy_lock = TRUE
 	///Is the crate being bought by a person, or a budget card?
 	var/department_purchase = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/crate_secure
+	melee = 30
+	bullet = 50
+	laser = 50
+	energy = 100
+	fire = 80
+	acid = 80
 
 /obj/structure/closet/crate/secure/owned/examine(mob/user)
 	. = ..()

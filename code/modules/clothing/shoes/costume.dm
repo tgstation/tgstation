@@ -5,7 +5,7 @@
 	inhand_icon_state = "wizshoe"
 	strip_delay = 100
 	equip_delay_other = 100
-	// ARMOR TODO armor = list(BIO = 10)
+	armor_type = /datum/armor/shoes_roman
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin
@@ -14,6 +14,10 @@
 	icon_state = "griffinboots"
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_roman
+	bio = 10
 
 /obj/item/clothing/shoes/griffin/Initialize(mapload)
 	. = ..()
@@ -38,6 +42,10 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "clockwork_treads"
 	can_be_tied = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_roman
+	bio = 10
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()

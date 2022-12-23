@@ -614,7 +614,17 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
-	// ARMOR TODO armor = list(MELEE = 15, BULLET = 25, LASER = 15, ENERGY = 15, BOMB = 100, FIRE = 100, ACID = 30) //mostly bone bracer armor
+	armor_type = /datum/armor/gloves_gauntlets
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/gloves_gauntlets
+	melee = 15
+	bullet = 25
+	laser = 15
+	energy = 15
+	bomb = 100
+	fire = 100
+	acid = 30
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
@@ -648,7 +658,7 @@
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/hooded_berserker
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -668,6 +678,16 @@
 		/obj/item/melee/cleaving_saw,
 	)
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
+
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
@@ -685,7 +705,7 @@
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/hooded_berserker
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -697,6 +717,16 @@
 	var/berserk_charge = 0
 	/// Status of berserk
 	var/berserk_active = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /obj/item/clothing/head/hooded/berserker/Initialize(mapload)
 	. = ..()
@@ -781,6 +811,16 @@
 	custom_materials = null
 	var/datum/action/cooldown/scan/scan_ability
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
+
 /obj/item/clothing/glasses/godeye/Initialize(mapload)
 	. = ..()
 	scan_ability = new(src)
@@ -821,6 +861,16 @@
 	click_to_activate = TRUE
 	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /datum/action/cooldown/scan/IsAvailable(feedback = FALSE)
 	return ..() && isliving(owner)
@@ -864,6 +914,16 @@
 	range_mid = 5
 	range_far = 15
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
+
 /datum/status_effect/agent_pinpointer/scan/scan_for_target()
 	return
 
@@ -881,6 +941,16 @@
 	items_to_create = list(/obj/item/cursed_katana)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /obj/item/organ/internal/cyberimp/arm/katana/attack_self(mob/user, modifiers)
 	. = ..()
@@ -950,6 +1020,16 @@
 		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = PROC_REF(cloak)),
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(shatter)),
 	)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /obj/item/cursed_katana/Initialize(mapload)
 	. = ..()

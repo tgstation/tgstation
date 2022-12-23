@@ -5,7 +5,7 @@
 	worn_icon = 'icons/mob/clothing/head/wizard.dmi'
 	icon_state = "wizard"
 	inhand_icon_state = "wizhat"
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 100, FIRE = 100, ACID = 100,  WOUND = 20)
+	armor_type = /datum/armor/head_wizard
 	strip_delay = 50
 	equip_delay_other = 50
 	clothing_flags = SNUG_FIT | CASTING_CLOTHES
@@ -67,7 +67,7 @@
 	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = "wizrobe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 100, FIRE = 100, ACID = 100, WOUND = 20)
+	armor_type = /datum/armor/suit_wizrobe
 	allowed = list(/obj/item/teleportation_scroll, /obj/item/highfrequencyblade/wizard)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
@@ -148,6 +148,18 @@
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/suit_wizrobe
+	melee = 30
+	bullet = 20
+	laser = 20
+	energy = 30
+	bomb = 20
+	bio = 100
+	fire = 100
+	acid = 100
+	wound = 20
 
 /obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)
 	stickmen()

@@ -7,13 +7,19 @@
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
-	// ARMOR TODO armor = list(BIO = 100, FIRE = 95, ACID = 95)
+	armor_type = /datum/armor/under_plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 80
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/under_plasmaman
+	bio = 100
+	fire = 95
+	acid = 95
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
@@ -118,6 +124,12 @@
 	has_sensor = LOCKED_SENSORS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/under_plasmaman
+	bio = 100
+	fire = 95
+	acid = 95
 
 /obj/item/clothing/under/plasmaman/clown/Extinguish(mob/living/carbon/human/H)
 	if(!istype(H))

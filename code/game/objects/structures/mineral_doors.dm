@@ -12,7 +12,7 @@
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 	max_integrity = 200
-	// ARMOR TODO armor = list(MELEE = 10, ENERGY = 100, BOMB = 10, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/structure_mineral_door
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
 	material_flags = MATERIAL_EFFECTS
@@ -27,6 +27,14 @@
 
 	var/sheetType = /obj/item/stack/sheet/iron //what we're made of
 	var/sheetAmount = 10 //how much it takes to construct us.
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_mineral_door
+	melee = 10
+	energy = 100
+	bomb = 10
+	fire = 50
+	acid = 50
 
 /obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
@@ -241,6 +249,14 @@
 	opacity = FALSE
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_mineral_door
+	melee = 10
+	energy = 100
+	bomb = 10
+	fire = 50
+	acid = 50
+
 /obj/structure/mineral_door/transparent/Close()
 	..()
 	set_opacity(FALSE)
@@ -267,6 +283,14 @@
 	max_integrity = 200
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_mineral_door
+	melee = 10
+	energy = 100
+	bomb = 10
+	fire = 50
+	acid = 50
+
 /obj/structure/mineral_door/wood/pickaxe_door(mob/living/user, obj/item/I)
 	return
 
@@ -292,6 +316,14 @@
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_mineral_door
+	melee = 10
+	energy = 100
+	bomb = 10
+	fire = 50
+	acid = 50
 
 /obj/structure/mineral_door/paperframe/Initialize(mapload)
 	. = ..()

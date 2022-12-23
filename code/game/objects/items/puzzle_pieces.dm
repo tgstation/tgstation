@@ -40,7 +40,7 @@
 	explosion_block = 3
 	heat_proof = TRUE
 	max_integrity = 600
-	// ARMOR TODO armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/door_puzzle
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	move_resist = MOVE_FORCE_OVERPOWERING
 	damage_deflection = 70
@@ -50,6 +50,17 @@
 	var/open_message = "The door beeps, and slides opens."
 
 //Standard Expressions to make keycard doors basically un-cheeseable
+/// Automatically generated armor datum, errors may exist
+/datum/armor/door_puzzle
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
+
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()
 
@@ -78,6 +89,17 @@
 /obj/machinery/door/puzzle/keycard
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/door_puzzle
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
+
 /obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/keycard))
@@ -99,6 +121,17 @@
 
 /obj/machinery/door/puzzle/light
 	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructible."
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/door_puzzle
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
 
 /obj/machinery/door/puzzle/light/Initialize(mapload)
 	. = ..()
@@ -141,6 +174,17 @@
 	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/door_puzzle
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
+
 /obj/item/pressure_plate/hologrid/Initialize(mapload)
 	. = ..()
 	if(undertile_pressureplate)
@@ -174,7 +218,7 @@
 	icon_state = "light_puzzle"
 	anchored = TRUE
 	explosion_block = 3
-	// ARMOR TODO armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/structure_light_puzzle
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_power = 3
@@ -188,6 +232,17 @@
 	)
 	/// Banned combinations of the list in decimal
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_light_puzzle
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
 
 /obj/structure/light_puzzle/Initialize(mapload)
 	. = ..()

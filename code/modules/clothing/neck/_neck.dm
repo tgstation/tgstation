@@ -289,7 +289,7 @@
 	name = "suspicious looking striped scarf"
 	desc = "Ready to operate."
 	greyscale_colors = "#B40000#545350"
-	// ARMOR TODO armor = list(FIRE = 50, ACID = 40)
+	armor_type = /datum/armor/large_scarf_syndie
 
 /obj/item/clothing/neck/infinity_scarf
 	name = "infinity scarf"
@@ -306,6 +306,11 @@
 	desc = "It's for pets."
 	icon_state = "petcollar"
 	var/tagname = null
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/large_scarf_syndie
+	fire = 50
+	acid = 40
 
 /obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(!ismonkey(M))
@@ -332,6 +337,11 @@
 	var/profit_scaling = 1
 	/// toggles between sell (TRUE) and get price post-fees (FALSE)
 	var/selling = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/large_scarf_syndie
+	fire = 50
+	acid = 40
 
 /obj/item/clothing/neck/necklace/dope/merchant/attack_self(mob/user)
 	. = ..()
@@ -363,6 +373,11 @@
 	color = "#ffffff"
 	custom_price = PAYCHECK_CREW * 0.2
 	custom_materials = (list(/datum/material/plastic = 500))
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/large_scarf_syndie
+	fire = 50
+	acid = 40
 
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()

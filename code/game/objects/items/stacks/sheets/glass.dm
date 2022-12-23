@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	icon_state = "sheet-glass"
 	inhand_icon_state = "sheet-glass"
 	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
-	// ARMOR TODO armor = list(FIRE = 50, ACID = 100)
+	armor_type = /datum/armor/sheet_glass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
 	grind_results = list(/datum/reagent/silicon = 20)
@@ -33,12 +33,22 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	cost = 500
 	source = /datum/robot_energy_storage/glass
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sheet_glass
+	fire = 50
+	acid = 100
+
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sheet_glass
+	fire = 50
+	acid = 100
 
 /obj/item/stack/sheet/glass/get_main_recipes()
 	. = ..()
@@ -89,7 +99,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	inhand_icon_state = "sheet-pglass"
 	mats_per_unit = list(/datum/material/alloy/plasmaglass=MINERAL_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plasmaglass
-	// ARMOR TODO armor = list(FIRE = 75, ACID = 100)
+	armor_type = /datum/armor/sheet_plasmaglass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
@@ -98,6 +108,11 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sheet_plasmaglass
+	fire = 75
+	acid = 100
 
 /obj/item/stack/sheet/plasmaglass/get_main_recipes()
 	. = ..()
@@ -143,13 +158,18 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	icon_state = "sheet-rglass"
 	inhand_icon_state = "sheet-rglass"
 	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
-	// ARMOR TODO armor = list(FIRE = 70, ACID = 100)
+	armor_type = /datum/armor/sheet_rglass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
 	point_value = 4
 	matter_amount = 6
 	tableVariant = /obj/structure/table/reinforced/rglass
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sheet_rglass
+	fire = 70
+	acid = 100
 
 /obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -164,6 +184,11 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	var/datum/robot_energy_storage/glasource = /datum/robot_energy_storage/glass
 	/// The amount of energy this draws from the glass source per stack unit.
 	var/glacost = 500
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sheet_rglass
+	fire = 70
+	acid = 100
 
 /obj/item/stack/sheet/rglass/cyborg/get_amount()
 	return min(round(source.energy / cost), round(glasource.energy / glacost))
@@ -196,7 +221,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	icon_state = "sheet-prglass"
 	inhand_icon_state = "sheet-prglass"
 	mats_per_unit = list(/datum/material/alloy/plasmaglass=MINERAL_MATERIAL_AMOUNT, /datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.5)
-	// ARMOR TODO armor = list(MELEE = 20, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/sheet_plasmarglass
 	resistance_flags = ACID_PROOF
 	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
@@ -204,6 +229,12 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	point_value = 23
 	matter_amount = 8
 	tableVariant = /obj/structure/table/reinforced/plasmarglass
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sheet_plasmarglass
+	melee = 20
+	fire = 80
+	acid = 100
 
 /obj/item/stack/sheet/plasmarglass/get_main_recipes()
 	. = ..()
@@ -222,13 +253,18 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	inhand_icon_state = "sheet-titaniumglass"
 	mats_per_unit = list(/datum/material/alloy/titaniumglass=MINERAL_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/titaniumglass
-	// ARMOR TODO armor = list(FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/sheet_titaniumglass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/titaniumglass
 	tableVariant = /obj/structure/table/reinforced/titaniumglass
 
 /obj/item/stack/sheet/titaniumglass/fifty
 	amount = 50
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sheet_titaniumglass
+	fire = 80
+	acid = 100
 
 /obj/item/stack/sheet/titaniumglass/get_main_recipes()
 	. = ..()
@@ -246,11 +282,16 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	inhand_icon_state = "sheet-plastitaniumglass"
 	mats_per_unit = list(/datum/material/alloy/plastitaniumglass=MINERAL_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plastitaniumglass
-	// ARMOR TODO armor = list(FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/sheet_plastitaniumglass
 	material_flags = NONE
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
 	tableVariant = /obj/structure/table/reinforced/plastitaniumglass
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sheet_plastitaniumglass
+	fire = 80
+	acid = 100
 
 /obj/item/stack/sheet/plastitaniumglass/get_main_recipes()
 	. = ..()
@@ -272,7 +313,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	attack_verb_simple = list("stab", "slash", "slice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	resistance_flags = ACID_PROOF
-	// ARMOR TODO armor = list(MELEE = 100, ENERGY = 100, FIRE = 50, ACID = 100)
+	armor_type = /datum/armor/item_shard
 	max_integrity = 40
 	sharpness = SHARP_EDGED
 	var/icon_prefix
@@ -280,6 +321,13 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/craft_time = 3.5 SECONDS
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
 	embedding = list("embed_chance" = 65)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_shard
+	melee = 100
+	energy = 100
+	fire = 50
+	acid = 100
 
 /obj/item/shard/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide."))

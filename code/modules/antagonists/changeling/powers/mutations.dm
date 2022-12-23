@@ -480,10 +480,16 @@
 	item_flags = DROPDEL
 	clothing_flags = STOPSPRESSUREDAMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/oxygen)
-	// ARMOR TODO armor = list(BIO = 100, FIRE = 90, ACID = 90) //No armor at all.
+	armor_type = /datum/armor/space_changeling
 	actions_types = list()
 	cell = null
 	show_hud = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/space_changeling
+	bio = 100
+	fire = 90
+	acid = 90
 
 /obj/item/clothing/suit/space/changeling/Initialize(mapload)
 	. = ..()
@@ -511,8 +517,14 @@
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	item_flags = DROPDEL
 	clothing_flags = STOPSPRESSUREDAMAGE | HEADINTERNALS
-	// ARMOR TODO armor = list(BIO = 100, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/space_changeling
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/space_changeling
+	bio = 100
+	fire = 90
+	acid = 90
 
 /obj/item/clothing/head/helmet/space/changeling/Initialize(mapload)
 	. = ..()
@@ -543,10 +555,21 @@
 	inhand_icon_state = null
 	item_flags = DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	// ARMOR TODO armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 10, BIO = 10, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/armor_changeling
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/armor_changeling
+	melee = 40
+	bullet = 40
+	laser = 40
+	energy = 50
+	bomb = 10
+	bio = 10
+	fire = 90
+	acid = 90
 
 /obj/item/clothing/suit/armor/changeling/Initialize(mapload)
 	. = ..()
@@ -560,8 +583,19 @@
 	icon_state = "lingarmorhelmet"
 	inhand_icon_state = null
 	item_flags = DROPDEL
-	// ARMOR TODO armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 10, BIO = 10, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/helmet_changeling
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/helmet_changeling
+	melee = 40
+	bullet = 40
+	laser = 40
+	energy = 50
+	bomb = 10
+	bio = 10
+	fire = 90
+	acid = 90
 
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)
 	. = ..()

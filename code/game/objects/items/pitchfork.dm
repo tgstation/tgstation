@@ -19,8 +19,13 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	// ARMOR TODO armor = list(FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/item_pitchfork
 	resistance_flags = FIRE_PROOF
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_pitchfork
+	fire = 100
+	acid = 30
 
 /obj/item/pitchfork/Initialize(mapload)
 	. = ..()

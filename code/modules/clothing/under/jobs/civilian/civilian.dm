@@ -98,7 +98,7 @@
 	name = "botanist's jumpsuit"
 	icon_state = "hydroponics"
 	inhand_icon_state = "g_suit"
-	// ARMOR TODO armor = list(BIO = 50)
+	armor_type = /datum/armor/civilian_hydroponics
 
 /obj/item/clothing/under/rank/civilian/hydroponics/skirt
 	name = "botanist's jumpskirt"
@@ -115,7 +115,7 @@
 	name = "janitor's jumpsuit"
 	icon_state = "janitor"
 	inhand_icon_state = "janitor"
-	// ARMOR TODO armor = list(BIO = 10)
+	armor_type = /datum/armor/civilian_janitor
 
 /obj/item/clothing/under/rank/civilian/janitor/skirt
 	name = "janitor's jumpskirt"
@@ -139,6 +139,10 @@
 	desc = "Slick threads."
 	name = "Lawyer suit"
 	can_adjust = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/civilian_janitor
+	bio = 10
 
 /obj/item/clothing/under/rank/civilian/lawyer/dye_item(dye_color, dye_key_override)
 	if(dye_color == DYE_COSMIC || dye_color == DYE_SYNDICATE)

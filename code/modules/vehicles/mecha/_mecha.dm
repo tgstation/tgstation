@@ -23,7 +23,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 300
-	// ARMOR TODO armor = list(MELEE = 20, BULLET = 10, BOMB = 10, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/sealed_mecha
 	force = 5
 	movedelay = 1 SECONDS
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -200,6 +200,14 @@
 	var/ui_y = 600
 	/// ref to screen object that displays in the middle of the UI
 	var/atom/movable/screen/map_view/ui_view
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sealed_mecha
+	melee = 20
+	bullet = 10
+	bomb = 10
+	fire = 100
+	acid = 100
 
 /obj/item/radio/mech //this has to go somewhere
 	subspace_transmission = TRUE

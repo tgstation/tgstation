@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
-	// ARMOR TODO armor = list(MELEE = 50, BULLET = 50, LASER = 50, BOMB = 30, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/item_shield
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -25,6 +25,15 @@
 	var/shield_break_sound = 'sound/effects/bang.ogg'
 	/// baton bash cooldown
 	COOLDOWN_DECLARE(baton_bash)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_shield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
@@ -102,6 +111,15 @@
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_shield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
+
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)
 	if(istype(attackby_item, /obj/item/melee/baton))
 		if(!COOLDOWN_FINISHED(src, baton_bash))
@@ -127,6 +145,15 @@
 	icon_state = "flashshield"
 	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash = /obj/item/assembly/flash/handheld
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_shield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
 
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
@@ -245,6 +272,15 @@
 	/// Whether clumsy people can transform this without side effects.
 	var/can_clumsy_use = FALSE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_shield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
+
 /obj/item/shield/energy/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
@@ -288,6 +324,15 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	/// Whether the shield is extended and protecting the user..
 	var/extended = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_shield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
 
 /obj/item/shield/riot/tele/Initialize(mapload)
 	. = ..()

@@ -9,7 +9,7 @@
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/iron
-	// ARMOR TODO armor = list(FIRE = 100, ACID = 70)
+	armor_type = /datum/armor/tile_iron
 	resistance_flags = FIRE_PROOF
 	matter_amount = 1
 	cost = 125
@@ -88,6 +88,11 @@
 
 /obj/item/stack/tile/iron/four
 	amount = 4
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/tile_iron
+	fire = 100
+	acid = 70
 
 /obj/item/stack/tile/iron/Initialize(mapload)
 	. = ..()

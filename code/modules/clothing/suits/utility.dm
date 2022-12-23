@@ -28,7 +28,7 @@
 		/obj/item/tank/internals,
 	)
 	slowdown = 1
-	// ARMOR TODO armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 20, BOMB = 20, BIO = 50, FIRE = 100, ACID = 50)
+	armor_type = /datum/armor/utility_fire
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -38,6 +38,17 @@
 	strip_delay = 60
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/utility_fire
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 20
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
 
 /obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -70,7 +81,7 @@
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
 	clothing_flags = THICKMATERIAL | SNUG_FIT
-	// ARMOR TODO armor = list(MELEE = 20, LASER = 20,ENERGY = 30, BOMB = 100, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/utility_bomb_hood
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 	cold_protection = HEAD
@@ -91,7 +102,7 @@
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
-	// ARMOR TODO armor = list(MELEE = 20, LASER = 20,ENERGY = 30, BOMB = 100, BIO = 50, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/utility_bomb_suit
 	flags_inv = HIDEJUMPSUIT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
@@ -128,11 +139,17 @@
 	desc = "A hood with radiation protective properties. The label reads, 'Made with lead. Please do not consume insulation.'"
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	// ARMOR TODO armor = list(BIO = 60, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/utility_radiation
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/utility_radiation
+	bio = 60
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/head/utility/radiation/Initialize(mapload)
 	. = ..()
@@ -152,11 +169,17 @@
 		/obj/item/tank/internals,
 		)
 	slowdown = 1.5
-	// ARMOR TODO armor = list(BIO = 60, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/utility_radiation
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/utility_radiation
+	bio = 60
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()

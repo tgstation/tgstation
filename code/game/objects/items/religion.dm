@@ -276,7 +276,7 @@
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	// ARMOR TODO armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/plate_crusader
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -293,7 +293,7 @@
 	icon_state = null
 	inhand_icon_state = null
 	flags_1 = 0
-	// ARMOR TODO armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, FIRE = 60, ACID = 60) //religion protects you from disease, honk.
+	armor_type = /datum/armor/crusader_prophet
 	worn_y_offset = 6
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
@@ -315,6 +315,17 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/crusader_prophet
+	melee = 60
+	bullet = 60
+	laser = 60
+	energy = 60
+	bomb = 70
+	bio = 50
+	fire = 60
+	acid = 60
 
 /obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -354,7 +365,7 @@
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	// ARMOR TODO armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, FIRE = 60, ACID = 60) //does this even do anything on boots?
+	armor_type = /datum/armor/shoes_plate
 	clothing_flags = NOSLIP
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -366,6 +377,16 @@
 
 /obj/item/clothing/shoes/plate/blue
 	icon_state = "crusader-blue"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_plate
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
 
 /obj/item/storage/box/itemset/crusader/blue/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue(src)

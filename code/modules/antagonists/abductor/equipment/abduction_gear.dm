@@ -13,7 +13,7 @@
 	icon_state = "vest_stealth"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
-	// ARMOR TODO armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, FIRE = 70, ACID = 70)
+	armor_type = /datum/armor/abductor_vest
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	allowed = list(
 		/obj/item/abductor,
@@ -28,6 +28,17 @@
 	var/datum/icon_snapshot/disguise
 	var/stealth_armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, FIRE = 70, ACID = 70)
 	var/combat_armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, FIRE = 90, ACID = 90)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
 
 /obj/item/clothing/suit/armor/abductor/vest/Initialize(mapload)
 	. = ..()
@@ -140,6 +151,17 @@
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
+
 /obj/item/proc/AbductorCheck(mob/user)
 	if (HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
@@ -169,6 +191,17 @@
 	var/mode = GIZMO_SCAN
 	var/datum/weakref/marked_target_weakref
 	var/obj/machinery/abductor/console/console
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
 
 /obj/item/abductor/gizmo/attack_self(mob/user)
 	if(!ScientistCheck(user))
@@ -253,6 +286,17 @@
 	icon_state = "silencer"
 	inhand_icon_state = "gizmo"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
+
 /obj/item/abductor/silencer/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
 		return
@@ -294,6 +338,17 @@
 	icon_state = "mind_device_message"
 	inhand_icon_state = "silencer"
 	var/mode = MIND_DEVICE_MESSAGE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
 
 /obj/item/abductor/mind_device/attack_self(mob/user)
 	if(!ScientistCheck(user))
@@ -374,6 +429,17 @@
 	desc = "This firing pin is slimy and warm; you can swear you feel it constantly trying to mentally probe you."
 	fail_message = "<span class='abductor'>Firing error, please contact Command.</span>"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
+
 /obj/item/firing_pin/abductor/pin_auth(mob/living/user)
 	. = isabductor(user)
 
@@ -422,6 +488,17 @@
 <br>
 Congratulations! You are now trained for invasive xenobiology research!"}
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
+
 /obj/item/paper/guides/antag/abductor/AltClick()
 	return //otherwise it would fold into a paperplane.
 
@@ -457,6 +534,17 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/sleep_time = 2 MINUTES
 	var/time_to_cuff = 3 SECONDS
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
 
 /obj/item/melee/baton/abductor/Initialize(mapload)
 	. = ..()
@@ -617,6 +705,17 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/restraints/handcuffs/energy/used
 	item_flags = DROPDEL
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
+
 /obj/item/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message(span_danger("[user]'s [name] breaks in a discharge of energy!"), \
 							span_userdanger("[user]'s [name] breaks in a discharge of energy!"))
@@ -645,6 +744,17 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "abductor_headset"
 	keyslot2 = /obj/item/encryptionkey/heads/captain
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
+
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
@@ -661,6 +771,17 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "beacon"
 	w_class = WEIGHT_CLASS_TINY
 	var/obj/machinery/spawned_machine
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
 
 /obj/item/abductor_machine_beacon/attack_self(mob/user)
 	..()
@@ -733,6 +854,17 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	inhand_icon_state = null
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
+
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot_flags & slot)
@@ -764,6 +896,17 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "alien_frame"
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	framestackamount = 1
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)
@@ -828,6 +971,17 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/static/list/injected_reagents = list(/datum/reagent/medicine/cordiolis_hepatico)
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/abductor_vest
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 25
+	bomb = 15
+	bio = 15
+	fire = 70
+	acid = 70
+
 /obj/structure/table/optable/abductor/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
@@ -878,5 +1032,5 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "abductor"
 	inhand_icon_state = "bl_suit"
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	// ARMOR TODO armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, fire = 0, acid = 0)
+	armor_type = /datum/armor/under_abductor
 	can_adjust = FALSE

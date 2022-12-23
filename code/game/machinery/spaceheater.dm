@@ -13,7 +13,7 @@
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
 	max_integrity = 250
-	// ARMOR TODO armor = list(FIRE = 80, ACID = 10)
+	armor_type = /datum/armor/machinery_space_heater
 	circuit = /obj/item/circuitboard/machine/space_heater
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
@@ -39,6 +39,11 @@
 	var/settable_temperature_range = 30
 	///Should we add an overlay for open spaceheaters
 	var/display_panel = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_space_heater
+	fire = 80
+	acid = 10
 
 /obj/machinery/space_heater/get_cell()
 	return cell
@@ -277,6 +282,11 @@
 /obj/machinery/space_heater/constructed
 	cell = null
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_space_heater
+	fire = 80
+	acid = 10
+
 /obj/machinery/space_heater/constructed/Initialize(mapload)
 	. = ..()
 	set_panel_open(TRUE)
@@ -304,6 +314,11 @@
 	///How powerful the heating is, upgrades with parts. (ala chem_heater.dm's method, basically the same level of heating, but this is restricted)
 	var/chem_heating_power = 1
 	display_panel = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_space_heater
+	fire = 80
+	acid = 10
 
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()

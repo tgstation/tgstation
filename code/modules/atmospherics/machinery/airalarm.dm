@@ -75,7 +75,7 @@
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 0.33
-	// ARMOR TODO armor = list(ENERGY = 100, FIRE = 90, ACID = 30)
+	armor_type = /datum/armor/machinery_airalarm
 	resistance_flags = FIRE_PROOF
 
 	/// Current alert level, found in code/__DEFINES/atmospherics/atmos_machinery.dm
@@ -122,6 +122,12 @@
 	)
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
@@ -928,6 +934,12 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	req_access = null
 	req_one_access = null
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
+
 /obj/machinery/airalarm/syndicate //general syndicate access
 	req_access = list(ACCESS_SYNDICATE)
 
@@ -958,6 +970,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/datum/port/output/current_mode
 
 	var/static/list/options_map
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/item/circuit_component/air_alarm_general/populate_options()
 	if(!options_map)
@@ -1071,6 +1089,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/list/alarm_duplicates = list()
 	var/max_alarm_duplicates = 20
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
+
 /obj/item/circuit_component/air_alarm/ui_perform_action(mob/user, action)
 	if(length(alarm_duplicates) >= max_alarm_duplicates)
 		return
@@ -1119,6 +1143,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	circuit_size = 0
 	ui_buttons = list()
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/item/circuit_component/air_alarm/duplicate/removed_from(obj/item/integrated_circuit/removed_from)
 	if(!QDELING(src))
@@ -1226,6 +1256,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/max_scrubber_duplicates = 20
 	var/list/scrubber_duplicates = list()
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
+
 /obj/item/circuit_component/air_alarm_scrubbers/ui_perform_action(mob/user, action)
 	if(length(scrubber_duplicates) >= max_scrubber_duplicates)
 		return
@@ -1265,6 +1301,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	display_name = "Air Alarm Scrubber Control"
 	circuit_size = 0
 	ui_buttons = list()
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/item/circuit_component/air_alarm_scrubbers/duplicate/Destroy()
 	connected_alarm = null
@@ -1445,6 +1487,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/max_vent_duplicates = 20
 	var/list/vent_duplicates = list()
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
+
 /obj/item/circuit_component/air_alarm_vents/ui_perform_action(mob/user, action)
 	if(length(vent_duplicates) >= max_vent_duplicates)
 		return
@@ -1492,6 +1540,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	circuit_size = 0
 	ui_buttons = list()
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/item/circuit_component/air_alarm_vents/duplicate/removed_from(obj/item/integrated_circuit/removed_from)
 	if(!QDELING(src))

@@ -4,10 +4,19 @@
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "atv"
 	max_integrity = 150
-	// ARMOR TODO armor = list(MELEE = 50, BULLET = 25, LASER = 20, BOMB = 50, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/ridden_atv
 	key_type = /obj/item/key/atv
 	integrity_failure = 0.5
 	var/static/mutable_appearance/atvcover
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/ridden_atv
+	melee = 50
+	bullet = 25
+	laser = 20
+	bomb = 50
+	fire = 60
+	acid = 60
 
 /obj/vehicle/ridden/atv/Initialize(mapload)
 	. = ..()
@@ -32,6 +41,15 @@
 	name = "mounted turret"
 	scan_range = 7
 	density = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/ridden_atv
+	melee = 50
+	bullet = 25
+	laser = 20
+	bomb = 50
+	fire = 60
+	acid = 60
 
 /obj/vehicle/ridden/atv/turret/Initialize(mapload)
 	. = ..()

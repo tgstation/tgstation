@@ -4,9 +4,18 @@
 	locked = TRUE
 	icon_state = "secure"
 	max_integrity = 250
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/closet_secure_closet
 	secure = TRUE
 	damage_deflection = 20
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/closet_secure_closet
+	melee = 30
+	bullet = 50
+	laser = 50
+	energy = 100
+	fire = 80
+	acid = 80
 
 /obj/structure/closet/secure_closet/Initialize(mapload)
 	. = ..()

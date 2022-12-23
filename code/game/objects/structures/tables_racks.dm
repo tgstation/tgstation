@@ -391,7 +391,12 @@
 	canSmoothWith = SMOOTH_GROUP_GLASS_TABLES
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
-	// ARMOR TODO armor = list(FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/table_glass
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/table_glass
+	fire = 80
+	acid = 100
 
 /obj/structure/table/glass/Initialize(mapload)
 	. = ..()
@@ -480,6 +485,11 @@
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/table_glass
+	fire = 80
+	acid = 100
+
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
 		..()
@@ -507,6 +517,11 @@
 	smoothing_groups = SMOOTH_GROUP_FANCY_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
 	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/table_glass
+	fire = 80
+	acid = 100
 
 /obj/structure/table/wood/fancy/Initialize(mapload)
 	. = ..()
@@ -583,7 +598,17 @@
 	buildstack = /obj/item/stack/sheet/plasteel
 	max_integrity = 200
 	integrity_failure = 0.25
-	// ARMOR TODO armor = list(MELEE = 10, BULLET = 30, LASER = 30, ENERGY = 100, BOMB = 20, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/table_reinforced
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/table_reinforced
+	melee = 10
+	bullet = 30
+	laser = 30
+	energy = 100
+	bomb = 20
+	fire = 80
+	acid = 70
 
 /obj/structure/table/reinforced/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -631,6 +656,16 @@
 	buildstack = /obj/item/stack/sheet/bronze
 	smoothing_groups = SMOOTH_GROUP_BRONZE_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/table_reinforced
+	melee = 10
+	bullet = 30
+	laser = 30
+	energy = 100
+	bomb = 20
+	fire = 80
+	acid = 70
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
@@ -694,6 +729,16 @@
 	custom_materials = list(/datum/material/silver = 2000)
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/table_reinforced
+	melee = 10
+	bullet = 30
+	laser = 30
+	energy = 100
+	bomb = 20
+	fire = 80
+	acid = 70
 
 /obj/structure/table/optable/Initialize(mapload)
 	. = ..()
@@ -767,6 +812,16 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/table_reinforced
+	melee = 10
+	bullet = 30
+	laser = 30
+	energy = 100
+	bomb = 20
+	fire = 80
+	acid = 70
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
@@ -848,6 +903,16 @@
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron=2000)
 	var/building = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/table_reinforced
+	melee = 10
+	bullet = 30
+	laser = 30
+	energy = 100
+	bomb = 20
+	fire = 80
+	acid = 70
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
 	if (W.tool_behaviour == TOOL_WRENCH)

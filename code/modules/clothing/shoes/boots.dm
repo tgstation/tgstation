@@ -27,8 +27,12 @@
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
-	// ARMOR TODO armor = list(BIO = 90)
+	armor_type = /datum/armor/shoes_jackboots
 	can_be_tied = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_jackboots
+	bio = 90
 
 /obj/item/clothing/shoes/jackboots/Initialize(mapload)
 	. = ..()
@@ -46,12 +50,16 @@
 	desc = "Boots lined with 'synthetic' animal fur."
 	icon_state = "winterboots"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(BIO = 80)
+	armor_type = /datum/armor/shoes_winterboots
 	cold_protection = FEET|LEGS
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	lace_time = 8 SECONDS
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_winterboots
+	bio = 80
 
 /obj/item/clothing/shoes/winterboots/Initialize(mapload)
 	. = ..()
@@ -72,7 +80,7 @@
 	icon_state = "iceboots_eva"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.25
-	// ARMOR TODO armor = list(MELEE = 10, LASER = 10, ENERGY = 10, BIO = 50, FIRE = 50, ACID = 10)
+	armor_type = /datum/armor/ice_boots_eva
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
 	clothing_flags = NOSLIP_ICE|THICKMATERIAL
@@ -83,11 +91,15 @@
 	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
 	icon_state = "workboots"
 	inhand_icon_state = "jackboots"
-	// ARMOR TODO armor = list(BIO = 80)
+	armor_type = /datum/armor/shoes_workboots
 	strip_delay = 20
 	equip_delay_other = 40
 	lace_time = 8 SECONDS
 	species_exception = list(/datum/species/golem/uranium)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_workboots
+	bio = 80
 
 /obj/item/clothing/shoes/workboots/Initialize(mapload)
 	. = ..()
@@ -106,6 +118,10 @@
 	icon_state = "rus_shoes"
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_workboots
+	bio = 80
 
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()

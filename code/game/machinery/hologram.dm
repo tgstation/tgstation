@@ -43,7 +43,7 @@ Possible to do for anyone motivated enough:
 	plane = GAME_PLANE
 	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	max_integrity = 300
-	// ARMOR TODO armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, FIRE = 50)
+	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
 	/// associative lazylist of the form: list(mob calling us = hologram representing that mob).
 	/// this is only populated for holopads answering calls from another holopad
@@ -87,6 +87,14 @@ Possible to do for anyone motivated enough:
 	///bitfield. used to turn on and off hearing sensitivity depending on if we can act on Hear() at all - meant for lowering the number of unessesary hearable atoms
 	var/can_hear_flags = NONE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_holopad
+	melee = 50
+	bullet = 20
+	laser = 20
+	energy = 20
+	fire = 50
+
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()
 	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
@@ -97,6 +105,14 @@ Possible to do for anyone motivated enough:
 	name = "secure holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
 	secure = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_holopad
+	melee = 50
+	bullet = 20
+	laser = 20
+	energy = 20
+	fire = 50
 
 /obj/machinery/holopad/secure/Initialize(mapload)
 	. = ..()
@@ -111,6 +127,14 @@ Possible to do for anyone motivated enough:
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_holopad
+	melee = 50
+	bullet = 20
+	laser = 20
+	energy = 20
+	fire = 50
 
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
@@ -823,6 +847,14 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	initial_language_holder = /datum/language_holder/universal
 	var/mob/living/Impersonation
 	var/datum/holocall/HC
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/machinery_holopad
+	melee = 50
+	bullet = 20
+	laser = 20
+	energy = 20
+	fire = 50
 
 /obj/effect/overlay/holo_pad_hologram/Destroy()
 	Impersonation = null

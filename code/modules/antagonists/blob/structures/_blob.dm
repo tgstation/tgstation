@@ -14,7 +14,7 @@
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/point_return = 0
 	max_integrity = BLOB_REGULAR_MAX_HP
-	// ARMOR TODO armor = list(FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/structure_blob
 	/// how much health this blob regens when pulsed
 	var/health_regen = BLOB_REGULAR_HP_REGEN
 	/// We got pulsed when?
@@ -31,6 +31,11 @@
 	var/atmosblock = FALSE
 	var/mob/camera/blob/overmind
 
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_blob
+	fire = 80
+	acid = 70
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -350,6 +355,11 @@
 	var/initial_integrity = BLOB_REGULAR_HP_INIT
 	health_regen = BLOB_REGULAR_HP_REGEN
 	brute_resist = BLOB_BRUTE_RESIST * 0.5
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_blob
+	fire = 80
+	acid = 70
 
 /obj/structure/blob/normal/Initialize(mapload, owner_overmind)
 	. = ..()

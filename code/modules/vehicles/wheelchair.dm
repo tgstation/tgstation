@@ -79,7 +79,7 @@
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
-	// ARMOR TODO armor = list(MELEE = 20, BULLET = 20, LASER = 20, BOMB = 20, FIRE = 30, ACID = 40)
+	armor_type = /datum/armor/wheelchair_gold
 	custom_materials = list(/datum/material/gold = 10000)
 	foldabletype = /obj/item/wheelchair/gold
 
@@ -109,6 +109,15 @@
 	force = 10
 	custom_materials = list(/datum/material/gold = 10000)
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/wheelchair_gold
+	melee = 20
+	bullet = 20
+	laser = 20
+	bomb = 20
+	fire = 30
+	acid = 40
 
 /obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
 	. = ..()

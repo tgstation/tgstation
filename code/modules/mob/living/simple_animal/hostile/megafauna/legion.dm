@@ -273,7 +273,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
-	// ARMOR TODO armor = list(LASER = 100)
+	armor_type = /datum/armor/structure_legionturret
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
@@ -282,6 +282,10 @@
 	var/shot_delay = 8
 	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
 	var/faction = list("mining")
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_legionturret
+	laser = 100
 
 /obj/structure/legionturret/Initialize(mapload)
 	. = ..()

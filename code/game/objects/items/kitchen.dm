@@ -31,10 +31,15 @@
 	attack_verb_continuous = list("attacks", "stabs", "pokes")
 	attack_verb_simple = list("attack", "stab", "poke")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	// ARMOR TODO armor = list(FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/kitchen_fork
 	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_LOWER
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/kitchen_fork
+	fire = 50
+	acid = 30
 
 /obj/item/kitchen/fork/Initialize(mapload)
 	. = ..()
@@ -71,6 +76,11 @@
 	custom_materials = list(/datum/material/plastic=80)
 	custom_price = PAYCHECK_LOWER * 2
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/kitchen_fork
+	fire = 50
+	acid = 30
+
 /obj/item/kitchen/fork/plastic/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
@@ -93,6 +103,11 @@
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
 	custom_price = PAYCHECK_LOWER * 2
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/kitchen_fork
+	fire = 50
+	acid = 30
 
 /obj/item/knife/plastic/Initialize(mapload)
 	. = ..()
@@ -126,6 +141,11 @@
 	custom_price = PAYCHECK_CREW * 2
 	bare_wound_bonus = 14
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/kitchen_fork
+	fire = 50
+	acid = 30
+
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
@@ -142,7 +162,7 @@
 	throw_range = 5
 	attack_verb_simple = list("whack", "spoon", "tap")
 	attack_verb_continuous = list("whacks", "spoons", "taps")
-	// ARMOR TODO armor = list(FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/kitchen_spoon
 	custom_materials = list(/datum/material/iron=120)
 	custom_price = PAYCHECK_LOWER * 5
 	tool_behaviour = TOOL_MINING
@@ -155,6 +175,11 @@
 	custom_materials = list(/datum/material/plastic=120)
 	custom_price = PAYCHECK_LOWER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/kitchen_spoon
+	fire = 50
+	acid = 30
 
 /obj/item/kitchen/spoon/plastic/Initialize(mapload)
 	. = ..()
