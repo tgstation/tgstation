@@ -233,6 +233,10 @@
 			candidates.Remove(candidate_player)
 			continue
 
+		if (candidate_client.prefs.special_disable)
+			candidates.Remove(candidate_player)
+			continue
+
 		if (is_banned_from(candidate_player.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
 			candidates.Remove(candidate_player)
 			continue

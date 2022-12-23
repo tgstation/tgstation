@@ -17,6 +17,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//Antag preferences
 	var/list/be_special = list() //Special role selection
+	/// Global disable for all antags
+	var/special_disable = FALSE
 
 	/// Custom keybindings. Map of keybind names to keyboard inputs.
 	/// For example, by default would have "swap_hands" -> list("X")

@@ -170,6 +170,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//general preferences
 	lastchangelog = savefile.get_entry("lastchangelog")
 	be_special = savefile.get_entry("be_special")
+	special_disable = savefile.get_entry("special_disable", FALSE)
 	default_slot = savefile.get_entry("default_slot")
 	chat_toggles = savefile.get_entry("chat_toggles")
 	toggles = savefile.get_entry("toggles")
@@ -208,6 +209,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	default_slot = sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles = sanitize_integer(toggles, 0, (2**24)-1, initial(toggles))
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
+	special_disable = !!special_disable
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 
@@ -251,6 +253,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	savefile.set_entry("lastchangelog", lastchangelog)
 	savefile.set_entry("be_special", be_special)
+	savefile.set_entry("special_disable", special_disable)
 	savefile.set_entry("default_slot", default_slot)
 	savefile.set_entry("toggles", toggles)
 	savefile.set_entry("chat_toggles", chat_toggles)

@@ -333,11 +333,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return ""
 
 /datum/antagonist/proc/enabled_in_preferences(datum/mind/M)
+	if(!M.current)
+		return
+	if(!M.current.client)
+		return
+
 	if(job_rank)
-		if(M.current && M.current.client && (job_rank in M.current.client.prefs.be_special))
-			return TRUE
-		else
+		if(M.current.client.prefs.special_disable)
 			return FALSE
+
+		if(job_rank in M.current.client.prefs.be_special)
+			return TRUE
+		return FALSE
+
 	return TRUE
 
 /// List of ["Command"] = CALLBACK(), user will be appeneded to callback arguments on execution

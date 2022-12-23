@@ -13,6 +13,8 @@
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
 		if(!H.client || !(ROLE_OBSESSED in H.client.prefs.be_special))
 			continue
+		if(H.client.prefs.special_disable)
+			continue
 		if(H.stat == DEAD)
 			continue
 		if(!(H.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //only station jobs sans nonhuman roles, prevents ashwalkers trying to stalk with crewmembers they never met

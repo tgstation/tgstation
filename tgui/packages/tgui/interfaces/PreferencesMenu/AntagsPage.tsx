@@ -1,7 +1,15 @@
 import { binaryInsertWith } from 'common/collections';
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Flex, Section, Stack, Tooltip } from '../../components';
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Section,
+  Stack,
+  Tooltip,
+} from '../../components';
 import { Antagonist, Category } from './antagonists/base';
 import { PreferencesMenuData } from './data';
 
@@ -94,6 +102,21 @@ const AntagSelection = (
           <Button color="bad" onClick={() => disableAntags(antagonistKeys)}>
             Disable All
           </Button>
+
+          {data.special_disable ? (
+            <Button
+              color="bad"
+              onclick={() => act('set_disable', { enable: true })}>
+              Re-enable antagonist functions
+            </Button>
+          ) : (
+            <Button
+              color="good"
+              onClick={() => act('set_disable', { enable: false })}>
+              Temporarily disable all antagonists
+            </Button>
+          )}
+          <Button color=""></Button>
         </>
       }>
       <Flex className={className} align="flex-end" wrap>
@@ -112,8 +135,8 @@ const AntagSelection = (
                   isBanned || daysLeft > 0
                     ? 'banned'
                     : predictedState.has(antagonist.key)
-                      ? 'on'
-                      : 'off'
+                    ? 'on'
+                    : 'off'
                 }`,
               ])}
               key={antagonist.key}>
@@ -134,15 +157,16 @@ const AntagSelection = (
                       isBanned
                         ? `You are banned from ${antagonist.name}.`
                         : antagonist.description.map((text, index) => {
-                          return (
-                            <div key={antagonist.key + index}>
-                              {text}
-                              {index !== antagonist.description.length - 1 && (
-                                <Divider />
-                              )}
-                            </div>
-                          );
-                        })
+                            return (
+                              <div key={antagonist.key + index}>
+                                {text}
+                                {index !==
+                                  antagonist.description.length - 1 && (
+                                  <Divider />
+                                )}
+                              </div>
+                            );
+                          })
                     }
                     position="bottom">
                     <Box

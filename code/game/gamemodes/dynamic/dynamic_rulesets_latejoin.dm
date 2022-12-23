@@ -16,6 +16,8 @@
 			candidates.Remove(P)
 		else if (!((antag_preference || antag_flag) in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
 			candidates.Remove(P)
+		else if (P.client.prefs.special_disable)
+			candidates.Remove(p)
 
 /datum/dynamic_ruleset/latejoin/ready(forced = 0)
 	if (forced)

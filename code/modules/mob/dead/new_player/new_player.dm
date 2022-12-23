@@ -275,7 +275,7 @@
 		return TRUE
 	// If they have antags enabled, they're potentially doing this on purpose instead of by accident. Notify admins if so.
 	var/has_antags = FALSE
-	if(client.prefs.be_special.len > 0)
+	if(client.prefs.be_special.len > 0 && !client.special_disable)
 		has_antags = TRUE
 	if(client.prefs.job_preferences.len == 0)
 		if(!ineligible_for_roles)

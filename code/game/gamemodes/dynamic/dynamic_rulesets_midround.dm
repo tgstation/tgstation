@@ -68,6 +68,9 @@
 		if (is_banned_from(M.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
 			trimmed_list.Remove(M)
 			continue
+		if (M.client.prefs.special_disable)
+			trimmed_list.Remove(M)
+			continue
 		if (M.mind)
 			if (restrict_ghost_roles && (M.mind.assigned_role.title in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
 				trimmed_list.Remove(M)

@@ -1,6 +1,7 @@
 /datum/preference_middleware/antags
 	action_delegations = list(
 		"set_antags" = PROC_REF(set_antags),
+		"set_disable" = PROC_REF(set_disable)
 	)
 
 /datum/preference_middleware/antags/get_ui_static_data(mob/user)
@@ -15,6 +16,7 @@
 		selected_antags += serialize_antag_name(antag)
 
 	data["selected_antags"] = selected_antags
+	data["special_disable"] = special_disable
 
 	var/list/antag_bans = get_antag_bans()
 	if (antag_bans.len)
@@ -55,6 +57,10 @@
 
 	// This is predicted on the client
 	return FALSE
+
+/datum/preference_middleware/antags/proc/set_disable(list/params)
+	var/enable = params["enable"]
+	preferences.special_disable = !!enable
 
 /datum/preference_middleware/antags/proc/get_antag_bans()
 	var/list/antag_bans = list()
