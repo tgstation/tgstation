@@ -541,7 +541,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		gas_heat_power_generation += sm_gas.heat_power_generation * gas_percentage[gas_path]
 		gas_powerloss_inhibition += sm_gas.powerloss_inhibition * gas_percentage[gas_path]
 
-	gas_heat_power_generation = clamp(gas_heat_power_generation, 0, 4)
+	gas_heat_power_generation = clamp(gas_heat_power_generation, 0, 1)
 	gas_powerloss_inhibition = clamp(gas_powerloss_inhibition, 0, 1)
 
 /**
