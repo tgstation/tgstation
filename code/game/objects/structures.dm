@@ -10,10 +10,14 @@
 	pass_flags_self = PASSSTRUCTURE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	var/broken = FALSE
+	armor_type = /datum/armor/obj_structure
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/obj_structure
+	fire = 50
+	acid = 50
 
 /obj/structure/Initialize(mapload)
-	if (!armor)
-		// ARMOR TODO armor = list(FIRE = 50, ACID = 50)
 	. = ..()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
