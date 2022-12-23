@@ -1,12 +1,15 @@
-GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
+GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 
-/proc/__generate_armor_cache()
+/proc/generate_armor_type_cache()
 	. = list()
 	for(var/datum/armor/armor_type as anything in subtypesof(/datum/armor))
 		armor_type = new armor_type
 		.[armor_type.type] = armor_type
 		armor_type.GenerateTag()
 
+/**
+ * Gets an armor type datum using the given type by formatting it into the expected datum tag
+ */
 /proc/get_armor_by_type(armor_type)
 	. = locate(replacetext("[armor_type]", "/", "-"))
 	if(.)
@@ -131,6 +134,7 @@ GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
 /datum/armor/immune/generate_new_with_specific(list/values)
 	return src
 
+/// Gets the rating of armor for the specified rating
 /datum/armor/proc/get_rating(rating)
 	// its not that I dont trust coders, its just that I don't trust coders
 	if(!(rating in ARMOR_LIST_ALL()))
@@ -140,6 +144,7 @@ GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
 /datum/armor/immune/get_rating(rating)
 	return 100
 
+/// Converts all the ratings of the armor into a list, optionally inversed
 /datum/armor/proc/get_rating_list(inverse = FALSE)
 	. = list()
 	for(var/rating in ARMOR_LIST_ALL())
@@ -153,6 +158,7 @@ GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
 	for(var/rating in .)
 		.[rating] = 100
 
+/// Returns a new armor datum with the given armor added onto this one
 /datum/armor/proc/add_other_armor(datum/armor/other)
 	if(ispath(other))
 		other = get_armor_by_type(other)
@@ -161,6 +167,7 @@ GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
 /datum/armor/immune/add_other_armor(datum/armor/other)
 	return src
 
+/// Returns a new armor datum with the given armor removed from this one
 /datum/armor/proc/subtract_other_armor(datum/armor/other)
 	if(ispath(other))
 		other = get_armor_by_type(other)
@@ -169,6 +176,7 @@ GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
 /datum/armor/immune/subtract_other_armor(datum/armor/other)
 	return src
 
+/// Checks if any of the armor values are non-zero, so this technically also counts negative armor!
 /datum/armor/proc/has_any_armor()
 	for(var/rating as anything in ARMOR_LIST_ALL())
 		if(vars[rating])
