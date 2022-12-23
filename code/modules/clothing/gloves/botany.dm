@@ -10,4 +10,10 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	clothing_traits = list(TRAIT_PLANT_SAFE)
-	// ARMOR TODO armor = list(BIO = 50, FIRE = 70, ACID = 30)
+	armor_type = /datum/armor/gloves_botanic_leather
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/gloves_botanic_leather
+	bio = 50
+	fire = 70
+	acid = 30

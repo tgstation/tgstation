@@ -14,10 +14,14 @@
 	body_parts_covered = CHEST|GROIN
 	attack_verb_continuous = list("warns", "cautions", "smashes")
 	attack_verb_simple = list("warn", "caution", "smash")
-	// ARMOR TODO armor = list(MELEE = 5)
+	armor_type = /datum/armor/suit_caution
 	species_exception = list(/datum/species/golem)
 	allowed = list(
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
 	)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/suit_caution
+	melee = 5
