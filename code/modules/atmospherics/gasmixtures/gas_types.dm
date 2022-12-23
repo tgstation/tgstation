@@ -108,7 +108,7 @@
 
 /datum/gas/water_vapor
 	id = "water_vapor"
-	specific_heat = 100
+	specific_heat = 40
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_GAS_VISIBLE
@@ -157,7 +157,7 @@
 
 /datum/gas/tritium
 	id = "tritium"
-	specific_heat = 300
+	specific_heat = 10
 	name = "Tritium"
 	gas_overlay = "tritium"
 	moles_visible = MOLES_GAS_VISIBLE
@@ -212,7 +212,7 @@
 
 /datum/gas/hydrogen
 	id = "hydrogen"
-	specific_heat = 300
+	specific_heat = 15
 	name = "Hydrogen"
 	dangerous = TRUE
 	fusion_power = 2
