@@ -65,6 +65,7 @@
 		else
 			stack_trace("Sandstorm event given [start_side] as unrecognized direction. Cancelling event...")
 			kill()
+			return
 
 	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
 		Impact is expected in the next two minutes. All employees are encouranged to assist in repairs and damage mitigation if possible.", "Collision Emergency Alert")
@@ -88,7 +89,7 @@
 	max_occurrences = 0
 	earliest_start = 0 MINUTES
 	category = EVENT_CATEGORY_SPACE
-	description = "The station is pelted by an extreme amount of dust, from all sides, for several minutes."
+	description = "The station is pelted by an extreme amount of dust, from all sides, for several minutes. Very destructive and likely to cause lag. Use at own risk."
 
 /datum/round_event/sandstorm_classic
 	start_when = 1
