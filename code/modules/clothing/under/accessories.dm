@@ -258,8 +258,12 @@
 	desc = "An eccentric medal made of plasma."
 	icon_state = "plasma"
 	medaltype = "medal-plasma"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = -10, ACID = 0) //It's made of plasma. Of course it's flammable.
+	armor_type = /datum/armor/medal_plasma
 	custom_materials = list(/datum/material/plasma=1000)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/medal_plasma
+	fire = -10
 
 /obj/item/clothing/accessory/medal/plasma/Initialize(mapload)
 	. = ..()
@@ -419,23 +423,53 @@
 	name = "bone talisman"
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
+	armor_type = /datum/armor/accessory_talisman
 	attachment_slot = null
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/accessory_talisman
+	melee = 5
+	bullet = 5
+	laser = 5
+	energy = 5
+	bomb = 20
+	bio = 20
+	acid = 25
 
 /obj/item/clothing/accessory/skullcodpiece
 	name = "skull codpiece"
 	desc = "A skull shaped ornament, intended to protect the important things in life."
 	icon_state = "skull"
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
+	armor_type = /datum/armor/accessory_skullcodpiece
 	attachment_slot = GROIN
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/accessory_skullcodpiece
+	melee = 5
+	bullet = 5
+	laser = 5
+	energy = 5
+	bomb = 20
+	bio = 20
+	acid = 25
 
 /obj/item/clothing/accessory/skilt
 	name = "Sinew Skirt"
 	desc = "For the last time. IT'S A KILT not a skirt."
 	icon_state = "skilt"
 	minimize_when_attached = FALSE
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
+	armor_type = /datum/armor/accessory_skilt
 	attachment_slot = GROIN
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/accessory_skilt
+	melee = 5
+	bullet = 5
+	laser = 5
+	energy = 5
+	bomb = 20
+	bio = 20
+	acid = 25
 
 /obj/item/clothing/accessory/allergy_dogtag
 	name = "Allergy dogtag"
