@@ -67,8 +67,10 @@ GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
 	var/datum/armor/new_armor = new
 
 	var/all_keys = ARMOR_LIST_ALL()
-	if(modifiers[ARMOR_ALL])
+	if(ARMOR_ALL in modifiers)
 		var/mod_all = modifiers[ARMOR_ALL]
+		if(!mod_all)
+			return src
 		for(var/mod in all_keys)
 			new_armor.vars[mod] = vars[mod] + mod_all
 		return new_armor
