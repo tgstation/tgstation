@@ -165,6 +165,7 @@ export type PreferencesMenuData = {
   antag_bans?: string[];
   antag_days_left?: Record<string, number>;
   selected_antags: string[];
+  special_disable: BooleanLike;
 
   active_slot: number;
   name_to_use: string;
