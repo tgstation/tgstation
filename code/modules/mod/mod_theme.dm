@@ -22,7 +22,7 @@
 	/// The slot this mod theme fits on
 	var/slot_flags = ITEM_SLOT_BACK
 	/// Armor shared across the MOD parts.
-	var/armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 5)
+	var/datum/armor/armor_type = /datum/armor/mod_theme
 	/// Resistance flags shared across the MOD parts.
 	var/resistance_flags = NONE
 	/// Atom flags shared across the MOD parts.
@@ -100,6 +100,16 @@
 			),
 		),
 	)
+
+/datum/armor/mod_theme
+	melee = 10
+	bullet = 5
+	laser = 5
+	energy = 5
+	bio = 100
+	fire = 25
+	acid  =25
+	wound = 5
 
 /datum/mod_theme/engineering
 	name = "engineering"
