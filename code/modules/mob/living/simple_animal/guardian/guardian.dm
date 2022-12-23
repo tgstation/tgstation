@@ -91,6 +91,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	update_theme(theme)
 	AddElement(/datum/element/simple_flying)
 
+/mob/living/simple_animal/hostile/guardian/Destroy() //if deleted by admins or something random, cut from the summoner
+	if(!QDELETED(summoner))
+		cut_summoner(different_person = TRUE)
+	return ..()
+
 /// Setter for our summoner mob.
 /mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, different_person = FALSE)
 	if(QDELETED(to_who))
@@ -126,8 +131,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	recall(forced = TRUE)
 
 /mob/living/simple_animal/hostile/guardian/proc/cut_summoner(different_person = FALSE)
+	if(is_deployed())
+		recall_effects()
 	forceMove(get_turf(src))
-	recall_effects()
 	UnregisterSignal(summoner, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if(different_person)
 		summoner.faction -= "[REF(src)]"
