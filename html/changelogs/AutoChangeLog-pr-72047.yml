@@ -1,7 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram windows are now properly flush with the tram walls."
-  - imageadd: "Tram shuttle seats have been replaced with benches so people can sit too close to each other for that real metro experience."
-  - code_imp: "The icon for tram controls is now set in the tram controls subtype instead of the map itself."
-  - code_imp: "The tram floor tiles are now in a tram floor subtype instead of the map itself."

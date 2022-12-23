@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "There is now a message clarifying that you've been KICKED from the game when the keysend flood autokick triggers."

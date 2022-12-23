@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - rscadd: "Gas sensors recipe to RPD"
-  - code_imp: "linking all the stuff via multitool"
-  - qol: "make your own tank instead of moving around canisters"
