@@ -4996,6 +4996,7 @@
 #include "voidcrew\modules\overmap\code\modules\overmap\stars.dm"
 #include "voidcrew\modules\overmap\code\modules\overmap\behaviour\planets.dm"
 #include "voidcrew\modules\overmap\code\modules\overmap\behaviour\stars.dm"
+#include "voidcrew\modules\research\autolathe_designs.dm"
 #include "voidcrew\modules\research\machinery_rnd.dm"
 #include "voidcrew\modules\research\research_notes.dm"
 #include "voidcrew\modules\research\server.dm"
