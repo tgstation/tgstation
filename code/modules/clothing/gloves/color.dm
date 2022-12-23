@@ -8,7 +8,7 @@
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
 	siemens_coefficient = 0
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 50)
 	resistance_flags = NONE
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
@@ -46,7 +46,7 @@
 	icon_state = "sprayon"
 	inhand_icon_state = null
 	item_flags = DROPDEL
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	resistance_flags = ACID_PROOF
 	var/charges_remaining = 10
 
@@ -75,7 +75,7 @@
 	inhand_icon_state = "ygloves"
 	greyscale_colors = null
 	siemens_coefficient = 1 //Set to a default of 1, gets overridden in Initialize()
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 25, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 25)
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/cut
 
@@ -144,7 +144,7 @@
 	name = "insulated gloves"
 	desc = "These gloves provide protection against electric shock."
 	siemens_coefficient = 0
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 50)
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/rainbow
@@ -212,7 +212,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 60
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 70, ACID = 50)
+	// ARMOR TODO armor = list(BIO = 90, FIRE = 70, ACID = 50)
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/chief_engineer
@@ -235,7 +235,7 @@
 	inhand_icon_state = "latex_gloves"
 	greyscale_colors = null
 	siemens_coefficient = 0.3
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 100)
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = NONE
 
@@ -255,7 +255,7 @@
 	icon_state = "clockwork_gauntlets"
 	greyscale_colors = "#db6f05"
 	siemens_coefficient = 0.8
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 70, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 70)
 	clothing_traits = list(TRAIT_QUICK_BUILD)
 	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 

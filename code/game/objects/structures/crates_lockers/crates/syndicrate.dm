@@ -3,7 +3,7 @@
 	desc = "A conspicuous crate with the Syndicate logo on it. You don't know how to open it."
 	icon_state = "syndicrate"
 	max_integrity = 500
-	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 0, BIO = 0)
+	// ARMOR TODO armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	integrity_failure = 0 //prevents bust_open from activating
 	/// variable that only lets the crate open if opened by a key from the uplink

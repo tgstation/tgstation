@@ -7,7 +7,7 @@
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	plane = FLOOR_PLANE
 	max_integrity = 200
-	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	// ARMOR TODO armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, FIRE = 50, ACID = 30)
 
 	var/uses = 20
 	COOLDOWN_DECLARE(foam_cooldown)

@@ -4,7 +4,7 @@
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Hood hopefully belonging to an ablative trenchcoat. Includes a visor for cool-o-vision."
 	icon_state = "ablativehood"
-	armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
+	// ARMOR TODO armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, FIRE = 100, ACID = 100)
 	strip_delay = 30
 	var/hit_reflect_chance = 50
 
@@ -22,7 +22,7 @@
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
+	// ARMOR TODO armor = list(MELEE = 10, BULLET = 10, LASER = 60, ENERGY = 60, FIRE = 100, ACID = 100)
 	hoodtype = /obj/item/clothing/head/hooded/ablative
 	strip_delay = 30
 	equip_delay_other = 40

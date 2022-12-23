@@ -29,7 +29,7 @@
 /obj/item/clothing/shoes/sneakers/blue
 	name = "blue shoes"
 	greyscale_colors = "#4f88df#ffffff"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 95, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 95)
 
 /obj/item/clothing/shoes/sneakers/green
 	name = "green shoes"
@@ -51,7 +51,7 @@
 /obj/item/clothing/shoes/sneakers/white
 	name = "white shoes"
 	greyscale_colors = "#ffffff#ffffff"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 95, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 95)
 
 /obj/item/clothing/shoes/sneakers/rainbow
 	name = "rainbow shoes"

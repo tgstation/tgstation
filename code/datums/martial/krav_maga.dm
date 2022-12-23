@@ -198,4 +198,4 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 80, ACID = 50)
+	// ARMOR TODO armor = list(BIO = 90, FIRE = 80, ACID = 50)

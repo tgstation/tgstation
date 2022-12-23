@@ -27,7 +27,7 @@
 		/obj/item/storage/bag/plants,
 	)
 	species_exception = list(/datum/species/golem)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 50)
 
 /obj/item/clothing/suit/apron/waders
 	name = "horticultural waders"
@@ -66,7 +66,7 @@
 	inhand_icon_state = "chef"
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 50)
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/kitchen,
@@ -98,7 +98,7 @@
 	inhand_icon_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
+	// ARMOR TODO armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, ACID = 45)
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
 
@@ -277,7 +277,7 @@
 		/obj/item/storage/bag/books,
 		/obj/item/tank/internals,
 	)
-	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
+	// ARMOR TODO armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, ACID = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
 
@@ -308,7 +308,7 @@
 	name = "research director's coat"
 	desc = "A mix between a labcoat and just a regular coat. It's made out of a special anti-bacterial, anti-acidic, and anti-biohazardous synthetic fabric."
 	icon_state = "labcoat_rd"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 75, FIRE = 75, ACID = 75)
+	// ARMOR TODO armor = list(BIO = 75, FIRE = 75, ACID = 75)
 	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/suit/jacket/research_director/Initialize(mapload)

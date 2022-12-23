@@ -6,7 +6,7 @@
 	movedelay = 4
 	max_integrity = 400
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
-	armor = list(MELEE = 40, BULLET = 35, LASER = 15, ENERGY = 10, BOMB = 20, BIO = 0, FIRE = 100, ACID = 100)
+	// ARMOR TODO armor = list(MELEE = 40, BULLET = 35, LASER = 15, ENERGY = 10, BOMB = 20, FIRE = 100, ACID = 100)
 	max_temperature = 30000
 	force = 40
 	destruction_sleep_duration = 40

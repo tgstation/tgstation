@@ -23,7 +23,7 @@
 	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
-	armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)
+	// ARMOR TODO armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, FIRE = 100, ACID = 100)
 	max_temperature = 30000
 	force = 30
 	destruction_sleep_duration = 40

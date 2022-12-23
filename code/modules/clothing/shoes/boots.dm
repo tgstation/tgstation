@@ -3,7 +3,7 @@
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
-	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)
+	// ARMOR TODO armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)
 	strip_delay = 40
 	resistance_flags = NONE
 	lace_time = 12 SECONDS
@@ -17,7 +17,7 @@
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
 	clothing_flags = NOSLIP
-	armor = list(MELEE = 40, BULLET = 30, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 90, ACID = 50)
+	// ARMOR TODO armor = list(MELEE = 40, BULLET = 30, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 90, ACID = 50)
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
@@ -27,7 +27,7 @@
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 90)
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/jackboots/Initialize(mapload)
@@ -46,7 +46,7 @@
 	desc = "Boots lined with 'synthetic' animal fur."
 	icon_state = "winterboots"
 	inhand_icon_state = null
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 80, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 80)
 	cold_protection = FEET|LEGS
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET|LEGS
@@ -72,7 +72,7 @@
 	icon_state = "iceboots_eva"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.25
-	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 50, FIRE = 50, ACID = 10)
+	// ARMOR TODO armor = list(MELEE = 10, LASER = 10, ENERGY = 10, BIO = 50, FIRE = 50, ACID = 10)
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
 	clothing_flags = NOSLIP_ICE|THICKMATERIAL
@@ -83,7 +83,7 @@
 	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
 	icon_state = "workboots"
 	inhand_icon_state = "jackboots"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 80, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 80)
 	strip_delay = 20
 	equip_delay_other = 40
 	lace_time = 8 SECONDS

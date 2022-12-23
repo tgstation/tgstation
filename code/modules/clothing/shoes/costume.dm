@@ -5,7 +5,7 @@
 	inhand_icon_state = "wizshoe"
 	strip_delay = 100
 	equip_delay_other = 100
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 10)
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin

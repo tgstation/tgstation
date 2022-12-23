@@ -43,7 +43,7 @@
 	name = "durathread beanie"
 	desc = "A beanie made from durathread, its resilient fibres provide some protection to the wearer."
 	greyscale_colors = "#8291A1#8291A1"
-	armor = list(MELEE = 15, BULLET = 5, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, FIRE = 30, ACID = 5)
+	// ARMOR TODO armor = list(MELEE = 15, BULLET = 5, LASER = 15, ENERGY = 25, BOMB = 10, FIRE = 30, ACID = 5)
 
 /obj/item/clothing/head/rasta
 	name = "rastacap"

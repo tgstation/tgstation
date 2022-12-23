@@ -75,7 +75,7 @@
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 0.33
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
+	// ARMOR TODO armor = list(ENERGY = 100, FIRE = 90, ACID = 30)
 	resistance_flags = FIRE_PROOF
 
 	/// Current alert level, found in code/__DEFINES/atmospherics/atmos_machinery.dm

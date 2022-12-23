@@ -2,7 +2,7 @@
 	name = "cowboy boots"
 	desc = "A small sticker lets you know they've been inspected for snakes, It is unclear how long ago the inspection took place..."
 	icon_state = "cowboy_brown"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 0, ACID = 0) //these are quite tall
+	// ARMOR TODO armor = list(BIO = 90) //these are quite tall
 	custom_price = PAYCHECK_CREW
 	var/max_occupants = 4
 	can_be_tied = FALSE
@@ -75,13 +75,13 @@
 	name = "bilton wrangler boots"
 	desc = "A pair of authentic haute couture boots from Japanifornia. You doubt they have ever been close to cattle."
 	icon_state = "cowboy_fancy"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 95, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 95)
 
 /obj/item/clothing/shoes/cowboy/lizard
 	name = "lizard skin boots"
 	desc = "You can hear a faint hissing from inside the boots; you hope it is just a mournful ghost."
 	icon_state = "lizardboots_green"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 40, ACID = 0) //lizards like to stay warm
+	// ARMOR TODO armor = list(BIO = 90, FIRE = 40) //lizards like to stay warm
 
 /obj/item/clothing/shoes/cowboy/lizard/masterwork
 	name = "\improper Hugs-The-Feet lizard skin boots"

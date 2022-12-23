@@ -6,7 +6,7 @@
 	movedelay = 2
 	step_energy_drain = 3
 	max_integrity = 200
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
+	// ARMOR TODO armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, FIRE = 100, ACID = 100)
 	max_temperature = 25000
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	destruction_sleep_duration = 40

@@ -6,7 +6,7 @@
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.5)
 	strip_delay = 5
 	equip_delay_other = 50
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
+	// ARMOR TODO armor = list(BIO = 10)
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
