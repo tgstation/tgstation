@@ -6,9 +6,13 @@
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.5)
 	strip_delay = 5
 	equip_delay_other = 50
-	// ARMOR TODO armor = list(BIO = 10)
+	armor_type = /datum/armor/shoes_sandal
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_sandal
+	bio = 10
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"

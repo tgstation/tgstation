@@ -5,7 +5,7 @@
 	base_icon_state = "reticence"
 	movedelay = 2
 	max_integrity = 100
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 15, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/mecha_reticence
 	max_temperature = 15000
 	force = 30
 	destruction_sleep_duration = 40
@@ -22,6 +22,15 @@
 	)
 	step_energy_drain = 3
 	color = "#87878715"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/mecha_reticence
+	melee = 25
+	bullet = 20
+	laser = 30
+	energy = 15
+	fire = 100
+	acid = 100
 
 /obj/vehicle/sealed/mecha/reticence/loaded
 	equip_by_category = list(

@@ -12,10 +12,18 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
-	// ARMOR TODO armor = list(MELEE = 10, BIO = 10, FIRE = 30, ACID = 30, WOUND = 10)
+	armor_type = /datum/armor/rank_security
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security uniform"
@@ -23,11 +31,27 @@
 	icon_state = "rsecurity"
 	inhand_icon_state = "r_suit"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
+
 /obj/item/clothing/under/rank/security/officer/grey
 	name = "grey security jumpsuit"
 	desc = "A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "security"
 	inhand_icon_state = "gy_suit"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
 
 /obj/item/clothing/under/rank/security/officer/skirt
 	name = "security skirt"
@@ -39,6 +63,14 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
+
 /obj/item/clothing/under/rank/security/officer/blueshirt
 	name = "blue shirt and tie"
 	desc = "I'm a little busy right now, Calhoun."
@@ -46,12 +78,28 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
+
 /obj/item/clothing/under/rank/security/officer/formal
 	name = "security officer's formal uniform"
 	desc = "The latest in fashionable security outfits."
 	icon_state = "officerblueclothes"
 	inhand_icon_state = null
 	alt_covers_chest = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
 
 /obj/item/clothing/under/rank/security/constable
 	name = "constable outfit"
@@ -62,17 +110,41 @@
 	custom_price = PAYCHECK_COMMAND
 
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
+
 /obj/item/clothing/under/rank/security/warden
 	name = "security suit"
 	desc = "A formal security suit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rwarden"
 	inhand_icon_state = "r_suit"
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
+
 /obj/item/clothing/under/rank/security/warden/grey
 	name = "grey security suit"
 	desc = "A formal relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "warden"
 	inhand_icon_state = "gy_suit"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
 
 /obj/item/clothing/under/rank/security/warden/skirt
 	name = "warden's suitskirt"
@@ -84,6 +156,14 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
+
 /obj/item/clothing/under/rank/security/warden/formal
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
 	name = "warden's formal uniform"
@@ -94,12 +174,28 @@
 /*
  * Detective
  */
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
+
 /obj/item/clothing/under/rank/security/detective
 	name = "hard-worn suit"
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	inhand_icon_state = "det"
 	alt_covers_chest = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
 
 /obj/item/clothing/under/rank/security/detective/skirt
 	name = "detective's suitskirt"
@@ -112,12 +208,28 @@
 	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
+
 /obj/item/clothing/under/rank/security/detective/noir
 	name = "noir suit"
 	desc = "A hard-boiled private investigator's dark suit, complete with tie clip."
 	icon_state = "noirdet"
 	inhand_icon_state = null
 	alt_covers_chest = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
 
 /obj/item/clothing/under/rank/security/detective/noir/skirt
 	name = "noir suitskirt"
@@ -133,13 +245,29 @@
 /*
  * Head of Security
  */
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
+
 /obj/item/clothing/under/rank/security/head_of_security
 	name = "head of security's uniform"
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos"
 	inhand_icon_state = "r_suit"
-	// ARMOR TODO armor = list(MELEE = 10, BIO = 10, FIRE = 50, ACID = 50, WOUND = 10)
+	armor_type = /datum/armor/security_head_of_security
 	strip_delay = 60
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/security/head_of_security/skirt
 	name = "head of security's skirt"
@@ -151,11 +279,27 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/under/rank/security/head_of_security/grey
 	name = "head of security's grey jumpsuit"
 	desc = "There are old men, and there are bold men, but there are very few old, bold men."
 	icon_state = "hos"
 	inhand_icon_state = "gy_suit"
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/security/head_of_security/alt
 	name = "head of security's turtleneck"
@@ -163,6 +307,14 @@
 	icon_state = "hosalt"
 	inhand_icon_state = "bl_suit"
 	alt_covers_chest = TRUE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/security/head_of_security/alt/skirt
 	name = "head of security's turtleneck skirt"
@@ -175,12 +327,28 @@
 	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/under/rank/security/head_of_security/parade
 	name = "head of security's parade uniform"
 	desc = "A male head of security's luxury-wear, for special occasions."
 	icon_state = "hos_parade_male"
 	inhand_icon_state = "r_suit"
 	can_adjust = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/security/head_of_security/parade/female
 	name = "head of security's parade uniform"
@@ -189,6 +357,14 @@
 	inhand_icon_state = "r_suit"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/security/head_of_security/formal
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
@@ -201,12 +377,28 @@
  *Spacepol
  */
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/under/rank/security/officer/spacepol
 	name = "police uniform"
 	desc = "Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol."
 	icon_state = "spacepol"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
@@ -222,6 +414,14 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/under/rank/prisoner/skirt
 	name = "prison jumpskirt"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
@@ -236,6 +436,14 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/under/rank/security/officer/beatcop
 	name = "space police uniform"
 	desc = "A police uniform often found in the lines at donut shops."
@@ -243,12 +451,28 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/under/rank/security/detective/disco
 	name = "superstar cop uniform"
 	desc = "Flare cut trousers and a dirty shirt that might have been classy before someone took a piss in the armpits. It's the dress of a superstar."
 	icon_state = "jamrock_suit"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/security/detective/kim
 	name = "aerostatic suit"

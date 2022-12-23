@@ -7,7 +7,12 @@
 	random_sensor = FALSE
 	icon = 'icons/obj/clothing/under/captain.dmi'
 	worn_icon = 'icons/mob/clothing/under/captain.dmi'
-	// ARMOR TODO armor = list(BIO = 10, WOUND = 15)
+	armor_type = /datum/armor/rank_captain
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_captain
+	bio = 10
+	wound = 15
 
 /obj/item/clothing/under/rank/captain/skirt
 	name = "captain's jumpskirt"
@@ -19,12 +24,22 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_captain
+	bio = 10
+	wound = 15
+
 /obj/item/clothing/under/rank/captain/suit
 	name = "captain's suit"
 	desc = "A green suit and yellow necktie. Exemplifies authority."
 	icon_state = "green_suit"
 	inhand_icon_state = "dg_suit"
 	can_adjust = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_captain
+	bio = 10
+	wound = 15
 
 /obj/item/clothing/under/rank/captain/suit/skirt
 	name = "green suitskirt"
@@ -35,6 +50,11 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/rank_captain
+	bio = 10
+	wound = 15
 
 /obj/item/clothing/under/rank/captain/parade
 	name = "captain's parade uniform"

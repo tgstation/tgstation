@@ -26,14 +26,36 @@
 		to_chat(user, span_boldnotice("You can no longer speak like a pirate."))
 
 /obj/item/clothing/head/costume/pirate/armored
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
+	armor_type = /datum/armor/pirate_armored
 	strip_delay = 40
 	equip_delay_other = 20
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/pirate_armored
+	melee = 30
+	bullet = 50
+	laser = 30
+	energy = 40
+	bomb = 30
+	bio = 30
+	fire = 60
+	acid = 75
 
 /obj/item/clothing/head/costume/pirate/captain
 	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
 	inhand_icon_state = null
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/pirate_armored
+	melee = 30
+	bullet = 50
+	laser = 30
+	energy = 40
+	bomb = 30
+	bio = 30
+	fire = 60
+	acid = 75
 
 /obj/item/clothing/head/costume/pirate/bandana
 	name = "pirate bandana"
@@ -41,7 +63,18 @@
 	icon_state = "bandana"
 	inhand_icon_state = null
 
+/// Automatically generated armor datum, errors may exist
+/datum/armor/pirate_armored
+	melee = 30
+	bullet = 50
+	laser = 30
+	energy = 40
+	bomb = 30
+	bio = 30
+	fire = 60
+	acid = 75
+
 /obj/item/clothing/head/costume/pirate/bandana/armored
-	// ARMOR TODO armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
+	armor_type = /datum/armor/bandana_armored
 	strip_delay = 40
 	equip_delay_other = 20

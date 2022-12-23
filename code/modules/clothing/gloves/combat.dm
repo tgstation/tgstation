@@ -10,7 +10,13 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	// ARMOR TODO armor = list(BIO = 90, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/gloves_combat
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/gloves_combat
+	bio = 90
+	fire = 80
+	acid = 50
 
 /obj/item/clothing/gloves/combat/wizard
 	name = "enchanted gloves"

@@ -3,9 +3,16 @@
 	desc = "A plasmaman containment suit designed for security officers, offering a limited amount of extra protection."
 	icon_state = "security_envirosuit"
 	inhand_icon_state = null
-	// ARMOR TODO armor = list(MELEE = 10, BIO = 100, FIRE = 95, ACID = 95)
+	armor_type = /datum/armor/plasmaman_security
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/plasmaman_security
+	melee = 10
+	bio = 100
+	fire = 95
+	acid = 95
 
 /obj/item/clothing/under/plasmaman/security/warden
 	name = "warden plasma envirosuit"
