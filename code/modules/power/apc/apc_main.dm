@@ -452,7 +452,7 @@
 	else if(excess < 0)
 		main_status = APC_LOW_POWER
 		for(var/obj/machinery/light/flickering_light in area)
-			breaked_light.flickering = TRUE // We don't need to unset, because it resets back to FALSE every time it flickers in light code
+			flickering_light.flickering = TRUE // We don't need to unset, because it resets back to FALSE every time it flickers in light code
 			CHECK_TICK
 	else
 		main_status = APC_HAS_POWER
