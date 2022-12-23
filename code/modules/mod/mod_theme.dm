@@ -22,7 +22,7 @@
 	/// The slot this mod theme fits on
 	var/slot_flags = ITEM_SLOT_BACK
 	/// Armor shared across the MOD parts.
-	// ARMOR TODO armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BIO = 100, FIRE = 25, ACID = 25, WOUND = 5)
+	var/datum/armor/armor_type = /datum/armor/mod_theme
 	/// Resistance flags shared across the MOD parts.
 	var/resistance_flags = NONE
 	/// Atom flags shared across the MOD parts.
@@ -101,6 +101,16 @@
 		),
 	)
 
+/datum/armor/mod_theme
+	melee = 10
+	bullet = 5
+	laser = 5
+	energy = 5
+	bio = 100
+	fire = 25
+	acid = 25
+	wound = 5
+
 /datum/mod_theme/engineering
 	name = "engineering"
 	desc = "An engineer-fit suit with heat and shock resistance. Nakamura Engineering's classic."
@@ -110,7 +120,7 @@
 		a shock-resistant outer layer, making the suit nigh-invulnerable against even the extremes of high-voltage electricity. \
 		However, the capacity for modification remains the same as civilian-grade suits."
 	default_skin = "engineering"
-	// ARMOR TODO armor = list(MELEE = 10, BULLET = 5, LASER = 20, ENERGY = 10, BOMB = 10, BIO = 100, FIRE = 100, ACID = 25, WOUND = 10)
+	armor_type = /datum/armor/mod_theme/engineer
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
@@ -149,6 +159,13 @@
 		),
 	)
 
+/datum/armor/mod_theme/engineer
+	laser = 20
+	energy = 10
+	bomb = 10
+	fire = 100
+	wound = 10
+
 /datum/mod_theme/atmospheric
 	name = "atmospheric"
 	desc = "An atmospheric-resistant suit by Nakamura Engineering, offering extreme heat resistance compared to the engineer suit."
@@ -158,7 +175,7 @@
 		corrosive gasses and liquids, useful in the world of pipes. \
 		However, the capacity for modification remains the same as civilian-grade suits."
 	default_skin = "atmospheric"
-	// ARMOR TODO armor = list(MELEE = 10, BULLET = 5, LASER = 10, ENERGY = 15, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
+	armor_type = /datum/armor/mod_theme/atmospheric
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	slowdown_inactive = 1.5
@@ -197,6 +214,14 @@
 			),
 		),
 	)
+
+/datum/armor/mod_theme/atmospheric
+	laser = 10
+	energy = 15
+	bomb = 10
+	fire = 100
+	acid = 75
+	wound = 10
 
 /datum/mod_theme/advanced
 	name = "advanced"

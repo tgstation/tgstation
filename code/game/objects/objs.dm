@@ -232,7 +232,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 			usr.client.object_say(src)
 	if(href_list[VV_HK_ARMOR_MOD])
 		var/list/pickerlist = list()
-		var/list/armorlist = armor.getList()
+		var/list/armorlist = get_armor().get_rating_list()
 
 		for (var/i in armorlist)
 			pickerlist += list(list("value" = armorlist[i], "name" = i))
@@ -242,16 +242,23 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		if (islist(result))
 			if (result["button"] != 2) // If the user pressed the cancel button
 				// text2num conveniently returns a null on invalid values
-				armor = armor.setRating(melee = text2num(result["values"][MELEE]),\
-			                  bullet = text2num(result["values"][BULLET]),\
-			                  laser = text2num(result["values"][LASER]),\
-			                  energy = text2num(result["values"][ENERGY]),\
-			                  bomb = text2num(result["values"][BOMB]),\
-			                  bio = text2num(result["values"][BIO]),\
-			                  fire = text2num(result["values"][FIRE]),\
-			                  acid = text2num(result["values"][ACID]))
-				log_admin("[key_name(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], fire: [armor.fire], acid: [armor.acid]")
-				message_admins(span_notice("[key_name_admin(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], fire: [armor.fire], acid: [armor.acid]"))
+				set_armor(get_armor().generate_new_with_specific(list(
+					MELEE = text2num(result["values"][MELEE]),
+			        BULLET = text2num(result["values"][BULLET]),
+			        LASER = text2num(result["values"][LASER]),
+			        ENERGY = text2num(result["values"][ENERGY]),
+			        BOMB = text2num(result["values"][BOMB]),
+			        BIO = text2num(result["values"][BIO]),
+			        FIRE = text2num(result["values"][FIRE]),
+			        ACID = text2num(result["values"][ACID]),
+					)))
+				var/message = "[key_name(usr)] modified the armor on [src] ([type]) to: "
+				for(var/armor_key in ARMOR_LIST_ALL())
+					message += "[armor_key]=[get_armor_rating(armor_key)],"
+				message = copytext(message, 1, -1)
+				log_admin(span_notice(message))
+				message_admins(span_notice(message))
+
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))
 			var/action_type = tgui_alert(usr, "Strict type ([type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))

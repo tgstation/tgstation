@@ -1,5 +1,6 @@
 /// Get the atom's armor reference
 /atom/proc/get_armor()
+	RETURN_TYPE(/datum/armor)
 	return (armor ||= get_armor_by_type(armor_type))
 
 /// Helper to get a specific rating for the atom's armor
