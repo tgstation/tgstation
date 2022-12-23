@@ -28,7 +28,6 @@
 /// All bluespace gas senders
 GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/components/unary/bluespace_sender)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/unary_bluespace_sender
 	energy = 100
 	fire = 80

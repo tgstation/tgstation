@@ -50,7 +50,6 @@
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100
@@ -123,7 +122,6 @@
 	reactivearmor_cooldown_duration = 10 SECONDS
 	var/tele_range = 6
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100
@@ -152,7 +150,6 @@
 	cooldown_message = span_danger("The reactive incendiary armor activates, but fails to send out flames as it is still recharging its flame jets!")
 	emp_message = span_warning("The reactive incendiary armor's targeting system begins rebooting...")
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100
@@ -193,7 +190,6 @@
 	var/animation_time = 2 SECONDS
 	var/in_stealth = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100
@@ -247,7 +243,6 @@
 	/// What flags do we pass to the zaps we give off?
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100
@@ -281,7 +276,6 @@
 	emp_message = span_warning("The repulse generator is reset to default settings...")
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100
@@ -322,7 +316,6 @@
 	emp_message = span_danger("The reactive table armor's fabricators click and whirr ominously for a moment...")
 	var/tele_range = 10
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100
@@ -359,7 +352,6 @@
 	emp_message = span_warning("You feel the backsurge of a mind pulse.")
 	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100
@@ -404,7 +396,6 @@
 	var/static/list/l_legs
 	var/static/list/r_legs
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100
@@ -478,7 +469,6 @@
 	cooldown_message = span_danger("The reactive barrier system is still recharging! It fails to activate!")
 	reactivearmor_cooldown_duration = 10 SECONDS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_reactive
 	fire = 100
 	acid = 100

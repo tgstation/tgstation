@@ -44,7 +44,6 @@
 		COLOR_TOOL_YELLOW,
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_screwdriver
 	fire = 50
 	acid = 30
@@ -73,7 +72,6 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_screwdriver
 	fire = 50
 	acid = 30
@@ -107,7 +105,6 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_screwdriver
 	fire = 50
 	acid = 30
@@ -160,7 +157,6 @@
 /obj/item/screwdriver/red
 	random_color = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_screwdriver
 	fire = 50
 	acid = 30

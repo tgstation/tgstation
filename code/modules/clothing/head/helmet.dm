@@ -17,7 +17,6 @@
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/head_helmet
 	melee = 35
 	bullet = 30
@@ -70,7 +69,6 @@
 	armor_type = /datum/armor/helmet_alt
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_alt
 	melee = 15
 	bullet = 60
@@ -96,7 +94,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_marine
 	melee = 50
 	bullet = 50
@@ -181,7 +178,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/toggleable_riot
 	melee = 50
 	bullet = 10
@@ -245,7 +241,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_swat
 	melee = 40
 	bullet = 30
@@ -284,7 +279,6 @@
 	strip_delay = 80
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_thunderdome
 	melee = 80
 	bullet = 80
@@ -300,7 +294,6 @@
 	heat_protection = null
 	armor_type = /datum/armor/thunderdome_holosuit
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/thunderdome_holosuit
 	melee = 10
 	bullet = 10
@@ -317,7 +310,6 @@
 	strip_delay = 100
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_roman
 	melee = 25
 	laser = 25
@@ -359,7 +351,6 @@
 	// Offer about the same protection as a hardhat.
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_redtaghelm
 	melee = 15
 	bullet = 10
@@ -378,7 +369,6 @@
 	// Offer about the same protection as a hardhat.
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_bluetaghelm
 	melee = 15
 	bullet = 10
@@ -398,7 +388,6 @@
 	strip_delay = 80
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_knight
 	melee = 50
 	bullet = 10
@@ -424,7 +413,6 @@
 	armor_type = /datum/armor/knight_greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/knight_greyscale
 	melee = 35
 	bullet = 10
@@ -445,7 +433,6 @@
 	inhand_icon_state = null
 	strip_delay = 100
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_skull
 	melee = 35
 	bullet = 25
@@ -464,7 +451,6 @@
 	armor_type = /datum/armor/helmet_durathread
 	strip_delay = 60
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_durathread
 	melee = 20
 	bullet = 10
@@ -482,7 +468,6 @@
 	inhand_icon_state = "rus_helmet"
 	armor_type = /datum/armor/helmet_rus_helmet
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_rus_helmet
 	melee = 25
 	bullet = 30
@@ -507,7 +492,6 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/helmet_rus_ushanka
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_rus_ushanka
 	melee = 25
 	bullet = 20
@@ -529,7 +513,6 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_elder_atmosian
 	melee = 25
 	bullet = 20

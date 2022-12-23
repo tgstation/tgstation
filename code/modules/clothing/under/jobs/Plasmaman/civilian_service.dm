@@ -15,7 +15,6 @@
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/under_plasmaman
 	bio = 100
 	fire = 95
@@ -125,7 +124,6 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/under_plasmaman
 	bio = 100
 	fire = 95

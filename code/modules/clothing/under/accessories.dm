@@ -255,7 +255,6 @@
 	armor_type = /datum/armor/medal_plasma
 	custom_materials = list(/datum/material/plasma=1000)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/medal_plasma
 	fire = -10
 
@@ -420,7 +419,6 @@
 	armor_type = /datum/armor/accessory_talisman
 	attachment_slot = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/accessory_talisman
 	melee = 5
 	bullet = 5
@@ -437,7 +435,6 @@
 	armor_type = /datum/armor/accessory_skullcodpiece
 	attachment_slot = GROIN
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/accessory_skullcodpiece
 	melee = 5
 	bullet = 5
@@ -455,7 +452,6 @@
 	armor_type = /datum/armor/accessory_skilt
 	attachment_slot = GROIN
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/accessory_skilt
 	melee = 5
 	bullet = 5

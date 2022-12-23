@@ -24,7 +24,6 @@
 	resistance_flags = NONE
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_space
 	bio = 100
 	fire = 80
@@ -64,7 +63,6 @@
 	var/thermal_on = FALSE /// Status of the thermal regulator
 	var/show_hud = TRUE /// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_space
 	bio = 100
 	fire = 80

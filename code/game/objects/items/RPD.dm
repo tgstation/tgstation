@@ -261,7 +261,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	/// Bitflags for upgrades
 	var/upgrade_flags
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_pipe_dispenser
 	fire = 100
 	acid = 50

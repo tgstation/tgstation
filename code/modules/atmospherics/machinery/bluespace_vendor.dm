@@ -53,7 +53,6 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_bluespace_vendor
 	energy = 100
 	fire = 80

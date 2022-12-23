@@ -415,7 +415,6 @@
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/baton_security
 	bomb = 50
 	fire = 80
@@ -653,7 +652,6 @@
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/baton_security
 	bomb = 50
 	fire = 80
@@ -701,7 +699,6 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/baton_security
 	bomb = 50
 	fire = 80
@@ -730,7 +727,6 @@
 	inhand_icon_state = "teleprod"
 	slot_flags = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/baton_security
 	bomb = 50
 	fire = 80

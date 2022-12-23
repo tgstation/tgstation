@@ -110,7 +110,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_modular_computer
 	bullet = 20
 	laser = 20

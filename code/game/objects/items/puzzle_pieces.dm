@@ -50,7 +50,6 @@
 	var/open_message = "The door beeps, and slides opens."
 
 //Standard Expressions to make keycard doors basically un-cheeseable
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_puzzle
 	melee = 100
 	bullet = 100
@@ -89,7 +88,6 @@
 /obj/machinery/door/puzzle/keycard
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_puzzle
 	melee = 100
 	bullet = 100
@@ -122,7 +120,6 @@
 /obj/machinery/door/puzzle/light
 	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructible."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_puzzle
 	melee = 100
 	bullet = 100
@@ -174,7 +171,6 @@
 	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_puzzle
 	melee = 100
 	bullet = 100
@@ -233,7 +229,6 @@
 	/// Banned combinations of the list in decimal
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_light_puzzle
 	melee = 100
 	bullet = 100

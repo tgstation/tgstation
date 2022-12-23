@@ -107,7 +107,6 @@
 	armor_type = /datum/armor/structure_projected_forcefield
 	var/obj/item/forcefield_projector/generator
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_projected_forcefield
 	bullet = 25
 	laser = 50

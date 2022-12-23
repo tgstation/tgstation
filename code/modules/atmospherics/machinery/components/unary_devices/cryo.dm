@@ -115,7 +115,6 @@
 	payment_department = ACCOUNT_MED
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/unary_cryo_cell
 	energy = 100
 	fire = 30

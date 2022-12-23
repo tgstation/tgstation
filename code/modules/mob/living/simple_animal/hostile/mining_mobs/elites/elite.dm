@@ -146,7 +146,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		/mob/living/simple_animal/hostile/asteroid/elite/herald,
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_elite_tumor
 	melee = 100
 	bullet = 100
@@ -364,7 +363,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	throw_speed = 3
 	throw_range = 5
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_elite_tumor
 	melee = 100
 	bullet = 100
@@ -413,7 +411,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/datum/weakref/activator_ref
 	var/datum/weakref/ourelite_ref
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_elite_tumor
 	melee = 100
 	bullet = 100

@@ -48,7 +48,6 @@
 	var/mob/living/carbon/breathing_mob = null
 
 /// Closes the tank if dropped while open.
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_tank
 	bomb = 10
 	fire = 80

@@ -12,7 +12,6 @@
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_wintercoat
 	bio = 10
 
@@ -44,7 +43,6 @@
 
 // An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
 // Slight extra armor, bulky size, slows you down, can carry a large oxygen tank, won't burn off.
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_winterhood
 	bio = 10
 
@@ -64,7 +62,6 @@
 	resistance_flags = NONE
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/eva
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wintercoat_eva
 	melee = 10
 	laser = 10
@@ -88,7 +85,6 @@
 	resistance_flags = NONE
 
 // CentCom
-/// Automatically generated armor datum, errors may exist
 /datum/armor/winterhood_eva
 	melee = 10
 	laser = 10
@@ -105,7 +101,6 @@
 	armor_type = /datum/armor/wintercoat_centcom
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/centcom
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wintercoat_centcom
 	melee = 35
 	bullet = 40
@@ -125,7 +120,6 @@
 	armor_type = /datum/armor/winterhood_centcom
 
 // Captain
-/// Automatically generated armor datum, errors may exist
 /datum/armor/winterhood_centcom
 	melee = 35
 	bullet = 40
@@ -146,7 +140,6 @@
 	armor_type = /datum/armor/wintercoat_captain
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wintercoat_captain
 	melee = 25
 	bullet = 30
@@ -164,7 +157,6 @@
 	armor_type = /datum/armor/winterhood_captain
 
 // Head of Personnel
-/// Automatically generated armor datum, errors may exist
 /datum/armor/winterhood_captain
 	melee = 25
 	bullet = 30
@@ -184,7 +176,6 @@
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hop
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wintercoat_hop
 	melee = 10
 	bullet = 15
@@ -246,7 +237,6 @@
 	armor_type = /datum/armor/wintercoat_security
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wintercoat_security
 	melee = 25
 	bullet = 15
@@ -265,7 +255,6 @@
 	armor_type = /datum/armor/winterhood_security
 
 // Medical Doctor
-/// Automatically generated armor datum, errors may exist
 /datum/armor/winterhood_security
 	melee = 25
 	bullet = 15
@@ -295,7 +284,6 @@
 	armor_type = /datum/armor/wintercoat_medical
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wintercoat_medical
 	bio = 40
 	fire = 10
@@ -307,7 +295,6 @@
 	armor_type = /datum/armor/winterhood_medical
 
 // Chief Medical Officer
-/// Automatically generated armor datum, errors may exist
 /datum/armor/winterhood_medical
 	bio = 40
 	fire = 10
@@ -321,7 +308,6 @@
 	armor_type = /datum/armor/medical_cmo
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/cmo
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/medical_cmo
 	bio = 50
 	fire = 20
@@ -339,7 +325,6 @@
 	armor_type = /datum/armor/medical_cmo
 
 // Chemist
-/// Automatically generated armor datum, errors may exist
 /datum/armor/medical_cmo
 	bio = 50
 	fire = 20
@@ -411,7 +396,6 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
 	species_exception = list(/datum/species/golem)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wintercoat_science
 	bomb = 10
 	fire = 20
@@ -422,7 +406,6 @@
 	armor_type = /datum/armor/winterhood_science
 
 // Research Director
-/// Automatically generated armor datum, errors may exist
 /datum/armor/winterhood_science
 	bomb = 10
 	fire = 20
@@ -435,7 +418,6 @@
 	armor_type = /datum/armor/science_rd
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/rd
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/science_rd
 	bomb = 20
 	fire = 30
@@ -452,7 +434,6 @@
 	armor_type = /datum/armor/science_rd
 
 // Roboticist
-/// Automatically generated armor datum, errors may exist
 /datum/armor/science_rd
 	bomb = 20
 	fire = 30
@@ -498,7 +479,6 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
 	species_exception = list(/datum/species/golem/uranium)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wintercoat_engineering
 	fire = 20
 
@@ -512,7 +492,6 @@
 	icon_state = "hood_engineer"
 	armor_type = /datum/armor/winterhood_engineering
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/winterhood_engineering
 	fire = 20
 
@@ -530,7 +509,6 @@
 	armor_type = /datum/armor/engineering_ce
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/ce
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/engineering_ce
 	fire = 30
 	acid = 10
@@ -547,7 +525,6 @@
 	armor_type = /datum/armor/engineering_ce
 
 // Atmospherics Technician
-/// Automatically generated armor datum, errors may exist
 /datum/armor/engineering_ce
 	fire = 30
 	acid = 10
@@ -612,7 +589,6 @@
 	armor_type = /datum/armor/wintercoat_miner
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wintercoat_miner
 	melee = 10
 
@@ -621,7 +597,6 @@
 	icon_state = "hood_miner"
 	armor_type = /datum/armor/winterhood_miner
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/winterhood_miner
 	melee = 10
 

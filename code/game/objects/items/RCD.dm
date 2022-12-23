@@ -39,7 +39,6 @@ RLD
 	var/datum/component/remote_materials/silo_mats //remote connection to the silo
 	var/silo_link = FALSE //switch to use internal or remote storage
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_construction
 	fire = 100
 	acid = 50
@@ -413,7 +412,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 // `initial` does not work here. Neither does instantiating a wall/whatever
 // and referencing that. I don't know why.
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_construction
 	fire = 100
 	acid = 50
@@ -491,7 +489,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	name = "hologram"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_construction
 	fire = 100
 	acid = 50
@@ -762,7 +759,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/energyfactor = 72
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_construction
 	fire = 100
 	acid = 50
@@ -868,7 +864,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	inhand_icon_state = "oldrcd"
 	has_ammobar = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_construction
 	fire = 100
 	acid = 50
@@ -933,7 +928,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/list/display_options = list()
 	var/color_choice = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_construction
 	fire = 100
 	acid = 50
@@ -1136,7 +1130,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		"Fifth Layer" = 5,
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_construction
 	fire = 100
 	acid = 50
@@ -1394,7 +1387,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	has_ammobar = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_construction
 	fire = 100
 	acid = 50
@@ -1425,7 +1417,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	icon_state = "plumberer_service"
 	has_ammobar = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_construction
 	fire = 100
 	acid = 50

@@ -23,7 +23,6 @@
 	)
 	bumpsmash = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_marauder
 	melee = 50
 	bullet = 55
@@ -47,7 +46,6 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_marauder
 	melee = 50
 	bullet = 55
@@ -68,7 +66,6 @@
 	name = "Smoke"
 	button_icon_state = "mech_smoke"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_marauder
 	melee = 50
 	bullet = 55
@@ -90,7 +87,6 @@
 	name = "Zoom"
 	button_icon_state = "mech_zoom_off"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_marauder
 	melee = 50
 	bullet = 55

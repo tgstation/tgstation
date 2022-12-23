@@ -18,7 +18,6 @@
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_button
 	melee = 50
 	bullet = 50
@@ -209,7 +208,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_button
 	melee = 50
 	bullet = 50
@@ -317,7 +315,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	device_type = /obj/item/assembly/control/curtain
 	var/sync_doors = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_button
 	melee = 50
 	bullet = 50
@@ -363,7 +360,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_button
 	melee = 50
 	bullet = 50

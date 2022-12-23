@@ -12,7 +12,6 @@
 	var/list/unlock_contents = list()
 
 /// if the crate takes damage it will explode 25% of the time
-/// Automatically generated armor datum, errors may exist
 /datum/armor/crate_syndicrate
 	melee = 30
 	bullet = 50
@@ -67,7 +66,6 @@
 	icon_state = "syndicrate_key"
 	w_class = WEIGHT_CLASS_TINY
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/crate_syndicrate
 	melee = 30
 	bullet = 50

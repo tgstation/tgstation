@@ -161,7 +161,6 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	var/has_fov = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_bronze
 	melee = 5
 	laser = -5

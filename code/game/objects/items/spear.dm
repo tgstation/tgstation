@@ -31,7 +31,6 @@
 	/// How much damage to do wielded
 	var/force_wielded = 18
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_spear
 	fire = 50
 	acid = 30
@@ -108,7 +107,6 @@
 	icon_prefix = "spearbomb"
 	var/obj/item/grenade/explosive = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_spear
 	fire = 50
 	acid = 30
@@ -189,7 +187,6 @@
 	force_unwielded = 15
 	force_wielded = 25
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_spear
 	fire = 50
 	acid = 30

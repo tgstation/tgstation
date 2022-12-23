@@ -24,7 +24,6 @@
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_disposal
 	melee = 25
 	bullet = 10
@@ -299,7 +298,6 @@
 	icon_state = "disposal"
 
 // attack by item places it in to disposal
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_disposal
 	melee = 25
 	bullet = 10
@@ -488,7 +486,6 @@
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_disposal
 	melee = 25
 	bullet = 10

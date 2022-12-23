@@ -7,7 +7,6 @@
 	strip_delay = 40
 	equip_delay_other = 20
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_pirate
 	melee = 30
 	bullet = 50
@@ -22,7 +21,6 @@
 	icon_state = "spacebandana"
 	inhand_icon_state = "space_bandana_helmet"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_pirate
 	melee = 30
 	bullet = 50

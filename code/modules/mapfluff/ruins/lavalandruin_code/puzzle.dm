@@ -298,7 +298,6 @@
 /obj/structure/puzzle_element/prison
 	armor_type = /datum/armor/puzzle_element_prison
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/puzzle_element_prison
 	melee = 50
 	bullet = 50
@@ -317,7 +316,6 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "prison_cube"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/puzzle_element_prison
 	melee = 50
 	bullet = 50

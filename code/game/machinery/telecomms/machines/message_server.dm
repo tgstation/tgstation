@@ -14,7 +14,6 @@
 	armor_type = /datum/armor/machinery_blackbox_recorder
 	var/obj/item/stored
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_blackbox_recorder
 	melee = 25
 	bullet = 10
@@ -90,7 +89,6 @@
 	var/decryptkey = "password"
 	var/calibrating = 15 MINUTES //Init reads this and adds world.time, then becomes 0 when that time has passed and the machine works
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_blackbox_recorder
 	melee = 25
 	bullet = 10
@@ -169,7 +167,6 @@
 	server_type = /obj/machinery/telecomms/message_server
 	var/datum/logged
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_blackbox_recorder
 	melee = 25
 	bullet = 10
@@ -227,7 +224,6 @@
 	var/datum/picture/picture  // attached photo
 	var/automated = 0 //automated message
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_blackbox_recorder
 	melee = 25
 	bullet = 10
@@ -264,7 +260,6 @@
 	var/id_auth = "Unauthenticated"
 	var/priority = "Normal"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_blackbox_recorder
 	melee = 25
 	bullet = 10

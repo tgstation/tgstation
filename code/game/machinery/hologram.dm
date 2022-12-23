@@ -87,7 +87,6 @@ Possible to do for anyone motivated enough:
 	///bitfield. used to turn on and off hearing sensitivity depending on if we can act on Hear() at all - meant for lowering the number of unessesary hearable atoms
 	var/can_hear_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_holopad
 	melee = 50
 	bullet = 20
@@ -106,7 +105,6 @@ Possible to do for anyone motivated enough:
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
 	secure = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_holopad
 	melee = 50
 	bullet = 20
@@ -128,7 +126,6 @@ Possible to do for anyone motivated enough:
 	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_holopad
 	melee = 50
 	bullet = 20
@@ -848,7 +845,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/mob/living/Impersonation
 	var/datum/holocall/HC
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_holopad
 	melee = 50
 	bullet = 20

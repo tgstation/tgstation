@@ -69,7 +69,6 @@
 	armor_type = /datum/armor/jacket_puffer
 	species_exception = list(/datum/species/golem/bone)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/jacket_puffer
 	bio = 50
 
@@ -82,7 +81,6 @@
 	cold_protection = CHEST|GROIN
 	armor_type = /datum/armor/puffer_vest
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/puffer_vest
 	bio = 30
 
@@ -93,7 +91,6 @@
 	inhand_icon_state = null
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/puffer_vest
 	bio = 30
 
@@ -104,7 +101,6 @@
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/puffer_vest
 	bio = 30
 
@@ -115,7 +111,6 @@
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/puffer_vest
 	bio = 30
 
@@ -126,7 +121,6 @@
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/puffer_vest
 	bio = 30
 

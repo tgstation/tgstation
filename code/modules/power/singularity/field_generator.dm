@@ -52,7 +52,6 @@ no power level overlay is currently in the overlays list.
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/field_generator
 	melee = 25
 	bullet = 10

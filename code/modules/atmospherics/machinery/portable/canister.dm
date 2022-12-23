@@ -92,7 +92,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	///used while processing to update appearance only when its pressure state changes
 	var/current_pressure_state
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/portable_atmospherics_canister
 	melee = 50
 	bullet = 50
@@ -290,7 +289,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	temp_limit = 1e12
 	pressure_limit = 1e14
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/portable_atmospherics_canister
 	melee = 50
 	bullet = 50
@@ -313,7 +311,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9fba6c#3d4680"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/portable_atmospherics_canister
 	melee = 50
 	bullet = 50
@@ -373,7 +370,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
  * Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
  * Used for canisters spawned in maps and by admins
  */
-/// Automatically generated armor datum, errors may exist
 /datum/armor/portable_atmospherics_canister
 	melee = 50
 	bullet = 50

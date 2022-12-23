@@ -5,7 +5,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/plasmaman_engineering
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plasmaman_engineering
 	bio = 100
 	fire = 95
@@ -19,7 +18,6 @@
 	armor_type = /datum/armor/plasmaman_atmospherics
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plasmaman_atmospherics
 	bio = 100
 	fire = 95

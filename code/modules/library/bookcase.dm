@@ -21,7 +21,6 @@
 	/// How many random books to generate.
 	var/books_to_load = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_bookcase
 	fire = 50
 
@@ -188,7 +187,6 @@
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_bookcase
 	fire = 50
 
@@ -203,7 +201,6 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_bookcase
 	fire = 50
 

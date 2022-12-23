@@ -146,7 +146,6 @@ Slimecrossing Items
 	max_integrity = 100
 	armor_type = /datum/armor/structure_ice_stasis
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_ice_stasis
 	melee = 30
 	bullet = 50
@@ -173,7 +172,6 @@ Slimecrossing Items
 	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "capturedevice"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_ice_stasis
 	melee = 30
 	bullet = 50

@@ -111,7 +111,6 @@
 	var/offset_old
 	armor_type = /datum/armor/power_apc
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/power_apc
 	melee = 20
 	bullet = 20

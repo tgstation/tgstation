@@ -67,7 +67,6 @@
 	/// Used for the extra flavor text the d-boy himself sees
 	var/datum/weakref/beanie_owner = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/beanie_durathread
 	melee = 15
 	bullet = 5

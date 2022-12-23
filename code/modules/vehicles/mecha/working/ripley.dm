@@ -43,7 +43,6 @@
 	/// How fast the mech is in normal pressure
 	var/slow_pressure_step_in = 2
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/working_ripley
 	melee = 40
 	bullet = 20
@@ -96,7 +95,6 @@
 	enter_delay = 40
 	silicon_icon_state = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/ripley_mk2
 	melee = 40
 	bullet = 30
@@ -149,7 +147,6 @@
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/ripley_mk2
 	melee = 40
 	bullet = 30
@@ -194,7 +191,6 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 	base_icon_state = "hauler"
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/ripley_mk2
 	melee = 40
 	bullet = 30
@@ -241,7 +237,6 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/ripley_mk2
 	melee = 40
 	bullet = 30

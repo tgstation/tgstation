@@ -8,7 +8,6 @@
 	resistance_flags = NONE
 	lace_time = 12 SECONDS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_combat
 	melee = 25
 	bullet = 25
@@ -30,7 +29,6 @@
 	clothing_flags = NOSLIP
 	armor_type = /datum/armor/combat_swat
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/combat_swat
 	melee = 40
 	bullet = 30
@@ -52,7 +50,6 @@
 	armor_type = /datum/armor/shoes_jackboots
 	can_be_tied = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_jackboots
 	bio = 90
 
@@ -79,7 +76,6 @@
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	lace_time = 8 SECONDS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_winterboots
 	bio = 80
 
@@ -108,7 +104,6 @@
 	clothing_flags = NOSLIP_ICE|THICKMATERIAL
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/ice_boots_eva
 	melee = 10
 	laser = 10
@@ -128,7 +123,6 @@
 	lace_time = 8 SECONDS
 	species_exception = list(/datum/species/golem/uranium)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_workboots
 	bio = 80
 

@@ -25,7 +25,6 @@
 	var/cable = 1
 	var/list/debris = list()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_window
 	melee = 20
 	bullet = 50

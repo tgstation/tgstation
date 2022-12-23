@@ -151,7 +151,6 @@
 	armor_type = /datum/armor/glasses_science
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -191,7 +190,6 @@
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -246,7 +244,6 @@
 	inhand_icon_state = "glasses"
 	vision_correction = TRUE //corrects nearsightedness
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -389,7 +386,6 @@
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -411,7 +407,6 @@
 	darkness_view = 1
 	dog_fashion = /datum/dog_fashion/head
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -438,7 +433,6 @@
 	inhand_icon_state = null
 	var/colored_before = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -481,7 +475,6 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -497,7 +490,6 @@
 	desc = "A pair of xray goggles manufactured by the Syndicate."
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -539,7 +531,6 @@
 	icon_state = "thermoncle"
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -560,7 +551,6 @@
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -623,7 +613,6 @@
 	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
 	var/xray = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
@@ -678,7 +667,6 @@
 	///Tells us who the current wearer([BIGSHOT]) is.
 	var/mob/living/carbon/human/bigshot
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100

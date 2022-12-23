@@ -21,7 +21,6 @@
 	strip_delay = 70
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/clown_shoes_combat
 	melee = 25
 	bullet = 25
@@ -51,7 +50,6 @@
 	resistance_flags = NONE
 	always_noslip = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/banana_shoes_combat
 	melee = 25
 	bullet = 25
@@ -100,7 +98,6 @@
 	/// Cooldown for making a trombone noise for failing to make a bananium desword
 	COOLDOWN_DECLARE(next_trombone_allowed)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/banana_shoes_combat
 	melee = 25
 	bullet = 25
@@ -177,7 +174,6 @@
 	active_throw_speed = 1
 	can_clumsy_use = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/banana_shoes_combat
 	melee = 25
 	bullet = 25
@@ -233,7 +229,6 @@
 	var/det_time = 50
 	var/obj/item/grenade/syndieminibomb/bomb
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/banana_shoes_combat
 	melee = 25
 	bullet = 25
@@ -271,7 +266,6 @@
 	icon_state = "moustacheg"
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/banana_shoes_combat
 	melee = 25
 	bullet = 25
@@ -297,7 +291,6 @@
 /obj/item/clothing/mask/fakemoustache/sticky
 	var/unstick_time = 600
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/banana_shoes_combat
 	melee = 25
 	bullet = 25

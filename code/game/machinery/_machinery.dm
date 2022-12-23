@@ -154,7 +154,6 @@
 	var/appearance_power_state = -1
 	armor_type = /datum/armor/obj_machinery
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/obj_machinery
 	melee = 25
 	bullet = 10

@@ -12,7 +12,6 @@
 	var/broken = FALSE
 	armor_type = /datum/armor/obj_structure
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/obj_structure
 	fire = 50
 	acid = 50

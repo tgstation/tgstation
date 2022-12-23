@@ -11,7 +11,6 @@
 	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.
 	var/obj/item/food/grown/banana/eddie_murphy
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/ridden_secway
 	melee = 10
 	laser = 10

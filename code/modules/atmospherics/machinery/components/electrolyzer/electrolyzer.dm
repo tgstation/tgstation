@@ -25,7 +25,6 @@
 	///Decrease the amount of power usage, changed by upgrading the capacitor tier
 	var/efficiency = 0.5
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_electrolyzer
 	fire = 80
 	acid = 10

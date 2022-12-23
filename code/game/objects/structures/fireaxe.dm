@@ -21,7 +21,6 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_fireaxecabinet
 	melee = 50
 	bullet = 20

@@ -48,7 +48,6 @@
 	///The ammount of damage dealt when the tape piece is ripped off of someone.
 	var/stripping_damage = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/muzzle_breath
 	bio = 100
 

@@ -58,7 +58,6 @@
 	item_flags = NO_MAT_REDEMPTION
 	armor_type = /datum/armor/backpack_holding
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -85,7 +84,6 @@
 	inhand_icon_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -235,7 +233,6 @@
 	worn_icon = 'icons/mob/clothing/back/ethereal.dmi'
 	icon_state = "saddlepack"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -260,7 +257,6 @@
 	icon_state = "satchel-leather"
 	inhand_icon_state = "satchel"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -339,7 +335,6 @@
 	inhand_icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -374,7 +369,6 @@
 	inhand_icon_state = "duffel"
 	slowdown = 1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -393,7 +387,6 @@
 	slowdown = 2
 	max_integrity = 100
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -456,7 +449,6 @@
 
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -484,7 +476,6 @@
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -515,7 +506,6 @@
 	inhand_icon_state = "duffel-drone"
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -535,7 +525,6 @@
 	icon_state = "duffel-clown"
 	inhand_icon_state = "duffel-clown"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -555,7 +544,6 @@
 	slowdown = 0
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -569,7 +557,6 @@
 	icon_state = "duffel-syndieammo"
 	inhand_icon_state = "duffel-syndieammo"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -596,7 +583,6 @@
 	icon_state = "duffel-syndiemed"
 	inhand_icon_state = "duffel-syndiemed"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -625,7 +611,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun
 	desc = "A large duffel bag, packed to the brim with Bulldog shotgun magazines."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -640,7 +625,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/ammo/smg
 	desc = "A large duffel bag, packed to the brim with C-20r magazines."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -652,7 +636,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
 	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -667,7 +650,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
 	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -686,7 +668,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -700,7 +681,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
 	desc = "A large duffel bag containing a Bulldog, some drums, and a pair of thermal imaging glasses."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -714,7 +694,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a magboot MODsuit module."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -728,7 +707,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle
 	desc = "A large duffel bag containing deadly chemicals, a handheld chem sprayer, Bioterror foam grenade, a Donksoft assault rifle, box of riot grade darts, a dart pistol, and a box of syringes."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -755,7 +733,6 @@
 /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite MODsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
@@ -801,7 +778,6 @@
 	icon_state = "duffel-explorer"
 	inhand_icon_state = "duffel-explorer"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50

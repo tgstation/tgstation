@@ -13,7 +13,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_beret
 	melee = 80
 	bullet = 80
@@ -42,7 +41,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_officer
 	melee = 80
 	bullet = 80

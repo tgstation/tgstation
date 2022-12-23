@@ -18,7 +18,6 @@
 	var/gate_active = TRUE
 	COOLDOWN_DECLARE(spam_cooldown_time)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_prisongate
 	melee = 30
 	bullet = 30

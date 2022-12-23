@@ -12,7 +12,6 @@
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/head_bio_hood
 	bio = 100
 	fire = 30
@@ -37,7 +36,6 @@
 	resistance_flags = ACID_PROOF
 
 //Standard biosuit, orange stripe
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_bio_suit
 	bio = 100
 	fire = 30
@@ -61,7 +59,6 @@
 	armor_type = /datum/armor/bio_hood_security
 	icon_state = "bio_security"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/bio_hood_security
 	melee = 25
 	bullet = 15
@@ -76,7 +73,6 @@
 	armor_type = /datum/armor/bio_suit_security
 	icon_state = "bio_security"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/bio_suit_security
 	melee = 25
 	bullet = 15

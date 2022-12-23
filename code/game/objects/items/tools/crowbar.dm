@@ -24,7 +24,6 @@
 	armor_type = /datum/armor/item_crowbar
 	var/force_opens = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_crowbar
 	fire = 50
 	acid = 30
@@ -71,7 +70,6 @@
 	desc = "It's a bulky crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
 	w_class = WEIGHT_CLASS_BULKY
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_crowbar
 	fire = 50
 	acid = 30
@@ -89,7 +87,6 @@
 	throwforce = 10
 	throw_speed = 2
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_crowbar
 	fire = 50
 	acid = 30
@@ -114,7 +111,6 @@
 	toolspeed = 0.7
 	force_opens = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_crowbar
 	fire = 50
 	acid = 30
@@ -150,7 +146,6 @@
 	toolspeed = 0.5
 	force_opens = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_crowbar
 	fire = 50
 	acid = 30
@@ -207,7 +202,6 @@
 	bare_wound_bonus = 15
 	wound_bonus = 10
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/crowbar_mechremoval
 	bomb = 100
 	fire = 100

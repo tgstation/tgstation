@@ -41,7 +41,6 @@
 	flash_protect = FLASH_PROTECTION_NONE
 	armor_type = /datum/armor/space_eva
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_eva
 	bio = 100
 	fire = 50
@@ -84,7 +83,6 @@
 	armor_type = /datum/armor/space_fragile
 	strip_delay = 65
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_fragile
 	melee = 5
 

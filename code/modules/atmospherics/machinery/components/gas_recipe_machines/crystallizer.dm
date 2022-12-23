@@ -31,7 +31,6 @@
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/binary_crystallizer
 	energy = 100
 	fire = 80

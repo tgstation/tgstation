@@ -36,7 +36,6 @@
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_LOWER
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/kitchen_fork
 	fire = 50
 	acid = 30
@@ -76,7 +75,6 @@
 	custom_materials = list(/datum/material/plastic=80)
 	custom_price = PAYCHECK_LOWER * 2
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/kitchen_fork
 	fire = 50
 	acid = 30
@@ -104,7 +102,6 @@
 	sharpness = SHARP_EDGED
 	custom_price = PAYCHECK_LOWER * 2
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/kitchen_fork
 	fire = 50
 	acid = 30
@@ -141,7 +138,6 @@
 	custom_price = PAYCHECK_CREW * 2
 	bare_wound_bonus = 14
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/kitchen_fork
 	fire = 50
 	acid = 30
@@ -176,7 +172,6 @@
 	custom_price = PAYCHECK_LOWER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/kitchen_spoon
 	fire = 50
 	acid = 30

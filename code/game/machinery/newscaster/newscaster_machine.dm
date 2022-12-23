@@ -54,7 +54,6 @@
 	///Text of the currently written bounty
 	var/bounty_text = ""
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_newscaster
 	melee = 50
 	fire = 50

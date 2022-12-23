@@ -15,7 +15,6 @@
 	///Initial direction of the railing.
 	var/ini_dir
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_railing
 	melee = 50
 	bullet = 70

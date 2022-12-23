@@ -28,7 +28,6 @@
 	var/sheetType = /obj/item/stack/sheet/iron //what we're made of
 	var/sheetAmount = 10 //how much it takes to construct us.
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_mineral_door
 	melee = 10
 	energy = 100
@@ -249,7 +248,6 @@
 	opacity = FALSE
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_mineral_door
 	melee = 10
 	energy = 100
@@ -283,7 +281,6 @@
 	max_integrity = 200
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_mineral_door
 	melee = 10
 	energy = 100
@@ -317,7 +314,6 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_mineral_door
 	melee = 10
 	energy = 100

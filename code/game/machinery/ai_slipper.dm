@@ -14,7 +14,6 @@
 	var/cooldown_time = 10 SECONDS // just about enough cooldown time so you cant waste foam
 	req_access = list(ACCESS_AI_UPLOAD)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_ai_slipper
 	melee = 50
 	bullet = 20

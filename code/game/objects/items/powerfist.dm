@@ -31,7 +31,6 @@
 	/// Tank used for the gauntlet's piston-ram.
 	var/obj/item/tank/internals/tank
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/melee_powerfist
 	fire = 100
 	acid = 40

@@ -26,7 +26,6 @@
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_knife
 	fire = 50
 	acid = 50
@@ -180,7 +179,6 @@
 	armor_type = /datum/armor/shiv_plasma
 	custom_materials = list(/datum/material/glass=400, /datum/material/plasma=200)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shiv_plasma
 	melee = 25
 	bullet = 25
@@ -201,7 +199,6 @@
 	armor_type = /datum/armor/shiv_titanium
 	custom_materials = list(/datum/material/glass=400, /datum/material/titanium=200)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shiv_titanium
 	melee = 25
 	bullet = 25
@@ -225,7 +222,6 @@
 	armor_type = /datum/armor/shiv_plastitanium
 	custom_materials = list(/datum/material/glass=400, /datum/material/alloy/plastitanium=200)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shiv_plastitanium
 	melee = 50
 	bullet = 50

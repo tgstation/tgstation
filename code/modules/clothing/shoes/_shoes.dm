@@ -23,7 +23,6 @@
 	///An active alert
 	var/datum/weakref/our_alert_ref
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/clothing_shoes
 	bio = 50
 

@@ -25,7 +25,6 @@
 	// Slightly better than normal cult robes
 	armor_type = /datum/armor/cultrobes_eldritch
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cultrobes_eldritch
 	melee = 50
 	bullet = 50
@@ -59,7 +58,6 @@
 	item_flags = EXAMINE_SKIP
 	armor_type = /datum/armor/cult_hoodie_void
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cult_hoodie_void
 	melee = 30
 	bullet = 30
@@ -85,7 +83,6 @@
 	armor_type = /datum/armor/cultrobes_void
 	alternative_mode = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cultrobes_void
 	melee = 30
 	bullet = 30

@@ -278,7 +278,6 @@
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
 	armor_type = /datum/armor/plate_crusader
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plate_crusader
 	melee = 50
 	bullet = 50
@@ -306,7 +305,6 @@
 	armor_type = /datum/armor/crusader_prophet
 	worn_y_offset = 6
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/crusader_prophet
 	melee = 60
 	bullet = 60
@@ -382,7 +380,6 @@
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_plate
 	melee = 50
 	bullet = 50

@@ -9,7 +9,6 @@
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_foilhat
 	laser = -5
 	energy = -15

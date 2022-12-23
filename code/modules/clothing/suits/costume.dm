@@ -36,7 +36,6 @@
 	equip_delay_other = 20
 	species_exception = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/pirate_armored
 	melee = 30
 	bullet = 50
@@ -59,7 +58,6 @@
 	equip_delay_other = 20
 	species_exception = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/pirate_armored
 	melee = 30
 	bullet = 50
@@ -89,7 +87,6 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/costume_justice
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_justice
 	melee = 35
 	bullet = 30
@@ -313,7 +310,6 @@
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood/spaceproof
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/carp_costume_spaceproof
 	melee = -20
 	bio = 100
@@ -335,7 +331,6 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/carp_hood_spaceproof
 	melee = -20
 	bio = 100
@@ -502,7 +497,6 @@
 	icon_state = "clockwork_cuirass_old"
 	armor_type = /datum/armor/costume_bronze
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_bronze
 	melee = 5
 	laser = -5
@@ -542,7 +536,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/suit_coordinator
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_coordinator
 	melee = 25
 	bullet = 15

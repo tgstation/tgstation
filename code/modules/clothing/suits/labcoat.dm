@@ -37,7 +37,6 @@
 	icon_state = "labcoat_cmo"
 	inhand_icon_state = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/toggle_labcoat
 	bio = 50
 	fire = 50
@@ -71,7 +70,6 @@
 	desc = "A suit that protects against minor chemical spills. Has an orange stripe on the shoulder."
 	icon_state = "labcoat_chem"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/toggle_labcoat
 	bio = 50
 	fire = 50
@@ -86,7 +84,6 @@
 	desc = "A suit that protects against minor chemical spills. Has a green stripe on the shoulder."
 	icon_state = "labcoat_vir"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/toggle_labcoat
 	bio = 50
 	fire = 50
@@ -101,7 +98,6 @@
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_sci"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/toggle_labcoat
 	bio = 50
 	fire = 50

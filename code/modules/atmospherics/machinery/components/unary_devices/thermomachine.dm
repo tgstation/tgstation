@@ -34,7 +34,6 @@
 	var/base_cooling = 170
 	var/color_index = 1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/unary_thermomachine
 	energy = 100
 	fire = 80
@@ -301,7 +300,6 @@
 	on = TRUE
 	icon_state = "thermo_base_1"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/unary_thermomachine
 	energy = 100
 	fire = 80
@@ -316,7 +314,6 @@
 	icon_state = "thermo_base_1"
 	greyscale_colors = COLOR_CYAN
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/unary_thermomachine
 	energy = 100
 	fire = 80

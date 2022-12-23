@@ -12,7 +12,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/head_wizard
 	melee = 30
 	bullet = 20
@@ -87,7 +86,6 @@
 	clothing_flags = CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_wizrobe
 	melee = 30
 	bullet = 20

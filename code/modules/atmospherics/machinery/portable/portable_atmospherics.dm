@@ -31,7 +31,6 @@
 	/// Is there a hypernoblium crystal inserted into this
 	var/nob_crystal_inserted = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_portable_atmospherics
 	energy = 100
 	fire = 60

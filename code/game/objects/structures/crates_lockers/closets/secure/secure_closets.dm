@@ -8,7 +8,6 @@
 	secure = TRUE
 	damage_deflection = 20
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/closet_secure_closet
 	melee = 30
 	bullet = 50

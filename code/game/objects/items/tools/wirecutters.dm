@@ -42,7 +42,6 @@
 		COLOR_TOOL_YELLOW,
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_wirecutters
 	fire = 50
 	acid = 30

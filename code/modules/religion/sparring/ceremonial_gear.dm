@@ -26,7 +26,6 @@
 	armor_type = /datum/armor/item_ceremonial_blade
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_ceremonial_blade
 	fire = 100
 	acid = 50

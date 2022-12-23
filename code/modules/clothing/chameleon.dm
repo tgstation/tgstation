@@ -384,7 +384,6 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/under_chameleon
 	melee = 10
 	bullet = 10
@@ -424,7 +423,6 @@
 	armor_type = /datum/armor/suit_chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_chameleon
 	melee = 10
 	bullet = 10
@@ -462,7 +460,6 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/glasses_chameleon
 	melee = 10
 	bullet = 10
@@ -501,7 +498,6 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/gloves_chameleon
 	melee = 10
 	bullet = 10
@@ -539,7 +535,6 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/head_chameleon
 	melee = 5
 	bullet = 5
@@ -572,7 +567,6 @@
 	armor_type = /datum/armor/none
 	// which means it offers no protection, it's just air and light
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/head_chameleon
 	melee = 5
 	bullet = 5
@@ -605,7 +599,6 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_chameleon
 	melee = 5
 	bullet = 5
@@ -644,7 +637,6 @@
 	// Can drones use the voice changer part? Let's not find out.
 	voice_change = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_chameleon
 	melee = 5
 	bullet = 5
@@ -678,7 +670,6 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_chameleon
 	melee = 10
 	bullet = 10
@@ -709,7 +700,6 @@
 	clothing_flags = NOSLIP
 	can_be_bloody = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_chameleon
 	melee = 10
 	bullet = 10
@@ -726,7 +716,6 @@
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_chameleon
 	melee = 10
 	bullet = 10
@@ -758,7 +747,6 @@
 	desc = "Holds tools."
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_chameleon
 	melee = 10
 	bullet = 10
@@ -792,7 +780,6 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_chameleon
 	melee = 10
 	bullet = 10
@@ -823,7 +810,6 @@
 	name = "tablet"
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_chameleon
 	melee = 10
 	bullet = 10
@@ -854,7 +840,6 @@
 /obj/item/stamp/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_chameleon
 	melee = 10
 	bullet = 10
@@ -886,7 +871,6 @@
 /obj/item/clothing/neck/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/neck_chameleon
 	fire = 50
 	acid = 50
@@ -928,7 +912,6 @@
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/neck_chameleon
 	fire = 50
 	acid = 50

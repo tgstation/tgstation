@@ -8,7 +8,6 @@
 	strip_delay = 30
 	var/hit_reflect_chance = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_ablative
 	melee = 10
 	bullet = 10
@@ -37,7 +36,6 @@
 	equip_delay_other = 40
 	var/hit_reflect_chance = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_ablative
 	melee = 10
 	bullet = 10

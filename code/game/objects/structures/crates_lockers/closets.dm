@@ -70,7 +70,6 @@
 
 	var/contents_initialized = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_closet
 	melee = 20
 	bullet = 10

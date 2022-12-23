@@ -6,7 +6,6 @@
 	armor_type = /datum/armor/rank_engineering
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_engineering
 	bio = 10
 	fire = 60
@@ -19,7 +18,6 @@
 	inhand_icon_state = "gy_suit"
 	armor_type = /datum/armor/engineering_chief_engineer
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/engineering_chief_engineer
 	bio = 10
 	fire = 80
@@ -35,7 +33,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/engineering_chief_engineer
 	bio = 10
 	fire = 80
@@ -47,7 +44,6 @@
 	icon_state = "atmos"
 	inhand_icon_state = "atmos_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/engineering_chief_engineer
 	bio = 10
 	fire = 80
@@ -63,7 +59,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/engineering_chief_engineer
 	bio = 10
 	fire = 80
@@ -76,7 +71,6 @@
 	inhand_icon_state = "engi_suit"
 	species_exception = list(/datum/species/golem/uranium)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/engineering_chief_engineer
 	bio = 10
 	fire = 80
@@ -89,7 +83,6 @@
 	inhand_icon_state = "syndicate-orange"
 	alt_covers_chest = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/engineering_chief_engineer
 	bio = 10
 	fire = 80

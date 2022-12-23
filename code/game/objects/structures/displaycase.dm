@@ -29,7 +29,6 @@
 	///Used for subtypes that have a UI in them. The examine on click while adjecent will not fire, as we already get a popup
 	var/autoexamine_while_closed = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_displaycase
 	melee = 30
 	bomb = 10
@@ -234,7 +233,6 @@
 	var/obj/item/electronics/airlock/electronics
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_displaycase
 	melee = 30
 	bomb = 10
@@ -321,7 +319,6 @@
 	///the trophy message
 	var/trophy_message = ""
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_displaycase
 	melee = 30
 	bomb = 10
@@ -444,7 +441,6 @@
 /obj/item/showpiece_dummy
 	name = "holographic replica"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_displaycase
 	melee = 30
 	bomb = 10
@@ -476,7 +472,6 @@
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_displaycase
 	melee = 30
 	bomb = 10

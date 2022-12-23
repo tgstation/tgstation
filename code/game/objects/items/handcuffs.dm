@@ -47,7 +47,6 @@
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/restraints_handcuffs
 	fire = 50
 	acid = 50
@@ -153,7 +152,6 @@
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/restraints_handcuffs
 	fire = 50
 	acid = 50
@@ -276,7 +274,6 @@
 	cable_color = CABLE_COLOR_WHITE
 	inhand_icon_state = "coil_white"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/restraints_handcuffs
 	fire = 50
 	acid = 50
@@ -338,7 +335,6 @@
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_used"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/restraints_handcuffs
 	fire = 50
 	acid = 50
@@ -399,7 +395,6 @@
 /obj/item/restraints/legcuffs/beartrap/prearmed
 	armed = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/restraints_handcuffs
 	fire = 50
 	acid = 50
@@ -493,7 +488,6 @@
 	item_flags = DROPDEL
 	flags_1 = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/restraints_handcuffs
 	fire = 50
 	acid = 50
@@ -532,7 +526,6 @@
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/restraints_handcuffs
 	fire = 50
 	acid = 50
@@ -589,7 +582,6 @@
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_COMMAND * 0.35
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/restraints_handcuffs
 	fire = 50
 	acid = 50
@@ -617,7 +609,6 @@
 	slowdown = 0
 	var/datum/status_effect/gonbola_pacify/effectReference
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/restraints_handcuffs
 	fire = 50
 	acid = 50

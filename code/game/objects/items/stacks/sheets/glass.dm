@@ -33,7 +33,6 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	cost = 500
 	source = /datum/robot_energy_storage/glass
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sheet_glass
 	fire = 50
 	acid = 100
@@ -45,7 +44,6 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sheet_glass
 	fire = 50
 	acid = 100
@@ -109,7 +107,6 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sheet_plasmaglass
 	fire = 75
 	acid = 100
@@ -166,7 +163,6 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	matter_amount = 6
 	tableVariant = /obj/structure/table/reinforced/rglass
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sheet_rglass
 	fire = 70
 	acid = 100
@@ -185,7 +181,6 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	/// The amount of energy this draws from the glass source per stack unit.
 	var/glacost = 500
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sheet_rglass
 	fire = 70
 	acid = 100
@@ -230,7 +225,6 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	matter_amount = 8
 	tableVariant = /obj/structure/table/reinforced/plasmarglass
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sheet_plasmarglass
 	melee = 20
 	fire = 80
@@ -261,7 +255,6 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 /obj/item/stack/sheet/titaniumglass/fifty
 	amount = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sheet_titaniumglass
 	fire = 80
 	acid = 100
@@ -288,7 +281,6 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
 	tableVariant = /obj/structure/table/reinforced/plastitaniumglass
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sheet_plastitaniumglass
 	fire = 80
 	acid = 100
@@ -322,7 +314,6 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
 	embedding = list("embed_chance" = 65)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_shard
 	melee = 100
 	energy = 100

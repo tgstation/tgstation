@@ -15,7 +15,6 @@
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
 	var/sign_change_name
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_sign
 	melee = 50
 	fire = 50
@@ -46,7 +45,6 @@
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_sign
 	melee = 50
 	fire = 50

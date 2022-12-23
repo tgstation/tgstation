@@ -13,7 +13,6 @@
 	var/extinguishes_left = 10
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/eva_plasmaman
 	bio = 100
 	fire = 100
@@ -68,7 +67,6 @@
 	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
 	visor_flags_inv = HIDEEYES|HIDEFACE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_plasmaman
 	bio = 100
 	fire = 100

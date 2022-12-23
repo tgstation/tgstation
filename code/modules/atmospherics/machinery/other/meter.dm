@@ -16,7 +16,6 @@
 	///The piping layer of the target
 	var/target_layer = PIPING_LAYER_DEFAULT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_meter
 	energy = 100
 	fire = 40
@@ -163,7 +162,6 @@
 	///The component parent object
 	var/obj/machinery/meter/connected_meter
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_meter
 	energy = 100
 	fire = 40
@@ -195,7 +193,6 @@
 // why are you yelling?
 /obj/machinery/meter/turf
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_meter
 	energy = 100
 	fire = 40

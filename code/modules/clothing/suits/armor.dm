@@ -13,7 +13,6 @@
 	resistance_flags = NONE
 	armor_type = /datum/armor/suit_armor
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_armor
 	melee = 35
 	bullet = 30
@@ -58,7 +57,6 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/vest_marine
 	melee = 50
 	bullet = 50
@@ -114,7 +112,6 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_hos
 	melee = 30
 	bullet = 30
@@ -187,7 +184,6 @@
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/vest_capcarapace
 	melee = 50
 	bullet = 40
@@ -227,7 +223,6 @@
 	strip_delay = 80
 	equip_delay_other = 60
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_riot
 	melee = 50
 	bullet = 10
@@ -246,7 +241,6 @@
 	armor_type = /datum/armor/armor_bone
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_bone
 	melee = 35
 	bullet = 25
@@ -267,7 +261,6 @@
 	strip_delay = 70
 	equip_delay_other = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_bulletproof
 	melee = 15
 	bullet = 60
@@ -291,7 +284,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/hit_reflect_chance = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_laserproof
 	melee = 10
 	bullet = 10
@@ -335,7 +327,6 @@
 
 //All of the armor below is mostly unused
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_swat
 	melee = 40
 	bullet = 30
@@ -359,7 +350,6 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/armor_heavy
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_heavy
 	melee = 80
 	bullet = 80
@@ -378,7 +368,6 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_tdome
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_tdome
 	melee = 80
 	bullet = 80
@@ -407,7 +396,6 @@
 	cold_protection = null
 	heat_protection = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/tdome_holosuit
 	melee = 10
 	bullet = 10
@@ -449,7 +437,6 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor_type = /datum/armor/knight_greyscale
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/knight_greyscale
 	melee = 35
 	bullet = 10
@@ -472,7 +459,6 @@
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/vest_durathread
 	melee = 20
 	bullet = 10
@@ -489,7 +475,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/vest_russian
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/vest_russian
 	melee = 25
 	bullet = 30
@@ -509,7 +494,6 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/vest_russian_coat
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/vest_russian_coat
 	melee = 25
 	bullet = 20
@@ -532,7 +516,6 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_elder_atmosian
 	melee = 25
 	bullet = 20
@@ -552,7 +535,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_centcom_formal
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_centcom_formal
 	melee = 35
 	bullet = 40

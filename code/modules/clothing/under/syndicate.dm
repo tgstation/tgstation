@@ -9,7 +9,6 @@
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/under_syndicate
 	melee = 10
 	bio = 10
@@ -28,7 +27,6 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_skirt
 	melee = 10
 	bio = 10
@@ -44,7 +42,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_bloodred
 	melee = 10
 	bullet = 10
@@ -61,7 +58,6 @@
 	inhand_icon_state = "bl_suit"
 	armor_type = /datum/armor/bloodred_sleepytime
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/bloodred_sleepytime
 	bio = 10
 	fire = 50
@@ -75,7 +71,6 @@
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/syndicate_tacticool
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_tacticool
 	bio = 10
 	fire = 50
@@ -91,7 +86,6 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/tacticool_skirt
 	bio = 10
 	fire = 50
@@ -119,7 +113,6 @@
 	armor_type = /datum/armor/syndicate_soviet
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_soviet
 	melee = 10
 	bio = 10
@@ -138,7 +131,6 @@
 	armor_type = /datum/armor/syndicate_rus_army
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_rus_army
 	melee = 5
 	bio = 10
@@ -152,7 +144,6 @@
 	can_adjust = FALSE
 	armor_type = /datum/armor/syndicate_scrubs
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_scrubs
 	melee = 10
 	bio = 50

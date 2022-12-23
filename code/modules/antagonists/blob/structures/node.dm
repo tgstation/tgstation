@@ -15,7 +15,6 @@
 	ignore_syncmesh_share = TRUE
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/special_node
 	fire = 65
 	acid = 90

@@ -72,7 +72,6 @@ Slimecrossing Weapons
 	item_flags = SLOWS_WHILE_IN_HAND
 	breakable_by_damage = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shield_adamantineshield
 	melee = 50
 	bullet = 50
@@ -103,7 +102,6 @@ Slimecrossing Weapons
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shield_adamantineshield
 	melee = 50
 	bullet = 50
@@ -140,7 +138,6 @@ Slimecrossing Weapons
 	nodamage = TRUE
 	hitsound = 'sound/effects/splat.ogg'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shield_adamantineshield
 	melee = 50
 	bullet = 50

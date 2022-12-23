@@ -10,7 +10,6 @@
 	armor_type = /datum/armor/rnd_research_director
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_research_director
 	bomb = 10
 	bio = 10
@@ -21,7 +20,6 @@
 	has_sensor = NO_SENSORS
 	random_sensor = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_research_director
 	bomb = 10
 	bio = 10
@@ -37,7 +35,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_research_director
 	bomb = 10
 	bio = 10
@@ -51,7 +48,6 @@
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_research_director
 	bomb = 10
 	bio = 10
@@ -67,7 +63,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_research_director
 	bomb = 10
 	bio = 10
@@ -81,7 +76,6 @@
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_research_director
 	bomb = 10
 	bio = 10
@@ -97,7 +91,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_research_director
 	bomb = 10
 	bio = 10
@@ -110,7 +103,6 @@
 	inhand_icon_state = "w_suit"
 	armor_type = /datum/armor/rnd_scientist
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_scientist
 	bio = 50
 
@@ -124,7 +116,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_scientist
 	bio = 50
 
@@ -135,7 +126,6 @@
 	inhand_icon_state = null
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_scientist
 	bio = 50
 
@@ -149,7 +139,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_scientist
 	bio = 50
 
@@ -160,7 +149,6 @@
 	inhand_icon_state = "w_suit"
 	armor_type = /datum/armor/rnd_geneticist
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rnd_geneticist
 	bio = 50
 

@@ -22,7 +22,6 @@
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/car_vim
 	melee = 70
 	bullet = 40
@@ -127,7 +126,6 @@
 	/// Whether the mech headlights are currently on.
 	var/datum/port/output/are_headlights_on
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/car_vim
 	melee = 70
 	bullet = 40

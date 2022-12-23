@@ -90,7 +90,6 @@
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/closet_supplypod
 	melee = 30
 	bullet = 50
@@ -573,7 +572,6 @@
 	icon_state = "LZ_Slider"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/closet_supplypod
 	melee = 30
 	bullet = 50

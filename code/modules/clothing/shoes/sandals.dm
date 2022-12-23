@@ -10,7 +10,6 @@
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_sandal
 	bio = 10
 

@@ -15,7 +15,6 @@
 	cut_type = /obj/item/clothing/gloves/cut
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/color_yellow
 	bio = 50
 
@@ -83,7 +82,6 @@
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/cut
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/color_fyellow
 	bio = 25
 
@@ -155,7 +153,6 @@
 	armor_type = /datum/armor/red_insulated
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/red_insulated
 	bio = 50
 
@@ -227,7 +224,6 @@
 	armor_type = /datum/armor/color_captain
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/color_captain
 	bio = 90
 	fire = 70
@@ -257,7 +253,6 @@
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/color_latex
 	bio = 100
 
@@ -281,7 +276,6 @@
 	clothing_traits = list(TRAIT_QUICK_BUILD)
 	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/latex_engineering
 	bio = 70
 

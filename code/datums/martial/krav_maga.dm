@@ -200,7 +200,6 @@
 	resistance_flags = NONE
 	armor_type = /datum/armor/krav_maga_combatglovesplus
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/krav_maga_combatglovesplus
 	bio = 90
 	fire = 80

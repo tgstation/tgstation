@@ -38,7 +38,6 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_pneumatic_cannon
 	fire = 60
 	acid = 50
@@ -312,7 +311,6 @@
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_pneumatic_cannon
 	fire = 60
 	acid = 50

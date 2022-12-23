@@ -186,7 +186,6 @@ Striking a noncultist, however, will tear their flesh."}
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_cult_hoodie
 	melee = 40
 	bullet = 30
@@ -215,7 +214,6 @@ Striking a noncultist, however, will tear their flesh."}
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_cultrobes
 	melee = 40
 	bullet = 30
@@ -255,7 +253,6 @@ Striking a noncultist, however, will tear their flesh."}
 	armor_type = /datum/armor/wizard_magus
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wizard_magus
 	melee = 50
 	bullet = 30
@@ -278,7 +275,6 @@ Striking a noncultist, however, will tear their flesh."}
 	armor_type = /datum/armor/suit_magusred
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_magusred
 	melee = 50
 	bullet = 30
@@ -304,7 +300,6 @@ Striking a noncultist, however, will tear their flesh."}
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cultrobes_hardened
 	melee = 50
 	bullet = 40
@@ -329,7 +324,6 @@ Striking a noncultist, however, will tear their flesh."}
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cult_hoodie_hardened
 	melee = 50
 	bullet = 40
@@ -362,7 +356,6 @@ Striking a noncultist, however, will tear their flesh."}
 	armor_type = /datum/armor/cultrobes_cult_shield
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cultrobes_cult_shield
 	melee = 50
 	bullet = 40
@@ -389,7 +382,6 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "cult_hoodalt"
 	armor_type = /datum/armor/cult_hoodie_cult_shield
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cult_hoodie_cult_shield
 	melee = 50
 	bullet = 40
@@ -417,7 +409,6 @@ Striking a noncultist, however, will tear their flesh."}
 	slowdown = -0.3 //the hood gives an additional -0.3 if you have it flipped up, for a total of -0.6
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cultrobes_berserker
 	melee = -45
 	bullet = -45
@@ -431,7 +422,6 @@ Striking a noncultist, however, will tear their flesh."}
 	armor_type = /datum/armor/cult_hoodie_berserkerhood
 	slowdown = -0.3
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cult_hoodie_berserkerhood
 	melee = -45
 	bullet = -45

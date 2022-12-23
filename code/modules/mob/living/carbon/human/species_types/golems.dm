@@ -872,7 +872,6 @@
 	var/revive_time = 90 SECONDS
 	var/mob/living/carbon/human/cloth_golem
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_cloth_pile
 	melee = 90
 	bullet = 90
@@ -967,7 +966,6 @@
 	var/last_gong_time = 0
 	var/gong_cooldown = 150
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_cloth_pile
 	melee = 90
 	bullet = 90
@@ -1151,7 +1149,6 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/durathread,
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_cloth_pile
 	melee = 90
 	bullet = 90
@@ -1211,7 +1208,6 @@
 	)
 	var/datum/action/innate/bonechill/bonechill
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_cloth_pile
 	melee = 90
 	bullet = 90
@@ -1270,7 +1266,6 @@
 	var/last_use
 	var/snas_chance = 3
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_cloth_pile
 	melee = 90
 	bullet = 90
@@ -1342,7 +1337,6 @@
 	/// A ref to our cryobeam spell we get on species gain.
 	var/datum/action/cooldown/spell/pointed/projectile/cryo/cryo
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_cloth_pile
 	melee = 90
 	bullet = 90
@@ -1401,7 +1395,6 @@
 	)
 	examine_limb_id = SPECIES_GOLEM
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_cloth_pile
 	melee = 90
 	bullet = 90

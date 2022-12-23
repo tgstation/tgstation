@@ -89,7 +89,6 @@
 /obj/item/stack/tile/iron/four
 	amount = 4
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/tile_iron
 	fire = 100
 	acid = 70

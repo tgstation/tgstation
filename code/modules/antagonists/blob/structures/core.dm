@@ -17,7 +17,6 @@
 	max_spores = BLOB_CORE_MAX_SPORES
 	ignore_syncmesh_share = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/special_core
 	fire = 75
 	acid = 90

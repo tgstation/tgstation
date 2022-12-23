@@ -14,7 +14,6 @@
 	strip_delay = 80
 	equip_delay_other = 60
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -28,7 +27,6 @@
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 //Suits
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -46,7 +44,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -64,7 +61,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -82,7 +78,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -99,7 +94,6 @@
 	inhand_icon_state = null
 	body_parts_covered = ARMS|CHEST
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -116,7 +110,6 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -136,7 +129,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/monkhabit
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -156,7 +148,6 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -174,7 +165,6 @@
 	body_parts_covered = GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -192,7 +182,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -211,7 +200,6 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/megaphone/clown, /obj/item/soap, /obj/item/food/pie/cream, /obj/item/bikehorn, /obj/item/bikehorn/golden, /obj/item/bikehorn/airhorn, /obj/item/instrument/bikehorn, /obj/item/reagent_containers/cup/soda_cans/canned_laughter, /obj/item/toy/crayon, /obj/item/toy/crayon/spraycan, /obj/item/toy/crayon/spraycan/lubecan, /obj/item/grown/bananapeel, /obj/item/food/grown/banana)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplainsuit_armor
 	melee = 50
 	bullet = 10
@@ -232,7 +220,6 @@
 	strip_delay = 8 SECONDS
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplain_clock
 	melee = 50
 	bullet = 10
@@ -250,7 +237,6 @@
 	slowdown = 0
 	clothing_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/chaplain_clock
 	melee = 50
 	bullet = 10
@@ -272,7 +258,6 @@
 	strip_delay = 80
 	dog_fashion = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_chaplain
 	melee = 50
 	bullet = 10
@@ -290,7 +275,6 @@
 	slowdown = 0
 	clothing_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_chaplain
 	melee = 50
 	bullet = 10
@@ -307,7 +291,6 @@
 	inhand_icon_state = null
 	worn_y_offset = 7
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_chaplain
 	melee = 50
 	bullet = 10
@@ -322,7 +305,6 @@
 	icon_state = "knight_ancient"
 	inhand_icon_state = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_chaplain
 	melee = 50
 	bullet = 10
@@ -337,7 +319,6 @@
 	icon_state = "knight_ancient"
 	inhand_icon_state = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_chaplain
 	melee = 50
 	bullet = 10
@@ -354,7 +335,6 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEEYES
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_chaplain
 	melee = 50
 	bullet = 10
@@ -371,7 +351,6 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_chaplain
 	melee = 50
 	bullet = 10
@@ -386,7 +365,6 @@
 	icon_state = "crusader"
 	inhand_icon_state = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_chaplain
 	melee = 50
 	bullet = 10
@@ -404,7 +382,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_crusader
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_crusader
 	melee = 50
 	bullet = 50
@@ -417,7 +394,6 @@
 /obj/item/clothing/suit/chaplainsuit/armor/crusader/red
 	icon_state = "crusader-red"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_crusader
 	melee = 50
 	bullet = 50
@@ -430,7 +406,6 @@
 /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue
 	icon_state = "crusader-blue"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_crusader
 	melee = 50
 	bullet = 50
@@ -451,7 +426,6 @@
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_crusader
 	melee = 50
 	bullet = 50
@@ -470,7 +444,6 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_crusader
 	melee = 50
 	bullet = 50
@@ -487,7 +460,6 @@
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/leader
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_crusader
 	melee = 50
 	bullet = 50
@@ -502,7 +474,6 @@
 	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
 	icon_state = "chaplain_hood_leader"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_crusader
 	melee = 50
 	bullet = 50

@@ -29,7 +29,6 @@
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_apron
 	bio = 50
 
@@ -81,7 +80,6 @@
 	species_exception = list(/datum/species/golem)
 
 //Cook
-/// Automatically generated armor datum, errors may exist
 /datum/armor/toggle_chef
 	bio = 50
 
@@ -110,7 +108,6 @@
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/jacket_det_suit
 	melee = 25
 	bullet = 10
@@ -298,7 +295,6 @@
 	heat_protection = CHEST|ARMS
 
 //Robotocist
-/// Automatically generated armor datum, errors may exist
 /datum/armor/jacket_curator
 	melee = 25
 	bullet = 10
@@ -335,7 +331,6 @@
 	armor_type = /datum/armor/jacket_research_director
 	body_parts_covered = CHEST|GROIN|ARMS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/jacket_research_director
 	bio = 75
 	fire = 75

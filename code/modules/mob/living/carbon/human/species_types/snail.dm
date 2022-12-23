@@ -64,7 +64,6 @@
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/backpack_snail
 	melee = 40
 	bullet = 30

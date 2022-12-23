@@ -132,7 +132,6 @@
 	armor_type = /datum/armor/suit_pillow_suit
 	var/obj/item/pillow/unstoppably_plushed
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_pillow_suit
 	melee = 5
 	acid = 75
@@ -157,7 +156,6 @@
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/head_pillow_hood
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/head_pillow_hood
 	melee = 5
 	acid = 75

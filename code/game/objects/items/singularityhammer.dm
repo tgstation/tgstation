@@ -18,7 +18,6 @@
 	///Is it able to pull shit right now?
 	var/charged = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_singularityhammer
 	melee = 50
 	bullet = 50
@@ -89,7 +88,6 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_singularityhammer
 	melee = 50
 	bullet = 50

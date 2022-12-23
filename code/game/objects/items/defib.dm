@@ -44,7 +44,6 @@
 	/// The icon state for the emagged overlay, not applied if null
 	var/emagged_state = "defibunit-emagged"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_defibrillator
 	fire = 50
 	acid = 50
@@ -295,7 +294,6 @@
 	nocell_state = "defibcompact-nocell"
 	emagged_state = "defibcompact-emagged"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_defibrillator
 	fire = 50
 	acid = 50
@@ -326,7 +324,6 @@
 /obj/item/defibrillator/compact/combat/loaded
 	cell_removable = FALSE // Don't let people just have an infinite power cell
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_defibrillator
 	fire = 50
 	acid = 50
@@ -375,7 +372,6 @@
 	var/recharge_time = 6 SECONDS // Only applies to defibs that do not require a defibrilator. See: do_success()
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_defibrillator
 	fire = 50
 	acid = 50
@@ -705,7 +701,6 @@
 	inhand_icon_state = "defibpaddles0"
 	req_defib = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_defibrillator
 	fire = 50
 	acid = 50

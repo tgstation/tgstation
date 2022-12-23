@@ -9,7 +9,6 @@
 	integrity_failure = 0.5
 	var/static/mutable_appearance/atvcover
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/ridden_atv
 	melee = 50
 	bullet = 25
@@ -42,7 +41,6 @@
 	scan_range = 7
 	density = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/ridden_atv
 	melee = 50
 	bullet = 25

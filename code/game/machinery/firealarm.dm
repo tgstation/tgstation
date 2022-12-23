@@ -38,7 +38,6 @@
 	///looping sound datum for our fire alarm siren.
 	var/datum/looping_sound/firealarm/soundloop
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_firealarm
 	fire = 90
 	acid = 30
@@ -442,7 +441,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	desc = "Cuban Pete is in the house!"
 	var/static/party_overlay
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_firealarm
 	fire = 90
 	acid = 30
@@ -483,7 +481,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 
 	var/obj/machinery/firealarm/attached_alarm
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_firealarm
 	fire = 90
 	acid = 30

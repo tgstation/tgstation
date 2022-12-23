@@ -12,7 +12,6 @@
 	atmosblock = TRUE
 	armor_type = /datum/armor/blob_shield
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/blob_shield
 	fire = 90
 	acid = 90
@@ -54,7 +53,6 @@
 	max_integrity = BLOB_REFLECTOR_MAX_HP
 	health_regen = BLOB_REFLECTOR_HP_REGEN
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/blob_shield
 	fire = 90
 	acid = 90

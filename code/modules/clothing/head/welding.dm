@@ -17,7 +17,6 @@
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_welding
 	melee = 10
 	fire = 100

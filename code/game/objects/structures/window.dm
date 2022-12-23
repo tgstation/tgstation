@@ -34,7 +34,6 @@
 	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
 	var/bloodied = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_window
 	melee = 50
 	fire = 80
@@ -459,7 +458,6 @@
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 //2021 AND STILLLL GOING STRONG
 //2022 BABYYYYY ~lewc
-/// Automatically generated armor datum, errors may exist
 /datum/armor/window_reinforced
 	melee = 80
 	bomb = 25
@@ -582,7 +580,6 @@
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_MEDIUM_INSULATION
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/window_plasma
 	melee = 80
 	bullet = 5
@@ -628,7 +625,6 @@
 	glass_type = /obj/item/stack/sheet/plasmarglass
 	rad_insulation = RAD_HEAVY_INSULATION
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/reinforced_plasma
 	melee = 80
 	bullet = 20
@@ -745,7 +741,6 @@
 	glass_amount = 2
 
 //there is a sub shuttle window in survival_pod.dm for mining pods
-/// Automatically generated armor datum, errors may exist
 /datum/armor/reinforced_plasma
 	melee = 80
 	bullet = 20
@@ -776,7 +771,6 @@
 	receive_ricochet_chance_mod = 1.2
 	rad_insulation = RAD_MEDIUM_INSULATION
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/reinforced_shuttle
 	melee = 90
 	bomb = 50
@@ -823,7 +817,6 @@
 	glass_amount = 2
 	rad_insulation = RAD_EXTREME_INSULATION
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plasma_plastitanium
 	melee = 95
 	bomb = 50
@@ -870,7 +863,6 @@
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plasma_plastitanium
 	melee = 95
 	bomb = 50

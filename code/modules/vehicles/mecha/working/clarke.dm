@@ -29,7 +29,6 @@
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/working_clarke
 	melee = 20
 	bullet = 10
@@ -64,7 +63,6 @@
 	/// Var to avoid istype checking every time the topic button is pressed. This will only work inside Clarke mechs.
 	var/obj/vehicle/sealed/mecha/working/clarke/hostmech
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/working_clarke
 	melee = 20
 	bullet = 10
@@ -96,7 +94,6 @@
 	button_icon_state = "mech_search_ruins"
 	COOLDOWN_DECLARE(search_cooldown)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/working_clarke
 	melee = 20
 	bullet = 10
@@ -143,7 +140,6 @@
 	range_mid = 20
 	range_far = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/working_clarke
 	melee = 20
 	bullet = 10

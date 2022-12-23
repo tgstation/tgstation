@@ -31,7 +31,6 @@
 	greyscale_colors = "#4f88df#ffffff"
 	armor_type = /datum/armor/sneakers_blue
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sneakers_blue
 	bio = 95
 
@@ -57,7 +56,6 @@
 	greyscale_colors = "#ffffff#ffffff"
 	armor_type = /datum/armor/sneakers_white
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sneakers_white
 	bio = 95
 

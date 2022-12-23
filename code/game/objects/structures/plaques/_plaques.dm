@@ -13,7 +13,6 @@
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
 	var/engraved = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_plaque
 	melee = 50
 	fire = 50
@@ -36,7 +35,6 @@
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 	var/engraved = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_plaque
 	melee = 50
 	fire = 50

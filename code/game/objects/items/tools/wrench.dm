@@ -24,7 +24,6 @@
 	toolspeed = 1
 	armor_type = /datum/armor/item_wrench
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_wrench
 	fire = 50
 	acid = 30
@@ -60,7 +59,6 @@
 	///var to hold the name of the person who suicided
 	var/suicider
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_wrench
 	fire = 50
 	acid = 30
@@ -106,7 +104,6 @@
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_wrench
 	fire = 50
 	acid = 30

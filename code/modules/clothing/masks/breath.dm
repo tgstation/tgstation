@@ -13,7 +13,6 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_breath
 	bio = 50
 
@@ -41,6 +40,5 @@
 	armor_type = /datum/armor/breath_medical
 	equip_delay_other = 10
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/breath_medical
 	bio = 90

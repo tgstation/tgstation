@@ -17,7 +17,6 @@
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
 	var/force_fee = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_holopay
 	bullet = 50
 	laser = 50

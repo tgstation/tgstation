@@ -30,7 +30,6 @@
 	strip_delay = 40
 	equip_delay_other = 20
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/pirate_armored
 	melee = 30
 	bullet = 50
@@ -57,7 +56,6 @@
 	strip_delay = 40
 	equip_delay_other = 20
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/bandana_armored
 	melee = 30
 	bullet = 50

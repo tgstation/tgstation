@@ -21,7 +21,6 @@
 	var/obj/durand_shield/shield
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_durand
 	melee = 40
 	bullet = 35
@@ -143,7 +142,6 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."
 	button_icon_state = "mech_defense_mode_off"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_durand
 	melee = 40
 	bullet = 35

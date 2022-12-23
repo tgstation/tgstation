@@ -65,7 +65,6 @@
 	var/bash_sound = 'sound/effects/glassbash.ogg'
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_firedoor
 	melee = 10
 	bullet = 30
@@ -685,7 +684,6 @@
 	density = TRUE
 	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_firedoor
 	melee = 10
 	bullet = 30
@@ -767,7 +765,6 @@
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_firedoor
 	melee = 10
 	bullet = 30

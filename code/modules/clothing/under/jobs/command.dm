@@ -9,7 +9,6 @@
 	worn_icon = 'icons/mob/clothing/under/captain.dmi'
 	armor_type = /datum/armor/rank_captain
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_captain
 	bio = 10
 	wound = 15
@@ -24,7 +23,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_captain
 	bio = 10
 	wound = 15
@@ -36,7 +34,6 @@
 	inhand_icon_state = "dg_suit"
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_captain
 	bio = 10
 	wound = 15
@@ -51,7 +48,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_captain
 	bio = 10
 	wound = 15

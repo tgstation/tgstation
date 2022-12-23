@@ -17,7 +17,6 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -31,7 +30,6 @@
 	icon_state = "rsecurity"
 	inhand_icon_state = "r_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -45,7 +43,6 @@
 	icon_state = "security"
 	inhand_icon_state = "gy_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -63,7 +60,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -78,7 +74,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -93,7 +88,6 @@
 	inhand_icon_state = null
 	alt_covers_chest = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -110,7 +104,6 @@
 	custom_price = PAYCHECK_COMMAND
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -124,7 +117,6 @@
 	icon_state = "rwarden"
 	inhand_icon_state = "r_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -138,7 +130,6 @@
 	icon_state = "warden"
 	inhand_icon_state = "gy_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -156,7 +147,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -174,7 +164,6 @@
 /*
  * Detective
  */
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -189,7 +178,6 @@
 	inhand_icon_state = "det"
 	alt_covers_chest = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -208,7 +196,6 @@
 	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -223,7 +210,6 @@
 	inhand_icon_state = null
 	alt_covers_chest = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -245,7 +231,6 @@
 /*
  * Head of Security
  */
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_security
 	melee = 10
 	bio = 10
@@ -261,7 +246,6 @@
 	armor_type = /datum/armor/security_head_of_security
 	strip_delay = 60
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -279,7 +263,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -293,7 +276,6 @@
 	icon_state = "hos"
 	inhand_icon_state = "gy_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -308,7 +290,6 @@
 	inhand_icon_state = "bl_suit"
 	alt_covers_chest = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -327,7 +308,6 @@
 	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -342,7 +322,6 @@
 	inhand_icon_state = "r_suit"
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -358,7 +337,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -377,7 +355,6 @@
  *Spacepol
  */
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -392,7 +369,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -414,7 +390,6 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -436,7 +411,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -451,7 +425,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10
@@ -466,7 +439,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 10

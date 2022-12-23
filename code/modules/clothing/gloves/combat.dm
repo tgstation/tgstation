@@ -12,7 +12,6 @@
 	resistance_flags = NONE
 	armor_type = /datum/armor/gloves_combat
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/gloves_combat
 	bio = 90
 	fire = 80

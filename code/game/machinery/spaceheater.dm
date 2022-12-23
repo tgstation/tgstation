@@ -40,7 +40,6 @@
 	///Should we add an overlay for open spaceheaters
 	var/display_panel = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_space_heater
 	fire = 80
 	acid = 10
@@ -282,7 +281,6 @@
 /obj/machinery/space_heater/constructed
 	cell = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_space_heater
 	fire = 80
 	acid = 10
@@ -315,7 +313,6 @@
 	var/chem_heating_power = 1
 	display_panel = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_space_heater
 	fire = 80
 	acid = 10

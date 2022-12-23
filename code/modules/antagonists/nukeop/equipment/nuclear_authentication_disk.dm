@@ -23,7 +23,6 @@
 	/// The last world time the disk moved.
 	var/last_disk_move
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/disk_nuclear
 	bomb = 30
 	fire = 100

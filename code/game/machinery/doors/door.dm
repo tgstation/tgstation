@@ -47,7 +47,6 @@
 	/// Whether or not this door can be opened through a door remote, ever
 	var/opens_with_door_remote = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_door
 	melee = 30
 	bullet = 30
@@ -463,7 +462,6 @@
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_door
 	melee = 30
 	bullet = 30

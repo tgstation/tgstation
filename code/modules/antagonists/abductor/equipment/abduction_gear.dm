@@ -37,7 +37,6 @@
 	fire = 90
 	acid = 90
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/abductor_vest
 	melee = 15
 	bullet = 15
@@ -895,7 +894,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	armor_type = /datum/armor/under_abductor
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/under_abductor
 	bomb = 10
 	bio = 10

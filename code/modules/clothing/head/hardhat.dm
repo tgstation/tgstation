@@ -25,7 +25,6 @@
 	var/on = FALSE
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_hardhat
 	melee = 15
 	bullet = 5
@@ -122,7 +121,6 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_hardhat
 	melee = 15
 	bullet = 5
@@ -153,7 +151,6 @@
 	visor_flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_hardhat
 	melee = 15
 	bullet = 5
@@ -241,7 +238,6 @@
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_hardhat
 	melee = 15
 	bullet = 5
@@ -286,7 +282,6 @@
 	light_color = "#76ff8e"
 	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_hardhat
 	melee = 15
 	bullet = 5

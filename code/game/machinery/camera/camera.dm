@@ -54,7 +54,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_camera
 	melee = 50
 	bullet = 20

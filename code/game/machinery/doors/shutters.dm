@@ -32,7 +32,6 @@
 	opacity = FALSE
 	rad_insulation = RAD_NO_INSULATION
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/poddoor_shutters
 	melee = 20
 	bullet = 20

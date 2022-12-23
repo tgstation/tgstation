@@ -55,7 +55,6 @@
 	dog_fashion = /datum/dog_fashion/head/captain
 
 //Captain: This is no longer space-worthy
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hats_caphat
 	melee = 25
 	bullet = 15
@@ -89,7 +88,6 @@
 	dog_fashion = /datum/dog_fashion/head/hop
 
 //Chaplain
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hats_hopcap
 	melee = 25
 	bullet = 15
@@ -121,7 +119,6 @@
 	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/fedora_det_hat
 	melee = 25
 	bullet = 5
@@ -173,7 +170,6 @@
 	icon_state = "hoscap"
 	strip_delay = 80
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hats_hos
 	melee = 40
 	bullet = 30
@@ -214,7 +210,6 @@
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hats_warden
 	melee = 40
 	bullet = 30
@@ -237,7 +232,6 @@
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden_red
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/warden_red
 	melee = 40
 	bullet = 30
@@ -329,7 +323,6 @@
 	dog_fashion = null
 	flags_1 = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/beret_sec
 	melee = 35
 	bullet = 30
@@ -445,7 +438,6 @@
 	greyscale_colors = "#C5D4F3#ECF1F8"
 	armor_type = /datum/armor/beret_durathread
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/beret_durathread
 	melee = 15
 	bullet = 5
@@ -481,7 +473,6 @@
 #undef DRILL_YELLING
 #undef DRILL_CANADIAN
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/beret_centcom_formal
 	melee = 80
 	bullet = 80

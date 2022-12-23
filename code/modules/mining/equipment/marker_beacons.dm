@@ -85,7 +85,6 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	var/remove_speed = 15
 	var/picked_color
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_marker_beacon
 	melee = 50
 	bullet = 75

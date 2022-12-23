@@ -104,7 +104,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_porta_turret
 	melee = 50
 	bullet = 30
@@ -657,7 +656,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_cycle_equip_off"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_porta_turret
 	melee = 50
 	bullet = 30
@@ -678,7 +676,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_eject"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_porta_turret
 	melee = 50
 	bullet = 30
@@ -754,7 +751,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	faction = list(ROLE_SYNDICATE)
 	desc = "A ballistic machine gun auto-turret."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_porta_turret
 	melee = 50
 	bullet = 30
@@ -812,7 +808,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
 	armor_type = /datum/armor/syndicate_shuttle
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_shuttle
 	melee = 50
 	bullet = 30
@@ -835,7 +830,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	faction = list("silicon")
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_shuttle
 	melee = 50
 	bullet = 30
@@ -857,7 +851,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	mode = TURRET_LETHAL //It would be useless in stun mode anyway
 	faction = list(FACTION_NEUTRAL,"silicon","turret") //Minebots, medibots, etc that should not be shot.
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_shuttle
 	melee = 50
 	bullet = 30
@@ -897,7 +890,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	faction = list(FACTION_NEUTRAL,"silicon","turret")
 	mode = TURRET_LETHAL
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_shuttle
 	melee = 50
 	bullet = 30
@@ -954,7 +946,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// List of weakrefs to all turrets
 	var/list/turrets = list()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_shuttle
 	melee = 50
 	bullet = 30
@@ -1123,7 +1114,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	pixel_shift = 29
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_shuttle
 	melee = 50
 	bullet = 30
@@ -1193,7 +1183,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	turret_flags = TURRET_FLAG_AUTH_WEAPONS
 	var/team_color
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_shuttle
 	melee = 50
 	bullet = 30
@@ -1246,7 +1235,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	installation = /obj/item/gun/energy/laser/bluetag
 	team_color = "blue"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/syndicate_shuttle
 	melee = 50
 	bullet = 30

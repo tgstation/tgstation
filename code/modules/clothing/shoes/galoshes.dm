@@ -18,7 +18,6 @@
 	desc = "A pair of purple rubber boots, designed to prevent slipping on wet surfaces while also drying them."
 	icon_state = "galoshes_dry"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_galoshes
 	bio = 100
 	fire = 40

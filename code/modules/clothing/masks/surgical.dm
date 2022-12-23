@@ -11,7 +11,6 @@
 	armor_type = /datum/armor/mask_surgical
 	actions_types = list(/datum/action/item_action/adjust)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_surgical
 	bio = 100
 

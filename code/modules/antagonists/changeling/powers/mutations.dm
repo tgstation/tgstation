@@ -485,7 +485,6 @@
 	cell = null
 	show_hud = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_changeling
 	bio = 100
 	fire = 90
@@ -520,7 +519,6 @@
 	armor_type = /datum/armor/space_changeling
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_changeling
 	bio = 100
 	fire = 90
@@ -560,7 +558,6 @@
 	cold_protection = 0
 	heat_protection = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/armor_changeling
 	melee = 40
 	bullet = 40
@@ -586,7 +583,6 @@
 	armor_type = /datum/armor/helmet_changeling
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/helmet_changeling
 	melee = 40
 	bullet = 40

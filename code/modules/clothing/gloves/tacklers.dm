@@ -80,7 +80,6 @@
 	siemens_coefficient = 0
 	armor_type = /datum/armor/combat_insulated
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/combat_insulated
 	bio = 50
 
@@ -97,7 +96,6 @@
 	tackle_speed = 6
 	skill_mod = 7
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/combat_insulated
 	bio = 50
 
@@ -112,7 +110,6 @@
 	min_distance = 2
 	skill_mod = -1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/combat_insulated
 	bio = 50
 

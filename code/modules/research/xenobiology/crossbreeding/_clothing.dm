@@ -17,7 +17,6 @@ Slimecrossing Armor
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_nobreath
 	bio = 50
 
@@ -40,7 +39,6 @@ Slimecrossing Armor
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
 	var/glasses_color = "#FFFFFF"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_nobreath
 	bio = 50
 
@@ -57,7 +55,6 @@ Slimecrossing Armor
 	anchored = TRUE
 	max_integrity = 10
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_nobreath
 	bio = 50
 
@@ -76,7 +73,6 @@ Slimecrossing Armor
 	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	button_icon_state = "prismcolor"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_nobreath
 	bio = 50
 
@@ -94,7 +90,6 @@ Slimecrossing Armor
 	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	button_icon_state = "lightprism"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_nobreath
 	bio = 50
 
@@ -128,7 +123,6 @@ Slimecrossing Armor
 	throw_speed = 1
 	throw_range = 3
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_nobreath
 	bio = 50
 
@@ -162,7 +156,6 @@ Slimecrossing Armor
 	slowdown = 4
 	var/hit_reflect_chance = 40
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_nobreath
 	bio = 50
 

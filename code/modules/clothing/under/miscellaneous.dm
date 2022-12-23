@@ -56,7 +56,6 @@
 	can_adjust = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/misc_adminsuit
 	melee = 100
 	bullet = 100
@@ -75,7 +74,6 @@
 	can_adjust = FALSE
 	has_sensor = NO_SENSORS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/misc_adminsuit
 	melee = 100
 	bullet = 100
@@ -94,7 +92,6 @@
 	can_adjust = FALSE
 	custom_price = PAYCHECK_CREW
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/misc_adminsuit
 	melee = 100
 	bullet = 100
@@ -112,7 +109,6 @@
 	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/misc_adminsuit
 	melee = 100
 	bullet = 100
@@ -131,7 +127,6 @@
 	can_adjust = FALSE
 	armor_type = /datum/armor/misc_durathread
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/misc_durathread
 	melee = 10
 	laser = 10
@@ -148,7 +143,6 @@
 	can_adjust = FALSE
 	armor_type = /datum/armor/misc_bouncer
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/misc_bouncer
 	melee = 5
 	bio = 10
@@ -164,7 +158,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/misc_bouncer
 	melee = 5
 	bio = 10

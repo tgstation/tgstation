@@ -393,7 +393,6 @@
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/table_glass
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/table_glass
 	fire = 80
 	acid = 100
@@ -485,7 +484,6 @@
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/table_glass
 	fire = 80
 	acid = 100
@@ -518,7 +516,6 @@
 	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/table_glass
 	fire = 80
 	acid = 100
@@ -600,7 +597,6 @@
 	integrity_failure = 0.25
 	armor_type = /datum/armor/table_reinforced
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/table_reinforced
 	melee = 10
 	bullet = 30
@@ -657,7 +653,6 @@
 	smoothing_groups = SMOOTH_GROUP_BRONZE_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/table_reinforced
 	melee = 10
 	bullet = 30
@@ -730,7 +725,6 @@
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/table_reinforced
 	melee = 10
 	bullet = 30
@@ -813,7 +807,6 @@
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/table_reinforced
 	melee = 10
 	bullet = 30
@@ -904,7 +897,6 @@
 	custom_materials = list(/datum/material/iron=2000)
 	var/building = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/table_reinforced
 	melee = 10
 	bullet = 30

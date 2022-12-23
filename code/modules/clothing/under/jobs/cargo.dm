@@ -44,7 +44,6 @@
 	armor_type = /datum/armor/cargo_miner
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cargo_miner
 	bio = 10
 	fire = 80

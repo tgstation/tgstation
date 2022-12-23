@@ -39,7 +39,6 @@
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_fire
 	melee = 15
 	bullet = 5
@@ -93,7 +92,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_bomb_hood
 	melee = 20
 	laser = 20
@@ -121,7 +119,6 @@
 	equip_delay_other = 70
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_bomb_suit
 	melee = 20
 	laser = 20
@@ -164,7 +161,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/utility_radiation
 	bio = 60
 	fire = 30

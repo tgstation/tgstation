@@ -7,7 +7,6 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plasmaman_security
 	melee = 10
 	bio = 100

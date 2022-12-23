@@ -199,7 +199,6 @@
  * * FALSE - if the machine was maploaded on a zlevel that doesn't pass the is_station_level check
  * * TRUE - all other cases
  */
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_vending
 	melee = 20
 	fire = 50
@@ -1282,7 +1281,6 @@
 	var/list/base64_cache = list()
 	panel_type = "panel20"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_vending
 	melee = 20
 	fire = 50
@@ -1445,7 +1443,6 @@
 	icon_state = "refill_custom"
 	custom_premium_price = PAYCHECK_CREW
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_vending
 	melee = 20
 	fire = 50

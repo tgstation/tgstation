@@ -22,7 +22,6 @@
 	)
 	step_energy_drain = 3
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_gygax
 	melee = 25
 	bullet = 20
@@ -39,7 +38,6 @@
 	name = "Toggle leg actuators overload"
 	button_icon_state = "mech_overload_off"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_gygax
 	melee = 25
 	bullet = 20
@@ -95,7 +93,6 @@
 	)
 	destruction_sleep_duration = 20
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/gygax_dark
 	melee = 40
 	bullet = 40

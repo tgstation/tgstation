@@ -12,7 +12,6 @@
 	var/recharging_rate = 60 //default 6 seconds between each dash
 	var/recharging_time = 0 //time until next dash
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_bhop
 	bio = 90
 

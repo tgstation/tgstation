@@ -22,7 +22,6 @@
 	///Can we support a cell?
 	var/cell_connectors = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_light_construct
 	melee = 50
 	bullet = 10

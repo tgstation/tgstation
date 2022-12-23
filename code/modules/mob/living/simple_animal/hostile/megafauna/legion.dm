@@ -283,7 +283,6 @@
 	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
 	var/faction = list("mining")
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_legionturret
 	laser = 100
 

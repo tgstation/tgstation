@@ -10,7 +10,6 @@
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_holosign
 	bullet = 50
 	laser = 50
@@ -67,7 +66,6 @@
 	max_integrity = 20
 	var/allow_walk = TRUE //can we pass through it on walk intent
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_holosign
 	bullet = 50
 	laser = 50
@@ -92,7 +90,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "holosign"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_holosign
 	bullet = 50
 	laser = 50
@@ -133,7 +130,6 @@
 	max_integrity = 150
 	icon_state = "holo_tram"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_holosign
 	bullet = 50
 	laser = 50
@@ -160,7 +156,6 @@
 	max_integrity = 10
 	allow_walk = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_holosign
 	bullet = 50
 	laser = 50
@@ -184,7 +179,6 @@
 	var/force_allaccess = FALSE
 	var/buzzcd = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_holosign
 	bullet = 50
 	laser = 50
@@ -237,7 +231,6 @@
 	max_integrity = 20
 	var/shockcd = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_holosign
 	bullet = 50
 	laser = 50

@@ -20,7 +20,6 @@
 	/// Are we authenticated to use this? Used by things like comms console, security and medical data, and apc controller.
 	var/authenticated = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_computer
 	fire = 40
 	acid = 20

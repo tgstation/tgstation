@@ -123,7 +123,6 @@
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_airalarm
 	energy = 100
 	fire = 90
@@ -934,7 +933,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	req_access = null
 	req_one_access = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_airalarm
 	energy = 100
 	fire = 90
@@ -971,7 +969,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	var/static/list/options_map
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_airalarm
 	energy = 100
 	fire = 90
@@ -1089,7 +1086,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/list/alarm_duplicates = list()
 	var/max_alarm_duplicates = 20
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_airalarm
 	energy = 100
 	fire = 90
@@ -1144,7 +1140,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	circuit_size = 0
 	ui_buttons = list()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_airalarm
 	energy = 100
 	fire = 90
@@ -1256,7 +1251,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/max_scrubber_duplicates = 20
 	var/list/scrubber_duplicates = list()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_airalarm
 	energy = 100
 	fire = 90
@@ -1302,7 +1296,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	circuit_size = 0
 	ui_buttons = list()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_airalarm
 	energy = 100
 	fire = 90
@@ -1487,7 +1480,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/max_vent_duplicates = 20
 	var/list/vent_duplicates = list()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_airalarm
 	energy = 100
 	fire = 90
@@ -1541,7 +1533,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	circuit_size = 0
 	ui_buttons = list()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_airalarm
 	energy = 100
 	fire = 90

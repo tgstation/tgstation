@@ -30,7 +30,6 @@
 	/// The heat given off when active.
 	var/active_heat = 3500
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/melee_energy
 	fire = 100
 	acid = 30
@@ -151,7 +150,6 @@
 	active_throwforce = 30
 	active_w_class = WEIGHT_CLASS_HUGE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/melee_energy
 	fire = 100
 	acid = 30
@@ -186,7 +184,6 @@
 	block_chance = 50
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/melee_energy
 	fire = 100
 	acid = 30
@@ -202,7 +199,6 @@
 	/// The cell cost of hitting something.
 	var/hitcost = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/melee_energy
 	fire = 100
 	acid = 30
@@ -256,7 +252,6 @@
 	var/hacked = FALSE
 	var/hacked_color
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/melee_energy
 	fire = 100
 	acid = 30
@@ -296,7 +291,6 @@
 /obj/item/melee/energy/sword/saber/purple
 	sword_color_icon = "purple"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/melee_energy
 	fire = 100
 	acid = 30
@@ -344,7 +338,6 @@
 	var/datum/effect_system/spark_spread/spark_system
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
-/// Automatically generated armor datum, errors may exist
 /datum/armor/melee_energy
 	fire = 100
 	acid = 30

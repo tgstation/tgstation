@@ -24,7 +24,6 @@
 	on = TRUE
 	icon_state = "igniter1"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_igniter
 	melee = 50
 	bullet = 30
@@ -81,7 +80,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 /obj/machinery/sparker/ordmix
 	id = INCINERATOR_ORDMIX_IGNITER
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_igniter
 	melee = 50
 	bullet = 30

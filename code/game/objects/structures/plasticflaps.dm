@@ -13,7 +13,6 @@
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_plasticflaps
 	melee = 100
 	bullet = 80

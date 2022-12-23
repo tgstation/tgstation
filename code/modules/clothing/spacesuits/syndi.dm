@@ -6,7 +6,6 @@
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
 	armor_type = /datum/armor/space_syndicate
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -28,7 +27,6 @@
 	cell = /obj/item/stock_parts/cell/hyper
 
 //Green syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -44,7 +42,6 @@
 	icon_state = "syndicate-helm-green"
 	inhand_icon_state = "space_helmet_syndicate"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -62,7 +59,6 @@
 
 
 //Dark green syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -78,7 +74,6 @@
 	icon_state = "syndicate-helm-green-dark"
 	inhand_icon_state = "syndicate-helm-green-dark"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -96,7 +91,6 @@
 
 
 //Orange syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -112,7 +106,6 @@
 	icon_state = "syndicate-helm-orange"
 	inhand_icon_state = "syndicate-helm-orange"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -129,7 +122,6 @@
 	inhand_icon_state = "syndicate-orange"
 
 //Blue syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -145,7 +137,6 @@
 	icon_state = "syndicate-helm-blue"
 	inhand_icon_state = "syndicate-helm-blue"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -163,7 +154,6 @@
 
 
 //Black syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -179,7 +169,6 @@
 	icon_state = "syndicate-helm-black"
 	inhand_icon_state = "syndicate-helm-black"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -197,7 +186,6 @@
 
 
 //Black-green syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -213,7 +201,6 @@
 	icon_state = "syndicate-helm-black-green"
 	inhand_icon_state = "syndicate-helm-black-green"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -231,7 +218,6 @@
 
 
 //Black-blue syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -247,7 +233,6 @@
 	icon_state = "syndicate-helm-black-blue"
 	inhand_icon_state = "syndicate-helm-black-blue"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -265,7 +250,6 @@
 
 
 //Black medical syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -281,7 +265,6 @@
 	icon_state = "syndicate-helm-black-med"
 	inhand_icon_state = "syndicate-helm-black"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -299,7 +282,6 @@
 
 
 //Black-orange syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -315,7 +297,6 @@
 	icon_state = "syndicate-helm-black-orange"
 	inhand_icon_state = "syndicate-helm-black"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -333,7 +314,6 @@
 
 
 //Black-red syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -349,7 +329,6 @@
 	icon_state = "syndicate-helm-black-red"
 	inhand_icon_state = "syndicate-helm-black-red"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -366,7 +345,6 @@
 	inhand_icon_state = "syndicate-black-red"
 
 //Black-red syndicate contract varient
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -384,7 +362,6 @@
 	icon_state = "syndicate-contract-helm"
 	inhand_icon_state = "contractor_helmet"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -404,7 +381,6 @@
 	inhand_icon_state = null
 
 //Black with yellow/red engineering syndicate space suit
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50
@@ -420,7 +396,6 @@
 	icon_state = "syndicate-helm-black-engie"
 	inhand_icon_state = "syndicate-helm-black"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/space_syndicate
 	melee = 40
 	bullet = 50

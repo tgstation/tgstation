@@ -77,7 +77,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_requests_console
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_requests_console
 	melee = 70
 	bullet = 30

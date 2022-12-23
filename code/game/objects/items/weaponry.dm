@@ -15,7 +15,6 @@
 	armor_type = /datum/armor/item_banhammer
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_banhammer
 	fire = 100
 	acid = 70
@@ -56,7 +55,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_banhammer
 	fire = 100
 	acid = 70
@@ -87,7 +85,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	armor_type = /datum/armor/item_claymore
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_claymore
 	fire = 100
 	acid = 50
@@ -117,7 +114,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	armour_penetration = 35
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_claymore
 	fire = 100
 	acid = 50
@@ -292,7 +288,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	armor_type = /datum/armor/item_katana
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -317,7 +312,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -424,7 +418,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	/// Whether the switchblade starts extended or not.
 	var/start_extended = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -478,7 +471,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("call", "ring")
 	hitsound = 'sound/weapons/ring.ogg'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -516,7 +508,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron = 600)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -591,7 +582,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -628,7 +618,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -662,7 +651,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("bust")
 	var/impressiveness = 45
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -715,7 +703,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	///The vehicle counterpart for the board
 	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -778,7 +765,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	/// List of all thrown datums we sent.
 	var/list/thrown_datums = list()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -901,7 +887,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 15
 	mob_thrower = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -931,7 +916,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	/// How much extra damage the fly swatter does against mobs it is strong against
 	var/extra_strength_damage = 24
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -993,7 +977,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "\improper ACME Extendo-Hand"
 	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -1067,7 +1050,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	/// The previous target we attacked
 	var/datum/weakref/previous_target
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -1162,7 +1144,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -1191,7 +1172,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	wound_bonus = 20
 	bare_wound_bonus = 25
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_katana
 	fire = 100
 	acid = 50

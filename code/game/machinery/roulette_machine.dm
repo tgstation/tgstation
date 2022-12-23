@@ -46,7 +46,6 @@
 	var/on = TRUE
 	var/last_spin = 13
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_roulette
 	melee = 45
 	bullet = 30
@@ -444,7 +443,6 @@
 	icon_state = "floor_beacon"
 	var/used
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_roulette
 	melee = 45
 	bullet = 30

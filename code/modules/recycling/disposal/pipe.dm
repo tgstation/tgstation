@@ -18,7 +18,6 @@
 	var/obj/structure/disposalconstruct/stored
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_disposalpipe
 	melee = 25
 	bullet = 10
@@ -203,7 +202,6 @@
 // next direction to move
 // if coming in from secondary dirs, then next is primary dir
 // if coming in from primary dir, then next is equal chance of other dirs
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_disposalpipe
 	melee = 25
 	bullet = 10
@@ -248,7 +246,6 @@
 	icon_state = "pipe-t"
 	var/obj/linked // the linked obj/machinery/disposal or obj/disposaloutlet
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_disposalpipe
 	melee = 25
 	bullet = 10
@@ -329,7 +326,6 @@
 	// broken pipes always have dpdir=0 so they're not found as 'real' pipes
 	// i.e. will be treated as an empty turf
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_disposalpipe
 	melee = 25
 	bullet = 10

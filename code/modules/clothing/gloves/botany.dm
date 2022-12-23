@@ -12,7 +12,6 @@
 	clothing_traits = list(TRAIT_PLANT_SAFE)
 	armor_type = /datum/armor/gloves_botanic_leather
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/gloves_botanic_leather
 	bio = 50
 	fire = 70

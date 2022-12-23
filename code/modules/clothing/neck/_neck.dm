@@ -307,7 +307,6 @@
 	icon_state = "petcollar"
 	var/tagname = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/large_scarf_syndie
 	fire = 50
 	acid = 40
@@ -338,7 +337,6 @@
 	/// toggles between sell (TRUE) and get price post-fees (FALSE)
 	var/selling = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/large_scarf_syndie
 	fire = 50
 	acid = 40
@@ -374,7 +372,6 @@
 	custom_price = PAYCHECK_CREW * 0.2
 	custom_materials = (list(/datum/material/plastic = 500))
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/large_scarf_syndie
 	fire = 50
 	acid = 40

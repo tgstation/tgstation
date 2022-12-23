@@ -26,7 +26,6 @@
 	var/list/contraband
 	var/list/premium
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_vending_refill
 	fire = 70
 	acid = 30

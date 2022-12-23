@@ -22,7 +22,6 @@
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/clothing_under
 	bio = 10
 	wound = 5
@@ -364,7 +363,6 @@
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/clothing_under
 	bio = 10
 	wound = 5

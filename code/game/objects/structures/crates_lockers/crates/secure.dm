@@ -9,7 +9,6 @@
 	var/tamperproof = 0
 	damage_deflection = 25
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/crate_secure
 	melee = 30
 	bullet = 50
@@ -56,7 +55,6 @@
 	name = "secure hydroponics crate"
 	icon_state = "hydrosecurecrate"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/crate_secure
 	melee = 30
 	bullet = 50
@@ -76,7 +74,6 @@
 	req_access = list(ACCESS_KITCHEN)
 	tamperproof = 10
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/crate_secure
 	melee = 30
 	bullet = 50
@@ -112,7 +109,6 @@
 	///Is the crate being bought by a person, or a budget card?
 	var/department_purchase = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/crate_secure
 	melee = 30
 	bullet = 50

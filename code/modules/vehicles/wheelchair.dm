@@ -17,7 +17,6 @@
 	///Bell attached to the wheelchair, if we have one.
 	var/obj/structure/desk_bell/bell_attached
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/ridden_wheelchair
 	melee = 10
 	bullet = 10
@@ -119,7 +118,6 @@
 	custom_materials = list(/datum/material/gold = 10000)
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/wheelchair_gold
 	melee = 20
 	bullet = 20

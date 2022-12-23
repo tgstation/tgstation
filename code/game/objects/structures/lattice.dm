@@ -18,7 +18,6 @@
 	var/build_material = /obj/item/stack/rods
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_lattice
 	melee = 50
 	fire = 80
@@ -87,7 +86,6 @@
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_lattice
 	melee = 50
 	fire = 80
@@ -113,7 +111,6 @@
 	desc = "A heavily reinforced catwalk used to build bridges in hostile environments. It doesn't look like anything could make this budge."
 	resistance_flags = INDESTRUCTIBLE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_lattice
 	melee = 50
 	fire = 80
@@ -136,7 +133,6 @@
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_lattice
 	melee = 50
 	fire = 80

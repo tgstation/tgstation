@@ -3,7 +3,6 @@
 	worn_icon = 'icons/mob/clothing/under/medical.dmi'
 	armor_type = /datum/armor/rank_medical
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -13,7 +12,6 @@
 	icon_state = "medical"
 	inhand_icon_state = "w_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -27,7 +25,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -37,7 +34,6 @@
 	icon_state = "cmo"
 	inhand_icon_state = "w_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -51,7 +47,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -61,7 +56,6 @@
 	icon_state = "scrubscmo"
 	inhand_icon_state = "w_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -74,7 +68,6 @@
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -88,7 +81,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -98,7 +90,6 @@
 	icon_state = "virology"
 	inhand_icon_state = "w_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -112,14 +103,12 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
 /obj/item/clothing/under/rank/medical/scrubs
 	name = "medical scrubs"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -127,7 +116,6 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
 	icon_state = "scrubsblue"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -135,7 +123,6 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in dark green."
 	icon_state = "scrubsgreen"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -143,7 +130,6 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
 	icon_state = "scrubswine"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/rank_medical
 	bio = 50
 
@@ -154,7 +140,6 @@
 	inhand_icon_state = "w_suit"
 	armor_type = /datum/armor/medical_chemist
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/medical_chemist
 	bio = 10
 	fire = 50
@@ -170,7 +155,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/medical_chemist
 	bio = 10
 	fire = 50
@@ -182,7 +166,6 @@
 	icon_state = "paramedic"
 	inhand_icon_state = "w_suit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/medical_chemist
 	bio = 10
 	fire = 50
@@ -198,7 +181,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/medical_chemist
 	bio = 10
 	fire = 50

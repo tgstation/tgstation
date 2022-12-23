@@ -63,7 +63,6 @@
 
 	armor_type = /datum/armor/machinery_atmospherics
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/machinery_atmospherics
 	melee = 25
 	bullet = 10

@@ -102,7 +102,6 @@
 	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -840,7 +839,6 @@
 	desc = "An ID card that allows access to bots maintenance protocols."
 	trim = /datum/id_trim/away/old/robo
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -856,7 +854,6 @@
 	var/department_name = ACCOUNT_CIV_NAME
 	registered_age = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -884,7 +881,6 @@
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -919,7 +915,6 @@
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -1089,7 +1084,6 @@
 	assigned_icon_state = "assigned_gold"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -1105,7 +1099,6 @@
 	trim = /datum/id_trim/job/captain
 	registered_age = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -1205,7 +1198,6 @@
 	registered_name = "Captain"
 	registered_age = null
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -1227,7 +1219,6 @@
 	trim = /datum/id_trim/admin
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -1261,7 +1252,6 @@
 	/// Time left on a card till they can leave.
 	var/time_left = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -1376,7 +1366,6 @@
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/card_id
 	fire = 100
 	acid = 100

@@ -268,7 +268,6 @@
 	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40
@@ -314,7 +313,6 @@
 	greyscale_config_worn = /datum/greyscale_config/heck_helmet/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40
@@ -389,7 +387,6 @@
 	/// Cooldown between attacks
 	COOLDOWN_DECLARE(attack_cooldown)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40
@@ -607,7 +604,6 @@
 	/// Blood level, used for movement and abilities in a soulscythe
 	var/blood_level = MAX_BLOOD_LEVEL
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40
@@ -635,7 +631,6 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40
@@ -673,7 +668,6 @@
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40
@@ -760,7 +754,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40
@@ -836,7 +829,6 @@
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40
@@ -926,7 +918,6 @@
 	/// Throwforce when the saw is opened.
 	var/open_throwforce = 20
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40
@@ -1047,7 +1038,6 @@
 	var/static/list/excluded_areas = list(/area/space)
 	var/list/targeted_turfs = list()
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40

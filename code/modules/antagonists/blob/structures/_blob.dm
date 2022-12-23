@@ -32,7 +32,6 @@
 	var/mob/camera/blob/overmind
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_blob
 	fire = 80
 	acid = 70
@@ -356,7 +355,6 @@
 	health_regen = BLOB_REGULAR_HP_REGEN
 	brute_resist = BLOB_BRUTE_RESIST * 0.5
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_blob
 	fire = 80
 	acid = 70

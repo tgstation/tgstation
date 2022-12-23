@@ -22,6 +22,5 @@
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/suit_caution
 	melee = 5

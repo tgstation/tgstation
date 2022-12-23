@@ -253,7 +253,6 @@
 	random_sensor = FALSE
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -269,7 +268,6 @@
 	species_exception = list(/datum/species/golem)
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -285,7 +283,6 @@
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -301,7 +298,6 @@
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -315,7 +311,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -328,7 +323,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -344,7 +338,6 @@
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -358,7 +351,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -372,7 +364,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -385,7 +376,6 @@
 	icon_state = "joker"
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -398,7 +388,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -412,7 +401,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10
@@ -425,7 +413,6 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_russian_officer
 	melee = 10
 	bio = 10

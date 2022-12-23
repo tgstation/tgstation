@@ -18,7 +18,6 @@
 	var/obj/item/noz
 	var/volume = 500
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30
@@ -134,7 +133,6 @@
 
 	var/obj/item/watertank/tank
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30
@@ -159,7 +157,6 @@
 	inhand_icon_state = "waterbackpackjani"
 	custom_price = PAYCHECK_CREW * 5
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30
@@ -180,7 +177,6 @@
 	possible_transfer_amounts = list(5, 10)
 	current_range = 5
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30
@@ -201,7 +197,6 @@
 	custom_price = PAYCHECK_CREW * 2
 	volume = 1000
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30
@@ -222,7 +217,6 @@
 	possible_transfer_amounts = list(5, 10)
 	current_range = 6
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30
@@ -248,7 +242,6 @@
 	volume = 200
 	slowdown = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30
@@ -289,7 +282,6 @@
 	var/metal_synthesis_cooldown = 0
 	COOLDOWN_DECLARE(resin_cooldown)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30
@@ -402,7 +394,6 @@
 	pass_flags = PASSTABLE
 	anchored = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30
@@ -447,7 +438,6 @@
 	fill_icon_thresholds = list(0, 15, 60)
 	fill_icon_state = "backpack"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_watertank
 	fire = 100
 	acid = 30

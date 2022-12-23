@@ -144,7 +144,6 @@
 	var/deploy_message = TRUE
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/barricade_security
 	melee = 10
 	bullet = 50
@@ -174,7 +173,6 @@
 	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/barricade_security
 	melee = 10
 	bullet = 50
@@ -241,7 +239,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/barricade_security
 	melee = 10
 	bullet = 50

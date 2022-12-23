@@ -17,7 +17,6 @@
 	voice_activated = TRUE
 
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_password
 	melee = 100
 	bullet = 100

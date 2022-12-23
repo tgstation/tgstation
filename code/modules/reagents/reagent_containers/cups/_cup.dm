@@ -357,7 +357,6 @@
 		ITEM_SLOT_DEX_STORAGE
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cup_bucket
 	melee = 10
 	fire = 75
@@ -381,7 +380,6 @@
 	armor_type = /datum/armor/bucket_wooden
 	resistance_flags = FLAMMABLE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/bucket_wooden
 	melee = 10
 	acid = 50
@@ -446,7 +444,6 @@
 	spillable = TRUE
 	var/obj/item/grinded
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/bucket_wooden
 	melee = 10
 	acid = 50

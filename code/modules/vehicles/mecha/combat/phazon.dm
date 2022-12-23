@@ -21,7 +21,6 @@
 	)
 	phase_state = "phazon-phase"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_phazon
 	melee = 30
 	bullet = 30
@@ -40,7 +39,6 @@
 	name = "Reconfigure arm microtool arrays"
 	button_icon_state = "mech_damtype_brute"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_phazon
 	melee = 30
 	bullet = 30
@@ -73,7 +71,6 @@
 	name = "Toggle Phasing"
 	button_icon_state = "mech_phasing_off"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_phazon
 	melee = 30
 	bullet = 30

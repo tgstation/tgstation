@@ -100,7 +100,6 @@
 	inhand_icon_state = "g_suit"
 	armor_type = /datum/armor/civilian_hydroponics
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/civilian_hydroponics
 	bio = 50
 
@@ -121,7 +120,6 @@
 	inhand_icon_state = "janitor"
 	armor_type = /datum/armor/civilian_janitor
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/civilian_janitor
 	bio = 10
 

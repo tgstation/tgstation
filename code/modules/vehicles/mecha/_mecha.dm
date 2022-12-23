@@ -201,7 +201,6 @@
 	/// ref to screen object that displays in the middle of the UI
 	var/atom/movable/screen/map_view/ui_view
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sealed_mecha
 	melee = 20
 	bullet = 10

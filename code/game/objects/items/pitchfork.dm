@@ -22,7 +22,6 @@
 	armor_type = /datum/armor/item_pitchfork
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_pitchfork
 	fire = 100
 	acid = 30

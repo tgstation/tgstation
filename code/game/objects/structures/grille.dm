@@ -18,7 +18,6 @@
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_grille
 	melee = 50
 	bullet = 70

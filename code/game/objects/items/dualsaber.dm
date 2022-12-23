@@ -35,7 +35,6 @@
 	var/hacked = FALSE
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_dualsaber
 	fire = 100
 	acid = 70
@@ -193,7 +192,6 @@
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_dualsaber
 	fire = 100
 	acid = 70

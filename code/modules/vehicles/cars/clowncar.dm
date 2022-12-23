@@ -22,7 +22,6 @@
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
 	var/cannonmode = CLOWN_CANNON_INACTIVE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/car_clowncar
 	melee = 70
 	bullet = 40

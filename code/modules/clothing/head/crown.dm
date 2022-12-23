@@ -5,7 +5,6 @@
 	armor_type = /datum/armor/costume_crown
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/costume_crown
 	melee = 15
 	energy = 10

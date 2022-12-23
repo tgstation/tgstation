@@ -12,7 +12,6 @@
 	resistance_flags = NONE
 	armor_type = /datum/armor/gloves_bracer
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/gloves_bracer
 	melee = 15
 	bullet = 25

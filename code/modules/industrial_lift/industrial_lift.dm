@@ -67,7 +67,6 @@ GLOBAL_LIST_EMPTY(lifts)
 	/// A lazylist of REFs to all mobs which have a radial open currently
 	var/list/current_operators
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_industrial_lift
 	melee = 50
 	fire = 80
@@ -727,7 +726,6 @@ GLOBAL_LIST_EMPTY(lifts)
 	lift_id = DEBUG_LIFT_ID
 	radial_travel = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_industrial_lift
 	melee = 50
 	fire = 80
@@ -817,7 +815,6 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/tram/white
 	icon_state = "titanium_white"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/structure_industrial_lift
 	melee = 50
 	fire = 80

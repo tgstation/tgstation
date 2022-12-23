@@ -18,7 +18,6 @@
 	///Does the mask have an FOV?
 	var/has_fov = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mask_gas
 	bio = 100
 
@@ -107,7 +106,6 @@
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/gas_atmos
 	bio = 100
 	fire = 20
@@ -147,7 +145,6 @@
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/gas_welding
 	melee = 10
 	bio = 100

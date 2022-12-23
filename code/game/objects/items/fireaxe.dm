@@ -28,7 +28,6 @@
 	/// How much damage to do wielded
 	var/force_wielded = 24
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_fireaxe
 	fire = 100
 	acid = 30
@@ -75,7 +74,6 @@
 /*
  * Metal Hydrogen Axe
  */
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_fireaxe
 	fire = 100
 	acid = 30

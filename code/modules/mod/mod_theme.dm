@@ -159,7 +159,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_engineering
 	melee = 10
 	bullet = 5
@@ -220,7 +219,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_atmospheric
 	melee = 10
 	bullet = 5
@@ -285,7 +283,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_advanced
 	melee = 15
 	bullet = 5
@@ -387,7 +384,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_mining
 	melee = 15
 	bullet = 5
@@ -449,7 +445,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_loader
 	melee = 15
 	bullet = 5
@@ -542,7 +537,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_medical
 	melee = 5
 	bullet = 5
@@ -614,7 +608,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_rescue
 	melee = 10
 	bullet = 10
@@ -680,7 +673,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_research
 	melee = 20
 	bullet = 15
@@ -743,7 +735,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_security
 	melee = 15
 	bullet = 15
@@ -805,7 +796,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_safeguard
 	melee = 15
 	bullet = 15
@@ -873,7 +863,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_magnate
 	melee = 20
 	bullet = 15
@@ -933,7 +922,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_cosmohonk
 	melee = 5
 	bullet = 5
@@ -1026,7 +1014,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_syndicate
 	melee = 15
 	bullet = 20
@@ -1094,7 +1081,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_elite
 	melee = 35
 	bullet = 30
@@ -1162,7 +1148,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_infiltrator
 	melee = 50
 	bullet = 50
@@ -1225,7 +1210,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_enchanted
 	melee = 40
 	bullet = 40
@@ -1290,7 +1274,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_ninja
 	melee = 40
 	bullet = 30
@@ -1355,7 +1338,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_prototype
 	melee = 20
 	bullet = 5
@@ -1442,7 +1424,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_responsory
 	melee = 50
 	bullet = 40
@@ -1507,7 +1488,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_apocryphal
 	melee = 80
 	bullet = 80
@@ -1570,7 +1550,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_corporate
 	melee = 50
 	bullet = 40
@@ -1627,7 +1606,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_chrono
 	melee = 60
 	bullet = 60
@@ -1686,7 +1664,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_debug
 	melee = 50
 	bullet = 50
@@ -1741,7 +1718,6 @@
 		),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mod_theme_administrative
 	melee = 100
 	bullet = 100

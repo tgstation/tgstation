@@ -15,7 +15,6 @@
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_roman
 	bio = 10
 
@@ -43,7 +42,6 @@
 	icon_state = "clockwork_treads"
 	can_be_tied = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_roman
 	bio = 10
 

@@ -204,7 +204,6 @@ There appears to be a small amount of surface corrosion. It doesn't look like it
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/safe_caps_spare
 	melee = 100
 	bullet = 100

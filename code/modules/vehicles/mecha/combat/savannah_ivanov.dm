@@ -38,7 +38,6 @@
 	//no tax on flying, since the power cost is in the leap itself.
 	phasing_energy_drain = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_savannah_ivanov
 	melee = 45
 	bullet = 40
@@ -79,7 +78,6 @@
 	///skyfall builds up in charges every 2 seconds, when it reaches 5 charges the ability actually starts
 	var/skyfall_charge_level = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_savannah_ivanov
 	melee = 45
 	bullet = 40
@@ -255,7 +253,6 @@
 	var/rockets_left = 0
 	var/aiming_missile = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_savannah_ivanov
 	melee = 45
 	bullet = 40
@@ -375,7 +372,6 @@
 	///reference to mecha following
 	var/obj/vehicle/sealed/mecha/mecha
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_savannah_ivanov
 	melee = 45
 	bullet = 40

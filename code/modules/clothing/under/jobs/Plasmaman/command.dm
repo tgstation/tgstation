@@ -7,7 +7,6 @@
 	random_sensor = FALSE
 	armor_type = /datum/armor/plasmaman_captain
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plasmaman_captain
 	bio = 100
 	fire = 95
@@ -29,7 +28,6 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/security_head_of_security
 	melee = 10
 	bio = 100
@@ -44,7 +42,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/plasmaman_chief_engineer
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plasmaman_chief_engineer
 	bio = 100
 	fire = 95
@@ -57,7 +54,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/plasmaman_chief_medical_officer
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plasmaman_chief_medical_officer
 	bio = 100
 	fire = 95
@@ -70,7 +66,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/plasmaman_research_director
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/plasmaman_research_director
 	bio = 100
 	fire = 95

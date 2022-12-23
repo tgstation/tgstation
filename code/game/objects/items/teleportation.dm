@@ -125,7 +125,6 @@
 	*/
 	var/last_portal_location
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_hand_tele
 	bomb = 30
 	fire = 100
@@ -339,7 +338,6 @@
 	//How far the emergency teleport checks for a safe position
 	var/parallel_teleport_distance = 3
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_hand_tele
 	bomb = 30
 	fire = 100
@@ -514,7 +512,6 @@
 /obj/item/storage/box/syndie_kit/syndicate_teleporter
 	name = "syndicate teleporter kit"
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_hand_tele
 	bomb = 30
 	fire = 100

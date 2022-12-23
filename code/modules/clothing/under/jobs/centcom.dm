@@ -62,7 +62,6 @@
 	inhand_icon_state = "bl_suit"
 	armor_type = /datum/armor/centcom_military
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/centcom_military
 	melee = 10
 	bio = 10

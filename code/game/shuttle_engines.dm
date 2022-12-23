@@ -26,7 +26,6 @@
 	///The mobile ship we are connected to.
 	var/datum/weakref/connected_ship_ref
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/power_shuttle_engine
 	melee = 100
 	bullet = 10

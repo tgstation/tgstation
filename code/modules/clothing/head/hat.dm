@@ -11,7 +11,6 @@
 	armor_type = /datum/armor/hats_centhat
 	strip_delay = 80
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hats_centhat
 	melee = 30
 	bullet = 15
@@ -59,7 +58,6 @@
 	armor_type = /datum/armor/bio_hood_plague
 	flags_inv = NONE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/bio_hood_plague
 	bio = 100
 
@@ -101,7 +99,6 @@
 	armor_type = /datum/armor/head_cowboy
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/head_cowboy
 	melee = 5
 	bullet = 5
@@ -204,7 +201,6 @@
 	inhand_icon_state = "that"
 	armor_type = /datum/armor/hats_coordinator
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hats_coordinator
 	melee = 25
 	bullet = 15
@@ -235,7 +231,6 @@
 	armor_type = /datum/armor/hats_centcom_cap
 	strip_delay = (8 SECONDS)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hats_centcom_cap
 	melee = 30
 	bullet = 15

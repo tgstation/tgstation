@@ -25,7 +25,6 @@
 		)
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_explorer
 	melee = 30
 	bullet = 10
@@ -50,7 +49,6 @@
 	armor_type = /datum/armor/hooded_explorer
 	resistance_flags = FIRE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_explorer
 	melee = 30
 	bullet = 10
@@ -83,7 +81,6 @@
 	resistance_flags = FIRE_PROOF
 	has_fov = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/gas_explorer
 	melee = 10
 	bullet = 5
@@ -140,7 +137,6 @@
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 	body_parts_covered = CHEST|GROIN|ARMS
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cloak_goliath
 	melee = 35
 	bullet = 10
@@ -161,7 +157,6 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	transparent_protection = HIDEMASK
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cloakhood_goliath
 	melee = 35
 	bullet = 10
@@ -195,7 +190,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cloak_drake
 	melee = 65
 	bullet = 15
@@ -220,7 +214,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cloakhood_drake
 	melee = 65
 	bullet = 15
@@ -263,7 +256,6 @@
 	COOLDOWN_DECLARE(effect_cooldown)
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cloak_godslayer
 	melee = 50
 	bullet = 25
@@ -290,7 +282,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cloakhood_godslayer
 	melee = 50
 	bullet = 25

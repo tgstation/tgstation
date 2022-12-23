@@ -269,7 +269,6 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	material_flags = NONE
 	matter_amount = 12
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/sheet_plasteel
 	fire = 100
 	acid = 80
@@ -347,7 +346,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	walltype = /turf/closed/wall/mineral/wood
 	stairs_type = /obj/structure/stairs/wood
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mineral_wood
 	fire = 50
 
@@ -396,7 +394,6 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	material_type = /datum/material/bamboo
 	walltype = /turf/closed/wall/mineral/bamboo
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mineral_bamboo
 	fire = 50
 
@@ -461,7 +458,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 20)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mineral_bamboo
 	fire = 50
 
@@ -495,7 +491,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mineral_bamboo
 	fire = 50
 
@@ -597,7 +592,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	null, \
 ))
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mineral_bamboo
 	fire = 50
 
@@ -623,7 +617,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mineral_bamboo
 	fire = 50
 
@@ -688,7 +681,6 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	walltype = /turf/closed/wall/mineral/bronze
 	has_unique_girder = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mineral_bamboo
 	fire = 50
 
@@ -774,7 +766,6 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 /obj/item/stack/sheet/plastic/five
 	amount = 5
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mineral_bamboo
 	fire = 50
 
@@ -798,7 +789,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	grind_results = list(/datum/reagent/cellulose = 20)
 	material_type = /datum/material/paper
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mineral_bamboo
 	fire = 50
 

@@ -22,7 +22,6 @@
 	)
 	var/squeak = TRUE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/mecha_honker
 	melee = -20
 	fire = 100
@@ -61,7 +60,6 @@
 		MECHA_ARMOR = list(),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/honker_dark
 	melee = 40
 	bullet = 40

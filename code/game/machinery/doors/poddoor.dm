@@ -18,7 +18,6 @@
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_poddoor
 	melee = 50
 	bullet = 100
@@ -175,7 +174,6 @@
 	var/checkdir = 4 //door won't open if turf in this dir is `turftype`
 	var/turftype = /turf/open/space
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/door_poddoor
 	melee = 50
 	bullet = 100

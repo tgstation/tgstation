@@ -26,7 +26,6 @@
 	/// baton bash cooldown
 	COOLDOWN_DECLARE(baton_bash)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_shield
 	melee = 50
 	bullet = 50
@@ -111,7 +110,6 @@
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_shield
 	melee = 50
 	bullet = 50
@@ -146,7 +144,6 @@
 	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash = /obj/item/assembly/flash/handheld
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_shield
 	melee = 50
 	bullet = 50
@@ -272,7 +269,6 @@
 	/// Whether clumsy people can transform this without side effects.
 	var/can_clumsy_use = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_shield
 	melee = 50
 	bullet = 50
@@ -325,7 +321,6 @@
 	/// Whether the shield is extended and protecting the user..
 	var/extended = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_shield
 	melee = 50
 	bullet = 50

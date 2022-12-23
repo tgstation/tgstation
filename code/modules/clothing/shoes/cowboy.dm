@@ -7,7 +7,6 @@
 	var/max_occupants = 4
 	can_be_tied = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/shoes_cowboy
 	bio = 90
 
@@ -81,7 +80,6 @@
 	icon_state = "cowboy_fancy"
 	armor_type = /datum/armor/cowboy_fancy
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cowboy_fancy
 	bio = 95
 
@@ -91,7 +89,6 @@
 	icon_state = "lizardboots_green"
 	armor_type = /datum/armor/cowboy_lizard
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/cowboy_lizard
 	bio = 90
 	fire = 40

@@ -616,7 +616,6 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
 	armor_type = /datum/armor/gloves_gauntlets
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/gloves_gauntlets
 	melee = 15
 	bullet = 25
@@ -678,7 +677,6 @@
 		/obj/item/melee/cleaving_saw,
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_berserker
 	melee = 30
 	bullet = 30
@@ -718,7 +716,6 @@
 	/// Status of berserk
 	var/berserk_active = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_berserker
 	melee = 30
 	bullet = 30
@@ -811,7 +808,6 @@
 	custom_materials = null
 	var/datum/action/cooldown/scan/scan_ability
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_berserker
 	melee = 30
 	bullet = 30
@@ -862,7 +858,6 @@
 	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_berserker
 	melee = 30
 	bullet = 30
@@ -914,7 +909,6 @@
 	range_mid = 5
 	range_far = 15
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_berserker
 	melee = 30
 	bullet = 30
@@ -942,7 +936,6 @@
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_berserker
 	melee = 30
 	bullet = 30
@@ -1021,7 +1014,6 @@
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(shatter)),
 	)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/hooded_berserker
 	melee = 30
 	bullet = 30

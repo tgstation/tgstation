@@ -51,7 +51,6 @@
 	var/activation_sound = 'sound/items/welderactivate.ogg'
 	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_weldingtool
 	fire = 100
 	acid = 30
@@ -336,7 +335,6 @@
 	max_fuel = 40
 	custom_materials = list(/datum/material/glass=60)
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_weldingtool
 	fire = 100
 	acid = 30
@@ -354,7 +352,6 @@
 	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_weldingtool
 	fire = 100
 	acid = 30
@@ -374,7 +371,6 @@
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	change_icons = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_weldingtool
 	fire = 100
 	acid = 30
@@ -396,7 +392,6 @@
 	light_range = 0
 	change_icons = FALSE
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_weldingtool
 	fire = 100
 	acid = 30
@@ -429,7 +424,6 @@
 	var/last_gen = 0
 	var/nextrefueltick = 0
 
-/// Automatically generated armor datum, errors may exist
 /datum/armor/item_weldingtool
 	fire = 100
 	acid = 30
