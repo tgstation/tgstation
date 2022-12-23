@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
 	var/datum/armor/new_armor = new
 
 	var/all_keys = ARMOR_LIST_ALL()
-	if(multipliers[ARMOR_ALL])
+	if(ARMOR_ALL in multipliers)
 		var/mult_all = multipliers[ARMOR_ALL]
 		for(var/mod in all_keys)
 			new_armor.vars[mod] = vars[mod] * mult_all
@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
 	var/datum/armor/new_armor = new
 
 	var/all_keys = ARMOR_LIST_ALL()
-	if(values[ARMOR_ALL])
+	if(ARMOR_ALL in values)
 		var/value_all = values[ARMOR_ALL]
 		for(var/mod in all_keys)
 			new_armor.vars[mod] = value_all
