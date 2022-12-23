@@ -73,18 +73,18 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 
 	var/all_keys = ARMOR_LIST_ALL()
 	if(ARMOR_ALL in modifiers)
-		var/mod_all = modifiers[ARMOR_ALL]
-		if(!mod_all)
+		var/modifier_all = modifiers[ARMOR_ALL]
+		if(!modifier_all)
 			return src
 		for(var/mod in all_keys)
-			new_armor.vars[mod] = vars[mod] + mod_all
+			new_armor.vars[mod] = vars[mod] + modifier_all
 		return new_armor
 
-	for(var/mod in modifiers)
-		if(mod in all_keys)
-			new_armor.vars[mod] = vars[mod] + modifiers[mod]
+	for(var/modifier in modifiers)
+		if(modifier in all_keys)
+			new_armor.vars[modifier] = vars[modifier] + modifiers[modifier]
 		else
-			stack_trace("Attempt to call generate_new_with_modifiers with illegal modifier '[mod]'! ignoring it")
+			stack_trace("Attempt to call generate_new_with_modifiers with illegal modifier '[modifier]'! Ignoring it")
 	return new_armor
 
 /datum/armor/immune/generate_new_with_modifiers(list/modifiers)
@@ -96,18 +96,18 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 
 	var/all_keys = ARMOR_LIST_ALL()
 	if(ARMOR_ALL in multipliers)
-		var/mult_all = multipliers[ARMOR_ALL]
-		if(!mult_all)
+		var/multiplier_all = multipliers[ARMOR_ALL]
+		if(!multiplier_all)
 			return src
-		for(var/mod in all_keys)
-			new_armor.vars[mod] = vars[mod] * mult_all
+		for(var/multiplier in all_keys)
+			new_armor.vars[multiplier] = vars[multiplier] * multiplier_all
 		return new_armor
 
-	for(var/mod in multipliers)
-		if(mod in all_keys)
-			new_armor.vars[mod] = vars[mod] * multipliers[mod]
+	for(var/multiplier in multipliers)
+		if(multiplier in all_keys)
+			new_armor.vars[multiplier] = vars[multiplier] * multipliers[multiplier]
 		else
-			stack_trace("Attempt to call generate_new_with_multipliers with illegal modifier '[mod]'! ignoring it")
+			stack_trace("Attempt to call generate_new_with_multipliers with illegal multiplier '[multiplier]'! Ignoring it")
 	return new_armor
 
 /datum/armor/immune/generate_new_with_multipliers(list/multipliers)
@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 		if(value in all_keys)
 			new_armor.vars[value] = values[value]
 		else
-			stack_trace("Attempt to call generate_new_with_specific with illegal modifier '[value]'! ignoring it")
+			stack_trace("Attempt to call generate_new_with_specific with illegal value '[value]'! Ignoring it")
 	return new_armor
 
 /datum/armor/immune/generate_new_with_specific(list/values)
