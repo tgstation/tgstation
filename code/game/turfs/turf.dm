@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/overfloor_placed = FALSE
 	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
+	var/lattice_underneath = TRUE
 
 	// baseturfs can be either a list or a single turf type.
 	// In class definition like here it should always be a single type.

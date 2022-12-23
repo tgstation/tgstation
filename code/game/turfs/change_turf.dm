@@ -79,6 +79,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
 	var/old_always_lit = always_lit
+	var/old_lattice_underneath = lattice_underneath
 
 	var/old_bp = blueprint_data
 	blueprint_data = null
@@ -94,29 +95,29 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	//We do this here so anything that doesn't want to persist can clear itself
 	var/list/old_comp_lookup = comp_lookup?.Copy()
 	var/list/old_signal_procs = signal_procs?.Copy()
-	var/turf/W = new path(src)
+	var/turf/new_turf = new path(src)
 
 	// WARNING WARNING
 	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
 	// It's possible because turfs are fucked, and if you have one in a list and it's replaced with another one, the list ref points to the new turf
 	if(old_comp_lookup)
-		LAZYOR(W.comp_lookup, old_comp_lookup)
+		LAZYOR(new_turf.comp_lookup, old_comp_lookup)
 	if(old_signal_procs)
-		LAZYOR(W.signal_procs, old_signal_procs)
+		LAZYOR(new_turf.signal_procs, old_signal_procs)
 
 	for(var/datum/callback/callback as anything in post_change_callbacks)
-		callback.InvokeAsync(W)
+		callback.InvokeAsync(new_turf)
 
 	if(new_baseturfs)
-		W.baseturfs = baseturfs_string_list(new_baseturfs, W)
+		new_turf.baseturfs = baseturfs_string_list(new_baseturfs, new_turf)
 	else
-		W.baseturfs = baseturfs_string_list(old_baseturfs, W) //Just to be safe
+		new_turf.baseturfs = baseturfs_string_list(old_baseturfs, new_turf) //Just to be safe
 
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
-		W.AfterChange(flags, old_type)
+		new_turf.AfterChange(flags, old_type)
 
-	W.blueprint_data = old_bp
-	W.rcd_memory = old_rcd_memory
+	new_turf.blueprint_data = old_bp
+	new_turf.rcd_memory = old_rcd_memory
 
 	lighting_corner_NE = old_lighting_corner_NE
 	lighting_corner_SE = old_lighting_corner_SE
@@ -125,16 +126,18 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	dynamic_lumcount = old_dynamic_lumcount
 
-	if(W.always_lit)
+	lattice_underneath = old_lattice_underneath
+
+	if(new_turf.always_lit)
 		// We are guarenteed to have these overlays because of how generation works
 		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
-		W.add_overlay(overlay)
+		new_turf.add_overlay(overlay)
 	else if (old_always_lit)
 		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
-		W.cut_overlay(overlay)
+		new_turf.cut_overlay(overlay)
 
 	if(SSlighting.initialized)
-		W.lighting_object = old_lighting_object
+		new_turf.lighting_object = old_lighting_object
 
 		directional_opacity = old_directional_opacity
 		recalculate_directional_opacity()
@@ -147,14 +150,14 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
 	if(SSmapping.z_level_to_plane_offset[z])
-		var/area/thisarea = get_area(W)
+		var/area/thisarea = get_area(new_turf)
 		if(thisarea.lighting_effects)
-			W.add_overlay(thisarea.lighting_effects[SSmapping.z_level_to_plane_offset[z] + 1])
+			new_turf.add_overlay(thisarea.lighting_effects[SSmapping.z_level_to_plane_offset[z] + 1])
 
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
 
-	return W
+	return new_turf
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.
 	if ((flags & CHANGETURF_INHERIT_AIR) && ispath(path, /turf/open))
@@ -362,6 +365,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		T.update_visuals()
 		SSair.add_to_active(T)
 
-/turf/proc/ReplaceWithLattice()
-	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-	new /obj/structure/lattice(locate(x, y, z))
+/turf/proc/AttemptLatticeReplacement(amount = 2)
+	if(lattice_underneath)
+		var/turf/new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
+		if(!istype(new_turf, /turf/open/floor))
+			new /obj/structure/lattice(locate(x,y,z))
+	else
+		ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
