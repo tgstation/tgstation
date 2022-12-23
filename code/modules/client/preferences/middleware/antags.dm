@@ -16,7 +16,7 @@
 		selected_antags += serialize_antag_name(antag)
 
 	data["selected_antags"] = selected_antags
-	data["special_disable"] = special_disable
+	data["special_disable"] = preferences.special_disable
 
 	var/list/antag_bans = get_antag_bans()
 	if (antag_bans.len)
