@@ -12,7 +12,7 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/hooded/explorer
-	armor_type = /datum/armor/hooded_explorer
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 50, ACID = 50)
 	allowed = list(
 		/obj/item/flashlight,
 		/obj/item/gun/energy/recharge/kinetic_accelerator,
@@ -37,19 +37,8 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	armor_type = /datum/armor/hooded_explorer
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 50, ACID = 50, WOUND = 10)
 	resistance_flags = FIRE_PROOF
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/hooded_explorer
-	melee = 30
-	bullet = 10
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 50
-	acid = 50
-	wound = 10
 
 /obj/item/clothing/suit/hooded/explorer/Initialize(mapload)
 	. = ..()
@@ -69,20 +58,9 @@
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)
-	armor_type = /datum/armor/gas_explorer
+	armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 0, BIO = 50, FIRE = 20, ACID = 40, WOUND = 5)
 	resistance_flags = FIRE_PROOF
 	has_fov = FALSE
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/gas_explorer
-	melee = 10
-	bullet = 5
-	laser = 5
-	energy = 5
-	bio = 50
-	fire = 20
-	acid = 40
-	wound = 5
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
 	adjustmask(user)
@@ -105,17 +83,6 @@
 /obj/item/clothing/mask/gas/explorer/folded
 	w_class = WEIGHT_CLASS_SMALL
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/gas_explorer
-	melee = 10
-	bullet = 5
-	laser = 5
-	energy = 5
-	bio = 50
-	fire = 20
-	acid = 40
-	wound = 5
-
 /obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()
 	adjustmask()
@@ -137,7 +104,7 @@
 		/obj/item/spear,
 		/obj/item/tank/internals,
 		)
-	armor_type = /datum/armor/cloak_goliath
+	armor = list(MELEE = 35, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 60, ACID = 60) //a fair alternative to bone armor, requiring alternative materials and gaining a suit slot
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 	body_parts_covered = CHEST|GROIN|ARMS
 
@@ -147,7 +114,7 @@
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "golhood"
 	desc = "A protective & concealing hood."
-	armor_type = /datum/armor/cloakhood_goliath
+	armor = list(MELEE = 35, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 60, ACID = 60)
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	transparent_protection = HIDEMASK
@@ -166,7 +133,7 @@
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
 		)
-	armor_type = /datum/armor/cloak_drake
+	armor = list(MELEE = 65, BULLET = 15, LASER = 40, ENERGY = 40, BOMB = 70, BIO = 60, FIRE = 100, ACID = 100)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -182,7 +149,7 @@
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "dragon"
 	desc = "The skull of a dragon."
-	armor_type = /datum/armor/cloakhood_drake
+	armor = list(MELEE = 65, BULLET = 15, LASER = 40, ENERGY = 40, BOMB = 70, BIO = 60, FIRE = 100, ACID = 100)
 	clothing_flags = SNUG_FIT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
@@ -204,7 +171,7 @@
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
 		)
-	armor_type = /datum/armor/cloak_godslayer
+	armor = list(MELEE = 50, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 50, FIRE = 100, ACID = 100)
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/godslayer
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -228,7 +195,7 @@
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "godslayer"
 	desc = "The horns and skull of a wendigo, held together by the remaining icey energy of a demonic miner."
-	armor_type = /datum/armor/cloakhood_godslayer
+	armor = list(MELEE = 50, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 50, FIRE = 100, ACID = 100)
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
@@ -237,17 +204,6 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/cloakhood_godslayer
-	melee = 50
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 50
-	fire = 100
-	acid = 100
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/examine(mob/user)
 	. = ..()
