@@ -766,7 +766,7 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	reinf = TRUE
 	heat_resistance = 1600
-	// ARMOR TODO armor = list(MELEE = 90, BOMB = 50, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/reinforced_shuttle
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE
@@ -775,6 +775,13 @@
 	glass_amount = 2
 	receive_ricochet_chance_mod = 1.2
 	rad_insulation = RAD_MEDIUM_INSULATION
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/reinforced_shuttle
+	melee = 90
+	bomb = 50
+	fire = 80
+	acid = 100
 
 /obj/structure/window/reinforced/shuttle/spawnDebris(location)
 	. = list()

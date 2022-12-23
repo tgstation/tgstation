@@ -83,9 +83,13 @@
 	inhand_icon_state = "ygloves"
 	greyscale_colors = null
 	siemens_coefficient = 1 //Set to a default of 1, gets overridden in Initialize()
-	// ARMOR TODO armor = list(BIO = 25)
+	armor_type = /datum/armor/color_fyellow
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/cut
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/color_fyellow
+	bio = 25
 
 /obj/item/clothing/gloves/color/fyellow/Initialize(mapload)
 	. = ..()

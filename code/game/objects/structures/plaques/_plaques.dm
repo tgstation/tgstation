@@ -9,9 +9,15 @@
 	layer = SIGN_LAYER
 	custom_materials = list(/datum/material/gold = 2000)
 	max_integrity = 200 //Twice as durable as regular signs.
-	// ARMOR TODO armor = list(MELEE = 50, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/structure_plaque
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
 	var/engraved = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/structure_plaque
+	melee = 50
+	fire = 50
+	acid = 50
 
 /obj/item/plaque //The item version of the above.
 	icon = 'icons/obj/signs.dmi'
@@ -24,11 +30,17 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/gold = 2000)
 	max_integrity = 200
-	// ARMOR TODO armor = list(MELEE = 50, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/item_plaque
 	///This points the item to make the proper structure when placed on a wall.
 	var/plaque_path = /obj/structure/plaque
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 	var/engraved = FALSE
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/item_plaque
+	melee = 50
+	fire = 50
+	acid = 50
 
 /obj/structure/plaque/attack_hand(mob/user, list/modifiers)
 	. = ..()

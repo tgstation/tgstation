@@ -6,11 +6,20 @@
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
 	integrity_failure = 0.5
-	// ARMOR TODO armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 100, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/sign_barsign
 	buildable_sign = FALSE
 
 	var/panel_open = FALSE
 	var/datum/barsign/chosen_sign
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/sign_barsign
+	melee = 20
+	bullet = 20
+	laser = 20
+	energy = 100
+	fire = 50
+	acid = 50
 
 /obj/structure/sign/barsign/Initialize(mapload)
 	. = ..()

@@ -5,7 +5,7 @@
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
 	max_integrity = 100
-	// ARMOR TODO armor = list(MELEE = 10, BULLET = 10, LASER = 10, BOMB = 10, FIRE = 20, ACID = 30) //Wheelchairs aren't super tough yo
+	armor_type = /datum/armor/ridden_wheelchair
 	density = FALSE //Thought I couldn't fix this one easily, phew
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7
@@ -16,6 +16,15 @@
 	var/foldabletype = /obj/item/wheelchair
 	///Bell attached to the wheelchair, if we have one.
 	var/obj/structure/desk_bell/bell_attached
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/ridden_wheelchair
+	melee = 10
+	bullet = 10
+	laser = 10
+	bomb = 10
+	fire = 20
+	acid = 30
 
 /obj/vehicle/ridden/wheelchair/generate_actions()
 	. = ..()

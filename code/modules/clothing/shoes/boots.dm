@@ -3,10 +3,21 @@
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
-	// ARMOR TODO armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)
+	armor_type = /datum/armor/shoes_combat
 	strip_delay = 40
 	resistance_flags = NONE
 	lace_time = 12 SECONDS
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 90
+	fire = 70
+	acid = 50
 
 /obj/item/clothing/shoes/combat/Initialize(mapload)
 	. = ..()
@@ -17,7 +28,18 @@
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
 	clothing_flags = NOSLIP
-	// ARMOR TODO armor = list(MELEE = 40, BULLET = 30, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 90, ACID = 50)
+	armor_type = /datum/armor/combat_swat
+
+/// Automatically generated armor datum, errors may exist
+/datum/armor/combat_swat
+	melee = 40
+	bullet = 30
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 100
+	fire = 90
+	acid = 50
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
