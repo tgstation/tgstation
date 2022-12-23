@@ -378,16 +378,8 @@
 			data["has_scanner"] = !!(scan)
 			data["has_cache"] = !!(scan?.cache)
 
-			var/cooldown_number = (COOLDOWN_TIMELEFT(src, newscaster_cooldown))
-			var/active_newscaster_cooldown = COOLDOWN_FINISHED(src, newscaster_cooldown)
-			data["active_newscaster_cooldown"] = active_newscaster_cooldown
-			var/tooltip_message = ""
-			if(active_newscaster_cooldown)
-				tooltip_message = "Upload your book to the newscaster's book club channel."
-			else
-				tooltip_message = "Please wait [DisplayTimeText(cooldown_number)] before uploading your book."
-
-			data["upload_tooltip_message"] = tooltip_message
+			data["cooldown_string"] = "[DisplayTimeText(COOLDOWN_TIMELEFT(src, newscaster_cooldown))]"
+			data["active_newscaster_cooldown"] = COOLDOWN_FINISHED(src, newscaster_cooldown)
 
 			if(scan?.cache)
 				data["cache_title"] = scan.cache.get_title()

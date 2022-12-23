@@ -490,7 +490,7 @@ export const Upload = (props, context) => {
     can_db_request,
     has_cache,
     has_scanner,
-    upload_tooltip_message,
+    cooldown_string,
   } = data;
   const [uploadToDB, setUploadToDB] = useLocalState(context, 'UploadDB', false);
   if (!has_scanner) {
@@ -575,7 +575,13 @@ export const Upload = (props, context) => {
               <Button
                 disabled={!active_newscaster_cooldown}
                 fluid
-                tooltip={upload_tooltip_message}
+                tooltip={
+                  active_newscaster_cooldown
+                    ? "Send your book to the station's newscaster's channel."
+                    : 'Please wait ' +
+                    cooldown_string +
+                    ' before sending your book to the newscaster!'
+                }
                 tooltipPosition="top"
                 icon="newspaper"
                 content="Newscaster"
