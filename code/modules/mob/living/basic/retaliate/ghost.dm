@@ -5,7 +5,7 @@
 	icon_state = "ghost"
 	icon_living = "ghost"
 	mob_biotypes = MOB_SPIRIT
-	speak_emote = list("wails","weeps")
+	speak_emote = list("wails", "weeps")
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	combat_mode = TRUE
@@ -68,14 +68,14 @@
 			ghost_facial_hairstyle = random_facial_hairstyle()
 			ghost_facial_hair_color = ghost_hair_color
 
-	if(ghost_hairstyle != null)
+	if(!isnull(ghost_hairstyle))
 		var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[ghost_hairstyle] //We use the hairstyle name to get the sprite accessory, which we copy the icon_state from.
 		ghost_hair = mutable_appearance('icons/mob/species/human/human_face.dmi', "[hair_style.icon_state]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
 		add_overlay(ghost_hair)
 
-	if(ghost_facial_hairstyle != null)
+	if(!isnull(ghost_facial_hairstyle))
 		var/datum/sprite_accessory/facial_hair_style = GLOB.facial_hairstyles_list[ghost_facial_hairstyle]
 		ghost_facial_hair = mutable_appearance('icons/mob/species/human/human_face.dmi', "[facial_hair_style.icon_state]", -HAIR_LAYER)
 		ghost_facial_hair.alpha = 200
