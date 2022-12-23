@@ -1,19 +1,21 @@
+/// Assosciative list of type -> armor. Used to ensure we always hold a reference to default armor datums
 GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 
 /proc/generate_armor_type_cache()
-	. = list()
+	var/list/armor_cache = list()
 	for(var/datum/armor/armor_type as anything in subtypesof(/datum/armor))
 		armor_type = new armor_type
-		.[armor_type.type] = armor_type
+		armor_cache[armor_type.type] = armor_type
 		armor_type.GenerateTag()
+	return armor_cache
 
 /**
  * Gets an armor type datum using the given type by formatting it into the expected datum tag
  */
 /proc/get_armor_by_type(armor_type)
-	. = locate(replacetext("[armor_type]", "/", "-"))
-	if(.)
-		return .
+	var/armor = locate(replacetext("[armor_type]", "/", "-"))
+	if(armor)
+		return armor
 	if(armor_type == /datum/armor)
 		CRASH("Attempted to get the base armor type, you probably meant to use /datum/armor/none")
 	CRASH("Attempted to get an armor type that did not exist! '[armor_type]'")
@@ -79,10 +81,10 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 		return new_armor
 
 	for(var/mod in modifiers)
-		if(!(mod in all_keys)) // Did you know that the false block evaluates faster than the true block?
-			stack_trace("Attempt to call generate_new_with_modifiers with illegal modifier '[mod]'! ignoring it")
-		else
+		if(mod in all_keys)
 			new_armor.vars[mod] = vars[mod] + modifiers[mod]
+		else
+			stack_trace("Attempt to call generate_new_with_modifiers with illegal modifier '[mod]'! ignoring it")
 	return new_armor
 
 /datum/armor/immune/generate_new_with_modifiers(list/modifiers)
@@ -102,10 +104,10 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 		return new_armor
 
 	for(var/mod in multipliers)
-		if(!(mod in all_keys)) // Did you know that the false block evaluates faster than the true block?
-			stack_trace("Attempt to call generate_new_with_modifiers with illegal modifier '[mod]'! ignoring it")
-		else
+		if(mod in all_keys)
 			new_armor.vars[mod] = vars[mod] * multipliers[mod]
+		else
+			stack_trace("Attempt to call generate_new_with_multipliers with illegal modifier '[mod]'! ignoring it")
 	return new_armor
 
 /datum/armor/immune/generate_new_with_multipliers(list/multipliers)
@@ -125,10 +127,10 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 		return new_armor
 
 	for(var/value in values)
-		if(!(value in all_keys))
-			stack_trace("Attempt to call generate_new_with_modifiers with illegal modifier '[value]'! ignoring it")
-		else
+		if(value in all_keys)
 			new_armor.vars[value] = values[value]
+		else
+			stack_trace("Attempt to call generate_new_with_specific with illegal modifier '[value]'! ignoring it")
 	return new_armor
 
 /datum/armor/immune/generate_new_with_specific(list/values)
@@ -146,17 +148,19 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 
 /// Converts all the ratings of the armor into a list, optionally inversed
 /datum/armor/proc/get_rating_list(inverse = FALSE)
-	. = list()
+	var/ratings = list()
 	for(var/rating in ARMOR_LIST_ALL())
 		var/value = vars[rating]
 		if(inverse)
 			value *= -1
-		.[rating] = value
+		ratings[rating] = value
+	return ratings
 
 /datum/armor/immune/get_rating_list(inverse)
-	. = ..()
-	for(var/rating in .)
-		.[rating] = 100
+	var/ratings = ..() // get all ratings
+	for(var/rating in ratings)
+		ratings[rating] = 100 // and set them to 100
+	return ratings
 
 /// Returns a new armor datum with the given armor added onto this one
 /datum/armor/proc/add_other_armor(datum/armor/other)
