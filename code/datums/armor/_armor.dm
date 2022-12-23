@@ -50,8 +50,17 @@ GLOBAL_LIST_INIT(armor_by_type, __generate_armor_cache())
 	..()
 	tag = replacetext("[type]", "/", "-")
 
-/datum/armor/can_vv_get(var_name)
-	return FALSE // Modifying an atoms armor is done via a VV HK
+/datum/armor/vv_edit_var(var_name, var_value)
+	return FALSE
+
+/datum/armor/can_vv_mark()
+	return FALSE
+
+/datum/armor/vv_get_dropdown()
+	return list("", "MUST MODIFY ARMOR VALUES ON THE PARENT ATOM")
+
+/datum/armor/CanProcCall(procname)
+	return FALSE
 
 /// Generate a brand new armor datum with the modifiers given, if ARMOR_ALL is specified only that modifier is used
 /datum/armor/proc/generate_new_with_modifiers(list/modifiers)
