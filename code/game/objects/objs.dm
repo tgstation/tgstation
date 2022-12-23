@@ -222,7 +222,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	VV_DROPDOWN_OPTION("", "---")
 	VV_DROPDOWN_OPTION(VV_HK_MASS_DEL_TYPE, "Delete all of type")
 	VV_DROPDOWN_OPTION(VV_HK_OSAY, "Object Say")
-	VV_DROPDOWN_OPTION(VV_HK_ARMOR_MOD, "Modify armor values")
 
 /obj/vv_do_topic(list/href_list)
 	if(!(. = ..()))
@@ -230,34 +229,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(href_list[VV_HK_OSAY])
 		if(check_rights(R_FUN, FALSE))
 			usr.client.object_say(src)
-	if(href_list[VV_HK_ARMOR_MOD])
-		var/list/pickerlist = list()
-		var/list/armorlist = get_armor().get_rating_list()
-
-		for (var/i in armorlist)
-			pickerlist += list(list("value" = armorlist[i], "name" = i))
-
-		var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [src]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
-
-		if (islist(result))
-			if (result["button"] != 2) // If the user pressed the cancel button
-				// text2num conveniently returns a null on invalid values
-				set_armor(get_armor().generate_new_with_specific(list(
-					MELEE = text2num(result["values"][MELEE]),
-			        BULLET = text2num(result["values"][BULLET]),
-			        LASER = text2num(result["values"][LASER]),
-			        ENERGY = text2num(result["values"][ENERGY]),
-			        BOMB = text2num(result["values"][BOMB]),
-			        BIO = text2num(result["values"][BIO]),
-			        FIRE = text2num(result["values"][FIRE]),
-			        ACID = text2num(result["values"][ACID]),
-					)))
-				var/message = "[key_name(usr)] modified the armor on [src] ([type]) to: "
-				for(var/armor_key in ARMOR_LIST_ALL())
-					message += "[armor_key]=[get_armor_rating(armor_key)],"
-				message = copytext(message, 1, -1)
-				log_admin(span_notice(message))
-				message_admins(span_notice(message))
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))
