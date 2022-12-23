@@ -141,3 +141,8 @@
 /obj/structure/sign/plaques/kiddie/gameoflife
 	name = "\improper Conway's The Game Of Life plaque"
 	desc = "A plaque detailing the historical significance of The Game Of Life in the field of computer science, and that the mural underfoot is a representation of the game in action."
+
+/obj/structure/sign/plaques/tram
+	name = "\improper tram information plate"
+	desc = "A plate showing details from the manufacturer of this SkyyTram Mk III, serial number XC37587TG2022. We are not responsible for any injuries or fatalites caused by usage of the tram."
+	icon_state = "commission_tram"

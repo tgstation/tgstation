@@ -36805,6 +36805,7 @@
 "njs" = (
 /obj/effect/landmark/tram/middle_part,
 /obj/structure/industrial_lift/tram,
+/obj/structure/sign/plaques/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "njt" = (
