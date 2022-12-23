@@ -11,43 +11,27 @@
 /mob/camera/blob/proc/place_blob_core(placement_override = BLOB_NORMAL_PLACEMENT, pop_override = FALSE)
 	if(placed && placement_override != BLOB_FORCE_PLACEMENT)
 		return TRUE
+
 	if(placement_override == BLOB_NORMAL_PLACEMENT)
-		if(!pop_override)
-			for(var/mob/living/M in range(7, src))
-				if(ROLE_BLOB in M.faction)
-					continue
-				if(M.client)
-					to_chat(src, span_warning("There is someone too close to place your blob core!"))
-					return FALSE
-			for(var/mob/living/M in view(13, src))
-				if(ROLE_BLOB in M.faction)
-					continue
-				if(M.client)
-					to_chat(src, span_warning("Someone could see your blob core from here!"))
-					return FALSE
-		var/turf/T = get_turf(src)
-		if(T.density)
+		if(!pop_override && !check_core_visibility())
+			return FALSE
+		var/turf/placement = get_turf(src)
+		if(placement.density)
 			to_chat(src, span_warning("This spot is too dense to place a blob core on!"))
 			return FALSE
-		if(!is_valid_turf(T))
+		if(!is_valid_turf(placement))
 			to_chat(src, span_warning("You cannot place your core here!"))
 			return FALSE
-		for(var/obj/O in T)
-			if(istype(O, /obj/structure/blob))
-				if(istype(O, /obj/structure/blob/normal))
-					qdel(O)
-				else
-					to_chat(src, span_warning("There is already a blob here!"))
-					return FALSE
-			else if(O.density)
-				to_chat(src, span_warning("This spot is too dense to place a blob core on!"))
-				return FALSE
+		if(!check_objects_tile(placement))
+			return FALSE
 		if(!pop_override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
 			to_chat(src, span_warning("It is too early to place your blob core!"))
 			return FALSE
-	else if(placement_override == BLOB_RANDOM_PLACEMENT)
-		var/turf/T = pick(GLOB.blobstart)
-		forceMove(T) //got overrided? you're somewhere random, motherfucker
+	else
+		if(placement_override == BLOB_RANDOM_PLACEMENT)
+			var/turf/force_tile = pick(GLOB.blobstart)
+			forceMove(force_tile) //got overrided? you're somewhere random, motherfucker
+
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
@@ -56,11 +40,49 @@
 		blobs_legit += src
 		blob_core = core
 		core.update_appearance()
+
 	update_health_hud()
 	placed = TRUE
 	announcement_time = world.time + OVERMIND_ANNOUNCEMENT_MAX_TIME
+
 	return TRUE
 
+/** Checks proximity for mobs */
+/mob/camera/blob/proc/check_core_visibility()
+	for(var/mob/living/player in range(7, src))
+		if(ROLE_BLOB in player.faction)
+			continue
+		if(player.client)
+			to_chat(src, span_warning("There is someone too close to place your blob core!"))
+			return FALSE
+
+	for(var/mob/living/player in view(13, src))
+		if(ROLE_BLOB in player.faction)
+			continue
+		if(player.client)
+			to_chat(src, span_warning("Someone could see your blob core from here!"))
+			return FALSE
+
+	return TRUE
+
+
+/** Checks for previous blobs or denose objects on the tile. */
+/mob/camera/blob/proc/check_objects_tile(turf/placement)
+	for(var/obj/object in placement)
+		if(istype(object, /obj/structure/blob))
+			if(istype(object, /obj/structure/blob/normal))
+				qdel(object)
+			else
+				to_chat(src, span_warning("There is already a blob here!"))
+				return FALSE
+		else
+			if(object.density)
+				to_chat(src, span_warning("This spot is too dense to place a blob core on!"))
+				return FALSE
+
+	return TRUE
+
+/** Moves the core elsewhere. */
 /mob/camera/blob/proc/transport_core()
 	if(blob_core)
 		forceMove(blob_core.drop_location())
@@ -221,22 +243,30 @@
 	B.forceMove(old_turf)
 	B.setDir(olddir)
 
-/mob/camera/blob/proc/remove_blob(turf/T)
-	var/obj/structure/blob/B = locate() in T
-	if(!B)
+/** Searches the tile for a blob and removes it. */
+/mob/camera/blob/proc/remove_blob(turf/tile)
+	var/obj/structure/blob/blob = locate() in tile
+
+	if(!blob)
 		to_chat(src, span_warning("There is no blob there!"))
-		return
-	if(B.point_return < 0)
+		return FALSE
+
+	if(blob.point_return < 0)
 		to_chat(src, span_warning("Unable to remove this blob."))
-		return
-	if(max_blob_points < B.point_return + blob_points)
+		return FALSE
+
+	if(max_blob_points < blob.point_return + blob_points)
 		to_chat(src, span_warning("You have too many resources to remove this blob!"))
-		return
-	if(B.point_return)
-		add_points(B.point_return)
-		to_chat(src, span_notice("Gained [B.point_return] resources from removing \the [B]."))
-		B.balloon_alert(src, "+[B.point_return] resource\s")
-	qdel(B)
+		return FALSE
+
+	if(blob.point_return)
+		add_points(blob.point_return)
+		to_chat(src, span_notice("Gained [blob.point_return] resources from removing \the [blob]."))
+		blob.balloon_alert(src, "+[blob.point_return] resource\s")
+
+	qdel(blob)
+
+	return TRUE
 
 /mob/camera/blob/proc/expand_blob(turf/T)
 	if(world.time < last_attack)

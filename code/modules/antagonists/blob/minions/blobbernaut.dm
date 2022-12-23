@@ -42,9 +42,12 @@
 	if(!..())
 		return
 	var/list/blobs_in_area = range(2, src)
+
 	if(independent)
-		return // strong independent blobbernaut that don't need no blob
+		return FALSE // strong independent blobbernaut that don't need no blob
+
 	var/damagesources = 0
+
 	if(!(locate(/obj/structure/blob) in blobs_in_area))
 		damagesources++
 
@@ -53,26 +56,30 @@
 	else
 		if(locate(/obj/structure/blob/special/core) in blobs_in_area)
 			adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_CORE * delta_time)
-			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
+			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
-				H.color = overmind.blobstrain.complementary_color
+				heal_effect.color = overmind.blobstrain.complementary_color
 			else
-				H.color = "#000000"
+				heal_effect.color = "#000000"
 		if(locate(/obj/structure/blob/special/node) in blobs_in_area)
 			adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_NODE * delta_time)
-			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
+			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
 			if(overmind)
-				H.color = overmind.blobstrain.complementary_color
+				heal_effect.color = overmind.blobstrain.complementary_color
 			else
-				H.color = "#000000"
+				heal_effect.color = "#000000"
 
-	if(damagesources)
-		adjustHealth(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damagesources * delta_time) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
-		var/image/I = new('icons/mob/nonhuman-player/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
-		I.appearance_flags = RESET_COLOR
-		if(overmind)
-			I.color = overmind.blobstrain.complementary_color
-		flick_overlay_view(I, 8)
+	if(!damagesources)
+		return FALSE
+
+	adjustHealth(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damagesources * delta_time) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+	var/image/image = new('icons/mob/nonhuman-player/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
+	image.appearance_flags = RESET_COLOR
+
+	if(overmind)
+		image.color = overmind.blobstrain.complementary_color
+
+	flick_overlay_view(I, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()

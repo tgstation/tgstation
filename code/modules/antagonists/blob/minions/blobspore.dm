@@ -32,7 +32,7 @@
 	/// Size of cloud produced from a dying spore
 	var/death_cloud_size = 1
 	/// The attached person
-	var/mob/living/carbon/human/oldguy
+	var/mob/living/carbon/human/corpse
 	/// If this is attached to a person
 	var/is_zombie = FALSE
 	/// Whether or not this is a fragile spore from Distributed Neurons
@@ -42,12 +42,14 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 
-	if(istype(linked_node))
-		factory = linked_node
-		factory.spores += src
-		if(linked_node.overmind && istype(linked_node.overmind.blobstrain, /datum/blobstrain/reagent/distributed_neurons) && !istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak))
-			notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
-		add_cell_sample()
+	if(!istype(linked_node))
+		return
+
+	factory = linked_node
+	factory.spores += src
+	if(linked_node.overmind && istype(linked_node.overmind.blobstrain, /datum/blobstrain/reagent/distributed_neurons) && !istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak))
+		notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
+	add_cell_sample()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!is_zombie && isturf(loc))
@@ -91,9 +93,9 @@
 	if(factory)
 		factory.spores -= src
 		factory = null
-	if(oldguy)
-		oldguy.forceMove(loc)
-		oldguy = null
+	if(corpse)
+		corpse.forceMove(loc)
+		corpse = null
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
@@ -101,13 +103,15 @@
 		add_atom_colour(overmind.blobstrain.complementary_color, FIXED_COLOUR_PRIORITY)
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
-	if(is_zombie)
-		copy_overlays(oldguy, TRUE)
-		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head")
-		if(overmind)
-			blob_head_overlay.color = overmind.blobstrain.complementary_color
-		color = initial(color)//looks better.
-		add_overlay(blob_head_overlay)
+	if(!is_zombie)
+		return FALSE
+
+	copy_overlays(corpse, TRUE)
+	var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head")
+	if(overmind)
+		blob_head_overlay.color = overmind.blobstrain.complementary_color
+	color = initial(color) // looks better.
+	add_overlay(blob_head_overlay)
 
 /mob/living/simple_animal/hostile/blob/blobspore/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -138,7 +142,7 @@
 		to_chat(user, span_warning("Someone else already took this spore!"))
 		return
 	key = user.key
-	var/datum/antagonist/blobspore/spore = new()
+	var/datum/antagonist/blobspore/spore = new
 	mind.add_antag_datum(spore)
 	log_message("took control of [name].", LOG_GAME)
 
@@ -147,7 +151,7 @@
 	is_zombie = 1
 	if(target.wear_suit)
 		var/obj/item/clothing/suit/armor/armorRef = target.wear_suit
-		maxHealth += armorRef.armor.melee //That zombie's got armor, I want armor!
+		maxHealth += armorRef.armor.melee // That zombie's got armor, I want armor!
 	maxHealth += 40
 	health = maxHealth
 	name = "blob zombie"
@@ -155,7 +159,7 @@
 	mob_biotypes |= MOB_HUMANOID
 	melee_damage_lower += 8
 	melee_damage_upper += 11
-	obj_damage = 20 //now that it has a corpse to puppet, it can properly attack structures
+	obj_damage = 20 // now that it has a corpse to puppet, it can properly attack structures
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	movement_type = GROUND
 	death_cloud_size = 0
@@ -164,7 +168,7 @@
 	target.hairstyle = null
 	target.update_body_parts()
 	target.forceMove(src)
-	oldguy = target
+	corpse = target
 	update_icons()
 	visible_message(span_warning("The corpse of [target.name] suddenly rises!"))
 	if(!key)
