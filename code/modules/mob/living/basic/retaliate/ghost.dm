@@ -39,11 +39,10 @@
 	var/mutable_appearance/ghost_facial_hair
 	///Will this ghost spawn with a randomly generated name and hair?
 	var/random_identity = TRUE
-	///What will this ghost drop on death
-	var/list/death_loot = list(/obj/item/ectoplasm)
 
 /mob/living/basic/ghost/Initialize(mapload)
 	. = ..()
+	var/static/list/death_loot = list(/obj/item/ectoplasm)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/ai_retaliate)
