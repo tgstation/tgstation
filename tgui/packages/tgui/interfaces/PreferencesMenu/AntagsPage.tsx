@@ -116,7 +116,6 @@ const AntagSelection = (
               Temporarily disable all antagonists
             </Button>
           )}
-          <Button color=""></Button>
         </>
       }>
       <Flex className={className} align="flex-end" wrap>
