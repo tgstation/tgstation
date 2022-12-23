@@ -153,6 +153,18 @@
 	for(var/iterator in 1 to 5)
 		new /obj/item/stack/spacecash/c1000(src)
 
+/// A briefcase that contains various sought-after spoils
+/obj/item/storage/secure/briefcase/riches
+
+/obj/item/storage/secure/briefcase/riches/PopulateContents()
+	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	new /obj/item/suppressor(src)
+	new /obj/item/melee/baton/telescopic(src)
+	new /obj/item/clothing/mask/balaclava(src)
+	new /obj/item/bodybag(src)
+	new /obj/item/soap/nanotrasen(src)
+
 ///Secure Safe
 /obj/item/storage/secure/safe
 	name = "secure safe"
