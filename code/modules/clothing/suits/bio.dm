@@ -7,7 +7,7 @@
 	icon_state = "bio"
 	inhand_icon_state = "bio_hood"
 	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
-	armor_type = /datum/armor/head_bio_hood
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 30, ACID = 100)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
@@ -24,7 +24,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 0.5
 	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/flashlight/pen, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/cup/beaker, /obj/item/gun/syringe)
-	armor_type = /datum/armor/suit_bio_suit
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 30, ACID = 100)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	strip_delay = 70
 	equip_delay_other = 70
@@ -46,23 +46,12 @@
 
 //Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
-	armor_type = /datum/armor/bio_hood_security
+	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 100, FIRE = 30, ACID = 100)
 	icon_state = "bio_security"
 
 /obj/item/clothing/suit/bio_suit/security
-	armor_type = /datum/armor/bio_suit_security
+	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 100, FIRE = 30, ACID = 100)
 	icon_state = "bio_security"
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/bio_suit_security
-	melee = 25
-	bullet = 15
-	laser = 25
-	energy = 35
-	bomb = 25
-	bio = 100
-	fire = 30
-	acid = 100
 
 /obj/item/clothing/suit/bio_suit/security/Initialize(mapload)
 	. = ..()
@@ -74,17 +63,6 @@
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/bio_suit_security
-	melee = 25
-	bullet = 15
-	laser = 25
-	energy = 35
-	bomb = 25
-	bio = 100
-	fire = 30
-	acid = 100
 
 /obj/item/clothing/suit/bio_suit/janitor/Initialize(mapload)
 	. = ..()
@@ -104,17 +82,6 @@
 /obj/item/clothing/suit/bio_suit/cmo
 	icon_state = "bio_cmo"
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/bio_suit_security
-	melee = 25
-	bullet = 15
-	laser = 25
-	energy = 35
-	bomb = 25
-	bio = 100
-	fire = 30
-	acid = 100
-
 /obj/item/clothing/suit/bio_suit/cmo/Initialize(mapload)
 	. = ..()
 	allowed += list(/obj/item/melee/baton/telescopic)
@@ -127,17 +94,6 @@
 	inhand_icon_state = "bio_suit"
 	strip_delay = 40
 	equip_delay_other = 20
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/bio_suit_security
-	melee = 25
-	bullet = 15
-	laser = 25
-	energy = 35
-	bomb = 25
-	bio = 100
-	fire = 30
-	acid = 100
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
 	. = ..()

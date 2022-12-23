@@ -31,7 +31,7 @@
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/costume/pirate/armored
-	armor_type = /datum/armor/pirate_armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
 	strip_delay = 40
 	equip_delay_other = 20
 	species_exception = null
@@ -43,7 +43,7 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/pirate/armored
-	armor_type = /datum/armor/pirate_armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
 	strip_delay = 40
 	equip_delay_other = 20
 	species_exception = null
@@ -65,7 +65,7 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	armor_type = /datum/armor/costume_justice
+	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 
 /obj/item/clothing/suit/costume/judgerobe
 	name = "judge's robe"
@@ -147,16 +147,6 @@
 	toggle_noun = "wings"
 	body_parts_covered = ARMS|CHEST
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/costume_justice
-	melee = 35
-	bullet = 30
-	laser = 30
-	energy = 40
-	bomb = 25
-	fire = 50
-	acid = 50
-
 /obj/item/clothing/suit/toggle/owlwings/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_vest_allowed
@@ -175,16 +165,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT
 	dog_fashion = /datum/dog_fashion/back
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/costume_justice
-	melee = 35
-	bullet = 30
-	laser = 30
-	energy = 40
-	bomb = 25
-	fire = 50
-	acid = 50
 
 /obj/item/clothing/suit/costume/cardborg/equipped(mob/living/user, slot)
 	..()
@@ -238,16 +218,6 @@
 	icon_state = "ponchoshame"
 	inhand_icon_state = null
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/costume_justice
-	melee = 35
-	bullet = 30
-	laser = 30
-	energy = 40
-	bomb = 25
-	fire = 50
-	acid = 50
-
 /obj/item/clothing/suit/costume/poncho/ponchoshame/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
@@ -284,16 +254,6 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/costume_justice
-	melee = 35
-	bullet = 30
-	laser = 30
-	energy = 40
-	bomb = 25
-	fire = 50
-	acid = 50
-
 /obj/item/clothing/head/hooded/carp_hood/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if (slot & ITEM_SLOT_HEAD)
@@ -309,7 +269,7 @@
 	desc = "A slimming piece of dubious space carp technology, you suspect it won't stand up to hand-to-hand blows."
 	icon_state = "carp_suit"
 	inhand_icon_state = "space_suit_syndicate"
-	armor_type = /datum/armor/carp_costume_spaceproof
+	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy whimpy whoo
 	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/rifle/boltaction/harpoon) //I'm giving you a hint here
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -325,7 +285,7 @@
 	name = "carp helmet"
 	desc = "Spaceworthy and it looks like a space carp's head, smells like one too."
 	icon_state = "carp_helm"
-	armor_type = /datum/armor/carp_hood_spaceproof
+	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy as a space carp
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR //facial hair will clip with the helm, this'll need a dynamic_fhair_suffix at some point.
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -336,13 +296,6 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/carp_hood_spaceproof
-	melee = -20
-	bio = 100
-	fire = 60
-	acid = 75
-
 /obj/item/clothing/head/hooded/carp_hood/spaceproof/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
@@ -351,13 +304,6 @@
 	name = "battered carp space suit"
 	desc = "It's covered in bite marks and scratches, yet seems to be still perfectly functional."
 	slowdown = 1
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/carp_hood_spaceproof
-	melee = -20
-	bio = 100
-	fire = 60
-	acid = 75
 
 /obj/item/clothing/suit/hooded/ian_costume //It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
@@ -384,13 +330,6 @@
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
-/// Automatically generated armor datum, errors may exist
-/datum/armor/carp_hood_spaceproof
-	melee = -20
-	bio = 100
-	fire = 60
-	acid = 75
-
 /obj/item/clothing/suit/hooded/bee_costume // It's Hip!
 	name = "bee costume"
 	desc = "Bee the true Queen!"
@@ -411,13 +350,6 @@
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/carp_hood_spaceproof
-	melee = -20
-	bio = 100
-	fire = 60
-	acid = 75
 
 /obj/item/clothing/suit/hooded/bloated_human //OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
@@ -522,7 +454,7 @@
 	name = "bronze suit"
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
 	icon_state = "clockwork_cuirass_old"
-	armor_type = /datum/armor/costume_bronze
+	armor = list(MELEE = 5, BULLET = 0, LASER = -5, ENERGY = -15, BOMB = 10, BIO = 0, FIRE = 20, ACID = 20)
 
 /obj/item/clothing/suit/hooded/mysticrobe
 	name = "mystic's robe"
@@ -553,7 +485,7 @@
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = null
-	armor_type = /datum/armor/suit_coordinator
+	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 
 /obj/item/clothing/suit/costume/hawaiian
 	name = "hawaiian overshirt"

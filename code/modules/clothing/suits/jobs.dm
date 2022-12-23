@@ -27,7 +27,7 @@
 		/obj/item/storage/bag/plants,
 	)
 	species_exception = list(/datum/species/golem)
-	armor_type = /datum/armor/suit_apron
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/apron/waders
 	name = "horticultural waders"
@@ -66,7 +66,7 @@
 	inhand_icon_state = "chef"
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
-	armor_type = /datum/armor/toggle_chef
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/kitchen,
@@ -98,17 +98,9 @@
 	inhand_icon_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	armor_type = /datum/armor/jacket_det_suit
+	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/jacket_det_suit
-	melee = 25
-	bullet = 10
-	laser = 25
-	energy = 35
-	acid = 45
 
 /obj/item/clothing/suit/jacket/det_suit/Initialize(mapload)
 	. = ..()
@@ -161,14 +153,6 @@
 	species_exception = list(/datum/species/golem)
 
 // Lemom todo: and here
-/// Automatically generated armor datum, errors may exist
-/datum/armor/jacket_det_suit
-	melee = 25
-	bullet = 10
-	laser = 25
-	energy = 35
-	acid = 45
-
 /obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
@@ -293,7 +277,7 @@
 		/obj/item/storage/bag/books,
 		/obj/item/tank/internals,
 	)
-	armor_type = /datum/armor/jacket_curator
+	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
 
@@ -324,14 +308,8 @@
 	name = "research director's coat"
 	desc = "A mix between a labcoat and just a regular coat. It's made out of a special anti-bacterial, anti-acidic, and anti-biohazardous synthetic fabric."
 	icon_state = "labcoat_rd"
-	armor_type = /datum/armor/jacket_research_director
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 75, FIRE = 75, ACID = 75)
 	body_parts_covered = CHEST|GROIN|ARMS
-
-/// Automatically generated armor datum, errors may exist
-/datum/armor/jacket_research_director
-	bio = 75
-	fire = 75
-	acid = 75
 
 /obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
 	. = ..()
