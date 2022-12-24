@@ -307,7 +307,6 @@
 		return
 	
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-	balloon_alert(user, "built a floor")
 	var/turf/open/floor/plating/new_plating = PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	if(lattice)
 		qdel(lattice)
