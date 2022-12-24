@@ -23,6 +23,7 @@
 		TRAIT_NOHUNGER,
 	)
 
+	mutanteyes = /obj/item/organ/internal/eyes/night_vision/nightmare
 	mutantheart = /obj/item/organ/internal/heart/nightmare
 	mutantbrain = /obj/item/organ/internal/brain/shadow/nightmare
 	bodypart_overrides = list(

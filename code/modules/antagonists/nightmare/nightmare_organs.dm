@@ -102,5 +102,24 @@
 		return TRUE
 	return ..()
 
+/obj/item/organ/internal/eyes/night_vision/nightmare
+	name = "piercing red eyes"
+	desc = "Even without their nightmarish owner, looking at these eyes gives you a sense of dread."
+	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	///Our associated terrorize spell, for antagonist nightmares
+	var/datum/action/cooldown/spell/pointed/terrorize/terrorize_spell
+
+/obj/item/organ/internal/eyes/night_vision/nightmare/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+	..()
+
+	if(reciever.mind?.has_antag_datum(/datum/antagonist/nightmare)) //Only a TRUE NIGHTMARE is worthy of using this ability
+		terrorize_spell = new(reciever)
+		terrorize_spell.Grant(reciever)
+
+/obj/item/organ/internal/eyes/night_vision/nightmare/Remove(mob/living/carbon/eye_owner, special)
+	. = ..()
+
+	terrorize_spell.Remove(eye_owner)
+
 #undef HEART_SPECIAL_SHADOWIFY
 #undef HEART_RESPAWN_THRESHHOLD
