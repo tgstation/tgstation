@@ -268,13 +268,13 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 /obj/effect/meteor/sand/make_debris()
 	return //We drop NOTHING
 
-/obj/effect/meteor/sand/ram_turf(turf/T)
-	if(istype(T, /turf/closed/wall)) //sand is too weak to affect rwalls or walls with similar durability.
-		var/turf/closed/wall/wall_to_ram = T
-		if(wall_to_ram.hardness <= 30)
+/obj/effect/meteor/sand/ram_turf(turf/turf_to_ram)
+	if(istype(turf_to_ram, /turf/closed/wall)) //sand is too weak to affect rwalls or walls with similar durability.
+		var/turf/closed/wall/wall_to_ram = turf_to_ram
+		if(wall_to_ram.hardness <= 25)
 			return
 
-	var/area/area_to_check = get_area(T)
+	var/area/area_to_check = get_area(turf_to_ram)
 	if(area_to_check.area_flags & EVENT_PROTECTED) //This event absolutely destroys arrivals, and putting latejoiners into firelock hell is cringe
 		return
 
