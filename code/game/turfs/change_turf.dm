@@ -34,13 +34,13 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 /turf/open/copyTurf(turf/open/copy_to_turf, copy_air = FALSE)
 	. = ..()
-	if (isopenturf(copy_to_turf))
-		var/datum/component/wet_floor/slip = GetComponent(/datum/component/wet_floor)
-		if(slip)
-			var/datum/component/wet_floor/new_wet_floor_component = copy_to_turf.AddComponent(/datum/component/wet_floor)
-			new_wet_floor_component.InheritComponent(slip)
-		if (copy_air)
-			copy_to_turf.air.copy_from(air)
+	ASSERT(istype(copy_to_turf, /turf/open))
+	var/datum/component/wet_floor/slip = GetComponent(/datum/component/wet_floor)
+	if(slip)
+		var/datum/component/wet_floor/new_wet_floor_component = copy_to_turf.AddComponent(/datum/component/wet_floor)
+		new_wet_floor_component.InheritComponent(slip)
+	if (copy_air)
+		copy_to_turf.air.copy_from(air)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
 /turf/proc/TerraformTurf(path, new_baseturf, flags)
@@ -361,10 +361,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		turf.update_visuals()
 		SSair.add_to_active(turf)
 
-/turf/proc/AttemptLatticeReplacement(amount = 2)
+/// Attempts to replace a tile with lattice. Amount is the amount of tiles to scrape away.
+/turf/proc/attempt_lattice_replacement(amount = 2)
 	if(lattice_underneath)
 		var/turf/new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
 		if(!istype(new_turf, /turf/open/floor))
-			new /obj/structure/lattice(locate(x,y,z))
+			new /obj/structure/lattice(src)
 	else
 		ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)

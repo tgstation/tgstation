@@ -300,19 +300,19 @@
 /turf/open/proc/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles, user)
 	var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
 	if(!has_valid_support() && !lattice)
-		to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
+		balloon_alert(user, "The plating is going to need some support! Place metal rods first.")
 		return
 	if(!used_tiles.use(1))
-		to_chat(user, span_warning("You need one floor tile to build a floor!"))
+		balloon_alert(user, "You need one floor tile to build a floor!")
 		return
 	
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-	to_chat(user, span_notice("You build a floor."))
-	var/turf/open/floor/plating/newplating = PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	balloon_alert(user, "You build a floor.")
+	var/turf/open/floor/plating/new_plating = PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	if(lattice)
 		qdel(lattice)
 	else
-		newplating.lattice_underneath = FALSE
+		new_plating.lattice_underneath = FALSE
 
 /turf/open/proc/has_valid_support()
 	for (var/direction in GLOB.cardinals)
