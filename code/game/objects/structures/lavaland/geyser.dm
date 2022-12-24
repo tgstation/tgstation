@@ -34,7 +34,7 @@
 	create_reagents(max_volume, DRAINABLE)
 	reagents.add_reagent(reagent_id, max_volume)
 
-	RegisterSignals(src, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(start_chemming))
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(start_chemming))
 
 	if(erupting_state)
 		icon_state = erupting_state
@@ -109,8 +109,9 @@
 	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
 /obj/structure/geyser/random/Initialize(mapload)
-	. = ..()
 	reagent_id = get_random_reagent_id()
+
+	return ..()
 
 ///A wearable tool that lets you empty plumbing machinery and some other stuff
 /obj/item/plunger
