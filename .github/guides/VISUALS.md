@@ -594,7 +594,7 @@ There's a bit more detail here, not gonna go into it, stuff like [underlays](htt
 
 This is the default rendering format. What we used to use. It tells byond to render going off [plane](#planes) first, then [layer](#layers). There's a few edgecases involving big icons, but it's small peanuts.
 
-### [`SIDE_MAP `](https://www.byond.com/docs/ref/#/{notes}/side) (Check [the main page](https://www.byond.com/docs/ref/#/world/var/map_format) too!)
+### [`SIDE_MAP`](https://www.byond.com/docs/ref/#/{notes}/side) (Check [the main page](https://www.byond.com/docs/ref/#/world/var/map_format) too!)
 
 Our current rendering format, used in preparation for moving more things to 3/4ths.
 
