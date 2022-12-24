@@ -396,7 +396,7 @@
 	attack_verb_continuous = list("beats")
 	attack_verb_simple = list("beat")
 
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/baton_security
 
 	throwforce = 7
 	stamina_damage = 60
@@ -415,6 +415,11 @@
 	var/cell_hit_cost = 1000
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
+
+/datum/armor/baton_security
+	bomb = 50
+	fire = 80
+	acid = 80
 
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
@@ -649,6 +654,11 @@
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
 
+/datum/armor/baton_security
+	bomb = 50
+	fire = 80
+	acid = 80
+
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
@@ -691,6 +701,11 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
+/datum/armor/baton_security
+	bomb = 50
+	fire = 80
+	acid = 80
+
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
@@ -713,6 +728,11 @@
 	icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
 	slot_flags = null
+
+/datum/armor/baton_security
+	bomb = 50
+	fire = 80
+	acid = 80
 
 /obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
