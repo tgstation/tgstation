@@ -11,21 +11,21 @@
 		var/icon_state
 		var/icon/I
 
-		if(initial(D.research_icon) && initial(D.research_icon_state)) //If the design has an icon replacement skip the rest
-			icon_file = initial(D.research_icon)
-			icon_state = initial(D.research_icon_state)
+		if(initial(path.research_icon) && initial(path.research_icon_state)) //If the design has an icon replacement skip the rest
+			icon_file = initial(path.research_icon)
+			icon_state = initial(path.research_icon_state)
 			if (PERFORM_ALL_TESTS(focus_only/invalid_research_designs))
 				if(!(icon_state in icon_states(icon_file)))
-					stack_trace("design [D] with icon '[icon_file]' missing state '[icon_state]'")
+					stack_trace("design [path] with icon '[icon_file]' missing state '[icon_state]'")
 					continue
 			I = icon(icon_file, icon_state, SOUTH)
 
 		else
 			// construct the icon and slap it into the resource cache
-			var/atom/item = initial(D.build_path)
+			var/atom/item = initial(path.build_path)
 			if (!ispath(item, /atom))
 				// biogenerator outputs to beakers by default
-				if (initial(D.build_type) & BIOGENERATOR)
+				if (initial(path.build_type) & BIOGENERATOR)
 					item = /obj/item/reagent_containers/cup/beaker/large
 				else
 					continue  // shouldn't happen, but just in case
@@ -48,7 +48,7 @@
 			icon_state = initial(item.icon_state)
 			if (PERFORM_ALL_TESTS(focus_only/invalid_research_designs))
 				if(!(icon_state in icon_states(icon_file)))
-					stack_trace("design [D] with icon '[icon_file]' missing state '[icon_state]'")
+					stack_trace("design [path] with icon '[icon_file]' missing state '[icon_state]'")
 					continue
 			I = icon(icon_file, icon_state, SOUTH)
 
@@ -63,4 +63,4 @@
 				if (keyboard && (keyboard in all_states))
 					I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
-		Insert(initial(D.id), I)
+		Insert(initial(path.id), I)
