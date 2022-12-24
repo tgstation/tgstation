@@ -1,5 +1,5 @@
-#define TERROR_DARKNESS_AMOUNT 20
-#define TERROR_HUG_AMOUNT 35
+#define TERROR_DARKNESS_AMOUNT 10
+#define TERROR_HUG_AMOUNT 60
 
 #define TERROR_FEAR_THRESHOLD 140
 #define TERROR_PANIC_THRESHOLD 300
@@ -38,8 +38,9 @@
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, you should probably run.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
-		owner.adjustStaminaLoss(10)
-		if(prob(25)) //We don't want to spam chat
+		owner.adjust_blurriness(10)
+		owner.apply_status_effect(/datum/status_effect/dizziness, 20)
+		if(prob(20)) //We don't want to spam chat
 			to_chat(owner, span_alert("Your heart lurches in your chest. You can't take much more of this!"))
 
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by casting on an already maximum-terrified target
@@ -60,17 +61,23 @@
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD)
 		return span_warning("[owner] looks very worried about something. Are [owner.p_they(TRUE)] alright?")
 
-/// If we get a hug from a friend, we calm down!
-/datum/status_effect/terrified/proc/comfort_owner(mob/living/source)
+	return span_notice("[owner] looks rather anxious. [owner.p_they(TRUE)] could probably use a hug...")
+
+/// If we get a hug from a friend, we calm down! If we get a hug from a nightmare, we FREAK OUT
+/datum/status_effect/terrified/proc/comfort_owner(mob/living/source) //this doesnt work right now
 	SIGNAL_HANDLER
 
-	terror_buildup -= TERROR_HUG_AMOUNT
+	if(is_species(source, /datum/species/shadow/nightmare))
+		terror_buildup += TERROR_HUG_AMOUNT
+		owner.balloon_alert("get away!")
+		return
 
+	terror_buildup -= TERROR_HUG_AMOUNT
 	if(prob(20))
 		owner.balloon_alert_to_viewers("*phew*", "deep breaths...")
 
 /**
- * Checks the surroundings of our victim and reduces terror buildup if surrounded by enough light.
+ * Checks the surroundings of our victim and modifies terror buildup based on the amount of light nearby
  *
  * Checks the surrounded tiles for light amount. If the user has more light nearby, their terror is reduced.
  * Otherwise, their terror buildup will increase until it reaches TERROR_DARKNESS_MAX

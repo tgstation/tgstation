@@ -21,7 +21,7 @@
 	var/lit_tiles = 0
 	var/unlit_tiles = 0
 
-	for(var/turf/turf_to_check in view(2, get_turf(cast_on)))
+	for(var/turf/turf_to_check in view(1, get_turf(cast_on)))
 		var/light_amount = turf_to_check.get_lumcount()
 		if(light_amount > 0.2)
 			lit_tiles++
