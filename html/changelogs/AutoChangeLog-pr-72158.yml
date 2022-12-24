@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "The preview dummy in the preferences menu now shows some visual quirks, like Heterochromia or nearsighted."
+  - bugfix: "Fixed some quirks which read a preference roundstart not applying the preference."
+  - refactor: "Refactored some bits of quirk datums and the quirk application process."

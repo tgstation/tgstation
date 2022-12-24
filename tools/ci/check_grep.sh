@@ -95,6 +95,12 @@ if $grep '/obj/structure/cable(/\w+)+[{]' $map_files;	then
     echo -e "${RED}ERROR: Variable editted cables detected, please remove them.${NC}"
     st=1
 fi;
+part "invalid map procs"
+if $grep '(new|newlist|icon|matrix|sound)\(.+\)' $map_files;	then
+	echo
+	echo -e "${RED}ERROR: Using unsupported procs in variables in a map file! Please remove all instances of this.${NC}"
+	st=1
+fi;
 part "invalid cables"
 if $grep '\td[1-2] =' $map_files;	then
 	echo

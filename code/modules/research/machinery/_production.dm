@@ -219,7 +219,7 @@
 	return ..()
 
 /obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, notify_admins)
-	if(notify_admins)
+	if(notify_admins && ismob(usr))
 		usr.investigate_log("built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at \a [src]([type]).")
 

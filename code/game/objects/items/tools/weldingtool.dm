@@ -25,7 +25,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/item_weldingtool
 	resistance_flags = FIRE_PROOF
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
@@ -50,6 +50,10 @@
 
 	var/activation_sound = 'sound/items/welderactivate.ogg'
 	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
+
+/datum/armor/item_weldingtool
+	fire = 100
+	acid = 30
 
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
@@ -331,6 +335,10 @@
 	max_fuel = 40
 	custom_materials = list(/datum/material/glass=60)
 
+/datum/armor/item_weldingtool
+	fire = 100
+	acid = 30
+
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return
 
@@ -343,6 +351,10 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
+
+/datum/armor/item_weldingtool
+	fire = 100
+	acid = 30
 
 /obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
 	if(!isOn())
@@ -358,6 +370,10 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	change_icons = FALSE
+
+/datum/armor/item_weldingtool
+	fire = 100
+	acid = 30
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
 	return
@@ -375,6 +391,10 @@
 	light_system = NO_LIGHT_SUPPORT
 	light_range = 0
 	change_icons = FALSE
+
+/datum/armor/item_weldingtool
+	fire = 100
+	acid = 30
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
@@ -403,6 +423,10 @@
 	toolspeed = 0.5
 	var/last_gen = 0
 	var/nextrefueltick = 0
+
+/datum/armor/item_weldingtool
+	fire = 100
+	acid = 30
 
 /obj/item/weldingtool/experimental/process()
 	..()
