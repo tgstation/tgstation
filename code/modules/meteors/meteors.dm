@@ -208,8 +208,8 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
-	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user) && !istype(src, /obj/effect/meteor/sand))
-		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
+	check_examine_award(user)
 
 /obj/effect/meteor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MINING)
@@ -238,6 +238,20 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
 			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, sound_to_use = meteor_sound)
 
+/**
+ * Used to check if someone who has examined a meteor will recieve an award.
+ *
+ * Checks the criteria to recieve the "examine a meteor" award.
+ * Admin spawned meteors will not grant the user an achievement.
+ *
+ * Arguments:
+ * * user - the person who will be recieving the examine award.
+ */
+
+/obj/effect/meteor/proc/check_examine_award(mob/user)
+	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
+		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
 ///////////////////////
 //Meteor types
 ///////////////////////
@@ -255,11 +269,19 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 	return //We drop NOTHING
 
 /obj/effect/meteor/sand/ram_turf(turf/T)
-	if(istype(T, /turf/closed/wall/r_wall)) //sand is too weak to affect rwalls
+	if(istype(T, /turf/closed/wall)) //sand is too weak to affect rwalls or walls with similar durability.
+		var/turf/closed/wall/wall_to_ram = T
+		if(wall_to_ram.hardness <= 30)
+			return
+
+	var/area/area_to_check = get_area(T)
+	if(area_to_check.area_flags & EVENT_PROTECTED) //This event absolutely destroys arrivals, and putting latejoiners into firelock hell is cringe
 		return
-	if(istype(get_area(T), /area/station/hallway/secondary/entry)) //This event absolutely destroys arrivals, and putting latejoiners into firelock hell is cringe
-		return
+
 	return ..()
+
+/obj/effect/meteor/sand/check_examine_award(mob/user) //Too insignificant and predictable to warrant an award.
+	return
 
 //Dust
 /obj/effect/meteor/dust

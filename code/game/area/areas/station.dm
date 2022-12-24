@@ -340,6 +340,7 @@
 /area/station/hallway/secondary/entry
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
+	area_flags = EVENT_PROTECTED
 
 /area/station/hallway/secondary/service
 	name = "\improper Service Hallway"

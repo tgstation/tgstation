@@ -126,6 +126,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PERSISTENT_ENGRAVINGS (1<<14)
 /// Mobs that die in this area don't produce a dead chat message
 #define NO_DEATH_MESSAGE (1<<15)
+/// This area should have extra shielding from certain event effects
+#define EVENT_PROTECTED (1<<16)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

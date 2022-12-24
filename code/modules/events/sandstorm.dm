@@ -73,7 +73,6 @@
 /datum/round_event/sandstorm/tick()
 	spawn_meteors(15, GLOB.meteors_sandstorm, start_side)
 
-
 /**
  * The original sandstorm event. An admin-only disasterfest that sands down all sides of the station
  * Uses space dust, meaning walls/rwalls are quickly chewed up very quickly.
