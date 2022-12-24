@@ -282,29 +282,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_colors = "#009a00#006600"
 
 // Special canisters below here
-
-/obj/machinery/portable_atmospherics/canister/fusion_test
-	name = "fusion test canister"
-	desc = "Don't be a badmin."
-	temp_limit = 1e12
-	pressure_limit = 1e14
-
-/datum/armor/portable_atmospherics_canister
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 100
-	bomb = 10
-	fire = 80
-	acid = 50
-
-/obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
-	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/tritium)
-	air_contents.gases[/datum/gas/hydrogen][MOLES] = 300
-	air_contents.gases[/datum/gas/tritium][MOLES] = 300
-	air_contents.temperature = 10000
-	SSair.start_processing_machine(src)
-
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix
 	name = "Anesthetic mix"
 	desc = "A mixture of N2O and Oxygen"
