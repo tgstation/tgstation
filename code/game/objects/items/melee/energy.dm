@@ -1,7 +1,7 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/melee_energy
 	attack_verb_continuous = list("hits", "taps", "pokes")
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
@@ -29,6 +29,10 @@
 	var/active_w_class = WEIGHT_CLASS_BULKY
 	/// The heat given off when active.
 	var/active_heat = 3500
+
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
 
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
@@ -146,6 +150,10 @@
 	active_throwforce = 30
 	active_w_class = WEIGHT_CLASS_HUGE
 
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
+
 /obj/item/melee/energy/axe/make_transformable()
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
@@ -176,6 +184,10 @@
 	block_chance = 50
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
+
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(blade_active)
 		return ..()
@@ -186,6 +198,10 @@
 	sword_color_icon = "red"
 	/// The cell cost of hitting something.
 	var/hitcost = 50
+
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
 
 /obj/item/melee/energy/sword/cyborg/attack(mob/target, mob/living/silicon/robot/user)
 	if(!user.cell)
@@ -236,6 +252,10 @@
 	var/hacked = FALSE
 	var/hacked_color
 
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
+
 /obj/item/melee/energy/sword/saber/Initialize(mapload)
 	. = ..()
 	if(!sword_color_icon && LAZYLEN(possible_sword_colors))
@@ -270,6 +290,10 @@
 
 /obj/item/melee/energy/sword/saber/purple
 	sword_color_icon = "purple"
+
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
 
 /obj/item/melee/energy/sword/saber/multitool_act(mob/living/user, obj/item/tool)
 	if(hacked)
@@ -314,6 +338,10 @@
 	var/datum/effect_system/spark_spread/spark_system
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
+
 /obj/item/melee/energy/blade/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread()

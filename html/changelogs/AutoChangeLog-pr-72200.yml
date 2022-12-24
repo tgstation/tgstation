@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - bugfix: "Dead people are no longer counted as crew when determining if 65% of the station is revs for the auto-shuttle call"
