@@ -217,8 +217,12 @@
 	if(prob(20))
 		victim.emote("cry")
 	used = TRUE
-	desc += " It has been used up."
 	update_appearance(UPDATE_ICON)
+
+/obj/item/eyesnatcher/examine(mob/user)
+	. = ..()
+	if(used)
+		. += span_notice("It has been used up.")
 
 /obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/internal/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/victim)
 	if(!eyeballies || QDELETED(eyeballies))

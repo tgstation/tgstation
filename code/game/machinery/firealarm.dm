@@ -17,7 +17,7 @@
 	icon_state = "fire0"
 	max_integrity = 250
 	integrity_failure = 0.4
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
+	armor_type = /datum/armor/machinery_firealarm
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON
@@ -38,11 +38,15 @@
 	///looping sound datum for our fire alarm siren.
 	var/datum/looping_sound/firealarm/soundloop
 
+/datum/armor/machinery_firealarm
+	fire = 90
+	acid = 30
+
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
 	if(building)
 		buildstage = 0
-		panel_open = TRUE
+		set_panel_open(TRUE)
 	if(name == initial(name))
 		name = "[get_area_name(src)] [initial(name)]"
 	update_appearance()
@@ -256,7 +260,7 @@
 
 	if(tool.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
 		tool.play_tool_sound(src)
-		panel_open = !panel_open
+		toggle_panel_open()
 		to_chat(user, span_notice("The wires have been [panel_open ? "exposed" : "unexposed"]."))
 		update_appearance()
 		return
@@ -437,6 +441,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	desc = "Cuban Pete is in the house!"
 	var/static/party_overlay
 
+/datum/armor/machinery_firealarm
+	fire = 90
+	acid = 30
+
 /obj/machinery/firealarm/partyalarm/reset()
 	if (machine_stat & (NOPOWER|BROKEN))
 		return
@@ -472,6 +480,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	var/datum/port/output/reset
 
 	var/obj/machinery/firealarm/attached_alarm
+
+/datum/armor/machinery_firealarm
+	fire = 90
+	acid = 30
 
 /obj/item/circuit_component/firealarm/populate_ports()
 	alarm_trigger = add_input_port("Set", PORT_TYPE_SIGNAL)

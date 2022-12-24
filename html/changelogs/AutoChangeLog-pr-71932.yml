@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - rscadd: "you can flip eyepatches"
-  - bugfix: "blindfolds now take into consideration both eye colors for their color"

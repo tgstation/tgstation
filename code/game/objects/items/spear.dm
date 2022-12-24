@@ -19,7 +19,7 @@
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
 	sharpness = SHARP_EDGED // i know the whole point of spears is that they're pointy, but edged is more devastating at the moment so
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
 	bare_wound_bonus = 15
 	/// For explosive spears, what we cry out when we use this to bap someone
@@ -30,6 +30,10 @@
 	var/force_unwielded = 10
 	/// How much damage to do wielded
 	var/force_wielded = 18
+
+/datum/armor/item_spear
+	fire = 50
+	acid = 30
 
 /obj/item/spear/Initialize(mapload)
 	. = ..()
@@ -102,6 +106,10 @@
 	base_icon_state = "spearbomb"
 	icon_prefix = "spearbomb"
 	var/obj/item/grenade/explosive = null
+
+/datum/armor/item_spear
+	fire = 50
+	acid = 30
 
 /obj/item/spear/explosive/Initialize(mapload)
 	. = ..()
@@ -178,6 +186,10 @@
 	attack_verb_simple = list("gore")
 	force_unwielded = 15
 	force_wielded = 25
+
+/datum/armor/item_spear
+	fire = 50
+	acid = 30
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
