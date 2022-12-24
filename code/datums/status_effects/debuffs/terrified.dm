@@ -43,8 +43,22 @@
 			to_chat(owner, span_alert("Your heart lurches in your chest. You can't take much more of this!"))
 
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by casting on an already maximum-terrified target
+		owner.visible_message(span_warning("[owner] clutches their chest for a moment, then collapses to the floor.") ,span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing."), span_hear("You hear something heavy collide with the ground."))
 		owner.ForceContractDisease(/datum/disease/heart_failure)
-		owner.Paralyze(1.5 SECONDS)
+		owner.Unconscious(15 SECONDS)
+		qdel(src)
+
+/datum/status_effect/terrified/get_examine_text()
+	. = ..()
+
+	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD)
+		return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] siezing up, about to collapse in fear!")
+
+	if(terror_buildup >= TERROR_PANIC_THRESHOLD)
+		return span_boldwarning("[owner] is visibly trembling and twitching. It looks like [owner.p_theyre(TRUE)] freaking out!")
+
+	if(terror_buildup >= TERROR_FEAR_THRESHOLD)
+		return span_warning("[owner] looks very worried about something. Are [owner.p_they(TRUE)] alright?")
 
 /// If we get a hug from a friend, we calm down!
 /datum/status_effect/terrified/proc/comfort_owner(mob/living/source)
@@ -78,13 +92,11 @@
 	else
 		terror_buildup -= TERROR_DARKNESS_AMOUNT
 
-
-
 /// The status effect for the terror status effect
 /atom/movable/screen/alert/status_effect/terrified
 	name = "Terrified!"
 	desc = "You feel a supernatural darkness settle in around you, overwhelming you with panic!"
-	icon_state = "high" //change this
+	icon_state = "terrified"
 
 #undef TERROR_DARKNESS_AMOUNT
 #undef TERROR_HUG_AMOUNT
