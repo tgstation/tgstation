@@ -25,7 +25,7 @@
 
 /obj/structure/frame/machine
 	name = "machine frame"
-	desc = "The standard frame for most station appliances. Its appearance and function is controlled by the inserted board. "
+	desc = "The standard frame for most station appliances. Its appearance and function is controlled by the inserted board."
 	var/list/components = null
 	var/list/req_components = null
 	var/list/req_component_names = null // user-friendly names of components
