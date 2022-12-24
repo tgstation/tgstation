@@ -43,7 +43,7 @@
 	name = "durathread beanie"
 	desc = "A beanie made from durathread, its resilient fibres provide some protection to the wearer."
 	greyscale_colors = "#8291A1#8291A1"
-	armor = list(MELEE = 15, BULLET = 5, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, FIRE = 30, ACID = 5)
+	armor_type = /datum/armor/beanie_durathread
 
 /obj/item/clothing/head/rasta
 	name = "rastacap"
@@ -66,6 +66,15 @@
 	desc = "A dingy and torn black beanie. Is that slime or grease?"
 	/// Used for the extra flavor text the d-boy himself sees
 	var/datum/weakref/beanie_owner = null
+
+/datum/armor/beanie_durathread
+	melee = 15
+	bullet = 5
+	laser = 15
+	energy = 25
+	bomb = 10
+	fire = 30
+	acid = 5
 
 /obj/item/clothing/head/beanie/black/dboy/equipped(mob/user, slot)
 	. = ..()
