@@ -21,7 +21,7 @@
 		return ADMIN_CANCEL_EVENT
 	if(chosen == "Random")
 		return //still do the event, but chosen_gang is still null, so it will pick from the choices
-	chosen_gang = gang_choices["[chosen]"]
+	chosen_gang = gang_choices[chosen]
 
 /datum/round_event_control/pirates/preRunEvent()
 	if (!SSmapping.empty_space)
