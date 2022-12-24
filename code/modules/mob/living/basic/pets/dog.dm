@@ -1,8 +1,14 @@
 //Dogs.
 
+// Add 'walkies' as valid input
 /datum/pet_command/follow/dog
 	speech_commands = list("heel", "follow", "walkies")
 
+// Add 'good dog' as valid input
+/datum/pet_command/good_boy/dog
+	speech_commands = list("good dog")
+
+// Set correct attack behaviour
 /datum/pet_command/point_targetting/attack/dog
 	attack_behaviour = /datum/ai_behavior/basic_melee_attack/dog
 
@@ -28,7 +34,7 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/good_boy,
+		/datum/pet_command/good_boy/dog,
 		/datum/pet_command/follow/dog,
 		/datum/pet_command/point_targetting/attack/dog,
 		/datum/pet_command/point_targetting/fetch,
