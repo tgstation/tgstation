@@ -3,8 +3,9 @@
 	name = "design"
 
 /datum/asset/spritesheet/research_designs/create_spritesheets()
-	for (var/path in subtypesof(/datum/design))
-		var/datum/design/D = path
+	for (var/datum/design/path as anything in subtypesof(/datum/design))
+		if(initial(path.id) == DESIGN_ID_IGNORE)
+			continue
 
 		var/icon_file
 		var/icon_state
