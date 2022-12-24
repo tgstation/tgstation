@@ -75,7 +75,15 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/supplies_requestable = FALSE // Can others request supplies from this terminal?
 	var/anon_tips_receiver = FALSE // Can you relay information to this console?
 	max_integrity = 300
-	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/machinery_requests_console
+
+/datum/armor/machinery_requests_console
+	melee = 70
+	bullet = 30
+	laser = 30
+	energy = 30
+	fire = 90
+	acid = 90
 
 /obj/machinery/requests_console/update_appearance(updates=ALL)
 	. = ..()

@@ -431,15 +431,31 @@
 		unlock_note = "<B>Uplink Degrees:</B> [english_list(unlock_code)] ([P.name])."
 
 /datum/component/uplink/proc/generate_code()
-	if(istype(parent,/obj/item/modular_computer/pda))
-		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
-	else if(istype(parent,/obj/item/radio))
-		return pick(GLOB.phonetic_alphabet)
-	else if(istype(parent,/obj/item/pen))
-		var/list/L = list()
+	var/returnable_code = ""
+
+	if(istype(parent, /obj/item/modular_computer/pda))
+		returnable_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+
+	else if(istype(parent, /obj/item/radio))
+		returnable_code = pick(GLOB.phonetic_alphabet)
+
+	else if(istype(parent, /obj/item/pen))
+		returnable_code = list()
 		for(var/i in 1 to PEN_ROTATIONS)
-			L += rand(1, 360)
-		return L
+			returnable_code += rand(1, 360)
+
+	if(!unlock_code) // assume the unlock_code is our "base" code that we don't want to duplicate, and if we don't have an unlock code, immediately return out of it since there's nothing to compare to.
+		return returnable_code
+
+	// duplicate checking, re-run the proc if we get a dupe to prevent the failsafe explodey code being the same as the unlock code.
+	if(islist(returnable_code))
+		if(english_list(returnable_code) == english_list(unlock_code)) // we pass english_list to the user anyways and for later processing, so we can just compare the english_list of the two lists.
+			return generate_code()
+
+	else if(unlock_code == returnable_code)
+		return generate_code()
+
+	return returnable_code
 
 /datum/component/uplink/proc/failsafe(mob/living/carbon/user)
 	if(!parent)

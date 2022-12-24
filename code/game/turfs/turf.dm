@@ -166,11 +166,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(uses_integrity)
 		atom_integrity = max_integrity
 
-		if (islist(armor))
-			armor = getArmor(arglist(armor))
-		else if (!armor)
-			armor = getArmor()
-
 	return INITIALIZE_HINT_NORMAL
 
 /// Initializes our adjacent turfs. If you want to avoid this, do not override it, instead set init_air to FALSE

@@ -48,13 +48,23 @@
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
 	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100,ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/misc_adminsuit
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/datum/armor/misc_adminsuit
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
 
 /obj/item/clothing/under/misc/burial
 	name = "burial garments"
@@ -64,6 +74,16 @@
 	can_adjust = FALSE
 	has_sensor = NO_SENSORS
 
+/datum/armor/misc_adminsuit
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
+
 /obj/item/clothing/under/misc/overalls
 	name = "laborer's overalls"
 	desc = "A set of durable overalls for getting the job done."
@@ -72,6 +92,16 @@
 	can_adjust = FALSE
 	custom_price = PAYCHECK_CREW
 
+/datum/armor/misc_adminsuit
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
+
 /obj/item/clothing/under/misc/assistantformal
 	name = "assistant's formal uniform"
 	desc = "An assistant's formal-wear. Why an assistant needs formal-wear is still unknown."
@@ -79,13 +109,31 @@
 	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
 
+/datum/armor/misc_adminsuit
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
+
 /obj/item/clothing/under/misc/durathread
 	name = "durathread jumpsuit"
 	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
 	icon_state = "durathread"
 	inhand_icon_state = null
 	can_adjust = FALSE
-	armor = list(MELEE = 10, LASER = 10, FIRE = 40, ACID = 10, BOMB = 5, BIO = 10, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/misc_durathread
+
+/datum/armor/misc_durathread
+	melee = 10
+	laser = 10
+	fire = 40
+	acid = 10
+	bomb = 5
+	bio = 10
 
 /obj/item/clothing/under/misc/bouncer
 	name = "bouncer uniform"
@@ -93,7 +141,13 @@
 	icon_state = "bouncer"
 	inhand_icon_state = null
 	can_adjust = FALSE
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/misc_bouncer
+
+/datum/armor/misc_bouncer
+	melee = 5
+	bio = 10
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/under/misc/coordinator
 	name = "coordinator jumpsuit"
@@ -103,6 +157,12 @@
 	icon_state = "captain_parade"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/datum/armor/misc_bouncer
+	melee = 5
+	bio = 10
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/under/misc/syndicate_souvenir
 	name = "syndicate souvenir tee"
