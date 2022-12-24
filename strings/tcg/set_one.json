@@ -19,7 +19,9 @@
 			"summoncost": "5",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_file": "icons/mob/silicon/ai.dmi",
+			"summon_icon_state": "AI"
 		},
 		{
 			"id": "stickman",
@@ -33,7 +35,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Construct",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_file": "icons/mob/animal.dmi",
+			"summon_icon_state": "stickman"
 		},
 		{
 			"id": "changeling",
@@ -47,7 +51,9 @@
 			"summoncost": "6",
 			"cardtype": "Creature",
 			"cardsubtype": "Abomination",
-			"rarity": "rare"
+			"rarity": "rare",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/changeling"
 		},
 		{
 			"id": "assistant",
@@ -61,7 +67,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/assistant"
 		},
 		{
 			"id": "atmos_tech",
@@ -75,7 +83,9 @@
 			"summoncost": "4",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Engineer",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/atmos"
 		},
 		{
 			"id": "bartender",
@@ -89,7 +99,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/bartender"
 		},
 		{
 			"id": "botanist",
@@ -103,7 +115,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/botanist"
 		},
 		{
 			"id": "captain",
@@ -117,7 +131,9 @@
 			"summoncost": "7",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Commander",
-			"rarity": "rare"
+			"rarity": "rare",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/captain"
 		},
 		{
 			"id": "caps_suit",
@@ -145,7 +161,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/cargo_tech"
 		},
 		{
 			"id": "chap_plate",
@@ -173,7 +191,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/chemist"
 		},
 		{
 			"id": "CE",
@@ -187,7 +207,9 @@
 			"summoncost": "5",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Engineer",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/ce"
 		},
 		{
 			"id": "ce_suit",
@@ -215,7 +237,9 @@
 			"summoncost": "5",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/cmo"
 		},
 		{
 			"id": "cmo_suit",
@@ -243,7 +267,9 @@
 			"summoncost": "4",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Soldier",
-			"rarity": "epic"
+			"rarity": "epic",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/chrono_agent"
 		},
 		{
 			"id": "sloth",
@@ -257,7 +283,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Sloth",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/pets.dmi",
+			"summon_icon_state": "cool_sloth"
 		},
 		{
 			"id": "clown",
@@ -271,7 +299,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Clown",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/clown"
 		},
 		{
 			"id": "clownborg",
@@ -285,7 +315,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Clown",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "clown"
 		},
 		{
 			"id": "clown_suit",
@@ -327,7 +359,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit":"/datum/outfit/job/cook"
 		},
 		{
 			"id": "wiz_suit",
@@ -355,7 +389,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Worker",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit":"/datum/outfit/job/curator"
 		},
 		{
 			"id": "ianborg",
@@ -369,7 +405,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Corgi",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_file": "CUSTOM ICON NEEDED",
+			"summon_icon_type": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "deathsquad_armour",
@@ -397,7 +435,9 @@
 			"summoncost": "5",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Officer",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/detective"
 		},
 		{
 			"id": "nukie_elite",
@@ -411,7 +451,9 @@
 			"summoncost": "7",
 			"cardtype": "Creature",
 			"cardsubtype": "Syndicate Soldier",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_file": "icons/mob/simple/simple_human.dmi",
+			"summon_icon_state": "syndicate_stormtrooper_sword"
 		},
 		{
 			"id": "engiborg",
@@ -425,7 +467,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "engineer"
 		},
 		{
 			"id": "ert_command",
@@ -495,7 +539,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Explorer",
-			"rarity": "legendary"
+			"rarity": "legendary",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/space"
 		},
 		{
 			"id": "borg",
@@ -509,7 +555,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icon/mob/silicon/robots.dmi",
+			"summon_icon_state": "robot"
 		},
 		{
 			"id": "geneticist",
@@ -523,7 +571,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Scientist",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/geneticist"
 		},
 		{
 			"id": "med_geneticist",
@@ -537,7 +587,9 @@
 			"summoncost": "8",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
-			"rarity": "misprint"
+			"rarity": "misprint",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/geneticist"
 		},
 		{
 			"id": "spookian",
@@ -551,7 +603,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Spirit Corgi",
-			"rarity": "epic"
+			"rarity": "epic",
+			"summon_icon_file": "CUSTOM ICON NEEDED",
+			"summon_icon_type": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "HOP",
@@ -565,7 +619,9 @@
 			"summoncost": "7",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Commander",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": 1,
+			"outfit":"/datum/outfit/job/hop"
 		},
 		{
 			"id": "HOS",
@@ -579,7 +635,9 @@
 			"summoncost": "7",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Officer",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": 1,
+			"outfit":"/datum/outfit/job/hos"
 		},
 		{
 			"id": "hos_suit",
@@ -607,7 +665,9 @@
 			"summoncost": "4",
 			"cardtype": "Creature",
 			"cardsubtype": "Corgi",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icon/mob/simple/pets.dmi",
+			"summon_icon_state": "corgi"
 		},
 		{
 			"id": "inquisitor_suit",
@@ -633,9 +693,11 @@
 			"resolve": "1",
 			"faction": "Command",
 			"summoncost": "1",
-			"cardtype": "Human",
+			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/centcom/centcom_intern/unarmed"
 		},
 		{
 			"id": "jannie",
@@ -647,9 +709,11 @@
 			"resolve": "1",
 			"faction": "Service",
 			"summoncost": "1",
-			"cardtype": "Human",
+			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/janitor"
 		},
 		{
 			"id": "jannieborg",
@@ -663,7 +727,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "janitor"
 		},
 		{
 			"id": "lawyer",
@@ -677,7 +743,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/lawyer"
 		},
 		{
 			"id": "legion",
@@ -691,7 +759,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Abomination",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_file": "icons/mob/simple/lavaland/lavaland_monsters.dmi",
+			"summon_icon_state": "legion"
 		},
 		{
 			"id": "medborg",
@@ -705,7 +775,9 @@
 			"summoncost": "4",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Doctor",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "medical"
 		},
 		{
 			"id": "doc",
@@ -719,7 +791,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/doctor"
 		},
 		{
 			"id": "mime",
@@ -733,7 +807,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Mime",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/mime"
 		},
 		{
 			"id": "miningborg",
@@ -747,7 +823,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Miner",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "minerOLD"
 		},
 		{
 			"id": "monkey",
@@ -761,7 +839,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Primate",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "CUSTOM ICON NEEDED",
+			"summon_icon_state": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "nukeop",
@@ -775,7 +855,9 @@
 			"summoncost": "4",
 			"cardtype": "Creature",
 			"cardsubtype": "Syndicate Soldier",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_file": "icons/mob/simple/simple_human.dmi",
+			"summon_icon_state": "syndicate_space_shotgun"
 		},
 		{
 			"id": "paramed",
@@ -789,7 +871,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/paramedic"
 		},
 		{
 			"id": "peaceborg",
@@ -803,7 +887,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Officer",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "peace"
 		},
 		{
 			"id": "plasma_engi",
@@ -817,7 +903,9 @@
 			"summoncost": "5",
 			"cardtype": "Creature",
 			"cardsubtype": "Plasmaman Engineer",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": "CUSTOM ICON NEEDED",
+			"outfit": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "QM",
@@ -831,7 +919,9 @@
 			"summoncost": "6",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/quartermaster"
 		},
 		{
 			"id": "qm_head",
@@ -845,7 +935,9 @@
 			"summoncost": "10",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
-			"rarity": "misprint"
+			"rarity": "misprint",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/quartermaster"
 		},
 		{
 			"id": "rabbit_pai",
@@ -859,7 +951,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Rabbit",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/silicon/pai.dmi",
+			"summon_icon_state": "rabbit"
 		},
 		{
 			"id": "drone_pai",
@@ -873,7 +967,9 @@
 			"summoncost": "5",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Drone",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/silicon/pai.dmi",
+			"summon_icon_state": "repairbot"
 		},
 		{
 			"id": "RD",
@@ -887,7 +983,9 @@
 			"summoncost": "7",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Scientist",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/rd"
 		},
 		{
 			"id": "rd_suit",
@@ -915,7 +1013,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Scientist",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/roboticist"
 		},
 		{
 			"id": "runtime",
@@ -929,7 +1029,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Cat",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_file": "icons/mob/pets.dmi",
+			"summon_icon_state": "cat"
 		},
 		{
 			"id": "scientist",
@@ -943,7 +1045,9 @@
 			"summoncost": "4",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Scientist",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/scientist"
 		},
 		{
 			"id": "secborg",
@@ -957,7 +1061,9 @@
 			"summoncost": "6",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Officer",
-			"rarity": "epic"
+			"rarity": "epic",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "sec"
 		},
 		{
 			"id": "sec_officer",
@@ -971,7 +1077,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Officer",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/security"
 		},
 		{
 			"id": "ratvar_armor",
@@ -999,7 +1107,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "kent"
 		},
 		{
 			"id": "flamboyantborg",
@@ -1013,7 +1123,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "brobot"
 		},
 		{
 			"id": "skirtborg",
@@ -1027,7 +1139,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "service_f"
 		},
 		{
 			"id": "classicborg",
@@ -1041,7 +1155,9 @@
 			"summoncost": "2",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "service_m"
 		},
 		{
 			"id": "stylinborg",
@@ -1055,7 +1171,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_file": "icons/mob/silicon/robots.dmi",
+			"summon_icon_state": "service_m"
 		},
 		{
 			"id": "miner",
@@ -1069,7 +1187,9 @@
 			"summoncost": "5",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Miner",
-			"rarity": "rare"
+			"rarity": "rare",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/miner"
 		},
 		{
 			"id": "engi",
@@ -1083,7 +1203,9 @@
 			"summoncost": "4",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Engineer",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/engineer"
 		},
 		{
 			"id": "swarmer",
@@ -1097,7 +1219,9 @@
 			"summoncost": "1",
 			"cardtype": "Creature",
 			"cardsubtype": "Robot",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_file": "CUSTOM ICON NEEDED",
+			"summon_icon_state": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "viro",
@@ -1111,7 +1235,9 @@
 			"summoncost": "3",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/virologist"
 		},
 		{
 			"id": "warden",
@@ -1125,7 +1251,9 @@
 			"summoncost": "4",
 			"cardtype": "Creature",
 			"cardsubtype": "Human Officer",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/warden"
 		},
 		{
 			"id": "xeno",
@@ -1140,7 +1268,9 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
 			"series": "coreset2020",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_file": "icons/mob/nonhuman-players/alien.dmi",
+			"summon_icon_state": "alienh"
 		},
 		{
 			"id": "tough_choices",
@@ -1230,7 +1360,9 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
 			"series": "coreset2020",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": 1,
+			"outfit": "/datum/outfit/job/psychologist"
 		},
 		{
 			"id": "just_losses",
@@ -1335,7 +1467,9 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Spirit",
 			"series": "coreset2020",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_file": "icons/mob/simple/mob.dmi",
+			"summon_icon_state": "revenant_revealed"
 		},
 		{
 			"id": "re_education",
@@ -1365,7 +1499,9 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Lizard Doctor",
 			"series": "coreset2020",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"humanoid": "CUSTOM ICON NEEDED",
+			"outfit": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "botanist_plant",
@@ -1380,7 +1516,9 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Plant Worker",
 			"series": "coreset2020",
-			"rarity": "rare"
+			"rarity": "rare",
+			"humanoid": "CUSTOM ICON NEEDED",
+			"outfit": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "scientist_moth",
@@ -1395,7 +1533,9 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Moth Scientist",
 			"series": "coreset2020",
-			"rarity": "common"
+			"rarity": "common",
+			"humanoid": "CUSTOM ICON NEEDED",
+			"outfit": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "inducer",
