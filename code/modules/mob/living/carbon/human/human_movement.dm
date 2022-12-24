@@ -35,7 +35,7 @@
 	if(body_position == STANDING_UP)
 		if(shoes && loc == NewLoc && has_gravity(loc))
 			SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
-		if(dir != old_dir && prob(1.25))
+		if(dir != old_dir && prob(1.25) && m_intent != MOVE_INTENT_WALK)
 			playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 			balloon_alert_to_viewers("tripped!")
 			Knockdown(0.6 SECONDS)
