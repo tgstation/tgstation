@@ -1,0 +1,6 @@
+author: "flowercuco"
+delete-after: True
+changes:
+  - rscadd: "during holidays the spread syndicate propaganda through posters objective has a chance of spawning evil holiday poster"
+  - bugfix: "framework for holiday posters is more functional and modular"
+  - code_imp: "contraband.dm file and contraband.dmi file are both now poster.dm and poster.dmi"
