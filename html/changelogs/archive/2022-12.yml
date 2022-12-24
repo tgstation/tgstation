@@ -814,3 +814,10 @@
   winterboekje:
   - spellcheck: drastically improves grammar for inserting something during organ
       manipulation
+2022-12-24:
+  Mothblocks:
+  - bugfix: The briefcase in the MetaStation vault now contains the (surprisingly
+      good) spoils it's supposed to.
+  NamelessFairy:
+  - admin: Admins can now enable a custom hostile environment that prevents the shuttle
+      from leaving.
