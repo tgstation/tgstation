@@ -30,9 +30,14 @@
 	return dna.species.negates_gravity(src) || ..()
 
 /mob/living/carbon/human/Move(NewLoc, direct)
+	var/old_dir = dir
 	. = ..()
 	if(shoes && body_position == STANDING_UP && loc == NewLoc && has_gravity(loc))
 		SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
+		if(dir != old_dir && prob(1.25))
+			playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+			balloon_alert_to_viewers("tripped!")
+			Knockdown(0.6 SECONDS)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
