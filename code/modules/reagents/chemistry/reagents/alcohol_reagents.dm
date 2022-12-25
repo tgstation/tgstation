@@ -12,6 +12,7 @@
 	ph = 7.33
 	burning_temperature = 2193//ethanol burns at 1970C (at it's peak)
 	burning_volume = 0.1
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/beer
 	fallback_icon = 'icons/obj/drinks/bottles.dmi'
 	fallback_icon_state = "beer"
 	/**
@@ -324,6 +325,7 @@
 	taste_description = "grain alcohol"
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS //Very high proof
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/vodka
 
 /datum/glass_style/shot_glass/vodka
 	required_drink_type = /datum/reagent/consumable/ethanol/vodka
@@ -400,6 +402,7 @@
 	boozepwr = 60
 	taste_description = "spiked butterscotch"
 	ph = 6.5
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum
 
 /datum/glass_style/shot_glass/rum
 	required_drink_type = /datum/reagent/consumable/ethanol/rum
@@ -459,6 +462,7 @@
 	ph = 3.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/wine
 
 /datum/glass_style/shot_glass/wine
 	required_drink_type = /datum/reagent/consumable/ethanol/wine

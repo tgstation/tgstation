@@ -45,6 +45,8 @@
 	))
 	// If the blood draining tab should be greyed out
 	var/inject_only = FALSE
+	// Whether the injection maintained by the plumbing network
+	var/inject_from_plumbing = FALSE
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
@@ -73,23 +75,31 @@
 
 /obj/machinery/iv_drip/ui_data(mob/user)
 	var/list/data = list()
+
+	data["hasInternalStorage"] = use_internal_storage
+	data["hasContainer"] = reagent_container ? TRUE : FALSE
+	data["canRemoveContainer"] = !use_internal_storage
+
+	data["mode"] = mode == IV_INJECTING ? TRUE : FALSE
+	data["canDraw"] = inject_only || (attached && !isliving(attached)) ? FALSE : TRUE
+	data["injectFromPlumbing"] = inject_from_plumbing
+
+	data["canAdjustTransfer"] = inject_from_plumbing && mode == IV_INJECTING ? FALSE : TRUE
 	data["transferRate"] = transfer_rate
 	data["transferStep"] = IV_TRANSFER_RATE_STEP
-	data["maxInjectRate"] = MAX_IV_TRANSFER_RATE
-	data["minInjectRate"] = MIN_IV_TRANSFER_RATE
-	data["mode"] = mode == IV_INJECTING ? TRUE : FALSE
-	data["connected"] = attached ? TRUE : FALSE
+	data["maxTransferRate"] = MAX_IV_TRANSFER_RATE
+	data["minTransferRate"] = MIN_IV_TRANSFER_RATE
+
+	data["hasObjectAttached"] = attached ? TRUE : FALSE
 	if(attached)
 		data["objectName"] = attached.name
-	data["injectOnly"] = inject_only || (attached && !isliving(attached)) ? TRUE : FALSE
-	data["containerAttached"] = reagent_container ? TRUE : FALSE
+
 	var/datum/reagents/drip_reagents = get_reagents()
 	if(drip_reagents)
 		data["containerCurrentVolume"] = round(drip_reagents.total_volume, IV_TRANSFER_RATE_STEP)
 		data["containerMaxVolume"] = drip_reagents.maximum_volume
 		data["containerReagentColor"] = mix_color_from_reagents(drip_reagents.reagent_list)
-	data["useInternalStorage"] = use_internal_storage
-	data["isContainerRemovable"] = !use_internal_storage
+
 	return data
 
 /obj/machinery/iv_drip/ui_act(action, params)
@@ -406,6 +416,7 @@
 	base_icon_state = "plumb"
 	density = TRUE
 	use_internal_storage = TRUE
+	inject_from_plumbing = TRUE
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload)
 	. = ..()

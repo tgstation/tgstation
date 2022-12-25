@@ -1,5 +1,0 @@
-author: "robotduinomm"
-delete-after: True
-changes:
-  - qol: "drones now start with engineering skillchip."
-  - qol: "drones can now interract with light boxes, rack parts, light replacers and stack of duct."
