@@ -2937,6 +2937,23 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/closet/syndicate{
+	name = "emergency megafauna combat closet";
+	desc = "A storage unit used to contain emergency combat gear, presumably for fighting megafauna."
+	},
+/obj/item/gun/energy/recharge/kinetic_accelerator/minebot,
+/obj/item/gun/energy/recharge/kinetic_accelerator/minebot,
+/obj/item/gun/energy/recharge/kinetic_accelerator/minebot,
+/obj/item/gun/energy/plasmacutter/adv,
+/obj/item/gun/energy/plasmacutter/adv,
+/obj/item/gun/energy/plasmacutter/adv,
+/obj/item/kinetic_crusher,
+/obj/item/kinetic_crusher,
+/obj/item/kinetic_crusher,
+/obj/item/paper{
+	default_raw_text = "This kit's been provided so you can fight off megafauna. DO NOT attempt to mine outside of the base, as that will result in contract termination. -Syndicate Command";
+	name = "memo"
+	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "wv" = (
