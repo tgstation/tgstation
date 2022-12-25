@@ -43,7 +43,7 @@
 	if(!owner.hud_used)
 		return
 
-	var/time_left_in_seconds = (duration - world.time) / 10
+	var/time_left_in_seconds = (duration - world.time) / (1 SECONDS)
 	var/amount_of_blur = clamp(time_left_in_seconds * BLUR_DURATION_TO_INTENSITY, 0.6, 3)
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
