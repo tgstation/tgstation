@@ -762,3 +762,119 @@
   - rscadd: Shambling cola vendors will now speak a different language each time they
       talk. Syndicate vendors will now speak codespeak.  Beach vendors will now speak
       beachbum.
+2022-12-23:
+  Fikou:
+  - bugfix: fixes kilo not having xmas trees
+  - bugfix: fixes simple/basic mob damage sounds in some places
+  - bugfix: fixes bald and shaved santas
+  Iamgoofball:
+  - bugfix: Fixes access_view on goodies not being respected by anything other than
+      department budget orders
+  Improvedname:
+  - rscadd: Adds some costumes to autodrobe
+  - bugfix: fixes deltastation vent at brig entrance
+  Jacquerel:
+  - rscadd: Mice who are fed cheese by hand will accept humans as friends, at least
+      until reminded otherwise by their rightful lord.
+  - bugfix: Fixed a runtime preventing mice from acting correctly when trying to flee
+      and also eat cheese at the same time.
+  LT3:
+  - bugfix: Tram windows are now properly flush with the tram walls.
+  - imageadd: Tram shuttle seats have been replaced with benches so people can sit
+      too close to each other for that real metro experience.
+  - code_imp: The icon for tram controls is now set in the tram controls subtype instead
+      of the map itself.
+  - code_imp: The tram floor tiles are now in a tram floor subtype instead of the
+      map itself.
+  ShizCalev:
+  - bugfix: There is now a message clarifying that you've been KICKED from the game
+      when the keysend flood autokick triggers.
+  - bugfix: Deaf mobs will no longer see PDA ringtones when a PDA receives a message.
+  SyncIt21:
+  - bugfix: correctly update canister appearance
+  - rscadd: Gas sensors recipe to RPD
+  - code_imp: linking all the stuff via multitool
+  - qol: make your own tank instead of moving around canisters
+  iwishforducks:
+  - rscadd: Pride pin quirk! Start the shift off with a pride pin in-hand.
+  - qol: Pride pins can be infinitely reskinned now.
+  lizardqueenlexi:
+  - bugfix: Fixed a couple of incorrect defines for mech categories.
+  mc-oofert:
+  - code_imp: Turned most syndicate mobs into basicmobs, making their AI better and
+      (possibly) more deadlier!
+  - rscdel: Removed syndicate mech pilots and syndicate civvies
+  san7890:
+  - bugfix: Bar/Restaurant Bots should no longer spam orders forever.
+  - bugfix: After a recent mishap with a high-ranking Syndicate operative, the uplink's
+      unlock code and failsafe code (the one that makes it blow up if you say it)
+      should never turn out to be the same.
+  vincentiusvin:
+  - bugfix: fixed sm activation logging.
+  winterboekje:
+  - spellcheck: drastically improves grammar for inserting something during organ
+      manipulation
+2022-12-24:
+  Mothblocks:
+  - bugfix: The briefcase in the MetaStation vault now contains the (surprisingly
+      good) spoils it's supposed to.
+  NamelessFairy:
+  - admin: Admins can now enable a custom hostile environment that prevents the shuttle
+      from leaving.
+2022-12-25:
+  Iamgoofball:
+  - bugfix: Dead people are no longer counted as crew when determining if 65% of the
+      station is revs for the auto-shuttle call
+  Jacquerel:
+  - bugfix: Pacifists can now hit people with pillows and holographic weapons, as
+      well as participate in boxing.
+  Jolly:
+  - code_imp: The lists in admin_verbs.dm was organized to be made better. This shouldn't
+      affect the panels admins use at all, since they're already alphabetized.
+  LemonInTheDark:
+  - bugfix: Using optimized multiz on > 2 z layer maps will no longer cause fucko
+      bungo
+  Melbert:
+  - qol: The preview dummy in the preferences menu now shows some visual quirks, like
+      Heterochromia or nearsighted.
+  - bugfix: Fixed some quirks which read a preference roundstart not applying the
+      preference.
+  - refactor: Refactored some bits of quirk datums and the quirk application process.
+  - bugfix: Husked bodies look husked again
+  Profakos:
+  - qol: the security department delivery crates are now have to be opened in the
+      security office, where the crates are delivered
+  Rhials:
+  - admin: anomaly events now give the option to occur at your current location when
+      triggered with the Trigger Event admin verb
+  - bugfix: Racks now properly construct again
+  - qol: Shadow Jaunter users now receive a brief warning before walking into light
+      and being forcibly un-jaunted.
+  Striders13:
+  - bugfix: fixed dice servants not receiving any indication of who their master is
+  Tattle:
+  - bugfix: all of the barstools on the Emergency escape shuttle are equipped with
+      a seatbelt
+  - bugfix: Wrapping balloon alerts are shorter and no longer contain spans
+  Unit2E:
+  - bugfix: Tinacusiate is now possible to make again.
+  ZephyrTFA:
+  - refactor: armor, from the ground up basically
+  etherware-novice:
+  - bugfix: added descriptions for holodeck floors and comp/mach frames
+  flowercuco:
+  - rscadd: during holidays the spread syndicate propaganda through posters objective
+      has a chance of spawning evil holiday poster
+  - bugfix: framework for holiday posters is more functional and modular
+  - code_imp: contraband.dm file and contraband.dmi file are both now poster.dm and
+      poster.dmi
+  lizardqueenlexi:
+  - bugfix: Implemented "jelly eyes" to make jellypeople and stargazers use the proper
+      eyes sprite.
+  mc-oofert:
+  - bugfix: You can now add mutations to advanced injectors without having an occupant
+      inside
+  robotduinomm:
+  - qol: drones now start with engineering skillchip.
+  - qol: drones can now interract with light boxes, rack parts, light replacers and
+      stack of duct.
