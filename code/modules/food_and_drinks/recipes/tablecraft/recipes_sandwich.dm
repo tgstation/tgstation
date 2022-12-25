@@ -114,4 +114,4 @@
 		/obj/item/food/grown/onion = 1,
 	)
 	result = /obj/item/food/philly_cheesesteak
-	subcategory = CAT_SANDWICH
+	category = CAT_SANDWICH

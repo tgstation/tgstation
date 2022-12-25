@@ -54,7 +54,6 @@
 /obj/item/clothing/shoes/sneakers/white
 	name = "white shoes"
 	greyscale_colors = "#ffffff#ffffff"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 95, FIRE = 0, ACID = 0)
 	icon_preview = 'icons/obj/previews.dmi'
 	icon_state_preview = "shoes_cloth"
 	armor_type = /datum/armor/sneakers_white

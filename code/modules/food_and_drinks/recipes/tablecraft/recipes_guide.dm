@@ -127,9 +127,9 @@
 	reaction = /datum/chemical_reaction/food/pancakebatter
 	category = CAT_BREAD
 
-/datum/crafting_recipe/food/reaction/ricebowl
-	result = /obj/item/food/salad/ricebowl
-	reaction = /datum/chemical_reaction/food/ricebowl
+/datum/crafting_recipe/food/reaction/uncooked_rice
+	result = /obj/item/food/uncooked_rice
+	reaction = /datum/chemical_reaction/food/uncooked_rice
 	category = CAT_SALAD
 
 /datum/crafting_recipe/food/reaction/bbqsauce
@@ -621,8 +621,8 @@
 	category = CAT_EGG
 
 /datum/crafting_recipe/food/microwave/boiledrice
-	reqs = list(/obj/item/food/salad/ricebowl = 1)
-	result = /obj/item/food/salad/boiledrice
+	reqs = list(/obj/item/food/uncooked_rice = 1)
+	result = /obj/item/food/boiledrice
 	category = CAT_SALAD
 
 /datum/crafting_recipe/food/microwave/boiledspaghetti
