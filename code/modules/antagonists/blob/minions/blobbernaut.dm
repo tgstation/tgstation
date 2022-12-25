@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!..())
-		return
+		return FALSE
 	var/list/blobs_in_area = range(2, src)
 
 	if(independent)
@@ -79,7 +79,7 @@
 	if(overmind)
 		image.color = overmind.blobstrain.complementary_color
 
-	flick_overlay_view(I, 8)
+	flick_overlay_view(image, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()

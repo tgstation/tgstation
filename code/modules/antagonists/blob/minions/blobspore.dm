@@ -132,15 +132,15 @@
 /** Ghost control a blob zombie */
 /mob/living/simple_animal/hostile/blob/blobspore/proc/humanize_pod(mob/user)
 	if((!overmind || istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak) || !istype(overmind.blobstrain, /datum/blobstrain/reagent/distributed_neurons)) && !is_zombie)
-		return
+		return FALSE
 	if(key || stat)
-		return
+		return FALSE
 	var/pod_ask = tgui_alert(usr, "Are you bulbous enough?", "Blob Spore", list("Yes", "No"))
 	if(pod_ask != "Yes" || QDELETED(src))
-		return
+		return FALSE
 	if(key)
 		to_chat(user, span_warning("Someone else already took this spore!"))
-		return
+		return FALSE
 	key = user.key
 	var/datum/antagonist/blobspore/spore = new
 	mind.add_antag_datum(spore)

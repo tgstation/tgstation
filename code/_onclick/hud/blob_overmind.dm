@@ -80,9 +80,10 @@
 	desc = "Produces a resource blob for [BLOB_STRUCTURE_RESOURCE_COST] resources.<br>Resource blobs will give you resources every few seconds."
 
 /atom/movable/screen/blob/resource_blob/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.createSpecial(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/special/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.create_special(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/special/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/node_blob
 	icon_state = "ui_node"
@@ -98,7 +99,7 @@
 /atom/movable/screen/blob/node_blob/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.createSpecial(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
+		B.create_special(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
 
 /atom/movable/screen/blob/factory_blob
 	icon_state = "ui_factory"
@@ -114,7 +115,7 @@
 /atom/movable/screen/blob/factory_blob/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.createSpecial(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
+		B.create_special(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/readapt_strain
 	icon_state = "ui_chemswap"
