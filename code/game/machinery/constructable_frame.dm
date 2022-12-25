@@ -1,5 +1,6 @@
 /obj/structure/frame
 	name = "frame"
+	desc = "A generic looking construction frame. One day this will be something greater."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
 	density = TRUE
@@ -24,6 +25,7 @@
 
 /obj/structure/frame/machine
 	name = "machine frame"
+	desc = "The standard frame for most station appliances. Its appearance and function is controlled by the inserted board."
 	var/list/components = null
 	var/list/req_components = null
 	var/list/req_component_names = null // user-friendly names of components
