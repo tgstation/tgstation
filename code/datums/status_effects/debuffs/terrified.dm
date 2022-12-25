@@ -45,10 +45,10 @@
 			to_chat(owner, span_alert("Your heart lurches in your chest. You can't take much more of this!"))
 
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by actively terrorizing someone
-		owner.visible_message(span_warning("[owner] clutches their chest for a moment, then collapses to the floor.") ,span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."), span_hear("You hear something heavy collide with the ground."))
+		owner.visible_message(span_warning("[owner] clutches [owner.p_their(TRUE)] chest for a moment, then collapses to the floor.") ,span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."), span_hear("You hear something heavy collide with the ground."))
 		owner.ForceContractDisease(/datum/disease/heart_failure)
 		owner.Unconscious(20 SECONDS)
-		qdel(src) //Victim's heart stops working and they pass out from fear.
+		qdel(src) //Victim passes out from fear, calming them down and permenantly damaging their heart.
 
 /datum/status_effect/terrified/get_examine_text()
 	. = ..()
@@ -73,7 +73,7 @@
 		return COMPONENT_BLOCK_MISC_HELP
 
 	terror_buildup -= TERROR_HUG_AMOUNT //maybe later I'll integrate some of the hug-related traits into this somehow
-	owner.visible_message(span_warning("[owner] seems to relax as [hugger] gives them a comforting hug."), span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."), span_hear("You hear shuffling and a sigh of relief."))
+	owner.visible_message(span_warning("[owner] seems to relax as [hugger] gives [owner.p_them(TRUE)] a comforting hug."), span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."), span_hear("You hear shuffling and a sigh of relief."))
 	return COMPONENT_BLOCK_MISC_HELP
 
 /**
@@ -110,7 +110,7 @@
 
 /datum/status_effect/terrified/proc/freak_out(mob/living/freaker)
 	terror_buildup += TERROR_HUG_AMOUNT
-	owner.visible_message(span_warning("[owner] recoils in fear as [freaker] waves their arms at them!"), span_boldwarning("The shadows lash out at you!"), span_hear("You hear someone shriek in fear. How embarassing!"))
+	owner.visible_message(span_warning("[owner] recoils in fear as [freaker] waves [freaker.p_their(TRUE)] arms at them!"), span_boldwarning("The shadows lash out at you!"), span_hear("You hear someone shriek in fear. How embarassing!"))
 	owner.emote("scream")
 
 /// The status effect popup for the terror status effect

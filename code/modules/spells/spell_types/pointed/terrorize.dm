@@ -15,7 +15,7 @@
 	. = ..()
 
 	if(!ishuman(cast_on))
-		owner.balloon_alert("use this on a human!")
+		to_chat(owner, span_notice("[cast_on] cannot be terrorized!"))
 		return FALSE
 
 	var/lit_tiles = 0
@@ -29,7 +29,7 @@
 			unlit_tiles++
 
 	if(lit_tiles > unlit_tiles)
-		owner.balloon_alert("target isn't in the dark!")
+		to_chat(owner, span_warning("[cast_on] must be surrounded by darkness to be terrorized!"))
 		return FALSE
 
 /datum/action/cooldown/spell/pointed/terrorize/cast(mob/living/carbon/human/cast_on)
