@@ -76,10 +76,10 @@
 
 /obj/structure/sign/barsign/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
-	if(!panel_open)
+	panel_open = !panel_open
+	if(panel_open)
 		to_chat(user, span_notice("You open the maintenance panel."))
 		set_sign(new /datum/barsign/hiddensigns/signoff)
-		panel_open = TRUE
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	to_chat(user, span_notice("You close the maintenance panel."))
 
@@ -89,7 +89,6 @@
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 	else
 		set_sign(chosen_sign)
-	panel_open = FALSE
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
