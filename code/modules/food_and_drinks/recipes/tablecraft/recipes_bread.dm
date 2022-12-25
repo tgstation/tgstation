@@ -148,7 +148,7 @@
 		/obj/item/food/croissant = 1,
 		/obj/item/stack/rods = 1,
 	)
-	result = /obj/item/food/raw_croissant
+	result = /obj/item/food/croissant/throwing
 	subcategory = CAT_BREAD
 	always_available = FALSE
 

@@ -445,7 +445,7 @@
 
 // Enhanced weaponised bread
 /obj/item/food/croissant/throwing
-	throwforce = 15
+	throwforce = 20
 	tastes = list("fluffy bread" = 1, "butter" = 2, "metal" = 1)
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/iron = 1)
 
