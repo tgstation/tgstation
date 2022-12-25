@@ -846,7 +846,7 @@
 				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 				var/image/splash_animation = image('icons/effects/effects.dmi', src, "splash_hydroponics")
 				splash_animation.color = mix_color_from_reagents(reagent_source.reagents.reagent_list)
-				flick_overlay_global(splash_animation, GLOB.clients, 0.8 SECONDS)
+				flick_overlay_global(splash_animation, GLOB.clients, 1.1 SECONDS)
 
 		if(visi_msg)
 			visible_message(span_notice("[visi_msg]."))
