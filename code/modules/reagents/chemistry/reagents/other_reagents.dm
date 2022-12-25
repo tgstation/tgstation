@@ -22,7 +22,7 @@
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
-	if(chems.has_reagent(type, 1))
+	if(chems.has_reagent(src.type, 1))
 		mytray.adjust_pestlevel(rand(2,3))
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
@@ -107,10 +107,6 @@
 			bloodsplatter.AddComponent(/datum/component/infective, viri_to_add)
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-
-/datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	. = ..()
-	mytray.adjust_pestlevel(rand(2,3))
 
 /datum/reagent/liquidgibs
 	name = "Liquid Gibs"
@@ -253,8 +249,9 @@
 
 ///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
 /datum/reagent/water/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(chems.has_reagent(src.type, 1))
-		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type) * 1))
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type)))
 		//You don't belong in this world, monster!
 		chems.remove_reagent(/datum/reagent/water, chems.get_reagent_amount(src.type))
 
@@ -274,11 +271,12 @@
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type)))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 0.1))
 		if(myseed)
-			myseed.adjust_instability(round(chems.get_reagent_amount(type) * 0.15))
+			myseed.adjust_instability(round(chems.get_reagent_amount(src.type) * 0.15))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/affected_mob)
 	..()
@@ -1099,7 +1097,7 @@
 /datum/reagent/uranium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	mytray.mutation_roll(user)
-	if(chems.has_reagent(src.type, 1))
+	if(chems.has_reagent(src, 1))
 		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 1))
 		mytray.adjust_toxic(round(chems.get_reagent_amount(src.type) * 2))
 
@@ -1996,7 +1994,7 @@
 /datum/reagent/ash/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type)))
 		mytray.adjust_weedlevel(-1)
 
 /datum/reagent/acetone
@@ -2171,7 +2169,7 @@
 		mytray.adjust_plant_health(round(salt * 0.18))
 		if(myseed)
 			myseed.adjust_production(-round(salt/10)-prob(salt%10))
-			myseed.adjust_potency(round(salt*1))
+			myseed.adjust_potency(round(salt))
 
 /datum/reagent/lye
 	name = "Lye"
@@ -2843,7 +2841,7 @@
 	if(chems.has_reagent(src.type, 1))
 		mytray.adjust_weedlevel(-1)
 		mytray.adjust_pestlevel(-1)
-		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type)))
 		if(myseed)
 			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))
 

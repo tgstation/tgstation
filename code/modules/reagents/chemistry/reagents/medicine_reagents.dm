@@ -48,12 +48,12 @@
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 1))
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type)))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type)))
 		mytray.adjust_pestlevel(-rand(1,5))
 		mytray.adjust_weedlevel(-rand(1,5))
-	if(chems.has_reagent(type, 3))
+	if(chems.has_reagent(src.type, 3))
 		switch(rand(100))
 			if(66  to 100)
 				mytray.mutatespecie()
@@ -150,8 +150,9 @@
 // Healing
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 3))
-	mytray.adjust_toxic(-round(chems.get_reagent_amount(type) * 3))
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 3))
+		mytray.adjust_toxic(-round(chems.get_reagent_amount(src.type) * 3))
 
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
@@ -840,7 +841,7 @@
 // FEED ME SEYMOUR
 /datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(type, 1))
+	if(chems.has_reagent(src.type, 1))
 		mytray.spawnplant()
 
 /// Calculates the amount of reagent to at a bare minimum make the target not dead
