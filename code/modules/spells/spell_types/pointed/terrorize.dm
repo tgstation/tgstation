@@ -1,8 +1,7 @@
 /datum/action/cooldown/spell/pointed/terrorize //Make sure this requires nightmare eyes to do
 	name = "Terrorize"
 	desc = "Send your target reeling in terror. If kept terrified for long enough, targets will grow overwhelmed and be weakened, making them easy prey."
-	button_icon = 'icons/effects/effects.dmi'
-	button_icon_state = "curse"
+	button_icon_state = "terrify"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	panel = null
