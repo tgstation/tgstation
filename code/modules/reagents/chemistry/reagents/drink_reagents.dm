@@ -11,6 +11,7 @@
 	taste_description = "oranges"
 	ph = 3.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice
 
 /datum/glass_style/drinking_glass/orangejuice
 	required_drink_type = /datum/reagent/consumable/orangejuice
@@ -37,6 +38,7 @@
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "tomatoes"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice
 
 /datum/glass_style/drinking_glass/tomatojuice
 	required_drink_type = /datum/reagent/consumable/tomatojuice
@@ -57,6 +59,7 @@
 	taste_description = "unbearable sourness"
 	ph = 2.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/limejuice
 
 /datum/glass_style/drinking_glass/limejuice
 	required_drink_type = /datum/reagent/consumable/limejuice
@@ -288,6 +291,7 @@
 	taste_description = "milk"
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/milk
 
 /datum/glass_style/drinking_glass/milk
 	required_drink_type = /datum/reagent/consumable/milk
@@ -324,6 +328,7 @@
 	color = "#DFDFC7" // rgb: 223, 223, 199
 	taste_description = "soy milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/soymilk
 
 /datum/glass_style/drinking_glass/soymilk
 	required_drink_type = /datum/reagent/consumable/soymilk
@@ -343,6 +348,7 @@
 	color = "#DFD7AF" // rgb: 223, 215, 175
 	taste_description = "creamy milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
 
 /datum/glass_style/drinking_glass/cream
 	required_drink_type = /datum/reagent/consumable/cream
@@ -395,6 +401,7 @@
 	taste_description = "tart black tea"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
+	default_container = /obj/item/reagent_containers/cup/glass/mug/tea
 
 /datum/glass_style/drinking_glass/tea
 	required_drink_type = /datum/reagent/consumable/tea
@@ -874,6 +881,7 @@
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "ice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/ice
 
 /datum/glass_style/drinking_glass/ice
 	required_drink_type = /datum/reagent/consumable/ice
@@ -1244,6 +1252,7 @@
 	color = "#80AF9C"
 	taste_description = "mint"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/menthol
 
 /datum/glass_style/drinking_glass/menthol
 	required_drink_type = /datum/reagent/consumable/menthol
@@ -1284,6 +1293,7 @@
 	color = "#F7D435"
 	taste_description = "pineapple"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/pineapplejuice
 
 /datum/glass_style/drinking_glass/pineapplejuice
 	required_drink_type = /datum/reagent/consumable/pineapplejuice
