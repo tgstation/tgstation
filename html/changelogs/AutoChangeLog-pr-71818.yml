@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "The maps are now placed in the center of Z level to avoid having parts getting into the inaccessible area"
