@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - qol: "Shadow Jaunter users now receive a brief warning before walking into light and being forcibly un-jaunted."

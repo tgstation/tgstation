@@ -1,4 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - bugfix: "Wrapping balloon alerts are shorter and no longer contain spans"
