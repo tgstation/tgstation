@@ -18,9 +18,8 @@
 
 /datum/status_effect/terrified/on_apply()
 	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(comfort_owner))
-	owner.add_fov_trait(type, FOV_270_DEGREES) //Terror induced tunnel vision
 	owner.emote("scream")
-	to_chat(owner, span_alert("The darkness closes in around you, shadows dance around the corners of your vision... Did something just move behind you?"))
+	to_chat(owner, span_alert("The darkness closes in around you, shadows dance around the corners of your vision... It feels like something is watching you!"))
 	return TRUE
 
 /datum/status_effect/terrified/on_remove()
@@ -38,16 +37,18 @@
 
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD) //The onset, minor effects of terror buildup
 		owner.apply_status_effect(/datum/status_effect/dizziness, 5 SECONDS * delta_time)
-		owner.adjust_stutter(5 SECONDS * delta_time)
+		owner.adjust_stutter(2 SECONDS * delta_time)
+		owner.set_jitter(2 SECONDS * delta_time)
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, it's time to start looking for a way out.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
-		owner.set_blurriness(2)
-		owner.set_jitter(5 SECONDS)
+		owner.set_blurriness(1)
+		owner.add_fov_trait(type, FOV_270_DEGREES) //Terror induced tunnel vision
 		if(prob(10)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
 			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
 			to_chat(owner, span_alert("Your heart lurches in your chest. You can't take much more of this!"))
 	else
+		owner.remove_fov_trait(type, FOV_270_DEGREES)
 		owner.set_blurriness(0)
 
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by actively terrorizing someone

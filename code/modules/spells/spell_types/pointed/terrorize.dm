@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/pointed/terrorize
 	name = "Terrorize"
-	desc = "Strike fear into your victim, inflicting them with terror buildup. \
+	desc = "Stare down a victim with your piercing red eyes, inflicting them with terror buildup. \
 		Targets must be in the dark to be terrorized and, if they remain in the darkness, will suffer increasingly adverse effects. \
 		Prey will be weakened, and may even pass out from terror buildup in extreme amounts. \
 		Swatting a victim with an open hand will boost terror buildup considerably."
@@ -11,7 +11,8 @@
 	spell_requirements = NONE
 	cooldown_time = 25 SECONDS
 	cast_range = 9
-	active_msg = "You prepare to terrify a target..."
+	active_msg = "You prepare to stare down a target..."
+	deactive_msg = "You refocus your eyes..."
 
 /datum/action/cooldown/spell/pointed/terrorize/is_valid_target(atom/cast_on)
 	. = ..()
