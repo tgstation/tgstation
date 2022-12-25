@@ -1,6 +1,9 @@
-/datum/action/cooldown/spell/pointed/terrorize //Make sure this requires nightmare eyes to do
+/datum/action/cooldown/spell/pointed/terrorize
 	name = "Terrorize"
-	desc = "Send your target reeling in terror. If kept terrified for long enough, targets will grow overwhelmed and be weakened, making them easy prey."
+	desc = "Strike fear into your victim, inflicting them with terror buildup. \
+		Targets must be in the dark to be terrorized, and as they remain in the darkness, will suffer increasingly adverse effects. \
+		Prey will be weakened, and may even pass out from terror buildup in extreme amounts. \
+		Hugging a victim will boost terror buildup considerably."
 	button_icon_state = "terrify"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -10,7 +13,7 @@
 	cast_range = 9
 	active_msg = "You prepare to terrify a target..."
 
-/datum/action/cooldown/spell/pointed/terrorize/is_valid_target(atom/cast_on) //Make sure the target is shrouded in darkness
+/datum/action/cooldown/spell/pointed/terrorize/is_valid_target(atom/cast_on)
 	. = ..()
 
 	if(!ishuman(cast_on))

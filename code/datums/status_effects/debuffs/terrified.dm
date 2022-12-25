@@ -1,5 +1,6 @@
-#define TERROR_DARKNESS_AMOUNT 10 //Amount of terror passively generated (or removed) on every tick based on lighting.
-#define TERROR_HUG_AMOUNT 60 //Amount of terror actively removed (or generated) upon being hugged.
+#define DARKNESS_TERROR_AMOUNT 10 //Amount of terror passively generated (or removed) on every tick based on lighting.
+#define PANIC_ATTACK_TERROR_AMOUNT 35 //How much terror a random panic attack will give the victim
+#define HUG_TERROR_AMOUNT 60 //Amount of terror actively removed (or generated) upon being hugged.
 
 #define DARKNESS_TERROR_CAP 400 //The soft cap on how much passively generated terror you can have. Takes 30 seconds to reach without the victim being actively terrorized.
 
@@ -41,7 +42,8 @@
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, it's time to start looking for a way out.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		owner.adjust_blurriness(2)
-		if(prob(15)) //We don't want to spam chat
+		if(prob(10)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
+			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
 			to_chat(owner, span_alert("Your heart lurches in your chest. You can't take much more of this!"))
 
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by actively terrorizing someone
@@ -65,16 +67,17 @@
 	return span_notice("[owner] looks rather anxious. [owner.p_they(TRUE)] could probably use a hug...")
 
 /// If we get a hug from a friend, we calm down! If we get a hug from a nightmare, we FREAK OUT.
-/datum/status_effect/terrified/proc/comfort_owner(datum/source, mob/living/hugger) //this doesnt work right now
+/datum/status_effect/terrified/proc/comfort_owner(datum/source, mob/living/hugger)
 	SIGNAL_HANDLER
 
 	if(is_species(hugger, /datum/species/shadow/nightmare)) //hey wait a minute, that's not a comforting, friendly hug!
-		addtimer(CALLBACK(src, PROC_REF(freak_out), hugger))
+		addtimer(CALLBACK(src, PROC_REF(freak_out), HUG_TERROR_AMOUNT))
+		owner.visible_message(span_warning("[owner] recoils in fear as [hugger] waves [hugger.p_their(TRUE)] arms at them!"), span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"), span_hear("You hear someone shriek in fear. How embarassing!"))
 		return COMPONENT_BLOCK_MISC_HELP
 
-	terror_buildup -= TERROR_HUG_AMOUNT //maybe later I'll integrate some of the hug-related traits into this somehow
+	terror_buildup -= HUG_TERROR_AMOUNT //maybe later I'll integrate some of the hug-related traits into this somehow
 	owner.visible_message(span_warning("[owner] seems to relax as [hugger] gives [owner.p_them(TRUE)] a comforting hug."), span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."), span_hear("You hear shuffling and a sigh of relief."))
-	return COMPONENT_BLOCK_MISC_HELP
+	return
 
 /**
  * Checks the surroundings of our victim and modifies terror buildup based on the amount of light nearby
@@ -95,22 +98,22 @@
 			unlit_tiles++
 
 	if(lit_tiles < unlit_tiles && terror_buildup < DARKNESS_TERROR_CAP)
-		terror_buildup += TERROR_DARKNESS_AMOUNT
+		terror_buildup += DARKNESS_TERROR_AMOUNT
 	else
-		terror_buildup -= TERROR_DARKNESS_AMOUNT
+		terror_buildup -= DARKNESS_TERROR_AMOUNT
 
 /**
- * Adds to the victim's terror buildup, and makes them scream.
+ * Adds to the victim's terror buildup, makes them scream, and knocks them over for a moment.
  *
- * Makes the victm scream and adds the TERROR_HUG_AMOUNT to their buildup.
- * Run async because the scream emote calls sleep.
+ * Makes the victm scream and adds the passed amount to their buildup.
+ * Knocks over the victim for a brief moment.
  *
- * * freaker - the nightmare who is terrorizing our victim.
+ * * amount - how much terror buildup this freakout will cause
  */
 
-/datum/status_effect/terrified/proc/freak_out(mob/living/freaker)
-	terror_buildup += TERROR_HUG_AMOUNT
-	owner.visible_message(span_warning("[owner] recoils in fear as [freaker] waves [freaker.p_their(TRUE)] arms at them!"), span_boldwarning("The shadows lash out at you!"), span_hear("You hear someone shriek in fear. How embarassing!"))
+/datum/status_effect/terrified/proc/freak_out(amount)
+	terror_buildup += amount
+	owner.Knockdown(0.5 SECONDS)
 	owner.emote("scream")
 
 /// The status effect popup for the terror status effect
@@ -119,5 +122,10 @@
 	desc = "You feel a supernatural darkness settle in around you, overwhelming you with panic!"
 	icon_state = "terrified"
 
-#undef TERROR_DARKNESS_AMOUNT
-#undef TERROR_HUG_AMOUNT
+#undef DARKNESS_TERROR_AMOUNT
+#undef PANIC_ATTACK_TERROR_AMOUNT
+#undef HUG_TERROR_AMOUNT
+#undef DARKNESS_TERROR_CAP
+#undef TERROR_FEAR_THRESHOLD
+#undef TERROR_PANIC_THRESHOLD
+#undef TERROR_HEART_ATTACK_THRESHOLD
