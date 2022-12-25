@@ -210,6 +210,12 @@
 		if(QDELETED(src))
 			return
 
+	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
+
+	var/image/splash_animation = image('icons/effects/effects.dmi', target, "splash")
+	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
+	flick_overlay_global(splash_animation, GLOB.clients, 0.8 SECONDS)
+
 	reagents.clear_reagents()
 
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
