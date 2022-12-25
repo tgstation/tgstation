@@ -140,7 +140,7 @@
 		/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/raw_croissant
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/throwing_croissant
 	name = "Throwing croissant"
@@ -149,7 +149,7 @@
 		/obj/item/stack/rods = 1,
 	)
 	result = /obj/item/food/croissant/throwing
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 	always_available = FALSE
 
 /datum/crafting_recipe/food/breaddog
