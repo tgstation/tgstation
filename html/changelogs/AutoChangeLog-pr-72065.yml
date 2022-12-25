@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - admin: "anomaly events now give the option to occur at your current location when triggered with the Trigger Event admin verb"
