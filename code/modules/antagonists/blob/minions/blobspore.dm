@@ -150,8 +150,7 @@
 /mob/living/simple_animal/hostile/blob/blobspore/proc/zombify(mob/living/carbon/human/target)
 	is_zombie = 1
 	if(target.wear_suit)
-		var/obj/item/clothing/suit/armor/armorRef = target.wear_suit
-		maxHealth += armorRef.armor.melee // That zombie's got armor, I want armor!
+		maxHealth += target.get_armor_rating(MELEE) // That zombie's got armor, I want armor!
 	maxHealth += 40
 	health = maxHealth
 	name = "blob zombie"
