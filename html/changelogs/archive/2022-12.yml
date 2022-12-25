@@ -821,3 +821,60 @@
   NamelessFairy:
   - admin: Admins can now enable a custom hostile environment that prevents the shuttle
       from leaving.
+2022-12-25:
+  Iamgoofball:
+  - bugfix: Dead people are no longer counted as crew when determining if 65% of the
+      station is revs for the auto-shuttle call
+  Jacquerel:
+  - bugfix: Pacifists can now hit people with pillows and holographic weapons, as
+      well as participate in boxing.
+  Jolly:
+  - code_imp: The lists in admin_verbs.dm was organized to be made better. This shouldn't
+      affect the panels admins use at all, since they're already alphabetized.
+  LemonInTheDark:
+  - bugfix: Using optimized multiz on > 2 z layer maps will no longer cause fucko
+      bungo
+  Melbert:
+  - qol: The preview dummy in the preferences menu now shows some visual quirks, like
+      Heterochromia or nearsighted.
+  - bugfix: Fixed some quirks which read a preference roundstart not applying the
+      preference.
+  - refactor: Refactored some bits of quirk datums and the quirk application process.
+  - bugfix: Husked bodies look husked again
+  Profakos:
+  - qol: the security department delivery crates are now have to be opened in the
+      security office, where the crates are delivered
+  Rhials:
+  - admin: anomaly events now give the option to occur at your current location when
+      triggered with the Trigger Event admin verb
+  - bugfix: Racks now properly construct again
+  - qol: Shadow Jaunter users now receive a brief warning before walking into light
+      and being forcibly un-jaunted.
+  Striders13:
+  - bugfix: fixed dice servants not receiving any indication of who their master is
+  Tattle:
+  - bugfix: all of the barstools on the Emergency escape shuttle are equipped with
+      a seatbelt
+  - bugfix: Wrapping balloon alerts are shorter and no longer contain spans
+  Unit2E:
+  - bugfix: Tinacusiate is now possible to make again.
+  ZephyrTFA:
+  - refactor: armor, from the ground up basically
+  etherware-novice:
+  - bugfix: added descriptions for holodeck floors and comp/mach frames
+  flowercuco:
+  - rscadd: during holidays the spread syndicate propaganda through posters objective
+      has a chance of spawning evil holiday poster
+  - bugfix: framework for holiday posters is more functional and modular
+  - code_imp: contraband.dm file and contraband.dmi file are both now poster.dm and
+      poster.dmi
+  lizardqueenlexi:
+  - bugfix: Implemented "jelly eyes" to make jellypeople and stargazers use the proper
+      eyes sprite.
+  mc-oofert:
+  - bugfix: You can now add mutations to advanced injectors without having an occupant
+      inside
+  robotduinomm:
+  - qol: drones now start with engineering skillchip.
+  - qol: drones can now interract with light boxes, rack parts, light replacers and
+      stack of duct.
