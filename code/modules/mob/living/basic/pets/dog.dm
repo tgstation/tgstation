@@ -9,7 +9,7 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	speak_emote = list("barks", "woofs")
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	see_in_dark = 5
 	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/dog
@@ -374,16 +374,16 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if(def_zone)
 		if(def_zone == BODY_ZONE_HEAD)
 			if(inventory_head)
-				armorval = inventory_head.armor.getRating(type)
+				armorval = inventory_head.get_armor_rating(type)
 		else
 			if(inventory_back)
-				armorval = inventory_back.armor.getRating(type)
+				armorval = inventory_back.get_armor_rating(type)
 		return armorval
 	else
 		if(inventory_head)
-			armorval += inventory_head.armor.getRating(type)
+			armorval += inventory_head.get_armor_rating(type)
 		if(inventory_back)
-			armorval += inventory_back.armor.getRating(type)
+			armorval += inventory_back.get_armor_rating(type)
 	return armorval*0.5
 
 /mob/living/basic/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
@@ -592,7 +592,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_state = "narsian"
 	icon_living = "narsian"
 	icon_dead = "narsian_dead"
-	faction = list("neutral", "cult")
+	faction = list(FACTION_NEUTRAL, "cult")
 	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
 	unique_pet = TRUE

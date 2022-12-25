@@ -14,7 +14,7 @@
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	max_integrity = 250
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/disk_nuclear
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	/// Whether we're a real nuke disk or not.
 	var/fake = FALSE
@@ -22,6 +22,11 @@
 	var/turf/last_secured_location
 	/// The last world time the disk moved.
 	var/last_disk_move
+
+/datum/armor/disk_nuclear
+	bomb = 30
+	fire = 100
+	acid = 100
 
 /obj/item/disk/nuclear/Initialize(mapload)
 	. = ..()

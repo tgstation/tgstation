@@ -345,7 +345,7 @@
 	flags_inv = HIDEHAIR
 	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 75, ACID = 50) //Weak melee protection, because you can wear it on your head
+	armor_type = /datum/armor/cup_bucket
 	slot_equipment_priority = list( \
 		ITEM_SLOT_BACK, ITEM_SLOT_ID,\
 		ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
@@ -356,6 +356,11 @@
 		ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
 		ITEM_SLOT_DEX_STORAGE
 	)
+
+/datum/armor/cup_bucket
+	melee = 10
+	fire = 75
+	acid = 50
 
 /obj/item/reagent_containers/cup/bucket/Initialize(mapload, vol)
 	if(greyscale_colors == initial(greyscale_colors))
@@ -372,8 +377,12 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 50)
+	armor_type = /datum/armor/bucket_wooden
 	resistance_flags = FLAMMABLE
+
+/datum/armor/bucket_wooden
+	melee = 10
+	acid = 50
 
 /obj/item/reagent_containers/cup/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
@@ -434,6 +443,10 @@
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	var/obj/item/grinded
+
+/datum/armor/bucket_wooden
+	melee = 10
+	acid = 50
 
 /obj/item/reagent_containers/cup/mortar/AltClick(mob/user)
 	if(grinded)

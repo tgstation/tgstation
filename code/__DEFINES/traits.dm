@@ -687,12 +687,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Receives echolocation images.
 #define TRAIT_ECHOLOCATION_RECEIVER "echolocation_receiver"
 
-//Medical Categories for quirks
-#define CAT_QUIRK_ALL 0
-#define CAT_QUIRK_NOTES 1
-#define CAT_QUIRK_MINOR_DISABILITY 2
-#define CAT_QUIRK_MAJOR_DISABILITY 3
-
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define UNCONSCIOUS_TRAIT "unconscious"

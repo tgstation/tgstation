@@ -99,8 +99,8 @@
 ///Apply the trickery image and animation
 /datum/component/seethrough/proc/trick_mob(mob/fool)
 	var/datum/hud/our_hud = fool.hud_used
-	var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
-	seethrough.unhide_plane(fool)
+	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+		seethrough.unhide_plane(fool)
 
 	var/image/user_overlay = new(parent)
 	user_overlay.loc = parent
@@ -145,8 +145,9 @@
 		fool.client?.images -= trickery_image
 		UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 		var/datum/hud/our_hud = fool.hud_used
-		var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
-		seethrough.hide_plane(fool)
+
+		for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+			seethrough.hide_plane(fool)
 
 	tricked_mobs.Cut()
 
@@ -158,5 +159,5 @@
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 	RegisterSignal(fool, COMSIG_MOB_LOGIN, PROC_REF(trick_mob))
 	var/datum/hud/our_hud = fool.hud_used
-	var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
-	seethrough.hide_plane(fool)
+	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+		seethrough.hide_plane(fool)

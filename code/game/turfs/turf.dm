@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/overfloor_placed = FALSE
 	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
+	/// If there is a lattice underneat this turf. Used for the attempt_lattice_replacement proc to determine if it should place lattice.
+	var/lattice_underneath = TRUE
 
 	// baseturfs can be either a list or a single turf type.
 	// In class definition like here it should always be a single type.
@@ -133,18 +135,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	levelupdate()
 
-	if (length(smoothing_groups))
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
-			assert_sorted(smoothing_groups, "[type].smoothing_groups")
+	SETUP_SMOOTHING()
 
-		SET_BITFLAG_LIST(smoothing_groups)
-	if (length(canSmoothWith))
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
-			assert_sorted(canSmoothWith, "[type].canSmoothWith")
-
-		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
-			smoothing_flags |= SMOOTH_OBJ
-		SET_BITFLAG_LIST(canSmoothWith)
 	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
@@ -175,11 +167,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if(uses_integrity)
 		atom_integrity = max_integrity
-
-		if (islist(armor))
-			armor = getArmor(arglist(armor))
-		else if (!armor)
-			armor = getArmor()
 
 	return INITIALIZE_HINT_NORMAL
 

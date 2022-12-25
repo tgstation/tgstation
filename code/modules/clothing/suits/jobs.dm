@@ -27,7 +27,10 @@
 		/obj/item/storage/bag/plants,
 	)
 	species_exception = list(/datum/species/golem)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/suit_apron
+
+/datum/armor/suit_apron
+	bio = 50
 
 /obj/item/clothing/suit/apron/waders
 	name = "horticultural waders"
@@ -66,7 +69,7 @@
 	inhand_icon_state = "chef"
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/toggle_chef
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/kitchen,
@@ -77,6 +80,9 @@
 	species_exception = list(/datum/species/golem)
 
 //Cook
+/datum/armor/toggle_chef
+	bio = 50
+
 /obj/item/clothing/suit/apron/chef
 	name = "cook's apron"
 	desc = "A basic, dull, white chef's apron."
@@ -98,9 +104,16 @@
 	inhand_icon_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
+	armor_type = /datum/armor/jacket_det_suit
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
+
+/datum/armor/jacket_det_suit
+	melee = 25
+	bullet = 10
+	laser = 25
+	energy = 35
+	acid = 45
 
 /obj/item/clothing/suit/jacket/det_suit/Initialize(mapload)
 	. = ..()
@@ -277,11 +290,18 @@
 		/obj/item/storage/bag/books,
 		/obj/item/tank/internals,
 	)
-	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
+	armor_type = /datum/armor/jacket_curator
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
 
 //Robotocist
+/datum/armor/jacket_curator
+	melee = 25
+	bullet = 10
+	laser = 25
+	energy = 35
+	acid = 45
+
 /obj/item/clothing/suit/hooded/techpriest
 	name = "techpriest robes"
 	desc = "For those who REALLY love their toasters."
@@ -308,8 +328,13 @@
 	name = "research director's coat"
 	desc = "A mix between a labcoat and just a regular coat. It's made out of a special anti-bacterial, anti-acidic, and anti-biohazardous synthetic fabric."
 	icon_state = "labcoat_rd"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 75, FIRE = 75, ACID = 75)
+	armor_type = /datum/armor/jacket_research_director
 	body_parts_covered = CHEST|GROIN|ARMS
+
+/datum/armor/jacket_research_director
+	bio = 75
+	fire = 75
+	acid = 75
 
 /obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
 	. = ..()

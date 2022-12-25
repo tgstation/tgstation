@@ -29,8 +29,8 @@
 /code/modules/awaymissions/ @Fikou
 /code/modules/mining/ @Fikou
 /code/modules/mod/ @Fikou
-/code/modules/ruins/lavalandruin_code/ @Fikou
-/code/modules/ruins/lavaland_ruin_code.dm @Fikou
+/code/modules/mapfluff/ruins/lavalandruin_code/ @Fikou
+/code/modules/mapfluff/ruins/lavaland_ruin_code.dm @Fikou
 
 # JohnFulpWizard
 
@@ -170,6 +170,13 @@
 /code/__DEFINES/reactions.dm @Pickle-Coding
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
+
+# ZephyrTFA
+
+/code/datums/json_savefile.dm @ZephyrTFA
+/code/datums/armor/ @ZephyrTFA
+/code/modules/client/preferences.dm @ZephyrTFA
+/code/modules/client/preferences_savefile.dm @ZephyrTFA
 
 # MULTIPLE OWNERS
 
