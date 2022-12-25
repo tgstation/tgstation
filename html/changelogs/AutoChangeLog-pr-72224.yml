@@ -1,0 +1,4 @@
+author: "kawoppi"
+delete-after: True
+changes:
+  - bugfix: "xmas crackers are now tiny instead of normal sized"
