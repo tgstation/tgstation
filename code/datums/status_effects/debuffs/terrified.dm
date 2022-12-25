@@ -43,6 +43,7 @@
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, it's time to start looking for a way out.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		owner.set_blurriness(2)
+		owner.set_jitter(5 SECONDS)
 		if(prob(10)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
 			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
 			to_chat(owner, span_alert("Your heart lurches in your chest. You can't take much more of this!"))
@@ -100,8 +101,9 @@
 		else
 			unlit_tiles++
 
-	if(lit_tiles < unlit_tiles && terror_buildup < DARKNESS_TERROR_CAP)
-		terror_buildup += DARKNESS_TERROR_AMOUNT
+	if(lit_tiles < unlit_tiles)
+		if(terror_buildup < DARKNESS_TERROR_CAP)
+			terror_buildup += DARKNESS_TERROR_AMOUNT
 	else
 		terror_buildup -= DARKNESS_TERROR_AMOUNT
 
