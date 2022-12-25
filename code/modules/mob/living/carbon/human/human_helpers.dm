@@ -11,7 +11,7 @@
 	var/list/most_seen_damage = list() // This looks like: ({Damage type} = {Frequency of the most common description}, ...)
 	var/list/final_descriptions = list() // This looks like: ({Damage type} = {Most common damage description for that type}, ...)
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		for(var/i = 1, i < part.damage_examines.len, i++)
+		for(var/i in 1 to part.damage_examines.len)
 			var/damage_type = part.damage_examines[i]
 			var/damage_desc = part.damage_examines[damage_type]
 			if(!seen_damage[damage_type])
@@ -24,7 +24,7 @@
 			if(type_description_list[damage_desc] > most_seen_damage[damage_type])
 				most_seen_damage[damage_type] = type_description_list[damage_desc]
 				final_descriptions[damage_type] = damage_desc
- 	return final_descriptions
+	return final_descriptions
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
