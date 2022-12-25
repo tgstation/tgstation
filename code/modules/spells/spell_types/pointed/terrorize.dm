@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/terrorize
 	name = "Terrorize"
 	desc = "Strike fear into your victim, inflicting them with terror buildup. \
-		Targets must be in the dark to be terrorized, and as they remain in the darkness, will suffer increasingly adverse effects. \
+		Targets must be in the dark to be terrorized and, if they remain in the darkness, will suffer increasingly adverse effects. \
 		Prey will be weakened, and may even pass out from terror buildup in extreme amounts. \
 		Hugging a victim will boost terror buildup considerably."
 	button_icon_state = "terrify"
