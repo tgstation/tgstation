@@ -500,6 +500,7 @@
 	cost = 10
 	minimum_players = 25
 	repeatable = TRUE
+	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur, /datum/dynamic_ruleset/roundstart/revs)
 	var/list/vents = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
