@@ -6,7 +6,7 @@
 	base_icon_state = "lattice"
 	density = FALSE
 	anchored = TRUE
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/structure_lattice
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
@@ -17,6 +17,11 @@
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
 
+
+/datum/armor/structure_lattice
+	melee = 50
+	fire = 80
+	acid = 50
 
 /obj/structure/lattice/examine(mob/user)
 	. = ..()
@@ -81,6 +86,11 @@
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
+/datum/armor/structure_lattice
+	melee = 50
+	fire = 80
+	acid = 50
+
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")
 
@@ -101,6 +111,11 @@
 	desc = "A heavily reinforced catwalk used to build bridges in hostile environments. It doesn't look like anything could make this budge."
 	resistance_flags = INDESTRUCTIBLE
 
+/datum/armor/structure_lattice
+	melee = 50
+	fire = 80
+	acid = 50
+
 /obj/structure/lattice/catwalk/mining/deconstruction_hints(mob/user)
 	return
 
@@ -117,6 +132,11 @@
 	canSmoothWith = SMOOTH_GROUP_LATTICE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+
+/datum/armor/structure_lattice
+	melee = 50
+	fire = 80
+	acid = 50
 
 /obj/structure/lattice/lava/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>, but the <i>heat treatment will shatter off</i>. There's space for a <i>tile</i>.")

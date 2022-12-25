@@ -17,17 +17,15 @@
 	desc = "You just don't care as much as other people. That's nice to have in a place like this, I guess."
 	icon = "meh"
 	value = 4
-	mood_quirk = TRUE
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
 	mail_goodies = list(/obj/item/hourglass)
 
-/datum/quirk/apathetic/add()
-	if (quirk_holder.mob_mood)
-		quirk_holder.mob_mood.mood_modifier -= 0.2
+/datum/quirk/apathetic/add(client/client_source)
+	quirk_holder.mob_mood?.mood_modifier -= 0.2
 
 /datum/quirk/apathetic/remove()
-	if (quirk_holder.mob_mood)
-		quirk_holder.mob_mood.mood_modifier += 0.2
+	quirk_holder.mob_mood?.mood_modifier += 0.2
 
 /datum/quirk/drunkhealing
 	name = "Drunken Resilience"
@@ -37,7 +35,7 @@
 	gain_text = "<span class='notice'>You feel like a drink would do you good.</span>"
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
-	processing_quirk = TRUE
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/booze)
 
 /datum/quirk/drunkhealing/process(delta_time)
@@ -85,10 +83,10 @@
 		/obj/item/toy/figure/clown,
 	)
 
-/datum/quirk/item_quirk/clown_enjoyer/add_unique()
+/datum/quirk/item_quirk/clown_enjoyer/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/clothing/accessory/clown_enjoyer_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
-/datum/quirk/item_quirk/clown_enjoyer/add()
+/datum/quirk/item_quirk/clown_enjoyer/add(client/client_source)
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.show_to(quirk_holder)
 
@@ -115,10 +113,10 @@
 		/obj/item/toy/crayon/spraycan/mimecan,
 	)
 
-/datum/quirk/item_quirk/mime_fan/add_unique()
+/datum/quirk/item_quirk/mime_fan/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/clothing/accessory/mime_fan_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
-/datum/quirk/item_quirk/mime_fan/add()
+/datum/quirk/item_quirk/mime_fan/add(client/client_source)
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.show_to(quirk_holder)
 
@@ -141,7 +139,7 @@
 	mob_trait = TRAIT_FRIENDLY
 	gain_text = "<span class='notice'>You want to hug someone.</span>"
 	lose_text = "<span class='danger'>You no longer feel compelled to hug others.</span>"
-	mood_quirk = TRUE
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	medical_record_text = "Patient demonstrates low-inhibitions for physical contact and well-developed arms. Requesting another doctor take over this case."
 	mail_goodies = list(/obj/item/storage/box/hug)
 
@@ -151,7 +149,7 @@
 	icon = "grin"
 	value = 4
 	mob_trait = TRAIT_JOLLY
-	mood_quirk = TRUE
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
 	mail_goodies = list(/obj/item/clothing/mask/joy)
 
@@ -177,7 +175,7 @@
 	medical_record_text = "Patient brain scans show a highly-developed auditory pathway."
 	mail_goodies = list(/obj/effect/spawner/random/entertainment/musical_instrument, /obj/item/instrument/piano_synth/headphones)
 
-/datum/quirk/item_quirk/musician/add_unique()
+/datum/quirk/item_quirk/musician/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/choice_beacon/music, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/night_vision
@@ -195,7 +193,7 @@
 		/obj/item/skillchip/light_remover,
 	)
 
-/datum/quirk/night_vision/add()
+/datum/quirk/night_vision/add(client/client_source)
 	refresh_quirk_holder_eyes()
 
 /datum/quirk/night_vision/remove()
@@ -244,7 +242,7 @@
 		/obj/item/storage/fancy/candle_box,
 	)
 
-/datum/quirk/item_quirk/spiritual/add_unique()
+/datum/quirk/item_quirk/spiritual/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/storage/fancy/candle_box, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 	give_item_to_holder(/obj/item/storage/box/matches, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
@@ -264,7 +262,7 @@
 		/obj/item/canvas/twentythree_twentythree
 	)
 
-/datum/quirk/item_quirk/tagger/add_unique()
+/datum/quirk/item_quirk/tagger/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/toy/crayon/spraycan, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/voracious
@@ -282,9 +280,10 @@
 	desc = "You possess excellent communication skills in sign language."
 	icon = "hands"
 	value = 4
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/clothing/gloves/radio)
 
-/datum/quirk/item_quirk/signer/add_unique()
+/datum/quirk/item_quirk/signer/add_unique(client/client_source)
 	quirk_holder.AddComponent(/datum/component/sign_language)
 	var/obj/item/clothing/gloves/gloves_type = /obj/item/clothing/gloves/radio
 	if(isplasmaman(quirk_holder))

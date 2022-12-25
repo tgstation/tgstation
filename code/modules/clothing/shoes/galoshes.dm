@@ -8,7 +8,7 @@
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 40, ACID = 75)
+	armor_type = /datum/armor/shoes_galoshes
 	can_be_bloody = FALSE
 	custom_price = PAYCHECK_CREW * 3
 	can_be_tied = FALSE
@@ -17,6 +17,11 @@
 	name = "absorbent galoshes"
 	desc = "A pair of purple rubber boots, designed to prevent slipping on wet surfaces while also drying them."
 	icon_state = "galoshes_dry"
+
+/datum/armor/shoes_galoshes
+	bio = 100
+	fire = 40
+	acid = 75
 
 /obj/item/clothing/shoes/galoshes/dry/Initialize(mapload)
 	. = ..()

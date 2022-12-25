@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "ghosts cant mess with RCD & PLumbing RCD"
