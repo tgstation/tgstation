@@ -14,8 +14,8 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/mob/living/simple_animal/hostile/asteroid/goliath = list(":H Watch out for that Goliath!", ":H Found a Goliath!", ":H There's a goliath here, don't get hit by the tendrils!"),
 	/mob/living/simple_animal/hostile/asteroid/gutlunch = list(":H Gutlunch here!", ":H Found a Gutlunch!", ":H Got a Gutlunch here!"),
 	/mob/living/simple_animal/hostile/asteroid/hivelord = list(":H Hivelord here!", ":H Spotted a Hivelord!", ":H Hivelord!"),
-	/mob/living/simple_animal/hostile/asteroid/ice_demon = list(":H Ice demon here!". ":H Spotted a real Ice Demon!", ":h Ice demon out here!"),
-	/mob/living/simple_animal/hostile/asteroid/ice_whelp = list(":H Got an ice whelp!". ":H Ice whelp out here!", ":H Spotted an ice whelp!"),
+	/mob/living/simple_animal/hostile/asteroid/ice_demon = list(":H Ice demon here!", ":H Spotted a real Ice Demon!", ":H Ice demon out here!"),
+	/mob/living/simple_animal/hostile/asteroid/ice_whelp = list(":H Got an ice whelp!", ":H Ice whelp out here!", ":H Spotted an ice whelp!"),
 	/mob/living/simple_animal/hostile/asteroid/lobstrosity = list(":H Lobstrosity!", ":H Look out for that Lobstrosity!", ":H Lobstrosity here!"),
 	/mob/living/simple_animal/hostile/asteroid/polarbear = list(":H Polar bear here!", ":H Watch out for those bear claws!", ":H Polar bear over here!"),
 	/mob/living/simple_animal/hostile/asteroid/wolf = list(":H Spotted a white wolf!", ":H Watch out for that wolf!", ":H Careful, wolf about!"),
@@ -68,10 +68,9 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 
 /datum/job/shaft_miner/proc/point_speech(mob/pointing_miner, atom/movable/object_of_interest)
 	SIGNAL_HANDLER
-	for(var/path in GLOB.miner_callouts)
-		if(istype(object_of_interest, path))
-			pointing_miner.say(pick(GLOB.miner_callouts[]), forced = "Miner Pointing Callouts")
-			break
+	if(object_of_interest.type in GLOB.miner_callouts)
+		var/list/lines = GLOB.miner_callouts[object_of_interest.type]
+		pointing_miner.say(pick(lines), forced = "Miner Pointing Callouts")
 
 /datum/outfit/job/miner
 	name = "Shaft Miner"
