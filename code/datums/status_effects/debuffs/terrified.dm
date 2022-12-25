@@ -95,7 +95,7 @@
 	var/lit_tiles = 0
 	var/unlit_tiles = 0
 
-	for(var/turf/open/turf_to_check in view(2, owner))
+	for(var/turf/open/turf_to_check in range(1, owner.loc))
 		var/light_amount = turf_to_check.get_lumcount()
 		if(light_amount > 0.2)
 			lit_tiles++
