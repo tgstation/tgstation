@@ -21,7 +21,7 @@
 	var/lit_tiles = 0
 	var/unlit_tiles = 0
 
-	for(var/turf/turf_to_check in view(1, get_turf(cast_on)))
+	for(var/turf/open/turf_to_check in view(2, cast_on))
 		var/light_amount = turf_to_check.get_lumcount()
 		if(light_amount > 0.2)
 			lit_tiles++
@@ -38,8 +38,7 @@
 	if(cast_on.has_status_effect(/datum/status_effect/terrified))
 		var/datum/status_effect/terrified/terrified_status_effect
 		terrified_status_effect.terror_buildup += 125 //It stacks, and then some
-		var/alert_message = pick("what was that?", "did you hear that?", "behind you!", "something's coming!")
-		cast_on.balloon_alert("[alert_message]")
+	else
+		cast_on.apply_status_effect(/datum/status_effect/terrified)
 
-	cast_on.apply_status_effect(/datum/status_effect/terrified)
-	cast_on.balloon_alert_to_viewers("AUGHGH", "AIIEEE")
+	cast_on.balloon_alert("spooked!")
