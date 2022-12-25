@@ -9,7 +9,7 @@
 /datum/status_effect/organ_set_bonus/goliath
 	organs_needed = 4
 	bonus_activate_text = span_notice("goliath DNA is deeply infused with you! You can now endure walking on lava!")
-	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to survive on lava...")
+	bonus_deactivate_text = span_notice("You feel your muscle mass shrink and the tendrils around your skin wither. Your Goliath DNA is mostly gone and so is your ability to survive lava.")
 
 /datum/status_effect/organ_set_bonus/goliath/enable_bonus()
 	. = ..()
@@ -57,7 +57,7 @@
 
 /obj/item/organ/internal/lungs/lavaland/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "small tendrils grow on their back.", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "back is covered in small tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 ///goliath brain. you can't use gloves but one of your arms becomes a tendril hammer that can be used to mine!
@@ -171,7 +171,7 @@
 
 /obj/item/organ/internal/heart/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "thick hide plates are growing under the skin", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 #undef GOLIATH_COLORS
