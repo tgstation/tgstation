@@ -3,7 +3,7 @@
 	desc = "Stare down a victim with your piercing red eyes, inflicting them with terror buildup. \
 		Targets must be in the dark to be terrorized and, if they remain in the darkness, will suffer increasingly adverse effects. \
 		Prey will be weakened, and may even pass out from terror buildup in extreme amounts. \
-		Swatting a victim with an open hand will boost terror buildup considerably."
+		Swatting a victim with an open hand will boost terror buildup considerably." //TODO: move this to the antag tools popup thing
 	button_icon_state = "terrify"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -33,7 +33,7 @@
 
 	if(lit_tiles > unlit_tiles)
 		to_chat(owner, span_warning("[cast_on] must be surrounded by darkness to be terrorized!"))
-		return FALSE //Having a light on you will most likely block this, meaning you'll probably need to get an initial hit on the victim with the light eater
+		return FALSE //Having a light on you will usually block this, meaning you'll probably need to get an initial hit on the victim with the light eater
 
 /datum/action/cooldown/spell/pointed/terrorize/cast(mob/living/carbon/human/cast_on)
 	. = ..()

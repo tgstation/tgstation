@@ -2,7 +2,7 @@
 #define PANIC_ATTACK_TERROR_AMOUNT 35 //How much terror a random panic attack will give the victim
 #define HUG_TERROR_AMOUNT 60 //Amount of terror actively removed (or generated) upon being hugged.
 
-#define DARKNESS_TERROR_CAP 400 //The soft cap on how much passively generated terror you can have. Takes 30 seconds to reach without the victim being actively terrorized.
+#define DARKNESS_TERROR_CAP 400 //The soft cap on how much passively generated terror you can have. Takes about 30 seconds to reach without the victim being actively terrorized.
 
 #define TERROR_FEAR_THRESHOLD 140 //The terror_buildup threshold for minor fear effects to occur.
 #define TERROR_PANIC_THRESHOLD 300 //The terror_buildup threshold for the more serious effects. Takes about 20 seconds of darkness buildup to reach
@@ -24,7 +24,7 @@
 
 /datum/status_effect/terrified/on_remove()
 	UnregisterSignal(owner, COMSIG_CARBON_HELPED)
-	owner.remove_fov_trait(type, FOV_270_DEGREES)
+	owner.remove_fov_trait(src, FOV_270_DEGREES)
 
 /datum/status_effect/terrified/tick(delta_time, times_fired)
 	. = ..()
@@ -35,22 +35,22 @@
 		qdel(src)
 
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD) //The onset, minor effects of terror buildup
-		owner.apply_status_effect(/datum/status_effect/dizziness, 5 SECONDS * delta_time)
-		owner.adjust_stutter(2 SECONDS * delta_time)
-		owner.set_jitter(5 SECONDS * delta_time)
+		owner.adjust_dizzy_up_to(10 SECONDS * delta_time, 10 SECONDS)
+		owner.adjust_stutter_up_to(10 SECONDS * delta_time, 10 SECONDS)
+		owner.adjust_jitter_up_to(10 SECONDS * delta_time, 10 SECONDS)
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, it's time to start looking for a way out.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
-		owner.add_fov_trait(type, FOV_270_DEGREES) //Terror induced tunnel vision
+		owner.add_fov_trait(src, FOV_270_DEGREES) //Terror induced tunnel vision
+		owner.adjust_eye_blur_up_to(10 SECONDS * delta_time, 10 SECONDS)
 		if(prob(5)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
 			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
-			to_chat(owner, span_alert("Your heart lurches in your chest. You can't take much more of this!"))
+			owner.visible_message(span_warning("[owner] drops to the floor for a moment, clutching their chest."), span_alert("Your heart lurches in your chest. You can't take much more of this!"), span_hear("You hear a grunt."))
 	else
-		owner.remove_fov_trait(type, FOV_270_DEGREES)
-		//PUT THE EYE BLUR STUFF BACK
+		owner.remove_fov_trait(src, FOV_270_DEGREES)
 
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by actively terrorizing someone
-		owner.visible_message(span_warning("[owner] clutches [owner.p_their(TRUE)] chest for a moment, then collapses to the floor.") ,span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."), span_hear("You hear something heavy collide with the ground."))
+		owner.visible_message(span_warning("[owner] clutches [owner.p_their()] chest for a moment, then collapses to the floor."), span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."), span_hear("You hear something heavy collide with the ground."))
 		owner.ForceContractDisease(/datum/disease/heart_failure)
 		owner.Unconscious(20 SECONDS)
 		qdel(src) //Victim passes out from fear, calming them down and permenantly damaging their heart.
@@ -58,14 +58,14 @@
 /datum/status_effect/terrified/get_examine_text()
 	. = ..()
 
-	if(terror_buildup >= DARKNESS_TERROR_CAP) //If we're approaching a heart attack
+	if(terror_buildup > DARKNESS_TERROR_CAP) //If we're approaching a heart attack
 		return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] siezing up, about to collapse in fear!")
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD)
-		return span_boldwarning("[owner] is visibly trembling and twitching. It looks like [owner.p_theyre(TRUE)] freaking out!")
+		return span_boldwarning("[owner] is visibly trembling and twitching. It looks like [owner.p_theyre()] freaking out!")
 
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD)
-		return span_warning("[owner] looks very worried about something. [owner.p_are()] [owner.p_they(TRUE)] alright?")
+		return span_warning("[owner] looks very worried about something. [owner.p_are()] [owner.p_they()] alright?")
 
 	return span_notice("[owner] looks rather anxious. [owner.p_they(TRUE)] could probably use a hug...")
 
@@ -75,11 +75,11 @@
 
 	if(is_species(hugger, /datum/species/shadow/nightmare)) //hey wait a minute, that's not a comforting, friendly hug!
 		addtimer(CALLBACK(src, PROC_REF(freak_out), HUG_TERROR_AMOUNT))
-		owner.visible_message(span_warning("[owner] recoils in fear as [hugger] waves [hugger.p_their(TRUE)] arms at them!"), span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"), span_hear("You hear someone shriek in fear. How embarassing!"))
+		owner.visible_message(span_warning("[owner] recoils in fear as [hugger] waves [hugger.p_their()] arms and shrieks at [hugger.p_them()]!"), span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"), span_hear("You hear someone shriek in fear. How embarassing!"))
 		return COMPONENT_BLOCK_MISC_HELP
 
 	terror_buildup -= HUG_TERROR_AMOUNT //maybe later I'll integrate some of the hug-related traits into this somehow
-	owner.visible_message(span_warning("[owner] seems to relax as [hugger] gives [owner.p_them(TRUE)] a comforting hug."), span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."), span_hear("You hear shuffling and a sigh of relief."))
+	owner.visible_message(span_notice("[owner] seems to relax as [hugger] gives [owner.p_them()] a comforting hug."), span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."), span_hear("You hear shuffling and a sigh of relief."))
 	return
 
 /**
