@@ -15,6 +15,10 @@
 	//atmos_sensitive applies connect_loc which 1. reacts to movement in order to 2. unregister and register signals to
 	//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
 
+/obj/structure/window/reinforced/shuttle/tram
+	name = "tram window"
+	icon = 'icons/obj/smooth_structures/tram_window.dmi'
+
 /obj/structure/window/reinforced/shuttle/tram/Initialize(mapload, direct)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
@@ -23,10 +27,22 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
+/obj/structure/chair/sofa/bench/tram
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/left
+	icon_state = "bench_left"
+	greyscale_config = /datum/greyscale_config/bench_left
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/right
+	icon_state = "bench_right"
+	greyscale_config = /datum/greyscale_config/bench_right
+	greyscale_colors = "#00CCFF"
+
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
-	plane = GAME_PLANE
 	layer = TRAM_XING_LAYER
 
 /obj/machinery/door/window/tram
@@ -61,7 +77,6 @@
 	if(!open())
 		return
 	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
-		say("Emergency exit activated!")
 		return PROCESS_KILL
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)

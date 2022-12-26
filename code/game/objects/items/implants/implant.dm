@@ -5,7 +5,7 @@
 	name = "implant"
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
-	item_flags = DROPDEL
+	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE
 	// This gives the user an action button that allows them to activate the implant.
 	// If the implant needs no action button, then null this out.

@@ -69,7 +69,9 @@
 	/// Total level of visualy impairing items
 	var/tinttotal = 0
 
-	///Gets filled up in [create_bodyparts()][/mob/living/carbon/proc/create_bodyparts]
+	/// Gets filled up in [/datum/species/proc/replace_body].
+	/// Will either contain a list of typepaths if nothing has been created yet,
+	/// or a list of the body part objects.
 	var/list/bodyparts = list(
 		/obj/item/bodypart/chest,
 		/obj/item/bodypart/head,

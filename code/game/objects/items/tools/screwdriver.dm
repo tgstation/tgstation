@@ -23,7 +23,7 @@
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 	tool_behaviour = TOOL_SCREWDRIVER
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_screwdriver
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound = 'sound/items/handling/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
@@ -43,6 +43,10 @@
 		COLOR_TOOL_CYAN,
 		COLOR_TOOL_YELLOW,
 	)
+
+/datum/armor/item_screwdriver
+	fire = 50
+	acid = 30
 
 /obj/item/screwdriver/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -67,6 +71,10 @@
 	random_color = FALSE
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+
+/datum/armor/item_screwdriver
+	fire = 50
+	acid = 30
 
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_alien")
@@ -96,6 +104,10 @@
 	greyscale_config_belt = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+
+/datum/armor/item_screwdriver
+	fire = 50
+	acid = 30
 
 /obj/item/screwdriver/power/Initialize(mapload)
 	. = ..()
@@ -144,6 +156,10 @@
 
 /obj/item/screwdriver/red
 	random_color = FALSE
+
+/datum/armor/item_screwdriver
+	fire = 50
+	acid = 30
 
 /obj/item/screwdriver/red/Initialize(mapload)
 	. = ..()

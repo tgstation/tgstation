@@ -8,6 +8,9 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/food/tortilla/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/hard_taco_shell, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
+
 /obj/item/food/burrito
 	name = "burrito"
 	desc = "Tortilla wrapped goodness."
@@ -122,5 +125,90 @@
 	icon_state = "chipsandsalsa"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("peppers" = 1, "salsa" = 3, "tortilla chips" = 1, "onion" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/classic_chimichanga
+	name = "classic chimichanga"
+	desc = "A deep-fried burrito packed with a generous amount of meat and cheese."
+	icon_state = "classic_chimichanga"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 6,)
+	tastes = list("deep-fried tortilla" = 1, "meat" = 3, "cheese" = 1, "onions" = 1)
+	foodtypes = MEAT | GRAIN | VEGETABLES | DAIRY | FRIED
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/vegetarian_chimichanga
+	name = "vegetarian chimichanga"
+	desc = "A deep-fried burrito packed with a generous amount of baked vegetables, for the non-meat eaters."
+	icon_state = "vegetarian_chimichanga"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 10)
+	tastes = list("deep-fried tortilla" = 1, "cabbage" = 3, "onions" = 1, "peppers" = 1)
+	foodtypes = GRAIN | VEGETABLES | FRIED
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/vegetarian_chimichanga
+	name = "vegetarian chimichanga"
+	desc = "A deep-fried burrito packed with a generous amount of baked vegetables, for the non-meat eaters."
+	icon_state = "vegetarian_chimichanga"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 10)
+	tastes = list("deep-fried tortilla" = 1, "cabbage" = 3, "onions" = 1, "peppers" = 1)
+	foodtypes = GRAIN | VEGETABLES | FRIED
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/hard_taco_shell
+	name = "hard taco shell"
+	desc = "A hard taco shell, just waiting to be stuffed with ingredients. Use an ingredient on it to start making custom tacos!"
+	icon_state = "hard_taco_shell"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	tastes = list("hard corn tortilla" = 1)
+	foodtypes = GRAIN | FRIED
+	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
+
+/obj/item/food/hard_taco_shell/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/hard_taco_shell/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+
+// empty taco shell for custom tacos
+/obj/item/food/hard_taco_shell/empty
+	name = "hard-shell taco"
+	foodtypes = NONE
+	tastes = list()
+	icon_state = "hard_taco_shell"
+	desc = "A customized hard-shell taco."
+
+/obj/item/food/classic_hard_shell_taco
+	name = "classic hard-shell taco"
+	desc = "A classically-made hard-shell taco, the most satisfying crunch in the galaxy."
+	icon_state = "classic_hard_shell_taco"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment/protein = 6,)
+	tastes = list("crunchy taco shell" = 1, "cabbage" = 3, "tomatoes" = 1, "ground meat" = 1, "cheese" = 1)
+	foodtypes = GRAIN | VEGETABLES | MEAT | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/plain_hard_shell_taco
+	name = "plain hard-shell taco"
+	desc = "A hard-shell taco with just meat, for the picky eaters and children in us all."
+	icon_state = "plain_hard_shell_taco"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment/protein = 6,)
+	tastes = list("crunchy taco shell" = 1, "ground meat" = 1)
+	foodtypes = GRAIN | MEAT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/refried_beans
+	name = "refried beans"
+	desc = "A steaming bowl of delicious refried beans, a common staple in Mexican cuisine."
+	icon_state = "refried_beans"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment/protein = 4,)
+	tastes = list("mashed beans" = 1, "onion" = 3,)
+	foodtypes = VEGETABLES | FRIED
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/spanish_rice
+	name = "spanish rice"
+	desc = "A bowl of delicious spanish rice, cooked in a tomato sauce which gives it the orange color."
+	icon_state = "spanish_rice"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("zesty rice" = 1, "tomato sauce" = 3,)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL

@@ -5,7 +5,7 @@
 	base_icon_state = "marauder"
 	movedelay = 5
 	max_integrity = 500
-	armor = list(MELEE = 50, BULLET = 55, LASER = 40, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/mecha_marauder
 	max_temperature = 60000
 	destruction_sleep_duration = 40
 	exit_delay = 40
@@ -23,6 +23,15 @@
 	)
 	bumpsmash = TRUE
 
+/datum/armor/mecha_marauder
+	melee = 50
+	bullet = 55
+	laser = 40
+	energy = 30
+	bomb = 30
+	fire = 100
+	acid = 100
+
 /obj/vehicle/sealed/mecha/marauder/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_smoke)
@@ -37,6 +46,15 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
 
+/datum/armor/mecha_marauder
+	melee = 50
+	bullet = 55
+	laser = 40
+	energy = 30
+	bomb = 30
+	fire = 100
+	acid = 100
+
 /obj/vehicle/sealed/mecha/marauder/add_cell(obj/item/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
@@ -47,6 +65,15 @@
 /datum/action/vehicle/sealed/mecha/mech_smoke
 	name = "Smoke"
 	button_icon_state = "mech_smoke"
+
+/datum/armor/mecha_marauder
+	melee = 50
+	bullet = 55
+	laser = 40
+	energy = 30
+	bomb = 30
+	fire = 100
+	acid = 100
 
 /datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
@@ -59,6 +86,15 @@
 /datum/action/vehicle/sealed/mecha/mech_zoom
 	name = "Zoom"
 	button_icon_state = "mech_zoom_off"
+
+/datum/armor/mecha_marauder
+	melee = 50
+	bullet = 55
+	laser = 40
+	energy = 30
+	bomb = 30
+	fire = 100
+	acid = 100
 
 /datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(trigger_flags)
 	if(!owner?.client || !chassis || !(owner in chassis.occupants))
