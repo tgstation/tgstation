@@ -53,23 +53,25 @@ LINEN BINS
 
 /obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
 	if(isliving(target) && target.body_position == LYING_DOWN)
-		context[SCREENTIP_CONTEXT_LMB] = "Cover"
+		context[SCREENTIP_CONTEXT_RMB] = "Cover"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
 
-/obj/item/bedsheet/attack(mob/living/target, mob/living/user)
+/obj/item/bedsheet/attack_secondary(mob/living/target, mob/living/user, params)
 	if(!user.CanReach(target))
-		return
-	if(user.combat_mode || target.body_position != LYING_DOWN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(target.body_position != LYING_DOWN)
 		return ..()
 	if(!user.dropItemToGround(src))
-		return
+		return ..()
 
 	forceMove(get_turf(target))
 	balloon_alert(user, "covered")
 	coverup(target)
 	add_fingerprint(user)
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/bedsheet/attack_self(mob/living/user)
 	if(!user.CanReach(src)) //No telekenetic grabbing.

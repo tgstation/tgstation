@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 		"always wants to travel",
 	)
 	input_obj_or_mob = list(
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 	)
 	output_organs = list(
 		/obj/item/organ/internal/lungs/carp,

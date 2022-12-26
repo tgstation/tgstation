@@ -161,7 +161,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
-	foodtypes = VEGETABLES | GRAIN | NUTS
+	foodtypes = VEGETABLES | GRAIN | NUTS | RAW
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/food/raw_green_lasagne/MakeBakeable()
@@ -207,7 +207,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
-	foodtypes = VEGETABLES | GRAIN
+	foodtypes = VEGETABLES | GRAIN | RAW
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/food/raw_baked_rice/MakeBakeable()
@@ -685,7 +685,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("dough" = 1, "tomato" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 
 /obj/item/food/raw_mothic_margherita/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_margherita, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -727,7 +727,7 @@
 		/datum/reagent/consumable/capsaicin = 10,
 	)
 	tastes = list("dough" = 1, "chili" = 1, "corn" = 1, "cheese" = 1, "bbq sauce" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 
 /obj/item/food/raw_mothic_firecracker/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_firecracker, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -769,7 +769,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("dough" = 1, "cheese" = 1, "more cheese" = 1, "excessive amounts of cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 
 /obj/item/food/raw_mothic_five_cheese/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_five_cheese, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -810,7 +810,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("dough" = 1, "cheese" = 1, "herbs" = 1, "garlic" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 
 /obj/item/food/raw_mothic_white_pie/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_white_pie, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -851,7 +851,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("dough" = 1, "pesto" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
+	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
 
 /obj/item/food/raw_mothic_pesto/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_pesto, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -868,7 +868,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("crust" = 1, "pesto" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
+	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
 	slice_type = /obj/item/food/pizzaslice/mothic_pesto
 	boxtag = "Presto Pesto"
 
@@ -892,7 +892,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("dough" = 1, "garlic" = 1, "butter" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN | VEGETABLES | RAW
 
 /obj/item/food/raw_mothic_garlic/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_garlic, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)

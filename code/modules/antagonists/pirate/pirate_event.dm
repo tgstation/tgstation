@@ -16,12 +16,12 @@
 	for(var/datum/pirate_gang/possible_gang as anything in GLOB.pirate_gangs)
 		gang_choices[possible_gang.name] = possible_gang
 
-	var/datum/pirate_gang/chosen = tgui_input_list(usr, "Select pirate gang", "TICKETS TO THE SPONGEBOB MOVIE!!", gang_choices)
+	var/chosen = tgui_input_list(usr, "Select pirate gang", "TICKETS TO THE SPONGEBOB MOVIE!!", gang_choices)
 	if(!chosen)
 		return ADMIN_CANCEL_EVENT
 	if(chosen == "Random")
 		return //still do the event, but chosen_gang is still null, so it will pick from the choices
-	chosen_gang = gang_choices["chosen"]
+	chosen_gang = gang_choices[chosen]
 
 /datum/round_event_control/pirates/preRunEvent()
 	if (!SSmapping.empty_space)
