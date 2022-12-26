@@ -171,6 +171,13 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
+# ZephyrTFA
+
+/code/datums/json_savefile.dm @ZephyrTFA
+/code/datums/armor/ @ZephyrTFA
+/code/modules/client/preferences.dm @ZephyrTFA
+/code/modules/client/preferences_savefile.dm @ZephyrTFA
+
 # MULTIPLE OWNERS
 
 /_maps/ @EOBGames @Maurukas @san7890 @ShizCalev

@@ -3,15 +3,25 @@
 /obj/item/clothing/under/rank/engineering
 	icon = 'icons/obj/clothing/under/engineering.dmi'
 	worn_icon = 'icons/mob/clothing/under/engineering.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 60, ACID = 20)
+	armor_type = /datum/armor/rank_engineering
 	resistance_flags = NONE
+
+/datum/armor/rank_engineering
+	bio = 10
+	fire = 60
+	acid = 20
 
 /obj/item/clothing/under/rank/engineering/chief_engineer
 	desc = "It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of \"Chief Engineer\". Made from fire resistant materials."
 	name = "chief engineer's jumpsuit"
 	icon_state = "chiefengineer"
 	inhand_icon_state = "gy_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 80, ACID = 40)
+	armor_type = /datum/armor/engineering_chief_engineer
+
+/datum/armor/engineering_chief_engineer
+	bio = 10
+	fire = 80
+	acid = 40
 
 /obj/item/clothing/under/rank/engineering/chief_engineer/skirt
 	name = "chief engineer's jumpskirt"
@@ -23,11 +33,21 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/datum/armor/engineering_chief_engineer
+	bio = 10
+	fire = 80
+	acid = 40
+
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	desc = "It's a jumpsuit worn by atmospheric technicians. Made from fire resistant materials."
 	name = "atmospheric technician's jumpsuit"
 	icon_state = "atmos"
 	inhand_icon_state = "atmos_suit"
+
+/datum/armor/engineering_chief_engineer
+	bio = 10
+	fire = 80
+	acid = 40
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt
 	name = "atmospheric technician's jumpskirt"
@@ -39,6 +59,11 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/datum/armor/engineering_chief_engineer
+	bio = 10
+	fire = 80
+	acid = 40
+
 /obj/item/clothing/under/rank/engineering/engineer
 	desc = "It's an orange high visibility jumpsuit worn by engineers. Made from fire resistant materials."
 	name = "engineer's jumpsuit"
@@ -46,12 +71,22 @@
 	inhand_icon_state = "engi_suit"
 	species_exception = list(/datum/species/golem/uranium)
 
+/datum/armor/engineering_chief_engineer
+	bio = 10
+	fire = 80
+	acid = 40
+
 /obj/item/clothing/under/rank/engineering/engineer/hazard
 	name = "engineer's hazard jumpsuit"
 	desc = "A high visibility jumpsuit. Made from fire resistant materials."
 	icon_state = "hazard"
 	inhand_icon_state = "syndicate-orange"
 	alt_covers_chest = TRUE
+
+/datum/armor/engineering_chief_engineer
+	bio = 10
+	fire = 80
+	acid = 40
 
 /obj/item/clothing/under/rank/engineering/engineer/skirt
 	name = "engineer's jumpskirt"

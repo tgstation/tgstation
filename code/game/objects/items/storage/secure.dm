@@ -36,14 +36,9 @@
 	if(can_hack_open)
 		. += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
 
-/obj/item/storage/secure/update_icon()
-	..()
-	if(!atom_storage)
-		return
-	if(atom_storage.locked)
-		icon_state = "[initial(icon_state)]_locked"
-	else
-		icon_state = "[initial(icon_state)]"
+/obj/item/storage/secure/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][atom_storage?.locked ? "_locked" : null]"
 
 /obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool)
 	if(can_hack_open && atom_storage.locked)
@@ -158,6 +153,18 @@
 	for(var/iterator in 1 to 5)
 		new /obj/item/stack/spacecash/c1000(src)
 
+/// A briefcase that contains various sought-after spoils
+/obj/item/storage/secure/briefcase/riches
+
+/obj/item/storage/secure/briefcase/riches/PopulateContents()
+	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	new /obj/item/suppressor(src)
+	new /obj/item/melee/baton/telescopic(src)
+	new /obj/item/clothing/mask/balaclava(src)
+	new /obj/item/bodybag(src)
+	new /obj/item/soap/nanotrasen(src)
+
 ///Secure Safe
 /obj/item/storage/secure/safe
 	name = "secure safe"
@@ -203,11 +210,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion."
 	can_hack_open = FALSE
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 0, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
 	color = "#ffdd33"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
+
+/datum/armor/safe_caps_spare
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 70
+	fire = 80
+	acid = 70
 
 /obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
 	. = ..()

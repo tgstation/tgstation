@@ -71,8 +71,8 @@
 			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	var/is_bone_creature = victim.get_biological_state() == BIO_JUST_BONE
-	if(!gelled || (!taped && !is_bone_creature))
+	var/is_bone_limb = ((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
+	if(!gelled || (!taped && !is_bone_limb))
 		return
 
 	regen_ticks_current++
@@ -82,7 +82,7 @@
 		if(victim.IsSleeping() && DT_PROB(30, delta_time))
 			regen_ticks_current += 1
 
-	if(!is_bone_creature && DT_PROB(severity * 1.5, delta_time))
+	if(!is_bone_limb && DT_PROB(severity * 1.5, delta_time))
 		victim.take_bodypart_damage(rand(1, severity * 2), wound_bonus=CANT_WOUND)
 		victim.adjustStaminaLoss(rand(2, severity * 2.5))
 		if(prob(33))
@@ -371,7 +371,7 @@
 /// if someone is using bone gel on our wound
 /datum/wound/blunt/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	// skellies get treated nicer with bone gel since their "reattach dismembered limbs by hand" ability sucks when it's still critically wounded
-	if(victim.get_biological_state() == BIO_JUST_BONE)
+	if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
 		skelly_gel(I, user)
 		return
 
@@ -414,9 +414,6 @@
 
 /// skellies are less averse to bone gel, since they're literally all bone
 /datum/wound/blunt/proc/skelly_gel(obj/item/stack/medical/bone_gel/I, mob/user)
-	if(victim.get_biological_state() != BIO_JUST_BONE)
-		return // poser
-
 	if(gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already coated with bone gel!"))
 		return
@@ -475,7 +472,7 @@
 	. += "<div class='ml-3'>"
 
 	if(severity > WOUND_SEVERITY_MODERATE)
-		if(victim.get_biological_state() == BIO_JUST_BONE)
+		if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
 			if(!gelled)
 				. += "Recommended Treatment: Apply bone gel directly to injured limb. Creatures of pure bone don't seem to mind bone gel application nearly as much as fleshed individuals. Surgical tape will also be unnecessary.\n"
 			else

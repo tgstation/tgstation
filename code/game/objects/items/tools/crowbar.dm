@@ -21,8 +21,12 @@
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_crowbar
 	var/force_opens = FALSE
+
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
 
 /obj/item/crowbar/Initialize(mapload)
 	. = ..()
@@ -66,6 +70,10 @@
 	desc = "It's a bulky crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
 	w_class = WEIGHT_CLASS_BULKY
 
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
+
 /obj/item/crowbar/large/heavy //from space ruin
 	name = "heavy crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
@@ -78,6 +86,10 @@
 	desc = "It's an old crowbar. Much larger than the pocket sized ones, carrying a lot more heft. They don't make 'em like they used to."
 	throwforce = 10
 	throw_speed = 2
+
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
 
 /obj/item/crowbar/large/old/Initialize(mapload)
 	. = ..()
@@ -98,6 +110,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
+
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
@@ -129,6 +145,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	force_opens = TRUE
+
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
 
 /obj/item/crowbar/power/examine()
 	. = ..()
@@ -177,10 +197,14 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
 	toolspeed = 1.25
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 0, FIRE = 100, ACID = 0)
+	armor_type = /datum/armor/crowbar_mechremoval
 	resistance_flags = FIRE_PROOF
 	bare_wound_bonus = 15
 	wound_bonus = 10
+
+/datum/armor/crowbar_mechremoval
+	bomb = 100
+	fire = 100
 
 /obj/item/crowbar/mechremoval/Initialize(mapload)
 	. = ..()
