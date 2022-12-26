@@ -1,5 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - code_imp: "Turned most syndicate mobs into basicmobs, making their AI better and (possibly) more deadlier!"
-  - rscdel: "Removed syndicate mech pilots and syndicate civvies"
