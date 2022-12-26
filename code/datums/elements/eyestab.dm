@@ -96,7 +96,7 @@
 	target.adjust_eye_blur_up_to(6 SECONDS, EYESTAB_MAX_BLUR)
 	eyes.applyOrganDamage(rand(2, 4))
 
-	if(eyes.damage >= EYESTAB_BLEEDING_THRESHOLD)
+	if(eyes.damage < EYESTAB_BLEEDING_THRESHOLD)
 		return
 
 	// At over 10 damage we apply a lot of eye blur

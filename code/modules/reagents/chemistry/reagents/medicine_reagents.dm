@@ -657,13 +657,15 @@
 	restore_eyesight(prev_affected_mob, eyes)
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * delta_time * normalise_creation_purity())
-	affected_mob.adjust_eye_blur(-4 SECONDS * REM * delta_time * normalise_creation_purity())
+	var/normalized_purity = normalise_creation_purity()
+	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * delta_time * normalized_purity)
+	affected_mob.adjust_eye_blur(-4 SECONDS * REM * delta_time * normalized_purity)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
 		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
 		eyes.applyOrganDamage(-2 * REM * delta_time * normalise_creation_purity(), required_organtype = affected_organtype)
-		if(eyes.damaged && DT_PROB(10, delta_time))
+		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
+		if(eyes.damaged && DT_PROB(16 - min(normalized_purity * 6, 12), delta_time))
 			// While healing, gives some eye blur
 			if(affected_mob.is_blind_from(EYE_DAMAGE))
 				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
@@ -673,23 +675,6 @@
 				affected_mob.adjust_eye_blur(5 SECONDS)
 
 	return ..()
-
-	/*
-	var/fix_prob = 10
-	if(creation_purity >= 1)
-		fix_prob = 100
-
-	if(owner.is_blind_from(EYE_DAMAGE))
-		if(DT_PROB(fix_prob, delta_time))
-			to_chat(owner, span_warning("Your vision slowly returns..."))
-			owner.cure_blind(EYE_DAMAGE)
-			owner.cure_nearsighted(EYE_DAMAGE)
-			owner.set_eye_blur_if_lower(70 SECONDS)
-
-	else if(owner.is_nearsighted_from(EYE_DAMAGE))
-		owner.cure_nearsighted(EYE_DAMAGE)
-		owner.set_eye_blur_if_lower(20 SECONDS)
-	*/
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/affected_mob)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.getorganslot(ORGAN_SLOT_EYES)
