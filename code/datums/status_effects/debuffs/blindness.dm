@@ -44,7 +44,7 @@
 		return
 
 	overlay_severity = to_value
-	update_fullscreen_overlay()
+	update_nearsighted_overlay()
 
 /// Blindness
 /datum/status_effect/grouped/blindness
@@ -97,20 +97,21 @@
 	if(owner.stat == DEAD)
 		return
 
-	var/mob/living/stored_owner = owner
 	// Temp. blindness heals faster if our eyes are covered
-	if(owner.is_blind_from(EYES_COVERED))
-		// Knocks 2 seconds off of our duration
-		// If we should be deleted, give a message letting them know
-		var/mob/living/stored_owner = owner
-		if(remove_duration(2 SECONDS))
-			to_chat(stored_owner, span_green("Your eyes start to feel better!"))
-			return
+	if(!owner.is_blind_from(EYES_COVERED))
+		return
 
-		// Otherwise add a chance to let them know that it's working
-		else if(DT_PROB(5, delta_time))
-			var/obj/item/thing_covering_eyes = owner.is_eyes_covered()
-			// "Your blindfold soothes your eyes", for example
-			to_chat(owner, span_green("Your [thing_covering_eyes?.name || "eye covering"] soothes your eyes."))
+	// Knocks 2 seconds off of our duration
+	// If we should be deleted, give a message letting them know
+	var/mob/living/stored_owner = owner
+	if(remove_duration(2 SECONDS))
+		to_chat(stored_owner, span_green("Your eyes start to feel better!"))
+		return
+
+	// Otherwise add a chance to let them know that it's working
+	else if(DT_PROB(5, delta_time))
+		var/obj/item/thing_covering_eyes = owner.is_eyes_covered()
+		// "Your blindfold soothes your eyes", for example
+		to_chat(owner, span_green("Your [thing_covering_eyes?.name || "eye covering"] soothes your eyes."))
 
 #undef CAN_BE_BLIND
