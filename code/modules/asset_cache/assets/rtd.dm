@@ -71,7 +71,6 @@
 		/obj/item/stack/tile/glass,
 		/obj/item/stack/tile/rglass,
 		/obj/item/stack/tile/iron/recharge_floor,
-		/obj/item/stack/tile/iron/solarpanel,
 		/obj/item/stack/tile/circuit,
 		/obj/item/stack/tile/circuit/green,
 		/obj/item/stack/tile/circuit/red,
