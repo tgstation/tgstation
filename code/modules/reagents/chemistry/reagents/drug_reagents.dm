@@ -150,8 +150,9 @@
 	. = ..()
 	//the more pure, the less non-blue colors get involved - best case scenario is rgb(135, 200, 250) AKA #78C8FA
 	//worst case scenario is rgb(250, 250, 250) AKA #FAFAFA
-	var/removed_red = round(creation_purity * 125)
-	var/removed_green = round(creation_purity * 55)
+	//minimum purity of meth is 50%, therefore we base values on that
+	var/removed_red = round(max(0, creation_purity - 0.5)/0.5 * 125)
+	var/removed_green = round(max(0, creation_purity - 0.5)/0.5 * 55)
 	color = rgb(250-removed_red, 250-removed_green, 250)
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
