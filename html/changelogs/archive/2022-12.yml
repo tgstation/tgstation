@@ -878,3 +878,51 @@
   - qol: drones now start with engineering skillchip.
   - qol: drones can now interract with light boxes, rack parts, light replacers and
       stack of duct.
+2022-12-26:
+  MTandi:
+  - bugfix: fixed saline drip UI not having transfer rate controls visible
+  - qol: Rewrote the crafting/cooking menu UI
+  - qol: Split crafting and cooking menus in two different menus
+  - qol: Crafting is no longer blocking the entire UI, only the "Make" buttons are
+      disabled
+  - qol: Added stack crafting recipes to the crafting menu
+  - qol: Added cooking recipes that were absent in the crafting menu before (tool
+      recipes, machine recipes, reactions)
+  - qol: Added option to search recipes by title
+  - qol: Added option to filter recipes by required materials/ingredients
+  - qol: Added food types to the cooking menu, highlighting diet of your species (liked,
+      disliked foods)
+  - qol: Added total nutrition value of the result to the cooking menu
+  - qol: Added option to filter cooking recipes by the food type of the resulting
+      food
+  - qol: Added "Can make" category that lists all currently craftable recipes throughout
+      all categories
+  - refactor: changed categories and reshuffled some items in them
+  - code_imp: Reagents now have default container to get an icon from the reagent
+      datum
+  - code_imp: Objects now have `desc_controls` var for OOC information about mouse
+      controls that are visible on examine, but not in the description
+  - bugfix: Fixed alignment on many food icons
+  - bugfix: Fixed missing icon for beef stroganoff
+  - bugfix: The maps are now placed in the center of Z level to avoid having parts
+      getting into the inaccessible area
+  Rhials:
+  - rscadd: Sandstorm random event! A random side of the station is pummeled by an
+      onslaught of sand and dust. If you hear that one is approaching, grab a welder
+      and some iron to help with repairs!
+  - rscadd: Space sand! It's weak and doesn't hurt reinforced walls, but shouldn't
+      be underestimated in high quantities.
+  - code_imp: You can now pass a start direction to the spawn_meteors/spawn_meteor
+      global procs.
+  Wayland-Smithy:
+  - bugfix: Cult spirt realm ghost marking now works again.
+  flowercuco:
+  - bugfix: admins can now select pirate events correctly
+  iwishforducks:
+  - balance: You can now place plating adjacent to already existing plating without
+      having to place rods first.
+  kawoppi:
+  - bugfix: xmas crackers are now tiny instead of normal sized
+  san7890:
+  - bugfix: To prevent spam, there is now a cooldown on being able to upload assorted
+      books into the newscaster's channel feed.
