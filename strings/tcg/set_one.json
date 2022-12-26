@@ -6,7 +6,7 @@
 			"series": "coreset2020",
 			"humanoid": "0",
 			"outfit": "/datum/outfit/job/clown",
-			"summon_icon_file": "icons/mob/simple/carp.dmi",
+			"summon_icon_file": "icons/mob/landmarks.dmi",
 			"summon_icon_state": "carp"
 		}
 	],
@@ -56,7 +56,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Abomination",
 			"rarity": "rare",
-			"humanoid": 1,
+			"humanoid": "CUSTOM ICON NEEDED",
 			"outfit": "/datum/outfit/changeling"
 		},
 		{
@@ -72,8 +72,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/assistant"
+			"summon_icon_state": "Assistant"
 		},
 		{
 			"id": "atmos_tech",
@@ -88,8 +87,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Engineer",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/atmos"
+			"summon_icon_state": "Atmospheric Technician"
 		},
 		{
 			"id": "bartender",
@@ -104,8 +102,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/bartender"
+			"summon_icon_state": "Bartender"
 		},
 		{
 			"id": "botanist",
@@ -120,8 +117,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/botanist"
+			"summon_icon_state": "Botanist"
 		},
 		{
 			"id": "captain",
@@ -136,8 +132,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Commander",
 			"rarity": "rare",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/captain"
+			"summon_icon_state": "Captain"
 		},
 		{
 			"id": "caps_suit",
@@ -166,8 +161,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/cargo_tech"
+			"summon_icon_state": "Cargo Tech"
 		},
 		{
 			"id": "chap_plate",
@@ -196,8 +190,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/chemist"
+			"summon_icon_state": "Chemist"
 		},
 		{
 			"id": "CE",
@@ -212,8 +205,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Engineer",
 			"rarity": "uncommon",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/ce"
+			"summon_icon_state": "Chief Engineer"
 		},
 		{
 			"id": "ce_suit",
@@ -242,8 +234,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/cmo"
+			"summon_icon_state": "Chief Medical Officer"
 		},
 		{
 			"id": "cmo_suit",
@@ -272,8 +263,8 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Soldier",
 			"rarity": "epic",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/chrono_agent"
+			"humanoid": "CUSTOM ICON NEEDED",
+			"outfit": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "sloth",
@@ -304,8 +295,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Clown",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/clown"
+			"summon_icon_state": "Clown"
 		},
 		{
 			"id": "clownborg",
@@ -364,8 +354,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit":"/datum/outfit/job/cook"
+			"summon_icon_state": "Cook"
 		},
 		{
 			"id": "wiz_suit",
@@ -394,8 +383,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Worker",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit":"/datum/outfit/job/curator"
+			"summon_icon_state": "Curator"
 		},
 		{
 			"id": "ianborg",
@@ -411,7 +399,7 @@
 			"cardsubtype": "Silicon Corgi",
 			"rarity": "rare",
 			"summon_icon_file": "CUSTOM ICON NEEDED",
-			"summon_icon_type": "CUSTOM ICON NEEDED"
+			"summon_icon_state": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "deathsquad_armour",
@@ -440,8 +428,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Officer",
 			"rarity": "uncommon",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/detective"
+			"summon_icon_state": "Detective"
 		},
 		{
 			"id": "nukie_elite",
@@ -544,7 +531,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Explorer",
 			"rarity": "legendary",
-			"humanoid": 1,
+			"humanoid": "CUSTOM ICON NEEDED",
 			"outfit": "/datum/outfit/space"
 		},
 		{
@@ -576,8 +563,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Scientist",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/geneticist"
+			"summon_icon_state": "Geneticist"
 		},
 		{
 			"id": "med_geneticist",
@@ -592,8 +578,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
 			"rarity": "misprint",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/geneticist"
+			"summon_icon_state": "Geneticist"
 		},
 		{
 			"id": "spookian",
@@ -609,7 +594,7 @@
 			"cardsubtype": "Spirit Corgi",
 			"rarity": "epic",
 			"summon_icon_file": "CUSTOM ICON NEEDED",
-			"summon_icon_type": "CUSTOM ICON NEEDED"
+			"summon_icon_state": "CUSTOM ICON NEEDED"
 		},
 		{
 			"id": "HOP",
@@ -624,8 +609,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Commander",
 			"rarity": "uncommon",
-			"humanoid": 1,
-			"outfit":"/datum/outfit/job/hop"
+			"summon_icon_state": "Head of Personnel"
 		},
 		{
 			"id": "HOS",
@@ -640,8 +624,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Officer",
 			"rarity": "uncommon",
-			"humanoid": 1,
-			"outfit":"/datum/outfit/job/hos"
+			"summon_icon_state": "Head of Security"
 		},
 		{
 			"id": "hos_suit",
@@ -700,7 +683,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "common",
-			"humanoid": 1,
+			"humanoid": "CUSTOM ICON NEEDED",
 			"outfit": "/datum/outfit/centcom/centcom_intern/unarmed"
 		},
 		{
@@ -716,8 +699,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/janitor"
+			"summon_icon_state": "Janitor"
 		},
 		{
 			"id": "jannieborg",
@@ -748,8 +730,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/lawyer"
+			"summon_icon_state": "Lawyer"
 		},
 		{
 			"id": "legion",
@@ -796,8 +777,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/doctor"
+			"summon_icon_state": "Medical Doctor"
 		},
 		{
 			"id": "mime",
@@ -812,8 +792,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Mime",
 			"rarity": "uncommon",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/mime"
+			"summon_icon_state": "Mime"
 		},
 		{
 			"id": "miningborg",
@@ -876,8 +855,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/paramedic"
+			"summon_icon_state": "Paramedic"
 		},
 		{
 			"id": "peaceborg",
@@ -924,8 +902,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "uncommon",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/quartermaster"
+			"summon_icon_state": "Quartermaster"
 		},
 		{
 			"id": "qm_head",
@@ -940,8 +917,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "misprint",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/quartermaster"
+			"summon_icon_state": "Quartermaster"
 		},
 		{
 			"id": "rabbit_pai",
@@ -988,8 +964,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Scientist",
 			"rarity": "uncommon",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/rd"
+			"summon_icon_state": "Research Director"
 		},
 		{
 			"id": "rd_suit",
@@ -1018,8 +993,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Scientist",
 			"rarity": "uncommon",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/roboticist"
+			"summon_icon_state": "Roboticist"
 		},
 		{
 			"id": "runtime",
@@ -1050,8 +1024,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Scientist",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/scientist"
+			"summon_icon_state": "Scientist"
 		},
 		{
 			"id": "secborg",
@@ -1082,8 +1055,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Officer",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/security"
+			"summon_icon_state": "Security Officer"
 		},
 		{
 			"id": "ratvar_armor",
@@ -1192,8 +1164,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Miner",
 			"rarity": "rare",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/miner"
+			"summon_icon_state": "Shaft Miner"
 		},
 		{
 			"id": "engi",
@@ -1208,8 +1179,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Engineer",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/engineer"
+			"summon_icon_state": "Station Engineer"
 		},
 		{
 			"id": "swarmer",
@@ -1240,8 +1210,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Doctor",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/virologist"
+			"summon_icon_state": "Virologist"
 		},
 		{
 			"id": "warden",
@@ -1256,8 +1225,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Officer",
 			"rarity": "uncommon",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/warden"
+			"summon_icon_state": "Warden"
 		},
 		{
 			"id": "xeno",
@@ -1365,8 +1333,7 @@
 			"cardsubtype": "Human Doctor",
 			"series": "coreset2020",
 			"rarity": "common",
-			"humanoid": 1,
-			"outfit": "/datum/outfit/job/psychologist"
+			"summon_icon_state": "Psychologist"
 		},
 		{
 			"id": "just_losses",
