@@ -139,7 +139,6 @@
 
 /obj/structure/trading_card_summon/red
 	team_color = "#ff7777"
-    
 
 #undef STAT_Y
 #undef POWER_X
