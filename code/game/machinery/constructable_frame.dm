@@ -1,5 +1,6 @@
 /obj/structure/frame
 	name = "frame"
+	desc = "A generic looking construction frame. One day this will be something greater."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
 	density = TRUE
@@ -24,6 +25,7 @@
 
 /obj/structure/frame/machine
 	name = "machine frame"
+	desc = "The standard frame for most station appliances. Its appearance and function is controlled by the inserted board."
 	var/list/components = null
 	var/list/req_components = null
 	var/list/req_component_names = null // user-friendly names of components
@@ -85,6 +87,13 @@
 				req_component_names[component_path] = initial(stock_part.base_name)
 			else
 				req_component_names[component_path] = initial(stock_part.name)
+		else if(ispath(component_path, /obj/item))
+			var/obj/item/part = component_path
+
+			req_component_names[component_path] = initial(part.name)
+		else
+			stack_trace("Invalid component part [component_path] in [type], couldn't get its name")
+			req_component_names[component_path] = "[component_path] (this is a bug)"
 
 /obj/structure/frame/machine/proc/get_req_components_amt()
 	var/amt = 0
@@ -159,6 +168,9 @@
 				icon_state = "box_2"
 				state = 3
 				components = list()
+				//add circuit board as the first component to the list of components
+				//required for part_replacer to locate it while exchanging parts so it does not early return in /obj/machinery/proc/exchange_parts
+				components += circuit
 				req_components = board.req_components.Copy()
 				update_namelist(board.specific_parts)
 				return
@@ -222,42 +234,38 @@
 							old_part.moveToNullspace()
 							qdel(old_part)
 
-						// Set anchor state and move the frame's parts over to the new machine.
-						// Then refresh parts and call on_construction().
-
+						// Set anchor state
 						new_machine.set_anchored(anchored)
-						new_machine.component_parts = list()
 
-						circuit.forceMove(new_machine)
-						new_machine.component_parts += circuit
+						// Assign the circuit & parts & move them all at once into the machine
+						// no need to seperatly move circuit board as its already part of the components list
 						new_machine.circuit = circuit
-
-						for (var/obj/new_part in src)
+						new_machine.component_parts = components
+						for (var/obj/new_part in components)
 							new_part.forceMove(new_machine)
 
-						new_machine.component_parts = components
-						components = null
-
+						//Inform machine that its finished & cleanup
 						new_machine.RefreshParts()
-
 						new_machine.on_construction()
+						components = null
 					qdel(src)
 				return
 
 			if(istype(P, /obj/item/storage/part_replacer) && P.contents.len && get_req_components_amt())
 				var/obj/item/storage/part_replacer/replacer = P
 				var/list/added_components = list()
-				var/list/part_list = list()
-
-				//Assemble a list of current parts, then sort them by their rating!
-				for(var/obj/item/co in replacer)
-					part_list += co
-				//Sort the parts. This ensures that higher tier items are applied first.
-				part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
+				var/list/part_list = replacer.get_sorted_parts() //parts sorted in order of tier
 
 				for(var/path in req_components)
-					while(req_components[path] > 0 && (locate(path) in part_list))
-						var/obj/item/part = (locate(path) in part_list)
+					var/target_path
+					if(ispath(path, /datum/stock_part))
+						var/datum/stock_part/datum_part = path
+						target_path = initial(datum_part.physical_object_base_type)
+					else
+						target_path = path
+
+					var/obj/item/part
+					while(req_components[path] > 0 && (part = locate(target_path) in part_list))
 						part_list -= part
 						if(istype(part,/obj/item/stack))
 							var/obj/item/stack/S = part

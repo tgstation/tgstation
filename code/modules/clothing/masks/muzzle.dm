@@ -27,7 +27,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	body_parts_covered = NONE
 	clothing_flags = MASKINTERNALS | BLOCKS_SPEECH
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/muzzle_breath
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
 
 /obj/item/clothing/mask/muzzle/tape
@@ -47,6 +47,9 @@
 	var/harmful_strip = FALSE
 	///The ammount of damage dealt when the tape piece is ripped off of someone.
 	var/stripping_damage = 0
+
+/datum/armor/muzzle_breath
+	bio = 100
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()

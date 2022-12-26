@@ -406,7 +406,7 @@
 	reqs = list(/obj/item/stack/sheet/leather = 1,
 				/obj/item/stack/sheet/sinew = 2,
 				/obj/item/stack/sheet/bone = 2)
-	category = CAT_PRIMAL
+	category = CAT_TOOLS
 
 /obj/item/fishing_rod/master
 	name = "master fishing rod"

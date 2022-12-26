@@ -60,12 +60,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 
 	var/ones = since_last % 10
 	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]")
-	ones_overlay.pixel_x = 4
+	ones_overlay.pixel_w = 4
 	. += ones_overlay
 
 	var/tens = (since_last / 10) % 10
 	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]")
-	tens_overlay.pixel_x = -5
+	tens_overlay.pixel_w = -5
 	. += tens_overlay
 
 /obj/structure/sign/delamination_counter/examine(mob/user)
@@ -118,12 +118,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 
 	var/ones = hit_count % 10
 	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "hits_[ones]")
-	ones_overlay.pixel_x = 4
+	ones_overlay.pixel_w = 4
 	. += ones_overlay
 
 	var/tens = (hit_count / 10) % 10
 	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "hits_[tens]")
-	tens_overlay.pixel_x = -5
+	tens_overlay.pixel_w = -5
 	. += tens_overlay
 
 /obj/structure/sign/collision_counter/examine(mob/user)

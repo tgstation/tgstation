@@ -1,7 +1,7 @@
 #define SOLAR_GEN_RATE 1500
 #define OCCLUSION_DISTANCE 20
-#define PANEL_Y_OFFSET 13
-#define PANEL_EDGE_Y_OFFSET (PANEL_Y_OFFSET - 2)
+#define PANEL_Z_OFFSET 13
+#define PANEL_EDGE_Z_OFFSET (PANEL_Z_OFFSET - 2)
 
 /obj/machinery/power/solar
 	name = "solar panel"
@@ -33,8 +33,8 @@
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Y_OFFSET)
-	panel = add_panel_overlay("solar_panel", PANEL_Y_OFFSET)
+	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Z_OFFSET)
+	panel = add_panel_overlay("solar_panel", PANEL_Z_OFFSET)
 
 	Make(S)
 	connect_to_network()
@@ -51,14 +51,13 @@
 	SET_PLANE(panel_edge, PLANE_TO_TRUE(panel_edge.plane), new_turf)
 	SET_PLANE(panel, PLANE_TO_TRUE(panel.plane), new_turf)
 
-/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, y_offset)
+/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, z_offset)
 	var/obj/effect/overlay/overlay = new()
 	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
 	overlay.appearance_flags = TILE_BOUND
 	overlay.icon_state = icon_state
-	overlay.layer = FLY_LAYER
 	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
-	overlay.pixel_y = y_offset
+	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay
 
@@ -232,6 +231,12 @@
 /obj/machinery/power/solar/process()
 	if(machine_stat & BROKEN)
 		return
+	// space vines block out sunlight
+	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+	if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
+		unset_control()
+		return
+
 	if(control && (!powernet || control.powernet != powernet))
 		unset_control()
 	if(needs_to_turn)
@@ -401,6 +406,11 @@
 	if(powernet)
 		for(var/obj/machinery/power/M in powernet.nodes)
 			if(istype(M, /obj/machinery/power/solar))
+				// space vines block out sunlight
+				var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+				if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
+					continue
+
 				var/obj/machinery/power/solar/S = M
 				if(!S.control) //i.e unconnected
 					S.set_control(src)
@@ -559,5 +569,5 @@
 
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE
-#undef PANEL_Y_OFFSET
-#undef PANEL_EDGE_Y_OFFSET
+#undef PANEL_Z_OFFSET
+#undef PANEL_EDGE_Z_OFFSET

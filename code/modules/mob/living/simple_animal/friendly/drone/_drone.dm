@@ -30,7 +30,7 @@
 	healable = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
-	sight = SEE_TURFS | SEE_OBJS| SEE_BLACKNESS
+	sight = SEE_TURFS | SEE_OBJS
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
@@ -43,7 +43,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
-	faction = list("neutral","silicon","turret")
+	faction = list(FACTION_NEUTRAL,"silicon","turret")
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -135,6 +135,7 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
+		/obj/item/rack_parts,
 	)
 	/// whitelisted drone items, recursive/includes descendants
 	var/list/drone_item_whitelist_recursive = list(
@@ -151,11 +152,14 @@
 		/obj/item/stack/rods,
 		/obj/item/stack/sheet,
 		/obj/item/stack/tile,
+		/obj/item/stack/ducts,
 		/obj/item/stock_parts,
 		/obj/item/toner,
 		/obj/item/wallframe,
 		/obj/item/clothing/head,
 		/obj/item/clothing/mask,
+		/obj/item/storage/box/lights,
+		/obj/item/lightreplacer,
 	)
 	/// machines whitelisted from being shy with
 	var/list/shy_machine_whitelist = list(
@@ -191,6 +195,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_LITERATE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_KNOW_ENGI_WIRES, INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))

@@ -451,6 +451,13 @@
 	description = "Guaranteed to get you somewhere FAST. With a custom-built plasma engine, this bad boy will put more distance between you and certain danger than any other!"
 	credit_cost = CARGO_CRATE_VALUE * 50
 
+/datum/map_template/shuttle/emergency/fish
+	suffix = "fish"
+	name = "Angler's Choice Emergency Shuttle"
+	description = "Trades such amenities as 'storage space' and 'sufficient seating' for an artifical environment ideal for fishing, plus ample supplies (also for fishing)."
+	admin_notes = "There's a chasm in it, it has railings but that won't stop determined players."
+	credit_cost = CARGO_CRATE_VALUE * 10
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
@@ -718,6 +725,10 @@
 /datum/map_template/shuttle/starfury/corvette
 	suffix = "corvette"
 	name = "SBC Starfury Corvette"
+
+/datum/map_template/shuttle/ruin/cyborg_mothership
+	suffix = "cyborg_mothership"
+	name = "Cyborg Mothership"
 
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"

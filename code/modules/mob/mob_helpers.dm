@@ -310,7 +310,7 @@
 		if(affecting.heal_damage(brute_heal, burn_heal, BODYTYPE_ROBOTIC))
 			human.update_damage_overlays()
 		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : "burnt wires in"] [human]'s [affecting.name]."), \
-			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"]	[affecting.name]."))
+			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"] [affecting.name]."))
 		return TRUE //successful heal
 
 
@@ -471,3 +471,11 @@
 	if(!istype(player, /client))
 		return
 	return player
+
+/proc/health_percentage(mob/living/mob)
+	var/divided_health = mob.health / mob.maxHealth
+	if(iscyborg(mob) || islarva(mob))
+		divided_health = (mob.health + mob.maxHealth) / (mob.maxHealth * 2)
+	else if(iscarbon(mob) || isAI(mob) || isbrain(mob))
+		divided_health = abs(HEALTH_THRESHOLD_DEAD - mob.health) / abs(HEALTH_THRESHOLD_DEAD - mob.maxHealth)
+	return divided_health * 100

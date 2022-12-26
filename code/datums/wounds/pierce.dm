@@ -25,34 +25,35 @@
 
 /datum/wound/pierce/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	set_blood_flow(initial_flow)
-	if(attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+	if(!no_bleeding && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
 		victim.spray_blood(attack_direction, severity)
 
-
 /datum/wound/pierce/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(victim.stat == DEAD || wounding_dmg < 5)
+	if(victim.stat == DEAD || (wounding_dmg < 5) || no_bleeding || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
 		return
-	if(victim.blood_volume && prob(internal_bleeding_chance + wounding_dmg))
-		if(limb.current_gauze?.splint_factor)
-			wounding_dmg *= (1 - limb.current_gauze.splint_factor)
-		var/blood_bled = rand(1, wounding_dmg * internal_bleeding_coefficient) // 12 brute toolbox can cause up to 15/18/21 bloodloss on mod/sev/crit
-		switch(blood_bled)
-			if(1 to 6)
-				victim.bleed(blood_bled, TRUE)
-			if(7 to 13)
-				victim.visible_message("<span class='smalldanger'>Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone].</span>", span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."), vision_distance=COMBAT_MESSAGE_RANGE)
-				victim.bleed(blood_bled, TRUE)
-			if(14 to 19)
-				victim.visible_message("<span class='smalldanger'>A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!</span>", span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"), vision_distance=COMBAT_MESSAGE_RANGE)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
-				victim.bleed(blood_bled)
-			if(20 to INFINITY)
-				victim.visible_message(span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"), span_danger("<b>You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
-				victim.bleed(blood_bled)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
-				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
+	if(limb.current_gauze?.splint_factor)
+		wounding_dmg *= (1 - limb.current_gauze.splint_factor)
+	var/blood_bled = rand(1, wounding_dmg * internal_bleeding_coefficient) // 12 brute toolbox can cause up to 15/18/21 bloodloss on mod/sev/crit
+	switch(blood_bled)
+		if(1 to 6)
+			victim.bleed(blood_bled, TRUE)
+		if(7 to 13)
+			victim.visible_message("<span class='smalldanger'>Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone].</span>", span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.bleed(blood_bled, TRUE)
+		if(14 to 19)
+			victim.visible_message("<span class='smalldanger'>A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!</span>", span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"), vision_distance=COMBAT_MESSAGE_RANGE)
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+			victim.bleed(blood_bled)
+		if(20 to INFINITY)
+			victim.visible_message(span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"), span_danger("<b>You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.bleed(blood_bled)
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 /datum/wound/pierce/get_bleed_rate_of_change()
+	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
+	if(no_bleeding)
+		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 		return BLOOD_FLOW_INCREASING
 	if(limb.current_gauze)
@@ -62,13 +63,14 @@
 /datum/wound/pierce/handle_process(delta_time, times_fired)
 	set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
-	if(victim.bodytemperature < (BODYTEMP_NORMAL - 10))
-		adjust_blood_flow(-0.1 * delta_time)
-		if(DT_PROB(2.5, delta_time))
-			to_chat(victim, span_notice("You feel the [lowertext(name)] in your [limb.plaintext_zone] firming up from the cold!"))
+	if(!no_bleeding)
+		if(victim.bodytemperature < (BODYTEMP_NORMAL - 10))
+			adjust_blood_flow(-0.1 * delta_time)
+			if(DT_PROB(2.5, delta_time))
+				to_chat(victim, span_notice("You feel the [lowertext(name)] in your [limb.plaintext_zone] firming up from the cold!"))
 
-	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
-		adjust_blood_flow(0.25 * delta_time) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+			adjust_blood_flow(0.25 * delta_time) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
 		adjust_blood_flow(-limb.current_gauze.absorption_rate * gauzed_clot_rate * delta_time)
@@ -106,7 +108,8 @@
 	user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 	if(!do_after(user, base_treat_time * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
-	user.visible_message(span_green("[user] stitches up some of the bleeding on [victim]."), span_green("You stitch up some of the bleeding on [user == victim ? "yourself" : "[victim]"]."))
+	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
+	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
 	limb.heal_damage(I.heal_brute, I.heal_burn)
@@ -126,7 +129,8 @@
 	if(!do_after(user, base_treat_time * self_penalty_mult * improv_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
-	user.visible_message(span_green("[user] cauterizes some of the bleeding on [victim]."), span_green("You cauterize some of the bleeding on [victim]."))
+	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
+	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	limb.receive_damage(burn = 2 + severity, wound_bonus = CANT_WOUND)
 	if(prob(30))
 		victim.emote("scream")
@@ -153,6 +157,11 @@
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
 
+/datum/wound/pierce/moderate/update_descriptions()
+	if(no_bleeding)
+		examine_desc = "has a small, circular hole"
+		occur_text = "splits a small hole open"
+
 /datum/wound/pierce/severe
 	name = "Open Puncture"
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and reduced limb stability."
@@ -169,6 +178,10 @@
 	threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
+
+/datum/wound/pierce/severe/update_descriptions()
+	if(no_bleeding)
+		occur_text = "tears a hole open"
 
 /datum/wound/pierce/critical
 	name = "Ruptured Cavity"
