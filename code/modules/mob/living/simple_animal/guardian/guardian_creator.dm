@@ -92,6 +92,8 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		used = FALSE
 
 /obj/item/guardiancreator/proc/spawn_guardian(mob/living/user, mob/dead/candidate, guardian_path)
+	if(QDELETED(user) || user.stat == DEAD)
+		return
 	var/list/guardians = user.get_all_linked_holoparasites()
 	if(length(guardians) && !allowmultiple)
 		to_chat(user, span_holoparasite("You already have a [mob_name]!") )
