@@ -1790,7 +1790,7 @@
 	icon_state = "silencerglass"
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(ishuman(drinker) && drinker.mind?.miming)
+	if(ishuman(drinker) && ISMIMING(drinker))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
@@ -2695,7 +2695,7 @@
 	icon_state = "blank_paper"
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(ishuman(drinker) && drinker.mind?.miming)
+	if(ishuman(drinker) && ISMIMING(drinker))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE

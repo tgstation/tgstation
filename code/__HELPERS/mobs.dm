@@ -719,6 +719,8 @@ GLOBAL_LIST_EMPTY(species_list)
 
 #define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_DISCOORDINATED_TOOL_USER))
 
+#define ISMIMING(mob) (HAS_TRAIT(mob, TRAIT_FRENCH_METABOLISM) && !HAS_TRAIT(mob, TRAIT_BROKEN_VOW))
+
 #define IS_IN_STASIS(mob) (mob.has_status_effect(/datum/status_effect/grouped/stasis))
 
 /// Gets the client of the mob, allowing for mocking of the client.

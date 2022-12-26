@@ -16,6 +16,8 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
+	liver_traits = list(TRAIT_FRENCH_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_MIME
 	departments_list = list(
 		/datum/job_department/service,
@@ -75,12 +77,6 @@
 
 	if(visualsOnly)
 		return
-
-	// Start our mime out with a vow of silence and the ability to break (or make) it
-	if(H.mind)
-		var/datum/action/cooldown/spell/vow_of_silence/vow = new(H.mind)
-		vow.Grant(H)
-		H.mind.miming = TRUE
 
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.show_to(H)

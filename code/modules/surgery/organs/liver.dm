@@ -33,6 +33,9 @@
 	// If the liver handles foods like a clown, it honks like a bike horn
 	// Don't think about it too much.
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COMEDY_METABOLISM), PROC_REF(on_add_comedy_metabolism))
+	// If the liver handles foods like a mime, it becomes grayscale and grants the vow of silence action
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_FRENCH_METABOLISM), PROC_REF(on_add_french_metabolism))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FRENCH_METABOLISM), PROC_REF(on_remove_french_metabolism))
 
 /* Signal handler for the liver gaining the TRAIT_COMEDY_METABOLISM trait
  *
@@ -50,6 +53,70 @@
 	// Would that make the clown more or less likely to honk it
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
 
+/* Signal handler for the liver gaining the TRAIT_FRENCH_METABOLISM trait
+ *
+ * The liver becomes grayscale and gains the vow of silence action.
+ */
+/obj/item/organ/internal/liver/proc/on_add_french_metabolism()
+	SIGNAL_HANDLER
+
+	var/static/list/grayscale_color = list(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
+	add_atom_colour(grayscale_color, FIXED_COLOUR_PRIORITY)
+	add_organ_trait(TRAIT_FRENCH_METABOLISM)
+	// Register signals for when the vow is broken
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_BROKEN_VOW), PROC_REF(on_add_broken_vow))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_BROKEN_VOW), PROC_REF(on_remove_broken_vow))
+	var/datum/action/cooldown/spell/vow_of_silence/vow_action = locate() in actions
+	if(!vow_action)
+		vow_action = new(src)
+	if(owner)
+		vow_action.Grant(owner)
+
+/* Signal handler for the liver losing the TRAIT_FRENCH_METABOLISM trait
+ *
+ * Removes the action and resets color to whatever it was initially
+ */
+/obj/item/organ/internal/liver/proc/on_remove_french_metabolism()
+	SIGNAL_HANDLER
+
+	remove_atom_colour(FIXED_COLOUR_PRIORITY)
+	remove_organ_trait(TRAIT_FRENCH_METABOLISM)
+	remove_organ_trait(TRAIT_BROKEN_VOW) //no french metabolism, no vow
+	// Unregister signals for when the vow is broken
+	UnregisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_BROKEN_VOW))
+	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_BROKEN_VOW))
+	var/datum/action/cooldown/spell/vow_of_silence/vow_action = locate() in actions
+	if(!vow_action)
+		return
+	if(owner)
+		vow_action.Remove(owner)
+	actions -= vow_action
+	qdel(vow_action)
+
+/* Signal handler for the liver gaining the TRAIT_BROKEN_VOW trait
+ *
+ * Uses to properly send a mood event to the current owner
+ */
+/obj/item/organ/internal/liver/proc/on_add_broken_vow()
+	SIGNAL_HANDLER
+
+	if(!owner)
+		return
+
+	owner.add_mood_event("vow_of_silence", /datum/mood_event/broken_vow)
+
+/* Signal handler for the liver losing the TRAIT_BROKEN_VOW trait
+ *
+ * Uses to properly clear the mood event from the current owner
+ */
+/obj/item/organ/internal/liver/proc/on_remove_broken_vow()
+	SIGNAL_HANDLER
+
+	if(!owner)
+		return
+
+	owner.clear_mood_event("vow_of_silence")
+
 /obj/item/organ/internal/liver/examine(mob/user)
 	. = ..()
 
@@ -59,7 +126,11 @@
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
 			. += "The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>."
 		if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
-			. += "A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>."
+			. += "A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, imply that this is the liver of a <em>clown</em>."
+		if(HAS_TRAIT(src, TRAIT_FRENCH_METABOLISM))
+			. += "A smell of cheese and wine, coupled with a depressing lack of color, imply that this is the liver of a <em>mime</em>."
+			if(HAS_TRAIT(src, TRAIT_BROKEN_VOW))
+				. += span_warning("A severe scar in the shape of a frown implies that whoever owned this liver broke their vow of silence, bringing shame to mimes everywhere.")
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
 			. += "Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>."
 		if(HAS_TRAIT(src, TRAIT_ENGINEER_METABOLISM))
@@ -85,6 +156,17 @@
 		if(!HAS_TRAIT_FROM(src, readded_trait, JOB_TRAIT))
 			continue
 		ADD_TRAIT(replacement, readded_trait, JOB_TRAIT)
+
+/obj/item/organ/internal/liver/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+	. = ..()
+	if(!. || !HAS_TRAIT(src, TRAIT_BROKEN_VOW))
+		return
+	reciever.add_mood_event("vow_of_silence", /datum/mood_event/broken_vow)
+
+/obj/item/organ/internal/liver/Remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	if(organ_owner)
+		organ_owner.clear_mood_event("vow_of_silence")
 
 #define HAS_SILENT_TOXIN 0 //don't provide a feedback message if this is the only toxin present
 #define HAS_NO_TOXIN 1
