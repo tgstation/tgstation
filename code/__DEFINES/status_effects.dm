@@ -57,7 +57,7 @@
 /// Is the mob nearsighted?
 #define is_nearsighted(...) has_status_effect(/datum/status_effect/grouped/nearsighted)
 /// Is the mob nearsighted, but has it disabled temporarily?
-#define is_nearsighted_currently(...) is_nearsighted() && HAS_TRAIT(src, TRAIT_NEARSIGHTED_CORRECTED)
+#define is_nearsighted_currently(...) is_nearsighted() && !HAS_TRAIT(src, TRAIT_NEARSIGHTED_CORRECTED)
 /// Is the mob nearsigthed from the passed source or sources?
 #define is_nearsighted_from(sources) has_status_effect_from_source(/datum/status_effect/grouped/nearsighted, sources)
 
