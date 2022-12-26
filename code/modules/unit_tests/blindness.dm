@@ -115,7 +115,7 @@
 	TEST_ASSERT(!HAS_BLINDNESS(dummy), "After healing from critical eye damage, the dummy was not unblinded.")
 
 	// Test nearsightedness due to eye damage
-	var/datum/status_effect/grouped/visually_impaired/nearsighted/nearsightedness
+	var/datum/status_effect/grouped/nearsighted/nearsightedness
 	// Cause minor eye damage
 	var/minor_damage = eyes.maxHealth * 0.5
 	eyes.applyOrganDamage(minor_damage) //~25 ddamage

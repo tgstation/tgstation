@@ -2,78 +2,68 @@
 /// There are no reason why these cannot be blinded, it is simply for "design reasons" (these things shouldn't be blinded)
 #define CAN_BE_BLIND(mob) (!isanimal_or_basicmob(mob) && !isbrain(mob) && !isrevenant(mob))
 
-/// Grouped status effect that applies a visual imparity (a fullscreen overlay)
-/datum/status_effect/grouped/visually_impaired
-	alert_type = null
-	/// What overlay do we give out?
-	var/overlay_type = /atom/movable/screen/fullscreen/impaired
-	/// What serverity to give to the overlay? Can be null (no severity)
-	var/overlay_severity
-
-/datum/status_effect/grouped/visually_impaired/on_apply()
-	apply_fullscreen_overlay()
-	return TRUE
-
-/datum/status_effect/grouped/visually_impaired/on_remove()
-	owner.clear_fullscreen(id)
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
-
-/datum/status_effect/grouped/visually_impaired/proc/apply_fullscreen_overlay()
-	owner.overlay_fullscreen(id, overlay_type, overlay_severity)
-
-/datum/status_effect/grouped/visually_impaired/proc/set_overlay_severity(to_value)
-	overlay_severity = to_value
-	apply_fullscreen_overlay()
-
 /// Nearsighted
-/datum/status_effect/grouped/visually_impaired/nearsighted
+/datum/status_effect/grouped/nearsighted
 	id = "nearsighted"
-	overlay_severity = 1
+	// This is not "remove on fullheal" as in practice,
+	// fullheal should instead remove all the sources and in turn cure this
 
-/datum/status_effect/grouped/visually_impaired/nearsighted/on_apply()
-	. = ..()
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NEARSIGHTED_CORRECTED), .proc/stop_nearsightedness)
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NEARSIGHTED_CORRECTED), .proc/resume_nearsightedness)
+	/// Static list of signals that, when recieved, we force an update to our nearsighted overlay
+	var/static/list/update_signals = list(SIGNAL_ADDTRAIT(TRAIT_NEARSIGHTED_CORRECTED), SIGNAL_REMOVETRAIT(TRAIT_NEARSIGHTED_CORRECTED))
+	/// How severe is our nearsightedness right now
+	var/overlay_severity = 1
 
-/datum/status_effect/grouped/visually_impaired/nearsighted/on_remove()
-	UnregisterSignal(owner, list(
-		SIGNAL_ADDTRAIT(TRAIT_NEARSIGHTED_CORRECTED),
-		SIGNAL_REMOVETRAIT(TRAIT_NEARSIGHTED_CORRECTED),
-	))
+/datum/status_effect/grouped/nearsighted/on_apply()
+	RegisterSignals(owner, update_signals, PROC_REF(update_nearsightedness))
+	update_nearsighted_overlay()
 	return ..()
 
-/datum/status_effect/grouped/visually_impaired/nearsighted/apply_fullscreen_overlay()
-	if(HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED))
-		return
-	return ..()
-
-/// Signal proc for when we gain [TRAIT_NEARSIGHTED_CORRECTED] - (temporarily) disable the overlay if we're correcting it
-/datum/status_effect/grouped/visually_impaired/nearsighted/proc/stop_nearsightedness(datum/source)
-	SIGNAL_HANDLER
-
+/datum/status_effect/grouped/nearsighted/on_remove()
+	UnregisterSignal(owner, update_signals)
 	owner.clear_fullscreen(id)
+	return ..()
 
-/// Signal proc for when we gain [TRAIT_NEARSIGHTED_CORRECTED] - re-enable the overlay
-/datum/status_effect/grouped/visually_impaired/nearsighted/proc/resume_nearsightedness(datum/source)
+/// Signal proc for when we gain or lose [TRAIT_NEARSIGHTED_CORRECTED] - (temporarily) disable the overlay if we're correcting it
+/datum/status_effect/grouped/nearsighted/proc/update_nearsightedness(datum/source)
 	SIGNAL_HANDLER
 
-	apply_fullscreen_overlay()
+	update_nearsighted_overlay()
+
+/// Updates our nearsightd overlay, either removing it if we have the trait or adding it if we don't
+/datum/status_effect/grouped/nearsighted/proc/update_nearsighted_overlay()
+	if(HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED))
+		owner.clear_fullscreen(id)
+	else
+		owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/impaired, overlay_severity)
+
+/// Sets the severity of our nearsighted overlay
+/datum/status_effect/grouped/nearsighted/proc/set_nearsighted_severity(to_value)
+	if(!isnum(to_value))
+		return
+	if(overlay_severity == to_value)
+		return
+
+	overlay_severity = to_value
+	update_fullscreen_overlay()
 
 /// Blindness
-/datum/status_effect/grouped/visually_impaired/blindness
+/datum/status_effect/grouped/blindness
 	id = "blindness"
 	alert_type = /atom/movable/screen/alert/status_effect/blind
-	overlay_type = /atom/movable/screen/fullscreen/blind
+	// This is not "remove on fullheal" as in practice,
+	// fullheal should instead remove all the sources and in turn cure this
 
-/datum/status_effect/grouped/visually_impaired/blindness/on_apply()
+/datum/status_effect/grouped/blindness/on_apply()
 	if(!CAN_BE_BLIND(owner))
 		return FALSE
 
-	. = ..()
+	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/blind)
 	// You are blind - at most, able to make out shapes near you
 	owner.add_client_colour(/datum/client_colour/monochrome/blind)
+	return ..()
 
-/datum/status_effect/grouped/visually_impaired/blindness/on_remove()
+/datum/status_effect/grouped/blindness/on_remove()
+	owner.clear_fullscreen(id)
 	owner.remove_client_colour(/datum/client_colour/monochrome/blind)
 	return ..()
 
@@ -87,6 +77,7 @@
 	id = "temporary_blindness"
 	tick_interval = 2 SECONDS
 	alert_type = null
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/temporary_blindness/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration

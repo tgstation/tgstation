@@ -70,6 +70,9 @@
  * Returns an instance of a status effect, or NULL if none were found.
  */
 /mob/proc/has_status_effect(datum/status_effect/checked_effect)
+	// Yes I'm being cringe and putting this on the mob level even though status effects only apply to the living level
+	// There's quite a few places (namely examine and, bleh, cult code) where it's easier to not need to cast to living before checking
+	// for an effect such as blindness
 	return null
 
 /mob/living/has_status_effect(datum/status_effect/checked_effect)
@@ -90,6 +93,7 @@
  * Returns an instance of a status effect, or NULL if none were found.
  */
 /mob/proc/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, sources)
+	// See [/mob/proc/has_status_effect] for reason behind having this on the mob level
 	return null
 
 /mob/living/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, sources)
@@ -118,6 +122,8 @@
  * Returns a list
  */
 /mob/proc/has_status_effect_list(datum/status_effect/checked_effect)
+	// See [/mob/proc/has_status_effect] for reason behind having this on the mob level
+	return null
 
 /mob/living/has_status_effect_list(datum/status_effect/checked_effect)
 	RETURN_TYPE(/list)

@@ -166,7 +166,7 @@
 			// clear nearsightedness from damage
 			owner.cure_nearsighted(EYE_DAMAGE)
 			// if we're still nearsighted, reset it's severity to 1
-			var/datum/status_effect/grouped/visually_impaired/nearsighted/nearsightedness = owner.is_nearsighted()
+			var/datum/status_effect/grouped/nearsighted/nearsightedness = owner.is_nearsighted()
 			nearsightedness?.overlay_severity = 1
 			// and cure blindness from damage
 			owner.cure_blind(EYE_DAMAGE)
@@ -184,7 +184,7 @@
 		// become nearsighted from damage
 		owner.become_nearsighted(EYE_DAMAGE)
 		// update the severity of our nearsightedness based on our eye damage
-		var/datum/status_effect/grouped/visually_impaired/nearsighted/nearsightedness = owner.is_nearsighted()
+		var/datum/status_effect/grouped/nearsighted/nearsightedness = owner.is_nearsighted()
 		nearsightedness.set_overlay_severity(damage > high_threshold ? 2 : 1)
 
 	damaged = TRUE
