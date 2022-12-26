@@ -149,6 +149,7 @@
 /datum/reagent/drug/methamphetamine/on_new(data)
 	. = ..()
 	//the more pure, the less non-blue colors get involved - best case scenario is rgb(135, 200, 250) AKA #78C8FA
+	//worst case scenario is rgb(250, 250, 250) AKA #FAFAFA
 	var/removed_red = round(creation_purity * 125)
 	var/removed_green = round(creation_purity * 55)
 	color = rgb(250-removed_red, 250-removed_green, 250)
