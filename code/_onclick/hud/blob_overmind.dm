@@ -9,16 +9,6 @@
 /atom/movable/screen/blob/MouseExited()
 	closeToolTip(usr)
 
-/atom/movable/screen/blob/blob_help
-	icon_state = "ui_help"
-	name = "Blob Help"
-	desc = "Help on playing blob!"
-
-/atom/movable/screen/blob/blob_help/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.blob_help()
-
 /atom/movable/screen/blob/jump_to_node
 	icon_state = "ui_tonode"
 	name = "Jump to Node"
@@ -97,9 +87,10 @@
 	desc = "Produces a node blob for [BLOB_STRUCTURE_NODE_COST] resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
 /atom/movable/screen/blob/node_blob/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.create_special(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.create_special(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
 
 /atom/movable/screen/blob/factory_blob
 	icon_state = "ui_factory"
@@ -171,11 +162,6 @@
 	healths = new /atom/movable/screen/healths/blob()
 	healths.hud = src
 	infodisplay += healths
-
-	using = new /atom/movable/screen/blob/blob_help()
-	using.screen_loc = "WEST:6,NORTH:-3"
-	using.hud = src
-	static_inventory += using
 
 	using = new /atom/movable/screen/blob/jump_to_node()
 	using.screen_loc = ui_inventory

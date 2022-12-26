@@ -4,8 +4,10 @@
 	antagpanel_category = "Biohazards"
 	show_to_ghosts = TRUE
 	job_rank = ROLE_BLOB
-
+	ui_name = "AntagInfoBlob"
+	/// Action to release a blob infection
 	var/datum/action/innate/blobpop/pop_action
+	/// Initial points for a human blob
 	var/starting_points_human_blob = OVERMIND_STARTING_POINTS
 
 /datum/antagonist/blob/roundend_report()
@@ -43,6 +45,28 @@
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
+
+
+/datum/antagonist/blob/ui_data(mob/user)
+	var/list/data = list()
+
+	var/mob/camera/blob/blob = user
+	if(!isovermind(user))
+		return FALSE
+
+	data["objectives"] = get_objectives()
+
+	var/datum/blobstrain/reagent/blobstrain = blob.blobstrain
+
+	if(!blobstrain)
+		return data
+
+	data["color"] = blobstrain.color
+	data["description"] = blobstrain.description
+	data["effects"] = blobstrain.effectdesc
+	data["name"] = blobstrain.name
+
+	return data
 
 /datum/antagonist/blob/proc/create_objectives()
 	var/datum/objective/blob_takeover/main = new
@@ -144,3 +168,6 @@
 
 /obj/effect/dummy/phased_mob/can_blob_attack()
 	return FALSE
+
+
+

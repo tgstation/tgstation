@@ -219,11 +219,11 @@
 
 	var/mob/dead/observer/player = pick(candidates)
 	blobber.key = player.key
-	blobber.mind?.add_antag_datum(/datum/antagonist/blob)
+	blobber.mind?.add_antag_datum(/datum/antagonist/blobbernaut)
 
 	SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
 	SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
-	to_chat(blobber, "<b>You are a blobbernaut!</b>")
+	to_chat(blobber, span_boldannounce("You are a blobbernaut!"))
 	to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed.")
 	to_chat(blobber, "You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally")
 	to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
@@ -413,27 +413,5 @@
 			strain_choices = null
 
 			return
-
-/** Displays some help text in chat. */
-/mob/camera/blob/proc/blob_help()
-	to_chat(src, "<b>As the overmind, you can control the blob!</b>")
-	to_chat(src, "Your blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-	to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.description]")
-	if(blobstrain.effectdesc)
-		to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.effectdesc]")
-	to_chat(src, "<b>You can expand, which will attack people, damage objects, or place a Normal Blob if the tile is clear.</b>")
-	to_chat(src, "<i>Normal Blobs</i> will expand your reach and can be upgraded into special blobs that perform certain functions.")
-	to_chat(src, "<b>You can upgrade normal blobs into the following types of blob:</b>")
-	to_chat(src, "<i>Shield Blobs</i> are strong and expensive blobs which take more damage. In additon, they are fireproof and can block air, use these to protect yourself from station fires. Upgrading them again will result in a reflective blob, capable of reflecting most projectiles at the cost of the strong blob's extra health.")
-	to_chat(src, "<i>Resource Blobs</i> are blobs which produce more resources for you, build as many of these as possible to consume the station. This type of blob must be placed near node blobs or your core to work.")
-	to_chat(src, "<i>Factory Blobs</i> are blobs that spawn blob spores which will attack nearby enemies. This type of blob must be placed near node blobs or your core to work.")
-	to_chat(src, "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become fragile and briefly unable to produce spores.")
-	to_chat(src, "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs.")
-	to_chat(src, "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>")
-	to_chat(src, "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob")
-	to_chat(src, "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them.")
-	if(!placed && autoplace_max_time <= world.time)
-		to_chat(src, span_big("<font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font>"))
-		to_chat(src, span_big("<font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font>"))
 
 #undef BLOB_REROLL_RADIUS
