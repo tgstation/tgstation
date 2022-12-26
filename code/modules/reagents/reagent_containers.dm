@@ -122,7 +122,7 @@
 	if(isturf(target))
 		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
 	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
-	flick_overlay_global(splash_animation, GLOB.clients, 0.8 SECONDS)
+	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
 
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
@@ -218,7 +218,7 @@
 	if(isturf(target))
 		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
 	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
-	flick_overlay_global(splash_animation, GLOB.clients, 0.8 SECONDS)
+	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
 
 	reagents.clear_reagents()
 
