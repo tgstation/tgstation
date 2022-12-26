@@ -1092,7 +1092,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 ///This proc handles punching damage. IMPORTANT: Our owner is the TARGET and not the USER in this proc. For whatever reason...
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !attacker_style?.pacifist_style)
 		to_chat(user, span_warning("You don't want to harm [target]!"))
 		return FALSE
 	if(target.check_block())
@@ -1285,7 +1285,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						human.visible_message(span_danger("[human] is knocked senseless!"), \
 										span_userdanger("You're knocked senseless!"))
 						human.set_confusion_if_lower(20 SECONDS)
-						human.adjust_blurriness(10)
+						human.adjust_eye_blur(20 SECONDS)
 					if(prob(10))
 						human.gain_trauma(/datum/brain_trauma/mild/concussion)
 				else

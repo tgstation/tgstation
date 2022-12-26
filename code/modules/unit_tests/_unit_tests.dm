@@ -171,6 +171,7 @@
 #include "screenshot_antag_icons.dm"
 #include "screenshot_basic.dm"
 #include "screenshot_humanoids.dm"
+#include "screenshot_husk.dm"
 #include "screenshot_saturnx.dm"
 #include "security_officer_distribution.dm"
 #include "security_levels.dm"

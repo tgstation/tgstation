@@ -1842,18 +1842,15 @@
 			return 0
 
 	var/list/forced_gravity = list()
-	if(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity))
-		if(!length(forced_gravity))
-			SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity)
+	SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	if(length(forced_gravity))
+		var/positive_grav = max(forced_gravity)
+		var/negative_grav = min(min(forced_gravity), 0) //negative grav needs to be below or equal to 0
 
-		var/positive_grav = 0
-		var/negative_grav = 0
 		//our gravity is sum of the most massive positive and negative numbers returned by the signal
 		//so that adding two forced_gravity elements with an effect size of 1 each doesnt add to 2 gravity
 		//but negative force gravity effects can cancel out positive ones
-		for(var/gravity_influence in forced_gravity)
-			positive_grav = max(positive_grav, gravity_influence)
-			negative_grav = min(negative_grav, gravity_influence)
 
 		return (positive_grav + negative_grav)
 

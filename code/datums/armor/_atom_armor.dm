@@ -19,4 +19,4 @@
 /// Helper to update the atom's armor to a new armor with the specified rating
 /atom/proc/set_armor_rating(damage_type, rating)
 	var/datum/armor/armor = get_armor()
-	set_armor(armor.generate_new_with_specific(list(damage_type = rating)))
+	set_armor(armor.generate_new_with_specific(list("[damage_type]" = rating)))

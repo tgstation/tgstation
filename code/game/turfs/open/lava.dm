@@ -7,6 +7,7 @@
 /turf/open/lava
 	name = "lava"
 	icon_state = "lava"
+	desc = "Looks painful to step in. Don't mine down."
 	gender = PLURAL //"That's some lava."
 	baseturfs = /turf/open/lava //lava all the way down
 	slowdown = 2
