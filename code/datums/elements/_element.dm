@@ -52,11 +52,10 @@
 /datum/proc/_AddElement(list/arguments)
 	if(QDELING(src))
 		CRASH("We just tried to add an element to a qdeleted datum, something is fucked")
-	var/element_type = arguments[1]
 	var/datum/element/ele = SSdcs.GetElement(arguments)
 	arguments[1] = src
 	if(ele.Attach(arglist(arguments)) == ELEMENT_INCOMPATIBLE)
-		CRASH("Incompatible element [element_type] was assigned to a [type]! args: [json_encode(args)]")
+		CRASH("Incompatible element [ele.type] was assigned to a [type]! args: [json_encode(args)]")
 
 /**
  * Finds the singleton for the element type given and detaches it from src
