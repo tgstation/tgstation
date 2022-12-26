@@ -72,22 +72,8 @@
 
 	hologram = new(loc)
 
-	if(template.humanoid == 1)
-		var/datum/outfit/summon_outfit = text2path(template.outfit)
-
-		var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy("TGC_PRESET")
-
-		if(summon_outfit)
-			mannequin.equipOutfit(summon_outfit ,TRUE)
-		mannequin.setDir(SOUTH)
-
-		hologram.icon = mannequin.icon
-		hologram.icon_state = mannequin.icon_state
-		hologram.copy_overlays(mannequin, TRUE)
-		unset_busy_human_dummy("TGC_PRESET")
-	else
-		hologram.icon = file(template.summon_icon_file)
-		hologram.icon_state = template.summon_icon_state
+	hologram.icon = file(template.summon_icon_file)
+	hologram.icon_state = template.summon_icon_state
 	hologram.name = name
 	hologram.alpha = 170
 	hologram.add_atom_colour(team_color, FIXED_COLOUR_PRIORITY)

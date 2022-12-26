@@ -470,13 +470,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	///The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
 	var/rarity = "uber rare to the extreme"
 
-	///Below vars are used for displaying holographic summons
-	///Basically a var for checking if the card summon wears clothes or not.
-	var/humanoid = -1
-	///Used when summoning humanoid creatures to put them in an outfit
-	var/outfit = "/datum/outfit/job"
-	///If the summon is not humanoid summon the icon of their mob/object
+	///Icon file that summons are pulled from
 	var/summon_icon_file = "icons/obj/toys/tcgmisc.dmi"
+	///Icon state for summons to use
 	var/summon_icon_state = "template"
 
 /datum/card/New(list/data = list(), list/templates = list())
