@@ -141,7 +141,7 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     {integrity_factors.map(({ name, amount }) => (
                       <LabeledList.Item key={name} label={name} labelWrap>
                         <Box color={amount > 0 ? 'green' : 'red'}>
-                          {toFixed(amount, 2)}
+                          {toFixed(amount, 4)}
                         </Box>
                       </LabeledList.Item>
                     ))}
