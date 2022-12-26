@@ -94,9 +94,9 @@
 			//nothing
 		if(21 to 110)
 			if(DT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), delta_time))
-				M.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
+				affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
 		if(110 to INFINITY)
-			M.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
+			affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
 	return ..()
 
 /datum/reagent/consumable/berryjuice

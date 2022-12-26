@@ -3699,7 +3699,6 @@
 #include "code\modules\mob\living\carbon\alien\logout.dm"
 #include "code\modules\mob\living\carbon\alien\organs.dm"
 #include "code\modules\mob\living\carbon\alien\screen.dm"
-#include "code\modules\mob\living\carbon\alien\status_procs.dm"
 #include "code\modules\mob\living\carbon\alien\adult\adult.dm"
 #include "code\modules\mob\living\carbon\alien\adult\adult_defense.dm"
 #include "code\modules\mob\living\carbon\alien\adult\adult_update_icons.dm"
