@@ -139,7 +139,10 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                 !!integrity_factors.length && (
                   <LabeledList>
                     {integrity_factors.map(({ name, amount }) => (
-                      <LabeledList.Item key={name} label={name} labelWrap>
+                      <LabeledList.Item
+                        key={name}
+                        label={'∆ ' + name}
+                        labelWrap>
                         <Box color={amount > 0 ? 'green' : 'red'}>
                           {toFixed(amount, 4)}
                         </Box>
@@ -169,7 +172,10 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                 !!internal_energy_factors.length && (
                   <LabeledList>
                     {internal_energy_factors.map(({ name, amount }) => (
-                      <LabeledList.Item key={name} label={name} labelWrap>
+                      <LabeledList.Item
+                        key={name}
+                        label={'∆ ' + name}
+                        labelWrap>
                         <Box color={amount > 0 ? 'green' : 'red'}>
                           {toFixed(amount, 2) + ' MeV/cm3'}
                         </Box>
