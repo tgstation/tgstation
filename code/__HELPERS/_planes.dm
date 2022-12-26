@@ -47,6 +47,9 @@
 			if(_our_turf){\
 				thing.plane = GET_NEW_PLANE(_cached_plane, GET_Z_PLANE_OFFSET(_our_turf.z));\
 			}\
+			else {\
+				thing.plane = new_value;\
+			}\
 		}\
 		else {\
 			thing.plane = new_value;\

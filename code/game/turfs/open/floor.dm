@@ -11,8 +11,8 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	flags_1 = NO_SCREENTIPS_1
 	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
-	canSmoothWith = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
+	canSmoothWith = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
@@ -83,8 +83,7 @@
 			switch(rand(1, 3))
 				if(1)
 					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
-						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-						ReplaceWithLattice()
+						attempt_lattice_replacement()
 					else
 						ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 					if(prob(33))
@@ -236,7 +235,7 @@
 			if(prob(70))
 				sheer = TRUE
 			else if(prob(50) && (/turf/open/space in baseturfs))
-				ReplaceWithLattice()
+				attempt_lattice_replacement()
 	if(sheer)
 		if(has_tile())
 			remove_tile(null, TRUE, TRUE, TRUE)

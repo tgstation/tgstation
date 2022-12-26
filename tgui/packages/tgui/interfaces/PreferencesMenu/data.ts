@@ -16,6 +16,7 @@ export enum Food {
   Junkfood = 'JUNKFOOD',
   Meat = 'MEAT',
   Nuts = 'NUTS',
+  Oranges = 'ORANGES',
   Pineapple = 'PINEAPPLE',
   Raw = 'RAW',
   Seafood = 'SEAFOOD',

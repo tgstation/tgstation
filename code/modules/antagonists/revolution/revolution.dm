@@ -510,6 +510,8 @@
 	for (var/datum/mind/crewmember as anything in get_crewmember_minds())
 		if (crewmember.has_antag_datum(/datum/antagonist/enemy_of_the_revolution))
 			continue
+		if(crewmember.current?.stat == DEAD) // if we have 60 dead nonrev crew, 2 alive crew, and 10 alive revs, it should qualify for the shuttle
+			continue
 
 		total_candidates += 1
 
