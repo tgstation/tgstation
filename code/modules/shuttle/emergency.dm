@@ -181,8 +181,8 @@
 
 /obj/machinery/computer/emergency_shuttle/proc/increase_hijack_stage()
 	var/obj/docking_port/mobile/emergency/shuttle = SSshuttle.emergency
-	if(!shuttle.hijack_status) // Begin loading this early, otherwise we get an awkward 30 second delay on the 
-		SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	// Begin loading this early, otherwise we get an awkward 30 second delay on the 
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	shuttle.hijack_status++
 	if(hijack_announce)
 		announce_hijack_stage()
