@@ -152,7 +152,7 @@
 	//worst case scenario is rgb(250, 250, 250) AKA #FAFAFA
 	//minimum purity of meth is 50%, therefore we base values on that
 	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
-	color = BlendRGB(color, "#FAFAFA")
+	color = BlendRGB(color, "#FAFAFA", effective_impurity)
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
