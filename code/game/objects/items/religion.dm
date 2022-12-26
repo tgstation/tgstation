@@ -125,7 +125,7 @@
 	result = /obj/item/banner/medical/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/medical = 1)
+				/obj/item/clothing/under/rank/medical/doctor = 1)
 	category = CAT_MISC
 
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
@@ -276,7 +276,16 @@
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/plate_crusader
+
+/datum/armor/plate_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -293,8 +302,18 @@
 	icon_state = null
 	inhand_icon_state = null
 	flags_1 = 0
-	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, FIRE = 60, ACID = 60) //religion protects you from disease, honk.
+	armor_type = /datum/armor/crusader_prophet
 	worn_y_offset = 6
+
+/datum/armor/crusader_prophet
+	melee = 60
+	bullet = 60
+	laser = 60
+	energy = 60
+	bomb = 70
+	bio = 50
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
 	icon_state = "prophet-red"
@@ -354,12 +373,21 @@
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60) //does this even do anything on boots?
+	armor_type = /datum/armor/shoes_plate
 	clothing_flags = NOSLIP
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+
+/datum/armor/shoes_plate
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/shoes/plate/red
 	icon_state = "crusader-red"

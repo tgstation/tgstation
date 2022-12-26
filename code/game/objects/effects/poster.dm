@@ -14,7 +14,7 @@
 /obj/item/poster
 	name = "poorly coded poster"
 	desc = "You probably shouldn't be holding this."
-	icon = 'icons/obj/contraband.dmi'
+	icon = 'icons/obj/poster.dmi'
 	force = 0
 	resistance_flags = FLAMMABLE
 	var/poster_type
@@ -101,7 +101,7 @@
 	name = "poster"
 	var/original_name
 	desc = "A large piece of space-resistant printed paper."
-	icon = 'icons/obj/contraband.dmi'
+	icon = 'icons/obj/poster.dmi'
 	anchored = TRUE
 	buildable_sign = FALSE //Cannot be unwrenched from a wall.
 	var/ruined = FALSE
@@ -149,14 +149,11 @@
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
 	var/list/approved_types = list()
-	for(var/t in poster_types)
-		var/obj/structure/sign/poster/T = t
-		if(initial(T.icon_state) && !initial(T.never_random))
-			approved_types |= T
+	for(var/obj/structure/sign/poster/type_of_poster as anything in poster_types)
+		if(initial(type_of_poster.icon_state) && !initial(type_of_poster.never_random))
+			approved_types |= type_of_poster
 
 	var/obj/structure/sign/poster/selected = pick(approved_types)
-	if(length(GLOB.holidays) && prob(30))  // its the holidays! lets get festive
-		selected = /obj/structure/sign/poster/official/festive
 
 	name = initial(selected.name)
 	desc = initial(selected.desc)
@@ -165,11 +162,26 @@
 	poster_item_desc = initial(selected.poster_item_desc)
 	poster_item_icon_state = initial(selected.poster_item_icon_state)
 	ruined = initial(selected.ruined)
+	if(length(GLOB.holidays) && prob(30)) // its the holidays! lets get festive
+		apply_holiday()
 	update_appearance()
 
-/obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER)
-		I.play_tool_sound(src, 100)
+/// allows for posters to become festive posters during holidays
+/obj/structure/sign/poster/proc/apply_holiday()
+	if(!length(GLOB.holidays))
+		return
+	var/active_holiday = pick(GLOB.holidays)
+	var/datum/holiday/holi_data = GLOB.holidays[active_holiday]
+
+	if(holi_data.poster_name == "generic celebration poster")
+		return
+	name = holi_data.poster_name
+	desc = holi_data.poster_desc
+	icon_state = holi_data.poster_icon
+
+/obj/structure/sign/poster/attackby(obj/item/tool, mob/user, params)
+	if(tool.tool_behaviour == TOOL_WIRECUTTER)
+		tool.play_tool_sound(src, 100)
 		if(ruined)
 			to_chat(user, span_notice("You remove the remnants of the poster."))
 			qdel(src)
@@ -1047,16 +1059,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 	name = "Festive Notice Poster"
 	desc = "A poster that informs of active holidays. None are today, so you should get back to work."
 	icon_state = "holiday_none"
-
-/obj/structure/sign/poster/official/festive/Initialize()
-	. = ..()
-	if(!length(GLOB.holidays))
-		return
-	var/active_holiday = pick(GLOB.holidays)
-	var/datum/holiday/holi_data = GLOB.holidays[active_holiday]
-
-	name = holi_data.poster_name
-	desc = holi_data.poster_desc
-	icon_state = holi_data.poster_icon
 
 #undef PLACE_SPEED

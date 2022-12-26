@@ -7,7 +7,7 @@
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
 	inhand_icon_state = null
-	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 10, BOMB = 20, BIO = 50, FIRE = 100, ACID = 50, WOUND = 10) // surprisingly robust against head trauma
+	armor_type = /datum/armor/utility_hardhat
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
@@ -24,6 +24,17 @@
 	///Whether the headlamp is on or off.
 	var/on = FALSE
 
+
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/head/utility/hardhat/Initialize(mapload)
 	. = ..()
@@ -110,6 +121,17 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/head/utility/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
@@ -128,6 +150,17 @@
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	visor_flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/head/utility/hardhat/weldhat/Initialize(mapload)
 	. = ..()
@@ -198,12 +231,23 @@
 	hat_type = "pumpkin"
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 	light_color = "#fff2bf"
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
+
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
@@ -238,6 +282,17 @@
 	light_color = "#76ff8e"
 	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
 
+/datum/armor/utility_hardhat
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 10
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
+	wound = 10
+
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin/turn_on(mob/user)
 	. = ..()
 	dog_fashion = /datum/dog_fashion/head/blumpkin/lit
@@ -255,7 +310,7 @@
 	inhand_icon_state = null
 	hat_type = "reindeer"
 	flags_inv = 0
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	light_range = 1 //luminosity when on
 
 

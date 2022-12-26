@@ -66,8 +66,11 @@
 	desc = "A thick jacket with a rubbery, water-resistant shell."
 	icon_state = "pufferjacket"
 	inhand_icon_state = "hostrench"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/jacket_puffer
 	species_exception = list(/datum/species/golem/bone)
+
+/datum/armor/jacket_puffer
+	bio = 50
 
 /obj/item/clothing/suit/jacket/puffer/vest
 	name = "puffer vest"
@@ -76,7 +79,10 @@
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN
 	cold_protection = CHEST|GROIN
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 30, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/puffer_vest
+
+/datum/armor/puffer_vest
+	bio = 30
 
 /obj/item/clothing/suit/jacket/miljacket
 	name = "military jacket"
@@ -85,12 +91,18 @@
 	inhand_icon_state = null
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
 
+/datum/armor/puffer_vest
+	bio = 30
+
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
 	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
 	icon_state = "letterman"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
+
+/datum/armor/puffer_vest
+	bio = 30
 
 /obj/item/clothing/suit/jacket/letterman_red
 	name = "red letterman jacket"
@@ -99,12 +111,18 @@
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 
+/datum/armor/puffer_vest
+	bio = 30
+
 /obj/item/clothing/suit/jacket/letterman_syndie
 	name = "blood-red letterman jacket"
 	desc = "Oddly, this jacket seems to have a large S on the back..."
 	icon_state = "letterman_s"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
+
+/datum/armor/puffer_vest
+	bio = 30
 
 /obj/item/clothing/suit/jacket/letterman_nanotrasen
 	name = "blue letterman jacket"

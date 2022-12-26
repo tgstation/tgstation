@@ -7,6 +7,7 @@
 /turf/open/lava
 	name = "lava"
 	icon_state = "lava"
+	desc = "Looks painful to step in. Don't mine down."
 	gender = PLURAL //"That's some lava."
 	baseturfs = /turf/open/lava //lava all the way down
 	slowdown = 2
@@ -228,8 +229,8 @@
 			burn_obj.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 		if(burn_obj.resistance_flags & FIRE_PROOF)
 			burn_obj.resistance_flags &= ~FIRE_PROOF
-		if(burn_obj.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
-			burn_obj.armor = burn_obj.armor.setRating(fire = 50)
+		if(burn_obj.get_armor_rating(FIRE) > 50) //obj with 100% fire armor still get slowly burned away.
+			burn_obj.set_armor_rating(FIRE, 50)
 		burn_obj.fire_act(temperature_damage, 1000 * delta_time)
 		if(istype(burn_obj, /obj/structure/closet))
 			var/obj/structure/closet/burn_closet = burn_obj

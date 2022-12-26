@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/overfloor_placed = FALSE
 	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
+	/// If there is a lattice underneat this turf. Used for the attempt_lattice_replacement proc to determine if it should place lattice.
+	var/lattice_underneath = TRUE
 
 	// baseturfs can be either a list or a single turf type.
 	// In class definition like here it should always be a single type.
@@ -165,11 +167,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if(uses_integrity)
 		atom_integrity = max_integrity
-
-		if (islist(armor))
-			armor = getArmor(arglist(armor))
-		else if (!armor)
-			armor = getArmor()
 
 	return INITIALIZE_HINT_NORMAL
 

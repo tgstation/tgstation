@@ -60,9 +60,17 @@
 	inhand_icon_state = null
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, FIRE = 0, ACID = 50)
+	armor_type = /datum/armor/backpack_snail
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/datum/armor/backpack_snail
+	melee = 40
+	bullet = 30
+	laser = 30
+	energy = 10
+	bomb = 25
+	acid = 50
 
 /obj/item/storage/backpack/snail/dropped(mob/user, silent)
 	. = ..()
