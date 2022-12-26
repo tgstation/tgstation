@@ -71,14 +71,14 @@ const CategoryItem = (props, context) => {
   );
 };
 
-const InfoSection = (props, context) => {
+export const InfoSection = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { silo_upgraded } = data;
 
   return (
     <Section>
       <LabeledList>
-        <MatterItem space />
+        <MatterItem />
         {silo_upgraded ? <SiloItem /> : ''}
         <CategoryItem />
       </LabeledList>
