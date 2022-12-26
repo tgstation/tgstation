@@ -1092,10 +1092,10 @@
 //Mutagenic chem side-effects.
 /datum/reagent/uranium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
+	mytray.mutation_roll(user)
 	// Chek if this is the exact same type
 	if(chems.has_reagent(src, 1))
-		mytray.mutation_roll(user)
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
 
 /datum/reagent/uranium/radium

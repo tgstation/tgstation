@@ -403,7 +403,7 @@
 	. = ..()
 	// Chek if this is the exact same type
 	if(chems.has_reagent(src, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(src.type)))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
 		mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
