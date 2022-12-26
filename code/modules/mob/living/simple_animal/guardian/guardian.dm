@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	return ..()
 
 /// Setter for our summoner mob.
-/mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/to_who, different_person = FALSE)
+/mob/living/simple_animal/hostile/guardian/proc/set_summoner(mob/living/to_who, different_person = FALSE)
 	if(QDELETED(to_who))
 		qdel(src) //no gettin off scot-free pal.........
 		return
@@ -129,6 +129,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_summoner_shapeshifted))
 	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_summoner_unshapeshifted))
 	recall(forced = TRUE)
+	if(to_who.stat == DEAD)
+		on_summoner_death(to_who)
 
 /mob/living/simple_animal/hostile/guardian/proc/cut_summoner(different_person = FALSE)
 	if(is_deployed())
