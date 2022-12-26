@@ -298,6 +298,14 @@
 		/obj/item/mod/module/dna_lock/reinforced,
 		/obj/item/mod/module/emp_shield/pulse,
 	)
+	default_pins = list(
+		/obj/item/mod/module/stealth/ninja,
+		/obj/item/mod/module/dispenser/ninja,
+		/obj/item/mod/module/emp_shield/pulse,
+		/obj/item/mod/module/weapon_recall,
+		/obj/item/mod/module/adrenaline_boost,
+		/obj/item/mod/module/energy_net,
+	)
 
 /obj/item/mod/control/pre_equipped/prototype
 	theme = /datum/mod_theme/prototype
