@@ -1541,7 +1541,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				new /datum/tile_info("Smooth Large", /obj/item/stack/tile/iron/dark/smooth_large, 7),
 				new /datum/tile_info("Small", /obj/item/stack/tile/iron/dark/small, 4),
 				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/dark/diagonal, 4),
-				new /datum/tile_info("Herrigbone", /obj/item/stack/tile/iron/dark/herringbone, 4),
+				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/dark/herringbone, 4),
 				new /datum/tile_info("Half Dark", /obj/item/stack/tile/iron/dark_side, 4),
 				new /datum/tile_info("Dark Corner" ,/obj/item/stack/tile/iron/dark_corner, 4),
 			),
@@ -1555,7 +1555,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				new /datum/tile_info("Smooth Large", /obj/item/stack/tile/iron/white/smooth_large, 7),
 				new /datum/tile_info("Small", /obj/item/stack/tile/iron/white/small, 5),
 				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/white/diagonal, 5),
-				new /datum/tile_info("Herrigbone", /obj/item/stack/tile/iron/white/herringbone, 5),
+				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/white/herringbone, 5),
 				new /datum/tile_info("Half White", /obj/item/stack/tile/iron/white_side, 5),
 				new /datum/tile_info("White Corner", /obj/item/stack/tile/iron/white_corner, 5),
 			),
@@ -1586,7 +1586,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				new /datum/tile_info("Cafeteria", /obj/item/stack/tile/iron/cafeteria, 4),
 				new /datum/tile_info("Grimy", /obj/item/stack/tile/iron/grimy, 5),
 				new /datum/tile_info("Sepia", /obj/item/stack/tile/iron/sepia, 5),
-				new /datum/tile_info("Herrigbone", /obj/item/stack/tile/iron/kitchen/herringbone, 5),
+				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/kitchen/herringbone, 5),
 			),
 
 			//Culd have called it miscellaneous but nah too long
@@ -1596,7 +1596,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/terracotta/diagonal, 5),
 				new /datum/tile_info("Herrigone", /obj/item/stack/tile/iron/terracotta/herringbone, 5),
 				new /datum/tile_info("Checkered", /obj/item/stack/tile/iron/checker, 5),
-				new /datum/tile_info("Herrigbone", /obj/item/stack/tile/iron/herringbone, 5),
+				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/herringbone, 5),
 			)
 		)
 	)
@@ -1731,14 +1731,16 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	return TRUE
 
+/obj/item/construction/rtd/proc/is_valid_plating(atom/A)
+	return A.type == /turf/open/floor/plating ||  A.type == /turf/open/floor/plating/reinforced
 
 /obj/item/construction/rtd/afterattack(atom/A, mob/user)
 	. = ..()
 	if(!range_check(A,user) || !istype(A, /turf/open/floor))
 		return TRUE
 
-	var/turf/open/floor/plating/floor = A
-	if(floor.type != /turf/open/floor/plating) //we infer what floor type it is if its not the usual plating
+	var/turf/open/floor = A
+	if(!is_valid_plating(floor)) //we infer what floor type it is if its not the usual plating
 		user.Beam(A, icon_state="light_beam", time = 5)
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])
@@ -1781,8 +1783,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(!range_check(A, user) || !istype(A, /turf/open/floor))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/turf/open/floor/floor = A
-	if(A.type == /turf/open/floor/plating) //cant deconstruct normal plating thats the RCD's job
+	var/turf/open/floor/plating/floor = A
+	if(is_valid_plating(floor)) //cant deconstruct normal plating thats the RCD's job
 		balloon_alert(user, "Nothing to deconstruct")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -1812,8 +1814,12 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		rcd_effect.end_animation()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	//change turf back to plating
-	floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	//for turfs whose base is open space we put regular plating in its place else everyone dies
+	if(floor.baseturfs == /turf/baseturf_bottom)
+		floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	else // for every other turf we scarp away exposing base turf underneath
+		floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+
 	rcd_effect.end_animation()
 	useResource(cost * 0.7, user)
 
