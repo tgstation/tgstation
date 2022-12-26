@@ -419,9 +419,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return SUPERMATTER_NORMAL
 	return SUPERMATTER_INACTIVE
 
+/// Returns the integrity percent of the Supermatter. No rounding made yet, round it yourself.
 /obj/machinery/power/supermatter_crystal/proc/get_integrity_percent()
 	var/integrity = damage / explosion_point
-	integrity = round(100 - integrity * 100, 0.01)
+	integrity = 100 - integrity * 100
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
