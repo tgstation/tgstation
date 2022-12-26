@@ -133,7 +133,7 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     average: [0.5, 0.9],
                     bad: [-Infinity, 0.5],
                   }}>
-                  {toFixed(integrity, 2)}
+                  {toFixed(integrity, 2) + ' %'}
                 </ProgressBar>
               }
               detail={
