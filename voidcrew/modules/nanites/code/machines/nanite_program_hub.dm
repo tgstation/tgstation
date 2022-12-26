@@ -10,17 +10,7 @@
 
 	var/obj/item/disk/nanite_program/disk
 	var/datum/techweb/linked_techweb
-	var/current_category = "Main"
 	var/detail_view = TRUE
-	var/categories = list(
-		list(name = "Utility Nanites"),
-		list(name = "Medical Nanites"),
-		list(name = "Sensor Nanites"),
-		list(name = "Augmentation Nanites"),
-		list(name = "Suppression Nanites"),
-		list(name = "Weaponized Nanites"),
-		list(name = "Protocols"),
-	)
 
 /obj/machinery/nanite_program_hub/Destroy()
 	unsync_research_servers()
@@ -32,8 +22,12 @@
 		linked_techweb = null
 
 /obj/machinery/nanite_program_hub/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(linked_techweb && !QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		linked_techweb.connected_machines -= src //disconnect old one
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		if(linked_techweb)
+			if(linked_techweb == tool.buffer)
+				say("Already linked!")
+				return
+			unsync_research_servers()
 
 		linked_techweb = tool.buffer
 		linked_techweb.connected_machines += src //connect new one
@@ -61,14 +55,13 @@
 
 /obj/machinery/nanite_program_hub/AltClick(mob/user)
 	if(disk && user.canUseTopic(src, !issilicon(user)))
-		to_chat(user, "<span class='notice'>You take out [disk] from [src].</span>")
+		to_chat(user, span_notice("You take out [disk] from [src]."))
 		eject(user)
 	return
 
 /obj/machinery/nanite_program_hub/ui_interact(mob/user, datum/tgui/ui)
 	if(!linked_techweb)
-		visible_message("Warning: no linked server!")
-		SStgui.close_uis(src)
+		balloon_alert(user, "no linked server!")
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -95,10 +88,11 @@
 
 /obj/machinery/nanite_program_hub/ui_static_data(mob/user)
 	var/list/data = list()
+
 	data["programs"] = list()
 	for(var/i in linked_techweb.researched_designs)
 		var/datum/design/nanites/D = SSresearch.techweb_design_by_id(i)
-		if(!istype(D))
+		if(!(D.build_type & NANITE_PROGRAM))
 			continue
 		var/cat_name = D.category[1] //just put them in the first category fuck it
 		if(isnull(data["programs"][cat_name]))

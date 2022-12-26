@@ -1,14 +1,16 @@
 /obj/machinery/nanite_programmer
 	name = "nanite programmer"
 	desc = "A device that can edit nanite program disks to adjust their functionality."
-	var/obj/item/disk/nanite_program/disk
-	var/datum/nanite_program/program
 	icon = 'voidcrew/modules/nanites/icons/research.dmi'
 	icon_state = "nanite_programmer"
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/nanite_programmer
+
+	var/obj/item/disk/nanite_program/disk
+	var/datum/nanite_program/program
+
 	COOLDOWN_DECLARE(nanite_programmer)
 
 /obj/machinery/nanite_programmer/Initialize(mapload)

@@ -27,7 +27,11 @@
 
 /obj/machinery/computer/nanite_cloud_controller/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		linked_techweb.connected_machines -= src //disconnect old one
+		if(linked_techweb)
+			if(linked_techweb == tool.buffer)
+				say("Already linked!")
+				return
+			unsync_research_servers()
 
 		linked_techweb = tool.buffer
 		linked_techweb.connected_machines += src //connect new one

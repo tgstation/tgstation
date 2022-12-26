@@ -5,7 +5,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
 	build_path = /obj/item/nanite_remote
-	category = list("Electronics")
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/nanite_comm_remote
@@ -15,7 +17,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
 	build_path = /obj/item/nanite_remote/comm
-	category = list("Electronics")
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/nanite_scanner
@@ -25,7 +29,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
 	build_path = /obj/item/nanite_scanner
-	category = list("Electronics")
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/nanite_disk
@@ -35,7 +41,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	build_path = /obj/item/disk/nanite_program
-	category = list("Electronics")
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ELECTRONICS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/nanite_chamber
@@ -43,7 +51,9 @@
 	desc = "The circuit board for a Nanite Chamber."
 	id = "nanite_chamber"
 	build_path = /obj/item/circuitboard/machine/nanite_chamber
-	category = list("Research Machinery")
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/public_nanite_chamber
@@ -51,7 +61,9 @@
 	desc = "The circuit board for a Public Nanite Chamber."
 	id = "public_nanite_chamber"
 	build_path = /obj/item/circuitboard/machine/public_nanite_chamber
-	category = list("Research Machinery")
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/nanite_programmer
@@ -59,7 +71,9 @@
 	desc = "The circuit board for a Nanite Programmer."
 	id = "nanite_programmer"
 	build_path = /obj/item/circuitboard/machine/nanite_programmer
-	category = list("Research Machinery")
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/nanite_program_hub
@@ -67,5 +81,7 @@
 	desc = "The circuit board for a Nanite Program Hub."
 	id = "nanite_program_hub"
 	build_path = /obj/item/circuitboard/machine/nanite_program_hub
-	category = list("Research Machinery")
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

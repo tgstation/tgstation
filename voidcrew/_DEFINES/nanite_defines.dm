@@ -49,3 +49,16 @@
 #define NES_BUTTON_NAME "Button Name"
 #define NES_ICON "Icon"
 #define NES_COLOR "Color"
+
+///The nanite build_type.
+#define NANITE_PROGRAM (1<<11)
+
+#define RND_CATEGORY_NANITE_PROGRAMS "/Nanites"
+#define RND_SUBCATEGORY_NANITE_UTILITY "/Utility Nanites"
+#define RND_SUBCATEGORY_NANITE_MEDICAL "/Medical Nanites"
+#define RND_SUBCATEGORY_NANITE_AUGMENTATION "/Augmentation Nanites"
+#define RND_SUBCATEGORY_NANITE_DEFECTIVE "/Defective Nanites"
+#define RND_SUBCATEGORY_NANITE_WEAPONIZED "/Weaponized Nanites"
+#define RND_SUBCATEGORY_NANITE_SUPRESSION "/Suppression Nanites"
+#define RND_SUBCATEGORY_NANITE_SENSOR "/Sensor Nanites"
+#define RND_SUBCATEGORY_NANITE_PROTOCOL "/Protocol Nanites"
