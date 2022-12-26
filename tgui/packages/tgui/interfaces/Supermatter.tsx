@@ -145,7 +145,7 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                         label={name + ' (∆)'}
                         labelWrap>
                         <Box color={amount > 0 ? 'green' : 'red'}>
-                          {toFixed(amount, 2)}
+                          {toFixed(amount, 2) + ' %'}
                         </Box>
                       </LabeledList.Item>
                     ))}
