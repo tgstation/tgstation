@@ -5,7 +5,7 @@
 	var/list/paths = typesof(/obj/item/mod/control/pre_equipped)
 
 	for(var/modpath in paths)
-		var/obj/item/mod/control/mod = new modpath()
+		var/obj/item/mod/control/pre_equipped/mod = new modpath()
 		TEST_ASSERT(mod.theme, "[modpath] spawned without a theme.")
 		TEST_ASSERT(mod.helmet, "[modpath] spawned without a helmet.")
 		TEST_ASSERT(mod.chestplate, "[modpath] spawned without a chestplate.")
