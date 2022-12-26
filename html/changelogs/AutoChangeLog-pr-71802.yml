@@ -1,6 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "Sandstorm random event! A random side of the station is pummeled by an onslaught of sand and dust. If you hear that one is approaching, grab a welder and some iron to help with repairs!"
-  - rscadd: "Space sand! It's weak and doesn't hurt reinforced walls, but shouldn't be underestimated in high quantities."
-  - code_imp: "You can now pass a start direction to the spawn_meteors/spawn_meteor global procs."

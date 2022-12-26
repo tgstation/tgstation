@@ -130,6 +130,7 @@
 #define VV_HK_REMOVE_MOOD "removemood"
 #define VV_HK_GIVE_HALLUCINATION "give_hallucination"
 #define VV_HK_GIVE_DELUSION_HALLUCINATION "give_hallucination_delusion"
+#define VV_HK_GIVE_GUARDIAN_SPIRIT "give_guardian_spirit"
 
 // /mob/living/carbon
 #define VV_HK_MAKE_AI "aiify"

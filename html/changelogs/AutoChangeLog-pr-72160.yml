@@ -1,4 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - bugfix: "admins can now select pirate events correctly"
