@@ -472,12 +472,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 	///Below vars are used for displaying holographic summons
 	///Basically a var for checking if the card summon wears clothes or not.
-	var/humanoid = FALSE
+	var/humanoid = -1
 	///Used when summoning humanoid creatures to put them in an outfit
-	var/outfit = "/datum/outfit/job/clown"
+	var/outfit = "/datum/outfit/job"
 	///If the summon is not humanoid summon the icon of their mob/object
-	var/summon_icon_file = "icons/mob/simple/carp.dmi"
-	var/summon_icon_state = "carp"
+	var/summon_icon_file = "icons/obj/toys/tcgmisc.dmi"
+	var/summon_icon_state = "template"
 
 /datum/card/New(list/data = list(), list/templates = list())
 	applyTemplates(data, templates)

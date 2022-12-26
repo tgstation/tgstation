@@ -74,7 +74,7 @@
 
     hologram = new(loc)
 
-    if(template.humanoid == TRUE)
+    if(template.humanoid == 1)
         var/datum/outfit/summon_outfit = text2path(template.outfit)
 
         var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy("TGC_PRESET")
