@@ -33,7 +33,7 @@
 
 	if(lit_tiles > unlit_tiles)
 		to_chat(owner, span_warning("[cast_on] must be surrounded by darkness to be terrorized!"))
-		return FALSE //For reference, having a active seclite on your person is enough to block the spell, forcing the nightmare to get an initial hit with the light eater
+		return FALSE //Having a light on you will most likely block this, meaning you'll probably need to get an initial hit on the victim with the light eater
 
 /datum/action/cooldown/spell/pointed/terrorize/cast(mob/living/carbon/human/cast_on)
 	. = ..()

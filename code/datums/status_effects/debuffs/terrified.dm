@@ -38,11 +38,11 @@
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD) //The onset, minor effects of terror buildup
 		owner.apply_status_effect(/datum/status_effect/dizziness, 5 SECONDS * delta_time)
 		owner.adjust_stutter(2 SECONDS * delta_time)
-		owner.set_jitter(2 SECONDS * delta_time)
+		owner.set_jitter(5 SECONDS * delta_time)
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, it's time to start looking for a way out.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
-		owner.set_blurriness(1)
+		owner.set_blurriness(2)
 		owner.add_fov_trait(type, FOV_270_DEGREES) //Terror induced tunnel vision
 		if(prob(10)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
 			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
