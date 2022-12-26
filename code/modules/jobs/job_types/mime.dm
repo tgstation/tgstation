@@ -110,14 +110,13 @@
 			picked_spell_type = /datum/action/cooldown/spell/conjure_item/invisible_box
 
 	if(ispath(picked_spell_type))
-		// Gives the user a vow ability too, if they don't already have one
-		var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in user.actions
-		if(!vow && user.mind)
-			vow = new(user.mind)
-			vow.Grant(user)
+		// Gives the user a mime liver if they don't have one already
+		var/obj/item/organ/internal/liver/liver = user.getorganslot(ORGAN_SLOT_LIVER)
+		if(liver)
+			liver.add_organ_trait(TRAIT_FRENCH_METABOLISM)
 
-		picked_spell_type = new picked_spell_type(user.mind || user)
-		picked_spell_type.Grant(user)
+			picked_spell_type = new picked_spell_type(liver)
+			picked_spell_type.Grant(user)
 
 		to_chat(user, span_warning("The book disappears into thin air."))
 		qdel(src)
@@ -137,6 +136,7 @@
 		return FALSE
 	if(user.incapacitated())
 		return FALSE
-	if(!user.mind)
+	//mimery is stored in the liver
+	if(!user.getorganslot(ORGAN_SLOT_LIVER))
 		return FALSE
 	return TRUE
