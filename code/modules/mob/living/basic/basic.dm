@@ -155,16 +155,16 @@
 	if(basic_mob_flags & UNDENSIFY_ON_DEATH)
 		set_density(initial(density))
 
-/mob/living/basic/proc/melee_attack(atom/target)
+/mob/living/basic/proc/melee_attack(atom/target, list/modifiers)
 	face_atom(target)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
-	var/result = target.attack_basic_mob(src)
+	var/result = target.attack_basic_mob(src, modifiers)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
 
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	melee_attack(attack_target)
+	melee_attack(attack_target, modifiers)
 
 /mob/living/basic/vv_edit_var(vname, vval)
 	. = ..()
