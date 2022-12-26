@@ -23,6 +23,8 @@
 	var/stealth_cooldown_time = 16 SECONDS
 	/// Damage added in stealth mode.
 	var/damage_bonus = 35
+	/// Our wound bonus when in stealth mode.
+	var/stealth_wound_bonus = -20 //from -100, you can now wound!
 	/// Screen alert given when we are able to stealth.
 	var/atom/movable/screen/alert/canstealthalert
 	/// Screen alert given when we are in stealth.
@@ -75,7 +77,7 @@
 		melee_damage_lower += damage_bonus
 		melee_damage_upper += damage_bonus
 		armour_penetration = 100
-		wound_bonus = -25 //from -100, you can now wound!
+		wound_bonus = stealth_wound_bonus
 		obj_damage = 0
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))
