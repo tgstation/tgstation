@@ -1083,12 +1083,12 @@
 /area/shuttle/sbc_starfury)
 "dW" = (
 /obj/structure/table,
-/obj/item/bodypart/l_arm/robot,
-/obj/item/bodypart/l_arm/robot,
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/left/robot,
+/obj/item/bodypart/arm/left/robot,
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 3
 	},
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 3
 	},
 /obj/item/book/manual/wiki/surgery,
@@ -1409,7 +1409,7 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1665,7 +1665,7 @@
 /obj/item/wrench,
 /obj/item/weldingtool,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 9
@@ -1867,7 +1867,7 @@
 "gF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded,
+/obj/vehicle/sealed/mecha/marauder/mauler/loaded,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "gH" = (
@@ -2345,7 +2345,7 @@
 /area/shuttle/sbc_starfury)
 "hI" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /obj/item/mop,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/sbc_starfury)
@@ -2630,11 +2630,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/gun/ballistic/revolver{
+/obj/item/gun/ballistic/revolver/syndicate{
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/gun/ballistic/revolver{
+/obj/item/gun/ballistic/revolver/syndicate{
 	pixel_x = -1;
 	pixel_y = 2
 	},
@@ -2690,8 +2690,8 @@
 	pixel_x = 2
 	},
 /obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare,
-/obj/item/clothing/head/hos/syndicate,
-/obj/item/clothing/head/hos/beret/syndicate,
+/obj/item/clothing/head/hats/hos/syndicate,
+/obj/item/clothing/head/hats/hos/beret/syndicate,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate,
 /obj/item/storage/belt/military/assault,
@@ -3509,7 +3509,7 @@
 	pixel_y = -1
 	},
 /obj/item/multitool,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -3974,11 +3974,11 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "mO" = (
-/obj/structure/shuttle/engine/huge,
+/obj/machinery/power/shuttle_engine/huge,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "mP" = (
-/obj/structure/shuttle/engine/large,
+/obj/machinery/power/shuttle_engine/large,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "mY" = (

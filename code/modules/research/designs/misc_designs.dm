@@ -109,7 +109,7 @@
 	id = "bright_helmet"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
-	build_path = /obj/item/clothing/head/hardhat/red/upgraded
+	build_path = /obj/item/clothing/head/utility/hardhat/red/upgraded
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)
@@ -317,6 +317,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/botpad_remote
+	name = "Bot Launchpad Controller"
+	desc = "Allows you to control the connected bot launchpad"
+	id = "botpad_remote"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
+	build_path = /obj/item/botpad_remote
+	category = list(RND_CATEGORY_EQUIPMENT)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/anomaly_neutralizer
 	name = "Anomaly Neutralizer"
 	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine."
@@ -475,6 +485,18 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/light_replacer_blue
+	name = "Bluespace Light Replacer"
+	desc = "A device to automatically replace lights at a distance. Refill with working light bulbs."
+	id = "light_replacer_blue"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000, /datum/material/bluespace = 300)
+	build_path = /obj/item/lightreplacer/blue
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/buffer_upgrade
 	name = "Floor Buffer Upgrade"
@@ -676,18 +698,6 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500)
 	build_path = /obj/item/flashlight/seclite
-	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-
-/datum/design/detective_scanner
-	name = "Forensic Scanner"
-	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
-	id = "detective_scanner"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 2500, /datum/material/silver = 2000)
-	build_path = /obj/item/detective_scanner
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
@@ -939,6 +949,17 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/blank_coffee_cartridge
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/syrup_bottle
+	name = "Syrup bottle"
+	id = "syrup_bottle"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/reagent_containers/cup/bottle/syrup_bottle
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)

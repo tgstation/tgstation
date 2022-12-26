@@ -1,6 +1,9 @@
 /// A global list of all ongoing hallucinations, primarily for easy access to be able to stop (delete) hallucinations.
 GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 
+/// Biotypes which cannot hallucinate for balance and logic reasons (not code)
+#define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC)
+
 // Macro wrapper for _cause_hallucination so we can cheat in named arguments, like AddComponent.
 /**
  * Causes a hallucination of a certain type to the mob.
@@ -63,7 +66,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		if(HAS_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE) || (nearby_living.mind && HAS_TRAIT(nearby_living.mind, TRAIT_MADNESS_IMMUNE)))
 			continue
 
-		if(nearby_living.mob_biotypes & (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC))
+		if(nearby_living.mob_biotypes & NO_HALLUCINATION_BIOTYPES)
 			continue
 
 		if(nearby_living.is_blind())
@@ -138,7 +141,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 			last_type_weight = this_weight
 
 	// Sort by weight descending, where weight is the values (not the keys). We assoc_to_keys later to get JUST the text
-	all_weights = sortTim(all_weights, /proc/cmp_numeric_dsc, associative = TRUE)
+	all_weights = sortTim(all_weights, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 
 	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
 	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(assoc_to_keys(all_weights), "")]</table>"

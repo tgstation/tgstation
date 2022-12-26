@@ -1,7 +1,4 @@
-//Here are the procs used to modify status effects of a mob.
-//The effects include: stun, knockdown, unconscious, sleeping, resting
-
-/////////////////////////////////// STUN ////////////////////////////////////
+// Aliens are more resistant to certain status effect
 
 /mob/living/carbon/alien/Stun(amount, ignore_canstun = FALSE)
 	. = ..()

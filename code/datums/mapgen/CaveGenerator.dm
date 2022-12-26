@@ -35,7 +35,7 @@
 	///Base chance of spawning flora
 	var/flora_spawn_chance = 2
 	///Base chance of spawning features
-	var/feature_spawn_chance = 0.1
+	var/feature_spawn_chance = 0.15
 	///Unique ID for this spawner
 	var/string_gen
 
@@ -141,10 +141,11 @@
 					can_spawn = FALSE
 					break
 			//if the random is a standard mob, avoid spawning if there's another one within 12 tiles
-			else if(ispath(picked_mob, /mob/living/simple_animal/hostile/asteroid))
-				for(var/mob/living/simple_animal/hostile/asteroid/mob_blocker in range(12, new_turf))
-					can_spawn = FALSE
-					break
+			else if(isminingpath(picked_mob))
+				for(var/mob/living/mob_blocker in range(12, new_turf))
+					if(ismining(mob_blocker))
+						can_spawn = FALSE
+						break
 			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
 			if(can_spawn)
 				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, new_turf))

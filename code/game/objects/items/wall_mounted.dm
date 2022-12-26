@@ -55,8 +55,8 @@
 
 	qdel(src)
 
-/obj/item/wallframe/proc/after_attach(obj/O)
-	transfer_fingerprints_to(O)
+/obj/item/wallframe/proc/after_attach(obj/attached_to)
+	transfer_fingerprints_to(attached_to)
 
 /obj/item/wallframe/screwdriver_act(mob/living/user, obj/item/tool)
 	// For camera-building borgs

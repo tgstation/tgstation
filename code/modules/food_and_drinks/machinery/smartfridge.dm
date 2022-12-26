@@ -451,6 +451,10 @@
 	if(isorgan(O))
 		var/obj/item/organ/organ = O
 		organ.organ_flags |= ORGAN_FROZEN
+	if(isbodypart(O))
+		var/obj/item/bodypart/bodypart = O
+		for(var/obj/item/organ/stored in bodypart.contents)
+			stored.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	. = ..()
@@ -467,6 +471,10 @@
 	if(isorgan(gone))
 		var/obj/item/organ/O = gone
 		O.organ_flags &= ~ORGAN_FROZEN
+	if(isbodypart(gone))
+		var/obj/item/bodypart/bodypart = gone
+		for(var/obj/item/organ/stored in bodypart.contents)
+			stored.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------
 // Chemistry Medical Smartfridge

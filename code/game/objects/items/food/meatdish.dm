@@ -124,7 +124,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/vegetariansushiroll/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/vegetariansushislice, 4)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/vegetariansushislice, 4, screentip_verb = "Chop")
 
 /obj/item/food/vegetariansushislice
 	name = "vegetarian sushi slice"
@@ -145,7 +145,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/spicyfiletsushiroll/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spicyfiletsushislice, 4)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spicyfiletsushislice, 4, screentip_verb = "Chop")
 
 /obj/item/food/spicyfiletsushislice
 	name = "spicy filet sushi slice"
@@ -165,7 +165,7 @@
 	desc = "A roll of customized sushi."
 
 /obj/item/food/sushi/empty/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sushislice/empty, 4)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sushislice/empty, 4, screentip_verb = "Chop")
 
 /obj/item/food/sushislice/empty
 	name = "sushi slice"
@@ -219,7 +219,7 @@
 
 // sliceable into 4xtempehslices
 /obj/item/food/tempeh/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 //add an icon for slices
 /obj/item/food/tempehslice
@@ -307,7 +307,7 @@
 	AddComponent(/datum/component/grillable, meatball_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
 /obj/item/food/raw_meatball/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, table_required = TRUE, screentip_verb = "Flatten")
 
 /obj/item/food/raw_meatball/human
 	name = "strange raw meatball"
@@ -465,8 +465,8 @@
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/sausage/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE)
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 
 /obj/item/food/sausage/american
 	name = "american sausage"
@@ -575,6 +575,8 @@
 	name = "chicken nugget"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	icon = 'icons/obj/food/meat.dmi'
+	/// Default nugget icon for recipes that need any nugget
+	icon_state = "nugget_lump"
 	tastes = list("\"chicken\"" = 1)
 	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
@@ -713,6 +715,7 @@
 /obj/item/food/beef_stroganoff
 	name = "beef stroganoff"
 	desc = "A russian dish that consists of beef and sauce. Really popular in japan, or at least that's what my animes would allude to."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "beefstroganoff"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("beef" = 3, "sour cream" = 1, "salt" = 1, "pepper" = 1)
@@ -734,7 +737,7 @@
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/beef_wellington/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
 
 /obj/item/food/beef_wellington_slice
 	name = "beef wellington slice"
@@ -757,3 +760,40 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
+
+/obj/item/food/raw_meatloaf
+	name = "raw meatloaf"
+	desc = "A heavy 'loaf' of minced meat, onions, and garlic. Bake it in an oven!"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "raw_meatloaf"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 40, /datum/reagent/consumable/nutriment/vitamin = 32, /datum/reagent/consumable/nutriment = 32)
+	tastes = list("raw meat" = 3, "onions" = 1)
+	foodtypes = MEAT | RAW | VEGETABLES
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/food/raw_meatloaf/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/meatloaf, rand(30 SECONDS, 40 SECONDS), TRUE, TRUE)
+
+/obj/item/food/meatloaf
+	name = "meatloaf"
+	desc = "A mixture of meat, onions, and garlic formed into a loaf and baked in an oven. It's covered in a generous slathering of ketchup. Use a knife to cut it into slices!"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "meatloaf"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 40, /datum/reagent/consumable/nutriment/vitamin = 32, /datum/reagent/consumable/nutriment = 32)
+	tastes = list("juicy meat" = 3, "onions" = 1, "garlic" = 1, "ketchup" = 1)
+	foodtypes = MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_NORMAL
+	burns_in_oven = TRUE
+
+/obj/item/food/meatloaf/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meatloaf_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/meatloaf_slice
+	name = "meatloaf slice"
+	desc = "A slice of delicious, juicy meatloaf with a ketchup topping."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "meatloaf_slice"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 8)
+	tastes = list("juicy meat" = 3, "onions" = 1, "garlic" = 1, "ketchup" = 1)
+	foodtypes = MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL

@@ -9,6 +9,7 @@
 	selection_color = "#ffe1c3"
 	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_LOWER
+	config_tag = "PRISONER"
 
 	outfit = /datum/outfit/job/prisoner
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
@@ -27,7 +28,7 @@
 
 /datum/job/prisoner/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/add_pref_crime)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(add_pref_crime))
 
 /datum/job/prisoner/proc/add_pref_crime(datum/source, mob/living/crewmember, rank)
 	SIGNAL_HANDLER

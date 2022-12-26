@@ -36,7 +36,7 @@
 	if(!.)
 		return
 	ADD_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(sense_explosion))
 
 /obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -118,12 +118,12 @@
 	pre_matrix.Scale(4, 0.25)
 	var/matrix/post_matrix = matrix()
 	post_matrix.Scale(0.25, 4)
-	animate(mod.wearer, teleport_time, color = COLOR_CYAN, transform = pre_matrix.Multiply(mod.wearer.transform), easing = EASE_OUT)
+	animate(mod.wearer, teleport_time, color = COLOR_CYAN, transform = pre_matrix.Multiply(mod.wearer.transform), easing = SINE_EASING|EASE_OUT)
 	if(!do_after(mod.wearer, teleport_time, target = mod))
 		balloon_alert(mod.wearer, "interrupted!")
-		animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Multiply(mod.wearer.transform), easing = EASE_IN)
+		animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Multiply(mod.wearer.transform), easing = SINE_EASING|EASE_IN)
 		return
-	animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Multiply(mod.wearer.transform), easing = EASE_IN)
+	animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Multiply(mod.wearer.transform), easing = SINE_EASING|EASE_IN)
 	if(!do_teleport(mod.wearer, target_turf, asoundin = 'sound/effects/phasein.ogg'))
 		return
 	drain_power(use_power_cost)

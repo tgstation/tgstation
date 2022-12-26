@@ -46,7 +46,7 @@
 
 	search_objects = 1 // So that it can see through walls
 
-	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
+	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
 	move_force = MOVE_FORCE_EXTREMELY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
@@ -115,8 +115,8 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/netherworld/statue/IsVocal() //we're a statue, of course we can't talk.
-	return FALSE
+/mob/living/simple_animal/hostile/netherworld/statue/can_speak(allow_mimes = FALSE)
+	return FALSE // We're a statue, of course we can't talk.
 
 // Cannot talk
 
@@ -145,7 +145,7 @@
 	return . - creator
 
 /mob/living/simple_animal/hostile/netherworld/statue/sentience_act()
-	faction -= "neutral"
+	faction -= FACTION_NEUTRAL
 
 // Statue powers
 

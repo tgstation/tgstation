@@ -197,14 +197,14 @@
 /obj/effect/mob_spawn/ghost_role/human/doctor/alive/equip(mob/living/carbon/human/doctor)
 	. = ..()
 	// Remove radio and PDA so they wouldn't annoy station crew.
-	var/list/del_types = list(/obj/item/modular_computer/tablet, /obj/item/radio/headset)
+	var/list/del_types = list(/obj/item/modular_computer/pda, /obj/item/radio/headset)
 	for(var/del_type in del_types)
 		var/obj/item/unwanted_item = locate(del_type) in doctor
 		qdel(unwanted_item)
 
 /obj/effect/mob_spawn/ghost_role/mouse
 	name = "sleeper"
-	mob_type = /mob/living/simple_animal/mouse
+	mob_type = /mob/living/basic/mouse
 	prompt_name = "a mouse"
 	you_are_text = "You're a mouse!"
 	flavour_text = "Uh... yep! Squeak squeak, motherfucker."
@@ -309,7 +309,7 @@
 	name = "Syndicate Ship Captain"
 	uniform = /obj/item/clothing/under/syndicate/combat
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	head = /obj/item/clothing/head/hos/beret/syndicate
+	head = /obj/item/clothing/head/hats/hos/beret/syndicate
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	r_pocket = /obj/item/knife/combat/survival
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id

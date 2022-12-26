@@ -48,11 +48,10 @@
 /// from /obj/machinery/computer/teleporter/proc/set_target(target, old_target)
 #define COMSIG_TELEPORTER_NEW_TARGET "teleporter_new_target"
 
-// /obj/machinery/power/supermatter_crystal signals
-/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM delam reaches the point of sounding alarms
-#define COMSIG_SUPERMATTER_DELAM_START_ALARM "sm_delam_start_alarm"
+// /obj/machinery/power/supermatter_crystal
 /// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
 #define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
+
 
 // /obj/machinery/atmospherics/components/unary/cryo_cell signals
 
@@ -135,31 +134,13 @@
 ///from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
-///called on item when microwaved (): (obj/machinery/microwave/M)
-#define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"
-	#define COMPONENT_SUCCESFUL_MICROWAVE (1<<0)
-///called on item when created through microwaving (): (obj/machinery/microwave/M, cooking_efficiency)
-#define COMSIG_ITEM_MICROWAVE_COOKED "microwave_cooked"
 ///from base of item/sharpener/attackby(): (amount, max)
 #define COMSIG_ITEM_SHARPEN_ACT "sharpen_act"
 	#define COMPONENT_BLOCK_SHARPEN_APPLIED (1<<0)
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED (1<<1)
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY (1<<2)
 	#define COMPONENT_BLOCK_SHARPEN_MAXED (1<<3)
-///Called when an object is grilled ontop of a griddle
-#define COMSIG_ITEM_GRILLED "item_griddled"
-	#define COMPONENT_HANDLED_GRILLING (1<<0)
-///Called when an object is turned into another item through grilling ontop of a griddle
-#define COMSIG_GRILL_COMPLETED "item_grill_completed"
-///Called when an object is meant to be grilled through a grill: (atom/fry_object, grill_time)
-#define COMSIG_GRILL_FOOD "item_grill_food"
-//Called when an object is in an oven
-#define COMSIG_ITEM_BAKED "item_baked"
-	#define COMPONENT_HANDLED_BAKING (1<<0)
-	#define COMPONENT_BAKING_GOOD_RESULT (1<<1)
-	#define COMPONENT_BAKING_BAD_RESULT (1<<2)
-///Called when an object is turned into another item through baking in an oven
-#define COMSIG_BAKE_COMPLETED "item_bake_completed"
+
 ///Called when an armor plate is successfully applied to an object
 #define COMSIG_ARMOR_PLATED "armor_plated"
 ///Called when an item gets recharged by the ammo powerup
@@ -283,6 +264,8 @@
 
 ///called from base of /obj/item/radio/proc/set_frequency(): (list/args)
 #define COMSIG_RADIO_NEW_FREQUENCY "radio_new_frequency"
+///called from base of /obj/item/radio/proc/talk_into(): (atom/movable/M, message, channel)
+#define COMSIG_RADIO_NEW_MESSAGE "radio_new_message"
 
 // /obj/item/pen signals
 
@@ -340,6 +323,8 @@
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
 ///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire"
+///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/firer, atom/original_target)
+#define COMSIG_PROJECTILE_FIRER_BEFORE_FIRE "projectile_firer_before_fire"
 ///from the base of /obj/projectile/proc/fire(): ()
 #define COMSIG_PROJECTILE_FIRE "projectile_fire"
 ///sent to targets during the process_hit proc of projectiles
@@ -422,3 +407,6 @@
 
 /// from /obj/structure/sign/poster/trap_succeeded() : (mob/user)
 #define COMSIG_POSTER_TRAP_SUCCEED "poster_trap_succeed"
+
+/// from /obj/item/detective_scanner/scan(): (mob/user, list/extra_data)
+#define COMSIG_DETECTIVE_SCANNED "det_scanned"

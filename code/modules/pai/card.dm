@@ -53,7 +53,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(!pai?.holoform)
+	if(pai && !pai.holoform)
 		pai.emp_act(severity)
 
 /obj/item/pai_card/handle_atom_del(atom/thing)
@@ -172,7 +172,7 @@
 		return
 	COOLDOWN_START(src, alert_cooldown, 5 SECONDS)
 	add_alert()
-	addtimer(CALLBACK(src, .proc/remove_alert), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(remove_alert)), 5 SECONDS)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	visible_message(span_notice("[src] flashes a message across its screen: New personalities available for download!"), blind_message = span_notice("[src] vibrates with an alert."))
 

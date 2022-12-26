@@ -4,7 +4,7 @@
 	icon_state = "bluetag"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	inhand_icon_state = "bluetag"
+	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/gun/energy/laser/bluetag)
@@ -16,7 +16,7 @@
 	icon_state = "redtag"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	inhand_icon_state = "redtag"
+	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/gun/energy/laser/redtag)

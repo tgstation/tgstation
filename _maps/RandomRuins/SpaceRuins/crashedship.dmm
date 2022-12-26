@@ -344,7 +344,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/aft)
 "oT" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /obj/structure/lattice,
@@ -383,6 +383,7 @@
 /obj/machinery/porta_turret{
 	dir = 8;
 	installation = /obj/item/gun/energy/lasercannon;
+	
 	},
 /obj/effect/mapping_helpers/atom_injector/obj_flag{
 	inject_flags = 1;
@@ -944,7 +945,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/aft)
 "Hb" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -1166,7 +1167,7 @@
 /turf/open/floor/iron/textured_edge,
 /area/awaymission/bmpship/aft)
 "NM" = (
-/obj/structure/shuttle/engine/large{
+/obj/machinery/power/shuttle_engine/large{
 	dir = 8
 	},
 /turf/template_noop,

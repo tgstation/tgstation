@@ -36,7 +36,7 @@
 	var/mob/living/carbon/buffet = our_venue.restaurant_portal?.turned_on_portal?.resolve()
 	if (!istype(buffet)) // Always asks for the clothes that you have on, but this is a fallback.
 		wanted_clothing_type = pick_weight(list(
-			/obj/item/clothing/head/chefhat = 3,
+			/obj/item/clothing/head/utility/chefhat = 3,
 			/obj/item/clothing/shoes/sneakers/black = 3,
 			/obj/item/clothing/gloves/color/black = 1,
 		))
@@ -91,7 +91,7 @@
 	if(wanted_flavors.len > 1 && length(unique_list) == 1)
 		icecream_name = "[make_tuple(wanted_flavors.len)] [wanted_flavors[1]] ice cream ([initial(cone_type.name)])"
 	else
-		sortTim(wanted_flavors, cmp = /proc/cmp_text_asc)
+		sortTim(wanted_flavors, cmp = GLOBAL_PROC_REF(cmp_text_asc))
 		icecream_name = "[english_list(wanted_flavors)] ice cream ([initial(cone_type.name)])"
 
 /datum/custom_order/icecream/get_order_line(datum/venue/our_venue)

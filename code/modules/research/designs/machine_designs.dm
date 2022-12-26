@@ -134,6 +134,15 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/botpad
+	name = "Machine Design (Bot launchpad)"
+	desc = "The circuit board for a bot launchpad."
+	id = "botpad"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/machine/botpad
+	category = list(RND_CATEGORY_MACHINE)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/launchpad
 	name = "Bluespace Launchpad Board"
 	desc = "The circuit board for a bluespace Launchpad."
@@ -607,7 +616,7 @@
 	name = "Mining Rewards Vendor Board"
 	desc = "The circuit board for a Mining Rewards Vendor."
 	id = "mining_equipment_vendor"
-	build_path = /obj/item/circuitboard/machine/mining_equipment_vendor
+	build_path = /obj/item/circuitboard/computer/order_console/mining
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_CARGO
 	)

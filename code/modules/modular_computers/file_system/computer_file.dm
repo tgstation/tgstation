@@ -1,34 +1,32 @@
 /datum/computer_file
-	var/filename = "NewFile" // Placeholder. No spacebars
-	var/filetype = "XXX" // File full names are [filename].[filetype] so like NewFile.XXX in this case
-	var/size = 1 // File size in GQ. Integers only!
-	var/obj/item/computer_hardware/hard_drive/holder // Holder that contains this file.
-	var/obj/item/modular_computer/computer
-	var/unsendable = FALSE // Whether the file may be sent to someone via NTNet transfer or other means.
-	var/undeletable = FALSE // Whether the file may be deleted. Setting to TRUE prevents deletion/renaming/etc.
-	var/uid // UID of this file
+	///The name of the internal file shown in file management.
+	var/filename = "NewFile"
+	///The type of file format the file is in, placed after filename. PNG, TXT, ect. This would be NewFile.XXX
+	var/filetype = "XXX"
+	///How much GQ storage space the file will take to store. Integers only!
+	var/size = 1
+	///Whether the file may be deleted. Setting to TRUE prevents deletion/renaming/etc.
+	var/undeletable = FALSE
+	///The computer file's personal ID
+	var/uid
+	///Static ID to ensure all IDs are unique.
 	var/static/file_uid = 0
+	///The modular computer hosting the file.
+	var/obj/item/modular_computer/computer
 
 /datum/computer_file/New()
 	..()
 	uid = file_uid++
 
 /datum/computer_file/Destroy(force)
-	if(!holder)
-		return ..()
-
-	holder.remove_file(src)
-	// holder.holder is the computer that has drive installed. If we are Destroy()ing program that's currently running kill it.
-	if(computer && computer.active_program == src)
-		computer.kill_program(forced = TRUE)
-	holder = null
-	computer = null
+	if(computer)
+		computer.remove_file(src)
+		computer = null
 	return ..()
 
 // Returns independent copy of this file.
 /datum/computer_file/proc/clone(rename = FALSE)
 	var/datum/computer_file/temp = new type
-	temp.unsendable = unsendable
 	temp.undeletable = undeletable
 	temp.size = size
 	if(rename)
@@ -49,8 +47,8 @@
 /datum/computer_file/proc/on_examine(obj/item/modular_computer/source, mob/user)
 	return null
 
-/// Called when someone tries to insert something one of your applications needs, like an Intellicard for AI restoration. Return TRUE to cancel attackby chain.
-/datum/computer_file/proc/try_insert(obj/item/attacking_item, mob/living/user)
+/// Called when attacking a tablet with an item, checking if any application uses it. Return TRUE to cancel the attack chain.
+/datum/computer_file/proc/application_attackby(obj/item/attacking_item, mob/living/user)
 	return FALSE
 
 /**

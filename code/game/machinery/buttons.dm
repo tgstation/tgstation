@@ -11,18 +11,27 @@
 	var/id = null
 	var/initialized_button = 0
 	var/silicon_access_disabled = FALSE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 90, ACID = 70)
+	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/datum/armor/machinery_button
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 90
+	acid = 70
+
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
 	if(built)
 		setDir(ndir)
-		panel_open = TRUE
+		set_panel_open(TRUE)
 		update_appearance()
 
 	if(!built && !device && device_type)
@@ -182,10 +191,10 @@
 	icon_state = "[skin]1"
 
 	if(device)
-		device.pulsed(pulser = user)
+		device.pulsed(user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
 
-	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 15)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 15)
 
 /obj/machinery/button/door
 	name = "door button"
@@ -198,6 +207,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/datum/armor/machinery_button
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 90
+	acid = 70
 
 /obj/machinery/button/door/setup_device()
 	if(!device)
@@ -286,15 +304,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/flasher
 
+/obj/machinery/button/flasher/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/machinery/button/curtain
 	name = "curtain button"
 	desc = "A remote control switch for a mechanical curtain."
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/curtain
+	var/sync_doors = TRUE
 
-/obj/machinery/button/flasher/indestructible
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+/datum/armor/machinery_button
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 90
+	acid = 70
+
+/obj/machinery/button/curtain/setup_device()
+	var/obj/item/assembly/control/curtain = device
+	curtain.sync_doors = sync_doors
+	return ..()
 
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
@@ -324,11 +357,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
+	/// The specific lift id of the tram we're calling.
+	var/lift_id = MAIN_STATION_TRAM
+
+/datum/armor/machinery_button
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 90
+	acid = 70
 
 /obj/machinery/button/tram/setup_device()
 	var/obj/item/assembly/control/tram/tram_device = device
 	tram_device.initial_id = id
-	. = ..()
+	tram_device.specific_lift_id = lift_id
+	return ..()
 
 /obj/machinery/button/tram/examine(mob/user)
 	. = ..()

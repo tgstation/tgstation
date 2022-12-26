@@ -63,22 +63,22 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "s" = (
 /turf/template_noop,
 /area/template_noop)
 "t" = (
-/obj/structure/shuttle/engine/propulsion/burst/left,
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "u" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "v" = (
-/obj/structure/shuttle/engine/propulsion/burst/right,
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "w" = (

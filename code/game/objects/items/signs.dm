@@ -1,5 +1,6 @@
 /obj/item/picket_sign
 	icon_state = "picket"
+	inhand_icon_state = "picket"
 	name = "blank picket sign"
 	desc = "It's blank."
 	force = 5
@@ -71,4 +72,4 @@
 	reqs = list(/obj/item/stack/rods = 1,
 				/obj/item/stack/sheet/cardboard = 2)
 	time = 80
-	category = CAT_MISC
+	category = CAT_ENTERTAINMENT

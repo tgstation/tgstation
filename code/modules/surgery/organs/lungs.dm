@@ -88,6 +88,15 @@
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
+///Simply exists so that you don't keep any alerts from your previous lack of lungs.
+/obj/item/organ/internal/lungs/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_CO2)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_NITRO)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_N2O)
+	return ..()
+
 /obj/item/organ/internal/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	if(breather.status_flags & GODMODE)
 		breather.failed_last_breath = FALSE //clear oxy issues
@@ -341,7 +350,8 @@
 			breather.adjustFireLoss(15)
 			if (prob(freon_pp/2))
 				to_chat(breather, span_alert("Your throat closes up!"))
-				breather.silent = max(breather.silent, 3)
+				breather.set_silence_if_lower(6 SECONDS)
+
 		else
 			breather.adjustFireLoss(freon_pp/4)
 		gas_breathed = breath_gases[/datum/gas/freon][MOLES]
@@ -399,7 +409,7 @@
 		var/helium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/helium][MOLES])
 		if(helium_pp > helium_speech_min && !helium_speech)
 			helium_speech = TRUE
-			RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_helium_speech)
+			RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_helium_speech))
 		else if(helium_pp <= helium_speech_min && helium_speech)
 			helium_speech = FALSE
 			UnregisterSignal(owner, COMSIG_MOB_SAY)

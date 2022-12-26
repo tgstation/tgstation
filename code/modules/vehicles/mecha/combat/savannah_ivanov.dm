@@ -1,10 +1,10 @@
 ///how much time between charge_level going up by 1
-#define SKYFALL_SINGLE_CHARGE_TIME 2 SECONDS
+#define SKYFALL_SINGLE_CHARGE_TIME (2 SECONDS)
 ///enough charge level to take off, basically done charging
 #define SKYFALL_CHARGELEVEL_LAUNCH 5
 
 ///how much time you're in the air
-#define TOTAL_SKYFALL_LEAP_TIME 3 SECONDS
+#define TOTAL_SKYFALL_LEAP_TIME (3 SECONDS)
 
 /**
  * ## Savannah-Ivanov!
@@ -12,7 +12,7 @@
  * A two person mecha that delegates moving to the driver and shooting to the pilot.
  * ...Hilarious, right?
  */
-/obj/vehicle/sealed/mecha/combat/savannah_ivanov
+/obj/vehicle/sealed/mecha/savannah_ivanov
 	name = "\improper Savannah-Ivanov"
 	desc = "An insanely overbulked mecha that handily crushes single-pilot opponents. The price is that you need two pilots to use it."
 	icon = 'icons/mecha/coop_mech.dmi'
@@ -23,8 +23,11 @@
 	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
-	armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/mecha_savannah_ivanov
 	max_temperature = 30000
+	force = 30
+	destruction_sleep_duration = 40
+	exit_delay = 40
 	wreckage = /obj/structure/mecha_wreckage/savannah_ivanov
 	max_occupants = 2
 	max_equip_by_category = list(
@@ -35,7 +38,16 @@
 	//no tax on flying, since the power cost is in the leap itself.
 	phasing_energy_drain = 0
 
-/obj/vehicle/sealed/mecha/combat/savannah_ivanov/get_mecha_occupancy_state()
+/datum/armor/mecha_savannah_ivanov
+	melee = 45
+	bullet = 40
+	laser = 30
+	energy = 30
+	bomb = 40
+	fire = 100
+	acid = 100
+
+/obj/vehicle/sealed/mecha/savannah_ivanov/get_mecha_occupancy_state()
 	var/driver_present = driver_amount() != 0
 	var/gunner_present = return_amount_of_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT) > 0
 	var/list/mob/drivers = return_drivers()
@@ -45,13 +57,13 @@
 		leap_state = action.skyfall_charge_level > 2 ? "leap_" : ""
 	return "[base_icon_state]_[leap_state][gunner_present]_[driver_present]"
 
-/obj/vehicle/sealed/mecha/combat/savannah_ivanov/auto_assign_occupant_flags(mob/new_occupant)
+/obj/vehicle/sealed/mecha/savannah_ivanov/auto_assign_occupant_flags(mob/new_occupant)
 	if(driver_amount() < max_drivers) //movement
 		add_control_flags(new_occupant, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
 	else //weapons
 		add_control_flags(new_occupant, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 
-/obj/vehicle/sealed/mecha/combat/savannah_ivanov/generate_actions()
+/obj/vehicle/sealed/mecha/savannah_ivanov/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/swap_seat)
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/skyfall, VEHICLE_CONTROL_DRIVE)
@@ -65,6 +77,15 @@
 	var/skyfall_cooldown_time = 1 MINUTES
 	///skyfall builds up in charges every 2 seconds, when it reaches 5 charges the ability actually starts
 	var/skyfall_charge_level = 0
+
+/datum/armor/mecha_savannah_ivanov
+	melee = 45
+	bullet = 40
+	laser = 30
+	energy = 30
+	bomb = 40
+	fire = 100
+	acid = 100
 
 /datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
@@ -80,7 +101,7 @@
 		abort_skyfall()
 		return
 	chassis.balloon_alert(owner, "charging skyfall...")
-	INVOKE_ASYNC(src, .proc/skyfall_charge_loop)
+	INVOKE_ASYNC(src, PROC_REF(skyfall_charge_loop))
 
 /**
  * ## skyfall_charge_loop
@@ -118,8 +139,8 @@
 		return
 	S_TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_SKYFALL, skyfall_cooldown_time)
 	button_icon_state = "mech_savannah_cooldown"
-	UpdateButtons()
-	addtimer(CALLBACK(src, .proc/reset_button_icon), skyfall_cooldown_time)
+	build_all_button_icons()
+	addtimer(CALLBACK(src, PROC_REF(reset_button_icon)), skyfall_cooldown_time)
 	for(var/mob/living/shaken in range(7, chassis))
 		shake_camera(shaken, 3, 3)
 
@@ -136,7 +157,7 @@
 	SET_PLANE(chassis, GAME_PLANE_UPPER_FOV_HIDDEN, launch_turf)
 	animate(chassis, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(chassis, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
-	addtimer(CALLBACK(src, .proc/begin_landing), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(begin_landing)), 2 SECONDS)
 
 /**
  * ## begin_landing
@@ -147,7 +168,7 @@
 /datum/action/vehicle/sealed/mecha/skyfall/proc/begin_landing()
 	animate(chassis, pixel_z = 0, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(chassis, alpha = 255, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, .proc/land), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(land)), 1 SECONDS)
 
 /**
  * ## land
@@ -197,6 +218,7 @@
 				continue
 			to_chat(crushed_victim, span_userdanger("[chassis] crashes down on you from above!"))
 			if(crushed_victim.stat != CONSCIOUS)
+				crushed_victim.investigate_log("has been gibbed by a falling Savannah Ivanov mech.", INVESTIGATE_DEATHS)
 				crushed_victim.gib(FALSE, FALSE, FALSE)
 				continue
 			crushed_victim.adjustBruteLoss(80)
@@ -220,7 +242,7 @@
  */
 /datum/action/vehicle/sealed/mecha/skyfall/proc/reset_button_icon()
 	button_icon_state = "mech_savannah"
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/vehicle/sealed/mecha/ivanov_strike
 	name = "Ivanov Strike"
@@ -230,6 +252,15 @@
 	///how many rockets can we send with ivanov strike
 	var/rockets_left = 0
 	var/aiming_missile = FALSE
+
+/datum/armor/mecha_savannah_ivanov
+	melee = 45
+	bullet = 40
+	laser = 30
+	energy = 30
+	bomb = 40
+	fire = 100
+	acid = 100
 
 /datum/action/vehicle/sealed/mecha/ivanov_strike/Destroy()
 	if(aiming_missile)
@@ -255,7 +286,7 @@
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/reset_button_icon()
 	button_icon_state = "mech_ivanov"
-	UpdateButtons()
+	build_all_button_icons()
 
 /**
  * ## start_missile_targeting
@@ -267,8 +298,8 @@
 	chassis.balloon_alert(owner, "missile mode on (click to target)")
 	aiming_missile = TRUE
 	rockets_left = 3
-	RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, .proc/on_melee_click)
-	RegisterSignal(chassis, COMSIG_MECHA_EQUIPMENT_CLICK, .proc/on_equipment_click)
+	RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(on_melee_click))
+	RegisterSignal(chassis, COMSIG_MECHA_EQUIPMENT_CLICK, PROC_REF(on_equipment_click))
 	owner.client.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi'
 	owner.update_mouse_pointer()
 	owner.overlay_fullscreen("ivanov", /atom/movable/screen/fullscreen/ivanov_display, 1)
@@ -323,8 +354,8 @@
 		"explosionSize" = list(0,0,1,2)
 	))
 	button_icon_state = "mech_ivanov_cooldown"
-	UpdateButtons()
-	addtimer(CALLBACK(src, /datum/action/vehicle/sealed/mecha/ivanov_strike.proc/reset_button_icon), strike_cooldown_time)
+	build_all_button_icons()
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/action/vehicle/sealed/mecha/ivanov_strike, reset_button_icon)), strike_cooldown_time)
 
 //misc effects
 
@@ -339,16 +370,25 @@
 	pixel_y = -32
 	alpha = 0
 	///reference to mecha following
-	var/obj/vehicle/sealed/mecha/combat/mecha
+	var/obj/vehicle/sealed/mecha/mecha
 
-/obj/effect/skyfall_landingzone/Initialize(mapload, obj/vehicle/sealed/mecha/combat/mecha)
+/datum/armor/mecha_savannah_ivanov
+	melee = 45
+	bullet = 40
+	laser = 30
+	energy = 30
+	bomb = 40
+	fire = 100
+	acid = 100
+
+/obj/effect/skyfall_landingzone/Initialize(mapload, obj/vehicle/sealed/mecha/mecha)
 	. = ..()
 	if(!mecha)
 		stack_trace("Skyfall landing zone created without mecha")
 		return INITIALIZE_HINT_QDEL
 	src.mecha = mecha
 	animate(src, alpha = 255, TOTAL_SKYFALL_LEAP_TIME/2, easing = CIRCULAR_EASING|EASE_OUT)
-	RegisterSignal(mecha, COMSIG_MOVABLE_MOVED, .proc/follow)
+	RegisterSignal(mecha, COMSIG_MOVABLE_MOVED, PROC_REF(follow))
 	QDEL_IN(src, TOTAL_SKYFALL_LEAP_TIME) //when the animations land
 
 /obj/effect/skyfall_landingzone/Destroy(force)

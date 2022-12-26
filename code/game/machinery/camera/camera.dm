@@ -13,7 +13,7 @@
 	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
-	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 90, ACID = 50)
+	armor_type = /datum/armor/machinery_camera
 	max_integrity = 100
 	integrity_failure = 0.5
 	var/default_camera_icon = "camera" //the camera's base icon used by update_appearance - icon_state is primarily used for mapping display purposes.
@@ -54,6 +54,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
+/datum/armor/machinery_camera
+	melee = 50
+	bullet = 20
+	laser = 20
+	energy = 20
+	fire = 90
+	acid = 50
+
 /obj/machinery/camera/preset/ordnance //Bomb test site in space
 	name = "Hardened Bomb-Test Camera"
 	desc = "A specially-reinforced camera with a long lasting battery, used to monitor the bomb testing site. An external light is attached to the top."
@@ -91,9 +99,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		assembly_ref = WEAKREF(assembly)
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
-	if (isturf(loc))
-		myarea = get_area(src)
-		LAZYADD(myarea.cameras, src)
+	myarea = get_room_area()
+
+	LAZYADD(myarea.cameras, src)
 
 	if(mapload && is_station_level(z) && prob(3) && !start_active)
 		toggle_cam()
@@ -171,7 +179,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_appearance()
-			addtimer(CALLBACK(src, .proc/post_emp_reset, emped, network), 90 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), 90 SECONDS)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
 				if (M.client?.eye == src)
@@ -191,7 +199,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
 	emped = 0 //Resets the consecutive EMP count
-	addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)
@@ -216,7 +224,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
-	panel_open = !panel_open
+	toggle_panel_open()
 	to_chat(user, span_notice("You screw the camera's panel [panel_open ? "open" : "closed"]."))
 	I.play_tool_sound(src)
 	update_appearance()
@@ -330,16 +338,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			return
 
 	// OTHER
-	if(istype(attacking_item, /obj/item/modular_computer/tablet))
+	if(istype(attacking_item, /obj/item/modular_computer/pda))
 		var/itemname = ""
 		var/info = ""
 
-		var/obj/item/modular_computer/tablet/computer = attacking_item
-		var/obj/item/computer_hardware/hard_drive/hdd = computer.all_components[MC_HDD]
-		if(hdd)
-			for(var/datum/computer_file/program/notepad/notepad_app in hdd.stored_files)
-				info = notepad_app.written_note
-				break
+		var/obj/item/modular_computer/computer = attacking_item
+		for(var/datum/computer_file/program/notepad/notepad_app in computer.stored_files)
+			info = notepad_app.written_note
+			break
 
 		itemname = computer.name
 		itemname = sanitize(itemname)
@@ -348,7 +354,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		user.log_talk(itemname, LOG_GAME, log_globally=TRUE, tag="Pressed to camera")
 		user.changeNext_move(CLICK_CD_MELEE)
 
-		for(var/mob/potential_viewer in GLOB.player_list)
+		for(var/mob/potential_viewer as anything in GLOB.player_list)
 			if(isAI(potential_viewer))
 				var/mob/living/silicon/ai/ai = potential_viewer
 				if(ai.control_disabled || (ai.stat == DEAD))
@@ -401,7 +407,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				log_paper("[key_name(user)] held [last_shown_paper] up to [src], requesting [key_name(ai)] read it.")
 
 				if(user.name == "Unknown")
-					to_chat(ai, "[span_name(user)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
+					to_chat(ai, "[span_name(user.name)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
 				else
 					to_chat(ai, "<b><a href='?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
 				continue
@@ -496,7 +502,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
 		if(!QDELETED(src)) //We'll be doing it anyway in destroy
-			addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
 	if(displaymessage)
 		if(user)
 			visible_message(span_danger("[user] [change_msg] [src]!"))

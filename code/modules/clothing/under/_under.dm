@@ -6,7 +6,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0, WOUND = 5)
+	armor_type = /datum/armor/clothing_under
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -21,13 +21,43 @@
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
-	var/freshly_laundered = FALSE
+
+/datum/armor/clothing_under
+	bio = 10
+	wound = 5
 
 /obj/item/clothing/under/Initialize(mapload)
 	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF)
+	register_context()
+
+/obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	var/screentip_change = FALSE
+
+	if(isnull(held_item) && has_sensor == HAS_SENSORS)
+		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
+		screentip_change = TRUE
+
+	if(istype(held_item, /obj/item/clothing/accessory) && !attached_accessory)
+		var/obj/item/clothing/accessory/accessory = held_item
+		if(accessory.can_attach_accessory(src, user))
+			context[SCREENTIP_CONTEXT_LMB] = "Attach accessory"
+			screentip_change = TRUE
+
+	if(istype(held_item, /obj/item/stack/cable_coil) && has_sensor == BROKEN_SENSORS)
+		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
+		screentip_change = TRUE
+
+	if(attached_accessory)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove accessory"
+		screentip_change = TRUE
+	else if(can_adjust)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = adjusted == ALT_STYLE ? "Wear normally" : "Wear casually"
+		screentip_change = TRUE
+
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -47,7 +77,7 @@
 		C.use(1)
 		has_sensor = HAS_SENSORS
 		to_chat(user,span_notice("You repair the suit sensors on [src] with [C]."))
-		return 1
+		return TRUE
 	if(!attach_accessory(I, user))
 		return ..()
 
@@ -89,7 +119,6 @@
 			if(ooman.w_uniform == src)
 				ooman.update_suit_sensors()
 
-
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
 	..()
 	if(adjusted)
@@ -110,12 +139,6 @@
 		H.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
 			H.update_worn_oversuit()
-
-/obj/item/clothing/under/equipped(mob/living/user, slot)
-	..()
-	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
-		freshly_laundered = FALSE
-		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
 
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)
@@ -206,8 +229,6 @@
 
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
-	if(freshly_laundered)
-		. += "It looks fresh and clean."
 	if(can_adjust)
 		if(adjusted == ALT_STYLE)
 			. += "Alt-click on [src] to wear it normally."
@@ -341,6 +362,10 @@
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER
+
+/datum/armor/clothing_under
+	bio = 10
+	wound = 5
 
 /obj/item/clothing/under/proc/dump_attachment()
 	if(!attached_accessory)

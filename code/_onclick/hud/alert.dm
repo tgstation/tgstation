@@ -64,7 +64,7 @@
 	animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
 	if(thealert.timeout)
-		addtimer(CALLBACK(src, .proc/alert_timeout, thealert, category), thealert.timeout)
+		addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), thealert.timeout)
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
 	return thealert
 
@@ -149,12 +149,12 @@
 
 /atom/movable/screen/alert/not_enough_plas
 	name = "Choking (No Plasma)"
-	desc = "You're not getting enough plasma. Find some good air before you pass out!"
+	desc = "You're not getting enough plasma. Find some good air before you pass out! The box in your backpack has a spare plasma tank."
 	icon_state = ALERT_NOT_ENOUGH_PLASMA
 
 /atom/movable/screen/alert/too_much_plas
 	name = "Choking (Plasma)"
-	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = ALERT_TOO_MUCH_PLASMA
 
 /atom/movable/screen/alert/not_enough_n2o
@@ -164,7 +164,7 @@
 
 /atom/movable/screen/alert/too_much_n2o
 	name = "Choking (N2O)"
-	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = ALERT_TOO_MUCH_N2O
 
 //End gas alerts
@@ -296,6 +296,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "default"
 	var/mob/living/carbon/offerer
 	var/obj/item/receiving
+	/// Additional text displayed in the description of the alert.
+	var/additional_desc_text = "Click this alert to take it."
 
 /atom/movable/screen/alert/give/Destroy()
 	offerer = null
@@ -306,20 +308,41 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
  * Handles assigning most of the variables for the alert that pops up when an item is offered
  *
  * Handles setting the name, description and icon of the alert and tracking the person giving
- * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the offerer
+ * and the item being offered.
  * Arguments:
  * * taker - The person receiving the alert
  * * offerer - The person giving the alert and item
  * * receiving - The item being given by the offerer
  */
 /atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
-	name = "[offerer] is offering [receiving]"
-	desc = "[offerer] is offering [receiving]. Click this alert to take it."
+	var/receiving_name = get_receiving_name(taker, offerer, receiving)
+	name = "[offerer] is offering [receiving_name]"
+	desc = "[offerer] is offering [receiving_name]. [additional_desc_text]"
 	icon_state = "template"
 	cut_overlays()
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.offerer = offerer
+
+
+/**
+ * Called right before `setup()`, to do any sort of logic to change the name of
+ * what's displayed as the name of what's being offered in the alert. Use this to
+ * add pronouns and the like, or to totally override the displayed name!
+ * Also the best place to make changes to `additional_desc_text` before `setup()`
+ * without having to override `setup()` entirely.
+ *
+ * Arguments:
+ * * taker - The person receiving the alert
+ * * offerer - The person giving the alert and item
+ * * receiving - The item being given by the offerer
+ *
+ * Returns a string that will be displayed in the alert, which is `receiving.name`
+ * by default.
+ */
+/atom/movable/screen/alert/give/proc/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	return receiving.name
+
 
 /atom/movable/screen/alert/give/Click(location, control, params)
 	. = ..()
@@ -335,12 +358,21 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/give/proc/handle_transfer()
 	var/mob/living/carbon/taker = owner
 	taker.take(offerer, receiving)
+	SEND_SIGNAL(offerer, COMSIG_CARBON_ITEM_GIVEN, taker, receiving)
+
+
+/atom/movable/screen/alert/give/highfive
+	additional_desc_text = "Click this alert to slap it."
+
+
+/atom/movable/screen/alert/give/highfive/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	return "a high-five"
+
 
 /atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	. = ..()
-	name = "[offerer] is offering a high-five!"
-	desc = "[offerer] is offering a high-five! Click this alert to slap it."
-	RegisterSignal(offerer, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+	RegisterSignal(offerer, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(check_fake_out))
+
 
 /atom/movable/screen/alert/give/highfive/handle_transfer()
 	var/mob/living/carbon/taker = owner
@@ -359,7 +391,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	offerer.visible_message(span_notice("[rube] rushes in to high-five [offerer], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
 	to_chat(rube, span_nicegreen("You go in for [offerer]'s high-five, but-"))
-	addtimer(CALLBACK(src, .proc/too_slow_p2, offerer, rube), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(too_slow_p2), offerer, rube), 0.5 SECONDS)
 
 /// Part two of the ultimate prank
 /atom/movable/screen/alert/give/highfive/proc/too_slow_p2()
@@ -384,6 +416,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!receiving)
 		examine_list += "[span_warning("[offerer]'s arm appears tensed up, as if [offerer.p_they()] plan on pulling it back suddenly...")]\n"
 
+
+/atom/movable/screen/alert/give/hand/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	additional_desc_text = "Click this alert to take it and let [offerer.p_them()] pull you around!"
+	return "[offerer.p_their()] [receiving]"
+
+
+/atom/movable/screen/alert/give/hand/helping/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	. = ..()
+	additional_desc_text = "Click this alert to let them help you up!"
+
+
 /atom/movable/screen/alert/give/secret_handshake
 	icon_state = "default"
 
@@ -407,8 +450,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!.)
 		return
 	var/mob/living/living_owner = owner
-	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
-	if(isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
+	var/last_whisper
+	if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
+		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
+	if(isnull(last_whisper))
+		if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
+			return
+	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")

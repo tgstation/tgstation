@@ -34,7 +34,7 @@
 	wine_power = 40
 
 /obj/item/food/grown/watermelon/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20, screentip_verb = "Slice")
 
 /obj/item/food/grown/watermelon/make_dryable()
 	return //No drying
@@ -59,6 +59,9 @@
 	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
 	icon_state = "holymelon"
 	bite_consumption_mod = 2
+	w_class = WEIGHT_CLASS_NORMAL
+	foodtypes = FRUIT
+	juice_results = list(/datum/reagent/water/holywater = 0)
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
 
@@ -66,18 +69,8 @@
 	return //No drying
 
 /obj/item/food/grown/holymelon/MakeEdible()
-	AddComponent(/datum/component/edible, \
-		initial_reagents = food_reagents, \
-		food_flags = food_flags, \
-		foodtypes = foodtypes, \
-		volume = max_volume, \
-		eat_time = eat_time, \
-		tastes = tastes, \
-		eatverbs = eatverbs,\
-		bite_consumption = bite_consumption, \
-		microwaved_type = microwaved_type, \
-		junkiness = junkiness, \
-		check_liked = CALLBACK(src, .proc/check_holyness))
+	. = ..()
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_holyness)))
 
 /*
  * Callback to be used with the edible component.

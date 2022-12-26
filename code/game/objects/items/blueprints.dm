@@ -7,6 +7,7 @@
 	name = "area modification item"
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "blueprints"
+	inhand_icon_state = "blueprints"
 	attack_verb_continuous = list("attacks", "baps", "hits")
 	attack_verb_simple = list("attack", "bap", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"

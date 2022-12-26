@@ -19,26 +19,38 @@
 #define BRAIN "brain"
 
 //Damage flag defines //
-/// Involves a melee attack or a thrown object.
-#define MELEE "melee"
-/// Involves a solid projectile.
-#define BULLET "bullet"
-/// Involves a laser.
-#define LASER "laser"
-/// Involves an EMP or energy-based projectile.
-#define ENERGY "energy"
-/// Involves a shockwave, usually from an explosion.
-#define BOMB "bomb"
-/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
-#define BIO "bio"
-/// Involves fire or temperature extremes.
-#define FIRE "fire"
+
 /// Involves corrosive substances.
 #define ACID "acid"
-/// Involved in checking the likelyhood of applying a wound to a mob.
-#define WOUND "wound"
+/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
+#define BIO "bio"
+/// Involves a shockwave, usually from an explosion.
+#define BOMB "bomb"
+/// Involves a solid projectile.
+#define BULLET "bullet"
 /// Involves being eaten
 #define CONSUME "consume"
+/// Involves an EMP or energy-based projectile.
+#define ENERGY "energy"
+/// Involves fire or temperature extremes.
+#define FIRE "fire"
+/// Involves a laser.
+#define LASER "laser"
+/// Involves a melee attack or a thrown object.
+#define MELEE "melee"
+/// Involved in checking the likelyhood of applying a wound to a mob.
+#define WOUND "wound"
+
+#define ARMOR_ALL "all_damage_types"
+
+/// Armor values that are used for damage
+#define ARMOR_LIST_DAMAGE(...) list(BIO, BOMB, BULLET, ENERGY, LASER, MELEE)
+
+/// Armor values that are used for durability
+#define ARMOR_LIST_DURABILITY(...) list(ACID, FIRE)
+
+/// All armors, preferable in the order as seen above
+#define ARMOR_LIST_ALL(...) list(ACID, BIO, BOMB, BULLET, CONSUME, ENERGY, FIRE, LASER, MELEE, WOUND)
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)

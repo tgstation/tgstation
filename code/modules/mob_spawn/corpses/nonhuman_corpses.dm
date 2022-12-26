@@ -37,3 +37,9 @@
 	var/obj/item/clothing/mask/facehugger/spawned_facehugger = new mob_type(loc)
 	spawned_facehugger.Die()
 	qdel(src)
+
+///dead goliath spawner
+/obj/effect/mob_spawn/corpse/goliath
+	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "goliath_dead_helper"

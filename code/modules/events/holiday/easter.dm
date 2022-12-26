@@ -30,9 +30,9 @@
 		if(R.name != "blobspawn")
 			if(prob(35))
 				if(isspaceturf(R.loc))
-					new /mob/living/simple_animal/rabbit/easter/space(R.loc)
+					new /mob/living/basic/rabbit/easter/space(R.loc)
 				else
-					new /mob/living/simple_animal/rabbit/easter(R.loc)
+					new /mob/living/basic/rabbit/easter(R.loc)
 
 //Easter Baskets
 /obj/item/storage/basket/easter
@@ -56,10 +56,10 @@
 	countEggs()
 
 //Bunny Suit
-/obj/item/clothing/head/bunnyhead
+/obj/item/clothing/head/costume/bunnyhead
 	name = "Easter Bunny Head"
 	icon_state = "bunnyhead"
-	inhand_icon_state = "bunnyhead"
+	inhand_icon_state = null
 	desc = "Considerably more cute than 'Frank'."
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL | SNUG_FIT
@@ -71,7 +71,7 @@
 	icon_state = "bunnysuit"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	inhand_icon_state = "bunnysuit"
+	inhand_icon_state = null
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -82,7 +82,7 @@
 	name = "Easter Bunny Satchel"
 	desc = "Good for your eyes."
 	icon_state = "satchel_carrot"
-	inhand_icon_state = "satchel_carrot"
+	inhand_icon_state = null
 
 //Egg prizes and egg spawns!
 /obj/item/surprise_egg
@@ -102,7 +102,7 @@
 	icon_state = "egg-[eggcolor]"
 
 /obj/item/surprise_egg/proc/dispensePrize(turf/where)
-	var/static/list/prize_list = list(/obj/item/clothing/head/bunnyhead,
+	var/static/list/prize_list = list(/obj/item/clothing/head/costume/bunnyhead,
 		/obj/item/clothing/suit/costume/bunnysuit,
 		/obj/item/storage/backpack/satchel/bunnysatchel,
 		/obj/item/food/grown/carrot,
@@ -149,7 +149,7 @@
 	)
 	result = /obj/item/food/hotcrossbun
 
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"
@@ -158,7 +158,7 @@
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/food/cake/brioche
-	subcategory = CAT_MISCFOOD
+	category = CAT_MISCFOOD
 
 /obj/item/food/scotchegg
 	name = "scotch egg"
@@ -177,7 +177,7 @@
 		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/food/scotchegg
-	subcategory = CAT_EGG
+	category = CAT_EGG
 
 /datum/crafting_recipe/food/mammi
 	name = "Mammi"
@@ -187,7 +187,7 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/food/soup/mammi
-	subcategory = CAT_MISCFOOD
+	category = CAT_MISCFOOD
 
 /obj/item/food/chocolatebunny
 	name = "chocolate bunny"
@@ -202,4 +202,4 @@
 		/obj/item/food/chocolatebar = 1
 	)
 	result = /obj/item/food/chocolatebunny
-	subcategory = CAT_MISCFOOD
+	category = CAT_MISCFOOD

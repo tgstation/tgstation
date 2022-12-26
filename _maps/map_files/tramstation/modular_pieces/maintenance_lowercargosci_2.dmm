@@ -15,7 +15,7 @@
 /area/station/maintenance/starboard/central)
 "eY" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
+/area/lavaland/surface)
 "ff" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
@@ -274,7 +274,7 @@
 /area/station/maintenance/starboard/central)
 "VS" = (
 /turf/open/misc/asteroid/airless,
-/area/mine/explored)
+/area/lavaland/surface)
 "Wc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

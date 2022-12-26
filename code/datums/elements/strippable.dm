@@ -1,7 +1,7 @@
 /// An element for atoms that, when dragged and dropped onto a mob, opens a strip panel.
 /datum/element/strippable
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
+	argument_hash_start_idx = 2
 
 	/// An assoc list of keys to /datum/strippable_item
 	var/list/items
@@ -19,7 +19,7 @@
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, .proc/mouse_drop_onto)
+	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, PROC_REF(mouse_drop_onto))
 
 	src.items = items
 	src.should_strip_proc_path = should_strip_proc_path
@@ -57,7 +57,7 @@
 		strip_menu = new(source, src)
 		LAZYSET(strip_menus, source, strip_menu)
 
-	INVOKE_ASYNC(strip_menu, /datum/.proc/ui_interact, user)
+	INVOKE_ASYNC(strip_menu, TYPE_PROC_REF(/datum/, ui_interact), user)
 
 /// A representation of an item that can be stripped down
 /datum/strippable_item
@@ -87,37 +87,8 @@
 /// Start the equipping process. This is the proc you should yield in.
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
-	if (warn_dangerous_clothing && isclothing(source))
-		var/obj/item/clothing/clothing = source
-		if(clothing.clothing_flags & DANGEROUS_OBJECT)
-			source.visible_message(
-				span_danger("[user] tries to put [equipping] on [source]."),
-				span_userdanger("[user] tries to put [equipping] on you."),
-				ignored_mobs = user,
-			)
 
-		else
-			source.visible_message(
-				span_notice("[user] tries to put [equipping] on [source]."),
-				span_notice("[user] tries to put [equipping] on you."),
-				ignored_mobs = user,
-			)
-
-		if(ishuman(source))
-			var/mob/living/carbon/human/victim_human = source
-			if(victim_human.key && !victim_human.client) // AKA braindead
-				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
-					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
-					LAZYADD(victim_human.afk_thefts, new_entry)
-
-			else if(victim_human.is_blind())
-				to_chat(source, span_userdanger("You feel someone trying to put something on you."))
-
-	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
-
-	user.log_message("is putting [equipping] on [key_name(source)]", LOG_ATTACK, color="red")
-	source.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
-
+	equipping.item_start_equip(source, equipping, user, warn_dangerous_clothing)
 	return TRUE
 
 /// The proc that places the item on the source. This should not yield.

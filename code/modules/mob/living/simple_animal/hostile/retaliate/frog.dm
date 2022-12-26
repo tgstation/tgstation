@@ -22,7 +22,7 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	density = FALSE
-	faction = list("hostile")
+	faction = list("hostile", FACTION_MAINT_CREATURES)
 	attack_sound = 'sound/effects/reee.ogg'
 	butcher_results = list(/obj/item/food/nugget = 1)
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -31,7 +31,7 @@
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	worn_slot_flags = ITEM_SLOT_HEAD
-	head_icon = 'icons/mob/clothing/head/animal_item_head.dmi'
+	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	var/stepped_sound = 'sound/effects/huuu.ogg'
 	///How much of a reagent the mob injects on attack
 	var/poison_per_bite = 3
@@ -53,7 +53,7 @@
 		poison_type = /datum/reagent/drug/mushroomhallucinogen
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/venomous, poison_type, poison_per_bite)

@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - admin: "Gibtonite logging has been improved to actually pass the name of the user when a user blows it up."

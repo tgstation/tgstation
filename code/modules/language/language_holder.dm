@@ -55,7 +55,7 @@ Key procs
 /// Initializes, and copies in the languages from the current atom if available.
 /datum/language_holder/New(atom/_owner)
 	if(_owner && QDELETED(_owner))
-		CRASH("Langauge holder added to a qdeleting thing, what the fuck \ref[_owner]")
+		CRASH("Langauge holder added to a qdeleting thing, what the fuck [text_ref(_owner)]")
 	owner = _owner
 	if(istype(owner, /datum/mind))
 		var/datum/mind/M = owner
@@ -409,6 +409,20 @@ Key procs
 								/datum/language/monkey = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/monkey = list(LANGUAGE_ATOM))
+
+/datum/language_holder/syndicate
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/codespeak = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/codespeak = list(LANGUAGE_ATOM))
+
+/datum/language_holder/beachbum
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/beachbum = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/beachbum = list(LANGUAGE_ATOM))
+	selected_language = /datum/language/beachbum
+
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()

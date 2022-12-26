@@ -13,7 +13,6 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
-	base_icon_state = "spellcard"
 	cast_range = 40
 	projectile_type = /obj/projectile/magic/spellcard
 	projectile_amount = 5
@@ -47,7 +46,7 @@
 		range = 5, \
 		typecache = GLOB.typecache_living, \
 		amount = 1, \
-		when_locked = CALLBACK(src, .proc/on_lockon_component))
+		when_locked = CALLBACK(src, PROC_REF(on_lockon_component)))
 
 /datum/action/cooldown/spell/pointed/projectile/spell_cards/proc/on_lockon_component(list/locked_weakrefs)
 	if(!length(locked_weakrefs))

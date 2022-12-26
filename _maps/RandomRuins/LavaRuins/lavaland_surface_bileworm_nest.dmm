@@ -9,7 +9,7 @@
 /turf/template_noop,
 /area/template_noop)
 "d" = (
-/mob/living/basic/bileworm,
+/mob/living/basic/mining/bileworm,
 /turf/open/misc/asteroid/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "e" = (

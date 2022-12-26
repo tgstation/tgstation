@@ -185,7 +185,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "gu" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "gx" = (
@@ -844,7 +844,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "GV" = (
-/obj/structure/shuttle/engine/huge,
+/obj/machinery/power/shuttle_engine/huge,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "He" = (
@@ -906,7 +906,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Jw" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -1046,7 +1046,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "QM" = (
-/obj/item/bodypart,
+/obj/effect/gibspawner/human,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

@@ -58,7 +58,7 @@
 		return INITIALIZE_HINT_QDEL
 
 	src.parent = parent
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/parent_deleting)
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_deleting))
 
 
 /obj/projectile/hallucination/Destroy()
@@ -166,7 +166,7 @@
 
 	parent.hallucinator.client?.images |= blood
 	animate(blood, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = 5)
-	addtimer(CALLBACK(src, .proc/clean_up_blood, blood), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(clean_up_blood), blood), 0.5 SECONDS)
 
 /obj/projectile/hallucination/proc/clean_up_blood(image/blood)
 	parent.hallucinator.client?.images -= blood
@@ -180,7 +180,7 @@
 	hit_effect.pixel_x = hit_atom.pixel_x + rand(-4,4)
 	hit_effect.pixel_y = hit_atom.pixel_y + rand(-4,4)
 	parent.hallucinator.client.images |= hit_effect
-	addtimer(CALLBACK(src, .proc/clean_up_hit, hit_effect), is_wall ? hit_duration_wall : hit_duration)
+	addtimer(CALLBACK(src, PROC_REF(clean_up_hit), hit_effect), is_wall ? hit_duration_wall : hit_duration)
 
 /obj/projectile/hallucination/proc/clean_up_hit(image/hit_effect)
 	parent.hallucinator.client?.images -= hit_effect
@@ -244,7 +244,7 @@
 			forced = "hulk (hallucinating)",
 		)
 	else if((afflicted.status_flags & CANKNOCKDOWN) && !HAS_TRAIT(afflicted, TRAIT_STUNIMMUNE))
-		addtimer(CALLBACK(afflicted, /mob/living/carbon.proc/do_jitter_animation, 20), 0.5 SECONDS)
+		addtimer(CALLBACK(afflicted, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 20), 0.5 SECONDS)
 
 /obj/projectile/hallucination/disabler
 	name = "disabler beam"

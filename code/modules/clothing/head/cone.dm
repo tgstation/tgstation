@@ -2,8 +2,9 @@
 	desc = "This cone is trying to warn you of something!"
 	name = "warning cone"
 	icon = 'icons/obj/janitor.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "cone"
-	inhand_icon_state = "cone"
+	inhand_icon_state = null
 	force = 1
 	throwforce = 3
 	throw_speed = 2

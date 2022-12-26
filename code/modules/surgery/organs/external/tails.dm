@@ -3,12 +3,17 @@
 	name = "tail"
 	desc = "A severed tail. What did you cut this off of?"
 	icon_state = "severedtail"
+
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+
 	feature_key = "tail"
 	render_key = "tail"
+
 	dna_block = DNA_TAIL_BLOCK
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
+
 	///Does this tail have a wagging sprite, and is it currently wagging?
 	var/wag_flags = NONE
 	///The original owner of this tail
@@ -26,7 +31,7 @@
 /obj/item/organ/external/tail/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 	if(.)
-		RegisterSignal(reciever, COMSIG_ORGAN_WAG_TAIL, .proc/wag)
+		RegisterSignal(reciever, COMSIG_ORGAN_WAG_TAIL, PROC_REF(wag))
 		original_owner ||= reciever //One and done
 
 		reciever.clear_mood_event("tail_lost")
@@ -64,7 +69,7 @@
 		render_key = "wagging[initial(render_key)]"
 		wag_flags |= WAG_WAGGING
 		if(stop_after)
-			addtimer(CALLBACK(src, .proc/wag, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
+			addtimer(CALLBACK(src, PROC_REF(wag), FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	else
 		render_key = initial(render_key)
 		wag_flags &= ~WAG_WAGGING
@@ -89,6 +94,7 @@
 	preference = "feature_lizard_tail"
 	feature_key = "tail_lizard"
 	wag_flags = WAG_ABLE
+	dna_block = DNA_LIZARD_TAIL_BLOCK
 	///A reference to the paired_spines, since for some fucking reason tail spines are tied to the spines themselves.
 	var/obj/item/organ/external/spines/paired_spines
 
@@ -122,7 +128,7 @@
 		render_key = "wagging[initial(render_key)]"
 		wag_flags |= WAG_WAGGING
 		if(stop_after)
-			addtimer(CALLBACK(src, .proc/wag, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
+			addtimer(CALLBACK(src, PROC_REF(wag), FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 		if(paired_spines)
 			paired_spines.render_key = "wagging[initial(paired_spines.render_key)]"
 	else

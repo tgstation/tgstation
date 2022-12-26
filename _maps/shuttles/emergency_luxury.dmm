@@ -23,10 +23,7 @@
 "ae" = (
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	dwidth = 5;
-	height = 14;
-	name = "Luxurious Emergency Shuttle";
-	width = 25
+	name = "Luxurious Emergency Shuttle"
 	},
 /obj/machinery/scanner_gate/luxury_shuttle{
 	layer = 2.6
@@ -77,13 +74,13 @@
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ar" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/luxury)
 "as" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{

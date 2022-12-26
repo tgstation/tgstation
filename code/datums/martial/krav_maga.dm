@@ -7,7 +7,7 @@
 
 /datum/action/neck_chop
 	name = "Neck Chop - Injures the neck, stopping the victim from speaking for a while."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "neckchop"
 
 /datum/action/neck_chop/Trigger(trigger_flags)
@@ -23,7 +23,7 @@
 
 /datum/action/leg_sweep
 	name = "Leg Sweep - Trips the victim, knocking them down for a brief moment."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "legsweep"
 
 /datum/action/leg_sweep/Trigger(trigger_flags)
@@ -39,7 +39,7 @@
 
 /datum/action/lung_punch//referred to internally as 'quick choke'
 	name = "Lung Punch - Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "lungpunch"
 
 /datum/action/lung_punch/Trigger(trigger_flags)
@@ -112,10 +112,7 @@
 	to_chat(attacker, span_danger("You karate chop [defender]'s neck, rendering [defender.p_them()] unable to speak!"))
 	playsound(get_turf(attacker), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	defender.apply_damage(10, attacker.get_attack_type(), BODY_ZONE_HEAD)
-	if(iscarbon(defender))
-		var/mob/living/carbon/carbon_defender = defender
-		if(carbon_defender.silent <= 10)
-			carbon_defender.silent = clamp(carbon_defender.silent + 10, 0, 10)
+	defender.adjust_silence_up_to(20 SECONDS, 20 SECONDS)
 	log_combat(attacker, defender, "neck chopped")
 	return TRUE
 
@@ -182,7 +179,7 @@
 	name = "krav maga gloves"
 	desc = "These gloves can teach you to perform Krav Maga using nanochips."
 	icon_state = "fightgloves"
-	inhand_icon_state = "fightgloves"
+	greyscale_colors = "#c41e0d"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
@@ -193,7 +190,7 @@
 	name = "combat gloves plus"
 	desc = "These tactical gloves are fireproof and electrically insulated, and through the use of nanochip technology will teach you the martial art of krav maga."
 	icon_state = "black"
-	inhand_icon_state = "blackgloves"
+	greyscale_colors = "#2f2e31"
 	siemens_coefficient = 0
 	strip_delay = 80
 	cold_protection = HANDS
@@ -201,4 +198,9 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/krav_maga_combatglovesplus
+
+/datum/armor/krav_maga_combatglovesplus
+	bio = 90
+	fire = 80
+	acid = 50

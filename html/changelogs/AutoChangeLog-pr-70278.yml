@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "\"Bot Language Malfunction\" trait (random languages for simple bots) is now a smidge more common, and affects all simple robots created on the station rather than just roundstart ones. Also, it tries to pick a language that isn't galactic common if possible."

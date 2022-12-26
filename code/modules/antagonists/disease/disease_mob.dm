@@ -1,4 +1,4 @@
-#define FREEMOVE_TIME 2 MINUTES
+#define FREEMOVE_TIME (2 MINUTES)
 
 /*
 A mob of type /mob/camera/disease is an overmind coordinating at least one instance of /datum/disease/advance/sentient_disease
@@ -20,7 +20,7 @@ the new instance inside the host to be updated to the template's stats.
 	see_invisible = SEE_INVISIBLE_LIVING
 	layer = BELOW_MOB_LAYER
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	sight = SEE_SELF|SEE_THRU|SEE_BLACKNESS
+	sight = SEE_SELF|SEE_THRU
 	initial_language_holder = /datum/language_holder/universal
 
 	var/freemove = TRUE
@@ -71,7 +71,7 @@ the new instance inside the host to be updated to the template's stats.
 	browser = new /datum/browser(src, "disease_menu", "Adaptation Menu", 1000, 770, src)
 
 	freemove_end = world.time + FREEMOVE_TIME
-	freemove_end_timerid = addtimer(CALLBACK(src, .proc/infect_random_patient_zero), FREEMOVE_TIME, TIMER_STOPPABLE)
+	freemove_end_timerid = addtimer(CALLBACK(src, PROC_REF(infect_random_patient_zero)), FREEMOVE_TIME, TIMER_STOPPABLE)
 
 /mob/camera/disease/Destroy()
 	. = ..()
@@ -139,7 +139,7 @@ the new instance inside the host to be updated to the template's stats.
 		return ..()
 	return FALSE
 
-/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	var/atom/movable/to_follow = speaker
 	if(radio_freq)
@@ -288,7 +288,7 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/proc/set_following(mob/living/L)
 	if(following_host)
 		UnregisterSignal(following_host, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(L, COMSIG_MOVABLE_MOVED, .proc/follow_mob)
+	RegisterSignal(L, COMSIG_MOVABLE_MOVED, PROC_REF(follow_mob))
 	following_host = L
 	follow_mob()
 
@@ -329,7 +329,7 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/proc/adapt_cooldown()
 	to_chat(src, span_notice("You have altered your genetic structure. You will be unable to adapt again for [DisplayTimeText(adaptation_cooldown)]."))
 	next_adaptation_time = world.time + adaptation_cooldown
-	addtimer(CALLBACK(src, .proc/notify_adapt_ready), adaptation_cooldown)
+	addtimer(CALLBACK(src, PROC_REF(notify_adapt_ready)), adaptation_cooldown)
 
 /mob/camera/disease/proc/notify_adapt_ready()
 	to_chat(src, span_notice("You are now ready to adapt again."))
@@ -426,7 +426,7 @@ the new instance inside the host to be updated to the template's stats.
 
 /datum/action/innate/disease_adapt
 	name = "Adaptation Menu"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "disease_menu"
 
 /datum/action/innate/disease_adapt/Activate()

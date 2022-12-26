@@ -8,7 +8,7 @@
 	name = "\improper Firebot"
 	desc = "A little fire extinguishing bot. He looks rather anxious."
 	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "firebot"
+	icon_state = "firebot1"
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -224,7 +224,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, target_fire, 30, 1, id=access_card)
+		path = get_path_to(src, target_fire, max_distance=30, mintargetdist=1, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
@@ -265,7 +265,9 @@
 
 /mob/living/simple_animal/bot/firebot/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(COOLDOWN_FINISHED(src, foam_cooldown))
-		new /obj/effect/particle_effect/fluid/foam/firefighting(loc)
+		var/datum/effect_system/fluid_spread/foam/firefighting/foam = new
+		foam.set_up(3, holder = src, location = loc)
+		foam.start()
 		COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
 /mob/living/simple_animal/bot/firebot/proc/spray_water(atom/target, mob/user)
@@ -290,7 +292,7 @@
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
-	new /obj/item/clothing/head/hardhat/red(Tsec)
+	new /obj/item/clothing/head/utility/hardhat/red(Tsec)
 
 	var/turf/T = get_turf(Tsec)
 

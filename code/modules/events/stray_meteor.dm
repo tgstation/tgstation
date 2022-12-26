@@ -12,7 +12,8 @@
 
 /datum/round_event_control/stray_meteor/admin_setup()
 	if(!check_rights(R_FUN))
-		return
+		return ADMIN_CANCEL_EVENT
+
 	if(tgui_alert(usr, "Select a meteor?", "Plasuable Deniability!", list("Yes", "No")) == "Yes")
 		var/list/meteor_list = list()
 		meteor_list += subtypesof(/obj/effect/meteor)
@@ -26,11 +27,12 @@
 	var/datum/round_event_control/stray_meteor/meteor_event = control
 	if(meteor_event.chosen_meteor)
 		var/chosen_meteor = meteor_event.chosen_meteor
+		meteor_event.chosen_meteor = null
 		var/list/passed_meteor = list()
 		passed_meteor[chosen_meteor] = 1
 		spawn_meteor(passed_meteor)
 	else
-		spawn_meteor(GLOB.meteorsD)
+		spawn_meteor(GLOB.meteors_stray)
 
 /datum/round_event/stray_meteor/announce(fake)
 	if(GLOB.meteor_list)

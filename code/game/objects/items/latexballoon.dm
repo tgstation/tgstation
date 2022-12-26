@@ -2,7 +2,9 @@
 	name = "latex glove"
 	desc = "Sterile and airtight."
 	icon_state = "latexballon"
-	inhand_icon_state = "lgloves"
+	inhand_icon_state = "greyscale_gloves"
+	lefthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -19,6 +21,8 @@
 	if (icon_state == "latexballon_bursted")
 		return
 	icon_state = "latexballon_blow"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	inhand_icon_state = "latexballon"
 	user.update_held_items()
 	to_chat(user, span_notice("You blow up [src] with [tank]."))
@@ -35,7 +39,9 @@
 		return
 	playsound(src, 'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
 	icon_state = "latexballon_bursted"
-	inhand_icon_state = "lgloves"
+	inhand_icon_state = initial(inhand_icon_state)
+	lefthand_file = initial(lefthand_file)
+	righthand_file = initial(righthand_file)
 	if(isliving(loc))
 		var/mob/living/user = src.loc
 		user.update_held_items()

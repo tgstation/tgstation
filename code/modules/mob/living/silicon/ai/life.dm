@@ -5,8 +5,6 @@
 
 	update_gravity(has_gravity())
 
-	handle_status_effects(delta_time, times_fired)
-
 	if(malfhack?.aidisabled)
 		deltimer(malfhacking)
 		// This proc handles cleanup of screen notifications and
@@ -60,6 +58,7 @@
 	update_stat()
 	diag_hud_set_health()
 	disconnect_shell()
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/silicon/ai/update_stat()
 	if(status_flags & GODMODE)
@@ -88,7 +87,7 @@
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
 	to_chat(src, span_notice("Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection."))
 	end_multicam()
-	sleep(50)
+	sleep(5 SECONDS)
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
 	if(AIarea?.power_equip)
@@ -96,16 +95,16 @@
 			ai_restore_power()
 			return
 	to_chat(src, span_notice("Fault confirmed: missing external power. Shutting down main control system to save power."))
-	sleep(20)
+	sleep(2 SECONDS)
 	to_chat(src, span_notice("Emergency control system online. Verifying connection to power network."))
-	sleep(50)
+	sleep(5 SECONDS)
 	T = get_turf(src)
 	if(isspaceturf(T))
 		to_chat(src, span_alert("Unable to verify! No power connection detected!"))
 		setAiRestorePowerRoutine(POWER_RESTORATION_SEARCH_APC)
 		return
 	to_chat(src, span_notice("Connection verified. Searching for APC in power network."))
-	sleep(50)
+	sleep(5 SECONDS)
 	var/obj/machinery/power/apc/theAPC = null
 
 	var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
@@ -135,14 +134,14 @@
 				to_chat(src, span_notice("Power port upload access confirmed. Loading control program into APC power port software."))
 			if (4)
 				to_chat(src, span_notice("Transfer complete. Forcing APC to execute program."))
-				sleep(50)
+				sleep(5 SECONDS)
 				to_chat(src, span_notice("Receiving control information from APC."))
-				sleep(2)
+				sleep(0.2 SECONDS)
 				to_chat(src, "<A HREF=?src=[REF(src)];emergencyAPC=[TRUE]>APC ready for connection.</A>")
 				apc_override = theAPC
 				apc_override.ui_interact(src)
 				setAiRestorePowerRoutine(POWER_RESTORATION_APC_FOUND)
-		sleep(50)
+		sleep(5 SECONDS)
 		theAPC = null
 
 /mob/living/silicon/ai/proc/ai_restore_power()
@@ -164,4 +163,4 @@
 	adjust_temp_blindness(2 SECONDS)
 	update_sight()
 	to_chat(src, span_alert("You've lost power!"))
-	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)
+	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 20)

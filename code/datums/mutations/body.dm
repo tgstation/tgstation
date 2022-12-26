@@ -20,7 +20,7 @@
 	owner.Unconscious(200 * GET_MUTATION_POWER(src))
 	owner.set_jitter(2000 SECONDS * GET_MUTATION_POWER(src)) //yes this number looks crazy but the jitter animations are amplified based on the duration.
 	owner.add_mood_event("epilepsy", /datum/mood_event/epilepsy)
-	addtimer(CALLBACK(src, .proc/jitter_less), 90)
+	addtimer(CALLBACK(src, PROC_REF(jitter_less)), 90)
 
 /datum/mutation/human/epilepsy/proc/jitter_less()
 	if(QDELETED(owner))
@@ -31,7 +31,7 @@
 /datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_FLASHED, .proc/get_flashed_nerd)
+	RegisterSignal(owner, COMSIG_MOB_FLASHED, PROC_REF(get_flashed_nerd))
 
 /datum/mutation/human/epilepsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -430,7 +430,7 @@
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /datum/mutation/human/extrastun/on_losing()
 	. = ..()
@@ -461,7 +461,7 @@
 	. = ..()
 	if(.)
 		return TRUE
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/bloody_shower)
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(bloody_shower))
 
 /datum/mutation/human/martyrdom/on_losing()
 	. = ..()
@@ -480,19 +480,20 @@
 		qdel(I)
 
 	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
-	for(var/mob/living/carbon/human/H in view(2,owner))
+	for(var/mob/living/carbon/human/splashed in view(2, owner))
 		var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		if(eyes)
-			to_chat(H, span_userdanger("You are blinded by a shower of blood!"))
+			to_chat(splashed, span_userdanger("You are blinded by a shower of blood!"))
 			eyes.applyOrganDamage(5)
 		else
-			to_chat(H, span_userdanger("You are knocked down by a wave of... blood?!"))
-		H.Stun(20)
-		H.set_eye_blur_if_lower(40 SECONDS)
-		H.adjust_confusion(3 SECONDS)
-	for(var/mob/living/silicon/S in view(2,owner))
-		to_chat(S, span_userdanger("Your sensors are disabled by a shower of blood!"))
-		S.Paralyze(60)
+			to_chat(splashed, span_userdanger("You are knocked down by a wave of... blood?!"))
+		splashed.Stun(2 SECONDS)
+		splashed.set_eye_blur_if_lower(40 SECONDS)
+		splashed.adjust_confusion(3 SECONDS)
+	for(var/mob/living/silicon/borgo in view(2,owner))
+		to_chat(borgo, span_userdanger("Your sensors are disabled by a shower of blood!"))
+		borgo.Paralyze(6 SECONDS)
+	owner.investigate_log("has been gibbed by the martyrdom mutation.", INVESTIGATE_DEATHS)
 	owner.gib()
 
 /datum/mutation/human/headless
@@ -518,7 +519,7 @@
 		head.drop_organs()
 		qdel(head)
 		owner.regenerate_icons()
-	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, .proc/abortattachment)
+	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abortattachment))
 
 /datum/mutation/human/headless/on_losing()
 	. = ..()

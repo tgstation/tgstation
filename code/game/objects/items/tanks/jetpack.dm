@@ -17,8 +17,9 @@
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, .proc/get_user)
-	check_on_move = CALLBACK(src, .proc/allow_thrust, 0.01)
+	get_mover = CALLBACK(src, PROC_REF(get_user))
+	check_on_move = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE)
 	refresh_jetpack()
 
 /obj/item/tank/jetpack/Destroy()
@@ -72,7 +73,7 @@
 	else
 		turn_off(user)
 		to_chat(user, span_notice("You turn the jetpack off."))
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/tank/jetpack/proc/set_stabilizers(new_stabilizers)
 	if(new_stabilizers == stabilizers)
@@ -80,11 +81,15 @@
 	stabilizers = new_stabilizers
 	refresh_jetpack()
 
+/obj/item/tank/jetpack/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][on ? "-on" : ""]"
+
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED) & JETPACK_ACTIVATION_FAILED)
 		return FALSE
 	on = TRUE
-	icon_state = "[initial(icon_state)]-on"
+	update_icon(UPDATE_ICON_STATE)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 	return TRUE
@@ -93,7 +98,7 @@
 	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED)
 	on = FALSE
 	set_stabilizers(FALSE)
-	icon_state = initial(icon_state)
+	update_icon(UPDATE_ICON_STATE)
 	if(user)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
@@ -121,13 +126,13 @@
 		return null
 	return loc
 
-/obj/item/tank/jetpack/suicide_act(mob/user)
+/obj/item/tank/jetpack/suicide_act(mob/living/user)
 	if (!ishuman(user))
-		return ..()
+		return
 	var/mob/living/carbon/human/suffocater = user
 	suffocater.say("WHAT THE FUCK IS CARBON DIOXIDE?")
 	suffocater.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/tank/jetpack/improvised
 	name = "improvised jetpack"
@@ -166,7 +171,7 @@
 	name = "jet harness (oxygen)"
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
 	icon_state = "jetpack-mini"
-	inhand_icon_state = "jetpack-mini"
+	inhand_icon_state = "jetpack-black"
 	volume = 40
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL

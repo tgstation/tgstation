@@ -10,20 +10,20 @@
 	name = "striped dress"
 	desc = "Fashion in space."
 	icon_state = "striped_dress"
-	inhand_icon_state = "striped_dress"
+	inhand_icon_state = null
 	female_sprite_flags = FEMALE_UNIFORM_FULL
 
 /obj/item/clothing/under/dress/sailor
 	name = "sailor dress"
 	desc = "Formal wear for a leading lady."
 	icon_state = "sailor_dress"
-	inhand_icon_state = "sailor_dress"
+	inhand_icon_state = null
 
 /obj/item/clothing/under/dress/wedding_dress
 	name = "wedding dress"
 	desc = "A luxurious gown for once-in-a-lifetime occasions."
 	icon_state = "wedding_dress"
-	inhand_icon_state = "wedding_dress"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_cover = HIDESHOES
 
@@ -31,12 +31,13 @@
 	name = "red evening gown"
 	desc = "Fancy dress for space bar singers."
 	icon_state = "red_evening_gown"
-	inhand_icon_state = "red_evening_gown"
+	inhand_icon_state = null
 
 /obj/item/clothing/under/dress/skirt
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
+	inhand_icon_state = "blackskirt"
 
 /obj/item/clothing/under/dress/skirt/plaid
 	name = "plaid skirt"

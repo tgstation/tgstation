@@ -195,15 +195,16 @@
 
 
 	vis_locs = null //clears this atom out of all viscontents
-	vis_contents.Cut()
+
+	// Checking length(vis_contents) before cutting has significant speed benefits
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 /atom/movable/proc/update_emissive_block()
 	if(!blocks_emissive)
 		return
 	else if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
-		var/mutable_appearance/gen_emissive_blocker = emissive_blocker(icon, icon_state, src, alpha = src.alpha, appearance_flags = src.appearance_flags)
-		gen_emissive_blocker.dir = dir
-		return gen_emissive_blocker
+		return fast_emissive_blocker(src)
 	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 		if(!em_block && !QDELETED(src))
 			render_target = ref(src)
@@ -217,6 +218,7 @@
 		. += emissive_block
 
 /atom/movable/proc/onZImpact(turf/impacted_turf, levels, message = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(message)
 		visible_message(span_danger("[src] crashes into [impacted_turf]!"))
 	var/atom/highest = impacted_turf
@@ -226,8 +228,21 @@
 		if(isobj(hurt_atom) || ismob(hurt_atom))
 			if(hurt_atom.layer > highest.layer)
 				highest = hurt_atom
-	INVOKE_ASYNC(src, .proc/SpinAnimation, 5, 2)
+	INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
+	SEND_SIGNAL(src, COMSIG_ATOM_ON_Z_IMPACT, impacted_turf, levels)
 	return TRUE
+
+/*
+ * Attempts to move using zMove if direction is UP or DOWN, step if not
+ *
+ * Args:
+ * direction: The direction to go
+ * z_move_flags: bitflags used for checks in zMove and can_z_move
+*/
+/atom/movable/proc/try_step_multiz(direction, z_move_flags = ZMOVE_FLIGHT_FLAGS)
+	if(direction == UP || direction == DOWN)
+		return zMove(direction, null, z_move_flags)
+	return step(src, direction)
 
 /*
  * The core multi-z movement proc. Used to move a movable through z levels.
@@ -312,16 +327,16 @@
 			else
 				to_chat(src, span_warning("You are not Superman."))
 		return FALSE
-	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, start)))
+	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination, (z_move_flags & ZMOVE_ALLOW_ANCHORED)) && destination.zPassIn(src, direction, start)))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			to_chat(rider || src, span_warning("You couldn't move there!"))
 		return FALSE
 	return destination //used by some child types checks and zMove()
 
 /atom/movable/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list(NAMEOF(src, step_x) = TRUE, NAMEOF(src, step_y) = TRUE, NAMEOF(src, step_size) = TRUE, NAMEOF(src, bounds) = TRUE)
-	var/static/list/careful_edits = list(NAMEOF(src, bound_x) = TRUE, NAMEOF(src, bound_y) = TRUE, NAMEOF(src, bound_width) = TRUE, NAMEOF(src, bound_height) = TRUE)
-	var/static/list/not_falsey_edits = list(NAMEOF(src, bound_width) = TRUE, NAMEOF(src, bound_height) = TRUE)
+	var/static/list/banned_edits = list(NAMEOF_STATIC(src, step_x) = TRUE, NAMEOF_STATIC(src, step_y) = TRUE, NAMEOF_STATIC(src, step_size) = TRUE, NAMEOF_STATIC(src, bounds) = TRUE)
+	var/static/list/careful_edits = list(NAMEOF_STATIC(src, bound_x) = TRUE, NAMEOF_STATIC(src, bound_y) = TRUE, NAMEOF_STATIC(src, bound_width) = TRUE, NAMEOF_STATIC(src, bound_height) = TRUE)
+	var/static/list/not_falsey_edits = list(NAMEOF_STATIC(src, bound_width) = TRUE, NAMEOF_STATIC(src, bound_height) = TRUE)
 	if(banned_edits[var_name])
 		return FALSE //PLEASE no.
 	if(careful_edits[var_name] && (var_value % world.icon_size) != 0)
@@ -939,6 +954,8 @@
 		return
 	. = anchored
 	anchored = anchorvalue
+	if(anchored && pulledby)
+		pulledby.stop_pulling()
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /// Sets the currently_z_moving variable to a new value. Used to allow some zMovement sources to have precedence over others.
@@ -1047,9 +1064,17 @@
 		// so we do this. sucks to suck
 		update_appearance()
 
-		// I so much wish this could be somewhere else. alas, no.
-		for(var/image/update in update_on_z)
-			SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
+		if(update_on_z)
+			// I so much wish this could be somewhere else. alas, no.
+			for(var/image/update in update_on_z)
+				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
+		if(update_overlays_on_z)
+			// This EVEN more so
+			cut_overlay(update_overlays_on_z)
+			// This even more so
+			for(var/mutable_appearance/update in update_overlays_on_z)
+				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
+			add_overlay(update_overlays_on_z)
 
 	if(!notify_contents)
 		return
@@ -1396,6 +1421,29 @@
 	var/datum/language_holder/language_holder = get_language_holder()
 	return language_holder.update_atom_languages(src)
 
+/**
+ * Randomizes our atom's language to an uncommon language if:
+ * - They are on the station Z level
+ * OR
+ * - They are on the escape shuttle
+ */
+/atom/movable/proc/randomize_language_if_on_station()
+	var/turf/atom_turf = get_turf(src)
+	var/area/atom_area = get_area(src)
+
+	if(!atom_turf) // some machines spawn in nullspace
+		return
+
+	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
+		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with machines
+		// but docked at centcom, and I wanted those machines to also speak funny languages
+		return FALSE
+
+	/// The atom's language holder - so we can randomize and change their language
+	var/datum/language_holder/atom_languages = get_language_holder()
+	atom_languages.selected_language = atom_languages.get_random_spoken_uncommon_language()
+	return TRUE
+
 /* End language procs */
 
 //Returns an atom's power cell, if it has one. Overload for individual items.
@@ -1453,6 +1501,7 @@
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_PARTICLES, "Edit Particles")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
 
@@ -1461,6 +1510,10 @@
 
 	if(!.)
 		return
+
+	if(href_list[VV_HK_EDIT_PARTICLES] && check_rights(R_VAREDIT))
+		var/client/C = usr.client
+		C?.open_particle_editor(src)
 
 	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
 		if(tgui_alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", list("Allow", "Cancel")) != "Allow")

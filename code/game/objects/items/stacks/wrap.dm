@@ -9,6 +9,7 @@
 	desc = "Wrap packages with this festive paper to make gifts."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wrap_paper"
+	inhand_icon_state = "wrap_paper"
 	greyscale_config = /datum/greyscale_config/wrap_paper
 	item_flags = NOBLUDGEON
 	amount = 25
@@ -85,7 +86,7 @@
 		parcel.add_fingerprint(user)
 		return OXYLOSS
 	else
-		balloon_alert(user, span_warning("You need more paper!"))
+		balloon_alert(user, "not enough paper!")
 		return SHAME
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
@@ -112,7 +113,7 @@
 	if(isitem(target))
 		var/obj/item/item = target
 		if(!item.can_be_package_wrapped())
-			balloon_alert(user, "The [target] can not be wrapped!")
+			balloon_alert(user, "can't be wrapped!")
 			return
 		if(user.is_holding(item))
 			if(!user.dropItemToGround(item))
@@ -136,10 +137,10 @@
 	else if(istype(target, /obj/structure/closet))
 		var/obj/structure/closet/closet = target
 		if(closet.opened)
-			balloon_alert(user, span_warning("You can not wrap the [target] while it is opened!"))
+			balloon_alert(user, "can't wrap while open!")
 			return
 		if(!closet.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
-			balloon_alert(user, span_warning("You can't wrap this!"))
+			balloon_alert(user, "can't wrap!")
 			return
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(closet.loc))
@@ -150,13 +151,13 @@
 			parcel.add_fingerprint(user)
 			closet.add_fingerprint(user)
 		else
-			balloon_alert(user, span_warning("You need more paper!"))
+			balloon_alert(user, "not enough paper!")
 			return
 
 	else if(istype(target,  /obj/machinery/portable_atmospherics))
 		var/obj/machinery/portable_atmospherics/portable_atmospherics = target
 		if(portable_atmospherics.anchored)
-			balloon_alert(user, span_warning("You can not wrap the [target] while it is anchored!"))
+			balloon_alert(user, "can't wrap while anchored!")
 			return
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(portable_atmospherics.loc))
@@ -167,11 +168,11 @@
 			parcel.add_fingerprint(user)
 			portable_atmospherics.add_fingerprint(user)
 		else
-			balloon_alert(user, span_warning("You need more paper!"))
+			balloon_alert(user, "not enough paper!")
 			return
 
 	else
-		balloon_alert(user, span_warning("The object you are trying to wrap is unsuitable for the sorting machinery!"))
+		balloon_alert(user, "can't wrap!")
 		return
 
 	user.visible_message(span_notice("[user] wraps [target]."))
@@ -194,6 +195,7 @@
 	desc = "A tube... of cardboard."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "c_tube"
+	inhand_icon_state = "c_tube"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3

@@ -180,7 +180,7 @@
 		params = recursive_list_resolve(params)
 
 	log_admin_circuit("[parent.get_creator()] proccalled '[to_invoke]' on [called_on] with params \[[params.Join(", ")]].")
-	INVOKE_ASYNC(src, .proc/do_proccall, called_on, to_invoke, params)
+	INVOKE_ASYNC(src, PROC_REF(do_proccall), called_on, to_invoke, params)
 
 /obj/item/circuit_component/proccall/proc/do_proccall(called_on, to_invoke, params)
 	var/result = HandleUserlessProcCall(parent.get_creator(), called_on, to_invoke, params)

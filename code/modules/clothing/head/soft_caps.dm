@@ -1,8 +1,10 @@
 /obj/item/clothing/head/soft
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteful brown colour."
+	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
-	inhand_icon_state = "helmet"
+	inhand_icon_state = "greyscale_softcap" //todo wip
 	var/soft_type = "cargo"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
@@ -118,6 +120,7 @@
 	name = "rainbow cap"
 	desc = "It's a baseball hat in a bright rainbow of colors."
 	icon_state = "rainbowsoft"
+	inhand_icon_state = "rainbow_softcap"
 	soft_type = "rainbow"
 	dog_fashion = null
 
@@ -126,9 +129,18 @@
 	desc = "It's a robust baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	soft_type = "sec"
-	armor = list(MELEE = 30, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 20, ACID = 50)
+	armor_type = /datum/armor/soft_sec
 	strip_delay = 60
 	dog_fashion = null
+
+/datum/armor/soft_sec
+	melee = 30
+	bullet = 25
+	laser = 25
+	energy = 35
+	bomb = 25
+	fire = 20
+	acid = 50
 
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"

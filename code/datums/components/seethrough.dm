@@ -13,9 +13,11 @@
 	var/animation_time
 	///After we somehow moved (because ss13 is godless and does not respect anything), how long do we need to stand still to feel safe to setup our "behind" area again
 	var/perimeter_reset_timer
+	///Does this object let clicks from players its transparent to pass through it
+	var/clickthrough
 
 ///see_through_map is a define pointing to a specific map. It's basically defining the area which is considered behind. See see_through_maps.dm for a list of maps
-/datum/component/seethrough/Initialize(see_through_map = SEE_THROUGH_MAP_DEFAULT, target_alpha = 100, animation_time = 0.5 SECONDS, perimeter_reset_timer = 2 SECONDS)
+/datum/component/seethrough/Initialize(see_through_map = SEE_THROUGH_MAP_DEFAULT, target_alpha = 100, animation_time = 0.5 SECONDS, perimeter_reset_timer = 2 SECONDS, clickthrough = TRUE)
 	. = ..()
 
 	relative_turf_coords = GLOB.see_through_maps[see_through_map]
@@ -28,8 +30,9 @@
 	src.target_alpha = target_alpha
 	src.animation_time = animation_time
 	src.perimeter_reset_timer = perimeter_reset_timer
+	src.clickthrough = clickthrough
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/dismantle_perimeter)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(dismantle_perimeter))
 
 	setup_perimeter(parent)
 
@@ -43,8 +46,8 @@
 		if(isnull(target))
 			continue
 
-		RegisterSignal(target, COMSIG_ATOM_ENTERED, .proc/on_entered)
-		RegisterSignal(target, COMSIG_ATOM_EXITED, .proc/on_exited)
+		RegisterSignal(target, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+		RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 
 		watched_turfs.Add(target)
 
@@ -58,7 +61,7 @@
 	var/mob/mob = entered
 
 	if(!mob.client)
-		RegisterSignal(mob, COMSIG_MOB_LOGIN, .proc/trick_mob)
+		RegisterSignal(mob, COMSIG_MOB_LOGIN, PROC_REF(trick_mob))
 		return
 
 	if(mob in tricked_mobs)
@@ -91,19 +94,21 @@
 		UnregisterSignal(mob, COMSIG_MOB_LOGOUT)
 
 		//after playing the fade-in animation, remove the screen obj
-		addtimer(CALLBACK(src, /datum/component/seethrough/proc/clear_image, trickery_image, mob.client), animation_time)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/seethrough,clear_image), trickery_image, mob.client), animation_time)
 
 ///Apply the trickery image and animation
 /datum/component/seethrough/proc/trick_mob(mob/fool)
 	var/datum/hud/our_hud = fool.hud_used
-	var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
-	seethrough.unhide_plane(fool)
+	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+		seethrough.unhide_plane(fool)
 
 	var/image/user_overlay = new(parent)
 	user_overlay.loc = parent
 	user_overlay.override = TRUE
-	//Special plane so we can click through the overlay
-	SET_PLANE_EXPLICIT(user_overlay, SEETHROUGH_PLANE, parent)
+
+	if(clickthrough)
+		//Special plane so we can click through the overlay
+		SET_PLANE_EXPLICIT(user_overlay, SEETHROUGH_PLANE, parent)
 
 	//These are inherited, but we already use the atom's loc so we end up at double the pixel offset
 	user_overlay.pixel_x = 0
@@ -114,7 +119,7 @@
 	animate(user_overlay, alpha = target_alpha, time = animation_time)
 
 	tricked_mobs[fool] = user_overlay
-	RegisterSignal(fool, COMSIG_MOB_LOGOUT, .proc/on_client_disconnect)
+	RegisterSignal(fool, COMSIG_MOB_LOGOUT, PROC_REF(on_client_disconnect))
 
 
 ///Unrout ourselves after we somehow moved, and start a timer so we can re-restablish our behind area after standing still for a bit
@@ -128,7 +133,7 @@
 	clear_all_images()
 
 	//Timer override, so if our atom keeps moving the timer is reset until they stop for X time
-	addtimer(CALLBACK(src, /datum/component/seethrough/proc/setup_perimeter, parent), perimeter_reset_timer, TIMER_OVERRIDE | TIMER_UNIQUE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/seethrough,setup_perimeter), parent), perimeter_reset_timer, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 ///Remove a screen image from a client
 /datum/component/seethrough/proc/clear_image(image/removee, client/remove_from)
@@ -140,8 +145,9 @@
 		fool.client?.images -= trickery_image
 		UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 		var/datum/hud/our_hud = fool.hud_used
-		var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
-		seethrough.hide_plane(fool)
+
+		for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+			seethrough.hide_plane(fool)
 
 	tricked_mobs.Cut()
 
@@ -151,7 +157,7 @@
 
 	tricked_mobs.Remove(fool)
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
-	RegisterSignal(fool, COMSIG_MOB_LOGIN, .proc/trick_mob)
+	RegisterSignal(fool, COMSIG_MOB_LOGIN, PROC_REF(trick_mob))
 	var/datum/hud/our_hud = fool.hud_used
-	var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
-	seethrough.hide_plane(fool)
+	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+		seethrough.hide_plane(fool)

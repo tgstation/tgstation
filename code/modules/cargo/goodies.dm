@@ -30,7 +30,7 @@
 	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38!"
 	cost = PAYCHECK_CREW * 40 //they really mean a premium here
 	access_view = ACCESS_DETECTIVE
-	contains = list(/obj/item/gun/ballistic/revolver/detective)
+	contains = list(/obj/item/gun/ballistic/revolver/c38/detective)
 
 /datum/supply_pack/goody/stingbang
 	name = "Stingbang Single-Pack"
@@ -227,6 +227,12 @@
 	desc = "Set of various fishing lines."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/storage/box/fishing_lines)
+
+/datum/supply_pack/goody/fishing_hook_rescue
+	name = "Rescue Fishing Hook"
+	desc = "For when your fellow miner has inevitably fallen into a chasm, and it's up to you to save them."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/fishing_hook/rescue)
 
 /datum/supply_pack/goody/premium_bait
 	name = "Deluxe fishing bait"

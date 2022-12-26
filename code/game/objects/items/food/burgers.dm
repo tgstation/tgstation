@@ -1,6 +1,7 @@
 /obj/item/food/burger
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "hburger"
+	inhand_icon_state = "burger"
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("bun" = 2, "beef patty" = 4)
@@ -300,7 +301,7 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_EXOTIC
 
-/obj/item/food/burger/superbite/suicide_act(mob/user)
+/obj/item/food/burger/superbite/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to eat [src] in one bite, it looks like [user.p_theyre()] trying to commit suicide!"))
 	var/datum/component/edible/component = GetComponent(/datum/component/edible)
 	component?.TakeBite(user, user)

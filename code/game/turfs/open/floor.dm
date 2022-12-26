@@ -11,12 +11,13 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	flags_1 = NO_SCREENTIPS_1
 	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
-	canSmoothWith = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
+	canSmoothWith = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
 	tiled_dirt = TRUE
+
 
 	overfloor_placed = TRUE
 
@@ -28,6 +29,8 @@
 	var/floor_tile = null
 	var/list/broken_states
 	var/list/burnt_states
+	/// Determines if you can deconstruct this with a RCD
+	var/rcd_proof = FALSE
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
@@ -80,8 +83,7 @@
 			switch(rand(1, 3))
 				if(1)
 					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
-						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-						ReplaceWithLattice()
+						attempt_lattice_replacement()
 					else
 						ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 					if(prob(33))
@@ -154,7 +156,7 @@
 /turf/open/floor/proc/crush()
 	break_tile()
 
-/turf/open/floor/ChangeTurf(path, new_baseturf, flags)
+/turf/open/floor/ChangeTurf(path, new_baseturfs, flags)
 	if(!isfloorturf(src))
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
 	if(!ispath(path, /turf/open/floor))
@@ -233,7 +235,7 @@
 			if(prob(70))
 				sheer = TRUE
 			else if(prob(50) && (/turf/open/space in baseturfs))
-				ReplaceWithLattice()
+				attempt_lattice_replacement()
 	if(sheer)
 		if(has_tile())
 			remove_tile(null, TRUE, TRUE, TRUE)
@@ -250,6 +252,9 @@
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
+			var/obj/structure/girder/girder = locate() in src
+			if(girder)
+				return girder.rcd_vals(user, the_rcd)
 			return rcd_result_with_memory(
 				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 16),
 				src, RCD_MEMORY_WALL,
@@ -277,6 +282,10 @@
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
+			var/obj/structure/girder/girder = locate() in src
+			if(girder)
+				return girder.rcd_act(user, the_rcd, passed_mode)
+
 			to_chat(user, span_notice("You build a wall."))
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
@@ -307,6 +316,7 @@
 				new_airlock.electronics.unres_sides = the_rcd.airlock_electronics.unres_sides
 				new_airlock.electronics.passed_name = the_rcd.airlock_electronics.passed_name
 				new_airlock.electronics.passed_cycle_id = the_rcd.airlock_electronics.passed_cycle_id
+				new_airlock.electronics.shell = the_rcd.airlock_electronics.shell
 			if(new_airlock.electronics.one_access)
 				new_airlock.req_one_access = new_airlock.electronics.accesses
 			else
@@ -323,11 +333,15 @@
 			new_airlock.update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
-			var/old_turf_name = name
-			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
+			if(rcd_proof)
+				balloon_alert(user, "it's too thick!")
 				return FALSE
-			to_chat(user, span_notice("You deconstruct the [old_turf_name]."))
-			return TRUE
+			else
+				var/old_turf_name = name
+				if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
+					return FALSE
+				to_chat(user, span_notice("You deconstruct the [old_turf_name]."))
+				return TRUE
 		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)
 				return FALSE

@@ -9,13 +9,16 @@ Slimecrossing Armor
 	name = "rebreather mask"
 	desc = "A transparent mask, resembling a conventional breath mask, but made of bluish slime. Seems to lack any air supply tube, though."
 	icon_state = "slime"
-	inhand_icon_state = "slime"
+	inhand_icon_state = "b_mask"
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	clothing_traits = list(TRAIT_NOBREATH)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/mask_nobreath
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
+
+/datum/armor/mask_nobreath
+	bio = 50
 
 /obj/item/clothing/mask/nobreath/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -36,6 +39,9 @@ Slimecrossing Armor
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
 	var/glasses_color = "#FFFFFF"
 
+/datum/armor/mask_nobreath
+	bio = 50
+
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)
 		return TRUE
@@ -49,6 +55,9 @@ Slimecrossing Armor
 	anchored = TRUE
 	max_integrity = 10
 
+/datum/armor/mask_nobreath
+	bio = 50
+
 /obj/structure/light_prism/Initialize(mapload, newcolor)
 	. = ..()
 	color = newcolor
@@ -61,11 +70,14 @@ Slimecrossing Armor
 
 /datum/action/item_action/change_prism_colour
 	name = "Adjust Prismatic Lens"
-	icon_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	button_icon_state = "prismcolor"
 
+/datum/armor/mask_nobreath
+	bio = 50
+
 /datum/action/item_action/change_prism_colour/Trigger(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.glasses_color) as color|null
@@ -75,11 +87,14 @@ Slimecrossing Armor
 
 /datum/action/item_action/place_light_prism
 	name = "Fabricate Light Prism"
-	icon_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	button_icon_state = "lightprism"
 
+/datum/armor/mask_nobreath
+	bio = 50
+
 /datum/action/item_action/place_light_prism/Trigger(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	if(locate(/obj/structure/light_prism) in get_turf(owner))
@@ -96,17 +111,21 @@ Slimecrossing Armor
 	name = "heroine bud"
 	desc = "An extremely addictive flower, full of peace magic."
 	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "peaceflower"
-	inhand_icon_state = "peaceflower"
+	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_HEAD
 	clothing_traits = list(TRAIT_PACIFISM)
 	body_parts_covered = NONE
-
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
+
+/datum/armor/mask_nobreath
+	bio = 50
+
 /obj/item/clothing/head/peaceflower/proc/at_peace_check(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
@@ -131,11 +150,14 @@ Slimecrossing Armor
 	icon_state = "adamsuit"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
-	inhand_icon_state = "adamsuit"
+	inhand_icon_state = null
 	flags_inv = NONE
 	obj_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 40
+
+/datum/armor/mask_nobreath
+	bio = 50
 
 /obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
 	if(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) && prob(hit_reflect_chance))

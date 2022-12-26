@@ -3,6 +3,7 @@
 	desc = "A dropper. Holds up to 5 units."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "dropper0"
+	inhand_icon_state = "dropper"
 	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
@@ -66,6 +67,7 @@
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 		update_appearance()
+		target.update_appearance()
 
 	else
 
@@ -82,6 +84,7 @@
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
 
 		update_appearance()
+		target.update_appearance()
 
 /obj/item/reagent_containers/dropper/update_overlays()
 	. = ..()

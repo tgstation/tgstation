@@ -1,5 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - bugfix: "Footsteps and gunshots can be seen while blind again."
-  - rscadd: "Typing indicators can be reliably seen while blind."

@@ -198,14 +198,14 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "M" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "N" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "O" = (

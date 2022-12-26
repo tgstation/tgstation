@@ -36,4 +36,4 @@
 
 
 /obj/item/food/grown/pineapple/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pineappleslice, 3, 15)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pineappleslice, 3, 15, screentip_verb = "Cut")

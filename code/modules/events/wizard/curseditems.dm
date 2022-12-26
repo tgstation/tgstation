@@ -34,7 +34,7 @@
 		if("voicemodulators")
 			loadout[ITEM_SLOT_MASK] = /obj/item/clothing/mask/chameleon
 		if("catgirls2015")
-			loadout[ITEM_SLOT_HEAD] = /obj/item/clothing/head/kitty
+			loadout[ITEM_SLOT_HEAD] = /obj/item/clothing/head/costume/kitty
 			ruins_spaceworthiness = 1
 			ruins_wizard_loadout = 1
 
