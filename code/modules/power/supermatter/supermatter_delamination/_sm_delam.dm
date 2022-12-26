@@ -94,8 +94,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		type = "rays",
 		size = clamp(sm.internal_energy / 30, 1, 125),
 		color = (sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR),
-		factor = clamp(sm.damage/600, 1, 10),
-		density = clamp(sm.damage/10, 12, 100)
+		factor = clamp(sm.damage / 10, 1, 10),
+		density = clamp(sm.damage, 12, 100)
 	))
 
 	// Filter animation persists even if the filter itself is changed externally.
@@ -108,8 +108,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
 	sm.set_light(
-		l_range = 4 + sm.internal_energy/200,
-		l_power = 1 + sm.internal_energy/1000,
+		l_range = 4 + ROUND_UP(max(sm.internal_energy / 200, 25)),
+		l_power = 1 + ROUND_UP(max(sm.internal_energy/1000, 5)),
 		l_color = sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
 		l_on = !!sm.internal_energy,
 	)
