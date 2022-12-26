@@ -1,5 +1,5 @@
 ///A map of which tiles[singluar_name] can be rotated in what directions
-///used to create rotated assesst icons & to display ui in rtd
+///used to create rotated asset icons & to display ui in rtd
 ///this is required because initial() returns null when retriving list variables such as tile_rotate_dirs so had to manually type them
 GLOBAL_LIST_INIT(tile_rotations, list(
 	"edge floor tile" = list(SOUTH, NORTH, EAST, WEST),
