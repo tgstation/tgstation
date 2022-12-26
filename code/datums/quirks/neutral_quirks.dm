@@ -496,7 +496,6 @@
 	name = "Pride Pin"
 	desc = "Show off your pride with this changing pride pin!"
 	icon = "rainbow"
-	quirk_flags = QUIRK_CHANGES_APPEARANCE
 	value = 0
 	gain_text = "<span class='notice'>You feel fruity.</span>"
 	lose_text = "<span class='danger'>You feel only slightly less fruity than before.</span>"
