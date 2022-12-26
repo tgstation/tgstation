@@ -264,7 +264,7 @@
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
-		/obj/item/mod/module/jetpack/flamethrower,
+		/obj/item/mod/module/flamethrower,
 	)
 
 /obj/item/mod/control/pre_equipped/infiltrator
