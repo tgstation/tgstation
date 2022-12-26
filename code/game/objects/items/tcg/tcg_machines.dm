@@ -134,7 +134,8 @@
 	return stats_display
 
 /obj/structure/trading_card_summon/Destroy()
-	hologram.Destroy()
+	if(hologram)
+		hologram.Destroy()
 	return ..()
 
 /obj/structure/trading_card_summon/red
