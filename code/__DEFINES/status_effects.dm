@@ -56,10 +56,16 @@
 
 /// Is the mob nearsighted?
 #define is_nearsighted(...) has_status_effect(/datum/status_effect/grouped/nearsighted)
-/// Is the mob nearsighted, but has it disabled temporarily?
-#define is_nearsighted_currently(...) is_nearsighted() && !HAS_TRAIT(src, TRAIT_NEARSIGHTED_CORRECTED)
 /// Is the mob nearsigthed from the passed source or sources?
 #define is_nearsighted_from(sources) has_status_effect_from_source(/datum/status_effect/grouped/nearsighted, sources)
+/// Is the mob nearsighted CURRENTLY?
+/// This check fails if the mob is nearsighted but is wearing glasses,
+/// While is_nearsighted will always succeed even if they are wearing glasses.
+/mob/proc/is_nearsighted_currently()
+	var/datum/status_effect/grouped/nearsighted/nearsight = has_status_effect(/datum/status_effect/grouped/nearsighted)
+	if(isnull(nearsight))
+		return FALSE
+	return nearsight.should_be_nearsighted()
 
 // Status effect application helpers.
 // These are macros for easier use of adjust_timed_status_effect and set_timed_status_effect.

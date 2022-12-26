@@ -6,6 +6,9 @@
 
 	setup_mood()
 
+	// All start without eyes, and get them via set species
+	become_blind(NO_EYES)
+
 	create_dna()
 	dna.species.create_fresh_body(src)
 	setup_human_dna()
@@ -15,8 +18,6 @@
 
 	prepare_huds() //Prevents a nasty runtime on human init
 
-	// All start without eyes and then get them in create_internal_organs below
-	become_blind(NO_EYES)
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 	physiology = new()

@@ -11,6 +11,7 @@
 /datum/unit_test/blindness/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/glasses/blindfold/blindfold = new(dummy.loc)
+	TEST_ASSERT(!dummy.is_blind(), "Dummy was blind on initialize, and shouldn't be.")
 
 	// Become blind
 	dummy.become_blind("unit_test")

@@ -31,12 +31,16 @@
 
 	update_nearsighted_overlay()
 
+/// Checks if we should be nearsighted currently, or if we should clear the overlay
+/datum/status_effect/grouped/nearsighted/proc/should_be_nearsighted()
+	return !HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED)
+
 /// Updates our nearsightd overlay, either removing it if we have the trait or adding it if we don't
 /datum/status_effect/grouped/nearsighted/proc/update_nearsighted_overlay()
-	if(HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED))
-		owner.clear_fullscreen(id)
-	else
+	if(should_be_nearsighted())
 		owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/impaired, overlay_severity)
+	else
+		owner.clear_fullscreen(id)
 
 /// Sets the severity of our nearsighted overlay
 /datum/status_effect/grouped/nearsighted/proc/set_nearsighted_severity(to_value)
