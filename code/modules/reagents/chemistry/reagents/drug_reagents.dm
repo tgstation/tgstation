@@ -154,6 +154,12 @@
 	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
 	color = BlendRGB(color, "#FAFAFA", effective_impurity)
 
+//we need to update the color whenever purity gets changed
+/datum/reagent/drug/methamphetamine/on_merge(data, amount)
+	. = ..()
+	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
+	color = BlendRGB(color, "#FAFAFA", effective_impurity)
+
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
