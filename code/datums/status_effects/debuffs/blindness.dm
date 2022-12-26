@@ -88,37 +88,29 @@
 		return FALSE
 
 	owner.become_blind(id)
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_temp_blindness)
 	return TRUE
 
 /datum/status_effect/temporary_blindness/on_remove()
 	owner.cure_blind(id)
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 
 /datum/status_effect/temporary_blindness/tick(delta_time, times_fired)
 	if(owner.stat == DEAD)
 		return
 
+	var/mob/living/stored_owner = owner
 	// Temp. blindness heals faster if our eyes are covered
 	if(owner.is_blind_from(EYES_COVERED))
 		// Knocks 2 seconds off of our duration
-		duration -= 2 SECONDS
-
 		// If we should be deleted, give a message letting them know
-		if(duration < world.time)
-			to_chat(owner, span_green("Your eyes start to feel better!"))
-			qdel(src)
+		var/mob/living/stored_owner = owner
+		if(remove_duration(2 SECONDS))
+			to_chat(stored_owner, span_green("Your eyes start to feel better!"))
+			return
 
 		// Otherwise add a chance to let them know that it's working
 		else if(DT_PROB(5, delta_time))
 			var/obj/item/thing_covering_eyes = owner.is_eyes_covered()
 			// "Your blindfold soothes your eyes", for example
 			to_chat(owner, span_green("Your [thing_covering_eyes?.name || "eye covering"] soothes your eyes."))
-
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL]. When healed, self delete
-/datum/status_effect/temporary_blindness/proc/remove_temp_blindness(datum/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
 
 #undef CAN_BE_BLIND

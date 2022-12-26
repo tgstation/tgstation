@@ -165,9 +165,10 @@
 			damaged = FALSE
 			// clear nearsightedness from damage
 			owner.cure_nearsighted(EYE_DAMAGE)
-			// if we're still nearsighted, reset it's severity to 1
+			// if we're still nearsighted, reset its severity
+			// this is kinda icky, ideally we'd track severity to source but that's way more complex
 			var/datum/status_effect/grouped/nearsighted/nearsightedness = owner.is_nearsighted()
-			nearsightedness?.overlay_severity = 1
+			nearsightedness?.set_overlay_severity(1)
 			// and cure blindness from damage
 			owner.cure_blind(EYE_DAMAGE)
 		return
