@@ -93,7 +93,6 @@
 /datum/sm_delam/tesla/filters(obj/machinery/power/supermatter_crystal/sm)
 	..()
 
-	// override the ray from parent call.
 	sm.modify_filter(name = "ray", new_params = list(
 		color = SUPERMATTER_TESLA_COLOUR,
 	))
