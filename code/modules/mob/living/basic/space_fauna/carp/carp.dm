@@ -132,6 +132,10 @@
 /mob/living/basic/carp/ranged_secondary_attack(atom/atom_target, modifiers)
 	teleport.Trigger(target = atom_target)
 
+/// Gives the carp a list of destinations to try and travel between when it has nothing better to do
+/mob/living/basic/carp/proc/migrate_to(list/migration_points)
+	ai_controller.blackboard[BB_CARP_MIGRATION_PATH] = migration_points
+
 /**
  * Holographic carp from the holodeck
  */
