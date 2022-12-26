@@ -139,7 +139,7 @@
 	name = "Methamphetamine"
 	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
-	color = "#78C8FA" //rgb(135, 200, 250)
+	color = "#78C8FA" //best case scenario is the "default", gets muddled depend
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	ph = 5
@@ -151,9 +151,8 @@
 	//the more pure, the less non-blue colors get involved - best case scenario is rgb(135, 200, 250) AKA #78C8FA
 	//worst case scenario is rgb(250, 250, 250) AKA #FAFAFA
 	//minimum purity of meth is 50%, therefore we base values on that
-	var/removed_red = round(max(0, creation_purity - 0.5)/0.5 * 125)
-	var/removed_green = round(max(0, creation_purity - 0.5)/0.5 * 55)
-	color = rgb(250-removed_red, 250-removed_green, 250)
+	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
+	color = BlendRGB(color, "#FAFAFA")
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
