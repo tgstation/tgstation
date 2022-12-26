@@ -22,10 +22,19 @@
 	if (!length(migration_points))
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/find_next_carp_migration_step, BB_CARP_MIGRATION_PATH, BB_CARP_MIGRATION_TARGET)
-	controller.queue_behavior(/datum/ai_behavior/make_carp_rift/towards/passive, BB_CARP_RIFT, BB_CARP_MIGRATION_TARGET)
-	controller.queue_behavior(/datum/ai_behavior/attack_obstructions/carp, BB_CARP_MIGRATION_TARGET)
-	controller.queue_behavior(/datum/ai_behavior/travel_towards, BB_CARP_MIGRATION_TARGET)
+	var/datum/weakref/weak_target = controller.blackboard[BB_CARP_MIGRATION_TARGET]
+	var/turf/moving_to = weak_target?.resolve()
+
+	// If we don't have a target or are close enough to it, pick a new one
+	if (isnull(moving_to) || get_dist(controller.pawn, moving_to) <= CARP_DESTINATION_SEARCH_RANGE)
+		controller.queue_behavior(/datum/ai_behavior/find_next_carp_migration_step, BB_CARP_MIGRATION_PATH, BB_CARP_MIGRATION_TARGET)
+		return SUBTREE_RETURN_FINISH_PLANNING
+
+	var/turf/next_step = get_step_towards(controller.pawn, moving_to)
+	if (next_step.is_blocked_turf(exclude_mobs = TRUE))
+		controller.queue_behavior(/datum/ai_behavior/make_carp_rift/towards/unvalidated, BB_CARP_RIFT, BB_CARP_MIGRATION_TARGET)
+		controller.queue_behavior(/datum/ai_behavior/attack_obstructions/carp, BB_CARP_MIGRATION_TARGET)
+	controller.queue_behavior(/datum/ai_behavior/step_towards_turf, BB_CARP_MIGRATION_TARGET)
 
 	return SUBTREE_RETURN_FINISH_PLANNING
 
@@ -34,16 +43,6 @@
  * Records the next turf we want to travel to into the blackboard for other actions
  */
 /datum/ai_behavior/find_next_carp_migration_step
-
-/datum/ai_behavior/find_next_carp_migration_step/setup(datum/ai_controller/controller, path_key, target_key)
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	if (weak_target)
-		var/turf/previous_target = weak_target.resolve()
-		if (!isnull(previous_target) && get_dist(controller.pawn, previous_target) > CARP_DESTINATION_SEARCH_RANGE)
-			return FALSE // We're not necessary, there's already a perfectly good target
-
-	var/list/migration_points = controller.blackboard[path_key]
-	return length(migration_points)
 
 /datum/ai_behavior/find_next_carp_migration_step/perform(delta_time, datum/ai_controller/controller, path_key, target_key)
 	var/list/blackboard_points = controller.blackboard[path_key]

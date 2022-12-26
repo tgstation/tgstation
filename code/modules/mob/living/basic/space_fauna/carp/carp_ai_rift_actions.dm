@@ -163,13 +163,15 @@
 	teleport_buffer_distance = 2 // Don't aggressively drop carps directly on top of a target mob
 
 /**
- * # Make carp rift forwards (passive)
- * Make a rift towards your target if you are blocked from moving, then cancel further actions
+ * # Make carp rift forwards (unvalidated)
+ * Skip validation checks because we already did them in the controller
  */
-/datum/ai_behavior/make_carp_rift/towards/passive
-	teleport_if_far = FALSE // Only teleport if something is in the way
+/datum/ai_behavior/make_carp_rift/towards/unvalidated
 
-/datum/ai_behavior/make_carp_rift/towards/passive/finish_action(datum/ai_controller/controller, succeeded, ...)
+/datum/ai_behavior/make_carp_rift/towards/unvalidated/validate_target(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
+	return TRUE
+
+/datum/ai_behavior/make_carp_rift/towards/unvalidated/finish_action(datum/ai_controller/controller, succeeded, ...)
 	. = ..()
 	if (succeeded)
 		controller.CancelActions()
