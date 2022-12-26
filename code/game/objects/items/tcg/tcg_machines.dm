@@ -27,19 +27,46 @@
 	else
 		return..()
 
+GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
+
 /obj/machinery/trading_card_holder/attack_hand(mob/user)
 	if(current_card)
-		user.put_in_hands(current_card)
-		to_chat(user, span_notice("You take [current_card] out of [src]."))
-		current_card = null
-		icon_state = "paper_bin0"
-		update_appearance()
-		if(current_summon)
-			current_summon.Destroy()
+		var/list/choices = GLOB.tcgcard_machine_radial_choices
+		if(!length(choices))
+			choices = GLOB.tcgcard_machine_radial_choices = list(
+			"Eject" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject"),
+			"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
+			"Modify" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
+			)
+		var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
+		if(!check_menu(user))
+			return
+		switch(choice)
+			if("Tap")
+				current_summon.update_tapped(current_card)
+			if("Eject")
+				user.put_in_hands(current_card)
+				to_chat(user, span_notice("You take [current_card] out of [src]."))
+				current_card = null
+				icon_state = "paper_bin0"
+				update_appearance()
+				if(current_summon)
+					current_summon.Destroy()
+			if("Modify")
+				//Do nothing yet
+			if(null)
+				return
 	else
 		to_chat(user, span_warning("[src] is empty!"))
 	add_fingerprint(user)
 	return..()
+
+/obj/machinery/trading_card_holder/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
 
 /obj/machinery/trading_card_holder/red
 	spawn_direction = 2
@@ -59,6 +86,7 @@
 
 	var/summon_power
 	var/summon_resolve
+	var/tapped
 
 	var/obj/effect/overlay/card_summon/hologram
 	var/obj/effect/overlay/status_display_text/power_overlay
@@ -113,11 +141,18 @@
 		qdel(overlay)
 
 	var/obj/effect/overlay/status_display_text/stats_display = new(src, pos_y, stats, text_color, text_color, x_offset)
-	// Draw our object visually "in front" of this display, taking advantage of sidemap
+
 	stats_display.pixel_y = -32
 	stats_display.pixel_z = 32
 	vis_contents += stats_display
 	return stats_display
+
+/obj/structure/trading_card_summon/proc/update_tapped(obj/item/tcgcard/current_card)
+	if(tapped)
+		hologram.transform = turn(hologram.transform, 90)
+	else
+		hologram.transform = turn(hologram.transform, -90)
+	tapped = !tapped
 
 /obj/structure/trading_card_summon/Destroy()
 	if(hologram)
