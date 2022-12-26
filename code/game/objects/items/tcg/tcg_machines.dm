@@ -149,4 +149,3 @@
 
 /obj/effect/overlay/card_summon
     mouse_opacity = 0
-
