@@ -5,10 +5,10 @@
 	if(is_blind() && !is_blind_from(list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
 		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if(!eyes)
-		return INFINITY //Can't get flashed without eyes
-	else
+	if(eyes)
 		. += eyes.flash_protect
+	else
+		return INFINITY //Can't get flashed without eyes
 	if(isclothing(head)) //Adds head protection
 		. += head.flash_protect
 	if(isclothing(glasses)) //Glasses
