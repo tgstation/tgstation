@@ -4907,6 +4907,7 @@
 #include "voidcrew\edits\sleeper.dm"
 #include "voidcrew\edits\techwebs.dm"
 #include "voidcrew\edits\mobs\new_player.dm"
+#include "voidcrew\edits\subsystem\_subsystem.dm"
 #include "voidcrew\mapping\_mapping.dm"
 #include "voidcrew\mapping\areas.dm"
 #include "voidcrew\mapping\docking_port\_docking.port.dm"
