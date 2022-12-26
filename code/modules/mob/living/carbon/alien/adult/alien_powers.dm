@@ -274,6 +274,9 @@ Doesn't work on other aliens/AI.*/
 	build_all_button_icons()
 	on_who.update_icons()
 
+// We do this in InterceptClickOn() instead of Activate()
+// because we use the click parameters for aiming the projectile
+// (or something like that)
 /datum/action/cooldown/alien/acid/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
 	if(!.)
