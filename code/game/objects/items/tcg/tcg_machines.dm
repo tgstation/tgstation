@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 				if(current_summon)
 					current_summon.Destroy()
 			if("Modify")
-				//Do nothing yet
+				current_summon.modify_stats(user)
 			if(null)
 				return
 	else
@@ -75,6 +75,8 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 #define STAT_Y -23
 #define POWER_X -12
 #define RESOLVE_X 12
+#define DEFAULT_POWER_COLOR "#af2323"
+#define DEFAULT_RESOLVE_COLOR "#231ac0"
 
 /obj/structure/trading_card_summon
 	name = "coder"
@@ -93,6 +95,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	var/obj/effect/overlay/status_display_text/resolve_overlay
 	var/power_color = "#af2323"
 	var/resolve_color = "#231ac0"
+	var/modified_color = "#1db327"
 
 	var/team_color = "#77abff"
 
@@ -154,6 +157,19 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		hologram.transform = turn(hologram.transform, -90)
 	tapped = !tapped
 
+/obj/structure/trading_card_summon/proc/modify_stats(mob/living/user)
+	summon_power = num2text(tgui_input_number(user, "Please input power value", "Stat Modification", text2num(template.power), 25))
+	if(summon_power == template.power)
+		power_color = DEFAULT_POWER_COLOR
+	else
+		power_color = modified_color
+	summon_resolve = num2text(tgui_input_number(user, "Please input resolve value", "Stat Modification", text2num(template.resolve), 25))
+	if(summon_resolve == template.resolve)
+		resolve_color = DEFAULT_RESOLVE_COLOR
+	else
+		resolve_color = modified_color
+	update_overlays()
+
 /obj/structure/trading_card_summon/Destroy()
 	if(hologram)
 		hologram.Destroy()
@@ -165,6 +181,8 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 #undef STAT_Y
 #undef POWER_X
 #undef RESOLVE_X
+#undef DEFAULT_POWER_COLOR
+#undef DEFAULT_RESOLVE_COLOR
 
 /obj/effect/overlay/card_summon
 	mouse_opacity = 0

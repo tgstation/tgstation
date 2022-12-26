@@ -885,7 +885,7 @@
 			"cardsubtype": "Plasmaman Engineer",
 			"rarity": "common",
 			"summon_icon_file": "icons/obj/toys/tcgsummons.dmi",
-			"summon_icon_state": "plasma"
+			"summon_icon_state": "plasmaman"
 		},
 		{
 			"id": "QM",
