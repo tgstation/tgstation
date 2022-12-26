@@ -7,13 +7,13 @@
 	ranged_cooldown_time = 4 SECONDS
 	speed = -0.5
 	damage_coeff = list(BRUTE = 0.75, BURN = 0.75, TOX = 0.75, CLONE = 0.75, STAMINA = 0, OXY = 0.75)
-	playstyle_string = span_holoparasite("As a <b>charger</b> type you do medium damage, have medium damage resistance, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.")
+	playstyle_string = span_holoparasite("As a <b>charger</b> type you do medium damage, have light damage resistance, move very fast, can be ridden, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.")
 	magic_fluff_string = span_holoparasite("..And draw the Hunter, an alien master of rapid assault.")
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Charge modules loaded. Holoparasite swarm online.")
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...")
 	miner_fluff_string = span_holoparasite("You encounter... Titanium, a lightweight, agile fighter.")
 	creator_name = "Charger"
-	creator_desc = "Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding."
+	creator_desc = "Moves very fast, does medium damage on attack, can be ridden and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding."
 	creator_icon = "charger"
 	/// Is it currently charging at something?
 	var/charging = FALSE
