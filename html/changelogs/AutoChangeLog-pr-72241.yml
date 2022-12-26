@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes:
+  - bugfix: "Metal Hydrogen/Elder Atmosian suits can carry a MH Axe on its suit slot now."

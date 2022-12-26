@@ -165,8 +165,8 @@
 	updatehealth()
 
 
-/mob/living/simple_animal/slime/handle_status_effects(delta_time, times_fired)
-	..()
+/mob/living/simple_animal/slime/handle_traits(delta_time, times_fired)
+	. = ..()
 	if(!stat && DT_PROB(16, delta_time))
 		adjustBruteLoss(-0.5 * delta_time)
 

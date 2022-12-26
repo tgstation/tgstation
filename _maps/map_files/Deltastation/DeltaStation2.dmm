@@ -98434,7 +98434,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/carp/lia,
+/mob/living/basic/carp/pet/lia,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "xXt" = (

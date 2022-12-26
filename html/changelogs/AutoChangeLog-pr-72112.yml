@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "To prevent spam, there is now a cooldown on being able to upload assorted books into the newscaster's channel feed."

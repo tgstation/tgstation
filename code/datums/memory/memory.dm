@@ -45,7 +45,7 @@
 	//entirely independent vars (not related to the action or story type)
 
 	var/static/list/something_pool = list(
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/netherworld/statue,
@@ -55,8 +55,8 @@
 		/mob/living/simple_animal/hostile/giant_spider,
 		/mob/living/simple_animal/hostile/giant_spider/hunter,
 		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-		/mob/living/simple_animal/hostile/carp/ranged,
-		/mob/living/simple_animal/hostile/carp/ranged/chaos,
+		/mob/living/basic/carp/magic,
+		/mob/living/basic/carp/magic/chaos,
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 		/mob/living/simple_animal/hostile/asteroid/goliath/beast,
 		/mob/living/simple_animal/hostile/headcrab,
