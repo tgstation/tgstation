@@ -25,7 +25,9 @@
 	dummy.equip_to_slot_if_possible(blindfold, ITEM_SLOT_EYES)
 	check_if_blind(dummy, status_message = "after being blindfolded")
 	// Become quirk blinded and mutation blindness, these shouldn't do anything since we're already blind
-	dummy.add_quirk(/datum/quirk/item_quirk/blindness, TRUE)
+	// Have to do a transfer here so we don't get a blindfold
+	var/datum/quirk/item_quirk/blindness/quirk = new()
+	quirk.add_to_holder(dummy, quirk_transfer = TRUE)
 	dummy.dna.add_mutation(/datum/mutation/human/blind)
 
 	// Remove the blindfold. We should remain blinded
@@ -71,7 +73,9 @@
 	var/obj/item/clothing/glasses/regular/glasses = new(dummy.loc)
 
 	// Become quirk nearsighted
-	dummy.add_quirk(/datum/quirk/item_quirk/nearsighted, TRUE)
+	// Have to do a transfer here so we don't get glasses
+	var/datum/quirk/item_quirk/nearsighted/quirk = new()
+	quirk.add_to_holder(dummy, quirk_transfer = TRUE)
 	TEST_ASSERT(HAS_NEARSIGHTEDNESS(dummy), "Dummy is not nearsighted after gaining the nearsighted quirk.")
 	TEST_ASSERT(HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/impaired), "Dummy didn't gain the nearsighted overlay after becoming nearsighted.")
 	TEST_ASSERT(dummy.is_nearsighted_currently(), "Dummy ran is_nearsighted_correctly, and it returned an incorrect value, as they are nearsighted.")

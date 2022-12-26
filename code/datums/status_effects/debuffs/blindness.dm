@@ -5,6 +5,8 @@
 /// Nearsighted
 /datum/status_effect/grouped/nearsighted
 	id = "nearsighted"
+	tick_interval = -1
+	alert_type = null
 	// This is not "remove on fullheal" as in practice,
 	// fullheal should instead remove all the sources and in turn cure this
 
@@ -49,6 +51,7 @@
 /// Blindness
 /datum/status_effect/grouped/blindness
 	id = "blindness"
+	tick_interval = -1
 	alert_type = /atom/movable/screen/alert/status_effect/blind
 	// This is not "remove on fullheal" as in practice,
 	// fullheal should instead remove all the sources and in turn cure this
