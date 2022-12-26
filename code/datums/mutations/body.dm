@@ -490,7 +490,7 @@
 		splashed.Stun(2 SECONDS)
 		splashed.set_eye_blur_if_lower(40 SECONDS)
 		splashed.adjust_confusion(3 SECONDS)
-	for(var/mob/living/silicon/borgo in view(2,owner))
+	for(var/mob/living/silicon/borgo in view(2, owner))
 		to_chat(borgo, span_userdanger("Your sensors are disabled by a shower of blood!"))
 		borgo.Paralyze(6 SECONDS)
 	owner.investigate_log("has been gibbed by the martyrdom mutation.", INVESTIGATE_DEATHS)

@@ -3,7 +3,7 @@
 /// The damage threshold (of the victim's eyes) after which they start taking more serious effects
 #define EYESTAB_BLEEDING_THRESHOLD 10
 /// How much blur we can apply
-#define EYESTAB_MAX_BLUR 4 MINUTES
+#define EYESTAB_MAX_BLUR (4 MINUTES)
 
 /// An element that lets you stab people in the eyes when targeting them
 /datum/element/eyestab
