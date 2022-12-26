@@ -31,7 +31,7 @@
 /datum/sm_delam/singularity/filters(obj/machinery/power/supermatter_crystal/sm)
 	..()
 
-	sm.modify_filter(name = "ray", new_params=list(
+	sm.modify_filter(name = "ray", new_params = list(
 		color = SUPERMATTER_SINGULARITY_RAYS_COLOUR
 	))
 
