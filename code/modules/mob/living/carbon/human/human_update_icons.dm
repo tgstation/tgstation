@@ -296,13 +296,12 @@ There are several things that need to be remembered:
 
 	if(shoes)
 		var/obj/item/worn_item = shoes
-		var/icon_file
+		update_hud_shoes(worn_item)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET)
 			return
 
-		update_hud_shoes(worn_item)
-
+		var/icon_file
 		//(Currently) unused digitigrade handling
 		/*if((dna.species.bodytype & BODYTYPE_DIGITIGRADE) && (worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			var/obj/item/bodypart/leg = src.get_bodypart(BODY_ZONE_L_LEG)
