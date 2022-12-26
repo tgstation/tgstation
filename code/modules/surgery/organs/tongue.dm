@@ -12,8 +12,10 @@
 	 *
 	 * Relates to a mob's ability to speak a language - a mob must be able to speak the language
 	 * and have a tongue able to speak the language (or omnitongue) in order to actually speak said language
+	 *
+	 * To modify this list for subtypes, see [/obj/item/organ/internal/tongue/proc/get_possible_languages]. Do not modify directly.
 	 */
-	var/list/languages_possible
+	VAR_PRIVATE/list/languages_possible
 	/**
 	 * A list of languages which are native to this tongue
 	 *
