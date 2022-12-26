@@ -4,7 +4,7 @@
 	damage = 5
 	damage_type = TOX
 	nodamage = FALSE
-	paralyze = 100
+	paralyze = 10 SECONDS
 	armor_flag = BIO
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/neurotoxin
 
@@ -13,3 +13,7 @@
 		paralyze = 0
 		nodamage = TRUE
 	return ..()
+
+/obj/projectile/neurotoxin/damaging //for ai controlled aliums
+	damage = 30
+	paralyze = 0 SECONDS
