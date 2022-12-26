@@ -45,6 +45,8 @@
 	var/cell_line = CELL_LINE_TABLE_CARP
 	/// What colour is our 'healing' outline?
 	var/regenerate_colour = COLOR_PALE_GREEN
+	/// Ability which lets carp teleport around
+	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/teleport
 	/// Information to apply when treating this carp as a vehicle
 	var/ridable_data = /datum/component/riding/creature/carp
 	/// Commands you can give this carp once it is tamed, not static because subtypes can modify it
@@ -97,6 +99,10 @@
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
 
+	teleport = new(src)
+	teleport.Grant(src)
+	ai_controller.blackboard[BB_CARP_RIFT] = teleport
+
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
 	AddElement(/datum/element/basic_eating, 10, 0, null, desired_food)
@@ -118,6 +124,10 @@
 		return
 	spin(spintime = 10, speed = 1)
 	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
+
+/// Teleport when you right click away from you
+/mob/living/basic/carp/ranged_secondary_attack(atom/atom_target, modifiers)
+	teleport.Trigger(target = atom_target)
 
 /**
  * Holographic carp from the holodeck
