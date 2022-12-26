@@ -124,7 +124,7 @@
 		if(HAS_TRAIT(src, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 			. += "Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>."
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
-			. += "The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>."
+			. += "The high iron content and slight smell of garlic, imply that this is the liver of a <em>cook</em>."
 		if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
 			. += "A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, imply that this is the liver of a <em>clown</em>."
 		if(HAS_TRAIT(src, TRAIT_FRENCH_METABOLISM))
@@ -134,13 +134,13 @@
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
 			. += "Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>."
 		if(HAS_TRAIT(src, TRAIT_ENGINEER_METABOLISM))
-			. += "Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>."
+			. += "Signs of radiation exposure and space adaption, imply that this is the liver of an <em>engineer</em>."
 
 		// royal trumps pretender royal
 		if(HAS_TRAIT(src, TRAIT_ROYAL_METABOLISM))
-			. += "A rich diet of luxury food, suppleness from soft beds, implies that this is the liver of a <em>head of staff</em>."
+			. += "A rich diet of luxury food, suppleness from soft beds, imply that this is the liver of a <em>head of staff</em>."
 		else if(HAS_TRAIT(src, TRAIT_PRETENDER_ROYAL_METABOLISM))
-			. += "A diet of imitation caviar, and signs of insomnia, implies that this is the liver of <em>someone who wants to be a head of staff</em>."
+			. += "A diet of imitation caviar, and signs of insomnia, imply that this is the liver of <em>someone who wants to be a head of staff</em>."
 
 /obj/item/organ/internal/liver/before_organ_replacement(obj/item/organ/replacement)
 	. = ..()
