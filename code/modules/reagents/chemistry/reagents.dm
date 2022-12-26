@@ -231,6 +231,9 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!mytray)
 		return
+	// Check if we have atleast a single amount of the reagent
+	if(!chems.has_reagent(type, 1))
+		return
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)
