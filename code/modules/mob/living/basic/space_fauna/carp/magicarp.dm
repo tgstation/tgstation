@@ -71,8 +71,8 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	assign_spell()
 
 /mob/living/basic/carp/magic/Destroy()
-	. = ..()
 	QDEL_NULL(spell)
+	return ..()
 
 /// Returns the list of spells we are allowed to cast
 /mob/living/basic/carp/magic/proc/spell_list()

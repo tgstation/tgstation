@@ -315,8 +315,8 @@
 	hook = new /obj/item/gun/magic/hook/bounty(src)
 
 /obj/item/gun/ballistic/shotgun/hook/Destroy()
-	. = ..()
 	QDEL_NULL(hook)
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
 	. = ..()
