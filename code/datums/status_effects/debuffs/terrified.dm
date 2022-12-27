@@ -33,7 +33,11 @@
 /datum/status_effect/terrified/tick(delta_time, times_fired)
 	. = ..()
 
-	check_surrounding_light()
+	if(check_surrounding_darkness())
+		if(terror_buildup < DARKNESS_TERROR_CAP)
+			terror_buildup += DARKNESS_TERROR_AMOUNT
+	else
+		terror_buildup -= DARKNESS_TERROR_AMOUNT
 
 	if(terror_buildup <= 0) //If we've completely calmed down, we remove the status effect.
 		qdel(src)
@@ -82,22 +86,26 @@
 	SIGNAL_HANDLER
 
 	if(is_species(hugger, /datum/species/shadow/nightmare)) //hey wait a minute, that's not a comforting, friendly hug!
-		addtimer(CALLBACK(src, PROC_REF(freak_out), HUG_TERROR_AMOUNT))
-		owner.visible_message(span_warning("[owner] recoils in fear as [hugger] waves [hugger.p_their()] arms and shrieks at [owner.p_them()]!"), span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"), span_hear("You hear someone shriek in fear. How embarassing!"))
-		return COMPONENT_BLOCK_MISC_HELP
+		if(check_surrounding_darkness())
+			addtimer(CALLBACK(src, PROC_REF(freak_out), HUG_TERROR_AMOUNT))
+			owner.visible_message(span_warning("[owner] recoils in fear as [hugger] waves [hugger.p_their()] arms and shrieks at [owner.p_them()]!"), span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"), span_hear("You hear someone shriek in fear. How embarassing!"))
+			return COMPONENT_BLOCK_MISC_HELP
+		else
+			owner.balloon_alert(hugger, "victim must be in the dark!")
+			return
 
 	terror_buildup -= HUG_TERROR_AMOUNT //maybe later I'll integrate some of the hug-related traits into this somehow
 	owner.visible_message(span_notice("[owner] seems to relax as [hugger] gives [owner.p_them()] a comforting hug."), span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."), span_hear("You hear shuffling and a sigh of relief."))
 	return
 
 /**
- * Checks the surroundings of our victim and modifies terror buildup based on the amount of light nearby
+ * Checks the surroundings of our victim and returns TRUE if the user is surrounded by enough darkness
  *
- * Checks the surrounded tiles for light amount. If the user has more light nearby, their terror is reduced.
- * Otherwise, their terror buildup will increase until it reaches DARKNESS_TERROR_CAP
+ * Checks the surrounded tiles for light amount. If the user has more light nearby, return true.
+ * Otherwise, return false
  */
 
-/datum/status_effect/terrified/proc/check_surrounding_light()
+/datum/status_effect/terrified/proc/check_surrounding_darkness()
 	var/lit_tiles = 0
 	var/unlit_tiles = 0
 
@@ -109,10 +117,9 @@
 			unlit_tiles++
 
 	if(lit_tiles < unlit_tiles)
-		if(terror_buildup < DARKNESS_TERROR_CAP)
-			terror_buildup += DARKNESS_TERROR_AMOUNT
+		return TRUE
 	else
-		terror_buildup -= DARKNESS_TERROR_AMOUNT
+		return FALSE
 
 /**
  * Adds to the victim's terror buildup, makes them scream, and knocks them over for a moment.
@@ -131,7 +138,7 @@
 /// The status effect popup for the terror status effect
 /atom/movable/screen/alert/status_effect/terrified
 	name = "Terrified!"
-	desc = "You feel a supernatural darkness settle in around you, overwhelming you with panic!"
+	desc = "You feel a supernatural darkness settle in around you, overwhelming you with panic! Get into the light!"
 	icon_state = "terrified"
 
 #undef DARKNESS_TERROR_AMOUNT
