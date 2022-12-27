@@ -82,7 +82,7 @@
 #define COMSIG_MOB_SEE_IN_DARK_CHANGE "mob_see_in_dark_change"
 
 
-///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
+///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
 ///from base of /mob/living/attack_alien(): (user)
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
@@ -171,3 +171,5 @@
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
+/// from mob/get_status_tab_items(): (list/items)
+#define COMSIG_MOB_GET_STATUS_TAB_ITEMS "mob_get_status_tab_items"

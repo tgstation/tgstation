@@ -127,7 +127,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		tc_to_distribute -= tc_per_nukie
 
 	if (tc_to_distribute > 0) // What shall we do with the remainder...
-		for (var/mob/living/simple_animal/hostile/carp/cayenne/C in GLOB.mob_living_list)
+		for (var/mob/living/basic/carp/pet/cayenne/C in GLOB.mob_living_list)
 			if (C.stat != DEAD)
 				var/obj/item/stack/telecrystal/TC = new(C.drop_location(), tc_to_distribute)
 				TC.throw_at(get_step(C, C.dir), 3, 3)

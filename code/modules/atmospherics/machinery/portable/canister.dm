@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_colors = "#ffff00#000000"
 	density = TRUE
 	volume = 2000
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/portable_atmospherics_canister
 	max_integrity = 300
 	integrity_failure = 0.4
 	pressure_resistance = 7 * ONE_ATMOSPHERE
@@ -88,6 +88,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/cell_container_opened = FALSE
 
 	var/protected_contents = FALSE
+
+	///used while processing to update appearance only when its pressure state changes
+	var/current_pressure_state
+
+/datum/armor/portable_atmospherics_canister
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 100
+	bomb = 10
+	fire = 80
+	acid = 50
 
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
@@ -277,6 +289,15 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	temp_limit = 1e12
 	pressure_limit = 1e14
 
+/datum/armor/portable_atmospherics_canister
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 100
+	bomb = 10
+	fire = 80
+	acid = 50
+
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
 	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/tritium)
 	air_contents.gases[/datum/gas/hydrogen][MOLES] = 300
@@ -289,6 +310,15 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	desc = "A mixture of N2O and Oxygen"
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9fba6c#3d4680"
+
+/datum/armor/portable_atmospherics_canister
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 100
+	bomb = 10
+	fire = 80
+	acid = 50
 
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix/create_gas()
 	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
@@ -340,6 +370,15 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
  * Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
  * Used for canisters spawned in maps and by admins
  */
+/datum/armor/portable_atmospherics_canister
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 100
+	bomb = 10
+	fire = 80
+	acid = 50
+
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(!gas_type)
 		return
@@ -379,21 +418,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(connected_port)
 		. += mutable_appearance(canister_overlay_file, "can-connector")
 
-	var/air_pressure = air_contents.return_pressure()
-
-	switch(air_pressure)
-		if((40 * ONE_ATMOSPHERE) to INFINITY)
-			. += mutable_appearance(canister_overlay_file, "can-3")
-			. += emissive_appearance(canister_overlay_file, "can-3-light", src, alpha = src.alpha)
-		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
-			. += mutable_appearance(canister_overlay_file, "can-2")
-			. += emissive_appearance(canister_overlay_file, "can-2-light", src, alpha = src.alpha)
-		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
-			. += mutable_appearance(canister_overlay_file, "can-1")
-			. += emissive_appearance(canister_overlay_file, "can-1-light", src, alpha = src.alpha)
-		if((10) to (5 * ONE_ATMOSPHERE))
-			. += mutable_appearance(canister_overlay_file, "can-0")
-			. += emissive_appearance(canister_overlay_file, "can-0-light", src, alpha = src.alpha)
+	var/light_state = get_pressure_state(air_contents.return_pressure())
+	if(light_state) //happens when pressure is below 10kpa which means no light
+		. += mutable_appearance(canister_overlay_file, light_state)
+		. += emissive_appearance(canister_overlay_file, "[light_state]-light", src, alpha = src.alpha)
 
 	update_window()
 
@@ -572,6 +600,20 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		else
 			shielding_powered = FALSE
 
+///return the icon_state component for the canister's indicator light based on its current pressure reading
+/obj/machinery/portable_atmospherics/canister/proc/get_pressure_state(air_pressure)
+	switch(air_pressure)
+		if((40 * ONE_ATMOSPHERE) to INFINITY)
+			return "can-3"
+		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
+			return "can-2"
+		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
+			return "can-1"
+		if((10) to (5 * ONE_ATMOSPHERE))
+			return "can-0"
+		else
+			return null
+
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	if(machine_stat & BROKEN)
 		return PROCESS_KILL
@@ -585,13 +627,21 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		var/datum/gas_mixture/target_air = holding?.return_air() || location.return_air()
 		excited = TRUE
 
-		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
-			air_update_turf(FALSE, FALSE)
+		if(air_contents.release_gas_to(target_air, release_pressure))
+			if(!holding)
+				air_update_turf(FALSE, FALSE)
 
 	// A bit different than other atmos devices. Wont stop if currently taking damage.
 	if(take_atmos_damage())
+		update_appearance()
 		excited = TRUE
-	update_appearance()
+		return ..() //we have already updated appearance so dont need to update again below
+
+	var/new_pressure_state = get_pressure_state(air_contents.return_pressure())
+	if(current_pressure_state != new_pressure_state) //update apperance only when its pressure changes significantly from its current value
+		update_appearance()
+		current_pressure_state = new_pressure_state
+
 	return ..()
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)

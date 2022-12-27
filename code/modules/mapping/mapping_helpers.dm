@@ -34,22 +34,8 @@
 	qdel(src)
 
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
-	if(length(thing.baseturfs))
-		var/list/baseturf_cache = thing.baseturfs.Copy()
-		for(var/i in baseturf_cache)
-			if(baseturf_to_replace[i])
-				baseturf_cache -= i
-		thing.baseturfs = baseturfs_string_list(baseturf_cache, thing)
-		if(!baseturf_cache.len)
-			thing.assemble_baseturfs(baseturf)
-		else
-			thing.PlaceOnBottom(null, baseturf)
-	else if(baseturf_to_replace[thing.baseturfs])
-		thing.assemble_baseturfs(baseturf)
-	else
-		thing.PlaceOnBottom(null, baseturf)
-
-
+	thing.remove_baseturfs_from_typecache(baseturf_to_replace)
+	thing.PlaceOnBottom(fake_turf_type = baseturf)
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"
@@ -161,12 +147,12 @@
 			if(16 to 23)
 				airlock.welded = TRUE
 			if(24 to 30)
-				airlock.panel_open = TRUE
+				airlock.set_panel_open(TRUE)
 	if(airlock.cutAiWire)
 		airlock.wires.cut(WIRE_AI)
 	if(airlock.autoname)
 		airlock.name = get_area_name(src, TRUE)
-	update_appearance()
+	airlock.update_appearance()
 	qdel(src)
 
 /obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/airlock/payload)

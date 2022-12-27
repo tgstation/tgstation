@@ -169,7 +169,7 @@
 		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
 		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
 		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
-		RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, PROC_REF(check_health))
+		RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -177,7 +177,7 @@
 	icon_state = "memento_mori"
 	if(!active_owner)
 		return
-	UnregisterSignal(active_owner, COMSIG_CARBON_HEALTH_UPDATE)
+	UnregisterSignal(active_owner, COMSIG_LIVING_HEALTH_UPDATE)
 	var/mob/living/carbon/human/H = active_owner //to avoid infinite looping when dust unequips the pendant
 	active_owner = null
 	to_chat(H, span_userdanger("You feel your life rapidly slipping away from you!"))
@@ -209,7 +209,7 @@
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/simple_animal/hostile/guardian/guardian)
 	guardian.locked = FALSE
-	guardian.Recall(TRUE)
+	guardian.recall(forced = TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
 	guardian.playsound_local(get_turf(guardian), 'sound/magic/repulse.ogg', 50, TRUE)
 
@@ -614,7 +614,16 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
-	armor = list(MELEE = 15, BULLET = 25, LASER = 15, ENERGY = 15, BOMB = 100, BIO = 0, FIRE = 100, ACID = 30) //mostly bone bracer armor
+	armor_type = /datum/armor/gloves_gauntlets
+
+/datum/armor/gloves_gauntlets
+	melee = 15
+	bullet = 25
+	laser = 15
+	energy = 15
+	bomb = 100
+	fire = 100
+	acid = 30
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
@@ -648,7 +657,7 @@
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/hooded_berserker
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -668,6 +677,15 @@
 		/obj/item/melee/cleaving_saw,
 	)
 
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
+
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
@@ -685,7 +703,7 @@
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/hooded_berserker
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -697,6 +715,15 @@
 	var/berserk_charge = 0
 	/// Status of berserk
 	var/berserk_active = FALSE
+
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /obj/item/clothing/head/hooded/berserker/Initialize(mapload)
 	. = ..()
@@ -737,7 +764,7 @@
 	to_chat(user, span_warning("You enter berserk mode."))
 	playsound(user, 'sound/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor.melee += BERSERK_MELEE_ARMOR_ADDED
+	user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = BERSERK_MELEE_ARMOR_ADDED))
 	user.next_move_modifier *= BERSERK_ATTACK_SPEED_MODIFIER
 	user.add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
 	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
@@ -755,7 +782,7 @@
 	to_chat(user, span_warning("You exit berserk mode."))
 	playsound(user, 'sound/magic/summonitems_generic.ogg', 50)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor.melee -= BERSERK_MELEE_ARMOR_ADDED
+	user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = -BERSERK_MELEE_ARMOR_ADDED))
 	user.next_move_modifier /= BERSERK_ATTACK_SPEED_MODIFIER
 	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
 	REMOVE_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
@@ -780,6 +807,15 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
 	var/datum/action/cooldown/scan/scan_ability
+
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /obj/item/clothing/glasses/godeye/Initialize(mapload)
 	. = ..()
@@ -821,6 +857,15 @@
 	click_to_activate = TRUE
 	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
+
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /datum/action/cooldown/scan/IsAvailable(feedback = FALSE)
 	return ..() && isliving(owner)
@@ -864,6 +909,15 @@
 	range_mid = 5
 	range_far = 15
 
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
+
 /datum/status_effect/agent_pinpointer/scan/scan_for_target()
 	return
 
@@ -881,6 +935,15 @@
 	items_to_create = list(/obj/item/cursed_katana)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
+
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /obj/item/organ/internal/cyberimp/arm/katana/attack_self(mob/user, modifiers)
 	. = ..()
@@ -950,6 +1013,15 @@
 		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = PROC_REF(cloak)),
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(shatter)),
 	)
+
+/datum/armor/hooded_berserker
+	melee = 30
+	bullet = 30
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /obj/item/cursed_katana/Initialize(mapload)
 	. = ..()

@@ -40,6 +40,7 @@
 
 /turf/open/indestructible
 	name = "floor"
+	desc = "The floor you walk on. It looks near-impervious to damage."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
@@ -298,15 +299,23 @@
 /// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
 /// Building floors works
 /turf/open/proc/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles, user)
-	var/obj/structure/lattice/soon_to_be_floor = locate(/obj/structure/lattice, src)
-	if(!soon_to_be_floor)
-		to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
+	var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+	if(!has_valid_support() && !lattice)
+		balloon_alert(user, "needs support, place rods!")
 		return
 	if(!used_tiles.use(1))
-		to_chat(user, span_warning("You need one floor tile to build a floor!"))
+		balloon_alert(user, "need a floor tile to build!")
 		return
-
-	qdel(soon_to_be_floor)
+	
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-	to_chat(user, span_notice("You build a floor."))
-	PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/open/floor/plating/new_plating = PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	if(lattice)
+		qdel(lattice)
+	else
+		new_plating.lattice_underneath = FALSE
+
+/turf/open/proc/has_valid_support()
+	for (var/direction in GLOB.cardinals)
+		if(istype(get_step(src, direction), /turf/open/floor))
+			return TRUE
+	return FALSE

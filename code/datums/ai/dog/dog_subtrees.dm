@@ -18,7 +18,7 @@
 	if(!controller.blackboard[BB_SIMPLE_CARRY_ITEM] && controller.blackboard[BB_FETCH_TARGET])
 		var/atom/movable/interact_target = controller.blackboard[BB_FETCH_TARGET]
 		if(in_range(living_pawn, interact_target) && (isturf(interact_target.loc)))
-			controller.set_movement_target(interact_target)
+			controller.set_movement_target(type, interact_target)
 			if(IS_EDIBLE(interact_target))
 				controller.queue_behavior(/datum/ai_behavior/eat_snack)
 			else if(isitem(interact_target))
@@ -35,6 +35,18 @@
 			// if the return target isn't in sight, we'll just forget about it and carry the thing around
 			controller.blackboard[BB_FETCH_DELIVER_TO] = null
 			return
-		controller.set_movement_target(return_target)
+		controller.set_movement_target(type, return_target)
 		controller.queue_behavior(/datum/ai_behavior/deliver_item)
 		return
+
+	if(DT_PROB(10, delta_time))
+		for(var/mob/living/iter_living in oview(2, living_pawn))
+			if(iter_living.stat != CONSCIOUS || !HAS_TRAIT(iter_living, TRAIT_HATED_BY_DOGS))
+				continue
+
+			living_pawn.audible_message(span_warning("[living_pawn] growls at [iter_living], seemingly annoyed by [iter_living.p_their()] presence."), hearing_distance = COMBAT_MESSAGE_RANGE)
+			controller.set_movement_target(iter_living)
+			controller.blackboard[BB_DOG_HARASS_TARGET] = WEAKREF(iter_living)
+			controller.blackboard[BB_DOG_HARASS_HARM] = FALSE
+			controller.queue_behavior(/datum/ai_behavior/harass)
+			return

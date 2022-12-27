@@ -9,15 +9,33 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80, WOUND = 20)
+	armor_type = /datum/armor/chaplainsuit_armor
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
+
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
 
 /obj/item/clothing/suit/hooded/chaplainsuit
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 //Suits
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
+
 /obj/item/clothing/suit/chaplainsuit/holidaypriest
 	name = "holiday priest"
 	desc = "This is a nice holiday, my son."
@@ -25,6 +43,15 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
 
 /obj/item/clothing/suit/chaplainsuit/nun
 	name = "nun robe"
@@ -34,6 +61,15 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
+
 /obj/item/clothing/suit/chaplainsuit/bishoprobe
 	name = "bishop's robes"
 	desc = "Glad to see the tithes you collected were well spent."
@@ -42,6 +78,15 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
+
 /obj/item/clothing/suit/chaplainsuit/armor/studentuni
 	name = "student robe"
 	desc = "The uniform of a bygone institute of learning."
@@ -49,12 +94,30 @@
 	inhand_icon_state = null
 	body_parts_covered = ARMS|CHEST
 
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
+
 /obj/item/clothing/suit/chaplainsuit/armor/witchhunter
 	name = "witchunter garb"
 	desc = "This worn outfit saw much use back in the day."
 	icon_state = "witchhunter"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
 
 /obj/item/clothing/suit/hooded/chaplainsuit/monkhabit
 	name = "monk's habit"
@@ -66,6 +129,15 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/monkhabit
 
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
+
 /obj/item/clothing/head/hooded/monkhabit
 	name = "monk's hood"
 	desc = "For when a man wants to cover up his tonsure."
@@ -76,6 +148,15 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
+
 /obj/item/clothing/suit/chaplainsuit/monkrobeeast
 	name = "eastern monk's robes"
 	desc = "Best combined with a shaved head."
@@ -84,6 +165,15 @@
 	body_parts_covered = GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT
 
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
+
 /obj/item/clothing/suit/chaplainsuit/whiterobe
 	name = "white robe"
 	desc = "Good for clerics and sleepy crewmembers."
@@ -91,6 +181,15 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
 
 /obj/item/clothing/suit/chaplainsuit/clownpriest
 	name = "Robes of the Honkmother"
@@ -101,16 +200,33 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/megaphone/clown, /obj/item/soap, /obj/item/food/pie/cream, /obj/item/bikehorn, /obj/item/bikehorn/golden, /obj/item/bikehorn/airhorn, /obj/item/instrument/bikehorn, /obj/item/reagent_containers/cup/soda_cans/canned_laughter, /obj/item/toy/crayon, /obj/item/toy/crayon/spraycan, /obj/item/toy/crayon/spraycan/lubecan, /obj/item/grown/bananapeel, /obj/item/food/grown/banana)
 
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
+
 /obj/item/clothing/head/helmet/chaplain/clock
 	name = "forgotten helmet"
 	desc = "It has the unyielding gaze of a god eternally forgotten."
 	icon_state = "clockwork_helmet"
 	inhand_icon_state = null
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/chaplain_clock
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 8 SECONDS
 	dog_fashion = null
+
+/datum/armor/chaplain_clock
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
 
 /obj/item/clothing/suit/chaplainsuit/armor/clock
 	name = "forgotten armour"
@@ -121,6 +237,14 @@
 	slowdown = 0
 	clothing_flags = NONE
 
+/datum/armor/chaplain_clock
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+
 /obj/item/clothing/head/helmet/chaplain
 	name = "crusader helmet"
 	desc = "Deus Vult."
@@ -128,11 +252,19 @@
 	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
 	icon_state = "knight_templar"
 	inhand_icon_state = null
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/helmet_chaplain
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+
+/datum/armor/helmet_chaplain
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
 
 /obj/item/clothing/suit/chaplainsuit/armor/templar
 	name = "crusader armour"
@@ -143,6 +275,14 @@
 	slowdown = 0
 	clothing_flags = NONE
 
+/datum/armor/helmet_chaplain
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
@@ -151,17 +291,41 @@
 	inhand_icon_state = null
 	worn_y_offset = 7
 
+/datum/armor/helmet_chaplain
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+
 /obj/item/clothing/head/helmet/chaplain/ancient
 	name = "ancient helmet"
 	desc = "None may pass!"
 	icon_state = "knight_ancient"
 	inhand_icon_state = null
 
+/datum/armor/helmet_chaplain
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+
 /obj/item/clothing/suit/chaplainsuit/armor/ancient
 	name = "ancient armour"
 	desc = "Defend the treasure..."
 	icon_state = "knight_ancient"
 	inhand_icon_state = null
+
+/datum/armor/helmet_chaplain
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
 
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat
 	name = "witchunter hat"
@@ -171,6 +335,14 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEEYES
 
+/datum/armor/helmet_chaplain
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+
 /obj/item/clothing/head/helmet/chaplain/adept
 	name = "adept hood"
 	desc = "Its only heretical when others do it."
@@ -179,11 +351,27 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
+/datum/armor/helmet_chaplain
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+
 /obj/item/clothing/suit/chaplainsuit/armor/adept
 	name = "adept robes"
 	desc = "The ideal outfit for burning the unfaithful."
 	icon_state = "crusader"
 	inhand_icon_state = null
+
+/datum/armor/helmet_chaplain
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader
 	name = "Crusader's Armour"
@@ -192,13 +380,40 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/armor_crusader
+
+/datum/armor/armor_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader/red
 	icon_state = "crusader-red"
 
+/datum/armor/armor_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
+
 /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue
 	icon_state = "crusader-blue"
+
+/datum/armor/armor_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie
 	name = "follower hoodie"
@@ -211,6 +426,15 @@
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
 
+/datum/armor/armor_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
+
 /obj/item/clothing/head/hooded/chaplain_hood
 	name = "follower hood"
 	desc = "Hood made for acolytes of the chaplain."
@@ -220,6 +444,15 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
+/datum/armor/armor_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
+
 /obj/item/clothing/suit/hooded/chaplain_hoodie/leader
 	name = "leader hoodie"
 	desc = "Now you're ready for some 50 dollar bling water."
@@ -227,10 +460,28 @@
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/leader
 
+/datum/armor/armor_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
+
 /obj/item/clothing/head/hooded/chaplain_hood/leader
 	name = "leader hood"
 	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
 	icon_state = "chaplain_hood_leader"
+
+/datum/armor/armor_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/suit/chaplainsuit/shrinehand
 	name = "shrinehand robe"
