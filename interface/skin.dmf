@@ -202,6 +202,14 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
+	elem "tts_player"
+		type = BROWSER
+		pos = 0,0
+		size = 200x200
+		anchor1 = none
+		anchor2 = none
+		is-visible = false
+		saved-params = ""
 
 window "outputwindow"
 	elem "outputwindow"

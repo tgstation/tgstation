@@ -94,6 +94,11 @@
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
 
+	/// The voice that this movable makes when speaking
+	var/voice
+
+	var/voice_filter = ""
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -104,6 +109,10 @@
 
 /atom/movable/Initialize(mapload)
 	. = ..()
+
+	if(!voice && SStts.tts_enabled)
+		voice = pick(SStts.available_speakers)
+
 	switch(blocks_emissive)
 		if(EMISSIVE_BLOCK_GENERIC)
 			var/static/mutable_appearance/emissive_blocker/blocker = new()

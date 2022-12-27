@@ -1,0 +1,9 @@
+services:
+  tts:
+    container_name: tts
+    build: .
+    ports:
+      - "5002:5002"
+    tty: true
+    volumes:
+      - "../../data/tts_cache:/root/.local"

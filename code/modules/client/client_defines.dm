@@ -267,3 +267,6 @@
 
 	/// Does this client have typing indicators enabled?
 	var/typing_indicators = FALSE
+
+	/// Has this client's audio tts browser been initialized?
+	var/audio_tts_browser_initialized = FALSE

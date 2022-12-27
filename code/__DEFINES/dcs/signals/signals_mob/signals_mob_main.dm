@@ -107,7 +107,7 @@
 	#define SPEECH_LANGUAGE 5
 	#define SPEECH_IGNORE_SPAM 6
 	#define SPEECH_FORCED 7
-	#define SPEECH_FILTERPROOF 8
+	#define voice_filterPROOF 8
 	#define SPEECH_RANGE 9
 	#define SPEECH_SAYMODE 10
 
