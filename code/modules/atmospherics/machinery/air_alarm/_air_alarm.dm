@@ -44,7 +44,7 @@
 	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = PROC_REF(check_air_dangerlevel))
 
 	// An assoc list of [datum/tlv]s, indexed by "pressure", "temperature", and [datum/gas] typepaths.
-	var/list/tlv_collection
+	var/list/datum/tlv/tlv_collection
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
@@ -127,49 +127,67 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		ui.open()
 
 /obj/machinery/airalarm/ui_data(mob/user)
-	var/data = list(
-		"locked" = locked,
-		"siliconUser" = user.has_unlimited_silicon_privilege,
-		"emagged" = (obj_flags & EMAGGED ? 1 : 0),
-		"danger_level" = danger_level,
-	)
+	var/data = list()
 
+	data["locked"] = locked
+	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["emagged"] = (obj_flags & EMAGGED ? 1 : 0)
+	data["dangerLevel"] = danger_level
 	data["atmos_alarm"] = !!my_area.active_alarms[ALARM_ATMOS]
 	data["fire_alarm"] = my_area.fire
 
-	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/environment = T.return_air()
-	var/datum/tlv/cur_tlv
-
-	data["environment_data"] = list()
-	var/pressure = environment.return_pressure()
-	cur_tlv = tlv_collection["pressure"]
-	data["environment_data"] += list(list(
-							"name" = "Pressure",
-							"value" = pressure,
-							"unit" = "kPa",
-							"danger_level" = cur_tlv.check_value(pressure)
-	))
-	var/temperature = environment.temperature
-	cur_tlv = tlv_collection["temperature"]
-	data["environment_data"] += list(list(
-							"name" = "Temperature",
-							"value" = temperature,
-							"unit" = "K ([round(temperature - T0C, 0.1)]C)",
-							"danger_level" = cur_tlv.check_value(temperature)
-	))
+	var/turf/turf = get_turf(src)
+	var/datum/gas_mixture/environment = turf.return_air()
 	var/total_moles = environment.total_moles()
-	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
-	for(var/gas_id in environment.gases)
-		if(!(gas_id in tlv_collection)) // We're not interested in this gas, it seems.
-			continue
-		cur_tlv = tlv_collection[gas_id]
-		data["environment_data"] += list(list(
-								"name" = environment.gases[gas_id][GAS_META][META_GAS_NAME],
-								"value" = environment.gases[gas_id][MOLES] / total_moles * 100,
-								"unit" = "%",
-								"danger_level" = cur_tlv.check_value(environment.gases[gas_id][MOLES] * partial_pressure)
+	var/temp = environment.temperature
+	var/pressure = total_moles * R_IDEAL_GAS_EQUATION * temp / environment.volume
+
+	data["current_env"] = list()
+	data["current_env"] += list(list(
+		"name" = "Pressure",
+		"value" = "[round(pressure, 0.01)] kPa",
+		"danger" = tlv_collection["pressure"].check_value(pressure)
+	))
+	data["current_env"] += list(list(
+		"name" = "Temperature",
+		"value" = "[round(temp, 0.01)] Kelvin / [round(temp, 0.01) - T0C] Celcius",
+		"danger" = tlv_collection["temperature"].check_value(pressure),
+	))
+	for(var/gas_path in environment.gases)
+		var/moles = environment.gases[gas_path]
+		var/portion = moles / total_moles
+		data["current_env"] += list(list(
+			"name" = GLOB.meta_gas_info[gas_path][META_GAS_NAME],
+			"value" = "[round(moles, 0.01)] moles / [round(100 * portion, 0.01)] % / [round(portion * pressure, 0.01)] kPa",
+			"danger" = tlv_collection[gas_path].check_value(portion * pressure),
 		))
+
+	data["tlv_settings"] = list()
+	for(var/threshold in tlv_collection)
+		var/datum/tlv/tlv = tlv_collection[threshold]
+		var/list/singular_tlv = list()
+		if(threshold == "pressure")
+			singular_tlv += list(
+				"name" = "Pressure",
+				"unit" = "kPa",
+			)
+		else if (threshold == "temperature")
+			singular_tlv += list(
+				"name" = "Temperature",
+				"unit" = "K",
+			)
+		else
+			singular_tlv += list(
+				"name" = GLOB.meta_gas_info[threshold][META_GAS_NAME],
+				"value" = "kPa",
+			)
+		singular_tlv += list(
+			"warning_min" = tlv.warning_min,
+			"hazard_min" = tlv.hazard_min,
+			"warning_max" = tlv.warning_max,
+			"hazard_max" = tlv.hazard_max,
+		)
+		data["tlv_settings"] += list(singular_tlv)
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
@@ -213,35 +231,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", "mode" = AALARM_MODE_OFF, "selected" = mode == AALARM_MODE_OFF, "danger" = 0))
 		if(obj_flags & EMAGGED)
 			data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents", "mode" = AALARM_MODE_FLOOD, "selected" = mode == AALARM_MODE_FLOOD, "danger" = 1))
-
-		var/datum/tlv/selected
-		var/list/thresholds = list()
-
-		selected = tlv_collection["pressure"]
-		thresholds += list(list("name" = "Pressure", "settings" = list()))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "hazard_min", "selected" = selected.hazard_min))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "warning_min", "selected" = selected.warning_min))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "warning_max", "selected" = selected.warning_max))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "hazard_max", "selected" = selected.hazard_max))
-
-		selected = tlv_collection["temperature"]
-		thresholds += list(list("name" = "Temperature", "settings" = list()))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "hazard_min", "selected" = selected.hazard_min))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "warning_min", "selected" = selected.warning_min))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "warning_max", "selected" = selected.warning_max))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "hazard_max", "selected" = selected.hazard_max))
-
-		for(var/gas_id in GLOB.meta_gas_info)
-			if(!(gas_id in tlv_collection)) // We're not interested in this gas, it seems.
-				continue
-			selected = tlv_collection[gas_id]
-			thresholds += list(list("name" = GLOB.meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "hazard_min", "selected" = selected.hazard_min))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "warning_min", "selected" = selected.warning_min))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "warning_max", "selected" = selected.warning_max))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "hazard_max", "selected" = selected.hazard_max))
-
-		data["thresholds"] = thresholds
 	return data
 
 /obj/machinery/airalarm/ui_act(action, params)
