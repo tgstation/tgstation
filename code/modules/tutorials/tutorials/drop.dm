@@ -1,7 +1,7 @@
 #define TIME_TO_START_MOVING_DROP_ICON (0.5 SECONDS)
 
 #define STAGE_DROP_ITEM "STAGE_DROP_ITEM"
-#define STAGE_SHOULD_SWAP_HAND "STAGE_SHOULD_SWAP_HAND"
+#define STAGE_PICK_SOMETHING_UP "STAGE_PICK_SOMETHING_UP"
 
 /datum/tutorial/drop
 	grandfather_date = "2022-12-25"
@@ -20,11 +20,9 @@
 	create_drop_preview(params[SCREEN_LOC])
 	addtimer(CALLBACK(src, PROC_REF(show_instructions)), TIME_TO_START_MOVING_DROP_ICON)
 
-	RegisterSignal(user, COMSIG_MOB_DROPPING_ITEM, PROC_REF(complete))
+	RegisterSignal(user, COMSIG_MOB_DROPPING_ITEM, PROC_REF(on_dropped_item))
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
-
-	// We didn't properly complete the tutorial, so we'll just try again some other round
-	RegisterSignal(user, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(dismiss))
+	RegisterSignal(user, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(on_pick_up_item))
 
 	update_held_item()
 
@@ -54,26 +52,36 @@
 				"Press '%KEY%' to drop your current item",
 				"Click '<b>DROP</b>' to drop your current item",
 			))
-		if (STAGE_SHOULD_SWAP_HAND)
-			// learn, damn it
-			show_instruction(keybinding_message(
-				/datum/keybinding/mob/swap_hands,
-				"Press '%KEY%' to swap back to your other hand",
-				"Click '<b>SWAP</b>' to swap back to your other hand",
-			))
+		if (STAGE_PICK_SOMETHING_UP)
+			show_instruction("Pick something up!")
 
 /datum/tutorial/drop/proc/on_swap_hands()
 	SIGNAL_HANDLER
 
 	if (isnull(user.get_active_held_item()))
-		if (stage != STAGE_SHOULD_SWAP_HAND)
-			stage = STAGE_SHOULD_SWAP_HAND
+		if (stage != STAGE_PICK_SOMETHING_UP)
+			stage = STAGE_PICK_SOMETHING_UP
 			show_instructions()
-	else if (stage == STAGE_SHOULD_SWAP_HAND)
+	else if (stage == STAGE_PICK_SOMETHING_UP)
 		stage = STAGE_DROP_ITEM
 		show_instructions()
 
 	update_held_item()
+
+/datum/tutorial/drop/proc/on_dropped_item()
+	SIGNAL_HANDLER
+
+	stage = STAGE_PICK_SOMETHING_UP
+	show_instructions()
+
+/datum/tutorial/drop/proc/on_pick_up_item()
+	SIGNAL_HANDLER
+
+	if (stage != STAGE_PICK_SOMETHING_UP)
+		dismiss()
+		return
+
+	complete()
 
 // Exists so that if we, say, place the item on a table, we don't count that as completion
 /datum/tutorial/drop/proc/update_held_item()
@@ -84,8 +92,16 @@
 	if (isnull(last_held_item))
 		return
 
-	RegisterSignal(last_held_item, COMSIG_MOVABLE_MOVED, PROC_REF(dismiss))
+	RegisterSignal(last_held_item, COMSIG_MOVABLE_MOVED, PROC_REF(on_held_item_moved))
+
+/datum/tutorial/drop/proc/on_held_item_moved()
+	SIGNAL_HANDLER
+
+	if (stage == STAGE_PICK_SOMETHING_UP)
+		return
+
+	dismiss()
 
 #undef STAGE_DROP_ITEM
-#undef STAGE_SHOULD_SWAP_HAND
+#undef STAGE_PICK_SOMETHING_UP
 #undef TIME_TO_START_MOVING_DROP_ICON
