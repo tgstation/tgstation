@@ -54,7 +54,7 @@
 
 	var/list/target_offsets = screen_loc_to_offset(ui_hand_position(hand_to_watch), view)
 	// `- world.icon_Size * 0.5` to patch over a likely bug in screen_loc_to_offset with CENTER, needs more looking at
-	var/matrix/animate_to_transform = TRANSLATE_MATRIX(target_offsets[1] - world.icon_size * 0.5, target_offsets[2] - world.icon_size)
+	var/matrix/animate_to_transform = TRANSLATE_MATRIX(target_offsets[1] - world.icon_size * 1.5, target_offsets[2] - world.icon_size)
 
 	hand_preview.transform = origin_transform
 
