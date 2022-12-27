@@ -38,6 +38,10 @@
 	if(terror_buildup <= 0) //If we've completely calmed down, we remove the status effect.
 		qdel(src)
 
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		terror_buildup -= 50 //get over it you big baby, you're fine
+		return
+
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD) //The onset, minor effects of terror buildup
 		owner.adjust_dizzy_up_to(10 SECONDS * delta_time, 10 SECONDS)
 		owner.adjust_stutter_up_to(10 SECONDS * delta_time, 10 SECONDS)
