@@ -99,6 +99,11 @@
 	selected_design.set_info(GLOB.floor_designs[root_category][design_category][1])
 	update_appearance()
 
+/obj/item/construction/rtd/Destroy()
+	. = ..()
+	qdel(selected_design)
+	qdel(tile_design)
+
 /obj/item/construction/rtd/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
