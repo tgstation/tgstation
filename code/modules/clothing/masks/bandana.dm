@@ -12,6 +12,7 @@
 	name = "bandana"
 	desc = "A fine bandana with nanotech lining."
 	icon_state = "bandana"
+	icon_state_preview = "bandana_cloth"
 	inhand_icon_state = "greyscale_bandana"
 	worn_icon_state = "bandana_worn"
 	greyscale_config = /datum/greyscale_config/bandana
@@ -111,12 +112,15 @@
 	desc = "A fine white bandana with nanotech lining."
 	greyscale_colors = "#DCDCDC"
 	flags_1 = NONE
+	icon_state_preview = "bandana_cloth"
 
 /obj/item/clothing/mask/bandana/durathread
 	name = "durathread bandana"
 	desc = "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
 	greyscale_colors = "#5c6d80"
 	flags_1 = NONE
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "bandana_durathread"
 
 /obj/item/clothing/mask/bandana/striped
 	name = "striped bandana"

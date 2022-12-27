@@ -821,3 +821,148 @@
   NamelessFairy:
   - admin: Admins can now enable a custom hostile environment that prevents the shuttle
       from leaving.
+2022-12-25:
+  Iamgoofball:
+  - bugfix: Dead people are no longer counted as crew when determining if 65% of the
+      station is revs for the auto-shuttle call
+  Jacquerel:
+  - bugfix: Pacifists can now hit people with pillows and holographic weapons, as
+      well as participate in boxing.
+  Jolly:
+  - code_imp: The lists in admin_verbs.dm was organized to be made better. This shouldn't
+      affect the panels admins use at all, since they're already alphabetized.
+  LemonInTheDark:
+  - bugfix: Using optimized multiz on > 2 z layer maps will no longer cause fucko
+      bungo
+  Melbert:
+  - qol: The preview dummy in the preferences menu now shows some visual quirks, like
+      Heterochromia or nearsighted.
+  - bugfix: Fixed some quirks which read a preference roundstart not applying the
+      preference.
+  - refactor: Refactored some bits of quirk datums and the quirk application process.
+  - bugfix: Husked bodies look husked again
+  Profakos:
+  - qol: the security department delivery crates are now have to be opened in the
+      security office, where the crates are delivered
+  Rhials:
+  - admin: anomaly events now give the option to occur at your current location when
+      triggered with the Trigger Event admin verb
+  - bugfix: Racks now properly construct again
+  - qol: Shadow Jaunter users now receive a brief warning before walking into light
+      and being forcibly un-jaunted.
+  Striders13:
+  - bugfix: fixed dice servants not receiving any indication of who their master is
+  Tattle:
+  - bugfix: all of the barstools on the Emergency escape shuttle are equipped with
+      a seatbelt
+  - bugfix: Wrapping balloon alerts are shorter and no longer contain spans
+  Unit2E:
+  - bugfix: Tinacusiate is now possible to make again.
+  ZephyrTFA:
+  - refactor: armor, from the ground up basically
+  etherware-novice:
+  - bugfix: added descriptions for holodeck floors and comp/mach frames
+  flowercuco:
+  - rscadd: during holidays the spread syndicate propaganda through posters objective
+      has a chance of spawning evil holiday poster
+  - bugfix: framework for holiday posters is more functional and modular
+  - code_imp: contraband.dm file and contraband.dmi file are both now poster.dm and
+      poster.dmi
+  lizardqueenlexi:
+  - bugfix: Implemented "jelly eyes" to make jellypeople and stargazers use the proper
+      eyes sprite.
+  mc-oofert:
+  - bugfix: You can now add mutations to advanced injectors without having an occupant
+      inside
+  robotduinomm:
+  - qol: drones now start with engineering skillchip.
+  - qol: drones can now interract with light boxes, rack parts, light replacers and
+      stack of duct.
+2022-12-26:
+  MTandi:
+  - bugfix: fixed saline drip UI not having transfer rate controls visible
+  - qol: Rewrote the crafting/cooking menu UI
+  - qol: Split crafting and cooking menus in two different menus
+  - qol: Crafting is no longer blocking the entire UI, only the "Make" buttons are
+      disabled
+  - qol: Added stack crafting recipes to the crafting menu
+  - qol: Added cooking recipes that were absent in the crafting menu before (tool
+      recipes, machine recipes, reactions)
+  - qol: Added option to search recipes by title
+  - qol: Added option to filter recipes by required materials/ingredients
+  - qol: Added food types to the cooking menu, highlighting diet of your species (liked,
+      disliked foods)
+  - qol: Added total nutrition value of the result to the cooking menu
+  - qol: Added option to filter cooking recipes by the food type of the resulting
+      food
+  - qol: Added "Can make" category that lists all currently craftable recipes throughout
+      all categories
+  - refactor: changed categories and reshuffled some items in them
+  - code_imp: Reagents now have default container to get an icon from the reagent
+      datum
+  - code_imp: Objects now have `desc_controls` var for OOC information about mouse
+      controls that are visible on examine, but not in the description
+  - bugfix: Fixed alignment on many food icons
+  - bugfix: Fixed missing icon for beef stroganoff
+  - bugfix: The maps are now placed in the center of Z level to avoid having parts
+      getting into the inaccessible area
+  Rhials:
+  - rscadd: Sandstorm random event! A random side of the station is pummeled by an
+      onslaught of sand and dust. If you hear that one is approaching, grab a welder
+      and some iron to help with repairs!
+  - rscadd: Space sand! It's weak and doesn't hurt reinforced walls, but shouldn't
+      be underestimated in high quantities.
+  - code_imp: You can now pass a start direction to the spawn_meteors/spawn_meteor
+      global procs.
+  Wayland-Smithy:
+  - bugfix: Cult spirt realm ghost marking now works again.
+  flowercuco:
+  - bugfix: admins can now select pirate events correctly
+  iwishforducks:
+  - balance: You can now place plating adjacent to already existing plating without
+      having to place rods first.
+  kawoppi:
+  - bugfix: xmas crackers are now tiny instead of normal sized
+  san7890:
+  - bugfix: To prevent spam, there is now a cooldown on being able to upload assorted
+      books into the newscaster's channel feed.
+2022-12-27:
+  Fikou:
+  - bugfix: guardian spirits check for death before they add themselves to you
+  - admin: admins can now give someone a holoparasite through a new menu in vv dropdown
+  - qol: alt click holopara abilities were moved to right click
+  - qol: support holoparas heal with right click
+  - admin: holoparas have less hardcoded stuff so admins can edit them easier
+  - qol: holoparasites now get their light color from their guardian color
+  - bugfix: holoparasites no longer have the hostile faction, things will attack them
+  - bugfix: holoparasites fly over chasms and stuff properly again
+  - qol: holoparasites update their health every time the summoner gets damaged, rather
+      than every 2 seconds. they also instantly react to the summoner's death, deletion
+      and have a screen overlay of how damaged the summoner is
+  - qol: holoparasite creation now uses a radial menu with tooltips for each subtype,
+      as such, the guide papers no longer exist. it also shows ghosts which type you
+      picked
+  - bugfix: holoparasites can no longer be fugu'd
+  - bugfix: fixes overlay lighting runtiming if deleted during a signal queue
+  - bugfix: fixes negative gravity being weird, and gravitokinetic holoparasite's
+      turf slams not working
+  - bugfix: fixes invisible info tooltips for radial menus
+  - admin: you can now make holoparas not controlled by anyone
+  Guillaume Prata:
+  - bugfix: Metal Hydrogen/Elder Atmosian suits can carry a MH Axe on its suit slot
+      now.
+  Jacquerel:
+  - rscadd: Carp will now run away if their health gets low, meaning they may have
+      a chance to regenerate.
+  - rscadd: Lia will now fight back if attacked instead of letting herself get killed,
+      watch out!
+  - balance: Magicarp will now aim their spells more intelligently.
+  - rscadd: Tame Magicarp can be ordered to use their spells on things.
+  - refactor: Carp are now "Basic Mobs" instead of "Simple Mobs"
+  - bugfix: Dehydrated carp no longer give you a bad feeling when they're your friend
+      and a good feeling when they're going to attack you.
+  - balance: Tamed carp are now friendly only to their tamer rather than their whole
+      faction, which should make dehydrated carp more active. Order them to stay or
+      follow you if you want them to behave around your friends.
+  Melbert:
+  - refactor: Drowsiness and Blurred Eyes are now tracked via status effect.

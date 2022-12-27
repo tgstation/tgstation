@@ -20,6 +20,8 @@
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "rib"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "rib"
 
 /obj/structure/statue/bone/skull
 	name = "colossal skull"
@@ -27,12 +29,16 @@
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "skull"
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull-half"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "halfskull"
 
 //***Wasteland floor and rock turfs here.
 /turf/open/misc/asteroid/basalt/wasteland //Like a more fun version of living in Arizona.
