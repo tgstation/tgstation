@@ -212,6 +212,10 @@
 	/// How many smaller table smacks we can do before we're out
 	var/table_smacks_left = 3
 
+/obj/item/hand_item/slapper/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/high_fiver)
+
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
 
@@ -313,54 +317,12 @@
 	user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [table]!")]</b>", "<b>[span_danger("You slam your fist down on [table]!")]</b>")
 	qdel(src)
 
-/obj/item/hand_item/slapper/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
-	. = TRUE
-
-	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
-		visible_message(span_danger("[offerer] raises [offerer.p_their()] arm, looking around for a high-five, but there's no one around!"), \
-			span_warning("You post up, looking for a high-five, but finding no one within range!"), null, 2)
-		return
-
-	offerer.visible_message(span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"), \
-		span_notice("You post up, looking for a high-five!"), null, 2)
-	offerer.apply_status_effect(/datum/status_effect/offering, src, /atom/movable/screen/alert/give/highfive)
-
-/// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
+// Successful takes will qdel our hand after
 /obj/item/hand_item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
-	. = TRUE
-
-	var/open_hands_taker
-	var/slappers_giver
-	for(var/i in taker.held_items) // see how many hands the taker has open for high'ing
-		if(isnull(i))
-			open_hands_taker++
-
-	if(!open_hands_taker)
-		to_chat(taker, span_warning("You can't high-five [offerer] with no open hands!"))
-		taker.add_mood_event("high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
+	. = ..()
+	if(!.)
 		return
 
-	for(var/i in offerer.held_items)
-		var/obj/item/hand_item/slapper/slap_check = i
-		if(istype(slap_check))
-			slappers_giver++
-
-	if(slappers_giver >= 2) // we only check this if it's already established the taker has 2+ hands free
-		offerer.visible_message(span_notice("[taker] enthusiastically high-tens [offerer]!"), span_nicegreen("Wow! You're high-tenned [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
-		to_chat(taker, span_nicegreen("You give high-tenning [offerer] your all!"))
-		playsound(offerer, 'sound/weapons/slap.ogg', 100, TRUE, 1)
-		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		offerer.add_mood_event("high_five", /datum/mood_event/high_ten)
-		taker.add_mood_event("high_five", /datum/mood_event/high_ten)
-	else
-		offerer.visible_message(span_notice("[taker] high-fives [offerer]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
-		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
-		playsound(offerer, 'sound/weapons/slap.ogg', 50, TRUE, -1)
-		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		offerer.add_mood_event("high_five", /datum/mood_event/high_five)
-		taker.add_mood_event("high_five", /datum/mood_event/high_five)
 	qdel(src)
 
 
