@@ -37,7 +37,7 @@
 	if(!built && !device && device_type)
 		device = new device_type(src)
 
-	src.check_access(null)	
+	src.check_access(null)
 
 	if(length(req_access) || length(req_one_access))
 		board = new(src)
