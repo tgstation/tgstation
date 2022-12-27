@@ -59,7 +59,13 @@
 		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 			return TRUE
 
-	return afterattack(target, user, TRUE, params)
+	// MBTODO: Every afterattack needs to be changed =(
+	var/afterattack_result = afterattack(target, user, TRUE, params)
+
+	if (!afterattack_result && isitem(target))
+		suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
+
+	return afterattack_result
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)
