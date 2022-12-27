@@ -74,6 +74,7 @@
 	if(!crushes_people)
 		return
 
-	poor_target.AddElement(/datum/element/squish, 30 SECONDS)
+	if(iscarbon(poor_target))
+		poor_target.AddElement(/datum/element/squish, 30 SECONDS)
 	poor_target.Paralyze(0.5 SECONDS * fall_damage) // For a piano, that would be 30 seconds
 	add_memory_in_range(poor_target, 7, /datum/memory/witness_vendor_crush, protagonist = poor_target, antagonist = source)

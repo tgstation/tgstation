@@ -84,9 +84,10 @@
 	atom/deuteragonist,
 	atom/antagonist,
 	high_five_type,
+	high_ten = FALSE,
 )
 	src.high_five_type = high_five_type
-	story_value = high_five_type == "high ten" ? STORY_VALUE_OKAY : STORY_VALUE_MEH
+	src.story_value = high_ten ? STORY_VALUE_OKAY : STORY_VALUE_MEH
 	return ..()
 
 /datum/memory/high_five/get_names()
