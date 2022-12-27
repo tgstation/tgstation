@@ -1,15 +1,3 @@
-/obj/item/electronics/airalarm
-	name = "air alarm electronics"
-	icon_state = "airalarm_electronics"
-
-/obj/item/wallframe/airalarm
-	name = "air alarm frame"
-	desc = "Used for building Air Alarms."
-	icon = 'icons/obj/monitors.dmi'
-	icon_state = "alarm_bitem"
-	result_path = /obj/machinery/airalarm
-	pixel_shift = 24
-
 #define AALARM_MODE_SCRUBBING 1
 #define AALARM_MODE_VENTING 2 //makes draught
 #define AALARM_MODE_PANIC 3 //like siphon, but stronger (enables widenet)
