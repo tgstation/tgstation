@@ -42,6 +42,21 @@
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
 
+/obj/item/food/spaghetti/pastatomato/soulful
+	name = "soul food"
+	desc = "Just how mom used to make it."
+	food_reagents = list(
+		// same as normal pasghetti
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/tomatojuice = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		// where the soul comes from
+		/datum/reagent/pax = 5,
+		/datum/reagent/medicine/psicodine = 10,
+		/datum/reagent/medicine/morphine = 5,
+	)
+	tastes = list("nostalgia" = 1, "happiness" = 1)
+
 /obj/item/food/spaghetti/copypasta
 	name = "copypasta"
 	desc = "You probably shouldn't try this, you always hear people talking about how bad it is..."
