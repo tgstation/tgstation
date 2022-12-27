@@ -23,7 +23,7 @@
 			"cardsubtype": "Silicon",
 			"rarity": "uncommon",
 			"summon_icon_file": "icons/mob/silicon/ai.dmi",
-			"summon_icon_state": "AI"
+			"summon_icon_state": "ai"
 		},
 		{
 			"id": "stickman",
@@ -1239,7 +1239,7 @@
 			"cardsubtype": "Xenomorph",
 			"series": "coreset2020",
 			"rarity": "rare",
-			"summon_icon_file": "icons/mob/nonhuman-players/alien.dmi",
+			"summon_icon_file": "icons/mob/nonhuman-player/alien.dmi",
 			"summon_icon_state": "alienh"
 		},
 		{

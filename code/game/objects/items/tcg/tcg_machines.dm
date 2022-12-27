@@ -39,9 +39,9 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		var/list/choices = GLOB.tcgcard_machine_radial_choices
 		if(!length(choices))
 			choices = GLOB.tcgcard_machine_radial_choices = list(
-			"Eject" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject"),
+			"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
 			"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
-			"Modify" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
+			"Modify" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_modify"),
 			)
 		var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 		if(!check_menu(user))
@@ -49,9 +49,9 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		switch(choice)
 			if("Tap")
 				current_summon.update_tapped(current_card)
-			if("Eject")
+			if("Pickup")
 				user.put_in_hands(current_card)
-				to_chat(user, span_notice("You take [current_card] out of [src]."))
+				to_chat(user, span_notice("You take the [current_card] card out of [src]."))
 				current_card = null
 				icon_state = "card_holder_inactive"
 				update_appearance()
@@ -84,15 +84,15 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	summon_type = /obj/structure/trading_card_summon/red
 
 #define STAT_Y -23
-#define POWER_X -12
+#define POWER_X -14
 #define RESOLVE_X 12
 #define DEFAULT_POWER_COLOR "#af2323"
 #define DEFAULT_RESOLVE_COLOR "#231ac0"
 
 /obj/structure/trading_card_summon
 	name = "coder"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "holopad1"
+	icon = 'icons/obj/toys/tcgsummons.dmi'
+	icon_state = "hologram"
 	anchored = TRUE
 
 	var/datum/card/template
