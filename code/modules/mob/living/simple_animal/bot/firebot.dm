@@ -49,6 +49,10 @@
 	create_extinguisher()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
+/mob/living/simple_animal/bot/firebot/Destroy()
+	QDEL_NULL(internal_ext)
+	return ..()
+
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	create_extinguisher()
 
