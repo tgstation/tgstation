@@ -1,13 +1,21 @@
-#define DARKNESS_TERROR_AMOUNT 10 //Amount of terror passively generated (or removed) on every tick based on lighting.
-#define PANIC_ATTACK_TERROR_AMOUNT 35 //How much terror a random panic attack will give the victim.
-#define HUG_TERROR_AMOUNT 60 //Amount of terror actively removed (or generated) upon being hugged.
-#define STACK_TERROR_AMOUNT 135 //Amount of terror caused by subsequent casting of the Terrify spell.
+///Amount of terror passively generated (or removed) on every tick based on lighting.
+#define DARKNESS_TERROR_AMOUNT 10
+///How much terror a random panic attack will give the victim.
+#define PANIC_ATTACK_TERROR_AMOUNT 35
+///Amount of terror actively removed (or generated) upon being hugged.
+#define HUG_TERROR_AMOUNT 60
+///Amount of terror caused by subsequent casting of the Terrify spell.
+#define STACK_TERROR_AMOUNT 135
 
-#define DARKNESS_TERROR_CAP 400 //The soft cap on how much passively generated terror you can have. Takes about 30 seconds to reach without the victim being actively terrorized.
+///The soft cap on how much passively generated terror you can have. Takes about 30 seconds to reach without the victim being actively terrorized.
+#define DARKNESS_TERROR_CAP 400
 
-#define TERROR_FEAR_THRESHOLD 140 //The terror_buildup threshold for minor fear effects to occur.
-#define TERROR_PANIC_THRESHOLD 300 //The terror_buildup threshold for the more serious effects. Takes about 20 seconds of darkness buildup to reach.
-#define TERROR_HEART_ATTACK_THRESHOLD 600 //If you actively terrorize someone already at the darkness threshold, you can cause a heart attack and knock them out.
+///The terror_buildup threshold for minor fear effects to occur.
+#define TERROR_FEAR_THRESHOLD 140
+///The terror_buildup threshold for the more serious effects. Takes about 20 seconds of darkness buildup to reach.
+#define TERROR_PANIC_THRESHOLD 300
+///Terror buildup will cause a heart attack and knock them out, removing the status effect.
+#define TERROR_HEART_ATTACK_THRESHOLD 600
 
 /datum/status_effect/terrified
 	id = "terrified"
