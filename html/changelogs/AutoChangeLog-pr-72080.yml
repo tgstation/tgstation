@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Ethereals and Flypeople and Aliens who learn Uncommon language can speak it with their tongues like they could speak Common, no this doesn't mean they can naturally speak or understand Uncommon"
+  - refactor: "Refactored how tongues set up their languages lists"
