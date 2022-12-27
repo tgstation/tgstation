@@ -1647,7 +1647,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return tile_directions[1]
 
 /datum/tile_info/proc/get_icon_state(selected_dir)
-	return icon_state + (selected_dir != null ? "-[dir2text(selected_dir)]" : "")
+	return icon_state + (isnull(selected_dir) ? "" : "-[dir2text(selected_dir)]")
 
 /obj/item/construction/rtd/Initialize(mapload)
 	. = ..()
