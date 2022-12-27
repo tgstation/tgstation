@@ -16,20 +16,20 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	//Can this plating have reinforced floors placed ontop of it
-	var/attachment_holes = TRUE 
+	var/attachment_holes = TRUE
 
 	//Used for upgrading this into R-Plating
-	var/upgradable = TRUE 
+	var/upgradable = TRUE
 
 	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
 	/// And if our baseturfs are compatible.
 	/// See [/obj/item/stack/tile/proc/place_tile].
 	var/allow_replacement = TRUE
 
-/turf/open/floor/plating/setup_broken_states()
+/turf/open/floor/plating/broken_states()
 	return list("damaged1", "damaged2", "damaged4")
 
-/turf/open/floor/plating/setup_burnt_states()
+/turf/open/floor/plating/burnt_states()
 	return list("floorscorched1", "floorscorched2")
 
 /turf/open/floor/plating/examine(mob/user)
