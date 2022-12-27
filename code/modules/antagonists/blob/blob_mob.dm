@@ -99,3 +99,13 @@
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [rendered]")
+
+/mob/living/simple_animal/hostile/blob/proc/create_objectives(datum/antagonist/antagonist)
+	if(!antagonist)
+		return FALSE
+	var/datum/objective/protect/new_objective = new
+	new_objective.owner = mind
+	new_objective.target = overmind
+	new_objective.explanation_text = "Protect the core!"
+	antagonist.objectives = list(new_objective)
+	return TRUE

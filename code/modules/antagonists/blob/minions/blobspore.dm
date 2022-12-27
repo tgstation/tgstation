@@ -51,6 +51,15 @@
 		notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
 	add_cell_sample()
 
+/mob/living/simple_animal/hostile/blob/blobspore/mind_initialize()
+	. = ..()
+	if(independent)
+		return FALSE
+	if(mind.has_antag_datum(/datum/antagonist/blobspore))
+		return FALSE
+	var/datum/antagonist/blobspore/blobspore = mind.add_antag_datum(/datum/antagonist/blobspore)
+	create_objectives(blobspore)
+
 /mob/living/simple_animal/hostile/blob/blobspore/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!is_zombie && isturf(loc))
 		for(var/mob/living/carbon/human/target in view(src,1)) //Only for corpse right next to/on same tile
@@ -142,8 +151,6 @@
 		to_chat(user, span_warning("Someone else already took this spore!"))
 		return FALSE
 	key = user.key
-	var/datum/antagonist/blobspore/spore = new
-	mind.add_antag_datum(spore)
 	log_message("took control of [name].", LOG_GAME)
 
 /** Zombifies a dead mob, turning it into a blob zombie */

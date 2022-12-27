@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Collapsible, Divider, LabeledList, Section } from '../components';
+import { Box, Collapsible, Divider, LabeledList, Section, Stack } from '../components';
 
 import { Window } from '../layouts';
 
@@ -21,11 +21,13 @@ type Objectives = {
   reward: number;
 };
 
+const BLOB_COLOR = '#556b2f';
+
 export const AntagInfoBlob = (props, context) => {
   return (
     <Window width={400} height={550}>
       <Window.Content>
-        <Section fill scrollable title="Blob Guide">
+        <Section fill scrollable>
           <Overview />
           <Divider />
           <Basics />
@@ -44,23 +46,24 @@ const Overview = (props, context) => {
 
   if (!name) {
     return (
-      <>
-        <Box bold color="white">
+      <Stack vertical>
+        <Stack.Item bold fontSize="14px" textColor={BLOB_COLOR}>
           You haven&apos;t revealed your true form yet!
-        </Box>
-        <Box>You must be consumed by the blob. Find somewhere safe!</Box>
-      </>
+        </Stack.Item>
+        <Stack.Item>
+          You must be succumb to the infection. Find somewhere safe and pop!
+        </Stack.Item>
+      </Stack>
     );
   }
 
   return (
-    <>
-      <Box bold color="white">
-        As the overmind, you can control the blob!
-      </Box>
-
-      <br />
-      <Box>
+    <Stack vertical>
+      <Stack.Item bold fontSize="24px" textColor={BLOB_COLOR}>
+        You are the Blob!
+      </Stack.Item>
+      <Stack.Item>As the overmind, you can control the blob.</Stack.Item>
+      <Stack.Item>
         Your blob reagent is:{' '}
         <span
           style={{
@@ -68,21 +71,19 @@ const Overview = (props, context) => {
           }}>
           {name}
         </span>
-      </Box>
-      {description && (
-        <Box>
-          The{' '}
-          <span
-            style={{
-              color,
-            }}>
-            {name}
-          </span>{' '}
-          reagent {description}
-        </Box>
-      )}
+      </Stack.Item>
+      <Stack.Item>
+        The{' '}
+        <span
+          style={{
+            color,
+          }}>
+          {name}
+        </span>{' '}
+        reagent {description}
+      </Stack.Item>
       {effects && (
-        <Box>
+        <Stack.Item>
           The{' '}
           <span
             style={{
@@ -91,9 +92,9 @@ const Overview = (props, context) => {
             {name}
           </span>{' '}
           reagent {effects}
-        </Box>
+        </Stack.Item>
       )}
-    </>
+    </Stack>
   );
 };
 

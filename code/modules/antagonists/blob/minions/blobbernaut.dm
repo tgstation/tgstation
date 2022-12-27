@@ -35,6 +35,15 @@
 	. = ..()
 	add_cell_sample()
 
+/mob/living/simple_animal/hostile/blob/blobbernaut/mind_initialize()
+	. = ..()
+	if(independent)
+		return FALSE
+	if(mind.has_antag_datum(/datum/antagonist/blobbernaut))
+		return FALSE
+	var/datum/antagonist/blobbernaut/blobbernaut = mind.add_antag_datum(/datum/antagonist/blobbernaut)
+	create_objectives(blobbernaut)
+
 /mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
@@ -107,3 +116,5 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent
 	independent = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN
+
+

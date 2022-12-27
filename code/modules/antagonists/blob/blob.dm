@@ -50,12 +50,11 @@
 /datum/antagonist/blob/ui_data(mob/user)
 	var/list/data = list()
 
-	var/mob/camera/blob/blob = user
-	if(!isovermind(user))
-		return FALSE
-
 	data["objectives"] = get_objectives()
 
+	if(!isovermind(user))
+		return data
+	var/mob/camera/blob/blob = user
 	var/datum/blobstrain/reagent/blobstrain = blob.blobstrain
 
 	if(!blobstrain)
@@ -74,10 +73,11 @@
 	objectives += main
 
 /datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
-	if(!isovermind(owner.current))
-		if(!pop_action)
-			pop_action = new
-		pop_action.Grant(owner.current)
+	if(isovermind(owner.current))
+		return FALSE
+	if(!pop_action)
+		pop_action = new
+	pop_action.Grant(owner.current)
 
 /datum/objective/blob_takeover
 	explanation_text = "Reach critical mass!"
@@ -85,7 +85,7 @@
 //Non-overminds get this on blob antag assignment
 /datum/action/innate/blobpop
 	name = "Pop"
-	desc = "Unleash the blob"
+	desc = "Unleash the blob!"
 	button_icon = 'icons/mob/nonhuman-player/blob.dmi'
 	button_icon_state = "blob"
 
@@ -96,7 +96,7 @@
 	. = ..()
 	if(owner)
 		addtimer(CALLBACK(src, PROC_REF(Activate), TRUE), autoplace_time, TIMER_UNIQUE|TIMER_OVERRIDE)
-		to_chat(owner, "<span class='big'><font color=\"#EE4000\">You will automatically pop and place your blob core in [DisplayTimeText(autoplace_time)].</font></span>")
+		to_chat(owner, span_boldannounce("You will automatically pop and place your blob core in [DisplayTimeText(autoplace_time)]."))
 
 /datum/action/innate/blobpop/Activate(timer_activated = FALSE)
 	var/mob/living/old_body = owner
@@ -111,11 +111,11 @@
 	. = TRUE
 	var/turf/target_turf = get_turf(owner)
 	if(target_turf.density)
-		to_chat(owner, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
+		to_chat(owner, span_warning("This spot is too dense to place a blob core on!"))
 		. = FALSE
 	var/area/target_area = get_area(target_turf)
 	if(isspaceturf(target_turf) || !(target_area?.area_flags & BLOBS_ALLOWED) || !is_station_level(target_turf.z))
-		to_chat(owner, "<span class='warning'>You cannot place your core here!</span>")
+		to_chat(owner, span_warning("You cannot place your core here!"))
 		. = FALSE
 
 	var/placement_override = BLOB_FORCE_PLACEMENT
@@ -123,7 +123,7 @@
 		if(!timer_activated)
 			return
 		placement_override = BLOB_RANDOM_PLACEMENT
-		to_chat(owner, "<span class='boldwarning'>Because your current location is an invalid starting spot and you need to pop, you've been moved to a random location!</span>")
+		to_chat(owner, span_warning("Because your current location is an invalid starting spot and you need to pop, you've been moved to a random location!"))
 
 	var/mob/camera/blob/blob_cam = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
 	owner.mind.transfer_to(blob_cam)
@@ -168,6 +168,5 @@
 
 /obj/effect/dummy/phased_mob/can_blob_attack()
 	return FALSE
-
 
 

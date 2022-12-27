@@ -15,9 +15,10 @@
 	desc = "Moves your camera to a selected blob node."
 
 /atom/movable/screen/blob/jump_to_node/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.jump_to_node()
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.jump_to_node()
 
 /atom/movable/screen/blob/jump_to_core
 	icon_state = "ui_tocore"
@@ -36,11 +37,12 @@
 	return ..()
 
 /atom/movable/screen/blob/jump_to_core/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		if(!B.placed)
-			B.place_blob_core(BLOB_NORMAL_PLACEMENT)
-		B.transport_core()
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	if(!blob.placed)
+		blob.place_blob_core(BLOB_NORMAL_PLACEMENT)
+	blob.transport_core()
 
 /atom/movable/screen/blob/blobbernaut
 	icon_state = "ui_blobbernaut"
@@ -54,9 +56,10 @@
 	desc = "Produces a strong, smart blobbernaut from a factory blob for [BLOBMOB_BLOBBERNAUT_RESOURCE_COST] resources.<br>The factory blob used will become fragile and unable to produce spores."
 
 /atom/movable/screen/blob/blobbernaut/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.create_blobbernaut()
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.create_blobbernaut()
 
 /atom/movable/screen/blob/resource_blob
 	icon_state = "ui_resource"
@@ -104,9 +107,10 @@
 	desc = "Produces a factory blob for [BLOB_STRUCTURE_FACTORY_COST] resources.<br>Factory blobs will produce spores every few seconds."
 
 /atom/movable/screen/blob/factory_blob/Click()
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
-		B.create_special(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
+	if(!isovermind(usr))
+		return FALSE
+	var/mob/camera/blob/blob = usr
+	blob.create_special(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/readapt_strain
 	icon_state = "ui_chemswap"

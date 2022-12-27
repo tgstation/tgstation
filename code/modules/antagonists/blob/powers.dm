@@ -175,15 +175,15 @@
 	var/obj/structure/blob/special/factory/factory = locate(/obj/structure/blob/special/factory) in current_turf
 	if(!factory)
 		to_chat(src, span_warning("You must be on a factory blob!"))
-		return
+		return FALSE
 	if(factory.naut) //if it already made a blobbernaut, it can't do it again
 		to_chat(src, span_warning("This factory blob is already sustaining a blobbernaut."))
-		return
+		return FALSE
 	if(factory.get_integrity() < factory.max_integrity * 0.5)
 		to_chat(src, span_warning("This factory blob is too damaged to sustain a blobbernaut."))
-		return
+		return FALSE
 	if(!can_buy(BLOBMOB_BLOBBERNAUT_RESOURCE_COST))
-		return
+		return FALSE
 
 	factory.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
 	to_chat(src, span_notice("You attempt to produce a blobbernaut."))
@@ -219,15 +219,13 @@
 
 	var/mob/dead/observer/player = pick(candidates)
 	blobber.key = player.key
-	blobber.mind?.add_antag_datum(/datum/antagonist/blobbernaut)
 
 	SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
 	SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
-	to_chat(blobber, span_boldannounce("You are a blobbernaut!"))
-	to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed.")
-	to_chat(blobber, "You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally")
-	to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-	to_chat(blobber, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
+	to_chat(blobber, span_infoplain("You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed."))
+	to_chat(blobber, span_infoplain("You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally"))
+	to_chat(blobber, span_infoplain("Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!"))
+	to_chat(blobber, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))
 
 /** Moves the core */
 /mob/camera/blob/proc/relocate_core()
@@ -367,7 +365,7 @@
 /mob/camera/blob/proc/strain_reroll()
 	if (!free_strain_rerolls && blob_points < BLOB_POWER_REROLL_COST)
 		to_chat(src, span_warning("You need at least [BLOB_POWER_REROLL_COST] resources to reroll your strain again!"))
-		return
+		return FALSE
 
 	open_reroll_menu()
 
