@@ -662,11 +662,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
-/datum/armor/machinery_airalarm
-	energy = 100
-	fire = 90
-	acid = 30
-
 /proc/extract_id_tags(list/objects)
 	var/list/tags = list()
 

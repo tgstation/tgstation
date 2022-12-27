@@ -22,11 +22,6 @@
 
 	var/static/list/options_map
 
-/datum/armor/machinery_airalarm
-	energy = 100
-	fire = 90
-	acid = 30
-
 /obj/item/circuit_component/air_alarm_general/populate_options()
 	if(!options_map)
 		options_map = list(
@@ -139,11 +134,6 @@
 	var/list/alarm_duplicates = list()
 	var/max_alarm_duplicates = 20
 
-/datum/armor/machinery_airalarm
-	energy = 100
-	fire = 90
-	acid = 30
-
 /obj/item/circuit_component/air_alarm/ui_perform_action(mob/user, action)
 	if(length(alarm_duplicates) >= max_alarm_duplicates)
 		return
@@ -192,11 +182,6 @@
 
 	circuit_size = 0
 	ui_buttons = list()
-
-/datum/armor/machinery_airalarm
-	energy = 100
-	fire = 90
-	acid = 30
 
 /obj/item/circuit_component/air_alarm/duplicate/removed_from(obj/item/integrated_circuit/removed_from)
 	if(!QDELING(src))
@@ -304,11 +289,6 @@
 	var/max_scrubber_duplicates = 20
 	var/list/scrubber_duplicates = list()
 
-/datum/armor/machinery_airalarm
-	energy = 100
-	fire = 90
-	acid = 30
-
 /obj/item/circuit_component/air_alarm_scrubbers/ui_perform_action(mob/user, action)
 	if(length(scrubber_duplicates) >= max_scrubber_duplicates)
 		return
@@ -348,11 +328,6 @@
 	display_name = "Air Alarm Scrubber Control"
 	circuit_size = 0
 	ui_buttons = list()
-
-/datum/armor/machinery_airalarm
-	energy = 100
-	fire = 90
-	acid = 30
 
 /obj/item/circuit_component/air_alarm_scrubbers/duplicate/Destroy()
 	connected_alarm = null
@@ -533,11 +508,6 @@
 	var/max_vent_duplicates = 20
 	var/list/vent_duplicates = list()
 
-/datum/armor/machinery_airalarm
-	energy = 100
-	fire = 90
-	acid = 30
-
 /obj/item/circuit_component/air_alarm_vents/ui_perform_action(mob/user, action)
 	if(length(vent_duplicates) >= max_vent_duplicates)
 		return
@@ -585,11 +555,6 @@
 
 	circuit_size = 0
 	ui_buttons = list()
-
-/datum/armor/machinery_airalarm
-	energy = 100
-	fire = 90
-	acid = 30
 
 /obj/item/circuit_component/air_alarm_vents/duplicate/removed_from(obj/item/integrated_circuit/removed_from)
 	if(!QDELING(src))

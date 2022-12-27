@@ -35,11 +35,6 @@
 	req_access = null
 	req_one_access = null
 
-/datum/armor/machinery_airalarm
-	energy = 100
-	fire = 90
-	acid = 30
-
 /obj/machinery/airalarm/syndicate //general syndicate access
 	req_access = list(ACCESS_SYNDICATE)
 
