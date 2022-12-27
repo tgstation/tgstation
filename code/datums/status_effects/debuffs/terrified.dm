@@ -1,20 +1,20 @@
-///Amount of terror passively generated (or removed) on every tick based on lighting.
+/// Amount of terror passively generated (or removed) on every tick based on lighting.
 #define DARKNESS_TERROR_AMOUNT 10
-///How much terror a random panic attack will give the victim.
+/// How much terror a random panic attack will give the victim.
 #define PANIC_ATTACK_TERROR_AMOUNT 35
-///Amount of terror actively removed (or generated) upon being hugged.
+/// Amount of terror actively removed (or generated) upon being hugged.
 #define HUG_TERROR_AMOUNT 60
-///Amount of terror caused by subsequent casting of the Terrify spell.
+/// Amount of terror caused by subsequent casting of the Terrify spell.
 #define STACK_TERROR_AMOUNT 135
 
-///The soft cap on how much passively generated terror you can have. Takes about 30 seconds to reach without the victim being actively terrorized.
+/// The soft cap on how much passively generated terror you can have. Takes about 30 seconds to reach without the victim being actively terrorized.
 #define DARKNESS_TERROR_CAP 400
 
-///The terror_buildup threshold for minor fear effects to occur.
+/// The terror_buildup threshold for minor fear effects to occur.
 #define TERROR_FEAR_THRESHOLD 140
-///The terror_buildup threshold for the more serious effects. Takes about 20 seconds of darkness buildup to reach.
+/// The terror_buildup threshold for the more serious effects. Takes about 20 seconds of darkness buildup to reach.
 #define TERROR_PANIC_THRESHOLD 300
-///Terror buildup will cause a heart attack and knock them out, removing the status effect.
+/// Terror buildup will cause a heart attack and knock them out, removing the status effect.
 #define TERROR_HEART_ATTACK_THRESHOLD 600
 
 /datum/status_effect/terrified
