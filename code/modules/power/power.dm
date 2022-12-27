@@ -411,7 +411,7 @@
 	var/drained_hp = victim.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
 	log_combat(source, victim, "electrocuted")
 
-	var/drained_energy = drained_hp*20
+	var/drained_energy = drained_hp * 2
 
 	if (isarea(power_source))
 		var/area/source_area = power_source
