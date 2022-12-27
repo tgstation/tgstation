@@ -8,7 +8,7 @@ import { Window } from '../layouts';
 type Data = {
   selected_icon: string;
   tile_dirs: string[];
-  selected_dir: string;
+  selected_direction: string;
   selected_category: string;
   selected_recipe: string;
   categories: Category[];
@@ -46,7 +46,7 @@ const TilePreview = (props, context) => {
 
 const DirectionSelect = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { tile_dirs = [], selected_dir } = data;
+  const { tile_dirs = [], selected_direction } = data;
   return (
     <Section fill vertical>
       <Stack vertical>
@@ -55,7 +55,7 @@ const DirectionSelect = (props, context) => {
             <Button.Checkbox
               content={dir}
               color="transparent"
-              checked={dir === selected_dir}
+              checked={dir === selected_direction}
               onClick={() =>
                 act('set_dir', {
                   dir: dir,
@@ -71,14 +71,14 @@ const DirectionSelect = (props, context) => {
 
 const TileRotateSection = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { selected_dir } = data;
+  const { selected_direction } = data;
   return (
     <Stack fill vertical>
       <Stack.Item>
         <TilePreview />
       </Stack.Item>
       <Stack.Item grow>
-        {selected_dir !== null ? <DirectionSelect /> : ''}
+        {selected_direction !== null ? <DirectionSelect /> : ''}
       </Stack.Item>
     </Stack>
   );
