@@ -122,11 +122,11 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
 #ENFORCE_HUMAN_AUTHORITY_ON_EVERYONE
 
-## If non-human species have their pay multiplied by the value of NONHUMAN_PAYDAY_MUL.
-#ENFORCE_NONHUMAN_WAGE_GAP
+## Prevents non-human species from having their pay cut.
+#NO_NONHUMAN_WAGE_GAP
 
-## Multiplier for non-humans' paycheck values. Only used if ENFORCE_NONHUMAN_WAGE_GAP is uncommented.
-NONHUMAN_PAYDAY_MUL 0.75
+## Multiplier for non-humans' paycheck values. Unused if NO_NONHUMAN_WAGE_GAP is uncommented.
+NONHUMAN_PAYDAY_MULTIPLIER 0.75
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
