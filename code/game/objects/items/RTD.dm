@@ -146,9 +146,9 @@
 	icon_state = initial(type.icon_state)
 	cost = tile_cost
 
-/datum/tile_info/proc/fill_ui_data(list/data, dir)
+/datum/tile_info/proc/fill_ui_data(list/data, direction)
 	data["selected_recipe"] = name
-	data["selected_icon"] = get_icon_state(dir)
+	data["selected_icon"] = get_icon_state(direction)
 
 	var/tile_directions = GLOB.tile_rotations[initial(tile_type.singular_name)]
 	if(tile_directions == null)
@@ -156,17 +156,17 @@
 		return
 
 	data["tile_dirs"] = list()
-	for(var/direction in tile_directions)
-		var/text_dir = dir2text(direction)
+	for(var/tile_direction in tile_directions)
+		var/text_dir = dir2text(tile_direction)
 		data["tile_dirs"] += text_dir
 		if(data["selected_dir"] == null)
-			data["selected_dir"] = dir ? dir2text(dir) : text_dir
+			data["selected_dir"] = direction ? dir2text(direction) : text_dir
 
-/datum/tile_info/proc/is_valid_dir(dir)
+/datum/tile_info/proc/is_valid_dir(direction)
 	var/tile_directions = GLOB.tile_rotations[initial(tile_type.singular_name)]
 	if(tile_directions == null)
 		return FALSE
-	return dir in tile_directions
+	return direction in tile_directions
 
 /datum/tile_info/proc/default_dir()
 	var/tile_directions = GLOB.tile_rotations[initial(tile_type.singular_name)]
