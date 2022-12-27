@@ -1605,6 +1605,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/design_category = "Standard"
 	var/selected_dir = null
 	var/datum/tile_info/selected_design
+	var/list/design_overlays = list()
 
 /datum/tile_info
 	var/name
@@ -1649,19 +1650,36 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /datum/tile_info/proc/get_icon_state(selected_dir)
 	return icon_state + (isnull(selected_dir) ? "" : "-[dir2text(selected_dir)]")
 
-/obj/item/construction/rtd/Initialize(mapload)
-	. = ..()
-	update_appearance()
+/datum/overlay_info
+	var/icon/icon
+	var/icon_state
+	var/direction
+	var/alpha
+	var/color
+
+//decompressing nessasary information required to re-create an mutable appearance
+/datum/overlay_info/New(mutable_appearance/appearance)
+	icon = appearance.icon
+	icon_state = appearance.icon_state
+	alpha = appearance.alpha
+	direction = appearance.dir
+	color = appearance.color
+
+//re-create the appearance
+/datum/overlay_info/proc/add_decal(turf/the_turf)
+	the_turf.AddElement(/datum/element/decal, icon, icon_state, direction, null, null, alpha, color, null, FALSE, null)
 
 /obj/item/construction/rtd/Initialize(mapload)
 	. = ..()
 	selected_design = floor_designs[root_category][design_category][1]
+	update_appearance()
 
 /obj/item/construction/rtd/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "RapidTilingDevice", name)
 		ui.open()
+
 
 /obj/item/construction/rtd/ui_assets(mob/user)
 	return list(
@@ -1753,6 +1771,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 						if(!tile_design.is_valid_dir(selected_dir)) //selected_dir will mostly be SOUTH but if the tile design doesnt support it then make it null
 							selected_dir = null
 						balloon_alert(user, "Tile changed to [selected_design.name]")
+
+						//infer available overlays on the floor to recreate them to the best extent
+						design_overlays.Cut()
+						if(islist(floor.managed_overlays))
+							for(var/mutable_appearance/appearance as anything in floor.managed_overlays)
+								design_overlays += new /datum/overlay_info(appearance)
+						else
+							design_overlays += new /datum/overlay_info(floor.managed_overlays)
 						return TRUE
 
 		//could not infer floor type
@@ -1772,7 +1798,12 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	//consume resource only if tile was placed successfully
 	var/obj/item/stack/tile/final_tile = new selected_design.tile_type(user.drop_location(), 1)
 	final_tile.turf_dir = selected_dir
-	if(final_tile.place_tile(floor, user))
+	var/turf/open/new_turf = final_tile.place_tile(floor, user)
+	if(new_turf)
+		//apply infered overlays
+		for(var/datum/overlay_info/info in design_overlays)
+			info.add_decal(new_turf)
+		//use material
 		useResource(selected_design.cost, user)
 	rcd_effect.end_animation()
 
@@ -1807,6 +1838,15 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			balloon_alert(user, "Cannot deconstruct this type")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	//find & collect all decals
+	var/list/all_decals = list()
+	for(var/obj/effect/decal in floor.contents)
+		all_decals += decal
+	//delete all decals
+	for(var/obj/effect/decal in all_decals)
+		floor.contents -= decal
+		qdel(decal)
+
 	//All special effect stuff
 	user.Beam(A, icon_state="light_beam", time = 2)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, 2, RCD_FLOORWALL)
@@ -1814,14 +1854,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		rcd_effect.end_animation()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	//for turfs whose base is open space we put regular plating in its place else everyone dies
-	if(floor.baseturf_at_depth(1) == /turf/baseturf_bottom)
-		floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/new_turf = null
+	if(floor.baseturfs == /turf/baseturf_bottom) //for turfs whose base is open space we put regular plating in its place else everyone dies
+		new_turf = floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	else // for every other turf we scarp away exposing base turf underneath
-		floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-
+		new_turf = floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	if(new_turf)
+		useResource(cost * 0.7, user)
 	rcd_effect.end_animation()
-	useResource(cost * 0.7, user)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
