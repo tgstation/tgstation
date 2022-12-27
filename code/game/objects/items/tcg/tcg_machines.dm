@@ -5,7 +5,9 @@
 	icon_state = "card_holder_inactive"
 	use_power = NO_POWER_USE
 
+	//Card thats currently inside the holder
 	var/obj/item/tcgcard/current_card
+	//Reference to holographic currently active holographic summon
 	var/obj/structure/trading_card_summon/current_summon
 
 	var/summon_offset_x = 0

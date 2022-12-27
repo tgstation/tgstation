@@ -172,6 +172,7 @@
 
 /turf/open/floor/holofloor/dark
 	icon_state = "darkfull"
+	desc = "The surrounding enviroment is so dark you can hardly see yourself."
 
 /turf/open/floor/holofloor/stairs
 	name = "stairs"
