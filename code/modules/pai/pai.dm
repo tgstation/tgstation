@@ -159,12 +159,7 @@
 	QDEL_NULL(internal_gps)
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
-	if(!QDELETED(card) && loc != card)
-		card.forceMove(drop_location())
-		// these are otherwise handled by paicard/handle_atom_del()
-		card.pai = null
-		card.emotion_icon = initial(card.emotion_icon)
-		card.update_appearance()
+	card = null
 	GLOB.pai_list.Remove(src)
 	return ..()
 
