@@ -20,7 +20,6 @@
 #define AALARM_MODE_CONTAMINATED 8 //Turns on all filtering and widenet scrubbing.
 #define AALARM_MODE_REFILL 9 //just like normal, but with triple the air output
 #define AALARM_MODE_MAX AALARM_MODE_REFILL
-#define NO_BOUND 3
 
 #define AALARM_REPORT_TIMEOUT 100
 
@@ -161,7 +160,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 							"name" = "Pressure",
 							"value" = pressure,
 							"unit" = "kPa",
-							"danger_level" = cur_tlv.get_danger_level(pressure)
+							"danger_level" = cur_tlv.check_value(pressure)
 	))
 	var/temperature = environment.temperature
 	cur_tlv = tlv_collection["temperature"]
@@ -169,7 +168,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 							"name" = "Temperature",
 							"value" = temperature,
 							"unit" = "K ([round(temperature - T0C, 0.1)]C)",
-							"danger_level" = cur_tlv.get_danger_level(temperature)
+							"danger_level" = cur_tlv.check_value(temperature)
 	))
 	var/total_moles = environment.total_moles()
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
@@ -181,7 +180,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 								"name" = environment.gases[gas_id][GAS_META][META_GAS_NAME],
 								"value" = environment.gases[gas_id][MOLES] / total_moles * 100,
 								"unit" = "%",
-								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id][MOLES] * partial_pressure)
+								"danger_level" = cur_tlv.check_value(environment.gases[gas_id][MOLES] * partial_pressure)
 		))
 
 	if(!locked || user.has_unlimited_silicon_privilege)
@@ -620,17 +619,17 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	current_tlv = cached_tlv["pressure"]
 	var/environment_pressure = environment.return_pressure()
-	var/pressure_dangerlevel = current_tlv.get_danger_level(environment_pressure)
+	var/pressure_dangerlevel = current_tlv.check_value(environment_pressure)
 
 	current_tlv = cached_tlv["temperature"]
-	var/temperature_dangerlevel = current_tlv.get_danger_level(exposed_temperature)
+	var/temperature_dangerlevel = current_tlv.check_value(exposed_temperature)
 
 	var/gas_dangerlevel = 0
 	for(var/gas_id in env_gases)
 		if(!(gas_id in cached_tlv)) // We're not interested in this gas, it seems.
 			continue
 		current_tlv = cached_tlv[gas_id]
-		gas_dangerlevel = max(gas_dangerlevel, current_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure))
+		gas_dangerlevel = max(gas_dangerlevel, current_tlv.check_value(env_gases[gas_id][MOLES] * partial_pressure))
 
 	environment.garbage_collect()
 

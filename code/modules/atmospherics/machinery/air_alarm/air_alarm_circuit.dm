@@ -1,4 +1,3 @@
-
 /obj/item/circuit_component/air_alarm_general
 	display_name = "Air Alarm"
 	desc = "Outputs basic information that the air alarm has recorded"
@@ -596,8 +595,6 @@
 
 	vent.on = (port == enable)
 	vent.update_appearance(UPDATE_ICON)
-
-#define NO_BOUND 3
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_external(datum/port/input/port)
 	CIRCUIT_TRIGGER
