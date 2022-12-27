@@ -24,7 +24,6 @@ type Category = {
 
 type Design = {
   title: string;
-  design_id: Number;
   icon: string;
 };
 
@@ -110,9 +109,9 @@ const DesignSection = (props, context) => {
           </Tabs.Tab>
         ))}
       </Tabs>
-      {shownCategory?.designs.map((design) => (
+      {shownCategory?.designs.map((design, i) => (
         <Button
-          key={design.design_id}
+          key={i + 1}
           fluid
           ellipsis
           height="31px"
@@ -124,7 +123,7 @@ const DesignSection = (props, context) => {
           onClick={() =>
             act('design', {
               category: shownCategory.cat_name,
-              index: design.design_id,
+              index: i + 1,
             })
           }>
           <Box

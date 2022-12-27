@@ -15,12 +15,11 @@ type Data = {
 };
 
 type Category = {
-  cat_name: string;
+  category_name: string;
   recipes: Design[];
 };
 
 type Design = {
-  index: number;
   name: string;
   icon: string;
 };
@@ -36,7 +35,7 @@ const TilePreview = (props, context) => {
         height: '50px',
       }}>
       <Box
-        className={classes(['rtd-tgui32x32', selected_icon])}
+        className={classes(['rtd32x32', selected_icon])}
         style={{
           transform: 'scale(1.5) translate(9.5%, 9.5%)',
         }}
@@ -94,7 +93,7 @@ const TileDesignSection = (props, context) => {
     selected_category
   );
   const shownCategory =
-    categories.find((category) => category.cat_name === categoryName) ||
+    categories.find((category) => category.category_name === categoryName) ||
     categories[0];
   return (
     <Section fill scrollable>
@@ -102,30 +101,30 @@ const TileDesignSection = (props, context) => {
         {categories.map((category) => (
           <Tabs.Tab
             fluid
-            key={category.cat_name}
-            selected={category.cat_name === categoryName}
-            onClick={() => setCategoryName(category.cat_name)}>
-            {category.cat_name}
+            key={category.category_name}
+            selected={category.category_name === categoryName}
+            onClick={() => setCategoryName(category.category_name)}>
+            {category.category_name}
           </Tabs.Tab>
         ))}
       </Tabs>
-      {shownCategory?.recipes.map((recipe) => (
+      {shownCategory?.recipes.map((recipe, i) => (
         <Button
-          key={recipe.index}
+          key={i + 1}
           fluid
           ellipsis
           color="transparent"
           selected={
             recipe.name === selected_recipe &&
-            shownCategory.cat_name === selected_category
+            shownCategory.category_name === selected_category
           }
           style={{
             height: '35px',
           }}
           onClick={() =>
             act('recipe', {
-              cat_name: shownCategory.cat_name,
-              id: recipe.index,
+              category_name: shownCategory.category_name,
+              id: i + 1,
             })
           }>
           <Box

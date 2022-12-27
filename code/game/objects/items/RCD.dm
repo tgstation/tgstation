@@ -644,7 +644,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			//sanitize them so you dont go insane when icon names contain spaces in them
 			icon_state = sanitize_css_class_name(icon_state)
 
-			designs += list(list("design_id" = i, TITLE = design[TITLE], ICON = icon_state))
+			designs += list(list(TITLE = design[TITLE], ICON = icon_state))
 		data["categories"] += list(list("cat_name" = sub_category, "designs" = designs))
 
 	//merge airlock_electronics ui data with this

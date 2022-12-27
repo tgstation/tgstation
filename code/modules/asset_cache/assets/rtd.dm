@@ -1,5 +1,5 @@
 /datum/asset/spritesheet/rtd
-	name = "rtd-tgui"
+	name = "rtd"
 
 /datum/asset/spritesheet/rtd/create_spritesheets()
 	var/list/tiles = list(

@@ -232,9 +232,9 @@
 		var/list/designs = list() //initialize all designs under this category
 		for(var/i in 1 to target_category.len)
 			var/datum/tile_info/tile_design = target_category[i]
-			designs += list(list("index" = i, "name" = tile_design.name, "icon" = tile_design.get_icon_state()))
+			designs += list(list("name" = tile_design.name, "icon" = tile_design.get_icon_state()))
 
-		data["categories"] += list(list("cat_name" = sub_category, "recipes" = designs))
+		data["categories"] += list(list("category_name" = sub_category, "recipes" = designs))
 
 	return data
 
@@ -260,30 +260,30 @@
 			var/list/main_root = floor_designs[root_category]
 			if(main_root == null)
 				return TRUE
-			var/list/sub_category = main_root[params["cat_name"]]
+			var/list/sub_category = main_root[params["category_name"]]
 			if(sub_category == null)
 				return TRUE
 			var/datum/tile_info/tile_design = sub_category[text2num(params["id"])]
 			if(tile_design == null)
 				return
 
-			design_category = params["cat_name"]
+			design_overlays.Cut()
+			design_category = params["category_name"]
 			selected_design = tile_design
 			selected_dir = tile_design.default_dir()
 
 	return TRUE
 
-/obj/item/construction/rtd/proc/is_valid_plating(atom/A)
-	return A.type == /turf/open/floor/plating ||  A.type == /turf/open/floor/plating/reinforced
+/obj/item/construction/rtd/proc/is_valid_plating(turf/open/floor)
+	return floor.type == /turf/open/floor/plating ||  floor.type == /turf/open/floor/plating/reinforced
 
-/obj/item/construction/rtd/afterattack(atom/A, mob/user)
+/obj/item/construction/rtd/afterattack(turf/open/floor/floor, mob/user)
 	. = ..()
-	if(!range_check(A,user) || !istype(A, /turf/open/floor))
+	if(!istype(floor) || !range_check(floor,user))
 		return TRUE
 
-	var/turf/open/floor = A
 	if(!is_valid_plating(floor)) //we infer what floor type it is if its not the usual plating
-		user.Beam(A, icon_state="light_beam", time = 5)
+		user.Beam(floor, icon_state="light_beam", time = 5)
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])
 				for(var/datum/tile_info/tile_design in floor_designs[main_root][sub_category])
@@ -294,7 +294,7 @@
 						selected_dir = floor.dir
 						if(!tile_design.is_valid_dir(selected_dir)) //selected_dir will mostly be SOUTH but if the tile design doesnt support it then make it null
 							selected_dir = null
-						balloon_alert(user, "Tile changed to [selected_design.name]")
+						balloon_alert(user, "tile changed to [selected_design.name]")
 
 						//infer available overlays on the floor to recreate them to the best extent
 						design_overlays.Cut()
@@ -305,17 +305,17 @@
 							design_overlays += new /datum/overlay_info(floor.managed_overlays)
 						return TRUE
 
-		//could not infer floor type
-		balloon_alert(user, "Design not supported")
+		//can't infer floor type!
+		balloon_alert(user, "design not supported!")
 		return TRUE
 
 	if(!checkResource(selected_design.cost, user))
 		return TRUE
 
 	//All special effect stuff
-	user.Beam(A, icon_state="light_beam", time = 0.5 SECONDS)
+	user.Beam(floor, icon_state="light_beam", time = 0.5 SECONDS)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, 2, RCD_FLOORWALL)
-	if(!do_after(user, 0.2 SECONDS, target = A))
+	if(!do_after(user, 0.2 SECONDS, target = floor))
 		rcd_effect.end_animation()
 		return TRUE
 
@@ -333,14 +333,13 @@
 
 	return TRUE
 
-/obj/item/construction/rtd/afterattack_secondary(atom/A, mob/user, proximity_flag, click_parameters)
+/obj/item/construction/rtd/afterattack_secondary(turf/open/floor/floor, mob/user, proximity_flag, click_parameters)
 	..()
-	if(!range_check(A, user) || !istype(A, /turf/open/floor))
+	if(!istype(floor) || !range_check(floor,user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/turf/open/floor/plating/floor = A
 	if(is_valid_plating(floor)) //cant deconstruct normal plating thats the RCD's job
-		balloon_alert(user, "Nothing to deconstruct")
+		balloon_alert(user, "nothing to deconstruct!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	//we only deconstruct floors which are supported by the RTD
@@ -359,7 +358,7 @@
 					break
 	if(!can_deconstruct || !checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
 		if(!can_deconstruct)
-			balloon_alert(user, "Cannot deconstruct this type")
+			balloon_alert(user, "can't deconstruct this type!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	//find & collect all decals
@@ -372,7 +371,7 @@
 		qdel(decal)
 
 	//All special effect stuff
-	user.Beam(A, icon_state="light_beam", time = 2)
+	user.Beam(floor, icon_state="light_beam", time = 2)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, 2, RCD_FLOORWALL)
 	if(!do_after(user, 2, target = floor))
 		rcd_effect.end_animation()
