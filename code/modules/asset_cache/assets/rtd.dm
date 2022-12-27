@@ -77,7 +77,7 @@
 
 	for(var/obj/item/stack/tile/tile as anything in tiles)
 		var/icon_state = initial(tile.icon_state)
-		Insert(sprite_name = icon_state , I = 'icons/obj/tiles.dmi', icon_state = icon_state)
+		Insert(sprite_name = icon_state, I = 'icons/obj/tiles.dmi', icon_state = icon_state)
 
 		var/list/tile_directions = GLOB.tile_rotations[initial(tile.singular_name)]
 		if(tile_directions == null)
