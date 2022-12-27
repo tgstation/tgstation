@@ -18,7 +18,7 @@
 	/// The amount of blind to apply
 	var/eye_blind_amount = 10
 	/// The amount of blurriness to apply
-	var/eye_blurry_amount = 20
+	var/eye_blur_duration = 40 SECONDS
 	/// The duration of the blind mutation placed on the person
 	var/blind_mutation_duration = 30 SECONDS
 
@@ -41,7 +41,7 @@
 
 	to_chat(cast_on, span_warning("Your eyes cry out in pain!"))
 	cast_on.adjust_blindness(eye_blind_amount)
-	cast_on.blur_eyes(eye_blurry_amount)
+	cast_on.set_eye_blur_if_lower(eye_blur_duration)
 	if(cast_on.dna && blind_mutation_duration > 0 SECONDS)
 		cast_on.dna.add_mutation(/datum/mutation/human/blind)
 		addtimer(CALLBACK(src, PROC_REF(fix_eyes), cast_on), blind_mutation_duration)
