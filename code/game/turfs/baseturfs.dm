@@ -181,7 +181,8 @@
 /turf/proc/insert_baseturf(level, turf_type)
 	if (!islist(baseturfs))
 		assemble_baseturfs()
-		TEST_ONLY_ASSERT(islist(baseturfs), "baseturfs is not a list after assemble_baseturfs()")
+		if(!islist(baseturfs))
+			baseturfs = list(baseturfs)
 
 	var/list/baseturfs_copy = baseturfs.Copy()
 	baseturfs_copy.Insert(level, turf_type)
