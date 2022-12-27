@@ -808,10 +808,7 @@
  * * user - mob that is doing the loading of the vending machine
  */
 /obj/machinery/vending/proc/compartmentLoadAccessCheck(mob/user)
-	if(!req_access)
-		return TRUE
-
-	if(allowed(user) || (obj_flags & EMAGGED) || !scan_id)
+	if(!req_access || allowed(user) || (obj_flags & EMAGGED) || !scan_id)
 		return TRUE
 
 	to_chat(user, span_warning("[src]'s input compartment blinks red: Access denied."))
