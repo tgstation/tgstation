@@ -730,3 +730,6 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	WRITE_FILE(temp_file, convert_to_json())
 	DIRECT_OUTPUT(saver, ftp(temp_file, "[display_name || "circuit"].json"))
 	return TRUE
+
+/obj/item/integrated_circuit/admin
+	admin_only = TRUE
