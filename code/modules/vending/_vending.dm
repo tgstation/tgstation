@@ -815,17 +815,14 @@
 	if(!canload_access_list)
 		return TRUE
 	else
-		var/do_you_have_access = FALSE
-		var/req_access_txt_holder = req_access_txt
+		var/has_access = FALSE
 		for(var/i in canload_access_list)
-			req_access_txt = i
 			if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
 				continue
 			else
-				do_you_have_access = TRUE
+				has_access = TRUE
 				break //you passed don't bother looping anymore
-		req_access_txt = req_access_txt_holder // revert to normal (before the proc ran)
-		if(do_you_have_access)
+		if(has_access)
 			return TRUE
 		else
 			to_chat(user, span_warning("[src]'s input compartment blinks red: Access denied."))
