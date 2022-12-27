@@ -103,10 +103,6 @@
 	. = ..()
 	qdel(selected_design)
 	qdel(tile_design)
-	//tests fail if i call clear_design_list() method i dont know
-	for(var/datum/overlay_info in design_overlays)
-		qdel(overlay_info)
-	design_overlays.Cut()
 
 //just to make sure nothing is left behind
 /obj/item/construction/rtd/proc/clear_design_list()
