@@ -414,7 +414,7 @@ There are several things that need to be remembered:
 			if(worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION)
 				icon_file = DIGITIGRADE_SUIT_FILE*/
 
-		if(!((icon_file, RESOLVE_ICON_STATE(worn_item)))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = DEFAULT_SUIT_FILE
 
 		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
@@ -493,7 +493,7 @@ There are several things that need to be remembered:
 		update_hud_back(worn_item)
 		var/icon_file
 
-		if(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/back.dmi'
 
 		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
