@@ -248,7 +248,7 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/ears.dmi'
 
 		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file)
@@ -273,7 +273,7 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/neck.dmi'
 
 		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file)
@@ -308,7 +308,7 @@ There are several things that need to be remembered:
 			if(leg.limb_id == "digitigrade")//Snowflakey and bad. But it makes it look consistent.
 				icon_file = DIGITIGRADE_SHOES_FILE*/
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = DEFAULT_SHOES_FILE
 
 		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
@@ -359,7 +359,7 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/head/default.dmi'
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file)
@@ -386,7 +386,7 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/belt.dmi'
 
 		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
@@ -414,7 +414,7 @@ There are several things that need to be remembered:
 			if(worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION)
 				icon_file = DIGITIGRADE_SUIT_FILE*/
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+		if(!((icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = DEFAULT_SUIT_FILE
 
 		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
@@ -466,8 +466,8 @@ There are several things that need to be remembered:
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_MASK)
 			return
 
-		var/icon_file = 'icons/mob/clothing/mask.dmi'
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+		var/icon_file
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/mask.dmi'
 
 		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file)
@@ -491,9 +491,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = back
 		var/mutable_appearance/back_overlay
 		update_hud_back(worn_item)
-		var/icon_file = 'icons/mob/clothing/back.dmi'
+		var/icon_file
 
-		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
+		if(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))
 			icon_file = 'icons/mob/clothing/back.dmi'
 
 		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
