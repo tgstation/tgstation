@@ -44,7 +44,7 @@
 
 /// Swat at someone we don't like but won't hurt
 /datum/ai_behavior/basic_melee_attack/dog/proc/paw_harmlessly(mob/living/living_pawn, atom/target, delta_time)
-	if(!DT_PROB(10, delta_time))
+	if(!DT_PROB(20, delta_time))
 		return
 	living_pawn.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
