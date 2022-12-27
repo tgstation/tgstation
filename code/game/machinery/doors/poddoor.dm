@@ -10,13 +10,22 @@
 	heat_proof = TRUE
 	safe = FALSE
 	max_integrity = 600
-	armor = list(MELEE = 50, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 50, BIO = 0, FIRE = 100, ACID = 70)
+	armor_type = /datum/armor/door_poddoor
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
 	can_open_with_hands = FALSE
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1
+
+/datum/armor/door_poddoor
+	melee = 50
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 50
+	fire = 100
+	acid = 70
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -164,6 +173,15 @@
 /obj/machinery/door/poddoor/shuttledock
 	var/checkdir = 4 //door won't open if turf in this dir is `turftype`
 	var/turftype = /turf/open/space
+
+/datum/armor/door_poddoor
+	melee = 50
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 50
+	fire = 100
+	acid = 70
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/turf = get_step(src, checkdir)

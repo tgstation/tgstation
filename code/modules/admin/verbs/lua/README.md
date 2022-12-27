@@ -105,6 +105,18 @@ A weak reference to DM's `usr`. As a rule of thumb, this is a reference to the m
 
 ---
 
+## Execution Limit
+
+In order to prevent freezing the server with infinite loops, auxlua enforces an execution limit, defaulting to 100ms. When a single lua state has been executing for longer than this limit, it will eventually stop and produce an error.
+
+To avoid exceeding the execution limit, call `sleep()` or `coroutine.yield()` before the execution limit is reached.
+
+### over_exec_usage(fraction = 0.95)
+
+This function returns whether the current run of the Lua VM has executed for longer than the specified fraction of the execution limit. You can use this function to branch to a call to `sleep()` or `coroutine.yield()` to maximize the amount of work done in a single run of the Lua VM. If nil, `fraction` will default to 0.95, otherwise, it will be clamped to the range \[0, 1\].
+
+---
+
 ## Task management
 The Lua Scripting subsystem manages the execution of tasks for each Lua state. A single fire of the subsystem behaves as follows:
 - All tasks that slept since the last fire are resumed in the order they slept.

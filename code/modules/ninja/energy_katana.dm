@@ -11,7 +11,8 @@
  */
 /obj/item/energy_katana
 	name = "energy katana"
-	desc = "A katana infused with strong energy. Right-click to dash."
+	desc = "A katana infused with strong energy."
+	desc_controls = "Right-click to dash."
 	icon_state = "energy_katana"
 	inhand_icon_state = "energy_katana"
 	worn_icon_state = "energy_katana"

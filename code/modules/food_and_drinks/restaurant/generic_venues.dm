@@ -90,7 +90,7 @@
 
 	// Look for a glass style based on this reagent type
 	for(var/potential_container in GLOB.glass_style_singletons)
-		var/datum/glass_style/draw_as = GLOB.glass_style_singletons[potential_container][reagent_to_order.type]
+		var/datum/glass_style/draw_as = GLOB.glass_style_singletons[potential_container][reagent_to_order]
 		if(isnull(draw_as))
 			continue
 
