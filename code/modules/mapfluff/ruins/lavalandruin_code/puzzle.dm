@@ -296,7 +296,16 @@
 
 //Some armor so it's harder to kill someone by mistake.
 /obj/structure/puzzle_element/prison
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/puzzle_element_prison
+
+/datum/armor/puzzle_element_prison
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 50
+	fire = 50
+	acid = 50
 
 /obj/structure/puzzle_element/prison/relaymove(mob/living/user, direction)
 	return
@@ -306,6 +315,15 @@
 	desc = "Dusty cube with humanoid imprint on it."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "prison_cube"
+
+/datum/armor/puzzle_element_prison
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 50
+	fire = 50
+	acid = 50
 
 /obj/item/prisoncube/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

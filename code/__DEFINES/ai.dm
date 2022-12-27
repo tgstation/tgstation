@@ -165,6 +165,7 @@
 #define BB_DOG_PLAYING_DEAD "BB_DOG_PLAYING_DEAD"
 #define BB_DOG_HARASS_TARGET "BB_DOG_HARASS_TARGET"
 #define BB_DOG_HARASS_FRUSTRATION "BB_DOG_HARASS_FRUSTRATION"
+#define BB_DOG_HARASS_HARM "BB_DOG_HARASS_HARM"
 #define BB_DOG_IS_SLOW "BB_DOG_IS_SLOW"
 
 /// Basically, what is our vision/hearing range for picking up on things to fetch/
