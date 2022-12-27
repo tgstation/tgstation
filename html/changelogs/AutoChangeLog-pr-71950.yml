@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Drowsiness and Blurred Eyes are now tracked via status effect."
