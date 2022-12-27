@@ -207,11 +207,12 @@
 
 					//infer available overlays on the floor to recreate them to the best extent
 					clear_design_list()
-					if(islist(floor.managed_overlays))
-						for(var/mutable_appearance/appearance as anything in floor.managed_overlays)
-							design_overlays += new /datum/overlay_info(appearance)
-					else
-						design_overlays += new /datum/overlay_info(floor.managed_overlays)
+					if(!isnull(floor.managed_overlays))
+						if(islist(floor.managed_overlays))
+							for(var/mutable_appearance/appearance as anything in floor.managed_overlays)
+								design_overlays += new /datum/overlay_info(appearance)
+						else
+							design_overlays += new /datum/overlay_info(floor.managed_overlays)
 
 					//store all information about this tile
 					root_category = main_root
