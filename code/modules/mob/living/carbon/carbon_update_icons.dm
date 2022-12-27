@@ -29,7 +29,7 @@
 		update_worn_undersuit()
 	if(slot_flags & ITEM_SLOT_SUITSTORE)
 		update_suit_storage()
-	if(slot_flags & ITEM_SLOT_LPOCKET || slot_flags & ITEM_SLOT_RPOCKET)
+	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
 		update_pockets()
 
 //IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.

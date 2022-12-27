@@ -17,15 +17,17 @@ GLOBAL_VAR(test_log)
 /// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
 GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
-/// The name of the test that is currently focused.
+/// A list of every test that is currently focused.
 /// Use the PERFORM_ALL_TESTS macro instead.
-GLOBAL_VAR_INIT(focused_test, focused_test())
+GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
-/proc/focused_test()
+/proc/focused_tests()
+	var/list/focused_tests = list()
 	for (var/datum/unit_test/unit_test as anything in subtypesof(/datum/unit_test))
 		if (initial(unit_test.focus))
-			return unit_test
-	return null
+			focused_tests += unit_test
+
+	return focused_tests.len > 0 ? focused_tests : null
 
 /datum/unit_test
 	//Bit of metadata for the future maybe
