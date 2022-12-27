@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes:
+  - rscadd: "Dogs will now occasionally bark at their two mortal enemies: felinids and mailmen"
+  - bugfix: "Dogs set to attack will now only close within 3 tiles of their target, and must be approached further by their target (or pushed next to their target) to actually attack"
