@@ -409,6 +409,20 @@ Key procs
 								/datum/language/monkey = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/monkey = list(LANGUAGE_ATOM))
+
+/datum/language_holder/syndicate
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/codespeak = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/codespeak = list(LANGUAGE_ATOM))
+
+/datum/language_holder/beachbum
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/beachbum = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/beachbum = list(LANGUAGE_ATOM))
+	selected_language = /datum/language/beachbum
+
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()

@@ -363,7 +363,7 @@
 			add_overlay("ov-opencover -c")
 	if(hat)
 		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		head_overlay.pixel_y += hat_offset
+		head_overlay.pixel_z += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
 

@@ -182,12 +182,12 @@
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
+				shuttle_spawns.Add(/mob/living/basic/syndicate/ranged/infiltrator)
+				shuttle_spawns.Add(/mob/living/basic/syndicate/ranged/infiltrator)
 				if(prob(75))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
+					shuttle_spawns.Add(/mob/living/basic/syndicate/ranged/infiltrator)
 				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
+					shuttle_spawns.Add(/mob/living/basic/syndicate/ranged/infiltrator)
 
 			if(RUSKY_PARTY)
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/service/party]

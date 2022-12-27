@@ -12,6 +12,7 @@
 	ph = 7.33
 	burning_temperature = 2193//ethanol burns at 1970C (at it's peak)
 	burning_volume = 0.1
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/beer
 	fallback_icon = 'icons/obj/drinks/bottles.dmi'
 	fallback_icon_state = "beer"
 	/**
@@ -187,7 +188,7 @@
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.set_dizzy_if_lower(10 SECONDS * REM * delta_time)
-	drinker.adjust_drowsyness(-3 * REM * delta_time)
+	drinker.adjust_drowsiness(-6 SECONDS * REM * delta_time)
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
@@ -267,7 +268,7 @@
 	icon_state = "thirteen_loko_glass"
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_drowsyness(-7 * REM * delta_time)
+	drinker.adjust_drowsiness(-14 SECONDS * REM * delta_time)
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
@@ -324,6 +325,7 @@
 	taste_description = "grain alcohol"
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS //Very high proof
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/vodka
 
 /datum/glass_style/shot_glass/vodka
 	required_drink_type = /datum/reagent/consumable/ethanol/vodka
@@ -400,6 +402,7 @@
 	boozepwr = 60
 	taste_description = "spiked butterscotch"
 	ph = 6.5
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum
 
 /datum/glass_style/shot_glass/rum
 	required_drink_type = /datum/reagent/consumable/ethanol/rum
@@ -459,6 +462,7 @@
 	ph = 3.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/wine
 
 /datum/glass_style/shot_glass/wine
 	required_drink_type = /datum/reagent/consumable/ethanol/wine
