@@ -239,6 +239,9 @@
 
 	//consume resource only if tile was placed successfully
 	var/obj/item/stack/tile/final_tile = selected_design.new_tile(user.drop_location())
+	if(QDELETED(final_tile)) //if you were standing on a stack of tiles this newly spawned tile could get merged with it cause its spawned on your location
+		balloon_alert(user, "tile got merged with the stack beneath you!")
+		return TRUE
 	var/turf/open/new_turf = final_tile.place_tile(floor, user)
 	if(new_turf)
 		//apply infered overlays
