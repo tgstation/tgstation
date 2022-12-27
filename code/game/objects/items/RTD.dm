@@ -103,6 +103,13 @@
 	. = ..()
 	qdel(selected_design)
 	qdel(tile_design)
+	clear_design_list()
+
+//just to make sure nothing is left behind
+/obj/item/construction/rtd/proc/clear_design_list()
+	for(var/datum/overlay_info in design_overlays)
+		qdel(overlay_info)
+	design_overlays.Cut()
 
 /obj/item/construction/rtd/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -174,7 +181,7 @@
 			if(target_design == null)
 				return
 
-			design_overlays.Cut()
+			clear_design_list()
 			design_category = params["category_name"]
 			selected_design.set_info(target_design)
 
@@ -199,7 +206,7 @@
 						continue
 
 					//infer available overlays on the floor to recreate them to the best extent
-					design_overlays.Cut()
+					clear_design_list()
 					if(islist(floor.managed_overlays))
 						for(var/mutable_appearance/appearance as anything in floor.managed_overlays)
 							design_overlays += new /datum/overlay_info(appearance)
