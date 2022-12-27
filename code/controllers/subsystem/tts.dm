@@ -36,8 +36,11 @@ SUBSYSTEM_DEF(tts)
 	return ..()
 
 /datum/controller/subsystem/tts/Initialize()
+	if(!CONFIG_GET(string/tts_http_url))
+		return SS_INIT_NO_NEED
+
 	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "http://localhost:5002/tts-voices", "", "")
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-voices", "", "")
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
@@ -87,7 +90,7 @@ SUBSYSTEM_DEF(tts)
 
 	var/shell_scrubbed_input = tts_filter(message)
 	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 100)
-	var/identifier = md5(shell_scrubbed_input)
+	var/identifier = md5(speaker + shell_scrubbed_input + filter)
 	speaker = tts_filter(speaker)
 	if(!(speaker in available_speakers))
 		CRASH("Tried to use invalid speaker for TTS message! ([speaker])")
@@ -96,7 +99,7 @@ SUBSYSTEM_DEF(tts)
 	headers["Content-Type"] = "application/json"
 	var/datum/http_request/request = new()
 	var/file_name = "tmp/[identifier].ogg"
-	request.prepare(RUSTG_HTTP_METHOD_GET, "http://localhost:5002/tts?voice=[speaker]&identifier=[identifier]&filter=[filter]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
 	request.begin_async()
 
 	queued_tts_messages += list(list(target, identifier, world.time + message_timeout, request))
