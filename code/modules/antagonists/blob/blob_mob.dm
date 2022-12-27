@@ -51,12 +51,12 @@
 
 /mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
-		for(var/i in 1 to 2)
-			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
+		for(var/unused in 1 to 2)
+			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
-				H.color = overmind.blobstrain.complementary_color
+				heal_effect.color = overmind.blobstrain.complementary_color
 			else
-				H.color = "#000000"
+				heal_effect.color = "#000000"
 		adjustHealth(-maxHealth*BLOBMOB_HEALING_MULTIPLIER)
 
 /mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
@@ -84,7 +84,7 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
-	for(var/obj/structure/blob/B in range(1, src))
+	for(var/obj/structure/blob/blob in range(1, src))
 		return 1
 	return ..()
 
@@ -93,12 +93,12 @@
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	var/spanned_message = say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
-	for(var/M in GLOB.mob_list)
-		if(isovermind(M) || isblobmonster(M))
-			to_chat(M, rendered)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, src)
-			to_chat(M, "[link] [rendered]")
+	for(var/creature in GLOB.mob_list)
+		if(isovermind(creature) || isblobmonster(creature))
+			to_chat(creature, rendered)
+		if(isobserver(creature))
+			var/link = FOLLOW_LINK(creature, src)
+			to_chat(creature, "[link] [rendered]")
 
 /mob/living/simple_animal/hostile/blob/proc/create_objectives(datum/antagonist/antagonist)
 	if(!antagonist)
