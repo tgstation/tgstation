@@ -126,7 +126,7 @@
 /// Returns the baseturf at the given depth.
 /// For example, baseturf_at_depth(1) will give the baseturf that would show up when scraping once.
 /turf/proc/baseturf_at_depth(index)
-	TEST_ONLY_ASSERT(isnum(index))
+	TEST_ONLY_ASSERT(isnum(index), "baseturf_at_depth must be given a number, received [index]")
 	if (islist(baseturfs))
 		return LAZYACCESS(baseturfs, baseturfs.len - index + 1)
 	else if (index == 1)
@@ -181,7 +181,7 @@
 /turf/proc/insert_baseturf(level, turf_type)
 	if (!islist(baseturfs))
 		assemble_baseturfs()
-		TEST_ONLY_ASSERT(islist(baseturfs))
+		TEST_ONLY_ASSERT(islist(baseturfs), "baseturfs is not a list after assemble_baseturfs()")
 
 	var/list/baseturfs_copy = baseturfs.Copy()
 	baseturfs_copy.Insert(level, turf_type)
