@@ -314,6 +314,10 @@
 	. = ..()
 	hook = new /obj/item/gun/magic/hook/bounty(src)
 
+/obj/item/gun/ballistic/shotgun/hook/Destroy()
+	. = ..()
+	QDEL_NULL(hook)
+
 /obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
 	. = ..()
 	. += span_notice("Right-click to shoot the hook.")
