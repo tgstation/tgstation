@@ -19,7 +19,7 @@
 
 /datum/action/cooldown/spell/vow_of_silence/Remove(mob/living/remove_from)
 	. = ..()
-	REMOVE_TRAIT(grant_to, TRAIT_MIMING, "[type]")
+	REMOVE_TRAIT(remove_from, TRAIT_MIMING, "[type]")
 	remove_from.clear_mood_event("vow")
 
 /datum/action/cooldown/spell/vow_of_silence/cast(mob/living/carbon/human/cast_on)
