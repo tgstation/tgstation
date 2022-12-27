@@ -1,0 +1,7 @@
+/obj/item/stamp/captain : /obj/item/stamp/head/captain {@OLD}
+/obj/item/stamp/ce : /obj/item/stamp/head/ce {@OLD}
+/obj/item/stamp/cmo : /obj/item/stamp/head/cmo {@OLD}
+/obj/item/stamp/hop : /obj/item/stamp/head/hop {@OLD}
+/obj/item/stamp/hos : /obj/item/stamp/head/hos {@OLD}
+/obj/item/stamp/qm : /obj/item/stamp/head/qm {@OLD}
+/obj/item/stamp/rd : /obj/item/stamp/head/rd {@OLD}

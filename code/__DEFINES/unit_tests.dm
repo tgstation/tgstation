@@ -18,3 +18,9 @@
 #else
 #define TEST_ONLY_ASSERT(test, explanation)
 #endif
+
+#ifdef UNIT_TESTS
+#define REGISTER_CRUCIAL_MAP_ITEM(arguments...) AddElement(/datum/element/map_crucial_item, ##arguments...)
+#else
+#define REGISTER_CRUCIAL_MAP_ITEM(arguments...)
+#endif
