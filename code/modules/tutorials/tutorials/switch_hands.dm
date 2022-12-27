@@ -3,7 +3,6 @@
 #define STAGE_SHOULD_SWAP_HAND "STAGE_SHOULD_SWAP_HAND"
 #define STAGE_PICK_UP_ITEM "STAGE_PICK_UP_ITEM"
 
-// MBTODO: Don't perform if item in both hands
 /datum/tutorial/switch_hands
 	grandfather_date = "2022-12-25"
 
