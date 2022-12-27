@@ -15,7 +15,6 @@
 	toxic_food = NONE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
-	payday_modifier = 0.75
 
 	mutanttongue = /obj/item/organ/internal/tongue/fly
 	mutantheart = /obj/item/organ/internal/heart/fly
