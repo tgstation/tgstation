@@ -1476,7 +1476,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/rtd
 	name = "rapid-tiling-device (RTD)"
-	desc = "Used for fast placement & destruction of floor tiles"
+	desc = "Used for fast placement & destruction of floor tiles."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rtd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
