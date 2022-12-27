@@ -10,16 +10,24 @@
 	school = SCHOOL_MIME
 	cooldown_time = 5 MINUTES
 
-	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIND
+	spell_requirements = SPELL_REQUIRES_HUMAN
 	spell_max_level = 1
+
+/datum/action/cooldown/spell/vow_of_silence/Grant(mob/grant_to)
+	. = ..()
+	ADD_TRAIT(grant_to, TRAIT_MIMING, "[type]")
+
+/datum/action/cooldown/spell/vow_of_silence/Remove(mob/living/remove_from)
+	. = ..()
+	REMOVE_TRAIT(grant_to, TRAIT_MIMING, "[type]")
+	remove_from.clear_mood_event("vow")
 
 /datum/action/cooldown/spell/vow_of_silence/cast(mob/living/carbon/human/cast_on)
 	. = ..()
-	cast_on.mind.miming = !cast_on.mind.miming
-	if(cast_on.mind.miming)
-		to_chat(cast_on, span_notice("You make a vow of silence."))
-		cast_on.clear_mood_event("vow")
-	else
+	if(HAS_TRAIT(grant_to, TRAIT_MIMING, "[type]"))
 		to_chat(cast_on, span_notice("You break your vow of silence."))
 		cast_on.add_mood_event("vow", /datum/mood_event/broken_vow)
+	else
+		to_chat(cast_on, span_notice("You make a vow of silence."))
+		cast_on.clear_mood_event("vow")
 	cast_on.update_mob_action_buttons()

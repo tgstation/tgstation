@@ -263,7 +263,7 @@
 /datum/emote/living/laugh/get_sound(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == SPECIES_HUMAN && (!H.mind || !H.mind.miming))
+		if(H.dna.species.id == SPECIES_HUMAN && !HAS_TRAIT(H, TRAIT_MIMING))
 			if(user.gender == FEMALE)
 				return 'sound/voice/human/womanlaugh.ogg'
 			else
