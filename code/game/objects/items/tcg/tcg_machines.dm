@@ -1,29 +1,34 @@
 /obj/machinery/trading_card_holder
 	name = "card slot"
 	desc = "a slot for placing Tactical Game Cards"
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "paper_bin0"
+	icon = 'icons/obj/toys/tcgmisc.dmi'
+	icon_state = "card_holder_inactive"
 	use_power = NO_POWER_USE
 
 	var/obj/item/tcgcard/current_card
 	var/obj/structure/trading_card_summon/current_summon
 
-	var/spawn_direction = 1
+	var/summon_offset_x = 0
+	var/summon_offset_y = 1
 	var/summon_type = /obj/structure/trading_card_summon
 
 /obj/machinery/trading_card_holder/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/tcgcard) && current_card == null)
 		current_card = I
 		var/datum/card/card_template = current_card.extract_datum()
-		if(!user.transferItemToLoc(current_card, src))
-			return
-		to_chat(user, span_notice("You put [current_card] in [src]."))
-		icon_state = "paper_bin1"
-		update_appearance()
 		if(card_template.cardtype == "Creature")
-			current_summon = new summon_type(get_step(src.loc, spawn_direction))
+			if(!user.transferItemToLoc(current_card, src))
+				return
+			to_chat(user, span_notice("You put the [current_card] card in [src]."))
+			icon_state = "card_holder_active"
+			update_appearance()
+			current_summon = new summon_type(locate(x + summon_offset_x, y + summon_offset_y, z))
 			current_summon.template = card_template
 			current_summon.load_model(current_card)
+		else
+			to_chat(user, span_notice("The [src] smartly rejects the non-creature card."))
+			current_card = null
+			return..()
 	else
 		return..()
 
@@ -48,7 +53,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 				user.put_in_hands(current_card)
 				to_chat(user, span_notice("You take [current_card] out of [src]."))
 				current_card = null
-				icon_state = "paper_bin0"
+				icon_state = "card_holder_inactive"
 				update_appearance()
 				if(current_summon)
 					current_summon.Destroy()
@@ -68,8 +73,14 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		return FALSE
 	return TRUE
 
+/obj/machinery/trading_card_holder/Destroy()
+	if(current_summon)
+		current_summon.Destroy()
+	. = ..()
+	
+
 /obj/machinery/trading_card_holder/red
-	spawn_direction = 2
+	summon_offset_y = -1
 	summon_type = /obj/structure/trading_card_summon/red
 
 #define STAT_Y -23
