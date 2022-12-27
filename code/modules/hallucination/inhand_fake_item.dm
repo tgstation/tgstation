@@ -129,7 +129,7 @@
 		stack_trace("[type] was created without a parent hallucination.")
 		return INITIALIZE_HINT_QDEL
 
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/parent_deleting)
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_deleting))
 	src.parent = parent
 
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)

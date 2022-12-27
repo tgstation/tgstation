@@ -25,7 +25,7 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 75
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 70)
+	armor_type = /datum/armor/item_dualsaber
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
 	bare_wound_bonus = 20
@@ -35,6 +35,10 @@
 	var/hacked = FALSE
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
+/datum/armor/item_dualsaber
+	fire = 100
+	acid = 70
+
 /obj/item/dualsaber/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, \
@@ -42,8 +46,8 @@
 		force_wielded = two_hand_force, \
 		wieldsound = 'sound/weapons/saberon.ogg', \
 		unwieldsound = 'sound/weapons/saberoff.ogg', \
-		wield_callback = CALLBACK(src, .proc/on_wield), \
-		unwield_callback = CALLBACK(src, .proc/on_unwield), \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
 
 /// Triggered on wield of two handed item
@@ -132,10 +136,10 @@
 		impale(user)
 		return
 	if(prob(50))
-		INVOKE_ASYNC(src, .proc/jedi_spin, user)
+		INVOKE_ASYNC(src, PROC_REF(jedi_spin), user)
 
 /obj/item/dualsaber/proc/jedi_spin(mob/living/user)
-	dance_rotate(user, CALLBACK(user, /mob.proc/dance_flip))
+	dance_rotate(user, CALLBACK(user, TYPE_PROC_REF(/mob, dance_flip)))
 
 /obj/item/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, span_warning("You twirl around a bit before losing your balance and impaling yourself on [src]."))
@@ -174,7 +178,7 @@
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	INVOKE_ASYNC(src, .proc/jedi_spin, user)
+	INVOKE_ASYNC(src, PROC_REF(jedi_spin), user)
 
 /obj/item/dualsaber/green
 	possible_colors = list("green")
@@ -187,6 +191,10 @@
 
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
+
+/datum/armor/item_dualsaber
+	fire = 100
+	acid = 70
 
 /obj/item/dualsaber/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_MULTITOOL)

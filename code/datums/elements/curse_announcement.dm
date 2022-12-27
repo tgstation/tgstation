@@ -6,8 +6,8 @@
  * Possible improvements for the future: add an option to allow the cursed affix to be a prefix. right now only coded for suffixes
  */
 /datum/element/curse_announcement
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	///message sent on announce
 	var/announcement_message
 	///color of the outline filter on announce
@@ -27,9 +27,9 @@
 	src.new_name = new_name
 	src.fantasy_component = WEAKREF(fantasy_component)
 	if(cursed_item.slot_equipment_priority) //if it can equip somewhere, only go active when it is actually done
-		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
+		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 	else
-		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, .proc/on_pickup)
+		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 
 /datum/element/curse_announcement/Detach(datum/target)
 	. = ..()

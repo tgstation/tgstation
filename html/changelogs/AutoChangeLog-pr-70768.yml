@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Pipecleaner coils are no longer invisible."
-  - bugfix: "Pipecleaners will now how have correct color when split."

@@ -43,7 +43,8 @@
 		item_harvest_time = 5 SECONDS, \
 		item_harvest_sound = 'sound/surgery/scalpel1.ogg', \
 	)
-	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, .proc/on_sacrificed)
+	AddElement(/datum/element/ai_retaliate)
+	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_sacrificed))
 
 /mob/living/basic/sheep/update_overlays()
 	. = ..()
@@ -65,7 +66,7 @@
 		to_chat(cultist, span_cultitalic("This feels a bit too cliché, don't you think?"))
 
 	cult_converted = TRUE
-	INVOKE_ASYNC(src, /atom/movable.proc/say, "BAAAAAAAAH!")
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "BAAAAAAAAH!")
 	update_appearance(UPDATE_ICON)
 	return STOP_SACRIFICE
 
@@ -80,9 +81,15 @@
 		update_appearance(UPDATE_ICON)
 
 /datum/ai_controller/basic_controller/sheep
+	blackboard = list(
+		BB_BASIC_MOB_FLEEING = TRUE,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/sheep
+		/datum/ai_planning_subtree/random_speech/sheep,
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/flee_target,
 	)

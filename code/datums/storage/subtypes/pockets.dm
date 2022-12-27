@@ -61,7 +61,7 @@
 	. = ..()
 	if(ispickedupmob(to_insert))
 		var/obj/item/clothing/head/mob_holder/mausholder = to_insert
-		if(locate(/mob/living/simple_animal/mouse) in mausholder.contents)
+		if(locate(/mob/living/basic/mouse) in mausholder.contents)
 			return
 		return FALSE
 

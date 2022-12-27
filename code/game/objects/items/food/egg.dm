@@ -19,7 +19,6 @@
 	icon_state = "egg"
 	inhand_icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
-	microwaved_type = /obj/item/food/boiledegg
 	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_TINY
 	ant_attracting = FALSE
@@ -27,11 +26,16 @@
 	decomp_req_handle = TRUE //so laid eggs can actually become chickens
 	var/static/chick_count = 0 //I copied this from the chicken_count (note the "en" in there) variable from chicken code.
 
+/obj/item/food/egg/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/boiledegg)
+
 /obj/item/food/egg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10, /datum/reagent/consumable/mold = 10)
-	microwaved_type = /obj/item/food/boiledegg/rotten
 	foodtypes = GROSS
 	preserved_food = TRUE
+
+/obj/item/food/egg/rotten/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/boiledegg/rotten)
 
 /obj/item/food/egg/gland
 	desc = "An egg! It looks weird..."
@@ -143,7 +147,7 @@
 	desc = "A fried egg. Would go well with a touch of salt and pepper."
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "friedegg"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/eggyolk = 2 , /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/eggyolk = 1 , /datum/reagent/consumable/nutriment/vitamin = 1)
 	bite_consumption = 1
 	tastes = list("egg" = 4)
 	foodtypes = MEAT | FRIED | BREAKFAST

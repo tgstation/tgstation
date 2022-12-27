@@ -6,7 +6,7 @@
 /datum/unit_test/species_change_organs
 
 /datum/unit_test/species_change_organs/Run()
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 
 	// Give a trauma
 	dummy.gain_trauma(/datum/brain_trauma/severe/blindness)

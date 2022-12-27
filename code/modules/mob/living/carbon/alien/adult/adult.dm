@@ -17,10 +17,10 @@
 	bodyparts = list(
 		/obj/item/bodypart/chest/alien,
 		/obj/item/bodypart/head/alien,
-		/obj/item/bodypart/l_arm/alien,
-		/obj/item/bodypart/r_arm/alien,
-		/obj/item/bodypart/r_leg/alien,
-		/obj/item/bodypart/l_leg/alien,
+		/obj/item/bodypart/arm/left/alien,
+		/obj/item/bodypart/arm/right/alien,
+		/obj/item/bodypart/leg/right/alien,
+		/obj/item/bodypart/leg/left/alien,
 	)
 
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 			span_userdanger("[src] is attempting to devour you!"))
 
 	playsound(lucky_winner, 'sound/creatures/alien_eat.ogg', 100)
-	if(!do_mob(src, lucky_winner, devour_time, extra_checks = CALLBACK(src, .proc/can_consume, lucky_winner)))
+	if(!do_mob(src, lucky_winner, devour_time, extra_checks = CALLBACK(src, PROC_REF(can_consume), lucky_winner)))
 		return TRUE
 	if(!can_consume(lucky_winner))
 		return TRUE

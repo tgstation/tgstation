@@ -45,7 +45,7 @@
 	//entirely independent vars (not related to the action or story type)
 
 	var/static/list/something_pool = list(
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/netherworld/statue,
@@ -55,8 +55,8 @@
 		/mob/living/simple_animal/hostile/giant_spider,
 		/mob/living/simple_animal/hostile/giant_spider/hunter,
 		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-		/mob/living/simple_animal/hostile/carp/ranged,
-		/mob/living/simple_animal/hostile/carp/ranged/chaos,
+		/mob/living/basic/carp/magic,
+		/mob/living/basic/carp/magic/chaos,
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 		/mob/living/simple_animal/hostile/asteroid/goliath/beast,
 		/mob/living/simple_animal/hostile/headcrab,
@@ -66,18 +66,18 @@
 		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 		/mob/living/simple_animal/hostile/gorilla,
 		/mob/living/simple_animal/parrot,
-		/mob/living/simple_animal/pet/dog/corgi,
+		/mob/living/basic/pet/dog/corgi,
 		/mob/living/simple_animal/crab,
-		/mob/living/simple_animal/pet/dog/pug,
+		/mob/living/basic/pet/dog/pug,
 		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/mouse,
+		/mob/living/basic/mouse,
 		/mob/living/simple_animal/chicken,
 		/mob/living/basic/cow,
 		/mob/living/simple_animal/hostile/lizard,
 		/mob/living/simple_animal/pet/fox,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/pet/cat/cak,
-		/mob/living/simple_animal/pet/dog/breaddog,
+		/mob/living/basic/pet/dog/breaddog,
 		/mob/living/simple_animal/chick,
 		/mob/living/basic/cow/wisdom,
 		/obj/item/skub,
@@ -190,9 +190,9 @@
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
 		if(memory_flags & MEMORY_FLAG_NOSTATIONNAME)
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [CURRENT_STATION_YEAR]."
 		else
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540] on [station_name()]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [CURRENT_STATION_YEAR] on [station_name()]."
 
 	parsed_story = trim_right(parsed_story)
 
@@ -205,5 +205,3 @@
 		var/detail = extra_info[key]
 		line = replacetext(line, "%[key]", "[detail]")
 	name = line
-
-

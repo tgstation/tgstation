@@ -216,7 +216,7 @@
 	to_chat(owner, span_warning("Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!"))
 	owner.playsound_local(owner, 'sound/magic/lightning_chargeup.ogg', 75, FALSE)
 	returning = TRUE
-	addtimer(CALLBACK(src, .proc/snapback), 100)
+	addtimer(CALLBACK(src, PROC_REF(snapback)), 100)
 
 /datum/brain_trauma/special/quantum_alignment/proc/snapback()
 	returning = FALSE
@@ -292,7 +292,7 @@
 /datum/brain_trauma/special/death_whispers/proc/whispering()
 	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = TRUE
-	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
+	addtimer(CALLBACK(src, PROC_REF(cease_whispering)), rand(50, 300))
 
 /datum/brain_trauma/special/death_whispers/proc/cease_whispering()
 	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
@@ -333,7 +333,7 @@
 												"You simply fade away.")]</span>")
 	owner.forceMove(veil)
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
-	addtimer(CALLBACK(src, .proc/fade_in), duration)
+	addtimer(CALLBACK(src, PROC_REF(fade_in)), duration)
 
 /datum/brain_trauma/special/existential_crisis/proc/fade_in()
 	QDEL_NULL(veil)
@@ -390,7 +390,7 @@
 	if(get_dist(owner, beepsky) <= 1)
 		owner.playsound_local(owner, 'sound/weapons/egloves.ogg', 50)
 		owner.visible_message(span_warning("[owner]'s body jerks as if it was shocked."), span_userdanger("You feel the fist of the LAW."))
-		owner.take_bodypart_damage(0,0,rand(40, 70))
+		owner.adjustStaminaLoss(rand(40, 70))
 		QDEL_NULL(beepsky)
 
 	if(prob(20) && get_dist(owner, beepsky) <= 8)

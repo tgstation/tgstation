@@ -68,8 +68,8 @@
 		/datum/component/puzzgrid, \
 		puzzgrid = puzzgrid, \
 		timer = timer, \
-		on_victory_callback = CALLBACK(src, .proc/on_victory), \
-		on_fail_callback = CALLBACK(src, gib_on_loss ? .proc/loss_gib : .proc/loss_restart), \
+		on_victory_callback = CALLBACK(src, PROC_REF(on_victory)), \
+		on_fail_callback = CALLBACK(src, gib_on_loss ? PROC_REF(loss_gib) : PROC_REF(loss_restart)), \
 	)
 
 /obj/structure/puzzgrid_effect/proc/on_victory()
@@ -111,7 +111,7 @@
 	visible_message(span_danger("The fiendishly hard puzzle shapeshifts into a different, equally as challenging puzzle!"))
 
 	// Defer until after the fail proc finishes, since that will qdel the component.
-	addtimer(CALLBACK(src, .proc/add_puzzgrid_component, puzzgrid), 0)
+	addtimer(CALLBACK(src, PROC_REF(add_puzzgrid_component), puzzgrid), 0)
 
 /obj/structure/puzzgrid_effect/proc/remove_traits()
 	REMOVE_TRAIT(victim, TRAIT_HANDS_BLOCKED, "[type]")

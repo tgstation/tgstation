@@ -52,11 +52,11 @@
 	all_answers = puzzgrid.answers.Copy()
 
 	if (!isnull(timer))
-		addtimer(CALLBACK(src, .proc/out_of_time), timer)
+		addtimer(CALLBACK(src, PROC_REF(out_of_time)), timer)
 		time_to_finish = world.time + timer
 
 /datum/component/puzzgrid/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 
 /datum/component/puzzgrid/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
@@ -64,7 +64,7 @@
 /datum/component/puzzgrid/proc/on_attack_hand(atom/source, mob/user)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/ui_interact, user)
+	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
 /datum/component/puzzgrid/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

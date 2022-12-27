@@ -33,7 +33,7 @@
 	icon_state = "adamantine_cords"
 
 /datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 	var/message = tgui_input_text(owner, "Resonate a message to all nearby golems", "Resonate")
 	if(!message)
@@ -72,25 +72,29 @@
 	..()
 	cords = target
 
-/datum/action/item_action/organ_action/colossus/IsAvailable()
-	if(world.time < cords.next_command)
-		return FALSE
+/datum/action/item_action/organ_action/colossus/IsAvailable(feedback = FALSE)
 	if(!owner)
+		return FALSE
+	if(world.time < cords.next_command)
+		if (feedback)
+			owner.balloon_alert(owner, "wait [DisplayTimeText(cords.next_command - world.time)]!")
 		return FALSE
 	if(isliving(owner))
 		var/mob/living/living = owner
 		if(!living.can_speak())
+			if (feedback)
+				owner.balloon_alert(owner, "can't speak!")
 			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
+			if (feedback)
+				owner.balloon_alert(owner, "unconscious!")
 			return FALSE
 	return TRUE
 
 /datum/action/item_action/organ_action/colossus/Trigger(trigger_flags)
 	. = ..()
-	if(!IsAvailable())
-		if(world.time < cords.next_command)
-			to_chat(owner, span_notice("You must wait [DisplayTimeText(cords.next_command - world.time)] before Speaking again."))
+	if(!.)
 		return
 	var/command = tgui_input_text(owner, "Speak with the Voice of God", "Command")
 	if(!command)

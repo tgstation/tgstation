@@ -164,7 +164,8 @@
 	var/immobilize = 0
 	var/unconscious = 0
 	var/eyeblur = 0
-	var/drowsy = 0
+	/// Drowsiness applied on projectile hit
+	var/drowsy = 0 SECONDS
 	/// Jittering applied on projectile hit
 	var/jitter = 0 SECONDS
 	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
@@ -193,7 +194,7 @@
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
 	var/static/list/projectile_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
@@ -701,6 +702,8 @@
 	LAZYINITLIST(impacted)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
+	if(firer)
+		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
 	//If no angle needs to resolve it from xo/yo!
 	if(shrapnel_type && LAZYLEN(embedding))
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)

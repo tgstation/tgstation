@@ -26,8 +26,6 @@
 	var/list/eatverbs
 	///How much reagents per bite
 	var/bite_consumption
-	///What you get if you microwave the food. Use baking for raw things, use microwaving for already cooked things
-	var/microwaved_type
 	///Type of atom thats spawned after eating this item
 	var/trash_type
 	///How much junkiness this food has? God I should remove junkiness soon
@@ -65,13 +63,8 @@
 	MakeGrillable()
 	MakeDecompose(mapload)
 	MakeBakeable()
+	make_microwavable()
 	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
-
-/obj/item/food/examine(mob/user)
-	. = ..()
-	if(foodtypes)
-		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
-		. += span_notice("It is [lowertext(english_list(types))].")
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/MakeEdible()
@@ -84,7 +77,6 @@
 				tastes = tastes,\
 				eatverbs = eatverbs,\
 				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
 				junkiness = junkiness)
 
 
@@ -104,6 +96,10 @@
 		AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
 	return
 
+/// This proc handles the microwave component. Overwrite if you want special microwave results.
+/// By default, all food is microwavable. However, they will be microwaved into a bad recipe (burnt mess).
+/obj/item/food/proc/make_microwavable()
+	AddElement(/datum/element/microwavable)
 
 ///This proc handles trash components, overwrite this if you want the object to spawn trash
 /obj/item/food/proc/MakeLeaveTrash()
@@ -116,8 +112,3 @@
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
-
-/obj/item/food/mark_silver_slime_reaction()
-	//Adds this flag to prevent it from exporting for profit from cargo
-	food_flags |= FOOD_SILVER_SPAWNED
-	return ..()

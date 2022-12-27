@@ -33,7 +33,7 @@
 
 /obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
-		to_chat(user, span_notice("The bolt is closed!"))
+		balloon_alert(user, "[bolt_wording] is closed!")
 		return
 	return ..()
 

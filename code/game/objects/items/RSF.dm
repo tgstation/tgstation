@@ -20,7 +20,7 @@ RSF
 	density = FALSE
 	anchored = FALSE
 	item_flags = NOBLUDGEON
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	///The current matter count
 	var/matter = 0
 	///The max amount of matter in the device
@@ -86,7 +86,7 @@ RSF
 	var/cost = 0
 	//Warning, prepare for bodgecode
 	while(islist(target))//While target is a list we continue the loop
-		var/picked = show_radial_menu(user, src, formRadial(target), custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+		var/picked = show_radial_menu(user, src, formRadial(target), custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE)
 		if(!check_menu(user) || picked == null)
 			return
 		for(var/emem in target)//Back through target agian

@@ -35,9 +35,9 @@
 		flick(pulseicon, src)
 		radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION)
 
-/obj/item/nuke_core/suicide_act(mob/user)
+/obj/item/nuke_core/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is rubbing [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (TOXLOSS)
+	return TOXLOSS
 
 //nuke core box, for carrying the core
 /obj/item/nuke_core_container
@@ -61,7 +61,7 @@
 	core = ncore
 	icon_state = "core_container_loaded"
 	to_chat(user, span_warning("Container is sealing..."))
-	addtimer(CALLBACK(src, .proc/seal), 50)
+	addtimer(CALLBACK(src, PROC_REF(seal)), 50)
 	return TRUE
 
 /obj/item/nuke_core_container/proc/seal()
@@ -203,6 +203,7 @@
 	victim.visible_message(span_danger("As [victim] is hit by [src], both flash into dust and silence fills the room..."),\
 		span_userdanger("You're hit by [src] and everything suddenly goes silent.\n[src] flashes into dust, and soon as you can register this, you do as well."),\
 		span_hear("Everything suddenly goes silent."))
+	victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 	victim.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
@@ -217,6 +218,7 @@
 			span_hear("Everything suddenly goes silent."))
 	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 	user.dust()
 
 /obj/item/nuke_core_container/supermatter
@@ -237,7 +239,7 @@
 	T.icon_state = "supermatter_tongs"
 	icon_state = "core_container_loaded"
 	to_chat(user, span_warning("Container is sealing..."))
-	addtimer(CALLBACK(src, .proc/seal), 50)
+	addtimer(CALLBACK(src, PROC_REF(seal)), 50)
 	return TRUE
 
 /obj/item/nuke_core_container/supermatter/seal()
@@ -316,6 +318,7 @@
 		var/mob/living/victim = AM
 		if(victim.incorporeal_move || victim.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
 			return
+		victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 		victim.dust()
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(victim)].", INVESTIGATE_ENGINE)
@@ -329,6 +332,7 @@
 		user.visible_message(span_danger("As [user] touches [AM] with \the [src], both flash into dust and silence fills the room..."),\
 			span_userdanger("You touch [AM] with [src], and everything suddenly goes silent.\n[AM] and [sliver] flash into dust, and soon as you can register this, you do as well."),\
 			span_hear("Everything suddenly goes silent."))
+		user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 		user.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)

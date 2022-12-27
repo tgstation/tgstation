@@ -22,7 +22,7 @@
 	button_icon_state = "alien_evolve_drone"
 	plasma_cost = 500
 
-/datum/action/cooldown/alien/evolve_to_praetorian/IsAvailable()
+/datum/action/cooldown/alien/evolve_to_praetorian/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

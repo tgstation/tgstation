@@ -123,7 +123,7 @@
 	icon_state = "raw_green_lasagne"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
-	foodtypes = VEGETABLES | GRAIN | NUTS
+	foodtypes = VEGETABLES | GRAIN | NUTS | RAW
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/food/raw_green_lasagne/MakeBakeable()
@@ -141,7 +141,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/green_lasagne/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 
 /obj/item/food/green_lasagne_slice
 	name = "green lasagne al forno slice"
@@ -160,7 +160,7 @@
 	icon_state = "raw_baked_rice"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
-	foodtypes = VEGETABLES | GRAIN
+	foodtypes = VEGETABLES | GRAIN | RAW
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/food/raw_baked_rice/MakeBakeable()
@@ -178,7 +178,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/big_baked_rice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/lil_baked_rice
 	name = "lil baked rice"
@@ -508,7 +508,7 @@
 	icon_state = "raw_margherita_pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("dough" = 1, "tomato" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 
 /obj/item/food/raw_mothic_margherita/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_margherita, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -539,7 +539,7 @@
 	icon_state = "raw_firecracker_pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/bbqsauce = 6, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/capsaicin = 10)
 	tastes = list("dough" = 1, "chili" = 1, "corn" = 1, "cheese" = 1, "bbq sauce" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 
 /obj/item/food/raw_mothic_firecracker/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_firecracker, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -570,7 +570,7 @@
 	icon_state = "raw_five_cheese_pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("dough" = 1, "cheese" = 1, "more cheese" = 1, "excessive amounts of cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 
 /obj/item/food/raw_mothic_five_cheese/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_five_cheese, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -601,7 +601,7 @@
 	icon_state = "raw_white_pie_pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("dough" = 1, "cheese" = 1, "herbs" = 1, "garlic" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 
 /obj/item/food/raw_mothic_white_pie/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_white_pie, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -632,7 +632,7 @@
 	icon_state = "raw_pesto_pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("dough" = 1, "pesto" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
+	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
 
 /obj/item/food/raw_mothic_pesto/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_pesto, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -644,7 +644,7 @@
 	icon_state = "pesto_pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "pesto" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
+	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
 	slice_type = /obj/item/food/pizzaslice/mothic_pesto
 	boxtag = "Presto Pesto"
 
@@ -663,7 +663,7 @@
 	icon_state = "raw_garlic_pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("dough" = 1, "garlic" = 1, "butter" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN | VEGETABLES | RAW
 
 /obj/item/food/raw_mothic_garlic/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_garlic, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -697,9 +697,8 @@
 	tastes = list("cornbread" = 10)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/bread/corn/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/corn, 6)
+	slice_type = /obj/item/food/breadslice/corn
+	yield = 6
 
 /obj/item/food/breadslice/corn
 	name = "cornbread slice"
@@ -728,9 +727,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sugar = 20)
 	tastes = list("vanilla" = 1, "clouds" = 1, "chocolate" = 1)
 	foodtypes = VEGETABLES | SUGAR
-
-/obj/item/food/cake/mothmallow/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/mothmallow, 6)
+	slice_type = /obj/item/food/cakeslice/mothmallow
+	yield = 6
 
 /obj/item/food/cakeslice/mothmallow
 	name = "mothmallow"

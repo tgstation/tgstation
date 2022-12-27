@@ -4,34 +4,34 @@
 
 /datum/design/leftarm
 	name = "Left Arm"
-	id = "l_arm"
+	id = "arm/left"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
-	build_path = /obj/item/bodypart/l_arm
+	build_path = /obj/item/bodypart/arm/left
 	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL)
 
 /datum/design/rightarm
 	name = "Right Arm"
-	id = "r_arm"
+	id = "arm/right"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
-	build_path = /obj/item/bodypart/r_arm
+	build_path = /obj/item/bodypart/arm/right
 	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL)
 
 /datum/design/leftleg
 	name = "Left Leg"
-	id = "l_leg"
+	id = "leg/left"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
-	build_path = /obj/item/bodypart/l_leg
+	build_path = /obj/item/bodypart/leg/left
 	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_DIGITIGRADE)
 
 /datum/design/rightleg
 	name = "Right Leg"
-	id = "r_leg"
+	id = "leg/right"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
-	build_path = /obj/item/bodypart/r_leg
+	build_path = /obj/item/bodypart/leg/right
 	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_DIGITIGRADE)
 
 //Non-limb limb designs

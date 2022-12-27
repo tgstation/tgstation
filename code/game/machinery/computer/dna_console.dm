@@ -205,6 +205,11 @@
 			return
 	return ..()
 
+/obj/machinery/computer/scan_consolenew/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		stored_research = tool.buffer
+	return TRUE
+
 /obj/machinery/computer/scan_consolenew/AltClick(mob/user)
 	// Make sure the user can interact with the machine.
 	. = ..()
@@ -231,8 +236,9 @@
 	set_default_state()
 
 	// Link machine with research techweb. Used for discovering and accessing
-	//  already discovered mutations
-	stored_research = SSresearch.science_tech
+	// already discovered mutations
+	if(!CONFIG_GET(flag/no_default_techweb_link))
+		stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -1558,13 +1564,8 @@
 		// params["mutref"] - ATOM Ref of specific mutation to add to the injector
 		// params["advinj"] - Name of the advanced injector to add the mutation to
 		if("add_advinj_mut")
-			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
-			//  operational guard checks.
-			// This is needed because this operation can only be completed from the
-			//  genetic sequencer.
-			if(!can_modify_occupant())
+			if(!scanner_operational())
 				return
-
 			var/adv_inj = params["advinj"]
 
 			// GUARD CHECK - Make sure our advanced injector actually exists. This
@@ -1592,6 +1593,9 @@
 				return
 
 			var/bref = params["mutref"]
+			if(search_flag & SEARCH_OCCUPANT)
+				if(!can_modify_occupant())
+					return
 			// We've already made sure we can modify the occupant, so this is safe to
 			//  call
 			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flag)
@@ -2291,7 +2295,7 @@
 			connected_scanner.set_linked_console(null)
 	connected_scanner = new_scanner
 	if(connected_scanner)
-		RegisterSignal(connected_scanner, COMSIG_PARENT_QDELETING, .proc/react_to_scanner_del)
+		RegisterSignal(connected_scanner, COMSIG_PARENT_QDELETING, PROC_REF(react_to_scanner_del))
 		connected_scanner.set_linked_console(src)
 
 /obj/machinery/computer/scan_consolenew/proc/react_to_scanner_del(datum/source)

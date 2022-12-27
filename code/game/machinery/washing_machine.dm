@@ -273,6 +273,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/washer)
 	washer.bloody_mess = TRUE
+	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
+	gib()
+
+/mob/living/basic/pet/machine_wash(obj/machinery/washing_machine/washer)
+	washer.bloody_mess = TRUE
 	gib()
 
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
@@ -286,11 +291,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		can_adjust = initial(U.can_adjust)
 		if(!can_adjust && adjusted) //we deadjust the uniform if it's now unadjustable
 			toggle_jumpsuit_adjust()
-
-/obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/washer)
-	freshly_laundered = TRUE
-	addtimer(VARSET_CALLBACK(src, freshly_laundered, FALSE), 5 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
-	..()
 
 /obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/washer)
 	..()
@@ -373,7 +373,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(L.buckled || L.has_buckled_mobs())
 			return
 		if(state_open)
-			if(istype(L, /mob/living/simple_animal/pet))
+			if(istype(L, /mob/living/simple_animal/pet) || istype(L, /mob/living/basic/pet))
 				L.forceMove(src)
 				update_appearance()
 		return
@@ -404,7 +404,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
 		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/wash_cycle), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(wash_cycle)), 20 SECONDS)
 	START_PROCESSING(SSfastprocess, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

@@ -1,7 +1,7 @@
 /datum/component/gags_recolorable
 
 /datum/component/gags_recolorable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 
 /datum/component/gags_recolorable/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
@@ -19,7 +19,7 @@
 	if(can.is_capped || can.check_empty())
 		return
 
-	INVOKE_ASYNC(src, .proc/open_ui, user, can)
+	INVOKE_ASYNC(src, PROC_REF(open_ui), user, can)
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/gags_recolorable/proc/open_ui(mob/user, obj/item/toy/crayon/spraycan/can)
@@ -39,7 +39,7 @@
 			allowed_configs += "[initial(item.greyscale_config_inhand_right)]"
 
 	var/datum/greyscale_modify_menu/spray_paint/menu = new(
-		atom_parent, user, allowed_configs, CALLBACK(src, .proc/recolor, user, can),
+		atom_parent, user, allowed_configs, CALLBACK(src, PROC_REF(recolor), user, can),
 		starting_icon_state = initial(atom_parent.icon_state),
 		starting_config = initial(atom_parent.greyscale_config),
 		starting_colors = atom_parent.greyscale_colors,

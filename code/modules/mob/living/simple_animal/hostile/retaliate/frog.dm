@@ -22,7 +22,7 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	density = FALSE
-	faction = list("hostile")
+	faction = list("hostile", FACTION_MAINT_CREATURES)
 	attack_sound = 'sound/effects/reee.ogg'
 	butcher_results = list(/obj/item/food/nugget = 1)
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -53,7 +53,7 @@
 		poison_type = /datum/reagent/drug/mushroomhallucinogen
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/venomous, poison_type, poison_per_bite)

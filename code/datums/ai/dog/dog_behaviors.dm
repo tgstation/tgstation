@@ -133,7 +133,7 @@
 
 /datum/ai_behavior/play_dead/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/simple_pawn = controller.pawn
+	var/mob/living/basic/simple_pawn = controller.pawn
 	if(!istype(simple_pawn))
 		return
 
@@ -141,7 +141,7 @@
 		controller.blackboard[BB_DOG_PLAYING_DEAD] = TRUE
 		simple_pawn.emote("deathgasp", intentional=FALSE)
 		simple_pawn.icon_state = simple_pawn.icon_dead
-		if(simple_pawn.flip_on_death)
+		if(simple_pawn.basic_mob_flags & FLIP_ON_DEATH)
 			simple_pawn.transform = simple_pawn.transform.Turn(180)
 		simple_pawn.set_density(FALSE)
 
@@ -150,13 +150,13 @@
 
 /datum/ai_behavior/play_dead/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	var/mob/living/simple_animal/simple_pawn = controller.pawn
+	var/mob/living/basic/simple_pawn = controller.pawn
 	if(!istype(simple_pawn) || simple_pawn.stat) // imagine actually dying while playing dead. hell, imagine being the kid waiting for your pup to get back up :(
 		return
 	controller.blackboard[BB_DOG_PLAYING_DEAD] = FALSE
 	simple_pawn.visible_message(span_notice("[simple_pawn] springs to [simple_pawn.p_their()] feet, panting excitedly!"))
 	simple_pawn.icon_state = simple_pawn.icon_living
-	if(simple_pawn.flip_on_death)
+	if(simple_pawn.basic_mob_flags & FLIP_ON_DEATH)
 		simple_pawn.transform = simple_pawn.transform.Turn(180)
 	simple_pawn.set_density(initial(simple_pawn.density))
 
@@ -215,13 +215,19 @@
 
 	controller.blackboard[BB_DOG_HARASS_FRUSTRATION] = world.time
 
-	// make sure the pawn gets some temporary strength boost to actually attack the target instead of pathetically nuzzling them.
-	var/old_melee_lower = living_pawn.melee_damage_lower
-	var/old_melee_upper = living_pawn.melee_damage_upper
-	living_pawn.melee_damage_lower = max(5, old_melee_lower)
-	living_pawn.melee_damage_upper = max(10, old_melee_upper)
+	if(controller.blackboard[BB_DOG_HARASS_HARM])
+		// make sure the pawn gets some temporary strength boost to actually attack the target instead of pathetically nuzzling them.
+		var/old_melee_lower = living_pawn.melee_damage_lower
+		var/old_melee_upper = living_pawn.melee_damage_upper
+		living_pawn.melee_damage_lower = max(5, old_melee_lower)
+		living_pawn.melee_damage_upper = max(10, old_melee_upper)
 
-	living_pawn.UnarmedAttack(living_target, FALSE)
+		living_pawn.UnarmedAttack(living_target, FALSE)
 
-	living_pawn.melee_damage_lower = old_melee_lower
-	living_pawn.melee_damage_upper = old_melee_upper
+		living_pawn.melee_damage_lower = old_melee_lower
+		living_pawn.melee_damage_upper = old_melee_upper
+	else
+		if(prob(20))
+			living_pawn.do_attack_animation(living_target, ATTACK_EFFECT_DISARM)
+			playsound(living_target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			living_target.visible_message(span_danger("[living_pawn] paws ineffectually at [living_target]!"), span_danger("[living_pawn] paws ineffectually at you!"))

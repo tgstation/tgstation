@@ -16,7 +16,7 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/item_defibrillator
 
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
 	/// If the paddles are equipped (1) or on the defib (0)
@@ -44,6 +44,10 @@
 	/// The icon state for the emagged overlay, not applied if null
 	var/emagged_state = "defibunit-emagged"
 
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
+
 /obj/item/defibrillator/get_cell()
 	return cell
 
@@ -51,7 +55,7 @@
 	. = ..()
 	paddles = new paddle_type(src)
 	update_power()
-	RegisterSignal(paddles, COMSIG_DEFIBRILLATOR_SUCCESS, .proc/on_defib_success)
+	RegisterSignal(paddles, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(on_defib_success))
 
 /obj/item/defibrillator/loaded/Initialize(mapload) //starts with hicap
 	. = ..()
@@ -111,7 +115,7 @@
 	update_power()
 
 /obj/item/defibrillator/ui_action_click()
-	INVOKE_ASYNC(src, .proc/toggle_paddles)
+	INVOKE_ASYNC(src, PROC_REF(toggle_paddles))
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
@@ -217,7 +221,7 @@
 		remove_paddles(user)
 
 	update_power()
-	update_action_buttons()
+	update_item_action_buttons()
 
 
 /obj/item/defibrillator/equipped(mob/user, slot)
@@ -256,7 +260,7 @@
 			return FALSE
 
 /obj/item/defibrillator/proc/cooldowncheck()
-		addtimer(CALLBACK(src, .proc/finish_charging), cooldown_duration)
+		addtimer(CALLBACK(src, PROC_REF(finish_charging)), cooldown_duration)
 
 /obj/item/defibrillator/proc/finish_charging()
 	if(cell)
@@ -290,6 +294,10 @@
 	nocell_state = "defibcompact-nocell"
 	emagged_state = "defibcompact-emagged"
 
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
+
 /obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
 	if(slot & user.getBeltSlot())
 		return TRUE
@@ -315,6 +323,10 @@
 
 /obj/item/defibrillator/compact/combat/loaded
 	cell_removable = FALSE // Don't let people just have an infinite power cell
+
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize(mapload)
 	. = ..()
@@ -357,8 +369,12 @@
 	var/busy = FALSE
 	var/obj/item/defibrillator/defib
 	var/req_defib = TRUE // Whether or not the paddles require a defibrilator object
-	var/recharge_time = 6 SECONDS // Only applies to defibs that do not require a defibrilator. See: .proc/do_success
+	var/recharge_time = 6 SECONDS // Only applies to defibs that do not require a defibrilator. See: do_success()
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
+
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
 
 /obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
@@ -373,7 +389,7 @@
 	. = ..()
 	if(!req_defib)
 		return
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 
 /obj/item/shockpaddles/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -402,7 +418,7 @@
 		return
 	cooldown = TRUE
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/finish_recharge), time)
+	addtimer(CALLBACK(src, PROC_REF(finish_recharge)), time)
 
 /obj/item/shockpaddles/proc/finish_recharge()
 	var/turf/current_turf = get_turf(src)
@@ -422,12 +438,12 @@
 	busy = FALSE
 	update_appearance()
 
-/obj/item/shockpaddles/suicide_act(mob/user)
+/obj/item/shockpaddles/suicide_act(mob/living/user)
 	user.visible_message(span_danger("[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(req_defib)
 		defib.deductcharge(revivecost)
 	playsound(src, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/shockpaddles/update_icon_state()
 	icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
@@ -547,7 +563,7 @@
 		span_warning("You overcharge the paddles and begin to place them onto [H]'s chest..."))
 	busy = TRUE
 	update_appearance()
-	if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded)))
+	if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded))))
 		user.visible_message(span_notice("[user] places [src] on [H]'s chest."),
 			span_warning("You place [src] on [H]'s chest and begin to charge them."))
 		var/turf/T = get_turf(defib)
@@ -556,7 +572,7 @@
 			T.audible_message(span_warning("\The [defib] lets out an urgent beep and lets out a steadily rising hum..."))
 		else
 			user.audible_message(span_warning("[src] let out an urgent beep."))
-		if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded))) //Takes longer due to overcharging
+		if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //Takes longer due to overcharging
 			if(!H)
 				do_cancel()
 				return
@@ -587,11 +603,11 @@
 	user.visible_message(span_warning("[user] begins to place [src] on [H]'s chest."), span_warning("You begin to place [src] on [H]'s chest..."))
 	busy = TRUE
 	update_appearance()
-	if(do_after(user, 3 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+	if(do_after(user, 3 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message(span_notice("[user] places [src] on [H]'s chest."), span_warning("You place [src] on [H]'s chest."))
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, FALSE)
 		var/obj/item/organ/internal/heart = H.getorgan(/obj/item/organ/internal/heart)
-		if(do_after(user, 2 SECONDS, H, extra_checks = CALLBACK(src, .proc/is_wielded))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+		if(do_after(user, 2 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			if((!combat && !req_defib) || (req_defib && !defib.combat))
 				for(var/obj/item/clothing/C in H.get_equipped_items())
 					if((C.body_parts_covered & CHEST) && (C.clothing_flags & THICKMATERIAL)) //check to see if something is obscuring their chest.
@@ -651,7 +667,7 @@
 					H.set_heartattack(FALSE)
 					if(defib_result == DEFIB_POSSIBLE)
 						H.grab_ghost()
-					H.revive(full_heal = FALSE, admin_revive = FALSE)
+					H.revive()
 					H.emote("gasp")
 					H.set_jitter_if_lower(200 SECONDS)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
@@ -684,6 +700,10 @@
 	icon_state = "defibpaddles0"
 	inhand_icon_state = "defibpaddles0"
 	req_defib = FALSE
+
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
 
 /obj/item/shockpaddles/cyborg/attack(mob/M, mob/user)
 	if(iscyborg(user))

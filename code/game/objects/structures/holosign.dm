@@ -6,9 +6,16 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
 	max_integrity = 1
-	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/structure_holosign
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
+
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
@@ -59,6 +66,13 @@
 	max_integrity = 20
 	var/allow_walk = TRUE //can we pass through it on walk intent
 
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
+
 /obj/structure/holosign/barrier/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
@@ -75,6 +89,13 @@
 	desc = "When it says walk it means walk."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "holosign"
+
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holosign/barrier/wetsign/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -104,6 +125,18 @@
 	name = "sturdy holofirelock"
 	max_integrity = 150
 
+/obj/structure/holosign/barrier/atmos/tram
+	name = "tram atmos barrier"
+	max_integrity = 150
+	icon_state = "holo_tram"
+
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
+
 /obj/structure/holosign/barrier/atmos/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
@@ -123,6 +156,13 @@
 	max_integrity = 10
 	allow_walk = FALSE
 
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
+
 /obj/structure/holosign/barrier/cyborg/bullet_act(obj/projectile/P)
 	take_damage((P.damage / 5) , BRUTE, MELEE, 1) //Doesn't really matter what damage flag it is.
 	if(istype(P, /obj/projectile/energy/electrode))
@@ -138,6 +178,13 @@
 	alpha = 125 //lazy :)
 	var/force_allaccess = FALSE
 	var/buzzcd = 0
+
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holosign/barrier/medical/examine(mob/user)
 	. = ..()
@@ -184,6 +231,13 @@
 	max_integrity = 20
 	var/shockcd = 0
 
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
+
 /obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/projectile/P)
 	take_damage(P.damage, BRUTE, MELEE, 1) //Yeah no this doesn't get projectile resistance.
 	return BULLET_ACT_HIT
@@ -200,7 +254,7 @@
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier")
 			shockcd = TRUE
-			addtimer(CALLBACK(src, .proc/cooldown), 5)
+			addtimer(CALLBACK(src, PROC_REF(cooldown)), 5)
 
 /obj/structure/holosign/barrier/cyborg/hacked/Bumped(atom/movable/AM)
 	if(shockcd)
@@ -212,4 +266,4 @@
 	var/mob/living/M = AM
 	M.electrocute_act(15,"Energy Barrier")
 	shockcd = TRUE
-	addtimer(CALLBACK(src, .proc/cooldown), 5)
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), 5)

@@ -22,12 +22,20 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_wrench
 
-/obj/item/wrench/suicide_act(mob/user)
+/datum/armor/item_wrench
+	fire = 50
+	acid = 30
+
+/obj/item/wrench/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+
+/obj/item/wrench/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/wrench/abductor
 	name = "alien wrench"
@@ -50,6 +58,10 @@
 	attack_verb_simple = list("heal", "medical", "tap", "poke", "analyze")
 	///var to hold the name of the person who suicided
 	var/suicider
+
+/datum/armor/item_wrench
+	fire = 50
+	acid = 30
 
 /obj/item/wrench/medical/examine(mob/user)
 	. = ..()
@@ -92,6 +104,10 @@
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
 
+/datum/armor/item_wrench
+	fire = 50
+	acid = 30
+
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
@@ -100,7 +116,7 @@
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].

@@ -1,6 +1,6 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
-	create_reagents(1000, REAGENT_HOLDER_ALIVE)
+	create_carbon_reagents()
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	register_context()
 
@@ -9,8 +9,8 @@
 
 	GLOB.carbon_list += src
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_PRESHOVE = .proc/disarm_precollide,
-		COMSIG_CARBON_DISARM_COLLIDE = .proc/disarm_collision,
+		COMSIG_CARBON_DISARM_PRESHOVE = PROC_REF(disarm_precollide),
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(disarm_collision),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -37,6 +37,9 @@
 
 	if(!held_index)
 		held_index = (active_hand_index % held_items.len)+1
+
+	if(!isnum(held_index))
+		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
 
 	var/oindex = active_hand_index
 	active_hand_index = held_index
@@ -67,12 +70,16 @@
 		mode() // Activate held item
 
 /mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
-	for(var/datum/surgery/S in surgeries)
-		if(body_position == LYING_DOWN || !S.lying_required)
-			var/list/modifiers = params2list(params)
-			if((S.self_operable || user != src) && !user.combat_mode)
-				if(S.next_step(user, modifiers))
-					return 1
+	for(var/datum/surgery/operations as anything in surgeries)
+		if(user.combat_mode)
+			break
+		if(body_position != LYING_DOWN && (operations.surgery_flags & SURGERY_REQUIRE_RESTING))
+			continue
+		if(!(operations.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
+			continue
+		var/list/modifiers = params2list(params)
+		if(operations.next_step(user, modifiers))
+			return TRUE
 
 	if(!all_wounds || !(!user.combat_mode || user == src))
 		return ..()
@@ -148,21 +155,19 @@
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CARBON_THROW_THING, src, target)
-	return
+	return TRUE
 
 /mob/living/carbon/throw_item(atom/target)
 	. = ..()
 	throw_mode_off(THROW_MODE_TOGGLE)
 	if(!target || !isturf(loc))
-		return
+		return FALSE
 	if(istype(target, /atom/movable/screen))
-		return
-
+		return FALSE
 	var/atom/movable/thrown_thing
-	var/obj/item/I = get_active_held_item()
+	var/obj/item/held_item = get_active_held_item()
 	var/neckgrab_throw = FALSE // we can't check for if it's a neckgrab throw when totaling up power_throw since we've already stopped pulling them by then, so get it early
-
-	if(!I)
+	if(!held_item)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
 			var/mob/living/throwable_mob = pulling
 			if(!throwable_mob.buckled)
@@ -172,35 +177,39 @@
 				stop_pulling()
 				if(HAS_TRAIT(src, TRAIT_PACIFISM))
 					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
-					return
+					return FALSE
 	else
-		thrown_thing = I.on_thrown(src, target)
-
-	if(thrown_thing)
-
-		if(isliving(thrown_thing))
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-			var/turf/end_T = get_turf(target)
-			if(start_T && end_T)
-				log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
-		var/power_throw = 0
-		if(HAS_TRAIT(src, TRAIT_HULK))
-			power_throw++
-		if(HAS_TRAIT(src, TRAIT_DWARF))
-			power_throw--
-		if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
-			power_throw++
-		if(neckgrab_throw)
-			power_throw++
-		visible_message(span_danger("[src] throws [thrown_thing][power_throw ? " really hard!" : "."]"), \
-						span_danger("You throw [thrown_thing][power_throw ? " really hard!" : "."]"))
-		log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
-		newtonian_move(get_dir(target, src))
-		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
-
+		thrown_thing = held_item.on_thrown(src, target)
+	if(!thrown_thing)
+		return FALSE
+	if(isliving(thrown_thing))
+		var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
+		var/turf/end_T = get_turf(target)
+		if(start_T && end_T)
+			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
+	var/power_throw = 0
+	if(HAS_TRAIT(src, TRAIT_HULK))
+		power_throw++
+	if(HAS_TRAIT(src, TRAIT_DWARF))
+		power_throw--
+	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
+		power_throw++
+	if(neckgrab_throw)
+		power_throw++
+	visible_message(span_danger("[src] throws [thrown_thing][power_throw ? " really hard!" : "."]"), \
+					span_danger("You throw [thrown_thing][power_throw ? " really hard!" : "."]"))
+	log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
+	newtonian_move(get_dir(target, src))
+	thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
+
+/mob/living/carbon/proc/create_carbon_reagents()
+	if (!isnull(reagents))
+		return
+
+	create_reagents(1000, REAGENT_HOLDER_ALIVE)
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
@@ -381,7 +390,7 @@
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
 		if(-INFINITY to 0) //attack yourself
-			INVOKE_ASYNC(I, /obj/item.proc/attack, src, src)
+			INVOKE_ASYNC(I, TYPE_PROC_REF(/obj/item, attack), src, src)
 		if(1 to 30) //throw it at yourself
 			I.throw_impact(src)
 		if(31 to 60) //Throw object in facing direction
@@ -396,17 +405,6 @@
 		if(61 to 90) //throw it down to the floor
 			var/turf/target = get_turf(loc)
 			I.safe_throw_at(target,I.throw_range,I.throw_speed,src, force = move_force)
-
-/mob/living/carbon/get_status_tab_items()
-	. = ..()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
-	if(vessel)
-		. += "Plasma Stored: [vessel.stored_plasma]/[vessel.max_plasma]"
-	var/obj/item/organ/internal/heart/vampire/darkheart = getorgan(/obj/item/organ/internal/heart/vampire)
-	if(darkheart)
-		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."
-	if(locate(/obj/item/assembly/health) in src)
-		. += "Health: [health]"
 
 /mob/living/carbon/attack_ui(slot, params)
 	if(!has_hand_for_held_index(active_hand_index))
@@ -514,14 +512,11 @@
 		return
 	var/total_burn = 0
 	var/total_brute = 0
-	var/total_stamina = 0
 	for(var/X in bodyparts) //hardcoded to streamline things a bit
 		var/obj/item/bodypart/BP = X
 		total_brute += (BP.brute_dam * BP.body_damage_coeff)
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
-		total_stamina += (BP.stamina_dam * BP.stam_damage_coeff)
 	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION))
-	staminaloss = round(total_stamina, DAMAGE_PRECISION)
 	update_stat()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
 		become_husk(BURN)
@@ -530,7 +525,7 @@
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
-	SEND_SIGNAL(src, COMSIG_CARBON_HEALTH_UPDATE)
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
@@ -607,7 +602,7 @@
 		set_invis_see(see_override)
 
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		new_sight = SEE_BLACKNESS
+		new_sight = NONE
 
 	set_sight(new_sight)
 	return ..()
@@ -647,7 +642,7 @@
 	if(!client)
 		return
 
-	if(health <= crit_threshold)
+	if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOCRITOVERLAY))
 		var/severity = 0
 		switch(health)
 			if(-20 to -10)
@@ -771,28 +766,33 @@
 	else
 		hud_used.healths.icon_state = "health6"
 
-/mob/living/carbon/update_stamina_hud(shown_stamina_amount)
+/mob/living/carbon/update_stamina_hud(shown_stamina_loss)
 	if(!client || !hud_used?.stamina)
 		return
-	if(stat == DEAD || IsStun() || IsParalyzed() || IsImmobilized() || IsKnockdown() || IsFrozen())
-		hud_used.stamina.icon_state = "stamina6"
+
+	var/stam_crit_threshold = maxHealth - crit_threshold
+
+	if(stat == DEAD)
+		hud_used.stamina.icon_state = "stamina_dead"
 	else
-		if(shown_stamina_amount == null)
-			shown_stamina_amount = health - getStaminaLoss() - crit_threshold
-		if(shown_stamina_amount >= health)
-			hud_used.stamina.icon_state = "stamina0"
-		else if(shown_stamina_amount > health*0.8)
-			hud_used.stamina.icon_state = "stamina1"
-		else if(shown_stamina_amount > health*0.6)
-			hud_used.stamina.icon_state = "stamina2"
-		else if(shown_stamina_amount > health*0.4)
-			hud_used.stamina.icon_state = "stamina3"
-		else if(shown_stamina_amount > health*0.2)
-			hud_used.stamina.icon_state = "stamina4"
-		else if(shown_stamina_amount > 0)
-			hud_used.stamina.icon_state = "stamina5"
+
+		if(shown_stamina_loss == null)
+			shown_stamina_loss = getStaminaLoss()
+
+		if(shown_stamina_loss >= stam_crit_threshold)
+			hud_used.stamina.icon_state = "stamina_crit"
+		else if(shown_stamina_loss > maxHealth*0.8)
+			hud_used.stamina.icon_state = "stamina_5"
+		else if(shown_stamina_loss > maxHealth*0.6)
+			hud_used.stamina.icon_state = "stamina_4"
+		else if(shown_stamina_loss > maxHealth*0.4)
+			hud_used.stamina.icon_state = "stamina_3"
+		else if(shown_stamina_loss > maxHealth*0.2)
+			hud_used.stamina.icon_state = "stamina_2"
+		else if(shown_stamina_loss > 0)
+			hud_used.stamina.icon_state = "stamina_1"
 		else
-			hud_used.stamina.icon_state = "stamina6"
+			hud_used.stamina.icon_state = "stamina_full"
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	if(hud_used?.spacesuit)
@@ -845,9 +845,21 @@
 	else
 		clear_alert(ALERT_HANDCUFFED)
 		clear_mood_event("handcuffed")
-	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
+	update_mob_action_buttons() //some of our action buttons might be unusable when we're handcuffed.
 	update_worn_handcuffs()
 	update_hud_handcuffed()
+
+/mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	if(excess_healing)
+		if(dna && !(NOBLOOD in dna.species.species_traits))
+			blood_volume += (excess_healing * 2) //1 excess = 10 blood
+
+		for(var/obj/item/organ/organ as anything in internal_organs)
+			if(organ.organ_flags & ORGAN_SYNTHETIC)
+				continue
+			organ.applyOrganDamage(excess_healing * -1) //1 excess = 5 organ damage healed
+
+	return ..()
 
 /mob/living/carbon/heal_and_revive(heal_to = 75, revive_message)
 	// We can't heal them if they're missing a heart
@@ -859,41 +871,51 @@
 		return FALSE
 
 	// And we can't heal them if they're missing their liver
-	if(!getorganslot(ORGAN_SLOT_LIVER))
+	if(!HAS_TRAIT(src, TRAIT_NOMETABOLISM) && !getorganslot(ORGAN_SLOT_LIVER))
 		return FALSE
 
 	return ..()
 
-/mob/living/carbon/fully_heal(admin_revive = FALSE)
-	if(reagents)
-		reagents.clear_reagents()
-	if(mind)
-		for(var/addiction_type in subtypesof(/datum/addiction))
-			mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
-	for(var/obj/item/organ/organ as anything in internal_organs)
-		organ.setOrganDamage(0)
-	for(var/thing in diseases)
-		var/datum/disease/D = thing
-		if(D.severity != DISEASE_SEVERITY_POSITIVE)
-			D.cure(FALSE)
-	for(var/thing in all_wounds)
-		var/datum/wound/W = thing
-		W.remove_wound()
-	if(admin_revive)
-		suiciding = FALSE
+/mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
+
+	// Should be handled via signal on embedded, or via heal on bodypart
+	// Otherwise I don't care to give it a separate flag
+	remove_all_embedded_objects()
+
+	if(heal_flags & HEAL_NEGATIVE_DISEASES)
+		for(var/datum/disease/disease as anything in diseases)
+			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
+				disease.cure(FALSE)
+
+	if(heal_flags & HEAL_WOUNDS)
+		for(var/datum/wound/wound as anything in all_wounds)
+			wound.remove_wound()
+
+	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
+
+	if(heal_flags & HEAL_ORGANS)
 		regenerate_organs()
+
+	if(heal_flags & HEAL_TRAUMAS)
+		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+		// Addictions are like traumas
+		if(mind)
+			for(var/addiction_type in subtypesof(/datum/addiction))
+				mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
+
+	if(heal_flags & HEAL_RESTRAINTS)
 		QDEL_NULL(handcuffed)
 		QDEL_NULL(legcuffed)
 		set_handcuffed(null)
 		update_handcuffed()
-	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
-	..()
+
+	return ..()
 
 /mob/living/carbon/can_be_revived()
-	. = ..()
 	if(!getorgan(/obj/item/organ/internal/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
+	return ..()
 
 /mob/living/carbon/proc/can_defib()
 
@@ -949,11 +971,14 @@
 		to_chat(user, span_notice("You retrieve some of [src]\'s internal organs!"))
 	remove_all_embedded_objects()
 
-/mob/living/carbon/proc/create_bodyparts()
+/// Creates body parts for this carbon completely from scratch.
+/// Optionally takes a map of body zones to what type to instantiate instead of them.
+/mob/living/carbon/proc/create_bodyparts(list/overrides)
 	var/l_arm_index_next = -1
 	var/r_arm_index_next = 0
-	for(var/bodypart_path in bodyparts)
-		var/obj/item/bodypart/bodypart_instance = new bodypart_path()
+	for(var/obj/item/bodypart/bodypart_path as anything in bodyparts)
+		var/real_body_part_path = overrides?[initial(bodypart_path.body_zone)] || bodypart_path
+		var/obj/item/bodypart/bodypart_instance = new real_body_part_path()
 		bodypart_instance.set_owner(src)
 		bodyparts.Remove(bodypart_path)
 		add_bodypart(bodypart_instance)
@@ -989,7 +1014,7 @@
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
-
+	old_bodypart.on_removal()
 	bodyparts -= old_bodypart
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
@@ -1042,15 +1067,15 @@
 				if(BODY_ZONE_CHEST)
 					limbtypes = typesof(/obj/item/bodypart/chest)
 				if(BODY_ZONE_R_ARM)
-					limbtypes = typesof(/obj/item/bodypart/r_arm)
+					limbtypes = typesof(/obj/item/bodypart/arm/right)
 				if(BODY_ZONE_L_ARM)
-					limbtypes = typesof(/obj/item/bodypart/l_arm)
+					limbtypes = typesof(/obj/item/bodypart/arm/left)
 				if(BODY_ZONE_HEAD)
 					limbtypes = typesof(/obj/item/bodypart/head)
 				if(BODY_ZONE_L_LEG)
-					limbtypes = typesof(/obj/item/bodypart/l_leg)
+					limbtypes = typesof(/obj/item/bodypart/leg/left)
 				if(BODY_ZONE_R_LEG)
-					limbtypes = typesof(/obj/item/bodypart/r_leg)
+					limbtypes = typesof(/obj/item/bodypart/leg/right)
 			switch(edit_action)
 				if("remove")
 					if(BP)
@@ -1088,7 +1113,7 @@
 		for(var/i in artpaths)
 			var/datum/martial_art/M = i
 			artnames[initial(M.name)] = M
-		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in sort_list(artnames, /proc/cmp_typepaths_asc)
+		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1104,7 +1129,7 @@
 		if(!check_rights(NONE))
 			return
 		var/list/traumas = subtypesof(/datum/brain_trauma)
-		var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in sort_list(traumas, /proc/cmp_typepaths_asc)
+		var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1227,14 +1252,6 @@
 /mob/living/carbon/is_face_visible()
 	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
 
-/**
- * get_biological_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums
- *
- * go look at the species def for more info [/datum/species/proc/get_biological_state]
- */
-/mob/living/carbon/proc/get_biological_state()
-	return BIO_FLESH_BONE
-
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)
 	if (ismecha(loc))
@@ -1311,9 +1328,9 @@
 
 
 /mob/living/carbon/get_attack_type()
-	var/datum/species/species = dna?.species
-	if (species)
-		return species.attack_type
+	if(has_active_hand())
+		var/obj/item/bodypart/arm/active_arm = get_active_hand()
+		return active_arm.attack_type
 	return ..()
 
 

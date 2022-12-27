@@ -25,7 +25,7 @@
 	premium = list(
 		/obj/item/assembly/igniter/condenser = 2,
 		/obj/item/circuitboard/machine/vendor = 3,
-		/obj/item/price_tagger = 3,
+		/obj/item/universal_scanner = 3,
 		/obj/item/vending_refill/custom = 3,
 	)
 

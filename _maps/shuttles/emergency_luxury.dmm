@@ -23,10 +23,7 @@
 "ae" = (
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	dwidth = 5;
-	height = 14;
-	name = "Luxurious Emergency Shuttle";
-	width = 25
+	name = "Luxurious Emergency Shuttle"
 	},
 /obj/machinery/scanner_gate/luxury_shuttle{
 	layer = 2.6

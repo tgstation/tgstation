@@ -36,7 +36,7 @@
 
 /datum/component/gas_leaker/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, .proc/start_processing)
+	RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(start_processing))
 
 /datum/component/gas_leaker/UnregisterFromParent()
 	. = ..()

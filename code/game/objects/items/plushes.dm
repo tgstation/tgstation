@@ -609,7 +609,7 @@
 /obj/item/toy/plush/goatplushie/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/splat,
+		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = PROC_REF(splat),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

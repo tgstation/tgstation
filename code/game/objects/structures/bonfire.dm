@@ -34,7 +34,7 @@
 /obj/structure/bonfire/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -150,7 +150,7 @@
 			var/obj/burned_object = burn_target
 			if(grill && isitem(burned_object))
 				var/obj/item/grilled_item = burned_object
-				SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILLED, src, delta_time) //Not a big fan, maybe make this use fire_act() in the future.
+				SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, delta_time) //Not a big fan, maybe make this use fire_act() in the future.
 				continue
 			burned_object.fire_act(1000, 250 * delta_time)
 
@@ -187,9 +187,9 @@
 	fade = 1 SECONDS
 	grow = -0.01
 	velocity = list(0, 0)
-	position = generator("circle", 0, 16, NORMAL_RAND)
-	drift = generator("vector", list(0, -0.2), list(0, 0.2))
+	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
 	gravity = list(0, 0.95)
-	scale = generator("vector", list(0.3, 0.3), list(1,1), NORMAL_RAND)
+	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), NORMAL_RAND)
 	rotation = 30
-	spin = generator("num", -20, 20)
+	spin = generator(GEN_NUM, -20, 20)

@@ -6,7 +6,7 @@
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "detective"
+	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
 	flags_1 = CONDUCT_1
@@ -43,6 +43,8 @@
 	var/semicd = 0 //cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
 	var/dual_wield_spread = 24 //additional spread when dual wielding
+	///Can we hold up our target with this? Default to yes
+	var/can_hold_up = TRUE
 
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
@@ -192,6 +194,8 @@
 /obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
 	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
 		return ..() //if they're out of range, just shootem.
+	if(!can_hold_up)
+		return ..()
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
 		if(gunpoint_component.target == victim)
@@ -249,7 +253,7 @@
 
 	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands
 	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
-		to_chat(user, span_warning("You need two hands to fire [src]!"))
+		balloon_alert(user, "use both hands!")
 		return
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
@@ -262,7 +266,7 @@
 			else if(G.can_trigger_gun(user))
 				bonus_spread += dual_wield_spread
 				loop_counter++
-				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
+				addtimer(CALLBACK(G, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), loop_counter)
 
 	return process_fire(target, user, TRUE, params, null, bonus_spread)
 
@@ -370,7 +374,7 @@
 	if(burst_size > 1)
 		firing_burst = TRUE
 		for(var/i = 1 to burst_size)
-			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), modified_delay * (i - 1))
+			addtimer(CALLBACK(src, PROC_REF(process_burst), user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), modified_delay * (i - 1))
 	else
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
@@ -393,7 +397,7 @@
 		process_chamber()
 		update_appearance()
 		semicd = TRUE
-		addtimer(CALLBACK(src, .proc/reset_semicd), modified_delay)
+		addtimer(CALLBACK(src, PROC_REF(reset_semicd)), modified_delay)
 
 	if(user)
 		user.update_held_items()

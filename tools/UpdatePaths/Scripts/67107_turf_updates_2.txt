@@ -88,9 +88,9 @@
 
 /area/tcommsat/oldaisat : /area/ruin/tcommsat_oldaisat
 
-/area/solars/ancientstation/charlie/solars : /area/ruin/solars/ancientstation/charlie/solars
-/area/solars/derelict_starboard : /area/ruin/solars/derelict_starboard
-/area/solars/derelict_aft : /area/ruin/solars/derelict_aft
+/area/solars/ancientstation/charlie/solars : /area/ruin/space/solars/ancientstation/charlie/solars
+/area/solars/derelict_starboard : /area/ruin/space/solars/derelict_starboard
+/area/solars/derelict_aft : /area/ruin/space/solars/derelict_aft
 
 /area/ai_multicam_room : /area/centcom/ai_multicam_room
 
