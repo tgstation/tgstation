@@ -2,12 +2,20 @@
 	name = "rtd"
 
 /datum/asset/spritesheet/rtd/create_spritesheets()
+	//some tiles may share the same icon but have diffrent properties to animate that icon
+	//so we keep track of what icons we registered
+	var/list/registered = list()
+
 	for(var/main_root in GLOB.floor_designs)
 		for(var/sub_category in GLOB.floor_designs[main_root])
 			for(var/list/design in  GLOB.floor_designs[main_root][sub_category])
 				var/obj/item/stack/tile/type = design["type"]
 				var/icon_state = initial(type.icon_state)
+				if(registered[icon_state])
+					continue
+
 				Insert(sprite_name = icon_state, I = 'icons/obj/tiles.dmi', icon_state = icon_state)
+				registered[icon_state] = TRUE
 
 				var/list/tile_directions = design["tile_rotate_dirs"]
 				if(tile_directions == null)
