@@ -97,11 +97,12 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	icon_state = "hologram"
 	anchored = TRUE
 
+	//Holds all the default details of the card
 	var/datum/card/template
 
 	var/summon_power
 	var/summon_resolve
-	var/tapped
+	var/tapped = FALSE
 
 	var/obj/effect/overlay/card_summon/hologram
 	var/obj/effect/overlay/status_display_text/power_overlay
