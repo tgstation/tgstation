@@ -192,7 +192,7 @@
 
 /mob/living/carbon/human/on_job_equipping(datum/job/equipping)
 	var/payday
-	if(CONFIG_GET(flag/no_nonhuman_wage_gap) || dna.species.id == SPECIES_HUMAN)
+	if(CONFIG_GET(flag/equal_nonhuman_wages) || dna.species.id == SPECIES_HUMAN)
 		payday = 1
 	else
 		payday = CONFIG_GET(number/nonhuman_payday_multiplier)

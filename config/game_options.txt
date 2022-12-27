@@ -123,7 +123,7 @@ PROTECT_ROLES_FROM_ANTAGONIST
 #ENFORCE_HUMAN_AUTHORITY_ON_EVERYONE
 
 ## Prevents non-human species from having their pay cut.
-#NO_NONHUMAN_WAGE_GAP
+#EQUAL_NONHUMAN_WAGES
 
 ## Multiplier for non-humans' paycheck values. Unused if NO_NONHUMAN_WAGE_GAP is uncommented.
 NONHUMAN_PAYDAY_MULTIPLIER 0.75

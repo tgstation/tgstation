@@ -110,7 +110,7 @@
 
 /datum/config_entry/flag/enforce_human_authority_on_everyone //If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
 
-/datum/config_entry/flag/no_nonhuman_wage_gap //Prevents non-humans from having their pay multiplied.
+/datum/config_entry/flag/equal_nonhuman_wages //Prevents non-humans from having their pay multiplied.
 
 /datum/config_entry/number/nonhuman_payday_multiplier // Multiplier for non-human pay.
 	default = 0.75
