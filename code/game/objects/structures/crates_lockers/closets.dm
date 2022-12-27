@@ -9,7 +9,7 @@
 	drag_slowdown = 1.5 // Same as a prone mob
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 60)
+	armor_type = /datum/armor/structure_closet
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	/// The overlay for the closet's door
@@ -69,6 +69,14 @@
 	var/can_install_electronics = TRUE
 
 	var/contents_initialized = FALSE
+
+/datum/armor/structure_closet
+	melee = 20
+	bullet = 10
+	laser = 10
+	bomb = 10
+	fire = 70
+	acid = 60
 
 /obj/structure/closet/Initialize(mapload)
 	. = ..()

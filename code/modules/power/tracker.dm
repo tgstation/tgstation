@@ -50,7 +50,7 @@
 	overlay.icon_state = icon_state
 	overlay.layer = FLY_LAYER
 	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
-	overlay.pixel_y = z_offset
+	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay
 

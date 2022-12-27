@@ -13,8 +13,6 @@
 		FACEHAIR,
 		LIPS,
 		DRINKSBLOOD,
-		HAS_FLESH,
-		HAS_BONE,
 		BLOOD_CLANS,
 	)
 	inherent_traits = list(

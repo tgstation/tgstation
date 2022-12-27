@@ -68,5 +68,5 @@
 		var/mob/living/target = examiner
 		examine_text += span_danger("You can feel something in [eaten_light.p_them()] gnash at your eyes!")
 		target.adjust_blindness(5)
-		target.blur_eyes(10)
+		target.set_eye_blur_if_lower(20 SECONDS)
 	return NONE

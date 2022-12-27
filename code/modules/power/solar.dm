@@ -56,6 +56,7 @@
 	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
 	overlay.appearance_flags = TILE_BOUND
 	overlay.icon_state = icon_state
+	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
 	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay

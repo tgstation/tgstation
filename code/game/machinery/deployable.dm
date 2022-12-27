@@ -138,11 +138,19 @@
 	anchored = FALSE
 	max_integrity = 180
 	proj_pass_rate = 20
-	armor = list(MELEE = 10, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 10, ACID = 0)
+	armor_type = /datum/armor/barricade_security
 
 	var/deploy_time = 40
 	var/deploy_message = TRUE
 
+
+/datum/armor/barricade_security
+	melee = 10
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 10
 
 /obj/structure/barricade/security/Initialize(mapload)
 	. = ..()
@@ -164,6 +172,14 @@
 	inhand_icon_state = "flashbang"
 	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
+
+/datum/armor/barricade_security
+	melee = 10
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 10
 
 /obj/item/grenade/barrier/examine(mob/user)
 	. = ..()
@@ -222,6 +238,14 @@
 	max_integrity = 250
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+
+/datum/armor/barricade_security
+	melee = 10
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 10
 
 /obj/item/deployable_turret_folded/Initialize(mapload)
 	. = ..()

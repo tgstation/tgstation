@@ -45,8 +45,8 @@
 	. = ..()
 	handle_organs(delta_time, times_fired)
 
-/mob/living/carbon/alien/handle_status_effects(delta_time, times_fired)
-	..()
+/mob/living/carbon/alien/handle_traits(delta_time, times_fired)
+	. = ..()
 	//natural reduction of movement delay due to stun.
 	if(move_delay_add > 0)
 		move_delay_add = max(0, move_delay_add - (0.5 * rand(1, 2) * delta_time))

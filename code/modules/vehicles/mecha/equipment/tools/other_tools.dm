@@ -159,17 +159,14 @@
 	///icon in armor.dmi that shows in the UI
 	var/iconstate_name
 	//how much the armor of the mech is modified by
-	var/list/armor_mod = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	var/datum/armor/armor_mod
 
 /obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/M, attach_right)
 	. = ..()
-	chassis.armor = chassis.armor.modifyRating(arglist(armor_mod))
+	chassis.set_armor(chassis.get_armor().add_other_armor(armor_mod))
 
 /obj/item/mecha_parts/mecha_equipment/armor/detach(atom/moveto)
-	var/list/removed_armor = armor_mod.Copy()
-	for(var/armor_type in removed_armor)
-		removed_armor[armor_type] = -removed_armor[armor_type]
-	chassis.armor = chassis.armor.modifyRating(arglist(removed_armor))
+	chassis.set_armor(chassis.get_armor().subtract_other_armor(armor_mod))
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
@@ -178,7 +175,10 @@
 	icon_state = "mecha_abooster_ccw"
 	iconstate_name = "melee"
 	protect_name = "Melee Armor"
-	armor_mod = list(MELEE = 15, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_mod = /datum/armor/mecha_equipment_ccw_boost
+
+/datum/armor/mecha_equipment_ccw_boost
+	melee = 15
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
 	name = "armor booster module (Ranged Weaponry)"
@@ -186,8 +186,11 @@
 	icon_state = "mecha_abooster_proj"
 	iconstate_name = "range"
 	protect_name = "Ranged Armor"
-	armor_mod = list(MELEE = 0, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_mod = /datum/armor/mecha_equipment_ranged_boost
 
+/datum/armor/mecha_equipment_ranged_boost
+	bullet = 10
+	laser = 10
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
 

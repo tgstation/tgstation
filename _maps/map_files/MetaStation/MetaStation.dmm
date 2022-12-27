@@ -10217,9 +10217,7 @@
 /area/station/security/office)
 "dOo" = (
 /obj/structure/safe,
-/obj/item/storage/secure/briefcase{
-	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/gun/ballistic/automatic/pistol,/obj/item/suppressor,/obj/item/melee/baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/soap/nanotrasen)
-	},
+/obj/item/storage/secure/briefcase/riches,
 /obj/item/storage/backpack/duffelbag/syndie/hitman,
 /obj/item/card/id/advanced/silver/reaper,
 /obj/item/lazarus_injector,
@@ -12790,9 +12788,6 @@
 	c_tag = "Atmospherics Tank - CO2"
 	},
 /turf/open/floor/engine/co2,
-/area/station/engineering/atmos)
-"eJX" = (
-/turf/open/floor/iron,
 /area/station/engineering/atmos)
 "eJZ" = (
 /obj/effect/spawner/random/structure/chair_comfy{
@@ -18066,13 +18061,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"gKt" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "gKw" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/yellow{
@@ -109846,16 +109834,16 @@ tCS
 xzs
 vQV
 lnT
-gKt
-gKt
-gKt
-gKt
+fbf
+fbf
+fbf
+fbf
 rPe
 rPe
-gKt
-gKt
-gKt
-gKt
+fbf
+fbf
+fbf
+fbf
 dhi
 rPe
 vjB
@@ -110150,8 +110138,8 @@ gnT
 lgL
 lrK
 heV
-eJX
-eJX
+cyW
+cyW
 ffk
 hHt
 lRS
@@ -110871,7 +110859,7 @@ xID
 hTV
 brE
 vtp
-gKt
+fbf
 shV
 sGC
 stl
@@ -111683,11 +111671,11 @@ the
 wDG
 udD
 sCN
-eJX
+cyW
 ppD
-eJX
-eJX
-eJX
+cyW
+cyW
+cyW
 iQB
 tds
 nzo
@@ -111941,12 +111929,12 @@ hdp
 htY
 ruP
 gSn
-eJX
-eJX
-eJX
-eJX
-eJX
-eJX
+cyW
+cyW
+cyW
+cyW
+cyW
+cyW
 nzo
 mTI
 jvj
@@ -112197,12 +112185,12 @@ gto
 aej
 ahV
 ruP
-eJX
-eJX
-eJX
+cyW
+cyW
+cyW
 vlq
-eJX
-eJX
+cyW
+cyW
 lxt
 nzo
 vuU
@@ -112454,13 +112442,13 @@ gto
 aej
 qDt
 ruP
-eJX
-eJX
 cyW
 cyW
 cyW
-eJX
-eJX
+cyW
+cyW
+cyW
+cyW
 nzo
 vuU
 dwf
@@ -112715,12 +112703,12 @@ ruP
 ruP
 ruP
 ruP
-eJX
-eJX
+cyW
+cyW
 dfS
 nzo
 vuU
-eJX
+cyW
 kEe
 fPg
 jie
@@ -113996,7 +113984,7 @@ lAh
 kvK
 iPx
 qHh
-eJX
+cyW
 fBc
 dGq
 uQe
@@ -114253,7 +114241,7 @@ lAh
 dHG
 iui
 vlq
-eJX
+cyW
 jKG
 gpQ
 uQe
@@ -114510,7 +114498,7 @@ lAh
 htD
 ukq
 sdE
-eJX
+cyW
 jKG
 gpQ
 uQe
@@ -114776,7 +114764,7 @@ nzo
 fiE
 hur
 uel
-eJX
+cyW
 nnD
 lRA
 xXG
@@ -115033,7 +115021,7 @@ mDA
 jZz
 vlq
 gTC
-eJX
+cyW
 qzK
 vdf
 eSZ
@@ -115290,7 +115278,7 @@ nzo
 fzM
 rZt
 jZz
-eJX
+cyW
 ccK
 lqS
 kBh
@@ -115804,7 +115792,7 @@ nzo
 qVi
 uhx
 psl
-eJX
+cyW
 nnD
 aIz
 xXG
@@ -116061,7 +116049,7 @@ xRc
 qTA
 jZz
 nnD
-eJX
+cyW
 nnD
 nMe
 oIM
@@ -116574,8 +116562,8 @@ trM
 qwi
 jvj
 pul
-eJX
-eJX
+cyW
+cyW
 plD
 wGB
 oIM
@@ -116828,7 +116816,7 @@ vTX
 uIe
 dLl
 boD
-eJX
+cyW
 uDH
 xEN
 mei
@@ -117085,11 +117073,11 @@ vTX
 jTS
 sCp
 qFA
-eJX
+cyW
 jvj
 pul
-eJX
-eJX
+cyW
+cyW
 ewU
 tcA
 oIM

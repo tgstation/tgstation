@@ -62,6 +62,8 @@
 	var/limp_chance
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
+	/// Essentially, keeps track of whether or not this wound is capable of bleeding (in case the owner has the NOBLOOD species trait)
+	var/no_bleeding = FALSE
 
 	/// The minimum we need to roll on [/obj/item/bodypart/proc/check_wounding] to begin suffering this wound, see check_wounding_mods() for more
 	var/threshold_minimum
@@ -114,11 +116,10 @@
 		qdel(src)
 		return
 
-	if(ishuman(L.owner))
-		var/mob/living/carbon/human/H = L.owner
-		if(((wound_flags & BONE_WOUND) && !(HAS_BONE in H.dna.species.species_traits)) || ((wound_flags & FLESH_WOUND) && !(HAS_FLESH in H.dna.species.species_traits)))
-			qdel(src)
-			return
+	// Checks for biological state, to ensure only valid wounds are applied on the limb
+	if(((wound_flags & BONE_WOUND) && !(L.biological_state & BIO_BONE)) || ((wound_flags & FLESH_WOUND) && !(L.biological_state & BIO_FLESH)))
+		qdel(src)
+		return
 
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
@@ -132,6 +133,10 @@
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
+	//it's ok to not typecheck, humans are the only ones that deal with wounds
+	var/mob/living/carbon/human/human_victim = victim
+	no_bleeding = (NOBLOOD in human_victim?.dna.species.species_traits)
+	update_descriptions()
 	limb.update_wounds()
 	if(status_effect_type)
 		victim.apply_status_effect(status_effect_type, src)
@@ -161,6 +166,10 @@
 	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)
 		second_wind()
+
+// Updates descriptive texts for the wound, in case it can get altered for whatever reason
+/datum/wound/proc/update_descriptions()
+	return
 
 /datum/wound/proc/null_victim()
 	SIGNAL_HANDLER

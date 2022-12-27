@@ -28,7 +28,7 @@
 		/obj/item/tank/internals,
 	)
 	slowdown = 1
-	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 20, BOMB = 20, BIO = 50, FIRE = 100, ACID = 50)
+	armor_type = /datum/armor/utility_fire
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -38,6 +38,16 @@
 	strip_delay = 60
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
+
+/datum/armor/utility_fire
+	melee = 15
+	bullet = 5
+	laser = 20
+	energy = 20
+	bomb = 20
+	bio = 50
+	fire = 100
+	acid = 50
 
 /obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -70,7 +80,7 @@
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
 	clothing_flags = THICKMATERIAL | SNUG_FIT
-	armor = list(MELEE = 20, BULLET = 0, LASER = 20,ENERGY = 30, BOMB = 100, BIO = 0, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/utility_bomb_hood
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 	cold_protection = HEAD
@@ -82,6 +92,14 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
+/datum/armor/utility_bomb_hood
+	melee = 20
+	laser = 20
+	energy = 30
+	bomb = 100
+	fire = 80
+	acid = 50
+
 /obj/item/clothing/suit/utility/bomb_suit
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
@@ -91,7 +109,7 @@
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
-	armor = list(MELEE = 20, BULLET = 0, LASER = 20,ENERGY = 30, BOMB = 100, BIO = 50, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/utility_bomb_suit
 	flags_inv = HIDEJUMPSUIT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
@@ -100,6 +118,15 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = NONE
+
+/datum/armor/utility_bomb_suit
+	melee = 20
+	laser = 20
+	energy = 30
+	bomb = 100
+	bio = 50
+	fire = 80
+	acid = 50
 
 /obj/item/clothing/head/utility/bomb_hood/security
 	icon_state = "bombsuit_sec"
@@ -128,11 +155,16 @@
 	desc = "A hood with radiation protective properties. The label reads, 'Made with lead. Please do not consume insulation.'"
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 60, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/utility_radiation
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+
+/datum/armor/utility_radiation
+	bio = 60
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/head/utility/radiation/Initialize(mapload)
 	. = ..()
@@ -152,7 +184,7 @@
 		/obj/item/tank/internals,
 		)
 	slowdown = 1.5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 60, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/utility_radiation
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT

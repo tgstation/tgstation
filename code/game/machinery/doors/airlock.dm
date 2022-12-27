@@ -735,7 +735,7 @@
 	if(panel_open && detonated)
 		to_chat(user, span_warning("[src] has no maintenance panel!"))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
-	panel_open = !panel_open
+	toggle_panel_open()
 	to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the airlock."))
 	tool.play_tool_sound(src)
 	update_appearance()
@@ -1295,8 +1295,7 @@
 /obj/machinery/door/airlock/proc/on_break()
 	SIGNAL_HANDLER
 
-	if(!panel_open)
-		panel_open = TRUE
+	set_panel_open(TRUE)
 	wires.cut_all()
 
 /obj/machinery/door/airlock/emp_act(severity)
