@@ -38,3 +38,15 @@
 		controller.set_movement_target(type, return_target)
 		controller.queue_behavior(/datum/ai_behavior/deliver_item)
 		return
+
+	if(DT_PROB(10, delta_time))
+		for(var/mob/living/iter_living in oview(2, living_pawn))
+			if(iter_living.stat != CONSCIOUS || !HAS_TRAIT(iter_living, TRAIT_HATED_BY_DOGS))
+				continue
+
+			living_pawn.audible_message(span_warning("[living_pawn] growls at [iter_living], seemingly annoyed by [iter_living.p_their()] presence."), hearing_distance = COMBAT_MESSAGE_RANGE)
+			controller.set_movement_target(iter_living)
+			controller.blackboard[BB_DOG_HARASS_TARGET] = WEAKREF(iter_living)
+			controller.blackboard[BB_DOG_HARASS_HARM] = FALSE
+			controller.queue_behavior(/datum/ai_behavior/harass)
+			return
