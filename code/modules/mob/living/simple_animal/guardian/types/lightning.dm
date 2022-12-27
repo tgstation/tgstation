@@ -21,64 +21,67 @@
 	creator_name = "Lightning"
 	creator_desc = "Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage."
 	creator_icon = "lightning"
+	/// Beam datum of our lightning chain to the summoner.
 	var/datum/beam/summonerchain
+	/// List of all lightning chains attached to enemies.
 	var/list/enemychains = list()
+	/// Amount of shocks we've given through the chain to the summoner.
 	var/successfulshocks = 0
+	/// Cooldown between shocks.
+	COOLDOWN_DECLARE(shock_cooldown)
 
 /mob/living/simple_animal/hostile/guardian/lightning/AttackingTarget(atom/attacked_target)
 	. = ..()
-	if(. && isliving(target) && target != src && target != summoner)
-		cleardeletedchains()
-		for(var/chain in enemychains)
-			var/datum/beam/B = chain
-			if(B.target == target)
-				return //oh this guy already HAS a chain, let's not chain again
-		if(enemychains.len > 2)
-			var/datum/beam/C = pick(enemychains)
-			qdel(C)
-			enemychains -= C
-		enemychains += Beam(target, "lightning[rand(1,12)]", maxdistance=7, beam_type=/obj/effect/ebeam/chain)
+	if(!. || !isliving(target) || target == summoner || hasmatchingsummoner(target))
+		return
+	cleardeletedchains()
+	for(var/datum/beam/chain as anything in enemychains)
+		if(chain.target == target)
+			return //oh this guy already HAS a chain, let's not chain again
+	if(length(enemychains) > 2)
+		var/datum/beam/enemy_chain = pick(enemychains)
+		qdel(enemy_chain)
+		enemychains -= enemy_chain
+	enemychains += Beam(target, "lightning[rand(1,12)]", maxdistance=7, beam_type=/obj/effect/ebeam/chain)
 
 /mob/living/simple_animal/hostile/guardian/lightning/manifest_effects()
-	summonerchain = Beam(summoner, "lightning[rand(1,12)]", beam_type=/obj/effect/ebeam/chain)
-	while(loc != summoner)
-		if(successfulshocks > 5)
-			successfulshocks = 0
-		if(shockallchains())
-			successfulshocks++
-		SLEEP_CHECK_DEATH(3, src)
+	START_PROCESSING(SSfastprocess, src)
+	if(summoner)
+		summonerchain = Beam(summoner, "lightning[rand(1,12)]", beam_type=/obj/effect/ebeam/chain)
 
 /mob/living/simple_animal/hostile/guardian/lightning/recall_effects()
+	STOP_PROCESSING(SSfastprocess, src)
 	removechains()
+
+/mob/living/simple_animal/hostile/guardian/lightning/process(delta_time)
+	if(!COOLDOWN_FINISHED(src, shock_cooldown))
+		return
+	if(successfulshocks > 5)
+		successfulshocks = 0
+	if(shockallchains())
+		successfulshocks++
+	COOLDOWN_START(src, shock_cooldown, 0.3 SECONDS)
 
 /mob/living/simple_animal/hostile/guardian/lightning/proc/cleardeletedchains()
 	if(summonerchain && QDELETED(summonerchain))
 		summonerchain = null
-	if(enemychains.len)
-		for(var/chain in enemychains)
-			var/datum/cd = chain
-			if(!chain || QDELETED(cd))
-				enemychains -= chain
+	for(var/datum/chain as anything in enemychains)
+		if(QDELETED(chain))
+			enemychains -= chain
 
 /mob/living/simple_animal/hostile/guardian/lightning/proc/shockallchains()
 	. = 0
 	cleardeletedchains()
-	if(summoner)
-		if(!summonerchain)
-			summonerchain = Beam(summoner, "lightning[rand(1,12)]", beam_type=/obj/effect/ebeam/chain)
+	if(summonerchain)
 		. += chainshock(summonerchain)
-	if(enemychains.len)
-		for(var/chain in enemychains)
-			. += chainshock(chain)
+	for(var/chain in enemychains)
+		. += chainshock(chain)
 
 /mob/living/simple_animal/hostile/guardian/lightning/proc/removechains()
-	if(summonerchain)
-		qdel(summonerchain)
-		summonerchain = null
-	if(enemychains.len)
-		for(var/chain in enemychains)
-			qdel(chain)
-		enemychains = list()
+	QDEL_NULL(summonerchain)
+	for(var/chain in enemychains)
+		qdel(chain)
+	enemychains = list()
 
 /mob/living/simple_animal/hostile/guardian/lightning/proc/chainshock(datum/beam/B) //fuck you, fuck this
 	. = 0
