@@ -9,8 +9,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	worn_icon_state = "pinpointer"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 250)
@@ -161,28 +161,6 @@
 				target = null
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
-
-/obj/item/pinpointer/crew/prox //Weaker version of crew monitor primarily for EMT
-	name = "proximity crew pinpointer"
-	desc = "A handheld tracking device that displays its proximity to crew suit sensors."
-	icon_state = "pinpointer_crewprox"
-	worn_icon_state = "pinpointer_prox"
-	custom_price = PAYCHECK_CREW * 3
-
-/obj/item/pinpointer/crew/prox/get_direction_icon(here, there)
-	var/size = ""
-	if(here == there)
-		size = "small"
-	else
-		switch(get_dist(here, there))
-			if(1 to 4)
-				size = "xtrlarge"
-			if(5 to 16)
-				size = "large"
-			//17 through 28 use the normal pinion, "pinondirect"
-			if(29 to INFINITY)
-				size = "small"
-	return "pinondirect[size]"
 
 /obj/item/pinpointer/pair
 	name = "pair pinpointer"

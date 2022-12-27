@@ -18,7 +18,7 @@
 	// and the process of activating destroys the body, so let the other
 	// signal handlers at least finish. Also, the "delayed explosion"
 	// uses sleeps, which is bad for signal handlers to do.
-	INVOKE_ASYNC(src, .proc/activate, "death")
+	INVOKE_ASYNC(src, PROC_REF(activate), "death")
 
 /obj/item/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -35,7 +35,7 @@
 /obj/item/implant/explosive/activate(cause)
 	. = ..()
 	if(!cause || !imp_in || active)
-		return 0
+		return FALSE
 	if(cause == "action_button")
 		if(popup)
 			return FALSE
@@ -43,7 +43,9 @@
 		var/response = tgui_alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", list("Yes", "No"))
 		popup = FALSE
 		if(response != "Yes")
-			return 0
+			return FALSE
+	if(cause == "death" && HAS_TRAIT(imp_in, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION))
+		return FALSE
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)
@@ -55,7 +57,8 @@
 	if(delay <= 7)
 		explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak, explosion_cause = src)
 		if(imp_in)
-			imp_in.gib(1)
+			imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
+			imp_in.gib(TRUE)
 		qdel(src)
 		return
 	timed_explosion()
@@ -73,7 +76,7 @@
 
 	. = ..()
 	if(.)
-		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /obj/item/implant/explosive/removed(mob/target, silent = FALSE, special = FALSE)
 	. = ..()
@@ -95,7 +98,8 @@
 	sleep(delay*0.25)
 	explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak, explosion_cause = src)
 	if(imp_in)
-		imp_in.gib(1)
+		imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
+		imp_in.gib(TRUE)
 	qdel(src)
 
 /obj/item/implant/explosive/macro
@@ -119,3 +123,7 @@
 /obj/item/implanter/explosive_macro
 	name = "implanter (macrobomb)"
 	imp_type = /obj/item/implant/explosive/macro
+
+/datum/action/item_action/explosive_implant
+	check_flags = NONE
+	name = "Activate Explosive Implant"

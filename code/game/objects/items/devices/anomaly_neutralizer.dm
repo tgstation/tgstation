@@ -5,8 +5,8 @@
 	icon_state = "memorizer2"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
@@ -18,14 +18,14 @@
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You neutralize %THEEFFECT with %THEWEAPON, frying its circuitry in the process.", \
 		tip_text = "Neutralize anomaly", \
-		on_clear_callback = CALLBACK(src, .proc/on_anomaly_neutralized), \
+		on_clear_callback = CALLBACK(src, PROC_REF(on_anomaly_neutralized)), \
 		effects_we_clear = list(/obj/effect/anomaly))
 
 	// Can also be used to delete drained heretic influences, to stop fools from losing arms.
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You close %THEEFFECT with %THEWEAPON, frying its circuitry in the process.", \
 		tip_text = "Close rift", \
-		on_clear_callback = CALLBACK(src, .proc/on_use), \
+		on_clear_callback = CALLBACK(src, PROC_REF(on_use)), \
 		effects_we_clear = list(/obj/effect/visible_heretic_influence))
 
 /**

@@ -1,6 +1,6 @@
-import { classes } from "common/react";
-import { FeatureChoiced, FeatureChoicedServerData, FeatureValueProps, sortChoices } from "../base";
-import { Box, Dropdown, Stack } from "../../../../../components";
+import { classes } from 'common/react';
+import { FeatureChoiced, FeatureChoicedServerData, FeatureValueProps, sortChoices } from '../base';
+import { Box, Dropdown, Stack } from '../../../../../components';
 
 const UIStyleInput = (
   props: FeatureValueProps<string, string, FeatureChoicedServerData>
@@ -13,29 +13,27 @@ const UIStyleInput = (
   const { icons } = serverData;
 
   if (!icons) {
-    return (<Box color="red">ui_style had no icons!</Box>);
+    return <Box color="red">ui_style had no icons!</Box>;
   }
 
   const choices = Object.fromEntries(
-    Object.entries(icons)
-      .map(([name, icon]) => {
-        return [name, (
-          <Stack key={name}>
-            <Stack.Item>
-              <Box className={classes([
-                "preferences64x32",
-                icon,
-              ])} style={{
-                "transform": "scale(0.8)",
-              }} />
-            </Stack.Item>
+    Object.entries(icons).map(([name, icon]) => {
+      return [
+        name,
+        <Stack key={name}>
+          <Stack.Item>
+            <Box
+              className={classes(['preferences64x32', icon])}
+              style={{
+                'transform': 'scale(0.8)',
+              }}
+            />
+          </Stack.Item>
 
-            <Stack.Item grow>
-              {name}
-            </Stack.Item>
-          </Stack>
-        )];
-      })
+          <Stack.Item grow>{name}</Stack.Item>
+        </Stack>,
+      ];
+    })
   );
 
   return (
@@ -45,19 +43,20 @@ const UIStyleInput = (
       displayText={choices[value]}
       onSelected={props.handleSetValue}
       width="100%"
-      options={sortChoices(Object.entries(choices))
-        .map(([dataValue, label]) => {
+      options={sortChoices(Object.entries(choices)).map(
+        ([dataValue, label]) => {
           return {
             displayText: label,
             value: dataValue,
           };
-        })}
+        }
+      )}
     />
   );
 };
 
 export const UI_style: FeatureChoiced = {
-  name: "UI Style",
-  category: "UI",
+  name: 'UI Style',
+  category: 'UI',
   component: UIStyleInput,
 };

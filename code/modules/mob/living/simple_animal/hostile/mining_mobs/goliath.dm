@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath"
 	icon_living = "Goliath"
 	icon_aggro = "Goliath_alert"
@@ -50,18 +50,20 @@
 		return
 	icon_state = pre_attack_icon
 
-/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal = FALSE, admin_revive = FALSE)//who the fuck anchors mobs
-	if(..())
-		move_force = MOVE_FORCE_VERY_STRONG
-		move_resist = MOVE_FORCE_VERY_STRONG
-		pull_force = MOVE_FORCE_VERY_STRONG
-		. = 1
+/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)//who the fuck anchors mobs
+	. = ..()
+	if(!.)
+		return
+
+	move_force = initial(move_force)
+	move_resist = initial(move_resist)
+	pull_force = initial(pull_force)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT
 	move_resist = MOVE_RESIST_DEFAULT
 	pull_force = PULL_FORCE_DEFAULT
-	..(gibbed)
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
@@ -89,7 +91,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"
 	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath"
 	icon_living = "goliath"
 	icon_aggro = "goliath"
@@ -108,7 +110,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
 	if(!istype(O, /obj/item/saddle) || saddled)
@@ -118,7 +120,6 @@
 		user.visible_message(span_notice("You manage to put [O] on [src], you can now ride [p_them()]."))
 		qdel(O)
 		saddled = TRUE
-		can_buckle = TRUE
 		buckle_lying = 0
 		add_overlay("goliath_saddled")
 		AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
@@ -180,7 +181,7 @@
 //tentacles
 /obj/effect/temp_visual/goliath_tentacle
 	name = "goliath tentacle"
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle_spawn"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
@@ -197,7 +198,7 @@
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled()
 	deltimer(timerid)
-	timerid = addtimer(CALLBACK(src, .proc/tripanim), 7, TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(tripanim)), 7, TIMER_STOPPABLE)
 
 /obj/effect/temp_visual/goliath_tentacle/original/Initialize(mapload, new_spawner)
 	. = ..()
@@ -211,7 +212,7 @@
 /obj/effect/temp_visual/goliath_tentacle/proc/tripanim()
 	icon_state = "Goliath_tentacle_wiggle"
 	deltimer(timerid)
-	timerid = addtimer(CALLBACK(src, .proc/trip), 3, TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(trip)), 3, TIMER_STOPPABLE)
 
 /obj/effect/temp_visual/goliath_tentacle/proc/trip()
 	var/latched = FALSE
@@ -226,7 +227,7 @@
 		retract()
 	else
 		deltimer(timerid)
-		timerid = addtimer(CALLBACK(src, .proc/retract), 10, TIMER_STOPPABLE)
+		timerid = addtimer(CALLBACK(src, PROC_REF(retract)), 10, TIMER_STOPPABLE)
 
 /obj/effect/temp_visual/goliath_tentacle/proc/retract()
 	icon_state = "Goliath_tentacle_retract"

@@ -28,9 +28,7 @@
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "dO" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/explosives/alt/directional/west,
 /obj/machinery/atmospherics/components/tank/nitrogen{
 	dir = 4;
 	initialize_directions = 4
@@ -70,7 +68,7 @@
 "gJ" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/crumpled{
-	info = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
+	default_raw_text = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
 	pixel_y = 5
@@ -124,9 +122,7 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
 "iQ" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/explosives/alt/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)

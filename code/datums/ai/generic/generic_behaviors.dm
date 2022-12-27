@@ -2,7 +2,7 @@
 /datum/ai_behavior/resist/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
-	living_pawn.resist()
+	living_pawn.execute_resist()
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/battle_screech
@@ -12,7 +12,7 @@
 /datum/ai_behavior/battle_screech/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
-	INVOKE_ASYNC(living_pawn, /mob.proc/emote, pick(screeches))
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), pick(screeches))
 	finish_action(controller, TRUE)
 
 ///Moves to target then finishes
@@ -31,7 +31,7 @@
 
 /datum/ai_behavior/break_spine/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[target_key]
+	set_movement_target(controller, controller.blackboard[target_key])
 
 /datum/ai_behavior/break_spine/perform(delta_time, datum/ai_controller/controller, target_key)
 	var/mob/living/batman = controller.blackboard[target_key]
@@ -72,11 +72,11 @@
 /datum/ai_behavior/use_in_hand/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
-	var/obj/item/held = pawn.get_item_by_slot(pawn.get_active_hand())
+	var/obj/item/held = pawn.get_active_held_item()
 	if(!held)
 		finish_action(controller, FALSE)
 		return
-	pawn.activate_hand(pawn.get_active_hand())
+	pawn.activate_hand()
 	finish_action(controller, TRUE)
 
 /// Use the currently held item, or unarmed, on a weakref to an object in the world
@@ -90,7 +90,7 @@
 	var/target = target_ref?.resolve()
 	if(!target)
 		return FALSE
-	controller.current_movement_target = target
+	set_movement_target(controller, target)
 
 /datum/ai_behavior/use_on_object/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -119,20 +119,27 @@
 /datum/ai_behavior/give/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	controller.current_movement_target = target_ref?.resolve()
+	set_movement_target(controller, target_ref?.resolve())
 
 /datum/ai_behavior/give/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
-	var/obj/item/held_item = pawn.get_item_by_slot(pawn.get_active_hand())
+	var/obj/item/held_item = pawn.get_active_held_item()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
 	var/atom/target = target_ref?.resolve()
+
+	if(!held_item) //if held_item is null, we pretend that action was succesful
+		finish_action(controller, TRUE)
+		return
 
 	if(!target || !pawn.CanReach(target) || !isliving(target))
 		finish_action(controller, FALSE)
 		return
 
 	var/mob/living/living_target = target
+
+	if(!try_to_give_item(controller, living_target, held_item))
+		return
 	controller.PauseAi(1.5 SECONDS)
 	living_target.visible_message(
 		span_info("[pawn] starts trying to give [held_item] to [living_target]!"),
@@ -140,16 +147,36 @@
 	)
 	if(!do_mob(pawn, living_target, 1 SECONDS))
 		return
-	if(QDELETED(held_item) || QDELETED(living_target))
-		finish_action(controller, FALSE)
-		return
-	var/pocket_choice = prob(50) ? ITEM_SLOT_RPOCKET : ITEM_SLOT_LPOCKET
-	if(prob(50) && living_target.can_put_in_hand(held_item))
-		living_target.put_in_hand(held_item)
-	else if(held_item.mob_can_equip(living_target, pawn, pocket_choice, TRUE))
-		living_target.equip_to_slot(held_item, pocket_choice)
 
+	try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
+
+/datum/ai_behavior/give/proc/try_to_give_item(datum/ai_controller/controller, mob/living/target, obj/item/held_item, actually_give)
+	if(QDELETED(held_item) || QDELETED(target))
+		finish_action(controller, FALSE)
+		return FALSE
+
+	var/has_left_pocket = target.can_equip(held_item, ITEM_SLOT_LPOCKET)
+	var/has_right_pocket = target.can_equip(held_item, ITEM_SLOT_RPOCKET)
+	var/has_valid_hand
+
+	for(var/hand_index in target.get_empty_held_indexes())
+		if(target.can_put_in_hand(held_item, hand_index))
+			has_valid_hand = TRUE
+			break
+
+	if(!has_left_pocket && !has_right_pocket && !has_valid_hand)
+		finish_action(controller, FALSE)
+		return FALSE
+
+	if(!actually_give)
+		return TRUE
+
+	if(!has_valid_hand || prob(50))
+		target.equip_to_slot_if_possible(held_item, (!has_left_pocket ? ITEM_SLOT_RPOCKET : (prob(50) ? ITEM_SLOT_LPOCKET : ITEM_SLOT_RPOCKET)))
+	else
+		target.put_in_hands(held_item)
 	finish_action(controller, TRUE)
+
 
 /datum/ai_behavior/consume
 	required_distance = 1
@@ -159,7 +186,7 @@
 /datum/ai_behavior/consume/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	controller.current_movement_target = target_ref?.resolve()
+	set_movement_target(controller, target_ref?.resolve())
 
 /datum/ai_behavior/consume/perform(delta_time, datum/ai_controller/controller, target_key, hunger_timer_key)
 	. = ..()
@@ -168,11 +195,9 @@
 	var/obj/item/target = target_ref.resolve()
 
 	if(!(target in living_pawn.held_items))
-		if(!living_pawn.put_in_hand_check(target))
+		if(!living_pawn.get_empty_held_indexes() || !living_pawn.put_in_hands(target))
 			finish_action(controller, FALSE, target, hunger_timer_key)
 			return
-
-		living_pawn.put_in_hands(target)
 
 	target.melee_attack_chain(living_pawn, living_pawn)
 
@@ -183,67 +208,6 @@
 	. = ..()
 	if(succeeded)
 		controller.blackboard[hunger_timer_key] = world.time + rand(12 SECONDS, 60 SECONDS)
-
-/**find and set
- * Finds an item near themselves, sets a blackboard key as it. Very useful for ais that need to use machines or something.
- * if you want to do something more complicated than find a single atom, change the search_tactic() proc
- * cool tip: search_tactic() can set lists
- */
-/datum/ai_behavior/find_and_set
-	action_cooldown = 5 SECONDS
-
-/datum/ai_behavior/find_and_set/perform(delta_time, datum/ai_controller/controller, set_key, locate_path, search_range)
-	. = ..()
-	var/find_this_thing = search_tactic(controller, locate_path, search_range)
-	if(find_this_thing)
-		controller.blackboard[set_key] = WEAKREF(find_this_thing)
-		finish_action(controller, TRUE)
-	else
-		finish_action(controller, FALSE)
-
-/datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	return locate(locate_path) in oview(search_range, controller.pawn)
-
-/**
- * Variant of find and set that fails if the living pawn doesn't hold something
- */
-/datum/ai_behavior/find_and_set/pawn_must_hold_item
-
-/datum/ai_behavior/find_and_set/pawn_must_hold_item/search_tactic(datum/ai_controller/controller)
-	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.get_num_held_items())
-		return //we want to fail the search if we don't have something held
-	. = ..()
-
-/**
- * Variant of find and set that also requires the item to be edible. checks hands too
- */
-/datum/ai_behavior/find_and_set/edible
-
-/datum/ai_behavior/find_and_set/edible/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	var/mob/living/living_pawn = controller.pawn
-	var/list/food_candidates = list()
-	for(var/held_candidate as anything in living_pawn.held_items)
-		if(!held_candidate || !IsEdible(held_candidate))
-			continue
-		food_candidates += held_candidate
-
-	var/list/local_results = locate(locate_path) in oview(search_range, controller.pawn)
-	for(var/local_candidate in local_results)
-		if(!IsEdible(local_candidate))
-			continue
-		food_candidates += local_candidate
-	if(food_candidates.len)
-		return pick(food_candidates)
-
-/**
- * Variant of find and set that only checks in hands, search range should be excluded for this
- */
-/datum/ai_behavior/find_and_set/in_hands
-
-/datum/ai_behavior/find_and_set/in_hands/search_tactic(datum/ai_controller/controller, locate_path)
-	var/mob/living/living_pawn = controller.pawn
-	return locate(locate_path) in living_pawn.held_items
 
 /**
  * Drops items in hands, very important for future behaviors that require the pawn to grab stuff
@@ -281,7 +245,7 @@
 		finish_action(controller, TRUE)
 		return
 
-	controller.current_movement_target = living_target
+	set_movement_target(controller, living_target)
 	attack(controller, living_target)
 
 /datum/ai_behavior/attack/finish_action(datum/ai_controller/controller, succeeded)
@@ -317,7 +281,7 @@
 		finish_action(controller, TRUE)
 		return
 
-	controller.current_movement_target = living_target
+	set_movement_target(controller, living_target)
 
 /datum/ai_behavior/follow/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()

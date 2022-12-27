@@ -16,24 +16,24 @@ export const AccessList = (props, context) => {
     showBasic,
   } = props;
 
-  const [
-    wildcardTab,
-    setWildcardTab,
-  ] = useSharedState(context, "wildcardSelected", showBasic ? "None" : Object.keys(wildcardSlots)[0]);
+  const [wildcardTab, setWildcardTab] = useSharedState(
+    context,
+    'wildcardSelected',
+    showBasic ? 'None' : Object.keys(wildcardSlots)[0]
+  );
 
   let selectedWildcard;
 
-  if ((wildcardTab !== "None") && !wildcardSlots[wildcardTab]) {
-    selectedWildcard = showBasic ? "None" : Object.keys(wildcardSlots)[0];
+  if (wildcardTab !== 'None' && !wildcardSlots[wildcardTab]) {
+    selectedWildcard = showBasic ? 'None' : Object.keys(wildcardSlots)[0];
     setWildcardTab(selectedWildcard);
-  }
-  else {
+  } else {
     selectedWildcard = wildcardTab;
   }
 
   const parsedRegions = [];
   const selectedTrimAccess = [];
-  accesses.forEach(region => {
+  accesses.forEach((region) => {
     const regionName = region.name;
     const regionAccess = region.accesses;
     const parsedRegion = {
@@ -47,10 +47,11 @@ export const AccessList = (props, context) => {
     // we want to figure out how many are selected for later formatting
     // logic.
     if (showBasic) {
-      regionAccess.forEach(access => {
-        if (trimAccess.includes(access.ref)
-          && selectedList.includes(access.ref)
-          && !selectedTrimAccess.includes(access.ref)
+      regionAccess.forEach((access) => {
+        if (
+          trimAccess.includes(access.ref) &&
+          selectedList.includes(access.ref) &&
+          !selectedTrimAccess.includes(access.ref)
         ) {
           selectedTrimAccess.push(access.ref);
         }
@@ -59,16 +60,15 @@ export const AccessList = (props, context) => {
 
     // If there's no wildcard selected, grab accesses in
     // the trimAccess list as they require no wildcard.
-    if (selectedWildcard === "None") {
-      regionAccess.forEach(access => {
+    if (selectedWildcard === 'None') {
+      regionAccess.forEach((access) => {
         if (!trimAccess.includes(access.ref)) {
           return;
         }
         parsedRegion.accesses.push(access);
         if (selectedList.includes(access.ref)) {
           parsedRegion.hasSelected = true;
-        }
-        else {
+        } else {
           parsedRegion.allSelected = false;
         }
       });
@@ -80,7 +80,7 @@ export const AccessList = (props, context) => {
     // Otherwise, a trim is selected. We want to grab all
     // accesses not in trimAccess that are compatible with
     // the given wildcard.
-    regionAccess.forEach(access => {
+    regionAccess.forEach((access) => {
       if (trimAccess.includes(access.ref)) {
         return;
       }
@@ -88,8 +88,7 @@ export const AccessList = (props, context) => {
         parsedRegion.accesses.push(access);
         if (selectedList.includes(access.ref)) {
           parsedRegion.hasSelected = true;
-        }
-        else {
+        } else {
           parsedRegion.allSelected = false;
         }
       }
@@ -100,9 +99,7 @@ export const AccessList = (props, context) => {
   });
 
   return (
-    <Section
-      title="Access"
-      buttons={extraButtons} >
+    <Section title="Access" buttons={extraButtons}>
       <Flex wrap="wrap">
         <Flex.Item width="100%">
           <FormatWildcards
@@ -110,11 +107,11 @@ export const AccessList = (props, context) => {
             selectedList={selectedList}
             showBasic={showBasic}
             basicUsed={selectedTrimAccess.length}
-            basicMax={trimAccess.length} />
+            basicMax={trimAccess.length}
+          />
         </Flex.Item>
         <Flex.Item>
-          <RegionTabList
-            accesses={parsedRegions} />
+          <RegionTabList accesses={parsedRegions} />
         </Flex.Item>
         <Flex.Item grow={1}>
           <RegionAccessList
@@ -125,7 +122,8 @@ export const AccessList = (props, context) => {
             accessFlags={accessFlags}
             accessFlagNames={accessFlagNames}
             wildcardSlots={wildcardSlots}
-            showBasic={showBasic} />
+            showBasic={showBasic}
+          />
         </Flex.Item>
       </Flex>
     </Section>
@@ -133,25 +131,20 @@ export const AccessList = (props, context) => {
 };
 
 export const FormatWildcards = (props, context) => {
-  const {
-    wildcardSlots = {},
-    showBasic,
-    basicUsed = 0,
-    basicMax = 0,
-  } = props;
+  const { wildcardSlots = {}, showBasic, basicUsed = 0, basicMax = 0 } = props;
 
-  const [
-    wildcardTab,
-    setWildcardTab,
-  ] = useSharedState(context, "wildcardSelected", showBasic ? "None" : Object.keys(wildcardSlots)[0]);
+  const [wildcardTab, setWildcardTab] = useSharedState(
+    context,
+    'wildcardSelected',
+    showBasic ? 'None' : Object.keys(wildcardSlots)[0]
+  );
 
   let selectedWildcard;
 
-  if ((wildcardTab !== "None") && !wildcardSlots[wildcardTab]) {
-    selectedWildcard = showBasic ? "None" : Object.keys(wildcardSlots)[0];
+  if (wildcardTab !== 'None' && !wildcardSlots[wildcardTab]) {
+    selectedWildcard = showBasic ? 'None' : Object.keys(wildcardSlots)[0];
     setWildcardTab(selectedWildcard);
-  }
-  else {
+  } else {
     selectedWildcard = wildcardTab;
   }
 
@@ -159,27 +152,31 @@ export const FormatWildcards = (props, context) => {
     <Tabs>
       {showBasic && (
         <Tabs.Tab
-          selected={selectedWildcard === "None"}
-          onClick={() => setWildcardTab("None")} >
-          Trim:<br />{basicUsed + "/" + basicMax}
+          selected={selectedWildcard === 'None'}
+          onClick={() => setWildcardTab('None')}>
+          Trim:
+          <br />
+          {basicUsed + '/' + basicMax}
         </Tabs.Tab>
       )}
 
-      {Object.keys(wildcardSlots).map(wildcard => {
+      {Object.keys(wildcardSlots).map((wildcard) => {
         const wcObj = wildcardSlots[wildcard];
         let wcLimit = wcObj.limit;
         const wcUsage = wcObj.usage.length;
         const wcLeft = wcLimit - wcUsage;
         if (wcLeft < 0) {
-          wcLimit = "∞";
+          wcLimit = '∞';
         }
         const wcLeftStr = `${wcUsage}/${wcLimit}`;
         return (
           <Tabs.Tab
             key={wildcard}
             selected={selectedWildcard === wildcard}
-            onClick={() => setWildcardTab(wildcard)} >
-            {wildcard + ":"}<br />{wcLeftStr}
+            onClick={() => setWildcardTab(wildcard)}>
+            {wildcard + ':'}
+            <br />
+            {wcLeftStr}
           </Tabs.Tab>
         );
       })}
@@ -188,26 +185,26 @@ export const FormatWildcards = (props, context) => {
 };
 
 const RegionTabList = (props, context) => {
-  const {
-    accesses = [],
-  } = props;
+  const { accesses = [] } = props;
 
-  const [
-    selectedAccessName,
-    setSelectedAccessName,
-  ] = useSharedState(context, 'accessName', accesses[0]?.name);
+  const [selectedAccessName, setSelectedAccessName] = useSharedState(
+    context,
+    'accessName',
+    accesses[0]?.name
+  );
 
   return (
     <Tabs vertical>
-      {accesses.map(access => {
-        const icon = (access.allSelected && "check")
-          || (access.hasSelected && "minus")
-          || "times";
+      {accesses.map((access) => {
+        const icon =
+          (access.allSelected && 'check') ||
+          (access.hasSelected && 'minus') ||
+          'times';
         return (
           <Tabs.Tab
             key={access.name}
             icon={icon}
-            minWidth={"100%"}
+            minWidth={'100%'}
             altSelection
             selected={access.name === selectedAccessName}
             onClick={() => setSelectedAccessName(access.name)}>
@@ -231,35 +228,38 @@ const RegionAccessList = (props, context) => {
     showBasic,
   } = props;
 
-  const [
-    wildcardTab,
-    setWildcardTab,
-  ] = useSharedState(context, "wildcardSelected", showBasic ? "None" : Object.keys(wildcardSlots)[0]);
+  const [wildcardTab, setWildcardTab] = useSharedState(
+    context,
+    'wildcardSelected',
+    showBasic ? 'None' : Object.keys(wildcardSlots)[0]
+  );
 
   let selWildcard;
 
-  if ((wildcardTab !== "None") && !wildcardSlots[wildcardTab]) {
-    selWildcard = showBasic ? "None" : Object.keys(wildcardSlots)[0];
+  if (wildcardTab !== 'None' && !wildcardSlots[wildcardTab]) {
+    selWildcard = showBasic ? 'None' : Object.keys(wildcardSlots)[0];
     setWildcardTab(selWildcard);
-  }
-  else {
+  } else {
     selWildcard = wildcardTab;
   }
 
-  const [
-    selectedAccessName,
-  ] = useSharedState(context, 'accessName', accesses[0]?.name);
+  const [selectedAccessName] = useSharedState(
+    context,
+    'accessName',
+    accesses[0]?.name
+  );
 
-  const selectedAccess = accesses
-    .find(access => access.name === selectedAccessName);
-  const selectedAccessEntries = sortBy(
-    entry => entry.desc,
-  )(selectedAccess?.accesses || []);
+  const selectedAccess = accesses.find(
+    (access) => access.name === selectedAccessName
+  );
+  const selectedAccessEntries = sortBy((entry) => entry.desc)(
+    selectedAccess?.accesses || []
+  );
 
   const allWildcards = Object.keys(wildcardSlots);
   let wcAccess = {};
-  allWildcards.forEach(wildcard => {
-    wildcardSlots[wildcard].usage.forEach(access => {
+  allWildcards.forEach((wildcard) => {
+    wildcardSlots[wildcard].usage.forEach((access) => {
       wcAccess[access] = wildcard;
     });
   });
@@ -270,27 +270,28 @@ const RegionAccessList = (props, context) => {
   const wcUsage = wildcard ? wildcard.usage.length : 0;
   const wcAvail = wcLimit - wcUsage;
 
-  return (
-    selectedAccessEntries.map(entry => {
-      const id = entry.ref;
-      const disableButton = (
-        ((wcAvail === 0) && (wcAccess[id] !== selWildcard))
-        || ((wcAvail > 0) && wcAccess[id] && wcAccess[id] !== selWildcard));
-      const entryName = (!wcAccess[id] && trimAccess.includes(id))
-        ? entry.desc : entry.desc + " (" + accessFlagNames[accessFlags[id]] + ")";
+  return selectedAccessEntries.map((entry) => {
+    const id = entry.ref;
+    const disableButton =
+      (wcAvail === 0 && wcAccess[id] !== selWildcard) ||
+      (wcAvail > 0 && wcAccess[id] && wcAccess[id] !== selWildcard);
+    const entryName =
+      !wcAccess[id] && trimAccess.includes(id)
+        ? entry.desc
+        : entry.desc + ' (' + accessFlagNames[accessFlags[id]] + ')';
 
-      return (
-        <Button.Checkbox
-          ml={1}
-          fluid
-          key={entry.desc}
-          content={entryName}
-          disabled={disableButton}
-          checked={selectedList.includes(entry.ref)}
-          onClick={() => accessMod(
-            entry.ref,
-            (selWildcard === "None") ? null : selWildcard)} />
-      );
-    })
-  );
+    return (
+      <Button.Checkbox
+        ml={1}
+        fluid
+        key={entry.desc}
+        content={entryName}
+        disabled={disableButton}
+        checked={selectedList.includes(entry.ref)}
+        onClick={() =>
+          accessMod(entry.ref, selWildcard === 'None' ? null : selWildcard)
+        }
+      />
+    );
+  });
 };

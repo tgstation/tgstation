@@ -5,7 +5,7 @@
 /mob/living/silicon/get_ear_protection()//no ears
 	return 2
 
-/mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/silicon/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(..()) //if harm or disarm intent
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		if (prob(90))
@@ -45,7 +45,7 @@
 /mob/living/silicon/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	if(!L.combat_mode)
 		visible_message(span_notice("[L.name] rubs its head against [src]."))
 
@@ -77,12 +77,17 @@
 			visible_message(span_notice("[user] pets [src]."), \
 							span_notice("[user] pets you."), null, null, user)
 			to_chat(user, span_notice("You pet [src]."))
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT_RND, "pet_borg", /datum/mood_event/pet_borg)
+			user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
 
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.combat_mode)
 		return
+	return ..()
+
+/mob/living/silicon/attack_drone_secondary(mob/living/simple_animal/drone/M)
+	if(M.combat_mode)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
 /mob/living/silicon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)

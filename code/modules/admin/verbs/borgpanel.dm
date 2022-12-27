@@ -6,9 +6,9 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	if (!istype(borgo, /mob/living/silicon/robot))
+	if (!iscyborg(borgo))
 		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sort_names(GLOB.silicon_mobs)
-	if (!istype(borgo, /mob/living/silicon/robot))
+	if (!iscyborg(borgo))
 		to_chat(usr, span_warning("Borg is required for borgpanel"), confidential = TRUE)
 
 	var/datum/borgpanel/borgpanel = new(usr, borgo)
@@ -178,7 +178,7 @@
 				log_silicon("[key_name(user)] removed the [channel] radio channel from [key_name(borg)].")
 			else // We're adding a channel
 				if (!borg.radio.keyslot) // Assert that an encryption key exists
-					borg.radio.keyslot = new (borg.radio)
+					borg.radio.keyslot = new()
 				borg.radio.keyslot.channels[channel] = 1
 				if (channel == RADIO_CHANNEL_SYNDICATE)
 					borg.radio.keyslot.syndie = TRUE

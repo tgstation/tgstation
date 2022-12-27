@@ -5,7 +5,7 @@
 		return
 	var/target = GET_VV_TARGET
 	vv_do_basic(target, href_list, href)
-	if(istype(target, /datum))
+	if(isdatum(target))
 		var/datum/D = target
 		D.vv_do_topic(href_list)
 	else if(islist(target))
@@ -117,6 +117,6 @@
 	//Finally, refresh if something modified the list.
 	if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
-		if(istype(DAT, /datum) || istype(DAT, /client) || islist(DAT))
+		if(isdatum(DAT) || istype(DAT, /client) || islist(DAT))
 			debug_variables(DAT)
 

@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/imposter
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "Spawns a doppelganger of the wizard."
 
 /datum/round_event/wizard/imposter/start()
 	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/wizard))

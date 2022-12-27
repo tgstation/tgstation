@@ -1,0 +1,129 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/lesser)
+"m" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/starboard/lesser)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/engine,
+/area/station/maintenance/starboard/lesser)
+"q" = (
+/obj/structure/rack,
+/obj/item/storage/box/monkeycubes,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/crab/kreb,
+/turf/open/floor/engine,
+/area/station/maintenance/starboard/lesser)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/engine,
+/area/station/maintenance/starboard/lesser)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"E" = (
+/obj/structure/rack,
+/obj/item/storage/box/gloves{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/storage/box/masks{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"J" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"L" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Xenobiology Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"O" = (
+/turf/template_noop,
+/area/template_noop)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/station/maintenance/starboard/lesser)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen";
+	req_access = list("xenobiology");
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/starboard/lesser)
+
+(1,1,1) = {"
+a
+a
+a
+O
+"}
+(2,1,1) = {"
+a
+x
+t
+O
+"}
+(3,1,1) = {"
+a
+o
+S
+O
+"}
+(4,1,1) = {"
+a
+J
+V
+O
+"}
+(5,1,1) = {"
+L
+y
+G
+O
+"}
+(6,1,1) = {"
+a
+q
+E
+O
+"}
+(7,1,1) = {"
+a
+a
+a
+m
+"}

@@ -165,6 +165,12 @@
 /// MULEbot - No destination beacon found (or no route)
 #define BOT_NO_ROUTE "Navigating to Home"
 
+//Secbot and ED209 judgement criteria bitflag values
+#define JUDGE_EMAGGED (1<<0)
+#define JUDGE_IDCHECK (1<<1)
+#define JUDGE_WEAPONCHECK (1<<2)
+#define JUDGE_RECORDCHECK (1<<3)
+
 //SecBOT defines on arresting
 ///Whether arrests should be broadcasted over the Security radio
 #define SECBOT_DECLARE_ARRESTS (1<<0)
@@ -177,6 +183,14 @@
 ///Whether we will stun & cuff or endlessly stun
 #define SECBOT_HANDCUFF_TARGET (1<<4)
 
+DEFINE_BITFIELD(security_mode_flags, list(
+	"SECBOT_DECLARE_ARRESTS" = SECBOT_DECLARE_ARRESTS,
+	"SECBOT_CHECK_IDS" = SECBOT_CHECK_IDS,
+	"SECBOT_CHECK_WEAPONS" = SECBOT_CHECK_WEAPONS,
+	"SECBOT_CHECK_RECORDS" = SECBOT_CHECK_RECORDS,
+	"SECBOT_HANDCUFF_TARGET" = SECBOT_HANDCUFF_TARGET,
+))
+
 //MedBOT defines
 ///Whether to declare if someone (we are healing) is in critical condition
 #define MEDBOT_DECLARE_CRIT (1<<0)
@@ -184,3 +198,22 @@
 #define MEDBOT_STATIONARY_MODE (1<<1)
 ///Whether the bot will randomly speak from time to time. This will not actually prevent all speech.
 #define MEDBOT_SPEAK_MODE (1<<2)
+
+DEFINE_BITFIELD(medical_mode_flags, list(
+	"MEDBOT_DECLARE_CRIT" = MEDBOT_DECLARE_CRIT,
+	"MEDBOT_STATIONARY_MODE" = MEDBOT_STATIONARY_MODE,
+	"MEDBOT_SPEAK_MODE" = MEDBOT_SPEAK_MODE,
+))
+
+//cleanBOT defines on what to clean
+#define CLEANBOT_CLEAN_BLOOD (1<<0)
+#define CLEANBOT_CLEAN_TRASH (1<<1)
+#define CLEANBOT_CLEAN_PESTS (1<<2)
+#define CLEANBOT_CLEAN_DRAWINGS (1<<3)
+
+DEFINE_BITFIELD(janitor_mode_flags, list(
+	"CLEANBOT_CLEAN_BLOOD" = CLEANBOT_CLEAN_BLOOD,
+	"CLEANBOT_CLEAN_TRASH" = CLEANBOT_CLEAN_TRASH,
+	"CLEANBOT_CLEAN_PESTS" = CLEANBOT_CLEAN_PESTS,
+	"CLEANBOT_CLEAN_DRAWINGS" = CLEANBOT_CLEAN_DRAWINGS,
+))

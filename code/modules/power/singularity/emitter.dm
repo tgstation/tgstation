@@ -1,7 +1,7 @@
 /obj/machinery/power/emitter
 	name = "emitter"
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "emitter"
 	base_icon_state = "emitter"
 
@@ -115,7 +115,7 @@
 	else if(!powered)
 		. += span_notice("Its status display is glowing faintly.")
 	else
-		. += span_notice("Its status display reads: Emitting one beam every <b>[DisplayTimeText(fire_delay)]</b>.")
+		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay)]</b> and <b>[DisplayTimeText(maximum_fire_delay)]</b>.")
 		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
 
 /obj/machinery/power/emitter/should_have_node()
@@ -124,9 +124,9 @@
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
-		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)]")
-		log_game("[src] deleted at [AREACOORD(T)]")
-		investigate_log("deleted at [AREACOORD(T)]", INVESTIGATE_ENGINE)
+		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[src] deleted at [AREACOORD(T)].")
+		investigate_log("deleted at [AREACOORD(T)].", INVESTIGATE_ENGINE)
 	QDEL_NULL(sparks)
 	return ..()
 
@@ -379,12 +379,11 @@
 
 /obj/machinery/power/emitter/prototype
 	name = "Prototype Emitter"
-	icon = 'icons/obj/turrets.dmi'
-	icon_state = "proto_emitter"
-	base_icon_state = "proto_emitter"
-	icon_state_on = "proto_emitter_+a"
-	icon_state_underpowered = "proto_emitter_+u"
-	base_icon_state = "proto_emitter"
+	icon = 'icons/obj/weapons/turrets.dmi'
+	icon_state = "protoemitter"
+	base_icon_state = "protoemitter"
+	icon_state_on = "protoemitter_+a"
+	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
 	buckle_lying = 0
 	///Sets the view size for the user
@@ -457,7 +456,7 @@
 		for(var/obj/item/item in buckled_mob.held_items)
 			if(istype(item, /obj/item/turret_control))
 				qdel(item)
-		UpdateButtons()
+		build_all_button_icons()
 		return
 	playsound(proto_emitter,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	name = "Switch to Automatic Firing"
@@ -474,7 +473,7 @@
 		else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 			var/obj/item/turret_control/turret_control = new /obj/item/turret_control()
 			buckled_mob.put_in_hands(turret_control)
-	UpdateButtons()
+	build_all_button_icons()
 
 
 /obj/item/turret_control

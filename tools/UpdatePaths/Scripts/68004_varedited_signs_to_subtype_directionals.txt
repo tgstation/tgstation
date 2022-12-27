@@ -1,0 +1,452 @@
+#comment This UpdatePaths File should move every single sign in-game into a directional subtype in order to help with cutting down on the lines in your average DMM file.
+#comment There are the obvious North, South, East, West directionals: but several maps do two pixelshifts in order to get the sign in a corner.
+#comment This UpdatePaths File accounts for this by setting the subtype to either East or West, and then giving the "north" and "south" effect by a pixelshift.
+#comment Somethings are just utterly inescapable, and it's niche enough to the point where I don't see the need to define an entirely new directional subclass, just for "southwest" to be a thing.
+#comment The old functionality of manually pixelshifting a sign will still remain, but this just gives mappers subtle cues as to what I would really like them to do.
+#comment Some people also didn't properly pixel_shift it (using something like 28 instead of 32), but it's not going to be possible to automate auditing all of those because UpdatePaths can't do ranges of numbers. Unfortunate.
+#comment One thing to note is that the @SUBTYPES variable does not work for what I'm trying to accomplish (I tried), so I'm going to be explicit with every subtype in this script. It hurts me more than it hurts you.
+
+#comment Warning Signs!
+
+/obj/structure/sign/warning{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/biohazard{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/biohazard/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/biohazard{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/biohazard/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/biohazard{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/biohazard/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/biohazard{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/biohazard/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/biohazard{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/biohazard/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/biohazard{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/biohazard/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/biohazard{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/biohazard/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/biohazard{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/biohazard/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/bodysposal{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/bodysposal/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/bodysposal{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/bodysposal/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/bodysposal{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/bodysposal/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/bodysposal{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/bodysposal/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/bodysposal{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/bodysposal/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/bodysposal{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/bodysposal/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/bodysposal{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/bodysposal/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/bodysposal{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/bodysposal/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/chem_diamond{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/chem_diamond/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/chem_diamond{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/chem_diamond/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/chem_diamond{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/chem_diamond/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/chem_diamond{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/chem_diamond/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/chem_diamond{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/chem_diamond/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/chem_diamond{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/chem_diamond/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/chem_diamond{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/chem_diamond/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/chem_diamond{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/chem_diamond/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/cold_temp{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/cold_temp/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/cold_temp{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/cold_temp/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/cold_temp{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/cold_temp/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/cold_temp{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/cold_temp/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/cold_temp{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/cold_temp/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/cold_temp{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/cold_temp/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/cold_temp{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/cold_temp/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/cold_temp{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/cold_temp/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/deathsposal{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/deathsposal/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/deathsposal{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/deathsposal/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/deathsposal{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/deathsposal/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/deathsposal{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/deathsposal/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/deathsposal{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/deathsposal/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/deathsposal{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/deathsposal/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/deathsposal{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/deathsposal/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/deathsposal{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/deathsposal/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/docking{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/docking/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/docking{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/docking/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/docking{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/docking/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/docking{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/docking/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/docking{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/docking/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/docking{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/docking/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/docking{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/docking/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/docking{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/docking/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/electric_shock{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/electric_shock/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/electric_shock{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/electric_shock/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/electric_shock{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/electric_shock/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/electric_shock{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/electric_shock/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/electric_shock{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/electric_shock/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/electric_shock{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/electric_shock/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/electric_shock{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/electric_shock/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/electric_shock{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/electric_shock/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/engine_safety{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/engine_safety/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/engine_safety{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/engine_safety/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/engine_safety{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/engine_safety/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/engine_safety{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/engine_safety/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/engine_safety{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/engine_safety/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/engine_safety{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/engine_safety/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/engine_safety{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/engine_safety/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/engine_safety{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/engine_safety/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/explosives{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/explosives/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/explosives{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/explosives/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/explosives{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/explosives/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/explosives{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/explosives/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/explosives{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/explosives/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/explosives{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/explosives/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/explosives{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/explosives/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/explosives{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/explosives/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/fire{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/fire/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/fire{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/fire/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/fire{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/fire/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/fire{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/fire/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/fire{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/fire/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/fire{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/fire/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/fire{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/fire/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/fire{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/fire/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/firing_range{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/firing_range/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/firing_range{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/firing_range/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/firing_range{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/firing_range/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/firing_range{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/firing_range/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/firing_range{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/firing_range/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/firing_range{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/firing_range/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/firing_range{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/firing_range/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/firing_range{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/firing_range/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/gas_mask{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/gas_mask/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/gas_mask{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/gas_mask/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/gas_mask{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/gas_mask/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/gas_mask{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/gas_mask/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/gas_mask{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/gas_mask/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/gas_mask{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/gas_mask/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/gas_mask{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/gas_mask/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/gas_mask{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/gas_mask/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/hot_temp{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/hot_temp/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/hot_temp{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/hot_temp/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/hot_temp{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/hot_temp/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/hot_temp{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/hot_temp/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/hot_temp{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/hot_temp/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/hot_temp{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/hot_temp/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/hot_temp{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/hot_temp/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/hot_temp{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/hot_temp/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/no_smoking{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/no_smoking/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/no_smoking{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/no_smoking/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/no_smoking{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/no_smoking/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/no_smoking{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/no_smoking/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/no_smoking{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/no_smoking/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/no_smoking{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/no_smoking/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/no_smoking{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/no_smoking/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/no_smoking{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/no_smoking/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/pods{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/pods/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/pods{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/pods/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/pods{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/pods/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/pods{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/pods/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/pods{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/pods/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/pods{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/pods/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/pods{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/pods/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/pods{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/pods/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/rad_shelter{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/rad_shelter/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/rad_shelter{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/rad_shelter/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/rad_shelter{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/rad_shelter/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/rad_shelter{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/rad_shelter/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/rad_shelter{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/rad_shelter/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/rad_shelter{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/rad_shelter/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/rad_shelter{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/rad_shelter/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/rad_shelter{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/rad_shelter/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/radiation{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/radiation/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/radiation{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/radiation/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/radiation{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/radiation/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/radiation{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/radiation/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/radiation{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/radiation/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/radiation{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/radiation/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/radiation{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/radiation/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/radiation{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/radiation/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/secure_area{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/secure_area/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/secure_area{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/secure_area/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/secure_area{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/secure_area/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/secure_area{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/secure_area/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/secure_area{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/secure_area/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/secure_area{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/secure_area/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/secure_area{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/secure_area/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/secure_area{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/secure_area/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/test_chamber{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/test_chamber/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/test_chamber{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/test_chamber/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/test_chamber{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/test_chamber/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/test_chamber{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/test_chamber/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/test_chamber{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/test_chamber/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/test_chamber{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/test_chamber/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/test_chamber{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/test_chamber/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/test_chamber{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/test_chamber/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/vacuum{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/vacuum/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/vacuum{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/vacuum/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/vacuum{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/vacuum/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/vacuum{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/vacuum/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/vacuum{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/vacuum/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/vacuum{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/vacuum/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/vacuum{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/vacuum/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/vacuum{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/vacuum/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/xeno_mining{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/xeno_mining/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/xeno_mining{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/xeno_mining/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/xeno_mining{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/xeno_mining/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/xeno_mining{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/xeno_mining/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/xeno_mining{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/xeno_mining/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/xeno_mining{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/xeno_mining/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/xeno_mining{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/xeno_mining/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/xeno_mining{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/xeno_mining/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/yes_smoking/circle{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/yes_smoking/circle/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/yes_smoking/circle{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/yes_smoking/circle/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/yes_smoking/circle{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/yes_smoking/circle/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/yes_smoking/circle{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/yes_smoking/circle/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/yes_smoking/circle{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/yes_smoking/circle/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/yes_smoking/circle{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/yes_smoking/circle/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/yes_smoking/circle{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/yes_smoking/circle/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/yes_smoking/circle{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/yes_smoking/circle/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/vacuum/external{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/vacuum/external/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/vacuum/external{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/vacuum/external/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/vacuum/external{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/vacuum/external/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/vacuum/external{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/vacuum/external/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/vacuum/external{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/vacuum/external/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/vacuum/external{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/vacuum/external/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/vacuum/external{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/vacuum/external/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/vacuum/external{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/vacuum/external/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/no_smoking/circle{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/no_smoking/circle/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/no_smoking/circle{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/no_smoking/circle/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/no_smoking/circle{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/no_smoking/circle/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/no_smoking/circle{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/no_smoking/circle/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/no_smoking/circle{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/no_smoking/circle/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/no_smoking/circle{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/no_smoking/circle/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/no_smoking/circle{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/no_smoking/circle/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/no_smoking/circle{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/no_smoking/circle/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/explosives/alt{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/explosives/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/explosives/alt{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/explosives/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/explosives/alt{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/explosives/alt/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/explosives/alt{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/explosives/alt/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/explosives/alt{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/explosives/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/explosives/alt{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/explosives/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/explosives/alt{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/explosives/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/explosives/alt{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/explosives/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/warning/radiation/rad_area{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/warning/radiation/rad_area/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/radiation/rad_area{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/warning/radiation/rad_area/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/radiation/rad_area{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/warning/radiation/rad_area/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/radiation/rad_area{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/warning/radiation/rad_area/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/warning/radiation/rad_area{pixel_x=32;pixel_y=-32} : /obj/structure/sign/warning/radiation/rad_area/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/warning/radiation/rad_area{pixel_x=32;pixel_y=32} : /obj/structure/sign/warning/radiation/rad_area/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/radiation/rad_area{pixel_x=-32;pixel_y=32} : /obj/structure/sign/warning/radiation/rad_area/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/warning/radiation/rad_area{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/warning/radiation/rad_area/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+#comment Departmental Signs!
+
+/obj/structure/sign/departments/botany{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/botany/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/botany{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/botany/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/botany{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/botany/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/botany{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/botany/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/botany{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/botany/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/botany{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/botany/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/botany{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/botany/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/botany{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/botany/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/cargo{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/cargo/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/cargo{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/cargo/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/cargo{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/cargo/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/cargo{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/cargo/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/cargo{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/cargo/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/cargo{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/cargo/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/cargo{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/cargo/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/cargo{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/cargo/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/chemistry{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/chemistry/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/chemistry{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/chemistry/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/chemistry{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/chemistry/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/chemistry{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/chemistry/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/chemistry{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/chemistry/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/chemistry{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/chemistry/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/chemistry{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/chemistry/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/chemistry{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/chemistry/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/court{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/court/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/court{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/court/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/court{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/court/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/court{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/court/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/court{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/court/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/court{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/court/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/court{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/court/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/court{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/court/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/custodian{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/custodian/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/custodian{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/custodian/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/custodian{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/custodian/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/custodian{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/custodian/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/custodian{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/custodian/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/custodian{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/custodian/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/custodian{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/custodian/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/custodian{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/custodian/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/drop{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/drop/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/drop{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/drop/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/drop{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/drop/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/drop{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/drop/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/drop{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/drop/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/drop{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/drop/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/drop{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/drop/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/drop{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/drop/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/engineering{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/engineering/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/engineering{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/engineering/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/engineering{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/engineering/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/engineering{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/engineering/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/engineering{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/engineering/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/engineering{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/engineering/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/engineering{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/engineering/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/engineering{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/engineering/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/evac{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/evac/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/evac{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/evac/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/evac{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/evac/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/evac{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/evac/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/evac{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/evac/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/evac{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/evac/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/evac{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/evac/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/evac{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/evac/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/exam_room{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/exam_room/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/exam_room{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/exam_room/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/exam_room{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/exam_room/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/exam_room{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/exam_room/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/exam_room{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/exam_room/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/exam_room{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/exam_room/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/exam_room{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/exam_room/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/exam_room{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/exam_room/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/holy{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/holy/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/holy{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/holy/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/holy{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/holy/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/holy{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/holy/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/holy{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/holy/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/holy{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/holy/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/holy{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/holy/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/holy{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/holy/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/lawyer{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/lawyer/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/lawyer{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/lawyer/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/lawyer{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/lawyer/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/lawyer{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/lawyer/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/lawyer{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/lawyer/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/lawyer{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/lawyer/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/lawyer{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/lawyer/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/lawyer{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/lawyer/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/maint{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/maint/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/maint{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/maint/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/maint{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/maint/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/maint{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/maint/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/maint{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/maint/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/maint{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/maint/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/maint{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/maint/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/maint{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/maint/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/medbay{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/medbay/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/medbay{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/medbay/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/medbay{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/medbay/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/medbay{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/medbay/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/medbay{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/medbay/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/medbay{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/medbay/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/medbay{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/medbay/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/medbay{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/medbay/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/psychology{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/psychology/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/psychology{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/psychology/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/psychology{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/psychology/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/psychology{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/psychology/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/psychology{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/psychology/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/psychology{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/psychology/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/psychology{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/psychology/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/psychology{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/psychology/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/restroom{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/restroom/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/restroom{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/restroom/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/restroom{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/restroom/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/restroom{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/restroom/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/restroom{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/restroom/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/restroom{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/restroom/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/restroom{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/restroom/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/restroom{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/restroom/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/science{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/science/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/science{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/science/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/science{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/science/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/science{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/science/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/science{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/science/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/science{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/science/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/science{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/science/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/science{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/science/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/security{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/security/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/security{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/security/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/security{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/security/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/security{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/security/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/security{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/security/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/security{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/security/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/security{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/security/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/security{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/security/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/xenobio{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/xenobio/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/xenobio{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/xenobio/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/xenobio{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/xenobio/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/xenobio{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/xenobio/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/xenobio{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/xenobio/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/xenobio{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/xenobio/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/xenobio{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/xenobio/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/xenobio{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/xenobio/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/chemistry/pharmacy{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/chemistry/pharmacy/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/chemistry/pharmacy{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/chemistry/pharmacy/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/chemistry/pharmacy{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/chemistry/pharmacy/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/chemistry/pharmacy{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/chemistry/pharmacy/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/chemistry/pharmacy{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/chemistry/pharmacy/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/chemistry/pharmacy{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/chemistry/pharmacy/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/chemistry/pharmacy{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/chemistry/pharmacy/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/chemistry/pharmacy{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/chemistry/pharmacy/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/maint/alt{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/maint/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/maint/alt{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/maint/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/maint/alt{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/maint/alt/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/maint/alt{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/maint/alt/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/maint/alt{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/maint/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/maint/alt{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/maint/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/maint/alt{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/maint/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/maint/alt{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/maint/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/medbay/alt{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/medbay/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/medbay/alt{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/medbay/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/medbay/alt{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/medbay/alt/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/medbay/alt{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/medbay/alt/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/medbay/alt{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/medbay/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/medbay/alt{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/medbay/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/medbay/alt{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/medbay/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/medbay/alt{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/medbay/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}
+
+/obj/structure/sign/departments/science/alt{pixel_x=32;pixel_y=@UNSET} : /obj/structure/sign/departments/science/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/science/alt{pixel_x=-32;pixel_y=@UNSET} : /obj/structure/sign/departments/science/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/science/alt{pixel_x=@UNSET;pixel_y=32} : /obj/structure/sign/departments/science/alt/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/science/alt{pixel_x=@UNSET;pixel_y=-32} : /obj/structure/sign/departments/science/alt/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sign/departments/science/alt{pixel_x=32;pixel_y=-32} : /obj/structure/sign/departments/science/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=-32}
+/obj/structure/sign/departments/science/alt{pixel_x=32;pixel_y=32} : /obj/structure/sign/departments/science/alt/directional/east{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/science/alt{pixel_x=-32;pixel_y=32} : /obj/structure/sign/departments/science/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=32}
+/obj/structure/sign/departments/science/alt{pixel_x=-32;pixel_y=-32} : /obj/structure/sign/departments/science/alt/directional/west{@OLD;pixel_x=@SKIP;pixel_y=-32}

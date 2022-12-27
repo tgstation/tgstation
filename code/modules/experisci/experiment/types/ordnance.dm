@@ -7,7 +7,7 @@
 	name = "Toxin Research"
 	description = "An experiment conducted in the ordnance subdepartment."
 	exp_tag = "ordnance"
-	performance_hint = "Perform research experiments in the ordnance lab and publish them with NT Frontier."
+	performance_hint = "Perform research experiments in the ordnance lab using the specified equipment, print them unto a data disk, and publish them with the NT Frontier app."
 	/// Lookup experiments are initialized using subtypes, 
 	/// this lets us ignore the ones made for subtyping.
 	var/experiment_proper = FALSE

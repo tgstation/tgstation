@@ -18,16 +18,10 @@ export const EngravedMessage = (props, context) => {
     realdate,
   } = data;
   return (
-    <Window
-      width={600}
-      height={300}>
+    <Window width={600} height={300}>
       <Window.Content scrollable>
         <Section>
-          <Box
-            bold
-            textAlign="center"
-            fontSize="20px"
-            mb={2}>
+          <Box bold textAlign="center" fontSize="20px" mb={2}>
             {decodeHtmlEntities(hidden_message)}
           </Box>
           <Stack>
@@ -35,13 +29,14 @@ export const EngravedMessage = (props, context) => {
               <Button
                 fluid
                 icon="arrow-up"
-                content={" " + num_likes}
+                content={' ' + num_likes}
                 disabled={is_creator}
                 selected={has_liked}
                 textAlign="center"
                 fontSize="16px"
                 lineHeight="24px"
-                onClick={() => act('like')} />
+                onClick={() => act('like')}
+              />
             </Stack.Item>
             <Stack.Item grow={1}>
               <Button
@@ -52,39 +47,40 @@ export const EngravedMessage = (props, context) => {
                 textAlign="center"
                 fontSize="16px"
                 lineHeight="24px"
-                onClick={() => act('neutral')} />
+                onClick={() => act('neutral')}
+              />
             </Stack.Item>
             <Stack.Item grow={1.05}>
               <Button
                 fluid
                 icon="arrow-down"
-                content={" " + num_dislikes}
+                content={' ' + num_dislikes}
                 disabled={is_creator}
                 selected={has_disliked}
                 textAlign="center"
                 fontSize="16px"
                 lineHeight="24px"
-                onClick={() => act('dislike')} />
+                onClick={() => act('dislike')}
+              />
             </Stack.Item>
           </Stack>
         </Section>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Created On">
-              {realdate}
-            </LabeledList.Item>
+            <LabeledList.Item label="Created On">{realdate}</LabeledList.Item>
           </LabeledList>
         </Section>
         {!!admin_mode && (
           <Section
             title="Admin Panel"
-            buttons={(
+            buttons={
               <Button
                 icon="times"
                 content="Delete"
                 color="bad"
-                onClick={() => act('delete')} />
-            )}>
+                onClick={() => act('delete')}
+              />
+            }>
             <LabeledList>
               <LabeledList.Item label="Creator Ckey">
                 {creator_key}

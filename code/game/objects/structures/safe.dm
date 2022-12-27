@@ -131,7 +131,7 @@ FLOOR SAFES
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/user = usr
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 
 	var/canhear = FALSE

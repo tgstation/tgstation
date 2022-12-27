@@ -6,33 +6,33 @@ import { Box, Button, Flex } from '../components';
 import { Window } from '../layouts';
 
 type PaintCanvasProps = Partial<{
-  onCanvasModifiedHandler: (data : PointData[]) => void,
-  value: string[][],
-  width: number,
-  height: number,
-  imageWidth: number,
-  imageHeight: number,
-  editable: boolean,
-  drawing_color: string | null,
+  onCanvasModifiedHandler: (data: PointData[]) => void;
+  value: string[][];
+  width: number;
+  height: number;
+  imageWidth: number;
+  imageHeight: number;
+  editable: boolean;
+  drawing_color: string | null;
 }>;
 
 type PointData = {
-  x: number,
-  y: number,
-  color: Color
-}
+  x: number;
+  y: number;
+  color: Color;
+};
 
 const fromDM = (data: string[][]) => {
-  return data.map(inner => inner.map(v => Color.fromHex(v)));
+  return data.map((inner) => inner.map((v) => Color.fromHex(v)));
 };
 
 const toMassPaintFormat = (data: PointData[]) => {
-  return data.map(p => ({ x: p.x+1, y: p.y+1 })); // 1-based index dm side
+  return data.map((p) => ({ x: p.x + 1, y: p.y + 1 })); // 1-based index dm side
 };
 
 class PaintCanvas extends Component<PaintCanvasProps> {
   canvasRef: RefObject<HTMLCanvasElement>;
-  baseImageData: Color[][]
+  baseImageData: Color[][];
   modifiedElements: PointData[];
   onCanvasModified: (data: PointData[]) => void;
   drawing: boolean;
@@ -57,14 +57,18 @@ class PaintCanvas extends Component<PaintCanvasProps> {
 
   componentDidUpdate() {
     // eslint-disable-next-line max-len
-    if (this.props.value !== undefined && JSON.stringify(this.baseImageData) !== JSON.stringify(fromDM(this.props.value))) {
+    if (
+      this.props.value !== undefined &&
+      JSON.stringify(this.baseImageData) !==
+        JSON.stringify(fromDM(this.props.value))
+    ) {
       this.syncCanvas();
     }
   }
 
   prepareCanvas() {
     const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     const width = this.props.width || canvas.width || 360;
     const height = this.props.height || canvas.height || 360;
     const x_resolution = this.props.imageWidth || 36;
@@ -83,7 +87,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     this.modifiedElements = [];
 
     const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext("2d")!;
+    const ctx = canvas.getContext('2d')!;
     for (let x = 0; x < this.baseImageData.length; x++) {
       const element = this.baseImageData[x];
       for (let y = 0; y < element.length; y++) {
@@ -94,7 +98,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     }
   }
 
-  eventToCoords(event : MouseEvent) {
+  eventToCoords(event: MouseEvent) {
     const canvas = this.canvasRef.current!;
     const width = this.props.width || canvas.width || 360;
     const height = this.props.height || canvas.height || 360;
@@ -107,10 +111,12 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     return { x, y };
   }
 
-  handleStartDrawing(event : MouseEvent) {
-    if (!this.props.editable
-       || this.props.drawing_color === undefined
-       || this.props.drawing_color === null) {
+  handleStartDrawing(event: MouseEvent) {
+    if (
+      !this.props.editable ||
+      this.props.drawing_color === undefined ||
+      this.props.drawing_color === null
+    ) {
       return;
     }
     this.modifiedElements = [];
@@ -124,7 +130,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     let p: PointData = { x, y, color: Color.fromHex(color) };
     this.modifiedElements.push(p);
     const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext("2d")!;
+    const ctx = canvas.getContext('2d')!;
     ctx.fillStyle = color;
     ctx.fillRect(x, y, 1, 1);
   }
@@ -143,7 +149,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     }
     this.drawing = false;
     const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext("2d")!;
+    const ctx = canvas.getContext('2d')!;
     if (this.onCanvasModified !== undefined) {
       this.onCanvasModified(this.modifiedElements);
     }
@@ -174,7 +180,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   }
 }
 
-const getImageSize = value => {
+const getImageSize = (value) => {
   const width = value.length;
   const height = width !== 0 ? value[0].length : 0;
   return [width, height];
@@ -183,22 +189,22 @@ const getImageSize = value => {
 type PaletteColor = {
   color: string;
   is_selected: boolean;
-}
+};
 
 type CanvasData = {
-  grid: string[][],
-  px_per_unit: number,
-  finalized: boolean,
-  name: string,
-  editable: boolean,
-  paint_tool_color: string | null,
-  paint_tool_palette: PaletteColor[] | null,
-  author: string | null,
-  medium: string | null,
-  patron: string | null,
-  date: string | null,
-  show_plaque: boolean
-}
+  grid: string[][];
+  px_per_unit: number;
+  finalized: boolean;
+  name: string;
+  editable: boolean;
+  paint_tool_color: string | null;
+  paint_tool_palette: PaletteColor[] | null;
+  author: string | null;
+  medium: string | null;
+  patron: string | null;
+  date: string | null;
+  show_plaque: boolean;
+};
 
 export const Canvas = (props, context) => {
   const { act, data } = useBackend<CanvasData>(context);
@@ -210,9 +216,12 @@ export const Canvas = (props, context) => {
   return (
     <Window
       width={scaled_width + 72}
-      height={scaled_height + 75
-        + (data.show_plaque ? average_plaque_height : 0)
-		+ (data.editable && data.paint_tool_palette ? palette_height : 0)}>
+      height={
+        scaled_height +
+        75 +
+        (data.show_plaque ? average_plaque_height : 0) +
+        (data.editable && data.paint_tool_palette ? palette_height : 0)
+      }>
       <Window.Content>
         <Box textAlign="center">
           <PaintCanvas
@@ -222,7 +231,9 @@ export const Canvas = (props, context) => {
             width={scaled_width}
             height={scaled_height}
             drawing_color={data.paint_tool_color}
-            onCanvasModifiedHandler={(changed) => act("paint", { data: toMassPaintFormat(changed) })}
+            onCanvasModifiedHandler={(changed) =>
+              act('paint', { data: toMassPaintFormat(changed) })
+            }
             editable={data.editable}
           />
           <Flex align="center" justify="center" direction="column">
@@ -233,23 +244,29 @@ export const Canvas = (props, context) => {
                     key={`${index}`}
                     backgroundColor={element.color}
                     style={{
-                      "width": "24px",
-                      "height": "24px",
-                      "border-style": "solid",
-                      "border-color": element.is_selected ? "lightblue" : "black",
-                      "border-width": "2px",
+                      'width': '24px',
+                      'height': '24px',
+                      'border-style': 'solid',
+                      'border-color': element.is_selected
+                        ? 'lightblue'
+                        : 'black',
+                      'border-width': '2px',
                     }}
-                    onClick={() => act('select_color', {
-                      selected_color: element.color,
-                    })} />
+                    onClick={() =>
+                      act('select_color', {
+                        selected_color: element.color,
+                      })
+                    }
+                  />
                 ))}
               </Flex.Item>
             )}
             {!data.finalized && (
               <Flex.Item>
                 <Button.Confirm
-                  onClick={() => act("finalize")}
-                  content="Finalize" />
+                  onClick={() => act('finalize')}
+                  content="Finalize"
+                />
               </Flex.Item>
             )}
             {!!data.finalized && !!data.show_plaque && (
@@ -260,16 +277,24 @@ export const Canvas = (props, context) => {
                 textColor="black"
                 textAlign="left"
                 backgroundColor="white"
-                style={{ "border-style": "inset" }}>
-                <Box mb={1} fontSize="18px" bold>{decodeHtmlEntities(data.name)}</Box>
+                style={{ 'border-style': 'inset' }}>
+                <Box mb={1} fontSize="18px" bold>
+                  {decodeHtmlEntities(data.name)}
+                </Box>
                 <Box bold>
                   {data.author}
-                  {!!data.date && `- ${new Date(data.date).getFullYear()+540}`}
+                  {!!data.date &&
+                    `- ${new Date(data.date).getFullYear() + 540}`}
                 </Box>
                 <Box italic>{data.medium}</Box>
                 <Box italic>
                   {!!data.patron && `Sponsored by ${data.patron} `}
-                  <Button icon="hand-holding-usd" color="transparent" iconColor="black" onClick={() => act("patronage")} />
+                  <Button
+                    icon="hand-holding-usd"
+                    color="transparent"
+                    iconColor="black"
+                    onClick={() => act('patronage')}
+                  />
                 </Box>
               </Flex.Item>
             )}

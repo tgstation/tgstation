@@ -1,0 +1,15 @@
+{
+	"cutters": [
+		{
+			"type": "icon_state",
+			"icon_state": "cutters",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cutters_cutty_thingy",
+			"blend_mode": "overlay"
+		}
+	]
+}

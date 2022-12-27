@@ -4,7 +4,7 @@
 		BB_MOD_TARGET,
 		BB_MOD_IMPLANT,
 	)
-	max_target_distance = MOD_AI_RANGE //a little spicy but its one specific item that summons it, and it doesnt run otherwise
+	max_target_distance = MOD_AI_RANGE //a little spicy but its one specific item that summons it, and it doesn't run otherwise
 	ai_movement = /datum/ai_movement/jps
 	///ID card generated from the suit's required access. Used for pathing.
 	var/obj/item/card/id/advanced/id_card

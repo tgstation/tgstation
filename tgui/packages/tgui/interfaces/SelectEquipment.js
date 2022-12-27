@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 
 // here's an important mental define:
 // custom outfits give a ref keyword instead of path
-const getOutfitKey = outfit => outfit.path || outfit.ref;
+const getOutfitKey = (outfit) => outfit.path || outfit.ref;
 
 const useOutfitTabs = (context, categories) => {
   return useLocalState(context, 'selected-tab', categories[0]);
@@ -15,58 +15,46 @@ const useOutfitTabs = (context, categories) => {
 
 export const SelectEquipment = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    name,
-    icon64,
-    current_outfit,
-    favorites,
-  } = data;
+  const { name, icon64, current_outfit, favorites } = data;
 
-  const isFavorited = entry => favorites?.includes(entry.path);
+  const isFavorited = (entry) => favorites?.includes(entry.path);
 
-  const outfits = map(entry => ({
+  const outfits = map((entry) => ({
     ...entry,
     favorite: isFavorited(entry),
-  }))([
-    ...data.outfits,
-    ...data.custom_outfits,
-  ]);
+  }))([...data.outfits, ...data.custom_outfits]);
 
   // even if no custom outfits were sent, we still want to make sure there's
   // at least a 'Custom' tab so the button to create a new one pops up
   const categories = uniq([
-    ...outfits.map(entry => entry.category),
+    ...outfits.map((entry) => entry.category),
     'Custom',
   ]);
   const [tab] = useOutfitTabs(context, categories);
 
-  const [searchText, setSearchText] = useLocalState(
-    context, 'searchText', '');
-  const searchFilter = createSearch(searchText, entry => (
-    entry.name + entry.path
-  ));
+  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const searchFilter = createSearch(
+    searchText,
+    (entry) => entry.name + entry.path
+  );
 
   const visibleOutfits = flow([
-    filter(entry => entry.category === tab),
+    filter((entry) => entry.category === tab),
     filter(searchFilter),
     sortBy(
-      entry => !entry.favorite,
-      entry => !entry.priority,
-      entry => entry.name
+      (entry) => !entry.favorite,
+      (entry) => !entry.priority,
+      (entry) => entry.name
     ),
   ])(outfits);
 
-  const getOutfitEntry = current_outfit => outfits.find(outfit => (
-    getOutfitKey(outfit) === current_outfit
-  ));
+  const getOutfitEntry = (current_outfit) =>
+    outfits.find((outfit) => getOutfitKey(outfit) === current_outfit);
 
   const currentOutfitEntry = getOutfitEntry(current_outfit);
 
   return (
-    <Window
-      width={650}
-      height={415}
-      theme="admin">
+    <Window width={650} height={415} theme="admin">
       <Window.Content>
         <Stack fill>
           <Stack.Item>
@@ -77,15 +65,14 @@ export const SelectEquipment = (props, context) => {
                   autoFocus
                   placeholder="Search"
                   value={searchText}
-                  onInput={(e, value) => setSearchText(value)} />
+                  onInput={(e, value) => setSearchText(value)}
+                />
               </Stack.Item>
               <Stack.Item>
                 <DisplayTabs categories={categories} />
               </Stack.Item>
               <Stack.Item mt={0} grow={1} basis={0}>
-                <OutfitDisplay
-                  entries={visibleOutfits}
-                  currentTab={tab} />
+                <OutfitDisplay entries={visibleOutfits} currentTab={tab} />
               </Stack.Item>
             </Stack>
           </Stack.Item>
@@ -97,10 +84,7 @@ export const SelectEquipment = (props, context) => {
                 </Section>
               </Stack.Item>
               <Stack.Item grow={1}>
-                <Section
-                  fill
-                  title={name}
-                  textAlign="center">
+                <Section fill title={name} textAlign="center">
                   <Box
                     as="img"
                     m={0}
@@ -108,7 +92,8 @@ export const SelectEquipment = (props, context) => {
                     height="100%"
                     style={{
                       '-ms-interpolation-mode': 'nearest-neighbor',
-                    }} />
+                    }}
+                  />
                 </Section>
               </Stack.Item>
             </Stack>
@@ -124,7 +109,7 @@ const DisplayTabs = (props, context) => {
   const [tab, setTab] = useOutfitTabs(context, categories);
   return (
     <Tabs textAlign="center">
-      {categories.map(category => (
+      {categories.map((category) => (
         <Tabs.Tab
           key={category}
           selected={tab === category}
@@ -142,7 +127,7 @@ const OutfitDisplay = (props, context) => {
   const { entries, currentTab } = props;
   return (
     <Section fill scrollable>
-      {entries.map(entry => (
+      {entries.map((entry) => (
         <Button
           key={getOutfitKey(entry)}
           fluid
@@ -152,14 +137,19 @@ const OutfitDisplay = (props, context) => {
           content={entry.name}
           title={entry.path || entry.name}
           selected={getOutfitKey(entry) === current_outfit}
-          onClick={() => act('preview', {
-            path: getOutfitKey(entry),
-          })}
-          onDblClick={() => act('applyoutfit', {
-            path: getOutfitKey(entry),
-          })} />
+          onClick={() =>
+            act('preview', {
+              path: getOutfitKey(entry),
+            })
+          }
+          onDblClick={() =>
+            act('applyoutfit', {
+              path: getOutfitKey(entry),
+            })
+          }
+        />
       ))}
-      {currentTab === "Custom" && (
+      {currentTab === 'Custom' && (
         <Button
           color="transparent"
           icon="plus"
@@ -185,15 +175,16 @@ const CurrentlySelectedDisplay = (props, context) => {
             name={entry.favorite ? 'star' : 'star-o'}
             color="gold"
             style={{ cursor: 'pointer' }}
-            onClick={() => act('togglefavorite', {
-              path: entry.path,
-            })} />
+            onClick={() =>
+              act('togglefavorite', {
+                path: entry.path,
+              })
+            }
+          />
         </Stack.Item>
       )}
       <Stack.Item grow={1} basis={0}>
-        <Box color="label">
-          Currently selected:
-        </Box>
+        <Box color="label">Currently selected:</Box>
         <Box
           title={entry?.path}
           style={{
@@ -209,9 +200,11 @@ const CurrentlySelectedDisplay = (props, context) => {
           mr={0.8}
           lineHeight={2}
           color="green"
-          onClick={() => act('applyoutfit', {
-            path: current_outfit,
-          })}>
+          onClick={() =>
+            act('applyoutfit', {
+              path: current_outfit,
+            })
+          }>
           Confirm
         </Button>
       </Stack.Item>

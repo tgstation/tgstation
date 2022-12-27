@@ -200,6 +200,7 @@
 		if(id_trim)
 			if(!SSid_access.apply_trim_to_card(id_card, id_trim))
 				WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
+			H.sec_hud_set_ID()
 
 	if(suit_store)
 		EQUIP_OUTFIT_ITEM(suit_store, ITEM_SLOT_SUITSTORE)
@@ -244,8 +245,7 @@
 	if(!visualsOnly)
 		apply_fingerprints(H)
 		if(internals_slot)
-			H.internal = H.get_item_by_slot(internals_slot)
-			H.update_action_buttons_icon()
+			H.open_internals(H.get_item_by_slot(internals_slot))
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)

@@ -68,15 +68,16 @@
 
 /// Make [victim] into a shattered risen ghoul.
 /datum/heretic_knowledge/limited_amount/risen_corpse/proc/make_risen(mob/living/user, mob/living/carbon/human/victim)
-	log_game("[key_name(user)] created a shattered risen out of [key_name(victim)].")
+	user.log_message("created a shattered risen out of [key_name(victim)].", LOG_GAME)
+	victim.log_message("became a shattered risen of [key_name(user)]'s.", LOG_VICTIM, log_globally = FALSE)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a shattered risen, [ADMIN_LOOKUPFLW(victim)].")
 
 	victim.apply_status_effect(
 		/datum/status_effect/ghoul,
 		RISEN_MAX_HEALTH,
 		user.mind,
-		CALLBACK(src, .proc/apply_to_risen),
-		CALLBACK(src, .proc/remove_from_risen),
+		CALLBACK(src, PROC_REF(apply_to_risen)),
+		CALLBACK(src, PROC_REF(remove_from_risen)),
 	)
 
 /// Callback for the ghoul status effect - what effects are applied to the ghoul.

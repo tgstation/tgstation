@@ -2,7 +2,7 @@
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo."
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	inhand_icon_state = "syringe_kit"
@@ -23,6 +23,8 @@
 	var/max_ammo = 7
 	///Controls how sprites are updated for the ammo box; see defines in combat.dm: AMMO_BOX_ONE_SPRITE; AMMO_BOX_PER_BULLET; AMMO_BOX_FULL_EMPTY
 	var/multiple_sprites = AMMO_BOX_ONE_SPRITE
+	///For sprite updating, do we use initial(icon_state) or base_icon_state?
+	var/multiple_sprite_use_base = FALSE
 	///String, used for checking if ammo of different types but still fits can fit inside it; generally used for magazines
 	var/caliber
 	///Allows multiple bullets to be loaded in from one click of another box/magazine
@@ -43,7 +45,7 @@
 		top_off(starting=TRUE)
 
 /obj/item/ammo_box/add_weapon_description()
-	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_box)
+	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_box))
 
 /obj/item/ammo_box/proc/add_notes_box()
 	var/list/readout = list()
@@ -132,7 +134,7 @@
 				break
 		if(num_loaded)
 			AM.update_ammo_count()
-	if(istype(A, /obj/item/ammo_casing))
+	if(isammocasing(A))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
 			user.transferItemToLoc(AC, src, TRUE)
@@ -173,9 +175,9 @@
 	var/shells_left = LAZYLEN(stored_ammo)
 	switch(multiple_sprites)
 		if(AMMO_BOX_PER_BULLET)
-			icon_state = "[initial(icon_state)]-[shells_left]"
+			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left]"
 		if(AMMO_BOX_FULL_EMPTY)
-			icon_state = "[initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
+			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
 	return ..()
 
 /// Updates the amount of material in this ammo box according to how many bullets are left in it.

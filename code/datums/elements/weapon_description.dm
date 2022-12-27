@@ -6,8 +6,8 @@
  *
  */
 /datum/element/weapon_description
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 
 	// Additional proc to be run for specific object types
 	var/attached_proc
@@ -20,8 +20,8 @@
 	. = ..()
 	if(!isitem(target)) // Do not attach this to anything that isn't an item
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/warning_label)
-	RegisterSignal(target, COMSIG_TOPIC, .proc/topic_handler)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(warning_label))
+	RegisterSignal(target, COMSIG_TOPIC, PROC_REF(topic_handler))
 	// Don't perform the assignment if there is nothing to assign, or if we already have something for this bespoke element
 	if(attached_proc && !src.attached_proc)
 		src.attached_proc = attached_proc
@@ -62,7 +62,7 @@
 	SIGNAL_HANDLER
 
 	if(href_list["examine"])
-		to_chat(user, span_notice("[build_label_text(source)]"))
+		to_chat(user, span_notice(examine_block("[build_label_text(source)]")))
 
 /**
  *

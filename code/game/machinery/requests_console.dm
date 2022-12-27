@@ -75,7 +75,15 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/supplies_requestable = FALSE // Can others request supplies from this terminal?
 	var/anon_tips_receiver = FALSE // Can you relay information to this console?
 	max_integrity = 300
-	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/machinery_requests_console
+
+/datum/armor/machinery_requests_console
+	melee = 70
+	bullet = 30
+	laser = 30
+	energy = 30
+	fire = 90
+	acid = 90
 
 /obj/machinery/requests_console/update_appearance(updates=ALL)
 	. = ..()
@@ -109,7 +117,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		screen_state = "[base_icon_state]0"
 
 	. += mutable_appearance(icon, screen_state)
-	. += emissive_appearance(icon, screen_state, alpha = src.alpha)
+	. += emissive_appearance(icon, screen_state, src, alpha = src.alpha)
 
 /obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
@@ -334,7 +342,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				Radio.set_frequency(radio_freq)
 				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_appearance()
-				addtimer(CALLBACK(src, .proc/clear_emergency), 5 MINUTES)
+				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 
 	if(href_list["send"] && message && to_department && priority)
 

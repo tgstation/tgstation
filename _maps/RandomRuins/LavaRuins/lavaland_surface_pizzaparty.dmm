@@ -111,7 +111,7 @@
 "r" = (
 /obj/structure/chair/wood/wings,
 /obj/effect/decal/remains/human,
-/obj/item/clothing/head/festive{
+/obj/item/clothing/head/costume/festive{
 	desc = "A festive party hat with the name 'timmy' scribbled on the front.";
 	name = "party hat"
 	},

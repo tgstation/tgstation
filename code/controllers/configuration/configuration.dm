@@ -84,10 +84,14 @@
 				for(var/J in legacy_configs)
 					LoadEntries(J)
 				break
+	if (fexists("[directory]/dev_overrides.txt"))
+		LoadEntries("dev_overrides.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 	LoadPolicy()
 	LoadChatFilter()
+	if(CONFIG_GET(flag/load_jobs_from_txt))
+		validate_job_config()
 
 	loaded = TRUE
 
@@ -290,7 +294,7 @@ Value is raw html.
 
 Possible keywords :
 Job titles / Assigned roles (ghost spawners for example) : Assistant , Captain , Ash Walker
-Mob types : /mob/living/simple_animal/hostile/carp
+Mob types : /mob/living/basic/carp
 Antagonist types : /datum/antagonist/highlander
 Species types : /datum/species/lizard
 special keywords defined in _DEFINES/admin.dm
@@ -379,13 +383,13 @@ Example config:
 		return
 
 	log_config("Loading config file word_filter.toml...")
-
-	var/list/word_filter = rustg_read_toml_file("[directory]/word_filter.toml")
-	if (!islist(word_filter))
-		var/message = "The word filter configuration did not output a list, contact someone with configuration access to make sure it's setup properly."
+	var/list/result = rustg_raw_read_toml_file("[directory]/word_filter.toml")
+	if(!result["success"])
+		var/message = "The word filter is not configured correctly! [result["content"]]"
 		log_config(message)
 		DelayedMessageAdmins(message)
 		return
+	var/list/word_filter = json_decode(result["content"])
 
 	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
 	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")
@@ -468,6 +472,31 @@ Example config:
 	var/regex_filter = whitespace_split != "" ? "([whitespace_split]|[word_bounds])" : word_bounds
 	return regex(regex_filter, "i")
 
+/// Check to ensure that the jobconfig is valid/in-date.
+/datum/controller/configuration/proc/validate_job_config()
+	var/config_toml = "[directory]/jobconfig.toml"
+	var/config_txt = "[directory]/jobs.txt"
+	var/message = "Notify Server Operators: "
+	log_config("Validating config file jobconfig.toml...")
+
+	if(!fexists(file(config_toml)))
+		SSjob.legacy_mode = TRUE
+		message += "jobconfig.toml not found, falling back to legacy mode (using jobs.txt). To surpress this warning, generate a jobconfig.toml by running the verb 'Generate Job Configuration' in the Server tab.\n\
+			From there, you can then add it to the /config folder of your server to have it take effect for future rounds."
+
+		if(!fexists(file(config_txt)))
+			message += "\n\nFailed to set up legacy mode, jobs.txt not found! Codebase defaults will be used. If you do not wish to use this system, please disable it by commenting out the LOAD_JOBS_FROM_TXT config flag."
+
+		log_config(message)
+		DelayedMessageAdmins(span_notice(message))
+		return
+
+	var/list/result = rustg_raw_read_toml_file(config_toml)
+	if(!result["success"])
+		message += "The job config (jobconfig.toml) is not configured correctly! [result["content"]]"
+		log_config(message)
+		DelayedMessageAdmins(span_notice(message))
+
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(message_admins), text), 0)

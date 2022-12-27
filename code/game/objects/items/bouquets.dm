@@ -2,7 +2,7 @@
 /obj/item/bouquet
 	name = "mixed bouquet"
 	desc = "A bouquet of sunflowers, lilies, and geraniums. How delightful."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "mixedbouquet"
 
 /obj/item/bouquet/sunflower
@@ -19,3 +19,4 @@
 	name = "rose bouquet"
 	desc = "A bouquet of roses. A bundle of love."
 	icon_state = "rosebouquet"
+	inhand_icon_state = "rosebouquet"

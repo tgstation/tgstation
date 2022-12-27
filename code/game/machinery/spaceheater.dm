@@ -7,13 +7,13 @@
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
-	icon = 'icons/obj/atmos.dmi'
+	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "sheater-off"
 	base_icon_state = "sheater"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
 	max_integrity = 250
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 10)
+	armor_type = /datum/armor/machinery_space_heater
 	circuit = /obj/item/circuitboard/machine/space_heater
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
@@ -40,6 +40,10 @@
 	///Should we add an overlay for open spaceheaters
 	var/display_panel = TRUE
 
+/datum/armor/machinery_space_heater
+	fire = 80
+	acid = 10
+
 /obj/machinery/space_heater/get_cell()
 	return cell
 
@@ -49,6 +53,22 @@
 		cell = new cell(src)
 	update_appearance()
 	SSair.start_processing_machine(src)
+
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Toggle power", \
+	)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_LMB = "Open hatch",
+		),
+
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_LMB = "Anchor",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/machinery/space_heater/Destroy()
 	SSair.stop_processing_machine(src)
@@ -79,6 +99,10 @@
 	. = ..()
 	if(panel_open && display_panel)
 		. += "[base_icon_state]-open"
+
+/obj/machinery/space_heater/on_set_panel_open()
+	update_appearance()
+	return ..()
 
 /obj/machinery/space_heater/process_atmos()
 	if(!on || !is_operational)
@@ -124,8 +148,10 @@
 	if(mode == HEATER_MODE_COOL)
 		delta_temperature *= -1
 	if(delta_temperature)
-		enviroment.temperature += delta_temperature
-		air_update_turf(FALSE, FALSE)
+		for (var/turf/open/turf in ((local_turf.atmos_adjacent_turfs || list()) + local_turf))
+			var/datum/gas_mixture/turf_gasmix = turf.return_air()
+			turf_gasmix.temperature += delta_temperature
+			air_update_turf(FALSE, FALSE)
 	cell.use(required_energy / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
@@ -187,8 +213,8 @@
 
 /obj/machinery/space_heater/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
-		return
-	toggle_power()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	toggle_power(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
@@ -255,22 +281,26 @@
 /obj/machinery/space_heater/constructed
 	cell = null
 
+/datum/armor/machinery_space_heater
+	fire = 80
+	acid = 10
+
 /obj/machinery/space_heater/constructed/Initialize(mapload)
 	. = ..()
-	panel_open = TRUE
-	update_appearance()
+	set_panel_open(TRUE)
 
-/obj/machinery/space_heater/proc/toggle_power()
+/obj/machinery/space_heater/proc/toggle_power(user)
 	on = !on
 	mode = HEATER_MODE_STANDBY
-	usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
+	if(!isnull(user))
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 	update_appearance()
-	if (on)
+	if(on)
 		SSair.start_processing_machine(src)
 
 ///For use with heating reagents in a ghetto way
 /obj/machinery/space_heater/improvised_chem_heater
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "sheater-off"
 	name = "Improvised chem heater"
 	desc = "A space heater hacked to reroute heating to a water bath on the top."
@@ -282,6 +312,10 @@
 	///How powerful the heating is, upgrades with parts. (ala chem_heater.dm's method, basically the same level of heating, but this is restricted)
 	var/chem_heating_power = 1
 	display_panel = FALSE
+
+/datum/armor/machinery_space_heater
+	fire = 80
+	acid = 10
 
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()
@@ -398,7 +432,7 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/AltClick(mob/living/user)
 	. = ..()
-	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	replace_beaker(user)
 

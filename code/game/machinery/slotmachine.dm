@@ -31,7 +31,7 @@
 	var/jackpots = 0
 	var/paymode = HOLOCHIP //toggles between HOLOCHIP/COIN, defined above
 	var/cointype = /obj/item/coin/iron //default cointype
-	var/list/coinvalues = list()
+	var/static/list/coinvalues
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
@@ -41,18 +41,21 @@
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 
-	INVOKE_ASYNC(src, .proc/toggle_reel_spin, TRUE)//The reels won't spin unless we activate them
+	INVOKE_ASYNC(src, PROC_REF(toggle_reel_spin), TRUE)//The reels won't spin unless we activate them
 
 	var/list/reel = reels[1]
 	for(var/i in 1 to reel.len) //Populate the reels.
 		randomize_reels()
 
-	INVOKE_ASYNC(src, .proc/toggle_reel_spin, FALSE)
+	INVOKE_ASYNC(src, PROC_REF(toggle_reel_spin), FALSE)
 
-	for(cointype in typesof(/obj/item/coin))
-		var/obj/item/coin/C = new cointype
-		coinvalues["[cointype]"] = C.get_item_credit_value()
-		qdel(C) //Sigh
+	if (isnull(coinvalues))
+		coinvalues = list()
+
+		for(cointype in typesof(/obj/item/coin))
+			var/obj/item/coin/C = new cointype
+			coinvalues["[cointype]"] = C.get_item_credit_value()
+			qdel(C) //Sigh
 
 /obj/machinery/computer/slot_machine/Destroy()
 	if(balance)
@@ -210,9 +213,9 @@
 	update_appearance()
 	updateDialog()
 
-	var/spin_loop = addtimer(CALLBACK(src, .proc/do_spin), 2, TIMER_LOOP|TIMER_STOPPABLE)
+	var/spin_loop = addtimer(CALLBACK(src, PROC_REF(do_spin)), 2, TIMER_LOOP|TIMER_STOPPABLE)
 
-	addtimer(CALLBACK(src, .proc/finish_spinning, spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
+	addtimer(CALLBACK(src, PROC_REF(finish_spinning), spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
 	//WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
 
 /obj/machinery/computer/slot_machine/proc/do_spin()

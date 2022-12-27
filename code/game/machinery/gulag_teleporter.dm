@@ -140,7 +140,6 @@ The console is located at computer/gulag_teleporter.dm
 					continue
 				if(linked_reclaimer)
 					linked_reclaimer.stored_items[mob_occupant] += W
-					linked_reclaimer.contents += W
 					W.forceMove(linked_reclaimer)
 				else
 					W.forceMove(src)
@@ -168,9 +167,10 @@ The console is located at computer/gulag_teleporter.dm
 	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
 	req_components = list(
-							/obj/item/stack/ore/bluespace_crystal = 2,
-							/obj/item/stock_parts/scanning_module,
-							/obj/item/stock_parts/manipulator)
+		/obj/item/stack/ore/bluespace_crystal = 2,
+		/datum/stock_part/scanning_module = 1,
+		/obj/item/stock_parts/manipulator = 1,
+	)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /*  beacon that receives the teleported prisoner */

@@ -1,7 +1,7 @@
 /obj/item/implant/mindshield
 	name = "mindshield implant"
 	desc = "Protects against brainwashing."
-	activated = FALSE
+	actions_types = null
 
 /obj/item/implant/mindshield/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -28,7 +28,7 @@
 			qdel(src)
 			return TRUE
 		if(SEND_SIGNAL(target.mind, COMSIG_MINDSHIELD_IMPLANTED, user) & COMPONENT_MINDSHIELD_DECONVERTED)
-			if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+			if(prob(1) || check_holidays(APRIL_FOOLS))
 				target.say("I'm out! I quit! Whose kidneys are these?", forced = "They're out! They quit! Whose kidneys do they have?")
 
 	ADD_TRAIT(target, TRAIT_MINDSHIELD, IMPLANT_TRAIT)

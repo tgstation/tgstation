@@ -61,9 +61,9 @@
 /area/ruin/powered/clownplanet)
 "av" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 3
+	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/supply/qm_office,
 /turf/closed/wall/r_wall,
 /area/ruin/powered/clownplanet)
 "aw" = (
@@ -313,7 +313,7 @@
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "bL" = (
-/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /obj/structure/table/glass,
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
@@ -704,6 +704,7 @@
 /area/ruin/powered/clownplanet)
 "Or" = (
 /obj/machinery/light/directional/east,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "QT" = (
@@ -1779,7 +1780,7 @@ cc
 cc
 Zg
 QT
-QT
+gX
 QT
 QT
 gX
@@ -1813,7 +1814,7 @@ aa
 aa
 aa
 QT
-gX
+QT
 QT
 QT
 QT

@@ -87,61 +87,64 @@
 	if(!second_turf)
 		return
 
-	var/obj/effect/hallucination/simple/bluespace_stream/first = new(first_turf, owner)
-	var/obj/effect/hallucination/simple/bluespace_stream/second = new(second_turf, owner)
+	var/obj/effect/client_image_holder/bluespace_stream/first = new(first_turf, owner)
+	var/obj/effect/client_image_holder/bluespace_stream/second = new(second_turf, owner)
 
 	first.linked_to = second
 	second.linked_to = first
-	first.seer = owner
-	second.seer = owner
 
-/obj/effect/hallucination/simple/bluespace_stream
+/obj/effect/client_image_holder/bluespace_stream
 	name = "bluespace stream"
 	desc = "You see a hidden pathway through bluespace..."
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
 	image_layer = ABOVE_MOB_LAYER
 	image_plane = GAME_PLANE_UPPER
-	var/obj/effect/hallucination/simple/bluespace_stream/linked_to
-	var/mob/living/carbon/seer
+	var/obj/effect/client_image_holder/bluespace_stream/linked_to
 
-/obj/effect/hallucination/simple/bluespace_stream/Initialize(mapload)
+/obj/effect/client_image_holder/bluespace_stream/Initialize(mapload, list/mobs_which_see_us)
 	. = ..()
-	QDEL_IN(src, 300)
+	QDEL_IN(src, 30 SECONDS)
 
-/obj/effect/hallucination/simple/bluespace_stream/Destroy()
+/obj/effect/client_image_holder/bluespace_stream/Destroy()
 	if(!QDELETED(linked_to))
 		qdel(linked_to)
 	linked_to = null
-	seer = null
 	return ..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user, list/modifiers)
-	if(user != seer || !linked_to)
+/obj/effect/client_image_holder/bluespace_stream/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
 		return
+
+	if(!(user in who_sees_us) || !linked_to)
+		return
+
 	var/slip_in_message = pick("slides sideways in an odd way, and disappears", "jumps into an unseen dimension",\
 		"sticks one leg straight out, wiggles [user.p_their()] foot, and is suddenly gone", "stops, then blinks out of reality", \
 		"is pulled into an invisible vortex, vanishing from sight")
 	var/slip_out_message = pick("silently fades in", "leaps out of thin air","appears", "walks out of an invisible doorway",\
 		"slides out of a fold in spacetime")
+
 	to_chat(user, span_notice("You try to align with the bluespace stream..."))
-	if(do_after(user, 20, target = src))
-		var/turf/source_turf = get_turf(src)
-		var/turf/destination_turf = get_turf(linked_to)
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
 
-		new /obj/effect/temp_visual/bluespace_fissure(source_turf)
-		new /obj/effect/temp_visual/bluespace_fissure(destination_turf)
+	var/turf/source_turf = get_turf(src)
+	var/turf/destination_turf = get_turf(linked_to)
 
-		user.visible_message(span_warning("[user] [slip_in_message]."), null, null, null, user)
+	new /obj/effect/temp_visual/bluespace_fissure(source_turf)
+	new /obj/effect/temp_visual/bluespace_fissure(destination_turf)
 
-		if(!do_teleport(user, destination_turf, no_effects = TRUE))
-			user.visible_message(span_warning("[user] [slip_out_message], ending up exactly where they left."), null, null, null, user)
-			return
+	user.visible_message(span_warning("[user] [slip_in_message]."), ignored_mobs = user)
 
+	if(do_teleport(user, destination_turf, no_effects = TRUE))
 		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
+	else
+		user.visible_message(span_warning("[user] [slip_out_message], ending up exactly where they left."), span_notice("...and find yourself where you started?"))
 
-/obj/effect/hallucination/simple/bluespace_stream/attack_tk(mob/user)
+
+/obj/effect/client_image_holder/bluespace_stream/attack_tk(mob/user)
 	to_chat(user, span_warning("\The [src] actively rejects your mind, and the bluespace energies surrounding it disrupt your telekinesis!"))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -213,7 +216,7 @@
 	to_chat(owner, span_warning("Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!"))
 	owner.playsound_local(owner, 'sound/magic/lightning_chargeup.ogg', 75, FALSE)
 	returning = TRUE
-	addtimer(CALLBACK(src, .proc/snapback), 100)
+	addtimer(CALLBACK(src, PROC_REF(snapback)), 100)
 
 /datum/brain_trauma/special/quantum_alignment/proc/snapback()
 	returning = FALSE
@@ -289,7 +292,7 @@
 /datum/brain_trauma/special/death_whispers/proc/whispering()
 	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = TRUE
-	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
+	addtimer(CALLBACK(src, PROC_REF(cease_whispering)), rand(50, 300))
 
 /datum/brain_trauma/special/death_whispers/proc/cease_whispering()
 	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
@@ -329,12 +332,8 @@
 												"Do you even exist?",\
 												"You simply fade away.")]</span>")
 	owner.forceMove(veil)
-	SEND_SIGNAL(owner, COMSIG_MOVABLE_SECLUDED_LOCATION)
-	for(var/thing in owner)
-		var/atom/movable/AM = thing
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
-	addtimer(CALLBACK(src, .proc/fade_in), duration)
+	addtimer(CALLBACK(src, PROC_REF(fade_in)), duration)
 
 /datum/brain_trauma/special/existential_crisis/proc/fade_in()
 	QDEL_NULL(veil)
@@ -353,62 +352,73 @@
 	gain_text = "<span class='warning'>Justice is coming for you.</span>"
 	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
 	random_gain = FALSE
-	var/obj/effect/hallucination/simple/securitron/beepsky
+	/// A ref to our fake beepsky image that we chase the owner with
+	var/obj/effect/client_image_holder/securitron/beepsky
+
+/datum/brain_trauma/special/beepsky/Destroy()
+	QDEL_NULL(beepsky)
+	return ..()
 
 /datum/brain_trauma/special/beepsky/on_gain()
 	create_securitron()
-	..()
+	return ..()
 
 /datum/brain_trauma/special/beepsky/proc/create_securitron()
+	QDEL_NULL(beepsky)
 	var/turf/where = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z)
 	beepsky = new(where, owner)
-	beepsky.victim = owner
 
 /datum/brain_trauma/special/beepsky/on_lose()
 	QDEL_NULL(beepsky)
-	..()
+	return ..()
 
 /datum/brain_trauma/special/beepsky/on_life()
 	if(QDELETED(beepsky) || !beepsky.loc || beepsky.z != owner.z)
-		QDEL_NULL(beepsky)
 		if(prob(30))
 			create_securitron()
 		else
 			return
+
 	if(get_dist(owner, beepsky) >= 10 && prob(20))
-		QDEL_NULL(beepsky)
 		create_securitron()
+
 	if(owner.stat != CONSCIOUS)
 		if(prob(20))
 			owner.playsound_local(beepsky, 'sound/voice/beepsky/iamthelaw.ogg', 50)
 		return
+
 	if(get_dist(owner, beepsky) <= 1)
 		owner.playsound_local(owner, 'sound/weapons/egloves.ogg', 50)
 		owner.visible_message(span_warning("[owner]'s body jerks as if it was shocked."), span_userdanger("You feel the fist of the LAW."))
-		owner.take_bodypart_damage(0,0,rand(40, 70))
+		owner.adjustStaminaLoss(rand(40, 70))
 		QDEL_NULL(beepsky)
+
 	if(prob(20) && get_dist(owner, beepsky) <= 8)
 		owner.playsound_local(beepsky, 'sound/voice/beepsky/criminal.ogg', 40)
-	..()
 
-/obj/effect/hallucination/simple/securitron
+/obj/effect/client_image_holder/securitron
 	name = "Securitron"
 	desc = "The LAW is coming."
-	image_icon = 'icons/mob/aibots.dmi'
+	image_icon = 'icons/mob/silicon/aibots.dmi'
 	image_state = "secbot-c"
-	var/victim
 
-/obj/effect/hallucination/simple/securitron/Initialize(mapload)
+/obj/effect/client_image_holder/securitron/Initialize(mapload)
 	. = ..()
 	name = pick("Officer Beepsky", "Officer Johnson", "Officer Pingsky")
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/effect/hallucination/simple/securitron/process()
-	if(prob(60))
-		forceMove(get_step_towards(src, victim))
-		if(prob(5))
-			to_chat(victim, span_name("[name]</span> exclaims, \"<span class='robotic'>Level 10 infraction alert!\""))
-
-/obj/effect/hallucination/simple/securitron/Destroy()
+/obj/effect/client_image_holder/securitron/Destroy()
 	STOP_PROCESSING(SSfastprocess,src)
 	return ..()
+
+/obj/effect/client_image_holder/securitron/process()
+	if(prob(40))
+		return
+
+	var/mob/victim = pick(who_sees_us)
+	forceMove(get_step_towards(src, victim))
+	if(prob(5))
+		var/beepskys_cry = "Level 10 infraction alert!"
+		to_chat(victim, "<span class='name'>[name]</span> exclaims, \"<span class='robotic'>[beepskys_cry]</span>\"")
+		if(victim.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list("robotic"))

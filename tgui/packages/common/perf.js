@@ -48,8 +48,9 @@ const measure = (markerNameA, markerNameB) => {
   }
 };
 
-const formatDuration = duration => {
+const formatDuration = (duration) => {
   const durationInFrames = duration / FRAME_DURATION;
+  // prettier-ignore
   return duration.toFixed(duration < 10 ? 1 : 0) + 'ms '
     + '(' + durationInFrames.toFixed(2) + ' frames)';
 };

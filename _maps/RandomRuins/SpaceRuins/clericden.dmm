@@ -4,203 +4,200 @@
 /area/template_noop)
 "b" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "c" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "d" = (
 /turf/closed/wall,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "e" = (
 /turf/closed/wall/rust,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "f" = (
 /obj/item/stack/rods{
 	amount = 2
 	},
 /obj/item/shard,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "g" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "h" = (
 /obj/structure/grille/broken,
 /obj/structure/barricade/wooden/crude,
 /obj/structure/trap/cult,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "i" = (
 /obj/structure/light_prism,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "j" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "k" = (
 /obj/item/ectoplasm,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "l" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "m" = (
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "n" = (
 /turf/open/floor/carpet/royalblack/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "o" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/reagent_containers/cup/glass/bottle/holywater,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "p" = (
 /obj/structure/table/wood/fancy,
 /obj/item/melee/cleric_mace,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "q" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "r" = (
 /obj/effect/decal/cleanable/shreds,
 /obj/effect/decal/remains/human,
 /obj/item/disk/design_disk/adv/cleric_mace,
 /obj/structure/trap/cult,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "s" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/carpet/royalblack/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "t" = (
 /turf/open/floor/carpet/royalblue/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "u" = (
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "v" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "w" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/carpet/royalblack/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "x" = (
 /obj/structure/bonfire,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "y" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "z" = (
 /obj/item/paper/fluff/ruins/clericsden/contact,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "A" = (
 /obj/structure/table/wood{
 	layer = 3.3
 	},
 /turf/open/floor/carpet/royalblack/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "B" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "C" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblue/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "D" = (
 /obj/effect/decal/remains/human,
 /obj/structure/trap/cult,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "E" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /mob/living/simple_animal/hostile/construct/proteon/hostile,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "F" = (
 /obj/item/flashlight/flare/torch,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "G" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/trap/cult,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "H" = (
 /obj/structure/light_prism,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "I" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/carpet/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "J" = (
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "K" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "L" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "M" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "N" = (
 /mob/living/simple_animal/hostile/construct/proteon,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "O" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "Q" = (
 /obj/item/storage/book/bible,
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "R" = (
 /obj/structure/closet/crate/coffin,
 /obj/item/gps/spaceruin,
 /turf/open/floor/iron/dark/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "S" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "U" = (
 /obj/effect/decal/remains/human,
 /obj/item/paper/fluff/ruins/clericsden/warning,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 
 (1,1,1) = {"
 a

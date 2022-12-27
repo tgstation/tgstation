@@ -21,7 +21,7 @@
 		/obj/item/food/cnds = 6,
 		/obj/item/food/cnds/random = 3,
 		/obj/item/food/semki = 6,
-		/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
+		/obj/item/reagent_containers/cup/glass/dry_ramen = 3,
 		/obj/item/storage/box/gum = 3,
 		/obj/item/food/energybar = 6,
 	)

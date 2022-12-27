@@ -73,3 +73,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/vault, 32)
 	icon_state = "direction_upload"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/upload, 32)
+
+/obj/structure/sign/directions/dorms
+	name = "dormitories sign"
+	desc = "A direction sign, pointing out which way the dormitories are."
+	icon_state = "direction_dorms"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/dorms, 32)
+
+/obj/structure/sign/directions/lavaland
+	name = "lava sign"
+	desc = "A direction sign, pointing out which way the hot stuff is."
+	icon_state = "direction_lavaland"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland, 32)
+
+/obj/structure/sign/directions/arrival
+	name = "arrivals sign"
+	desc = "A direction sign, pointing out which way the arrivals shuttle dock is."
+	icon_state = "direction_arrival"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival, 32)

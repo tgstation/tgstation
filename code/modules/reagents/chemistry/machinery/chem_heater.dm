@@ -12,7 +12,7 @@
 	name = "reaction chamber" //Maybe this name is more accurate?
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "mixer0b"
 	base_icon_state = "mixer"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.4
@@ -64,7 +64,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -84,7 +84,7 @@
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, .proc/on_reaction_step)
+		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
 	update_appearance()
 	return TRUE
 
@@ -163,7 +163,7 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
 		var/obj/item/reagent_containers/B = I
 		if(!user.transferItemToLoc(B, src))
@@ -223,7 +223,7 @@
 */
 /obj/machinery/chem_heater/proc/add_ui_client_list(new_ui)
 	LAZYADD(ui_client_list, new_ui)
-	RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, .proc/on_ui_deletion)
+	RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, PROC_REF(on_ui_deletion))
 
 ///This removes an open ui instance from the ui list and deregsiters the signal
 /obj/machinery/chem_heater/proc/remove_ui_client_list(old_ui)

@@ -28,7 +28,7 @@
 /obj/structure/closet/gimmick/russian/PopulateContents()
 	..()
 	for(var/i in 1 to 5)
-		new /obj/item/clothing/head/ushanka(src)
+		new /obj/item/clothing/head/costume/ushanka(src)
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/under/costume/soviet(src)
 

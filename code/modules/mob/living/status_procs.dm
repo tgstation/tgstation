@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
+// eye damage, eye_blind, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
 #define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUNIMMUNE))))
 
@@ -71,7 +71,7 @@
 	return 0
 
 /mob/living/proc/Knockdown(amount, ignore_canstun = FALSE) //Can't go below remaining duration
-	if(SEND_SIGNAL(src, /datum/status_effect/incapacitating/knockdown, amount, ignore_canstun) & COMPONENT_NO_STUN)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
@@ -483,15 +483,24 @@
 			priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
 
-/mob/living/proc/add_quirk(quirktype) //separate proc due to the way these ones are handled
-	if(HAS_TRAIT(src, quirktype))
-		return
-	var/datum/quirk/quirk = quirktype
-	var/qname = initial(quirk.name)
+/**
+ * Adds the passed quirk to the mob
+ *
+ * Arguments
+ * * quirktype - Quirk typepath to add to the mob
+ * * override_client - optional, allows a client to be passed to the quirks on add procs.
+ * If not passed, defaults to this mob's client.
+ *
+ * Returns TRUE on success, FALSE on failure (already has the quirk, etc)
+ */
+/mob/living/proc/add_quirk(datum/quirk/quirktype, client/override_client)
+	if(has_quirk(quirktype))
+		return FALSE
+	var/qname = initial(quirktype.name)
 	if(!SSquirks || !SSquirks.quirks[qname])
-		return
-	quirk = new quirktype()
-	if(quirk.add_to_holder(src))
+		return FALSE
+	var/datum/quirk/quirk = new quirktype()
+	if(quirk.add_to_holder(new_holder = src, client_source = override_client))
 		return TRUE
 	qdel(quirk)
 	return FALSE
@@ -604,18 +613,6 @@
 		LAZYREMOVEASSOC(movespeed_mod_immunities, slowdown_type, source)
 	if(update)
 		update_movespeed()
-
-/**
- * Sets the [SHOCKED_1] flag on this mob.
- */
-/mob/living/proc/set_shocked()
-	flags_1 |= SHOCKED_1
-
-/**
- * Unsets the [SHOCKED_1] flag on this mob.
- */
-/mob/living/proc/reset_shocked()
-	flags_1 &= ~ SHOCKED_1
 
 /**
  * Adjusts a timed status effect on the mob,taking into account any existing timed status effects.
@@ -773,3 +770,7 @@
 /mob/living/proc/get_drunk_amount()
 	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
 	return inebriation?.drunk_value || 0
+
+/// Helper to check if we seem to be alive or not
+/mob/living/proc/appears_alive()
+	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)

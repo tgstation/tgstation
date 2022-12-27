@@ -9,7 +9,7 @@
  */
 export const captureExternalLinks = () => {
   // Subscribe to all document clicks
-  document.addEventListener('click', e => {
+  document.addEventListener('click', (e) => {
     /** @type {HTMLElement} */
     let target = e.target;
     // Recurse down the tree to find a valid link
@@ -26,6 +26,7 @@ export const captureExternalLinks = () => {
     }
     const hrefAttr = target.getAttribute('href') || '';
     // Leave BYOND links alone
+    // prettier-ignore
     const isByondLink = hrefAttr.charAt(0) === '?'
       || hrefAttr.startsWith('byond://');
     if (isByondLink) {

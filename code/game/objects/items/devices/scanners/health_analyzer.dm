@@ -70,8 +70,8 @@
 		to_chat(user, "<span class='info'>[M]'s biological structure is too complex for the health analyzer.")
 		return
 
-	user.visible_message(span_notice("[user] analyzes [M]'s vitals."), \
-						span_notice("You analyze [M]'s vitals."))
+	user.visible_message(span_notice("[user] analyzes [M]'s vitals."))
+	balloon_alert(user, "analyzing vitals")
 
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
@@ -188,9 +188,6 @@
 	if (HAS_TRAIT(target, TRAIT_IRRADIATED))
 		render_list += "<span class='alert ml-1'>Subject is irradiated. Supply toxin healing.</span>\n"
 
-	if(advanced && target.hallucinating())
-		render_list += "<span class='info ml-1'>Subject is hallucinating.</span>\n"
-
 	//Eyes and ears
 	if(advanced && iscarbon(target))
 		var/mob/living/carbon/carbontarget = target
@@ -259,7 +256,7 @@
 				[advanced ? "<td style='width:3em;'><font color='#ff0000'><b>Dmg</b></font></td>" : ""]\
 				<td style='width:12em;'><font color='#ff0000'><b>Status</b></font></td>"
 
-			for(var/obj/item/organ/organ in humantarget.internal_organs)
+			for(var/obj/item/organ/organ as anything in humantarget.internal_organs)
 				var/status = organ.get_status_text()
 				if (status != "")
 					render = TRUE
@@ -273,12 +270,14 @@
 				missing_organs += "brain"
 			if(!(NOBLOOD in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_HEART))
 				missing_organs += "heart"
-			if(!(TRAIT_NOBREATH in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_LUNGS))
+			if(!(TRAIT_NOBREATH in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LUNGS))
 				missing_organs += "lungs"
-			if(!(TRAIT_NOMETABOLISM in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
+			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
 				missing_organs += "liver"
 			if(!(NOSTOMACH in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
 				missing_organs += "stomach"
+			if(!(NO_TONGUE in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_TONGUE))
+				missing_organs += "tongue"
 			if(!humantarget.getorganslot(ORGAN_SLOT_EARS))
 				missing_organs += "ears"
 			if(!humantarget.getorganslot(ORGAN_SLOT_EYES))
@@ -311,7 +310,7 @@
 			|| targetspecies.mutantliver != initial(targetspecies.mutantliver) \
 			|| targetspecies.mutantstomach != initial(targetspecies.mutantstomach) \
 			|| targetspecies.mutantappendix != initial(targetspecies.mutantappendix) \
-			|| targetspecies.flying_species != initial(targetspecies.flying_species)
+			|| istype(humantarget.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
 		render_list += "<span class='info ml-1'>Core temperature: [round(humantarget.coretemperature-T0C,0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
@@ -377,7 +376,7 @@
 	// we handled the last <br> so we don't need handholding
 
 	if(tochat)
-		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 	else
 		return(jointext(render_list, ""))
 
@@ -436,12 +435,12 @@
 				render_list += "<span class='alert ml-2'>[allergies]</span>\n"
 
 		// we handled the last <br> so we don't need handholding
-		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
 
-	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src) || user.is_blind())
+	if(!user.canUseTopic(src, be_close = TRUE) || !user.can_read(src) || user.is_blind())
 		return
 
 	mode = !mode
@@ -475,7 +474,7 @@
 		else
 			to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
 	else
-		to_chat(user, jointext(render_list, ""), type = MESSAGE_TYPE_INFO)
+		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/wound
 	name = "first aid analyzer"

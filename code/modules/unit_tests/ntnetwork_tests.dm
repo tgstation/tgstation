@@ -1,22 +1,51 @@
 /datum/unit_test/ntnetwork
-	var/list/valid_network_names = list("SS13.ATMOS.SCRUBBERS.SM", "DEEPSPACE.HYDRO.PLANT", "SINDIE.STINKS.BUTT")
+	var/list/valid_network_names = list(
+		"SS13.ATMOS.SCRUBBERS.SM",
+		"DEEPSPACE.HYDRO.PLANT",
+		"SINDIE.STINKS.BUTT",
+	)
 
-	var/list/invalid_network_names = list(".SS13.BOB", "SS13.OHMAN.", "SS13.HAS A SPACE" )
+	var/list/invalid_network_names = list(
+		".SS13.BOB",
+		"SS13.OHMAN.",
+		"SS13.HAS A SPACE",
+	)
 
-	var/list/valid_network_trees = list(list("SS13","ATMOS","SCRUBBERS","SM"),list("DEEPSPACE","HYDRO","PLANT"), list("SINDIE","STINKS","BUTT"))
+	var/list/valid_network_trees = list(
+		list(
+			"SS13",
+			"ATMOS",
+			"SCRUBBERS",
+			"SM",
+		),
+		list(
+			"DEEPSPACE",
+			"HYDRO",
+			"PLANT",
+		),
+		list(
+			"SINDIE",
+			"STINKS",
+			"BUTT",
+		),
+	)
 
 	var/list/network_roots = list(
-				__STATION_NETWORK_ROOT,
-				__CENTCOM_NETWORK_ROOT,
-				__SYNDICATE_NETWORK_ROOT,
-				__LIMBO_NETWORK_ROOT)
+		__STATION_NETWORK_ROOT,
+		__CENTCOM_NETWORK_ROOT,
+		__SYNDICATE_NETWORK_ROOT,
+		__LIMBO_NETWORK_ROOT,
+	)
 
 	var/list/random_words_for_testing = list(
-				__NETWORK_TOOLS, __NETWORK_REMOTES, __NETWORK_AIRLOCKS,
-				__NETWORK_DOORS, __NETWORK_ATMOS, __NETWORK_SCUBBERS,
-				__NETWORK_AIRALARMS, __NETWORK_CONTROL, __NETWORK_STORAGE,
-				__NETWORK_CARGO, __NETWORK_BOTS, __NETWORK_COMPUTER,
-				__NETWORK_CARDS)
+		__NETWORK_TOOLS,
+		__NETWORK_CONTROL,
+		__NETWORK_STORAGE,
+		__NETWORK_CARGO,
+		__NETWORK_BOTS,
+		__NETWORK_COMPUTER,
+		__NETWORK_TABLETS,
+	)
 
 	var/number_of_names_to_test = 50
 	var/length_of_test_network = 5

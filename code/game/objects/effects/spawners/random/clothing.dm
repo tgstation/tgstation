@@ -13,28 +13,28 @@
 	name = "beret or rabbit ears spawner"
 	loot = list(
 		/obj/item/clothing/head/beret,
-		/obj/item/clothing/head/rabbitears,
+		/obj/item/clothing/head/costume/rabbitears,
 	)
 
 /obj/effect/spawner/random/clothing/bowler_or_that
 	name = "bowler or top hat spawner"
 	loot = list(
-		/obj/item/clothing/head/bowler,
-		/obj/item/clothing/head/that,
+		/obj/item/clothing/head/hats/bowler,
+		/obj/item/clothing/head/hats/tophat,
 	)
 
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears
 	name = "kitty ears or rabbit ears spawner"
 	loot = list(
-		/obj/item/clothing/head/kitty,
-		/obj/item/clothing/head/rabbitears,
+		/obj/item/clothing/head/costume/kitty,
+		/obj/item/clothing/head/costume/rabbitears,
 	)
 
 /obj/effect/spawner/random/clothing/pirate_or_bandana
 	name = "pirate hat or bandana spawner"
 	loot = list(
-		/obj/item/clothing/head/pirate,
-		/obj/item/clothing/head/bandana,
+		/obj/item/clothing/head/costume/pirate,
+		/obj/item/clothing/head/costume/pirate/bandana,
 	)
 
 /obj/effect/spawner/random/clothing/twentyfive_percent_cyborg_mask

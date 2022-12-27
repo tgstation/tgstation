@@ -26,8 +26,12 @@
 	if(!istype(weapon, recall.accepted_type))
 		return
 	recall.set_weapon(weapon)
+	for(var/obj/item/mod/module/module as anything in mod.modules)
+		module.pin(ninja)
 
 /datum/outfit/ninja_preview
+	name = "Space Ninja (Preview only)"
+
 	uniform = /obj/item/clothing/under/syndicate/ninja
 	back = /obj/item/mod/control/pre_equipped/empty/ninja
 	belt = /obj/item/energy_katana

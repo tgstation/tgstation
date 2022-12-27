@@ -20,7 +20,7 @@
 		user.visible_message(span_warning("[user] vomits a glob of acid on [user.p_their()] [O]!"), \
 			span_warning("We vomit acidic ooze onto our restraints!"))
 
-		addtimer(CALLBACK(src, .proc/dissolve_handcuffs, user, O), 30)
+		addtimer(CALLBACK(src, PROC_REF(dissolve_handcuffs), user, O), 30)
 		used = TRUE
 
 	if(user.legcuffed)
@@ -30,7 +30,7 @@
 		user.visible_message(span_warning("[user] vomits a glob of acid on [user.p_their()] [O]!"), \
 			span_warning("We vomit acidic ooze onto our restraints!"))
 
-		addtimer(CALLBACK(src, .proc/dissolve_legcuffs, user, O), 30)
+		addtimer(CALLBACK(src, PROC_REF(dissolve_legcuffs), user, O), 30)
 		used = TRUE
 
 	if(user.wear_suit && user.wear_suit.breakouttime && !used)
@@ -39,7 +39,7 @@
 			return FALSE
 		user.visible_message(span_warning("[user] vomits a glob of acid across the front of [user.p_their()] [S]!"), \
 			span_warning("We vomit acidic ooze onto our straight jacket!"))
-		addtimer(CALLBACK(src, .proc/dissolve_straightjacket, user, S), 30)
+		addtimer(CALLBACK(src, PROC_REF(dissolve_straightjacket), user, S), 30)
 		used = TRUE
 
 
@@ -49,7 +49,7 @@
 			return FALSE
 		C.visible_message(span_warning("[C]'s hinges suddenly begin to melt and run!"))
 		to_chat(user, span_warning("We vomit acidic goop onto the interior of [C]!"))
-		addtimer(CALLBACK(src, .proc/open_closet, user, C), 70)
+		addtimer(CALLBACK(src, PROC_REF(open_closet), user, C), 70)
 		used = TRUE
 
 	if(istype(user.loc, /obj/structure/spider/cocoon) && !used)
@@ -58,7 +58,7 @@
 			return FALSE
 		C.visible_message(span_warning("[src] shifts and starts to fall apart!"))
 		to_chat(user, span_warning("We secrete acidic enzymes from our skin and begin melting our cocoon..."))
-		addtimer(CALLBACK(src, .proc/dissolve_cocoon, user, C), 25) //Very short because it's just webs
+		addtimer(CALLBACK(src, PROC_REF(dissolve_cocoon), user, C), 25) //Very short because it's just webs
 		used = TRUE
 	..()
 	return used

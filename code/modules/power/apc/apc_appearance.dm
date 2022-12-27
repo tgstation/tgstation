@@ -55,18 +55,18 @@
 		return
 
 	. += mutable_appearance(icon, "apcox-[locked]")
-	. += emissive_appearance(icon, "apcox-[locked]")
+	. += emissive_appearance(icon, "apcox-[locked]", src)
 	. += mutable_appearance(icon, "apco3-[charging]")
-	. += emissive_appearance(icon, "apco3-[charging]")
+	. += emissive_appearance(icon, "apco3-[charging]", src)
 	if(!operating)
 		return
 
 	. += mutable_appearance(icon, "apco0-[equipment]")
-	. += emissive_appearance(icon, "apco0-[equipment]")
+	. += emissive_appearance(icon, "apco0-[equipment]", src)
 	. += mutable_appearance(icon, "apco1-[lighting]")
-	. += emissive_appearance(icon, "apco1-[lighting]")
+	. += emissive_appearance(icon, "apco1-[lighting]", src)
 	. += mutable_appearance(icon, "apco2-[environ]")
-	. += emissive_appearance(icon, "apco2-[environ]")
+	. += emissive_appearance(icon, "apco2-[environ]", src)
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()

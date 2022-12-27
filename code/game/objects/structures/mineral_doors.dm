@@ -12,7 +12,7 @@
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 	max_integrity = 200
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/structure_mineral_door
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
 	material_flags = MATERIAL_EFFECTS
@@ -27,6 +27,13 @@
 
 	var/sheetType = /obj/item/stack/sheet/iron //what we're made of
 	var/sheetAmount = 10 //how much it takes to construct us.
+
+/datum/armor/structure_mineral_door
+	melee = 10
+	energy = 100
+	bomb = 10
+	fire = 50
+	acid = 50
 
 /obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
@@ -76,13 +83,11 @@
 	if(isSwitchingStates || !anchored)
 		return
 	if(isliving(user))
-		var/mob/living/M = user
-		if(world.time - M.last_bumped <= 60)
-			return //NOTE do we really need that?
-		if(M.client)
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				if(!C.handcuffed)
+		var/mob/living/matters = user
+		if(matters.client)
+			if(iscarbon(matters))
+				var/mob/living/carbon/carbon_user = matters
+				if(!carbon_user.handcuffed)
 					SwitchState()
 			else
 				SwitchState()
@@ -100,7 +105,7 @@
 	playsound(src, openSound, 100, TRUE)
 	set_opacity(FALSE)
 	flick("[initial(icon_state)]opening",src)
-	sleep(10)
+	sleep(1 SECONDS)
 	set_density(FALSE)
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
@@ -109,7 +114,7 @@
 	isSwitchingStates = FALSE
 
 	if(close_delay != -1)
-		addtimer(CALLBACK(src, .proc/Close), close_delay)
+		addtimer(CALLBACK(src, PROC_REF(Close)), close_delay)
 
 /obj/structure/mineral_door/proc/Close()
 	if(isSwitchingStates || !door_opened)
@@ -120,7 +125,7 @@
 	isSwitchingStates = TRUE
 	playsound(src, closeSound, 100, TRUE)
 	flick("[initial(icon_state)]closing",src)
-	sleep(10)
+	sleep(1 SECONDS)
 	set_density(TRUE)
 	set_opacity(TRUE)
 	door_opened = FALSE
@@ -233,9 +238,6 @@
 	max_integrity = 300
 	light_range = 2
 
-/obj/structure/mineral_door/uranium/ComponentInitialize()
-	return
-
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"
 	icon_state = "sandstone"
@@ -245,6 +247,13 @@
 /obj/structure/mineral_door/transparent
 	opacity = FALSE
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
+
+/datum/armor/structure_mineral_door
+	melee = 10
+	energy = 100
+	bomb = 10
+	fire = 50
+	acid = 50
 
 /obj/structure/mineral_door/transparent/Close()
 	..()
@@ -272,6 +281,13 @@
 	max_integrity = 200
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
+/datum/armor/structure_mineral_door
+	melee = 10
+	energy = 100
+	bomb = 10
+	fire = 50
+	acid = 50
+
 /obj/structure/mineral_door/wood/pickaxe_door(mob/living/user, obj/item/I)
 	return
 
@@ -297,6 +313,13 @@
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
+
+/datum/armor/structure_mineral_door
+	melee = 10
+	energy = 100
+	bomb = 10
+	fire = 50
+	acid = 50
 
 /obj/structure/mineral_door/paperframe/Initialize(mapload)
 	. = ..()
@@ -331,9 +354,6 @@
 			return TRUE
 
 	return ..()
-
-/obj/structure/mineral_door/paperframe/ComponentInitialize()
-	return
 
 /obj/structure/mineral_door/paperframe/Destroy()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))

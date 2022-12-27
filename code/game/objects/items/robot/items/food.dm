@@ -33,7 +33,7 @@
 ///Queues another lollipop to be fabricated if there is enough room for one
 /obj/item/borg/lollipop/proc/check_amount()
 	if(!charging && candy < candymax)
-		addtimer(CALLBACK(src, .proc/charge_lollipops), charge_delay)
+		addtimer(CALLBACK(src, PROC_REF(charge_lollipops)), charge_delay)
 		charging = TRUE
 
 ///Increases the amount of lollipops
@@ -216,7 +216,7 @@
 /obj/projectile/bullet/reusable/lollipop/Initialize(mapload)
 	var/obj/item/food/lollipop/lollipop = new ammo_type(src)
 	color2 = lollipop.head_color
-	var/mutable_appearance/head = mutable_appearance('icons/obj/guns/projectiles.dmi', "lollipop_2")
+	var/mutable_appearance/head = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "lollipop_2")
 	head.color = color2
 	add_overlay(head)
 	return ..()

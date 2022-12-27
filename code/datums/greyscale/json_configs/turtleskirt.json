@@ -1,0 +1,16 @@
+{
+	"turtleskirt": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleskirt_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleskirt_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

@@ -3,8 +3,8 @@
 
 /// An element that lets you stab people in the eyes when targeting them
 /datum/element/eyestab
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 
 	/// The amount of damage to do per eyestab
 	var/damage = 7
@@ -18,7 +18,7 @@
 	if (!isnull(damage))
 		src.damage = damage
 
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/on_item_attack)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 
 /datum/element/eyestab/Detach(datum/source, ...)
 	. = ..()
@@ -76,7 +76,7 @@
 	else
 		target.take_bodypart_damage(damage)
 
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
+	target.add_mood_event("eye_stab", /datum/mood_event/eye_stab)
 
 	log_combat(user, target, "attacked", "[item.name]", "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
@@ -84,13 +84,13 @@
 	if (!eyes)
 		return
 
-	target.adjust_blurriness(3)
+	target.adjust_eye_blur(6 SECONDS)
 	eyes.applyOrganDamage(rand(2,4))
 
 	if(eyes.damage < EYESTAB_BLEEDING_THRESHOLD)
 		return
 
-	target.adjust_blurriness(15)
+	target.adjust_eye_blur(30 SECONDS)
 	if (target.stat != DEAD)
 		to_chat(target, span_danger("Your eyes start to bleed profusely!"))
 
@@ -102,7 +102,7 @@
 	if (prob(50))
 		if (target.stat != DEAD && target.drop_all_held_items())
 			to_chat(target, span_danger("You drop what you're holding and clutch at your eyes!"))
-		target.adjust_blurriness(10)
+		target.adjust_eye_blur(20 SECONDS)
 		target.Unconscious(20)
 		target.Paralyze(40)
 

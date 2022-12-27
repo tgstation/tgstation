@@ -27,7 +27,7 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
   transition: color 250ms ease-out, background-color 250ms ease-out;
 
   &:hover {
-    color: rgba(255, 255, 255, 1.0);
+    color: rgba(255, 255, 255, 1);
     background-color: #cc0000;
     transition: color 0ms, background-color 0ms;
   }

@@ -71,7 +71,7 @@
 		var/obj/item/bodypart/bodypart = user.get_holding_bodypart_of_item(src)
 		if(bodypart)
 			forceMove(get_turf(user))
-			user.visible_message("<b>[span_danger("[src] goes off in [user]'s hand, blowing [user.p_their()] [bodypart.name] to bloody shreds!")]</b>", span_userdanger("[src] goes off in your hand, blowing your [bodypart.name] to bloody shreds!"))
+			user.visible_message("<b>[span_danger("[src] goes off in [user]'s hand, blowing [user.p_their()] [bodypart.plaintext_zone] to bloody shreds!")]</b>", span_userdanger("[src] goes off in your hand, blowing your [bodypart.plaintext_zone] to bloody shreds!"))
 			bodypart.dismember()
 
 	. = ..()

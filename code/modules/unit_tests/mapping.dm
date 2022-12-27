@@ -17,3 +17,4 @@
 			continue
 
 		TEST_FAIL(log_entry)
+

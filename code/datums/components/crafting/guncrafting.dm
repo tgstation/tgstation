@@ -5,14 +5,14 @@
 /obj/item/weaponcrafting/receiver
 	name = "modular receiver"
 	desc = "A prototype modular receiver and trigger assembly for a firearm."
-	icon = 'icons/obj/improvised.dmi'
+	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "receiver"
 
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 6)
-	icon = 'icons/obj/improvised.dmi'
+	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "riflestock"
 
 ///These gun kits are printed from the security protolathe to then be used in making new weapons
@@ -22,7 +22,7 @@
 /obj/item/weaponcrafting/gunkit/
 	name = "generic gun parts kit"
 	desc = "It's an empty gun parts container! Why do you have this?"
-	icon = 'icons/obj/improvised.dmi'
+	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "kitsuitcase"
 
 /obj/item/weaponcrafting/gunkit/nuclear

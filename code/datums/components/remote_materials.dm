@@ -26,13 +26,13 @@ handles linking back and forth.
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/OnMultitool)
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z_level)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(OnAttackBy))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_z_level))
 
 	var/turf/T = get_turf(parent)
 	if (force_connect || (mapload && is_station_level(T.z)))
-		addtimer(CALLBACK(src, .proc/LateInitialize))
+		addtimer(CALLBACK(src, PROC_REF(LateInitialize)))
 	else if (allow_standalone)
 		_MakeLocal()
 
@@ -92,7 +92,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
 
-	if (silo && istype(I, /obj/item/stack))
+	if (silo && isstack(I))
 		if (silo.remote_attackby(parent, user, I, mat_container_flags))
 			return COMPONENT_NO_AFTERATTACK
 
@@ -108,7 +108,7 @@ handles linking back and forth.
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		var/turf/silo_turf = get_turf(M.buffer)
 		var/turf/user_loc = get_turf(user)
-		if(user_loc.z != silo_turf.z)
+		if(!is_valid_z_level(silo_turf, user_loc))
 			to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		if (silo)
@@ -130,11 +130,8 @@ handles linking back and forth.
 		return
 
 	var/turf/silo_turf = get_turf(silo)
-	if(is_station_level(silo_turf.z) && is_station_level(new_turf.z)) // if we're both on "station", regardless of multi-z, we'll pass by.
-		return
-	if(silo_turf.z == new_turf.z)
-		return
-	disconnect_from(silo)
+	if(!is_valid_z_level(silo_turf, new_turf))
+		disconnect_from(silo)
 
 /datum/component/remote_materials/proc/on_hold()
 	return silo?.holds["[get_area(parent)]/[category]"]
@@ -166,3 +163,10 @@ handles linking back and forth.
 	matlist[material_ref] = eject_amount
 	silo_log(parent, "ejected", -count, "sheets", matlist)
 	return count
+
+/// Returns `TRUE` if and only if the given material ref can be inserted/removed from this component
+/datum/component/remote_materials/proc/can_hold_material(datum/material/material_ref)
+	if(!mat_container)
+		return FALSE
+
+	return mat_container.can_hold_material(material_ref)

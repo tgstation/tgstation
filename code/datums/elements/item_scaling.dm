@@ -9,7 +9,7 @@
  */
 /datum/element/item_scaling
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Scaling value when the attached item is in the overworld (on a turf).
 	var/overworld_scaling
 	/// Scaling value when the attached item is in a storage component or inventory slot.
@@ -42,10 +42,10 @@
 	// Make sure overlays also inherit the scaling.
 	ADD_KEEP_TOGETHER(target, ITEM_SCALING_TRAIT)
 
-	// Object scaled when dropped/thrown OR when exiting a storage component.
-	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_STORAGE_EXITED), .proc/scale_overworld)
+	// Object scaled when dropped/thrown OR when exiting a storage object.
+	RegisterSignals(target, list(COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXITED), PROC_REF(scale_overworld))
 	// Object scaled when placed in an inventory slot OR when entering a storage component.
-	RegisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_STORAGE_ENTERED), .proc/scale_storage)
+	RegisterSignals(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ATOM_ENTERED), PROC_REF(scale_storage))
 
 /**
  * Detach proc for the item_scaling element.
@@ -58,8 +58,8 @@
 	UnregisterSignal(target, list(
 		COMSIG_ITEM_PICKUP,
 		COMSIG_ITEM_DROPPED,
-		COMSIG_STORAGE_ENTERED,
-		COMSIG_STORAGE_EXITED,
+		COMSIG_ATOM_ENTERED,
+		COMSIG_ATOM_EXITED,
 	))
 
 	REMOVE_KEEP_TOGETHER(target, ITEM_SCALING_TRAIT)
@@ -82,7 +82,7 @@
 	scalable_object.transform = M.Scale(scaling)
 
 /**
- * Signal handler for COMSIG_ITEM_DROPPED or COMSIG_STORAGE_EXITED
+ * Signal handler for COMSIG_ITEM_DROPPED or COMSIG_ATOM_EXITED
  *
  * Longer detailed paragraph about the proc
  * including any relevant detail
@@ -95,7 +95,7 @@
 	scale(source, overworld_scaling)
 
 /**
- * Signal handler for COMSIG_ITEM_EQUIPPED or COMSIG_STORAGE_ENTERED.
+ * Signal handler for COMSIG_ITEM_EQUIPPED or COMSIG_ATOM_ENTERED.
  *
  * Longer detailed paragraph about the proc
  * including any relevant detail
