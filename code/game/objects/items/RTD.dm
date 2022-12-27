@@ -100,9 +100,10 @@
 	update_appearance()
 
 /obj/item/construction/rtd/Destroy()
-	. = ..()
 	qdel(selected_design)
 	qdel(tile_design)
+	clear_design_list()
+	. = ..()
 
 //just to make sure nothing is left behind
 /obj/item/construction/rtd/proc/clear_design_list()
