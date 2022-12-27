@@ -46,7 +46,7 @@
 		return ..()
 	user.visible_message(
 		span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
-		span_danger("[src] feels unnaturally cold in your hands. You raise [src] your mouth and devour it!")
+		span_danger("[src] feels unnaturally cold in your hands. You raise [src] to your mouth and devour it!")
 	)
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 
