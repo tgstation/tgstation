@@ -2,7 +2,7 @@
 	name = "Terrorize"
 	desc = "Stare down a victim with your piercing red eyes, inflicting them with terror buildup. \
 		Prey will become increasingly terrified. Swatting terrified prey with an open hand will \
-		scare and disorient them.
+		scare and disorient them."
 	button_icon_state = "terrify"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
