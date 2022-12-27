@@ -131,7 +131,7 @@ const TileDesignSection = (props, context) => {
             inline
             verticalAlign="middle"
             mr="20px"
-            className={classes(['rtd-tgui32x32', recipe.icon])}
+            className={classes(['rtd32x32', recipe.icon])}
             style={{
               transform: 'scale(1.2) translate(9.5%, 9.5%)',
             }}

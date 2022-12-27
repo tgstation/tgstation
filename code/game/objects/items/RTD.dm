@@ -1,3 +1,6 @@
+#define CONSTRUCTION_TIME 0.4 SECONDS
+#define DECONSTRUCTION_TIME 0.2 SECONDS
+
 /obj/item/construction/rtd
 	name = "rapid-tiling-device (RTD)"
 	desc = "Used for fast placement & destruction of floor tiles."
@@ -17,40 +20,40 @@
 		"Conventional" = list(
 			//The most common types
 			"Standard" = list(
-				new /datum/tile_info("Base", /obj/item/stack/tile/iron, 4),
-				new /datum/tile_info("Small", /obj/item/stack/tile/iron/small, 3),
-				new /datum/tile_info("Large", /obj/item/stack/tile/iron/large, 7),
-				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/diagonal, 5),
-				new /datum/tile_info("Edge", /obj/item/stack/tile/iron/edge, 5),
-				new /datum/tile_info("Half", /obj/item/stack/tile/iron/half, 5),
-				new /datum/tile_info("Corner", /obj/item/stack/tile/iron/corner, 5),
-				new /datum/tile_info("Textured", /obj/item/stack/tile/iron/textured, 5),
-				new /datum/tile_info("Textured Edge", /obj/item/stack/tile/iron/textured_edge, 6),
-				new /datum/tile_info("Textured Half", /obj/item/stack/tile/iron/textured_half, 6),
-				new /datum/tile_info("Textured Corner", /obj/item/stack/tile/iron/textured_corner, 6),
-				new /datum/tile_info("Textured Large", /obj/item/stack/tile/iron/textured_large, 6),
+				new /datum/tile_info("Base", /obj/item/stack/tile/iron, tile_cost = 4),
+				new /datum/tile_info("Small", /obj/item/stack/tile/iron/small, tile_cost = 3),
+				new /datum/tile_info("Large", /obj/item/stack/tile/iron/large, tile_cost = 7),
+				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/diagonal, tile_cost = 5),
+				new /datum/tile_info("Edge", /obj/item/stack/tile/iron/edge, tile_cost = 5),
+				new /datum/tile_info("Half", /obj/item/stack/tile/iron/half, tile_cost = 5),
+				new /datum/tile_info("Corner", /obj/item/stack/tile/iron/corner, tile_cost = 5),
+				new /datum/tile_info("Textured", /obj/item/stack/tile/iron/textured, tile_cost = 5),
+				new /datum/tile_info("Textured Edge", /obj/item/stack/tile/iron/textured_edge, tile_cost = 6),
+				new /datum/tile_info("Textured Half", /obj/item/stack/tile/iron/textured_half, tile_cost = 6),
+				new /datum/tile_info("Textured Corner", /obj/item/stack/tile/iron/textured_corner, tile_cost = 6),
+				new /datum/tile_info("Textured Large", /obj/item/stack/tile/iron/textured_large, tile_cost = 6),
 			),
 			//Looks slightly transparent or faded
 			"Translusent" = list(
-				new /datum/tile_info("Smooth", /obj/item/stack/tile/iron/smooth, 4),
-				new /datum/tile_info("Smooth Edge", /obj/item/stack/tile/iron/smooth_edge, 4),
-				new /datum/tile_info("Smooth Half", /obj/item/stack/tile/iron/smooth_half, 4),
-				new /datum/tile_info("Smooth Corner", /obj/item/stack/tile/iron/smooth_corner, 4),
-				new /datum/tile_info("Smooth Large", /obj/item/stack/tile/iron/smooth_large, 7),
-				new /datum/tile_info("Freezer", /obj/item/stack/tile/iron/freezer, 5),
-				new /datum/tile_info("Showroom", /obj/item/stack/tile/iron/showroomfloor, 5),
-				new /datum/tile_info("Glass", /obj/item/stack/tile/glass, 5),
-				new /datum/tile_info("Reinforced Glass", /obj/item/stack/tile/rglass, 10)
+				new /datum/tile_info("Smooth", /obj/item/stack/tile/iron/smooth, tile_cost = 4),
+				new /datum/tile_info("Smooth Edge", /obj/item/stack/tile/iron/smooth_edge, tile_cost = 4),
+				new /datum/tile_info("Smooth Half", /obj/item/stack/tile/iron/smooth_half, tile_cost = 4),
+				new /datum/tile_info("Smooth Corner", /obj/item/stack/tile/iron/smooth_corner, tile_cost = 4),
+				new /datum/tile_info("Smooth Large", /obj/item/stack/tile/iron/smooth_large, tile_cost = 7),
+				new /datum/tile_info("Freezer", /obj/item/stack/tile/iron/freezer, tile_cost = 5),
+				new /datum/tile_info("Showroom", /obj/item/stack/tile/iron/showroomfloor, tile_cost = 5),
+				new /datum/tile_info("Glass", /obj/item/stack/tile/glass, tile_cost = 5),
+				new /datum/tile_info("Reinforced Glass", /obj/item/stack/tile/rglass, tile_cost = 10)
 			),
 			//Uses eletricity or atleast thats i think these do
 			"Circuit" = list(
-				new /datum/tile_info("Recharge", /obj/item/stack/tile/iron/recharge_floor, 5),
-				new /datum/tile_info("Solar Panel", /obj/item/stack/tile/iron/solarpanel, 5),
-				new /datum/tile_info("Blue Circuit", /obj/item/stack/tile/circuit, 5),
-				new /datum/tile_info("Green Circuit", /obj/item/stack/tile/circuit/green, 5),
-				new /datum/tile_info("Green Circuit Anim", /obj/item/stack/tile/circuit/green/anim, 5),
-				new /datum/tile_info("Red Circuit", /obj/item/stack/tile/circuit/red, 5),
-				new /datum/tile_info("Red Circuit Anim", /obj/item/stack/tile/circuit/red/anim, 5),
+				new /datum/tile_info("Recharge", /obj/item/stack/tile/iron/recharge_floor, tile_cost = 5),
+				new /datum/tile_info("Solar Panel", /obj/item/stack/tile/iron/solarpanel, tile_cost = 5),
+				new /datum/tile_info("Blue Circuit", /obj/item/stack/tile/circuit, tile_cost = 5),
+				new /datum/tile_info("Green Circuit", /obj/item/stack/tile/circuit/green, tile_cost = 5),
+				new /datum/tile_info("Green Circuit Anim", /obj/item/stack/tile/circuit/green/anim, tile_cost = 5),
+				new /datum/tile_info("Red Circuit", /obj/item/stack/tile/circuit/red, tile_cost = 5),
+				new /datum/tile_info("Red Circuit Anim", /obj/item/stack/tile/circuit/red/anim, tile_cost = 5),
 			)
 		),
 
@@ -58,44 +61,44 @@
 		"Decorated" = list(
 			//Dark Colored tiles
 			"Dark Colored" = list(
-				new /datum/tile_info("Base", /obj/item/stack/tile/iron/dark, 4),
-				new /datum/tile_info("Smooth Edge", /obj/item/stack/tile/iron/dark/smooth_edge, 4),
-				new /datum/tile_info("Smooth Half", /obj/item/stack/tile/iron/dark/smooth_half, 4),
-				new /datum/tile_info("Smooth Corner" ,/obj/item/stack/tile/iron/dark/smooth_corner, 4),
-				new /datum/tile_info("Smooth Large", /obj/item/stack/tile/iron/dark/smooth_large, 7),
-				new /datum/tile_info("Small", /obj/item/stack/tile/iron/dark/small, 4),
-				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/dark/diagonal, 4),
-				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/dark/herringbone, 4),
-				new /datum/tile_info("Half Dark", /obj/item/stack/tile/iron/dark_side, 4),
-				new /datum/tile_info("Dark Corner" ,/obj/item/stack/tile/iron/dark_corner, 4),
+				new /datum/tile_info("Base", /obj/item/stack/tile/iron/dark, tile_cost = 4),
+				new /datum/tile_info("Smooth Edge", /obj/item/stack/tile/iron/dark/smooth_edge, tile_cost = 4),
+				new /datum/tile_info("Smooth Half", /obj/item/stack/tile/iron/dark/smooth_half, tile_cost = 4),
+				new /datum/tile_info("Smooth Corner" ,/obj/item/stack/tile/iron/dark/smooth_corner, tile_cost = 4),
+				new /datum/tile_info("Smooth Large", /obj/item/stack/tile/iron/dark/smooth_large, tile_cost = 7),
+				new /datum/tile_info("Small", /obj/item/stack/tile/iron/dark/small, tile_cost = 4),
+				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/dark/diagonal, tile_cost = 4),
+				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/dark/herringbone, tile_cost = 4),
+				new /datum/tile_info("Half Dark", /obj/item/stack/tile/iron/dark_side, tile_cost = 4),
+				new /datum/tile_info("Dark Corner" ,/obj/item/stack/tile/iron/dark_corner, tile_cost = 4),
 			),
 
 			//White Colored tiles
 			"White Colored" = list(
-				new /datum/tile_info("Base", /obj/item/stack/tile/iron/white, 5),
-				new /datum/tile_info("Smooth Edge", /obj/item/stack/tile/iron/white/smooth_edge, 5),
-				new /datum/tile_info("Smooth Half", /obj/item/stack/tile/iron/white/smooth_half, 5),
-				new /datum/tile_info("Smooth Corner", /obj/item/stack/tile/iron/white/smooth_corner, 5),
-				new /datum/tile_info("Smooth Large", /obj/item/stack/tile/iron/white/smooth_large, 7),
-				new /datum/tile_info("Small", /obj/item/stack/tile/iron/white/small, 5),
-				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/white/diagonal, 5),
-				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/white/herringbone, 5),
-				new /datum/tile_info("Half White", /obj/item/stack/tile/iron/white_side, 5),
-				new /datum/tile_info("White Corner", /obj/item/stack/tile/iron/white_corner, 5),
+				new /datum/tile_info("Base", /obj/item/stack/tile/iron/white, tile_cost = 5),
+				new /datum/tile_info("Smooth Edge", /obj/item/stack/tile/iron/white/smooth_edge, tile_cost = 5),
+				new /datum/tile_info("Smooth Half", /obj/item/stack/tile/iron/white/smooth_half, tile_cost = 5),
+				new /datum/tile_info("Smooth Corner", /obj/item/stack/tile/iron/white/smooth_corner, tile_cost = 5),
+				new /datum/tile_info("Smooth Large", /obj/item/stack/tile/iron/white/smooth_large, tile_cost = 7),
+				new /datum/tile_info("Small", /obj/item/stack/tile/iron/white/small, tile_cost = 5),
+				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/white/diagonal, tile_cost = 5),
+				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/white/herringbone, tile_cost = 5),
+				new /datum/tile_info("Half White", /obj/item/stack/tile/iron/white_side, tile_cost = 5),
+				new /datum/tile_info("White Corner", /obj/item/stack/tile/iron/white_corner, tile_cost = 5),
 			),
 
 			//Textured tiles
 			"Textured" = list(
-				new /datum/tile_info("Textured White", /obj/item/stack/tile/iron/white/textured, 5),
-				new /datum/tile_info("Textured White Edge", /obj/item/stack/tile/iron/white/textured_edge, 5),
-				new /datum/tile_info("Textured White Half", /obj/item/stack/tile/iron/white/textured_half, 5),
-				new /datum/tile_info("Textured White Corner", /obj/item/stack/tile/iron/white/textured_corner, 5),
-				new /datum/tile_info("Textured White Large", /obj/item/stack/tile/iron/white/textured_large, 7),
-				new /datum/tile_info("Textured Dark", /obj/item/stack/tile/iron/dark/textured, 5),
-				new /datum/tile_info("Textured Dark Edge", /obj/item/stack/tile/iron/dark/textured_edge, 5),
-				new /datum/tile_info("Textured Dark Half", /obj/item/stack/tile/iron/dark/textured_half, 5),
-				new /datum/tile_info("Textured Dark Corner", /obj/item/stack/tile/iron/dark/textured_corner, 5),
-				new /datum/tile_info("Textured Dark Large", /obj/item/stack/tile/iron/dark/textured_large, 7),
+				new /datum/tile_info("Textured White", /obj/item/stack/tile/iron/white/textured, tile_cost = 5),
+				new /datum/tile_info("Textured White Edge", /obj/item/stack/tile/iron/white/textured_edge, tile_cost = 5),
+				new /datum/tile_info("Textured White Half", /obj/item/stack/tile/iron/white/textured_half, tile_cost = 5),
+				new /datum/tile_info("Textured White Corner", /obj/item/stack/tile/iron/white/textured_corner, tile_cost = 5),
+				new /datum/tile_info("Textured White Large", /obj/item/stack/tile/iron/white/textured_large, tile_cost = 7),
+				new /datum/tile_info("Textured Dark", /obj/item/stack/tile/iron/dark/textured, tile_cost = 5),
+				new /datum/tile_info("Textured Dark Edge", /obj/item/stack/tile/iron/dark/textured_edge, tile_cost = 5),
+				new /datum/tile_info("Textured Dark Half", /obj/item/stack/tile/iron/dark/textured_half, tile_cost = 5),
+				new /datum/tile_info("Textured Dark Corner", /obj/item/stack/tile/iron/dark/textured_corner, tile_cost = 5),
+				new /datum/tile_info("Textured Dark Large", /obj/item/stack/tile/iron/dark/textured_large, tile_cost = 7),
 			)
 		),
 
@@ -103,24 +106,24 @@
 		"Interior" = list(
 			//Common room tiles
 			"Room" = list(
-				new /datum/tile_info("Kitchen", /obj/item/stack/tile/iron/kitchen, 4),
-				new /datum/tile_info("Kitchen Small", /obj/item/stack/tile/iron/kitchen/small, 4),
-				new /datum/tile_info("Diagonal Kitchen", /obj/item/stack/tile/iron/kitchen/diagonal, 4),
-				new /datum/tile_info("Chapel", /obj/item/stack/tile/iron/chapel, 4),
-				new /datum/tile_info("Cafeteria", /obj/item/stack/tile/iron/cafeteria, 4),
-				new /datum/tile_info("Grimy", /obj/item/stack/tile/iron/grimy, 5),
-				new /datum/tile_info("Sepia", /obj/item/stack/tile/iron/sepia, 5),
-				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/kitchen/herringbone, 5),
+				new /datum/tile_info("Kitchen", /obj/item/stack/tile/iron/kitchen, tile_cost = 4),
+				new /datum/tile_info("Kitchen Small", /obj/item/stack/tile/iron/kitchen/small, tile_cost = 4),
+				new /datum/tile_info("Diagonal Kitchen", /obj/item/stack/tile/iron/kitchen/diagonal, tile_cost = 4),
+				new /datum/tile_info("Chapel", /obj/item/stack/tile/iron/chapel, tile_cost = 4),
+				new /datum/tile_info("Cafeteria", /obj/item/stack/tile/iron/cafeteria, tile_cost = 4),
+				new /datum/tile_info("Grimy", /obj/item/stack/tile/iron/grimy, tile_cost = 5),
+				new /datum/tile_info("Sepia", /obj/item/stack/tile/iron/sepia, tile_cost = 5),
+				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/kitchen/herringbone, tile_cost = 5),
 			),
 
 			//Culd have called it miscellaneous but nah too long
 			"Pattern" = list(
-				new /datum/tile_info("Terracotta", /obj/item/stack/tile/iron/terracotta, 5),
-				new /datum/tile_info("Small", /obj/item/stack/tile/iron/terracotta/small, 5),
-				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/terracotta/diagonal, 5),
-				new /datum/tile_info("Herrigone", /obj/item/stack/tile/iron/terracotta/herringbone, 5),
-				new /datum/tile_info("Checkered", /obj/item/stack/tile/iron/checker, 5),
-				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/herringbone, 5),
+				new /datum/tile_info("Terracotta", /obj/item/stack/tile/iron/terracotta, tile_cost = 5),
+				new /datum/tile_info("Small", /obj/item/stack/tile/iron/terracotta/small, tile_cost = 5),
+				new /datum/tile_info("Diagonal", /obj/item/stack/tile/iron/terracotta/diagonal, tile_cost = 5),
+				new /datum/tile_info("Herrigone", /obj/item/stack/tile/iron/terracotta/herringbone, tile_cost = 5),
+				new /datum/tile_info("Checkered", /obj/item/stack/tile/iron/checker, tile_cost = 5),
+				new /datum/tile_info("Herringbone", /obj/item/stack/tile/iron/herringbone, tile_cost = 5),
 			)
 		)
 	)
@@ -287,23 +290,26 @@
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])
 				for(var/datum/tile_info/tile_design in floor_designs[main_root][sub_category])
-					if(initial(tile_design.tile_type.turf_type) == floor.type)
-						root_category = main_root
-						design_category = sub_category
-						selected_design = tile_design
-						selected_dir = floor.dir
-						if(!tile_design.is_valid_dir(selected_dir)) //selected_dir will mostly be SOUTH but if the tile design doesnt support it then make it null
-							selected_dir = null
-						balloon_alert(user, "tile changed to [selected_design.name]")
+					if(initial(tile_design.tile_type.turf_type) != floor.type)
+						continue
 
-						//infer available overlays on the floor to recreate them to the best extent
-						design_overlays.Cut()
-						if(islist(floor.managed_overlays))
-							for(var/mutable_appearance/appearance as anything in floor.managed_overlays)
-								design_overlays += new /datum/overlay_info(appearance)
-						else
-							design_overlays += new /datum/overlay_info(floor.managed_overlays)
-						return TRUE
+					//store all information about this tile
+					root_category = main_root
+					design_category = sub_category
+					selected_design = tile_design
+					selected_dir = floor.dir
+					if(!tile_design.is_valid_dir(selected_dir)) //selected_dir will mostly be SOUTH but if the tile design doesnt support it then make it null
+						selected_dir = null
+					balloon_alert(user, "tile changed to [selected_design.name]")
+
+					//infer available overlays on the floor to recreate them to the best extent
+					design_overlays.Cut()
+					if(islist(floor.managed_overlays))
+						for(var/mutable_appearance/appearance as anything in floor.managed_overlays)
+							design_overlays += new /datum/overlay_info(appearance)
+					else
+						design_overlays += new /datum/overlay_info(floor.managed_overlays)
+					return TRUE
 
 		//can't infer floor type!
 		balloon_alert(user, "design not supported!")
@@ -313,9 +319,9 @@
 		return TRUE
 
 	//All special effect stuff
-	user.Beam(floor, icon_state="light_beam", time = 0.5 SECONDS)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, 2, RCD_FLOORWALL)
-	if(!do_after(user, 0.2 SECONDS, target = floor))
+	user.Beam(floor, icon_state="light_beam", time = CONSTRUCTION_TIME)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, CONSTRUCTION_TIME, RCD_FLOORWALL)
+	if(!do_after(user, CONSTRUCTION_TIME, target = floor))
 		rcd_effect.end_animation()
 		return TRUE
 
@@ -371,9 +377,9 @@
 		qdel(decal)
 
 	//All special effect stuff
-	user.Beam(floor, icon_state="light_beam", time = 2)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, 2, RCD_FLOORWALL)
-	if(!do_after(user, 2, target = floor))
+	user.Beam(floor, icon_state="light_beam", time = DECONSTRUCTION_TIME)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, DECONSTRUCTION_TIME, RCD_FLOORWALL)
+	if(!do_after(user, DECONSTRUCTION_TIME, target = floor))
 		rcd_effect.end_animation()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -395,3 +401,6 @@
 	name = "admin RTD"
 	max_matter = INFINITY
 	matter = INFINITY
+
+#undef CONSTRUCTION_TIME
+#undef DECONSTRUCTION_TIME
