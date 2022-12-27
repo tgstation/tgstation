@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "Mice who are fed cheese by hand will accept humans as friends, at least until reminded otherwise by their rightful lord."
-  - bugfix: "Fixed a runtime preventing mice from acting correctly when trying to flee and also eat cheese at the same time."

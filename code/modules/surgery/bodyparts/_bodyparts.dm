@@ -804,7 +804,7 @@
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
 
-	//HUSK SHIIIIT
+	// Handles making bodyparts look husked
 	if(is_husked)
 		limb.icon = icon_husk
 		limb.icon_state = "[husk_type]_husk_[body_zone]"
@@ -814,26 +814,27 @@
 			aux = image(limb.icon, "[husk_type]_husk_[aux_zone]", -aux_layer, image_dir)
 			. += aux
 
-	//invisibility
+	// Handles invisibility (not alpha or actual invisibility but invisibility)
 	if(is_invisible)
 		limb.icon = icon_invisible
 		limb.icon_state = "invisible_[body_zone]"
 		. += limb
 		return .
 
-	////This is the MEAT of limb icon code
-	limb.icon = icon_greyscale
-	if(!should_draw_greyscale || !icon_greyscale)
-		limb.icon = icon_static
-
-	if(is_dimorphic) //Does this type of limb have sexual dimorphism?
-		limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
-	else
-		limb.icon_state = "[limb_id]_[body_zone]"
-
-	icon_exists(limb.icon, limb.icon_state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
-
+	// Normal non-husk handling
 	if(!is_husked)
+		// This is the MEAT of limb icon code
+		limb.icon = icon_greyscale
+		if(!should_draw_greyscale || !icon_greyscale)
+			limb.icon = icon_static
+
+		if(is_dimorphic) //Does this type of limb have sexual dimorphism?
+			limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
+		else
+			limb.icon_state = "[limb_id]_[body_zone]"
+
+		icon_exists(limb.icon, limb.icon_state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
+
 		. += limb
 
 		if(aux_zone) //Hand shit
@@ -874,6 +875,7 @@
 			//add two masked images based on the old one
 			. += leg_source.generate_masked_leg(limb_image, image_dir)
 
+	// And finally put external organs on if not husked
 	if(!is_husked)
 		//Draw external organs like horns and frills
 		for(var/obj/item/organ/external/external_organ as anything in external_organs)

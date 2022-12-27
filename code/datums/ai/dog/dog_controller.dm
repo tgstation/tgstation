@@ -1,5 +1,6 @@
 /datum/ai_controller/basic_controller/dog
 	blackboard = list(
+		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
 	)
@@ -8,6 +9,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/dog,
 		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/dog_harassment,
 	)
 
 /**
@@ -15,6 +17,7 @@
  */
 /datum/ai_controller/basic_controller/dog/corgi
 	blackboard = list(
+		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
 		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/dog),
@@ -25,6 +28,7 @@
 		/datum/ai_planning_subtree/random_speech/dog,
 		/datum/ai_planning_subtree/make_babies, // Ian WILL prioritise sex over following your instructions
 		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/dog_harassment,
 	)
 
 /datum/ai_controller/basic_controller/dog/corgi/get_access()

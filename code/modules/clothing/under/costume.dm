@@ -247,11 +247,17 @@
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/costume_russian_officer
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	can_adjust = FALSE
+
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/under/costume/buttondown
 	gender = PLURAL
@@ -262,6 +268,12 @@
 	species_exception = list(/datum/species/golem)
 	can_adjust = FALSE
 
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+
 /obj/item/clothing/under/costume/buttondown/slacks
 	name = "buttondown shirt with slacks"
 	desc = "A fancy buttondown shirt with slacks."
@@ -270,6 +282,12 @@
 	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks_worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/under/costume/buttondown/shorts
 	name = "buttondown shirt with shorts"
@@ -280,6 +298,12 @@
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+
 /obj/item/clothing/under/costume/jackbros
 	name = "jack bros outfit"
 	desc = "For when it's time to hee some hos."
@@ -287,11 +311,23 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+
 /obj/item/clothing/under/costume/deckers
 	name = "deckers outfit"
 	icon_state = "decker_jumpsuit"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/under/costume/football_suit
 	name = "football uniform"
@@ -302,12 +338,24 @@
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+
 /obj/item/clothing/under/costume/swagoutfit
 	name = "Swag outfit"
 	desc = "Why don't you go secure some bitches?"
 	icon_state = "SwagOutfit"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/under/costume/referee
 	name = "referee uniform"
@@ -316,17 +364,35 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+
 /obj/item/clothing/under/costume/joker
 	name = "comedian suit"
 	desc = "The worst part of having a mental illness is people expect you to behave as if you don't."
 	icon_state = "joker"
 	can_adjust = FALSE
 
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+
 /obj/item/clothing/under/costume/yuri
 	name = "yuri initiate jumpsuit"
 	icon_state = "yuri_uniform"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/under/costume/dutch
 	name = "dutch's suit"
@@ -335,11 +401,23 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+
 /obj/item/clothing/under/costume/osi
 	name = "O.S.I. jumpsuit"
 	icon_state = "osi_jumpsuit"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/under/costume/tmc
 	name = "Lost MC clothing"

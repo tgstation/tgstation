@@ -44,7 +44,7 @@
 	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
 	mail_goodies = list(/obj/item/taperecorder) // for translation
 
-/datum/quirk/foreigner/add()
+/datum/quirk/foreigner/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.add_blocked_language(/datum/language/common)
 	if(ishumanbasic(human_holder))
@@ -66,7 +66,7 @@
 	medical_record_text = "Patient reports a vegetarian diet."
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/salad)
 
-/datum/quirk/vegetarian/add()
+/datum/quirk/vegetarian/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food &= ~MEAT
@@ -109,7 +109,7 @@
 	medical_record_text = "Patient demonstrates a pathological love of pineapple."
 	mail_goodies = list(/obj/item/food/pizzaslice/pineapple)
 
-/datum/quirk/pineapple_liker/add()
+/datum/quirk/pineapple_liker/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food |= PINEAPPLE
@@ -141,7 +141,7 @@
 		/obj/item/food/pizzaslice/sassysage,
 	)
 
-/datum/quirk/pineapple_hater/add()
+/datum/quirk/pineapple_hater/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.disliked_food |= PINEAPPLE
@@ -167,7 +167,7 @@
 	medical_record_text = "Patient demonstrates irregular nutrition preferences."
 	mail_goodies = list(/obj/item/food/urinalcake, /obj/item/food/badrecipe) // Mhhhmmm yummy
 
-/datum/quirk/deviant_tastes/add()
+/datum/quirk/deviant_tastes/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	var/liked = species.liked_food
@@ -192,36 +192,27 @@
 	name = "Heterochromatic"
 	desc = "One of your eyes is a different color than the other!"
 	icon = "eye-low-vision" // Ignore the icon name, its actually a fairly good representation of different color eyes
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	value = 0
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
-	var/color
 
-/datum/quirk/heterochromatic/add()
-	color = color || quirk_holder.client?.prefs?.read_preference(/datum/preference/color/heterochromatic)
+// Only your first eyes are heterochromatic
+// If someone comes and says "well mr coder you can have DNA bound heterochromia so it's not unrealistic
+// to allow all inserted replacement eyes to become heterochromatic or for it to transfer between mobs"
+// Then just change this to [proc/add] I really don't care
+/datum/quirk/heterochromatic/add_unique(client/client_source)
+	var/color = client_source?.prefs.read_preference(/datum/preference/color/heterochromatic)
 	if(!color)
 		return
 
-	link_to_holder()
+	apply_heterochromatic_eyes(color)
 
-/datum/quirk/heterochromatic/post_add()
-	if(color)
-		return
-
-	color = quirk_holder.client?.prefs?.read_preference(/datum/preference/color/heterochromatic)
-	if(!color)
-		return
-
-	link_to_holder()
-
-/datum/quirk/heterochromatic/remove()
-	UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
-
-/datum/quirk/heterochromatic/proc/link_to_holder()
+/// Applies the passed color to this mob's eyes
+/datum/quirk/heterochromatic/proc/apply_heterochromatic_eyes(color)
 	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/was_not_hetero = !human_holder.eye_color_heterochromatic
 	human_holder.eye_color_heterochromatic = TRUE
 	human_holder.eye_color_right = color
-	// We set override to TRUE as link to holder will be called whenever the preference is applied, given this quirk exists on the mob
-	RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_eye_removal), override=TRUE)
 
 	var/obj/item/organ/internal/eyes/eyes_of_the_holder = quirk_holder.getorgan(/obj/item/organ/internal/eyes)
 	if(!eyes_of_the_holder)
@@ -230,6 +221,15 @@
 	eyes_of_the_holder.eye_color_right = color
 	eyes_of_the_holder.old_eye_color_right = color
 	eyes_of_the_holder.refresh()
+
+	if(was_not_hetero)
+		RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_eye_removal))
+
+/datum/quirk/heterochromatic/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.eye_color_heterochromatic = FALSE
+	human_holder.eye_color_right = human_holder.eye_color_left
+	UnregisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN)
 
 /datum/quirk/heterochromatic/proc/check_eye_removal(datum/source, obj/item/organ/internal/eyes/removed)
 	SIGNAL_HANDLER
@@ -240,7 +240,7 @@
 	// Eyes were removed, remove heterochromia from the human holder and bid them adieu
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.eye_color_heterochromatic = FALSE
-	human_holder.eye_color_right = initial(human_holder.eye_color_right)
+	human_holder.eye_color_right = human_holder.eye_color_left
 	UnregisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN)
 
 /datum/quirk/monochromatic
@@ -256,7 +256,7 @@
 		/obj/item/clothing/head/fedora/white,
 	)
 
-/datum/quirk/monochromatic/add()
+/datum/quirk/monochromatic/add(client/client_source)
 	quirk_holder.add_client_colour(/datum/client_colour/monochrome)
 
 /datum/quirk/monochromatic/post_add()
@@ -273,21 +273,16 @@
 	icon = "spider"
 	value = 0
 	medical_record_text = "Patient has an irrational fear of something."
-	var/phobia
 	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/storage/pill_bottle/psicodine)
 
-/datum/quirk/phobia/add()
-	phobia = phobia || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/phobia)
-
-	if(phobia)
-		var/mob/living/carbon/human/human_holder = quirk_holder
-		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/quirk/phobia/post_add()
+// Phobia will follow you between transfers
+/datum/quirk/phobia/add(client/client_source)
+	var/phobia = client_source?.prefs.read_preference(/datum/preference/choiced/phobia)
 	if(!phobia)
-		var/mob/living/carbon/human/human_holder = quirk_holder
-		phobia = human_holder.client.prefs.read_preference(/datum/preference/choiced/phobia)
-		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/phobia/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -315,7 +310,7 @@
 	/// The user's starting hairstyle
 	var/old_hair
 
-/datum/quirk/item_quirk/bald/add()
+/datum/quirk/item_quirk/bald/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	old_hair = human_holder.hairstyle
 	human_holder.hairstyle = "Bald"
@@ -323,7 +318,7 @@
 	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, PROC_REF(equip_hat))
 	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, PROC_REF(unequip_hat))
 
-/datum/quirk/item_quirk/bald/add_unique()
+/datum/quirk/item_quirk/bald/add_unique(client/client_source)
 	var/obj/item/clothing/head/wig/natural/baldie_wig = new(get_turf(quirk_holder))
 
 	if (old_hair == "Bald")
@@ -369,7 +364,7 @@
 	medical_record_text = "Patient mentions photography as a stress-relieving hobby."
 	mail_goodies = list(/obj/item/camera_film)
 
-/datum/quirk/item_quirk/photographer/add_unique()
+/datum/quirk/item_quirk/photographer/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/storage/photo_album/personal/photo_album = new(get_turf(human_holder))
 	photo_album.persistence_id = "personal_[human_holder.last_mind?.key]" // this is a persistent album, the ID is tied to the account's key to avoid tampering
@@ -396,7 +391,7 @@
 	medical_record_text = "Patient enjoys dyeing their hair with pretty colors."
 	mail_goodies = list(/obj/item/dyespray)
 
-/datum/quirk/item_quirk/colorist/add_unique()
+/datum/quirk/item_quirk/colorist/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/dyespray, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 #define GAMING_WITHDRAWAL_TIME (15 MINUTES)
@@ -413,7 +408,7 @@
 	/// Timer for gaming withdrawal to kick in
 	var/gaming_withdrawal_timer = TIMER_ID_NULL
 
-/datum/quirk/gamer/add()
+/datum/quirk/gamer/add(client/client_source)
 	// Gamer diet
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
@@ -436,7 +431,7 @@
 	UnregisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME)
 	UnregisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME)
 
-/datum/quirk/gamer/add_unique()
+/datum/quirk/gamer/add_unique(client/client_source)
 	// The gamer starts off quelled
 	gaming_withdrawal_timer = addtimer(CALLBACK(src, PROC_REF(enter_withdrawal)), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
 
@@ -495,3 +490,24 @@
 	human_holder.add_mood_event("gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
 
 #undef GAMING_WITHDRAWAL_TIME
+
+
+/datum/quirk/item_quirk/pride_pin
+	name = "Pride Pin"
+	desc = "Show off your pride with this changing pride pin!"
+	icon = "rainbow"
+	value = 0
+	gain_text = "<span class='notice'>You feel fruity.</span>"
+	lose_text = "<span class='danger'>You feel only slightly less fruity than before.</span>"
+	medical_record_text = "Patient appears to be fruity."
+
+/datum/quirk/item_quirk/pride_pin/add_unique()
+	var/obj/item/clothing/accessory/pride/pin = new(get_turf(quirk_holder))
+
+	var/pride_choice = quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/pride_pin) || assoc_to_keys(GLOB.pride_pin_reskins)[1]
+	var/pride_reskin = GLOB.pride_pin_reskins[pride_choice]
+
+	pin.current_skin = pride_choice
+	pin.icon_state = pride_reskin
+
+	give_item_to_holder(pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))

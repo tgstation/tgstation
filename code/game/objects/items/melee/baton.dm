@@ -1,6 +1,7 @@
 /obj/item/melee/baton
 	name = "police baton"
-	desc = "A wooden truncheon for beating criminal scum. Left click to stun, right click to harm."
+	desc = "A wooden truncheon for beating criminal scum."
+	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
@@ -384,8 +385,8 @@
 
 /obj/item/melee/baton/security
 	name = "stun baton"
-	desc = "A stun baton for incapacitating people with. Left click to stun, right click to harm."
-
+	desc = "A stun baton for incapacitating people with."
+	desc_controls = "Left click to stun, right click to harm."
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
 	worn_icon_state = "baton"
@@ -395,7 +396,7 @@
 	attack_verb_continuous = list("beats")
 	attack_verb_simple = list("beat")
 
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/baton_security
 
 	throwforce = 7
 	stamina_damage = 60
@@ -414,6 +415,11 @@
 	var/cell_hit_cost = 1000
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
+
+/datum/armor/baton_security
+	bomb = 50
+	fire = 80
+	acid = 80
 
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
@@ -632,7 +638,8 @@
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
-	desc = "An improvised stun baton. Left click to stun, right click to harm."
+	desc = "An improvised stun baton."
+	desc_controls = "Left click to stun, right click to harm."
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
@@ -646,6 +653,11 @@
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
+
+/datum/armor/baton_security
+	bomb = 50
+	fire = 80
+	acid = 80
 
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
@@ -689,6 +701,11 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
+/datum/armor/baton_security
+	bomb = 50
+	fire = 80
+	acid = 80
+
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
@@ -711,6 +728,11 @@
 	icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
 	slot_flags = null
+
+/datum/armor/baton_security
+	bomb = 50
+	fire = 80
+	acid = 80
 
 /obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()

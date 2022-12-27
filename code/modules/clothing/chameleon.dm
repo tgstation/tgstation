@@ -380,9 +380,17 @@
 	random_sensor = FALSE
 	resistance_flags = NONE
 	can_adjust = FALSE
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/under_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/datum/armor/under_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	bio = 10
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/under/chameleon/Initialize(mapload)
 	. = ..()
@@ -392,6 +400,10 @@
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/under, /obj/item/clothing/under/color, /obj/item/clothing/under/rank, /obj/item/clothing/under/changeling), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/clothing/under/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
 	. = ..()
@@ -412,8 +424,15 @@
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	resistance_flags = NONE
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/suit_chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/datum/armor/suit_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/suit/chameleon/Initialize(mapload)
 	. = ..()
@@ -424,6 +443,10 @@
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/suit/armor/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/clothing/suit/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/clothing/suit/chameleon/emp_act(severity)
 	. = ..()
@@ -441,9 +464,16 @@
 	icon_state = "meson"
 	inhand_icon_state = "meson"
 	resistance_flags = NONE
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/glasses_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/datum/armor/glasses_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/glasses/chameleon/Initialize(mapload)
 	. = ..()
@@ -453,6 +483,10 @@
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/clothing/glasses/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity)
 	. = ..()
@@ -472,9 +506,16 @@
 	greyscale_colors = null
 
 	resistance_flags = NONE
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/gloves_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/datum/armor/gloves_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/gloves/chameleon/Initialize(mapload)
 	. = ..()
@@ -484,6 +525,10 @@
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/gloves, /obj/item/clothing/gloves/color, /obj/item/clothing/gloves/changeling), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/clothing/gloves/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/clothing/gloves/chameleon/emp_act(severity)
 	. = ..()
@@ -502,9 +547,16 @@
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "greysoft"
 	resistance_flags = NONE
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/head_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/datum/armor/head_chameleon
+	melee = 5
+	bullet = 5
+	laser = 5
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/head/chameleon/Initialize(mapload)
 	. = ..()
@@ -514,6 +566,10 @@
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/head/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/clothing/head/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/clothing/head/chameleon/emp_act(severity)
 	. = ..()
@@ -528,8 +584,15 @@
 /obj/item/clothing/head/chameleon/drone
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	// which means it offers no protection, it's just air and light
+
+/datum/armor/head_chameleon
+	melee = 5
+	bullet = 5
+	laser = 5
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/head/chameleon/drone/Initialize(mapload)
 	. = ..()
@@ -546,7 +609,7 @@
 	icon_state = "gas_alt"
 	inhand_icon_state = "gas_alt"
 	resistance_flags = NONE
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/mask_chameleon
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
@@ -556,6 +619,14 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+/datum/armor/mask_chameleon
+	melee = 5
+	bullet = 5
+	laser = 5
+	bio = 100
+	fire = 50
+	acid = 50
+
 /obj/item/clothing/mask/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -564,6 +635,10 @@
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/clothing/mask/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/clothing/mask/chameleon/emp_act(severity)
 	. = ..()
@@ -582,9 +657,17 @@
 
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	// Can drones use the voice changer part? Let's not find out.
 	voice_change = 0
+
+/datum/armor/mask_chameleon
+	melee = 5
+	bullet = 5
+	laser = 5
+	bio = 100
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/mask/chameleon/drone/Initialize(mapload)
 	. = ..()
@@ -607,9 +690,17 @@
 	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
 	desc = "A pair of black shoes."
 	resistance_flags = NONE
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/shoes_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/datum/armor/shoes_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	bio = 90
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/shoes/chameleon/Initialize(mapload)
 	. = ..()
@@ -623,6 +714,10 @@
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
+/obj/item/clothing/shoes/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
+
 /obj/item/clothing/shoes/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -633,6 +728,14 @@
 	clothing_flags = NOSLIP
 	can_be_bloody = FALSE
 
+/datum/armor/shoes_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	bio = 90
+	fire = 50
+	acid = 50
+
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize(mapload)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
@@ -641,6 +744,14 @@
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+/datum/armor/shoes_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	bio = 90
+	fire = 50
+	acid = 50
+
 /obj/item/storage/backpack/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -648,6 +759,10 @@
 	chameleon_action.chameleon_name = "Backpack"
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/storage/backpack/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/storage/backpack/chameleon/emp_act(severity)
 	. = ..()
@@ -664,6 +779,14 @@
 	desc = "Holds tools."
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+/datum/armor/shoes_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	bio = 90
+	fire = 50
+	acid = 50
+
 /obj/item/storage/belt/chameleon/Initialize(mapload)
 	. = ..()
 
@@ -674,6 +797,10 @@
 	add_item_action(chameleon_action)
 
 	atom_storage.silent = TRUE
+
+/obj/item/storage/belt/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/storage/belt/chameleon/emp_act(severity)
 	. = ..()
@@ -689,6 +816,14 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+/datum/armor/shoes_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	bio = 90
+	fire = 50
+	acid = 50
+
 /obj/item/radio/headset/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -696,6 +831,10 @@
 	chameleon_action.chameleon_name = "Headset"
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/radio/headset/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/radio/headset/chameleon/emp_act(severity)
 	. = ..()
@@ -711,6 +850,14 @@
 	name = "tablet"
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
 
+/datum/armor/shoes_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	bio = 90
+	fire = 50
+	acid = 50
+
 /obj/item/modular_computer/pda/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -719,6 +866,10 @@
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/modular_computer/pda/heads), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/modular_computer/pda/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/modular_computer/pda/chameleon/emp_act(severity)
 	. = ..()
@@ -733,6 +884,14 @@
 /obj/item/stamp/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+/datum/armor/shoes_chameleon
+	melee = 10
+	bullet = 10
+	laser = 10
+	bio = 90
+	fire = 50
+	acid = 50
+
 /obj/item/stamp/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -740,6 +899,10 @@
 	chameleon_action.chameleon_name = "Stamp"
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/stamp/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/stamp/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -750,11 +913,15 @@
 	desc = "A neosilk clip-on tie."
 	icon_state = "detective" //we use this icon_state since the other ones are all generated by GAGS.
 	resistance_flags = NONE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/neck_chameleon
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/neck/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/datum/armor/neck_chameleon
+	fire = 50
+	acid = 50
 
 /obj/item/clothing/neck/chameleon/Initialize(mapload)
 	. = ..()
@@ -793,6 +960,10 @@
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
 
+/datum/armor/neck_chameleon
+	fire = 50
+	acid = 50
+
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -806,8 +977,9 @@
 	set_chameleon_disguise(/obj/item/gun/energy/laser)
 
 /obj/item/gun/energy/laser/chameleon/Destroy()
-	. = ..()
 	chameleon_projectile_vars.Cut()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/gun/energy/laser/chameleon/emp_act(severity)
 	return
