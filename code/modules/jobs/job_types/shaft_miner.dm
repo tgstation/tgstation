@@ -93,12 +93,14 @@
 	gloves = /obj/item/clothing/gloves/bracer
 	accessory = /obj/item/clothing/accessory/talisman
 	backpack_contents = list(
-		/obj/item/t_scanner/adv_mining_scanner = 1,
-		/obj/item/gps/mining = 1,
-		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
+		/obj/item/storage/box/miner_modkits = 1,
+		/obj/item/gun/energy/recharge/kinetic_accelerator = 2,
 		/obj/item/kinetic_crusher/compact = 1,
+		/obj/item/resonator/upgraded = 1,
 	)
+	box = /obj/item/storage/box/survival/mining/bonus
 	l_pocket = /obj/item/modular_computer/pda/shaftminer
+	r_pocket = /obj/item/extinguisher/mini
 	belt = /obj/item/storage/belt/mining/healing
 
 /datum/outfit/job/miner/equipped/combat/post_equip(mob/living/carbon/human/miner, visualsOnly = FALSE)
@@ -114,8 +116,7 @@
 		for(var/i in 1 to 3)
 			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = new()
 			explorer_suit.hood.attackby(plating)
-	var/obj/item/gun/energy/recharge/kinetic_accelerator/accelerator = locate() in miner_contents
-	if(accelerator)
+	for(var/obj/item/gun/energy/recharge/kinetic_accelerator/accelerator in miner_contents)
 		var/obj/item/knife/combat/survival/knife = new(accelerator)
 		accelerator.bayonet = knife
 		var/obj/item/flashlight/seclite/flashlight = new()
