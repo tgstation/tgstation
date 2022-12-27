@@ -1,26 +1,3 @@
-// threshold_type values for [/datum/tlv/proc/set_value]  and [/datum/tlv/proc/reset_value]
-/// [/datum/tlv/var/warning_min]
-#define TLV_VAR_WARNING_MIN (1 << 0)
-/// [/datum/tlv/var/hazard_min]
-#define TLV_VAR_HAZARD_MIN (1 << 1)
-/// [/datum/tlv/var/warning_max]
-#define TLV_VAR_WARNING_MAX (1 << 2)
-/// [/datum/tlv/var/hazard_max]
-#define TLV_VAR_HAZARD_MAX (1 << 3)
-/// All the vars in [/datum/tlv]
-#define TLV_VAR_ALL (TLV_VAR_WARNING_MIN | TLV_VAR_HAZARD_MIN | TLV_VAR_WARNING_MAX | TLV_VAR_HAZARD_MAX)
-
-// Return value of [/datum/tlv/proc/check_value]
-/// The checked value doesnt exceed any thresholds.
-#define TLV_RET_SAFE 0
-/// The checked value exceeds warning but not hazard thresholds.
-#define TLV_RET_WARNING 1
-/// The checked value exceeds hazard thresholds.
-#define TLV_RET_HAZARD 2
-
-/// TLV datums will ignore variables set to this.
-#define TLV_VALUE_IGNORE -1
-
 // A datum for dealing with threshold limit values
 /datum/tlv
 	var/warning_min = 0

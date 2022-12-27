@@ -1,7 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, Section } from '../components';
+import { Box, Button, LabeledList, Modal, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
 import { Scrubber, ScrubberProps, Vent, VentProps } from './common/AtmosControls';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
@@ -19,6 +19,7 @@ type AirAlarmData = {
     danger: 0 | 1 | 2;
   }[];
   tlvSettings: {
+    id: string;
     name: string;
     unit: string;
     warning_min: number;
@@ -35,13 +36,14 @@ type AirAlarmData = {
     selected: BooleanLike;
     danger: BooleanLike;
   }[];
+  thresholdTypeMap: Record<string, number>;
 };
 
 export const AirAlarm = (props, context) => {
   const { act, data } = useBackend<AirAlarmData>(context);
   const locked = data.locked && !data.siliconUser;
   return (
-    <Window width={440} height={650}>
+    <Window width={475} height={650}>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox />
         <AirAlarmStatus />
@@ -260,39 +262,214 @@ const AirAlarmControlModes = (props, context) => {
 //  Thresholds
 // --------------------------------------------------------
 
+type EditingModalProps = {
+  id: string;
+  name: string;
+  type: number;
+  typeVar: string;
+  typeName: string;
+  unit: string;
+  oldValue: number;
+  finish: () => void;
+};
+
+const EditingModal = (props: EditingModalProps, context) => {
+  const { act, data } = useBackend<AirAlarmData>(context);
+  const { id, name, type, typeVar, typeName, unit, oldValue, finish } = props;
+  return (
+    <Modal>
+      <Section
+        title={'Threshold Value Editor'}
+        buttons={<Button onClick={() => finish()} icon="times" color="red" />}>
+        <Box mb={1.5}>
+          {`Editing the ${typeName.toLowerCase()} value for ${name.toLowerCase()}...`}
+        </Box>
+        {oldValue === -1 ? (
+          <Button
+            onClick={() =>
+              act('reset_threshold', {
+                threshold: id,
+                threshold_type: type,
+              })
+            }>
+            {'Enable'}
+          </Button>
+        ) : (
+          <>
+            <NumberInput
+              onChange={(e, value) =>
+                act('set_threshold', {
+                  threshold: id,
+                  threshold_type: type,
+                  value: value,
+                })
+              }
+              unit={unit}
+              value={oldValue}
+              minValue={0}
+              maxValue={100000}
+              step={10}
+            />
+            <Button
+              onClick={() =>
+                act('set_threshold', {
+                  threshold: id,
+                  threshold_type: type,
+                  value: -1,
+                })
+              }>
+              {'Disable'}
+            </Button>
+          </>
+        )}
+      </Section>
+    </Modal>
+  );
+};
+
 const AirAlarmControlThresholds = (props, context) => {
   const { act, data } = useBackend<AirAlarmData>(context);
-  const { tlvSettings } = data;
+  const [activeModal, setActiveModal] = useLocalState<Omit<
+    EditingModalProps,
+    'oldValue'
+  > | null>(context, 'tlvModal', null);
+  const { tlvSettings, thresholdTypeMap } = data;
   return (
-    <table className="LabeledList" style={{ width: '100%' }}>
-      <thead>
-        <tr>
-          <td />
-          <td className="color-bad">hazard_min</td>
-          <td className="color-average">warning_min</td>
-          <td className="color-average">warning_max</td>
-          <td className="color-bad">hazard_max</td>
-        </tr>
-      </thead>
-      <tbody>
-        {tlvSettings.map((threshold) => (
-          <tr key={threshold.name}>
-            <td className="LabeledList__label">{threshold.name}</td>
-            <td className="LabeledList__label">
-              {threshold.warning_min + threshold.unit}
-            </td>
-            <td className="LabeledList__label">
-              {threshold.hazard_min + threshold.unit}
-            </td>
-            <td className="LabeledList__label">
-              {threshold.warning_max + threshold.unit}
-            </td>
-            <td className="LabeledList__label">
-              {threshold.hazard_max + threshold.unit}
-            </td>
-          </tr>
+    <>
+      <Table>
+        <Table.Row>
+          <Table.Cell bold>Threshold</Table.Cell>
+          <Table.Cell bold color="bad">
+            Minimum Hazard
+          </Table.Cell>
+          <Table.Cell bold color="average">
+            Minimum Warning
+          </Table.Cell>
+          <Table.Cell bold color="average">
+            Maximum Warning
+          </Table.Cell>
+          <Table.Cell bold color="bad">
+            Maximum Hazard
+          </Table.Cell>
+          <Table.Cell bold>Actions</Table.Cell>
+        </Table.Row>
+        {tlvSettings.map((tlv) => (
+          <Table.Row key={tlv.name}>
+            <Table.Cell>{tlv.name}</Table.Cell>
+            <Table.Cell>
+              <Button
+                fluid
+                onClick={() =>
+                  setActiveModal({
+                    id: tlv.id,
+                    name: tlv.name,
+                    type: thresholdTypeMap['hazard_min'],
+                    typeVar: 'hazard_min',
+                    typeName: 'Minimum Hazard',
+                    unit: tlv.unit,
+                    finish: () => setActiveModal(null),
+                  })
+                }>
+                {tlv.hazard_min === -1
+                  ? 'Disabled'
+                  : tlv.hazard_min + ' ' + tlv.unit}
+              </Button>
+            </Table.Cell>
+            <Table.Cell>
+              <Button
+                fluid
+                onClick={() =>
+                  setActiveModal({
+                    id: tlv.id,
+                    name: tlv.name,
+                    type: thresholdTypeMap['warning_min'],
+                    typeVar: 'warning_min',
+                    typeName: 'Minimum Warning',
+                    unit: tlv.unit,
+                    finish: () => setActiveModal(null),
+                  })
+                }>
+                {tlv.warning_min === -1
+                  ? 'Disabled'
+                  : tlv.warning_min + ' ' + tlv.unit}
+              </Button>
+            </Table.Cell>
+            <Table.Cell>
+              <Button
+                fluid
+                onClick={() =>
+                  setActiveModal({
+                    id: tlv.id,
+                    name: tlv.name,
+                    type: thresholdTypeMap['warning_max'],
+                    typeVar: 'warning_max',
+                    typeName: 'Maximum Warning',
+                    unit: tlv.unit,
+                    finish: () => setActiveModal(null),
+                  })
+                }>
+                {tlv.warning_max === -1
+                  ? 'Disabled'
+                  : tlv.warning_max + ' ' + tlv.unit}
+              </Button>
+            </Table.Cell>
+            <Table.Cell>
+              <Button
+                fluid
+                onClick={() =>
+                  setActiveModal({
+                    id: tlv.id,
+                    name: tlv.name,
+                    type: thresholdTypeMap['hazard_max'],
+                    typeVar: 'hazard_max',
+                    typeName: 'Maximum Hazard',
+                    unit: tlv.unit,
+                    finish: () => setActiveModal(null),
+                  })
+                }>
+                {tlv.hazard_max === -1
+                  ? 'Disabled'
+                  : tlv.hazard_max + ' ' + tlv.unit}
+              </Button>
+            </Table.Cell>
+            <Table.Cell>
+              <>
+                <Button
+                  color="green"
+                  icon="sync"
+                  onClick={() =>
+                    act('reset_threshold', {
+                      threshold: tlv.id,
+                      threshold_type: thresholdTypeMap['all'],
+                    })
+                  }
+                />
+                <Button
+                  color="red"
+                  icon="times"
+                  onClick={() =>
+                    act('set_threshold', {
+                      threshold: tlv.id,
+                      threshold_type: thresholdTypeMap['all'],
+                      value: -1,
+                    })
+                  }
+                />
+              </>
+            </Table.Cell>
+          </Table.Row>
         ))}
-      </tbody>
-    </table>
+      </Table>
+      {activeModal && (
+        <EditingModal
+          oldValue={
+            (tlvSettings.find((tlv) => tlv.id === activeModal.id) || {})[
+              activeModal.typeVar
+            ]
+          }
+          {...activeModal}
+        />
+      )}
+    </>
   );
 };

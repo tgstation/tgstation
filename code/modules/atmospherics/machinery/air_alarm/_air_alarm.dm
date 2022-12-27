@@ -67,6 +67,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		name = "[get_area_name(src)] Air Alarm"
 
 	tlv_collection = list()
+	tlv_collection["pressure"] = new /datum/tlv/pressure
+	tlv_collection["temperature"] = new /datum/tlv/temperature
 	var/list/meta_info = GLOB.meta_gas_info // shorthand
 	for(var/gas_path in meta_info)
 		if(ispath(gas_path, /datum/gas/oxygen))
@@ -77,8 +79,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			tlv_collection[gas_path] = new /datum/tlv/dangerous
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
-	tlv_collection["temperature"] = new /datum/tlv/temperature
-	tlv_collection["pressure"] = new /datum/tlv/pressure
 
 	alarm_manager = new(src)
 	my_area = get_area(src)
@@ -126,6 +126,17 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		ui = new(user, src, "AirAlarm", name)
 		ui.open()
 
+/obj/machinery/airalarm/ui_static_data(mob/user)
+	var/list/data = list()
+	data["thresholdTypeMap"] = list(
+		"warning_min" = TLV_VAR_WARNING_MIN,
+		"hazard_min" = TLV_VAR_HAZARD_MIN,
+		"warning_max" = TLV_VAR_WARNING_MAX,
+		"hazard_max" = TLV_VAR_HAZARD_MAX,
+		"all" = TLV_VAR_ALL,
+	)
+	return data
+
 /obj/machinery/airalarm/ui_data(mob/user)
 	var/data = list()
 
@@ -151,10 +162,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	data["envData"] += list(list(
 		"name" = "Temperature",
 		"value" = "[round(temp, 0.01)] Kelvin / [round(temp, 0.01) - T0C] Celcius",
-		"danger" = tlv_collection["temperature"].check_value(pressure),
+		"danger" = tlv_collection["temperature"].check_value(temp),
 	))
 	for(var/gas_path in environment.gases)
-		var/moles = environment.gases[gas_path]
+		var/moles = environment.gases[gas_path][MOLES]
 		var/portion = moles / total_moles
 		data["envData"] += list(list(
 			"name" = GLOB.meta_gas_info[gas_path][META_GAS_NAME],
@@ -182,6 +193,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				"unit" = "kPa",
 			)
 		singular_tlv += list(
+			"id" = threshold,
 			"warning_min" = tlv.warning_min,
 			"hazard_min" = tlv.hazard_min,
 			"warning_max" = tlv.warning_max,
@@ -219,6 +231,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				"widenet" = scrubber.widenet,
 				"filter_types" = filter_types,
 			))
+
 		data["mode"] = mode
 		data["modes"] = list()
 		data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", "mode" = AALARM_MODE_SCRUBBING, "selected" = mode == AALARM_MODE_SCRUBBING, "danger" = 0))
@@ -342,28 +355,38 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			mode = clamp(round(text2num(params["mode"])), AALARM_MODE_SCRUBBING, AALARM_MODE_MAX)
 			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 			apply_mode(user)
-		if ("threshold")
-			var/env = params["env"]
-			if(text2path(env))
-				env = text2path(env)
 
-			var/name = params["var"]
-			var/datum/tlv/tlv = tlv_collection[env]
+		if ("set_threshold")
+			var/threshold = text2path(params["threshold"]) || params["threshold"]
+			var/datum/tlv/tlv = tlv_collection[threshold]
 			if(isnull(tlv))
 				return
-			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
-			if(!isnull(value) && !..())
-				if(value < 0)
-					tlv.vars[name] = -1
-				else
-					tlv.vars[name] = round(value, 0.01)
-				investigate_log("threshold value for [env]:[name] was set to [value] by [key_name(usr)]",INVESTIGATE_ATMOS)
-				var/turf/our_turf = get_turf(src)
-				var/datum/gas_mixture/environment = our_turf.return_air()
-				check_air_dangerlevel(our_turf, environment, environment.temperature)
+			var/threshold_type = params["threshold_type"]
+			var/value = params["value"]
+			tlv.set_value(threshold_type, value)
+			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(usr)]", INVESTIGATE_ATMOS)
+
+			var/turf/our_turf = get_turf(src)
+			var/datum/gas_mixture/environment = our_turf.return_air()
+			check_air_dangerlevel(our_turf, environment, environment.temperature)
+
+		if("reset_threshold")
+			var/threshold = text2path(params["threshold"]) || params["threshold"]
+			var/datum/tlv/tlv = tlv_collection[threshold]
+			if(isnull(tlv))
+				return
+			var/threshold_type = params["threshold_type"]
+			tlv.reset_value(threshold_type)
+			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(usr)]", INVESTIGATE_ATMOS)
+
+			var/turf/our_turf = get_turf(src)
+			var/datum/gas_mixture/environment = our_turf.return_air()
+			check_air_dangerlevel(our_turf, environment, environment.temperature)
+
 		if ("mode")
 			if (alarm_manager.send_alarm(ALARM_ATMOS))
 				danger_level = AIR_ALARM_ALERT_SEVERE
+
 		if ("reset")
 			if (alarm_manager.clear_alarm(ALARM_ATMOS))
 				danger_level = AIR_ALARM_ALERT_NONE
