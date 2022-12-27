@@ -141,7 +141,7 @@
 		controller.blackboard[BB_DOG_PLAYING_DEAD] = TRUE
 		simple_pawn.emote("deathgasp", intentional=FALSE)
 		simple_pawn.icon_state = simple_pawn.icon_dead
-		if(simple_pawn.flip_on_death)
+		if(simple_pawn.basic_mob_flags & FLIP_ON_DEATH)
 			simple_pawn.transform = simple_pawn.transform.Turn(180)
 		simple_pawn.set_density(FALSE)
 
@@ -156,7 +156,7 @@
 	controller.blackboard[BB_DOG_PLAYING_DEAD] = FALSE
 	simple_pawn.visible_message(span_notice("[simple_pawn] springs to [simple_pawn.p_their()] feet, panting excitedly!"))
 	simple_pawn.icon_state = simple_pawn.icon_living
-	if(simple_pawn.flip_on_death)
+	if(simple_pawn.basic_mob_flags & FLIP_ON_DEATH)
 		simple_pawn.transform = simple_pawn.transform.Turn(180)
 	simple_pawn.set_density(initial(simple_pawn.density))
 
