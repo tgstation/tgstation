@@ -1815,7 +1815,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	//for turfs whose base is open space we put regular plating in its place else everyone dies
-	if(floor.baseturfs == /turf/baseturf_bottom)
+	if(floor.baseturf_at_depth(1) == /turf/baseturf_bottom)
 		floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	else // for every other turf we scarp away exposing base turf underneath
 		floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
