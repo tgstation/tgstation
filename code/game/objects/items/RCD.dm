@@ -1632,7 +1632,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		var/text_dir = dir2text(direction)
 		data["tile_dirs"] += text_dir
 		if(data["selected_dir"] == null)
-			data["selected_dir"] = dir!= null ? dir2text(dir) : text_dir
+			data["selected_dir"] = dir ? dir2text(dir) : text_dir
 
 /datum/tile_info/proc/is_valid_dir(dir)
 	var/tile_directions = GLOB.tile_rotations[initial(tile_type.singular_name)]
