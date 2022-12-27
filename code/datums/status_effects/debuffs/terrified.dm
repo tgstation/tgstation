@@ -1,7 +1,7 @@
 #define DARKNESS_TERROR_AMOUNT 10 //Amount of terror passively generated (or removed) on every tick based on lighting.
 #define PANIC_ATTACK_TERROR_AMOUNT 35 //How much terror a random panic attack will give the victim.
 #define HUG_TERROR_AMOUNT 60 //Amount of terror actively removed (or generated) upon being hugged.
-#define STACK_TERROR_AMOUNT 150 //Amount of terror caused by subsequent casting of the Terrify spell.
+#define STACK_TERROR_AMOUNT 135 //Amount of terror caused by subsequent casting of the Terrify spell.
 
 #define DARKNESS_TERROR_CAP 400 //The soft cap on how much passively generated terror you can have. Takes about 30 seconds to reach without the victim being actively terrorized.
 

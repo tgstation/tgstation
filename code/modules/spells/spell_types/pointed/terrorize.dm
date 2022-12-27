@@ -38,4 +38,4 @@
 /datum/action/cooldown/spell/pointed/terrorize/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 
-	cast_on.apply_status_effect(/datum/status_effect/terrified) //Effect stacks, adding 150 terror to the victim if cast again
+	cast_on.apply_status_effect(/datum/status_effect/terrified) //Effect stacks, adding bonus terror to the victim if cast again
