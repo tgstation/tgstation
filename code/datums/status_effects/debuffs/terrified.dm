@@ -133,7 +133,8 @@
 /datum/status_effect/terrified/proc/freak_out(amount)
 	terror_buildup += amount
 	owner.Knockdown(0.5 SECONDS)
-	owner.emote("scream")
+	if(prob(50))
+		owner.emote("scream")
 
 /// The status effect popup for the terror status effect
 /atom/movable/screen/alert/status_effect/terrified
