@@ -1765,7 +1765,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	//All special effect stuff
 	user.Beam(A, icon_state="light_beam", time = 0.5 SECONDS)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, 2, RCD_FLOORWALL)
-	if(!do_after(user, 2, target = A))
+	if(!do_after(user, 0.2 SECONDS, target = A))
 		rcd_effect.end_animation()
 		return TRUE
 
