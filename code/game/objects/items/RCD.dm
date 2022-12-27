@@ -1779,7 +1779,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return TRUE
 
 /obj/item/construction/rtd/afterattack_secondary(atom/A, mob/user, proximity_flag, click_parameters)
-	. = ..()
+	..()
 	if(!range_check(A, user) || !istype(A, /turf/open/floor))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
