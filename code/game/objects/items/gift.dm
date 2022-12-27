@@ -104,6 +104,10 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	desc = "It could be anything!"
 
 /obj/item/a_gift/anything/get_gift_type()
+	if(!check_holidays(CHRISTMAS))
+		name = "gift"
+		desc = "PRESENTS!!!! eek!"
+		return ..() // Fixes edge cases where people were getting christmas presents outside of the christmas week.
 	if(!GLOB.possible_gifts.len)
 		var/list/gift_types_list = subtypesof(/obj/item)
 		for(var/V in gift_types_list)
