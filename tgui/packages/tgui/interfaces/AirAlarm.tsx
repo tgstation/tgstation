@@ -1,13 +1,44 @@
-import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
-import { Scrubber, Vent } from './common/AtmosControls';
+import { Scrubber, ScrubberProps, Vent, VentProps } from './common/AtmosControls';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
+type AirAlarmData = {
+  locked: BooleanLike;
+  siliconUser: BooleanLike;
+  emagged: BooleanLike;
+  dangerLevel: 0 | 1 | 2;
+  atmosAlarm: any; // fix this
+  fireAlarm: BooleanLike;
+  envData: {
+    name: string;
+    value: string; // preformatted in backend, shorter code that way.
+    danger: 0 | 1 | 2;
+  }[];
+  tlvSettings: {
+    name: string;
+    unit: string;
+    warning_min: number;
+    hazard_min: number;
+    warning_max: number;
+    hazard_max: number;
+  }[];
+  vents: VentProps[];
+  scrubbers: ScrubberProps[];
+  mode: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  modes: {
+    name: string;
+    mode: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+    selected: BooleanLike;
+    danger: BooleanLike;
+  }[];
+};
+
 export const AirAlarm = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<AirAlarmData>(context);
   const locked = data.locked && !data.siliconUser;
   return (
     <Window width={440} height={650}>
@@ -21,10 +52,7 @@ export const AirAlarm = (props, context) => {
 };
 
 const AirAlarmStatus = (props, context) => {
-  const { data } = useBackend(context);
-  const entries = (data.environment_data || []).filter(
-    (entry) => entry.value >= 0.01
-  );
+  const { data } = useBackend<AirAlarmData>(context);
   const dangerMap = {
     0: {
       color: 'good',
@@ -39,21 +67,20 @@ const AirAlarmStatus = (props, context) => {
       localStatusText: 'Danger (Internals Required)',
     },
   };
-  const localStatus = dangerMap[data.danger_level] || dangerMap[0];
+  const localStatus = dangerMap[data.dangerLevel] || dangerMap[0];
   return (
     <Section title="Air Status">
       <LabeledList>
-        {(entries.length > 0 && (
+        {(data.envData.length > 0 && (
           <>
-            {entries.map((entry) => {
-              const status = dangerMap[entry.danger_level] || dangerMap[0];
+            {data.envData.map((entry) => {
+              const status = dangerMap[entry.danger] || dangerMap[0];
               return (
                 <LabeledList.Item
                   key={entry.name}
                   label={entry.name}
                   color={status.color}>
-                  {toFixed(entry.value, 2)}
-                  {entry.unit}
+                  {entry.value}
                 </LabeledList.Item>
               );
             })}
@@ -62,9 +89,9 @@ const AirAlarmStatus = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item
               label="Area status"
-              color={data.atmos_alarm || data.fire_alarm ? 'bad' : 'good'}>
-              {(data.atmos_alarm && 'Atmosphere Alarm') ||
-                (data.fire_alarm && 'Fire Alarm') ||
+              color={data.atmosAlarm || data.fireAlarm ? 'bad' : 'good'}>
+              {(data.atmosAlarm && 'Atmosphere Alarm') ||
+                (data.fireAlarm && 'Fire Alarm') ||
                 'Nominal'}
             </LabeledList.Item>
           </>
@@ -107,7 +134,7 @@ const AIR_ALARM_ROUTES = {
 };
 
 const AirAlarmControl = (props, context) => {
-  const [screen, setScreen] = useLocalState(context, 'screen');
+  const [screen, setScreen] = useLocalState(context, 'screen', 'home');
   const route = AIR_ALARM_ROUTES[screen] || AIR_ALARM_ROUTES.home;
   const Component = route.component();
   return (
@@ -118,7 +145,7 @@ const AirAlarmControl = (props, context) => {
           <Button
             icon="arrow-left"
             content="Back"
-            onClick={() => setScreen()}
+            onClick={() => setScreen('home')}
           />
         )
       }>
@@ -131,16 +158,16 @@ const AirAlarmControl = (props, context) => {
 // --------------------------------------------------------
 
 const AirAlarmControlHome = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [screen, setScreen] = useLocalState(context, 'screen');
-  const { mode, atmos_alarm } = data;
+  const { act, data } = useBackend<AirAlarmData>(context);
+  const [screen, setScreen] = useLocalState(context, 'screen', 'home');
+  const { mode, atmosAlarm } = data;
   return (
     <>
       <Button
-        icon={atmos_alarm ? 'exclamation-triangle' : 'exclamation'}
-        color={atmos_alarm && 'caution'}
+        icon={atmosAlarm ? 'exclamation-triangle' : 'exclamation'}
+        color={atmosAlarm && 'caution'}
         content="Area Atmosphere Alarm"
-        onClick={() => act(atmos_alarm ? 'reset' : 'alarm')}
+        onClick={() => act(atmosAlarm ? 'reset' : 'alarm')}
       />
       <Box mt={1} />
       <Button
@@ -185,25 +212,25 @@ const AirAlarmControlHome = (props, context) => {
 // --------------------------------------------------------
 
 const AirAlarmControlVents = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<AirAlarmData>(context);
   const { vents } = data;
   if (!vents || vents.length === 0) {
     return 'Nothing to show';
   }
-  return vents.map((vent) => <Vent key={vent.ref} vent={vent} />);
+  return vents.map((vent) => <Vent key={vent.refID} {...vent} />);
 };
 
 //  Scrubbers
 // --------------------------------------------------------
 
 const AirAlarmControlScrubbers = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<AirAlarmData>(context);
   const { scrubbers } = data;
   if (!scrubbers || scrubbers.length === 0) {
     return 'Nothing to show';
   }
   return scrubbers.map((scrubber) => (
-    <Scrubber key={scrubber.ref} scrubber={scrubber} />
+    <Scrubber key={scrubber.refID} {...scrubber} />
   ));
 };
 
@@ -211,7 +238,7 @@ const AirAlarmControlScrubbers = (props, context) => {
 // --------------------------------------------------------
 
 const AirAlarmControlModes = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<AirAlarmData>(context);
   const { modes } = data;
   if (!modes || modes.length === 0) {
     return 'Nothing to show';
@@ -234,8 +261,8 @@ const AirAlarmControlModes = (props, context) => {
 // --------------------------------------------------------
 
 const AirAlarmControlThresholds = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { thresholds } = data;
+  const { act, data } = useBackend<AirAlarmData>(context);
+  const { tlvSettings } = data;
   return (
     <table className="LabeledList" style={{ width: '100%' }}>
       <thead>
@@ -248,22 +275,21 @@ const AirAlarmControlThresholds = (props, context) => {
         </tr>
       </thead>
       <tbody>
-        {thresholds.map((threshold) => (
+        {tlvSettings.map((threshold) => (
           <tr key={threshold.name}>
             <td className="LabeledList__label">{threshold.name}</td>
-            {threshold.settings.map((setting) => (
-              <td key={setting.val}>
-                <Button
-                  content={toFixed(setting.selected, 2)}
-                  onClick={() =>
-                    act('threshold', {
-                      env: setting.env,
-                      var: setting.val,
-                    })
-                  }
-                />
-              </td>
-            ))}
+            <td className="LabeledList__label">
+              {threshold.warning_min + threshold.unit}
+            </td>
+            <td className="LabeledList__label">
+              {threshold.hazard_min + threshold.unit}
+            </td>
+            <td className="LabeledList__label">
+              {threshold.warning_max + threshold.unit}
+            </td>
+            <td className="LabeledList__label">
+              {threshold.hazard_max + threshold.unit}
+            </td>
           </tr>
         ))}
       </tbody>

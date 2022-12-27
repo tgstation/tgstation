@@ -133,8 +133,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["emagged"] = (obj_flags & EMAGGED ? 1 : 0)
 	data["dangerLevel"] = danger_level
-	data["atmos_alarm"] = !!my_area.active_alarms[ALARM_ATMOS]
-	data["fire_alarm"] = my_area.fire
+	data["atmosAlarm"] = !!my_area.active_alarms[ALARM_ATMOS]
+	data["fireAlarm"] = my_area.fire
 
 	var/turf/turf = get_turf(src)
 	var/datum/gas_mixture/environment = turf.return_air()
@@ -142,13 +142,13 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/temp = environment.temperature
 	var/pressure = total_moles * R_IDEAL_GAS_EQUATION * temp / environment.volume
 
-	data["current_env"] = list()
-	data["current_env"] += list(list(
+	data["envData"] = list()
+	data["envData"] += list(list(
 		"name" = "Pressure",
 		"value" = "[round(pressure, 0.01)] kPa",
 		"danger" = tlv_collection["pressure"].check_value(pressure)
 	))
-	data["current_env"] += list(list(
+	data["envData"] += list(list(
 		"name" = "Temperature",
 		"value" = "[round(temp, 0.01)] Kelvin / [round(temp, 0.01) - T0C] Celcius",
 		"danger" = tlv_collection["temperature"].check_value(pressure),
@@ -156,13 +156,13 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	for(var/gas_path in environment.gases)
 		var/moles = environment.gases[gas_path]
 		var/portion = moles / total_moles
-		data["current_env"] += list(list(
+		data["envData"] += list(list(
 			"name" = GLOB.meta_gas_info[gas_path][META_GAS_NAME],
 			"value" = "[round(moles, 0.01)] moles / [round(100 * portion, 0.01)] % / [round(portion * pressure, 0.01)] kPa",
 			"danger" = tlv_collection[gas_path].check_value(portion * pressure),
 		))
 
-	data["tlv_settings"] = list()
+	data["tlvSettings"] = list()
 	for(var/threshold in tlv_collection)
 		var/datum/tlv/tlv = tlv_collection[threshold]
 		var/list/singular_tlv = list()
@@ -179,7 +179,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		else
 			singular_tlv += list(
 				"name" = GLOB.meta_gas_info[threshold][META_GAS_NAME],
-				"value" = "kPa",
+				"unit" = "kPa",
 			)
 		singular_tlv += list(
 			"warning_min" = tlv.warning_min,
@@ -187,13 +187,13 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			"warning_max" = tlv.warning_max,
 			"hazard_max" = tlv.hazard_max,
 		)
-		data["tlv_settings"] += list(singular_tlv)
+		data["tlvSettings"] += list(singular_tlv)
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 			data["vents"] += list(list(
-				"ref" = REF(vent),
+				"refID" = REF(vent),
 				"long_name" = sanitize(vent.name),
 				"power" = vent.on,
 				"checks" = vent.pressure_checks,
@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				var/list/gas = GLOB.meta_gas_info[path]
 				filter_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in scrubber.filter_types)))
 			data["scrubbers"] += list(list(
-				"ref" = REF(scrubber),
+				"refID" = REF(scrubber),
 				"long_name" = sanitize(scrubber.name),
 				"power" = scrubber.on,
 				"scrubbing" = scrubber.scrubbing,
