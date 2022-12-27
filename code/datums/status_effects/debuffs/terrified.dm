@@ -36,11 +36,9 @@
 
 /datum/status_effect/terrified/on_remove()
 	UnregisterSignal(owner, COMSIG_CARBON_HELPED)
-	owner.remove_fov_trait(src, FOV_270_DEGREES)
+	owner.remove_fov_trait(id, FOV_270_DEGREES)
 
 /datum/status_effect/terrified/tick(delta_time, times_fired)
-	. = ..()
-
 	if(check_surrounding_darkness())
 		if(terror_buildup < DARKNESS_TERROR_CAP)
 			terror_buildup += DARKNESS_TERROR_AMOUNT
@@ -49,6 +47,7 @@
 
 	if(terror_buildup <= 0) //If we've completely calmed down, we remove the status effect.
 		qdel(src)
+		return
 
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		terror_buildup -= 50 //get over it you big baby, you're fine
@@ -61,13 +60,13 @@
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, it's time to start looking for a way out.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
-		owner.add_fov_trait(src, FOV_270_DEGREES) //Terror induced tunnel vision
+		owner.add_fov_trait(id, FOV_270_DEGREES) //Terror induced tunnel vision
 		owner.adjust_eye_blur_up_to(10 SECONDS * delta_time, 10 SECONDS)
 		if(prob(5)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
 			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
 			owner.visible_message(span_warning("[owner] drops to the floor for a moment, clutching their chest."), span_alert("Your heart lurches in your chest. You can't take much more of this!"), span_hear("You hear a grunt."))
 	else
-		owner.remove_fov_trait(src, FOV_270_DEGREES)
+		owner.remove_fov_trait(id, FOV_270_DEGREES)
 
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by actively terrorizing someone
 		owner.visible_message(span_warning("[owner] clutches [owner.p_their()] chest for a moment, then collapses to the floor."), span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."), span_hear("You hear something heavy collide with the ground."))
@@ -76,16 +75,14 @@
 		qdel(src) //Victim passes out from fear, calming them down and permenantly damaging their heart.
 
 /datum/status_effect/terrified/get_examine_text()
-	. = ..()
-
 	if(terror_buildup > DARKNESS_TERROR_CAP) //If we're approaching a heart attack
-		return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] siezing up, about to collapse in fear!")
+		return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] seizing up, about to collapse in fear!")
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD)
 		return span_boldwarning("[owner] is visibly trembling and twitching. It looks like [owner.p_theyre()] freaking out!")
 
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD)
-		return span_warning("[owner] looks very worried about something. [owner.p_are()] [owner.p_they()] alright?")
+		return span_warning("[owner] looks very worried about something. [owner.p_are(TRUE)] [owner.p_they()] alright?")
 
 	return span_notice("[owner] looks rather anxious. [owner.p_they(TRUE)] could probably use a hug...")
 
@@ -124,10 +121,7 @@
 		else
 			unlit_tiles++
 
-	if(lit_tiles < unlit_tiles)
-		return TRUE
-	else
-		return FALSE
+	return lit_tiles < unlit_tiles
 
 /**
  * Adds to the victim's terror buildup, makes them scream, and knocks them over for a moment.
