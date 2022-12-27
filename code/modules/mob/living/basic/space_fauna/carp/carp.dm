@@ -107,8 +107,8 @@
 	ai_controller.blackboard[BB_CARP_RIFT] = teleport
 
 /mob/living/basic/carp/Destroy()
-	. = ..()
 	QDEL_NULL(teleport)
+	return ..()
 
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
