@@ -285,7 +285,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/turf/new_turf = null
-	if(floor.baseturfs == /turf/baseturf_bottom) //for turfs whose base is open space we put regular plating in its place else everyone dies
+	if(floor.baseturf_at_depth(1) == /turf/baseturf_bottom) //for turfs whose base is open space we put regular plating in its place else everyone dies
 		new_turf = floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	else // for every other turf we scarp away exposing base turf underneath
 		new_turf = floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
