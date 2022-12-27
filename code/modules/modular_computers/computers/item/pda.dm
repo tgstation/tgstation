@@ -257,7 +257,7 @@
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#a80001#000000#5C070F"
+	greyscale_colors = "#a80001#5C070F#000000"
 
 	starting_programs = list(
 		/datum/computer_file/program/ntnetdownload/syndicate,
