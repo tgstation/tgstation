@@ -187,3 +187,4 @@
 
 /turf/open/floor/holofloor/stairs/right
 	icon_state = "stairs-r"
+
