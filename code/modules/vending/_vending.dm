@@ -169,10 +169,6 @@
 	///A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements
 	var/onstation_override = FALSE //change this on the object on the map to override the onstation check. DO NOT APPLY THIS GLOBALLY.
 
-	///ID's that can load this vending machine wtih refills
-	var/list/canload_access_list
-
-
 	var/list/vending_machine_input = list()
 	///Display header on the input view
 	var/input_display_header = "Custom Vendor"
@@ -806,27 +802,20 @@
 	. = ..()
 
 /**
- * Is the passed in user allowed to load this vending machines compartments
+ * Is the passed in user allowed to load this vending machines compartments? This only is ran if we are using a /obj/item/storage/bag to load the vending machine, and not a dedicated restocker.
  *
  * Arguments:
  * * user - mob that is doing the loading of the vending machine
  */
 /obj/machinery/vending/proc/compartmentLoadAccessCheck(mob/user)
-	if(!canload_access_list)
+	if(!req_access)
 		return TRUE
-	else
-		var/has_access = FALSE
-		for(var/i in canload_access_list)
-			if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
-				continue
-			else
-				has_access = TRUE
-				break //you passed don't bother looping anymore
-		if(has_access)
-			return TRUE
-		else
-			to_chat(user, span_warning("[src]'s input compartment blinks red: Access denied."))
-			return FALSE
+
+	if(allowed(user) || (obj_flags & EMAGGED) || !scan_id)
+		return TRUE
+
+	to_chat(user, span_warning("[src]'s input compartment blinks red: Access denied."))
+	return FALSE
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
