@@ -1,5 +1,5 @@
 /datum/component/spawner
-	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
+	var/mob_types = list(/mob/living/basic/carp)
 	var/spawn_time = 300 //30 seconds default
 	var/list/spawned_mobs = list()
 	var/spawn_delay = 0

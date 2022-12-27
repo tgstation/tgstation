@@ -769,8 +769,7 @@
 /obj/structure/bed/dogbed/cayenne{
 	name = "Paprika's bed"
 	},
-/mob/living/simple_animal/hostile/carp/cayenne{
-	aggro_vision_range = 1;
+/mob/living/basic/carp/pet/cayenne{
 	desc = "It's Paprika! One of the Spider Clan's lovable Space Carp!";
 	faction = list("neutral");
 	name = "Paprika";
