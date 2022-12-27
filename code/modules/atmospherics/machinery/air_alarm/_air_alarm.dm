@@ -56,30 +56,8 @@
 
 	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = PROC_REF(check_air_dangerlevel))
 
-	var/list/TLV = list( // Breathable air.
-		"pressure" = new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are hazard_min, warning_min, warning_max, hazard_max
-		"temperature" = new/datum/tlv(BODYTEMP_COLD_WARNING_1, BODYTEMP_COLD_WARNING_1+10, BODYTEMP_HEAT_WARNING_1-27, BODYTEMP_HEAT_WARNING_1),
-		/datum/gas/oxygen = new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
-		/datum/gas/nitrogen = new/datum/tlv(-1, -1, 1000, 1000),
-		/datum/gas/carbon_dioxide = new/datum/tlv(-1, -1, 5, 10),
-		/datum/gas/miasma = new/datum/tlv/(-1, -1, 15, 30),
-		/datum/gas/plasma = new/datum/tlv/dangerous,
-		/datum/gas/nitrous_oxide = new/datum/tlv/dangerous,
-		/datum/gas/bz = new/datum/tlv/dangerous,
-		/datum/gas/hypernoblium = new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
-		/datum/gas/water_vapor = new/datum/tlv/dangerous,
-		/datum/gas/tritium = new/datum/tlv/dangerous,
-		/datum/gas/nitrium = new/datum/tlv/dangerous,
-		/datum/gas/pluoxium = new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
-		/datum/gas/freon = new/datum/tlv/dangerous,
-		/datum/gas/hydrogen = new/datum/tlv/dangerous,
-		/datum/gas/healium = new/datum/tlv/dangerous,
-		/datum/gas/proto_nitrate = new/datum/tlv/dangerous,
-		/datum/gas/zauker = new/datum/tlv/dangerous,
-		/datum/gas/helium = new/datum/tlv/dangerous,
-		/datum/gas/antinoblium = new/datum/tlv/dangerous,
-		/datum/gas/halon = new/datum/tlv/dangerous
-	)
+	// An assoc list of [datum/tlv]s, indexed by "pressure", "temperature", and [datum/gas] typepaths.
+	var/list/tlv_collection
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
@@ -100,6 +78,20 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
+
+	tlv_collection = list()
+	var/list/meta_info = GLOB.meta_gas_info // shorthand
+	for(var/gas_path in meta_info)
+		if(ispath(gas_path, /datum/gas/oxygen))
+			tlv_collection[gas_path] = new /datum/tlv/oxygen
+		else if(ispath(gas_path, /datum/gas/carbon_dioxide))
+			tlv_collection[gas_path] = new /datum/tlv/carbon_dioxide
+		else if(meta_info[gas_path][META_GAS_DANGER])
+			tlv_collection[gas_path] = new /datum/tlv/dangerous
+		else
+			tlv_collection[gas_path] = new /datum/tlv/no_checks
+	tlv_collection["temperature"] = new /datum/tlv/temperature
+	tlv_collection["pressure"] = new /datum/tlv/pressure
 
 	alarm_manager = new(src)
 	my_area = get_area(src)
@@ -164,7 +156,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	data["environment_data"] = list()
 	var/pressure = environment.return_pressure()
-	cur_tlv = TLV["pressure"]
+	cur_tlv = tlv_collection["pressure"]
 	data["environment_data"] += list(list(
 							"name" = "Pressure",
 							"value" = pressure,
@@ -172,7 +164,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 							"danger_level" = cur_tlv.get_danger_level(pressure)
 	))
 	var/temperature = environment.temperature
-	cur_tlv = TLV["temperature"]
+	cur_tlv = tlv_collection["temperature"]
 	data["environment_data"] += list(list(
 							"name" = "Temperature",
 							"value" = temperature,
@@ -182,9 +174,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/total_moles = environment.total_moles()
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
 	for(var/gas_id in environment.gases)
-		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+		if(!(gas_id in tlv_collection)) // We're not interested in this gas, it seems.
 			continue
-		cur_tlv = TLV[gas_id]
+		cur_tlv = tlv_collection[gas_id]
 		data["environment_data"] += list(list(
 								"name" = environment.gases[gas_id][GAS_META][META_GAS_NAME],
 								"value" = environment.gases[gas_id][MOLES] / total_moles * 100,
@@ -238,14 +230,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		var/datum/tlv/selected
 		var/list/thresholds = list()
 
-		selected = TLV["pressure"]
+		selected = tlv_collection["pressure"]
 		thresholds += list(list("name" = "Pressure", "settings" = list()))
 		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "hazard_min", "selected" = selected.hazard_min))
 		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "warning_min", "selected" = selected.warning_min))
 		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "warning_max", "selected" = selected.warning_max))
 		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "hazard_max", "selected" = selected.hazard_max))
 
-		selected = TLV["temperature"]
+		selected = tlv_collection["temperature"]
 		thresholds += list(list("name" = "Temperature", "settings" = list()))
 		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "hazard_min", "selected" = selected.hazard_min))
 		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "warning_min", "selected" = selected.warning_min))
@@ -253,9 +245,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "hazard_max", "selected" = selected.hazard_max))
 
 		for(var/gas_id in GLOB.meta_gas_info)
-			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+			if(!(gas_id in tlv_collection)) // We're not interested in this gas, it seems.
 				continue
-			selected = TLV[gas_id]
+			selected = tlv_collection[gas_id]
 			thresholds += list(list("name" = GLOB.meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "hazard_min", "selected" = selected.hazard_min))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "warning_min", "selected" = selected.warning_min))
@@ -380,7 +372,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				env = text2path(env)
 
 			var/name = params["var"]
-			var/datum/tlv/tlv = TLV[env]
+			var/datum/tlv/tlv = tlv_collection[env]
 			if(isnull(tlv))
 				return
 			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
@@ -621,7 +613,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	var/datum/tlv/current_tlv
 	//cache for sanic speed (lists are references anyways)
-	var/list/cached_tlv = TLV
+	var/list/cached_tlv = tlv_collection
 
 	var/list/env_gases = environment.gases
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * exposed_temperature / environment.volume

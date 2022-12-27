@@ -232,7 +232,7 @@
 	if(!current_option)
 		return
 
-	var/datum/tlv/settings = connected_alarm.TLV[options_map[current_option]]
+	var/datum/tlv/settings = connected_alarm.tlv_collection[options_map[current_option]]
 	if(min_2.value != null)
 		settings.hazard_min = min_2.value
 	if(min_1.value != null)
