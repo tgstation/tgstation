@@ -396,8 +396,8 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Corgi",
 			"rarity": "rare",
-			"summon_icon_file": "CUSTOM ICON NEEDED",
-			"summon_icon_state": "CUSTOM ICON NEEDED"
+			"summon_icon_file": "icons/obj/toys/tcgsummons.dmi",
+			"summon_icon_state": "borgi"
 		},
 		{
 			"id": "deathsquad_armour",
@@ -591,8 +591,8 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Spirit Corgi",
 			"rarity": "epic",
-			"summon_icon_file": "CUSTOM ICON NEEDED",
-			"summon_icon_state": "CUSTOM ICON NEEDED"
+			"summon_icon_file": "icons/obj/toys/tcgsummons.dmi",
+			"summon_icon_state": "ghost"
 		},
 		{
 			"id": "HOP",
@@ -1192,8 +1192,8 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Robot",
 			"rarity": "rare",
-			"summon_icon_file": "CUSTOM ICON NEEDED",
-			"summon_icon_state": "CUSTOM ICON NEEDED"
+			"summon_icon_file": "icons/obj/toys/tcgsummons.dmi",
+			"summon_icon_state": "swarmer"
 		},
 		{
 			"id": "viro",
