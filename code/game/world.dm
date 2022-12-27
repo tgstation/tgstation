@@ -368,7 +368,7 @@ GLOBAL_VAR(restart_counter)
 	maxx = new_maxx
 	if(!max_zs_to_load)
 		return
-	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
+	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
 	var/list/to_add = block(locate(old_max + 1, 1, 1), locate(maxx, maxy, max_zs_to_load))
 	global_area.contained_turfs += to_add
 
