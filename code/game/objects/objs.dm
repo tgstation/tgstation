@@ -28,7 +28,9 @@
 	var/infinite_reskin = FALSE
 
 	// Access levels, used in modules\jobs\access.dm
+	/// List of accesses needed to use this object: All accesses in this list are required for the user to have in order to use the object.
 	var/list/req_access
+	/// List of accesses needed to use this object: At least one access in this list is required for the user to have in order to use the object.
 	var/list/req_one_access
 
 	/// Custom fire overlay icon
