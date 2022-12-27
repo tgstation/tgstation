@@ -71,8 +71,7 @@
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by actively terrorizing someone
 		owner.visible_message(span_warning("[owner] clutches [owner.p_their()] chest for a moment, then collapses to the floor."), span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."), span_hear("You hear something heavy collide with the ground."))
 		var/datum/disease/heart_failure/heart_attack = new(src)
-		heart_attack.stage = 2
-		heart_attack.stage_prob = 2 //Advances twice as fast, with a kickstart
+		heart_attack.stage_prob = 2 //Advances twice as fast
 		owner.ForceContractDisease(heart_attack)
 		owner.Unconscious(20 SECONDS)
 		qdel(src) //Victim passes out from fear, calming them down and permenantly damaging their heart.
