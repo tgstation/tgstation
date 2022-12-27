@@ -83,7 +83,7 @@
 
 	if(is_species(hugger, /datum/species/shadow/nightmare)) //hey wait a minute, that's not a comforting, friendly hug!
 		addtimer(CALLBACK(src, PROC_REF(freak_out), HUG_TERROR_AMOUNT))
-		owner.visible_message(span_warning("[owner] recoils in fear as [hugger] waves [hugger.p_their()] arms and shrieks at [hugger.p_them()]!"), span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"), span_hear("You hear someone shriek in fear. How embarassing!"))
+		owner.visible_message(span_warning("[owner] recoils in fear as [hugger] waves [hugger.p_their()] arms and shrieks at [owner.p_them()]!"), span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"), span_hear("You hear someone shriek in fear. How embarassing!"))
 		return COMPONENT_BLOCK_MISC_HELP
 
 	terror_buildup -= HUG_TERROR_AMOUNT //maybe later I'll integrate some of the hug-related traits into this somehow
