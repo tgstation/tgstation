@@ -503,6 +503,6 @@
 
 	for(var/datum/turf_reservation/loaded_area as anything in nukie_template.reservations)
 		var/infiltrator_turf = get_turf(infiltrator_port)
-		if(infiltrator_port in loaded_area.reserved_turfs)
+		if(infiltrator_turf in loaded_area.reserved_turfs)
 			return TRUE
 	return FALSE
