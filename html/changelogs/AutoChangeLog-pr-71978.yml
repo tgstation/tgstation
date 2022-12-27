@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "You can now high five people with (non-cult) touch spells! Maybe be careful high-fiving a wizard who knows Smite."

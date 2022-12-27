@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Wedding dresses no longer render their shoes over the dress"
+  - bugfix: "Things which have inv flags set should more consistently actually hide the things they mean to hide"
