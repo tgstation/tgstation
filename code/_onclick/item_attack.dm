@@ -63,7 +63,10 @@
 	var/afterattack_result = afterattack(target, user, TRUE, params)
 
 	if (!afterattack_result && isitem(target))
-		suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
+		if (isnull(user.get_inactive_held_item()))
+			suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
+		else
+			suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
 	return afterattack_result
 

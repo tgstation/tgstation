@@ -29,11 +29,22 @@
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("[type] does not override perform()")
 
+/datum/tutorial/proc/should_perform()
+	SHOULD_CALL_PARENT(FALSE)
+	return TRUE
+
 /datum/tutorial/proc/complete()
-	SHOULD_NOT_SLEEP(TRUE)
+	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	manager().complete(user)
+	perform_base_completion_effects()
+
+/datum/tutorial/proc/dismiss()
+	SIGNAL_HANDLER
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	manager().dismiss(user)
 	perform_base_completion_effects()
 
 #define INSTRUCTION_SCREEN_DELAY (1 SECONDS)
@@ -72,6 +83,36 @@
 	var/list/keybinds = user.client?.prefs.key_bindings[initial(keybinding_type.name)]
 	return keybinds?.len > 0 ? replacetext(message, "%KEY%", "<b>[keybinds[1]]</b>") : message_without_keybinds
 
+/datum/tutorial/proc/animate_ui_element(icon_state, initial_screen_loc, target_screen_loc, animate_start_time)
+	var/atom/movable/screen/preview = new
+	preview.icon = ui_style2icon(user.client?.prefs.read_preference(/datum/preference/choiced/ui_style) || GLOB.available_ui_styles[1])
+	preview.icon_state = icon_state
+	preview.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	preview.screen_loc = "1,1"
+
+	var/view = user.client?.view
+
+	var/list/origin_offsets = screen_loc_to_offset(initial_screen_loc, view)
+
+	// A little offset to the right (origin offsets on its own already starts pretty far)
+	var/matrix/origin_transform = TRANSLATE_MATRIX(origin_offsets[1] - world.icon_size * 0.5, origin_offsets[2] - world.icon_size * 1.5)
+
+	var/list/target_offsets = screen_loc_to_offset(target_screen_loc, view)
+	// `- world.icon_Size * 0.5` to patch over a likely bug in screen_loc_to_offset with CENTER, needs more looking at
+	var/matrix/animate_to_transform = TRANSLATE_MATRIX(target_offsets[1] - world.icon_size * 1.5, target_offsets[2] - world.icon_size)
+
+	preview.transform = origin_transform
+
+	preview.alpha = 0
+	animate(preview, time = animate_start_time, alpha = 255, easing = CUBIC_EASING)
+	animate(1.4 SECONDS)
+	animate(transform = animate_to_transform, time = 2 SECONDS, easing = SINE_EASING | EASE_IN)
+	animate(alpha = 0, time = 2.4 SECONDS, easing = CUBIC_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
+
+	user.client?.screen += preview
+
+	return preview
+
 /datum/tutorial_manager
 	var/datum/tutorial/tutorial_type
 
@@ -87,10 +128,14 @@
 	ASSERT(ispath(tutorial_type, /datum/tutorial))
 	src.tutorial_type = tutorial_type
 
-/datum/tutorial_manager/proc/perform(mob/user, list/arguments)
+/datum/tutorial_manager/proc/try_perform(mob/user, list/arguments)
+	var/datum/tutorial/tutorial = new tutorial_type(user)
+	if (!tutorial.should_perform(user))
+		qdel(tutorial)
+		return
+
 	performing_ckeys[user.ckey] = TRUE
 
-	var/datum/tutorial/tutorial = new tutorial_type(user)
 	tutorial.perform(arglist(arguments))
 
 /datum/tutorial_manager/proc/should_run(mob/user)
@@ -140,4 +185,4 @@ GLOBAL_LIST_INIT_TYPED(tutorial_managers, /datum/tutorial, init_tutorial_manager
 	if (!tutorial_manager.should_run(user))
 		return
 
-	INVOKE_ASYNC(tutorial_manager, TYPE_PROC_REF(/datum/tutorial_manager, perform), user, args.Copy(3))
+	INVOKE_ASYNC(tutorial_manager, TYPE_PROC_REF(/datum/tutorial_manager, try_perform), user, args.Copy(3))
