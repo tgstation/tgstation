@@ -108,7 +108,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	var/obj/effect/overlay/status_display_text/power_overlay
 	var/obj/effect/overlay/status_display_text/resolve_overlay
 	var/power_color = "#af2323"
-	var/resolve_color = "#231ac0"
+	var/resolve_color = "#3492d0"
 	var/modified_color = "#1db327"
 
 	var/team_color = "#77abff"

@@ -4,7 +4,7 @@
 			"template": "default",
 			"icon": "icons/runtime/tcg/xenos.dmi",
 			"series": "resinfront",
-			"summon_icon_file": "icons/mob/simple/carp.dmi",
+			"summon_icon_file": "icons/obj/toys/tcgsummons.dmi",
 			"summon_icon_state": "carp"
 		}
 	],
@@ -21,7 +21,8 @@
 			"summoncost": 6,
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Xenomorph",
-			"rarity": "epic"
+			"rarity": "epic",
+			"summon_icon_state": "xenoborg"
 		},
 		{
 			"id": "sentinel",
@@ -35,7 +36,8 @@
 			"summoncost": 4,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_state": "xenosen"
 		},
 		{
 			"id": "drone",
@@ -49,7 +51,8 @@
 			"summoncost": 2,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_state": "xenodrone"
 		},
 		{
 			"id": "hunter",
@@ -63,7 +66,8 @@
 			"summoncost": 5,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_state": "xenohunt"
 		},
 		{
 			"id": "spitter",
@@ -77,7 +81,8 @@
 			"summoncost": 3,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_state": "xenospit"
 		},
 		{
 			"id": "runner",
@@ -91,7 +96,8 @@
 			"summoncost": 3,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_state": "xenorun"
 		},
 		{
 			"id": "praetorian",
@@ -105,7 +111,8 @@
 			"summoncost": 5,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_state": "xenoprae"
 		},
 		{
 			"id": "hivelord",
@@ -119,7 +126,8 @@
 			"summoncost": 3,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_state": "xenohive"
 		},
 		{
 			"id": "boiler",
@@ -133,7 +141,8 @@
 			"summoncost": 4,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_state": "xenoboil"
 		},
 		{
 			"id": "ravager",
@@ -147,7 +156,8 @@
 			"summoncost": 3,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_state": "xenoravage"
 		},
 		{
 			"id": "crusher",
@@ -161,7 +171,8 @@
 			"summoncost": 3,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_state": "xenocrush"
 		},
 		{
 			"id": "defender",
@@ -175,7 +186,8 @@
 			"summoncost": 2,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_state": "xenodefend"
 		},
 		{
 			"id": "warrior",
@@ -189,7 +201,8 @@
 			"summoncost": 4,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_state": "xenowar"
 		},
 		{
 			"id": "queen",
@@ -217,7 +230,8 @@
 			"summoncost": 3,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_state": "xenocarry"
 		},
 		{
 			"id": "defiler",
@@ -231,7 +245,8 @@
 			"summoncost": 3,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_state": "xenodefile"
 		},
 		{
 			"id": "predalien",
@@ -245,7 +260,8 @@
 			"summoncost": 3,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph Soldier",
-			"rarity": "legendary"
+			"rarity": "legendary",
+			"summon_icon_state": "xenopred"
 		},
 		{
 			"id": "shrike",
@@ -259,7 +275,8 @@
 			"summoncost": 2,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "rare"
+			"rarity": "rare",
+			"summon_icon_state" :"xenoshrike"
 		},
 		{
 			"id": "bull",
@@ -273,7 +290,9 @@
 			"summoncost": 6,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_file": "icons/runtime/tcg/xenos.dmi",
+			"summon_icon_state": "xeno_bull"
 		},
 		{
 			"id": "hivemind",
