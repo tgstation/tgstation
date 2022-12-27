@@ -1,20 +1,24 @@
 #define DARKNESS_TERROR_AMOUNT 10 //Amount of terror passively generated (or removed) on every tick based on lighting.
-#define PANIC_ATTACK_TERROR_AMOUNT 35 //How much terror a random panic attack will give the victim
+#define PANIC_ATTACK_TERROR_AMOUNT 35 //How much terror a random panic attack will give the victim.
 #define HUG_TERROR_AMOUNT 60 //Amount of terror actively removed (or generated) upon being hugged.
+#define STACK_TERROR_AMOUNT 150 //Amount of terror caused by subsequent casting of the Terrify spell.
 
 #define DARKNESS_TERROR_CAP 400 //The soft cap on how much passively generated terror you can have. Takes about 30 seconds to reach without the victim being actively terrorized.
 
 #define TERROR_FEAR_THRESHOLD 140 //The terror_buildup threshold for minor fear effects to occur.
-#define TERROR_PANIC_THRESHOLD 300 //The terror_buildup threshold for the more serious effects. Takes about 20 seconds of darkness buildup to reach
+#define TERROR_PANIC_THRESHOLD 300 //The terror_buildup threshold for the more serious effects. Takes about 20 seconds of darkness buildup to reach.
 #define TERROR_HEART_ATTACK_THRESHOLD 600 //If you actively terrorize someone already at the darkness threshold, you can cause a heart attack and knock them out.
 
 /datum/status_effect/terrified
 	id = "terrified"
-
+	status_type = STATUS_EFFECT_REFRESH
 	remove_on_fullheal = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/terrified
 	///A value that represents how much "terror" the victim has built up. Higher amounts cause more averse effects.
 	var/terror_buildup = 100
+
+/datum/status_effect/terrified/refresh(effect, ...) //Don't call parent, just add to the current amount
+	freak_out(STACK_TERROR_AMOUNT)
 
 /datum/status_effect/terrified/on_apply()
 	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(comfort_owner))

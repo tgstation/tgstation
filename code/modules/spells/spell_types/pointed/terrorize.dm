@@ -3,7 +3,7 @@
 	desc = "Stare down a victim with your piercing red eyes, inflicting them with terror buildup. \
 		Targets must be in the dark to be terrorized and, if they remain in the darkness, will suffer increasingly adverse effects. \
 		Prey will be weakened, and may even pass out from terror buildup in extreme amounts. \
-		Swatting a victim with an open hand will boost terror buildup considerably." //TODO: move this to the antag tools popup thing
+		Swatting a victim with an open hand will boost terror buildup considerably." //There has to be a better way to convey all of this. The message is huge.
 	button_icon_state = "terrify"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -38,10 +38,4 @@
 /datum/action/cooldown/spell/pointed/terrorize/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 
-	if(cast_on.has_status_effect(/datum/status_effect/terrified)) //TODO: somehow get this functionality onto the status effect
-		var/datum/status_effect/terrified/terrified_status_effect
-		terrified_status_effect.terror_buildup += 125 //It stacks, and then some
-	else
-		cast_on.apply_status_effect(/datum/status_effect/terrified)
-
-	cast_on.balloon_alert("spooked!")
+	cast_on.apply_status_effect(/datum/status_effect/terrified) //Effect stacks, adding 150 terror to the victim if cast again
