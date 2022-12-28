@@ -196,14 +196,14 @@
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
-			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
+			INVOKE_ASYNC(usr.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
 			return FALSE
 		if("vvGlobal")
 			var/thing_to_debug = traverse_list(params["indices"], current_state.globals)
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
-			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
+			INVOKE_ASYNC(usr.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
 			return FALSE
 		if("clearArgs")
 			arguments.Cut()

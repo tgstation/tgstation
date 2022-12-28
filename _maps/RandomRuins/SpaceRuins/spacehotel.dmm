@@ -267,7 +267,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "cB" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 8
 	},
 /turf/open/floor/carpet/lone,
@@ -298,7 +298,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "cS" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
 /obj/item/lightreplacer,
 /turf/open/floor/catwalk_floor,
@@ -518,7 +518,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "fv" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -721,7 +721,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
 "hq" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/machinery/light_switch/directional/south,
@@ -1390,7 +1390,7 @@
 /turf/template_noop,
 /area/template_noop)
 "mj" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
@@ -1426,7 +1426,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "mM" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/east,
@@ -2933,7 +2933,7 @@
 /turf/open/floor/carpet/red,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "EP" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
@@ -3019,7 +3019,7 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/hotel/dock)
 "FV" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblue,
@@ -3146,7 +3146,7 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "Ho" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -3489,7 +3489,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "Mz" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
@@ -3949,7 +3949,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "RV" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/east,
@@ -4094,7 +4094,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel)
 "TQ" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 8
 	},
 /turf/open/floor/carpet/orange,
@@ -4399,7 +4399,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "Xf" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/east,

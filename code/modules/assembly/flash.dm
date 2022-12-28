@@ -50,7 +50,7 @@
 	flashing = flash
 	. = ..()
 	if(flash)
-		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_icon)), 5)
 	holder?.update_icon(updates)
 
 /obj/item/assembly/flash/update_overlays()
@@ -118,7 +118,7 @@
 	last_trigger = world.time
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	set_light_on(TRUE)
-	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
 	if(!flash_recharge())
 		return FALSE
@@ -345,7 +345,7 @@
 		to_chat(real_arm.owner, span_warning("Your photon projector implant overheats and deactivates!"))
 		real_arm.Retract()
 	overheat = TRUE
-	addtimer(CALLBACK(src, .proc/cooldown), flashcd * 2)
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd * 2)
 
 /obj/item/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
@@ -354,7 +354,7 @@
 			to_chat(real_arm.owner, span_warning("Your photon projector is running too hot to be used again so quickly!"))
 		return FALSE
 	overheat = TRUE
-	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd)
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	update_icon(ALL, TRUE)
 	return TRUE
@@ -397,7 +397,7 @@
 				to_chat(M, span_hypnophrase("The light makes you feel oddly relaxed..."))
 				M.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
 				M.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
-				M.adjust_drowsyness(min(M.drowsyness+10, 20))
+				M.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
 				M.apply_status_effect(/datum/status_effect/pacify, 100)
 			else
 				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
@@ -411,7 +411,7 @@
 		to_chat(M, span_notice("Such a pretty light..."))
 		M.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
 		M.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
-		M.adjust_drowsyness(min(M.drowsyness+4, 20))
+		M.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
 		M.apply_status_effect(/datum/status_effect/pacify, 40)
 
 #undef CONFUSION_STACK_MAX_MULTIPLIER

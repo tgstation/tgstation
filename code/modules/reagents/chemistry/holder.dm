@@ -20,6 +20,15 @@
 
 	return reagent_list
 
+/// Creates an list which is indexed by reagent name . used by plumbing reaction chamber and chemical filter UI
+/proc/init_chemical_name_list()
+	var/list/name_list = list()
+	for(var/X in GLOB.chemical_reagents_list)
+		var/datum/reagent/Reagent = GLOB.chemical_reagents_list[X]
+		name_list += Reagent.name
+	return sort_list(name_list)
+
+
 /proc/build_chemical_reactions_lists()
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
@@ -703,9 +712,29 @@
 	var/list/cached_reagents = reagent_list
 	if(owner)
 		expose_temperature(owner.bodytemperature, 0.25)
+
 	var/need_mob_update = FALSE
+	var/obj/item/organ/internal/stomach/belly = owner.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/liver/liver = owner.getorganslot(ORGAN_SLOT_LIVER)
+	var/liver_tolerance
+	if(liver)
+		var/liver_health_percent = (liver.maxHealth - liver.damage) / liver.maxHealth
+		liver_tolerance = liver.toxTolerance * liver_health_percent
+
 	for(var/datum/reagent/reagent as anything in cached_reagents)
+		// skip metabolizing effects for small units of toxins
+		if(istype(reagent, /datum/reagent/toxin) && liver)
+			var/datum/reagent/toxin/toxin = reagent
+			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL)
+			if(belly)
+				amount += belly.reagents.get_reagent_amount(toxin.type)
+
+			if(amount <= liver_tolerance)
+				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * delta_time)
+				continue
+
 		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose, liverless)
+
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
 		owner.update_stamina()
@@ -787,7 +816,7 @@
 		added_purity = 0
 
 	if((reagent.inverse_chem_val > added_purity) && (reagent.inverse_chem))//Turns all of a added reagent into the inverse chem
-		add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = 1-reagent.creation_purity)
+		add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = reagent.get_inverse_purity(reagent.creation_purity))
 		var/datum/reagent/inverse_reagent = has_reagent(reagent.inverse_chem)
 		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
 			inverse_reagent.name = reagent.name//Negative effects are hidden
@@ -851,6 +880,13 @@
 			START_PROCESSING(SSreagents, src)
 		if(!(has_changed_state()))
 			return FALSE
+
+#ifndef UNIT_TESTS
+	// We assert that reagents will not need to react before the map is fully loaded
+	// This is the best I can do, sorry :(
+	if(!MC_RUNNING())
+		return FALSE
+#endif
 
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list_reactant_index
@@ -957,6 +993,8 @@
 
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
+
+	TEST_ONLY_ASSERT(!. || MC_RUNNING(), "We reacted during subsystem init, that shouldn't be happening!")
 
 /*
 * Main Reaction loop handler, Do not call this directly
@@ -1279,10 +1317,11 @@
 
 /datum/reagents/proc/get_multiple_reagent_amounts(list/reagents)
 	var/list/cached_reagents = reagent_list
+	var/total_amount = 0
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type in reagents)
-			return round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
-	return 0
+			total_amount += round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
+	return total_amount
 
 /// Get the purity of this reagent
 /datum/reagents/proc/get_reagent_purity(reagent)

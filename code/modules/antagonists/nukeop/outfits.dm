@@ -6,7 +6,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack/fireproof
 	ears = /obj/item/radio/headset/syndicate/alt
-	l_pocket = /obj/item/modular_computer/tablet/nukeops
+	l_pocket = /obj/item/modular_computer/pda/nukeops
 	r_pocket = /obj/item/pen/edagger
 	id = /obj/item/card/id/advanced/chameleon
 	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
@@ -28,6 +28,7 @@
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/nukie, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/obj/item/radio/radio = nukie.ears
 	radio.set_frequency(FREQ_SYNDICATE)
 	radio.freqlock = RADIO_FREQENCY_LOCKED

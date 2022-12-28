@@ -21,6 +21,7 @@
 /code/modules/mapping/ @Cyberboss
 
 # Dragomagol/Tattle
+
 /code/__HELPERS/logging/ @dragomagol
 
 # Fikou
@@ -28,8 +29,8 @@
 /code/modules/awaymissions/ @Fikou
 /code/modules/mining/ @Fikou
 /code/modules/mod/ @Fikou
-/code/modules/ruins/lavalandruin_code/ @Fikou
-/code/modules/ruins/lavaland_ruin_code.dm @Fikou
+/code/modules/mapfluff/ruins/lavalandruin_code/ @Fikou
+/code/modules/mapfluff/ruins/lavaland_ruin_code.dm @Fikou
 
 # JohnFulpWizard
 
@@ -110,6 +111,11 @@
 /code/modules/forensics/ @SuperNovaa41
 /code/datums/mood.dm @SuperNovaa41
 
+# Time-Green
+
+/code/modules/plumbing/ @Time-Green
+/code/modules/surgery/organs/external/ @Time-Green
+
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab
 /code/datums/ai @tralezab
@@ -165,10 +171,12 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
-# Time-Green
+# ZephyrTFA
 
-/code/modules/plumbing/ @Time-Green
-/code/modules/surgery/organs/external/ @Time-Green
+/code/datums/json_savefile.dm @ZephyrTFA
+/code/datums/armor/ @ZephyrTFA
+/code/modules/client/preferences.dm @ZephyrTFA
+/code/modules/client/preferences_savefile.dm @ZephyrTFA
 
 # MULTIPLE OWNERS
 

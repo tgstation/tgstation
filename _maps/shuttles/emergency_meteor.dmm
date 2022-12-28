@@ -65,11 +65,8 @@
 /area/shuttle/escape/meteor)
 "L" = (
 /obj/docking_port/mobile/emergency{
-	dwidth = 20;
-	height = 40;
 	movement_force = list("KNOCKDOWN"=3,"THROW"=6);
-	name = "\proper a meteor with engines strapped to it";
-	width = 40
+	name = "\proper a meteor with engines strapped to it"
 	},
 /turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)

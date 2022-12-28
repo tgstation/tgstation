@@ -54,7 +54,7 @@
 		if(host)
 			UnregisterSignal(host,COMSIG_MOVABLE_MOVED)
 		host = newhost
-		RegisterSignal(host,COMSIG_MOVABLE_MOVED,.proc/holder_movement)
+		RegisterSignal(host,COMSIG_MOVABLE_MOVED, PROC_REF(holder_movement))
 
 	// If host moved
 	if((host_turf != host.loc) || force)
@@ -63,7 +63,7 @@
 			host_turf = null
 		if(isturf(host.loc))
 			host_turf = host.loc
-			RegisterSignal(host_turf,COMSIG_ATOM_ENTERED,.proc/on_entered)
+			RegisterSignal(host_turf,COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
 		else
 			host_turf = null
 
@@ -87,7 +87,7 @@
 				var/mob/living/carbon/human/user = usr
 				if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 					to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
-					pulse(FALSE)
+					pulse()
 		update_appearance()
 		playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
@@ -117,7 +117,7 @@
 		var/mob/living/carbon/human/victim = target
 		if(HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 			playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
-			pulse(FALSE)
+			pulse()
 			return FALSE
 		switch(type)
 			if("feet")
@@ -148,7 +148,7 @@
 		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
 
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
-	pulse(FALSE)
+	pulse()
 
 /**
  * clumsy_check: Sets off the mousetrap if handled by a clown (with some probability)
@@ -197,13 +197,13 @@
 				if(ishuman(AM))
 					var/mob/living/carbon/H = AM
 					if(H.m_intent == MOVE_INTENT_RUN)
-						INVOKE_ASYNC(src, .proc/triggered, H)
+						INVOKE_ASYNC(src, PROC_REF(triggered), H)
 						H.visible_message(span_warning("[H] accidentally steps on [src]."), \
 							span_warning("You accidentally step on [src]"))
 				else if(ismouse(MM) || isregalrat(MM))
-					INVOKE_ASYNC(src, .proc/triggered, MM)
+					INVOKE_ASYNC(src, PROC_REF(triggered), MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
-			INVOKE_ASYNC(src, .proc/triggered, AM)
+			INVOKE_ASYNC(src, PROC_REF(triggered), AM)
 
 /obj/item/assembly/mousetrap/on_found(mob/finder)
 	if(armed)

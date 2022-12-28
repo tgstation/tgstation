@@ -88,9 +88,7 @@
 	dir = 4
 	},
 /obj/docking_port/mobile/arrivals{
-	height = 13;
-	name = "pubby arrivals shuttle";
-	width = 6
+	name = "pubby arrivals shuttle"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)

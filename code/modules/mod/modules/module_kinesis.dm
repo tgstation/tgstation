@@ -66,15 +66,16 @@
 		var/mob/living/grabbed_mob = grabbed_atom
 		grabbed_mob.Stun(mob_stun_time)
 	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
-	kinesis_icon = mutable_appearance(icon='icons/effects/effects.dmi', icon_state="kinesis", layer=grabbed_atom.layer-0.1)
+	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1)
 	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
+	kinesis_icon.overlays += emissive_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", offset_spokesman = grabbed_atom)
 	grabbed_atom.add_overlay(kinesis_icon)
 	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
 	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/kinesis, 0)
 	kinesis_catcher.kinesis_user = mod.wearer
 	kinesis_catcher.view_list = getviewsize(mod.wearer.client.view)
-	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
-	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_VIEWDATA_UPDATE, /atom/movable/screen/fullscreen/kinesis.proc/on_viewdata_update)
+	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/movable/screen/fullscreen/kinesis, on_move))
+	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_VIEWDATA_UPDATE, TYPE_PROC_REF(/atom/movable/screen/fullscreen/kinesis, on_viewdata_update))
 	kinesis_catcher.calculate_params()
 	soundloop.start()
 	START_PROCESSING(SSfastprocess, src)
@@ -93,13 +94,12 @@
 		balloon_alert(mod.wearer, "out of range!")
 		clear_grab()
 		return
-	kinesis_catcher.calculate_params()
-	if(!kinesis_catcher.given_turf)
-		clear_grab()
-		return
 	drain_power(use_power_cost/10)
+	if(kinesis_catcher.mouse_params)
+		kinesis_catcher.calculate_params()
+	if(!kinesis_catcher.given_turf)
+		return
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
-	grabbed_atom.set_glide_size()
 	if(grabbed_atom.loc == kinesis_catcher.given_turf)
 		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - world.icon_size/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - world.icon_size/2)
 			return //spare us redrawing if we are standing still
@@ -109,7 +109,7 @@
 	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
 	kinesis_beam.redrawing()
 	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
-	if(grabbed_atom.Move(next_turf))
+	if(grabbed_atom.Move(next_turf, get_dir(grabbed_atom, next_turf), 8))
 		if(isitem(grabbed_atom) && (mod.wearer in next_turf))
 			var/obj/item/grabbed_item = grabbed_atom
 			clear_grab()
@@ -198,7 +198,7 @@
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch()
 	playsound(grabbed_atom, 'sound/magic/repulse.ogg', 100, TRUE)
-	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_IMPACT, .proc/launch_impact)
+	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, grabbed_atom), get_turf(src), 10)
 	grabbed_atom.throw_at(target_turf, range = grab_range, speed = grabbed_atom.density ? 3 : 4, thrower = mod.wearer, spin = isitem(grabbed_atom))
 
@@ -265,8 +265,8 @@
 
 /atom/movable/screen/fullscreen/kinesis/proc/calculate_params()
 	var/list/modifiers = params2list(mouse_params)
-	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X)) || view_list[1]*world.icon_size/2
-	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y)) || view_list[2]*world.icon_size/2
+	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
+	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
 	var/our_x = round(icon_x / world.icon_size)
 	var/our_y = round(icon_y / world.icon_size)
 	given_turf = locate(kinesis_user.x+our_x-round(view_list[1]/2),kinesis_user.y+our_y-round(view_list[2]/2),kinesis_user.z)

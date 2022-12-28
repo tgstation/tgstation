@@ -28,7 +28,7 @@
 	leaked_gas_buffer = new(200)
 	compressor_record = list()
 
-	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/explosion_handle)
+	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(explosion_handle))
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/examine()
 	. = ..()
@@ -58,7 +58,7 @@
 			return ..()
 		inserted_tank = tank_item
 		last_recorded_pressure = 0
-		RegisterSignal(inserted_tank, COMSIG_PARENT_QDELETING, .proc/tank_destruction)
+		RegisterSignal(inserted_tank, COMSIG_PARENT_QDELETING, PROC_REF(tank_destruction))
 		update_appearance()
 		return
 	if(istype(item, /obj/item/computer_disk))
@@ -297,7 +297,7 @@
 				return
 			compressor_record -= record
 			return TRUE
-		if("print_record")
+		if("save_record")
 			var/datum/data/compressor_record/record  = locate(params["ref"]) in compressor_record
 			if(!compressor_record || !(record in compressor_record))
 				return

@@ -3,8 +3,9 @@
 	desc = "Completely conceals your identity, but does not make you invisible.  Can be activated early to disable it. \
 		While cloaked, you move faster, but undergo actions much slower. \
 		Taking damage while cloaked may cause it to lift suddenly, causing negative effects. "
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "ninja_cloak"
 	sound = 'sound/effects/curse2.ogg'
 
@@ -22,7 +23,8 @@
 	var/datum/status_effect/shadow_cloak/active_cloak
 
 /datum/action/cooldown/spell/shadow_cloak/Remove(mob/living/remove_from)
-	uncloak_mob(remove_from, show_message = FALSE)
+	if(active_cloak)
+		uncloak_mob(remove_from, show_message = FALSE)
 	return ..()
 
 /datum/action/cooldown/spell/shadow_cloak/is_valid_target(atom/cast_on)
@@ -49,7 +51,7 @@
 		StartCooldown(new_cd)
 
 	else
-		uncloak_timer = addtimer(CALLBACK(src, .proc/timed_uncloak, cast_on), uncloak_time, TIMER_STOPPABLE)
+		uncloak_timer = addtimer(CALLBACK(src, PROC_REF(timed_uncloak), cast_on), uncloak_time, TIMER_STOPPABLE)
 		cloak_mob(cast_on)
 		StartCooldown()
 
@@ -68,8 +70,8 @@
 	)
 
 	active_cloak = cast_on.apply_status_effect(/datum/status_effect/shadow_cloak)
-	RegisterSignal(active_cloak, COMSIG_PARENT_QDELETING, .proc/on_early_cloak_loss)
-	RegisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), .proc/on_focus_lost)
+	RegisterSignal(active_cloak, COMSIG_PARENT_QDELETING, PROC_REF(on_early_cloak_loss))
+	RegisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 
 /datum/action/cooldown/spell/shadow_cloak/proc/uncloak_mob(mob/living/cast_on, show_message = TRUE)
 	if(!QDELETED(active_cloak))
@@ -102,7 +104,7 @@
 
 	removed.Knockdown(0.5 SECONDS)
 	removed.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak/early_remove)
-	addtimer(CALLBACK(removed, /mob/proc/remove_movespeed_modifier, /datum/movespeed_modifier/shadow_cloak/early_remove), 2 MINUTES, TIMER_UNIQUE|TIMER_OVERRIDE)
+	addtimer(CALLBACK(removed, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/shadow_cloak/early_remove), 2 MINUTES, TIMER_UNIQUE|TIMER_OVERRIDE)
 	StartCooldown(uncloak_time * 2/3)
 
 /// Signal proc for [SIGNAL_REMOVETRAIT] via [TRAIT_ALLOW_HERETIC_CASTING], losing our focus midcast will throw us out.
@@ -141,11 +143,11 @@
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Register signals to cause effects
-	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
-	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/on_body_position_change)
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
-	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, .proc/on_damaged)
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(on_body_position_change))
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	return TRUE
 
 /datum/status_effect/shadow_cloak/on_remove()

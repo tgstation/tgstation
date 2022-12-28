@@ -1,8 +1,8 @@
 /// Middleware for handling randomization preferences
 /datum/preference_middleware/random
 	action_delegations = list(
-		"randomize_character" = .proc/randomize_character,
-		"set_random_preference" = .proc/set_random_preference,
+		"randomize_character" = PROC_REF(randomize_character),
+		"set_random_preference" = PROC_REF(set_random_preference),
 	)
 
 /datum/preference_middleware/random/get_character_preferences(mob/user)

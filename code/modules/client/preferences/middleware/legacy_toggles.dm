@@ -20,15 +20,7 @@
 		"disable_deathrattle" = DISABLE_DEATHRATTLE,
 		"member_public" = MEMBER_PUBLIC,
 		"sound_adminhelp" = SOUND_ADMINHELP,
-		"sound_ambience" = SOUND_AMBIENCE,
-		"sound_announcements" = SOUND_ANNOUNCEMENTS,
-		"sound_combatmode" = SOUND_COMBATMODE,
-		"sound_endofround" = SOUND_ENDOFROUND,
-		"sound_instruments" = SOUND_INSTRUMENTS,
-		"sound_lobby" = SOUND_LOBBY,
-		"sound_midi" = SOUND_MIDI,
 		"sound_prayers" = SOUND_PRAYERS,
-		"sound_ship_ambience" = SOUND_SHIP_AMBIENCE,
 		"split_admin_tabs" = SPLIT_ADMIN_TABS,
 	)
 
@@ -109,14 +101,6 @@
 			preferences.toggles |= legacy_flag
 		else
 			preferences.toggles &= ~legacy_flag
-
-		// I know this looks silly, but this is the only one that cares
-		// and NO NEW LEGACY TOGGLES should ever be added.
-		if (legacy_flag == SOUND_LOBBY)
-			if (value && isnewplayer(user))
-				user.client?.playtitlemusic()
-			else
-				user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 		return TRUE
 

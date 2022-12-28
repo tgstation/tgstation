@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(minor_mapping)
 		var/turf/T = pick_n_take(turfs)
 		var/obj/item/storage/backpack/satchel/flat/F = new(T)
 
-		SEND_SIGNAL(F, COMSIG_OBJ_HIDE, T.underfloor_accessibility < UNDERFLOOR_VISIBLE)
+		SEND_SIGNAL(F, COMSIG_OBJ_HIDE, T.underfloor_accessibility)
 		amount--
 
 /proc/find_exposed_wires()

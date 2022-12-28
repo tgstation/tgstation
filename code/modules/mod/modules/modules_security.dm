@@ -30,7 +30,7 @@
 	mod.chestplate.allowed -= (guns_typecache - already_allowed_guns)
 
 /obj/item/mod/module/magnetic_harness/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM, .proc/check_dropped_item)
+	RegisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(check_dropped_item))
 
 /obj/item/mod/module/magnetic_harness/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM)
@@ -42,7 +42,7 @@
 		return
 	if(new_location != get_turf(src))
 		return
-	addtimer(CALLBACK(src, .proc/pick_up_item, dropped_item), magnet_delay)
+	addtimer(CALLBACK(src, PROC_REF(pick_up_item), dropped_item), magnet_delay)
 
 /obj/item/mod/module/magnetic_harness/proc/pick_up_item(obj/item/item)
 	if(!isturf(item.loc) || !item.Adjacent(mod.wearer))
@@ -67,7 +67,7 @@
 	overlay_state_use = "module_pepper_used"
 
 /obj/item/mod/module/pepper_shoulders/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_check_shields)
+	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_check_shields))
 
 /obj/item/mod/module/pepper_shoulders/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
@@ -162,7 +162,7 @@
 	. = ..()
 	if(!.)
 		return
-	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /obj/item/mod/module/megaphone/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -237,8 +237,8 @@
 	linked_bodybag = new bodybag_type(target_turf)
 	linked_bodybag.take_contents()
 	playsound(linked_bodybag, 'sound/weapons/egloves.ogg', 80, TRUE)
-	RegisterSignal(linked_bodybag, COMSIG_MOVABLE_MOVED, .proc/check_range)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_range)
+	RegisterSignal(linked_bodybag, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 
 /obj/item/mod/module/criminalcapture/proc/packup()
 	if(!linked_bodybag)
@@ -246,7 +246,7 @@
 	playsound(linked_bodybag, 'sound/weapons/egloves.ogg', 80, TRUE)
 	apply_wibbly_filters(linked_bodybag)
 	animate(linked_bodybag, 0.5 SECONDS, alpha = 50, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, .proc/delete_bag, linked_bodybag), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(delete_bag), linked_bodybag), 0.5 SECONDS)
 	linked_bodybag = null
 
 /obj/item/mod/module/criminalcapture/proc/check_range()
@@ -258,7 +258,7 @@
 
 /obj/item/mod/module/criminalcapture/proc/delete_bag(obj/structure/closet/body_bag/bag)
 	if(mod?.wearer)
-		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_range)
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 		balloon_alert(mod.wearer, "bag dissipated")
 	bag.open(force = TRUE)
 	qdel(bag)
@@ -334,8 +334,8 @@
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = new(mod.wearer, field_radius, TRUE, src)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, .proc/dampen_projectile)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, .proc/release_projectile)
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(release_projectile))
 
 /obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
 	. = ..()

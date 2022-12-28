@@ -29,8 +29,8 @@
 	return ..()
 
 /datum/component/reagent_refiller/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/refill)
-	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/delete_self)
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(refill))
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(delete_self))
 
 /datum/component/reagent_refiller/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_EXITED))
@@ -53,7 +53,7 @@
 	if (!is_path_in_list(refill, whitelisted_reagents))
 		return
 
-	addtimer(CALLBACK(src, .proc/add_reagents, container, container.loc, refill, amount), time_to_refill)
+	addtimer(CALLBACK(src, PROC_REF(add_reagents), container, container.loc, refill, amount), time_to_refill)
 
 /// Refills the reagent container, and uses cell power if applicable
 /datum/component/reagent_refiller/proc/add_reagents(obj/item/reagent_containers/target, oldloc, reagent_to_refill, amount)

@@ -4,8 +4,9 @@
 	id = "hallucination"
 	alert_type = null
 	tick_interval = 2 SECONDS
-	/// Can this hallucination apply to silicons?
-	var/affects_silicons = FALSE
+	remove_on_fullheal = TRUE
+	/// Biotypes which cannot hallucinate.
+	var/barred_biotypes = NO_HALLUCINATION_BIOTYPES
 	/// The lower range of when the next hallucination will trigger after one occurs.
 	var/lower_tick_interval = 10 SECONDS
 	/// The upper range of when the next hallucination will trigger after one occurs.
@@ -13,42 +14,28 @@
 	/// The cooldown for when the next hallucination can occur
 	COOLDOWN_DECLARE(hallucination_cooldown)
 
-/datum/status_effect/hallucination/on_creation(
-	mob/living/new_owner,
-	duration,
-	affects_silicons = FALSE,
-)
-
+/datum/status_effect/hallucination/on_creation(mob/living/new_owner, duration)
 	if(isnum(duration))
 		src.duration = duration
-	src.affects_silicons = affects_silicons
 	return ..()
 
 /datum/status_effect/hallucination/on_apply()
-	if(!affects_silicons && issilicon(owner))
+	if(owner.mob_biotypes & barred_biotypes)
 		return FALSE
 
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_hallucinations)
-	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN, .proc/on_health_scan)
+	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN,  PROC_REF(on_health_scan))
 	if(iscarbon(owner))
-		RegisterSignal(owner, COMSIG_CARBON_CHECKING_BODYPART, .proc/on_check_bodypart)
-		RegisterSignal(owner, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, .proc/on_bump_airlock)
+		RegisterSignal(owner, COMSIG_CARBON_CHECKING_BODYPART, PROC_REF(on_check_bodypart))
+		RegisterSignal(owner, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, PROC_REF(on_bump_airlock))
 
 	return TRUE
 
 /datum/status_effect/hallucination/on_remove()
 	UnregisterSignal(owner, list(
-		COMSIG_LIVING_POST_FULLY_HEAL,
 		COMSIG_LIVING_HEALTHSCAN,
 		COMSIG_CARBON_CHECKING_BODYPART,
 		COMSIG_CARBON_BUMPED_AIRLOCK_OPEN,
 	))
-
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], terminate on full heal
-/datum/status_effect/hallucination/proc/remove_hallucinations(datum/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
 
 /// Signal proc for [COMSIG_LIVING_HEALTHSCAN]. Show we're hallucinating to (advanced) scanners.
 /datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode)

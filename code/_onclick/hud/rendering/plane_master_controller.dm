@@ -1,4 +1,6 @@
 ///Atom that manages and controls multiple planes. It's an atom so we can hook into add_filter etc. Multiple controllers can control one plane.
+///Of note: plane master controllers are currently not very extensively used, because render plates fill a semi similar niche
+///This could well change someday, and I'd like to keep this stuff around, so we use it for a few cases just out of convenience
 /atom/movable/plane_master_controller
 	///List of planes as defines in this controllers control
 	var/list/controlled_planes = list()
@@ -77,49 +79,17 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 		pm_iterator.update_atom_colour()
 
 
+/// Exists for convienience when referencing all game render plates
 /atom/movable/plane_master_controller/game
 	name = PLANE_MASTERS_GAME
 	controlled_planes = list(
-		FLOOR_PLANE,
-		RENDER_PLANE_TRANSPARENT,
-		GAME_PLANE,
-		GAME_PLANE_FOV_HIDDEN,
-		GAME_PLANE_UPPER,
-		GAME_PLANE_UPPER_FOV_HIDDEN,
-		ABOVE_GAME_PLANE,
-		MASSIVE_OBJ_PLANE,
-		GHOST_PLANE,
-		POINT_PLANE,
-		LIGHTING_PLANE,
-		AREA_PLANE,
+		RENDER_PLANE_GAME
 	)
 
-/// Controller of all planes we're ok with changing with colorblind logic
+/// Exists for convienience when referencing all game render plates
 /atom/movable/plane_master_controller/colorblind
 	name = PLANE_MASTERS_COLORBLIND
 	controlled_planes = list(
-		PLANE_SPACE_PARALLAX,
-		GRAVITY_PULSE_PLANE,
-		FLOOR_PLANE,
-		GAME_PLANE,
-		GAME_PLANE_FOV_HIDDEN,
-		GAME_PLANE_UPPER,
-		GAME_PLANE_UPPER_FOV_HIDDEN,
-		SEETHROUGH_PLANE,
-		ABOVE_GAME_PLANE,
-		MASSIVE_OBJ_PLANE,
-		GHOST_PLANE,
-		POINT_PLANE,
-		LIGHTING_PLANE,
-		O_LIGHTING_VISUAL_PLANE,
-		ABOVE_LIGHTING_PLANE,
-		CAMERA_STATIC_PLANE,
-		PIPECRAWL_IMAGES_PLANE,
-		HIGH_GAME_PLANE,
-		FULLSCREEN_PLANE,
-		RUNECHAT_PLANE,
-		HUD_PLANE,
-		ABOVE_HUD_PLANE,
-		AREA_PLANE,
+		RENDER_PLANE_MASTER
 	)
 

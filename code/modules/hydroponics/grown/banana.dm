@@ -30,7 +30,7 @@
 
 /obj/item/food/grown/banana/MakeEdible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, .proc/check_liked))
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/grown/banana/Initialize(mapload)
 	. = ..()
@@ -51,18 +51,18 @@
 		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 		peel.juice_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 
-/obj/item/food/grown/banana/suicide_act(mob/user)
+/obj/item/food/grown/banana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
 	sleep(2.5 SECONDS)
 	if(!user)
-		return (OXYLOSS)
+		return OXYLOSS
 	user.say("BANG!", forced = /datum/reagent/consumable/banana)
 	sleep(2.5 SECONDS)
 	if(!user)
-		return (OXYLOSS)
+		return OXYLOSS
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
-	return (OXYLOSS)
+	return OXYLOSS
 
 //Banana Peel
 /obj/item/grown/bananapeel
@@ -86,11 +86,10 @@
 		else
 			icon_state = "[icon_state]_3"
 
-/obj/item/grown/bananapeel/suicide_act(mob/user)
+/obj/item/grown/bananapeel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
-
+	return BRUTELOSS
 
 // Mimana - invisible sprites are totally a feature!
 /obj/item/seeds/banana/mime
@@ -181,7 +180,7 @@
 
 	animate(src, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
 	animate(time = 1, pixel_z = 0, easing = BOUNCE_EASING)
-	addtimer(CALLBACK(src, .proc/explosive_ripening), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(explosive_ripening)), 3 SECONDS)
 	for(var/i in 1 to 32)
 		animate(color = (i % 2) ? "#ffffff": "#ff6739", time = 1, easing = QUAD_EASING)
 

@@ -8,9 +8,9 @@
 	description = "Syndicate troops pour out of portals."
 
 /datum/round_event/portal_storm/syndicate_shocktroop
-	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
-	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 8,\
-						/mob/living/simple_animal/hostile/syndicate/ranged/space = 2)
+	boss_types = list(/mob/living/basic/syndicate/melee/space/stormtrooper = 2)
+	hostile_types = list(/mob/living/basic/syndicate/melee/space = 8,\
+						/mob/living/basic/syndicate/ranged/space = 2)
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"
@@ -105,7 +105,7 @@
 		log_game("Portal Storm failed to spawn effect due to an invalid location.")
 		return
 	T = get_step(T, SOUTHWEST) //align center of image with turf
-	flick_overlay_static(storm_appearances[GET_TURF_PLANE_OFFSET(T) + 1], T, 15)
+	T.flick_overlay_static(storm_appearances[GET_TURF_PLANE_OFFSET(T) + 1], 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
 
 /datum/round_event/portal_storm/proc/spawn_hostile()

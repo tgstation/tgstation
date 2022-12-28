@@ -7,10 +7,12 @@
 
 	fixed_mut_color = "#DBBF92"
 	hair_color = "#FF4B19" //cap color, spot color uses eye color
-	nojumpsuit = TRUE
 
-	say_mod = "poofs" //what does a mushroom sound like
-	species_traits = list(MUTCOLORS, NOEYESPRITES, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
+	species_traits = list(
+		MUTCOLORS,
+		NOEYESPRITES,
+		NO_UNDERWEAR,
+	)
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
@@ -18,11 +20,12 @@
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much
 
-	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING)
+	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING
 
 	burnmod = 1.25
 	heatmod = 1.5
 
+	mutanttongue = /obj/item/organ/internal/tongue/mush
 	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
 	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush

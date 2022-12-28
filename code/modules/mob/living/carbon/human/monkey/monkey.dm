@@ -2,7 +2,7 @@
 	icon_state = "monkey" //for mapping
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
-	faction = list("neutral", "monkey")
+	faction = list(FACTION_NEUTRAL, "monkey")
 
 /mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	if (cubespawned)
@@ -24,7 +24,7 @@
 /mob/living/carbon/human/species/monkey/angry/Initialize(mapload)
 	. = ..()
 	if(prob(10))
-		INVOKE_ASYNC(src, .proc/give_ape_escape_helmet)
+		INVOKE_ASYNC(src, PROC_REF(give_ape_escape_helmet))
 
 /// Gives our funny monkey an Ape Escape hat reference
 /mob/living/carbon/human/species/monkey/angry/proc/give_ape_escape_helmet()

@@ -2,7 +2,6 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 ///simple element to handle frozen obj's
 /datum/element/frozen
-	element_flags = ELEMENT_DETACH
 
 /datum/element/frozen/Attach(datum/target)
 	. = ..()
@@ -21,10 +20,10 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	target_obj.add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 	target_obj.alpha -= 25
 
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(target, COMSIG_MOVABLE_THROW_LANDED, .proc/shatter_on_throw)
-	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/shatter_on_throw)
-	RegisterSignal(target, COMSIG_OBJ_UNFREEZE, .proc/on_unfreeze)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(target, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(shatter_on_throw))
+	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(shatter_on_throw))
+	RegisterSignal(target, COMSIG_OBJ_UNFREEZE, PROC_REF(on_unfreeze))
 
 /datum/element/frozen/Detach(datum/source, ...)
 	var/obj/obj_source = source

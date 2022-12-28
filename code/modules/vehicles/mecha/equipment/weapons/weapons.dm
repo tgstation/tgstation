@@ -387,7 +387,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] fired a [F] in [ADMIN_VERBOSEJMP(T)]")
 	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_GAME)
 	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_ATTACK)
-	addtimer(CALLBACK(F, /obj/item/grenade/flashbang.proc/detonate), det_time)
+	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/flashbang, detonate)), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
 	name = "\improper SOB-3 grenade launcher"

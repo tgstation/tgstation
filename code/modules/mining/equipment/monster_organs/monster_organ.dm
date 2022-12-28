@@ -60,7 +60,7 @@
 
 /obj/item/organ/internal/monster_core/Initialize(mapload)
 	. = ..()
-	decay_timer = addtimer(CALLBACK(src, .proc/go_inert), time_to_decay, TIMER_STOPPABLE)
+	decay_timer = addtimer(CALLBACK(src, PROC_REF(go_inert)), time_to_decay, TIMER_STOPPABLE)
 
 /obj/item/organ/internal/monster_core/Destroy(force, silent)
 	deltimer(decay_timer)
@@ -197,9 +197,8 @@
  */
 /datum/action/cooldown/monster_core_action
 	check_flags = AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/obj/medical/organs/mining_organs.dmi'
+	button_icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	button_icon_state = "hivelord_core_2"
-	text_cooldown = FALSE //Looks really bad when you have minutes long cooldowns
 
 /datum/action/cooldown/monster_core_action/Activate(trigger_flags)
 	. = ..()
@@ -208,4 +207,4 @@
 	var/obj/item/organ/internal/monster_core/organ = target
 	if (!istype(organ))
 		return
-	organ.trigger_organ_action()
+	organ.on_triggered_internal()

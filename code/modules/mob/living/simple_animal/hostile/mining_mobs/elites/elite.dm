@@ -69,42 +69,43 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /datum/action/innate/elite_attack
 	name = "Elite Attack"
-	icon_icon = 'icons/mob/actions/actions_elites.dmi'
+	button_icon = 'icons/mob/actions/actions_elites.dmi'
 	button_icon_state = ""
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 	///The displayed message into chat when this attack is selected
 	var/chosen_message
 	///The internal attack ID for the elite's OpenFire() proc to use
 	var/chosen_attack_num = 0
 
-/datum/action/innate/elite_attack/CreateButton()
+/datum/action/innate/elite_attack/create_button()
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
-	button.maptext_x = 8
-	button.maptext_y = 0
+	button.maptext_x = 6
+	button.maptext_y = 2
 	button.maptext_width = 24
 	button.maptext_height = 12
 	return button
 
 /datum/action/innate/elite_attack/process()
-	if(owner == null)
+	if(isnull(owner))
 		STOP_PROCESSING(SSfastprocess, src)
 		qdel(src)
 		return
-	UpdateButtons()
 
-/datum/action/innate/elite_attack/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(status_only)
-		return
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/datum/action/innate/elite_attack/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
 	var/mob/living/simple_animal/hostile/asteroid/elite/elite_owner = owner
+	if(!istype(owner))
+		button.maptext = ""
+		return
+
 	var/timeleft = max(elite_owner.ranged_cooldown - world.time, 0)
 	if(timeleft == 0)
 		button.maptext = ""
 	else
-		button.maptext = "<b class='maptext'>[round(timeleft/10, 0.1)]</b>"
+		button.maptext = MAPTEXT("<b>[round(timeleft/10, 0.1)]</b>")
 
 /datum/action/innate/elite_attack/Grant(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/asteroid/elite))
@@ -122,7 +123,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor
 	name = "pulsing tumor"
 	desc = "An odd, pulsing tumor sticking out of the ground.  You feel compelled to reach out and touch it..."
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/structure_elite_tumor
 	resistance_flags = INDESTRUCTIBLE
 	icon = 'icons/obj/lavaland/tumor.dmi'
 	icon_state = "tumor"
@@ -145,6 +146,16 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		/mob/living/simple_animal/hostile/asteroid/elite/herald,
 	)
 
+/datum/armor/structure_elite_tumor
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
+
 /obj/structure/elite_tumor/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(!ishuman(user))
@@ -163,8 +174,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			if(boosted)
 				mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
 				to_chat(mychild, "<b>Someone has activated your tumor.  You will be returned to fight shortly, get ready!</b>")
-			addtimer(CALLBACK(src, .proc/return_elite), 30)
-			INVOKE_ASYNC(src, .proc/arena_checks)
+			addtimer(CALLBACK(src, PROC_REF(return_elite)), 30)
+			INVOKE_ASYNC(src, PROC_REF(arena_checks))
 		if(TUMOR_INACTIVE)
 			if(HAS_TRAIT(user, TRAIT_ELITE_CHALLENGER))
 				user.visible_message(span_warning("[user] reaches for [src] with [user.p_their()] arm, but nothing happens."),
@@ -175,7 +186,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			visible_message(span_boldwarning("[src] begins to convulse.  Your instincts tell you to step back."))
 			make_activator(user)
 			if(!boosted)
-				addtimer(CALLBACK(src, .proc/spawn_elite), 30)
+				addtimer(CALLBACK(src, PROC_REF(spawn_elite)), 30)
 				return
 			visible_message(span_boldwarning("Something within [src] stirs..."))
 			var/list/candidates = poll_candidates_for_mob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, src, POLL_IGNORE_LAVALAND_ELITE)
@@ -188,7 +199,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 					While the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\n\
 					If you want to win, you'll have to use your powers in creative ways to ensure the kill. It's suggested you try using them all as soon as possible.\n\
 					Should you win, you'll receive extra information regarding what to do after. Good luck!</b>")
-				addtimer(CALLBACK(src, .proc/spawn_elite, elitemind), 100)
+				addtimer(CALLBACK(src, PROC_REF(spawn_elite), elitemind), 100)
 			else
 				visible_message(span_boldwarning("The stirring stops, and nothing emerges.  Perhaps try again later."))
 				activity = TUMOR_INACTIVE
@@ -205,14 +216,14 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
 	mychild.log_message("has been awakened by [key_name(activator)]!", LOG_GAME, color="#960000")
 	icon_state = "tumor_popped"
-	RegisterSignal(mychild, COMSIG_PARENT_QDELETING, .proc/onEliteLoss)
-	INVOKE_ASYNC(src, .proc/arena_checks)
+	RegisterSignal(mychild, COMSIG_PARENT_QDELETING, PROC_REF(onEliteLoss))
+	INVOKE_ASYNC(src, PROC_REF(arena_checks))
 
 /obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
 	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
-	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
+	mychild.revive(HEAL_ALL)
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
 		mychild.health = mychild.maxHealth
@@ -235,7 +246,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		return
 	activator = user
 	ADD_TRAIT(user, TRAIT_ELITE_CHALLENGER, REF(src))
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/clear_activator)
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(clear_activator))
 	user.log_message("has activated an elite tumor!", LOG_GAME, color="#960000")
 
 /obj/structure/elite_tumor/proc/clear_activator(mob/source)
@@ -271,11 +282,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/arena_checks()
 	if(activity != TUMOR_ACTIVE || QDELETED(src))
 		return
-	INVOKE_ASYNC(src, .proc/fighters_check)  //Checks to see if our fighters died.
-	INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
-	INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
+	INVOKE_ASYNC(src, PROC_REF(fighters_check))  //Checks to see if our fighters died.
+	INVOKE_ASYNC(src, PROC_REF(arena_trap))  //Gets another arena trap queued up for when this one runs out.
+	INVOKE_ASYNC(src, PROC_REF(border_check))  //Checks to see if our fighters got out of the arena somehow.
 	if(!QDELETED(src))
-		addtimer(CALLBACK(src, .proc/arena_checks), 50)
+		addtimer(CALLBACK(src, PROC_REF(arena_checks)), 50)
 
 /obj/structure/elite_tumor/proc/fighters_check()
 	if(QDELETED(mychild) || mychild.stat == DEAD)
@@ -324,7 +335,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/onEliteWon()
 	activity = TUMOR_PASSIVE
 	clear_activator(activator)
-	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
+	mychild.revive(HEAL_ALL)
 	if(boosted)
 		times_won++
 		mychild.maxHealth = mychild.maxHealth * 0.4
@@ -352,6 +363,16 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	throw_speed = 3
 	throw_range = 5
 
+/datum/armor/structure_elite_tumor
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
+
 /obj/item/tumor_shard/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
@@ -360,7 +381,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			user.visible_message(span_notice("It appears [E] is unable to be revived right now.  Perhaps try again later."))
 			return
 		E.faction = list("[REF(user)]")
-		E.revive(full_heal = TRUE, admin_revive = TRUE)
+		E.revive(HEAL_ALL)
 		user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
 		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
 		to_chat(E, "<span class='userdanger'>You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span>")
@@ -379,8 +400,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	icon_state = "hierophant_wall_temp-0"
 	base_icon_state = "hierophant_wall_temp"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
-	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
+	smoothing_groups = SMOOTH_GROUP_HIERO_WALL
+	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
 	duration = 50
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
@@ -389,6 +410,16 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	light_color = COLOR_SOFT_RED
 	var/datum/weakref/activator_ref
 	var/datum/weakref/ourelite_ref
+
+/datum/armor/structure_elite_tumor
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
 
 /obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()

@@ -8,13 +8,13 @@ GLOBAL_LIST_EMPTY(lifts)
 	base_icon_state = "catwalk"
 	density = FALSE
 	anchored = TRUE
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/structure_industrial_lift
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
-	canSmoothWith = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
+	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
+	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered
@@ -67,6 +67,11 @@ GLOBAL_LIST_EMPTY(lifts)
 	/// A lazylist of REFs to all mobs which have a radial open currently
 	var/list/current_operators
 
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
+
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
 	GLOB.lifts.Add(src)
@@ -96,8 +101,8 @@ GLOBAL_LIST_EMPTY(lifts)
 ///set the movement registrations to our current turf(s) so contents moving out of our tile(s) are removed from our movement lists
 /obj/structure/industrial_lift/proc/set_movement_registrations(list/turfs_to_set)
 	for(var/turf/turf_loc as anything in turfs_to_set || locs)
-		RegisterSignal(turf_loc, COMSIG_ATOM_EXITED, .proc/UncrossedRemoveItemFromLift)
-		RegisterSignal(turf_loc, list(COMSIG_ATOM_ENTERED,COMSIG_ATOM_INITIALIZED_ON), .proc/AddItemOnLift)
+		RegisterSignal(turf_loc, COMSIG_ATOM_EXITED, PROC_REF(UncrossedRemoveItemFromLift))
+		RegisterSignals(turf_loc, list(COMSIG_ATOM_ENTERED,COMSIG_ATOM_INITIALIZED_ON), PROC_REF(AddItemOnLift))
 
 ///unset our movement registrations from turfs that no longer contain us (or every loc if turfs_to_unset is unspecified)
 /obj/structure/industrial_lift/proc/unset_movement_registrations(list/turfs_to_unset)
@@ -132,7 +137,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(isliving(new_lift_contents) && !HAS_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED))
 		ADD_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
 	LAZYADD(lift_load, new_lift_contents)
-	RegisterSignal(new_lift_contents, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
+	RegisterSignal(new_lift_contents, COMSIG_PARENT_QDELETING, PROC_REF(RemoveItemFromLift))
 
 	return TRUE
 
@@ -307,6 +312,7 @@ GLOBAL_LIST_EMPTY(lifts)
 				to_chat(crushed, span_userdanger("You are crushed by [src]!"))
 				if(violent_landing)
 					// Violent landing = gibbed. But the nicest kind of gibbing, keeping everything intact.
+					crushed.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 					crushed.gib(FALSE, FALSE, FALSE)
 				else
 					// Less violent landing simply crushes every bone in your body.
@@ -388,7 +394,7 @@ GLOBAL_LIST_EMPTY(lifts)
 					continue
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-				var/damage = rand(5, 10) * collision_lethality
+				var/damage = rand(9, 28) * collision_lethality
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
@@ -406,8 +412,10 @@ GLOBAL_LIST_EMPTY(lifts)
 
 				collided.throw_at()
 				//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
-				var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
+				var/datum/callback/land_slam = new(collided, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
+
+				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)
@@ -599,7 +607,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		user = user,
 		anchor = src,
 		choices = possible_directions,
-		custom_check = CALLBACK(src, .proc/can_open_lift_radial, user, starting_position),
+		custom_check = CALLBACK(src, PROC_REF(can_open_lift_radial), user, starting_position),
 		require_near = TRUE,
 		tooltips = TRUE,
 	)
@@ -718,6 +726,11 @@ GLOBAL_LIST_EMPTY(lifts)
 	lift_id = DEBUG_LIFT_ID
 	radial_travel = TRUE
 
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
+
 /obj/structure/industrial_lift/debug/open_lift_radial(mob/living/user)
 	var/starting_position = loc
 	if (!can_open_lift_radial(user,starting_position))
@@ -734,7 +747,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST)
 		)
 
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/can_open_lift_radial, user, starting_position), require_near = TRUE, tooltips = FALSE)
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(can_open_lift_radial), user, starting_position), require_near = TRUE, tooltips = FALSE)
 	if (!can_open_lift_radial(user,starting_position))
 		return	// nice try
 	if(!isnull(result) && result != "Cancel" && lift_master_datum.controls_locked)
@@ -776,7 +789,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	name = "tram"
 	desc = "A tram for tramversing the station."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "titanium_yellow"
+	icon_state = "titanium"
+	layer = TRAM_FLOOR_LAYER
 	base_icon_state = null
 	smoothing_flags = NONE
 	smoothing_groups = null
@@ -798,6 +812,14 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	create_multitile_platform = TRUE
 
+/obj/structure/industrial_lift/tram/white
+	icon_state = "titanium_white"
+
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
+
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()
 	if(travelling)
@@ -810,7 +832,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	for(var/atom/movable/glider as anything in lift_load)
 		if(travelling)
 			glider.set_glide_size(glide_size_override)
-			RegisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/on_changed_glide_size)
+			RegisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(on_changed_glide_size))
 		else
 			LAZYREMOVE(changed_gliders, glider)
 			UnregisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
@@ -845,7 +867,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		new overlay(our_turf)
 		turfs += our_turf
 
-	addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
+	addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
 
 /obj/structure/industrial_lift/tram/proc/clear_turfs(list/turfs_to_clear, iterations)
 	for(var/turf/our_old_turf as anything in turfs_to_clear)
@@ -865,4 +887,4 @@ GLOBAL_LIST_EMPTY(lifts)
 		turfs += our_turf
 
 	if(iterations)
-		addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
+		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)

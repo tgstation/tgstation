@@ -12,7 +12,7 @@
 /datum/ai_behavior/battle_screech/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
-	INVOKE_ASYNC(living_pawn, /mob.proc/emote, pick(screeches))
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), pick(screeches))
 	finish_action(controller, TRUE)
 
 ///Moves to target then finishes
@@ -31,7 +31,7 @@
 
 /datum/ai_behavior/break_spine/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[target_key]
+	set_movement_target(controller, controller.blackboard[target_key])
 
 /datum/ai_behavior/break_spine/perform(delta_time, datum/ai_controller/controller, target_key)
 	var/mob/living/batman = controller.blackboard[target_key]
@@ -72,11 +72,11 @@
 /datum/ai_behavior/use_in_hand/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
-	var/obj/item/held = pawn.get_item_by_slot(pawn.get_active_hand())
+	var/obj/item/held = pawn.get_active_held_item()
 	if(!held)
 		finish_action(controller, FALSE)
 		return
-	pawn.activate_hand(pawn.get_active_hand())
+	pawn.activate_hand()
 	finish_action(controller, TRUE)
 
 /// Use the currently held item, or unarmed, on a weakref to an object in the world
@@ -90,7 +90,7 @@
 	var/target = target_ref?.resolve()
 	if(!target)
 		return FALSE
-	controller.current_movement_target = target
+	set_movement_target(controller, target)
 
 /datum/ai_behavior/use_on_object/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -119,7 +119,7 @@
 /datum/ai_behavior/give/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	controller.current_movement_target = target_ref?.resolve()
+	set_movement_target(controller, target_ref?.resolve())
 
 /datum/ai_behavior/give/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -137,6 +137,9 @@
 		return
 
 	var/mob/living/living_target = target
+
+	if(!try_to_give_item(controller, living_target, held_item))
+		return
 	controller.PauseAi(1.5 SECONDS)
 	living_target.visible_message(
 		span_info("[pawn] starts trying to give [held_item] to [living_target]!"),
@@ -144,16 +147,36 @@
 	)
 	if(!do_mob(pawn, living_target, 1 SECONDS))
 		return
-	if(QDELETED(held_item) || QDELETED(living_target))
-		finish_action(controller, FALSE)
-		return
-	var/pocket_choice = prob(50) ? ITEM_SLOT_RPOCKET : ITEM_SLOT_LPOCKET
-	if(prob(50))
-		living_target.put_in_hands(held_item)
-	else
-		living_target.equip_to_slot_if_possible(held_item, pocket_choice)
 
+	try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
+
+/datum/ai_behavior/give/proc/try_to_give_item(datum/ai_controller/controller, mob/living/target, obj/item/held_item, actually_give)
+	if(QDELETED(held_item) || QDELETED(target))
+		finish_action(controller, FALSE)
+		return FALSE
+
+	var/has_left_pocket = target.can_equip(held_item, ITEM_SLOT_LPOCKET)
+	var/has_right_pocket = target.can_equip(held_item, ITEM_SLOT_RPOCKET)
+	var/has_valid_hand
+
+	for(var/hand_index in target.get_empty_held_indexes())
+		if(target.can_put_in_hand(held_item, hand_index))
+			has_valid_hand = TRUE
+			break
+
+	if(!has_left_pocket && !has_right_pocket && !has_valid_hand)
+		finish_action(controller, FALSE)
+		return FALSE
+
+	if(!actually_give)
+		return TRUE
+
+	if(!has_valid_hand || prob(50))
+		target.equip_to_slot_if_possible(held_item, (!has_left_pocket ? ITEM_SLOT_RPOCKET : (prob(50) ? ITEM_SLOT_LPOCKET : ITEM_SLOT_RPOCKET)))
+	else
+		target.put_in_hands(held_item)
 	finish_action(controller, TRUE)
+
 
 /datum/ai_behavior/consume
 	required_distance = 1
@@ -163,7 +186,7 @@
 /datum/ai_behavior/consume/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	controller.current_movement_target = target_ref?.resolve()
+	set_movement_target(controller, target_ref?.resolve())
 
 /datum/ai_behavior/consume/perform(delta_time, datum/ai_controller/controller, target_key, hunger_timer_key)
 	. = ..()
@@ -172,11 +195,9 @@
 	var/obj/item/target = target_ref.resolve()
 
 	if(!(target in living_pawn.held_items))
-		if(!living_pawn.put_in_hand_check(target))
+		if(!living_pawn.get_empty_held_indexes() || !living_pawn.put_in_hands(target))
 			finish_action(controller, FALSE, target, hunger_timer_key)
 			return
-
-		living_pawn.put_in_hands(target)
 
 	target.melee_attack_chain(living_pawn, living_pawn)
 
@@ -224,7 +245,7 @@
 		finish_action(controller, TRUE)
 		return
 
-	controller.current_movement_target = living_target
+	set_movement_target(controller, living_target)
 	attack(controller, living_target)
 
 /datum/ai_behavior/attack/finish_action(datum/ai_controller/controller, succeeded)
@@ -260,7 +281,7 @@
 		finish_action(controller, TRUE)
 		return
 
-	controller.current_movement_target = living_target
+	set_movement_target(controller, living_target)
 
 /datum/ai_behavior/follow/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()

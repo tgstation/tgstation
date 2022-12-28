@@ -607,6 +607,9 @@
 /obj/effect/turf_decal/trimline/white/warning
 	icon_state = "trimline_warn"
 
+/obj/effect/turf_decal/trimline/white/tram
+	icon_state = "trimline_tram"
+
 /obj/effect/turf_decal/trimline/white/mid_joiner
 	icon_state = "trimline_mid"
 

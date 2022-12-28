@@ -75,21 +75,21 @@ Difficulty: Hard
 
 /datum/action/innate/megafauna_attack/heavy_stomp
 	name = "Heavy Stomp"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	chosen_message = "<span class='colossus'>You are now stomping the ground around you.</span>"
 	chosen_attack_num = 1
 
 /datum/action/innate/megafauna_attack/teleport
 	name = "Teleport"
-	icon_icon = 'icons/effects/bubblegum.dmi'
+	button_icon = 'icons/effects/bubblegum.dmi'
 	button_icon_state = "smack ya one"
 	chosen_message = "<span class='colossus'>You are now teleporting at the target you click on.</span>"
 	chosen_attack_num = 2
 
 /datum/action/innate/megafauna_attack/shockwave_scream
 	name = "Shockwave Scream"
-	icon_icon = 'icons/turf/walls/wall.dmi'
+	button_icon = 'icons/turf/walls/wall.dmi'
 	button_icon_state = "wall-0"
 	chosen_message = "<span class='colossus'>You are now screeching, disorienting targets around you.</span>"
 	chosen_attack_num = 3
@@ -141,7 +141,7 @@ Difficulty: Hard
 	. = ..()
 	stored_move_dirs &= ~movement_dir
 	if(!stored_move_dirs)
-		INVOKE_ASYNC(src, .proc/wendigo_slam, stomp_range, 1, 8)
+		INVOKE_ASYNC(src, PROC_REF(wendigo_slam), stomp_range, 1, 8)
 
 /// Slams the ground around the source throwing back enemies caught nearby, delay is for the radius increase
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/wendigo_slam(range, delay, throw_range)

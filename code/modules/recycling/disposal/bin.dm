@@ -5,7 +5,7 @@
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	density = TRUE
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
+	armor_type = /datum/armor/machinery_disposal
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
@@ -24,6 +24,14 @@
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
 
+/datum/armor/machinery_disposal
+	melee = 25
+	bullet = 10
+	laser = 10
+	energy = 100
+	fire = 90
+	acid = 30
+
 /obj/machinery/disposal/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 
@@ -40,10 +48,10 @@
 	air_contents = new /datum/gas_mixture()
 	//gas.volume = 1.05 * CELLSTANDARD
 	update_appearance()
-	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_rummage)
-	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, .proc/on_storage_dump)
+	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_rummage))
+	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = .proc/trash_carbon,
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(trash_carbon),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
@@ -91,7 +99,7 @@
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
-			panel_open = !panel_open
+			toggle_panel_open()
 			I.play_tool_sound(src)
 			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return
@@ -290,6 +298,14 @@
 	icon_state = "disposal"
 
 // attack by item places it in to disposal
+/datum/armor/machinery_disposal
+	melee = 25
+	bullet = 10
+	laser = 10
+	energy = 100
+	fire = 90
+	acid = 30
+
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
@@ -470,6 +486,14 @@
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
 
+/datum/armor/machinery_disposal
+	melee = 25
+	bullet = 10
+	laser = 10
+	energy = 100
+	fire = 90
+	acid = 30
+
 /obj/machinery/disposal/delivery_chute/place_item_in_disposal(obj/item/I, mob/user)
 	if(I.CanEnterDisposals())
 		..()
@@ -525,7 +549,7 @@
 /obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, /obj/machinery/disposal/.proc/rat_rummage, king)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/disposal/, rat_rummage), king)
 
 /obj/machinery/disposal/proc/trash_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER

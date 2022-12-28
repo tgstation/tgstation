@@ -136,9 +136,19 @@
 	alive_bonus = 2
 
 /datum/traitor_objective/kidnapping/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+
+	var/list/already_targeting = list() //List of minds we're already targeting. The possible_duplicates is a list of objectives, so let's not mix things
+	for(var/datum/objective/task as anything in handler.primary_objectives)
+		if(!istype(task.target, /datum/mind))
+			continue
+		already_targeting += task.target //Removing primary objective kill targets from the list
+
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
 		if(possible_target == generating_for)
+			continue
+
+		if(possible_target in already_targeting)
 			continue
 
 		if(!ishuman(possible_target.current))
@@ -168,7 +178,7 @@
 
 	var/datum/mind/target_mind = pick(possible_targets)
 	victim = target_mind.current
-	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = COMSIG_PARENT_QDELETING)
+	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = list(COMSIG_PARENT_QDELETING))
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		if(istype(possible_area, /area/station/hallway) || istype(possible_area, /area/station/security) || initial(possible_area.outdoors))
@@ -212,7 +222,7 @@
 /datum/traitor_objective/kidnapping/proc/call_pod(mob/living/user)
 	pod_called = TRUE
 	var/obj/structure/closet/supplypod/extractionpod/new_pod = new()
-	RegisterSignal(new_pod, COMSIG_ATOM_ENTERED, .proc/enter_check)
+	RegisterSignal(new_pod, COMSIG_ATOM_ENTERED, PROC_REF(enter_check))
 	new /obj/effect/pod_landingzone(get_turf(user), new_pod)
 
 /datum/traitor_objective/kidnapping/proc/enter_check(obj/structure/closet/supplypod/extractionpod/source, entered_atom)
@@ -241,7 +251,7 @@
 
 	priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
 
-	addtimer(CALLBACK(src, .proc/handle_victim, sent_mob), 1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(handle_victim), sent_mob), 1.5 SECONDS)
 
 	if(sent_mob != victim)
 		fail_objective(penalty_cost = telecrystal_penalty)
@@ -255,14 +265,14 @@
 	source.startExitSequence(source)
 
 /datum/traitor_objective/kidnapping/proc/handle_victim(mob/living/carbon/human/sent_mob)
-	addtimer(CALLBACK(src, .proc/return_victim, sent_mob), 3 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(return_victim), sent_mob), 3 MINUTES)
 	if(sent_mob.stat == DEAD)
 		return
 
 	sent_mob.flash_act()
 	sent_mob.adjust_confusion(10 SECONDS)
 	sent_mob.adjust_dizzy(10 SECONDS)
-	sent_mob.blur_eyes(5 SECONDS)
+	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
 		so it's only a matter of time before we ship you back...\"</i>")))
@@ -308,6 +318,6 @@
 	sent_mob.flash_act()
 	sent_mob.adjust_confusion(10 SECONDS)
 	sent_mob.adjust_dizzy(10 SECONDS)
-	sent_mob.blur_eyes(5 SECONDS)
+	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 
 	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)

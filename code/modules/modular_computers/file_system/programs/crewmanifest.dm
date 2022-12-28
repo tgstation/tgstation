@@ -29,7 +29,7 @@
 								[GLOB.data_core ? GLOB.data_core.get_manifest_html(0) : ""]
 								"}
 				if(!computer.print_text(contents,text("crew manifest ([])", station_time_timestamp())))
-					to_chat(usr, span_notice("Hardware error: Printer was unable to print the file. It may be out of paper."))
+					to_chat(usr, span_notice("Printer is out of paper."))
 					return
 				else
 					computer.visible_message(span_notice("\The [computer] prints out a paper."))

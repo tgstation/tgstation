@@ -11,6 +11,14 @@
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 
+/// Enables update_appearance "relevence" tracking
+/// This allows us to check which update_appearance procs are actually doing anything. Good thing to look in on once a year or so
+/// You'll need to run a two regexes/search and replaces to make it work
+/// First, one to convert type refs (PROC_REF.*)(update_appearance\)) -> $1_$2
+/// Second, one to convert definitions /update_appearance\( -> /_update_appearance(
+/// We'll use another define to convert uses of the proc over. That'll be all
+// #define APPEARANCE_SUCCESS_TRACKING
+
 ///Used to find the sources of harddels, quite laggy, don't be surpised if it freezes your client for a good while
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
@@ -93,21 +101,6 @@
 #ifdef LOWMEMORYMODE
 #define FORCE_MAP "runtimestation"
 #define FORCE_MAP_DIRECTORY "_maps"
-#endif
-
-//Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 514
-#define MIN_COMPILER_BUILD 1556
-#if (DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD) && !defined(SPACEMAN_DMM)
-//Don't forget to update this part
-#error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 514.1556 or higher
-#endif
-
-#if (DM_VERSION == 514 && DM_BUILD > 1575 && DM_BUILD <= 1577)
-#error Your version of BYOND currently has a crashing issue that will prevent you from running Dream Daemon test servers.
-#error We require developers to test their content, so an inability to test means we cannot allow the compile.
-#error Please consider downgrading to 514.1575 or lower.
 #endif
 
 //Additional code for the above flags.

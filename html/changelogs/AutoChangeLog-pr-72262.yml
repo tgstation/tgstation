@@ -1,0 +1,6 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - balance: "standard holoparasites and assassin holoparasites in stealth mode can deal wounds"
+  - balance: "you can now ride charger holoparasites"
+  - balance: "charger holoparasites have a bit less armor and speed"

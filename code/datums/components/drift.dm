@@ -28,12 +28,12 @@
 	if(!drifting_loop) //Really want to qdel here but can't
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_START, .proc/drifting_start)
-	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_STOP, .proc/drifting_stop)
-	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/before_move)
-	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/after_move)
-	RegisterSignal(drifting_loop, COMSIG_PARENT_QDELETING, .proc/loop_death)
-	RegisterSignal(movable_parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, .proc/newtonian_impulse)
+	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_START, PROC_REF(drifting_start))
+	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_STOP, PROC_REF(drifting_stop))
+	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(before_move))
+	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(after_move))
+	RegisterSignal(drifting_loop, COMSIG_PARENT_QDELETING, PROC_REF(loop_death))
+	RegisterSignal(movable_parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, PROC_REF(newtonian_impulse))
 	if(drifting_loop.running)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
 
@@ -87,12 +87,12 @@
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
 	inertia_last_loc = movable_parent.loc
-	RegisterSignal(movable_parent, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	RegisterSignal(movable_parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 	// We will use glide size to intuit how long to delay our loop's next move for
 	// This way you can't ride two movements at once while drifting, since that'd be dumb as fuck
-	RegisterSignal(movable_parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/handle_glidesize_update)
+	RegisterSignal(movable_parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(handle_glidesize_update))
 	// If you stop pulling something mid drift, I want it to retain that momentum
-	RegisterSignal(movable_parent, COMSIG_ATOM_NO_LONGER_PULLING, .proc/stopped_pulling)
+	RegisterSignal(movable_parent, COMSIG_ATOM_NO_LONGER_PULLING, PROC_REF(stopped_pulling))
 
 /datum/component/drift/proc/drifting_stop()
 	SIGNAL_HANDLER
@@ -183,7 +183,7 @@
 	block_inputs_until = world.time + glide_for
 	QDEL_IN(src, glide_for + 1)
 	qdel(drifting_loop)
-	RegisterSignal(parent, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/allow_final_movement)
+	RegisterSignal(parent, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(allow_final_movement))
 
 /datum/component/drift/proc/allow_final_movement(datum/source)
 	// Some things want to allow movement out of spacedrift, we should let them

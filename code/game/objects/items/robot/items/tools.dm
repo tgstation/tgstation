@@ -1,4 +1,4 @@
-#define PKBORG_DAMPEN_CYCLE_DELAY 2 SECONDS
+#define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -16,7 +16,8 @@
 	name = "\improper Hyperkinetic Dampening projector"
 	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "shield"
+	icon_state = "shield0"
+	base_icon_state = "shield"
 	/// Max energy this dampener can hold
 	var/maxenergy = 1500
 	/// Current energy level
@@ -57,10 +58,9 @@
 /obj/item/borg/projectile_dampen/Initialize(mapload)
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 	tracked = list()
-	icon_state = "shield0"
 	START_PROCESSING(SSfastprocess, src)
 	host = loc
-	RegisterSignal(host, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(host, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	return ..()
 
 /obj/item/borg/projectile_dampen/proc/on_death(datum/source, gibbed)
@@ -88,7 +88,7 @@
 	to_chat(user, span_boldnotice("You [active ? "activate":"deactivate"] [src]."))
 
 /obj/item/borg/projectile_dampen/update_icon_state()
-	icon_state = "[initial(icon_state)][active]"
+	icon_state = "[base_icon_state][active]"
 	return ..()
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
@@ -96,8 +96,8 @@
 		QDEL_NULL(dampening_field)
 	var/mob/living/silicon/robot/owner = get_host()
 	dampening_field = new(owner, field_radius, TRUE, src)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, .proc/dampen_projectile)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, .proc/restore_projectile)
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(restore_projectile))
 	owner?.model.allow_riding = FALSE
 	active = TRUE
 

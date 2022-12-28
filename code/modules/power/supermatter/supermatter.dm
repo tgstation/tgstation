@@ -22,11 +22,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	anchored = TRUE
 	layer = MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
 	base_icon_state = "sm"
 	icon_state = "sm"
+	light_on = FALSE
 
 	///The id of our supermatter
 	var/uid = 1
@@ -118,8 +118,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The key our internal radio uses
 	var/radio_key = /obj/item/encryptionkey/headset_eng
 
-	///Boolean used for logging if we've been powered
-	var/has_been_powered = FALSE
+	///Boolean used to log the first activation of the SM.
+	var/activation_logged = FALSE
 
 	///An effect we show to admins and ghosts the percentage of delam we're at
 	var/obj/effect/countdown/supermatter/countdown
@@ -187,15 +187,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		GLOB.main_supermatter_engine = src
 
 	AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/force_delam)
+	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, PROC_REF(force_delam))
 
 	var/static/list/loc_connections = list(
-		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/tram_contents_consume,
+		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = PROC_REF(tram_contents_consume),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)	//Speficially for the tram, hacky
 
-	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, .proc/wrench_act_callback), CALLBACK(src, .proc/consume_callback))
-
+	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, PROC_REF(wrench_act_callback)), CALLBACK(src, PROC_REF(consume_callback)))
 	soundloop = new(src, TRUE)
 
 	if (!moveable)
@@ -280,6 +279,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	// PART 4: DAMAGE PROCESSING
 	temp_limit_factors = calculate_temp_limit()
+	damage_archived = damage
 	damage_factors = calculate_damage()
 	if(damage == 0) // Clear any in game forced delams if on full health.
 		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRATEGY_PURGE)
@@ -312,6 +312,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(prob(15))
 		supermatter_pull(loc, min(internal_energy/850, 3))//850, 1700, 2550
 	update_appearance()
+	delamination_strategy.lights(src)
+	delamination_strategy.filters(src)
 	return TRUE
 
 // SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
@@ -426,9 +428,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/update_overlays()
 	. = ..()
 	if(psy_coeff > 0)
-		var/mutable_appearance/psy_overlay = mutable_appearance(icon, "[base_icon_state]-psy", FLOAT_LAYER - 1)
-		psy_overlay.alpha = psy_coeff * 255
-		. += psy_overlay
+		. += mutable_appearance(icon = icon, icon_state = "[base_icon_state]-psy", layer = FLOAT_LAYER - 1, alpha = psy_coeff * 255)
 	if(delamination_strategy)
 		. += delamination_strategy.overlays(src)
 	return .
@@ -443,7 +443,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
 	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)
-	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam/proc/delaminate, src)
+	INVOKE_ASYNC(delamination_strategy, TYPE_PROC_REF(/datum/sm_delam, delaminate), src)
 
 /**
  * Count down, spout some messages, and then execute the delam itself.
@@ -517,14 +517,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * Returns: null
  */
 /obj/machinery/power/supermatter_crystal/proc/calculate_gases()
+	if(disable_gas)
+		return
+
 	gas_percentage = list()
 	gas_power_transmission = 0
 	gas_heat_modifier = 0
 	gas_heat_resistance = 0
 	gas_heat_power_generation = 0
 	gas_powerloss_inhibition = 0
-	if(disable_gas)
-		return
 
 	var/total_moles = absorbed_gasmix.total_moles()
 
@@ -564,6 +565,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_power[SM_POWER_EXTERNAL_IMMEDIATE] = external_power_immediate
 	external_power_immediate = 0
 	additive_power[SM_POWER_HEAT] = gas_heat_power_generation * absorbed_gasmix.temperature / 6
+	additive_power[SM_POWER_HEAT] && log_activation(who = "environmental factors")
 
 	// I'm sorry for this, but we need to calculate power lost immediately after power gain.
 	// Helps us prevent cases when someone dumps superhothotgas into the SM and shoots the power to the moon for one tick.
@@ -582,7 +584,32 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/powergain_types in additive_power)
 		internal_energy += additive_power[powergain_types]
 	internal_energy = max(internal_energy, 0)
+	if(internal_energy && !activation_logged)
+		stack_trace("Supermatter powered for the first time without being logged. Internal energy factors: [json_encode(internal_energy_factors)]")
+		activation_logged = TRUE // so we dont spam the log.
 	return additive_power
+
+/** Log when the supermatter is activated for the first time.
+ * Everything that can increase [/obj/machinery/power/supermatter_crystal/var/internal_energy]
+ * either directly or indirectly MUST call this.
+ *
+ * Arguments:
+ * * who - Either a string or a datum. Whatever gave power to the SM. Mandatory.
+ * * how - A datum. How they powered it. Optional.
+ */
+/obj/machinery/power/supermatter_crystal/proc/log_activation(who, how)
+	if(activation_logged || disable_power_change)
+		return
+	if(!who)
+		CRASH("Supermatter activated by an unknown source")
+
+	if(istext(who))
+		investigate_log("has been powered for the first time by [who][how ? " with [how]" : ""].", INVESTIGATE_ENGINE)
+		message_admins("[src] [ADMIN_JMP(src)] has been powered for the first time by [who][how ? " with [how]" : ""].")
+	else
+		investigate_log("has been powered for the first time by [key_name(who)][how ? " with [how]" : ""].", INVESTIGATE_ENGINE)
+		message_admins("[src] [ADMIN_JMP(src)] has been powered for the first time by [ADMIN_FULLMONTY(who)][how ? " with [how]" : ""].")
+	activation_logged = TRUE
 
 /**
  * Perform calculation for the main zap power multiplier.
@@ -696,7 +723,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for (var/damage_type in additive_damage)
 		total_damage += additive_damage[damage_type]
 
-	damage_archived = damage
 	damage += total_damage
 	damage = max(damage, 0)
 	return additive_damage

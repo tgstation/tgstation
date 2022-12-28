@@ -14,7 +14,7 @@
 	// Life() is handled just by tests
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/reagent_containers/dropper/dropper = allocate(/obj/item/reagent_containers/dropper)
 	var/obj/item/reagent_containers/cup/glass/bottle/drink = allocate(/obj/item/reagent_containers/cup/glass/bottle)
 	var/obj/item/reagent_containers/pill/patch/patch = allocate(/obj/item/reagent_containers/pill/patch)
@@ -34,11 +34,11 @@
 	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human still has fire stacks after touching water")
 
 	// VAPOR
-	TEST_ASSERT_EQUAL(human.drowsyness, 0, "Human is drowsy at the start of testing")
+	TEST_ASSERT_NULL(human.has_status_effect(/datum/status_effect/drowsiness), "Human is drowsy at the start of testing")
 	drink.reagents.clear_reagents()
 	drink.reagents.add_reagent(/datum/reagent/nitrous_oxide, 10)
 	drink.reagents.trans_to(human, 10, methods = VAPOR)
-	TEST_ASSERT_NOTEQUAL(human.drowsyness, 0, "Human is not drowsy after exposure to vapors")
+	TEST_ASSERT_NOTNULL(human.has_status_effect(/datum/status_effect/drowsiness), "Human is not drowsy after exposure to vapors")
 
 	// PATCH
 	human.health = 100

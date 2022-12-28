@@ -13,8 +13,6 @@
 		FACEHAIR,
 		LIPS,
 		DRINKSBLOOD,
-		HAS_FLESH,
-		HAS_BONE,
 		BLOOD_CLANS,
 	)
 	inherent_traits = list(
@@ -48,7 +46,7 @@
 /datum/species/vampire/spec_life(mob/living/carbon/human/vampire, delta_time, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
-		vampire.heal_overall_damage(2 * delta_time, 2 * delta_time, 0, BODYTYPE_ORGANIC)
+		vampire.heal_overall_damage(2 * delta_time, 2 * delta_time, BODYTYPE_ORGANIC)
 		vampire.adjustToxLoss(-2 * delta_time)
 		vampire.adjustOxyLoss(-2 * delta_time)
 		vampire.adjustCloneLoss(-2 * delta_time)
@@ -56,6 +54,7 @@
 	vampire.blood_volume -= 0.125 * delta_time
 	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(vampire, span_danger("You ran out of blood!"))
+		vampire.investigate_log("has been dusted by a lack of blood (vampire).", INVESTIGATE_DEATHS)
 		vampire.dust()
 	var/area/A = get_area(vampire)
 	if(istype(A, /area/station/service/chapel))
@@ -193,6 +192,18 @@
 /obj/item/organ/internal/heart/vampire
 	name = "vampire heart"
 	color = "#1C1C1C"
+
+/obj/item/organ/internal/heart/vampire/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	. = ..()
+	RegisterSignal(receiver, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+
+/obj/item/organ/internal/heart/vampire/Remove(mob/living/carbon/heartless, special)
+	. = ..()
+	UnregisterSignal(heartless, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+
+/obj/item/organ/internal/heart/vampire/proc/get_status_tab_item(mob/living/carbon/source, list/items)
+	SIGNAL_HANDLER
+	items += "Blood Level: [source.blood_volume]/[BLOOD_VOLUME_MAXIMUM]"
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

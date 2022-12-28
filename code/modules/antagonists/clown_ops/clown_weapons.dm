@@ -17,9 +17,19 @@
 	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
 	clothing_flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN
-	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)
+	armor_type = /datum/armor/clown_shoes_combat
 	strip_delay = 70
 	resistance_flags = NONE
+
+/datum/armor/clown_shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 90
+	fire = 70
+	acid = 50
 
 /obj/item/clothing/shoes/clown_shoes/combat/Initialize(mapload)
 	. = ..()
@@ -35,10 +45,20 @@
 	name = "mk-honk combat shoes"
 	desc = "The culmination of years of clown combat research, these shoes leave a trail of chaos in their wake. They will slowly recharge themselves over time, or can be manually charged with bananium."
 	slowdown = SHOES_SLOWDOWN
-	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 50, FIRE = 90, ACID = 50)
+	armor_type = /datum/armor/banana_shoes_combat
 	strip_delay = 70
 	resistance_flags = NONE
 	always_noslip = TRUE
+
+/datum/armor/banana_shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 50
+	fire = 90
+	acid = 50
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
 	. = ..()
@@ -78,13 +98,23 @@
 	/// Cooldown for making a trombone noise for failing to make a bananium desword
 	COOLDOWN_DECLARE(next_trombone_allowed)
 
+/datum/armor/banana_shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 50
+	fire = 90
+	acid = 50
+
 /obj/item/melee/energy/sword/bananium/make_transformable()
 	AddComponent(/datum/component/transforming, \
 		throw_speed_on = 4, \
 		attack_verb_continuous_on = list("slips"), \
 		attack_verb_simple_on = list("slip"), \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/energy/sword/bananium/on_transform(obj/item/source, mob/user, active)
 	. = ..()
@@ -119,7 +149,7 @@
 		return TRUE
 	return ..()
 
-/obj/item/melee/energy/sword/bananium/suicide_act(mob/user)
+/obj/item/melee/energy/sword/bananium/suicide_act(mob/living/user)
 	if(!blade_active)
 		attack_self(user)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!"))
@@ -143,6 +173,16 @@
 	active_throwforce = 0
 	active_throw_speed = 1
 	can_clumsy_use = TRUE
+
+/datum/armor/banana_shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 50
+	fire = 90
+	acid = 50
 
 /obj/item/shield/energy/bananium/on_transform(obj/item/source, mob/user, active)
 	. = ..()
@@ -189,6 +229,16 @@
 	var/det_time = 50
 	var/obj/item/grenade/syndieminibomb/bomb
 
+/datum/armor/banana_shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 50
+	fire = 90
+	acid = 50
+
 /obj/item/grown/bananapeel/bombanana/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, det_time)
@@ -202,11 +252,11 @@
 	. = ..()
 	QDEL_NULL(bomb)
 
-/obj/item/grown/bananapeel/bombanana/suicide_act(mob/user)
+/obj/item/grown/bananapeel/bombanana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide."))
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
 	bomb.arm_grenade(user, 0, FALSE)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 //TEARSTACHE GRENADE
 
@@ -215,6 +265,16 @@
 	desc = "A handsomely-attired teargas grenade."
 	icon_state = "moustacheg"
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
+
+/datum/armor/banana_shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 50
+	fire = 90
+	acid = 50
 
 /obj/item/grenade/chem_grenade/teargas/moustache/detonate(mob/living/lanced_by)
 	var/myloc = get_turf(src)
@@ -231,10 +291,20 @@
 /obj/item/clothing/mask/fakemoustache/sticky
 	var/unstick_time = 600
 
+/datum/armor/banana_shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 50
+	fire = 90
+	acid = 50
+
 /obj/item/clothing/mask/fakemoustache/sticky/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
-	addtimer(CALLBACK(src, .proc/unstick), unstick_time)
+	addtimer(CALLBACK(src, PROC_REF(unstick)), unstick_time)
 
 /obj/item/clothing/mask/fakemoustache/sticky/proc/unstick()
 	REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)

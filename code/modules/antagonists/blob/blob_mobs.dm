@@ -172,8 +172,7 @@
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1
 	if(H.wear_suit)
-		var/obj/item/clothing/suit/armor/A = H.wear_suit
-		maxHealth += A.armor.melee //That zombie's got armor, I want armor!
+		maxHealth += H.get_armor_rating(MELEE)
 	maxHealth += 40
 	health = maxHealth
 	name = "blob zombie"
@@ -327,7 +326,7 @@
 		I.appearance_flags = RESET_COLOR
 		if(overmind)
 			I.color = overmind.blobstrain.complementary_color
-		flick_overlay_view(I, src, 8)
+		flick_overlay_view(I, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()

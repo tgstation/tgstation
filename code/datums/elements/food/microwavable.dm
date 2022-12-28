@@ -1,7 +1,7 @@
 /// Atoms that can be microwaved from one type to another.
 /datum/element/microwavable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// The typepath we default to if we were passed no microwave result
 	var/atom/default_typepath = /obj/item/food/badrecipe
 	/// Resulting atom typepath on a completed microwave.
@@ -14,10 +14,10 @@
 
 	result_typepath = microwave_type || default_typepath
 
-	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, .proc/on_microwaved)
+	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, PROC_REF(on_microwaved))
 
 	if(!ispath(result_typepath, default_typepath))
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/microwavable/Detach(datum/source)
 	UnregisterSignal(source, list(COMSIG_ITEM_MICROWAVE_ACT, COMSIG_PARENT_EXAMINE))
@@ -27,7 +27,7 @@
  * Signal proc for [COMSIG_ITEM_MICROWAVE_ACT].
  * Handles the actual microwaving part.
  */
-/datum/element/microwavable/proc/on_microwaved(atom/source, obj/machinery/microwave/used_microwave, mob/microwaver)
+/datum/element/microwavable/proc/on_microwaved(atom/source, obj/machinery/microwave/used_microwave, mob/microwaver, randomize_pixel_offset)
 	SIGNAL_HANDLER
 
 	var/atom/result
@@ -49,13 +49,19 @@
 		result.reagents?.multiply_reagents(efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
 		source.reagents?.trans_to(result, source.reagents.total_volume)
 
-		SSblackbox.record_feedback("tally", "food_made", 1, result.type)
+		BLACKBOX_LOG_FOOD_MADE(result.type)
 
 	qdel(source)
 
 	var/recipe_result = COMPONENT_MICROWAVE_SUCCESS
 	if(istype(result, default_typepath))
 		recipe_result |= COMPONENT_MICROWAVE_BAD_RECIPE
+
+	if(randomize_pixel_offset && isitem(result))
+		var/obj/item/result_item = result
+		if(!(result_item.item_flags & NO_PIXEL_RANDOM_DROP))
+			result_item.pixel_x = result_item.base_pixel_x + rand(-6, 6)
+			result_item.pixel_y = result_item.base_pixel_y + rand(-5, 6)
 
 	return recipe_result
 

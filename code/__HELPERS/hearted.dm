@@ -17,7 +17,7 @@
 		if(!check_mob?.mind || !check_mob.client)
 			continue
 		// maybe some other filters like bans or whatever
-		INVOKE_ASYNC(check_mob, /mob.proc/query_heart, 1)
+		INVOKE_ASYNC(check_mob, TYPE_PROC_REF(/mob, query_heart), 1)
 		number_to_ask--
 		if(number_to_ask <= 0)
 			break

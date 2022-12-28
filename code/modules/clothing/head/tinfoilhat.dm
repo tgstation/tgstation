@@ -3,11 +3,15 @@
 	desc = "Thought control rays, psychotronic scanning. Don't mind that, I'm protected cause I made this hat."
 	icon_state = "foilhat"
 	inhand_icon_state = null
-	armor = list(MELEE = 0, BULLET = 0, LASER = -5,ENERGY = -15, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/costume_foilhat
 	equip_delay_other = 140
 	clothing_flags = ANTI_TINFOIL_MANEUVER
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
+
+/datum/armor/costume_foilhat
+	laser = -5
+	energy = -15
 
 /obj/item/clothing/head/costume/foilhat/Initialize(mapload)
 	. = ..()
@@ -16,8 +20,8 @@
 			antimagic_flags = MAGIC_RESISTANCE_MIND, \
 			inventory_flags = ITEM_SLOT_HEAD, \
 			charges = 6, \
-			drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
-			expiration = CALLBACK(src, .proc/warp_up) \
+			drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+			expiration = CALLBACK(src, PROC_REF(warp_up)) \
 		)
 	else
 		warp_up()
@@ -30,7 +34,7 @@
 		QDEL_NULL(paranoia)
 	paranoia = new()
 
-	RegisterSignal(user, COMSIG_HUMAN_SUICIDE_ACT, .proc/call_suicide)
+	RegisterSignal(user, COMSIG_HUMAN_SUICIDE_ACT, PROC_REF(call_suicide))
 
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, span_warning("As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. "))
@@ -77,7 +81,7 @@
 			return
 	return ..()
 
-/obj/item/clothing/head/costume/foilhat/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver)
+/obj/item/clothing/head/costume/foilhat/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
 	. = ..()
 	if(warped)
 		return
@@ -87,7 +91,7 @@
 
 /obj/item/clothing/head/costume/foilhat/proc/call_suicide(datum/source)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/suicide_act, source) //SIGNAL_HANDLER doesn't like things waiting; INVOKE_ASYNC bypasses that
+	INVOKE_ASYNC(src, PROC_REF(suicide_act), source) //SIGNAL_HANDLER doesn't like things waiting; INVOKE_ASYNC bypasses that
 	return OXYLOSS
 
 /obj/item/clothing/head/costume/foilhat/suicide_act(mob/living/user)
