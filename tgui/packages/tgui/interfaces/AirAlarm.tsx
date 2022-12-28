@@ -11,7 +11,7 @@ type AirAlarmData = {
   siliconUser: BooleanLike;
   emagged: BooleanLike;
   dangerLevel: 0 | 1 | 2;
-  atmosAlarm: any; // fix this
+  atmosAlarm: BooleanLike; // fix this
   fireAlarm: BooleanLike;
   envData: {
     name: string;

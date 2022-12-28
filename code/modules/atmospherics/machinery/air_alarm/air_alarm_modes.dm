@@ -1,3 +1,5 @@
+/// Keys are [/datum/air_alarm_mode] paths
+/// Values are their respective instances.
 GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 /proc/init_air_alarm_modes()
@@ -6,15 +8,26 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		ret[mode_path] = new mode_path
 	return ret
 
+/// Various modes that an [/obj/machinery/airalarm] can assume.
 /datum/air_alarm_mode
+	/// Name of the mode.
 	var/name
+	/// More detail on the mode.
 	var/desc
+	/// TRUE if this mode can be dangerous if selected.
 	var/danger
+	/// TRUE if the air alarm needs to be emagged for this to be selected.
 	var/emag = FALSE
 
+/** The proc that runs when this air alarm mode is selected.
+ *
+ * Arguments:
+ * * applied - which area will we apply this mode to.
+ */
 /datum/air_alarm_mode/proc/apply(area/applied)
 	return
 
+/// The default.
 /datum/air_alarm_mode/filtering
 	name = "Filtering"
 	desc = "Scrubs out contaminants"
@@ -94,7 +107,8 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	desc = "Siphons air before replacing"
 	danger = TRUE
 
-/datum/air_alarm_mode/cycle/apply(area/applied) // Same as panic siphon.
+/// Same as [/datum/air_alarm_mode/siphon/apply]
+/datum/air_alarm_mode/cycle/apply(area/applied)
 	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
 		vent.on = FALSE
 		vent.update_appearance(UPDATE_ICON)
@@ -104,6 +118,8 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		scrubber.set_widenet(TRUE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 
+/// Special case for cycles. Cycles need to refill the air again after it's scrubbed out so this proc is called.
+/// Same as [/datum/air_alarm_mode/filtering/apply]
 /datum/air_alarm_mode/cycle/proc/replace(area/applied)
 	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
 		vent.on = TRUE
