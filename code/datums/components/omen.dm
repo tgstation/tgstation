@@ -91,17 +91,33 @@
 					qdel(src)
 				return
 
-/// If we get knocked down, see if we have a really bad slip and bash our head hard
+/** If we get knocked down, see if we have a really bad slip and bash our head hard */
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
 	SIGNAL_HANDLER
 
-	if(prob(50))
-		make_emote(our_guy)
+	if(prob(50)) // AAAA
+		var/quote
+		if(ishuman(player))
+			quote = "scream"
+		if(iscyborg(player))
+			quote = "buzz"
+		if(quote)
+			INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), quote)
 
-	if(amount <= 0 || prob(50))
-		bonk(our_guy)
+	if(amount <= 0 || prob(50)) /// Bonk!
+		var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
+		if(!the_head)
+			return FALSE
+		playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
+		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
+		the_head.receive_damage(75)
+		our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100)
+		if(!permanent)
+			qdel(src)
 
-/// Hijack the mood system to see if we get the blessing mood event to cancel the omen
+	return TRUE
+
+/** Hijack the mood system to see if we get the blessing mood event to cancel the omen */
 /datum/component/omen/proc/check_bless(mob/living/our_guy, category)
 	SIGNAL_HANDLER
 
@@ -113,7 +129,7 @@
 
 	qdel(src)
 
-/** Bad omen players delimb on death */
+/** Unfortunate quirk players delimb on death */
 /datum/component/omen/proc/check_death(mob/living/our_guy)
 	SIGNAL_HANDLER
 
@@ -133,32 +149,3 @@
 		if(thing.body_part == CHEST || thing.body_part == HEAD)
 			continue
 		thing.dismember()
-
-/** User hits their head */
-/datum/component/omen/proc/bonk(mob/living/our_guy)
-	var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
-	if(!the_head)
-		return FALSE
-
-	playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
-	our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
-	the_head.receive_damage(75)
-	our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100)
-
-	if(!permanent)
-		qdel(src)
-
-	return TRUE
-
-/** Slipped! Time to emote */
-/datum/component/omen/proc/make_emote(mob/living/our_guy)
-	var/quote
-	if(ishuman(player))
-		quote = "scream"
-	if(iscyborg(player))
-		quote = "buzz"
-
-	if(quote)
-		INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), quote)
-
-	return TRUE
