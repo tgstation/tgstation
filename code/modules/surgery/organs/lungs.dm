@@ -24,9 +24,9 @@
 
 	///Empty breath - Used in the event that `check_breath` gets a null breath.
 	var/datum/gas_mixture/empty_breath = new
+
 	//Breath damage
 	//These thresholds are checked against what amounts to total_mix_pressure * (gas_type_mols/total_mols)
-
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_oxygen_max = 0
 	var/safe_nitro_min = 0
@@ -128,10 +128,14 @@
 
 	if(!has_moles)
 		if(can_breathe_vacuum)
+			// Breath has 0 moles, but the lungs can breathe anyways.
+			// What are you? Some bottom-feeding, scum-sucking algae eater?
 			breather.failed_last_breath = FALSE
+			// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
 		else
+			// Breath has 0 moles. Can't breathe!
 			. = FALSE
 			breather.failed_last_breath = TRUE
 
@@ -177,7 +181,7 @@
 			breather.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		else
 			breather.failed_last_breath = FALSE
-			if(breather.health >= breather.crit_threshold)
+			if(has_moles && (breather.health >= breather.crit_threshold))
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
 			breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
@@ -203,7 +207,7 @@
 			breather.throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
 		else
 			breather.failed_last_breath = FALSE
-			if(breather.health >= breather.crit_threshold)
+			if(has_moles && (breather.health >= breather.crit_threshold))
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
 			breather.clear_alert(ALERT_NOT_ENOUGH_NITRO)
@@ -238,7 +242,7 @@
 			breather.throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
 		else
 			breather.failed_last_breath = FALSE
-			if(breather.health >= breather.crit_threshold)
+			if(has_moles && (breather.health >= breather.crit_threshold))
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
 			breather.clear_alert(ALERT_NOT_ENOUGH_CO2)
@@ -265,7 +269,7 @@
 			breather.throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
 		else
 			breather.failed_last_breath = FALSE
-			if(breather.health >= breather.crit_threshold)
+			if(has_moles && (breather.health >= breather.crit_threshold))
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
 			breather.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
