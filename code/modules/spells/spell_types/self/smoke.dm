@@ -22,7 +22,6 @@
 
 	school = SCHOOL_HOLY
 	cooldown_time = 36 SECONDS
-	spell_requirements = NONE
 
 	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 2
