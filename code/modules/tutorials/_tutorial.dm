@@ -1,6 +1,5 @@
 // MBTODO: Document everything
 /datum/tutorial
-	// MBTODO: Unit test that this is null, or a date
 	var/grandfather_date
 
 	var/mob/user
