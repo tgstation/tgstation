@@ -899,7 +899,7 @@
 		"paladin_module",
 		"robocop_module",
 		"corporate_module",
-		"drone_module",		
+		"drone_module",
 		"oxygen_module",
 		"safeguard_module",
 		"protectstation_module",
@@ -908,7 +908,7 @@
 		"remove_module",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	
+
 /datum/techweb_node/ai_adv
 	id = "ai_adv"
 	display_name = "Advanced Artificial Intelligence"
@@ -1083,7 +1083,6 @@
 	description = "Organized record databases and how they're used."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"account_console",
 		"automated_announcement",
 		"med_data",
 		"prisonmanage",
@@ -1202,7 +1201,7 @@
 		"cybernetic_stomach_tier2",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
-	
+
 
 /datum/techweb_node/cyber_organs_upgraded
 	id = "cyber_organs_upgraded"
