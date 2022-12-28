@@ -80,15 +80,17 @@ SUBSYSTEM_DEF(tts)
 	if(!resumed)
 		var/list/priority_list = priority_queued_tts_messages
 		while(length(in_process_tts_messages) < max_concurrent_requests && priority_list.len > 0)
-			var/list/entry = priority_list[priority_list.len]
-			priority_list.len--
+			var/list/entry = popleft(priority_list)
+			if(entry[TIMEOUT_INDEX] < world.time)
+				continue
 			var/datum/http_request/request = entry[REQUEST_INDEX]
 			request.begin_async()
 			in_process_tts_messages += list(entry)
 		var/list/less_priority_list = queued_tts_messages
 		while(length(in_process_tts_messages) < max_concurrent_requests && less_priority_list.len > 0)
-			var/list/entry = less_priority_list[less_priority_list.len]
-			less_priority_list.len--
+			var/list/entry = popleft(less_priority_list)
+			if(entry[TIMEOUT_INDEX] < world.time)
+				continue
 			var/datum/http_request/request = entry[REQUEST_INDEX]
 			request.begin_async()
 			in_process_tts_messages += list(entry)
