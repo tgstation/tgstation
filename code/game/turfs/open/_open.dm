@@ -223,7 +223,6 @@
 	if(HAS_TRAIT(slipper, TRAIT_UNFORTUNATE))
 		if(!(lube & SLIDE_ICE))
 			lube |= SLIDE
-		lube |= GALOSHES_DONT_HELP
 		slide_distance = 8
 
 	var/obj/buckled_obj
@@ -236,6 +235,7 @@
 			return FALSE
 		if(slipper.m_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
 			return FALSE
+
 	if(!(lube & SLIDE_ICE))
 		to_chat(slipper, span_notice("You slipped[ O ? " on the [O.name]" : ""]!"))
 		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)

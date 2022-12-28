@@ -373,18 +373,21 @@
 
 /obj/machinery/microwave/proc/cook(mob/cooker)
 	if(machine_stat & (NOPOWER|BROKEN))
-		return
+		return FALSE
 	if(operating || broken > 0 || panel_open || !anchored || dirty >= MAX_MICROWAVE_DIRTINESS)
-		return
+		return FALSE
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
+	if(HAS_TRAIT(cooker, TRAIT_UNFORTUNATE) && prob(7))
+		muck()
+		return TRUE
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
 		muck()
-		return
+		return TRUE
 
 	// How many items are we cooking that aren't already food items
 	var/non_food_ingedients = length(ingredients)
@@ -395,7 +398,7 @@
 	// If we're cooking non-food items we can fail randomly
 	if(length(non_food_ingedients) && prob(min(dirty * 5, 100)))
 		start_can_fail(cooker)
-		return
+		return TRUE
 
 	start(cooker)
 
@@ -456,6 +459,7 @@
 	operating = FALSE
 
 	var/metal_amount = 0
+	var/unlucky = HAS_TRAIT(cooker, TRAIT_UNFORTUNATE) && prob(10)
 	for(var/obj/item/cooked_item in ingredients)
 		var/sigreturn = cooked_item.microwave_act(src, cooker, randomize_pixel_offset = ingredients.len)
 		if(sigreturn & COMPONENT_MICROWAVE_SUCCESS)
@@ -467,12 +471,14 @@
 
 		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
 
-	if(metal_amount)
+	if(unlucky || metal_amount)
 		spark()
 		broken = REALLY_BROKEN
-		if(prob(max(metal_amount / 2, 33)))
+		if(metal_amount && unlucky || prob(max(metal_amount / 2, 33)))
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
-
+		else
+			if(prob(33)) // Someone's having a very bad day
+				explosion(src, light_impact_range = 2, flame_range = 1)
 	else
 		dump_inventory_contents()
 

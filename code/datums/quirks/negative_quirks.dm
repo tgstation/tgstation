@@ -1135,7 +1135,7 @@
 
 /datum/quirk/unfortunate
 	name = "Unfortunate"
-	desc = "You are cursed with bad luck. You greatly suffer from accidents and mishaps. When it rains, it pours."
+	desc = "You are cursed with bad luck. You are much more likely to suffer from accidents and mishaps. When it rains, it pours."
 	icon = "cloud-showers-heavy"
 	value = -8
 	mob_trait = TRAIT_UNFORTUNATE
@@ -1145,4 +1145,4 @@
 	hardcore_value = 8
 
 /datum/quirk/unfortunate/add(client/client_source)
-	user.AddComponent(/datum/component/omen, silent = TRUE, permanent = TRUE)
+	quirk_holder.AddComponent(/datum/component/omen, silent = TRUE, _permanent = TRUE, _quirk = TRUE)
