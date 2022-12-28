@@ -61,7 +61,7 @@
 
 /datum/chemical_reaction/New()
 	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src,.proc/update_info))
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(update_info)))
 
 /**
  * Updates information during the roundstart
@@ -132,22 +132,8 @@
 		if(!reagent)
 			continue
 		//Split like this so it's easier for people to edit this function in a child
-		convert_into_failed(reagent, holder)
 		reaction_clear_check(reagent, holder)
 	holder.chem_temp = cached_temp
-
-/**
- * Converts a reagent into the type specified by the failed_chem var of the input reagent
- *
- * Arguments:
- * * reagent - the target reagent to convert
- */
-/datum/chemical_reaction/proc/convert_into_failed(datum/reagent/reagent, datum/reagents/holder)
-	if(reagent.purity < purity_min && reagent.failed_chem)
-		var/cached_volume = reagent.volume
-		holder.remove_reagent(reagent.type, cached_volume, FALSE)
-		holder.add_reagent(reagent.failed_chem, cached_volume, FALSE, added_purity = 1)
-		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[type] failed reactions")
 
 /**
  * REACTION_CLEAR handler
@@ -168,15 +154,8 @@
 		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem)
 			if(reagent.inverse_chem_val > reagent.purity)
 				holder.remove_reagent(reagent.type, cached_volume, FALSE)
-				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = 1-cached_purity)
+				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = reagent.get_inverse_purity(cached_purity))
 				return
-
-		if((reaction_flags & REACTION_CLEAR_IMPURE) && reagent.impure_chem)
-			var/impureVol = cached_volume * (1 - reagent.purity)
-			holder.remove_reagent(reagent.type, (impureVol), FALSE)
-			holder.add_reagent(reagent.impure_chem, impureVol, FALSE, added_purity = 1-cached_purity)
-			reagent.creation_purity = cached_purity
-			reagent.chemical_flags = reagent.chemical_flags | REAGENT_DONOTSPLIT
 
 /**
  * Occurs when a reation is overheated (i.e. past it's overheatTemp)
@@ -288,10 +267,10 @@
 		else
 			if(setting_type)
 				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 2)
 			else
 				if(step_towards(X, T) && moving_power > 1)
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_towards), X, T), 2)
 
 //////////////////Generic explosions/failures////////////////////
 // It is HIGHLY, HIGHLY recomended that you consume all/a good volume of the reagents/products in an explosion - because it will just keep going forever until the reaction stops
@@ -367,10 +346,6 @@
 			continue
 		if(reagent.inverse_chem)
 			invert_reagents.add_reagent(reagent.inverse_chem, reagent.volume, no_react = TRUE)
-			holder.remove_reagent(reagent.type, reagent.volume)
-			continue
-		else if (reagent.impure_chem && accept_impure)
-			invert_reagents.add_reagent(reagent.impure_chem, reagent.volume, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
 			continue
 		invert_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
@@ -504,7 +479,7 @@
 */
 /datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50 SECONDS, snowball_chance = 0)
 	for(var/any_turf in circle_range_turfs(center = get_turf(holder.my_atom), radius = radius))
-		if(!istype(any_turf, /turf/open))
+		if(!isopenturf(any_turf))
 			continue
 		var/turf/open/open_turf = any_turf
 		open_turf.MakeSlippery(TURF_WET_PERMAFROST, freeze_duration, freeze_duration, freeze_duration)

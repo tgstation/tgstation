@@ -19,7 +19,7 @@
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
 	sharpness = SHARP_EDGED // i know the whole point of spears is that they're pointy, but edged is more devastating at the moment so
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
 	bare_wound_bonus = 15
 	/// For explosive spears, what we cry out when we use this to bap someone
@@ -31,15 +31,25 @@
 	/// How much damage to do wielded
 	var/force_wielded = 18
 
-/obj/item/spear/Initialize()
+/datum/armor/item_spear
+	fire = 50
+	acid = 30
+
+/obj/item/spear/Initialize(mapload)
 	. = ..()
 	force = force_unwielded
-
-/obj/item/spear/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
+	//decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1")
+
+	AddComponent(/datum/component/butchering, \
+		speed = 10 SECONDS, \
+		effectiveness = 70, \
+	)
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force_unwielded, \
+		force_wielded = force_wielded, \
+		icon_wielded = "[icon_prefix]1", \
+	)
 	update_appearance()
 
 /obj/item/spear/update_icon_state()
@@ -97,6 +107,10 @@
 	icon_prefix = "spearbomb"
 	var/obj/item/grenade/explosive = null
 
+/datum/armor/item_spear
+	fire = 50
+	acid = 30
+
 /obj/item/spear/explosive/Initialize(mapload)
 	. = ..()
 	set_explosive(new /obj/item/grenade/iedcasing/spawned()) //For admin-spawned explosive lances
@@ -134,7 +148,7 @@
 	. += span_notice("Alt-click to set your war cry.")
 
 /obj/item/spear/explosive/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE))
+	if(user.canUseTopic(src, be_close = TRUE))
 		..()
 		if(istype(user) && loc == user)
 			var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)
@@ -172,6 +186,10 @@
 	attack_verb_simple = list("gore")
 	force_unwielded = 15
 	force_wielded = 25
+
+/datum/armor/item_spear
+	fire = 50
+	acid = 30
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()

@@ -122,7 +122,7 @@
 		{
 			"id": "caps_suit",
 			"name": "Apadyne Technologies Mk.2 R.I.O.T. Suit (Captain's Version)",
-			"desc": "A heavily customised Apadyne Technologies Mk.2 R.I.O.T. Suit, rebuilt and refitted to Nanotrasen's highest standards for issue to Station Captains.",
+			"desc": "A heavily customized Apadyne Technologies Mk.2 R.I.O.T. Suit, rebuilt and refitted to Nanotrasen's highest standards for issue to Station Captains.",
 			"rules": "{$On Equip}: tap the equipped card for 2 turns, without triggering the target card's effects.",
 			"icon_state": "captain_hardsuit",
 			"power": "-1",
@@ -234,7 +234,7 @@
 		{
 			"id": "chrono",
 			"name": "Chrono Legionnaire",
-			"desc": "Currently in the earliest stages of development, the Chrono Legionnaire project is expected to weaponise time itself.",
+			"desc": "Currently in the earliest stages of development, the Chrono Legionnaire project is expected to weaponize time itself.",
 			"rules": "If this card is destroyed or discarded, flip 3 coins. If the result has 2 or more heads, add this card back to your hand. Otherwise, send it to your graveyard.",
 			"icon_state": "chrono_legionnaire",
 			"power": "6",
@@ -640,7 +640,7 @@
 		{
 			"id": "jannie",
 			"name": "Janitor",
-			"desc": "A true testament to futility, they clean and they clean and they clean, knowing that there's no way they can clean it all. Yet, they perservere, knowing that without them, the crew would simply give in to their base animalistic nature.",
+			"desc": "A true testament to futility, they clean and they clean and they clean, knowing that there's no way they can clean it all. Yet, they persevere, knowing that without them, the crew would simply give in to their base animalistic nature.",
 			"rules": "{$Taunt}",
 			"icon_state": "janitor",
 			"power": "1",
@@ -738,7 +738,7 @@
 		{
 			"id": "miningborg",
 			"name": "Cyborg (Mining Shell)",
-			"desc": "Fitted with a drill and tracks, the Mining Shell is designed to hold up to the rigours of mining, be that on the hellish surface of Indecipheres, or in the silent vacuum of the asteroid belt.",
+			"desc": "Fitted with a drill and tracks, the Mining Shell is designed to hold up to the rigors of mining, be that on the hellish surface of Indecipheres, or in the silent vacuum of the asteroid belt.",
 			"rules": "{$Asimov}, at the end of your turn, if this card is not tapped, you may tap this card at the start of your next turn to gain 1 mana.",
 			"icon_state": "borg_miner",
 			"power": "3",
@@ -837,7 +837,7 @@
 			"id": "qm_head",
 			"name": "Quartermaster",
 			"desc": "Every Nanotrasen station has a Quartermaster, who controls the flow of cargo to and from the station, and by extension to and from the hands of the crew.",
-			"rules": "Pay 8 mana and permanantly tap this card: All cargo cards on your side of the field gain +2/+2 until this card leaves play.",
+			"rules": "Pay 8 mana and permanently tap this card: All cargo cards on your side of the field gain +2/+2 until this card leaves play.",
 			"icon_state": "qm_head",
 			"power": "6",
 			"resolve": "6",

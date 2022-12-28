@@ -6,7 +6,7 @@
 	anchored = FALSE
 	density = FALSE
 	var/deflector_icon_state
-	var/image/deflector_overlay
+	var/mutable_appearance/deflector_overlay
 	var/finished = FALSE
 	var/admin = FALSE //Can't be rotated or deconstructed
 	var/can_rotate = TRUE
@@ -14,7 +14,7 @@
 	var/framebuildstackamount = 5
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 0
-	var/list/allowed_projectile_typecache = list(/obj/projectile/beam)
+	var/list/allowed_projectile_typecache = list(/obj/projectile/beam, /obj/projectile/energy/nuclear_particle)
 	var/rotation_angle = -1
 
 /obj/structure/reflector/Initialize(mapload)
@@ -22,7 +22,10 @@
 	icon_state = "reflector_base"
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
 	if(deflector_icon_state)
-		deflector_overlay = image(icon, deflector_icon_state)
+		deflector_overlay = mutable_appearance(icon, deflector_icon_state)
+		// We offset our physical position DOWN, because TRANSFORM IS A FUCK
+		deflector_overlay.pixel_y = -32
+		deflector_overlay.pixel_z = 32
 		add_overlay(deflector_overlay)
 
 	if(rotation_angle == -1)
@@ -162,13 +165,13 @@
 		to_chat(user, span_warning("The rotation is locked!"))
 		return FALSE
 	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
-	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return FALSE
 	set_angle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		return
 	else if(finished)
 		rotate(user)

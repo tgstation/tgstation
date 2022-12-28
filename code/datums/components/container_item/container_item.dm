@@ -3,7 +3,7 @@
 
 /datum/component/container_item/Initialize()
 	. = ..()
-	RegisterSignal(parent, COMSIG_CONTAINER_TRY_ATTACH, .proc/try_attach)
+	RegisterSignal(parent, COMSIG_CONTAINER_TRY_ATTACH, PROC_REF(try_attach))
 
 /// Called when parent is added to the container.
 /datum/component/container_item/proc/try_attach(datum/source, atom/container, mob/user)

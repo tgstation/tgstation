@@ -10,21 +10,22 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-/obj/item/storage/drone_tools/ComponentInitialize()
-	. = ..()
 	var/static/list/drone_builtins = list(
 		/obj/item/crowbar/drone,
 		/obj/item/screwdriver/drone,
 		/obj/item/wrench/drone,
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
+		/obj/item/multitool/drone,
+		/obj/item/pipe_dispenser,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
 	)
-	var/datum/component/storage/storage_component = GetComponent(/datum/component/storage)
-	storage_component.max_combined_w_class = 40
-	storage_component.max_w_class = WEIGHT_CLASS_NORMAL
-	storage_component.max_items = 5
-	storage_component.rustle_sound = FALSE
-	storage_component.set_holdable(drone_builtins)
+	atom_storage.max_total_storage = 40
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 9
+	atom_storage.rustle_sound = FALSE
+	atom_storage.set_holdable(drone_builtins)
 
 
 /obj/item/storage/drone_tools/PopulateContents()
@@ -34,6 +35,10 @@
 	builtintools += new /obj/item/wrench/drone(src)
 	builtintools += new /obj/item/weldingtool/drone(src)
 	builtintools += new /obj/item/wirecutters/drone(src)
+	builtintools += new /obj/item/multitool/drone(src)
+	builtintools += new /obj/item/pipe_dispenser(src)
+	builtintools += new /obj/item/t_scanner(src)
+	builtintools += new /obj/item/analyzer(src)
 
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
@@ -90,3 +95,10 @@
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 
+/obj/item/multitool/drone
+	name = "built-in multitool"
+	desc = "A multitool built into your chassis."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "multitool_cyborg"
+	item_flags = NO_MAT_REDEMPTION
+	toolspeed = 0.5

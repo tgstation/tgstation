@@ -10,7 +10,7 @@
 #define HARM_ALARM_SAFETY_COOLDOWN (20 SECONDS)
 
 /obj/item/borg
-	icon = 'icons/mob/robot_items.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 
 /obj/item/borg/stun
 	name = "electrically-charged arm"
@@ -31,7 +31,7 @@
 
 	user.do_attack_animation(attacked_mob)
 	attacked_mob.Paralyze(100)
-	attacked_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+	attacked_mob.adjust_stutter(10 SECONDS)
 
 	attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \
 					span_userdanger("[user] prods you with [src]!"))
@@ -326,12 +326,12 @@
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
 			if(carbon.get_ear_protection())
 				continue
-			carbon.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/confusion)
+			carbon.adjust_confusion(6 SECONDS)
 
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
-		user.log_message("used a Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
+		user.log_message("used a Cyborg Harm Alarm", LOG_ATTACK)
 		if(iscyborg(user))
 			var/mob/living/silicon/robot/robot_user = user
 			to_chat(robot_user.connected_ai, "<br>[span_notice("NOTICE - Peacekeeping 'HARM ALARM' used by: [user]")]<br>")
@@ -341,14 +341,14 @@
 			var/bang_effect = carbon.soundbang_act(2, 0, 0, 5)
 			switch(bang_effect)
 				if(1)
-					carbon.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
-					carbon.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
-					carbon.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
+					carbon.adjust_confusion(5 SECONDS)
+					carbon.adjust_stutter(20 SECONDS)
+					carbon.adjust_jitter(20 SECONDS)
 				if(2)
 					carbon.Paralyze(40)
-					carbon.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
-					carbon.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
-					carbon.adjust_timed_status_effect(50 SECONDS, /datum/status_effect/jitter)
+					carbon.adjust_confusion(10 SECONDS)
+					carbon.adjust_stutter(30 SECONDS)
+					carbon.adjust_jitter(50 SECONDS)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
-		user.log_message("used an emagged Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
+		user.log_message("used an emagged Cyborg Harm Alarm", LOG_ATTACK)

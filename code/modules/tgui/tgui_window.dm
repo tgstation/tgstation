@@ -24,6 +24,7 @@
 	var/initial_inline_html
 	var/initial_inline_js
 	var/initial_inline_css
+	var/mouse_event_macro_set = FALSE
 
 /**
  * public
@@ -219,6 +220,8 @@
 /datum/tgui_window/proc/close(can_be_suspended = TRUE)
 	if(!client)
 		return
+	if(mouse_event_macro_set)
+		remove_mouse_macro()
 	if(can_be_suspended && can_be_suspended())
 		log_tgui(client,
 			context = "[id]/close (suspending)",
@@ -372,3 +375,41 @@
 
 /datum/tgui_window/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, id) && ..()
+
+
+/datum/tgui_window/proc/set_mouse_macro()
+	if(mouse_event_macro_set)
+		return
+
+	var/list/byondToTguiEventMap = list(
+		"MouseDown" = "byond/mousedown",
+		"MouseUp" = "byond/mouseup"
+	)
+
+	for(var/mouseMacro in byondToTguiEventMap)
+		var/command_template = ".output CONTROL PAYLOAD"
+		var/event_message = TGUI_CREATE_MESSAGE(byondToTguiEventMap[mouseMacro], null)
+		var target_control = is_browser \
+			? "[id]:update" \
+			: "[id].browser:update"
+		var/with_id = replacetext(command_template, "CONTROL", target_control)
+		var/full_command = replacetext(with_id, "PAYLOAD", event_message)
+
+		var/list/params = list()
+		params["parent"] = "default" //Technically this is external to tgui but whatever
+		params["name"] = mouseMacro
+		params["command"] = full_command
+
+		winset(client, "[mouseMacro]Window[id]Macro", params)
+	mouse_event_macro_set = TRUE
+
+/datum/tgui_window/proc/remove_mouse_macro()
+	if(!mouse_event_macro_set)
+		stack_trace("Unsetting mouse macro on tgui window that has none")
+	var/list/byondToTguiEventMap = list(
+		"MouseDown" = "byond/mousedown",
+		"MouseUp" = "byond/mouseup"
+	)
+	for(var/mouseMacro in byondToTguiEventMap)
+		winset(client, null, "[mouseMacro]Window[id]Macro.parent=null")
+	mouse_event_macro_set = FALSE

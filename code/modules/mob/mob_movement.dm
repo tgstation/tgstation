@@ -70,9 +70,9 @@
 	next_move_dir_sub = 0
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
-	if(!mob || !mob.loc)
+	if(!direct || !new_loc)
 		return FALSE
-	if(!new_loc || !direct)
+	if(!mob?.loc)
 		return FALSE
 	if(mob.notransform)
 		return FALSE //This is sota the goto stop mobs from moving var
@@ -106,9 +106,9 @@
 	if(!(L.mobility_flags & MOBILITY_MOVE))
 		return FALSE
 
-	if(isobj(mob.loc) || ismob(mob.loc)) //Inside an object, tell it we moved
-		var/atom/O = mob.loc
-		return O.relaymove(mob, direct)
+	if(ismovable(mob.loc)) //Inside an object, tell it we moved
+		var/atom/loc_atom = mob.loc
+		return loc_atom.relaymove(mob, direct)
 
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
@@ -118,7 +118,8 @@
 
 	//We are now going to move
 	var/add_delay = mob.cached_multiplicative_slowdown
-	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? SQRT_2 : 1 ) )) // set it now in case of pulled objects
+	var/new_glide_size = DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? SQRT_2 : 1 ) )
+	mob.set_glide_size(new_glide_size) // set it now in case of pulled objects
 	//If the move was recent, count using old_move_delay
 	//We want fractional behavior and all
 	if(old_move_delay + world.tick_lag > world.time)
@@ -137,10 +138,14 @@
 	if((direct & (direct - 1)) && mob.loc == new_loc) //moved diagonally successfully
 		add_delay *= SQRT_2
 
+	var/after_glide = 0
 	if(visual_delay)
-		mob.set_glide_size(visual_delay)
+		after_glide = visual_delay
 	else
-		mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
+		after_glide = DELAY_TO_GLIDE_SIZE(add_delay)
+
+	mob.set_glide_size(after_glide)
+
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
@@ -358,10 +363,12 @@
 /// Update the gravity status of this mob
 /mob/proc/update_gravity(has_gravity, override=FALSE)
 	var/speed_change = max(0, has_gravity - STANDARD_GRAVITY)
-	if(!speed_change)
+	if(!speed_change && gravity_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
-	else
+		gravity_slowdown = 0
+	else if(gravity_slowdown != speed_change)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
+		gravity_slowdown = speed_change
 
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth
@@ -522,6 +529,10 @@
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
 
+	if(ismovable(loc)) //Inside an object, tell it we moved
+		var/atom/loc_atom = loc
+		return loc_atom.relaymove(src, UP)
+
 	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS|ventcrawling_flag)) //Will we fall down if we go up?
 		if(buckled)
 			to_chat(src, span_warning("[buckled] is is not capable of flight."))
@@ -536,6 +547,16 @@
 /mob/verb/down()
 	set name = "Move Down"
 	set category = "IC"
+
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = SSmapping.get_turf_below(current_turf)
+	if(!below_turf)
+		to_chat(src, span_warning("There's nowhere to go in that direction!"))
+		return
+
+	if(ismovable(loc)) //Inside an object, tell it we moved
+		var/atom/loc_atom = loc
+		return loc_atom.relaymove(src, DOWN)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))

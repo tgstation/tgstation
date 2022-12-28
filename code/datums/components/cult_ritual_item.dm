@@ -15,8 +15,8 @@
 	var/list/turfs_that_boost_us
 	/// A list of all shields surrounding us while drawing certain runes (Nar'sie).
 	var/list/obj/structure/emergency_shield/cult/narsie/shields
-	/// An item action associated with our parent, to quick-draw runes.
-	var/datum/action/item_action/linked_action
+	/// Weakref to an action added to our parent item that allows for quick drawing runes
+	var/datum/weakref/linked_action_ref
 
 /datum/component/cult_ritual_item/Initialize(
 	examine_message,
@@ -35,22 +35,23 @@
 		src.turfs_that_boost_us = list(turfs_that_boost_us)
 
 	if(ispath(action))
-		linked_action = new action(parent)
+		var/obj/item/item_parent = parent
+		var/datum/action/added_action = item_parent.add_item_action(action)
+		linked_action_ref = WEAKREF(added_action)
 
 /datum/component/cult_ritual_item/Destroy(force, silent)
 	cleanup_shields()
-	if(linked_action)
-		QDEL_NULL(linked_action)
+	QDEL_NULL(linked_action_ref)
 	return ..()
 
 /datum/component/cult_ritual_item/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/try_scribe_rune)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_purge_holywater)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/try_hit_object)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, .proc/try_clear_rune)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(try_scribe_rune))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_purge_holywater))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(try_hit_object))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, PROC_REF(try_clear_rune))
 
 	if(examine_message)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/cult_ritual_item/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -91,7 +92,7 @@
 		to_chat(user, span_warning("You are already drawing a rune."))
 		return
 
-	INVOKE_ASYNC(src, .proc/start_scribe_rune, source, user)
+	INVOKE_ASYNC(src, PROC_REF(start_scribe_rune), source, user)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -111,7 +112,7 @@
 	if(!target.has_reagent(/datum/reagent/water/holywater))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_purge_holywater, target, user)
+	INVOKE_ASYNC(src, PROC_REF(do_purge_holywater), target, user)
 
 /*
  * Signal proc for [COMSIG_ITEM_ATTACK_OBJ].
@@ -124,11 +125,11 @@
 		return
 
 	if(istype(target, /obj/structure/girder/cult))
-		INVOKE_ASYNC(src, .proc/do_destroy_girder, target, cultist)
+		INVOKE_ASYNC(src, PROC_REF(do_destroy_girder), target, cultist)
 		return COMPONENT_NO_AFTERATTACK
 
 	if(istype(target, /obj/structure/destructible/cult))
-		INVOKE_ASYNC(src, .proc/do_unanchor_structure, target, cultist)
+		INVOKE_ASYNC(src, PROC_REF(do_unanchor_structure), target, cultist)
 		return COMPONENT_NO_AFTERATTACK
 
 /*
@@ -142,7 +143,7 @@
 		return
 
 	if(istype(target, /obj/effect/rune))
-		INVOKE_ASYNC(src, .proc/do_scrape_rune, target, cultist)
+		INVOKE_ASYNC(src, PROC_REF(do_scrape_rune), target, cultist)
 		return COMPONENT_NO_AFTERATTACK
 
 
@@ -217,14 +218,14 @@
 		return
 
 	if(rune.log_when_erased)
-		log_game("[rune.cultist_name] rune erased by [key_name(cultist)] with [parent].")
+		cultist.log_message("erased a [rune.cultist_name] rune with [parent].", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(cultist)] erased a [rune.cultist_name] rune with [parent].")
 
 	to_chat(cultist, span_notice("You carefully erase the [lowertext(rune.cultist_name)] rune."))
 	qdel(rune)
 
 /*
- * Wraps the entire act of [proc/do_scribe_rune] to ensure it properly enables or disables [var/drawing_a_rune].
+ * Wraps the entire act of [/proc/do_scribe_rune] to ensure it properly enables or disables [var/drawing_a_rune].)
  *
  * tool - the parent, source of the signal - the item inscribing the rune, casted to item.
  * cultist - the mob scribing the rune
@@ -327,7 +328,7 @@
 	made_rune.add_mob_blood(cultist)
 
 	to_chat(cultist, span_cult("The [lowertext(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
-	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune at [AREACOORD(made_rune)] using [parent] ([parent.type])", LOG_GAME)
+	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune using [parent] ([parent.type])", LOG_GAME)
 	SSblackbox.record_feedback("tally", "cult_runes_scribed", 1, made_rune.cultist_name)
 
 	return TRUE

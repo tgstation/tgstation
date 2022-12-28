@@ -8,7 +8,7 @@
 /area/icemoon/underground)
 "h" = (
 /obj/item/paper{
-	info = "We have managed to seal the beast inside, the last of its kind they say... unfortunately in doing so, it seems we have spawned creatures beyond our power to contain..."
+	default_raw_text = "We have managed to seal the beast inside, the last of its kind they say... unfortunately in doing so, it seems we have spawned creatures beyond our power to contain..."
 	},
 /obj/item/pen,
 /turf/open/misc/asteroid{

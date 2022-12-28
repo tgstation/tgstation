@@ -45,7 +45,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "h" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -54,7 +54,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "i" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -75,7 +75,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "n" = (
-/obj/machinery/mineral/equipment_vendor/golem,
+/obj/machinery/computer/order_console/mining/golem,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "o" = (

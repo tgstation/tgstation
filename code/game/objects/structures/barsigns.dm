@@ -6,11 +6,19 @@
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
 	integrity_failure = 0.5
-	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/sign_barsign
 	buildable_sign = FALSE
 
 	var/panel_open = FALSE
 	var/datum/barsign/chosen_sign
+
+/datum/armor/sign_barsign
+	melee = 20
+	bullet = 20
+	laser = 20
+	energy = 100
+	fire = 50
+	acid = 50
 
 /obj/structure/sign/barsign/Initialize(mapload)
 	. = ..()
@@ -22,7 +30,7 @@
 
 	icon_state = sign.icon
 
-	if(sign.name)
+	if(sign.rename_area)
 		name = "[initial(name)] ([sign.name])"
 	else
 		name = "[initial(name)]"
@@ -30,7 +38,7 @@
 	if(sign.desc)
 		desc = sign.desc
 
-	if(sign.rename_area && sign.name)
+	if(sign.rename_area)
 		rename_area(src, sign.name)
 
 	return sign
@@ -76,10 +84,10 @@
 
 /obj/structure/sign/barsign/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
-	if(!panel_open)
+	panel_open = !panel_open
+	if(panel_open)
 		to_chat(user, span_notice("You open the maintenance panel."))
 		set_sign(new /datum/barsign/hiddensigns/signoff)
-		panel_open = TRUE
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	to_chat(user, span_notice("You close the maintenance panel."))
 
@@ -89,7 +97,6 @@
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 	else
 		set_sign(chosen_sign)
-	panel_open = FALSE
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
@@ -138,15 +145,20 @@
 	var/list/names = list()
 	for(var/d in subtypesof(/datum/barsign))
 		var/datum/barsign/D = d
-		if(initial(D.name) && !initial(D.hidden))
+		if(!initial(D.hidden))
 			names += initial(D.name)
 	. = names
 
 /datum/barsign
-	var/name = "Name"
-	var/icon = "Icon"
-	var/desc = "desc"
+	/// User-visible name of the sign.
+	var/name
+	/// Icon state associated with this sign
+	var/icon
+	/// Description shown in the sign's examine text.
+	var/desc
+	/// Hidden from list of selectable options.
 	var/hidden = FALSE
+	/// Rename the area when this sign is selected.
 	var/rename_area = TRUE
 
 /datum/barsign/New()
@@ -304,7 +316,7 @@
 
 
 /datum/barsign/hiddensigns/empbarsign
-	name = null
+	name = "EMP'd"
 	icon = "empbarsign"
 	desc = "Something has gone very wrong."
 	rename_area = FALSE
@@ -315,7 +327,7 @@
 	desc = "Syndicate or die."
 
 /datum/barsign/hiddensigns/signoff
-	name = null
+	name = "Off"
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
 	rename_area = FALSE

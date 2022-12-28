@@ -59,16 +59,16 @@
 #define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
 
 //Shared cooldowns for actions
-#define MOB_SHARED_COOLDOWN_1 "mob_shared_cooldown_1"
-#define MOB_SHARED_COOLDOWN_2 "mob_shared_cooldown_2"
-#define MOB_SHARED_COOLDOWN_3 "mob_shared_cooldown_3"
+#define MOB_SHARED_COOLDOWN_1 (1<<0)
+#define MOB_SHARED_COOLDOWN_2 (1<<1)
+#define MOB_SHARED_COOLDOWN_3 (1<<2)
 
 //TIMER COOLDOWN MACROS
 
 #define COMSIG_CD_STOP(cd_index) "cooldown_[cd_index]"
 #define COMSIG_CD_RESET(cd_index) "cd_reset_[cd_index]"
 
-#define TIMER_COOLDOWN_START(cd_source, cd_index, cd_time) LAZYSET(cd_source.cooldowns, cd_index, addtimer(CALLBACK(GLOBAL_PROC, /proc/end_cooldown, cd_source, cd_index), cd_time))
+#define TIMER_COOLDOWN_START(cd_source, cd_index, cd_time) LAZYSET(cd_source.cooldowns, cd_index, addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(end_cooldown), cd_source, cd_index), cd_time))
 
 #define TIMER_COOLDOWN_CHECK(cd_source, cd_index) LAZYACCESS(cd_source.cooldowns, cd_index)
 
@@ -81,7 +81,7 @@
  * A bit more expensive than the regular timers, but can be reset before they end and the time left can be checked.
 */
 
-#define S_TIMER_COOLDOWN_START(cd_source, cd_index, cd_time) LAZYSET(cd_source.cooldowns, cd_index, addtimer(CALLBACK(GLOBAL_PROC, /proc/end_cooldown, cd_source, cd_index), cd_time, TIMER_STOPPABLE))
+#define S_TIMER_COOLDOWN_START(cd_source, cd_index, cd_time) LAZYSET(cd_source.cooldowns, cd_index, addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(end_cooldown), cd_source, cd_index), cd_time, TIMER_STOPPABLE))
 
 #define S_TIMER_COOLDOWN_RESET(cd_source, cd_index) reset_cooldown(cd_source, cd_index)
 

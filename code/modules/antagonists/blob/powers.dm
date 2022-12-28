@@ -173,7 +173,7 @@
 		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
 		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, [span_cultlarge("but will slowly die if not near the blob")] or if the factory that made you is killed.")
-		to_chat(blobber, "You can communicate with other blobbernauts and overminds via <b>:b</b>")
+		to_chat(blobber, "You can communicate with other blobbernauts and overminds <b>telepathically</b> by attempting to speak normally")
 		to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
 		to_chat(blobber, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
 	else
@@ -232,6 +232,8 @@
 	if(can_buy(BLOB_EXPAND_COST))
 		var/attacksuccess = FALSE
 		for(var/mob/living/L in T)
+			if(!L.can_blob_attack())
+				continue
 			if(ROLE_BLOB in L.faction) //no friendly/dead fire
 				continue
 			if(L.stat != DEAD)
@@ -298,7 +300,7 @@
 		for (var/_ in 1 to BLOB_POWER_REROLL_CHOICES)
 			var/datum/blobstrain/strain = pick_n_take(new_strains)
 
-			var/image/strain_icon = image('icons/mob/blob.dmi', "blob_core")
+			var/image/strain_icon = image('icons/mob/nonhuman-player/blob.dmi', "blob_core")
 			strain_icon.color = initial(strain.color)
 
 			var/info_text = span_boldnotice("[initial(strain.name)]")

@@ -11,7 +11,7 @@
 /obj/item/dna_probe
 	name = "DNA Sampler"
 	desc = "Can be used to take chemical and genetic samples of pretty much anything."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	inhand_icon_state = "sampler"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -49,7 +49,7 @@
 	if(allowed_scans & DNA_PROBE_SCAN_ANIMALS)
 		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
 		if(isanimal_or_basicmob(target) || is_type_in_typecache(target, non_simple_animals) || ismonkey(target))
-			if(istype(target, /mob/living/simple_animal/hostile/carp))
+			if(istype(target, /mob/living/basic/carp))
 				carp_dna_loaded = TRUE
 			var/mob/living/living_target = target
 			if(stored_dna_animal[living_target.type])
@@ -97,7 +97,8 @@
 	if(!do_after(user, CARP_MIX_DNA_TIMER))
 		return
 	var/mob/living/simple_animal/hostile/space_dragon/new_dragon = user.change_mob_type(/mob/living/simple_animal/hostile/space_dragon, location = loc, delete_old_mob = TRUE)
-	new_dragon.permanant_empower()
+	new_dragon.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	new_dragon.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	qdel(src)
 

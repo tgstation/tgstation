@@ -45,7 +45,7 @@
 		qdel(src)
 		return
 
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_act))
 
 	src.parent = WEAKREF(parent)
 	src.fingerprints = fingerprints
@@ -229,7 +229,7 @@
 
 /// Updates the blood displayed on parent
 /datum/forensics/proc/check_blood()
-	if(!isitem(parent.resolve()))
+	if(!parent || !isitem(parent.resolve()))
 		return
 	if(!length(blood_DNA))
 		return

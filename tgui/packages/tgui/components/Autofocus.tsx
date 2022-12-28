@@ -1,4 +1,4 @@
-import { Component, createRef } from "inferno";
+import { Component, createRef } from 'inferno';
 
 export class Autofocus extends Component {
   ref = createRef<HTMLDivElement>();

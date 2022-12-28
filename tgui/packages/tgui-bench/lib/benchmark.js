@@ -7,6 +7,7 @@
  * Manually stripped from useless junk by /tg/station13 maintainers.
  * Available under MIT license <https://mths.be/mit>
  */
+// prettier-ignore
 module.exports = (function() {
   'use strict';
 

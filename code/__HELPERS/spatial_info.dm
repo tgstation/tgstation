@@ -280,8 +280,7 @@
 	return turfs
 
 ///Returns a list of turfs around a center based on view()
-/proc/circle_view_turfs(center=usr,radius=3) //Is there even a diffrence between this proc and circle_range_turfs()?
-
+/proc/circle_view_turfs(center=usr,radius=3) //Is there even a diffrence between this proc and circle_range_turfs()? // Yes
 	var/turf/center_turf = get_turf(center)
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius + 0.5)
@@ -292,6 +291,31 @@
 		if(dx * dx + dy * dy <= rsq)
 			turfs += checked_turf
 	return turfs
+
+///Returns the list of turfs around the outside of a center based on RANGE_TURFS()
+/proc/border_diamond_range_turfs(atom/center = usr, radius = 3)
+	var/turf/center_turf = get_turf(center)
+	var/list/turfs = list()
+
+	for(var/turf/checked_turf as anything in RANGE_TURFS(radius, center_turf))
+		var/dx = checked_turf.x - center_turf.x
+		var/dy = checked_turf.y - center_turf.y
+		var/abs_sum = abs(dx) + abs(dy)
+		if(abs_sum == radius)
+			turfs += checked_turf
+	return turfs
+
+///Returns a slice of a list of turfs, defined by the ones that are inside the inner/outer angle's bounds
+/proc/slice_off_turfs(atom/center, list/turf/turfs, inner_angle, outer_angle)
+	var/turf/center_turf = get_turf(center)
+	var/list/sliced_turfs = list()
+
+	for(var/turf/checked_turf as anything in turfs)
+		var/angle_to = get_angle(center_turf, checked_turf)
+		if(angle_to < inner_angle || angle_to > outer_angle)
+			continue
+		sliced_turfs += checked_turf
+	return sliced_turfs
 
 /**
  * Get a bounding box of a list of atoms.

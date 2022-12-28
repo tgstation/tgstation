@@ -39,6 +39,10 @@
 #define COMSIG_GLOB_PRE_RANDOM_EVENT "!pre_random_event"
 	/// Do not allow this random event to continue.
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
+/// Called by (/datum/round_event_control/RunEvent).
+#define COMSIG_GLOB_RANDOM_EVENT "!random_event"
+	/// Do not allow this random event to continue.
+	#define CANCEL_RANDOM_EVENT (1<<0)
 /// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
 #define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
 /// a trapdoor remote has sent out a signal to link with a trapdoor
@@ -55,9 +59,9 @@
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
 #define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
 /// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
-#define COMSIG_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
+#define COMSIG_GLOB_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
 /// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
-#define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
+#define COMSIG_GLOB_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
 ///global mob logged in signal! (/mob/added_player)
 #define COMSIG_GLOB_MOB_LOGGED_IN "!mob_logged_in"
 
@@ -68,5 +72,5 @@
 
 /// Global signal sent when a light mechanism is completed (try_id)
 #define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
-///Global Signal sent when the crew wins the revolution (No arguments).
-#define COMSIG_GLOB_REVOLUTION_TAX_REMOVAL "!revolution_tax_removal"
+/// Global Signal sent when the crew wins the revolution (No arguments).
+#define COMSIG_GLOB_REVOLUTION_VICTORY "!revolution_victory"

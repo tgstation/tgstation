@@ -3,8 +3,8 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "assembly_holder"
 	inhand_icon_state = "assembly"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -28,13 +28,41 @@
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE
 
-
 /obj/item/assembly_holder/proc/assemble(obj/item/assembly/A, obj/item/assembly/A2, mob/user)
 	attach(A,user)
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
 	update_appearance()
 	SSblackbox.record_feedback("tally", "assembly_made", 1, "[initial(A.name)]-[initial(A2.name)]")
+
+/**
+ * on_attach: Pass on_attach message to child assemblies
+ *
+ */
+/obj/item/assembly_holder/proc/on_attach()
+	var/obj/item/newloc = loc
+	if(!newloc.IsSpecialAssembly() && !newloc.IsAssemblyHolder())
+		return
+	for(var/obj/item/assembly/assembly in assemblies)
+		assembly.on_attach()
+
+/obj/item/assembly_holder/proc/try_add_assembly(obj/item/assembly/attached_assembly, mob/user)
+	if(attached_assembly.secured)
+		balloon_alert(attached_assembly, "not attachable!")
+		return FALSE
+
+	if(LAZYLEN(assemblies) >= HOLDER_MAX_ASSEMBLIES)
+		balloon_alert(user, "too many assemblies!")
+		return FALSE
+
+	if(attached_assembly.assembly_flags & ASSEMBLY_NO_DUPLICATES)
+		if(locate(attached_assembly.type) in assemblies)
+			balloon_alert(user, "can't attach another of that!")
+			return FALSE
+
+	add_assembly(attached_assembly, user)
+	balloon_alert(user, "part attached")
+	return TRUE
 
 /**
  * Adds an assembly to the assembly holder
@@ -104,16 +132,15 @@
 	if(.)
 		return
 	for(var/obj/item/assembly/assembly as anything in assemblies)
-		assembly.attack_hand()
+		assembly.attack_hand(user, modifiers) // Note override in assembly.dm to prevent side effects here
 
 /obj/item/assembly_holder/attackby(obj/item/weapon, mob/user, params)
 	if(isassembly(weapon))
-		var/obj/item/assembly/attached_assembly = weapon
-		if(!attached_assembly.secured)
-			add_assembly(attached_assembly, user)
-			balloon_alert(user, "part added")
+		try_add_assembly(weapon, user)
 		return
+
 	return ..()
+
 /obj/item/assembly_holder/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
@@ -143,16 +170,14 @@
  * send a pulse to the assembly holder, which then calls this proc that actually activates the assemblies
  * Arguments:
  * * /obj/device - the device we sent the pulse from which called this proc
- * * normal - 	if this is a normal activation
- * * special - if this is a special activation
  */
-/obj/item/assembly_holder/proc/process_activation(obj/device, normal = TRUE, special = TRUE)
+/obj/item/assembly_holder/proc/process_activation(obj/device)
 	if(!device)
 		return FALSE
-	if(normal && LAZYLEN(assemblies) >= 2)
+	if(LAZYLEN(assemblies) >= 2)
 		for(var/obj/item/assembly/assembly as anything in assemblies)
-			if(LAZYACCESS(assemblies, assembly) != device)
-				assembly.pulsed(FALSE)
+			if(assembly != device)
+				assembly.pulsed()
 	if(master)
 		master.receive_signal()
 	return TRUE

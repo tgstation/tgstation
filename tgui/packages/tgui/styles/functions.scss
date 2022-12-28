@@ -23,7 +23,6 @@
   @return math.div($value, $value * 0 + 1);
 }
 
-
 //  Color
 // --------------------------------------------------------
 
@@ -32,7 +31,8 @@
   $scaled: hsl(
     color.hue($color),
     color.saturation($color),
-    color.lightness($color) * (1 + num($percent)));
+    color.lightness($color) * (1 + num($percent))
+  );
   $mixed: color.mix(#ffffff, $color, 100% * num($percent));
   @return color.mix($scaled, $mixed, 75%);
 }
@@ -43,7 +43,7 @@
   $colors: (
     'red': color.red($color),
     'green': color.green($color),
-    'blue': color.blue($color)
+    'blue': color.blue($color),
   );
 
   @each $name, $value in $colors {
@@ -51,14 +51,17 @@
     $value: math.div($value, 255);
     @if $value < 0.03928 {
       $value: math.div($value, 12.92);
-    }
-    @else {
-      $value: math.div($value + .055, 1.055);
+    } @else {
+      $value: math.div($value + 0.055, 1.055);
       $value: math.pow($value, 2.4);
     }
-    $colors: map.merge($colors, ($name: $value));
+    // prettier-ignore
+    $colors: map.merge($colors, (
+      $name: $value,
+    ));
   }
 
+  // prettier-ignore
   @return (map.get($colors, 'red') * .2126)
     + (map.get($colors, 'green') * .7152)
     + (map.get($colors, 'blue') * .0722);
@@ -70,5 +73,6 @@
   @return color.mix(
     color.change($color-rgba, $alpha: 1),
     $color-background,
-    color.alpha($color-rgba) * 100%);
+    color.alpha($color-rgba) * 100%
+  );
 }

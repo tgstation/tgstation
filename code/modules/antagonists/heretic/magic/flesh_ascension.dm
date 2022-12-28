@@ -1,66 +1,66 @@
-/obj/effect/proc_holder/spell/targeted/shed_human_form
+/datum/action/cooldown/spell/shapeshift/shed_human_form
 	name = "Shed form"
-	desc = "Shed your fragile form, become one with the arms, become one with the emperor."
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "worm_ascend"
+	desc = "Shed your fragile form, become one with the arms, become one with the emperor. \
+		Causes heavy amounts of brain damage and sanity loss to nearby mortals."
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "worm_ascend"
+
+	school = SCHOOL_FORBIDDEN
+
 	invocation = "REALITY UNCOIL!"
 	invocation_type = INVOCATION_SHOUT
-	school = SCHOOL_FORBIDDEN
-	clothes_req = FALSE
-	action_background_icon_state = "bg_ecult"
-	range = -1
-	include_user = TRUE
-	charge_max = 100
+	spell_requirements = NONE
+
+	possible_shapes = list(/mob/living/simple_animal/hostile/heretic_summon/armsy/prime)
+
 	/// The length of our new wormy when we shed.
 	var/segment_length = 10
+	/// The radius around us that we cause brain damage / sanity damage to.
+	var/scare_radius = 9
 
-/obj/effect/proc_holder/spell/targeted/shed_human_form/cast(list/targets, mob/user)
-	. = ..()
-	var/mob/living/target = user
-	var/mob/living/mob_inside = locate() in target.contents - target
+/datum/action/cooldown/spell/shapeshift/shed_human_form/do_shapeshift(mob/living/caster)
+	// When we transform into the worm, everyone nearby gets freaked out
+	for(var/mob/living/carbon/human/nearby_human in view(scare_radius, caster))
+		if(IS_HERETIC_OR_MONSTER(nearby_human) || nearby_human == caster)
+			continue
 
-	if(!mob_inside)
-		var/mob/living/simple_animal/hostile/heretic_summon/armsy/prime/outside = new(user.loc, TRUE, segment_length)
-		target.mind.transfer_to(outside, TRUE)
-		target.forceMove(outside)
-		target.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_ASCENSION_EFFECT)
-		for(var/mob/living/carbon/human/nearby_human in view(9, outside) - target)
-			if(IS_HERETIC_OR_MONSTER(nearby_human))
-				continue
-			SEND_SIGNAL(nearby_human, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
-			///They see the very reality uncoil before their eyes.
-			if(prob(25))
-				var/trauma = pick(subtypesof(BRAIN_TRAUMA_MILD) + subtypesof(BRAIN_TRAUMA_SEVERE))
-				nearby_human.gain_trauma(new trauma(), TRAUMA_RESILIENCE_LOBOTOMY)
-		return
+		// 25% chance to cause a trauma
+		if(prob(25))
+			var/datum/brain_trauma/trauma = pick(subtypesof(BRAIN_TRAUMA_MILD) + subtypesof(BRAIN_TRAUMA_SEVERE))
+			nearby_human.gain_trauma(trauma, TRAUMA_RESILIENCE_LOBOTOMY)
+		// And a negative moodlet
+		nearby_human.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
-	if(iscarbon(mob_inside))
-		var/mob/living/simple_animal/hostile/heretic_summon/armsy/prime/armsy = target
-		if(mob_inside.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_ASCENSION_EFFECT))
-			mob_inside.forceMove(armsy.loc)
-		armsy.mind.transfer_to(mob_inside, TRUE)
-		segment_length = armsy.get_length()
-		qdel(armsy)
-		return
+	return ..()
 
-/obj/effect/proc_holder/spell/targeted/worm_contract
+/datum/action/cooldown/spell/shapeshift/shed_human_form/do_unshapeshift(mob/living/simple_animal/hostile/heretic_summon/armsy/caster)
+	if(istype(caster))
+		segment_length = caster.get_length()
+
+	return ..()
+
+/datum/action/cooldown/spell/shapeshift/shed_human_form/create_shapeshift_mob(atom/loc)
+	return new shapeshift_type(loc, TRUE, segment_length)
+
+/datum/action/cooldown/spell/worm_contract
 	name = "Force Contract"
 	desc = "Forces your body to contract onto a single tile."
-	invocation_type = INVOCATION_NONE
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "worm_contract"
+
 	school = SCHOOL_FORBIDDEN
-	clothes_req = FALSE
-	action_background_icon_state = "bg_ecult"
-	range = -1
-	include_user = TRUE
-	charge_max = 300
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "worm_contract"
+	cooldown_time = 30 SECONDS
 
-/obj/effect/proc_holder/spell/targeted/worm_contract/cast(list/targets, mob/user)
+	invocation_type = INVOCATION_NONE
+	spell_requirements = NONE
+
+/datum/action/cooldown/spell/worm_contract/is_valid_target(atom/cast_on)
+	return istype(cast_on, /mob/living/simple_animal/hostile/heretic_summon/armsy)
+
+/datum/action/cooldown/spell/worm_contract/cast(mob/living/simple_animal/hostile/heretic_summon/armsy/cast_on)
 	. = ..()
-	if(!istype(user, /mob/living/simple_animal/hostile/heretic_summon/armsy))
-		to_chat(user, span_userdanger("You try to contract your muscles, but nothing happens..."))
-		return
-
-	var/mob/living/simple_animal/hostile/heretic_summon/armsy/lord_of_night = user
-	lord_of_night.contract_next_chain_into_single_tile()
+	cast_on.contract_next_chain_into_single_tile()

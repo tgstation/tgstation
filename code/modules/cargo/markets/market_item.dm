@@ -53,7 +53,7 @@
 	// SSblackmarket takes care of the shipping.
 	if(SSblackmarket.queue_item(purchase))
 		stock--
-		log_game("[key_name(buyer)] has succesfully purchased [name] using [shipping_method] for shipping.")
+		buyer.log_message("has succesfully purchased [name] using [shipping_method] for shipping.", LOG_ECON)
 		return TRUE
 	return FALSE
 

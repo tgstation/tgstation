@@ -3,13 +3,14 @@
 /obj/machinery/atmospherics/components/unary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "thermo_base"
+	plane = GAME_PLANE
 
 	name = "Temperature control unit"
 	desc = "Heats or cools gas in connected pipes."
 
 	density = TRUE
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/unary_thermomachine
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
 
@@ -32,6 +33,11 @@
 	var/base_heating = 140
 	var/base_cooling = 170
 	var/color_index = 1
+
+/datum/armor/unary_thermomachine
+	energy = 100
+	fire = 80
+	acid = 30
 
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
@@ -196,8 +202,9 @@
 	if(!panel_open)
 		return
 	color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
-	pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
-	visible_message("<span class='notice'>You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]].")
+	set_pipe_color(GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]])
+	visible_message(span_notice("[user] set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."), ignored_mobs = user)
+	to_chat(user, span_notice("You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."))
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -293,6 +300,11 @@
 	on = TRUE
 	icon_state = "thermo_base_1"
 
+/datum/armor/unary_thermomachine
+	energy = 100
+	fire = 80
+	acid = 30
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
 	if(target_temperature == initial(target_temperature))
@@ -301,6 +313,11 @@
 	name = "Cold room temperature control unit"
 	icon_state = "thermo_base_1"
 	greyscale_colors = COLOR_CYAN
+
+/datum/armor/unary_thermomachine
+	energy = 100
+	fire = 80
+	acid = 30
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
 	. = ..()

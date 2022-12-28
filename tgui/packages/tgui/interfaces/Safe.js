@@ -2,35 +2,26 @@ import { Fragment } from 'inferno';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, Section } from '../components';
-import { Window } from "../layouts";
+import { Window } from '../layouts';
 
 export const Safe = (properties, context) => {
   const { act, data } = useBackend(context);
-  const {
-    dial,
-    open,
-  } = data;
+  const { dial, open } = data;
   return (
-    <Window
-      width={625}
-      height={800}
-      theme="ntos">
+    <Window width={625} height={800} theme="ntos">
       <Window.Content>
         <Box className="Safe__engraving">
           <Dialer />
           <Box>
-            <Box
-              className="Safe__engraving-hinge"
-              top="25%" />
-            <Box
-              className="Safe__engraving-hinge"
-              top="75%" />
+            <Box className="Safe__engraving-hinge" top="25%" />
+            <Box className="Safe__engraving-hinge" top="75%" />
           </Box>
           <Icon
             className="Safe__engraving-arrow"
             name="long-arrow-alt-down"
             size="5"
-          /><br />
+          />
+          <br />
           {open ? (
             <Contents />
           ) : (
@@ -39,14 +30,12 @@ export const Safe = (properties, context) => {
               className="Safe__dial"
               src={resolveAsset('safe_dial.png')}
               style={{
-                "transform": "rotate(-" + (3.6 * dial) + "deg)",
+                'transform': 'rotate(-' + 3.6 * dial + 'deg)',
               }}
             />
           )}
         </Box>
-        {!open && (
-          <Help />
-        )}
+        {!open && <Help />}
       </Window.Content>
     </Window>
   );
@@ -54,22 +43,19 @@ export const Safe = (properties, context) => {
 
 const Dialer = (properties, context) => {
   const { act, data } = useBackend(context);
-  const {
-    dial,
-    open,
-    locked,
-    broken,
-  } = data;
+  const { dial, open, locked, broken } = data;
   const dialButton = (amount, right) => {
     return (
       <Button
         disabled={open || (right && !locked) || broken}
-        icon={"arrow-" + (right ? "right" : "left")}
-        content={(right ? "Right" : "Left") + " " + amount}
-        iconPosition={right ? "right" : "left"}
-        onClick={() => act(!right ? "turnright" : "turnleft", {
-          num: amount,
-        })}
+        icon={'arrow-' + (right ? 'right' : 'left')}
+        content={(right ? 'Right' : 'Left') + ' ' + amount}
+        iconPosition={right ? 'right' : 'left'}
+        onClick={() =>
+          act(!right ? 'turnright' : 'turnleft', {
+            num: amount,
+          })
+        }
       />
     );
   };
@@ -77,45 +63,40 @@ const Dialer = (properties, context) => {
     <Box className="Safe__dialer">
       <Button
         disabled={locked && !broken}
-        icon={open ? "lock" : "lock-open"}
-        content={open ? "Close" : "Open"}
+        icon={open ? 'lock' : 'lock-open'}
+        content={open ? 'Close' : 'Open'}
         mb="0.5rem"
         onClick={() => act('open')}
-      /><br />
+      />
+      <br />
       <Box position="absolute">
         {[dialButton(50), dialButton(10), dialButton(1)]}
       </Box>
-      <Box
-        className="Safe__dialer-right"
-        position="absolute" right="5px">
+      <Box className="Safe__dialer-right" position="absolute" right="5px">
         {[dialButton(1, true), dialButton(10, true), dialButton(50, true)]}
       </Box>
-      <Box className="Safe__dialer-number">
-        {dial}
-      </Box>
+      <Box className="Safe__dialer-number">{dial}</Box>
     </Box>
   );
 };
 
 const Contents = (properties, context) => {
   const { act, data } = useBackend(context);
-  const {
-    contents,
-  } = data;
+  const { contents } = data;
   return (
-    <Box
-      className="Safe__contents"
-      overflow="auto">
+    <Box className="Safe__contents" overflow="auto">
       {contents.map((item, index) => (
         <Fragment key={item}>
           <Button
             mb="0.5rem"
-            onClick={() => act("retrieve", {
-              index: index + 1,
-            })}>
+            onClick={() =>
+              act('retrieve', {
+                index: index + 1,
+              })
+            }>
             <Box
               as="img"
-              src={item.sprite + ".png"}
+              src={item.sprite + '.png'}
               verticalAlign="middle"
               ml="-6px"
               mr="0.5rem"
@@ -135,10 +116,13 @@ const Help = (properties, context) => {
       className="Safe__help"
       title="Safe opening instructions (because you all keep forgetting)">
       <Box>
-        1. Turn the dial left to the first number.<br />
-        2. Turn the dial right to the second number.<br />
-        3. Continue repeating this process for each number,
-        switching between left and right each time.<br />
+        1. Turn the dial left to the first number.
+        <br />
+        2. Turn the dial right to the second number.
+        <br />
+        3. Continue repeating this process for each number, switching between
+        left and right each time.
+        <br />
         4. Open the safe.
       </Box>
       <Box bold>

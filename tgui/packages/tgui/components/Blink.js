@@ -42,8 +42,10 @@ export class Blink extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.interval !== this.props.interval
-      || prevProps.time !== this.props.time) {
+    if (
+      prevProps.interval !== this.props.interval ||
+      prevProps.time !== this.props.time
+    ) {
       this.createTimer();
     }
   }
@@ -55,9 +57,10 @@ export class Blink extends Component {
 
   render(props) {
     return (
-      <span style={{
-        visibility: this.state.hidden ? "hidden" : "visible",
-      }}>
+      <span
+        style={{
+          visibility: this.state.hidden ? 'hidden' : 'visible',
+        }}>
         {props.children}
       </span>
     );

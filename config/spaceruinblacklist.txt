@@ -19,7 +19,7 @@
 #_maps/RandomRuins/SpaceRuins/crashedclownship.dmm
 #_maps/RandomRuins/SpaceRuins/crashedship.dmm
 #_maps/RandomRuins/SpaceRuins/deepstorage.dmm
-#_maps/RandomRuins/SpaceRuins/derelict1.dmm
+#_maps/RandomRuins/SpaceRuins/derelict_sulaco.dmm
 #_maps/RandomRuins/SpaceRuins/derelict2.dmm
 #_maps/RandomRuins/SpaceRuins/derelict3.dmm
 #_maps/RandomRuins/SpaceRuins/derelict4.dmm

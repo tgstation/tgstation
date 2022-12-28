@@ -4,7 +4,7 @@
 	///The typepath of the reagent they that they affect
 	var/target_reagent_type
 	///The minimumvolume required in the beaker for them to have an effect
-	var/min_volume = 10 
+	var/min_volume = 10
 	///The value in which the associated type is modified
 	var/modifier = 1
 
@@ -15,7 +15,7 @@
 	return FALSE
 
 /datum/reagent/catalyst_agent/speed
-	name ="Speed catalyst agent"
+	name ="Speed Catalyst Agent"
 
 /datum/reagent/catalyst_agent/speed/consider_catalyst(datum/equilibrium/equilibrium)
 	. = ..()
@@ -24,7 +24,7 @@
 		equilibrium.time_deficit += (creation_purity)*(0.05 * modifier) //give the reaction a little boost too (40% faster)
 
 /datum/reagent/catalyst_agent/ph
-	name ="pH catalyst agent"
+	name ="pH Catalyst Agent"
 
 /datum/reagent/catalyst_agent/ph/consider_catalyst(datum/equilibrium/equilibrium)
 	. = ..()

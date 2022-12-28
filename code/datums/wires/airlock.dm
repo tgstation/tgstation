@@ -45,11 +45,21 @@
 
 /datum/wires/airlock/New(atom/holder)
 	wires = list(
-		WIRE_POWER1, WIRE_POWER2,
-		WIRE_BACKUP1, WIRE_BACKUP2,
-		WIRE_OPEN, WIRE_BOLTS, WIRE_IDSCAN, WIRE_AI,
-		WIRE_SHOCK, WIRE_SAFETY, WIRE_TIMING, WIRE_LIGHT,
-		WIRE_ZAP1, WIRE_ZAP2
+		WIRE_AI,
+		WIRE_BACKUP1,
+		WIRE_BACKUP2,
+		WIRE_BOLTS,
+		WIRE_IDSCAN,
+		WIRE_LIGHT,
+		WIRE_OPEN,
+		WIRE_POWER1,
+		WIRE_POWER2,
+		WIRE_SAFETY,
+		WIRE_SHOCK,
+		WIRE_TIMING,
+		WIRE_UNRESTRICTED_EXIT,
+		WIRE_ZAP1,
+		WIRE_ZAP2,
 	)
 	add_duds(2)
 	..()
@@ -77,39 +87,45 @@
 /datum/wires/airlock/get_status()
 	var/obj/machinery/door/airlock/A = holder
 	var/list/status = list()
-	status += "The door bolts [A.locked ? "have fallen!" : "look up."]"
+	status += "The door bolts [A.locked ? "have engaged!" : "have disengaged."]"
 	status += "The test light is [A.hasPower() ? "on" : "off"]."
 	status += "The AI connection light is [A.aiControlDisabled || (A.obj_flags & EMAGGED) ? "off" : "on"]."
 	status += "The check wiring light is [A.safe ? "off" : "on"]."
 	status += "The timer is powered [A.autoclose ? "on" : "off"]."
 	status += "The speed light is [A.normalspeed ? "on" : "off"]."
 	status += "The emergency light is [A.emergency ? "on" : "off"]."
+
+	if(A.unres_sensor)
+		status += "The unrestricted exit display is [A.unres_sides ? "indicating that it is letting people pass from the [dir2text(REVERSE_DIR(A.unres_sides))]" : "faintly flickering"]."
+	else
+		status += "The unrestricted exit display is completely inactive."
+
 	return status
 
 /datum/wires/airlock/on_pulse(wire)
 	set waitfor = FALSE
 	var/obj/machinery/door/airlock/A = holder
 	switch(wire)
-		if(WIRE_POWER1, WIRE_POWER2) // Pulse to loose power.
+		if(WIRE_POWER1, WIRE_POWER2) // Pulse to lose power.
 			A.loseMainPower()
-		if(WIRE_BACKUP1, WIRE_BACKUP2) // Pulse to loose backup power.
+		if(WIRE_BACKUP1, WIRE_BACKUP2) // Pulse to lose backup power.
 			A.loseBackupPower()
 		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is required).
 			if(A.obj_flags & EMAGGED)
 				return
 			if(!A.requiresID() || A.check_access(null))
 				if(A.density)
-					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/open, 1)
+					INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/machinery/door/airlock, open), 1)
 				else
-					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/close, 1)
-		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
+					INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/machinery/door/airlock, close), 1)
+		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raises if power is on).
 			if(!A.locked)
 				A.bolt()
 			else
 				if(A.hasPower())
 					A.unbolt()
 			A.update_appearance()
-		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash red lights.
+		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash the red lights.
 			if(A.hasPower() && A.density)
 				A.do_animate("deny")
 				if(A.emergency)
@@ -120,7 +136,7 @@
 				A.aiControlDisabled = AI_WIRE_DISABLED
 			else if(A.aiControlDisabled == AI_WIRE_DISABLED_HACKED)
 				A.aiControlDisabled = AI_WIRE_HACKED
-			addtimer(CALLBACK(A, /obj/machinery/door/airlock.proc/reset_ai_wire), 1 SECONDS)
+			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/door/airlock, reset_ai_wire)), 1 SECONDS)
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
 				A.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, usr)
@@ -134,6 +150,11 @@
 		if(WIRE_LIGHT)
 			A.lights = !A.lights
 			A.update_appearance()
+		if(WIRE_UNRESTRICTED_EXIT) // Pulse to switch the direction around by 180 degrees (North goes to South, East goes to West, vice-versa)
+			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
+				return
+			A.unres_sides = DIRFLIP(A.unres_sides)
+			A.update_appearance()
 
 /obj/machinery/door/airlock/proc/reset_ai_wire()
 	if(aiControlDisabled == AI_WIRE_DISABLED)
@@ -144,21 +165,21 @@
 /datum/wires/airlock/on_cut(wire, mend)
 	var/obj/machinery/door/airlock/A = holder
 	switch(wire)
-		if(WIRE_POWER1, WIRE_POWER2) // Cut to loose power, repair all to gain power.
+		if(WIRE_POWER1, WIRE_POWER2) // Cut to lose power, repair all to gain power.
 			if(mend && !is_cut(WIRE_POWER1) && !is_cut(WIRE_POWER2))
 				A.regainMainPower()
 			else
 				A.loseMainPower()
 			if(isliving(usr))
 				A.shock(usr, 50)
-		if(WIRE_BACKUP1, WIRE_BACKUP2) // Cut to loose backup power, repair all to gain backup power.
+		if(WIRE_BACKUP1, WIRE_BACKUP2) // Cut to lose backup power, repair all to gain backup power.
 			if(mend && !is_cut(WIRE_BACKUP1) && !is_cut(WIRE_BACKUP2))
 				A.regainBackupPower()
 			else
 				A.loseBackupPower()
 			if(isliving(usr))
 				A.shock(usr, 50)
-		if(WIRE_BOLTS) // Cut to drop bolts, mend does nothing.
+		if(WIRE_BOLTS) // Cut to engage bolts, mend does nothing.
 			if(!mend)
 				A.bolt()
 		if(WIRE_AI) // Cut to disable WIRE_AI control, mend to re-enable.
@@ -192,6 +213,16 @@
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
 			if(isliving(usr))
 				A.shock(usr, 50)
+		if(WIRE_UNRESTRICTED_EXIT) // If this wire is cut, the unrestricted helper goes away. If you mend it, it'll go "haywire" and pick a new direction at random. Might have to cut/mend a time or two to get the direction you want.
+			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions, or if an unrestricted helper is added to a door in mapping)
+				return
+			if(mend)
+				A.unres_sides = pick(NORTH, SOUTH, EAST, WEST)
+				A.update_appearance()
+			else
+				A.unres_sides = NONE
+				A.update_appearance()
+
 
 /datum/wires/airlock/can_reveal_wires(mob/user)
 	if(HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))

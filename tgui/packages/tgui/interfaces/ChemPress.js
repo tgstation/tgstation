@@ -16,33 +16,37 @@ export const ChemPress = (props, context) => {
     patch_styles = [],
   } = data;
   return (
-    <Window
-      width={300}
-      height={227}>
+    <Window width={300} height={227}>
       <Window.Content>
         <Section>
           <LabeledList>
             <LabeledList.Item label="Product">
               <Button.Checkbox
                 content="Pills"
-                checked={product === "pill"}
-                onClick={() => act('change_product', {
-                  product: "pill",
-                })}
+                checked={product === 'pill'}
+                onClick={() =>
+                  act('change_product', {
+                    product: 'pill',
+                  })
+                }
               />
               <Button.Checkbox
                 content="Patches"
-                checked={product === "patch"}
-                onClick={() => act('change_product', {
-                  product: "patch",
-                })}
+                checked={product === 'patch'}
+                onClick={() =>
+                  act('change_product', {
+                    product: 'patch',
+                  })
+                }
               />
               <Button.Checkbox
                 content="Bottles"
-                checked={product === "bottle"}
-                onClick={() => act('change_product', {
-                  product: "bottle",
-                })}
+                checked={product === 'bottle'}
+                onClick={() =>
+                  act('change_product', {
+                    product: 'bottle',
+                  })
+                }
               />
             </LabeledList.Item>
             <LabeledList.Item label="Volume">
@@ -54,49 +58,57 @@ export const ChemPress = (props, context) => {
                 maxValue={max_volume}
                 step={1}
                 stepPixelSize={2}
-                onChange={(e, value) => act('change_current_volume', {
-                  volume: value,
-                })} />
+                onChange={(e, value) =>
+                  act('change_current_volume', {
+                    volume: value,
+                  })
+                }
+              />
             </LabeledList.Item>
             <LabeledList.Item label="Name">
               <Input
                 value={product_name}
                 placeholder={product_name}
-                onChange={(e, value) => act('change_product_name', {
-                  name: value,
-                })} />
-              <Box as="span">
-                {product}
-              </Box>
+                onChange={(e, value) =>
+                  act('change_product_name', {
+                    name: value,
+                  })
+                }
+              />
+              <Box as="span">{product}</Box>
             </LabeledList.Item>
-            {product === "pill" && (
+            {product === 'pill' && (
               <LabeledList.Item label="Style">
-                {pill_styles.map(pill => (
+                {pill_styles.map((pill) => (
                   <Button
                     key={pill.id}
                     width="30px"
                     selected={pill.id === pill_style}
                     textAlign="center"
                     color="transparent"
-                    onClick={() => act('change_pill_style', {
-                      id: pill.id,
-                    })}>
+                    onClick={() =>
+                      act('change_pill_style', {
+                        id: pill.id,
+                      })
+                    }>
                     <Box mx={-1} className={pill.class_name} />
                   </Button>
                 ))}
               </LabeledList.Item>
             )}
-            {product === "patch" && (
+            {product === 'patch' && (
               <LabeledList.Item label="Style">
-                {patch_styles.map(patch => (
+                {patch_styles.map((patch) => (
                   <Button
                     key={patch.style}
                     selected={patch.style === patch_style}
                     textAlign="center"
                     color="transparent"
-                    onClick={() => act('change_patch_style', {
-                      patch_style: patch.style,
-                    })}>
+                    onClick={() =>
+                      act('change_patch_style', {
+                        patch_style: patch.style,
+                      })
+                    }>
                     <Box mb={0} mt={1} className={patch.class_name} />
                   </Button>
                 ))}

@@ -5,6 +5,7 @@
  */
 
 /* eslint-disable */
+// prettier-ignore
 (function () {
   'use strict';
 

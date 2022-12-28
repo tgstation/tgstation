@@ -1,11 +1,11 @@
 /obj/item/gun/magic
 	name = "staff of nothing"
 	desc = "This staff is boring to watch because even though it came first you've seen everything it can do in other staves for years."
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "staffofnothing"
 	inhand_icon_state = "staff"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi' //not really a gun and some toys use these inhands
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
@@ -27,14 +27,22 @@
 
 /obj/item/gun/magic/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
+
+
+/obj/item/gun/magic/fire_sounds()
+	var/frequency_to_use = sin((90/max_charges) * charges)
+	if(suppressed)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
+	else
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use)
 
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
  *
  * Adds uses to wands or staffs.
  */
-/obj/item/gun/magic/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+/obj/item/gun/magic/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
 	. = COMPONENT_ITEM_CHARGED
@@ -86,7 +94,7 @@
 		chambered = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_recharge))
 
 
 /obj/item/gun/magic/Destroy()
@@ -112,10 +120,10 @@
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, span_warning("The [name] whizzles quietly."))
 
-/obj/item/gun/magic/suicide_act(mob/user)
+/obj/item/gun/magic/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, fire_sound, 50, TRUE, -1)
-	return (FIRELOSS)
+	return FIRELOSS
 
 /obj/item/gun/magic/vv_edit_var(var_name, var_value)
 	. = ..()

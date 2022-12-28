@@ -1,0 +1,16 @@
+{
+	"fancy_hat": [
+		{
+			"type": "icon_state",
+			"icon_state": "fancy_feather",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "fancy_hat",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

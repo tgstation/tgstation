@@ -17,7 +17,7 @@
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
-	icon = 'icons/mob/penguins.dmi'
+	icon = 'icons/mob/simple/penguins.dmi'
 	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 3)
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT

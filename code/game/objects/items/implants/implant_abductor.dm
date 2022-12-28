@@ -3,7 +3,6 @@
 	desc = "Returns you to the mothership."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
-	activated = 1
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 60 SECONDS
 	var/on_cooldown

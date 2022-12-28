@@ -66,7 +66,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(..()) //if harm or disarm intent.
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
@@ -84,7 +84,7 @@
 			log_combat(user, src, "attacked")
 		return 1
 
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
 		var/damage = rand(5, 10)
@@ -92,19 +92,13 @@
 		if(.)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 
-/mob/living/simple_animal/attack_basic_mob(mob/living/basic/user, list/modifiers)
-	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		return attack_threshold_check(damage, user.melee_damage_type)
-
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	if(.)
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		return attack_threshold_check(damage, user.melee_damage_type)
 
-/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
 		if(M.is_adult)
@@ -114,6 +108,11 @@
 /mob/living/simple_animal/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
+	return ..()
+
+/mob/living/simple_animal/attack_drone_secondary(mob/living/simple_animal/drone/M)
+	if(M.combat_mode)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = MELEE, actuallydamage = TRUE)
@@ -152,6 +151,7 @@
 	if(prob(bomb_armor))
 		adjustBruteLoss(500)
 	else
+		investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 		gib()
 
 /// Called when a heavy explosive acts on this mob

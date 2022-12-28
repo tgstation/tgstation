@@ -18,7 +18,7 @@
  *    transfers reagents from prerequisite objects,
  *    deletes all prerequisite objects (even not needed for recipe at the moment).
  *
- *  /proc/select_recipe(list/datum/recipe/avaiable_recipes, obj/obj as obj, exact = 1)
+ *  /proc/select_recipe(list/datum/recipe/avaiable_recipes), obj/obj as obj, exact = 1)
  *    Wonderful function that select suitable recipe for you.
  *    obj is a machine (or magik hat) with prerequisites,
  *    exact = 0 forces algorithm to ignore superfluous stuff.

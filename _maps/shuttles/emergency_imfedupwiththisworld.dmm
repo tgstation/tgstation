@@ -4,10 +4,7 @@
 /area/shuttle/escape)
 "c" = (
 /obj/docking_port/mobile/emergency{
-	dwidth = 1;
-	height = 10;
-	name = "Oh Hi Mark";
-	width = 12
+	name = "Oh Hi Daniel"
 	},
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
@@ -70,7 +67,7 @@
 /area/shuttle/escape)
 "p" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -83,10 +80,10 @@
 /area/shuttle/escape)
 "r" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

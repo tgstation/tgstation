@@ -9,7 +9,7 @@
 	max_integrity = 200
 	ui_x = 1200
 	lights_power = 7
-	armor = list(MELEE = 40, BULLET = 20, LASER = 10, ENERGY = 20, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/working_ripley
 	max_equip_by_category = list(
 		MECHA_UTILITY = 2,
 		MECHA_POWER = 1,
@@ -43,6 +43,15 @@
 	/// How fast the mech is in normal pressure
 	var/slow_pressure_step_in = 2
 
+/datum/armor/working_ripley
+	melee = 40
+	bullet = 20
+	laser = 10
+	energy = 20
+	bomb = 40
+	fire = 100
+	acid = 100
+
 /obj/vehicle/sealed/mecha/working/ripley/Move()
 	. = ..()
 	update_pressure()
@@ -55,8 +64,12 @@
 
 /obj/vehicle/sealed/mecha/working/ripley/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list(MELEE = 10, BULLET = 5, LASER = 5))
+	AddComponent(/datum/component/armor_plate, 3, /obj/item/stack/sheet/animalhide/goliath_hide, /datum/armor/armor_plate_ripley_goliath)
 
+/datum/armor/armor_plate_ripley_goliath
+	melee = 10
+	bullet = 5
+	laser = 5
 
 /obj/vehicle/sealed/mecha/working/ripley/Destroy()
 	for(var/atom/movable/A in cargo)
@@ -76,11 +89,20 @@
 	max_temperature = 30000
 	max_integrity = 250
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_INT_TANK_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
-	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 60, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/ripley_mk2
 	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
 	enclosed = TRUE
 	enter_delay = 40
 	silicon_icon_state = null
+
+/datum/armor/ripley_mk2
+	melee = 40
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 60
+	fire = 100
+	acid = 100
 
 /obj/vehicle/sealed/mecha/working/ripley/mk2/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
@@ -125,6 +147,15 @@
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
 
+/datum/armor/ripley_mk2
+	melee = 40
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 60
+	fire = 100
+	acid = 100
+
 /obj/vehicle/sealed/mecha/working/ripley/mining/Initialize(mapload)
 	. = ..()
 	take_damage(125) // Low starting health
@@ -159,6 +190,15 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 	icon_state = "hauler"
 	base_icon_state = "hauler"
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
+
+/datum/armor/ripley_mk2
+	melee = 40
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 60
+	fire = 100
+	acid = 100
 
 /obj/vehicle/sealed/mecha/working/ripley/cargo/Initialize(mapload)
 	. = ..()
@@ -196,6 +236,15 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 	name = "Cargo compartment"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
+
+/datum/armor/ripley_mk2
+	melee = 40
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 60
+	fire = 100
+	acid = 100
 
 /obj/item/mecha_parts/mecha_equipment/ejector/get_snowflake_data()
 	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_EJECTOR, "cargo" = list())

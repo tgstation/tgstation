@@ -28,9 +28,9 @@
 	return ..()
 
 /datum/component/crate_carrier/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, .proc/on_unarm_attack)
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarm_attack))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /datum/component/crate_carrier/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_DEATH, COMSIG_PARENT_EXAMINE))

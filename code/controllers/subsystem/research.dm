@@ -13,19 +13,29 @@ SUBSYSTEM_DEF(research)
 	var/datum/techweb_node/error_node/error_node //These two are what you get if a node/design is deleted and somehow still stored in a console.
 	var/datum/design/error_design/error_design
 
-	//ERROR LOGGING
-	var/list/invalid_design_ids = list() //associative id = number of times
-	var/list/invalid_node_ids = list() //associative id = number of times
-	var/list/invalid_node_boost = list() //associative id = error message
-
+	///List of all research servers.
 	var/list/obj/machinery/rnd/server/servers = list()
 
-	var/list/techweb_nodes_starting = list() //associative id = TRUE
-	var/list/techweb_categories = list() //category name = list(node.id = TRUE)
-	var/list/techweb_boost_items = list() //associative double-layer path = list(id = list(point_type = point_discount))
-	var/list/techweb_nodes_hidden = list() //Node ids that should be hidden by default.
-	var/list/techweb_nodes_experimental = list() //Node ids that are exclusive to the BEPIS.
-	var/list/techweb_point_items = list( //path = list(point type = value)
+	//ERROR LOGGING
+	///associative id = number of times
+	var/list/invalid_design_ids = list()
+	///associative id = number of times
+	var/list/invalid_node_ids = list()
+	///associative id = error message
+	var/list/invalid_node_boost = list()
+
+	///associative id = TRUE
+	var/list/techweb_nodes_starting = list()
+	///category name = list(node.id = TRUE)
+	var/list/techweb_categories = list()
+	///associative double-layer path = list(id = list(point_type = point_discount))
+	var/list/techweb_boost_items = list()
+	///Node ids that should be hidden by default.
+	var/list/techweb_nodes_hidden = list()
+	///Node ids that are exclusive to the BEPIS.
+	var/list/techweb_nodes_experimental = list()
+	///path = list(point type = value)
+	var/list/techweb_point_items = list(
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
 	var/list/errored_datums = list()
@@ -54,13 +64,14 @@ SUBSYSTEM_DEF(research)
 		/obj/item/assembly/signaler/anomaly/vortex = MAX_CORES_VORTEX,
 		/obj/item/assembly/signaler/anomaly/flux = MAX_CORES_FLUX,
 		/obj/item/assembly/signaler/anomaly/hallucination = MAX_CORES_HALLUCINATION,
-		/obj/item/assembly/signaler/anomaly/delimber = MAX_CORES_DELIMBER,
+		/obj/item/assembly/signaler/anomaly/bioscrambler = MAX_CORES_BIOSCRAMBLER,
+		/obj/item/assembly/signaler/anomaly/dimensional = MAX_CORES_DIMENSIONAL,
 	)
 
 	/// Lookup list for ordnance briefers.
-	var/list/ordnance_experiments
+	var/list/ordnance_experiments = list()
 	/// Lookup list for scipaper partners.
-	var/list/scientific_partners
+	var/list/scientific_partners = list()
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
@@ -72,7 +83,7 @@ SUBSYSTEM_DEF(research)
 	autosort_categories()
 	error_design = new
 	error_node = new
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/research/fire()
 	var/list/bitcoins = list()
@@ -296,12 +307,10 @@ SUBSYSTEM_DEF(research)
 		CHECK_TICK
 
 /datum/controller/subsystem/research/proc/populate_ordnance_experiments()
-	ordnance_experiments = list()
-	scientific_partners = list()
-
 	for (var/datum/experiment/ordnance/experiment_path as anything in subtypesof(/datum/experiment/ordnance))
 		if (initial(experiment_path.experiment_proper))
 			ordnance_experiments += new experiment_path()
+
 	for(var/partner_path in subtypesof(/datum/scientific_partner))
 		var/datum/scientific_partner/partner = new partner_path
 		if(!partner.accepted_experiments.len)

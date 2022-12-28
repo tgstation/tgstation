@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(wiremod_composite)
 	/// The templates created and stored
 	var/list/templates = list()
 
-/datum/controller/subsystem/wiremod_composite/New()
+/datum/controller/subsystem/wiremod_composite/PreInit()
 	. = ..()
 	// This needs to execute before global variables have initialized.
 	for(var/datum/circuit_composite_template/type as anything in subtypesof(/datum/circuit_composite_template))
@@ -19,11 +19,11 @@ SUBSYSTEM_DEF(wiremod_composite)
 			continue
 		templates[initial(type.datatype)] = new type()
 
-/datum/controller/subsystem/wiremod_composite/Initialize(start_timeofday)
-	. = ..()
+/datum/controller/subsystem/wiremod_composite/Initialize()
 	for(var/type in templates)
 		var/datum/circuit_composite_template/template = templates[type]
 		template.Initialize()
+	return SS_INIT_SUCCESS
 
 /**
  * Used to produce a composite datatype using another datatype, or

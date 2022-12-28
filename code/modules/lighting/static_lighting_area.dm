@@ -1,9 +1,10 @@
+/// List of plane offset + 1 -> mutable appearance to use
+/// Fills with offsets as they are generated
+GLOBAL_LIST_INIT_TYPED(fullbright_overlays, /mutable_appearance, list(create_fullbright_overlay(0)))
 
-GLOBAL_DATUM_INIT(fullbright_overlay, /mutable_appearance, create_fullbright_overlay())
-
-/proc/create_fullbright_overlay()
+/proc/create_fullbright_overlay(offset)
 	var/mutable_appearance/lighting_effect = mutable_appearance('icons/effects/alphacolors.dmi', "white")
-	lighting_effect.plane = LIGHTING_PLANE
+	SET_PLANE_W_SCALAR(lighting_effect, LIGHTING_PLANE, offset)
 	lighting_effect.layer = LIGHTING_PRIMARY_LAYER
 	lighting_effect.blend_mode = BLEND_ADD
 	return lighting_effect

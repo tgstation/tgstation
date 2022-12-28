@@ -5,7 +5,7 @@
 #define DEFAULT_CHARGE_DRAIN 5
 
 /// Default time for a part to seal
-#define MOD_ACTIVATION_STEP_TIME 2 SECONDS
+#define MOD_ACTIVATION_STEP_TIME (2 SECONDS)
 
 /// Passive module, just acts when put in naturally.
 #define MODULE_PASSIVE 0

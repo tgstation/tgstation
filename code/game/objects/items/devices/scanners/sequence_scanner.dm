@@ -25,10 +25,8 @@
 	add_fingerprint(user)
 	//no scanning if its a husk or DNA-less Species
 	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		user.visible_message(
-			span_notice("[user] analyzes [target]'s genetic sequence."),
-			span_notice("You analyze [target]'s genetic sequence.")
-			)
+		user.visible_message(span_notice("[user] analyzes [target]'s genetic sequence."))
+		balloon_alert(user, "sequence analyzed")
 		gene_scan(target, user)
 	else
 		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))
@@ -82,7 +80,7 @@
 	var/answer = tgui_input_list(user, "Analyze Potential", "Sequence Analyzer", sort_list(options))
 	if(isnull(answer))
 		return
-	if(!ready || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !user.can_read(src))
+	if(!ready || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || !user.can_read(src))
 		return
 
 	var/sequence
@@ -102,7 +100,7 @@
 
 	ready = FALSE
 	icon_state = "[icon_state]_recharging"
-	addtimer(CALLBACK(src, .proc/recharge), cooldown, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(recharge)), cooldown, TIMER_UNIQUE)
 
 /obj/item/sequence_scanner/proc/recharge()
 	icon_state = initial(icon_state)

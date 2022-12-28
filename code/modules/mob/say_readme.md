@@ -56,7 +56,15 @@ global procs
 		Say() is the "mother-proc". It calls all the other procs required for speaking, but does little itself.
 		At the atom/movable level, say() just calls send_speech.
 
-	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mods)
+	try_speak()
+		Checks that our atom can speak the passed messages.
+		Includes feedback to the speaker if they cannot speak.
+
+	can_speak()
+		Checks that our atom can vocally speak at all.
+		Does not (and should not) include any feedback on its own.
+
+	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mods, message_range)
 		This proc handles hearing. What it does varies. For mobs, it treats the message with hearer-specific things
 		like language and deafness, then outputs it to the hearer.
 
@@ -67,14 +75,13 @@ global procs
 		Message treatment or composition of output are not done by this proc, these are handled by the rest of
 		say() and the hearer respectively.
 
-	lang_treat(message, atom/movable/speaker, message_langs, raw_message, spans, list/message_mods)
+	translate_language(message, atom/movable/speaker, message_langs, raw_message)
 		Modifies the message by comparing the languages of the speaker with the languages of the hearer.
 		Called on the hearer.
-		Passes message_mods to say_quote.
 
 	say_quote(input, spans, list/message_mods)
 		Adds a verb and quotes to a message. Also attaches span classes to a message.
-        Verbs are determined by verb_say/verb_ask/verb_yell/verb_sing variables. Called on the speaker.
+		Verbs are determined by verb_say/verb_ask/verb_yell/verb_sing variables. Called on the speaker.
 
 /mob
 	say_dead(message)
@@ -92,9 +99,6 @@ global procs
 	hivecheck()
 		Returns TRUE if the mob can hear and talk in the alien hivemind.
 
-	lingcheck()
-		Returns a bitflag representing who is trying to talk to the changeling hivemind.
-
 /mob/living
 	say(message, bubble_type, var/list/spans, sanitize, datum/language/languag, ignore_spam, forced)
 		The say() of mob_living is significantly more complex than that of objects.
@@ -106,19 +110,6 @@ global procs
 
 	check_emote(message)
 		Checks if the message begins with an * and is thus an emote.
-
-	can_speak(message)
-		Calls can_speak_basic() and can_speak_vocal(), if they both pass it passes
-
-	can_speak_basic(message)
-		Sees if the mob can "think" the message. Does not include vocalization or stat checks.
-		Vocalization checks are in can_speak_vocal, stat checks have to be done manually.
-		Called right before handle_inherent_channels()
-
-	can_speak_vocal(message)
-		Checks if the mob can vocalize their message. This is separate so, for example, muzzles don't block
-		hivemind chat.
-		Called right after handle_inherent_channels()
 
 	get_message_mods(message, list/message_mods)
 		Checks the start of the message for each of the components it could contain, stores that info in mods, and returns a trimmed list

@@ -1,8 +1,8 @@
-#define FIRST_DUCT_LAYER 1
-#define SECOND_DUCT_LAYER 2
-#define THIRD_DUCT_LAYER 4
-#define FOURTH_DUCT_LAYER 8
-#define FIFTH_DUCT_LAYER 16
+#define FIRST_DUCT_LAYER (1<<0)
+#define SECOND_DUCT_LAYER (1<<1)
+#define THIRD_DUCT_LAYER (1<<2)
+#define FOURTH_DUCT_LAYER (1<<3)
+#define FIFTH_DUCT_LAYER (1<<4)
 
 #define DUCT_LAYER_DEFAULT THIRD_DUCT_LAYER
 
@@ -28,8 +28,3 @@ GLOBAL_LIST_INIT(plumbing_layer_names, list(
 
 /// Name of omni color
 #define DUCT_COLOR_OMNI "omni"
-
-/// Cached radial menu options for plumbing RCD color picker
-GLOBAL_LIST_EMPTY(plumbing_color_menu_options)
-/// Cached radial menu options for plumbing RCD layer picker
-GLOBAL_LIST_EMPTY(plumbing_layer_menu_options)

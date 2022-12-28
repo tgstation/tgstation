@@ -3,6 +3,28 @@
 // Wabbajack statue, a sleeping frog statue that shoots bolts of change if
 // living carbons are put on its altar/tables
 
+/obj/machinery/power/emitter/energycannon
+	name = "Energy Cannon"
+	desc = "A heavy duty industrial laser."
+	icon = 'icons/obj/engine/singularity.dmi'
+	icon_state = "emitter_+a"
+	base_icon_state = "emitter_+a"
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+
+	use_power = NO_POWER_USE
+	idle_power_usage = 0
+	active_power_usage = 0
+
+	active = TRUE
+	locked = TRUE
+	welded = TRUE
+
+/obj/machinery/power/emitter/energycannon/RefreshParts()
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
 /obj/machinery/power/emitter/energycannon/magical
 	name = "wabbajack statue"
 	desc = "Who am I? What is my purpose in life? What do I mean by who am I?"
@@ -93,7 +115,7 @@
 		L.visible_message(span_revennotice("A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious."),
 			span_revendanger("[desc]"))
 		// Don't let them sit suround unconscious forever
-		addtimer(CALLBACK(src, .proc/sleeper_dreams, L), 100)
+		addtimer(CALLBACK(src, PROC_REF(sleeper_dreams), L), 100)
 
 	// Existing sleepers
 	for(var/i in found)
@@ -148,7 +170,7 @@
 	. = ..()
 	access_card.add_access(list(ACCESS_CENT_BAR))
 	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
+	RegisterSignal(src, COMSIG_ENTER_AREA, PROC_REF(check_barstaff_godmode))
 	check_barstaff_godmode()
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
@@ -171,7 +193,7 @@
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
+	RegisterSignal(src, COMSIG_ENTER_AREA, PROC_REF(check_barstaff_godmode))
 	check_barstaff_godmode()
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
@@ -199,7 +221,7 @@
 /obj/structure/table/wood/shuttle_bar/Initialize(mapload, _buildstack)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -306,11 +328,11 @@
 
 	if(account)
 		if(account.account_balance < threshold - payees[AM])
-			account.adjust_money(-account.account_balance)
+			account.adjust_money(-account.account_balance, "Scanner Gate: Entry Fee")
 			payees[AM] += account.account_balance
 		else
 			var/money_owed = threshold - payees[AM]
-			account.adjust_money(-money_owed)
+			account.adjust_money(-money_owed, "Scanner Gate: Partial Entry Fee")
 			payees[AM] += money_owed
 
 	//Here is all the possible paygate payment methods.
@@ -348,7 +370,7 @@
 
 	if(payees[AM] < threshold) //Suggestions for those with no arms/simple animals.
 		var/armless
-		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
+		if(!ishuman(AM) && !isslime(AM))
 			armless = TRUE
 		else
 			var/mob/living/carbon/human/H = AM
@@ -372,7 +394,7 @@
 			var/obj/item/holochip/HC = new /obj/item/holochip(AM.loc) //Change is made in holocredits exclusively.
 			HC.credits = payees[AM]
 			HC.name = "[HC.credits] credit holochip"
-			if(istype(AM, /mob/living/carbon/human))
+			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				if(!H.put_in_hands(HC))
 					AM.pulling = HC

@@ -31,3 +31,7 @@ mbox_full.ogg and mbox_end.ogg make use of The Ragtime Drummer by James Lent, in
 growl1.ogg and growl2.ogg in /sound/creatures/dog are adapted from Glitchedtones's Freesound shih-tzu uploads https://freesound.org/people/Glitchedtones/
 
 eject.ogg is by magedu, adapted from https://freesound.org/people/magedu/sounds/267832/
+
+alien_explode.ogg is adapted from zimbot's Frozen Lettuce upload https://freesound.org/people/zimbot/sounds/89378/ and little_dog4000's balloon pop https://freesound.org/people/little_dog4000/sounds/478764/
+
+alien_organ_cut.ogg is adapted from some CC 0 flesh sound, lesaucisson's swoosh https://freesound.org/people/lesaucisson/sounds/585256/, and a snippet of EminYILDIRIM's tree cutting clip https://freesound.org/people/EminYILDIRIM/sounds/608343/

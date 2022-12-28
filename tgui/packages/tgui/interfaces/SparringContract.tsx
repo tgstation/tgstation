@@ -8,30 +8,25 @@ import { Window } from '../layouts';
 const STAKES_HOLY_MATCH = 1;
 
 const weaponlist = [
-  "Fist Fight",
-  "Ceremonial Weapons",
-  "Melee Only",
-  "Any Weapons",
+  'Fist Fight',
+  'Ceremonial Weapons',
+  'Melee Only',
+  'Any Weapons',
 ];
 
-const stakelist = [
-  "No Stakes",
-  "Holy Match",
-  "Money Match",
-  "Your Soul",
-];
+const stakelist = ['No Stakes', 'Holy Match', 'Money Match', 'Your Soul'];
 
 const weaponblurb = [
-  "You will fight with your fists only. Any weapons will be considered a violation.",
-  "You can only fight with ceremonial weapons. You will be at a severe disadvantage without one!",
-  "You can fight with weapons, or fists if you have none. Ranged weapons are a violation.",
-  "You can fight with any and all weapons as you please. Try not to kill them, okay?",
+  'You will fight with your fists only. Any weapons will be considered a violation.',
+  'You can only fight with ceremonial weapons. You will be at a severe disadvantage without one!',
+  'You can fight with weapons, or fists if you have none. Ranged weapons are a violation.',
+  'You can fight with any and all weapons as you please. Try not to kill them, okay?',
 ];
 
 const stakesblurb = [
   "No stakes, just for fun. Who doesn't love some recreational sparring?",
   "A match for the chaplain's deity. The Chaplain suffers large consequences for failure, but advances their sect by winning.",
-  "A match with money on the line. Whomever wins takes all the money of whomever loses.",
+  'A match with money on the line. Whomever wins takes all the money of whomever loses.',
   "A lethal match with the loser's soul becoming under ownership of the winner.",
 ];
 
@@ -58,13 +53,11 @@ export const SparringContract = (props, context) => {
     in_area,
     no_chaplains,
   } = data;
-  const [weapon, setWeapon] = useLocalState(context, "weapon", set_weapon);
-  const [area, setArea] = useLocalState(context, "area", set_area);
-  const [stakes, setStakes] = useLocalState(context, "stakes", set_stakes);
+  const [weapon, setWeapon] = useLocalState(context, 'weapon', set_weapon);
+  const [area, setArea] = useLocalState(context, 'area', set_area);
+  const [stakes, setStakes] = useLocalState(context, 'stakes', set_stakes);
   return (
-    <Window
-      width={420}
-      height={380}>
+    <Window width={420} height={380}>
       <Window.Content>
         <Section fill>
           <Stack vertical fill>
@@ -95,101 +88,94 @@ export const SparringContract = (props, context) => {
                 <Stack.Item>
                   <Dropdown
                     width="100%"
-                    selected={weaponlist[weapon-1]}
+                    selected={weaponlist[weapon - 1]}
                     options={weaponlist}
-                    onSelected={value =>
-                      setWeapon(weaponlist.findIndex(title => (
-                        title === value
-                      ))+1)} />
+                    onSelected={(value) =>
+                      setWeapon(
+                        weaponlist.findIndex((title) => title === value) + 1
+                      )
+                    }
+                  />
                 </Stack.Item>
                 <Stack.Item>
-                  <BlockQuote>
-                    {weaponblurb[weapon-1]}
-                  </BlockQuote>
+                  <BlockQuote>{weaponblurb[weapon - 1]}</BlockQuote>
                 </Stack.Item>
               </Stack>
             </Stack.Item>
             <Stack.Item>
               <Stack vertical>
-                <Stack.Item fontSize="16px">
-                  Arena:
-                </Stack.Item>
+                <Stack.Item fontSize="16px">Arena:</Stack.Item>
                 <Stack.Item>
                   <Dropdown
                     width="100%"
                     selected={area}
                     options={possible_areas}
-                    onSelected={value => setArea(value)} />
+                    onSelected={(value) => setArea(value)}
+                  />
                 </Stack.Item>
                 <Stack.Item>
                   <BlockQuote>
-                    This fight will take place in the {area}.
-                    Leaving the arena mid-fight is a violation.
+                    This fight will take place in the {area}. Leaving the arena
+                    mid-fight is a violation.
                   </BlockQuote>
                 </Stack.Item>
               </Stack>
             </Stack.Item>
             <Stack.Item>
               <Stack vertical>
-                <Stack.Item fontSize="16px">
-                  Stakes:
-                </Stack.Item>
+                <Stack.Item fontSize="16px">Stakes:</Stack.Item>
                 <Stack.Item>
                   <Dropdown
                     width="100%"
-                    selected={stakelist[stakes-1]}
+                    selected={stakelist[stakes - 1]}
                     options={stakelist}
-                    onSelected={value =>
-                      setStakes(stakelist.findIndex(title => (
-                        title === value
-                      ))+1)} />
+                    onSelected={(value) =>
+                      setStakes(
+                        stakelist.findIndex((title) => title === value) + 1
+                      )
+                    }
+                  />
                 </Stack.Item>
                 <Stack.Item>
-                  <BlockQuote>
-                    {stakesblurb[stakes-1]}
-                  </BlockQuote>
+                  <BlockQuote>{stakesblurb[stakes - 1]}</BlockQuote>
                 </Stack.Item>
               </Stack>
             </Stack.Item>
             <Stack.Item grow>
               <Stack grow textAlign="center">
-                <Stack.Item
-                  fontSize={left_sign !== "none" && "14px"}
-                  grow>
-                  {left_sign === 'none' && (
+                <Stack.Item fontSize={left_sign !== 'none' && '14px'} grow>
+                  {(left_sign === 'none' && (
                     <Button
                       icon="pen"
-                      onClick={() => act('sign', {
-                        "weapon": weapon,
-                        "area": area,
-                        "stakes": stakes,
-                        "sign_position": "left",
-                      })}>
+                      onClick={() =>
+                        act('sign', {
+                          'weapon': weapon,
+                          'area': area,
+                          'stakes': stakes,
+                          'sign_position': 'left',
+                        })
+                      }>
                       Sign Here
                     </Button>
-                  ) || (
-                    left_sign
-                  )}
+                  )) ||
+                    left_sign}
                 </Stack.Item>
-                <Stack.Item fontSize="16px">
-                  VS
-                </Stack.Item>
-                <Stack.Item
-                  fontSize={right_sign !== "none" && "14px"}
-                  grow>
-                  {right_sign === "none" && (
+                <Stack.Item fontSize="16px">VS</Stack.Item>
+                <Stack.Item fontSize={right_sign !== 'none' && '14px'} grow>
+                  {(right_sign === 'none' && (
                     <Button
                       icon="pen"
-                      onClick={() => act('sign', {
-                        "weapon": weapon,
-                        "area": area,
-                        "stakes": stakes,
-                      })}>
+                      onClick={() =>
+                        act('sign', {
+                          'weapon': weapon,
+                          'area': area,
+                          'stakes': stakes,
+                        })
+                      }>
                       Sign Here
                     </Button>
-                  ) || (
-                    right_sign
-                  )}
+                  )) ||
+                    right_sign}
                 </Stack.Item>
               </Stack>
             </Stack.Item>
@@ -198,11 +184,11 @@ export const SparringContract = (props, context) => {
                 <Stack.Item grow>
                   <Button
                     disabled={
-                      !in_area
-                      || (no_chaplains && set_stakes === STAKES_HOLY_MATCH)
+                      !in_area ||
+                      (no_chaplains && set_stakes === STAKES_HOLY_MATCH)
                     }
                     icon="fist-raised"
-                    onClick={() => act('fight')} >
+                    onClick={() => act('fight')}>
                     FIGHT!
                   </Button>
                   <Button
@@ -212,35 +198,45 @@ export const SparringContract = (props, context) => {
                       this button.
                     `}
                     icon="door-open"
-                    onClick={() => act('clear')} >
+                    onClick={() => act('clear')}>
                     Clear
                   </Button>
                 </Stack.Item>
                 <Stack.Item>
                   <Button
-                    tooltip={in_area
-                      && "Both participants are present in the "+ area + "."
-                      || "Both participants need to be in the arena!"}
-                    color={in_area && "green" || "red"}
-                    icon="ring" >
+                    tooltip={
+                      (in_area &&
+                        'Both participants are present in the ' + area + '.') ||
+                      'Both participants need to be in the arena!'
+                    }
+                    color={(in_area && 'green') || 'red'}
+                    icon="ring">
                     Arena
                   </Button>
                   <Button
-                    tooltip={(left_sign !== "none" && right_sign !== "none")
-                      && "Both signatures present, terms agreed upon."
-                      || "You need signatures from both fighters on the terms!"}
-                    color={(left_sign !== "none" && right_sign !== "none")
-                      && "green"
-                      || "red"}
-                    icon="file-signature" >
+                    tooltip={
+                      (left_sign !== 'none' &&
+                        right_sign !== 'none' &&
+                        'Both signatures present, terms agreed upon.') ||
+                      'You need signatures from both fighters on the terms!'
+                    }
+                    color={
+                      (left_sign !== 'none' &&
+                        right_sign !== 'none' &&
+                        'green') ||
+                      'red'
+                    }
+                    icon="file-signature">
                     Signatures
                   </Button>
                   <Button
-                    tooltip={!no_chaplains
-                      && "At least one chaplain is present. Holy matches allowed."
-                      || "No chaplain present for this fight. No Holy Matches!"}
-                    color={!no_chaplains && "green" || "yellow"}
-                    icon="cross" >
+                    tooltip={
+                      (!no_chaplains &&
+                        'At least one chaplain is present. Holy matches allowed.') ||
+                      'No chaplain present for this fight. No Holy Matches!'
+                    }
+                    color={(!no_chaplains && 'green') || 'yellow'}
+                    icon="cross">
                     Chaplain
                   </Button>
                 </Stack.Item>

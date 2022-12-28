@@ -3,8 +3,8 @@
  * The overlay can be specified in new as the first paramter; if not set it defaults to rust_overlay's rust_default
  */
 /datum/element/rust
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
+	argument_hash_start_idx = 2
 	/// The rust image itself, since the icon and icon state are only used as an argument
 	var/image/rust_overlay
 
@@ -15,9 +15,9 @@
 	if(!rust_overlay)
 		rust_overlay = image(rust_icon, rust_icon_state)
 	ADD_TRAIT(target, TRAIT_RUSTY, ELEMENT_TRAIT(type))
-	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
-	RegisterSignal(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
+	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_rust_overlay))
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(handle_examine))
+	RegisterSignals(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), PROC_REF(secondary_tool_act))
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
 	target.update_icon(UPDATE_OVERLAYS)
 
@@ -40,23 +40,30 @@
 /// Because do_after sleeps we register the signal here and defer via an async call
 /datum/element/rust/proc/secondary_tool_act(atom/source, mob/user, obj/item/item)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/handle_tool_use, source, user, item)
+	INVOKE_ASYNC(src, PROC_REF(handle_tool_use), source, user, item)
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /// We call this from secondary_tool_act because we sleep with do_after
 /datum/element/rust/proc/handle_tool_use(atom/source, mob/user, obj/item/item)
 	switch(item.tool_behaviour)
 		if(TOOL_WELDER)
-			if(item.use(5))
-				user.balloon_alert(user, "burning off rust...")
-				if(!do_after(user, 5 SECONDS * item.toolspeed, source))
-					return
-				user.balloon_alert(user, "burned off rust")
-				Detach(source)
+			if(!item.tool_start_check(user, amount=5))
 				return
+
+			user.balloon_alert(user, "burning off rust...")
+
+			if(!item.use_tool(source, user, 5 SECONDS))
+				return
+			user.balloon_alert(user, "burned off rust")
+			Detach(source)
+			return
+
+
 		if(TOOL_RUSTSCRAPER)
+			if(!item.tool_start_check(user))
+				return
 			user.balloon_alert(user, "scraping off rust...")
-			if(!do_after(user, 2 SECONDS * item.toolspeed, source))
+			if(!item.use_tool(source, user, 2 SECONDS))
 				return
 			user.balloon_alert(user, "scraped off rust")
 			Detach(source)

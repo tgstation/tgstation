@@ -1,6 +1,7 @@
 /turf/open
 	plane = FLOOR_PLANE
-	var/slowdown = 0 //negative for faster, positive for slower
+	///negative for faster, positive for slower
+	var/slowdown = 0
 
 	var/footstep = null
 	var/barefootstep = null
@@ -17,7 +18,7 @@
 	return FALSE
 
 //direction is direction of travel of A
-/turf/open/zPassOut(atom/movable/A, direction, turf/destination)
+/turf/open/zPassOut(atom/movable/A, direction, turf/destination, allow_anchored_movement)
 	if(direction == UP)
 		for(var/obj/O in contents)
 			if(O.obj_flags & BLOCK_Z_OUT_UP)
@@ -39,6 +40,7 @@
 
 /turf/open/indestructible
 	name = "floor"
+	desc = "The floor you walk on. It looks near-impervious to damage."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
@@ -69,7 +71,7 @@
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
 
-/turf/open/indestructible/permalube/ComponentInitialize()
+/turf/open/indestructible/permalube/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_LUBE, INFINITY, 0, INFINITY, TRUE)
 
@@ -82,7 +84,7 @@
 	heavyfootstep = null
 	var/sound = 'sound/effects/clownstep1.ogg'
 
-/turf/open/indestructible/honk/ComponentInitialize()
+/turf/open/indestructible/honk/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_SUPERLUBE, INFINITY, 0, INFINITY, TRUE)
 
@@ -159,21 +161,23 @@
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
 	blocks_air = TRUE
+	init_air = FALSE
 	baseturfs = /turf/open/indestructible/airblock
 
-/turf/open/Initalize_Atmos(times_fired)
+/turf/open/Initalize_Atmos(time)
 	excited = FALSE
 	update_visuals()
 
-	current_cycle = times_fired
-	immediate_calculate_adjacent_turfs()
-	for(var/i in atmos_adjacent_turfs)
-		var/turf/open/enemy_tile = i
-		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-		if(!excited && air.compare(enemy_air))
+	current_cycle = time
+
+	init_immediate_calculate_adjacent_turfs()
+	for(var/turf/open/enemy_tile as anything in atmos_adjacent_turfs)
+		if(air.compare(enemy_tile.return_air()))
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			excited = TRUE
 			SSair.active_turfs += src
+			// No sense continuing to iterate
+			return
 
 /turf/open/GetHeatCapacity()
 	. = air.heat_capacity()
@@ -187,10 +191,9 @@
 
 /turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)
-		if(I.resistance_flags & FREEZE_PROOF)
-			continue
-		if(!(I.obj_flags & FROZEN))
-			I.make_frozen_visual()
+		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.obj_flags & FREEZE_PROOF))
+			I.AddElement(/datum/element/frozen)
+
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)
 			L.apply_status_effect(/datum/status_effect/freon)
@@ -204,15 +207,14 @@
 		M.apply_water()
 
 	wash(CLEAN_WASH)
-	for(var/am in src)
-		var/atom/movable/movable_content = am
+	for(var/atom/movable/movable_content as anything in src)
 		if(ismopable(movable_content)) // Will have already been washed by the wash call above at this point.
 			continue
 		movable_content.wash(CLEAN_WASH)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
-	if(slipper.movement_type & FLYING)
+	if(slipper.movement_type & (FLYING | FLOATING))
 		return FALSE
 	if(has_gravity(src))
 		var/obj/buckled_obj
@@ -230,6 +232,7 @@
 			playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 		SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
+		slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 		if(force_drop)
 			for(var/obj/item/I in slipper.held_items)
 				slipper.accident(I)
@@ -296,15 +299,23 @@
 /// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
 /// Building floors works
 /turf/open/proc/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles, user)
-	var/obj/structure/lattice/soon_to_be_floor = locate(/obj/structure/lattice, src)
-	if(!soon_to_be_floor)
-		to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
+	var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+	if(!has_valid_support() && !lattice)
+		balloon_alert(user, "needs support, place rods!")
 		return
 	if(!used_tiles.use(1))
-		to_chat(user, span_warning("You need one floor tile to build a floor!"))
+		balloon_alert(user, "need a floor tile to build!")
 		return
-
-	qdel(soon_to_be_floor)
+	
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-	to_chat(user, span_notice("You build a floor."))
-	PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/open/floor/plating/new_plating = PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	if(lattice)
+		qdel(lattice)
+	else
+		new_plating.lattice_underneath = FALSE
+
+/turf/open/proc/has_valid_support()
+	for (var/direction in GLOB.cardinals)
+		if(istype(get_step(src, direction), /turf/open/floor))
+			return TRUE
+	return FALSE

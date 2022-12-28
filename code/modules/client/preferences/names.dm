@@ -42,6 +42,7 @@
 /datum/preference/name/real_name/apply_to_human(mob/living/carbon/human/target, value)
 	target.real_name = value
 	target.name = value
+	target.log_mob_tag("RENAMED: [key_name(target)]")
 
 /datum/preference/name/real_name/create_informed_default_value(datum/preferences/preferences)
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)

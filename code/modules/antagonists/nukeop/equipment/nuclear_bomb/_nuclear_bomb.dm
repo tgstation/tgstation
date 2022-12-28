@@ -32,7 +32,7 @@ GLOBAL_VAR(station_nuke_source)
 	/// world time tracker for when we're going to explode
 	var/detonation_timer = null
 	/// The code we need to detonate this nuke. Starts as "admin", purposefully un-enterable
-	var/r_code = "ADMIN"
+	var/r_code = NUKE_CODE_UNSET
 	/// If TRUE, the correct code has been entered and we can start the nuke
 	var/yes_code = FALSE
 	/// Whether the nuke safety is on, can't explode if it is
@@ -62,7 +62,7 @@ GLOBAL_VAR(station_nuke_source)
 	STOP_PROCESSING(SSobj, core)
 	update_appearance()
 	SSpoints_of_interest.make_point_of_interest(src)
-	previous_level = get_security_level()
+	previous_level = SSsecurity_level.get_current_level_as_text()
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
@@ -449,9 +449,9 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/proc/arm_nuke(mob/armer)
 	var/turf/our_turf = get_turf(src)
 	message_admins("\The [src] was armed at [ADMIN_VERBOSEJMP(our_turf)] by [armer ? ADMIN_LOOKUPFLW(armer) : "an unknown user"].")
-	log_game("\The [src] was armed at [loc_name(our_turf)] by [armer ? key_name(armer) : "an unknown user"].")
+	armer.log_message("armed \the [src].", LOG_GAME)
 
-	previous_level = get_security_level()
+	previous_level = SSsecurity_level.get_current_level_as_number()
 	detonation_timer = world.time + (timer_set * 10)
 	for(var/obj/item/pinpointer/nuke/syndicate/nuke_pointer in GLOB.pinpointer_list)
 		nuke_pointer.switch_mode_to(TRACK_INFILTRATOR)
@@ -459,17 +459,17 @@ GLOBAL_VAR(station_nuke_source)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_ARMED, src)
 
 	countdown.start()
-	set_security_level("delta")
+	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	update_appearance()
 
 /// Disarms the nuke, reverting all pinpointers and the security level
 /obj/machinery/nuclearbomb/proc/disarm_nuke(mob/disarmer)
 	var/turf/our_turf = get_turf(src)
 	message_admins("\The [src] at [ADMIN_VERBOSEJMP(our_turf)] was disarmed by [disarmer ? ADMIN_LOOKUPFLW(disarmer) : "an unknown user"].")
-	log_game("\The [src] at [loc_name(our_turf)] was disarmed by [disarmer ? key_name(disarmer) : "an unknown user"].")
+	disarmer.log_message("disarmed \the [src].", LOG_GAME)
 
 	detonation_timer = null
-	set_security_level(previous_level)
+	SSsecurity_level.set_level(previous_level)
 
 	for(var/obj/item/pinpointer/nuke/syndicate/nuke_pointer in GLOB.pinpointer_list)
 		nuke_pointer.switch_mode_to(initial(nuke_pointer.mode))
@@ -501,7 +501,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /**
  * Begins the process of exploding the nuke.
- * [proc/explode] -> [proc/actually_explode] -> [proc/really_actually_explode]
+ * [proc/explode] -> [proc/actually_explode] -> [proc/really_actually_explode])
  *
  * Goes through a few timers and plays a cinematic.
  */
@@ -518,7 +518,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	if(SSticker?.mode)
 		SSticker.roundend_check_paused = TRUE
-	addtimer(CALLBACK(src, .proc/actually_explode), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(actually_explode)), 10 SECONDS)
 	return TRUE
 
 /obj/machinery/nuclearbomb/proc/actually_explode()
@@ -526,8 +526,6 @@ GLOBAL_VAR(station_nuke_source)
 		play_cinematic(/datum/cinematic/nuke/no_core, world)
 		SSticker.roundend_check_paused = FALSE
 		return
-
-	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 
 	var/detonation_status
 	var/turf/bomb_location = get_turf(src)
@@ -549,6 +547,7 @@ GLOBAL_VAR(station_nuke_source)
 
 		// Confirming good hits, the nuke hit the station
 		else
+			SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 			detonation_status = DETONATION_HIT_STATION
 			GLOB.station_was_nuked = TRUE
 
@@ -560,11 +559,6 @@ GLOBAL_VAR(station_nuke_source)
 	else
 		detonation_status = DETONATION_MISSED_STATION
 
-	// Missing the station will register a hostile environment, until it actually explodes
-	if(detonation_status == DETONATION_MISSED_STATION)
-		SSshuttle.registerHostileEnvironment(src)
-		SSshuttle.lockdown = TRUE
-
 	// Now go play the cinematic
 	GLOB.station_nuke_source = detonation_status
 	really_actually_explode(detonation_status)
@@ -573,7 +567,7 @@ GLOBAL_VAR(station_nuke_source)
 	return detonation_status
 
 /obj/machinery/nuclearbomb/proc/really_actually_explode(detonation_status)
-	play_cinematic(get_cinematic_type(detonation_status), world, CALLBACK(SSticker, /datum/controller/subsystem/ticker/proc/station_explosion_detonation, src))
+	play_cinematic(get_cinematic_type(detonation_status), world, CALLBACK(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, station_explosion_detonation), src))
 
 	var/turf/bomb_location = get_turf(src)
 	var/list/z_levels_to_blow = list()
@@ -591,7 +585,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /// Cause nuke effects to the passed z-levels.
 /obj/machinery/nuclearbomb/proc/nuke_effects(list/affected_z_levels)
-	INVOKE_ASYNC(GLOBAL_PROC, /proc/callback_on_everyone_on_z, affected_z_levels, CALLBACK(GLOBAL_PROC, /proc/nuke_gib), src)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(callback_on_everyone_on_z), affected_z_levels, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(nuke_gib)), src)
 
 /// Gets what type of cinematic this nuke showcases depending on where we detonated.
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(detonation_status)
@@ -618,6 +612,7 @@ GLOBAL_VAR(station_nuke_source)
 		return FALSE
 
 	to_chat(gibbed, span_userdanger("You are shredded to atoms by [source]!"))
+	gibbed.investigate_log("has been gibbed by a nuclear blast.", INVESTIGATE_DEATHS)
 	gibbed.gib()
 	return TRUE
 

@@ -19,7 +19,7 @@
 	toggle_id_ctf(null, game_id, automated = TRUE)//only one machine runs the victory proc, start_ctf proc would break the other machine
 
 // We don't clean up for the medisim.
-/obj/machinery/capture_the_flag/medisim/reset_the_arena()
+/obj/machinery/capture_the_flag/medisim/unload()
 	return
 
 /obj/machinery/capture_the_flag/medisim/spawn_team_member(client/new_team_member)
@@ -28,7 +28,6 @@
 		return
 	var/mob/living/carbon/human/human_knight = .
 	randomize_human(human_knight)
-	human_knight.dna.update_dna_identity()
 	human_knight.dna.add_mutation(/datum/mutation/human/medieval, MUT_OTHER)
 	var/oldname = human_knight.name
 	var/title = "error"
@@ -59,7 +58,7 @@
 /obj/item/ctf/red/medisim
 	name = "\improper Redfield Castle Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
-	icon = 'icons/obj/plushes.dmi'
+	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "plushie_nuke"
 	force = 0
 	game_area = /area/shuttle/escape
@@ -68,7 +67,7 @@
 /obj/item/ctf/blue/medisim
 	name = "\improper Bluesworth Hold Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
-	icon = 'icons/obj/plushes.dmi'
+	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "plushie_slime"
 	force = 0
 	game_area = /area/shuttle/escape

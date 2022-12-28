@@ -4,6 +4,7 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_ALL_MOB_LAYER
+	vis_flags = VIS_INHERIT_PLANE
 	///typepath of the last location we're in, if it's different when moved then we need to update vis contents
 	var/last_attached_location_type
 	///the main item we're attached to at the moment, particle holders hold particles for something
@@ -17,8 +18,8 @@
 		stack_trace("particle holder was created with no loc!")
 		return INITIALIZE_HINT_QDEL
 	if(ismovable(loc))
-		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(loc, COMSIG_PARENT_QDELETING, .proc/on_qdel)
+		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(loc, COMSIG_PARENT_QDELETING, PROC_REF(on_qdel))
 	weak_attached = WEAKREF(loc)
 	particles = new particle_path
 	update_visual_contents(loc)
