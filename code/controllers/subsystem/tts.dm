@@ -70,7 +70,31 @@ SUBSYSTEM_DEF(tts)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/tts/proc/play_tts(target, sound)
-	playsound(target, sound, 100, ignore_walls = FALSE)
+
+	var/turf/turf_source = get_turf(target)
+
+	if (!turf_source)
+		return
+
+	//allocate a channel if necessary now so its the same for everyone
+	var/channel = SSsounds.random_available_channel()
+	var/listeners = get_hearers_in_view(SOUND_RANGE, turf_source)
+
+	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
+		if(get_dist(listening_mob, turf_source) <= SOUND_RANGE && listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts))
+			listening_mob.playsound_local(
+				turf_source,
+				sound,
+				vol = listening_mob == target? 60 : 85,
+				falloff_exponent = SOUND_FALLOFF_EXPONENT,
+				channel = channel,
+				pressure_affected = TRUE,
+				sound_to_use = sound,
+				max_distance = SOUND_RANGE,
+				falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE,
+				distance_multiplier = 1,
+				use_reverb = TRUE
+			)
 
 /datum/controller/subsystem/tts/fire(resumed)
 	if(!tts_enabled)

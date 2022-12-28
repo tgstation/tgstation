@@ -28,6 +28,11 @@
 	savefile_key = "sound_instruments"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/toggle/sound_tts
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_tts"
+	savefile_identifier = PREFERENCE_PLAYER
+
 /// Controls hearing dance machines
 /datum/preference/toggle/sound_jukebox
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
