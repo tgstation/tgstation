@@ -65,11 +65,11 @@
 	SIGNAL_HANDLER
 
 	if(!isliving(our_guy))
-		return FALSE
+		return
 	var/mob/living/living_guy = our_guy
 
 	if(!prob(15 * luck_mod))
-		return FALSE
+		return
 
 	var/our_guy_pos = get_turf(living_guy)
 	for(var/turf_content in our_guy_pos)
@@ -80,7 +80,7 @@
 			INVOKE_ASYNC(darth_airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, close), TRUE)
 			if(!permanent)
 				qdel(src)
-			return TRUE
+			return
 
 	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
 		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
@@ -88,7 +88,7 @@
 			living_guy.throw_at(the_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
 			if(!permanent)
 				qdel(src)
-			return TRUE
+			return
 
 		for(var/obj/machinery/vending/darth_vendor in the_turf)
 			if(darth_vendor.tiltable)
@@ -96,19 +96,13 @@
 				INVOKE_ASYNC(darth_vendor, TYPE_PROC_REF(/obj/machinery/vending, tilt), living_guy)
 				if(!permanent)
 					qdel(src)
-				return TRUE
+				return
 
 /** If we get knocked down, see if we have a really bad slip and bash our head hard */
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
 	SIGNAL_HANDLER
 
-	var/datum/status_effect/incapacitating/knockdown/knocked = our_guy.has_status_effect(/datum/status_effect/incapacitating/knockdown)
-	if(knocked)
-		knocked.duration = max(world.time + (SLIP_KNOCKDOWN * luck_mod), knocked.duration)
-	else
-		knocked = our_guy.apply_status_effect(/datum/status_effect/incapacitating/knockdown, (SLIP_KNOCKDOWN * luck_mod))
-
-	if(prob(40)) // AAAA
+	if(prob(33)) // AAAA
 		var/quote
 		if(ishuman(our_guy))
 			quote = "scream"
@@ -121,7 +115,7 @@
 	if(amount <= 0 || prob(50 * luck_mod)) /// Bonk!
 		var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
 		if(!the_head)
-			return FALSE
+			return
 		playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
 		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
 		the_head.receive_damage(75 * luck_mod)
@@ -129,17 +123,17 @@
 		if(!permanent)
 			qdel(src)
 
-	return TRUE
+	return
 
 /** Hijack the mood system to see if we get the blessing mood event to cancel the omen */
 /datum/component/omen/proc/check_bless(mob/living/our_guy, category)
 	SIGNAL_HANDLER
 
 	if(quirk || permanent)
-		return FALSE
+		return
 
 	if (!("blessing" in our_guy.mob_mood.mood_events))
-		return FALSE
+		return
 
 	qdel(src)
 
@@ -149,7 +143,7 @@
 
 	if(!permanent)
 		qdel(src)
-		return FALSE
+		return
 
 	var/turf/tile = get_turf(our_guy)
 	if(tile)
@@ -157,7 +151,7 @@
 
 	if(!quirk || !iscarbon(our_guy))
 		our_guy.gib()
-		return TRUE
+		return
 
 	var/mob/living/carbon/player = our_guy
 	player.spill_organs()
