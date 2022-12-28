@@ -70,6 +70,10 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	allowed_projectile_types = spell_list()
 	assign_spell()
 
+/mob/living/basic/carp/magic/Destroy()
+	QDEL_NULL(spell)
+	return ..()
+
 /// Returns the list of spells we are allowed to cast
 /mob/living/basic/carp/magic/proc/spell_list()
 	return GLOB.magicarp_spell_types

@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //how much damage from each damage type we transfer to the owner
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
 	melee_damage_lower = 15
@@ -90,8 +90,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites += src
 	update_theme(theme)
 	AddElement(/datum/element/simple_flying)
+	manifest_effects()
 
 /mob/living/simple_animal/hostile/guardian/Destroy() //if deleted by admins or something random, cut from the summoner
+	if(is_deployed())
+		recall_effects()
 	if(!QDELETED(summoner))
 		cut_summoner(different_person = TRUE)
 	return ..()
@@ -256,10 +259,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return FALSE
 	if(!summoner)
 		to_chat(src, span_boldholoparasite("For some reason, somehow, you have no summoner. Please report this bug immediately."))
-		return
-	to_chat(src, span_holoparasite("You are a <b>[real_name]</b>, bound to serve [summoner.real_name]."))
-	to_chat(src, span_holoparasite("You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with [summoner.p_them()] privately there."))
-	to_chat(src, span_holoparasite("While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to [summoner.p_them()] as you feed upon [summoner.p_them()] to sustain yourself."))
+	else
+		to_chat(src, span_holoparasite("You are a <b>[real_name]</b>, bound to serve [summoner.real_name]."))
+		to_chat(src, span_holoparasite("You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with [summoner.p_them()] privately there."))
+		to_chat(src, span_holoparasite("While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to [summoner.p_them()] as you feed upon [summoner.p_them()] to sustain yourself."))
 	to_chat(src, playstyle_string)
 	if(!guardian_color)
 		locked = TRUE
@@ -429,34 +432,34 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 //HAND HANDLING
 
-/mob/living/simple_animal/hostile/guardian/equip_to_slot(obj/item/I, slot)
+/mob/living/simple_animal/hostile/guardian/equip_to_slot(obj/item/equipped_item, slot)
 	if(!slot)
 		return FALSE
-	if(!istype(I))
+	if(!istype(equipped_item))
 		return FALSE
 
 	. = TRUE
-	var/index = get_held_index_of_item(I)
+	var/index = get_held_index_of_item(equipped_item)
 	if(index)
 		held_items[index] = null
 		update_held_items()
 
-	if(I.pulledby)
-		I.pulledby.stop_pulling()
+	if(equipped_item.pulledby)
+		equipped_item.pulledby.stop_pulling()
 
-	I.screen_loc = null // will get moved if inventory is visible
-	I.forceMove(src)
-	I.equipped(src, slot)
-	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
+	equipped_item.screen_loc = null // will get moved if inventory is visible
+	equipped_item.forceMove(src)
+	equipped_item.equipped(src, slot)
+	SET_PLANE_EXPLICIT(equipped_item, ABOVE_HUD_PLANE, src)
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
 	if((. = guardian_overlays[cache_index]))
 		add_overlay(.)
 
 /mob/living/simple_animal/hostile/guardian/proc/remove_overlay(cache_index)
-	var/I = guardian_overlays[cache_index]
-	if(I)
-		cut_overlay(I)
+	var/overlay = guardian_overlays[cache_index]
+	if(overlay)
+		cut_overlay(overlay)
 		guardian_overlays[cache_index] = null
 
 /mob/living/simple_animal/hostile/guardian/update_held_items()
