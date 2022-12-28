@@ -1165,6 +1165,8 @@
 
 	INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), quote)
 
+	return TRUE
+
 /// Proc that causes unfortunate to gib on death
 /datum/quirk/unfortunate/proc/on_death()
 	SIGNAL_HANDLER
