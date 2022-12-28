@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - code_imp: "The lists in admin_verbs.dm was organized to be made better. This shouldn't affect the panels admins use at all, since they're already alphabetized."

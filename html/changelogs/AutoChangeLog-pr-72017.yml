@@ -1,4 +1,0 @@
-author: "Striders13"
-delete-after: True
-changes:
-  - bugfix: "fixed dice servants not receiving any indication of who their master is"

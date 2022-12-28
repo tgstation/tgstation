@@ -209,7 +209,7 @@
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/simple_animal/hostile/guardian/guardian)
 	guardian.locked = FALSE
-	guardian.Recall(TRUE)
+	guardian.recall(forced = TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
 	guardian.playsound_local(get_turf(guardian), 'sound/magic/repulse.ogg', 50, TRUE)
 
