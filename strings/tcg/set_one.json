@@ -159,7 +159,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Human Employee",
 			"rarity": "common",
-			"summon_icon_state": "Cargo Tech"
+			"summon_icon_state": "Cargo Technician"
 		},
 		{
 			"id": "chap_plate",

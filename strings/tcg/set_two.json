@@ -291,8 +291,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
 			"rarity": "uncommon",
-			"summon_icon_file": "icons/runtime/tcg/xenos.dmi",
-			"summon_icon_state": "xeno_bull"
+			"summon_icon_state": "xenobull"
 		},
 		{
 			"id": "hivemind",
@@ -306,7 +305,8 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "uncommon"
+			"rarity": "uncommon",
+			"summon_icon_state": "xenomind"
 		},
 		{
 			"id": "screecher",
@@ -320,7 +320,8 @@
 			"summoncost": 2,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "epic"
+			"rarity": "epic",
+			"summon_icon_state": "xenoscreech"
 		},
 		{
 			"id": "creep",
@@ -334,7 +335,8 @@
 			"summoncost": 5,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"rarity": "common"
+			"rarity": "common",
+			"summon_icon_state": "xenocreep"
 		}
 	]
 }
