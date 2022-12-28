@@ -598,6 +598,13 @@
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
+// Height defines
+#define CARBON_HEIGHT_SHORTEST "shortest height"
+#define CARBON_HEIGHT_SHORT "short height"
+#define CARBON_HEIGHT_MEDIUM "medium height"
+#define CARBON_HEIGHT_TALL "tall height"
+#define CARBON_HEIGHT_TALLEST "tallest height"
+
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
 #define TOTAL_LAYERS 33 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;

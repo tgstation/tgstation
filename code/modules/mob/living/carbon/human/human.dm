@@ -769,6 +769,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_MOD_QUIRKS, "Add/Remove Quirks")
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
 	VV_DROPDOWN_OPTION(VV_HK_PURRBATION, "Toggle Purrbation")
+	VV_DROPDOWN_OPTION(VV_HK_SET_HEIGHT, "Set Height")
 
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
@@ -849,6 +850,21 @@
 			var/msg = span_notice("[key_name_admin(usr)] has removed [key_name(src)] from purrbation.")
 			message_admins(msg)
 			admin_ticket_log(src, msg)
+	if(href_list[VV_HK_SET_HEIGHT])
+		if(!check_rights(R_SPAWN))
+			return
+		var/static/list/options = list(
+			CARBON_HEIGHT_SHORTEST,
+			CARBON_HEIGHT_SHORT,
+			CARBON_HEIGHT_MEDIUM,
+			CARBON_HEIGHT_TALL,
+			CARBON_HEIGHT_TALLEST
+		)
+		var/result = input(usr, "Please choose a new height","Height") as null|anything in options
+		if(result)
+			admin_ticket_log("[key_name_admin(usr)] has set the height of [src] to [result]")
+			height = result
+			regenerate_icons()
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]
