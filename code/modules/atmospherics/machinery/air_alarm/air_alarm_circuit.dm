@@ -23,16 +23,10 @@
 
 /obj/item/circuit_component/air_alarm_general/populate_options()
 	if(!options_map)
-		options_map = list(
-			"Filtering" = AALARM_MODE_SCRUBBING,
-			"Contaminated" = AALARM_MODE_CONTAMINATED,
-			"Draught" = AALARM_MODE_VENTING,
-			"Refill" = AALARM_MODE_REFILL,
-			"Cycle" = AALARM_MODE_REPLACEMENT,
-			"Siphon" = AALARM_MODE_SIPHON,
-			"Panic Siphon" = AALARM_MODE_PANIC,
-			"Off" = AALARM_MODE_OFF,
-		)
+		options_map = list()
+		for(var/datum/air_alarm_mode/mode as anything in GLOB.air_alarm_modes)
+			if(!mode.emag)
+				options_map[mode.name] = mode.type
 
 /obj/item/circuit_component/air_alarm_general/populate_ports()
 	mode = add_option_port("Mode", options_map, order = 1)
@@ -50,7 +44,7 @@
 		RegisterSignal(connected_alarm.alarm_manager, COMSIG_ALARM_TRIGGERED, PROC_REF(on_alarm_triggered))
 		RegisterSignal(connected_alarm.alarm_manager, COMSIG_ALARM_CLEARED, PROC_REF(on_alarm_cleared))
 		RegisterSignal(shell, COMSIG_AIRALARM_UPDATE_MODE, PROC_REF(on_mode_updated))
-		current_mode.set_value(connected_alarm.get_mode_name(connected_alarm.mode))
+		current_mode.set_value(connected_alarm.selected_mode.name)
 
 /obj/item/circuit_component/air_alarm_general/unregister_usb_parent(atom/movable/shell)
 	if(connected_alarm)
@@ -67,7 +61,7 @@
 
 /obj/item/circuit_component/air_alarm_general/proc/on_mode_updated(obj/machinery/airalarm/alarm, datum/signal_source)
 	SIGNAL_HANDLER
-	current_mode.set_value(alarm.get_mode_name(alarm.mode))
+	current_mode.set_value(alarm.selected_mode.name)
 
 /obj/item/circuit_component/air_alarm_general/proc/on_alarm_triggered(datum/source, alarm_type, area/location)
 	SIGNAL_HANDLER
@@ -100,9 +94,8 @@
 	if(!mode.value)
 		return
 
-	connected_alarm.mode = options_map[mode.value]
-	connected_alarm.investigate_log("was turned to [connected_alarm.get_mode_name(connected_alarm.mode)] by [parent.get_creator()]")
-	INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF(/obj/machinery/airalarm, apply_mode), src)
+	connected_alarm.select_mode(parent.get_creator(), options_map[mode.value])
+	connected_alarm.investigate_log("was turned to [connected_alarm.selected_mode.name] by [parent.get_creator()]")
 
 /obj/item/circuit_component/air_alarm
 	display_name = "Air Alarm Core Control"

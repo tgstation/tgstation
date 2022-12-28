@@ -1,14 +1,3 @@
-#define AALARM_MODE_SCRUBBING 1
-#define AALARM_MODE_VENTING 2 //makes draught
-#define AALARM_MODE_PANIC 3 //like siphon, but stronger (enables widenet)
-#define AALARM_MODE_REPLACEMENT 4 //sucks off all air, then refill and swithes to scrubbing
-#define AALARM_MODE_OFF 5
-#define AALARM_MODE_FLOOD 6 //Emagged mode; turns off scrubbers and pressure checks on vents
-#define AALARM_MODE_SIPHON 7 //Scrubbers suck air
-#define AALARM_MODE_CONTAMINATED 8 //Turns on all filtering and widenet scrubbing.
-#define AALARM_MODE_REFILL 9 //just like normal, but with triple the air output
-#define AALARM_MODE_MAX AALARM_MODE_REFILL
-
 #define AALARM_REPORT_TIMEOUT 100
 
 /obj/machinery/airalarm
@@ -29,7 +18,7 @@
 	/// AIR_ALARM_ALERT_NONE, AIR_ALARM_ALERT_MINOR, AIR_ALARM_ALERT_SEVERE
 	var/danger_level = AIR_ALARM_ALERT_NONE
 
-	var/mode = AALARM_MODE_SCRUBBING
+	var/datum/air_alarm_mode/selected_mode
 	///A reference to the area we are in
 	var/area/my_area
 
@@ -79,6 +68,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			tlv_collection[gas_path] = new /datum/tlv/dangerous
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
+
+	selected_mode = GLOB.air_alarm_modes[/datum/air_alarm_mode/filtering]
 
 	alarm_manager = new(src)
 	my_area = get_area(src)
@@ -232,18 +223,16 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				"filter_types" = filter_types,
 			))
 
-		data["mode"] = mode
+		data["currentMode"] = selected_mode.type
 		data["modes"] = list()
-		data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", "mode" = AALARM_MODE_SCRUBBING, "selected" = mode == AALARM_MODE_SCRUBBING, "danger" = 0))
-		data["modes"] += list(list("name" = "Contaminated - Scrubs out ALL contaminants quickly","mode" = AALARM_MODE_CONTAMINATED, "selected" = mode == AALARM_MODE_CONTAMINATED, "danger" = 0))
-		data["modes"] += list(list("name" = "Draught - Siphons out air while replacing", "mode" = AALARM_MODE_VENTING, "selected" = mode == AALARM_MODE_VENTING, "danger" = 0))
-		data["modes"] += list(list("name" = "Refill - Triple vent output", "mode" = AALARM_MODE_REFILL, "selected" = mode == AALARM_MODE_REFILL, "danger" = 1))
-		data["modes"] += list(list("name" = "Cycle - Siphons air before replacing", "mode" = AALARM_MODE_REPLACEMENT, "selected" = mode == AALARM_MODE_REPLACEMENT, "danger" = 1))
-		data["modes"] += list(list("name" = "Siphon - Siphons air out of the room", "mode" = AALARM_MODE_SIPHON, "selected" = mode == AALARM_MODE_SIPHON, "danger" = 1))
-		data["modes"] += list(list("name" = "Panic Siphon - Siphons air out of the room quickly","mode" = AALARM_MODE_PANIC, "selected" = mode == AALARM_MODE_PANIC, "danger" = 1))
-		data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", "mode" = AALARM_MODE_OFF, "selected" = mode == AALARM_MODE_OFF, "danger" = 0))
-		if(obj_flags & EMAGGED)
-			data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents", "mode" = AALARM_MODE_FLOOD, "selected" = mode == AALARM_MODE_FLOOD, "danger" = 1))
+		for(var/datum/air_alarm_mode/mode in GLOB.air_alarm_modes)
+			data["modes"] += list(list(
+				"name" = mode.name,
+				"desc" = mode.desc,
+				"danger" = mode.danger,
+				"path" = mode.type
+			))
+
 	return data
 
 /obj/machinery/airalarm/ui_act(action, params)
@@ -352,9 +341,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 			scrubber.toggle_filters(params["val"])
 		if ("mode")
-			mode = clamp(round(text2num(params["mode"])), AALARM_MODE_SCRUBBING, AALARM_MODE_MAX)
-			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(user)]", INVESTIGATE_ATMOS)
-			apply_mode(user)
+			select_mode(user, text2path(params["mode"]))
+			investigate_log("was turned to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 
 		if ("set_threshold")
 			var/threshold = text2path(params["threshold"]) || params["threshold"]
@@ -485,9 +473,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(old_danger_level != danger_level)
 		INVOKE_ASYNC(src, PROC_REF(apply_danger_level))
-	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
-		mode = AALARM_MODE_SCRUBBING
-		INVOKE_ASYNC(src, PROC_REF(apply_mode), src)
+	if(istype(selected_mode, /datum/air_alarm_mode/cycle) && environment_pressure < ONE_ATMOSPHERE * 0.05)
+		var/datum/air_alarm_mode/cycle/typed_mode = selected_mode
+		typed_mode.replace(my_area)
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 
@@ -505,6 +493,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		danger_level = new_area_danger_level
 
 	update_appearance()
+
+/obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path)
+	selected_mode = GLOB.air_alarm_modes[mode_path]
+	selected_mode.apply(my_area)
+	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 

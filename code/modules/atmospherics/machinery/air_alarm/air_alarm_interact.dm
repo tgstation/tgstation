@@ -123,10 +123,10 @@
 						wires.repair()
 						aidisabled = 0
 						locked = FALSE
-						mode = 1
 						shorted = 0
 						danger_level = AIR_ALARM_ALERT_NONE
 						buildstage = AIRALARM_BUILD_COMPLETE
+						select_mode(user, /datum/air_alarm_mode/siphon)
 						update_appearance()
 				return
 		if(AIRALARM_BUILD_NO_CIRCUIT)
