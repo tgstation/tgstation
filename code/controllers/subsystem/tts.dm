@@ -5,7 +5,7 @@
 
 /proc/tts_filter(text)
 	// Only allow alphanumeric characters and whitespace
-	var/static/regex/bad_chars_regex = regex("\[^a-zA-Z0-9 ,?.!']", "g")
+	var/static/regex/bad_chars_regex = regex("\[^a-zA-Z0-9 ,?.!'&]", "g")
 	return bad_chars_regex.Replace(text, " ")
 
 
@@ -114,6 +114,12 @@ SUBSYSTEM_DEF(tts)
 
 /datum/controller/subsystem/tts/proc/queue_tts_message(target, message, speaker, filter)
 	if(!tts_enabled)
+		return
+
+	var/static/regex/contains_alphanumeric = regex("\[a-zA-Z0-9]", "g")
+	// If there is no alphanumeric char, the output will usually be static, so
+	// don't bother sending
+	if(contains_alphanumeric.Find(message) == 0)
 		return
 
 	var/shell_scrubbed_input = tts_filter(message)
