@@ -71,7 +71,7 @@
 		. += "+lit"
 
 /obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
-	. = ..()
+	. = ..() | AFTERATTACK_PROCESSED_ITEM
 	if(flag)
 		return // too close
 	if(ishuman(user))

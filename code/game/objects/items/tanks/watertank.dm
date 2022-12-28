@@ -147,7 +147,7 @@
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
 		return
-	..()
+	return ..()
 
 //Janitor tank
 /obj/item/watertank/janitor
@@ -327,8 +327,7 @@
 	if(AttemptRefill(target, user))
 		return
 	if(nozzle_mode == EXTINGUISHER)
-		..()
-		return
+		return ..()
 	var/Adj = user.Adjacent(target)
 	if(nozzle_mode == RESIN_LAUNCHER)
 		if(Adj)

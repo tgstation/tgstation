@@ -193,12 +193,12 @@
 		return BEAM_CANCEL_DRAW
 
 /obj/item/fishing_rod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+	. = ..() | AFTERATTACK_PROCESSED_ITEM
 
 	/// Reel in if able
 	if(currently_hooked_item)
 		reel(user)
-		return
+		return .
 
 	/// If the line to whatever that is is clear and we're not already busy, try fishing in it
 	if(!casting && !currently_hooked_item && !proximity_flag && CheckToolReach(user, target, cast_range))
@@ -214,6 +214,8 @@
 		cast_projectile.impacted = list(user = TRUE)
 		cast_projectile.preparePixelProjectile(target, user)
 		cast_projectile.fire()
+
+	return .
 
 /// Called by hook projectile when hitting things
 /obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile)

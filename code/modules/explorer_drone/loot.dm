@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	return cell
 
 /obj/item/firelance/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+	. = ..() | AFTERATTACK_PROCESSED_ITEM
 	if(!HAS_TRAIT(src,TRAIT_WIELDED))
 		to_chat(user,span_notice("You need to wield [src] in two hands before you can fire it."))
 		return

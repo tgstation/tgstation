@@ -70,7 +70,7 @@
 			. += span_notice("A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.")
 
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
+	. = ..() | AFTERATTACK_PROCESSED_ITEM
 	laser_act(target, user, params)
 
 /obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)

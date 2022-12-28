@@ -100,7 +100,12 @@
 
 /obj/item/reagent_containers/cup/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
+	if(!proximity_flag)
+		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+
+	if(!check_allowed_items(target, target_self = TRUE))
 		return
 
 	if(!spillable)
