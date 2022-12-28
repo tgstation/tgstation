@@ -86,4 +86,4 @@
 	var/list/afk_thefts
 
 	/// Height of the mob
-	var/mob_height = HUMAN_HEIGHT_MEDIUM
+	VAR_PROTECTED/mob_height = HUMAN_HEIGHT_MEDIUM

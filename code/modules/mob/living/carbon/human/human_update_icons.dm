@@ -709,7 +709,7 @@ generate/load female uniform sprites matching all previously decided variables
 			// ...So we need to apply human height here as well
 			for(var/mutable_appearance/added as anything in worn_overlays)
 				var/mob/living/carbon/human/human_loc = loc
-				human_loc.update_height(added)
+				human_loc.apply_height_filters(added)
 		standing.overlays.Add(worn_overlays)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
@@ -803,25 +803,18 @@ generate/load female uniform sprites matching all previously decided variables
 	update_worn_mask()
 
 /mob/living/carbon/human/apply_overlay(cache_index)
-	var/static/list/not_affected_by_height = list(
-		HANDS_LAYER,
-	)
-	if(cache_index in not_affected_by_height)
-		return ..()
-
 	var/raw_applied = overlays_standing[cache_index]
+
 	if(islist(raw_applied))
 		for(var/mutable_appearance/applied_appearance as anything in raw_applied)
-			update_height(applied_appearance)
+			apply_height_filters(applied_appearance)
 	else if(!isnull(raw_applied))
-		update_height(raw_applied)
+		apply_height_filters(raw_applied)
 
 	return ..()
 
-/**
- * Updates the height of the passed mutable appearance in accordance with our mob's [var/mob_height].
- */
-/mob/living/carbon/human/proc/update_height(mutable_appearance/appearance)
+/// Applies a filter to an appearance according to mob height
+/mob/living/carbon/human/proc/apply_height_filters(mutable_appearance/appearance)
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
@@ -836,21 +829,23 @@ generate/load female uniform sprites matching all previously decided variables
 		"Gnome_Cut_Legs",
 	))
 
-	if(HAS_TRAIT(src, TRAIT_DWARF))
-		appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
-		appearance.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
-		return
-
-	switch(mob_height)
+	switch(get_mob_height())
+		// Don't set this one directly, use TRAIT_DWARF
+		if(HUMAN_HEIGHT_DWARF)
+			appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
+			appearance.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
 		if(HUMAN_HEIGHT_SHORTEST)
 			appearance.add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
 		if(HUMAN_HEIGHT_SHORT)
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+		// Normal height
 		if(HUMAN_HEIGHT_MEDIUM)
-			return // Normal
+			return
+		// Higher than "tall" starts to get cut off
 		if(HUMAN_HEIGHT_TALL)
 			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+		// Minor cutoff
 		if(HUMAN_HEIGHT_TALLEST)
 			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
 			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))

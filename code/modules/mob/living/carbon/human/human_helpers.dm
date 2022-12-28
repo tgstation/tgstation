@@ -271,7 +271,9 @@
  */
 /mob/living/carbon/human/proc/set_mob_height(new_height)
 	if(mob_height == new_height)
-		return
+		return FALSE
+	if(new_height == HUMAN_HEIGHT_DWARF)
+		CRASH("Don't set height to dwarf height directly, use dwarf trait")
 
 	mob_height = new_height
 	regenerate_icons()

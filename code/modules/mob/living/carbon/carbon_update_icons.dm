@@ -460,7 +460,6 @@
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
-// TODO: update height
 	update_damage_overlays()
 	update_wound_overlays()
 	var/list/needs_update = list()
