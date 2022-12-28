@@ -284,7 +284,7 @@ fi;
 
 if $grep 'balloon_alert(.*span_)' $code_files; then
 	echo
-	echo 'e "${RED}ERROR: Balloon alerts should never contain spans.${NC}"'
+	echo -e "${RED}ERROR: Balloon alerts should never contain spans.${NC}"
 	st=1
 fi;
 
