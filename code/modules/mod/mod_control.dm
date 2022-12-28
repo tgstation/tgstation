@@ -545,7 +545,8 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-
+	if(active)
+		new_module.on_suit_activation()
 	if(user)
 		balloon_alert(user, "[new_module] added")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
