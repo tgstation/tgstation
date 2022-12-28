@@ -1132,3 +1132,53 @@
 	if(!IS_ORGANIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
+
+/datum/quirk/unfortunate
+	name = "Unfortunate"
+	desc = "You are cursed with bad luck. You greatly suffer from accidents and mishaps. When it rains, it pours."
+	icon = "cloud-showers-heavy"
+	value = -10
+	mob_trait = TRAIT_UNFORTUNATE
+	gain_text = span_danger("You feel like you're going to have a bad day.")
+	lose_text = span_notice("You feel like you're going to have a good day.")
+	medical_record_text = "Patient is cursed with bad luck."
+	hardcore_value = 10
+
+/datum/quirk/unfortunate/add(client/client_source)
+	RegisterSignal(quirk_holder, COMSIG_ON_CARBON_SLIP, PROC_REF(on_slip))
+	RegisterSignal(quirk_holder, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+
+/** Player has been slipped, emote time */
+/datum/quirk/unfortunate/proc/on_slip()
+	SIGNAL_HANDLER
+
+	if(prob(65))
+		return FALSE
+
+	var/mob/living/player = quirk_holder
+
+	var/quote
+	if(ishuman(player))
+		quote = "scream"
+	if(iscyborg(player))
+		quote = "buzz"
+
+	INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), quote)
+
+/// Proc that causes unfortunate to gib on death
+/datum/quirk/unfortunate/proc/on_death()
+	SIGNAL_HANDLER
+
+	var/mob/living/player = quirk_holder
+	var/turf/tile = get_turf(player)
+	var/far = 0.8
+	var/close = 0
+
+	if(tile)
+		explosion(tile,  devastation_range = close, heavy_impact_range = close, light_impact_range = far, flame_range = close, flash_range = close, explosion_cause = src)
+
+	player.investigate_log("has been gibbed by the unfortunate quirk.", INVESTIGATE_DEATHS)
+	player.gib()
+
+	return TRUE
+
