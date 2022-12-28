@@ -1,8 +1,12 @@
+/// Namespace for housing code relating to giving contextual tutorials to users.
 SUBSYSTEM_DEF(tutorials)
 	name = "Tutorials"
 	flags = SS_NO_FIRE
 
+	/// A mapping of /datum/tutorial type to their manager singleton.
+	/// You probably shouldn't be indexing this directly.
 	var/list/datum/tutorial_manager/tutorial_managers = list()
+
 	VAR_PRIVATE/list/datum/tutorial_manager/tutorial_managers_by_key = list()
 
 /datum/controller/subsystem/tutorials/Initialize()
@@ -12,6 +16,9 @@ SUBSYSTEM_DEF(tutorials)
 
 	return SS_INIT_SUCCESS
 
+/// Will suggest the passed tutorial type to the user.
+/// Will check that they should actually see it, e.g. hasn't completed it yet, etc.
+/// Then, calls `/datum/tutorial/subtype/perform` with the extra arguments passed in.
 /datum/controller/subsystem/tutorials/proc/suggest_tutorial(mob/user, datum/tutorial/tutorial_type, ...)
 	var/datum/tutorial_manager/tutorial_manager = tutorial_managers[tutorial_type]
 	if (isnull(tutorial_manager))

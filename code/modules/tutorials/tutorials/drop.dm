@@ -3,6 +3,8 @@
 #define STAGE_DROP_ITEM "STAGE_DROP_ITEM"
 #define STAGE_PICK_SOMETHING_UP "STAGE_PICK_SOMETHING_UP"
 
+/// Tutorial for showing how to drop items.
+/// Fired when clicking on an item with another item with a filled inactive hand.
 /datum/tutorial/drop
 	grandfather_date = "2022-12-25"
 

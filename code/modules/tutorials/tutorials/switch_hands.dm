@@ -3,6 +3,8 @@
 #define STAGE_SHOULD_SWAP_HAND "STAGE_SHOULD_SWAP_HAND"
 #define STAGE_PICK_UP_ITEM "STAGE_PICK_UP_ITEM"
 
+/// Tutorial for showing how to switch hands.
+/// Fired when clicking on an item with another item with an empty inactive hand.
 /datum/tutorial/switch_hands
 	grandfather_date = "2022-12-25"
 
