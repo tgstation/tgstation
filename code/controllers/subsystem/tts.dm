@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(tts)
 		play_tts(current_message[TARGET_INDEX], new_sound)
 		for(var/atom/movable/target in current_message[EXTRA_TARGETS_INDEX])
 			play_tts(target, new_sound)
-		cached_voices[identifier] = "tmp/[identifier].ogg"
+		cached_voices -= identifier
 		if(MC_TICK_CHECK)
 			return
 
@@ -138,8 +138,8 @@ SUBSYSTEM_DEF(tts)
 	if(islist(cached_voice))
 		cached_voice[EXTRA_TARGETS_INDEX] += target
 		return
-	else if(fexists(cached_voice))
-		var/sound/new_sound = new(cached_voice)
+	else if(fexists("tmp/[identifier].ogg"))
+		var/sound/new_sound = new("tmp/[identifier].ogg")
 		play_tts(target, new_sound)
 		return
 
