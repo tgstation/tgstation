@@ -94,7 +94,7 @@
 
 	var/list/origin_offsets = screen_loc_to_offset(initial_screen_loc, view)
 
-	// A little offset to the right (origin offsets on its own already starts pretty far)
+	// A little offset to the right
 	var/matrix/origin_transform = TRANSLATE_MATRIX(origin_offsets[1] - world.icon_size * 0.5, origin_offsets[2] - world.icon_size * 1.5)
 
 	var/list/target_offsets = screen_loc_to_offset(target_screen_loc, view)
