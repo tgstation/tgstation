@@ -599,11 +599,16 @@
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
 // Height defines
-#define CARBON_HEIGHT_SHORTEST "shortest height"
-#define CARBON_HEIGHT_SHORT "short height"
-#define CARBON_HEIGHT_MEDIUM "medium height"
-#define CARBON_HEIGHT_TALL "tall height"
-#define CARBON_HEIGHT_TALLEST "tallest height"
+// - They are numbers so you can compare height values (x height < y height)
+// - They do not start at 0 for futureproofing
+// - They skip numbers for futureproofing as well
+// Otherwise they are completely arbitrary
+#define HUMAN_HEIGHT_DWARF 2
+#define HUMAN_HEIGHT_SHORTEST 4
+#define HUMAN_HEIGHT_SHORT 6
+#define HUMAN_HEIGHT_MEDIUM 8
+#define HUMAN_HEIGHT_TALL 10
+#define HUMAN_HEIGHT_TALLEST 12
 
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays

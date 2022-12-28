@@ -1472,7 +1472,7 @@
 		playsound(get_turf(drinker), 'sound/effects/supermatter.ogg', 150, TRUE)
 		drinker.add_filter("singulo_rays", 1, ray_filter)
 		animate(drinker.get_filter("singulo_rays"), offset = 10, time = 1.5 SECONDS, loop = -1)
-		addtimer(CALLBACK(drinker, TYPE_PROC_REF(/atom/, remove_filter), "singulo_rays"), 1.5 SECONDS)
+		addtimer(CALLBACK(drinker, TYPE_PROC_REF(/datum, remove_filter), "singulo_rays"), 1.5 SECONDS)
 		drinker.emote("burp")
 	return ..()
 

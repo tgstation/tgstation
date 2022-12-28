@@ -45,28 +45,6 @@ There are several things that need to be remembered:
 		update_body()				//Calls update_body_parts(), as well as updates mutant bodyparts, the old, not-actually-bodypart system.
 */
 
-//HAIR OVERLAY
-/mob/living/carbon/human/update_hair(is_creating)
-	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(!my_head)
-		return
-	my_head.update_limb(FALSE, is_creating)
-	update_body_parts()
-
-//used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
-/mob/living/carbon/human/proc/update_mutant_bodyparts()
-	dna.species.handle_mutant_bodyparts(src)
-	update_body_parts()
-
-
-/mob/living/carbon/human/update_body(is_creating = FALSE)
-	dna.species.handle_body(src)
-	..()
-
-/mob/living/carbon/human/update_fire()
-	..((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM) ? "Standing" : "Generic_mob_burning")
-
-
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
@@ -149,7 +127,6 @@ There are several things that need to be remembered:
 		if(OFFSET_UNIFORM in dna.species.offset_features)
 			uniform_overlay?.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
 			uniform_overlay?.pixel_y += dna.species.offset_features[OFFSET_UNIFORM][2]
-		update_height(uniform_overlay)
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 		apply_overlay(UNIFORM_LAYER)
 
@@ -179,7 +156,6 @@ There are several things that need to be remembered:
 		if(OFFSET_ID in dna.species.offset_features)
 			id_overlay.pixel_x += dna.species.offset_features[OFFSET_ID][1]
 			id_overlay.pixel_y += dna.species.offset_features[OFFSET_ID][2]
-		update_height(id_overlay)
 		overlays_standing[ID_LAYER] = id_overlay
 
 	apply_overlay(ID_LAYER)
@@ -221,7 +197,6 @@ There are several things that need to be remembered:
 		if(OFFSET_GLOVES in dna.species.offset_features)
 			gloves_overlay.pixel_x += dna.species.offset_features[OFFSET_GLOVES][1]
 			gloves_overlay.pixel_y += dna.species.offset_features[OFFSET_GLOVES][2]
-		update_height(gloves_overlay)
 		overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
 
@@ -251,7 +226,6 @@ There are several things that need to be remembered:
 		if(OFFSET_GLASSES in dna.species.offset_features)
 			glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
 			glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
-		update_height(glasses_overlay)
 		overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
 
@@ -281,7 +255,6 @@ There are several things that need to be remembered:
 		if(OFFSET_EARS in dna.species.offset_features)
 			ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
 			ears_overlay.pixel_y += dna.species.offset_features[OFFSET_EARS][2]
-		update_height(ears_overlay)
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
 
@@ -303,14 +276,11 @@ There are several things that need to be remembered:
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/neck.dmi'
 
-			if(!neck_overlay)
-				return
-			if(OFFSET_NECK in dna.species.offset_features)
-				neck_overlay.pixel_x += dna.species.offset_features[OFFSET_NECK][1]
-				neck_overlay.pixel_y += dna.species.offset_features[OFFSET_NECK][2]
-			update_height(neck_overlay)
-			overlays_standing[NECK_LAYER] = neck_overlay
-		update_hud_neck(wear_neck)
+		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file)
+		if(OFFSET_NECK in dna.species.offset_features)
+			neck_overlay.pixel_x += dna.species.offset_features[OFFSET_NECK][1]
+			neck_overlay.pixel_y += dna.species.offset_features[OFFSET_NECK][2]
+		overlays_standing[NECK_LAYER] = neck_overlay
 
 	apply_overlay(NECK_LAYER)
 
@@ -347,7 +317,6 @@ There are several things that need to be remembered:
 		if(OFFSET_SHOES in dna.species.offset_features)
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
 			shoes_overlay.pixel_y += dna.species.offset_features[OFFSET_SHOES][2]
-		update_height(shoes_overlay)
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
@@ -373,7 +342,6 @@ There are several things that need to be remembered:
 		if(OFFSET_S_STORE in dna.species.offset_features)
 			s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
 			s_store_overlay.pixel_y += dna.species.offset_features[OFFSET_S_STORE][2]
-		update_height(s_store_overlay)
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
 	apply_overlay(SUIT_STORE_LAYER)
 
@@ -398,7 +366,6 @@ There are several things that need to be remembered:
 		if(OFFSET_HEAD in dna.species.offset_features)
 			head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD][1]
 			head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD][2]
-		update_height(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
 
 	update_mutant_bodyparts()
@@ -426,7 +393,6 @@ There are several things that need to be remembered:
 		if(OFFSET_BELT in dna.species.offset_features)
 			belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
 			belt_overlay.pixel_y += dna.species.offset_features[OFFSET_BELT][2]
-		update_height(belt_overlay)
 		overlays_standing[BELT_LAYER] = belt_overlay
 
 	apply_overlay(BELT_LAYER)
@@ -455,7 +421,6 @@ There are several things that need to be remembered:
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
-		update_height(suit_overlay)
 		overlays_standing[SUIT_LAYER] = suit_overlay
 	update_body_parts()
 	update_mutant_bodyparts()
@@ -509,7 +474,6 @@ There are several things that need to be remembered:
 		if(OFFSET_FACEMASK in dna.species.offset_features)
 			mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
 			mask_overlay.pixel_y += dna.species.offset_features[OFFSET_FACEMASK][2]
-		update_height(mask_overlay)
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
 	apply_overlay(FACEMASK_LAYER)
@@ -538,7 +502,6 @@ There are several things that need to be remembered:
 		if(OFFSET_BACK in dna.species.offset_features)
 			back_overlay.pixel_x += dna.species.offset_features[OFFSET_BACK][1]
 			back_overlay.pixel_y += dna.species.offset_features[OFFSET_BACK][2]
-		update_height(back_overlay)
 		overlays_standing[BACK_LAYER] = back_overlay
 	apply_overlay(BACK_LAYER)
 
@@ -585,7 +548,6 @@ There are several things that need to be remembered:
 			hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 
 		hands += hand_overlay
-		update_height(hand_overlay)
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)
 
@@ -742,6 +704,12 @@ generate/load female uniform sprites matching all previously decided variables
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
 	if(worn_overlays?.len)
+		if(!isinhands && ishuman(loc))
+			// Worn overlays don't get batched in with standing overlays because they are overlay overlays
+			// ...So we need to apply human height here as well
+			for(var/mutable_appearance/added as anything in worn_overlays)
+				var/mob/living/carbon/human/human_loc = loc
+				human_loc.update_height(added)
 		standing.overlays.Add(worn_overlays)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
@@ -833,5 +801,58 @@ generate/load female uniform sprites matching all previously decided variables
 				add_overlay(missing_eyes)
 	update_worn_head()
 	update_worn_mask()
+
+/mob/living/carbon/human/apply_overlay(cache_index)
+	var/static/list/not_affected_by_height = list(
+		HANDS_LAYER,
+	)
+	if(cache_index in not_affected_by_height)
+		return ..()
+
+	var/raw_applied = overlays_standing[cache_index]
+	if(islist(raw_applied))
+		for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+			update_height(applied_appearance)
+	else if(!isnull(raw_applied))
+		update_height(raw_applied)
+
+	return ..()
+
+/**
+ * Updates the height of the passed mutable appearance in accordance with our mob's [var/mob_height].
+ */
+/mob/living/carbon/human/proc/update_height(mutable_appearance/appearance)
+	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
+	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
+	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
+	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi', "Cut4")
+
+	appearance.remove_filter(list(
+		"Cut_Torso",
+		"Cut_Legs",
+		"Lenghten_Legs",
+		"Lenghten_Torso",
+		"Gnome_Cut_Torso",
+		"Gnome_Cut_Legs",
+	))
+
+	if(HAS_TRAIT(src, TRAIT_DWARF))
+		appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
+		appearance.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
+		return
+
+	switch(mob_height)
+		if(HUMAN_HEIGHT_SHORTEST)
+			appearance.add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
+			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+		if(HUMAN_HEIGHT_SHORT)
+			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+		if(HUMAN_HEIGHT_MEDIUM)
+			return // Normal
+		if(HUMAN_HEIGHT_TALL)
+			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+		if(HUMAN_HEIGHT_TALLEST)
+			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
+			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
 
 #undef RESOLVE_ICON_STATE

@@ -292,13 +292,17 @@
 /datum/proc/update_filters()
 	var/atom/atom_cast = src // this works with even images
 	atom_cast.filters = null
-	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
+	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		atom_cast.filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
+
+/obj/item/update_filters()
+	. = ..()
+	update_item_action_buttons()
 
 /datum/proc/transition_filter(name, time, list/new_params, easing, loop)
 	var/filter = get_filter(name)
@@ -326,6 +330,11 @@
 	if(filter_data && filter_data[name])
 		var/atom/atom_cast = src // this works with even images
 		return atom_cast.filters[filter_data.Find(name)]
+
+/// Returns the indice in filters of the given filter name.
+/// If it is not found, returns null.
+/datum/proc/get_filter_index(name)
+	return filter_data?.Find(name)
 
 /datum/proc/remove_filter(name_or_names)
 	if(!filter_data)
