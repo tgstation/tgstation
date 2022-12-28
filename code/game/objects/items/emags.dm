@@ -53,7 +53,7 @@
 
 /obj/item/card/emagfake/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if (!proximity)
+	if (!proximity_flag)
 		return
 	. |= AFTERATTACK_PROCESSED_ITEM
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
