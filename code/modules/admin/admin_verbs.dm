@@ -991,6 +991,10 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!check_rights(R_ADMIN))
 		return
 
+	if(SSticker.current_state != GAME_STATE_PLAYING)
+		to_chat(usr, span_warning("The game hasnt started yet!"))
+		return
+
 	var/list/choices = LAZY_TEMPLATE_KEY_LIST_ALL()
 	var/choice = tgui_input_list(usr, "Key?", "Lazy Loader", choices)
 	if(!choice)

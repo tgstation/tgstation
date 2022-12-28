@@ -27,37 +27,39 @@
 	var/burnt = FALSE
 	/// Path of the tile that this floor drops
 	var/floor_tile = null
-	var/list/broken_states
-	var/list/burnt_states
 	/// Determines if you can deconstruct this with a RCD
 	var/rcd_proof = FALSE
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
-	if (broken_states)
-		stack_trace("broken_states defined at the object level for [type], move it to setup_broken_states()")
-	else
-		broken_states = string_list(setup_broken_states())
-	if (burnt_states)
-		stack_trace("burnt_states defined at the object level for [type], move it to setup_burnt_states()")
-	else
-		var/list/new_burnt_states = setup_burnt_states()
-		if(new_burnt_states)
-			burnt_states = string_list(new_burnt_states)
-	if(!broken && broken_states && (icon_state in broken_states))
-		broken = TRUE
-	if(!burnt && burnt_states && (icon_state in burnt_states))
-		burnt = TRUE
+
+	if (PERFORM_ALL_TESTS(focus_only/valid_turf_states))
+		var/static/list/previous_errors = list()
+
+		if (!(type in previous_errors))
+			if (broken != (icon_state in broken_states()))
+				stack_trace("[icon_state] (from [type]), which should be [broken ? "NOT broken, IS" : "broken, IS NOT"]")
+				previous_errors[type] = TRUE
+
+			if (burnt != (icon_state in burnt_states()))
+				stack_trace("[icon_state] (from [type]), which should be [burnt ? "NOT burnt, IS" : "burnt, IS NOT"]")
+				previous_errors[type] = TRUE
+
 	if(mapload && prob(33))
 		MakeDirty()
+
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
-/turf/open/floor/proc/setup_broken_states()
+/// Returns a list of every turf state considered "broken".
+/// Will be randomly chosen if a turf breaks at runtime.
+/turf/open/floor/proc/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/proc/setup_burnt_states()
-	return
+/// Returns a list of every turf state considered "burnt".
+/// Will be randomly chosen if a turf is burnt at runtime.
+/turf/open/floor/proc/burnt_states()
+	return list()
 
 /turf/open/floor/Destroy()
 	if(is_station_level(z))
@@ -82,7 +84,7 @@
 		if(EXPLODE_HEAVY)
 			switch(rand(1, 3))
 				if(1)
-					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+					if (!ispath(baseturf_at_depth(2), /turf/open/floor))
 						attempt_lattice_replacement()
 					else
 						ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
@@ -141,12 +143,13 @@
 /turf/open/floor/update_overlays()
 	. = ..()
 	if(broken)
-		. += mutable_appearance(damaged_dmi, pick(broken_states))
+		. += mutable_appearance(damaged_dmi, pick(broken_states()))
 	else if(burnt)
-		if(LAZYLEN(burnt_states))
+		var/list/burnt_states = burnt_states()
+		if(burnt_states.len)
 			. += mutable_appearance(damaged_dmi, pick(burnt_states))
 		else
-			. += mutable_appearance(damaged_dmi, pick(broken_states))
+			. += mutable_appearance(damaged_dmi, pick(broken_states()))
 
 /// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)
@@ -234,8 +237,6 @@
 		if(STAGE_FIVE to INFINITY)
 			if(prob(70))
 				sheer = TRUE
-			else if(prob(50) && (/turf/open/space in baseturfs))
-				attempt_lattice_replacement()
 	if(sheer)
 		if(has_tile())
 			remove_tile(null, TRUE, TRUE, TRUE)

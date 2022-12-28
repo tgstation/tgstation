@@ -1,0 +1,6 @@
+author: "Guillaume Prata"
+delete-after: True
+changes:
+  - rscadd: "Geneticists figured out how to infuse goliath DNA into humanoids! (Many monkeys were harmed in the process!)"
+  - rscadd: "Goliath eyes for nightvision, lungs to breath at lavaland safely, heart to protect you from ash storms and the brain which turns one of your arms into a tendril hammer."
+  - rscadd: "Tendril hammer: Your arm becomes a giant mass of plate and tendril but it won't fit on gloves anymore. While slow to swing around, you can obliterate fauna/megafauna with it, 20 base dmg + 80 bonus damage to fauna/megafauna with a bonus knockback."
