@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// The path to the general savefile for this datum
 	var/path
 	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
-	var/load_and_save
+	var/load_and_save = TRUE
 	/// Ensures that we always load the last used save, QOL
 	var/default_slot = 1
 	/// The maximum number of slots we're allowed to contain
