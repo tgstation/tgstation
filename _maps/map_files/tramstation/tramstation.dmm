@@ -502,6 +502,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
+"aiW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/xmastree,
+/turf/open/floor/carpet,
+/area/station/service/chapel)
 "ajj" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/event_spawn,
@@ -152924,7 +152932,7 @@ bdz
 mSw
 ckb
 gyt
-iUs
+aiW
 iUs
 iUs
 iUs
