@@ -2,6 +2,7 @@ from flask import Flask, request, send_file
 from TTS.api import TTS
 import os
 import json
+import shlex
 
 tts = TTS("tts_models/en/vctk/vits")
 
@@ -17,12 +18,15 @@ def text_to_speech():
 
     filter_statement = ""
     if filter_complex != "":
-        filter_statement = "-filter_complex \"" + filter_complex + "\""
+        filter_statement = "-filter_complex " + shlex.quote(filter_complex)
+
+    wav_file_loc = f'/tts_files/{identifier}.wav'
+    ogg_file_loc = f'/tts_files/{identifier}.ogg'
 
     tts.tts_to_file(text=text, speaker=voice, file_path=f"/tts_files/{identifier}.wav")
-    os.system(f"ffmpeg -i '/tts_files/{identifier}.wav' {filter_statement} -c:a libvorbis -b:a 64k '/tts_files/{identifier}.ogg' -y")
-    os.remove(f"/tts_files/{identifier}.wav")
-    return send_file(f"/tts_files/{identifier}.ogg", mimetype="audio/wav")
+    os.system(f"ffmpeg -i {shlex.quote(wav_file_loc)} {filter_statement} -c:a libvorbis -b:a 64k {shlex.quote(ogg_file_loc)} -y")
+    os.remove(wav_file_loc)
+    return send_file(ogg_file_loc, mimetype="audio/wav")
 
 @app.route("/tts-voices")
 def voices_list():
