@@ -126,7 +126,7 @@
 						shorted = 0
 						danger_level = AIR_ALARM_ALERT_NONE
 						buildstage = AIRALARM_BUILD_COMPLETE
-						select_mode(user, /datum/air_alarm_mode/siphon)
+						select_mode(user, /datum/air_alarm_mode/filtering)
 						update_appearance()
 				return
 		if(AIRALARM_BUILD_NO_CIRCUIT)

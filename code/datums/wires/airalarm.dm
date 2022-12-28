@@ -45,7 +45,7 @@
 				if(istype(A.selected_mode, /datum/air_alarm_mode/siphon))
 					A.select_mode(usr, /datum/air_alarm_mode/panic_siphon)
 				else
-					A.select_mode(usr, /datum/air_alarm_mode/siphon)
+					A.select_mode(usr, /datum/air_alarm_mode/filtering)
 		if(WIRE_ALARM) // Clear alarms.
 			if(A.alarm_manager.clear_alarm(ALARM_ATMOS))
 				A.danger_level = AIR_ALARM_ALERT_NONE
