@@ -2448,7 +2448,7 @@
 /obj/effect/spawner/random/structure/table_fancy,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -94275,6 +94275,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/food/grilled_cheese_sandwich,
 /turf/open/floor/iron/cafeteria,
 /area/station/medical/break_room)
 "wWy" = (
