@@ -1143,6 +1143,10 @@
 	lose_text = span_notice("You feel like you're going to have a good day.")
 	medical_record_text = "Patient is cursed with bad luck."
 	hardcore_value = 10
+	/// Max distance for the on death explode
+	var/explode_outer = 0.8
+	/// Min distance and force of the on death explode
+	var/explode_inner = 0
 
 /datum/quirk/unfortunate/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_ON_CARBON_SLIP, PROC_REF(on_slip))
@@ -1173,11 +1177,9 @@
 
 	var/mob/living/player = quirk_holder
 	var/turf/tile = get_turf(player)
-	var/far = 0.8
-	var/close = 0
 
 	if(tile)
-		explosion(tile,  devastation_range = close, heavy_impact_range = close, light_impact_range = far, flame_range = close, flash_range = close, explosion_cause = src)
+		explosion(tile,  devastation_range = explode_inner, heavy_impact_range = explode_inner, light_impact_range = explode_outer, flame_range = explode_inner, flash_range = explode_inner, explosion_cause = src)
 
 	player.investigate_log("has been gibbed by the unfortunate quirk.", INVESTIGATE_DEATHS)
 	player.gib()
