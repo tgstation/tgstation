@@ -151,9 +151,10 @@
 		return FALSE
 
 	// MBTODO: Check grandfather date
-	// MBTODO: If no database, then use config which will forces this value
+	if (!SSdbcore.IsConnected())
+		return CONFIG_GET(flag/give_tutorials_without_db)
 
-	return TRUE
+	return FALSE
 
 // MBTODO: Log to database
 /datum/tutorial_manager/proc/complete(mob/user)
