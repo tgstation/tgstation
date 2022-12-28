@@ -1,14 +1,14 @@
 
 /obj/machinery/airalarm/server
 
-/obj/machinery/airalarm/server/New()
+/obj/machinery/airalarm/server/Initialize()
 	. = ..()
 	tlv_collection["temperature"] = new /datum/tlv/no_checks
 	tlv_collection["pressure"] = new /datum/tlv/no_checks
 
 /obj/machinery/airalarm/kitchen_cold_room
 
-/obj/machinery/airalarm/kitchen_cold_room/New()
+/obj/machinery/airalarm/kitchen_cold_room/Initialize()
 	. = ..()
 	tlv_collection["temperature"] = new /datum/tlv/cold_room_temperature
 	tlv_collection["pressure"] = new /datum/tlv/cold_room_pressure
