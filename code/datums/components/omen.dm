@@ -8,12 +8,14 @@
  */
 /datum/component/omen
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-
 	/// Whatever's causing the omen, if there is one. Destroying the vessel won't stop the omen, but we destroy the vessel (if one exists) upon the omen ending
 	var/obj/vessel
-
 	/// Whether this is a permanent omen that cannot be removed by any non-admin means.
 	var/permanent = FALSE
+	/// The outer light range of the self-gib explosion
+	var/explode_outer = 0.8
+	/// The force of the self-gib explosion
+	var/explode_inner = 0
 
 /datum/component/omen/Initialize(silent = FALSE, _vessel, _permanent = FALSE)
 	if(!isliving(parent))
@@ -40,6 +42,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_accident))
 	RegisterSignal(parent, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(check_slip))
 	RegisterSignal(parent, COMSIG_CARBON_MOOD_UPDATE, PROC_REF(check_bless))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(check_death))
 
 /datum/component/omen/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE))
@@ -58,8 +61,9 @@
 
 	var/mob/living/living_guy = our_guy
 
-	if(!prob(15))
-		return
+	if(prob(85))
+		return FALSE
+
 	var/our_guy_pos = get_turf(living_guy)
 	for(var/turf_content in our_guy_pos)
 		if(istype(turf_content, /obj/machinery/door/airlock))
@@ -91,19 +95,11 @@
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
 	SIGNAL_HANDLER
 
-	if(amount <= 0 || prob(50)) // 50% chance to bonk our head
-		return
+	if(prob(50))
+		make_emote(our_guy)
 
-	var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
-	if(!the_head)
-		return
-
-	playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
-	our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
-	the_head.receive_damage(75)
-	our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100)
-	if(!permanent)
-		qdel(src)
+	if(amount <= 0 || prob(50))
+		bonk(our_guy)
 
 /// Hijack the mood system to see if we get the blessing mood event to cancel the omen
 /datum/component/omen/proc/check_bless(mob/living/our_guy, category)
@@ -116,3 +112,53 @@
 		return
 
 	qdel(src)
+
+/** Bad omen players delimb on death */
+/datum/component/omen/proc/check_death(mob/living/our_guy)
+	SIGNAL_HANDLER
+
+	if(!permanent)
+		return FALSE
+
+	var/turf/tile = get_turf(player)
+	if(tile)
+		explosion(tile,  devastation_range = explode_inner, heavy_impact_range = explode_inner, light_impact_range = explode_outer, flame_range = explode_inner, flash_range = explode_inner, explosion_cause = src)
+
+	if(!iscarbon(player))
+		our_guy.gib()
+		return TRUE
+
+	var/mob/living/carbon/player = our_guy
+	for(var/obj/item/bodypart/thing in user.bodyparts)
+		if(thing.body_part == CHEST || thing.body_part == HEAD)
+			continue
+		thing.dismember()
+
+/** User hits their head */
+/datum/component/omen/proc/bonk(mob/living/our_guy)
+	var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
+	if(!the_head)
+		return FALSE
+
+	playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
+	our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
+	the_head.receive_damage(75)
+	our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100)
+
+	if(!permanent)
+		qdel(src)
+
+	return TRUE
+
+/** Slipped! Time to emote */
+/datum/component/omen/proc/make_emote(mob/living/our_guy)
+	var/quote
+	if(ishuman(player))
+		quote = "scream"
+	if(iscyborg(player))
+		quote = "buzz"
+
+	if(quote)
+		INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), quote)
+
+	return TRUE

@@ -1143,46 +1143,6 @@
 	lose_text = span_notice("You feel like you're going to have a good day.")
 	medical_record_text = "Patient is cursed with bad luck."
 	hardcore_value = 10
-	/// Max distance for the on death explode
-	var/explode_outer = 0.8
-	/// Min distance and force of the on death explode
-	var/explode_inner = 0
 
 /datum/quirk/unfortunate/add(client/client_source)
-	RegisterSignal(quirk_holder, COMSIG_ON_CARBON_SLIP, PROC_REF(on_slip))
-	RegisterSignal(quirk_holder, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-
-/** Player has been slipped, emote time */
-/datum/quirk/unfortunate/proc/on_slip()
-	SIGNAL_HANDLER
-
-	if(prob(65))
-		return FALSE
-
-	var/mob/living/player = quirk_holder
-
-	var/quote
-	if(ishuman(player))
-		quote = "scream"
-	if(iscyborg(player))
-		quote = "buzz"
-
-	INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), quote)
-
-	return TRUE
-
-/// Proc that causes unfortunate to gib on death
-/datum/quirk/unfortunate/proc/on_death()
-	SIGNAL_HANDLER
-
-	var/mob/living/player = quirk_holder
-	var/turf/tile = get_turf(player)
-
-	if(tile)
-		explosion(tile,  devastation_range = explode_inner, heavy_impact_range = explode_inner, light_impact_range = explode_outer, flame_range = explode_inner, flash_range = explode_inner, explosion_cause = src)
-
-	player.investigate_log("has been gibbed by the unfortunate quirk.", INVESTIGATE_DEATHS)
-	player.gib()
-
-	return TRUE
-
+	user.AddComponent(/datum/component/omen, silent = TRUE, permanent = TRUE)
