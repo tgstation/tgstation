@@ -19,15 +19,27 @@ SUBSYSTEM_DEF(tts)
 	wait = 0.1 SECONDS
 	init_order = INIT_ORDER_TTS
 
+	/// Queued HTTP requests that have yet to be sent
 	var/list/queued_tts_messages = list()
 
-	var/list/processing_tts_messages = list()
+	/// Queued HTTP requests that have yet to be sent. Takes priority over queued_tts_messages
+	var/list/priority_queued_tts_messages = list()
 
+	/// HTTP requests currently in progress but not being processed yet
+	var/list/in_process_tts_messages = list()
+
+	/// HTTP requests that are being processed to see if they've been finished
+	var/list/current_processing_tts_messages = list()
+
+	/// A list of available speakers
 	var/list/available_speakers = list()
 
+	/// Whether TTS is enabled or not
 	var/tts_enabled = FALSE
 
 	var/message_timeout = 5 SECONDS
+
+	var/max_processing_at_once = 15
 
 /datum/controller/subsystem/tts/vv_edit_var(var_name, var_value)
 	// tts being enabled depends on whether it actually exists
@@ -57,30 +69,44 @@ SUBSYSTEM_DEF(tts)
 		return
 
 	if(!resumed)
-		processing_tts_messages = queued_tts_messages.Copy()
+		var/list/priority_list = priority_queued_tts_messages
+		while(length(in_process_tts_messages) < max_processing_at_once && priority_list.len > 0)
+			var/list/entry = priority_list[priority_list.len]
+			priority_list.len--
+			var/datum/http_request/request = entry[REQUEST_INDEX]
+			request.begin_async()
+			in_process_tts_messages += list(entry)
+		var/list/less_priority_list = queued_tts_messages
+		while(length(in_process_tts_messages) < max_processing_at_once && less_priority_list.len > 0)
+			var/list/entry = less_priority_list[less_priority_list.len]
+			less_priority_list.len--
+			var/datum/http_request/request = entry[REQUEST_INDEX]
+			request.begin_async()
+			in_process_tts_messages += list(entry)
+		current_processing_tts_messages = in_process_tts_messages.Copy()
 
 	// For speed
-	var/list/processing_messages = processing_tts_messages
+	var/list/processing_messages = current_processing_tts_messages
 	while(processing_messages.len)
 		var/current_message = processing_messages[processing_messages.len]
 		processing_messages.len--
 		var/atom/movable/target = current_message[TARGET_INDEX]
 		if(QDELETED(target))
-			queued_tts_messages -= list(current_message)
+			in_process_tts_messages -= list(current_message)
 			continue
 
 		var/datum/http_request/request = current_message[REQUEST_INDEX]
 		if(!request.is_complete())
 			if(current_message[TIMEOUT_INDEX] < world.time)
-				queued_tts_messages -= list(current_message)
+				in_process_tts_messages -= list(current_message)
 			continue
 
 		var/datum/http_response/response = request.into_response()
-		queued_tts_messages -= list(current_message)
+		in_process_tts_messages -= list(current_message)
 		if(response.errored)
 			continue
 		var/sound/new_sound = new("tmp/[current_message[IDENTIFIER_INDEX]].ogg")
-		playsound(current_message[TARGET_INDEX], new_sound, 100)
+		playsound(current_message[TARGET_INDEX], new_sound, 100, ignore_walls = FALSE)
 		fdel(file("tmp/[current_message[IDENTIFIER_INDEX]].ogg"))
 		if(MC_TICK_CHECK)
 			return
@@ -101,9 +127,16 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request = new()
 	var/file_name = "tmp/[identifier].ogg"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
-	request.begin_async()
+	var/list/waiting_list = queued_tts_messages
+	if(length(in_process_tts_messages) < max_processing_at_once)
+		request.begin_async()
+		waiting_list = in_process_tts_messages
+	else if(ismob(target))
+		var/mob/target_mob = target
+		if(target_mob.client != null)
+			waiting_list = priority_queued_tts_messages
 
-	queued_tts_messages += list(list(target, identifier, world.time + message_timeout, request))
+	waiting_list += list(list(target, identifier, world.time + message_timeout, request))
 
 #undef TARGET_INDEX
 #undef IDENTIFIER_INDEX

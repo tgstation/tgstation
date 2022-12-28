@@ -4,7 +4,7 @@ import os
 import json
 import shlex
 
-tts = TTS("tts_models/en/vctk/vits")
+tts = TTS("tts_models/en/vctk/vits", progress_bar=False, gpu=False)
 
 app = Flask(__name__)
 

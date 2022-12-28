@@ -632,3 +632,5 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 
 ## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
 #FORBID_ADMIN_PROFILING
+
+TTS_HTTP_URL http://localhost:5002

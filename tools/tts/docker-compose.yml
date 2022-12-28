@@ -7,3 +7,4 @@ services:
     tty: true
     volumes:
       - "../../data/tts_cache:/root/.local"
+    restart: always

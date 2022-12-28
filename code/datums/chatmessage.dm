@@ -281,7 +281,6 @@
 		new /datum/chatmessage(raw_message, speaker, src, message_language, list("emote", "italics"))
 	else
 		new /datum/chatmessage(raw_message, speaker, src, message_language, spans)
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), speaker, raw_message, speaker.voice, speaker.voice_filter)
 
 // Tweak these defines to change the available color ranges
 #define CM_COLOR_SAT_MIN 0.6
