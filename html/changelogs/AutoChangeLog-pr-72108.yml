@@ -1,5 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - admin: "Adds a new function for admin lua scripting, \"over_exec_time\", for checking if lua code is running close to the execution limit. Details are available in the lua editor's help menu."
-  - admin: "The execution limit is described in detail in the lua editor's help menu."

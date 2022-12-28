@@ -1388,7 +1388,7 @@
 	return language_holder.can_speak_language(language)
 
 /// Returns the result of tongue specific limitations on spoken languages.
-/atom/movable/proc/could_speak_language(language)
+/atom/movable/proc/could_speak_language(datum/language/language_path)
 	return TRUE
 
 /// Returns selected language, if it can be spoken, or finds, sets and returns a new selected language if possible.
@@ -1420,6 +1420,29 @@
 /atom/movable/proc/update_atom_languages()
 	var/datum/language_holder/language_holder = get_language_holder()
 	return language_holder.update_atom_languages(src)
+
+/**
+ * Randomizes our atom's language to an uncommon language if:
+ * - They are on the station Z level
+ * OR
+ * - They are on the escape shuttle
+ */
+/atom/movable/proc/randomize_language_if_on_station()
+	var/turf/atom_turf = get_turf(src)
+	var/area/atom_area = get_area(src)
+
+	if(!atom_turf) // some machines spawn in nullspace
+		return
+
+	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
+		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with machines
+		// but docked at centcom, and I wanted those machines to also speak funny languages
+		return FALSE
+
+	/// The atom's language holder - so we can randomize and change their language
+	var/datum/language_holder/atom_languages = get_language_holder()
+	atom_languages.selected_language = atom_languages.get_random_spoken_uncommon_language()
+	return TRUE
 
 /* End language procs */
 

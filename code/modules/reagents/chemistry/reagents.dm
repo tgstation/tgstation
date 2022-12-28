@@ -95,6 +95,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	// Used for restaurants.
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
 	var/glass_price
+
+	///The default reagent container for the reagent
+	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
+
 	/// Icon for fallback item displayed in a tourist's thought bubble for if this reagent had no associated glass_style datum.
 	var/fallback_icon
 	/// Icon state for fallback item displayed in a tourist's thought bubble for if this reagent had no associated glass_style datum.

@@ -2225,10 +2225,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/basic/cockroach,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/basic/cockroach,
 /turf/open/floor/iron,
 /area/station/medical/abandoned)
 "ayH" = (
@@ -2448,7 +2448,7 @@
 /obj/effect/spawner/random/structure/table_fancy,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -5300,7 +5300,6 @@
 /area/station/security/office)
 "bla" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
@@ -5312,6 +5311,7 @@
 	name = "virology camera";
 	network = list("ss13","medbay","virology")
 	},
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/virology)
 "blc" = (
@@ -7998,8 +7998,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "bQy" = (
-/mob/living/basic/cockroach,
 /obj/effect/mapping_helpers/burnt_floor,
+/mob/living/basic/cockroach,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "bRe" = (
@@ -9525,8 +9525,8 @@
 /area/station/engineering/atmos/mix)
 "ciF" = (
 /obj/structure/window/reinforced/spawner/east,
-/mob/living/carbon/human/species/monkey,
 /obj/structure/flora/bush/sparsegrass,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "ciH" = (
@@ -10486,8 +10486,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "ctW" = (
-/mob/living/simple_animal/slime,
 /obj/structure/cable,
+/mob/living/simple_animal/slime,
 /turf/open/floor/circuit/green,
 /area/station/science/xenobiology)
 "cug" = (
@@ -16721,9 +16721,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/bot/secbot/beepsky/officer,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/simple_animal/bot/secbot/beepsky/officer,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "dYj" = (
@@ -30023,10 +30023,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "hkR" = (
-/mob/living/basic/cockroach,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/mob/living/basic/cockroach,
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "hkU" = (
@@ -30086,11 +30086,11 @@
 /area/station/hallway/primary/central/aft)
 "hlG" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
 /obj/structure/cable,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hlM" = (
@@ -36768,9 +36768,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "iWL" = (
-/mob/living/carbon/human/species/monkey,
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/sparsegrass,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "iWR" = (
@@ -38632,10 +38632,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/sloth/citrus,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/mob/living/simple_animal/sloth/citrus,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "jrA" = (
@@ -46486,10 +46486,10 @@
 /area/station/cargo/sorting)
 "lkE" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "lkL" = (
@@ -57320,11 +57320,11 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/library/abandoned)
 "nUR" = (
-/mob/living/basic/cockroach,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/basic/cockroach,
 /turf/open/floor/plating,
 /area/station/service/theater/abandoned)
 "nUT" = (
@@ -69244,11 +69244,11 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "qRZ" = (
@@ -69647,8 +69647,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/simple_animal/bot/secbot/pingsky,
 /obj/structure/cable/layer3,
+/mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "qYL" = (
@@ -70639,8 +70639,8 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/item/radio/intercom/directional/south,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/cmo)
 "rlC" = (
@@ -88104,10 +88104,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "vxi" = (
@@ -89252,7 +89252,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -94267,6 +94269,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/food/grilled_cheese_sandwich,
 /turf/open/floor/iron/cafeteria,
 /area/station/medical/break_room)
 "wWy" = (
@@ -95605,9 +95608,9 @@
 "xoa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/carbon/human/species/monkey,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/green/filled/warning,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "xop" = (
@@ -98423,10 +98426,10 @@
 /area/station/hallway/primary/central/fore)
 "xXq" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/carp/lia,
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 1
 	},
+/mob/living/basic/carp/pet/lia,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "xXt" = (

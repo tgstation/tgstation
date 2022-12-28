@@ -241,6 +241,31 @@
 	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
 	priority_announce("Warning: Emergency Shuttle uplink reestablished, shuttle enabled.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 
+/client/proc/admin_hostile_environment()
+	set category = "Admin.Events"
+	set name = "Hostile Environment"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	switch(tgui_alert(usr, "Select an Option", "Hostile Environment Manager", list("Enable", "Disable", "Clear All")))
+		if("Enable")
+			if (SSshuttle.hostile_environments["Admin"] == TRUE)
+				to_chat(usr, span_warning("Error, admin hostile environment already enabled."))
+			else
+				message_admins(span_adminnotice("[key_name_admin(usr)] Enabled an admin hostile environment"))
+				SSshuttle.registerHostileEnvironment("Admin")
+		if("Disable")
+			if (!SSshuttle.hostile_environments["Admin"])
+				to_chat(usr, span_warning("Error, no admin hostile environment found."))
+			else
+				message_admins(span_adminnotice("[key_name_admin(usr)] Disabled the admin hostile environment"))
+				SSshuttle.clearHostileEnvironment("Admin")
+		if("Clear All")
+			message_admins(span_adminnotice("[key_name_admin(usr)] Disabled all current hostile environment sources"))
+			SSshuttle.hostile_environments.Cut()
+			SSshuttle.checkHostileEnvironment()
+
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
 	set category = "Admin.Events"
 	set name = "Toggle Nuke"

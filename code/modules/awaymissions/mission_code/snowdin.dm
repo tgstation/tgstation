@@ -375,19 +375,40 @@
 /obj/item/clothing/under/syndicate/coldres
 	name = "insulated tactical turtleneck"
 	desc = "A nondescript and slightly suspicious-looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection."
-	armor = list(MELEE = 20, BULLET = 10, LASER = 0,ENERGY = 5, BOMB = 0, BIO = 0, FIRE = 25, ACID = 25)
+	armor_type = /datum/armor/syndicate_coldres
 	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
 
 /obj/item/clothing/shoes/combat/coldres
 	name = "insulated combat boots"
 	desc = "High speed, low drag combat boots, now with an added layer of insulation."
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
+
 /obj/item/gun/magic/wand/fireball/inert
 	name = "weakened wand of fireball"
 	desc = "This wand shoots scorching balls of fire that explode into destructive flames. The years of the cold have weakened the magic inside the wand."
 	max_charges = 4
+
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
 
 /obj/item/gun/magic/wand/resurrection/inert
 	name = "weakened wand of healing"
@@ -396,44 +417,142 @@
 
 
 //decals//--
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
+
 /obj/effect/turf_decal/snowdin_station_sign
 	icon_state = "AOP1"
+
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
 
 /obj/effect/turf_decal/snowdin_station_sign/two
 	icon_state = "AOP2"
 
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
+
 /obj/effect/turf_decal/snowdin_station_sign/three
 	icon_state = "AOP3"
+
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
 
 /obj/effect/turf_decal/snowdin_station_sign/four
 	icon_state = "AOP4"
 
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
+
 /obj/effect/turf_decal/snowdin_station_sign/five
 	icon_state = "AOP5"
+
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
 
 /obj/effect/turf_decal/snowdin_station_sign/six
 	icon_state = "AOP6"
 
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
+
 /obj/effect/turf_decal/snowdin_station_sign/seven
 	icon_state = "AOP7"
+
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
 
 /obj/effect/turf_decal/snowdin_station_sign/up
 	icon_state = "AOPU1"
 
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
+
 /obj/effect/turf_decal/snowdin_station_sign/up/two
 	icon_state = "AOPU2"
+
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
 
 /obj/effect/turf_decal/snowdin_station_sign/up/three
 	icon_state = "AOPU3"
 
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
+
 /obj/effect/turf_decal/snowdin_station_sign/up/four
 	icon_state = "AOPU4"
+
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
 
 /obj/effect/turf_decal/snowdin_station_sign/up/five
 	icon_state = "AOPU5"
 
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
+
 /obj/effect/turf_decal/snowdin_station_sign/up/six
 	icon_state = "AOPU6"
+
+/datum/armor/syndicate_coldres
+	melee = 20
+	bullet = 10
+	energy = 5
+	fire = 25
+	acid = 25
 
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
