@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - qol: "some modsuits now have some modules pinned by default"

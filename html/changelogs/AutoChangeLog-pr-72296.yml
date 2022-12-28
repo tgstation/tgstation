@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Did you know items have a 1.2x chance of getting fibers attached? Well it's been broken, now it's fixed"

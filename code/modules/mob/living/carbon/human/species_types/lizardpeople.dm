@@ -126,7 +126,7 @@ Lizard subspecies: ASHWALKERS
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = SPECIES_LIZARD_ASH
-	mutantlungs = /obj/item/organ/internal/lungs/ashwalker
+	mutantlungs = /obj/item/organ/internal/lungs/lavaland
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	species_traits = list(
 		MUTCOLORS,

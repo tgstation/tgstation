@@ -20,3 +20,6 @@
 
 /// Checks that smoothing_groups and canSmoothWith are properly sorted in /atom/Initialize
 /datum/unit_test/focus_only/sorted_smoothing_groups
+
+/// Checks that floor tiles are properly mapped to broken/burnt
+/datum/unit_test/focus_only/valid_turf_states

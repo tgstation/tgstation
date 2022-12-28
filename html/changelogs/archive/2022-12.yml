@@ -926,3 +926,79 @@
   san7890:
   - bugfix: To prevent spam, there is now a cooldown on being able to upload assorted
       books into the newscaster's channel feed.
+2022-12-27:
+  Fikou:
+  - bugfix: guardian spirits check for death before they add themselves to you
+  - admin: admins can now give someone a holoparasite through a new menu in vv dropdown
+  - qol: alt click holopara abilities were moved to right click
+  - qol: support holoparas heal with right click
+  - admin: holoparas have less hardcoded stuff so admins can edit them easier
+  - qol: holoparasites now get their light color from their guardian color
+  - bugfix: holoparasites no longer have the hostile faction, things will attack them
+  - bugfix: holoparasites fly over chasms and stuff properly again
+  - qol: holoparasites update their health every time the summoner gets damaged, rather
+      than every 2 seconds. they also instantly react to the summoner's death, deletion
+      and have a screen overlay of how damaged the summoner is
+  - qol: holoparasite creation now uses a radial menu with tooltips for each subtype,
+      as such, the guide papers no longer exist. it also shows ghosts which type you
+      picked
+  - bugfix: holoparasites can no longer be fugu'd
+  - bugfix: fixes overlay lighting runtiming if deleted during a signal queue
+  - bugfix: fixes negative gravity being weird, and gravitokinetic holoparasite's
+      turf slams not working
+  - bugfix: fixes invisible info tooltips for radial menus
+  - admin: you can now make holoparas not controlled by anyone
+  Guillaume Prata:
+  - bugfix: Metal Hydrogen/Elder Atmosian suits can carry a MH Axe on its suit slot
+      now.
+  Jacquerel:
+  - rscadd: Carp will now run away if their health gets low, meaning they may have
+      a chance to regenerate.
+  - rscadd: Lia will now fight back if attacked instead of letting herself get killed,
+      watch out!
+  - balance: Magicarp will now aim their spells more intelligently.
+  - rscadd: Tame Magicarp can be ordered to use their spells on things.
+  - refactor: Carp are now "Basic Mobs" instead of "Simple Mobs"
+  - bugfix: Dehydrated carp no longer give you a bad feeling when they're your friend
+      and a good feeling when they're going to attack you.
+  - balance: Tamed carp are now friendly only to their tamer rather than their whole
+      faction, which should make dehydrated carp more active. Order them to stay or
+      follow you if you want them to behave around your friends.
+  Melbert:
+  - refactor: Drowsiness and Blurred Eyes are now tracked via status effect.
+2022-12-28:
+  Fikou:
+  - balance: standard holoparasites and assassin holoparasites in stealth mode can
+      deal wounds
+  - balance: you can now ride charger holoparasites
+  - balance: charger holoparasites have a bit less armor and speed
+  - bugfix: you can correctly redirect yourself with neurotoxin as a xeno
+  - bugfix: you can see your active hand correctly as xeno
+  - bugfix: fixes moonicorns not applying pax
+  - imageadd: tweaks the ninja modsuit helmet
+  Jacquerel:
+  - bugfix: Space Carp can now breathe in space
+  Melbert:
+  - bugfix: Wedding dresses no longer render their shoes over the dress
+  - bugfix: Things which have inv flags set should more consistently actually hide
+      the things they mean to hide
+  - bugfix: Silver foods correctly spawn things grilled and fried
+  - bugfix: Ethereals and Flypeople and Aliens who learn Uncommon language can speak
+      it with their tongues like they could speak Common, no this doesn't mean they
+      can naturally speak or understand Uncommon
+  - refactor: Refactored how tongues set up their languages lists
+  - rscadd: You can now high five people with (non-cult) touch spells! Maybe be careful
+      high-fiving a wizard who knows Smite.
+  Ryll/Shaps:
+  - rscadd: 'Dogs will now occasionally bark at their two mortal enemies: felinids
+      and mailmen'
+  - bugfix: Dogs set to attack will now only close within 3 tiles of their target,
+      and must be approached further by their target (or pushed next to their target)
+      to actually attack
+  Time-Green:
+  - bugfix: Pride pin quirk works roundstart
+  ZephyrTFA:
+  - bugfix: War can once again be declared
+  san7890:
+  - rscadd: WOULD YOU EAT THE TOILET SANDWICH (LOCATED IN DELTASTATION'S MEDBAY BREAKROOM
+      RESTROOM) FOR FIVE DOLLARS? TEST IT OUT NOW!

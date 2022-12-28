@@ -1,17 +1,4 @@
 //Here are the procs used to modify status effects of a mob.
-
-/**
-* Set drowsyness of a mob to passed value
-*/
-/mob/proc/set_drowsyness(amount)
-	drowsyness = max(amount, 0)
-
-/**
- * Adds passed value to the drowsyness of a mob
- */
-/mob/proc/adjust_drowsyness(amount)
-	drowsyness = max(drowsyness + amount, 0)
-
 /**
  * Adjust a mobs blindness by an amount
  *
@@ -57,37 +44,6 @@
 		clear_alert(ALERT_BLIND)
 		clear_fullscreen("blind")
 		remove_client_colour(/datum/client_colour/monochrome/blind)
-
-
-/**
- * Make the mobs vision blurry
- */
-/mob/proc/blur_eyes(amount)
-	if(amount>0)
-		eye_blurry = max(amount, eye_blurry)
-	update_eye_blur()
-
-/**
- * Adjust the current blurriness of the mobs vision by amount
- */
-/mob/proc/adjust_blurriness(amount)
-	eye_blurry = max(eye_blurry+amount, 0)
-	update_eye_blur()
-
-///Set the mobs blurriness of vision to an amount
-/mob/proc/set_blurriness(amount)
-	eye_blurry = max(amount, 0)
-	update_eye_blur()
-
-///Apply the blurry overlays to a mobs clients screen
-/mob/proc/update_eye_blur()
-	if(!hud_used)
-		return
-	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	if(eye_blurry)
-		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(clamp(eye_blurry * 0.1, 0.6, 3)))
-	else
-		game_plane_master_controller.remove_filter("eye_blur")
 
 ///Adjust the disgust level of a mob
 /mob/proc/adjust_disgust(amount)
@@ -142,4 +98,3 @@
 	var/old_dark = see_in_dark
 	see_in_dark = new_dark
 	SEND_SIGNAL(src, COMSIG_MOB_SEE_IN_DARK_CHANGE, see_in_dark, old_dark)
-

@@ -386,7 +386,7 @@
 			if(prob(5))
 				victim.emote("scream")
 			victim.emote("cry")
-			victim.blur_eyes(5) // 10 seconds
+			victim.set_eye_blur_if_lower(10 SECONDS)
 			victim.adjust_blindness(3) // 6 seconds
 			victim.set_confusion_if_lower(5 SECONDS)
 			victim.Knockdown(3 SECONDS)
@@ -398,7 +398,7 @@
 			if(prob(15))
 				to_chat(exposed_mob, span_danger("[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]"))
 			if(prob(10))
-				victim.blur_eyes(1)
+				victim.set_eye_blur_if_lower(2 SECONDS)
 			if(prob(10))
 				victim.set_dizzy_if_lower(2 SECONDS)
 			if(prob(5))
@@ -493,7 +493,7 @@
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))
 			victim.emote("cry")
-			victim.blur_eyes(3) // 6 seconds
+			victim.set_eye_blur_if_lower(6 SECONDS)
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
@@ -760,7 +760,7 @@
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150, affected_biotype)
 		M.adjustToxLoss(3*REM, FALSE, required_biotype = affected_biotype)
 		M.adjustStaminaLoss(10*REM, FALSE, required_biotype = affected_biotype)
-		M.blur_eyes(5)
+		M.set_eye_blur_if_lower(10 SECONDS)
 		. = TRUE
 	..()
 

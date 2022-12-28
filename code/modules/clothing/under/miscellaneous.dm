@@ -26,6 +26,7 @@
 	desc = "<i>'Special delivery!'</i>"
 	icon_state = "mailman"
 	inhand_icon_state = "b_suit"
+	clothing_traits = list(TRAIT_HATED_BY_DOGS)
 
 /obj/item/clothing/under/misc/psyche
 	name = "psychedelic jumpsuit"
