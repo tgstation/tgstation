@@ -157,6 +157,7 @@
 #include "code\__DEFINES\profile.dm"
 #include "code\__DEFINES\projectiles.dm"
 #include "code\__DEFINES\qdel.dm"
+#include "code\__DEFINES\quirks.dm"
 #include "code\__DEFINES\radiation.dm"
 #include "code\__DEFINES\radio.dm"
 #include "code\__DEFINES\reactions.dm"
