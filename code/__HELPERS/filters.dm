@@ -23,6 +23,9 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 		)
 	),
 	// Not implenmented, but if this isn't uncommented some windows will just error
+	// Needs either a proper matrix editor, or just a hook to our existing one 
+	// Issue is filterrific assumes variables will have the same value type if they share the same name, which this violates
+	// Gotta refactor this sometime
 	"color" = list(
 		"defaults" = list(
 			"color" = matrix(),
