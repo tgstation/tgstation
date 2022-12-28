@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	desc = "Triple vent output"
 	danger = TRUE
 
-/datum/air_alarm_mode/refill/applied(area/applied)
+/datum/air_alarm_mode/refill/apply(area/applied)
 	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
-		scrubber.set_widenet(FALSE)
+		scrubber.set_widenet(TRUE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 
 /datum/air_alarm_mode/cycle/proc/replace(area/applied)
@@ -123,6 +123,14 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	danger = TRUE
 
 /datum/air_alarm_mode/siphon/apply(area/applied)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+		vent.on = FALSE
+		vent.update_appearance(UPDATE_ICON)
+
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+		scrubber.on = TRUE
+		scrubber.set_widenet(FALSE)
+		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 
 /datum/air_alarm_mode/panic_siphon
 	name = "Panic Siphon"
@@ -136,7 +144,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
-		scrubber.set_widenet(FALSE)
+		scrubber.set_widenet(TRUE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 
 /datum/air_alarm_mode/off

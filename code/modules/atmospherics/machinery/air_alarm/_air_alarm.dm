@@ -225,7 +225,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 		data["selectedModePath"] = selected_mode.type
 		data["modes"] = list()
-		for(var/datum/air_alarm_mode/mode in GLOB.air_alarm_modes)
+		for(var/mode_path in GLOB.air_alarm_modes)
+			var/datum/air_alarm_mode/mode = GLOB.air_alarm_modes[mode_path]
+			if(!(obj_flags & EMAGGED) && mode.emag)
+				continue
 			data["modes"] += list(list(
 				"name" = mode.name,
 				"desc" = mode.desc,
@@ -234,7 +237,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			))
 
 		// forgive me holy father
-		data["panicSiphonPath"] = /datum/air_alarm_mode/siphon
+		data["panicSiphonPath"] = /datum/air_alarm_mode/panic_siphon
 		data["filteringPath"] = /datum/air_alarm_mode/filtering
 
 	return data
@@ -499,7 +502,12 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	update_appearance()
 
 /obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path)
-	selected_mode = GLOB.air_alarm_modes[mode_path]
+	var/datum/air_alarm_mode/new_mode = GLOB.air_alarm_modes[mode_path]
+	if(!new_mode)
+		return
+	if(new_mode.emag && !(obj_flags & EMAGGED))
+		return
+	selected_mode = new_mode
 	selected_mode.apply(my_area)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 

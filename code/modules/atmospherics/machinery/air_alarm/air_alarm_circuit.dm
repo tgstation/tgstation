@@ -24,7 +24,8 @@
 /obj/item/circuit_component/air_alarm_general/populate_options()
 	if(!options_map)
 		options_map = list()
-		for(var/datum/air_alarm_mode/mode as anything in GLOB.air_alarm_modes)
+		for(var/mode_path in GLOB.air_alarm_modes)
+			var/datum/air_alarm_mode/mode = GLOB.air_alarm_modes[mode_path]
 			if(!mode.emag)
 				options_map[mode.name] = mode.type
 

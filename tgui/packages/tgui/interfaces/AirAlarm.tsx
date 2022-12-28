@@ -252,9 +252,10 @@ const AirAlarmControlModes = (props, context) => {
     <Fragment key={mode.path}>
       <Button
         icon={mode.path === selectedModePath ? 'check-square-o' : 'square-o'}
-        selected={mode.path === selectedModePath}
-        color={mode.path === selectedModePath && mode.danger && 'danger'}
-        content={mode.name}
+        color={
+          mode.path === selectedModePath && (mode.danger ? 'red' : 'green')
+        }
+        content={mode.name + ' - ' + mode.desc}
         onClick={() => act('mode', { mode: mode.path })}
       />
       <Box mt={1} />
@@ -290,9 +291,10 @@ const EditingModal = (props: EditingModalProps, context) => {
         {oldValue === -1 ? (
           <Button
             onClick={() =>
-              act('reset_threshold', {
+              act('set_threshold', {
                 threshold: id,
                 threshold_type: type,
+                value: 0,
               })
             }>
             {'Enable'}
