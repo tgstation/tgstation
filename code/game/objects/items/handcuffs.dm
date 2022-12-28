@@ -40,12 +40,16 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 1 MINUTES
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
+
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
 
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/user)
 	if(!istype(C))
@@ -147,6 +151,10 @@
 	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
 	. = ..()
@@ -266,6 +274,10 @@
 	cable_color = CABLE_COLOR_WHITE
 	inhand_icon_state = "coil_white"
 
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
+
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params) //Slapcrafting
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
@@ -323,6 +335,10 @@
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_used"
 
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
+
 /obj/item/restraints/handcuffs/cable/zipties/used/attack()
 	return
 
@@ -378,6 +394,10 @@
 
 /obj/item/restraints/legcuffs/beartrap/prearmed
 	armed = TRUE
+
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
 
 /obj/item/restraints/legcuffs/beartrap/Initialize(mapload)
 	. = ..()
@@ -468,6 +488,10 @@
 	item_flags = DROPDEL
 	flags_1 = NONE
 
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
+
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(dissipate)), 100)
@@ -494,6 +518,7 @@
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
 	icon_state = "bola"
+	icon_state_preview = "bola_preview"
 	inhand_icon_state = "bola"
 	lefthand_file = 'icons/mob/inhands/weapons/thrown_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/thrown_righthand.dmi'
@@ -501,6 +526,10 @@
 	gender = NEUTER
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
+
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
 	if(!..())
@@ -554,6 +583,10 @@
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_COMMAND * 0.35
 
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
+
 /obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_UNCATCHABLE, TRAIT_GENERIC) // People said energy bolas being uncatchable is a feature.
@@ -572,10 +605,15 @@
 	name = "gonbola"
 	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
 	icon_state = "gonbola"
+	icon_state_preview = "gonbola_preview"
 	inhand_icon_state = "bola_r"
 	breakouttime = 30 SECONDS
 	slowdown = 0
 	var/datum/status_effect/gonbola_pacify/effectReference
+
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
 
 /obj/item/restraints/legcuffs/bola/gonbola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()

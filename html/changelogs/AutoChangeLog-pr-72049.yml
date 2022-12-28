@@ -1,5 +1,0 @@
-author: "fikou"
-delete-after: True
-changes:
-  - rscdel: "chaos holoparasite"
-  - rscadd: "gaseous holoparasite, it can expel various gases from its body and stabilizes the users temperature"

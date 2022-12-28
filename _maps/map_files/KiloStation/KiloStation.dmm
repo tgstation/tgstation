@@ -41496,6 +41496,11 @@
 "lKq" = (
 /turf/closed/wall,
 /area/station/cargo/storage)
+"lKx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/xmastree,
+/turf/open/floor/iron/dark,
+/area/station/service/chapel)
 "lKC" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -59617,6 +59622,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
+"rbF" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/spawner/xmastree,
+/turf/open/floor/iron/showroomfloor,
+/area/station/service/bar/atrium)
 "rbH" = (
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
@@ -67355,7 +67368,7 @@
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 11;
-	height = 22;
+	height = 24;
 	name = "SS13: Auxiliary Dock, Station-Fore";
 	shuttle_id = "whiteship_home";
 	width = 35
@@ -76832,7 +76845,7 @@
 /obj/structure/bed/dogbed/cayenne{
 	name = "Lia's bed"
 	},
-/mob/living/simple_animal/hostile/carp/lia,
+/mob/living/basic/carp/pet/lia,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "vPd" = (
@@ -78729,7 +78742,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "woH" = (
-/mob/living/simple_animal/hostile/carp{
+/mob/living/basic/carp{
 	environment_smash = 0;
 	name = "Tuna";
 	real_name = "Tuna"
@@ -98143,7 +98156,7 @@ vmZ
 ewC
 qER
 xmn
-kUJ
+lKx
 ggj
 aSu
 kVd
@@ -115676,7 +115689,7 @@ eDT
 fzL
 bji
 qTC
-hNL
+rbF
 hVU
 mCs
 vYn

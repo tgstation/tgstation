@@ -9,7 +9,7 @@
 	obj_flags = CAN_BE_HIT
 	dir = NONE // dir will contain dominant direction for junction pipes
 	max_integrity = 200
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
+	armor_type = /datum/armor/structure_disposalpipe
 	layer = DISPOSAL_PIPE_LAYER // slightly lower than wires and other pipes
 	damage_deflection = 10
 	var/dpdir = NONE // bitmask of pipe directions
@@ -17,6 +17,14 @@
 	var/flip_type // If set, the pipe is flippable and becomes this type when flipped
 	var/obj/structure/disposalconstruct/stored
 
+
+/datum/armor/structure_disposalpipe
+	melee = 25
+	bullet = 10
+	laser = 10
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -194,6 +202,14 @@
 // next direction to move
 // if coming in from secondary dirs, then next is primary dir
 // if coming in from primary dir, then next is equal chance of other dirs
+/datum/armor/structure_disposalpipe
+	melee = 25
+	bullet = 10
+	laser = 10
+	energy = 100
+	fire = 90
+	acid = 30
+
 /obj/structure/disposalpipe/junction/nextdir(obj/structure/disposalholder/H)
 	var/flipdir = turn(H.dir, 180)
 	if(flipdir != dir) // came from secondary dir, so exit through primary
@@ -229,6 +245,14 @@
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
 	var/obj/linked // the linked obj/machinery/disposal or obj/disposaloutlet
+
+/datum/armor/structure_disposalpipe
+	melee = 25
+	bullet = 10
+	laser = 10
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/structure/disposalpipe/trunk/Initialize(mapload)
 	. = ..()
@@ -301,6 +325,14 @@
 	initialize_dirs = DISP_DIR_NONE
 	// broken pipes always have dpdir=0 so they're not found as 'real' pipes
 	// i.e. will be treated as an empty turf
+
+/datum/armor/structure_disposalpipe
+	melee = 25
+	bullet = 10
+	laser = 10
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)

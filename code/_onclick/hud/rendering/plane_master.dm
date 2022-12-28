@@ -260,7 +260,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	multiz_scaled = FALSE
-	critical = PLANE_CRITICAL_FUCKO_PARALLAX
 
 /atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -287,6 +286,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
 		is_outside_bounds = TRUE // I'm sorry :(
 		return
+	// If we can't render, and we aren't the bottom layer, don't render us
+	// This way we only multiply against stuff that's not fullwhite space
+	var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+	var/turf/viewing_turf = get_turf(relevant)
+	if(!viewing_turf || offset != GET_LOWEST_STACK_OFFSET(viewing_turf.z))
+		parent_parallax.remove_relay_from(plane)
+	else
+		parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
 	return ..()
 
 /atom/movable/screen/plane_master/parallax/inside_bounds(mob/relevant)
@@ -294,6 +301,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
 		is_outside_bounds = FALSE
 		return
+	// Always readd, just in case we lost it
+	var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+	parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
 	return ..()
 
 /atom/movable/screen/plane_master/gravpulse

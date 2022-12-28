@@ -32569,7 +32569,7 @@
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 11;
-	height = 22;
+	height = 24;
 	name = "SS13: Auxiliary Dock, Station-Port";
 	shuttle_id = "whiteship_home";
 	width = 35
@@ -47276,7 +47276,7 @@
 /area/station/maintenance/port/aft)
 "oxJ" = (
 /obj/structure/bed/dogbed/lia,
-/mob/living/simple_animal/hostile/carp/lia,
+/mob/living/basic/carp/pet/lia,
 /obj/structure/cable,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/hos)
