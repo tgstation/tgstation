@@ -29,11 +29,13 @@ type AirAlarmData = {
   }[];
   vents: VentProps[];
   scrubbers: ScrubberProps[];
-  mode: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  selectedModePath: string;
+  panicSiphonPath: string;
+  filteringPath: string;
   modes: {
     name: string;
-    mode: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-    selected: BooleanLike;
+    desc: string;
+    path: string;
     danger: BooleanLike;
   }[];
   thresholdTypeMap: Record<string, number>;
@@ -162,7 +164,8 @@ const AirAlarmControl = (props, context) => {
 const AirAlarmControlHome = (props, context) => {
   const { act, data } = useBackend<AirAlarmData>(context);
   const [screen, setScreen] = useLocalState(context, 'screen', 'home');
-  const { mode, atmosAlarm } = data;
+  const { selectedModePath, panicSiphonPath, filteringPath, atmosAlarm } = data;
+  const isPanicSiphoning = selectedModePath === panicSiphonPath;
   return (
     <>
       <Button
@@ -173,12 +176,12 @@ const AirAlarmControlHome = (props, context) => {
       />
       <Box mt={1} />
       <Button
-        icon={mode === 3 ? 'exclamation-triangle' : 'exclamation'}
-        color={mode === 3 && 'danger'}
+        icon={isPanicSiphoning ? 'exclamation-triangle' : 'exclamation'}
+        color={isPanicSiphoning && 'danger'}
         content="Panic Siphon"
         onClick={() =>
           act('mode', {
-            mode: mode === 3 ? 1 : 3,
+            mode: isPanicSiphoning ? filteringPath : panicSiphonPath,
           })
         }
       />
@@ -241,18 +244,18 @@ const AirAlarmControlScrubbers = (props, context) => {
 
 const AirAlarmControlModes = (props, context) => {
   const { act, data } = useBackend<AirAlarmData>(context);
-  const { modes } = data;
+  const { modes, selectedModePath } = data;
   if (!modes || modes.length === 0) {
     return 'Nothing to show';
   }
   return modes.map((mode) => (
-    <Fragment key={mode.mode}>
+    <Fragment key={mode.path}>
       <Button
-        icon={mode.selected ? 'check-square-o' : 'square-o'}
-        selected={mode.selected}
-        color={mode.selected && mode.danger && 'danger'}
+        icon={mode.path === selectedModePath ? 'check-square-o' : 'square-o'}
+        selected={mode.path === selectedModePath}
+        color={mode.path === selectedModePath && mode.danger && 'danger'}
         content={mode.name}
-        onClick={() => act('mode', { mode: mode.mode })}
+        onClick={() => act('mode', { mode: mode.path })}
       />
       <Box mt={1} />
     </Fragment>

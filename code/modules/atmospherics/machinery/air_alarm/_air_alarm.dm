@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				"filter_types" = filter_types,
 			))
 
-		data["currentMode"] = selected_mode.type
+		data["selectedModePath"] = selected_mode.type
 		data["modes"] = list()
 		for(var/datum/air_alarm_mode/mode in GLOB.air_alarm_modes)
 			data["modes"] += list(list(
@@ -232,6 +232,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				"danger" = mode.danger,
 				"path" = mode.type
 			))
+
+		// forgive me holy father
+		data["panicSiphonPath"] = /datum/air_alarm_mode/siphon
+		data["filteringPath"] = /datum/air_alarm_mode/filtering
 
 	return data
 
