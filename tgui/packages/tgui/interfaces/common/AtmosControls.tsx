@@ -56,7 +56,7 @@ export const Vent = (props: VentProps, context) => {
           content={power ? 'On' : 'Off'}
           onClick={() =>
             act('power', {
-              refID,
+              ref: refID,
               val: Number(!power),
             })
           }
@@ -70,7 +70,7 @@ export const Vent = (props: VentProps, context) => {
             color={!direction && 'danger'}
             onClick={() =>
               act('direction', {
-                refID,
+                ref: refID,
                 val: Number(!direction),
               })
             }
@@ -83,7 +83,7 @@ export const Vent = (props: VentProps, context) => {
             selected={incheck}
             onClick={() =>
               act('incheck', {
-                refID,
+                ref: refID,
                 val: checks,
               })
             }
@@ -94,7 +94,7 @@ export const Vent = (props: VentProps, context) => {
             selected={excheck}
             onClick={() =>
               act('excheck', {
-                refID,
+                ref: refID,
                 val: checks,
               })
             }
@@ -111,7 +111,7 @@ export const Vent = (props: VentProps, context) => {
               maxValue={5066}
               onChange={(e, value) =>
                 act('set_internal_pressure', {
-                  refID,
+                  ref: refID,
                   value,
                 })
               }
@@ -122,7 +122,7 @@ export const Vent = (props: VentProps, context) => {
               content="Reset"
               onClick={() =>
                 act('reset_internal_pressure', {
-                  refID,
+                  ref: refID,
                 })
               }
             />
@@ -139,7 +139,7 @@ export const Vent = (props: VentProps, context) => {
               maxValue={5066}
               onChange={(e, value) =>
                 act('set_external_pressure', {
-                  refID,
+                  ref: refID,
                   value,
                 })
               }
@@ -150,7 +150,7 @@ export const Vent = (props: VentProps, context) => {
               content="Reset"
               onClick={() =>
                 act('reset_external_pressure', {
-                  refID,
+                  ref: refID,
                 })
               }
             />
@@ -174,7 +174,7 @@ export const Scrubber = (props: ScrubberProps, context) => {
           selected={power}
           onClick={() =>
             act('power', {
-              refID,
+              ref: refID,
               val: Number(!power),
             })
           }
@@ -188,7 +188,7 @@ export const Scrubber = (props: ScrubberProps, context) => {
             content={scrubbing ? 'Scrubbing' : 'Siphoning'}
             onClick={() =>
               act('scrubbing', {
-                refID,
+                ref: refID,
                 val: Number(!scrubbing),
               })
             }
@@ -199,7 +199,7 @@ export const Scrubber = (props: ScrubberProps, context) => {
             content={widenet ? 'Expanded range' : 'Normal range'}
             onClick={() =>
               act('widenet', {
-                refID,
+                ref: refID,
                 val: Number(!widenet),
               })
             }
@@ -216,7 +216,7 @@ export const Scrubber = (props: ScrubberProps, context) => {
                 selected={filter.enabled}
                 onClick={() =>
                   act('toggle_filter', {
-                    refID,
+                    ref: refID,
                     val: filter.gas_id,
                   })
                 }
