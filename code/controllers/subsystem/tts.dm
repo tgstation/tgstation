@@ -59,6 +59,7 @@ SUBSYSTEM_DEF(tts)
 	if(response.errored || response.status_code != 200)
 		return SS_INIT_NO_NEED
 	available_speakers = json_decode(response.body)
+	available_speakers -= "ED\n" // TODO: properly fix this
 	tts_enabled = TRUE
 
 	return SS_INIT_SUCCESS
@@ -118,9 +119,9 @@ SUBSYSTEM_DEF(tts)
 	var/shell_scrubbed_input = tts_filter(message)
 	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 100)
 	var/identifier = md5(speaker + shell_scrubbed_input + filter)
-	speaker = tts_filter(speaker)
 	if(!(speaker in available_speakers))
 		CRASH("Tried to use invalid speaker for TTS message! ([speaker])")
+	speaker = tts_filter(speaker)
 
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
