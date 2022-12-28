@@ -1,0 +1,4 @@
+author: "Salex08"
+delete-after: True
+changes:
+  - bugfix: "transparent and timid kudzu mutations wont block light"
