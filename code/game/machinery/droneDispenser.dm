@@ -125,6 +125,8 @@
 
 /obj/machinery/drone_dispenser/examine(mob/user)
 	. = ..()
+	if (iron_cost > 0 || glass_cost > 0)
+		. += span_notice("It needs [iron_cost] iron and [glass_cost] glass to produce one drone shell.")
 	if((mode == DRONE_RECHARGING) && !machine_stat && recharging_text)
 		. += span_warning("[recharging_text]")
 
