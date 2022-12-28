@@ -64,9 +64,9 @@
 
 	if (!afterattack_result && isitem(target))
 		if (isnull(user.get_inactive_held_item()))
-			suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
+			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
 		else
-			suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
+			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
 	return afterattack_result
 

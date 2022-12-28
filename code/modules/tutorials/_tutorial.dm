@@ -23,7 +23,7 @@
 
 /datum/tutorial/proc/manager()
 	RETURN_TYPE(/datum/tutorial_manager)
-	return GLOB.tutorial_managers[type]
+	return SStutorials.tutorial_managers[type]
 
 /datum/tutorial/proc/perform()
 	SHOULD_CALL_PARENT(FALSE)
@@ -112,7 +112,6 @@
 	user.client?.screen += preview
 
 	return preview
-
 /datum/tutorial_manager
 	var/datum/tutorial/tutorial_type
 
@@ -127,6 +126,12 @@
 /datum/tutorial_manager/New(tutorial_type)
 	ASSERT(ispath(tutorial_type, /datum/tutorial))
 	src.tutorial_type = tutorial_type
+
+/datum/tutorial_manager/Destroy(force, ...)
+	if (!force)
+		stack_trace("Something is trying to destroy [type], which is a singleton")
+		return QDEL_HINT_LETMELIVE
+	return ..()
 
 /datum/tutorial_manager/proc/try_perform(mob/user, list/arguments)
 	var/datum/tutorial/tutorial = new tutorial_type(user)
@@ -150,13 +155,20 @@
 	if (ckey in performing_ckeys)
 		return FALSE
 
-	// MBTODO: Check grandfather date
 	if (!SSdbcore.IsConnected())
 		return CONFIG_GET(flag/give_tutorials_without_db)
 
-	return FALSE
+	var/player_join_date = user.client?.player_join_date
+	if (isnull(player_join_date))
+		return FALSE
 
-// MBTODO: Log to database
+	// This works because ISO-8601 is cool
+	var/grandfather_date = initial(tutorial_type.grandfather_date)
+	if (!isnull(grandfather_date) && player_join_date < grandfather_date)
+		return FALSE
+
+	return TRUE
+
 /datum/tutorial_manager/proc/complete(mob/user)
 	set waitfor = FALSE
 
@@ -168,22 +180,31 @@
 	SSblackbox.record_feedback("tally", "tutorial_completed", 1, "[tutorial_type]")
 	log_game("[key_name(user)] completed the [tutorial_type] tutorial.")
 
+	if (SSdbcore.IsConnected())
+		INVOKE_ASYNC(src, PROC_REF(log_completion_to_database), user.ckey)
+
+/datum/tutorial_manager/proc/log_completion_to_database(ckey)
+	PRIVATE_PROC(TRUE)
+
+	var/datum/db_query/insert_tutorial_query = SSdbcore.NewQuery(
+		"INSERT IGNORE INTO [format_table_name("tutorial_completions")] (ckey, tutorial_key) VALUES (:ckey, :tutorial_key)",
+		list(
+			"ckey" = ckey,
+			"tutorial_key" = get_key(),
+		)
+	)
+
+	insert_tutorial_query.warn_execute()
+
+	qdel(insert_tutorial_query)
+
 /datum/tutorial_manager/proc/dismiss(mob/user)
 	performing_ckeys -= user.ckey
 
-GLOBAL_LIST_INIT_TYPED(tutorial_managers, /datum/tutorial, init_tutorial_managers())
-/proc/init_tutorial_managers()
-	var/list/tutorial_managers = list()
-	for (var/datum/tutorial/tutorial_type as anything in subtypesof(/datum/tutorial))
-		tutorial_managers[tutorial_type] = new /datum/tutorial_manager(tutorial_type)
-	return tutorial_managers
+/datum/tutorial_manager/proc/mark_as_completed(ckey)
+	finished_ckeys[ckey] = TRUE
+	performing_ckeys -= ckey
 
-/proc/suggest_tutorial(mob/user, datum/tutorial/tutorial_type, ...)
-	var/datum/tutorial_manager/tutorial_manager = GLOB.tutorial_managers[tutorial_type]
-	if (isnull(tutorial_manager))
-		CRASH("[tutorial_type] is not a valid tutorial type")
-
-	if (!tutorial_manager.should_run(user))
-		return
-
-	INVOKE_ASYNC(tutorial_manager, TYPE_PROC_REF(/datum/tutorial_manager, try_perform), user, args.Copy(3))
+// MBTODO: Unit test that all of these are <= 64
+/datum/tutorial_manager/proc/get_key()
+	return copytext("[tutorial_type]", length("[/datum/tutorial]") + 2)
