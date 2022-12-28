@@ -288,7 +288,7 @@
 		return
 
 	var/uplifted_frog = FALSE
-	for (var/mob/living/simple_animal/hostile/retaliate/frog/nearby_frog in oview(owner, range))
+	for (var/mob/living/basic/frog/nearby_frog in oview(owner, range))
 		uplifted_frog = convert_frog(nearby_frog, converted_check_list) || uplifted_frog
 	if (uplifted_frog)
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into trash frogs!"))
@@ -303,7 +303,7 @@
 
 /// Makes a passed mob into our minion
 /datum/action/cooldown/riot/proc/make_minion(mob/living/new_minion, minion_desc, list/command_list = mouse_commands)
-	if (isbasicmob(new_minion)) // One day this will work for frogs too
+	if (isbasicmob(new_minion))
 		new_minion.AddComponent(/datum/component/obeys_commands, command_list)
 		qdel(new_minion.GetComponent(/datum/component/tameable)) // Rats don't share
 	new_minion.befriend(owner)
@@ -361,11 +361,12 @@
 	return TRUE
 
 /// Turns a frog into a crazy frog. This doesn't do anything interesting and should when it becomes a basic mob.
-/datum/action/cooldown/riot/proc/convert_frog(mob/living/simple_animal/hostile/retaliate/frog/nearby_frog, list/converted_check_list)
+/datum/action/cooldown/riot/proc/convert_frog(mob/living/basic/frog/nearby_frog, list/converted_check_list)
 	// No need to convert when not on the same team.
-	if(faction_check(nearby_frog.faction, converted_check_list))
+	if(faction_check(nearby_frog.faction, converted_check_list) || nearby_frog.stat == DEAD)
 		return FALSE
 
+	var/list/minion_commands = mouse_commands
 	if (!findtext(nearby_frog.name, "trash"))
 		nearby_frog.name = replacetext(nearby_frog.name, "frog", "trash frog")
 
@@ -376,8 +377,10 @@
 	nearby_frog.health += 10
 	nearby_frog.melee_damage_lower += 1
 	nearby_frog.melee_damage_upper += 5
+	nearby_frog.obj_damage += 10
+	nearby_frog.ai_controller = new /datum/ai_controller/basic_controller/frog/trash(nearby_frog)
 	var/crazy_frog_desc = " ...[findtext(nearby_frog.name, "rare") ? "even though" : "perhaps because"] they live in a trash bag."
-	make_minion(nearby_frog, crazy_frog_desc)
+	make_minion(nearby_frog, crazy_frog_desc, minion_commands)
 	return TRUE
 
 // Command you can give to a mouse to make it kill someone
