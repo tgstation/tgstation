@@ -15,20 +15,45 @@
 /obj/item/coupon/proc/generate(rig_omen=FALSE)
 	discounted_pack = pick(subtypesof(/datum/supply_pack/goody))
 	var/list/chances = list("0.10" = 4, "0.15" = 8, "0.20" = 10, "0.25" = 8, "0.50" = 4, COUPON_OMEN = 1)
+
 	if(rig_omen)
 		discount_pct_off = COUPON_OMEN
 	else
 		discount_pct_off = pick_weight(chances)
+
 	if(discount_pct_off == COUPON_OMEN)
 		name = "coupon - fuck you"
 		desc = "The small text reads, 'You will be slaughtered'... That doesn't sound right, does it?"
-		if(ismob(loc))
-			var/mob/M = loc
-			to_chat(M, span_warning("The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?"))
-			M.AddComponent(/datum/component/omen, TRUE, src)
+		if(!ismob(loc))
+			return FALSE
+
+		var/mob/cursed = loc
+		to_chat(cursed, span_warning("The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?"))
+
+		if(!HAS_TRAIT(cursed, TRAIT_UNFORTUNATE))
+			cursed.AddComponent(/datum/component/omen, silent = TRUE)
+			return TRUE
+
+		addtimer(CALLBACK(src, PROC_REF(cursed_heart), cursed), 3 SECONDS)
 	else
 		discount_pct_off = text2num(discount_pct_off)
 		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
+
+/obj/item/coupon/proc/cursed_heart(mob/living/cursed)
+	to_chat(cursed, span_warning("What a horrible night... To have a curse!"))
+	if(!iscarbon(cursed))
+		cursed.gib()
+		return TRUE
+
+	var/mob/living/carbon/player = cursed
+	var/obj/item/organ/internal/heart/heart = player.getorganslot(ORGAN_SLOT_HEART)
+	if(!heart)
+		player.adjustOxyLoss(-500)
+		return TRUE
+
+	to_chat(player, span_userdanger("Seeing the card sends you into a panic! Your heart can't take it!"))
+	qdel(heart)
+	return TRUE
 
 /obj/item/coupon/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/machinery/computer/cargo))
