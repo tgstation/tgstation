@@ -221,7 +221,7 @@ SUBSYSTEM_DEF(points_of_interest)
 	else
 		return sort_difference
 
-/// Priority list broadly stolen from /proc/sortmobs. Lower numbers are higher priorities when sorted and appear closer to the top or start of lists.
+/// Priority list broadly stolen from /proc/sortmobs(). Lower numbers are higher priorities when sorted and appear closer to the top or start of lists.
 /datum/point_of_interest/mob_poi/proc/get_type_sort_priority()
 	if(isAI(target))
 		return 0

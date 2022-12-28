@@ -13,9 +13,9 @@
 	return TRUE
 
 /datum/sm_delam/cascade/delam_progress(obj/machinery/power/supermatter_crystal/sm)
-	. = ..()
-	if(!.)
+	if(!..())
 		return FALSE
+
 	sm.radio.talk_into(
 		sm,
 		"DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.",
@@ -31,6 +31,8 @@
 	for(var/mob/victim as anything in GLOB.player_list)
 		to_chat(victim, span_danger(pick(messages)))
 
+	return TRUE
+
 /datum/sm_delam/cascade/on_select(obj/machinery/power/supermatter_crystal/sm)
 	message_admins("[sm] is heading towards a cascade. [ADMIN_VERBOSEJMP(sm)]")
 	sm.investigate_log("is heading towards a cascade.", INVESTIGATE_ENGINE)
@@ -40,7 +42,7 @@
 	animate(sm.warp, time = 1, transform = matrix().Scale(0.5,0.5))
 	animate(time = 9, transform = matrix())
 
-	addtimer(CALLBACK(src, .proc/announce_cascade, sm), 2 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(announce_cascade), sm), 2 MINUTES)
 
 /datum/sm_delam/cascade/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	message_admins("[sm] will no longer cascade. [ADMIN_VERBOSEJMP(sm)]")
@@ -62,7 +64,7 @@
 	effect_strand_shuttle()
 	sleep(5 SECONDS)
 	var/obj/cascade_portal/rift = effect_evac_rift_start()
-	RegisterSignal(rift, COMSIG_PARENT_QDELETING, .proc/end_round_holder)
+	RegisterSignal(rift, COMSIG_PARENT_QDELETING, PROC_REF(end_round_holder))
 	SSsupermatter_cascade.can_fire = TRUE
 	SSsupermatter_cascade.cascade_initiated = TRUE
 	effect_crystal_mass(sm, rift)
@@ -94,4 +96,4 @@
 /// Signal calls cant sleep, we gotta do this.
 /datum/sm_delam/cascade/proc/end_round_holder()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/effect_evac_rift_end)
+	INVOKE_ASYNC(src, PROC_REF(effect_evac_rift_end))

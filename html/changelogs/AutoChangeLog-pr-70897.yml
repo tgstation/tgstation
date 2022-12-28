@@ -1,4 +1,0 @@
-author: "Foxtrot (Funce)"
-delete-after: True
-changes:
-  - bugfix: "The amount of dead in the admin verb 'Check-antagonists' should now accurately report dead people (still in body) as well as ghosts that have died."

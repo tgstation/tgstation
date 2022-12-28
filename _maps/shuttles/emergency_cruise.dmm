@@ -412,7 +412,7 @@
 /area/shuttle/escape)
 "tJ" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/cup/glass/britcup{
+/obj/item/reagent_containers/cup/glass/mug/britcup{
 	pixel_x = 8;
 	pixel_y = -1
 	},
@@ -640,9 +640,7 @@
 	dir = 4
 	},
 /obj/docking_port/mobile/emergency{
-	height = 22;
-	name = "The NTSS Independence";
-	width = 44
+	name = "The NTSS Independence"
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)

@@ -373,6 +373,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	if(obj_flags & EMAGGED)
 		to_chat(gamer, span_userdanger("You're never going to make it to Orion..."))
+		gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 		gamer.death()
 		obj_flags &= ~EMAGGED //removes the emagged status after you lose
 		gamer.log_message("lost a Realism Mode Orion Trail game, changing the machine back to normal.", LOG_GAME)
@@ -435,6 +436,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(!settlers.len || !alive)
 		say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 		if(obj_flags & EMAGGED)
+			gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 			gamer.death()
 		set_game_over(gamer, "Your last pioneer committed suicide.")
 		if(killed_crew >= ORION_STARTING_CREW_COUNT)
@@ -443,6 +445,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	else if(obj_flags & EMAGGED)
 		if(findtext(gamer.name, sheriff))
 			say("The crew of the ship chose to kill [gamer]!")
+			gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 			gamer.death()
 
 /**
@@ -500,12 +503,11 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	newgame()
 	obj_flags |= EMAGGED
 
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
+/mob/living/basic/syndicate/ranged/smg/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
 	loot = list()
-	del_on_death = TRUE
 
 /obj/item/orion_ship
 	name = "model settler ship"

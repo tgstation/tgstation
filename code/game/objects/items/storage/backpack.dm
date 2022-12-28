@@ -56,7 +56,11 @@
 	inhand_icon_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
+	armor_type = /datum/armor/backpack_holding
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/holding/Initialize(mapload)
 	. = ..()
@@ -70,6 +74,7 @@
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(2 SECONDS)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
+	user.suicide_log()
 	qdel(user)
 
 /obj/item/storage/backpack/santabag
@@ -78,6 +83,10 @@
 	icon_state = "giftbag0"
 	inhand_icon_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
@@ -88,12 +97,12 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 60
 
-/obj/item/storage/backpack/santabag/suicide_act(mob/user)
+/obj/item/storage/backpack/santabag/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()
-	addtimer(CALLBACK(src, .proc/regenerate_presents), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(regenerate_presents)), 30 SECONDS)
 
 	var/mob/user = get(loc, /mob)
 	if(!istype(user))
@@ -224,6 +233,10 @@
 	worn_icon = 'icons/mob/clothing/back/ethereal.dmi'
 	icon_state = "saddlepack"
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/saddlepack/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 26
@@ -243,6 +256,10 @@
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel-leather"
 	inhand_icon_state = "satchel"
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/satchel/leather/withwallet/PopulateContents()
 	new /obj/item/storage/wallet/random(src)
@@ -318,6 +335,10 @@
 	inhand_icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/satchel/flat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
@@ -348,6 +369,10 @@
 	inhand_icon_state = "duffel"
 	slowdown = 1
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 30
@@ -360,8 +385,11 @@
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
 	slowdown = 2
-	item_flags = DROPDEL
 	max_integrity = 100
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/duffelbag/cursed/Initialize(mapload)
 	. = ..()
@@ -421,6 +449,10 @@
 
 
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/duffelbag/med/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
@@ -443,6 +475,10 @@
 /obj/item/storage/backpack/duffelbag/sec/surgery
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/duffelbag/sec/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
@@ -470,6 +506,10 @@
 	inhand_icon_state = "duffel-drone"
 	resistance_flags = FIRE_PROOF
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/duffelbag/drone/PopulateContents()
 	new /obj/item/screwdriver(src)
 	new /obj/item/wrench(src)
@@ -484,6 +524,10 @@
 	desc = "A large duffel bag for holding lots of funny gags!"
 	icon_state = "duffel-clown"
 	inhand_icon_state = "duffel-clown"
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/duffelbag/clown/cream_pie/PopulateContents()
 	for(var/i in 1 to 10)
@@ -500,6 +544,10 @@
 	slowdown = 0
 	resistance_flags = FIRE_PROOF
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/duffelbag/syndie/Initialize(mapload)
 	. = ..()
 	atom_storage.silent = TRUE
@@ -508,6 +556,10 @@
 	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
 	icon_state = "duffel-syndieammo"
 	inhand_icon_state = "duffel-syndieammo"
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
 	new /obj/item/clothing/under/suit/black(src)
@@ -530,6 +582,10 @@
 	desc = "A suspicious looking duffel bag for holding surgery tools."
 	icon_state = "duffel-syndiemed"
 	inhand_icon_state = "duffel-syndiemed"
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
@@ -555,6 +611,10 @@
 /obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun
 	desc = "A large duffel bag, packed to the brim with Bulldog shotgun magazines."
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_box/magazine/m12g(src)
@@ -565,12 +625,20 @@
 /obj/item/storage/backpack/duffelbag/syndie/ammo/smg
 	desc = "A large duffel bag, packed to the brim with C-20r magazines."
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/duffelbag/syndie/ammo/smg/PopulateContents()
 	for(var/i in 1 to 9)
 		new /obj/item/ammo_box/magazine/smgm45(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
 	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mech/PopulateContents()
 	new /obj/item/mecha_ammo/scattershot(src)
@@ -581,6 +649,10 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
 	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler/PopulateContents()
 	new /obj/item/mecha_ammo/lmg(src)
@@ -596,6 +668,10 @@
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
@@ -605,6 +681,10 @@
 /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
 	desc = "A large duffel bag containing a Bulldog, some drums, and a pair of thermal imaging glasses."
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle/PopulateContents()
 	new /obj/item/gun/ballistic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g(src)
@@ -612,16 +692,24 @@
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a knock-off pair of magboots."
+	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a magboot MODsuit module."
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
-	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/mod/module/magboot(src)
 	new /obj/item/storage/medkit/tactical(src)
 	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle
 	desc = "A large duffel bag containing deadly chemicals, a handheld chem sprayer, Bioterror foam grenade, a Donksoft assault rifle, box of riot grade darts, a dart pistol, and a box of syringes."
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle/PopulateContents()
 	new /obj/item/reagent_containers/spray/chemsprayer/bioterror(src)
@@ -645,6 +733,10 @@
 /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite MODsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
 
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
 /obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/mod/control/pre_equipped/elite/flamethrower(src)
@@ -662,7 +754,7 @@
 	atom_storage.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
-	new /obj/item/modular_computer/tablet/pda/clown(src)
+	new /obj/item/modular_computer/pda/clown(src)
 	new /obj/item/clothing/under/rank/civilian/clown(src)
 	new /obj/item/clothing/shoes/clown_shoes(src)
 	new /obj/item/clothing/mask/gas/clown_hat(src)
@@ -679,3 +771,25 @@
 	name = "police bag"
 	desc = "A large duffel bag for holding extra police gear."
 	slowdown = 0
+
+/obj/item/storage/backpack/duffelbag/mining_conscript
+	name = "mining conscription kit"
+	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
+
+/obj/item/storage/backpack/duffelbag/mining_conscript/PopulateContents()
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/clothing/suit/hooded/explorer(src)
+	new /obj/item/encryptionkey/headset_mining(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/card/id/advanced/mining(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
+	new /obj/item/knife/combat/survival(src)
+	new /obj/item/flashlight/seclite(src)

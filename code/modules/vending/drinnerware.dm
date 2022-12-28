@@ -19,6 +19,7 @@
 		/obj/item/kitchen/rollingpin = 2,
 		/obj/item/knife/kitchen = 2,
 		/obj/item/book/granter/crafting_recipe/cooking_sweets_101 = 2,
+		/obj/item/skillchip/chefs_kiss = 2,
 		/obj/item/plate/small = 5,
 		/obj/item/plate = 10,
 		/obj/item/plate/large = 5,

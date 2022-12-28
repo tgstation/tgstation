@@ -7,6 +7,7 @@
 	move_resist = INFINITY
 	obj_flags = NONE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	uses_integrity = FALSE
 
 /obj/effect/attackby(obj/item/weapon, mob/user, params)
 	if(SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_EFFECT, src, user, params) & COMPONENT_NO_AFTERATTACK)

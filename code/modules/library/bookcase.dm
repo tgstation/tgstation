@@ -12,7 +12,7 @@
 	opacity = FALSE
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
+	armor_type = /datum/armor/structure_bookcase
 	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase
 	var/load_random_books = FALSE
@@ -20,6 +20,9 @@
 	var/random_category = null
 	/// How many random books to generate.
 	var/books_to_load = 0
+
+/datum/armor/structure_bookcase
+	fire = 50
 
 /obj/structure/bookcase/Initialize(mapload)
 	. = ..()
@@ -35,7 +38,7 @@
 	update_appearance()
 
 	if(SSlibrary.initialized)
-		INVOKE_ASYNC(src, .proc/load_shelf)
+		INVOKE_ASYNC(src, PROC_REF(load_shelf))
 	else
 		SSlibrary.shelves_to_load += src
 
@@ -184,6 +187,9 @@
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
+/datum/armor/structure_bookcase
+	fire = 50
+
 /obj/structure/bookcase/manuals/engineering/Initialize(mapload)
 	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
@@ -194,6 +200,9 @@
 
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
+
+/datum/armor/structure_bookcase
+	fire = 50
 
 /obj/structure/bookcase/manuals/research_and_development/Initialize(mapload)
 	. = ..()

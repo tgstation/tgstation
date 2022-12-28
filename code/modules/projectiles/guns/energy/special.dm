@@ -24,6 +24,7 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
+	worn_icon_state = "gun"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 
@@ -287,7 +288,7 @@
 
 /obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal(target, 300, null, FALSE, null)
-	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	RegisterSignal(P, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
 	if(istype(W, /obj/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P
@@ -337,6 +338,12 @@
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	pin = /obj/item/firing_pin
 
+/obj/item/gun/energy/temperature/freeze
+	name = "cryogenic temperature gun"
+	desc = "A gun that reduces temperatures. Only for those with ice in their veins."
+	pin = /obj/item/firing_pin
+	ammo_type = list(/obj/item/ammo_casing/energy/temp)
+
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
@@ -375,3 +382,64 @@
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+
+/obj/item/gun/energy/marksman_revolver
+	name = "marksman revolver"
+	desc = "Uses electric pulses to fire microscopic pieces of metal at incredibly high speeds. Alternate fire flips a coin that can be targeted for extra firepower."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "revolver"
+	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
+	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	automatic_charge_overlays = FALSE
+	/// How many coins we can have at a time. Set to 0 for infinite
+	var/max_coins = 4
+	/// How many coins we currently have available
+	var/coin_count = 0
+	/// How long it takes to regen a coin
+	var/coin_regen_rate = 2 SECONDS
+	/// The cooldown for regenning coins
+	COOLDOWN_DECLARE(coin_regen_cd)
+
+/obj/item/gun/energy/marksman_revolver/Initialize(mapload)
+	. = ..()
+	coin_count = max_coins
+
+/obj/item/gun/energy/marksman_revolver/examine(mob/user)
+	. = ..()
+	if(max_coins)
+		. += "It currently has [coin_count] out of [max_coins] coins, and takes [coin_regen_rate/10] seconds to recharge each one."
+	else
+		. += "It has infinite coins available for use."
+
+/obj/item/gun/energy/marksman_revolver/process(delta_time)
+	if(!max_coins || coin_count >= max_coins)
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	if(COOLDOWN_FINISHED(src, coin_regen_cd))
+		if(ismob(loc))
+			var/mob/owner = loc
+			owner.playsound_local(owner, 'sound/machines/ding.ogg', 20)
+		coin_count++
+		COOLDOWN_START(src, coin_regen_cd, coin_regen_rate)
+
+/obj/item/gun/energy/marksman_revolver/afterattack_secondary(atom/target, mob/living/user, params)
+	if(!can_see(user, get_turf(target), length = 9))
+		return ..()
+
+	if(max_coins && coin_count <= 0)
+		to_chat(user, span_warning("You don't have any coins right now!"))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(max_coins)
+		START_PROCESSING(SSobj, src)
+		coin_count = max(0, coin_count - 1)
+
+	var/turf/target_turf = get_offset_target_turf(target, rand(-1, 1), rand(-1, 1)) // choose a random tile adjacent to the clicked one
+	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
+	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
+	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
+	new_coin.preparePixelProjectile(target_turf, user)
+	new_coin.fire()
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -24,6 +24,13 @@
 #define APPRENTICE_ROBELESS "robeless"
 #define APPRENTICE_HEALING "healing"
 
+//Pirates
+
+///Minimum amount the pirates will demand
+#define PAYOFF_MIN 20000
+///How long pirates will wait for a response before attacking
+#define RESPONSE_MAX_TIME 2 MINUTES
+
 //ERT Types
 #define ERT_BLUE "Blue"
 #define ERT_RED  "Red"
@@ -241,6 +248,12 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// TC to charge someone if they get a free implant through choice or
 /// because they have nothing else that supports an implant.
 #define UPLINK_IMPLANT_TELECRYSTAL_COST 4
+
+/// Items with this stock key do not share stock with other items
+#define UPLINK_SHARED_STOCK_UNIQUE "uplink_shared_stock_unique"
+/// Stock keys for items that share inventory stock
+#define UPLINK_SHARED_STOCK_KITS "uplink_shared_stock_kits"
+#define UPLINK_SHARED_STOCK_SURPLUS "uplink_shared_stock_surplus"
 
 // Used for traitor objectives
 /// If the objective hasn't been taken yet

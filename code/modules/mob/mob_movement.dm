@@ -548,6 +548,12 @@
 	set name = "Move Down"
 	set category = "IC"
 
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = SSmapping.get_turf_below(current_turf)
+	if(!below_turf)
+		to_chat(src, span_warning("There's nowhere to go in that direction!"))
+		return
+
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, DOWN)

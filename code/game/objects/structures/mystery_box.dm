@@ -10,13 +10,13 @@
 
 // delays for the different stages of the box's state, the visuals, and the audio
 /// How long the box takes to decide what the prize is
-#define MBOX_DURATION_CHOOSING 5 SECONDS
+#define MBOX_DURATION_CHOOSING (5 SECONDS)
 /// How long the box takes to start expiring the offer, though it's still valid until MBOX_DURATION_EXPIRING finishes. Timed to the sound clips
-#define MBOX_DURATION_PRESENTING 3.5 SECONDS
+#define MBOX_DURATION_PRESENTING (3.5 SECONDS)
 /// How long the box takes to start lowering the prize back into itself. When this finishes, the prize is gone
-#define MBOX_DURATION_EXPIRING 4.5 SECONDS
+#define MBOX_DURATION_EXPIRING (4.5 SECONDS)
 /// How long after the box closes until it can go again
-#define MBOX_DURATION_STANDBY 2.7 SECONDS
+#define MBOX_DURATION_STANDBY (2.7 SECONDS)
 
 GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/lasercannon,
@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/laser/captain,
 	/obj/item/gun/energy/laser/scatter,
 	/obj/item/gun/energy/temperature,
-	/obj/item/gun/ballistic/revolver/detective,
+	/obj/item/gun/ballistic/revolver/c38/detective,
 	/obj/item/gun/ballistic/revolver/mateba,
 	/obj/item/gun/ballistic/automatic/pistol/deagle/camo,
 	/obj/item/gun/ballistic/automatic/pistol/suppressed,
@@ -150,12 +150,12 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 /obj/structure/mystery_box/proc/present_weapon()
 	visible_message(span_notice("[src] presents [presented_item]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 	box_state = MYSTERY_BOX_PRESENTING
-	box_expire_timer = addtimer(CALLBACK(src, .proc/start_expire_offer), MBOX_DURATION_PRESENTING, TIMER_STOPPABLE)
+	box_expire_timer = addtimer(CALLBACK(src, PROC_REF(start_expire_offer)), MBOX_DURATION_PRESENTING, TIMER_STOPPABLE)
 
 /// The prize is still claimable, but the animation will show it start to recede back into the box
 /obj/structure/mystery_box/proc/start_expire_offer()
 	presented_item.expire_animation()
-	box_close_timer = addtimer(CALLBACK(src, .proc/close_box), MBOX_DURATION_EXPIRING, TIMER_STOPPABLE)
+	box_close_timer = addtimer(CALLBACK(src, PROC_REF(close_box)), MBOX_DURATION_EXPIRING, TIMER_STOPPABLE)
 
 /// The box is closed, whether because the prize fully expired, or it was claimed. Start resetting all of the state stuff
 /obj/structure/mystery_box/proc/close_box()
@@ -167,7 +167,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	playsound(src, crate_close_sound, 100)
 	box_close_timer = null
 	box_expire_timer = null
-	addtimer(CALLBACK(src, .proc/ready_again), MBOX_DURATION_STANDBY)
+	addtimer(CALLBACK(src, PROC_REF(ready_again)), MBOX_DURATION_STANDBY)
 
 /// The cooldown between activations has finished, shake to show that
 /obj/structure/mystery_box/proc/ready_again()
@@ -213,12 +213,12 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	name = "???"
 	desc = "Who knows what it'll be??"
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "detective"
+	icon_state = "revolver"
 	pixel_y = -8
 	uses_integrity = FALSE
 
 	/// The currently selected item. Constantly changes while choosing, determines what is spawned if the prize is claimed, and its current icon
-	var/selected_path = /obj/item/gun/ballistic/revolver/detective
+	var/selected_path = /obj/item/gun/ballistic/revolver/c38/detective
 	/// The box that spawned this
 	var/obj/structure/mystery_box/parent_box
 	/// Whether this prize is currently claimable
@@ -260,9 +260,9 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 		change_delay += change_delay_delta
 		change_counter += change_delay
 		selected_path = pick(parent_box.valid_types)
-		addtimer(CALLBACK(src, .proc/update_random_icon, selected_path), change_counter)
+		addtimer(CALLBACK(src, PROC_REF(update_random_icon), selected_path), change_counter)
 
-	addtimer(CALLBACK(src, .proc/present_item), MBOX_DURATION_CHOOSING)
+	addtimer(CALLBACK(src, PROC_REF(present_item)), MBOX_DURATION_CHOOSING)
 
 /// animate() isn't up to the task for queueing up icon changes, so this is the proc we call with timers to update our icon
 /obj/mystery_box_item/proc/update_random_icon(new_item_type)

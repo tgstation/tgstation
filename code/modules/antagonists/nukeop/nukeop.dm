@@ -105,8 +105,6 @@
 			number = nuke_team.members.Find(owner)
 			owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
 
-
-
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
 		antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]<br>"
@@ -129,6 +127,7 @@
 	owner.current.forceMove(pick(GLOB.nukeop_leader_start))
 
 /datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	if(!new_team)
 		if(!always_new_team)
 			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)
@@ -154,8 +153,8 @@
 
 /datum/antagonist/nukeop/get_admin_commands()
 	. = ..()
-	.["Send to base"] = CALLBACK(src,.proc/admin_send_to_base)
-	.["Tell code"] = CALLBACK(src,.proc/admin_tell_code)
+	.["Send to base"] = CALLBACK(src, PROC_REF(admin_send_to_base))
+	.["Tell code"] = CALLBACK(src, PROC_REF(admin_tell_code))
 
 /datum/antagonist/nukeop/proc/admin_send_to_base(mob/admin)
 	owner.current.forceMove(pick(GLOB.nukeop_start))
@@ -208,7 +207,7 @@
 
 	back = /obj/item/mod/control/pre_equipped/empty/elite
 	uniform = /obj/item/clothing/under/syndicate
-	l_hand = /obj/item/modular_computer/tablet/nukeops
+	l_hand = /obj/item/modular_computer/pda/nukeops
 	r_hand = /obj/item/shield/energy
 
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
@@ -261,7 +260,7 @@
 		var/obj/item/war_declaration = new challengeitem(leader.drop_location())
 		leader.put_in_hands(war_declaration)
 		nuke_team.war_button_ref = WEAKREF(war_declaration)
-	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
+	addtimer(CALLBACK(src, PROC_REF(nuketeam_name_assign)), 1)
 
 /datum/antagonist/nukeop/leader/proc/nuketeam_name_assign()
 	if(!nuke_team)
@@ -362,7 +361,7 @@
 /datum/team/nuclear/proc/get_result()
 	var/shuttle_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/disk_rescued = is_disk_rescued()
-	var/syndies_didnt_escape = !is_infiltrator_docked_at_centcom()
+	var/syndies_didnt_escape = !is_infiltrator_docked_at_syndiebase()
 	var/team_is_dead = are_all_operatives_dead()
 	var/station_was_nuked = GLOB.station_was_nuked
 	var/station_nuke_source = GLOB.station_nuke_source
@@ -495,8 +494,15 @@
 	return common_part + disk_report + challenge_report
 
 /// Returns whether or not syndicate operatives escaped.
-/proc/is_infiltrator_docked_at_centcom()
+/proc/is_infiltrator_docked_at_syndiebase()
 	var/obj/docking_port/mobile/infiltrator/infiltrator_port = SSshuttle.getShuttle("syndicate")
-	var/obj/docking_port/stationary/transit/infiltrator_dock = locate() in infiltrator_port.loc
 
-	return infiltrator_port && (is_centcom_level(infiltrator_port.z) || infiltrator_dock)
+	var/datum/lazy_template/nukie_base/nukie_template = GLOB.lazy_templates[LAZY_TEMPLATE_KEY_NUKIEBASE]
+	if(!nukie_template)
+		return FALSE // if its not even loaded, cant be docked
+
+	for(var/datum/turf_reservation/loaded_area as anything in nukie_template.reservations)
+		var/infiltrator_turf = get_turf(infiltrator_port)
+		if(infiltrator_turf in loaded_area.reserved_turfs)
+			return TRUE
+	return FALSE

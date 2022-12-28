@@ -1,6 +1,6 @@
 /datum/element/selfknockback
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/override_throw_val
 	var/override_speed_val
 
@@ -11,9 +11,9 @@ clamping the Knockback_Force value below. */
 /datum/element/selfknockback/Attach(datum/target, throw_amount, speed_amount)
 	. = ..()
 	if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/Item_SelfKnockback)
+		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(Item_SelfKnockback))
 	else if(isprojectile(target))
-		RegisterSignal(target, COMSIG_PROJECTILE_FIRE, .proc/Projectile_SelfKnockback)
+		RegisterSignal(target, COMSIG_PROJECTILE_FIRE, PROC_REF(Projectile_SelfKnockback))
 	else
 		return ELEMENT_INCOMPATIBLE
 

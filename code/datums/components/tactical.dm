@@ -9,8 +9,8 @@
 	src.allowed_slot = allowed_slot
 
 /datum/component/tactical/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/modify)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/unmodify)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(modify))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
 
 /datum/component/tactical/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
@@ -45,7 +45,7 @@
 	I.override = TRUE
 	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
 	I.layer = ABOVE_MOB_LAYER
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/on_z_move)
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_move))
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER

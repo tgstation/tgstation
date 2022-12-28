@@ -2,7 +2,7 @@
 	name = "\improper Vibebot"
 	desc = "A little robot. It's just vibing, doing its thing."
 	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "vibebot"
+	icon_state = "vibebot1"
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -61,10 +61,10 @@
 /datum/action/innate/vibe
 	name = "Vibe"
 	desc = "LMB: Change vibe color. RMB: Reset vibe color."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "funk"
 
-/datum/action/innate/vibe/IsAvailable()
+/datum/action/innate/vibe/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

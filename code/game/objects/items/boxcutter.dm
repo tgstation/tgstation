@@ -25,7 +25,7 @@
 		speed = 7 SECONDS, \
 		effectiveness = 100, \
 	)
-	tool_behaviour = TOOL_KNIFE
+
 	AddComponent(/datum/component/transforming, \
 		start_transformed = start_extended, \
 		force_on = 10, \
@@ -38,12 +38,13 @@
 		attack_verb_simple_on = list("cut", "stab", "slash"), \
 	)
 
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/boxcutter/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
 	on = active
 	playsound(src, on_sound, 50)
+	tool_behaviour = (active ? TOOL_KNIFE : NONE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 

@@ -37,8 +37,10 @@
 	mail_goodies = list(
 		/obj/item/clothing/mask/cigarette/cigar/havana = 20,
 		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
-		/obj/item/reagent_containers/cup/glass/bottle/champagne = 10,
-		/obj/item/toy/captainsaid/collector = 20
+		/obj/item/reagent_containers/cup/glass/bottle/champagne = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/champagne/cursed = 5,
+		/obj/item/toy/captainsaid/collector = 20,
+		/obj/item/skillchip/sabrage = 5,
 	)
 
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
@@ -63,7 +65,7 @@
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/station_charter = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/heads/captain
+	belt = /obj/item/modular_computer/pda/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/captain

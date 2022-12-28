@@ -451,12 +451,9 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	dwidth = 11;
-	height = 18;
 	name = "Delta emergency shuttle";
 	port_direction = 4;
-	preferred_direction = 2;
-	width = 30
+	preferred_direction = 2
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

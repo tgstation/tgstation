@@ -22,7 +22,7 @@
 /obj/item/clothing/mask/equipped(mob/M, slot)
 	. = ..()
 	if ((slot & ITEM_SLOT_MASK) && modifies_speech)
-		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
 
@@ -36,7 +36,7 @@
 		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
 			if(vval)
 				if(!modifies_speech)
-					RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+					RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 			else if(modifies_speech)
 				UnregisterSignal(M, COMSIG_MOB_SAY)
 	return ..()
@@ -88,7 +88,7 @@
 		user.wear_mask_update(src, toggle_off = mask_adjusted)
 	if(loc == user)
 		// Update action button icon for adjusted mask, if someone is holding it.
-		user.update_action_buttons_icon()
+		user.update_mob_action_buttons()
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status

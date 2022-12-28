@@ -126,6 +126,7 @@
 
 /datum/status_effect/fire_handler/fire_stacks
 	id = "fire_stacks" //fire_stacks and wet_stacks should have different IDs or else has_status_effect won't work
+	remove_on_fullheal = TRUE
 
 	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks)
 	stack_modifier = 1

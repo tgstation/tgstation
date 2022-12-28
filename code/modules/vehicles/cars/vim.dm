@@ -9,7 +9,7 @@
 	desc = "An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer."
 	icon_state = "vim"
 	max_integrity = 50
-	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/car_vim
 	enter_delay = 20
 	movedelay = 0.6
 	engine_sound_length = 0.3 SECONDS
@@ -21,6 +21,14 @@
 	///Maximum size of a mob trying to enter the mech
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)
+
+/datum/armor/car_vim
+	melee = 70
+	bullet = 40
+	laser = 40
+	bomb = 30
+	fire = 80
+	acid = 80
 
 /obj/vehicle/sealed/car/vim/Initialize(mapload)
 	. = ..()
@@ -118,6 +126,14 @@
 	/// Whether the mech headlights are currently on.
 	var/datum/port/output/are_headlights_on
 
+/datum/armor/car_vim
+	melee = 70
+	bullet = 40
+	laser = 40
+	bomb = 30
+	fire = 80
+	acid = 80
+
 /obj/item/circuit_component/vim/populate_ports()
 	are_headlights_on = add_output_port("Are Headlights On", PORT_TYPE_NUMBER)
 	chime = add_output_port("On Chime Used", PORT_TYPE_SIGNAL)
@@ -125,9 +141,9 @@
 
 /obj/item/circuit_component/vim/register_shell(atom/movable/shell)
 	. = ..()
-	RegisterSignal(shell, COMSIG_VIM_HEADLIGHTS_TOGGLED, .proc/on_headlights_toggle)
-	RegisterSignal(shell, COMSIG_VIM_CHIME_USED, .proc/on_chime_used)
-	RegisterSignal(shell, COMSIG_VIM_BUZZ_USED, .proc/on_buzz_used)
+	RegisterSignal(shell, COMSIG_VIM_HEADLIGHTS_TOGGLED, PROC_REF(on_headlights_toggle))
+	RegisterSignal(shell, COMSIG_VIM_CHIME_USED, PROC_REF(on_chime_used))
+	RegisterSignal(shell, COMSIG_VIM_BUZZ_USED, PROC_REF(on_buzz_used))
 
 /obj/item/circuit_component/vim/unregister_shell(atom/movable/shell)
 	. = ..()

@@ -17,6 +17,8 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
+	mind_traits = list(TRAIT_TOWER_OF_BABEL)
+
 	display_order = JOB_DISPLAY_ORDER_CURATOR
 	departments_list = list(
 		/datum/job_department/service,
@@ -45,10 +47,10 @@
 		/obj/item/barcodescanner = 1,
 		/obj/item/choice_beacon/hero = 1,
 	)
-	belt = /obj/item/modular_computer/tablet/pda/curator
+	belt = /obj/item/modular_computer/pda/curator
 	ears = /obj/item/radio/headset/headset_srv
 	shoes = /obj/item/clothing/shoes/laceup
-	l_pocket = /obj/item/laser_pointer
+	l_pocket = /obj/item/laser_pointer/green
 	r_pocket = /obj/item/key/displaycase
 	l_hand = /obj/item/storage/bag/books
 
@@ -62,4 +64,3 @@
 
 	translator.grant_all_languages(source=LANGUAGE_CURATOR)
 	translator.remove_blocked_language(GLOB.all_languages, source=LANGUAGE_ALL)
-	ADD_TRAIT(translator, TRAIT_TOWER_OF_BABEL, JOB_TRAIT)

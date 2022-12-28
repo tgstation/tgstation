@@ -90,31 +90,31 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 
 // ~mangling defines
 // With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable (bone only creatures just need the second):
-// 1. Skin is mangled: A critical slash or pierce wound on that limb
+// 1. Flesh is mangled: A critical slash or pierce wound on that limb
 // 2. Bone is mangled: At least a severe bone wound on that limb
 // see [/obj/item/bodypart/proc/get_mangled_state] for more information
-#define BODYPART_MANGLED_NONE 0
-#define BODYPART_MANGLED_BONE 1
-#define BODYPART_MANGLED_FLESH 2
-#define BODYPART_MANGLED_BOTH 3
+#define BODYPART_MANGLED_NONE NONE
+#define BODYPART_MANGLED_BONE (1<<0)
+#define BODYPART_MANGLED_FLESH (1<<1)
+#define BODYPART_MANGLED_BOTH (BODYPART_MANGLED_BONE | BODYPART_MANGLED_FLESH)
 
 
 // ~biology defines
-// What kind of biology we have, and what wounds we can suffer, mostly relies on the HAS_FLESH and HAS_BONE species traits on human species
+// What kind of biology a limb has, and what wounds it can suffer
 /// golems and androids, cannot suffer any wounds
-#define BIO_INORGANIC 0
+#define BIO_INORGANIC NONE
 /// skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember
-#define BIO_JUST_BONE 1
+#define BIO_BONE (1<<0)
 /// nothing right now, maybe slimepeople in the future, can only suffer slashing, piercing, and burn wounds
-#define BIO_JUST_FLESH 2
-/// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_JUST_BONE and BIO_JUST_FLESH
-#define BIO_FLESH_BONE 3
+#define BIO_FLESH (1<<1)
+/// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_BONE and BIO_FLESH
+#define BIO_FLESH_BONE (BIO_BONE | BIO_FLESH)
 
 
 // ~wound flag defines
-/// If this wound requires having the HAS_FLESH flag for humanoids
+/// If this wound requires having the BIO_FLESH biological_state on the limb
 #define FLESH_WOUND (1<<0)
-/// If this wound requires having the HAS_BONE flag for humanaoids
+/// If this wound requires having the BIO_BONE biological_state on the limb
 #define BONE_WOUND (1<<1)
 /// If having this wound counts as mangled flesh for dismemberment
 #define MANGLES_FLESH (1<<2)
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 #define SCAR_SAVE_PRECISE_LOCATION 4
 /// The severity the scar had
 #define SCAR_SAVE_SEVERITY 5
-/// Whether this is a BIO_JUST_BONE scar, a BIO_JUST_FLESH scar, or a BIO_FLESH_BONE scar (so you can't load fleshy human scars on a plasmaman character)
+/// Whether this is a BIO_BONE scar, a BIO_FLESH scar, or a BIO_FLESH_BONE scar (so you can't load fleshy human scars on a plasmaman character)
 #define SCAR_SAVE_BIOLOGY 6
 /// Which character slot this was saved to
 #define SCAR_SAVE_CHAR_SLOT 7
@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 #define BLOOD_FLOW_INCREASING 1
 
 /// How often can we annoy the player about their bleeding? This duration is extended if it's not serious bleeding
-#define BLEEDING_MESSAGE_BASE_CD 10 SECONDS
+#define BLEEDING_MESSAGE_BASE_CD (10 SECONDS)
 
 /// Skeletons and other BIO_ONLY_BONE creatures respond much better to bone gel and can have severe and critical bone wounds healed by bone gel alone. The duration it takes to heal is also multiplied by this, lucky them!
 #define WOUND_BONE_BIO_BONE_GEL_MULT 0.25

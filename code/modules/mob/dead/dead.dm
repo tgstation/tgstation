@@ -3,7 +3,7 @@
 INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	move_resist = INFINITY
 	throwforce = 0
 
@@ -12,7 +12,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
-	SET_PLANE_IMPLICIT(src, plane)
+	// Initial is non standard here, but ghosts move before they get here so it's needed. this is a cold path too so it's ok
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	tag = "mob_[next_mob_id++]"
 	add_to_mob_list()
 
@@ -38,11 +39,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/get_status_tab_items()
 	. = ..()
-	. += ""
-
 	if(SSticker.HasRoundStarted())
 		return
-
 	var/time_remaining = SSticker.GetTimeLeft()
 	if(time_remaining > 0)
 		. += "Time To Start: [round(time_remaining/10)]s"

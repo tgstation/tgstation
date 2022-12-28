@@ -26,7 +26,7 @@
 	demolition_mod = 1.25
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/item_tank
 	integrity_failure = 0.5
 	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
@@ -48,6 +48,11 @@
 	var/mob/living/carbon/breathing_mob = null
 
 /// Closes the tank if dropped while open.
+/datum/armor/item_tank
+	bomb = 10
+	fire = 80
+	acid = 30
+
 /obj/item/tank/dropped(mob/living/user, silent)
 	. = ..()
 	// Close open air tank if its current user got sent to the shadowrealm.
@@ -68,10 +73,18 @@
 /// Called by carbons after they connect the tank to their breathing apparatus.
 /obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
 	breathing_mob = carbon_target
+	RegisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /// Called by carbons after they disconnect the tank from their breathing apparatus.
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
+	UnregisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+
+/obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)
+	SIGNAL_HANDLER
+	items += "Internal Atmosphere Info: [name]"
+	items += "Tank Pressure: [air_contents.return_pressure()] kPa"
+	items += "Distribution Pressure: [distribute_pressure] kPa"
 
 /// Attempts to toggle the mob's internals on or off using this tank. Returns TRUE if successful.
 /obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
@@ -98,7 +111,7 @@
 
 	// This is separate from the reaction recorder.
 	// In this case we are only listening to determine if the tank is overpressurized but not destroyed.
-	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, .proc/merging_information)
+	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, PROC_REF(merging_information))
 
 	START_PROCESSING(SSobj, src)
 
@@ -106,7 +119,6 @@
 	return
 
 /obj/item/tank/Destroy()
-	UnregisterSignal(air_contents, COMSIG_GASMIX_MERGED)
 	air_contents = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -121,7 +133,7 @@
 			. += span_notice("If you want any more information you'll need to get closer.")
 		return
 
-	. += span_notice("The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.")
+	. += span_notice("The pressure gauge reads [round(air_contents.return_pressure(),0.01)] kPa.")
 
 	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive
@@ -148,7 +160,7 @@
 		playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	return ..()
 
-/obj/item/tank/suicide_act(mob/user)
+/obj/item/tank/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
 	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
@@ -156,8 +168,7 @@
 		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		human_user.inflate_gib()
 		return MANUAL_SUICIDE
-	else
-		to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
+	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME
 
 /obj/item/tank/attackby(obj/item/attacking_item, mob/user, params)

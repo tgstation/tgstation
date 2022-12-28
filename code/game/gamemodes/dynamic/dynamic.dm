@@ -290,10 +290,18 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	// If it got to this part, just pick one high impact ruleset if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags & HIGH_IMPACT_RULESET)
-			return rule.round_result()
+			rule.round_result()
+			// One was set, so we're done here
+			if(SSticker.news_report)
+				return
+
 	return ..()
 
 /datum/game_mode/dynamic/proc/send_intercept()
+	if(SScommunications.block_command_report) //If we don't want the report to be printed just yet, we put it off until it's ready
+		addtimer(CALLBACK(src, PROC_REF(send_intercept)), 10 SECONDS)
+		return
+
 	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>"
 	switch(round(shown_threat))
 		if(0 to 19)
@@ -333,6 +341,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	generate_station_goals(greenshift)
 	. += generate_station_goal_report()
 	. += generate_station_trait_report()
+	if(length(SScommunications.command_report_footnotes))
+		. += generate_report_footnote()
 
 	print_command_report(., "Central Command Status Summary", announce=FALSE)
 	if(greenshift)
@@ -450,10 +460,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/post_setup(report)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/game_mode/dynamic/, execute_roundstart_rule), rule), rule.delay)
 
 	if (!CONFIG_GET(flag/no_intercept_report))
-		addtimer(CALLBACK(src, .proc/send_intercept), rand(waittime_l, waittime_h))
+		addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(waittime_l, waittime_h))
 
 	..()
 
@@ -675,7 +685,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (forced_latejoin_rule.ready(TRUE))
 			if (!forced_latejoin_rule.repeatable)
 				latejoin_rules = remove_from_list(latejoin_rules, forced_latejoin_rule.type)
-			addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, forced_latejoin_rule), forced_latejoin_rule.delay)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/game_mode/dynamic/, execute_midround_latejoin_rule), forced_latejoin_rule), forced_latejoin_rule.delay)
 		forced_latejoin_rule = null
 
 	else if (latejoin_injection_cooldown < world.time && (forced_injection || prob(latejoin_roll_chance)))

@@ -8,7 +8,7 @@
 	var/labels_left = 30
 	var/mode = 0
 
-/obj/item/hand_labeler/suicide_act(mob/user)
+/obj/item/hand_labeler/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is pointing [src] at [user.p_them()]self. [user.p_theyre(TRUE)] going to label [user.p_them()]self as a suicide!"))
 	labels_left = max(labels_left - 1, 0)
 

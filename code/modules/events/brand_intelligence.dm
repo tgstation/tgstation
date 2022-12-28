@@ -4,7 +4,6 @@
 	weight = 5
 	category = EVENT_CATEGORY_AI
 	description = "Vending machines will attack people until the Patient Zero is disabled."
-
 	min_players = 15
 	max_occurrences = 1
 	///Var used to determine vendor subtype if used for admin setup
@@ -17,6 +16,7 @@
 		var/list/vendors = list()
 		vendors += subtypesof(/obj/machinery/vending)
 		chosen_vendor = tgui_input_list(usr, "Vendor type must have at least one instance on the station for this to work!","Vendor Selector", vendors)
+
 /datum/round_event/brand_intelligence
 	announce_when = 21
 	end_when = 1000 //Ends when all vending machines are subverted anyway.
@@ -52,13 +52,13 @@
 	if(brand_event.chosen_vendor) //Attempt to search for vendors of the selected admin subtype
 		var/chosen_vendor = brand_event.chosen_vendor
 		for(var/obj/machinery/vending/vendor in GLOB.machines)
-			if(!is_station_level(vendor.z) || !istype(vendor, chosen_vendor))
+			if(!is_station_level(vendor.z) || !istype(vendor, chosen_vendor) || !vendor.density)
 				continue
 			vendingMachines.Add(vendor)
 		brand_event.chosen_vendor = null //Event has a max_occurences of 1 but juuust in case
 	if(!length(vendingMachines)) //If no vendors are in vendingMachines, setup defaults back to randomly selecting one.
 		for(var/obj/machinery/vending/vendor in GLOB.machines)
-			if(!is_station_level(vendor.z))
+			if(!is_station_level(vendor.z) || !vendor.density)
 				continue
 			vendingMachines.Add(vendor)
 	if(!length(vendingMachines)) //If somehow there are still no elligible vendors, give up.
@@ -79,7 +79,7 @@
 			originMachine.visible_message(span_notice("[originMachine] beeps and seems lifeless."))
 		kill()
 		return
-	vendingMachines = remove_nulls_from_list(vendingMachines)
+	list_clear_nulls(vendingMachines)
 	if(!vendingMachines.len) //if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
 			if(!QDELETED(upriser))

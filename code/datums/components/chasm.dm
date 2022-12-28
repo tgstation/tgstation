@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	))
 
 /datum/component/chasm/Initialize(turf/target)
-	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/Entered)
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Entered))
 	target_turf = target
 	START_PROCESSING(SSobj, src) // process on create, in case stuff is still there
 	src.parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	for (var/thing in to_check)
 		if (droppable(thing))
 			. = TRUE
-			INVOKE_ASYNC(src, .proc/drop, thing)
+			INVOKE_ASYNC(src, PROC_REF(drop), thing)
 
 /datum/component/chasm/proc/droppable(atom/movable/dropped_thing)
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 	if (!storage)
 		storage = new(get_turf(parent))
-		RegisterSignal(storage, COMSIG_ATOM_EXITED, .proc/left_chasm)
+		RegisterSignal(storage, COMSIG_ATOM_EXITED, PROC_REF(left_chasm))
 		GLOB.chasm_storage += WEAKREF(storage)
 
 	if (storage.contains(dropped_thing))
@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 	if (dropped_thing.forceMove(storage))
 		if (isliving(dropped_thing))
-			RegisterSignal(dropped_thing, COMSIG_LIVING_REVIVE, .proc/on_revive)
+			RegisterSignal(dropped_thing, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 	else
 		parent.visible_message(span_boldwarning("[parent] spits out [dropped_thing]!"))
 		dropped_thing.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
@@ -185,6 +185,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	if (isliving(dropped_thing))
 		var/mob/living/fallen_mob = dropped_thing
 		if(fallen_mob.stat != DEAD)
+			fallen_mob.investigate_log("has died from falling into a chasm.", INVESTIGATE_DEATHS)
 			fallen_mob.death(TRUE)
 			fallen_mob.notransform = FALSE
 			fallen_mob.apply_damage(300)

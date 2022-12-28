@@ -353,7 +353,7 @@
 				to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
 	..()
 
-/obj/item/queen_bee/suicide_act(mob/user)
+/obj/item/queen_bee/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.say("IT'S HIP TO EAT BEES!")
 	qdel(src)
@@ -370,7 +370,7 @@
 
 /mob/living/simple_animal/hostile/bee/short/Initialize(mapload, timetolive=50 SECONDS)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/death), timetolive)
+	addtimer(CALLBACK(src, PROC_REF(death)), timetolive)
 
 /obj/item/trash/bee
 	name = "bee"

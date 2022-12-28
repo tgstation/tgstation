@@ -10,8 +10,6 @@
 /datum/action/cooldown/spell/pointed
 	click_to_activate = TRUE
 
-	/// The base icon state of the spell's button icon, used for editing the icon "on" and "off"
-	var/base_icon_state
 	/// Message showing to the spell owner upon activating pointed spell.
 	var/active_msg
 	/// Message showing to the spell owner upon deactivating pointed spell.
@@ -53,9 +51,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	to_chat(on_who, span_notice("[active_msg] <B>Left-click to cast the spell on a target!</B>"))
-	if(base_icon_state)
-		button_icon_state = "[base_icon_state]1"
-		UpdateButtons()
+	build_all_button_icons()
 	return TRUE
 
 /// Called when the spell is deactivated / the click ability is unset from our spell
@@ -65,9 +61,7 @@
 	if(refund_cooldown)
 		// Only send the "deactivation" message if they're willingly disabling the ability
 		to_chat(on_who, span_notice("[deactive_msg]"))
-	if(base_icon_state)
-		button_icon_state = "[base_icon_state]0"
-		UpdateButtons()
+	build_all_button_icons()
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/click_target)
@@ -87,11 +81,16 @@
 		to_chat(owner, span_warning("You cannot cast [src] on yourself!"))
 		return FALSE
 
-	if(get_dist(owner, cast_on) > cast_range)
-		to_chat(owner, span_warning("[cast_on.p_theyre(TRUE)] too far away!"))
-		return FALSE
-
 	return TRUE
+
+/datum/action/cooldown/spell/pointed/before_cast(atom/cast_on)
+	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		return
+
+	if(owner && get_dist(get_turf(owner), get_turf(cast_on)) > cast_range)
+		cast_on.balloon_alert(owner, "too far away!")
+		return . | SPELL_CANCEL_CAST
 
 /**
  * ### Pointed projectile spells
@@ -168,7 +167,7 @@
 	to_fire.firer = owner
 	to_fire.fired_from = src
 	to_fire.preparePixelProjectile(target, owner)
-	RegisterSignal(to_fire, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/on_cast_hit)
+	RegisterSignal(to_fire, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_cast_hit))
 
 	if(istype(to_fire, /obj/projectile/magic))
 		var/obj/projectile/magic/magic_to_fire = to_fire

@@ -58,6 +58,11 @@
 	cost = 4
 	surplus = 30
 
+/datum/uplink_item/stealthy_tools/emplight/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 3
+
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
 	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \

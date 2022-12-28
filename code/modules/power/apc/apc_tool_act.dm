@@ -62,7 +62,7 @@
 		if(obj_flags & EMAGGED)
 			balloon_alert(user, "the interface is broken!")
 			return
-		panel_open = !panel_open
+		toggle_panel_open()
 		balloon_alert(user, "wires are [panel_open ? "exposed" : "unexposed"]")
 		update_appearance()
 		return
@@ -203,7 +203,7 @@
 	environ = APC_CHANNEL_OFF
 	update_appearance()
 	update()
-	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
+	addtimer(CALLBACK(src, PROC_REF(reset), APC_RESET_EMP), 600)
 
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
 	if(obj_flags & EMAGGED)
