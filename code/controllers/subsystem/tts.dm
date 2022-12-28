@@ -81,6 +81,7 @@ SUBSYSTEM_DEF(tts)
 			continue
 		var/sound/new_sound = new("tmp/[current_message[IDENTIFIER_INDEX]].ogg")
 		playsound(current_message[TARGET_INDEX], new_sound, 100)
+		fdel(file("tmp/[current_message[IDENTIFIER_INDEX]].ogg"))
 		if(MC_TICK_CHECK)
 			return
 

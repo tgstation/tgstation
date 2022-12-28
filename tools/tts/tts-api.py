@@ -12,7 +12,7 @@ app = Flask(__name__)
 def text_to_speech():
     voice = request.args.get("voice", '')
     text = request.json.get("text", '')
-    identifier = request.args.get("identifier", 'invalid')
+    identifier = bytes.fromhex(request.args.get("identifier", '')).hex()
     filter_complex = request.args.get("filter", '')
     filter_complex = filter_complex.replace("\"", "")
 
