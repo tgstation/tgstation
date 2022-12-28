@@ -732,4 +732,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	return TRUE
 
 /obj/item/integrated_circuit/admin
+	name = "administrative circuit"
+	desc = "The components installed in here are far beyond your comprehension."
+
 	admin_only = TRUE
