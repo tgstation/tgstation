@@ -966,3 +966,39 @@
       follow you if you want them to behave around your friends.
   Melbert:
   - refactor: Drowsiness and Blurred Eyes are now tracked via status effect.
+2022-12-28:
+  Fikou:
+  - balance: standard holoparasites and assassin holoparasites in stealth mode can
+      deal wounds
+  - balance: you can now ride charger holoparasites
+  - balance: charger holoparasites have a bit less armor and speed
+  - bugfix: you can correctly redirect yourself with neurotoxin as a xeno
+  - bugfix: you can see your active hand correctly as xeno
+  - bugfix: fixes moonicorns not applying pax
+  - imageadd: tweaks the ninja modsuit helmet
+  Jacquerel:
+  - bugfix: Space Carp can now breathe in space
+  Melbert:
+  - bugfix: Wedding dresses no longer render their shoes over the dress
+  - bugfix: Things which have inv flags set should more consistently actually hide
+      the things they mean to hide
+  - bugfix: Silver foods correctly spawn things grilled and fried
+  - bugfix: Ethereals and Flypeople and Aliens who learn Uncommon language can speak
+      it with their tongues like they could speak Common, no this doesn't mean they
+      can naturally speak or understand Uncommon
+  - refactor: Refactored how tongues set up their languages lists
+  - rscadd: You can now high five people with (non-cult) touch spells! Maybe be careful
+      high-fiving a wizard who knows Smite.
+  Ryll/Shaps:
+  - rscadd: 'Dogs will now occasionally bark at their two mortal enemies: felinids
+      and mailmen'
+  - bugfix: Dogs set to attack will now only close within 3 tiles of their target,
+      and must be approached further by their target (or pushed next to their target)
+      to actually attack
+  Time-Green:
+  - bugfix: Pride pin quirk works roundstart
+  ZephyrTFA:
+  - bugfix: War can once again be declared
+  san7890:
+  - rscadd: WOULD YOU EAT THE TOILET SANDWICH (LOCATED IN DELTASTATION'S MEDBAY BREAKROOM
+      RESTROOM) FOR FIVE DOLLARS? TEST IT OUT NOW!
