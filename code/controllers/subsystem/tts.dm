@@ -13,6 +13,9 @@
 #define IDENTIFIER_INDEX 2
 #define TIMEOUT_INDEX 3
 #define REQUEST_INDEX 4
+#define EXTRA_TARGETS_INDEX 5
+
+#define CACHE_PENDING "pending"
 
 SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
@@ -34,12 +37,14 @@ SUBSYSTEM_DEF(tts)
 	/// A list of available speakers
 	var/list/available_speakers = list()
 
+	var/list/cached_voices = list()
+
 	/// Whether TTS is enabled or not
 	var/tts_enabled = FALSE
 
 	var/message_timeout = 5 SECONDS
 
-	var/max_processing_at_once = 15
+	var/max_concurrent_requests = 15
 
 /datum/controller/subsystem/tts/vv_edit_var(var_name, var_value)
 	// tts being enabled depends on whether it actually exists
@@ -64,6 +69,9 @@ SUBSYSTEM_DEF(tts)
 
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/tts/proc/play_tts(target, sound)
+	playsound(target, sound, 100, ignore_walls = FALSE)
+
 /datum/controller/subsystem/tts/fire(resumed)
 	if(!tts_enabled)
 		flags |= SS_NO_FIRE
@@ -71,14 +79,14 @@ SUBSYSTEM_DEF(tts)
 
 	if(!resumed)
 		var/list/priority_list = priority_queued_tts_messages
-		while(length(in_process_tts_messages) < max_processing_at_once && priority_list.len > 0)
+		while(length(in_process_tts_messages) < max_concurrent_requests && priority_list.len > 0)
 			var/list/entry = priority_list[priority_list.len]
 			priority_list.len--
 			var/datum/http_request/request = entry[REQUEST_INDEX]
 			request.begin_async()
 			in_process_tts_messages += list(entry)
 		var/list/less_priority_list = queued_tts_messages
-		while(length(in_process_tts_messages) < max_processing_at_once && less_priority_list.len > 0)
+		while(length(in_process_tts_messages) < max_concurrent_requests && less_priority_list.len > 0)
 			var/list/entry = less_priority_list[less_priority_list.len]
 			less_priority_list.len--
 			var/datum/http_request/request = entry[REQUEST_INDEX]
@@ -92,27 +100,28 @@ SUBSYSTEM_DEF(tts)
 		var/current_message = processing_messages[processing_messages.len]
 		processing_messages.len--
 		var/atom/movable/target = current_message[TARGET_INDEX]
-		if(QDELETED(target))
+		if(QDELETED(target) || current_message[TIMEOUT_INDEX] < world.time)
 			in_process_tts_messages -= list(current_message)
 			continue
 
 		var/datum/http_request/request = current_message[REQUEST_INDEX]
 		if(!request.is_complete())
-			if(current_message[TIMEOUT_INDEX] < world.time)
-				in_process_tts_messages -= list(current_message)
 			continue
 
 		var/datum/http_response/response = request.into_response()
 		in_process_tts_messages -= list(current_message)
 		if(response.errored)
 			continue
-		var/sound/new_sound = new("tmp/[current_message[IDENTIFIER_INDEX]].ogg")
-		playsound(current_message[TARGET_INDEX], new_sound, 100, ignore_walls = FALSE)
-		fdel(file("tmp/[current_message[IDENTIFIER_INDEX]].ogg"))
+		var/identifier = current_message[IDENTIFIER_INDEX]
+		var/sound/new_sound = new("tmp/[identifier].ogg")
+		play_tts(current_message[TARGET_INDEX], new_sound)
+		for(var/atom/movable/target in current_message[EXTRA_TARGETS_INDEX])
+			play_tts(target, new_sound)
+		cached_voices[identifier] = "tmp/[identifier].ogg"
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/tts/proc/queue_tts_message(target, message, speaker, filter)
+/datum/controller/subsystem/tts/proc/queue_tts_message(target, message, speaker, filter, high_priority = FALSE)
 	if(!tts_enabled)
 		return
 
@@ -124,7 +133,16 @@ SUBSYSTEM_DEF(tts)
 
 	var/shell_scrubbed_input = tts_filter(message)
 	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 100)
-	var/identifier = md5(speaker + shell_scrubbed_input + filter)
+	var/identifier = sha1(speaker + shell_scrubbed_input + filter)
+	var/cached_voice = cached_voices[identifier]
+	if(islist(cached_voice))
+		cached_voice[EXTRA_TARGETS_INDEX] += target
+		return
+	else if(fexists(cached_voice))
+		var/sound/new_sound = new(cached_voice)
+		play_tts(target, new_sound)
+		return
+
 	if(!(speaker in available_speakers))
 		CRASH("Tried to use invalid speaker for TTS message! ([speaker])")
 	speaker = tts_filter(speaker)
@@ -135,17 +153,18 @@ SUBSYSTEM_DEF(tts)
 	var/file_name = "tmp/[identifier].ogg"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
 	var/list/waiting_list = queued_tts_messages
-	if(length(in_process_tts_messages) < max_processing_at_once)
+	if(length(in_process_tts_messages) < max_concurrent_requests)
 		request.begin_async()
 		waiting_list = in_process_tts_messages
-	else if(ismob(target))
-		var/mob/target_mob = target
-		if(target_mob.client != null)
-			waiting_list = priority_queued_tts_messages
+	else if(high_priority)
+		waiting_list = priority_queued_tts_messages
 
-	waiting_list += list(list(target, identifier, world.time + message_timeout, request))
+	var/list/data = list(target, identifier, world.time + message_timeout, request, list())
+	cached_voices[identifier] = data
+	waiting_list += list(data)
 
 #undef TARGET_INDEX
 #undef IDENTIFIER_INDEX
 #undef TIMEOUT_INDEX
 #undef REQUEST_INDEX
+#undef EXTRA_TARGETS_INDEX

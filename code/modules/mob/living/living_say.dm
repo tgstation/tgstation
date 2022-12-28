@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			found_client = TRUE
 
 	if(src.voice && found_client)
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(message_raw), src.voice, src.voice_filter)
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(message_raw), src.voice, src.voice_filter, client != null)
 
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
