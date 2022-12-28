@@ -375,7 +375,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			var/datum/gas_mixture/environment = our_turf.return_air()
 			check_air_dangerlevel(our_turf, environment, environment.temperature)
 
-		if ("mode")
+		if ("alarm")
 			if (alarm_manager.send_alarm(ALARM_ATMOS))
 				danger_level = AIR_ALARM_ALERT_SEVERE
 
