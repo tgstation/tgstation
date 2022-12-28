@@ -124,9 +124,8 @@
 		terrorize_spell.Grant(reciever)
 
 /obj/item/organ/internal/eyes/night_vision/nightmare/Remove(mob/living/carbon/eye_owner, special)
-	. = ..()
-
-	terrorize_spell.Remove(eye_owner)
+	QDEL_NULL(terrorize_spell)
+	return ..()
 
 #undef HEART_SPECIAL_SHADOWIFY
 #undef HEART_RESPAWN_THRESHHOLD
