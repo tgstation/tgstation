@@ -9,6 +9,7 @@
 		BB_DOG_PLAYING_DEAD = FALSE,
 		BB_DOG_HARASS_TARGET = null,
 		BB_DOG_HARASS_FRUSTRATION = null,
+		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
 	)
 	ai_movement = /datum/ai_movement/jps
@@ -280,6 +281,7 @@
 			pawn.visible_message(span_notice("[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and growls intensely!"))
 			set_movement_target(pointed_movable)
 			blackboard[BB_DOG_HARASS_TARGET] = WEAKREF(pointed_movable)
+			blackboard[BB_DOG_HARASS_HARM] = TRUE
 			if(living_pawn.buckled)
 				queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something
 			queue_behavior(/datum/ai_behavior/harass)
@@ -299,6 +301,7 @@
 		BB_DOG_PLAYING_DEAD = FALSE,
 		BB_DOG_HARASS_TARGET = null,
 		BB_DOG_HARASS_FRUSTRATION = null,
+		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
 
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/dog),

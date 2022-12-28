@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	base_icon_state = "catwalk"
 	density = FALSE
 	anchored = TRUE
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/structure_industrial_lift
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
@@ -66,6 +66,11 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/radial_travel = TRUE
 	/// A lazylist of REFs to all mobs which have a radial open currently
 	var/list/current_operators
+
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
 
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
@@ -721,6 +726,11 @@ GLOBAL_LIST_EMPTY(lifts)
 	lift_id = DEBUG_LIFT_ID
 	radial_travel = TRUE
 
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
+
 /obj/structure/industrial_lift/debug/open_lift_radial(mob/living/user)
 	var/starting_position = loc
 	if (!can_open_lift_radial(user,starting_position))
@@ -779,7 +789,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	name = "tram"
 	desc = "A tram for tramversing the station."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "titanium_yellow"
+	icon_state = "titanium"
 	layer = TRAM_FLOOR_LAYER
 	base_icon_state = null
 	smoothing_flags = NONE
@@ -801,6 +811,14 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/horizontal_speed = 0.5
 
 	create_multitile_platform = TRUE
+
+/obj/structure/industrial_lift/tram/white
+	icon_state = "titanium_white"
+
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()

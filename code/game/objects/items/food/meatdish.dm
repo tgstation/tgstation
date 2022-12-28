@@ -575,6 +575,8 @@
 	name = "chicken nugget"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	icon = 'icons/obj/food/meat.dmi'
+	/// Default nugget icon for recipes that need any nugget
+	icon_state = "nugget_lump"
 	tastes = list("\"chicken\"" = 1)
 	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
