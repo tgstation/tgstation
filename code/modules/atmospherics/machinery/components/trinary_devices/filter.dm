@@ -157,7 +157,7 @@
 			else
 				change = "removed"
 			var/gas_name = GLOB.meta_gas_info[gas_id2path(params["val"])][META_GAS_NAME]
-			investigate_log("[key_name(usr)] [change] [gas_name] from the filter type.", INVESTIGATE_ATMOS)
+			usr.investigate_log("[change] [gas_name] from the filter type.", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_appearance()
 

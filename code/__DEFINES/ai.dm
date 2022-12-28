@@ -165,6 +165,7 @@
 #define BB_DOG_PLAYING_DEAD "BB_DOG_PLAYING_DEAD"
 #define BB_DOG_HARASS_TARGET "BB_DOG_HARASS_TARGET"
 #define BB_DOG_HARASS_FRUSTRATION "BB_DOG_HARASS_FRUSTRATION"
+#define BB_DOG_HARASS_HARM "BB_DOG_HARASS_HARM"
 #define BB_DOG_IS_SLOW "BB_DOG_IS_SLOW"
 
 /// Basically, what is our vision/hearing range for picking up on things to fetch/
@@ -222,6 +223,9 @@
 
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
+
+/// Flag to set on or off if you want your mob to prioritise running away
+#define BB_BASIC_MOB_FLEEING "BB_basic_fleeing"
 
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"

@@ -1,0 +1,4 @@
+author: "Salex08"
+delete-after: True
+changes:
+  - bugfix: "Adds missing christmas tree to tramstation"

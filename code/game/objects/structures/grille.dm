@@ -12,11 +12,18 @@
 	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
+
+/datum/armor/structure_grille
+	melee = 50
+	bullet = 70
+	laser = 70
+	energy = 100
+	bomb = 10
 
 /obj/structure/grille/Initialize(mapload)
 	. = ..()

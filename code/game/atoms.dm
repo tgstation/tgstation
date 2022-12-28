@@ -160,7 +160,9 @@
 	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error
 	var/uses_integrity = FALSE
 
-	var/datum/armor/armor
+	VAR_PROTECTED/datum/armor/armor_type = /datum/armor/none
+	VAR_PRIVATE/datum/armor/armor
+
 	VAR_PRIVATE/atom_integrity //defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
@@ -258,29 +260,9 @@
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()
 
-	if (length(smoothing_groups))
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
-			assert_sorted(smoothing_groups, "[type].smoothing_groups")
-
-		SET_BITFLAG_LIST(smoothing_groups)
-
-	if (length(canSmoothWith))
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
-			assert_sorted(canSmoothWith, "[type].canSmoothWith")
-
-		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
-			smoothing_flags |= SMOOTH_OBJ
-
-		SET_BITFLAG_LIST(canSmoothWith)
+	SETUP_SMOOTHING()
 
 	if(uses_integrity)
-		if (islist(armor))
-			armor = getArmor(arglist(armor))
-		else if (!armor)
-			armor = getArmor()
-		else if (!istype(armor, /datum/armor))
-			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
-
 		atom_integrity = max_integrity
 
 	// apply materials properly from the default custom_materials value
@@ -341,8 +323,10 @@
 
 	LAZYNULL(managed_overlays)
 
-	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
+	QDEL_NULL(light)
+	if (length(light_sources))
+		light_sources.Cut()
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
@@ -462,9 +446,9 @@
 					return TRUE
 
 /**
- * Is the atom in any of the centcom syndicate areas
+ * Is the atom in any of the syndicate areas
  *
- * Either in the syndie base on centcom, or any of their shuttles
+ * Either in the syndie base, or any of their shuttles
  *
  * Also used in gamemode code for win conditions
  */
@@ -473,7 +457,7 @@
 	if(!current_turf)
 		return FALSE
 
-	if(!is_centcom_level(current_turf.z))//if not, don't bother
+	if(!is_reserved_level(current_turf.z))//if not, don't bother
 		return FALSE
 
 	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/centcom/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))
@@ -1259,6 +1243,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_COLOR_MATRIX, "Edit Color as Matrix")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
+	VV_DROPDOWN_OPTION(VV_HK_ARMOR_MOD, "Modify Armor")
 	if(greyscale_colors)
 		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
 
@@ -1307,6 +1292,29 @@
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS] && check_rights(R_ADMIN))
 		usr.client.cmd_show_hiddenprints(src)
 
+	if(href_list[VV_HK_ARMOR_MOD])
+		var/list/pickerlist = list()
+		var/list/armorlist = get_armor().get_rating_list()
+
+		for (var/i in armorlist)
+			pickerlist += list(list("value" = armorlist[i], "name" = i))
+
+		var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [src]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
+		var/list/armor_all = ARMOR_LIST_ALL()
+
+		if (islist(result))
+			if (result["button"] != 2) // If the user pressed the cancel button
+				// text2num conveniently returns a null on invalid values
+				var/list/converted = list()
+				for(var/armor_key in armor_all)
+					converted[armor_key] = text2num(result["values"][armor_key])
+				set_armor(get_armor().generate_new_with_specific(converted))
+				var/message = "[key_name(usr)] modified the armor on [src] ([type]) to: "
+				for(var/armor_key in armor_all)
+					message += "[armor_key]=[get_armor_rating(armor_key)],"
+				message = copytext(message, 1, -1)
+				log_admin(span_notice(message))
+				message_admins(span_notice(message))
 
 	if(href_list[VV_HK_ADD_AI])
 		if(!check_rights(R_VAREDIT))
@@ -1836,18 +1844,15 @@
 			return 0
 
 	var/list/forced_gravity = list()
-	if(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity))
-		if(!length(forced_gravity))
-			SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity)
+	SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	if(length(forced_gravity))
+		var/positive_grav = max(forced_gravity)
+		var/negative_grav = min(min(forced_gravity), 0) //negative grav needs to be below or equal to 0
 
-		var/positive_grav = 0
-		var/negative_grav = 0
 		//our gravity is sum of the most massive positive and negative numbers returned by the signal
 		//so that adding two forced_gravity elements with an effect size of 1 each doesnt add to 2 gravity
 		//but negative force gravity effects can cancel out positive ones
-		for(var/gravity_influence in forced_gravity)
-			positive_grav = max(positive_grav, gravity_influence)
-			negative_grav = min(negative_grav, gravity_influence)
 
 		return (positive_grav + negative_grav)
 

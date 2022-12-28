@@ -62,7 +62,7 @@
 	desc = "A wonderful yet fake friend."
 	see_in_dark = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-	sight = SEE_BLACKNESS
+	sight = NONE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_MAXIMUM

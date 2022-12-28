@@ -32,7 +32,7 @@
 		passed_meteor[chosen_meteor] = 1
 		spawn_meteor(passed_meteor)
 	else
-		spawn_meteor(GLOB.meteorsD)
+		spawn_meteor(GLOB.meteors_stray)
 
 /datum/round_event/stray_meteor/announce(fake)
 	if(GLOB.meteor_list)

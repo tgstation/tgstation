@@ -162,17 +162,22 @@
 	switch(fill_type)
 		if(CUSTOM_INGREDIENT_ICON_SCATTER)
 			filling.pixel_x = rand(-1,1)
-			filling.pixel_y = rand(-1,1)
+			filling.pixel_z = rand(-1,1)
 		if(CUSTOM_INGREDIENT_ICON_STACK)
 			filling.pixel_x = rand(-1,1)
-			filling.pixel_y = 2 * LAZYLEN(ingredients) - 1
+			// we're gonna abuse position layering to ensure overlays render right
+			filling.pixel_y = -LAZYLEN(ingredients)
+			filling.pixel_z = 2 * LAZYLEN(ingredients) - 1 + LAZYLEN(ingredients)
 		if(CUSTOM_INGREDIENT_ICON_STACKPLUSTOP)
 			filling.pixel_x = rand(-1,1)
-			filling.pixel_y = 2 * LAZYLEN(ingredients) - 1
+			// similar here
+			filling.pixel_y = -LAZYLEN(ingredients)
+			filling.pixel_z = 2 * LAZYLEN(ingredients) - 1 + LAZYLEN(ingredients)
 			if (top_overlay) // delete old top if exists
 				atom_parent.cut_overlay(top_overlay)
 			top_overlay = mutable_appearance(atom_parent.icon, "[atom_parent.icon_state]_top")
-			top_overlay.pixel_y = 2 * LAZYLEN(ingredients) + 3
+			top_overlay.pixel_y = -(LAZYLEN(ingredients) + 1)
+			top_overlay.pixel_z = 2 * LAZYLEN(ingredients) + 3 + LAZYLEN(ingredients) + 1
 			atom_parent.add_overlay(filling)
 			atom_parent.add_overlay(top_overlay)
 			return
@@ -182,7 +187,7 @@
 				atom_parent.cut_overlay(top_overlay)
 			top_overlay = filling
 		if(CUSTOM_INGREDIENT_ICON_LINE)
-			filling.pixel_x = filling.pixel_y = rand(-8,3)
+			filling.pixel_x = filling.pixel_z = rand(-8,3)
 	atom_parent.add_overlay(filling)
 
 

@@ -111,14 +111,14 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/lesser/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message(span_danger("The slime extract begins to vibrate violently!"))
-	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Lesser Gold Slime", HOSTILE_SPAWN, "neutral"), 50)
+	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Lesser Gold Slime", HOSTILE_SPAWN, FACTION_NEUTRAL), 50)
 
 /datum/chemical_reaction/slime/slimemobspawn/friendly
 	required_reagents = list(/datum/reagent/water = 1)
 
 /datum/chemical_reaction/slime/slimemobspawn/friendly/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message(span_danger("The slime extract begins to vibrate adorably!"))
-	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 1, "Friendly Gold Slime", FRIENDLY_SPAWN, "neutral"), 50)
+	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 1, "Friendly Gold Slime", FRIENDLY_SPAWN, FACTION_NEUTRAL), 50)
 
 /datum/chemical_reaction/slime/slimemobspawn/spider
 	required_reagents = list(/datum/reagent/spider_extract = 1)
@@ -126,7 +126,7 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/spider/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message(span_danger("The slime extract begins to vibrate crikey-ingly!"))
-	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Traitor Spider Slime", /mob/living/simple_animal/hostile/giant_spider/midwife, "neutral", FALSE), 50)
+	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Traitor Spider Slime", /mob/living/simple_animal/hostile/giant_spider/midwife, FACTION_NEUTRAL, FALSE), 50)
 
 
 //Silver
@@ -149,9 +149,9 @@
 		var/obj/item/food_item = new chosen(T)
 		ADD_TRAIT(food_item, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 		if(prob(5))//Fry it!
-			AddElement(/datum/element/fried_item, rand(15, 60))
+			food_item.AddElement(/datum/element/fried_item, rand(15, 60))
 		if(prob(5))//Grill it!
-			AddElement(/datum/element/grilled_item, rand(30, 100))
+			food_item.AddElement(/datum/element/grilled_item, rand(30, 100))
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(food_item, pick(NORTH,SOUTH,EAST,WEST))

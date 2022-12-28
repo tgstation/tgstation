@@ -9,7 +9,7 @@
 	drag_slowdown = 1.5 // Same as a prone mob
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 60)
+	armor_type = /datum/armor/structure_closet
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	/// The overlay for the closet's door
@@ -69,6 +69,14 @@
 	var/can_install_electronics = TRUE
 
 	var/contents_initialized = FALSE
+
+/datum/armor/structure_closet
+	melee = 20
+	bullet = 10
+	laser = 10
+	bomb = 10
+	fire = 70
+	acid = 60
 
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
@@ -341,7 +349,8 @@
 				return FALSE
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
-				if(++mobs_stored >= mob_storage_capacity)
+				mobs_stored++
+				if(mobs_stored >= mob_storage_capacity)
 					return FALSE
 		L.stop_pulling()
 
@@ -555,6 +564,7 @@
 			else
 				O.forceMove(T)
 				close()
+			log_combat(user, O, "stuffed", addition = "inside of [src]")
 	else
 		O.forceMove(T)
 	return 1
@@ -756,10 +766,17 @@
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
-		span_userdanger("You're shoved into \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
-	log_combat(src, target, "shoved", "into [src] (locker/crate)")
+	if(target == shover)
+		target.visible_message(span_danger("[target.name] shoves [target.p_them()]self into [src]!"),
+			null,
+			span_hear("You hear shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+		to_chat(shover, span_notice("You shove yourself into [src]!"))
+	else
+		target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
+			span_userdanger("You're shoved into [src] by [shover.name]!"),
+			span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+		to_chat(src, span_danger("You shove [target.name] into [src]!"))
+	log_combat(shover, target, "shoved", "into [src] (locker/crate)")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.

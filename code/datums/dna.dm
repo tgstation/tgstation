@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		return
 	for(var/datum/mutation/human/HM in group)
 		if((HM.class in classes) && !(HM.mutadone_proof && mutadone))
-			force_lose(HM)
+			remove_mutation(HM)
 
 /datum/dna/proc/generate_unique_identity()
 	. = ""
@@ -453,6 +453,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /////////////////////////// DNA MOB-PROCS //////////////////////
 
 /mob/proc/set_species(datum/species/mrace, icon_update = 1)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /mob/living/brain/set_species(datum/species/mrace, icon_update = 1)
@@ -475,7 +476,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		else
 			return
 		death_sound = new_race.death_sound
-		dna.species.on_species_loss(src, new_race, pref_load)
+
+		if (dna.species.properly_gained)
+			dna.species.on_species_loss(src, new_race, pref_load)
+
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
 		dna.species.on_species_gain(src, old_species, pref_load)
@@ -644,7 +648,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 //Return the active mutation of a type if there is one
 /datum/dna/proc/get_mutation(A)
 	for(var/datum/mutation/human/HM in mutations)
-		if(HM.type == A)
+		if(istype(HM, A))
 			return HM
 
 /datum/dna/proc/check_block_string(mutation)
@@ -831,7 +835,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				if(elligible_organs.len)
 					var/obj/item/organ/O = pick(elligible_organs)
 					O.Remove(src)
-					visible_message(span_danger("[src] vomits up their [O.name]!"), span_danger("You vomit up your [O.name]")) //no "vomit up your heart"
+					visible_message(span_danger("[src] vomits up [p_their()] [O.name]!"), span_danger("You vomit up your [O.name]")) //no "vomit up your heart"
 					O.forceMove(drop_location())
 					if(prob(20))
 						O.animate_atom_living()

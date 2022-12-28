@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - bugfix: "fixed a setting air alarm to refill mode would set scrubber to siphon, thus defeating the purpose of refilling. Now it will set to scrub mode instead."

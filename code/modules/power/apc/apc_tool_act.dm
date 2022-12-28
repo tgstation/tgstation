@@ -62,7 +62,7 @@
 		if(obj_flags & EMAGGED)
 			balloon_alert(user, "the interface is broken!")
 			return
-		panel_open = !panel_open
+		toggle_panel_open()
 		balloon_alert(user, "wires are [panel_open ? "exposed" : "unexposed"]")
 		update_appearance()
 		return

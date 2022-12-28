@@ -11,18 +11,27 @@
 	var/id = null
 	var/initialized_button = 0
 	var/silicon_access_disabled = FALSE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 90, ACID = 70)
+	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/datum/armor/machinery_button
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 90
+	acid = 70
+
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
 	if(built)
 		setDir(ndir)
-		panel_open = TRUE
+		set_panel_open(TRUE)
 		update_appearance()
 
 	if(!built && !device && device_type)
@@ -199,6 +208,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/datum/armor/machinery_button
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 90
+	acid = 70
+
 /obj/machinery/button/door/setup_device()
 	if(!device)
 		if(normaldoorcontrol)
@@ -297,6 +315,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	device_type = /obj/item/assembly/control/curtain
 	var/sync_doors = TRUE
 
+/datum/armor/machinery_button
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 90
+	acid = 70
+
 /obj/machinery/button/curtain/setup_device()
 	var/obj/item/assembly/control/curtain = device
 	curtain.sync_doors = sync_doors
@@ -332,6 +359,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	id = 1
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
+
+/datum/armor/machinery_button
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 90
+	acid = 70
 
 /obj/machinery/button/tram/setup_device()
 	var/obj/item/assembly/control/tram/tram_device = device
