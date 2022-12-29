@@ -144,7 +144,24 @@
 		// ...Why don't all mutations delete on loss? Not sure.
 		qdel(src)
 
-/mob/living/carbon/proc/update_mutations_overlay()
+/**
+ * Updates mutation related overlays
+ *
+ * Mutation overlays are generated via [/datum/mutation/human/proc/get_visual_indicator]
+ *
+ * They are then managed as a list of overlays via standing overlays
+ * in the MUTATIONS_LAYER (behind the mob)
+ * or in FRONT_MUTATIONS_LAYER (in front of everything)
+ *
+ * To save processing on not needing to re-create overlays when it's not necessary,
+ * this proc will do nothing if the overlays are found to already exist in the mob's standing overlays
+ * You can pass force_recreate = TRUE if you want to force it to remove and re-apply overlays regardless
+ * Really only do this if you're doing big DNA changes that are liable to cause the overlay to change
+ * like for example, changing mob height
+ *
+ * melbert todo: hey are mutation appearances statically cached? if so undo all of this. at least it saves filters :^J
+ */
+/mob/living/carbon/proc/update_mutations_overlay(force_recreate = FALSE)
 	return
 
 /mob/living/carbon/human/update_mutations_overlay(force_recreate = FALSE)
@@ -158,7 +175,7 @@
 		if(overlays_standing[mutation.layer_used])
 			mut_overlay = overlays_standing[mutation.layer_used]
 		var/mutable_appearance/indicator_to_add = mutation.get_visual_indicator()
-		if(!mut_overlay.Find(indicator_to_add) && !force_recreate) //either we lack the visual indicator or we have the wrong one
+		if(!mut_overlay.Find(indicator_to_add) || force_recreate) //either we lack the visual indicator or we have the wrong one
 			remove_overlay(mutation.layer_used)
 			for(var/mutable_appearance/indicator_to_remove in mutation.visual_indicators[mutation.type])
 				mut_overlay.Remove(indicator_to_remove)
