@@ -66,7 +66,7 @@ There are several things that need to be remembered:
 		update_worn_neck()
 		update_transform()
 		//mutations
-		update_mutations_overlay()
+		update_mutations_overlay(force_recreate = TRUE)
 		//damage overlays
 		update_damage_overlays()
 
@@ -676,7 +676,14 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 */
-/obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, female_uniform = NO_FEMALE_UNIFORM, override_state = null, override_file = null)
+/obj/item/proc/build_worn_icon(
+	default_layer = 0,
+	default_icon_file = null,
+	isinhands = FALSE,
+	female_uniform = NO_FEMALE_UNIFORM,
+	override_state = null,
+	override_file = null,
+)
 
 	//Find a valid icon_state from variables+arguments
 	var/t_state
@@ -802,18 +809,70 @@ generate/load female uniform sprites matching all previously decided variables
 	update_worn_head()
 	update_worn_mask()
 
+#define UPPER_BODY TRUE
+#define LOWER_BODY FALSE
+
+// Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
+// Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.
+// Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
+// So instead we have to pass them through an offset, which is close enough to look good.
 /mob/living/carbon/human/apply_overlay(cache_index)
 	var/raw_applied = overlays_standing[cache_index]
 
-	if(islist(raw_applied))
-		for(var/mutable_appearance/applied_appearance as anything in raw_applied)
-			apply_height_filters(applied_appearance)
-	else if(!isnull(raw_applied))
-		apply_height_filters(raw_applied)
+	// Some layers shouldn't apply a filter, instead just offset it
+	// Also since indexes are, well, number indexes we need to cast to strings
+	var/static/list/layers_to_offset = list(
+		"[HANDS_LAYER]" = UPPER_BODY, // Weapons commonly go over the middle point so they shouldn't displace
+		"[HEAD_LAYER]" = LOWER_BODY, // very tall hats will get cutoff
+	)
+
+	var/string_form_index = num2text(cache_index)
+	if(string_form_index in layers_to_offset)
+		var/offset_amount = layers_to_offset[string_form_index]
+		if(islist(raw_applied))
+			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+				apply_height_offsets(applied_appearance, offset_amount)
+		else if(!isnull(raw_applied))
+			apply_height_offsets(raw_applied, offset_amount)
+
+	else
+		if(islist(raw_applied))
+			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+				apply_height_filters(applied_appearance)
+		else if(!isnull(raw_applied))
+			apply_height_filters(raw_applied)
 
 	return ..()
 
-/// Applies a filter to an appearance according to mob height
+#undef UPPER_BODY
+#undef LOWER_BODY
+
+/**
+ * Used in some circumstances where appearances can get cut off from the mob sprite from being too tall
+ *
+ * upper_torso is to specify whether the appearance is locate in the upper half of the mob rather than the lower half,
+ * higher up things (hats for example) need to be offset more due to the location of the filter displacement
+ */
+/mob/living/carbon/human/proc/apply_height_offsets(mutable_appearance/appearance, upper_torso = FALSE)
+	var/final_offset = 0
+	switch(get_mob_height())
+		if(HUMAN_HEIGHT_DWARF)
+			final_offset = (upper_torso ? -6 : -4)
+		if(HUMAN_HEIGHT_SHORTEST)
+			final_offset = (upper_torso ? -3 : -2)
+		if(HUMAN_HEIGHT_SHORT)
+			final_offset= -1
+		if(HUMAN_HEIGHT_TALL)
+			final_offset = 1
+		if(HUMAN_HEIGHT_TALLEST)
+			final_offset = (upper_torso ? 3 : 2)
+
+	appearance.pixel_y += final_offset
+	return appearance
+
+/**
+ * Applies a filter to an appearance according to mob height
+ */
 /mob/living/carbon/human/proc/apply_height_filters(mutable_appearance/appearance)
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
@@ -839,9 +898,6 @@ generate/load female uniform sprites matching all previously decided variables
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
 		if(HUMAN_HEIGHT_SHORT)
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
-		// Normal height
-		if(HUMAN_HEIGHT_MEDIUM)
-			return
 		// Higher than "tall" starts to get cut off
 		if(HUMAN_HEIGHT_TALL)
 			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
@@ -849,5 +905,7 @@ generate/load female uniform sprites matching all previously decided variables
 		if(HUMAN_HEIGHT_TALLEST)
 			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
 			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+
+	return appearance
 
 #undef RESOLVE_ICON_STATE
