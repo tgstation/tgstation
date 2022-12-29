@@ -62,6 +62,7 @@
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	suicide_cry = "VENOM- VENOM VEN VENOM!!"
+	ui_name = "AntagInfoVenom"
 
 /datum/antagonist/venom/on_gain()
 	forge_objectives()
@@ -71,7 +72,6 @@
 	. = ..()
 	owner.announce_objectives()
 	to_chat(owner.current, span_danger("You are Venom! You need to find a suitable host to start your spree. They need to be wearing a MODsuit."))
-	to_chat(owner.current, span_danger("By using your piercer on dead bodies with souls, your power grows. Power is used for the strength of your abilities."))
 
 /datum/antagonist/venom/proc/forge_objectives()
 	var/datum/objective/new_objective = new /datum/objective
@@ -103,6 +103,7 @@
 	var/power = 0
 	var/datum/song/song
 	var/obj/item/mod/control/mod
+	var/controlling_host = FALSE
 
 /mob/living/simple_animal/hostile/venom/Initialize(mapload)
 	. = ..()
@@ -163,7 +164,7 @@
 	if(!venom_target || !venom_target.active || venom_target.activating)
 		return
 	hit_mob.visible_message(span_danger("<b>[src]</b> jumps onto [hit_mob]!"), span_userdanger("<b>[src]</b> jumps onto you!"))
-	to_chat(hit_mob, span_hypnophrase("You feel like listening to it..."))
+	to_chat(hit_mob, span_hypnophrase("You feel like your freedom is at danger..."))
 	shake_camera(hit_mob, 4, 3)
 	shake_camera(src, 2, 3)
 	venomify_mod(venom_target)
@@ -176,8 +177,9 @@
 	ADD_TRAIT(mod.wearer, TRAIT_NOHUNGER, REF(src))
 	ADD_TRAIT(mod.wearer, TRAIT_VIRUSIMMUNE, REF(src))
 	ADD_TRAIT(mod.wearer, TRAIT_NODISMEMBER, REF(src))
-	ADD_TRAIT(mod.wearer, TRAIT_NEVER_WOUNDED, REF(src))
-	mod.wearer.AddComponent(/datum/component/tackler, stamina_cost = 35, base_knockdown = 3 SECONDS, range = 4, speed = 1.5, skill_mod = 5, min_distance = 2)
+	var/obj/item/implant/freedom/freedom_implant = new(mod.wearer)
+	freedom_implant.uses = INFINITY
+	freedom_implant.implant(mod.wearer, silent = TRUE)
 	qdel(mod.core)
 	var/obj/item/mod/core/infinite/venom/core = new()
 	core.install(mod)
@@ -197,6 +199,7 @@
 			if(is_type_in_list(mod_module, venom_module.incompatible_modules))
 				qdel(mod_module)
 		mod.install(venom_module)
+		venom_module.pin(mod.wearer)
 	mod.wearer.update_clothing(mod.slot_flags)
 
 /mob/living/simple_animal/hostile/venom/proc/block_mod_activation(datum/source)
@@ -236,7 +239,7 @@
 	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "mindswap"
 	check_flags = AB_CHECK_CONSCIOUS
-	cooldown_time = 5 MINUTES
+	cooldown_time = 30 SECONDS
 	var/controlling = FALSE
 	var/timerid
 	var/max_health = 0
@@ -256,7 +259,7 @@
 	var/mob/living/simple_animal/hostile/venom/venom = owner
 	if(!istype(venom))
 		return
-	var/mob/living/carbon/human/host = venom.mod.wearer
+	var/mob/living/carbon/human/host = venom.mod?.wearer
 	if(!host)
 		to_chat(venom, span_warning("You have no host!"))
 		return
@@ -265,15 +268,18 @@
 		return
 	start_time = world.time
 	var/control_time = (2 ** venom.power) SECONDS
+	cooldown_time = (30 + 1.5 ** venom.power) SECONDS
 	timerid = addtimer(CALLBACK(src, PROC_REF(stop_control)), control_time, TIMER_UNIQUE | TIMER_STOPPABLE)
 	to_chat(venom, span_danger("We can sustain control for [DisplayTimeText(control_time)]."))
 	to_chat(host, span_userdanger("Your body has been hijacked!"))
 	backseat = new(host, host)
 	venom.mind?.transfer_to(host, force_key_move = TRUE)
 	Grant(host)
+	venom.controlling_host = TRUE
 	controlling = TRUE
 	max_health = host.health
 	RegisterSignal(host, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_damage))
+	RegisterSignal(host, COMSIG_PARENT_QDELETING, PROC_REF(stop_control))
 
 /datum/action/cooldown/mind_control/Destroy()
 	if(controlling)
@@ -289,6 +295,7 @@
 	if(QDELETED(current_body))
 		backseat.ghostize(FALSE)
 		return
+	StartCooldownSelf()
 	UnregisterSignal(current_body, COMSIG_LIVING_HEALTH_UPDATE)
 	to_chat(current_body, span_userdanger("Your control ends!"))
 	to_chat(backseat, span_userdanger("You return to your body!"))
@@ -296,7 +303,10 @@
 	current_body.mind?.transfer_to(controller, force_key_move = TRUE)
 	backseat.mind?.transfer_to(current_body, force_key_move = TRUE)
 	QDEL_NULL(backseat)
-	StartCooldown(max(cooldown_time - (world.time - start_time), 0))
+	var/mob/living/simple_animal/hostile/venom/venom = controller
+	if(!istype(venom))
+		return
+	venom.controlling_host = FALSE
 
 /datum/action/cooldown/mind_control/proc/check_damage(mob/living/host)
 	SIGNAL_HANDLER
@@ -327,12 +337,54 @@
 
 /datum/action/cooldown/telepathy/Activate(atom/target)
 	var/mob/living/simple_animal/hostile/venom/venom = owner
-	if(!venom.mod.wearer)
+	if(!venom.mod?.wearer)
 		to_chat(venom, span_warning("You have no host!"))
 		return
 	var/message = span_notice(tgui_input_text(venom, "What do you wish to whisper to your host?", "[src]"))
 	to_chat(venom, "[span_boldnotice("You transmit to [venom.mod.wearer]:")] [message]")
 	to_chat(venom.mod.wearer, "[span_boldnotice("You hear something behind you talking...")] [message]")
+	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
+		if(!isobserver(ghost))
+			continue
+
+		var/from_link = FOLLOW_LINK(ghost, owner)
+		var/from_mob_name = span_boldnotice("[venom] [src]:")
+		var/to_link = FOLLOW_LINK(ghost, venom.mod.wearer)
+		var/to_mob_name = span_name("[venom.mod.wearer]")
+
+		to_chat(ghost, "[from_link] [from_mob_name] [message] [to_link] [to_mob_name]")
+
+/datum/action/cooldown/revive
+	name = "Revive"
+	desc = "Revive your host. Costs 3 power."
+	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
+	button_icon = 'icons/mob/actions/actions_changeling.dmi'
+	button_icon_state = "adrenaline"
+	check_flags = AB_CHECK_CONSCIOUS
+	cooldown_time = 0 SECONDS
+
+/datum/action/cooldown/telepathy/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!istype(owner, /mob/living/simple_animal/hostile/venom))
+	var/mob/living/simple_animal/hostile/venom/venom = owner
+	return venom.power >= 3
+
+/datum/action/cooldown/telepathy/Activate(atom/target)
+	var/mob/living/simple_animal/hostile/venom/venom = owner
+	if(!venom.mod?.wearer)
+		to_chat(venom, span_warning("You have no host!"))
+		return
+	if(venom.mod.wearer.stat != DEAD)
+		to_chat(venom, span_warning("Your host is not dead!"))
+		return
+	if(!venom.mod.wearer.can_be_revived())
+		to_chat(venom, span_warning("Your host can't be revived!"))
+		return
+	venom.mod.wearer.revive()
+	venom.power -= 3
 
 /obj/item/mod/module/venom_holder
 	name = "MOD Venom infusion module"
@@ -375,7 +427,7 @@
 	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "venom_tentacle"
 	module_type = MODULE_ACTIVE
-	incompatible_modules = list(/obj/item/mod/module/venom_tentacle, /obj/item/mod/module/tether)
+	incompatible_modules = list(/obj/item/mod/module/venom_tentacle, /obj/item/mod/module/tether, /obj/item/mod/module/jetpack)
 	cooldown_time = 1.5 SECONDS
 	var/mob/living/simple_animal/hostile/venom/venom
 
@@ -389,14 +441,27 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/tentacle = new /obj/projectile/tentacle(mod.wearer.loc)
-	tentacle.color = COLOR_BLACK
-	tentacle.range = 4 + venom.power
-	tentacle.stun = 5 * venom.power
+	var/obj/projectile/tentacle = new /obj/projectile/tentacle/venom(mod.wearer.loc)
+	if(venom)
+		tentacle.range = 4 + venom.power
+		tentacle.stun = 2.5 * venom.power * (venom.controlling_host ? 2 : 1)
 	tentacle.preparePixelProjectile(target, mod.wearer)
 	tentacle.firer = mod.wearer
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 	INVOKE_ASYNC(tentacle, TYPE_PROC_REF(/obj/projectile, fire))
+
+/obj/projectile/tentacle/venom
+	color = COLOR_BLACK
+
+/obj/projectile/tentacle/venom/on_hit(atom/target)
+	. = ..()
+	if(. == BULLET_ACT_HIT || . == BULLET_ACT_BLOCK)
+		return
+	if(!firer)
+		return
+	if(!isturf(target) && !isobj(target))
+		return
+	firer.throw_at(target, 10, 1.5, firer, FALSE, FALSE, null, MOVE_FORCE_NORMAL, TRUE)
 
 /obj/item/mod/module/venom_piercer
 	name = "MOD Venom piercer module"
@@ -439,17 +504,18 @@
 /obj/item/melee/venom_piercer/proc/update_power()
 	if(!venom)
 		return
-	force = 15 + venom.power*2
+	force = 15 + venom.power * (venom.controlling_host ? 2 : 1)
 
 /obj/item/melee/venom_piercer/attack(mob/living/carbon/human/target_mob, mob/living/user, params)
+	update_power()
 	. = ..()
 	if(!venom || !istype(target_mob) || !target_mob.mind || target_mob.stat != DEAD || HAS_TRAIT(target_mob, TRAIT_HUSK))
 		return
-	playsound(src, 'sound/effects/butcher.ogg', 50, TRUE)
+	playsound(target_mob, 'sound/effects/butcher.ogg', 75, TRUE)
 	to_chat(user, span_warning("Draining their strength..."))
 	if(!do_after(user, 10 SECONDS, target_mob))
 		return TRUE
-	target_mob.become_husk(BURN)
+	target_mob.apply_damage(200, BURN, spread_damage = TRUE, wound_bonus = 50)
 	to_chat(user, span_warning("Their strength has been drained."))
 	to_chat(venom, span_danger("You have gained power."))
 	venom.power++
@@ -474,8 +540,8 @@
 	. = ..()
 	if(!venom)
 		return
-	var/heal_amount = venom.power
-	var/status_reduction = (-venom.power) SECONDS
+	var/heal_amount = venom.power * (venom.controlling_host ? 1 : 0.5)
+	var/status_reduction = (-venom.power * (venom.controlling_host ? 1 : 0.5)) SECONDS
 	mod.wearer.heal_overall_damage(heal_amount * delta_time, heal_amount * delta_time)
 	mod.wearer.adjustToxLoss(-heal_amount * delta_time)
 	mod.wearer.adjustStaminaLoss(-heal_amount * 5 * delta_time)
