@@ -174,6 +174,7 @@
 	RegisterSignal(mod, COMSIG_PARENT_QDELETING, PROC_REF(death))
 	ADD_TRAIT(mod, TRAIT_NODROP, REF(src))
 	ADD_TRAIT(mod.wearer, TRAIT_NOHUNGER, REF(src))
+	ADD_TRAIT(mod.wearer, TRAIT_VIRUSIMMUNE, REF(src))
 	ADD_TRAIT(mod.wearer, TRAIT_NODISMEMBER, REF(src))
 	ADD_TRAIT(mod.wearer, TRAIT_NEVER_WOUNDED, REF(src))
 	mod.wearer.AddComponent(/datum/component/tackler, stamina_cost = 35, base_knockdown = 3 SECONDS, range = 4, speed = 1.5, skill_mod = 5, min_distance = 2)
@@ -391,6 +392,7 @@
 	var/obj/projectile/tentacle = new /obj/projectile/tentacle(mod.wearer.loc)
 	tentacle.color = COLOR_BLACK
 	tentacle.range = 4 + venom.power
+	tentacle.stun = 5 * venom.power
 	tentacle.preparePixelProjectile(target, mod.wearer)
 	tentacle.firer = mod.wearer
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
