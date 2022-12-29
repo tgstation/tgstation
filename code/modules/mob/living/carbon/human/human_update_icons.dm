@@ -713,17 +713,18 @@ generate/load female uniform sprites matching all previously decided variables
 	if(worn_overlays?.len)
 		if(!isinhands && default_layer && ishuman(loc))
 			var/mob/living/carbon/human/human_loc = loc
-			var/string_form_layer = num2text(default_layer)
-			if(string_form_layer in GLOB.layers_to_offset)
-				var/offset_amount = GLOB.layers_to_offset[string_form_layer]
-				for(var/mutable_appearance/applied_appearance as anything in worn_overlays)
-					human_loc.apply_height_offsets(applied_appearance, offset_amount)
+			if(human_loc.get_mob_height() != HUMAN_HEIGHT_MEDIUM)
+				var/string_form_layer = num2text(default_layer)
+				if(string_form_layer in GLOB.layers_to_offset)
+					var/offset_amount = GLOB.layers_to_offset[string_form_layer]
+					for(var/mutable_appearance/applied_appearance in worn_overlays)
+						human_loc.apply_height_offsets(applied_appearance, offset_amount)
 
-			else
-				// Worn overlays don't get batched in with standing overlays because they are overlay overlays
-				// ...So we need to apply human height here as well
-				for(var/mutable_appearance/applied_appearance as anything in worn_overlays)
-					human_loc.apply_height_filters(applied_appearance)
+				else
+					// Worn overlays don't get batched in with standing overlays because they are overlay overlays
+					// ...So we need to apply human height here as well
+					for(var/mutable_appearance/applied_appearance in worn_overlays)
+						human_loc.apply_height_filters(applied_appearance)
 
 		standing.overlays.Add(worn_overlays)
 
@@ -825,20 +826,23 @@ generate/load female uniform sprites matching all previously decided variables
 // Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
 // So instead we have to pass them through an offset, which is close enough to look good.
 /mob/living/carbon/human/apply_overlay(cache_index)
+	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM)
+		return ..()
+
 	var/raw_applied = overlays_standing[cache_index]
 
 	var/string_form_index = num2text(cache_index)
 	if(string_form_index in GLOB.layers_to_offset)
 		var/offset_amount = GLOB.layers_to_offset[string_form_index]
 		if(islist(raw_applied))
-			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+			for(var/mutable_appearance/applied_appearance in raw_applied)
 				apply_height_offsets(applied_appearance, offset_amount)
 		else if(!isnull(raw_applied))
 			apply_height_offsets(raw_applied, offset_amount)
 
 	else
 		if(islist(raw_applied))
-			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+			for(var/mutable_appearance/applied_appearance in raw_applied)
 				apply_height_filters(applied_appearance)
 		else if(!isnull(raw_applied))
 			apply_height_filters(raw_applied)
@@ -893,10 +897,8 @@ generate/load female uniform sprites matching all previously decided variables
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
 		if(HUMAN_HEIGHT_SHORT)
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
-		// Higher than "tall" starts to get cut off
 		if(HUMAN_HEIGHT_TALL)
 			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
-		// Minor cutoff
 		if(HUMAN_HEIGHT_TALLEST)
 			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
 			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
