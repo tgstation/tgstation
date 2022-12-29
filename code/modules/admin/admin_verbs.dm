@@ -665,7 +665,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
 	var/guar = input("Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system") as null|num
 
-	if(pack && batchSize && batchCount) //Not having any one of this will cause a runtime
+	if(pack && batchSize && batchCount) //Not having any one of these will cause a runtime
 		SStrading_card_game.checkCardDistribution(pack, batchSize, batchCount, guar)
 
 /client/proc/print_cards()
