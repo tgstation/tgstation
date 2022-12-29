@@ -1,3 +1,6 @@
+//dont create icons for TGUI if direction is any of these values cause its handled inside CSS
+GLOBAL_LIST_INIT(tile_dont_rotate, list(NORTH, EAST, SOUTH, WEST))
+
 ///all designs supported by the RTD
 GLOBAL_LIST_INIT(floor_designs, list(
 	//what players will use most of the time

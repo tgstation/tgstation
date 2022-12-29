@@ -26,7 +26,19 @@ type Design = {
 
 const TilePreview = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { selected_icon } = data;
+  const { selected_icon, selected_direction } = data;
+  const rotation = (direction) => {
+    if (direction === 'north') {
+      return 'rotateZ(-180deg)';
+    } else if (direction === 'west') {
+      return 'rotateZ(90deg)';
+    } else if (direction === 'east') {
+      return 'rotateZ(-90deg)';
+    } else {
+      return '';
+    }
+  };
+
   return (
     <Section
       backgroundColor="green"
@@ -37,7 +49,8 @@ const TilePreview = (props, context) => {
       <Box
         className={classes(['rtd32x32', selected_icon])}
         style={{
-          transform: 'scale(1.5) translate(9.5%, 9.5%)',
+          transform:
+            'scale(1.5) translate(9.5%, 9.5%) ' + rotation(selected_direction),
         }}
       />
     </Section>

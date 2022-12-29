@@ -65,7 +65,10 @@
 	selected_direction = direction
 
 /datum/tile_info/proc/get_icon_state()
-	return icon_state + (isnull(selected_direction) ? "" : "-[dir2text(selected_direction)]")
+	var/prefix = ""
+	if(selected_direction)
+		prefix = (selected_direction in GLOB.tile_dont_rotate) ? "" : "-[dir2text(selected_direction)]"
+	return icon_state + prefix
 
 /datum/tile_info/proc/new_tile(loc)
 	var/obj/item/stack/tile/final_tile = new tile_type(loc, 1)

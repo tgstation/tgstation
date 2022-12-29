@@ -22,14 +22,13 @@
 					continue
 
 				for(var/direction as anything in tile_directions)
+					//we can rotate the icon is css for these directions
+					if(direction in GLOB.tile_dont_rotate)
+						continue
+
+					//but for these directions we have to do some hacky stuff
 					var/icon/img = icon(icon = 'icons/obj/tiles.dmi', icon_state = icon_state)
 					switch(direction)
-						if(NORTH)
-							img.Turn(-180)
-						if(WEST)
-							img.Turn(90)
-						if(EAST)
-							img.Turn(-90)
 						if(NORTHEAST)
 							img.Turn(-180)
 							var/icon/east_rotated = icon(icon = 'icons/obj/tiles.dmi', icon_state = icon_state)
