@@ -13,7 +13,7 @@
 	announce_when = 10
 
 /datum/round_event/ghost_role/venom/spawn_role()
-	var/list/candidates = get_candidates(ROLE_PAI, ROLE_PAI)
+	var/list/candidates = get_candidates(ROLE_PAI, FALSE)
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/selected = pick(candidates)
@@ -145,7 +145,7 @@
 
 /mob/living/simple_animal/hostile/venom/Shoot(atom/targeted_atom)
 	charging = TRUE
-	throw_at(targeted_atom, range = 5, speed = 1.5, thrower = src, callback = CALLBACK(src, PROC_REF(charging_end)))
+	throw_at(targeted_atom, range = 5, speed = 1.5, thrower = src, spin = FALSE, callback = CALLBACK(src, PROC_REF(charging_end)))
 
 /mob/living/simple_animal/hostile/venom/ex_act(severity, target, origin)
 	return
@@ -261,9 +261,6 @@
 		return
 	if(!host.mind)
 		to_chat(venom, span_warning("Your host has no mind!"))
-		return
-	if(venom.power <= 1)
-		to_chat(venom, span_warning("You need at least 1 power!"))
 		return
 	start_time = world.time
 	var/control_time = (2 ** venom.power) SECONDS
@@ -433,28 +430,29 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	force = 15
-	wound_bonus = 5
-	bare_wound_bonus = 15
+	sharpness = SHARP_EDGED
 	color = COLOR_BLACK
 	var/mob/living/simple_animal/hostile/venom/venom
 
 /obj/item/melee/venom_piercer/proc/update_power()
 	if(!venom)
 		return
-	force = 15 + round(venom.power*1.5)
+	force = 15 + venom.power*2
 
 /obj/item/melee/venom_piercer/attack(mob/living/carbon/human/target_mob, mob/living/user, params)
 	. = ..()
-	if(!istype(target_mob) || !target_mob.mind || target_mob.stat != DEAD || HAS_TRAIT(target_mob, TRAIT_HUSK))
+	if(!venom || !istype(target_mob) || !target_mob.mind || target_mob.stat != DEAD || HAS_TRAIT(target_mob, TRAIT_HUSK))
 		return
+	playsound(src, 'sound/effects/butcher.ogg', 50, TRUE)
 	to_chat(user, span_warning("Draining their strength..."))
 	if(!do_after(user, 10 SECONDS, target_mob))
-		return
-	target_mob.become_husk("venom")
+		return TRUE
+	target_mob.become_husk(BURN)
 	to_chat(user, span_warning("Their strength has been drained."))
 	to_chat(venom, span_danger("You have gained power."))
 	venom.power++
 	update_power()
+	return TRUE
 
 /obj/item/mod/module/venom_restorer
 	name = "MOD Venom restorer module"
@@ -470,7 +468,10 @@
 		return
 	src.venom = venom
 
-/obj/item/mod/module/venom_restorer/on_active_process(delta_time)
+/obj/item/mod/module/venom_restorer/on_process(delta_time)
+	. = ..()
+	if(!venom)
+		return
 	var/heal_amount = venom.power
 	var/status_reduction = (-venom.power) SECONDS
 	mod.wearer.heal_overall_damage(heal_amount * delta_time, heal_amount * delta_time)
