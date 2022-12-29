@@ -49,7 +49,8 @@
 
 	var/mob/living/carbon/player = cursed
 	INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), "scream")
-	to_chat(player, span_userdanger("What did that coupon mean... The suspense is killing you!"))
+	to_chat(player, span_mind_control("What could that coupon mean?"))
+	to_chat(player, span_userdanger("...The suspense is killing you!"))
 	player.set_heartattack(status = TRUE)
 
 /obj/item/coupon/attack_atom(obj/O, mob/living/user, params)
