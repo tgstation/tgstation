@@ -8416,8 +8416,7 @@
 "cZX" = (
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
-/obj/structure/industrial_lift/tram,
-/obj/structure/chair/sofa/bench/tram/right,
+/obj/structure/industrial_lift/tram/accessible,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "dac" = (
@@ -35736,9 +35735,8 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "mQW" = (
-/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram/accessible,
 /obj/structure/fluff/tram_rail,
-/obj/structure/chair/sofa/bench/tram/left,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "mRd" = (

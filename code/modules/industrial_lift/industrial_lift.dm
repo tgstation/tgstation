@@ -805,6 +805,10 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/tram/white
 	icon_state = "titanium_white"
 
+/obj/structure/industrial_lift/tram/accessible
+	icon_state = "titanium_accessible"
+
+
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()
 	if(travelling)
