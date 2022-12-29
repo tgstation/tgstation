@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Deaf mobs will no longer see PDA ringtones when a PDA receives a message."
