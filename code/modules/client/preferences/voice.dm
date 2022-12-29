@@ -19,7 +19,7 @@
 		READ_FILE(file("data/cached_tts_voices.json"), text_data)
 		var/list/cached_data = json_decode(text_data)
 		return cached_data
-	return list()
+	return list("invalid")
 
 /datum/preference/choiced/voice/apply_to_human(mob/living/carbon/human/target, value)
 	target.voice = value
