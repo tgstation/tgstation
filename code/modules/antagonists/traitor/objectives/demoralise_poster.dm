@@ -91,13 +91,19 @@
 	/// Proximity sensor to make people sad if they're nearby
 	var/datum/proximity_monitor/advanced/demoraliser/demoraliser
 
+/obj/structure/sign/poster/traitor/apply_holiday()
+	var/obj/structure/sign/poster/traitor/holi_data = /obj/structure/sign/poster/traitor/festive
+	name = initial(holi_data.name)
+	desc = initial(holi_data.desc)
+	icon_state = initial(holi_data.icon_state)
+
 /obj/structure/sign/poster/traitor/on_placed_poster(mob/user)
 	var/datum/demoralise_moods/poster/mood_category = new()
 	demoraliser = new(src, 7, TRUE, mood_category)
 	return ..()
 
-/obj/structure/sign/poster/traitor/attackby(obj/item/I, mob/user, params)
-	if (I.tool_behaviour == TOOL_WIRECUTTER)
+/obj/structure/sign/poster/traitor/attackby(obj/item/tool, mob/user, params)
+	if (tool.tool_behaviour == TOOL_WIRECUTTER)
 		QDEL_NULL(demoraliser)
 	return ..()
 
@@ -155,3 +161,10 @@
 	name = "They Are Poisoning You"
 	desc = "This poster claims that in the modern age it is impossible to die of starvation. 'That feeling you get when you haven't eaten in a while isn't hunger, it's withdrawal.'"
 	icon_state = "traitor_hungry"
+
+/// syndicate can get festive too
+/obj/structure/sign/poster/traitor/festive
+	name = "Working For The Holidays."
+	desc = "Don't you know it's a holiday? What are you doing at work?"
+	icon_state = "traitor_festive"
+	never_random = TRUE

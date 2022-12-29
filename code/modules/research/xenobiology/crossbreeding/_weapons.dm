@@ -61,7 +61,7 @@ Slimecrossing Weapons
 	icon_state = "adamshield"
 	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/shield_adamantineshield
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
 	force = 0
@@ -71,6 +71,14 @@ Slimecrossing Weapons
 	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
 	breakable_by_damage = FALSE
+
+/datum/armor/shield_adamantineshield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
 
 /obj/item/shield/adamantineshield/Initialize(mapload)
 	. = ..()
@@ -93,6 +101,14 @@ Slimecrossing Weapons
 	recharge_rate = 1
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
+
+/datum/armor/shield_adamantineshield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
 
 /obj/item/gun/magic/bloodchill/Initialize(mapload)
 	. = ..()
@@ -121,6 +137,14 @@ Slimecrossing Weapons
 	damage_type = OXY
 	nodamage = TRUE
 	hitsound = 'sound/effects/splat.ogg'
+
+/datum/armor/shield_adamantineshield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
 
 /obj/projectile/magic/bloodchill/on_hit(mob/living/target)
 	. = ..()
