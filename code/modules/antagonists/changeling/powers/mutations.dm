@@ -321,7 +321,7 @@
 
 /obj/projectile/tentacle/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "tentacle", emissive = FALSE)
+		chain = firer.Beam(src, icon_state = "tentacle", emissive = FALSE, beam_color = color)
 	..()
 
 /obj/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
