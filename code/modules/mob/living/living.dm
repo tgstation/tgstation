@@ -850,8 +850,6 @@
 	// These should be tracked by status effects
 	losebreath = 0
 	set_blindness(0)
-	set_blurriness(0)
-	set_drowsyness(0)
 	set_disgust(0)
 	cure_nearsighted()
 	cure_blind()

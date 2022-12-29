@@ -772,7 +772,7 @@
 	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time, required_organtype = affected_organtype)
 	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * delta_time)
 	kronkaine_fiend.AdjustSleeping(-20 * REM * delta_time)
-	kronkaine_fiend.adjust_drowsyness(-5 * REM * delta_time)
+	kronkaine_fiend.adjust_drowsiness(-10 SECONDS * REM * delta_time)
 	if(volume < 10)
 		return
 	for(var/possible_purger in kronkaine_fiend.reagents.reagent_list)

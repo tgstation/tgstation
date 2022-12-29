@@ -1,6 +1,9 @@
 /// A global list of all ongoing hallucinations, primarily for easy access to be able to stop (delete) hallucinations.
 GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 
+/// Biotypes which cannot hallucinate for balance and logic reasons (not code)
+#define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC)
+
 // Macro wrapper for _cause_hallucination so we can cheat in named arguments, like AddComponent.
 /**
  * Causes a hallucination of a certain type to the mob.
@@ -63,7 +66,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		if(HAS_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE) || (nearby_living.mind && HAS_TRAIT(nearby_living.mind, TRAIT_MADNESS_IMMUNE)))
 			continue
 
-		if(nearby_living.mob_biotypes & (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC))
+		if(nearby_living.mob_biotypes & NO_HALLUCINATION_BIOTYPES)
 			continue
 
 		if(nearby_living.is_blind())
