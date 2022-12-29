@@ -661,12 +661,13 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		message_admins("The card subsystem is not currently loaded")
 		return
 	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sort_list(SStrading_card_game.card_packs)
+	if(!pack)
+		return
 	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as num
 	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as num
 	var/guar = input("Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system") as num
 
-	if(pack)
-		SStrading_card_game.checkCardDistribution(pack, batchSize, batchCount, guar)
+	SStrading_card_game.checkCardDistribution(pack, batchSize, batchCount, guar)
 
 /client/proc/print_cards()
 	set name = "Print Cards"
