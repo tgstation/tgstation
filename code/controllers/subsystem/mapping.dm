@@ -859,6 +859,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	lazy_loading = TRUE
 	. = _lazy_load_template(template_key, force)
 	lazy_loading = FALSE
+	return .
 
 /datum/controller/subsystem/mapping/proc/_lazy_load_template(template_key, force = FALSE)
 	PRIVATE_PROC(TRUE)
