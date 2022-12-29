@@ -1,5 +1,3 @@
-#define SLIP_KNOCKDOWN 6 SECONDS
-
 /**
  * omen.dm: For when you want someone to have a really bad day
  *
@@ -150,5 +148,3 @@
 	var/mob/living/carbon/player = our_guy
 	player.spill_organs()
 	player.spawn_gibs()
-
-#undef SLIP_KNOCKDOWN
