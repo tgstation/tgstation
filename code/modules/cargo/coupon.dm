@@ -21,35 +21,36 @@
 	else
 		discount_pct_off = pick_weight(chances)
 
-	if(discount_pct_off == COUPON_OMEN)
-		name = "coupon - fuck you"
-		desc = "The small text reads, 'You will be slaughtered'... That doesn't sound right, does it?"
-		if(!ismob(loc))
-			return FALSE
-
-		var/mob/cursed = loc
-		to_chat(cursed, span_warning("The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?"))
-
-		if(!HAS_TRAIT(cursed, TRAIT_UNFORTUNATE))
-			cursed.AddComponent(/datum/component/omen, silent = TRUE)
-			return TRUE
-
-		addtimer(CALLBACK(src, PROC_REF(curse_heart), cursed), 3 SECONDS)
-	else
+	if(discount_pct_off != COUPON_OMEN)
 		discount_pct_off = text2num(discount_pct_off)
 		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
+		return
+
+	name = "coupon - fuck you"
+	desc = "The small text reads, 'You will be slaughtered'... That doesn't sound right, does it?"
+	if(!ismob(loc))
+		return FALSE
+
+	var/mob/cursed = loc
+	to_chat(cursed, span_warning("The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?"))
+
+	if(!cursed.GetComponent(/datum/component/omen))
+		cursed.AddComponent(/datum/component/omen, silent = TRUE)
+		return TRUE
+	if(HAS_TRAIT(cursed, TRAIT_UNFORTUNATE))
+		to_chat(cursed, span_warning("What a horrible night... To have a curse!"))
+	addtimer(CALLBACK(src, PROC_REF(curse_heart), cursed), 5 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /// Play stupid games, win stupid prizes
 /obj/item/coupon/proc/curse_heart(mob/living/cursed)
-	to_chat(cursed, span_warning("What a horrible night... To have a curse!"))
 	if(!iscarbon(cursed))
 		cursed.gib()
 		return TRUE
 
 	var/mob/living/carbon/player = cursed
 	INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), "scream")
-	var/coding = player.set_heartattack(status = TRUE)
-	to_chat(player, span_userdanger("Seeing the card sends you into a panic![coding ? " Your heart can't take it!" : ""]"))
+	to_chat(player, span_userdanger("What did that coupon mean... The suspense is killing you!"))
+	player.set_heartattack(status = TRUE)
 
 /obj/item/coupon/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/machinery/computer/cargo))
