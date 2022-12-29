@@ -47,9 +47,10 @@
 		return TRUE
 
 	var/mob/living/carbon/player = cursed
+	INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), "scream")
 	var/coding = player.set_heartattack(status = TRUE)
 	to_chat(player, span_userdanger("Seeing the card sends you into a panic![coding ? " Your heart can't take it!" : ""]"))
-	player.emote("scream")
+
 
 /obj/item/coupon/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/machinery/computer/cargo))
