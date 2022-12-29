@@ -133,7 +133,6 @@
 
 /// From /mob/living/befriend() : (mob/living/new_friend)
 #define COMSIG_LIVING_BEFRIENDED "living_befriended"
-<<<<<<< HEAD
 
 /// From /obj/item/proc/pickup(): (/obj/item/picked_up_item)
 #define COMSIG_LIVING_PICKED_UP_ITEM "living_picked_up_item"
