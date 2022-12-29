@@ -275,7 +275,6 @@
 		/mob/living/simple_animal/hostile/retaliate/clown/mutant,
 		/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton,
 		/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow,
-		/mob/living/simple_animal/hostile/retaliate/frog,
 		/mob/living/simple_animal/hostile/retaliate/ghost,
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/mob/living/simple_animal/hostile/retaliate/goose,
