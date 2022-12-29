@@ -98,7 +98,7 @@
 					qdel(src)
 				return
 
-/** If we get knocked down, see if we have a really bad slip and bash our head hard */
+/// If we get knocked down, see if we have a really bad slip and bash our head hard
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
 	SIGNAL_HANDLER
 
@@ -119,7 +119,7 @@
 
 	return
 
-/** Hijack the mood system to see if we get the blessing mood event to cancel the omen */
+/// Hijack the mood system to see if we get the blessing mood event to cancel the omen
 /datum/component/omen/proc/check_bless(mob/living/our_guy, category)
 	SIGNAL_HANDLER
 
@@ -131,7 +131,7 @@
 
 	qdel(src)
 
-/** Unfortunate quirk players delimb on death */
+/// Unfortunate quirk players delimb on death
 /datum/component/omen/proc/check_death(mob/living/our_guy)
 	SIGNAL_HANDLER
 

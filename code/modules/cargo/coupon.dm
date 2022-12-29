@@ -39,7 +39,7 @@
 		discount_pct_off = text2num(discount_pct_off)
 		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
 
-/** Play stupid games, win stupid prizes */
+/// Play stupid games, win stupid prizes
 /obj/item/coupon/proc/curse_heart(mob/living/cursed)
 	to_chat(cursed, span_warning("What a horrible night... To have a curse!"))
 	if(!iscarbon(cursed))
