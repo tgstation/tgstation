@@ -1,7 +1,7 @@
 /datum/round_event_control/venom
 	name = "Spawn Venom"
 	typepath = /datum/round_event/ghost_role/venom
-	weight = 50
+	weight = 150
 	max_occurrences = 1
 	min_players = 10
 	category = EVENT_CATEGORY_ENTITIES
