@@ -217,7 +217,7 @@
 	else
 		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack && !remote_control_user)
 			locked = !locked
-			balloon_alert(user, "APC [ locked ? "locked" : "unlocked"]")
+			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()
 			if(!locked)
 				ui_interact(user)

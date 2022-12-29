@@ -49,7 +49,7 @@
 		return
 	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
-	balloon_alert(user, "ID changed")
+	balloon_alert(user, "id changed")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
