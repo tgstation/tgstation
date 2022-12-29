@@ -615,7 +615,7 @@
 /// The second """tuple""" index is the lower body offset
 GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
-	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -2),
+	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -1),
 	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
 	"[HUMAN_HEIGHT_MEDIUM]" = list(0, 0),
 	"[HUMAN_HEIGHT_TALL]" = list(1, 1),
@@ -643,9 +643,9 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define DAMAGE_LAYER 26
 /// Jumpsuit clothing layer
 #define UNIFORM_LAYER 25
-/// ID card layer (might be deprecated)
-#define ID_LAYER 24
 /// ID card layer
+#define ID_LAYER 24
+/// ID card layer (might be deprecated)
 #define ID_CARD_LAYER 23
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
 #define BODYPARTS_HIGH_LAYER 22
@@ -692,19 +692,42 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Fire layer when you're on fire
 #define FIRE_LAYER 1
 
-#define UPPER_BODY TRUE
-#define LOWER_BODY FALSE
+#define UPPER_BODY "upper body"
+#define LOWER_BODY "lower body"
 
 /// Used for human height overlay adjustments
 /// Certain standing overlay layers shouldn't have a filter applied and should instead just offset by a pixel y
 /// This list contains all the layers that must offset, with its value being whether it's a part of the upper half of the body (TRUE) or not (FALSE)
 GLOBAL_LIST_INIT(layers_to_offset, list(
-	"[HANDS_LAYER]" = LOWER_BODY, // Weapons commonly go over the middle point so they shouldn't displace
-	"[HEAD_LAYER]" = UPPER_BODY, // very tall hats will get cutoff
+	// Weapons commonly go over the middle point so they shouldn't displace
+	"[HANDS_LAYER]" = LOWER_BODY,
+	// very tall hats will get cutoff
+	"[HEAD_LAYER]" = UPPER_BODY,
+	"[HAIR_LAYER]" = UPPER_BODY,
+	// Everything below looks fine without stretching and doesn't need a filter (optimization)
+	"[GLASSES_LAYER]" = UPPER_BODY,
+	"[ABOVE_BODY_FRONT_GLASSES_LAYER]" = UPPER_BODY, // currently unused
+	"[ABOVE_BODY_FRONT_HEAD_LAYER]" = UPPER_BODY, // only used for head stuff
+	"[GLOVES_LAYER]" = LOWER_BODY,
+	"[HALO_LAYER]" = UPPER_BODY, // above the head
+	"[HANDCUFF_LAYER]" = LOWER_BODY,
+	"[ID_CARD_LAYER]" = UPPER_BODY, // unused
+	"[ID_LAYER]" = UPPER_BODY,
+	"[FACEMASK_LAYER]" = UPPER_BODY,
+	"[BELT_LAYER]" = LOWER_BODY,
+	// these DO get a filter, i'm leaving them here as reference
+	// BACK_LAYER (backpacks are big)
+	// BODYPARTS_HIGH_LAYER (arms)
+	// BODY_ADJ_LAYER (external organs like wings)
+	// BODY_BEHIND_LAYER (external organs like wings)
+	// BODY_FRONT_LAYER (external organs like wings)
+	// DAMAGE_LAYER (full body)
+	// FIRE_LAYER (full body)
+	// FRONT_MUTATIONS_LAYER (full body)
+	// MUTATIONS_LAYER (full body)
+	// UNIFORM_LAYER (full body)
+	// WOUND_LAYER (full body)
 ))
-
-#undef UPPER_BODY
-#undef LOWER_BODY
 
 //Bitflags for the layers an external organ can draw on (organs can be drawn on multiple layers)
 /// Draws organ on the BODY_FRONT_LAYER

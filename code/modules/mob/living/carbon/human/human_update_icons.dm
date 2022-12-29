@@ -715,8 +715,8 @@ generate/load female uniform sprites matching all previously decided variables
 			var/mob/living/carbon/human/human_loc = loc
 			if(human_loc.get_mob_height() != HUMAN_HEIGHT_MEDIUM)
 				var/string_form_layer = num2text(default_layer)
-				if(string_form_layer in GLOB.layers_to_offset)
-					var/offset_amount = GLOB.layers_to_offset[string_form_layer]
+				var/offset_amount = GLOB.layers_to_offset[string_form_layer]
+				if(offset_amount)
 					for(var/mutable_appearance/applied_appearance in worn_overlays)
 						human_loc.apply_height_offsets(applied_appearance, offset_amount)
 
@@ -818,9 +818,6 @@ generate/load female uniform sprites matching all previously decided variables
 	update_worn_head()
 	update_worn_mask()
 
-#define UPPER_BODY TRUE
-#define LOWER_BODY FALSE
-
 // Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
 // Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.
 // Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
@@ -830,27 +827,23 @@ generate/load female uniform sprites matching all previously decided variables
 		return ..()
 
 	var/raw_applied = overlays_standing[cache_index]
-
 	var/string_form_index = num2text(cache_index)
-	if(string_form_index in GLOB.layers_to_offset)
-		var/offset_amount = GLOB.layers_to_offset[string_form_index]
+	var/offset_amount = GLOB.layers_to_offset[string_form_index]
+	if(offset_amount)
 		if(islist(raw_applied))
-			for(var/mutable_appearance/applied_appearance in raw_applied)
+			for(var/mutable_appearance/applied_appearance in raw_applied) // can have nulls
 				apply_height_offsets(applied_appearance, offset_amount)
 		else if(!isnull(raw_applied))
 			apply_height_offsets(raw_applied, offset_amount)
 
 	else
 		if(islist(raw_applied))
-			for(var/mutable_appearance/applied_appearance in raw_applied)
+			for(var/mutable_appearance/applied_appearance in raw_applied) // can have nulls
 				apply_height_filters(applied_appearance)
 		else if(!isnull(raw_applied))
 			apply_height_filters(raw_applied)
 
 	return ..()
-
-#undef UPPER_BODY
-#undef LOWER_BODY
 
 /**
  * Used in some circumstances where appearances can get cut off from the mob sprite from being too tall
@@ -858,10 +851,10 @@ generate/load female uniform sprites matching all previously decided variables
  * upper_torso is to specify whether the appearance is locate in the upper half of the mob rather than the lower half,
  * higher up things (hats for example) need to be offset more due to the location of the filter displacement
  */
-/mob/living/carbon/human/proc/apply_height_offsets(mutable_appearance/appearance, upper_torso = FALSE)
+/mob/living/carbon/human/proc/apply_height_offsets(mutable_appearance/appearance, upper_torso = LOWER_BODY)
 	var/height_to_use = num2text(get_mob_height())
 	var/final_offset = 0
-	if(upper_torso)
+	if(upper_torso == UPPER_BODY)
 		final_offset = GLOB.human_heights_to_offsets[height_to_use][1]
 	else
 		final_offset = GLOB.human_heights_to_offsets[height_to_use][2]
