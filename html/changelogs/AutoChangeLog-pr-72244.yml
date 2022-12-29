@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - bugfix: "The nuke ops base begins lazy loading as soon as the first hijack stage is completed so as to avoid upwards of 30 second delays on the shuttle docking after the timer hits 00:00 due to server lag."
