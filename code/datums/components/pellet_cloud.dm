@@ -318,7 +318,7 @@
 					if(armor_factor > 0)
 						if(initial(P.weak_against_armour) && armor_factor >= 0)
 							armor_factor *= ARMOR_WEAKENED_MULTIPLIER
-						damage_dealt *= armor_factor
+						damage_dealt *= max(0, 1 - armor_factor*0.01)
 
 					hit_part.painless_wound_roll(wound_type, damage_dealt, w_bonus, bw_bonus, initial(P.sharpness))
 
