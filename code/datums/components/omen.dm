@@ -112,7 +112,7 @@
 			INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), quote)
 		to_chat(our_guy, span_warning("What a horrible night... To have a curse!"))
 
-	if(prob(33 * luck_mod)) /// Bonk!
+	if(prob(34 * luck_mod)) /// Bonk!
 		var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
 		if(!the_head)
 			return
