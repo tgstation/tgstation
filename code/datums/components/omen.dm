@@ -48,12 +48,12 @@
 
 /datum/component/omen/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_accident))
-	RegisterSignal(parent, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(check_slip))
+	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, PROC_REF(check_slip))
 	RegisterSignal(parent, COMSIG_CARBON_MOOD_UPDATE, PROC_REF(check_bless))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(check_death))
 
 /datum/component/omen/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE, COMSIG_LIVING_DEATH))
+	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE, COMSIG_LIVING_DEATH))
 
 /**
  * check_accident() is called each step we take
@@ -112,7 +112,7 @@
 			INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), quote)
 		to_chat(our_guy, span_warning("What a horrible night... To have a curse!"))
 
-	if(amount <= 0 || prob(50 * luck_mod)) /// Bonk!
+	if(prob(33 * luck_mod)) /// Bonk!
 		var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
 		if(!the_head)
 			return

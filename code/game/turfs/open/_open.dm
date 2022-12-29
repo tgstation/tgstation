@@ -223,7 +223,7 @@
 	if(HAS_TRAIT(slipper, TRAIT_UNFORTUNATE))
 		if(!(lube & SLIDE_ICE))
 			lube |= SLIDE
-		slide_distance = 8
+		slide_distance = rand(5, 9)
 
 	var/obj/buckled_obj
 	if(slipper.buckled)
