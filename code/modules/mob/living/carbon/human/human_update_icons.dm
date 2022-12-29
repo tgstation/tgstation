@@ -711,12 +711,20 @@ generate/load female uniform sprites matching all previously decided variables
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
 	if(worn_overlays?.len)
-		if(!isinhands && ishuman(loc))
-			// Worn overlays don't get batched in with standing overlays because they are overlay overlays
-			// ...So we need to apply human height here as well
-			for(var/mutable_appearance/added as anything in worn_overlays)
-				var/mob/living/carbon/human/human_loc = loc
-				human_loc.apply_height_filters(added)
+		if(!isinhands && default_layer && ishuman(loc))
+			var/mob/living/carbon/human/human_loc = loc
+			var/string_form_layer = num2text(default_layer)
+			if(string_form_layer in GLOB.layers_to_offset)
+				var/offset_amount = GLOB.layers_to_offset[string_form_layer]
+				for(var/mutable_appearance/applied_appearance as anything in worn_overlays)
+					human_loc.apply_height_offsets(applied_appearance, offset_amount)
+
+			else
+				// Worn overlays don't get batched in with standing overlays because they are overlay overlays
+				// ...So we need to apply human height here as well
+				for(var/mutable_appearance/applied_appearance as anything in worn_overlays)
+					human_loc.apply_height_filters(applied_appearance)
+
 		standing.overlays.Add(worn_overlays)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
@@ -819,16 +827,9 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/carbon/human/apply_overlay(cache_index)
 	var/raw_applied = overlays_standing[cache_index]
 
-	// Some layers shouldn't apply a filter, instead just offset it
-	// Also since indexes are, well, number indexes we need to cast to strings
-	var/static/list/layers_to_offset = list(
-		"[HANDS_LAYER]" = UPPER_BODY, // Weapons commonly go over the middle point so they shouldn't displace
-		"[HEAD_LAYER]" = LOWER_BODY, // very tall hats will get cutoff
-	)
-
 	var/string_form_index = num2text(cache_index)
-	if(string_form_index in layers_to_offset)
-		var/offset_amount = layers_to_offset[string_form_index]
+	if(string_form_index in GLOB.layers_to_offset)
+		var/offset_amount = GLOB.layers_to_offset[string_form_index]
 		if(islist(raw_applied))
 			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
 				apply_height_offsets(applied_appearance, offset_amount)
@@ -854,18 +855,12 @@ generate/load female uniform sprites matching all previously decided variables
  * higher up things (hats for example) need to be offset more due to the location of the filter displacement
  */
 /mob/living/carbon/human/proc/apply_height_offsets(mutable_appearance/appearance, upper_torso = FALSE)
+	var/height_to_use = num2text(get_mob_height())
 	var/final_offset = 0
-	switch(get_mob_height())
-		if(HUMAN_HEIGHT_DWARF)
-			final_offset = (upper_torso ? -6 : -4)
-		if(HUMAN_HEIGHT_SHORTEST)
-			final_offset = (upper_torso ? -3 : -2)
-		if(HUMAN_HEIGHT_SHORT)
-			final_offset= -1
-		if(HUMAN_HEIGHT_TALL)
-			final_offset = 1
-		if(HUMAN_HEIGHT_TALLEST)
-			final_offset = (upper_torso ? 3 : 2)
+	if(upper_torso)
+		final_offset = GLOB.human_heights_to_offsets[height_to_use][1]
+	else
+		final_offset = GLOB.human_heights_to_offsets[height_to_use][2]
 
 	appearance.pixel_y += final_offset
 	return appearance

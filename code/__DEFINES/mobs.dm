@@ -610,6 +610,18 @@
 #define HUMAN_HEIGHT_TALL 10
 #define HUMAN_HEIGHT_TALLEST 12
 
+/// Assoc list of all heights, cast to strings, to """"tuples"""""
+/// The first """tuple""" index is the upper body offset
+/// The second """tuple""" index is the lower body offset
+GLOBAL_LIST_INIT(human_heights_to_offsets, list(
+	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
+	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -2),
+	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
+	"[HUMAN_HEIGHT_MEDIUM]" = list(0, 0),
+	"[HUMAN_HEIGHT_TALL]" = list(1, 1),
+	"[HUMAN_HEIGHT_TALLEST]" = list(2, 2),
+))
+
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
 #define TOTAL_LAYERS 33 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
@@ -679,6 +691,20 @@
 #define HALO_LAYER 2
 /// Fire layer when you're on fire
 #define FIRE_LAYER 1
+
+#define UPPER_BODY TRUE
+#define LOWER_BODY FALSE
+
+/// Used for human height overlay adjustments
+/// Certain standing overlay layers shouldn't have a filter applied and should instead just offset by a pixel y
+/// This list contains all the layers that must offset, with its value being whether it's a part of the upper half of the body (TRUE) or not (FALSE)
+GLOBAL_LIST_INIT(layers_to_offset, list(
+	"[HANDS_LAYER]" = LOWER_BODY, // Weapons commonly go over the middle point so they shouldn't displace
+	"[HEAD_LAYER]" = UPPER_BODY, // very tall hats will get cutoff
+))
+
+#undef UPPER_BODY
+#undef LOWER_BODY
 
 //Bitflags for the layers an external organ can draw on (organs can be drawn on multiple layers)
 /// Draws organ on the BODY_FRONT_LAYER
