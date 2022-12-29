@@ -37,11 +37,11 @@ export const AntagInfoVenom = (props, context) => {
             </Stack.Item>
             <Stack.Item fontSize="12px">
               You can talk directly to your host with <b>Telepathy</b>, and as
-              you gain <b>power</b>, your <b>Mind Control</b>'s length
-              increases, going from 1 second at the start, to 2, 4, 8, 16, 32,
-              64, etc. Using Mind Control to initiate conflict is great if your
-              host is advert to it. The strength of your abilities is also
-              stronger under your direct control.
+              you gain <b>power</b>, your <b>Mind Control</b> length increases,
+              going from 1 second at the start, to 2, 4, 8, 16, 32, 64, etc.
+              Using Mind Control to initiate conflict is great if your host is
+              advert to it. The strength of your abilities is also stronger
+              under your direct control.
             </Stack.Item>
           </Stack>
         </Section>
