@@ -34,26 +34,22 @@
 			cursed.AddComponent(/datum/component/omen, silent = TRUE)
 			return TRUE
 
-		addtimer(CALLBACK(src, PROC_REF(cursed_heart), cursed), 3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(curse_heart), cursed), 3 SECONDS)
 	else
 		discount_pct_off = text2num(discount_pct_off)
 		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
 
-/obj/item/coupon/proc/cursed_heart(mob/living/cursed)
+/** Play stupid games, win stupid prizes */
+/obj/item/coupon/proc/curse_heart(mob/living/cursed)
 	to_chat(cursed, span_warning("What a horrible night... To have a curse!"))
 	if(!iscarbon(cursed))
 		cursed.gib()
 		return TRUE
 
 	var/mob/living/carbon/player = cursed
-	var/obj/item/organ/internal/heart/heart = player.getorganslot(ORGAN_SLOT_HEART)
-	if(!heart)
-		player.adjustOxyLoss(-500)
-		return TRUE
-
-	to_chat(player, span_userdanger("Seeing the card sends you into a panic! Your heart can't take it!"))
-	qdel(heart)
-	return TRUE
+	var/coding = player.set_heartattack(status = TRUE)
+	to_chat(player, span_userdanger("Seeing the card sends you into a panic![coding ? " Your heart can't take it!" : ""]"))
+	player.emote("scream")
 
 /obj/item/coupon/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/machinery/computer/cargo))
