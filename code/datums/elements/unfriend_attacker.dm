@@ -13,7 +13,7 @@
 	/// Message to print if we remove a friend. String %SOURCE% and %TARGET% are replaced by names if present.
 	var/untamed_reaction
 
-/datum/element/unfriend_attacker/Attach(datum/target, befriend_chance = AI_DOG_PET_FRIEND_PROB, untamed_reaction)
+/datum/element/unfriend_attacker/Attach(datum/target, untamed_reaction)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
