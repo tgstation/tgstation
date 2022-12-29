@@ -660,7 +660,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
-
 	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sort_list(SStrading_card_game.card_packs)
 	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as num
 	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as num
