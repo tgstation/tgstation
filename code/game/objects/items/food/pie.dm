@@ -13,7 +13,7 @@
 	/// so that the yield can change if it isnt 5
 	var/yield = 5
 
-/obj/item/food/pie/MakeProcessable()
+/obj/item/food/pie/make_processable()
 	if (slice_type)
 		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, table_required = TRUE, screentip_verb = "Slice")
 

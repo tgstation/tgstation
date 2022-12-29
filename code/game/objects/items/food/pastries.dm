@@ -159,7 +159,7 @@
 
 	return fortune_slip
 
-/obj/item/food/fortunecookie/MakeLeaveTrash()
+/obj/item/food/fortunecookie/make_leave_trash()
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type, food_flags, TYPE_PROC_REF(/obj/item/food/fortunecookie, get_fortune))
 
@@ -352,7 +352,7 @@
 		src.prefill_flavours = prefill_flavours
 	return ..()
 
-/obj/item/food/icecream/MakeEdible()
+/obj/item/food/icecream/make_edible()
 	. = ..()
 	AddComponent(/datum/component/ice_cream_holder, filled_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
 
@@ -393,7 +393,7 @@
 	tastes = list("raw brownie batter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | BREAKFAST
 
-/obj/item/food/raw_brownie_batter/MakeBakeable()
+/obj/item/food/raw_brownie_batter/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
 
 /obj/item/food/brownie_sheet
@@ -410,7 +410,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
 
-/obj/item/food/brownie_sheet/MakeProcessable()
+/obj/item/food/brownie_sheet/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 
 /obj/item/food/brownie
@@ -439,7 +439,7 @@
 	tastes = list("raw brownie batter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
 
-/obj/item/food/peanut_butter_brownie_batter/MakeBakeable()
+/obj/item/food/peanut_butter_brownie_batter/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/peanut_butter_brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
 
 /obj/item/food/peanut_butter_brownie_sheet
@@ -457,7 +457,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
 
-/obj/item/food/peanut_butter_brownie_sheet/MakeProcessable()
+/obj/item/food/peanut_butter_brownie_sheet/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/peanut_butter_brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 
 /obj/item/food/peanut_butter_brownie

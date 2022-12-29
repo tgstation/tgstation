@@ -22,7 +22,7 @@
 		decorate_donut()
 
 ///Override for checkliked callback
-/obj/item/food/donut/MakeEdible()
+/obj/item/food/donut/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 

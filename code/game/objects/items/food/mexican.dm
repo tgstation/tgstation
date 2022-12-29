@@ -11,7 +11,7 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/food/tortilla/MakeGrillable()
+/obj/item/food/tortilla/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/hard_taco_shell, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
 
 /obj/item/food/burrito

@@ -63,7 +63,7 @@
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/headcheese/MakeProcessable()
+/obj/item/food/headcheese/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/headcheese_slice
@@ -372,10 +372,10 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 
-/obj/item/food/rootdough/MakeBakeable()
+/obj/item/food/rootdough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bread/root, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
-/obj/item/food/rootdough/MakeProcessable()
+/obj/item/food/rootdough/make_processable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatrootdough, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
 
 /obj/item/food/flatrootdough
@@ -387,10 +387,10 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 
-/obj/item/food/flatrootdough/MakeProcessable()
+/obj/item/food/flatrootdough/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
-/obj/item/food/flatrootdough/MakeGrillable()
+/obj/item/food/flatrootdough/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/root_flatbread, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdoughslice
@@ -403,10 +403,10 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 
-/obj/item/food/rootdoughslice/MakeProcessable()
+/obj/item/food/rootdoughslice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
-/obj/item/food/rootdoughslice/MakeBakeable()
+/obj/item/food/rootdoughslice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/rootroll, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/root_flatbread

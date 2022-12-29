@@ -15,7 +15,7 @@
 	AddElement(/datum/element/dunkable, 10)
 	AddComponent(/datum/component/food_storage)
 
-/obj/item/food/bread/MakeProcessable()
+/obj/item/food/bread/make_processable()
 	if (slice_type)
 		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 		AddElement(/datum/element/processable, TOOL_SAW, slice_type, yield, 4 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -64,7 +64,7 @@
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
-/obj/item/food/breadslice/plain/MakeGrillable()
+/obj/item/food/breadslice/plain/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/griddle_toast, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/breadslice/moldy
@@ -456,7 +456,7 @@
 	foodtypes = GRAIN | RAW | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_frenchtoast/MakeGrillable()
+/obj/item/food/raw_frenchtoast/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/frenchtoast, rand(20 SECONDS, 30 SECONDS), TRUE)
 
 /obj/item/food/frenchtoast
@@ -486,7 +486,7 @@
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_breadstick/MakeBakeable()
+/obj/item/food/raw_breadstick/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/breadstick, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/food/breadstick

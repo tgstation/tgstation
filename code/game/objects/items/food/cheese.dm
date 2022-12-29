@@ -49,10 +49,10 @@
 	. = ..()
 	AddComponent(/datum/component/food_storage)
 
-/obj/item/food/cheese/wheel/MakeProcessable()
+/obj/item/food/cheese/wheel/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
-/obj/item/food/cheese/wheel/MakeBakeable()
+/obj/item/food/cheese/wheel/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/cheese/royal
@@ -84,7 +84,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 
-/obj/item/food/cheese/curd_cheese/MakeMicrowaveable()
+/obj/item/food/cheese/curd_cheese/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/cheese/cheese_curds)
 
 /obj/item/food/cheese/cheese_curds
@@ -108,7 +108,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 
-/obj/item/food/cheese/firm_cheese/MakeProcessable()
+/obj/item/food/cheese/firm_cheese/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/firm_cheese_slice, 3, 3 SECONDS, screentip_verb = "Slice")
 
 /obj/item/food/cheese/firm_cheese_slice
@@ -121,7 +121,7 @@
 	burns_on_grill = TRUE
 	rat_heal = 10
 
-/obj/item/food/cheese/firm_cheese_slice/MakeGrillable()
+/obj/item/food/cheese/firm_cheese_slice/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
 
 /obj/item/food/cheese/mozzarella

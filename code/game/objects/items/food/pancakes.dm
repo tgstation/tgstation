@@ -20,7 +20,7 @@
 	tastes = list("milky batter" = 1)
 	burns_on_grill = FALSE
 
-/obj/item/food/pancakes/raw/MakeGrillable()
+/obj/item/food/pancakes/raw/make_grillable()
 	AddComponent(/datum/component/grillable,\
 				cook_result = /obj/item/food/pancakes,\
 				required_cook_time = rand(30 SECONDS, 40 SECONDS),\

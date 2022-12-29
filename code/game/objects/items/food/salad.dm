@@ -70,7 +70,7 @@
 	tastes = list("rice" = 1)
 	foodtypes = GRAIN | RAW
 
-/obj/item/food/uncooked_rice/MakeMicrowaveable()
+/obj/item/food/uncooked_rice/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/boiledrice)
 
 /obj/item/food/boiledrice

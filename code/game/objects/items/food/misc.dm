@@ -492,7 +492,7 @@
 	foodtypes = GRAIN | RAW | DAIRY | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_meat_calzone/MakeBakeable()
+/obj/item/food/raw_meat_calzone/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/meat_calzone, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat_calzone
@@ -521,7 +521,7 @@
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_vegetarian_calzone/MakeBakeable()
+/obj/item/food/raw_vegetarian_calzone/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/vegetarian_calzone, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
 
 /obj/item/food/vegetarian_calzone

@@ -61,7 +61,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "moonfish_fillet"
 
-/obj/item/food/fishmeat/moonfish/MakeGrillable()
+/obj/item/food/fishmeat/moonfish/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_moonfish, rand(40 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/fishmeat/gunner_jellyfish
@@ -142,7 +142,7 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/vegetariansushiroll/MakeProcessable()
+/obj/item/food/vegetariansushiroll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/vegetariansushislice, 4, screentip_verb = "Chop")
 
 /obj/item/food/vegetariansushislice
@@ -171,7 +171,7 @@
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/spicyfiletsushiroll/MakeProcessable()
+/obj/item/food/spicyfiletsushiroll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spicyfiletsushislice, 4, screentip_verb = "Chop")
 
 /obj/item/food/spicyfiletsushislice
@@ -196,7 +196,7 @@
 	icon_state = "vegetariansushiroll"
 	desc = "A roll of customized sushi."
 
-/obj/item/food/sushi/empty/MakeProcessable()
+/obj/item/food/sushi/empty/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sushislice/empty, 4, screentip_verb = "Chop")
 
 /obj/item/food/sushislice/empty
@@ -258,7 +258,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 
 // sliceable into 4xtempehslices
-/obj/item/food/tempeh/MakeProcessable()
+/obj/item/food/tempeh/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 //add an icon for slices
@@ -310,7 +310,7 @@
 	foodtypes = MEAT | TOXIC
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/spiderleg/MakeGrillable()
+/obj/item/food/spiderleg/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/boiledspiderleg, rand(50 SECONDS, 60 SECONDS), TRUE, TRUE)
 
 /obj/item/food/cornedbeef
@@ -354,10 +354,10 @@
 	var/meatball_type = /obj/item/food/meatball
 	var/patty_type = /obj/item/food/raw_patty
 
-/obj/item/food/raw_meatball/MakeGrillable()
+/obj/item/food/raw_meatball/make_grillable()
 	AddComponent(/datum/component/grillable, meatball_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
-/obj/item/food/raw_meatball/MakeProcessable()
+/obj/item/food/raw_meatball/make_processable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, table_required = TRUE, screentip_verb = "Flatten")
 
 /obj/item/food/raw_meatball/human
@@ -428,7 +428,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/patty_type = /obj/item/food/patty/plain
 
-/obj/item/food/raw_patty/MakeGrillable()
+/obj/item/food/raw_patty/make_grillable()
 	AddComponent(/datum/component/grillable, patty_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
 /obj/item/food/raw_patty/human
@@ -501,7 +501,7 @@
 	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_sausage/MakeGrillable()
+/obj/item/food/raw_sausage/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/sausage, rand(60 SECONDS, 75 SECONDS), TRUE)
 
 /obj/item/food/sausage
@@ -521,7 +521,7 @@
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/sausage/MakeProcessable()
+/obj/item/food/sausage/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 
@@ -530,7 +530,7 @@
 	desc = "Snip."
 	icon_state = "american_sausage"
 
-/obj/item/food/sausage/american/MakeProcessable()
+/obj/item/food/sausage/american/make_processable()
 	return
 
 /obj/item/food/salami
@@ -559,7 +559,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/rawkhinkali/MakeGrillable()
+/obj/item/food/rawkhinkali/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/khinkali, rand(50 SECONDS, 60 SECONDS), TRUE)
 
 /obj/item/food/khinkali
@@ -868,7 +868,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	venue_value = FOOD_PRICE_EXOTIC
 
-/obj/item/food/beef_wellington/MakeProcessable()
+/obj/item/food/beef_wellington/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
 
 /obj/item/food/beef_wellington_slice
@@ -913,7 +913,7 @@
 	foodtypes = MEAT | RAW | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/food/raw_meatloaf/MakeBakeable()
+/obj/item/food/raw_meatloaf/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/meatloaf, rand(30 SECONDS, 40 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meatloaf
@@ -931,7 +931,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	burns_in_oven = TRUE
 
-/obj/item/food/meatloaf/MakeProcessable()
+/obj/item/food/meatloaf/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meatloaf_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
 
 /obj/item/food/meatloaf_slice

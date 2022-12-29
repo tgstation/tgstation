@@ -26,7 +26,7 @@
 	decomp_req_handle = TRUE //so laid eggs can actually become chickens
 	var/static/chick_count = 0 //I copied this from the chicken_count (note the "en" in there) variable from chicken code.
 
-/obj/item/food/egg/MakeMicrowaveable()
+/obj/item/food/egg/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/boiledegg)
 
 /obj/item/food/egg/rotten
@@ -34,7 +34,7 @@
 	foodtypes = GROSS
 	preserved_food = TRUE
 
-/obj/item/food/egg/rotten/MakeMicrowaveable()
+/obj/item/food/egg/rotten/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/boiledegg/rotten)
 
 /obj/item/food/egg/gland
@@ -171,7 +171,7 @@
 	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/rawegg/MakeGrillable()
+/obj/item/food/rawegg/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/friedegg, rand(20 SECONDS, 35 SECONDS), TRUE, FALSE)
 
 /obj/item/food/boiledegg

@@ -41,7 +41,7 @@
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
 
-/obj/item/food/spacefreezy/MakeEdible()
+/obj/item/food/spacefreezy/make_edible()
 	. = ..()
 	AddComponent(/datum/component/ice_cream_holder)
 
@@ -59,7 +59,7 @@
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
 
-/obj/item/food/sundae/MakeEdible()
+/obj/item/food/sundae/make_edible()
 	. = ..()
 	AddComponent(/datum/component/ice_cream_holder, y_offset = -2, sweetener = /datum/reagent/consumable/caramel)
 
@@ -77,7 +77,7 @@
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
 
-/obj/item/food/honkdae/MakeEdible()
+/obj/item/food/honkdae/make_edible()
 	. = ..()
 	AddComponent(/datum/component/ice_cream_holder, y_offset = -2) //The sugar will react with the banana forming laughter. Honk!
 
@@ -332,7 +332,7 @@
 	bite_consumption = reagents.total_volume / bite_states
 	update_icon() // make sure the popsicle overlay is primed so it's not just a stick until you start eating it
 
-/obj/item/food/popsicle/MakeEdible()
+/obj/item/food/popsicle/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_bite)))
 

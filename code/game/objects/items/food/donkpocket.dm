@@ -20,10 +20,10 @@
 	/// The upper end for how long it takes to bake
 	var/baking_time_long = 30 SECONDS
 
-/obj/item/food/donkpocket/MakeBakeable()
+/obj/item/food/donkpocket/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE)
 
-/obj/item/food/donkpocket/MakeMicrowaveable()
+/obj/item/food/donkpocket/make_microwaveable()
 	AddElement(/datum/element/microwavable, warm_type)
 
 /obj/item/food/donkpocket/warm

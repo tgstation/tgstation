@@ -21,7 +21,7 @@
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	reagents.flags |= OPENCONTAINER
 	preserved_food = FALSE
-	MakeDecompose()
+	make_decompose()
 
 /obj/item/food/canned/attack_self(mob/user)
 	if(!is_drainable())
@@ -156,7 +156,7 @@
 	/// What type of ready-donk are we warmed into?
 	var/warm_type = /obj/item/food/ready_donk/warm
 
-/obj/item/food/ready_donk/MakeMicrowaveable()
+/obj/item/food/ready_donk/make_microwaveable()
 	AddElement(/datum/element/microwavable, warm_type)
 
 /obj/item/food/ready_donk/examine_more(mob/user)
@@ -226,7 +226,7 @@
 	) //Won't make you fat. Will make you question your sanity.
 
 ///Override for checkliked callback
-/obj/item/food/rationpack/MakeEdible()
+/obj/item/food/rationpack/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 

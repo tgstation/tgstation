@@ -17,7 +17,7 @@
 	. = ..()
 	AddComponent(/datum/component/food_storage)
 
-/obj/item/food/cake/MakeProcessable()
+/obj/item/food/cake/make_processable()
 	if (slice_type)
 		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
@@ -209,7 +209,7 @@
 	foodtypes = GRAIN | DAIRY | JUNKFOOD | SUGAR
 	slice_type = /obj/item/food/cakeslice/birthday
 
-/obj/item/food/cake/birthday/MakeMicrowaveable() // super sekrit club
+/obj/item/food/cake/birthday/make_microwaveable() // super sekrit club
 	AddElement(/datum/element/microwavable, /obj/item/clothing/head/utility/hardhat/cakehat)
 
 /obj/item/food/cakeslice/birthday
@@ -240,7 +240,7 @@
 	tastes = list("cake" = 3, "a Vlad's Salad" = 1)
 	slice_type = /obj/item/food/cakeslice/birthday/energy
 
-/obj/item/food/cake/birthday/energy/MakeMicrowaveable() //super sekriter club
+/obj/item/food/cake/birthday/energy/make_microwaveable() //super sekriter club
 	AddElement(/datum/element/microwavable, /obj/item/clothing/head/utility/hardhat/cakehat/energycake)
 
 /obj/item/food/cake/birthday/energy/proc/energy_bite(mob/living/user)

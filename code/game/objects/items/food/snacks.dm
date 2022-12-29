@@ -36,7 +36,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/revelation = FALSE
 
-/obj/item/food/candy/bronx/MakeEdible()
+/obj/item/food/candy/bronx/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
@@ -95,7 +95,7 @@
 	foodtypes = JUNKFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/chips/MakeLeaveTrash()
+/obj/item/food/chips/make_leave_trash()
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
@@ -441,7 +441,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	foodtypes = JUNKFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/cornchips/MakeLeaveTrash()
+/obj/item/food/cornchips/make_leave_trash()
 	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
 /obj/item/food/cornchips/blue

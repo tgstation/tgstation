@@ -228,7 +228,7 @@
 	if(iscarbon(loc))
 		hallucinate(loc)
 
-/obj/item/food/bubblegum/bubblegum/MakeEdible()
+/obj/item/food/bubblegum/bubblegum/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(OnConsume)))
 
