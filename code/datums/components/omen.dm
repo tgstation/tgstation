@@ -102,14 +102,8 @@
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
 	SIGNAL_HANDLER
 
-	if(prob(33)) // AAAA
-		var/quote
-		if(ishuman(our_guy))
-			quote = "scream"
-		if(iscyborg(our_guy))
-			quote = "buzz"
-		if(quote)
-			INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), quote)
+	if(prob(30)) // AAAA
+		INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
 		to_chat(our_guy, span_warning("What a horrible night... To have a curse!"))
 
 	if(prob(30 * luck_mod)) /// Bonk!
