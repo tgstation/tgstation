@@ -278,7 +278,8 @@
 	RegisterSignal(host, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_damage))
 
 /datum/action/cooldown/mind_control/Destroy()
-	stop_control()
+	if(controlling)
+		stop_control()
 	return ..()
 
 /datum/action/cooldown/mind_control/proc/stop_control()
@@ -338,6 +339,7 @@
 /obj/item/mod/module/venom_holder
 	name = "MOD Venom infusion module"
 	desc = "An infusion of Venom infection into the suit. This holds the venom itself."
+	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "venom_holder"
 	overlay_icon_file = 'icons/mob/nonhuman-player/venom.dmi'
 	overlay_state_inactive = "venom_module_mob"
@@ -372,6 +374,7 @@
 /obj/item/mod/module/venom_tentacle
 	name = "MOD Venom tentacle module"
 	desc = "A weird tentacle."
+	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "venom_tentacle"
 	module_type = MODULE_ACTIVE
 	incompatible_modules = list(/obj/item/mod/module/venom_tentacle, /obj/item/mod/module/tether)
@@ -399,6 +402,7 @@
 /obj/item/mod/module/venom_piercer
 	name = "MOD Venom piercer module"
 	desc = "A weird sharp thing."
+	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "venom_piercer"
 	module_type = MODULE_ACTIVE
 	incompatible_modules = list(/obj/item/mod/module/venom_piercer)
@@ -420,8 +424,8 @@
 /obj/item/melee/venom_piercer
 	name = "piercer"
 	desc = "A weird fleshy mass."
-	icon = 'icons/obj/weapons/changeling_items.dmi'
-	icon_state = "arm_blade"
+	icon = 'icons/mob/nonhuman-player/venom.dmi'
+	icon_state = "venom_piercer"
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
@@ -455,6 +459,7 @@
 /obj/item/mod/module/venom_restorer
 	name = "MOD Venom restorer module"
 	desc = "A weird healy thing."
+	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "venom_restorer"
 	incompatible_modules = list(/obj/item/mod/module/venom_restorer)
 	var/mob/living/simple_animal/hostile/venom/venom
