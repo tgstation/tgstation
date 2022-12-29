@@ -8,6 +8,8 @@
 	var/tame_chance
 	///Added success chance after every failed tame attempt.
 	var/bonus_tame_chance
+	///Current chance to tame on interaction
+	var/current_tame_chance
 	///For effects once soemthing is tamed
 	var/datum/callback/after_tame
 
@@ -19,6 +21,7 @@
 		src.food_types = food_types
 	if(tame_chance)
 		src.tame_chance = tame_chance
+		src.current_tame_chance = tame_chance
 	if(bonus_tame_chance)
 		src.bonus_tame_chance = bonus_tame_chance
 	if(after_tame)
@@ -42,10 +45,10 @@
 	var/atom/atom_parent = source
 	atom_parent.balloon_alert(attacker, "fed")
 	if(unique || !already_friends(attacker))
-		if(prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
+		if(prob(current_tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
 			on_tame(attacker, food)
 		else
-			tame_chance += bonus_tame_chance
+			current_tame_chance += bonus_tame_chance
 
 	qdel(food)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -68,3 +71,5 @@
 
 	if(unique)
 		qdel(src)
+	else
+		current_tame_chance = tame_chance
