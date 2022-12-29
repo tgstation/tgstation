@@ -373,9 +373,9 @@
 
 /obj/machinery/microwave/proc/cook(mob/cooker)
 	if(machine_stat & (NOPOWER|BROKEN))
-		return FALSE
+		return
 	if(operating || broken > 0 || panel_open || !anchored || dirty >= MAX_MICROWAVE_DIRTINESS)
-		return FALSE
+		return
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
@@ -384,10 +384,10 @@
 
 	if(HAS_TRAIT(cooker, TRAIT_UNFORTUNATE) && prob(7))
 		muck()
-		return TRUE
+		return
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
 		muck()
-		return TRUE
+		return
 
 	// How many items are we cooking that aren't already food items
 	var/non_food_ingedients = length(ingredients)
@@ -398,7 +398,7 @@
 	// If we're cooking non-food items we can fail randomly
 	if(length(non_food_ingedients) && prob(min(dirty * 5, 100)))
 		start_can_fail(cooker)
-		return TRUE
+		return
 
 	start(cooker)
 
