@@ -281,7 +281,7 @@
 */
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
 	if (isnull(I))
-		return FALSE
+		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
 	. = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
