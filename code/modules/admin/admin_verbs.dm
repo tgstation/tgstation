@@ -664,7 +664,9 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as null|num
 	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
 	var/guar = input("Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system") as null|num
-	SStrading_card_game.checkCardDistribution(pack, batchSize, batchCount, guar)
+
+	if(pack)
+		SStrading_card_game.checkCardDistribution(pack, batchSize, batchCount, guar)
 
 /client/proc/print_cards()
 	set name = "Print Cards"
