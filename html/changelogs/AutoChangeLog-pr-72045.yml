@@ -1,0 +1,9 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Ian has learned some new tricks, tell him what a good boy he is!"
+  - rscadd: "Ian will come on a walk with you, if you are his friend."
+  - refactor: "Ian's tricks work the same way as some other mobs' tricks and should be extendable to future mobs."
+  - bugfix: "Dogs no longer run at the maximum possible speed for a mob at all times."
+  - rscadd: "When Ian gets old, he also slows down. Poor little guy."
+  - rscadd: "Dogs will no longer dislike the presence of Felinids who have taken the time to befriend them."
