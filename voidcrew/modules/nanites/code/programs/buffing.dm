@@ -36,44 +36,43 @@
 /datum/nanite_program/hardening
 	name = "Dermal Hardening"
 	desc = "The nanites form a mesh under the host's skin, protecting them from melee and bullet impacts."
-	use_rate = 1.0			//WS Edit - Increases nanite armor power use
+	use_rate = 1.0
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
-//TODO on_hit effect that turns skin grey for a moment
+#define NANITE_ARMOR_BOOST_ADDED 30
 
+//TODO on_hit effect that turns skin grey for a moment
 /datum/nanite_program/hardening/enable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.melee += 30		//WS Edit - nerfs nanite armor
-		H.physiology.armor.bullet += 30		//WS Edit
+		var/mob/living/carbon/human/user = host_mob
+		user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = NANITE_ARMOR_BOOST_ADDED, BULLET = NANITE_ARMOR_BOOST_ADDED))
 
 /datum/nanite_program/hardening/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.melee -= 30		//WS Edit - nerfs nanite armor
-		H.physiology.armor.bullet -= 30		//WS Edit
+		var/mob/living/carbon/human/user = host_mob
+		user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = -NANITE_ARMOR_BOOST_ADDED, BULLET = -NANITE_ARMOR_BOOST_ADDED))
 
 /datum/nanite_program/refractive
 	name = "Dermal Refractive Surface"
 	desc = "The nanites form a membrane above the host's skin, reducing the effect of laser and energy impacts."
-	use_rate = 1.0			//WS Edit - Increases nanite armor power use
+	use_rate = 1.0
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/refractive/enable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.laser += 30		//WS Edit - nerfs nanite armor
-		H.physiology.armor.energy += 30		//WS Edit
+		var/mob/living/carbon/human/user = host_mob
+		user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(LASER = NANITE_ARMOR_BOOST_ADDED, ENERGY = NANITE_ARMOR_BOOST_ADDED))
 
 /datum/nanite_program/refractive/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.laser -= 30		//WS Edit - nerfs nanite armor
-		H.physiology.armor.energy -= 30		//WS Edit
+		var/mob/living/carbon/human/user = host_mob
+		user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(LASER = -NANITE_ARMOR_BOOST_ADDED, ENERGY = -NANITE_ARMOR_BOOST_ADDED))
+
+#undef NANITE_ARMOR_BOOST_ADDED
 
 /datum/nanite_program/coagulating
 	name = "Rapid Coagulation"

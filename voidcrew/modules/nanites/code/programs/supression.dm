@@ -11,9 +11,9 @@
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
 
 /datum/nanite_program/sleepy/on_trigger(comm_message)
-	to_chat(host_mob, "<span class='warning'>You start to feel very sleepy...</span>")
-	host_mob.drowsyness += 20
-	addtimer(CALLBACK(host_mob, TYPE_PROC_REF(/mob/living/, Sleeping), 200), rand(60,200))
+	to_chat(host_mob, span_warning("You start to feel very sleepy..."))
+	host_mob.set_eye_blur_if_lower(2 SECONDS)
+	addtimer(CALLBACK(host_mob, TYPE_PROC_REF(/mob/living, AdjustSleeping), 200), rand(6 SECONDS, 20 SECONDS))
 
 /**
  * Paralysis

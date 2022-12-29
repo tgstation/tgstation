@@ -7,7 +7,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/gun/ballistic/revolver/mateba
-	head = /obj/item/clothing/head/hos/beret/syndicate
+	head = /obj/item/clothing/head/hats/hos/beret/syndicate
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 
 	l_pocket = /obj/item/melee/energy/sword/saber/red

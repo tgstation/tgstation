@@ -248,7 +248,7 @@
 	if(!target_hosts.len)
 		return
 	var/mob/living/carbon/human/infectee = pick(target_hosts)
-	if(prob(100 - infectee.wear_suit.armor.getRating(BIO)))
+	if(prob(100 - infectee.wear_suit.get_armor_rating(BIO)))
 		//this will potentially take over existing nanites!
 		infectee.AddComponent(/datum/component/nanites, null, 10)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
@@ -272,7 +272,7 @@
 		consume_nanites(-5)
 		return
 	var/mob/living/carbon/human/infectee = pick(target_hosts)
-	if(prob(100 - infectee.wear_suit.armor.getRating(BIO)))
+	if(prob(100 - infectee.wear_suit.get_armor_rating(BIO)))
 		//unlike with Infective Exo-Locomotion, this can't take over existing nanites, because Nanite Sting only targets non-hosts.
 		infectee.AddComponent(/datum/component/nanites, null, 5)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
@@ -329,8 +329,12 @@
 
 /datum/nanite_program/dermal_button/proc/press()
 	if(activated)
-		host_mob.visible_message("<span class='notice'>[host_mob] presses a button on [host_mob.p_their()] forearm.</span>",
-								"<span class='notice'>You press the nanite button on your forearm.</span>", null, 2)
+		host_mob.visible_message(
+			span_notice("[host_mob] presses a button on [host_mob.p_their()] forearm."),
+			span_notice("You press the nanite button on your forearm."),
+			blind_message = null,
+			vision_distance = 2,
+		)
 		var/datum/nanite_extra_setting/sent_code = extra_settings[NES_SENT_CODE]
 		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, sent_code.get_value(), "a [name] program")
 

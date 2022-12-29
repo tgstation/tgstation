@@ -1,7 +1,10 @@
+/datum/latejoin_menu/ui_interact(mob/dead/new_player/user, datum/tgui/ui)
+	user.select_ship() //override ui_interact and send to our latejoin menu instead
+
 /**
  * Latejoin menu
  */
-/mob/dead/new_player/LateChoices()
+/mob/dead/new_player/proc/select_ship()
 	var/list/shuttle_choices = list(
 		"Purchase ship" = "Purchase",
 	)
@@ -21,7 +24,7 @@
 	if(selected_ship == "Purchase")
 		var/datum/map_template/shuttle/voidcrew/template = SSmapping.ship_purchase_list[tgui_input_list(src, "Please select ship to purchase!", "Welcome, [used_name].", SSmapping.ship_purchase_list)]
 		if(!template)
-			return LateChoices()
+			return select_ship()
 		if(!client.remove_ship_cost(initial(template.faction_prefix), initial(template.part_cost)))
 			tgui_alert(client, "You lack the parts needed to build this ship! (Required: [initial(template.part_cost)] [initial(template.faction_prefix)] part\s)")
 			return
@@ -39,7 +42,7 @@
 	if(selected_ship.memo)
 		var/memo_accept = tgui_alert(src, "Current ship memo: [selected_ship.memo]", "[selected_ship.name] Memo", list("OK", "Cancel"))
 		if(memo_accept != "OK")
-			return LateChoices() //Send them back to shuttle selection
+			return select_ship() //Send them back to shuttle selection
 
 	var/list/job_choices = list()
 	for(var/datum/job/job as anything in selected_ship.job_slots)
@@ -48,11 +51,11 @@
 		job_choices["[job.title] ([selected_ship.job_slots[job]] positions)"] = job
 	if(!job_choices.len)
 		to_chat(usr, "<span class='danger'>There are no jobs available on this ship!</span>")
-		return LateChoices() //Send them back to shuttle selection
+		return select_ship() //Send them back to shuttle selection
 
 	var/datum/job/selected_job = job_choices[tgui_input_list(src, "Select job.", "Welcome, [used_name].", job_choices)]
 	if(!selected_job)
-		return LateChoices() //Send them back to shuttle selection
+		return select_ship() //Send them back to shuttle selection
 
 	if(!SSticker?.IsRoundInProgress())
 		to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
