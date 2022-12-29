@@ -102,10 +102,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(IS_CLIENT_OR_MOCK(parent))
 		load_and_save = !is_guest_key(parent.key)
-		if(load_and_save)
-			load_path(parent.ckey)
-			if(!fexists(path))
-				try_savefile_type_migration()
+		load_path(parent.ckey)
+		if(load_and_save && !fexists(path))
+			try_savefile_type_migration()
 		unlock_content = !!parent.IsByondMember()
 		if(unlock_content)
 			max_save_slots = 8

@@ -145,15 +145,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_savefile()
-	if(!load_and_save)
-		return
-	if(!path)
+	if(load_and_save && !path)
 		CRASH("Attempted to load savefile without first loading a path!")
-	savefile = new /datum/json_savefile(path)
+	savefile = new /datum/json_savefile(load_and_save ? path : null)
 
 /datum/preferences/proc/load_preferences()
-	if(!load_and_save)
-		return FALSE
 	if(!savefile)
 		stack_trace("Attempted to load the preferences of [parent] without a savefile; did you forget to call load_savefile?")
 		load_savefile()
@@ -236,8 +232,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return TRUE
 
 /datum/preferences/proc/save_preferences()
-	if(!load_and_save)
-		return FALSE
 	if(!savefile)
 		CRASH("Attempted to save the preferences of [parent] without a savefile. This should have been handled by load_preferences()")
 	savefile.set_entry("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
@@ -269,8 +263,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/load_character(slot)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!load_and_save)
-		return FALSE
 	if(!slot)
 		slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
@@ -324,8 +316,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/save_character()
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!load_and_save)
-		return FALSE
 	if(!path)
 		return FALSE
 	var/tree_key = "character[default_slot]"
