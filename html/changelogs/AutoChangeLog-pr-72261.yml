@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "throwing no longer gets canceled if theres a mob buckled to the thrown thing"
