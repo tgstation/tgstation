@@ -833,7 +833,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
 
-/// A dog bone fully heals a dog, or befriends it if it's not your friend.
+/// A dog bone fully heals a dog, and befriends it if it's not your friend.
 /obj/item/dog_bone
 	name = "jumbo dog bone"
 	desc = "A tasty femur full of juicy marrow, the perfect gift for your best friend."
