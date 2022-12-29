@@ -1,0 +1,8 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Blob minions are now sorted into biohazards in orbit UI."
+  - rscadd: "Blobs now get antag info screens."
+  - rscadd: "Blob minions get objectives (protect the core!)."
+  - rscadd: "Adds blob style text for victories, etc."
+  - refactor: "Refactors some blob & blob minion code."
