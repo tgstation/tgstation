@@ -2,7 +2,7 @@
 #define UNFRIEND_REPLACE_KEY_TARGET "%TARGET%"
 
 /**
- * # Unfriend Petting
+ * # Unfriend Attacker
  *
  * Element which makes a mob remove you from its friends list you if you hurt it.
  * Doesn't make a callout post because we don't have twitter integration.
