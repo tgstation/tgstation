@@ -651,6 +651,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	message += SStrading_card_game.checkCardDatums()
 	if(message)
 		message_admins(message)
+	else
+		message_admins("No errors found in card rarities or overrides.")
 
 /client/proc/test_cardpack_distribution()
 	set name = "Test Cardpack Distribution"

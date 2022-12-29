@@ -146,9 +146,6 @@ SUBSYSTEM_DEF(trading_card_game)
 				toReturn += "[pack.type] does not have the required rarity [pack_rarity]\n"
 		qdel(pack)
 
-	if(!length(toReturn))
-		toReturn += "No errors found in cardpack rarities. "
-
 	return toReturn
 
 ///Checks the global card list for cards that don't override all the default values of the card datum
@@ -170,9 +167,6 @@ SUBSYSTEM_DEF(trading_card_game)
 			if(shouldAdd)
 				toReturn += toAdd
 	qdel(thing)
-
-	if(!length(toReturn))
-		toReturn += "No errors found in cardpack datums."
 
 	return toReturn
 
