@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-/proc/tts_filter(text)
+/proc/tts_alphanumeric_filter(text)
 	// Only allow alphanumeric characters and whitespace
 	var/static/regex/bad_chars_regex = regex("\[^a-zA-Z0-9 ,?.!'&-]", "g")
 	return bad_chars_regex.Replace(text, " ")
@@ -14,6 +14,7 @@
 #define TIMEOUT_INDEX 3
 #define REQUEST_INDEX 4
 #define EXTRA_TARGETS_INDEX 5
+#define LANGUAGE_INDEX 6
 
 #define CACHE_PENDING "pending"
 
@@ -66,10 +67,10 @@ SUBSYSTEM_DEF(tts)
 	available_speakers = json_decode(response.body)
 	available_speakers -= "ED\n" // TODO: properly fix this
 	tts_enabled = TRUE
-
+	rustg_file_write(json_encode(available_speakers), "data/cached_tts_voices.json")
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, sound)
+/datum/controller/subsystem/tts/proc/play_tts(target, sound, datum/language/language)
 
 	var/turf/turf_source = get_turf(target)
 
@@ -81,7 +82,8 @@ SUBSYSTEM_DEF(tts)
 	var/listeners = get_hearers_in_view(SOUND_RANGE, turf_source)
 
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
-		if(get_dist(listening_mob, turf_source) <= SOUND_RANGE && listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts))
+		var/datum/language_holder/holder = listening_mob.get_language_holder()
+		if(get_dist(listening_mob, turf_source) <= SOUND_RANGE && listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts) && holder.has_language(language, spoken = FALSE))
 			listening_mob.playsound_local(
 				turf_source,
 				sound,
@@ -140,14 +142,14 @@ SUBSYSTEM_DEF(tts)
 			continue
 		var/identifier = current_message[IDENTIFIER_INDEX]
 		var/sound/new_sound = new("tmp/[identifier].ogg")
-		play_tts(current_message[TARGET_INDEX], new_sound)
+		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX])
 		for(var/atom/movable/target in current_message[EXTRA_TARGETS_INDEX])
-			play_tts(target, new_sound)
+			play_tts(target, new_sound, current_message[LANGUAGE_INDEX])
 		cached_voices -= identifier
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/tts/proc/queue_tts_message(target, message, speaker, filter, high_priority = FALSE)
+/datum/controller/subsystem/tts/proc/queue_tts_message(target, message, datum/language/language, speaker, filter, high_priority = FALSE)
 	if(!tts_enabled)
 		return
 
@@ -157,7 +159,7 @@ SUBSYSTEM_DEF(tts)
 	if(contains_alphanumeric.Find(message) == 0)
 		return
 
-	var/shell_scrubbed_input = tts_filter(message)
+	var/shell_scrubbed_input = tts_alphanumeric_filter(message)
 	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 100)
 	var/identifier = sha1(speaker + shell_scrubbed_input + filter)
 	var/cached_voice = cached_voices[identifier]
@@ -166,12 +168,12 @@ SUBSYSTEM_DEF(tts)
 		return
 	else if(fexists("tmp/[identifier].ogg"))
 		var/sound/new_sound = new("tmp/[identifier].ogg")
-		play_tts(target, new_sound)
+		play_tts(target, new_sound, language)
 		return
 
 	if(!(speaker in available_speakers))
-		CRASH("Tried to use invalid speaker for TTS message! ([speaker])")
-	speaker = tts_filter(speaker)
+		return
+	speaker = tts_alphanumeric_filter(speaker)
 
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
@@ -185,7 +187,7 @@ SUBSYSTEM_DEF(tts)
 	else if(high_priority)
 		waiting_list = priority_queued_tts_messages
 
-	var/list/data = list(target, identifier, world.time + message_timeout, request, list())
+	var/list/data = list(target, identifier, world.time + message_timeout, request, list(), language)
 	cached_voices[identifier] = data
 	waiting_list += list(data)
 
@@ -194,3 +196,4 @@ SUBSYSTEM_DEF(tts)
 #undef TIMEOUT_INDEX
 #undef REQUEST_INDEX
 #undef EXTRA_TARGETS_INDEX
+#undef LANGUAGE_INDEX

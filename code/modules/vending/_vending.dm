@@ -188,6 +188,8 @@
 	/// used for narcing on underages
 	var/obj/item/radio/sec_radio
 
+	voice_filter = "aderivative"
+
 
 /**
  * Initialize the vending machine
@@ -205,6 +207,12 @@
 		build_inv = TRUE
 	. = ..()
 	wires = new /datum/wires/vending(src)
+
+	if(SStts.tts_enabled)
+		var/static/vendor_voice_by_type = list()
+		if(!vendor_voice_by_type[type])
+			vendor_voice_by_type[type] = pick(SStts.available_speakers)
+		voice = vendor_voice_by_type[type]
 
 	if(build_inv) //non-constructable vending machine
 		build_inventories()

@@ -899,8 +899,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	var/longest_survival = 0
 	var/longest_deathstreak = 0
 
+	voice_filter="rubberband=pitch=1.5"
+
 /mob/living/simple_animal/parrot/poly/Initialize(mapload)
 	ears = new /obj/item/radio/headset/headset_eng(src)
+	if(SStts.tts_enabled)
+		voice = pick(SStts.available_speakers)
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)

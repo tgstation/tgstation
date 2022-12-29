@@ -51,8 +51,12 @@
 
 	var/obj/item/modular_computer/pda/silicon/modularInterface
 
+	voice_filter = "afftfilt=real='hypot(re,im)*sin(0)':imag='hypot(re,im)*cos(0)':win_size=512:overlap=1,rubberband=pitch=0.8"
+
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
+	if(SStts.tts_enabled)
+		voice = pick(SStts.available_speakers)
 	GLOB.silicon_mobs += src
 	faction += "silicon"
 	if(ispath(radio))

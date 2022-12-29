@@ -152,6 +152,7 @@
 #define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
 #define INIT_ORDER_MAPPING 50
+#define INIT_ORDER_TTS 49 // Needs to be before Early Assets init
 #define INIT_ORDER_EARLY_ASSETS 48
 #define INIT_ORDER_RESEARCH 47
 #define INIT_ORDER_TIMETRACK 46
@@ -160,7 +161,6 @@
 #define INIT_ORDER_ECONOMY 40
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
-#define INIT_ORDER_TTS 31 // Needs to be before SSAtoms init
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20

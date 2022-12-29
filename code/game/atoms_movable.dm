@@ -107,21 +107,8 @@
 	color = EM_BLOCK_COLOR
 	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
-/atom/movable/proc/setup_voice()
-	var/static/list/voices = list()
-	if(!voices[type])
-		voices[type] = pick(SStts.available_speakers)
-	voice = voices[type]
-
-/mob/living/carbon/human/setup_voice()
-	if(!voice)
-		voice = pick(SStts.available_speakers)
-
 /atom/movable/Initialize(mapload)
 	. = ..()
-
-	if(SStts.tts_enabled)
-		setup_voice()
 
 	switch(blocks_emissive)
 		if(EMISSIVE_BLOCK_GENERIC)
