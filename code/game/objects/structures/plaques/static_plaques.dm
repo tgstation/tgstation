@@ -144,5 +144,5 @@
 
 /obj/structure/sign/plaques/tram
 	name = "\improper tram information plate"
-	desc = "A plate showing details from the manufacturer about this SkyyTram Mk III, serial number XC7587TG2022. We are not responsible for any injuries or fatalites caused by usage of the tram. For technical assistance in the event of malfunction please contact: (the info seems to be scratched up to the point of being unreadable.)"
+	desc = "A plate showing details from the manufacturer about this Nakamura Engineering Tram Mk III, serial number XC7587TG2022. We are not responsible for any injuries or fatalites caused by usage of the tram. For technical assistance in the event of malfunction please contact: (the info seems to be scratched up to the point of being unreadable.)"
 	icon_state = "commission_tram"
