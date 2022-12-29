@@ -364,15 +364,16 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 0 SECONDS
 
-/datum/action/cooldown/telepathy/IsAvailable(feedback = FALSE)
+/datum/action/cooldown/revive/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(!istype(owner, /mob/living/simple_animal/hostile/venom))
+		return FALSE
 	var/mob/living/simple_animal/hostile/venom/venom = owner
 	return venom.power >= 3
 
-/datum/action/cooldown/telepathy/Activate(atom/target)
+/datum/action/cooldown/revive/Activate(atom/target)
 	var/mob/living/simple_animal/hostile/venom/venom = owner
 	if(!venom.mod?.wearer)
 		to_chat(venom, span_warning("You have no host!"))
