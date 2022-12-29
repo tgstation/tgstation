@@ -474,7 +474,7 @@
 	if(unlucky || metal_amount)
 		spark()
 		broken = REALLY_BROKEN
-		if(metal_amount && unlucky || prob(max(metal_amount / 2, 33)))
+		if((metal_amount && unlucky) || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
 		else
 			if(prob(33)) // Someone's having a very bad day

@@ -213,7 +213,7 @@
 		movable_content.wash(CLEAN_WASH)
 	return TRUE
 
-/turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
+/turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
 	if(slipper.movement_type & (FLYING | FLOATING))
 		return FALSE
 	if(!has_gravity(src))
@@ -221,7 +221,7 @@
 
 	var/slide_distance = 4
 	if(HAS_TRAIT(slipper, TRAIT_UNFORTUNATE))
-		if(!(lube & SLIDE_ICE))
+		if(!(lube & SLIDE_ICE)) // Ensures we are at least sliding
 			lube |= SLIDE
 		slide_distance = rand(5, 9)
 
@@ -237,14 +237,14 @@
 			return FALSE
 
 	if(!(lube & SLIDE_ICE))
-		to_chat(slipper, span_notice("You slipped[ O ? " on the [O.name]" : ""]!"))
+		to_chat(slipper, span_notice("You slipped[ slippable ? " on the [slippable.name]" : ""]!"))
 		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
 	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 	if(force_drop)
-		for(var/obj/item/I in slipper.held_items)
-			slipper.accident(I)
+		for(var/obj/item/item in slipper.held_items)
+			slipper.accident(item)
 
 	var/olddir = slipper.dir
 	slipper.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
