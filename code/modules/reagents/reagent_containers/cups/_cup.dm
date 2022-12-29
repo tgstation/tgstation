@@ -445,10 +445,6 @@
 	spillable = TRUE
 	var/obj/item/grinded
 
-/datum/armor/bucket_wooden
-	melee = 10
-	acid = 50
-
 /obj/item/reagent_containers/cup/mortar/AltClick(mob/user)
 	if(grinded)
 		grinded.forceMove(drop_location())

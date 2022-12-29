@@ -75,10 +75,6 @@
 	custom_materials = list(/datum/material/plastic=80)
 	custom_price = PAYCHECK_LOWER * 2
 
-/datum/armor/kitchen_fork
-	fire = 50
-	acid = 30
-
 /obj/item/kitchen/fork/plastic/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
@@ -101,10 +97,6 @@
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
 	custom_price = PAYCHECK_LOWER * 2
-
-/datum/armor/kitchen_fork
-	fire = 50
-	acid = 30
 
 /obj/item/knife/plastic/Initialize(mapload)
 	. = ..()
@@ -137,10 +129,6 @@
 	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1.5, /datum/material/plastic = MINERAL_MATERIAL_AMOUNT * 1.5)
 	custom_price = PAYCHECK_CREW * 2
 	bare_wound_bonus = 14
-
-/datum/armor/kitchen_fork
-	fire = 50
-	acid = 30
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

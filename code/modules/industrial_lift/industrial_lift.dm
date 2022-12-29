@@ -726,11 +726,6 @@ GLOBAL_LIST_EMPTY(lifts)
 	lift_id = DEBUG_LIFT_ID
 	radial_travel = TRUE
 
-/datum/armor/structure_industrial_lift
-	melee = 50
-	fire = 80
-	acid = 50
-
 /obj/structure/industrial_lift/debug/open_lift_radial(mob/living/user)
 	var/starting_position = loc
 	if (!can_open_lift_radial(user,starting_position))
@@ -814,11 +809,6 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/tram/white
 	icon_state = "titanium_white"
-
-/datum/armor/structure_industrial_lift
-	melee = 50
-	fire = 80
-	acid = 50
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()

@@ -124,11 +124,6 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/datum/armor/under_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/under/plasmaman/clown/Extinguish(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
