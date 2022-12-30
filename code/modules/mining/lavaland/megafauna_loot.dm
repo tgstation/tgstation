@@ -313,15 +313,6 @@
 	greyscale_config_worn = /datum/greyscale_config/heck_helmet/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/datum/armor/hooded_hostile_environment
-	melee = 70
-	bullet = 40
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
-
 /obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	update_appearance()
@@ -386,15 +377,6 @@
 	COOLDOWN_DECLARE(move_cooldown)
 	/// Cooldown between attacks
 	COOLDOWN_DECLARE(attack_cooldown)
-
-/datum/armor/hooded_hostile_environment
-	melee = 70
-	bullet = 40
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/item/soulscythe/Initialize(mapload)
 	. = ..()
@@ -604,15 +586,6 @@
 	/// Blood level, used for movement and abilities in a soulscythe
 	var/blood_level = MAX_BLOOD_LEVEL
 
-/datum/armor/hooded_hostile_environment
-	melee = 70
-	bullet = 40
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
-
 /mob/living/simple_animal/soulscythe/get_status_tab_items()
 	. = ..()
 	. += "Blood: [blood_level]/[MAX_BLOOD_LEVEL]"
@@ -630,15 +603,6 @@
 	light_range = 1
 	light_power = 1
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
-
-/datum/armor/hooded_hostile_environment
-	melee = 70
-	bullet = 40
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/projectile/soulscythe/on_hit(atom/target, blocked = FALSE)
 	if(ishostile(target))
@@ -667,15 +631,6 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
-
-/datum/armor/hooded_hostile_environment
-	melee = 70
-	bullet = 40
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/item/melee/ghost_sword/Initialize(mapload)
 	. = ..()
@@ -754,15 +709,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
-/datum/armor/hooded_hostile_environment
-	melee = 70
-	bullet = 40
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
-
 /obj/item/dragons_blood/attack_self(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
@@ -828,15 +774,6 @@
 	var/reset_cooldown = 5 SECONDS
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
-
-/datum/armor/hooded_hostile_environment
-	melee = 70
-	bullet = 40
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -917,15 +854,6 @@
 	var/open_force = 20
 	/// Throwforce when the saw is opened.
 	var/open_throwforce = 20
-
-/datum/armor/hooded_hostile_environment
-	melee = 70
-	bullet = 40
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/item/melee/cleaving_saw/Initialize(mapload)
 	. = ..()
@@ -1037,15 +965,6 @@
 	var/thunder_charge_time = 15 SECONDS
 	var/static/list/excluded_areas = list(/area/space)
 	var/list/targeted_turfs = list()
-
-/datum/armor/hooded_hostile_environment
-	melee = 70
-	bullet = 40
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/item/storm_staff/examine(mob/user)
 	. = ..()

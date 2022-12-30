@@ -74,10 +74,6 @@
 /*
  * Metal Hydrogen Axe
  */
-/datum/armor/item_fireaxe
-	fire = 100
-	acid = 30
-
 /obj/item/fireaxe/metal_h2_axe
 	icon_state = "metalh2_axe0"
 	base_icon_state = "metalh2_axe"

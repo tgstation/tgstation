@@ -202,14 +202,6 @@
 // next direction to move
 // if coming in from secondary dirs, then next is primary dir
 // if coming in from primary dir, then next is equal chance of other dirs
-/datum/armor/structure_disposalpipe
-	melee = 25
-	bullet = 10
-	laser = 10
-	energy = 100
-	fire = 90
-	acid = 30
-
 /obj/structure/disposalpipe/junction/nextdir(obj/structure/disposalholder/H)
 	var/flipdir = turn(H.dir, 180)
 	if(flipdir != dir) // came from secondary dir, so exit through primary
@@ -245,14 +237,6 @@
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
 	var/obj/linked // the linked obj/machinery/disposal or obj/disposaloutlet
-
-/datum/armor/structure_disposalpipe
-	melee = 25
-	bullet = 10
-	laser = 10
-	energy = 100
-	fire = 90
-	acid = 30
 
 /obj/structure/disposalpipe/trunk/Initialize(mapload)
 	. = ..()
@@ -325,14 +309,6 @@
 	initialize_dirs = DISP_DIR_NONE
 	// broken pipes always have dpdir=0 so they're not found as 'real' pipes
 	// i.e. will be treated as an empty turf
-
-/datum/armor/structure_disposalpipe
-	melee = 25
-	bullet = 10
-	laser = 10
-	energy = 100
-	fire = 90
-	acid = 30
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
