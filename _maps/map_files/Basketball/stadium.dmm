@@ -1,0 +1,1282 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"aw" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"be" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"bA" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/deck,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"cz" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/coin,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"dg" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/arrow_cw,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"dr" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"dC" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/shrink_cw,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"dJ" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"dM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"dS" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/blue/warning,
+/obj/effect/turf_decal/trimline/blue/filled/shrink_cw{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"eS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"eU" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"fi" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21";
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"fj" = (
+/obj/structure/sign/poster/official/random/directional/south,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"fu" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"gk" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"gq" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/red/warning,
+/obj/effect/turf_decal/trimline/red/filled/shrink_ccw{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"hf" = (
+/obj/effect/spawner/random/structure/billboard/roadsigns,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"hB" = (
+/obj/structure/table/wood,
+/obj/item/storage/dice,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"jj" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"kc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"kp" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 5
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"ku" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 5
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"kT" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"lh" = (
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"ly" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"lD" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 6
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"lR" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_green/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_green/filled/warning,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"mp" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"my" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"nE" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"oh" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"oR" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"pu" = (
+/obj/structure/chair/plastic,
+/turf/open/floor/carpet/red,
+/area/centcom/mafia)
+"qU" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"rU" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"sb" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 6
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"tO" = (
+/turf/open/space/basic,
+/area/centcom/mafia)
+"tU" = (
+/obj/structure/chair/plastic,
+/obj/item/toy/foamfinger,
+/turf/open/floor/carpet/blue,
+/area/centcom/mafia)
+"tX" = (
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"uH" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/red/warning,
+/obj/effect/turf_decal/trimline/red/filled/arrow_ccw{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"uW" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/blue/warning,
+/obj/effect/turf_decal/trimline/blue/filled/arrow_cw{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"vo" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"wZ" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"zy" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/blue/corner,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"zZ" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/money_medium,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Ax" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"AC" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"AI" = (
+/obj/machinery/status_display,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/mafia)
+"AU" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Bd" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Cv" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 8
+	},
+/obj/structure/hoop{
+	dir = 4;
+	name = "A La Penners"
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Cw" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/mafia)
+"CD" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/decoration,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"CV" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Dt" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"DP" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 4
+	},
+/obj/structure/hoop{
+	dir = 8;
+	name = "Hopping Jezzertons"
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Ev" = (
+/mob/living/simple_animal/robot_customer,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Gh" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/cup/glass/shaker,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Gi" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Hu" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/mafia)
+"HH" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 9
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Ic" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"IA" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"JM" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"KH" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/dark_green/warning,
+/obj/effect/turf_decal/trimline/dark_green/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Lu" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"LI" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"LS" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"LU" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"LV" = (
+/obj/structure/sign/poster/official/random/directional/west,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Ma" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"MS" = (
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Nt" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Oj" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 9
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Om" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 2
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"OB" = (
+/obj/structure/chair/plastic,
+/turf/open/floor/carpet/blue,
+/area/centcom/mafia)
+"PU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"PW" = (
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Qa" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/shrink_ccw,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Qh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Qi" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Ql" = (
+/obj/structure/sign/poster/official/random/directional/east,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Rl" = (
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Se" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/fireplace,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Tc" = (
+/obj/machinery/vending/cigarette/syndicate,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"TV" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Ul" = (
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"Uq" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Uv" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 10
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Uy" = (
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Vr" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"WB" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"WK" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/box/matches{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"WM" = (
+/turf/closed/indestructible/wood,
+/area/centcom/mafia)
+"Xm" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"Xn" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/mafia)
+"Xo" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 10
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"YH" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"YX" = (
+/obj/item/toy/basketball,
+/obj/effect/turf_decal/trimline/dark_green,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/noslip,
+/area/centcom/mafia)
+"ZM" = (
+/obj/structure/chair/plastic,
+/obj/item/toy/foamfinger,
+/turf/open/floor/carpet/red,
+/area/centcom/mafia)
+
+(1,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
+(2,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+tO
+tO
+tO
+tO
+Hu
+"}
+(3,1,1) = {"
+Hu
+tO
+tO
+Ul
+tO
+WM
+fi
+tX
+tX
+WB
+tX
+LV
+tX
+WB
+tX
+tX
+fi
+WM
+tO
+tO
+tO
+tO
+Hu
+"}
+(4,1,1) = {"
+Hu
+tO
+tO
+Ul
+tO
+WM
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+WM
+tO
+tO
+tO
+tO
+Hu
+"}
+(5,1,1) = {"
+Hu
+Ul
+WM
+WM
+WM
+WM
+at
+tX
+AI
+Cw
+Cw
+Cw
+Cw
+Cw
+AI
+tX
+fj
+WM
+WM
+WM
+WM
+tO
+Hu
+"}
+(6,1,1) = {"
+Hu
+Ul
+WM
+dr
+PU
+PU
+Vr
+tX
+Cw
+Oj
+dJ
+Cv
+Om
+Xo
+Cw
+tX
+tX
+CV
+bA
+AC
+WM
+tO
+Hu
+"}
+(7,1,1) = {"
+Hu
+Ul
+WM
+ly
+pu
+pu
+kc
+tX
+Cw
+Ic
+Qi
+rU
+IA
+LU
+Cw
+tX
+tX
+tX
+tX
+tX
+WM
+tO
+Hu
+"}
+(8,1,1) = {"
+Hu
+WM
+WM
+nE
+pu
+ZM
+kc
+Ev
+Cw
+ku
+TV
+TV
+TV
+sb
+Cw
+hf
+tX
+tX
+tX
+fj
+WM
+WM
+Hu
+"}
+(9,1,1) = {"
+Hu
+WM
+Tc
+ly
+pu
+pu
+kc
+tX
+Cw
+dC
+lh
+lh
+lh
+gq
+Cw
+tX
+tX
+tX
+Gh
+my
+cz
+WM
+Hu
+"}
+(10,1,1) = {"
+Hu
+WM
+dr
+Dt
+Gi
+Nt
+Xn
+tX
+Cw
+dg
+lh
+lh
+lh
+uH
+Cw
+tX
+tX
+PW
+my
+tX
+tX
+WM
+Hu
+"}
+(11,1,1) = {"
+Hu
+WM
+ly
+OB
+OB
+kc
+tX
+Uy
+Cw
+dg
+Lu
+mp
+gk
+uH
+Cw
+tX
+tX
+PW
+LI
+tX
+fu
+WM
+Hu
+"}
+(12,1,1) = {"
+Hu
+WM
+Se
+OB
+OB
+kc
+tX
+Rl
+AI
+lR
+LS
+YX
+oR
+KH
+AI
+tX
+tX
+PW
+wZ
+tX
+Ax
+WM
+Hu
+"}
+(13,1,1) = {"
+Hu
+WM
+ly
+tU
+OB
+kc
+tX
+MS
+Cw
+be
+eU
+qU
+Xm
+uW
+Cw
+tX
+tX
+PW
+my
+tX
+AU
+WM
+Hu
+"}
+(14,1,1) = {"
+Hu
+WM
+JM
+eS
+Gi
+Qh
+Vr
+tX
+Cw
+be
+lh
+lh
+lh
+uW
+Cw
+hf
+tX
+PW
+hB
+tX
+tX
+WM
+Hu
+"}
+(15,1,1) = {"
+Hu
+WM
+Uq
+ly
+pu
+ZM
+kc
+tX
+Cw
+Qa
+lh
+lh
+lh
+dS
+Cw
+tX
+tX
+tX
+WK
+zZ
+zZ
+WM
+Hu
+"}
+(16,1,1) = {"
+Hu
+WM
+WM
+nE
+pu
+pu
+kc
+Ev
+Cw
+HH
+YH
+YH
+YH
+Uv
+Cw
+tX
+tX
+tX
+tX
+fj
+WM
+WM
+Hu
+"}
+(17,1,1) = {"
+Hu
+tO
+WM
+ly
+ZM
+pu
+kc
+tX
+Cw
+Ma
+zy
+kT
+Bd
+oh
+Cw
+tX
+tX
+tX
+tX
+tX
+WM
+tO
+Hu
+"}
+(18,1,1) = {"
+Hu
+tO
+WM
+JM
+dM
+dM
+tX
+tX
+Cw
+kp
+vo
+DP
+aw
+lD
+Cw
+tX
+tX
+CV
+CD
+AC
+WM
+tO
+Hu
+"}
+(19,1,1) = {"
+Hu
+tO
+WM
+WM
+WM
+WM
+at
+tX
+AI
+Cw
+Cw
+Cw
+Cw
+Cw
+AI
+tX
+fj
+WM
+WM
+WM
+WM
+tO
+Hu
+"}
+(20,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+WM
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+WM
+tO
+tO
+tO
+tO
+Hu
+"}
+(21,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+WM
+fi
+tX
+tX
+jj
+tX
+Ql
+tX
+jj
+tX
+tX
+fi
+WM
+tO
+tO
+tO
+tO
+Hu
+"}
+(22,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+tO
+tO
+tO
+tO
+Hu
+"}
+(23,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}

@@ -1,0 +1,1244 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/structure/sign/poster/contraband/random/directional/north,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"aw" = (
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/structure/barricade/wooden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"be" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"bA" = (
+/obj/structure/sink/directional/east,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"cz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"dg" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"dr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/directional/south,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"dC" = (
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"dJ" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"dM" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/cut,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"dS" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"eN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/chair_maintenance,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"eS" = (
+/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"eU" = (
+/obj/structure/statue/sandstone/assistant,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"fi" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"fj" = (
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_empty,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"fp" = (
+/obj/structure/sign/poster/contraband/grey_tide,
+/turf/closed/indestructible/reinforced,
+/area/centcom/mafia)
+"fu" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"gk" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"gq" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"hf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/botanical_waste,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"hB" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"jj" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"ju" = (
+/turf/closed/indestructible/fakedoor/maintenance,
+/area/centcom/mafia)
+"jK" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = -7
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"kc" = (
+/obj/effect/spawner/random/trash/botanical_waste,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"kp" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"ku" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/spawner/random/structure/chair_maintenance{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"kT" = (
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"lh" = (
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"ly" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"lD" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"lR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/decal/remains/human,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"mp" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"my" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"nE" = (
+/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"oh" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"oR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"pq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/assembly/mousetrap/armed,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"pu" = (
+/obj/structure/bonfire,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"pw" = (
+/mob/living/basic/mouse/gray,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"pE" = (
+/obj/machinery/door/window/right/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/iron/dark/textured_half,
+/area/centcom/mafia)
+"qU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/directional/west,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"rU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_empty,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"sb" = (
+/obj/structure/girder/displaced,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"te" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"tO" = (
+/turf/open/space/basic,
+/area/centcom/mafia)
+"tU" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"tX" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"uH" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"uW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"vo" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"wJ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"wZ" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"zy" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"zX" = (
+/obj/item/food/deadmouse,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"zZ" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Ax" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/turf_decal/box/red,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"AC" = (
+/obj/structure/closet,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"AI" = (
+/obj/structure/grille/indestructible,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"AU" = (
+/obj/item/storage/toolbox/emergency,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"Bd" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Cv" = (
+/obj/structure/hoop{
+	dir = 4;
+	name = "A La Penners"
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Cw" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/mafia)
+"CD" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"CV" = (
+/turf/closed/indestructible/reinforced,
+/area/centcom/mafia)
+"De" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Dt" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"DP" = (
+/obj/structure/hoop{
+	dir = 8;
+	name = "Hopping Jezzertons"
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Ev" = (
+/obj/structure/headpike,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"FA" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"Ga" = (
+/obj/structure/barricade/wooden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Gh" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Gi" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Hu" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/mafia)
+"HH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Ic" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"IA" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"JM" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"KH" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Lu" = (
+/obj/structure/closet,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"LI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"LS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"LU" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"LV" = (
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/structure/closet,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Ma" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"MS" = (
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/obj/structure/table_frame,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Nt" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"NS" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Oj" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Om" = (
+/obj/effect/turf_decal/caution/stand_clear/white,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"OB" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"PU" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"PW" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Qa" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Qh" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Qi" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Ql" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/mob/living/basic/cockroach,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"QC" = (
+/obj/effect/spawner/random/structure/chair_flipped,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Rl" = (
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Se" = (
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Sv" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"SF" = (
+/mob/living/basic/cockroach,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Tc" = (
+/obj/structure/closet/mini_fridge,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Tl" = (
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = 32
+	},
+/obj/item/assembly/mousetrap,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"TV" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Ul" = (
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"Uq" = (
+/obj/structure/closet/crate/cardboard,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Uv" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Uy" = (
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/obj/structure/table_frame,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Vr" = (
+/obj/effect/spawner/random/trash/box,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"VW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"WB" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"WK" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"WM" = (
+/turf/closed/wall/rust,
+/area/centcom/mafia)
+"Xm" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Xn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/medical/memeorgans{
+	spawn_loot_count = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Xo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/box/red/corners{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"Xp" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/mouse/brown,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"XR" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Yp" = (
+/obj/structure/sign/poster/contraband/hacking_guide,
+/turf/closed/indestructible/reinforced,
+/area/centcom/mafia)
+"YH" = (
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"YX" = (
+/obj/item/toy/basketball,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/maint,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"ZM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/structure/chair_flipped{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+
+(1,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
+(2,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+CV
+CV
+CV
+CV
+CV
+ju
+Yp
+CV
+CV
+CV
+CV
+CV
+CV
+tO
+tO
+tO
+tO
+Hu
+"}
+(3,1,1) = {"
+Hu
+tO
+tO
+Ul
+tO
+CV
+dJ
+zX
+TV
+Ma
+lh
+Qh
+sb
+WB
+Xn
+lh
+KH
+CV
+tO
+tO
+tO
+tO
+Hu
+"}
+(4,1,1) = {"
+Hu
+tO
+tO
+Ul
+tO
+CV
+Qh
+LU
+Qh
+oh
+lh
+hf
+Qh
+lh
+Ga
+Qh
+lh
+CV
+tO
+tO
+tO
+tO
+Hu
+"}
+(5,1,1) = {"
+Hu
+Ul
+CV
+CV
+CV
+CV
+eS
+uH
+AI
+AI
+AI
+AI
+AI
+AI
+AI
+Nt
+kT
+CV
+CV
+CV
+CV
+tO
+Hu
+"}
+(6,1,1) = {"
+Hu
+Ul
+CV
+Dt
+PU
+lh
+Qh
+Qh
+AI
+Oj
+Om
+Cv
+Om
+Qh
+AI
+lh
+wJ
+SF
+bA
+AC
+CV
+tO
+Hu
+"}
+(7,1,1) = {"
+Hu
+Ul
+CV
+Qh
+AI
+pu
+Gi
+eU
+AI
+Qh
+Qi
+Qi
+IA
+lh
+AI
+Qh
+Qh
+oh
+YH
+YH
+CV
+tO
+Hu
+"}
+(8,1,1) = {"
+Hu
+CV
+CV
+nE
+AI
+AI
+lh
+Ev
+AI
+Qh
+TV
+Qh
+lh
+Qh
+AI
+kp
+Qh
+lh
+hf
+LV
+CV
+CV
+Hu
+"}
+(9,1,1) = {"
+Hu
+CV
+Tc
+Gi
+jK
+dM
+Qh
+YH
+AI
+dC
+Uv
+dC
+Uv
+gq
+AI
+oh
+Qh
+te
+Gh
+Gh
+Gh
+CV
+Hu
+"}
+(10,1,1) = {"
+Hu
+CV
+dr
+HH
+lh
+lh
+SF
+QC
+AI
+Qh
+Qh
+Gi
+Qh
+lh
+AI
+lh
+CD
+PW
+my
+hB
+FA
+CV
+Hu
+"}
+(11,1,1) = {"
+Hu
+CV
+Se
+Lu
+Cw
+Qh
+Qh
+Uy
+AI
+lh
+mp
+mp
+LS
+Qh
+AI
+ku
+pw
+NS
+LI
+Xo
+fu
+CV
+Hu
+"}
+(12,1,1) = {"
+Hu
+CV
+Tl
+dg
+OB
+VW
+Qh
+Rl
+AI
+Qh
+LS
+YX
+mp
+lh
+AI
+tX
+Ic
+pE
+wZ
+lR
+Ax
+WM
+Hu
+"}
+(13,1,1) = {"
+Hu
+CV
+oR
+tU
+Cw
+kc
+lh
+MS
+AI
+Qh
+mp
+LS
+mp
+uW
+AI
+ZM
+lh
+PW
+wZ
+Qh
+AU
+CV
+Hu
+"}
+(14,1,1) = {"
+Hu
+ju
+JM
+Qh
+Gi
+Qh
+lh
+eN
+AI
+be
+lh
+lh
+lh
+Qh
+AI
+Qh
+LU
+PW
+Qh
+XR
+lh
+CV
+Hu
+"}
+(15,1,1) = {"
+Hu
+CV
+Uq
+lh
+Cw
+AI
+lh
+CD
+AI
+Qa
+Qa
+Xm
+Qa
+dS
+AI
+uH
+oh
+lD
+WK
+WK
+WK
+CV
+Hu
+"}
+(16,1,1) = {"
+Hu
+CV
+CV
+at
+Sv
+Vr
+lh
+Ev
+AI
+HH
+Gi
+lh
+lh
+lh
+AI
+kp
+Qh
+TV
+lh
+fj
+CV
+CV
+Hu
+"}
+(17,1,1) = {"
+Hu
+tO
+CV
+ly
+Cw
+Cw
+uW
+eU
+AI
+Qh
+zy
+zy
+Bd
+Qh
+AI
+YH
+zZ
+YH
+Qh
+gk
+CV
+tO
+Hu
+"}
+(18,1,1) = {"
+Hu
+tO
+CV
+Xp
+TV
+lh
+lh
+lh
+AI
+kp
+vo
+DP
+vo
+lh
+AI
+Qh
+Qh
+Qh
+lh
+rU
+CV
+tO
+Hu
+"}
+(19,1,1) = {"
+Hu
+tO
+CV
+CV
+CV
+CV
+at
+AI
+AI
+AI
+AI
+AI
+AI
+AI
+AI
+lh
+aw
+CV
+ju
+CV
+CV
+tO
+Hu
+"}
+(20,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+CV
+lh
+cz
+lh
+lh
+De
+Gi
+Qh
+pq
+oh
+JM
+lh
+CV
+tO
+tO
+tO
+tO
+Hu
+"}
+(21,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+CV
+fi
+Qh
+Gi
+jj
+oh
+Ql
+qU
+jj
+CD
+Gi
+KH
+CV
+tO
+tO
+tO
+tO
+Hu
+"}
+(22,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+CV
+CV
+CV
+CV
+CV
+CV
+fp
+CV
+CV
+CV
+CV
+CV
+CV
+tO
+tO
+tO
+tO
+Hu
+"}
+(23,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}

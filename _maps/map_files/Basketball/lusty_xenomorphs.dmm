@@ -1,0 +1,1173 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/structure/sign/departments/xenobio/alt/directional/north,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"aw" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"be" = (
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"bA" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	name = "Containment Control"
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"cz" = (
+/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/turf/closed/indestructible/reinforced{
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi';
+	base_icon_state = "resin_wall";
+	icon_state = "resin_wall-0"
+	},
+/area/centcom/mafia)
+"dg" = (
+/obj/structure/alien/weeds,
+/obj/machinery/smartfridge/extract/preloaded,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"dr" = (
+/obj/item/bodypart/head/monkey,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"dC" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"dJ" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/monkeycubes,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"dM" = (
+/obj/machinery/door/window/brigdoor{
+	dir = 8;
+	name = "Containment Pen"
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"dS" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg,
+/obj/structure/alien/egg,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"eS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"eU" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"fi" = (
+/obj/structure/alien/weeds,
+/obj/structure/statue/plasma/xeno,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"fj" = (
+/obj/structure/sign/departments/xenobio/alt/directional/south,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/decoration,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"fu" = (
+/obj/item/bodypart/leg/right/monkey,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"gk" = (
+/obj/structure/sign/departments/xenobio,
+/turf/closed/indestructible/resin,
+/area/centcom/mafia)
+"gq" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/gloves{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/storage/box/masks{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"hf" = (
+/obj/structure/alien/weeds,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"hB" = (
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"jj" = (
+/obj/structure/sign/xenobio_guide/directional/east,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/glasses/science,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"kc" = (
+/obj/structure/alien/weeds/node,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"kp" = (
+/obj/structure/bed/nest,
+/obj/item/bodypart/chest/monkey,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"ku" = (
+/obj/effect/turf_decal/bot,
+/turf/closed/indestructible/resin/membrane,
+/area/centcom/mafia)
+"kT" = (
+/obj/item/organ/internal/body_egg/alien_embryo,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"lh" = (
+/obj/structure/sign/departments/xenobio/alt/directional/south,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"ly" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"lD" = (
+/obj/structure/alien/weeds,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"lR" = (
+/obj/structure/sign/departments/xenobio/alt/directional/north,
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"mp" = (
+/obj/structure/alien/weeds/node,
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"my" = (
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"nE" = (
+/obj/structure/sign/departments/xenobio/alt/directional/north,
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"oh" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"oR" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"pu" = (
+/mob/living/simple_animal/slime/random,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"qU" = (
+/obj/structure/sign/xenobio_guide/directional/west,
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"rU" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/left/directional/north{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	name = "Containment Pen"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/iron,
+/area/centcom/mafia)
+"sb" = (
+/obj/structure/alien/weeds,
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"tO" = (
+/turf/open/space/basic,
+/area/centcom/mafia)
+"tU" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"tX" = (
+/obj/structure/alien/weeds,
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"uH" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"uW" = (
+/obj/structure/sign/departments/xenobio/alt/directional/south,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"vo" = (
+/obj/structure/alien/weeds,
+/obj/item/stack/sheet/animalhide/xeno,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"wZ" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"zy" = (
+/obj/structure/alien/weeds,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/mafia)
+"zZ" = (
+/obj/structure/window/reinforced/fulltile/damaged,
+/obj/effect/particle_effect/water/extinguisher/stomach_acid,
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"Ax" = (
+/obj/structure/alien/weeds,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"AC" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"AI" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/left/directional/north{
+	base_state = "right";
+	dir = 8;
+	icon_state = "right";
+	name = "Containment Pen"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/iron,
+/area/centcom/mafia)
+"AU" = (
+/obj/structure/alien/weeds,
+/obj/structure/statue/plasma/scientist,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Bd" = (
+/obj/structure/alien/weeds,
+/obj/item/organ/internal/body_egg/alien_embryo,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Cv" = (
+/obj/structure/hoop{
+	dir = 4;
+	name = "A La Penners"
+	},
+/obj/structure/alien/weeds/node,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"Cw" = (
+/turf/closed/indestructible/resin/membrane,
+/area/centcom/mafia)
+"CD" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"CV" = (
+/obj/structure/alien/weeds,
+/obj/structure/door_assembly/door_assembly_research,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Dt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"DP" = (
+/obj/structure/hoop{
+	dir = 8;
+	name = "Hopping Jezzertons"
+	},
+/obj/structure/alien/weeds/node,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"Gh" = (
+/obj/structure/alien/egg/burst,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"Gi" = (
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	name = "Containment Pen"
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Hu" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/mafia)
+"Ic" = (
+/obj/structure/sign/xenobio_guide/directional/east,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/spray/cleaner,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"IA" = (
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"JM" = (
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Lu" = (
+/turf/closed/indestructible/resin,
+/area/centcom/mafia)
+"LI" = (
+/obj/item/bodypart/arm/right/monkey,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"LS" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"LU" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/folder/white,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"LV" = (
+/obj/structure/alien/weeds,
+/obj/structure/closet/l3closet/scientist,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"MS" = (
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Nt" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	name = "Containment Control"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Oj" = (
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"OB" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"PU" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"PW" = (
+/obj/structure/window/reinforced/fulltile/damaged,
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"Qh" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	name = "Containment Control"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Qi" = (
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
+/turf/closed/indestructible/resin,
+/area/centcom/mafia)
+"Ql" = (
+/obj/structure/alien/weeds,
+/obj/structure/sink/directional/west,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Rl" = (
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Se" = (
+/obj/machinery/computer/camera_advanced/xenobio,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Tc" = (
+/obj/machinery/monkey_recycler,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Ul" = (
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"Uq" = (
+/obj/machinery/processor/slime,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Uv" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/torso,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"Uy" = (
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"Vr" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"WB" = (
+/obj/structure/sign/xenobio_guide/directional/west,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"WK" = (
+/obj/machinery/door/poddoor{
+	id = "xenobio_maint_fore";
+	name = "Xenobiology Blast Door"
+	},
+/turf/closed/indestructible/fakeglass,
+/area/centcom/mafia)
+"WM" = (
+/turf/closed/indestructible/reinforced{
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi';
+	base_icon_state = "resin_wall";
+	icon_state = "resin_wall-0"
+	},
+/area/centcom/mafia)
+"Xm" = (
+/obj/structure/bed/nest,
+/obj/effect/mob_spawn/corpse/human/monkey,
+/obj/effect/mob_spawn/corpse/facehugger,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"Xo" = (
+/obj/structure/alien/weeds,
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"YH" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/iron/white,
+/area/centcom/mafia)
+"YX" = (
+/obj/item/toy/basketball,
+/obj/structure/bed/nest,
+/obj/structure/alien/weeds,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+"ZM" = (
+/obj/item/toy/plush/slimeplushie,
+/turf/open/floor/engine,
+/area/centcom/mafia)
+
+(1,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
+(2,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+WM
+WM
+WM
+WM
+WM
+WM
+cz
+WM
+WM
+Lu
+Lu
+Lu
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(3,1,1) = {"
+Hu
+tO
+tO
+Ul
+Ul
+WM
+fi
+YH
+Vr
+WB
+dg
+LV
+dg
+qU
+Vr
+Vr
+AU
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(4,1,1) = {"
+Hu
+tO
+tO
+Ul
+Ul
+WM
+Vr
+Vr
+Vr
+Vr
+Vr
+YH
+Vr
+Vr
+oh
+Vr
+Vr
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(5,1,1) = {"
+Hu
+Ul
+Lu
+Lu
+Lu
+Lu
+at
+Vr
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+kc
+uW
+Lu
+Lu
+Lu
+Lu
+tO
+Hu
+"}
+(6,1,1) = {"
+Hu
+Ul
+Lu
+Oj
+Oj
+PU
+Vr
+aw
+Cw
+Oj
+uH
+Cv
+uH
+Oj
+Cw
+Vr
+Vr
+CV
+Vr
+AC
+Lu
+tO
+Hu
+"}
+(7,1,1) = {"
+Hu
+Ul
+Lu
+Oj
+pu
+PU
+kc
+Vr
+Cw
+Oj
+uH
+uH
+uH
+Oj
+Cw
+Vr
+Vr
+zy
+tX
+tX
+Lu
+tO
+Hu
+"}
+(8,1,1) = {"
+Hu
+Lu
+Lu
+lR
+Oj
+PU
+Vr
+Vr
+Cw
+Oj
+Oj
+Oj
+Oj
+Oj
+Cw
+Vr
+Vr
+Ax
+gq
+lh
+Lu
+Lu
+Hu
+"}
+(9,1,1) = {"
+Hu
+Lu
+Tc
+ly
+AI
+LS
+Vr
+Vr
+Cw
+dC
+dC
+dC
+dC
+dC
+Cw
+Vr
+Vr
+WK
+WK
+PW
+WK
+Lu
+Hu
+"}
+(10,1,1) = {"
+Hu
+Lu
+JM
+Dt
+Gi
+Nt
+Vr
+Vr
+Cw
+uH
+uH
+uH
+uH
+uH
+ku
+Vr
+Vr
+PW
+kT
+dr
+IA
+Lu
+Hu
+"}
+(11,1,1) = {"
+Hu
+gk
+JM
+JM
+JM
+Vr
+Vr
+Uy
+Cw
+uH
+oR
+oR
+oR
+uH
+Cw
+Vr
+bA
+WK
+LI
+kp
+fu
+Lu
+Hu
+"}
+(12,1,1) = {"
+Hu
+Lu
+Se
+OB
+Vr
+Vr
+kc
+Rl
+Cw
+uH
+oR
+YX
+oR
+uH
+Cw
+Vr
+kc
+WK
+wZ
+Gh
+Oj
+Lu
+Hu
+"}
+(13,1,1) = {"
+Hu
+gk
+JM
+JM
+JM
+Vr
+Vr
+MS
+Cw
+uH
+oR
+oR
+oR
+uH
+Cw
+Vr
+dJ
+zZ
+my
+Xm
+Oj
+Lu
+Hu
+"}
+(14,1,1) = {"
+Hu
+Lu
+JM
+eS
+dM
+Qh
+Vr
+Vr
+Cw
+uH
+uH
+uH
+uH
+uH
+Cw
+Vr
+Vr
+be
+hB
+Oj
+Uv
+Lu
+Hu
+"}
+(15,1,1) = {"
+Hu
+Lu
+Uq
+ly
+rU
+LS
+Vr
+Vr
+Cw
+dC
+dC
+dC
+dC
+dS
+Cw
+Vr
+Vr
+WK
+WK
+WK
+WK
+Lu
+Hu
+"}
+(16,1,1) = {"
+Hu
+Lu
+Lu
+nE
+Oj
+PU
+Vr
+Vr
+Cw
+Oj
+Oj
+Oj
+Oj
+Oj
+Cw
+Vr
+Vr
+lD
+LU
+fj
+Lu
+Lu
+Hu
+"}
+(17,1,1) = {"
+Hu
+tO
+Lu
+Oj
+ZM
+PU
+Bd
+kc
+Cw
+Oj
+uH
+uH
+uH
+Oj
+Cw
+Vr
+Vr
+zy
+sb
+sb
+Lu
+tO
+Hu
+"}
+(18,1,1) = {"
+Hu
+tO
+Lu
+Oj
+Oj
+PU
+Vr
+Vr
+Cw
+Oj
+uH
+DP
+uH
+Oj
+Cw
+Vr
+kc
+hf
+CD
+Vr
+Lu
+tO
+Hu
+"}
+(19,1,1) = {"
+Hu
+tO
+Lu
+Lu
+Lu
+Lu
+at
+Vr
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Vr
+uW
+Lu
+Lu
+Lu
+Lu
+tO
+Hu
+"}
+(20,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Lu
+eU
+Vr
+kc
+Vr
+Vr
+vo
+Vr
+Vr
+Vr
+Vr
+Vr
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(21,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Lu
+AU
+Vr
+Vr
+jj
+Xo
+Ql
+mp
+Ic
+tU
+Vr
+fi
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(22,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+Qi
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(23,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}

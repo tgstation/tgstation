@@ -1,0 +1,764 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"aw" = (
+/obj/machinery/power/smes,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"bA" = (
+/obj/structure/chair/stool/directional/south,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"dg" = (
+/obj/structure/lattice,
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"dC" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"fj" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/lattice,
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"fu" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/mafia)
+"ku" = (
+/obj/structure/grille/indestructible,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"lD" = (
+/obj/structure/grille/indestructible,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"oR" = (
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel,
+/area/centcom/mafia)
+"rU" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"sb" = (
+/obj/machinery/power/solar_control{
+	dir = 1;
+	id = "starboardsolar";
+	name = "Starboard Quarter Solar Control"
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"tO" = (
+/turf/open/space/basic,
+/area/centcom/mafia)
+"uH" = (
+/turf/open/floor/iron/solarpanel,
+/area/centcom/mafia)
+"vo" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"zZ" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Cv" = (
+/obj/structure/hoop{
+	dir = 4;
+	name = "A La Penners"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"Cw" = (
+/obj/structure/sign/warning/electric_shock,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/mafia)
+"Dt" = (
+/turf/closed/indestructible/fakedoor/glass_airlock,
+/area/centcom/mafia)
+"DP" = (
+/obj/structure/hoop{
+	dir = 8;
+	name = "Hopping Jezzertons"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"Gh" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel,
+/area/centcom/mafia)
+"Hu" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/mafia)
+"Lu" = (
+/turf/closed/indestructible/reinforced,
+/area/centcom/mafia)
+"LV" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/olive,
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"Nt" = (
+/turf/closed/indestructible/grille,
+/area/centcom/mafia)
+"Oj" = (
+/obj/structure/lattice,
+/obj/structure/marker_beacon/olive,
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"OB" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Ql" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"Rl" = (
+/obj/structure/cable,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Se" = (
+/turf/closed/indestructible/fakedoor/engineering,
+/area/centcom/mafia)
+"Tc" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Ul" = (
+/turf/open/floor/fakespace,
+/area/centcom/mafia)
+"Uv" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"Vr" = (
+/obj/machinery/power/solar/fake,
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel,
+/area/centcom/mafia)
+"YX" = (
+/obj/item/toy/basketball,
+/obj/structure/marker_beacon/yellow,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+
+(1,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
+(2,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+tO
+tO
+tO
+tO
+Hu
+"}
+(3,1,1) = {"
+Hu
+tO
+tO
+Ul
+Ul
+Nt
+Ul
+Ul
+Ul
+Ul
+dg
+LV
+dg
+Ul
+Ul
+Ul
+Ul
+Nt
+tO
+tO
+tO
+tO
+Hu
+"}
+(4,1,1) = {"
+Hu
+tO
+tO
+Ul
+Ul
+Nt
+Ul
+Ul
+Ul
+Ul
+dg
+vo
+dg
+Ul
+Ul
+Ul
+Ul
+Nt
+tO
+tO
+tO
+tO
+Hu
+"}
+(5,1,1) = {"
+Hu
+Ul
+Nt
+Nt
+Nt
+Nt
+dg
+dg
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+dg
+dg
+Nt
+Nt
+Nt
+Nt
+tO
+Hu
+"}
+(6,1,1) = {"
+Hu
+Ul
+Nt
+Ul
+dg
+Ul
+Ul
+Ul
+ku
+Oj
+vo
+Cv
+vo
+Oj
+ku
+Ul
+Ul
+Ul
+Ul
+Ul
+Nt
+tO
+Hu
+"}
+(7,1,1) = {"
+Hu
+Ul
+Nt
+dg
+dg
+Ul
+Ul
+Ul
+ku
+dg
+vo
+vo
+vo
+dg
+ku
+Ul
+Ul
+Ul
+Ul
+Ul
+Nt
+tO
+Hu
+"}
+(8,1,1) = {"
+Hu
+Nt
+Nt
+dg
+dg
+Ul
+Ul
+Ul
+ku
+Ul
+dg
+dg
+dg
+Ul
+ku
+Vr
+dC
+Vr
+dg
+dg
+Nt
+Nt
+Hu
+"}
+(9,1,1) = {"
+Hu
+Lu
+Ul
+Ul
+dg
+Ul
+Ul
+Ul
+ku
+dC
+oR
+dC
+oR
+dC
+ku
+Vr
+dC
+Vr
+Ul
+Ul
+Ul
+Nt
+Hu
+"}
+(10,1,1) = {"
+Hu
+Lu
+Lu
+Lu
+Lu
+Lu
+fu
+Ul
+ku
+Ul
+uH
+dC
+uH
+Ul
+ku
+Vr
+dC
+Vr
+Ul
+Ul
+Ul
+Nt
+Hu
+"}
+(11,1,1) = {"
+Hu
+Lu
+Lu
+at
+rU
+zZ
+fu
+fu
+Cw
+dg
+oR
+dC
+oR
+dg
+ku
+Vr
+dC
+Vr
+Ul
+Ul
+Ul
+Nt
+Hu
+"}
+(12,1,1) = {"
+Hu
+Lu
+Se
+OB
+Tc
+Uv
+Dt
+Rl
+Dt
+Tc
+Tc
+YX
+Tc
+Tc
+lD
+Tc
+Tc
+Tc
+Tc
+Gh
+Ul
+Nt
+Hu
+"}
+(13,1,1) = {"
+Hu
+Lu
+Lu
+aw
+bA
+sb
+fu
+fu
+Cw
+dg
+oR
+dC
+oR
+dg
+ku
+Vr
+dC
+Vr
+Ul
+Ul
+Ul
+Nt
+Hu
+"}
+(14,1,1) = {"
+Hu
+Lu
+Lu
+Lu
+Lu
+Lu
+fu
+Ul
+ku
+Ul
+uH
+dC
+uH
+Ul
+ku
+Vr
+dC
+Vr
+Ul
+Ul
+Ul
+Nt
+Hu
+"}
+(15,1,1) = {"
+Hu
+Lu
+Ul
+Ul
+dg
+Ul
+tO
+tO
+ku
+dC
+oR
+dC
+oR
+dC
+ku
+Vr
+dC
+Vr
+Ul
+Ul
+Ul
+Nt
+Hu
+"}
+(16,1,1) = {"
+Hu
+Nt
+Nt
+dg
+dg
+Ul
+Ul
+Ul
+ku
+Ul
+dg
+dg
+dg
+Ul
+ku
+Vr
+dC
+Vr
+dg
+dg
+Nt
+Nt
+Hu
+"}
+(17,1,1) = {"
+Hu
+tO
+Nt
+dg
+dg
+Ul
+Ul
+Ul
+ku
+dg
+vo
+vo
+vo
+dg
+ku
+Ul
+Ul
+Ul
+Ul
+Ul
+Nt
+tO
+Hu
+"}
+(18,1,1) = {"
+Hu
+tO
+Nt
+Ul
+dg
+Ul
+Ul
+Ul
+ku
+fj
+vo
+DP
+vo
+fj
+ku
+Ul
+Ul
+Ul
+Ul
+Ul
+Nt
+tO
+Hu
+"}
+(19,1,1) = {"
+Hu
+tO
+Nt
+Nt
+Nt
+Nt
+dg
+dg
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+dg
+dg
+Nt
+Nt
+Nt
+Nt
+tO
+Hu
+"}
+(20,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Nt
+Ul
+Ul
+Ul
+Ul
+dg
+vo
+dg
+Ul
+Ul
+Ul
+Ul
+Nt
+tO
+tO
+tO
+tO
+Hu
+"}
+(21,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Nt
+Ul
+Ul
+Ul
+Ul
+dg
+Ql
+dg
+Ul
+Ul
+Ul
+Ul
+Nt
+tO
+tO
+tO
+tO
+Hu
+"}
+(22,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+tO
+tO
+tO
+tO
+Hu
+"}
+(23,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
