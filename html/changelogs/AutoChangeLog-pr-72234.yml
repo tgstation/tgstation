@@ -1,4 +1,0 @@
-author: "Salex08"
-delete-after: True
-changes:
-  - bugfix: "using chemicals on botany wont have unrelated side effects"
