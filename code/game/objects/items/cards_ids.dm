@@ -45,6 +45,7 @@
 	name = "retro identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "card_grey"
+	worn_icon = 'icons/mob/clothing/id_card.dmi'
 	worn_icon_state = "card_retro"
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
