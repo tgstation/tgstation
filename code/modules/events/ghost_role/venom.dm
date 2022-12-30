@@ -41,7 +41,7 @@
 	name = "weird meteor"
 	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "meteor"
-	hits = 15
+	hits = 10
 	heavy = TRUE
 	dropamt = 0
 	threat = 100
@@ -157,6 +157,9 @@
 
 /mob/living/simple_animal/hostile/venom/default_can_use_topic(src_object)
 	return UI_INTERACTIVE
+
+/mob/living/simple_animal/hostile/venom/can_interact_with(atom/interacted, treat_mob_as_adjacent)
+	return ..() || interacted == mod
 
 /mob/living/simple_animal/hostile/venom/proc/charging_end()
 	charging = FALSE
