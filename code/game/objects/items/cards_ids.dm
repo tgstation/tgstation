@@ -840,10 +840,6 @@
 	desc = "An ID card that allows access to bots maintenance protocols."
 	trim = /datum/id_trim/away/old/robo
 
-/datum/armor/card_id
-	fire = 100
-	acid = 100
-
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 
@@ -854,10 +850,6 @@
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
 	registered_age = null
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/departmental_budget/Initialize(mapload)
 	. = ..()
@@ -881,10 +873,6 @@
 	department_ID = ACCOUNT_CAR
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/departmental_budget/AltClick(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
@@ -915,10 +903,6 @@
 	var/trim_assignment_override
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
@@ -1085,10 +1069,6 @@
 	assigned_icon_state = "assigned_gold"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 
-/datum/armor/card_id
-	fire = 100
-	acid = 100
-
 /obj/item/card/id/advanced/gold/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
@@ -1099,10 +1079,6 @@
 	registered_name = "Captain"
 	trim = /datum/id_trim/job/captain
 	registered_age = null
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
@@ -1199,10 +1175,6 @@
 	registered_name = "Captain"
 	registered_age = null
 
-/datum/armor/card_id
-	fire = 100
-	acid = 100
-
 /obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare/update_label()
 	if(registered_name == "Captain")
 		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
@@ -1219,10 +1191,6 @@
 	assigned_icon_state = "assigned_centcom"
 	trim = /datum/id_trim/admin
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
@@ -1252,10 +1220,6 @@
 	var/time_to_assign
 	/// Time left on a card till they can leave.
 	var/time_left = 0
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
 	..()
@@ -1366,10 +1330,6 @@
 	var/anyone = FALSE
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
 	. = ..()

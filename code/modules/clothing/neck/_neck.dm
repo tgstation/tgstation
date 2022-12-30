@@ -339,10 +339,6 @@
 	/// toggles between sell (TRUE) and get price post-fees (FALSE)
 	var/selling = FALSE
 
-/datum/armor/large_scarf_syndie
-	fire = 50
-	acid = 40
-
 /obj/item/clothing/neck/necklace/dope/merchant/attack_self(mob/user)
 	. = ..()
 	selling = !selling
@@ -373,10 +369,6 @@
 	color = "#ffffff"
 	custom_price = PAYCHECK_CREW * 0.2
 	custom_materials = (list(/datum/material/plastic = 500))
-
-/datum/armor/large_scarf_syndie
-	fire = 50
-	acid = 40
 
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()

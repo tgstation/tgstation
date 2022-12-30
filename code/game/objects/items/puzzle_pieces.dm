@@ -88,16 +88,6 @@
 /obj/machinery/door/puzzle/keycard
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
 
-/datum/armor/door_puzzle
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/keycard))
@@ -119,16 +109,6 @@
 
 /obj/machinery/door/puzzle/light
 	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructible."
-
-/datum/armor/door_puzzle
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
 
 /obj/machinery/door/puzzle/light/Initialize(mapload)
 	. = ..()
@@ -170,16 +150,6 @@
 	undertile_pressureplate = FALSE
 	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
-
-/datum/armor/door_puzzle
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
 
 /obj/item/pressure_plate/hologrid/Initialize(mapload)
 	. = ..()
