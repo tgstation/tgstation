@@ -1,0 +1,22 @@
+{
+	"transmutation_rune": [
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune",
+			"blend_mode": "overlay"
+		}
+	],
+	"transmutation_rune_active": [
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_activate_colour",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_activate_white",
+			"blend_mode": "overlay"
+		}
+	]
+}
