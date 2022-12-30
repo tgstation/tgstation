@@ -1,0 +1,25 @@
+import re
+
+from .error import MaplintError
+
+REGEX_TYPEPATH = re.compile(r'^/[\w/]+$')
+
+class Typepath:
+    path: str
+    segments: list[str]
+
+    def __init__(self, path):
+        if not REGEX_TYPEPATH.match(path):
+            raise MaplintError(f"Invalid typepath {path!r}.")
+
+        self.path = path
+        self.segments = path.split('/')[1:]
+
+    def __eq__(self, other):
+        if not isinstance(other, Typepath):
+            return False
+
+        return self.path == other.path
+
+    def __str__(self) -> str:
+        return self.path

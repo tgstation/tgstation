@@ -1,5 +1,10 @@
-from dataclasses import dataclass, field
+# I know we already have one in mapmerge, but this one can afford to be significantly simpler to interface with
+# by virtue of being read-only.
 import re
+from dataclasses import dataclass, field
+
+from .common import Typepath
+from .error import MaplintError
 
 REGEX_POP_ID = re.compile(r'^"(?P<key>.+)" = \($')
 REGEX_POP_CONTENT_HEADER = re.compile(r'^(?P<path>[/\w]+?)(?P<end>[{,)])$')
@@ -8,10 +13,6 @@ REGEX_VAR_EDIT = re.compile(r'^\t(?P<name>.+?) = (?P<definition>.+?);?$')
 
 @dataclass
 class Filename:
-    path: str
-
-@dataclass
-class Typepath:
     path: str
 
 @dataclass
@@ -32,8 +33,12 @@ class DMM:
     # Z -> X -> Y -> Pop
     turfs: list[list[list[str]]] = field(default_factory = list)
 
-class DMMError(Exception):
-    pass
+    def turfs_for_pop(self, key: str):
+        for z, z_level in enumerate(self.turfs):
+            for x, x_level in enumerate(z_level):
+                for y, turf in enumerate(x_level):
+                    if turf == key:
+                        yield (x, y, z)
 
 class DMMParser:
     dmm: DMM
@@ -45,7 +50,7 @@ class DMMParser:
 
     def parse(self):
         if "dmm2tgm" not in self.next_line():
-            raise DMMError("Map isn't in TGM format. Consider using StrongDMM instead of Dream Maker.")
+            raise MaplintError("Map isn't in TGM format. Consider using StrongDMM instead of Dream Maker.")
 
         while self.parse_pop():
             pass
@@ -111,7 +116,7 @@ class DMMParser:
     def parse_constant(self, constant):
         if (float_constant := self.safe_float(constant)) is not None:
             return float_constant
-        elif re.match(r'^[/\w]+$', constant):
+        elif re.match(r'^/[/\w]+$', constant):
             return Typepath(constant)
         elif re.match(r'^".*"$', constant):
             # This should do escaping in the future
@@ -169,7 +174,7 @@ class DMMParser:
             self.raise_error(message)
 
     def raise_error(self, message):
-        raise DMMError(f"{message} (line {self.line})")
+        raise MaplintError(f"{message} (line {self.line})")
 
 def parse_dmm(reader):
     return DMMParser(reader).parse()
