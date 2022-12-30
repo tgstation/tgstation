@@ -25,7 +25,7 @@
 
 		if(worn_icon) //easiest to check since we override everything. this automatically includes downstream support.
 			if(!(icon_state in icon_states(worn_icon)))
-				TEST_FAIL("\t[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'")
+				TEST_FAIL("[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'")
 			continue
 
 		var/icon_file //checks against all the default icon locations if one isn't defined.
