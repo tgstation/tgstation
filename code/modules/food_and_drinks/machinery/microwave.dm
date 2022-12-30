@@ -382,7 +382,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
-	if(HAS_TRAIT(cooker, TRAIT_UNFORTUNATE) && prob(7))
+	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
 		muck()
 		return
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
@@ -459,7 +459,7 @@
 	operating = FALSE
 
 	var/metal_amount = 0
-	var/unlucky = HAS_TRAIT(cooker, TRAIT_UNFORTUNATE) && prob(10)
+	var/unlucky = HAS_TRAIT(cooker, TRAIT_CURSED) && prob(10)
 	for(var/obj/item/cooked_item in ingredients)
 		var/sigreturn = cooked_item.microwave_act(src, cooker, randomize_pixel_offset = ingredients.len)
 		if(sigreturn & COMPONENT_MICROWAVE_SUCCESS)

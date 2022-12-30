@@ -18,7 +18,7 @@
 	var/explode_outer = 0.8
 	/// The force of the self-gib explosion
 	var/explode_inner = 0
-	/// Luck modifier. Higher means more likely to trigger, more damage, etc. Unfortunate are half as unlucky as smites
+	/// Luck modifier. Higher means more likely to trigger, more damage, etc. Cursed only half as unlucky
 	var/luck_mod = 1
 
 /datum/component/omen/Initialize(silent = FALSE, _vessel, _permanent = FALSE, _quirk = FALSE)
@@ -28,7 +28,7 @@
 	permanent = _permanent
 	if(_quirk)
 		quirk = _quirk
-		luck_mod = 0.5 // Unfortunate are not as unlucky as smites
+		luck_mod = 0.5 // Lowers damage and probabilities for naturally cursed
 	if(!silent)
 		var/warning = "You get a bad feeling..."
 		if(permanent)
@@ -129,7 +129,7 @@
 
 	qdel(src)
 
-/// Unfortunate quirk players delimb on death
+/// Severe deaths. Non-carbons and smites are gibbed.
 /datum/component/omen/proc/check_death(mob/living/our_guy)
 	SIGNAL_HANDLER
 

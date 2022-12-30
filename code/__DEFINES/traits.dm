@@ -148,7 +148,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
 /// Gibs on death and slips like ice.
-#define TRAIT_UNFORTUNATE "unfortunate"
+#define TRAIT_CURSED "cursed"
 /// Emotemute. Can't... emote.
 #define TRAIT_EMOTEMUTE "emotemute"
 #define TRAIT_DEAF "deaf"

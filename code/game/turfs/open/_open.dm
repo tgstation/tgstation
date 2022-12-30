@@ -220,7 +220,7 @@
 		return FALSE
 
 	var/slide_distance = 4
-	if(HAS_TRAIT(slipper, TRAIT_UNFORTUNATE))
+	if(HAS_TRAIT(slipper, TRAIT_CURSED))
 		if(!(lube & SLIDE_ICE)) // Ensures we are at least sliding
 			lube |= SLIDE
 		slide_distance = rand(5, 9)

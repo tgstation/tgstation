@@ -37,7 +37,7 @@
 	if(!cursed.GetComponent(/datum/component/omen))
 		cursed.AddComponent(/datum/component/omen, silent = TRUE)
 		return TRUE
-	if(HAS_TRAIT(cursed, TRAIT_UNFORTUNATE))
+	if(HAS_TRAIT(cursed, TRAIT_CURSED))
 		to_chat(cursed, span_warning("What a horrible night... To have a curse!"))
 	addtimer(CALLBACK(src, PROC_REF(curse_heart), cursed), 5 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 
