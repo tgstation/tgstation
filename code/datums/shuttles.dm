@@ -499,7 +499,7 @@
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
 	name = "Salvage Ship"
-	description = "Whiteship that focuses on a large cargo bay that players can build in. Spawns with Syndicate basic mobs who do not drop corpses and are highly aggressive."
+	description = "Whiteship that focuses on a large cargo bay that players can build in. Spawns with Syndicate mobs who do not drop corpses and are highly aggressive."
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
