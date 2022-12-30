@@ -121,7 +121,7 @@
 	control.Grant(src)
 	var/datum/action/cooldown/revive/revive = new(src)
 	revive.Grant(src)
-	var/datum/action/cooldown/mod_ui = new(src)
+	var/datum/action/cooldown/mod_ui/mod_ui = new(src)
 	mod_ui.Grant(src)
 
 /mob/living/simple_animal/hostile/venom/death()
@@ -405,13 +405,13 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 0 SECONDS
 
-/datum/action/cooldown/revive/IsAvailable(feedback = FALSE)
+/datum/action/cooldown/mod_ui/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
 	return istype(owner, /mob/living/simple_animal/hostile/venom)
 
-/datum/action/cooldown/revive/Activate(atom/target)
+/datum/action/cooldown/mod_ui/Activate(atom/target)
 	var/mob/living/simple_animal/hostile/venom/venom = owner
 	if(!venom.mod)
 		to_chat(venom, span_warning("You have no linked suit!"))
@@ -563,7 +563,7 @@
 
 /obj/item/mod/module/venom_restorer
 	name = "MOD Venom restorer module"
-	desc = "A module that uses venom to reduce the duration of bad status effects and passively heals the user. \
+	desc = "A module that uses venom to reduce the duration of bad status effects and passively heal the user. \
 		Strength scales with sapped power."
 	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "venom_restorer"
