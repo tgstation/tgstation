@@ -272,6 +272,15 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 */
 
+/datum/crafting_recipe/basketball_hoop
+	name = "Basketball Hoop"
+	result = /obj/structure/hoop
+	reqs = list(/obj/item/stack/sheet/durathread = 5,
+				/obj/item/stack/sheet/iron = 1, // the backboard
+				/obj/item/stack/rods = 5)
+	time = 10 SECONDS
+	category = CAT_ENTERTAINMENT
+
 /obj/structure/hoop
 	name = "basketball hoop"
 	desc = "Boom, shakalaka!"
