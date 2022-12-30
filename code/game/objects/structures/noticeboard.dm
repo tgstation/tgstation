@@ -111,6 +111,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 		remove_item(content)
 	qdel(src)
 
+/obj/item/wallframe/noticeboard
+	name = "notice board"
+	desc = "Right now it's more of a clipboard. Attach to a wall to use."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "nboard00"
+	custom_materials = list(
+		/datum/material/wood = MINERAL_MATERIAL_AMOUNT,
+	)
+	result_path = /obj/structure/noticeboard
+	pixel_shift = 32
+
 // Notice boards for the heads of staff (plus the qm)
 
 /obj/structure/noticeboard/captain
