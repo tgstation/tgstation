@@ -9,7 +9,9 @@
 	circuit = /obj/item/circuitboard/computer/order_console/mining
 
 	cooldown_time = 10 SECONDS //just time to let you know your order went through.
-	express_cost_multiplier = 0.65 // multiplies cargo shipping instead 
+	express_cost_multiplier = 1
+	var/cargo_shipping_multiplier = 0.65
+
 	order_categories = list(
 		CATEGORY_MINING,
 		CATEGORY_CONSUMABLES,
@@ -21,7 +23,7 @@
 	var/final_cost = get_total_cost()
 	var/failure_message = "Sorry, but you do not have enough mining points."
 	if(!express)
-		final_cost = round(final_cost * express_cost_multiplier)
+		final_cost = round(final_cost * cargo_shipping_multiplier)
 	if(final_cost <= card.mining_points)
 		card.mining_points -= final_cost
 		return TRUE
