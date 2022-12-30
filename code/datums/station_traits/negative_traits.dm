@@ -301,5 +301,5 @@
 /datum/station_trait/haunted/on_round_start()
 	. = ..()
 	for (var/mob/living/carbon/player as anything in GLOB.player_list)
-		if(prob(66.6))
+		if(!prob(66.6))
 			player.add_quirk(/datum/quirk/cursed)
