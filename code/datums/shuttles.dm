@@ -534,7 +534,7 @@
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
-	description = "There is no map for this vessel and it was supposed to be used with the Meta-class. Do not try to spawn it!."
+	description = "There is no map for this vessel and it was supposed to be used with the Meta-class. Do not try to spawn it!"
 
 /datum/map_template/shuttle/whiteship/personalshuttle
 	suffix = "personalshuttle"
@@ -544,7 +544,7 @@
 /datum/map_template/shuttle/whiteship/obelisk
 	suffix = "obelisk"
 	name = "Obelisk"
-	description = "A large research vessel affected by the Cult of Nar'Sie. Has fucky wiring with its PACMAN generator."
+	description = "A large research vessel affected by the Cult of Nar'Sie. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
 	admin_notes = "Not actually an obelisk, has nonsentient cult constructs."
 
 /datum/map_template/shuttle/cargo/kilo
@@ -698,7 +698,7 @@
 /datum/map_template/shuttle/escape_pod/cramped
 	suffix = "cramped"
 	name = "escape pod (Cramped)"
-	description = "Downgraded escape pod that lacks a window and only has one seat, alongside lacking an emergency safe (presumably)."
+	description = "Downgraded escape pod that lacks a window and only has one seat, alongside lacking an emergency safe."
 
 /datum/map_template/shuttle/assault_pod/default
 	suffix = "default"
@@ -765,17 +765,17 @@
 /datum/map_template/shuttle/ruin/pirate_cutter
 	suffix = "pirate_cutter"
 	name = "Pirate Cutter"
-	description = "Small pirate vessel with ballistic turrets. Spawns with 3 pirate simplemobs, one of which drops an energy cutlass."
+	description = "Small pirate vessel with ballistic turrets. Spawns with 3 pirate mobs, one of which drops an energy cutlass."
 
 /datum/map_template/shuttle/ruin/syndicate_dropship
 	suffix = "syndicate_dropship"
 	name = "Syndicate Dropship"
-	description = "Light Syndicate vessel with laser turrets. Spawns with a Syndicate basic mob in the bridge."
+	description = "Light Syndicate vessel with laser turrets. Spawns with a Syndicate mob in the bridge."
 
 /datum/map_template/shuttle/ruin/syndicate_fighter_shiv
 	suffix = "syndicate_fighter_shiv"
 	name = "Syndicate Fighter"
-	description = "A small Syndicate vessel with exactly one tile of useful interior space and 4 laser turrets. Starts with a Syndicate basic mob in the pilot's seat, and extremely cramped."
+	description = "A small Syndicate vessel with exactly one tile of useful interior space and 4 laser turrets. Starts with a Syndicate mob in the pilot's seat, and extremely cramped."
 
 /datum/map_template/shuttle/snowdin/mining
 	suffix = "mining"
