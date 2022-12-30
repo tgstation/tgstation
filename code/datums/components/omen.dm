@@ -65,7 +65,7 @@
 			var/obj/machinery/door/airlock/darth_airlock = turf_content
 			living_guy.apply_status_effect(/datum/status_effect/incapacitating/paralyzed, 10)
 			INVOKE_ASYNC(darth_airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, close), TRUE)
-			if(!permanent)
+			if(!permanent && !prob(66.6))
 				qdel(src)
 			return
 
