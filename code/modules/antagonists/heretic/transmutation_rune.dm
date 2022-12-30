@@ -189,3 +189,17 @@
 	. = ..()
 	if (path_colour)
 		set_greyscale(colors = list(path_colour))
+
+/obj/effect/temp_visual/drawing_heretic_rune
+	duration = 30 SECONDS
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "transmutation_rune_draw"
+	pixel_x = -32
+	pixel_y = -32
+	layer = SIGIL_LAYER
+	greyscale_config = /datum/greyscale_config/heretic_rune
+
+/obj/effect/temp_visual/drawing_heretic_rune/Initialize(mapload, path_colour)
+	. = ..()
+	if (path_colour)
+		set_greyscale(colors = list(path_colour))

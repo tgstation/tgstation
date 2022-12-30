@@ -317,8 +317,10 @@
 	drawing_rune = TRUE
 
 	target_turf.balloon_alert(user, "drawing rune...")
+	var/obj/effect/temp_visual/drawing_heretic_rune/drawing_effect = new(target_turf, path_to_rune_color[heretic_path])
 	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks))
 		target_turf.balloon_alert(user, "interrupted!")
+		qdel(drawing_effect)
 		drawing_rune = FALSE
 		return
 
