@@ -319,7 +319,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bb" = (
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bc" = (
