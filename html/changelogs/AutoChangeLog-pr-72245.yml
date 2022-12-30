@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - bugfix: "The burden level of Burdened Sect chaplains is now updated properly when their negative mutations are healed with mutadone"

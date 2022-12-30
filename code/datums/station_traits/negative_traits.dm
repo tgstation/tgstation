@@ -282,6 +282,15 @@
 	weight_multiplier = 1.5
 	max_occurrences_modifier = 2
 
+/datum/station_trait/cramped_escape_pods
+	name = "Cramped Escape Pods"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Due to budget cuts, we have downsized your escape pods."
+	trait_to_give = STATION_TRAIT_SMALLER_PODS
+	blacklist = list(/datum/station_trait/luxury_escape_pods)
+
 /datum/station_trait/haunted
 	name = "Haunted"
 	report_message = "Your station seems to be experiencing some paranormal activity. Expect an increase of unfortunate events."

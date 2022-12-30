@@ -2408,10 +2408,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. = ..()
 	add_mood_event("gaming", /datum/mood_event/gaming)
 
-/// Proc for giving a mob a new 'friend', generally used for AI control and targetting
+/// Proc for giving a mob a new 'friend', generally used for AI control and targetting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
-	faction |= REF(new_friend)
+	var/friend_ref = REF(new_friend)
+	if (faction.Find(friend_ref))
+		return FALSE
+	faction |= friend_ref
 	if (ai_controller)
 		var/list/friends = ai_controller.blackboard[BB_FRIENDS_LIST]
 		if (!friends)
@@ -2419,6 +2422,23 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		friends[WEAKREF(new_friend)] = TRUE
 		ai_controller.blackboard[BB_FRIENDS_LIST] = friends
 	SEND_SIGNAL(src, COMSIG_LIVING_BEFRIENDED, new_friend)
+	return TRUE
+
+/// Proc for removing a friend you added with the proc 'befriend'. Returns true if you removed a friend.
+/mob/living/proc/unfriend(mob/living/old_friend)
+	SHOULD_CALL_PARENT(TRUE)
+	var/friend_ref = REF(old_friend)
+	if (!faction.Find(friend_ref))
+		return FALSE
+	faction -= friend_ref
+	if (ai_controller)
+		var/list/friends = ai_controller.blackboard[BB_FRIENDS_LIST]
+		if (!friends)
+			return
+		friends[WEAKREF(old_friend)] = FALSE
+		ai_controller.blackboard[BB_FRIENDS_LIST] = friends
+	SEND_SIGNAL(src, COMSIG_LIVING_UNFRIENDED, old_friend)
+	return TRUE
 
 /// Admin only proc for making the mob hallucinate a certain thing
 /mob/living/proc/admin_give_hallucination(mob/admin)
