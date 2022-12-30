@@ -17,11 +17,11 @@
 	/// Base damage from negative events. Cursed take 25% less damage.
 	var/damage_mod = 1
 
-/datum/component/omen/Initialize(_vessel)
+/datum/component/omen/Initialize(vessel)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	vessel = _vessel
+	src.vessel = vessel
 
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
@@ -136,9 +136,9 @@
  */
 /datum/component/omen/smite
 
-/datum/component/omen/smite/Initialize(_vessel, _permanent)
+/datum/component/omen/smite/Initialize(vessel, permanent)
 	. = ..()
-	permanent = _permanent
+	src.permanent = permanent
 
 /datum/component/omen/smite/check_bless(mob/living/our_guy, category)
 	if(!permanent)

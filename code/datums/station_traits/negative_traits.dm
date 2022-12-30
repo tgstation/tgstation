@@ -303,4 +303,8 @@
 	for (var/mob/living/carbon/player as anything in GLOB.player_list)
 		if(prob(66.6))
 			continue
+		to_chat(player, span_warning("You feel a chill down your spine..."))
+		/// This will be for release,
+		///	AddComponent(/datum/component/omen, player)
+		/// But for now, we'll just give them a cursed quirk.
 		player.add_quirk(/datum/quirk/cursed)
