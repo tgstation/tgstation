@@ -214,8 +214,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
 
 /obj/structure/fireaxecabinet/mechremoval/empty
-
-/obj/structure/fireaxecabinet/mechremoval/empty
 	populate_contents = FALSE
 
 /obj/item/wallframe/fireaxecabinet/mechremoval
