@@ -282,11 +282,13 @@
 	width = 3
 	dwidth = 1
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default
+	/// Set to true if you have a snowflake escape pod dock which needs to always have the normal pod or some other one
+	var/enforce_specific_pod = FALSE
 
 /obj/docking_port/stationary/escape_pod/Initialize(mapload)
 	. = ..()
-	if (roundstart_template != /datum/map_template/shuttle/escape_pod/default)
-		return // Ignore snowflake escape pods
+	if (enforce_specific_pod)
+		return
 
 	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
 		roundstart_template = /datum/map_template/shuttle/escape_pod/cramped
