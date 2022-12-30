@@ -41,7 +41,7 @@
 	name = "weird meteor"
 	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "meteor"
-	hits = 5
+	hits = 15
 	heavy = TRUE
 	dropamt = 0
 	threat = 100
@@ -119,6 +119,10 @@
 	telepathy.Grant(src)
 	var/datum/action/cooldown/mind_control/control = new(src)
 	control.Grant(src)
+	var/datum/action/cooldown/revive/revive = new(src)
+	revive.Grant(src)
+	var/datum/action/cooldown/mod_ui = new(src)
+	mod_ui.Grant(src)
 
 /mob/living/simple_animal/hostile/venom/death()
 	if(!QDELETED(mod))
@@ -151,6 +155,9 @@
 /mob/living/simple_animal/hostile/venom/ex_act(severity, target, origin)
 	return
 
+/mob/living/simple_animal/hostile/venom/default_can_use_topic(src_object)
+	return UI_INTERACTIVE
+
 /mob/living/simple_animal/hostile/venom/proc/charging_end()
 	charging = FALSE
 
@@ -177,6 +184,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_NOHUNGER, REF(src))
 	ADD_TRAIT(mod.wearer, TRAIT_VIRUSIMMUNE, REF(src))
 	ADD_TRAIT(mod.wearer, TRAIT_NODISMEMBER, REF(src))
+	ADD_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, REF(src))
 	var/obj/item/implant/freedom/freedom_implant = new(mod.wearer)
 	freedom_implant.uses = INFINITY
 	freedom_implant.implant(mod.wearer, silent = TRUE)
@@ -387,6 +395,29 @@
 	venom.mod.wearer.revive()
 	venom.power -= 3
 
+/datum/action/cooldown/mod_ui
+	name = "Access Suit"
+	desc = "Accesses the suit UI."
+	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
+	button_icon = 'icons/mob/actions/actions_mod.dmi'
+	button_icon_state = "panel"
+	check_flags = AB_CHECK_CONSCIOUS
+	cooldown_time = 0 SECONDS
+
+/datum/action/cooldown/revive/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	return istype(owner, /mob/living/simple_animal/hostile/venom)
+
+/datum/action/cooldown/revive/Activate(atom/target)
+	var/mob/living/simple_animal/hostile/venom/venom = owner
+	if(!venom.mod)
+		to_chat(venom, span_warning("You have no linked suit!"))
+		return
+	venom.mod.ui_interact(venom)
+
 /obj/item/mod/module/venom_holder
 	name = "MOD Venom infusion module"
 	desc = "An infusion of Venom infection into the suit. This holds the venom itself."
@@ -424,7 +455,8 @@
 
 /obj/item/mod/module/venom_tentacle
 	name = "MOD Venom tentacle module"
-	desc = "A weird tentacle."
+	desc = "A tentacle that can be used for bringing yourself to walls and structures and bringing people and items to you. \
+		Range and incapacitating ability scales with sapped power."
 	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "venom_tentacle"
 	module_type = MODULE_ACTIVE
@@ -466,7 +498,8 @@
 
 /obj/item/mod/module/venom_piercer
 	name = "MOD Venom piercer module"
-	desc = "A weird sharp thing."
+	desc = "A sharp weapon that can be used on corpses to sap their strength. \
+		Force scales with sapped power."
 	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "venom_piercer"
 	module_type = MODULE_ACTIVE
@@ -501,6 +534,7 @@
 	sharpness = SHARP_EDGED
 	color = COLOR_BLACK
 	var/mob/living/simple_animal/hostile/venom/venom
+	var/using = FALSE
 
 /obj/item/melee/venom_piercer/proc/update_power()
 	if(!venom)
@@ -510,13 +544,17 @@
 /obj/item/melee/venom_piercer/attack(mob/living/carbon/human/target_mob, mob/living/user, params)
 	update_power()
 	. = ..()
-	if(!venom || !istype(target_mob) || !target_mob.mind || target_mob.stat != DEAD || HAS_TRAIT(target_mob, TRAIT_HUSK))
+	if(using || !venom || !istype(target_mob) || !target_mob.mind || target_mob.stat != DEAD || HAS_TRAIT(target_mob, TRAIT_HUSK))
 		return
+	using = TRUE
 	playsound(target_mob, 'sound/effects/butcher.ogg', 75, TRUE)
 	to_chat(user, span_warning("Draining their strength..."))
 	if(!do_after(user, 10 SECONDS, target_mob))
+		using = FALSE
 		return TRUE
-	target_mob.apply_damage(200, BURN, spread_damage = TRUE, wound_bonus = 50)
+	using = FALSE
+	target_mob.apply_damage(500, BURN, spread_damage = TRUE)
+	target_mob.become_husk(BURN)
 	to_chat(user, span_warning("Their strength has been drained."))
 	to_chat(venom, span_danger("You have gained power."))
 	venom.power++
@@ -525,7 +563,8 @@
 
 /obj/item/mod/module/venom_restorer
 	name = "MOD Venom restorer module"
-	desc = "A weird healy thing."
+	desc = "A module that uses venom to reduce the duration of bad status effects and passively heals the user. \
+		Strength scales with sapped power."
 	icon = 'icons/mob/nonhuman-player/venom.dmi'
 	icon_state = "venom_restorer"
 	incompatible_modules = list(/obj/item/mod/module/venom_restorer)
