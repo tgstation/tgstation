@@ -155,7 +155,7 @@ const CheckoutTab = (props, context) => {
                   tooltip={`
                   Your groceries will arrive at cargo,
                   and hopefully get delivered by them.
-                  ${cargo_cheaper ? "Cheaper than express delivery." : ""}
+                  ${cargo_cheaper ? 'Cheaper than express delivery.' : ''}
                   `}
                   tooltipPosition="top"
                   onClick={() => act('purchase')}
@@ -169,7 +169,11 @@ const CheckoutTab = (props, context) => {
                 color="yellow"
                 content="Express"
                 tooltip={`
-                Sends the groceries instantly${!cargo_cheaper ? ",\nbut locks the console longer and increases the price!": "."}
+                Sends the groceries instantly${
+                  !cargo_cheaper
+                    ? ',\nbut locks the console longer and increases the price!'
+                    : '.'
+                }
                 `}
                 tooltipPosition="top-start"
                 onClick={() => act('express')}
