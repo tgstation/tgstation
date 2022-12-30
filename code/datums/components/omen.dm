@@ -141,17 +141,17 @@
 	if(!permanent)
 		qdel(src)
 		return
+
+	explosion(our_guy, devastation_range = explode_force, heavy_impact_range = explode_force, light_impact_range = explode_light, flame_range = explode_force, flash_range = explode_flash, explosion_cause = src)
+	if(!explode_force) // Gives normal, unedited curse gibs a mild shake (because explosions with no radius do not shake the camera)
+		for(var/mob/witness as anything in view(2, our_guy))
+			shake_camera(witness, 1 SECONDS, 3)
+
 	if(!quirk || !iscarbon(our_guy)) // Smites get gibbed
 		our_guy.gib()
 		return
 
 	var/mob/living/carbon/player = our_guy
-
-	explosion(player, devastation_range = explode_force, heavy_impact_range = explode_force, light_impact_range = explode_light, flame_range = explode_force, flash_range = explode_flash, explosion_cause = src)
-	if(!explode_force) // Gives normal, unedited curse gibs a mild shake (because explosions with no radius do not shake the camera)
-		for(var/mob/witness as anything in view(2, player))
-			shake_camera(witness, 1 SECONDS, 3)
-
 	player.spread_bodyparts(skip_head = TRUE)
 	player.spawn_gibs()
 	return
