@@ -519,7 +519,7 @@
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
-	description = "A ship hit with an engine blowout, leaving it as a depressurised husk. Has infinite power, although likely to bait people into removing that property. Also the most open out of all the whiteships."
+	description = "A ship hit with an engine blowout, leaving it as a depressurised husk. Has infinite power, although likely to bait people into removing that property. Also the most open out of all the whiteships, and starts with a 25% ripley chance."
 
 /datum/map_template/shuttle/whiteship/tram
 	suffix = "tram"
@@ -529,7 +529,7 @@
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
 	name = "NT Frigate"
-	description = "A standard whiteship with big spiders onboard."
+	description = "A standard whiteship with big spiders onboard. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
 
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
