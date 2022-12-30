@@ -104,7 +104,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	user.balloon_alert("repairing...")
+	user.balloon_alert(user, "repairing...")
 	if(I.use_tool(src, user, 10, volume=50))
 		user.balloon_alert(user, "repaired")
 		broken = 0
