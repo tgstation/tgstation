@@ -15,9 +15,11 @@
 	/// Whether this was caused by a quirk
 	var/quirk = FALSE
 	/// The outer light range of the self-gib explosion
-	var/explode_outer = 1
+	var/explode_light = 0
+	/// The flash and shake radius of the self-gib explosion
+	var/explode_flash = 0
 	/// The force of the self-gib explosion
-	var/explode_inner = 0
+	var/explode_force = 0
 	/// Luck modifier. Higher means more likely to trigger, more damage, etc. Cursed only half as unlucky
 	var/luck_mod = 1
 	/// Damage modifier. Higher means more damage, etc. Cursed quirk takes 30% damage
@@ -139,15 +141,17 @@
 	if(!permanent)
 		qdel(src)
 		return
-
-	var/turf/tile = get_turf(our_guy)
-	if(tile)
-		explosion(tile,  devastation_range = explode_inner, heavy_impact_range = explode_inner, light_impact_range = explode_outer, flame_range = explode_inner, flash_range = explode_inner, explosion_cause = src)
-
-	if(!quirk || !iscarbon(our_guy))
+	if(!quirk || !iscarbon(our_guy)) // Smites get gibbed
 		our_guy.gib()
 		return
 
 	var/mob/living/carbon/player = our_guy
-	player.spill_organs()
+
+	explosion(player, devastation_range = explode_force, heavy_impact_range = explode_force, light_impact_range = explode_light, flame_range = explode_force, flash_range = explode_flash, explosion_cause = src)
+	if(!explode_force) // Gives normal, unedited curse gibs a mild shake (because explosions with no radius do not shake the camera)
+		for(var/mob/witness as anything in view(2, player))
+			shake_camera(witness, 1 SECONDS, 3)
+
+	player.spread_bodyparts(skip_head = TRUE)
 	player.spawn_gibs()
+	return
