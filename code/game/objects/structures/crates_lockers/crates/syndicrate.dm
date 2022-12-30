@@ -49,7 +49,7 @@
 ///overwrites default opening behavior until it is unlocked via the syndicrate key
 /obj/structure/closet/crate/syndicrate/can_open(mob/living/user, force = FALSE)
 	if(!created_items)
-		balloon_alert(user, "Locked!")
+		balloon_alert(user, "locked!")
 		return FALSE
 	return ..()
 

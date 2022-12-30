@@ -60,11 +60,11 @@
 		var/turf/place = turfs[i]
 		if(isspaceturf(place)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
 			continue
-		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
+
+		if (place.count_baseturfs() < 2) // Some snowflake shuttle shit
 			continue
-		var/list/sanity = place.baseturfs.Copy()
-		sanity.Insert(3, /turf/baseturf_skipover/shuttle)
-		place.baseturfs = baseturfs_string_list(sanity, place)
+
+		place.insert_baseturf(3, /turf/baseturf_skipover/shuttle)
 
 		for(var/obj/docking_port/mobile/port in place)
 			port.calculate_docking_port_information(src)
@@ -673,6 +673,14 @@
 /datum/map_template/shuttle/escape_pod/large
 	suffix = "large"
 	name = "escape pod (Large)"
+
+/datum/map_template/shuttle/escape_pod/luxury
+	suffix = "luxury"
+	name = "escape pod (Luxury)"
+
+/datum/map_template/shuttle/escape_pod/cramped
+	suffix = "cramped"
+	name = "escape pod (Cramped)"
 
 /datum/map_template/shuttle/assault_pod/default
 	suffix = "default"

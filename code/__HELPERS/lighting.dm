@@ -14,7 +14,7 @@
 	var/mutable_appearance/blocker = new()
 	blocker.icon = make_blocker.icon
 	blocker.icon_state = make_blocker.icon_state
-	blocker.layer = make_blocker.layer
+	// blocker.layer = FLOAT_LAYER // Implied, FLOAT_LAYER is default for appearances
 	blocker.appearance_flags |= make_blocker.appearance_flags | EMISSIVE_APPEARANCE_FLAGS
 	blocker.dir = make_blocker.dir
 	blocker.color = GLOB.em_block_color
