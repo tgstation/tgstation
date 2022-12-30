@@ -184,7 +184,9 @@
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/ctf)
 "jq" = (
@@ -461,7 +463,9 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
 "zg" = (
@@ -490,7 +494,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
 "Ai" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
 "AN" = (
@@ -553,7 +559,9 @@
 /obj/effect/turf_decal/trimline/green/warning{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
 "Fc" = (
@@ -772,7 +780,9 @@
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/ctf)
 "Na" = (
@@ -798,7 +808,9 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
 "OQ" = (
@@ -951,7 +963,9 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/ctf)
 "VK" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/ctf)
 "VL" = (
@@ -1000,7 +1014,9 @@
 /obj/effect/turf_decal/trimline/green/warning{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
 "YB" = (
