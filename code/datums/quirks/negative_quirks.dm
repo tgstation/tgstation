@@ -1145,4 +1145,4 @@
 	hardcore_value = 8
 
 /datum/quirk/cursed/add(client/client_source)
-	quirk_holder.AddComponent(/datum/component/omen, silent = TRUE, _permanent = TRUE, _quirk = TRUE)
+	quirk_holder.AddComponent(/datum/component/omen/quirk)

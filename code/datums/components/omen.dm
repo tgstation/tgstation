@@ -10,43 +10,27 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Whatever's causing the omen, if there is one. Destroying the vessel won't stop the omen, but we destroy the vessel (if one exists) upon the omen ending
 	var/obj/vessel
-	/// Whether this is a permanent omen that cannot be removed by any non-admin means.
+	/// If the omen is permanent, it will never go away
 	var/permanent = FALSE
-	/// Whether this was caused by a quirk
-	var/quirk = FALSE
-	/// The outer light range of the self-gib explosion
-	var/explode_light = 0
-	/// The flash and shake radius of the self-gib explosion
-	var/explode_flash = 0
-	/// The force of the self-gib explosion
-	var/explode_force = 0
-	/// Luck modifier. Higher means more likely to trigger, more damage, etc. Cursed only half as unlucky
+	/// Base probability of negative events. Cursed are half as unlucky.
 	var/luck_mod = 1
-	/// Damage modifier. Higher means more damage, etc. Cursed quirk takes 30% damage
+	/// Base damage from negative events. Cursed take 25% less damage.
 	var/damage_mod = 1
 
-/datum/component/omen/Initialize(silent = FALSE, _vessel, _permanent = FALSE, _quirk = FALSE)
+/datum/component/omen/Initialize(_vessel)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	vessel = _vessel
-	permanent = _permanent
-	if(_quirk)
-		quirk = _quirk
-		luck_mod = 0.5 // Lowers damage and probabilities for naturally cursed
-		damage_mod = 0.25 // Lowers damage for naturally cursed
-	if(!silent)
-		var/warning = "You get a bad feeling..."
-		if(permanent)
-			warning += " A very bad feeling... As if you are surrounded by a twisted aura of pure malevolence..."
-		to_chat(parent, span_warning("[warning]"))
 
-/datum/component/omen/Destroy(force, silent)
-	if(!silent)
-		var/mob/living/person = parent
-		to_chat(person, span_nicegreen("You feel a horrible omen lifted off your shoulders!"))
+	vessel = _vessel
+
+/datum/component/omen/Destroy(force)
+	var/mob/living/person = parent
+	to_chat(person, span_nicegreen("You feel a horrible omen lifted off your shoulders!"))
+
 	if(vessel)
 		vessel.visible_message(span_warning("[vessel] burns up in a sinister flash, taking an evil energy with it..."))
 		vessel = null
+
 	return ..()
 
 /datum/component/omen/RegisterWithParent()
@@ -126,32 +110,81 @@
 /datum/component/omen/proc/check_bless(mob/living/our_guy, category)
 	SIGNAL_HANDLER
 
-	if(quirk || permanent)
-		return
-
 	if (!("blessing" in our_guy.mob_mood.mood_events))
 		return
 
 	qdel(src)
 
-/// Severe deaths. Non-carbons and smites are gibbed.
+/// Severe deaths. Normally lifts the curse.
 /datum/component/omen/proc/check_death(mob/living/our_guy)
 	SIGNAL_HANDLER
 
+	qdel(src)
+	return
+
+/// Creates a localized explosion that shakes the camera
+/datum/component/omen/proc/death_explode(mob/living/our_guy)
+	explosion(our_guy, explosion_cause = src)
+
+	for(var/mob/witness as anything in view(2, our_guy))
+		shake_camera(witness, 1 SECONDS, 2)
+
+	return
+
+/**
+ * The smite omen. Permanent.
+ */
+/datum/component/omen/smite
+
+/datum/component/omen/smite/Initialize(_vessel, _permanent)
+	. = ..()
+	permanent = _permanent
+
+/datum/component/omen/smite/check_bless(mob/living/our_guy, category)
+	SIGNAL_HANDLER
+
 	if(!permanent)
-		qdel(src)
-		return
+		return ..()
 
-	explosion(our_guy, devastation_range = explode_force, heavy_impact_range = explode_force, light_impact_range = explode_light, flame_range = explode_force, flash_range = explode_flash, explosion_cause = src)
-	if(!explode_force) // Gives normal, unedited curse gibs a mild shake (because explosions with no radius do not shake the camera)
-		for(var/mob/witness as anything in view(2, our_guy))
-			shake_camera(witness, 1 SECONDS, 3)
+	return
 
-	if(!quirk || !iscarbon(our_guy)) // Smites get gibbed
+/datum/component/omen/smite/check_death(mob/living/our_guy)
+	SIGNAL_HANDLER
+
+	if(!permanent)
+		return ..()
+
+	death_explode(our_guy)
+	our_guy.gib()
+
+	return
+
+/**
+ * The quirk omen. Permanent.
+ * Has only a 50% chance of bad things happening, and takes only 25% of normal damage.
+ */
+/datum/component/omen/quirk
+	luck_mod = 0.5 // 50% chance of bad things happening
+	damage_mod = 0.25 // 25% of normal damage
+
+/datum/component/omen/quirk/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_accident))
+	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, PROC_REF(check_slip))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(check_death))
+
+/datum/component/omen/quirk/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH))
+
+/datum/component/omen/quirk/check_death(mob/living/our_guy)
+	SIGNAL_HANDLER
+
+	if(!iscarbon(our_guy))
 		our_guy.gib()
 		return
 
+	death_explode(our_guy)
 	var/mob/living/carbon/player = our_guy
 	player.spread_bodyparts(skip_head = TRUE)
 	player.spawn_gibs()
+
 	return
