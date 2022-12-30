@@ -459,7 +459,6 @@
 	operating = FALSE
 
 	var/metal_amount = 0
-	var/unlucky = HAS_TRAIT(cooker, TRAIT_CURSED) && prob(10)
 	for(var/obj/item/cooked_item in ingredients)
 		var/sigreturn = cooked_item.microwave_act(src, cooker, randomize_pixel_offset = ingredients.len)
 		if(sigreturn & COMPONENT_MICROWAVE_SUCCESS)
@@ -471,14 +470,16 @@
 
 		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
 
-	if(unlucky || metal_amount)
+	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(5))
 		spark()
 		broken = REALLY_BROKEN
-		if((metal_amount && unlucky) || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
+		explosion(src, light_impact_range = 2, flame_range = 1)
+
+	if(metal_amount)
+		spark()
+		broken = REALLY_BROKEN
+		if(HAS_TRAIT(cooker, TRAIT_CURSED) || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
-		else
-			if(prob(33)) // Someone's having a very bad day
-				explosion(src, light_impact_range = 2, flame_range = 1)
 	else
 		dump_inventory_contents()
 

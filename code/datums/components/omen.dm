@@ -15,11 +15,13 @@
 	/// Whether this was caused by a quirk
 	var/quirk = FALSE
 	/// The outer light range of the self-gib explosion
-	var/explode_outer = 0.8
+	var/explode_outer = 1
 	/// The force of the self-gib explosion
 	var/explode_inner = 0
 	/// Luck modifier. Higher means more likely to trigger, more damage, etc. Cursed only half as unlucky
 	var/luck_mod = 1
+	/// Damage modifier. Higher means more damage, etc. Cursed quirk takes 30% damage
+	var/damage_mod = 1
 
 /datum/component/omen/Initialize(silent = FALSE, _vessel, _permanent = FALSE, _quirk = FALSE)
 	if(!isliving(parent))
@@ -29,6 +31,7 @@
 	if(_quirk)
 		quirk = _quirk
 		luck_mod = 0.5 // Lowers damage and probabilities for naturally cursed
+		damage_mod = 0.25 // Lowers damage for naturally cursed
 	if(!silent)
 		var/warning = "You get a bad feeling..."
 		if(permanent)
@@ -110,8 +113,8 @@
 			return
 		playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
 		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
-		the_head.receive_damage(75 * luck_mod)
-		our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 * luck_mod)
+		the_head.receive_damage(75 * damage_mod)
+		our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 * damage_mod)
 		if(!permanent)
 			qdel(src)
 
