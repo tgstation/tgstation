@@ -12,9 +12,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	COOLDOWN_DECLARE(order_cooldown)
 	///Cooldown time between uses, express console will have extra time depending on express_cost_multiplier.
 	var/cooldown_time = 60 SECONDS
-	///Boolean on whether they can bluespace orders using a '/obj/machinery/mining_ltsrbt'
-	var/uses_ltsrbt = FALSE
-
+	/// Change TGUI texts to imply that express is cheaper than normal?
+	var/express_cheaper = FALSE
 	///The radio the console can speak into
 	var/obj/item/radio/radio
 	///The channel we will attempt to speak into through our radio.
@@ -77,7 +76,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/ui_static_data(mob/user)
 	var/list/data = list()
-	data["ltsrbt_available"] = (uses_ltsrbt && GLOB.mining_ltsrbt.len)
+	data["express_cheaper"] = express_cheaper
 	data["forced_express"] = forced_express
 	data["order_categories"] = order_categories
 	data["order_datums"] = list()
