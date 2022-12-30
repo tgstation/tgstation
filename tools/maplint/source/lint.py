@@ -1,3 +1,4 @@
+import re
 from typing import Optional
 
 from .common import Typepath
@@ -30,10 +31,15 @@ class TypepathExtra:
 
 class BannedNeighbor:
     identical: bool = False
-    typepath: TypepathExtra
+    typepath: Optional[TypepathExtra] = None
+    pattern: Optional[re.Pattern] = None
 
     def __init__(self, typepath, data = {}):
-        self.typepath = TypepathExtra(typepath)
+        if typepath.upper() != typepath:
+            self.typepath = TypepathExtra(typepath)
+
+        if data is None:
+            return
 
         expect(isinstance(data, dict), "Banned neighbor must be a dictionary.")
 
@@ -41,13 +47,24 @@ class BannedNeighbor:
             self.identical = data.pop("identical")
         expect(isinstance(self.identical, bool), "identical must be a boolean.")
 
+        if "pattern" in data:
+            self.pattern = re.compile(data.pop("pattern"))
+
         expect(len(data) == 0, f"Unknown key in banned neighbor: {', '.join(data.keys())}.")
 
     def matches(self, identified: Content, neighbor: Content):
         if self.identical:
             return neighbor == identified
 
-        return self.typepath.matches_path(neighbor.path)
+        if self.typepath is not None:
+            if self.typepath.matches_path(neighbor.path):
+                return True
+
+        if self.pattern is not None:
+            if self.pattern.match(str(neighbor.path)):
+                return True
+
+        return False
 
 class Rules:
     banned: bool = False
