@@ -281,3 +281,16 @@
 	event_control_path = /datum/round_event_control/radiation_storm
 	weight_multiplier = 1.5
 	max_occurrences_modifier = 2
+
+/datum/station_trait/haunted
+	name = "Haunted"
+	report_message = "Your station seems to be experiencing some paranormal activity. Expect an increase of unfortunate events."
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 1
+	show_in_report = TRUE
+
+/datum/station_trait/haunted/on_round_start()
+	. = ..()
+	for (var/mob/living/carbon/player as anything in GLOB.player_list)
+		if(prob(66.6))
+			player.add_quirk(/datum/quirk/cursed)

@@ -1144,5 +1144,5 @@
 	medical_record_text = "Patient is cursed with bad luck."
 	hardcore_value = 8
 
-/datum/quirk/unfortunate/add(client/client_source)
+/datum/quirk/cursed/add(client/client_source)
 	quirk_holder.AddComponent(/datum/component/omen, silent = TRUE, _permanent = TRUE, _quirk = TRUE)
