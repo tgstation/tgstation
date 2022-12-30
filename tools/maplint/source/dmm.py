@@ -3,23 +3,13 @@
 import re
 from dataclasses import dataclass, field
 
-from .common import Typepath
+from .common import Constant, Filename, Null, Typepath
 from .error import MaplintError
 
 REGEX_POP_ID = re.compile(r'^"(?P<key>.+)" = \($')
 REGEX_POP_CONTENT_HEADER = re.compile(r'^(?P<path>[/\w]+?)(?P<end>[{,)])$')
 REGEX_ROW_BEGIN = re.compile(r'^\((?P<x>\d+),(?P<y>\d+),(?P<z>\d+)\) = {"$')
 REGEX_VAR_EDIT = re.compile(r'^\t(?P<name>.+?) = (?P<definition>.+?);?$')
-
-@dataclass
-class Filename:
-    path: str
-
-@dataclass
-class Null:
-    pass
-
-Constant = str | float | Filename | Typepath | Null | list['Constant'] | dict['Constant', 'Constant']
 
 @dataclass
 class Content:

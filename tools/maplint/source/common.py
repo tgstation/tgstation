@@ -1,4 +1,5 @@
 import re
+from dataclasses import dataclass
 
 from .error import MaplintError
 
@@ -23,3 +24,13 @@ class Typepath:
 
     def __str__(self) -> str:
         return self.path
+
+@dataclass
+class Filename:
+    path: str
+
+@dataclass
+class Null:
+    pass
+
+Constant = str | float | Filename | Typepath | Null | list['Constant'] | dict['Constant', 'Constant']
