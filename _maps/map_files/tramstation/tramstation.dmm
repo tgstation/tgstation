@@ -3397,7 +3397,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "btS" = (
-/obj/structure/industrial_lift/tram/white,
+/obj/structure/industrial_lift/tram/subfloor,
 /obj/structure/fluff/tram_rail,
 /obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
@@ -17485,11 +17485,6 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
-"gqn" = (
-/obj/structure/industrial_lift/tram,
-/obj/structure/tramwall/titanium,
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "gqp" = (
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
@@ -22962,7 +22957,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "itV" = (
-/obj/structure/industrial_lift/tram/white,
+/obj/structure/industrial_lift/tram/subfloor,
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
@@ -31584,7 +31579,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "ltK" = (
-/obj/structure/industrial_lift/tram/white,
+/obj/structure/industrial_lift/tram/subfloor,
 /obj/structure/window/reinforced/shuttle/tram,
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -36352,7 +36347,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "nbS" = (
-/obj/structure/industrial_lift/tram/white,
+/obj/structure/industrial_lift/tram/subfloor,
 /obj/structure/tramwall/titanium,
 /obj/machinery/destination_sign{
 	dir = 1;
@@ -38842,7 +38837,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "nYG" = (
-/obj/structure/industrial_lift/tram/white,
+/obj/structure/industrial_lift/tram/subfloor,
 /obj/structure/window/reinforced/shuttle/tram,
 /obj/machinery/computer/tram_controls/directional/south,
 /turf/open/openspace,
@@ -47226,6 +47221,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/left)
+"qVY" = (
+/obj/structure/industrial_lift/tram/subfloor,
+/obj/structure/tramwall/titanium,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "qWn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
@@ -52333,7 +52333,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "sPa" = (
-/obj/structure/industrial_lift/tram/white,
+/obj/structure/industrial_lift/tram/subfloor,
 /obj/structure/window/reinforced/shuttle/tram,
 /obj/machinery/computer/tram_controls/directional/north,
 /turf/open/openspace,
@@ -64554,7 +64554,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "xgy" = (
-/obj/structure/industrial_lift/tram/white,
+/obj/structure/industrial_lift/tram/subfloor,
 /obj/structure/window/reinforced/shuttle/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
@@ -163703,11 +163703,11 @@ izU
 jpv
 aEM
 cRU
-cmw
+qVY
 btS
 xgy
 ltK
-cmw
+qVY
 lyv
 eOi
 agt
@@ -164217,11 +164217,11 @@ vyH
 qGw
 bqI
 izU
-cmw
+qVY
 mVX
 qia
 pmD
-cmw
+qVY
 izU
 gYR
 vJF
@@ -165759,11 +165759,11 @@ vyH
 jfC
 kBX
 izU
-cmw
+qVY
 ePF
 qia
 vqF
-gqn
+qVY
 izU
 nWl
 vJF
@@ -166277,7 +166277,7 @@ cmw
 btS
 xgy
 itV
-cmw
+qVY
 lyv
 ebF
 vsR
