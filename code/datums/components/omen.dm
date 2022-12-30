@@ -141,16 +141,12 @@
 	permanent = _permanent
 
 /datum/component/omen/smite/check_bless(mob/living/our_guy, category)
-	SIGNAL_HANDLER
-
 	if(!permanent)
 		return ..()
 
 	return
 
 /datum/component/omen/smite/check_death(mob/living/our_guy)
-	SIGNAL_HANDLER
-
 	if(!permanent)
 		return ..()
 
@@ -176,8 +172,6 @@
 	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH))
 
 /datum/component/omen/quirk/check_death(mob/living/our_guy)
-	SIGNAL_HANDLER
-
 	if(!iscarbon(our_guy))
 		our_guy.gib()
 		return
