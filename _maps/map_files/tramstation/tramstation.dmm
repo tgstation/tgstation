@@ -502,6 +502,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
+"aiW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/xmastree,
+/turf/open/floor/carpet,
+/area/station/service/chapel)
 "ajj" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/event_spawn,
@@ -20148,13 +20156,8 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "hpz" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 8
 	},
 /turf/open/space/openspace,
 /area/space)
@@ -66709,13 +66712,8 @@
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
 "xXs" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
@@ -152924,7 +152922,7 @@ bdz
 mSw
 ckb
 gyt
-iUs
+aiW
 iUs
 iUs
 iUs

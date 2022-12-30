@@ -49,6 +49,7 @@
 	name = "mailman's hat"
 	icon_state = "mailman"
 	desc = "<i>'Right-on-time'</i> mail service head wear."
+	clothing_traits = list(TRAIT_HATED_BY_DOGS)
 
 /obj/item/clothing/head/bio_hood/plague
 	name = "plague doctor's hat"

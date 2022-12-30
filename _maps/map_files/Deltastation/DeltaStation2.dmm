@@ -2448,7 +2448,7 @@
 /obj/effect/spawner/random/structure/table_fancy,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -4177,13 +4177,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "aXU" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/space/basic,
 /area/space)
 "aXV" = (
@@ -94275,6 +94269,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/food/grilled_cheese_sandwich,
 /turf/open/floor/iron/cafeteria,
 /area/station/medical/break_room)
 "wWy" = (
@@ -98617,13 +98612,8 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "xZM" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space)

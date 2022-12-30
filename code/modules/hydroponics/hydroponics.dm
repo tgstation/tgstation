@@ -698,8 +698,8 @@
 		return
 	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
 
-/obj/machinery/hydroponics/proc/hardmutate()
-	mutate(4, 10, 2, 4, 50, 4, 10, 0, 4)
+/obj/machinery/hydroponics/proc/hardmutate(lifemut = 4, endmut = 10, productmut = 2, yieldmut = 4, potmut = 50, wrmut = 4, wcmut = 10, traitmut = 0, stabmut = 4)
+	mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
 
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD || !LAZYLEN(myseed.mutatelist))

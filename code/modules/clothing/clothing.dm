@@ -81,7 +81,7 @@
 	/// A weak reference to the clothing that created us
 	var/datum/weakref/clothing
 
-/obj/item/food/clothing/MakeEdible()
+/obj/item/food/clothing/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
 

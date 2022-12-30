@@ -323,8 +323,10 @@
 
 	LAZYNULL(managed_overlays)
 
-	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
+	QDEL_NULL(light)
+	if (length(light_sources))
+		light_sources.Cut()
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
@@ -444,9 +446,9 @@
 					return TRUE
 
 /**
- * Is the atom in any of the centcom syndicate areas
+ * Is the atom in any of the syndicate areas
  *
- * Either in the syndie base on centcom, or any of their shuttles
+ * Either in the syndie base, or any of their shuttles
  *
  * Also used in gamemode code for win conditions
  */
@@ -455,7 +457,7 @@
 	if(!current_turf)
 		return FALSE
 
-	if(!is_centcom_level(current_turf.z))//if not, don't bother
+	if(!is_reserved_level(current_turf.z))//if not, don't bother
 		return FALSE
 
 	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/centcom/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))

@@ -134,6 +134,8 @@
  * Attempts to charge a mob, user, an integer number of credits, total_cost, directly from an ID card/bank account.
  */
 /datum/component/payment/proc/handle_card(mob/living/user, obj/item/card/id/idcard, total_cost)
+	var/atom/atom_parent = parent
+
 	if(!idcard)
 		return FALSE
 	if(!idcard?.registered_account)
@@ -154,7 +156,7 @@
 				to_chat(user, span_warning("YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR."))
 			if(PAYMENT_CLINICAL)
 				to_chat(user, span_warning("ID Card lacks funds. Aborting."))
-		user.balloon_alert(user, "Cost: [total_cost] credits.")
+		atom_parent.balloon_alert(user, "needs [total_cost] credit\s!")
 		return FALSE
 	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery")
 	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")

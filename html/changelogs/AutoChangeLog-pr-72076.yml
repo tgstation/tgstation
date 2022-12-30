@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "New station traits can vary how large and comfortable the station escape pods are."

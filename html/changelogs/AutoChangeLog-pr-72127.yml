@@ -1,0 +1,8 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - rscadd: "chocolate boxes now contain bonbons (formerly tiny chocolates), truffles, and peanut butter cups"
+  - balance: "changed the sugar in clown cakes' food_reagents to banana juice"
+  - balance: "increased the amount of vitamin in pound cakes"
+  - bugfix: "slices of bread now taste like their respective breads instead of tasting \"indescribable\""
+  - bugfix: "fiesta skewers are now MEAT and VEGETABLES"
