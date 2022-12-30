@@ -50,18 +50,18 @@ SUBSYSTEM_DEF(tutorials)
 			continue // client shenanigans, never trust
 
 		var/index = ckeys.len + 1
-		ckey_options += "ckey = :ckey[index]"
+		ckey_options += ":ckey[index]"
 		ckeys["ckey[index]"] = ckey
 
 	if (ckey_options.len == 0)
 		return
 
 	var/datum/db_query/select_all_query = SSdbcore.NewQuery(
-		"SELECT ckey, tutorial_key FROM [format_table_name("tutorial_completions")] WHERE ([ckey_options.Join(" OR ")])",
+		"SELECT ckey, tutorial_key FROM [format_table_name("tutorial_completions")] WHERE ckey in ([ckey_options.Join(", ")])",
 		ckeys,
 	)
 
-	if (!select_all_query.warn_execute())
+	if (!select_all_query.Execute())
 		qdel(select_all_query)
 		return
 
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(tutorials)
 		list("ckey" = ckey)
 	)
 
-	if (!select_tutorials_for_ckey.warn_execute())
+	if (!select_tutorials_for_ckey.Execute())
 		return
 
 	while (select_tutorials_for_ckey.NextRow())

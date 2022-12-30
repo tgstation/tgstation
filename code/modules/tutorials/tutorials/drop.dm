@@ -28,7 +28,7 @@
 
 	update_held_item()
 
-/datum/tutorial/drop/perform_completion_effects()
+/datum/tutorial/drop/perform_completion_effects_with_delay()
 	UnregisterSignal(user, list(COMSIG_MOB_DROPPING_ITEM, COMSIG_MOB_SWAP_HANDS, COMSIG_LIVING_PICKED_UP_ITEM))
 	if (!isnull(last_held_item))
 		UnregisterSignal(last_held_item, COMSIG_MOVABLE_MOVED)

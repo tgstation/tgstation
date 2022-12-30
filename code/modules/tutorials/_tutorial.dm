@@ -67,7 +67,7 @@
 /datum/tutorial/proc/perform_base_completion_effects()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/delay = perform_completion_effects()
+	var/delay = perform_completion_effects_with_delay()
 
 	if (!isnull(instruction_screen))
 		animate(instruction_screen, time = INSTRUCTION_SCREEN_DELAY, alpha = 0, easing = SINE_EASING)
@@ -78,7 +78,7 @@
 /// Called when the tutorial is being hidden, but before it is deleted.
 /// You should unregister signals and fade out any of your creations in here.
 /// Returns how long extra to delay the deletion.
-/datum/tutorial/proc/perform_completion_effects()
+/datum/tutorial/proc/perform_completion_effects_with_delay()
 	SHOULD_CALL_PARENT(FALSE)
 	PROTECTED_PROC(TRUE)
 
@@ -228,7 +228,7 @@
 	PRIVATE_PROC(TRUE)
 
 	var/datum/db_query/insert_tutorial_query = SSdbcore.NewQuery(
-		"INSERT IGNORE INTO [format_table_name("tutorial_completions")] (ckey, tutorial_key) VALUES (:ckey, :tutorial_key)",
+		"INSERT INTO [format_table_name("tutorial_completions")] (ckey, tutorial_key) VALUES (:ckey, :tutorial_key) ON DUPLICATE KEY UPDATE tutorial_key = tutorial_key",
 		list(
 			"ckey" = ckey,
 			"tutorial_key" = get_key(),

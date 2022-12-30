@@ -6,7 +6,7 @@
 /// Tutorial for showing how to switch hands.
 /// Fired when clicking on an item with another item with an empty inactive hand.
 /datum/tutorial/switch_hands
-	grandfather_date = "2022-12-25"
+	// grandfather_date = "2022-12-25"
 
 	var/stage = STAGE_SHOULD_SWAP_HAND
 	var/atom/movable/screen/hand_preview
@@ -32,7 +32,7 @@
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
 	RegisterSignal(user, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(on_pick_up_item))
 
-/datum/tutorial/switch_hands/perform_completion_effects()
+/datum/tutorial/switch_hands/perform_completion_effects_with_delay()
 	UnregisterSignal(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_LIVING_PICKED_UP_ITEM))
 	return 0
 
