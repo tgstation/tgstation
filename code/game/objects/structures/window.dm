@@ -741,13 +741,6 @@
 	glass_amount = 2
 
 //there is a sub shuttle window in survival_pod.dm for mining pods
-/datum/armor/reinforced_plasma
-	melee = 80
-	bullet = 20
-	bomb = 60
-	fire = 99
-	acid = 100
-
 /obj/structure/window/reinforced/shuttle//this is called reinforced because it is reinforced w/titanium
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
@@ -862,12 +855,6 @@
 	hit_sound = 'sound/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
-
-/datum/armor/plasma_plastitanium
-	melee = 95
-	bomb = 50
-	fire = 80
-	acid = 100
 
 /obj/structure/window/paperframe/Initialize(mapload)
 	. = ..()

@@ -190,10 +190,6 @@
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
 
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
-
 /obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
 	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
@@ -243,10 +239,6 @@
 	icon_state = "glasses"
 	inhand_icon_state = "glasses"
 	vision_correction = TRUE //corrects nearsightedness
-
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
 
 /obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
@@ -386,10 +378,6 @@
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
-
 /obj/item/clothing/glasses/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
@@ -406,10 +394,6 @@
 	tint = 3
 	darkness_view = 1
 	dog_fashion = /datum/dog_fashion/head
-
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
 
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -432,10 +416,6 @@
 	icon_state = "blindfoldwhite"
 	inhand_icon_state = null
 	var/colored_before = FALSE
-
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
 
 /obj/item/clothing/glasses/blindfold/white/visual_equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && (slot & ITEM_SLOT_EYES))
@@ -475,10 +455,6 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
-
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -489,10 +465,6 @@
 	name = "syndicate xray goggles"
 	desc = "A pair of xray goggles manufactured by the Syndicate."
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
-
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
 
 /obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -531,10 +503,6 @@
 	icon_state = "thermoncle"
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
-
 /obj/item/clothing/glasses/thermal/monocle/examine(mob/user) //Different examiners see a different description!
 	if(user.gender == MALE)
 		desc = replacetext(desc, "person", "man")
@@ -550,10 +518,6 @@
 	base_icon_state = "eyepatch"
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
-
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
 
 /obj/item/clothing/glasses/thermal/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
@@ -614,10 +578,6 @@
 	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
 	var/xray = FALSE
 
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
-
 /obj/item/clothing/glasses/debug/equipped(mob/user, slot)
 	. = ..()
 	if(!(slot & ITEM_SLOT_EYES))
@@ -667,10 +627,6 @@
 	inhand_icon_state = "salesman"
 	///Tells us who the current wearer([BIGSHOT]) is.
 	var/mob/living/carbon/human/bigshot
-
-/datum/armor/glasses_science
-	fire = 80
-	acid = 100
 
 /obj/item/clothing/glasses/salesman/equipped(mob/living/carbon/human/user, slot)
 	..()

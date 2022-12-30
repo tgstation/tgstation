@@ -126,14 +126,6 @@
 	/// Whether the mech headlights are currently on.
 	var/datum/port/output/are_headlights_on
 
-/datum/armor/car_vim
-	melee = 70
-	bullet = 40
-	laser = 40
-	bomb = 30
-	fire = 80
-	acid = 80
-
 /obj/item/circuit_component/vim/populate_ports()
 	are_headlights_on = add_output_port("Are Headlights On", PORT_TYPE_NUMBER)
 	chime = add_output_port("On Chime Used", PORT_TYPE_SIGNAL)
