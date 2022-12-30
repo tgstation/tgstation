@@ -1,0 +1,9 @@
+help:
+  Custom mobile docking_port sizes detected. This is done automatically and should not be varedits.
+  Please remove the width, height, dwidth, and dheight varedits from the docking_port.
+/obj/docking_port/mobile:
+  banned_variables:
+  - width
+  - height
+  - dwidth
+  - dheight
