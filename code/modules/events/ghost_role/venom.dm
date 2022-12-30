@@ -558,6 +558,7 @@
 	using = FALSE
 	target_mob.apply_damage(500, BURN, spread_damage = TRUE)
 	target_mob.become_husk(BURN)
+	playsound(target_mob, 'sound/effects/wounds/sizzle2.ogg', 100, TRUE)
 	to_chat(user, span_warning("Their strength has been drained."))
 	to_chat(venom, span_danger("You have gained power."))
 	venom.power++
