@@ -47,7 +47,7 @@
 	return ..()
 
 /datum/outfit/hermit
-	name = "Lavaland hermit"
+	name = "Lavaland Hermit"
 	uniform = /obj/item/clothing/under/color/grey/ancient
 	back = /obj/item/storage/backpack
 	mask = /obj/item/clothing/mask/breath
