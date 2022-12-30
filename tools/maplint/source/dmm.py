@@ -23,6 +23,9 @@ class DMM:
     # Z -> X -> Y -> Pop
     turfs: list[list[list[str]]] = field(default_factory = list)
 
+    def size(self):
+        return (len(self.turfs[0]), len(self.turfs[0][0]))
+
     def turfs_for_pop(self, key: str):
         for z, z_level in enumerate(self.turfs):
             for x, x_level in enumerate(z_level):
@@ -56,7 +59,7 @@ class DMMParser:
         try:
             return next(self.reader).removesuffix("\n")
         except StopIteration:
-            return ""
+            return None
 
     def parse_pop(self):
         line = self.next_line()
@@ -122,8 +125,13 @@ class DMMParser:
 
     def parse_row(self):
         line = self.next_line()
-        if line == "":
+
+        if line is None:
             return False
+
+        if line == "":
+            # Starting a new z level
+            return True
 
         row_match = REGEX_ROW_BEGIN.match(line)
         self.expect(row_match is not None, "Rows ended too early, expected a newline in between.")
@@ -141,7 +149,7 @@ class DMMParser:
 
         contents = []
 
-        while next_line := self.next_line():
+        while (next_line := self.next_line()) is not None:
             next_line = next_line.rstrip()
             if next_line == '"}':
                 break

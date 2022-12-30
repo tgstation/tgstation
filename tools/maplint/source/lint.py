@@ -111,6 +111,9 @@ class BannedVariable:
     def __init__(self, variable, data = {}):
         self.variable = variable
 
+        if data is None:
+            return
+
         self.allow = extract_choices(data, "allow")
         self.deny = extract_choices(data, "deny")
 
@@ -126,6 +129,8 @@ class BannedVariable:
                     return f"Must be one of {', '.join(map(str, self.allow))}"
             elif not self.allow.match(str(identified.var_edits[self.variable])):
                 return f"Must match {self.allow.pattern}"
+
+            return None
 
         if self.deny is not None:
             if isinstance(self.deny, list):
@@ -220,6 +225,7 @@ class Lint:
 
     def run(self, map_data: DMM):
         results = []
+        (width, height) = map_data.size()
 
         for pop, contents in map_data.pops.items():
             for typepath_extra, rules in self.rules.items():
@@ -238,7 +244,12 @@ class Lint:
                         coordinate = next(coordinates, None)
                         if coordinate is None:
                             break
-                        coordinate_texts.append(f"({coordinate[0] + 1}, {coordinate[1] + 1}, {coordinate[2] + 1})")
+
+                        x = coordinate[0] + 1
+                        y = height - coordinate[1]
+                        z = coordinate[2] + 1
+
+                        coordinate_texts.append(f"({x}, {y}, {z})")
 
                     leftover_coordinates = sum(1 for _ in coordinates)
                     if leftover_coordinates > 0:

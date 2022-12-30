@@ -320,7 +320,6 @@
 /area/ruin/space/has_grav/hellfactory)
 "bb" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bc" = (

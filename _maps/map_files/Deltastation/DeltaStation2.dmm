@@ -20752,7 +20752,6 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "eXw" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},

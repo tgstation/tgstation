@@ -20937,9 +20937,6 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/south,
-/obj/structure/chair/office{
-	dir = 8
-	},
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "gpK" = (
