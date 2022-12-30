@@ -2,7 +2,6 @@
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
 	icon_state = "wallet"
-	worn_icon = 'icons/mob/clothing/id.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
