@@ -27,3 +27,12 @@
 		/obj/item/aquarium_kit = 1,
 	)
 	category = CAT_FURNITURE
+
+/datum/crafting_recipe/mirror
+	name = "Mirror"
+	result = /obj/item/wallframe/mirror
+	reqs = list(
+		/obj/item/stack/sheet/glass = 5,
+		/obj/item/stack/sheet/mineral/silver = 2,
+	)
+	category = CAT_FURNITURE

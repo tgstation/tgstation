@@ -1,4 +1,3 @@
-//wip wip wup
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -105,9 +104,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	to_chat(user, span_notice("You begin repairing [src]..."))
+	user.balloon_alert("repairing...")
 	if(I.use_tool(src, user, 10, volume=50))
-		to_chat(user, span_notice("You repair [src]."))
+		user.balloon_alert(user, "repaired")
 		broken = 0
 		icon_state = initial(icon_state)
 		desc = initial(desc)
@@ -120,6 +119,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 		if(BURN)
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+
+/obj/item/wallframe/mirror
+	name = "mirror"
+	desc = "An unmounted mirror. Attach it to a wall to use."
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "mirror"
+	custom_materials = list(
+		/datum/material/glass = MINERAL_MATERIAL_AMOUNT,
+		/datum/material/silver = MINERAL_MATERIAL_AMOUNT,
+	)
+	result_path = /obj/structure/mirror
+	pixel_shift = 28
 
 
 /obj/structure/mirror/magic
