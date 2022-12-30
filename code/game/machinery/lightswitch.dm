@@ -86,6 +86,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()
 
+/obj/item/wallframe/light_switch
+	name = "light switch"
+	desc = "An unmounted light switch. Attach it to a wall to use."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "light-nopower"
+	result_path = /obj/machinery/light_switch
+	pixel_shift = 26
+
 /obj/item/circuit_component/light_switch
 	display_name = "Light Switch"
 	desc = "Allows to control the lights of an area."

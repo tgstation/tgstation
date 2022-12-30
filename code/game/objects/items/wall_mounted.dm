@@ -1,6 +1,6 @@
 /obj/item/wallframe
 	icon = 'icons/obj/wallframe.dmi'
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2)
 	flags_1 = CONDUCT_1
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
