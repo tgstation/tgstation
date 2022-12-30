@@ -5,7 +5,7 @@
 	icon_state = "mining"
 	icon_keyboard = null
 	icon_screen = null
-	express_cheaper = TRUE
+	cargo_cheaper = TRUE
 	circuit = /obj/item/circuitboard/computer/order_console/mining
 
 	cooldown_time = 10 SECONDS //just time to let you know your order went through.
