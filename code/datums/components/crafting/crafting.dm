@@ -184,7 +184,7 @@
 				I = new R.result (get_turf(a.loc), R.result_amount || 1)
 			else
 				I = new R.result (get_turf(a.loc))
-				if(istype(I, /obj/item/storage))
+				if(I.atom_storage)
 					for(var/obj/item/thing in I)
 						qdel(thing)
 			I.CheckParts(parts, R)
