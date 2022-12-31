@@ -191,6 +191,7 @@
 #define HIGH_BUBBLE_LAYER 5.03
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
+#define HIGHEST_GAME_LAYER 5.2
 
 //---------- LIGHTING -------------
 
