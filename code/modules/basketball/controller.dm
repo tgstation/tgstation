@@ -60,7 +60,7 @@ GLOBAL_VAR(basketball_game)
  * Arguments:
  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
  */
-/datum/basketball_controller/proc/prepare_game(setup_list, ready_players)
+/datum/basketball_controller/proc/prepare_game(ready_players)
 	var/list/possible_maps = subtypesof(/datum/map_template/basketball)
 	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/basketball) in GLOB.landmarks_list)
 
@@ -88,10 +88,12 @@ GLOBAL_VAR(basketball_game)
 	for(var/player_key in ready_players)
 		if(length(ready_players) % 2) // odd is home team
 			landmark = pick_n_take(home_spawnpoints) // make sure to do something with landmark
-			home_team_players += player_key
+			home_team_players |= player_key
 		else // even is away team
 			landmark = pick_n_take(away_spawnpoints)
-			away_team_players += player_key // make sure to do something with landmark
+			away_team_players |= player_key // make sure to do something with landmark
+
+	create_bodies(ready_players)
 
 /**
  * The game by this point is now all set up, and so we can put people in their bodies and start the first phase.
@@ -113,26 +115,31 @@ GLOBAL_VAR(basketball_game)
  * * gives mafia panel
  * * sends the greeting text (goals, role name, etc)
  */
-/datum/mafia_controller/proc/create_bodies(ready_players)
+/datum/basketball_controller/proc/create_bodies(ready_players)
 	var/list/possible_away_teams = subtypesof(/datum/map_template/basketball) - current_map
-	var/home_uniform = current_map.home_team_uniform
-
 	var/datum/map_template/basketball/away_map = pick(possible_away_teams)
-	var/away_uniform = away_map.home_team_uniform
 
 	var/list/home_spawnpoints = home_team_landmarks.Copy()
 	var/list/away_spawnpoints = away_team_landmarks.Copy()
 	var/obj/effect/landmark/basketball/team_spawn/spawn_landmark
 
+	var/team_uniform
+
 	for(var/player_key in ready_players)
 		if(length(ready_players) % 2) // odd is home team
-			spawn_location = pick_n_take(home_spawnpoints) // make sure to do something with landmark
+			spawn_location = pick_n_take(home_spawnpoints)
 			home_team_players += player_key
+			team_uniform = current_map.home_team_uniform
 		else // even is away team
 			spawn_location = pick_n_take(away_spawnpoints)
-			away_team_players += player_key // make sure to do something with landmark
+			away_team_players += player_key
+			team_uniform = away_map.home_team_uniform
 
 		var/mob/living/carbon/human/baller = new(get_turf(spawn_landmark))
+
+		if(baller.dna.species.outfit_important_for_life)
+			baller.set_species(/datum/species/human)
+
 		ADD_TRAIT(baller, TRAIT_NOFIRE, BASKETBALL_MINIGAME_TRAIT)
 		ADD_TRAIT(baller, TRAIT_NOBREATH, BASKETBALL_MINIGAME_TRAIT)
 		ADD_TRAIT(baller, TRAIT_CANNOT_CRYSTALIZE, BASKETBALL_MINIGAME_TRAIT)
@@ -140,18 +147,15 @@ GLOBAL_VAR(basketball_game)
 		ADD_TRAIT(baller, TRAIT_PACIFISM, BASKETBALL_MINIGAME_TRAIT)
 		baller.status_flags |= GODMODE
 
-		baller.equipOutfit(home_uniform)
+		baller.equipOutfit(team_uniform)
 
-		var/client/player_client = GLOB.directory[role.player_key]
+		var/client/player_client = GLOB.directory[player_key]
 		if(player_client)
 			player_client.prefs.safe_transfer_prefs_to(baller, is_antag = TRUE)
-		role.body = baller
-		player_role_lookup[baller] = role
-		baller.key = role.player_key
-		role.greet()
+		baller.key = player_key
 
-/datum/basketball_controller/proc/send_home(datum/mafia_role/role)
-	role.body.forceMove(get_turf(role.assigned_landmark))
+		SEND_SOUND(baller, 'sound/machines/scanbuzz.ogg')
+		to_chat(baller, span_danger("You are a basketball player for the [team_name]. Score as much as you can before time runs out."))
 
 /datum/basketball_controller/proc/check_victory()
 	return
@@ -206,36 +210,5 @@ GLOBAL_VAR(basketball_game)
 		to_chat(unpicked_client, span_danger("Sorry, the starting basketball game has too many players and you were not picked."))
 		to_chat(unpicked_client, span_warning("You're still signed up, getting messages from the current round, and have another chance to join when the one starting now finishes."))
 
-	if(!setup.len) //don't actually have one yet, so generate a max player random setup. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
-		setup = generate_random_setup()
-	prepare_game(setup, filtered_keys)
-	start_game()
-
-//////////////////////////////////////////
-
-	var/client/new_team_member = user.client
-	team_members |= new_team_member.ckey
-	to_chat(user, "<span class='warning'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
-	spawn_team_member(new_team_member)
-
-
-/obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
-	var/datum/outfit/chosen_class
-
-		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob) || src.ctf_enabled == FALSE || !(new_team_member.ckey in src.team_members))
-			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?,
-				   //there isn't a game going on any more, you are no longer a member of this team (perhaps a new match already started?)
-		chosen_class = ctf_gear[choice]
-
-	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_turf(src))
-	new_team_member.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
-	if(M.dna.species.outfit_important_for_life)
-		M.set_species(/datum/species/human)
-	M.key = new_team_member.key
-	M.faction += team
-	M.equipOutfit(chosen_class)
-	RegisterSignal(M, COMSIG_PARENT_QDELETING, PROC_REF(ctf_qdelled_player)) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
-	for(var/trait in player_traits)
-		ADD_TRAIT(M, trait, CAPTURE_THE_FLAG_TRAIT)
-	spawned_mobs[M] = chosen_class
-	return M //used in medisim.dm
+	prepare_game(filtered_keys)
+	//start_game()
