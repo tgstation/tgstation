@@ -1,0 +1,4 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - bugfix: "Static light sources update properly now when carried by a mob."
