@@ -23,6 +23,7 @@
 	thermic_constant = 0
 	H_ion_release = 0
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
+	plant_react = FALSE
 
 /datum/chemical_reaction/food/tofu
 	required_reagents = list(/datum/reagent/consumable/soymilk = 10)
