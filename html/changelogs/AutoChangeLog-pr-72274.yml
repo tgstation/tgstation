@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - admin: "Added a new chat category for prayers. Filter them out, move them to their own pane, live your best life"
