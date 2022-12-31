@@ -2,7 +2,13 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = SPECIES_GOLEM
-	species_traits = list(NOBLOOD,NOTRANSSTING, MUTCOLORS,NO_UNDERWEAR, NO_DNA_COPY)
+	species_traits = list(
+		NOBLOOD,
+		NOTRANSSTING,
+		MUTCOLORS,
+		NO_UNDERWEAR,
+		NO_DNA_COPY,
+	)
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_NOBREATH,
@@ -858,13 +864,22 @@
 	name = "pile of bandages"
 	desc = "It emits a strange aura, as if there was still life within it..."
 	max_integrity = 50
-	armor = list(MELEE = 90, BULLET = 90, LASER = 25, ENERGY = 80, BOMB = 50, BIO = 0, FIRE = -50, ACID = -50)
+	armor_type = /datum/armor/structure_cloth_pile
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "pile_bandages"
 	resistance_flags = FLAMMABLE
 
 	var/revive_time = 90 SECONDS
 	var/mob/living/carbon/human/cloth_golem
+
+/datum/armor/structure_cloth_pile
+	melee = 90
+	bullet = 90
+	laser = 25
+	energy = 80
+	bomb = 50
+	fire = -50
+	acid = -50
 
 /obj/structure/cloth_pile/Initialize(mapload, mob/living/carbon/human/H)
 	. = ..()
@@ -1136,12 +1151,16 @@
 	special_names = list("Head", "Broth", "Fracture", "Rattler", "Appetit")
 	liked_food = GROSS | MEAT | RAW | GORE
 	toxic_food = null
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,HAS_BONE)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
 	mutantstomach = /obj/item/organ/internal/stomach/bone
 	sexes = FALSE
 	fixed_mut_color = null
+	species_traits = list(
+		NOBLOOD,
+		NO_UNDERWEAR,
+		NOEYESPRITES,
+	)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,

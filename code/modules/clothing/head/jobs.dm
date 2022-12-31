@@ -50,11 +50,21 @@
 	icon_state = "captain"
 	inhand_icon_state = "that"
 	flags_inv = 0
-	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50, WOUND = 5)
+	armor_type = /datum/armor/hats_caphat
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/captain
 
 //Captain: This is no longer space-worthy
+/datum/armor/hats_caphat
+	melee = 25
+	bullet = 15
+	laser = 25
+	energy = 35
+	bomb = 25
+	fire = 50
+	acid = 50
+	wound = 5
+
 /obj/item/clothing/head/hats/caphat/parade
 	name = "captain's parade cap"
 	desc = "Worn only by Captains with an abundance of class."
@@ -74,10 +84,19 @@
 	name = "head of personnel's cap"
 	icon_state = "hopcap"
 	desc = "The symbol of true bureaucratic micromanagement."
-	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/hats_hopcap
 	dog_fashion = /datum/dog_fashion/head/hop
 
 //Chaplain
+/datum/armor/hats_hopcap
+	melee = 25
+	bullet = 15
+	laser = 25
+	energy = 35
+	bomb = 25
+	fire = 50
+	acid = 50
+
 /obj/item/clothing/head/chaplain/nun_hood
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
@@ -94,11 +113,20 @@
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
-	armor = list(MELEE = 25, BULLET = 5, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 30, ACID = 50, WOUND = 5)
+	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
+
+/datum/armor/fedora_det_hat
+	melee = 25
+	bullet = 5
+	laser = 25
+	energy = 35
+	fire = 30
+	acid = 50
+	wound = 5
 
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
@@ -138,15 +166,26 @@
 /obj/item/clothing/head/hats/hos
 	name = "head of security cap"
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
-	armor = list(MELEE = 40, BULLET = 30, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 10, FIRE = 50, ACID = 60, WOUND = 10)
+	armor_type = /datum/armor/hats_hos
 	icon_state = "hoscap"
 	strip_delay = 80
+
+/datum/armor/hats_hos
+	melee = 40
+	bullet = 30
+	laser = 25
+	energy = 35
+	bomb = 25
+	bio = 10
+	fire = 50
+	acid = 60
+	wound = 10
 
 /obj/item/clothing/head/hats/hos/syndicate
 	name = "syndicate cap"
 	desc = "A black cap fit for a high ranking syndicate officer."
 
-/obj/item/clothing/head/hos/beret
+/obj/item/clothing/head/hats/hos/beret
 	name = "head of security's beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "beret_badge"
@@ -154,12 +193,12 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#39393f#FFCE5B"
 
-/obj/item/clothing/head/hos/beret/navyhos
+/obj/item/clothing/head/hats/hos/beret/navyhos
 	name = "head of security's formal beret"
 	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
 	greyscale_colors = "#3C485A#FFCE5B"
 
-/obj/item/clothing/head/hos/beret/syndicate
+/obj/item/clothing/head/hats/hos/beret/syndicate
 	name = "syndicate beret"
 	desc = "A black beret with thick armor padding inside. Stylish and robust."
 
@@ -167,9 +206,19 @@
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "policehelm"
-	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 30, ACID = 60, WOUND = 6)
+	armor_type = /datum/armor/hats_warden
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
+
+/datum/armor/hats_warden
+	melee = 40
+	bullet = 30
+	laser = 30
+	energy = 40
+	bomb = 25
+	fire = 30
+	acid = 60
+	wound = 6
 
 /obj/item/clothing/head/hats/warden/police
 	name = "police officer's hat"
@@ -179,9 +228,19 @@
 	name = "warden's hat"
 	desc = "A warden's red hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
 	icon_state = "wardenhat"
-	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 30, ACID = 60, WOUND = 6)
+	armor_type = /datum/armor/warden_red
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden_red
+
+/datum/armor/warden_red
+	melee = 40
+	bullet = 30
+	laser = 30
+	energy = 40
+	bomb = 25
+	fire = 30
+	acid = 60
+	wound = 6
 
 /obj/item/clothing/head/hats/warden/drill
 	name = "warden's campaign hat"
@@ -259,10 +318,20 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#a52f29#F2F2F2"
-	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 20, ACID = 50, WOUND = 4)
+	armor_type = /datum/armor/beret_sec
 	strip_delay = 60
 	dog_fashion = null
 	flags_1 = NONE
+
+/datum/armor/beret_sec
+	melee = 35
+	bullet = 30
+	laser = 30
+	energy = 40
+	bomb = 25
+	fire = 20
+	acid = 50
+	wound = 4
 
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
@@ -364,10 +433,22 @@
 	name = "durathread beret"
 	desc = "A beret made from durathread, its resilient fibers provide some protection to the wearer."
 	icon_state = "beret_badge"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "beret_durathread"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#C5D4F3#ECF1F8"
-	armor = list(MELEE = 15, BULLET = 5, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, FIRE = 30, ACID = 5, WOUND = 4)
+	armor_type = /datum/armor/beret_durathread
+
+/datum/armor/beret_durathread
+	melee = 15
+	bullet = 5
+	laser = 15
+	energy = 25
+	bomb = 10
+	fire = 30
+	acid = 5
+	wound = 4
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
@@ -385,7 +466,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#46b946#f2c42e"
-	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 100, ACID = 90, WOUND = 10)
+	armor_type = /datum/armor/beret_centcom_formal
 	strip_delay = 10 SECONDS
 
 
@@ -393,3 +474,14 @@
 #undef DRILL_SHOUTING
 #undef DRILL_YELLING
 #undef DRILL_CANADIAN
+
+/datum/armor/beret_centcom_formal
+	melee = 80
+	bullet = 80
+	laser = 50
+	energy = 50
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 90
+	wound = 10

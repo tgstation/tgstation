@@ -15,6 +15,10 @@
 	//atmos_sensitive applies connect_loc which 1. reacts to movement in order to 2. unregister and register signals to
 	//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
 
+/obj/structure/window/reinforced/shuttle/tram
+	name = "tram window"
+	icon = 'icons/obj/smooth_structures/tram_window.dmi'
+
 /obj/structure/window/reinforced/shuttle/tram/Initialize(mapload, direct)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
@@ -22,6 +26,19 @@
 /turf/open/floor/glass/reinforced/tram/Initialize(mapload)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/chair/sofa/bench/tram
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/left
+	icon_state = "bench_left"
+	greyscale_config = /datum/greyscale_config/bench_left
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/right
+	icon_state = "bench_right"
+	greyscale_config = /datum/greyscale_config/bench_right
+	greyscale_colors = "#00CCFF"
 
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"

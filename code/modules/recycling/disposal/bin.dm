@@ -5,7 +5,7 @@
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	density = TRUE
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
+	armor_type = /datum/armor/machinery_disposal
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
@@ -23,6 +23,14 @@
 	var/obj/structure/disposalconstruct/stored
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
+
+/datum/armor/machinery_disposal
+	melee = 25
+	bullet = 10
+	laser = 10
+	energy = 100
+	fire = 90
+	acid = 30
 
 /obj/machinery/disposal/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -91,7 +99,7 @@
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
-			panel_open = !panel_open
+			toggle_panel_open()
 			I.play_tool_sound(src)
 			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return

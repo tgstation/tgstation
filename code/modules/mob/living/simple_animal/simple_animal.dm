@@ -221,6 +221,7 @@
 		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
+	QDEL_NULL(access_card)
 	GLOB.simple_animals[AIStatus] -= src
 	SSnpcpool.currentrun -= src
 
@@ -449,8 +450,8 @@
 
 /mob/living/simple_animal/get_status_tab_items()
 	. = ..()
-	. += ""
 	. += "Health: [round((health / maxHealth) * 100)]%"
+	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/simple_animal/proc/drop_loot()
 	if(loot.len)

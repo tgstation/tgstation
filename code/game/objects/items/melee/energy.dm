@@ -1,7 +1,7 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/melee_energy
 	attack_verb_continuous = list("hits", "taps", "pokes")
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
@@ -29,6 +29,10 @@
 	var/active_w_class = WEIGHT_CLASS_BULKY
 	/// The heat given off when active.
 	var/active_heat = 3500
+
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
 
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()

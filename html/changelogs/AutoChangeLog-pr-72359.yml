@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - bugfix: "fixed pellet clouds (buckshot, improv shells) dealing insane wounds to armored people"

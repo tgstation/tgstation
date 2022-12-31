@@ -11,18 +11,27 @@
 	var/id = null
 	var/initialized_button = 0
 	var/silicon_access_disabled = FALSE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 90, ACID = 70)
+	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/datum/armor/machinery_button
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 90
+	acid = 70
+
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
 	if(built)
 		setDir(ndir)
-		panel_open = TRUE
+		set_panel_open(TRUE)
 		update_appearance()
 
 	if(!built && !device && device_type)

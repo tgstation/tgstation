@@ -75,7 +75,7 @@
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 0.33
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
+	armor_type = /datum/armor/machinery_airalarm
 	resistance_flags = FIRE_PROOF
 
 	/// Current alert level, found in code/__DEFINES/atmospherics/atmos_machinery.dm
@@ -123,6 +123,11 @@
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
+/datum/armor/machinery_airalarm
+	energy = 100
+	fire = 90
+	acid = 30
+
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	wires = new /datum/wires/airalarm(src)
@@ -131,7 +136,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(nbuild)
 		buildstage = AIRALARM_BUILD_NO_CIRCUIT
-		panel_open = TRUE
+		set_panel_open(TRUE)
 
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
@@ -723,7 +728,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if(buildstage != AIRALARM_BUILD_COMPLETE)
 		return
 	tool.play_tool_sound(src)
-	panel_open = !panel_open
+	toggle_panel_open()
 	to_chat(user, span_notice("The wires have been [panel_open ? "exposed" : "unexposed"]."))
 	update_appearance()
 	return TRUE
