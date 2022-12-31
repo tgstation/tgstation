@@ -304,5 +304,5 @@
 		if(prob(66.6))
 			continue
 		to_chat(player, span_warning("You feel a chill down your spine..."))
-		AddComponent(/datum/component/omen, player)
+		player.add_quirk(/datum/quirk/cursed)
 
