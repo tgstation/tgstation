@@ -21,6 +21,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
 	show_to_ghosts = TRUE
 
+/datum/antagonist/wizard/New()
+	if(move_to_lair) // kick off loading of your lair, if you want to be moved to it
+		INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_WIZARDDEN)
+	return ..()
+
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
 	antagpanel_category = "Wizard"
@@ -92,7 +97,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	wiz_team.master_wizard = src
 
 /datum/antagonist/wizard/proc/send_to_lair()
+	// And now we ensure that its loaded
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WIZARDDEN)
+
 	if(!owner)
 		CRASH("Antag datum with no owner.")
 	if(!owner.current)

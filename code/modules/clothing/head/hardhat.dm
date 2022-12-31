@@ -121,17 +121,6 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/datum/armor/utility_hardhat
-	melee = 15
-	bullet = 5
-	laser = 20
-	energy = 10
-	bomb = 20
-	bio = 50
-	fire = 100
-	acid = 50
-	wound = 10
-
 /obj/item/clothing/head/utility/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
@@ -150,17 +139,6 @@
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	visor_flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-
-/datum/armor/utility_hardhat
-	melee = 15
-	bullet = 5
-	laser = 20
-	energy = 10
-	bomb = 20
-	bio = 50
-	fire = 100
-	acid = 50
-	wound = 10
 
 /obj/item/clothing/head/utility/hardhat/weldhat/Initialize(mapload)
 	. = ..()
@@ -238,17 +216,6 @@
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
-/datum/armor/utility_hardhat
-	melee = 15
-	bullet = 5
-	laser = 20
-	energy = 10
-	bomb = 20
-	bio = 50
-	fire = 100
-	acid = 50
-	wound = 10
-
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
 	if(isnull(.))
@@ -281,17 +248,6 @@
 	hat_type = "blumpkin"
 	light_color = "#76ff8e"
 	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
-
-/datum/armor/utility_hardhat
-	melee = 15
-	bullet = 5
-	laser = 20
-	energy = 10
-	bomb = 20
-	bio = 50
-	fire = 100
-	acid = 50
-	wound = 10
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin/turn_on(mob/user)
 	. = ..()

@@ -39,9 +39,6 @@ Slimecrossing Armor
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
 	var/glasses_color = "#FFFFFF"
 
-/datum/armor/mask_nobreath
-	bio = 50
-
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)
 		return TRUE
@@ -54,9 +51,6 @@ Slimecrossing Armor
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 10
-
-/datum/armor/mask_nobreath
-	bio = 50
 
 /obj/structure/light_prism/Initialize(mapload, newcolor)
 	. = ..()
@@ -73,9 +67,6 @@ Slimecrossing Armor
 	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	button_icon_state = "prismcolor"
 
-/datum/armor/mask_nobreath
-	bio = 50
-
 /datum/action/item_action/change_prism_colour/Trigger(trigger_flags)
 	if(!IsAvailable(feedback = TRUE))
 		return
@@ -89,9 +80,6 @@ Slimecrossing Armor
 	name = "Fabricate Light Prism"
 	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	button_icon_state = "lightprism"
-
-/datum/armor/mask_nobreath
-	bio = 50
 
 /datum/action/item_action/place_light_prism/Trigger(trigger_flags)
 	if(!IsAvailable(feedback = TRUE))
@@ -123,9 +111,6 @@ Slimecrossing Armor
 	throw_speed = 1
 	throw_range = 3
 
-/datum/armor/mask_nobreath
-	bio = 50
-
 /obj/item/clothing/head/peaceflower/proc/at_peace_check(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
@@ -155,9 +140,6 @@ Slimecrossing Armor
 	obj_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 40
-
-/datum/armor/mask_nobreath
-	bio = 50
 
 /obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
 	if(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) && prob(hit_reflect_chance))
