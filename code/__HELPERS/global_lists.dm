@@ -235,6 +235,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/structure/fireaxecabinet/mechremoval,
 	/obj/structure/mirror,
 	/obj/structure/noticeboard,
+	/obj/structure/urinal,
 	/obj/structure/reagent_dispensers/wall,
 	/obj/structure/sign,
 	/obj/structure/sign/picture_frame,

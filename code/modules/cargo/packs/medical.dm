@@ -151,7 +151,7 @@
 
 /datum/supply_pack/medical/virus_food
 	name = "Wall-Mounted Virus Food Dispenser Crate"
-	desc = "Contains four wall-mounted virus food dispensers. Requires Security access to open."
+	desc = "Contains four wall-mounted virus food dispensers."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/wallframe/reagent_dispenser/virus_food = 4)
 	crate_name = "wall-mounted virus food dispenser crate"

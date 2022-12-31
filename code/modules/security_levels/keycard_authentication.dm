@@ -30,6 +30,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	QDEL_NULL(ev)
 	return ..()
 
+/obj/machinery/keycard_auth/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/wallframe/keycard_auth(loc)
+	qdel(src)
+
 /obj/machinery/keycard_auth/ui_state(mob/user)
 	return GLOB.physical_state
 
@@ -136,6 +141,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 			make_maint_all_access()
 		if(KEYCARD_BSA_UNLOCK)
 			toggle_bluespace_artillery()
+
+/obj/item/wallframe/keycard_auth
+	name = "keycard authenticator frame"
+	desc = "An unmounted keycard authenticator. Attach it to a wall to use."
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "auth_off"
+	result_path = /obj/machinery/keycard_auth
+	pixel_shift = 26
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()

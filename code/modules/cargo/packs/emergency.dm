@@ -189,3 +189,11 @@
 	contains = list(/obj/item/storage/box/mothic_rations = 3)
 	crate_name = "surplus rations box"
 	crate_type = /obj/structure/closet/crate/cardboard/mothic
+
+/datum/supply_pack/emergency/keycard_auth
+	name = "Keycard Authenticator Crate"
+	desc = "Contains two wall-mounted keycard authenticators. Requires command access to open."
+	cost = CARGO_CRATE_VALUE * 6
+	access = ACCESS_COMMAND
+	contains = list(/obj/item/wallframe/keycard_auth = 2)
+	crate_name = "wall-mounted keycard authenticator crate"
