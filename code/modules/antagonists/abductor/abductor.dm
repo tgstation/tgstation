@@ -17,6 +17,11 @@
 	/// Type path for the associated job datum.
 	var/role_job = /datum/job/abductor_agent
 
+/datum/antagonist/abductor/New()
+	// lets get the loading started now, but don't block waiting for it
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
+	return ..()
+
 /datum/antagonist/abductor/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/scientist = new
 	var/mob/living/carbon/human/dummy/consistent/agent = new
@@ -99,6 +104,8 @@
 	H.real_name = "[team.name] [sub_role]"
 	H.equipOutfit(outfit)
 
+	// We require that the template be loaded here, so call it in a blocking manner, if its already done loading, this won't block
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	//Teleport to ship
 	for(var/obj/effect/landmark/abductor/LM in GLOB.landmarks_list)
 		if(istype(LM, landmark_type) && LM.team_number == team.team_number)
@@ -116,7 +123,6 @@
 	. = ..()
 
 /datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)
-	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	var/list/current_teams = list()
 	for(var/datum/team/abductor_team/T in GLOB.antagonist_teams)
 		current_teams[T.name] = T

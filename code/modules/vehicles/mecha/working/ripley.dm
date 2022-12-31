@@ -147,15 +147,6 @@
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
 
-/datum/armor/ripley_mk2
-	melee = 40
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 60
-	fire = 100
-	acid = 100
-
 /obj/vehicle/sealed/mecha/working/ripley/mining/Initialize(mapload)
 	. = ..()
 	take_damage(125) // Low starting health
@@ -190,15 +181,6 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 	icon_state = "hauler"
 	base_icon_state = "hauler"
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
-
-/datum/armor/ripley_mk2
-	melee = 40
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 60
-	fire = 100
-	acid = 100
 
 /obj/vehicle/sealed/mecha/working/ripley/cargo/Initialize(mapload)
 	. = ..()
@@ -236,15 +218,6 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 	name = "Cargo compartment"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
-
-/datum/armor/ripley_mk2
-	melee = 40
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 60
-	fire = 100
-	acid = 100
 
 /obj/item/mecha_parts/mecha_equipment/ejector/get_snowflake_data()
 	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_EJECTOR, "cargo" = list())

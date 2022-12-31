@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "Instant Summons will now violently tear out embedded objects as they are summoned, and will drag embedee to you if nearby."

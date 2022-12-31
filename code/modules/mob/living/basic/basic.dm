@@ -137,8 +137,15 @@
 	. = ..()
 	if(basic_mob_flags & DEL_ON_DEATH)
 		qdel(src)
-		return
-	health = 0
+	else
+		health = 0
+		look_dead()
+
+/**
+ * Apply the appearance and properties this mob has when it dies
+ * This is called by the mob pretending to be dead too so don't put loot drops in here or something
+ */
+/mob/living/basic/proc/look_dead()
 	icon_state = icon_dead
 	if(basic_mob_flags & FLIP_ON_DEATH)
 		transform = transform.Turn(180)
@@ -147,8 +154,12 @@
 
 /mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
-	if (!.)
+	if(!.)
 		return
+	look_alive()
+
+/// Apply the appearance and properties this mob has when it is alive
+/mob/living/basic/proc/look_alive()
 	icon_state = icon_living
 	if(basic_mob_flags & FLIP_ON_DEATH)
 		transform = transform.Turn(180)

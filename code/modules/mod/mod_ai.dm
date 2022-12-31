@@ -8,7 +8,7 @@
 	switch(interaction)
 		if(AI_TRANS_TO_CARD)
 			if(!ai)
-				balloon_alert(user, "no AI in suit!")
+				balloon_alert(user, "no ai in suit!")
 				return
 			balloon_alert(user, "transferring to card...")
 			if(!do_after(user, 5 SECONDS, target = src))
@@ -28,21 +28,21 @@
 			intAI.controlled_equipment = null
 			intAI.remote_control = null
 			balloon_alert(intAI, "transferred to a card")
-			balloon_alert(user, "AI transferred to card")
+			balloon_alert(user, "ai transferred to card")
 			ai = null
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to the suit.
 			intAI = card.AI
 			if(!intAI)
-				balloon_alert(user, "no AI in card!")
+				balloon_alert(user, "no ai in card!")
 				return
 			if(ai)
-				balloon_alert(user, "already has AI!")
+				balloon_alert(user, "already has ai!")
 				return
 			if(intAI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				intAI.disconnect_shell()
 			if(intAI.stat || !intAI.client)
-				balloon_alert(user, "AI unresponsive!")
+				balloon_alert(user, "ai unresponsive!")
 				return
 			balloon_alert(user, "transferring to suit...")
 			if(!do_after(user, 5 SECONDS, target = src))
@@ -50,7 +50,7 @@
 				return
 			if(ai)
 				return
-			balloon_alert(user, "AI transferred to suit")
+			balloon_alert(user, "ai transferred to suit")
 			ai_enter_mod(intAI)
 			card.AI = null
 
@@ -135,7 +135,7 @@
 		return
 	var/mob/living/silicon/ai/ai = stored_ai.resolve()
 	if(!ai)
-		balloon_alert(user, "no AI!")
+		balloon_alert(user, "no ai!")
 		return
 	balloon_alert(user, "transferring to card...")
 	if(!do_after(user, 5 SECONDS, target = src) || !ai)
@@ -145,5 +145,5 @@
 	ai.forceMove(card)
 	card.AI = ai
 	ai.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
-	balloon_alert(user, "AI transferred to card")
+	balloon_alert(user, "ai transferred to card")
 	stored_ai = null
