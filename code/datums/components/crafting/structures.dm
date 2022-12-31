@@ -37,3 +37,26 @@
 	)
 	result = /obj/structure/statue/bone/skull/half
 	category = CAT_STRUCTURE
+
+/datum/crafting_recipe/firecabinet
+	name = "Fire Axe Cabinet"
+	result = /obj/item/wallframe/fireaxecabinet
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stack/sheet/glass = 5,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_STRUCTURE
+
+/datum/crafting_recipe/mechcabinet
+	name = "Mech Removal Cabinet"
+	result = /obj/item/wallframe/fireaxecabinet/mechremoval
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stack/sheet/glass = 5,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_STRUCTURE
+
