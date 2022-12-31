@@ -13,15 +13,18 @@
 #define IDENTIFIER_INDEX 2
 #define TIMEOUT_INDEX 3
 #define REQUEST_INDEX 4
-#define EXTRA_TARGETS_INDEX 5
-#define LANGUAGE_INDEX 6
+#define MESSAGE_INDEX 5
+#define EXTRA_TARGETS_INDEX 6
+#define LANGUAGE_INDEX 7
 
 #define CACHE_PENDING "pending"
 
 SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
-	wait = 0.1 SECONDS
+	// Basically every tick
+	wait = 0.05 SECONDS
 	init_order = INIT_ORDER_TTS
+	priority = FIRE_PRIORITY_TTS
 
 	/// Queued HTTP requests that have yet to be sent
 	var/list/queued_tts_messages = list()
@@ -45,7 +48,37 @@ SUBSYSTEM_DEF(tts)
 
 	var/message_timeout = 5 SECONDS
 
+	/// Messages can be timed out earlier if the algorithm thinks that
+	/// it's going to take too long for their message to be processed.
+	/// This'll determine the minimum extent of how late it is allowed to begin timing messages out
+	var/message_timeout_early_minimum = 3 SECONDS
+
 	var/max_concurrent_requests = 15
+
+	/// The real time factor. For example, an RTF of 0.33 means it'll take 2 seconds to create a 6 second voice clip
+	/// This is estimated based on how long it takes to receive text based on how long it take to process on the server
+	var/rtf = 0
+
+/proc/cmp_word_length_asc(list/a, list/b)
+	return length(a[MESSAGE_INDEX]) - length(b[MESSAGE_INDEX])
+
+#define AVERAGE_SPEECH_WPM 100
+#define AVERAGE_SYLLABLE_LENGTH 3
+#define AVERAGE_SYLLABLE_PER_SECOND 4
+
+/datum/controller/subsystem/tts/proc/estimate_word_processing_length(text, rtf_override)
+	var/rtf_to_use = rtf_override
+	if(!rtf_to_use)
+		rtf_to_use = rtf
+	var/words = length(splittext(text, " "))
+	var/characters = length(replacetext(text, " ", ""))
+	// Take the longest time
+	return max(
+		// Average speech time based on word count
+		(words / AVERAGE_SPEECH_WPM) * 60,
+		// Average speech time based on character count
+		(characters / (AVERAGE_SYLLABLE_LENGTH * AVERAGE_SYLLABLE_PER_SECOND))
+	) * rtf_to_use
 
 /datum/controller/subsystem/tts/vv_edit_var(var_name, var_value)
 	// tts being enabled depends on whether it actually exists
@@ -98,6 +131,15 @@ SUBSYSTEM_DEF(tts)
 				use_reverb = TRUE
 			)
 
+/datum/controller/subsystem/tts/proc/handle_request(list/entry)
+	var/time_left = entry[TIMEOUT_INDEX]
+	var/estimated_processing_time = estimate_word_processing_length(entry[MESSAGE_INDEX])
+	if(time_left < world.time || (time_left < world.time + message_timeout_early_minimum && time_left - estimated_processing_time < world.time))
+		return
+	var/datum/http_request/request = entry[REQUEST_INDEX]
+	request.begin_async()
+	in_process_tts_messages += list(entry)
+
 /datum/controller/subsystem/tts/fire(resumed)
 	if(!tts_enabled)
 		flags |= SS_NO_FIRE
@@ -107,19 +149,11 @@ SUBSYSTEM_DEF(tts)
 		var/list/priority_list = priority_queued_tts_messages
 		while(length(in_process_tts_messages) < max_concurrent_requests && priority_list.len > 0)
 			var/list/entry = popleft(priority_list)
-			if(entry[TIMEOUT_INDEX] < world.time)
-				continue
-			var/datum/http_request/request = entry[REQUEST_INDEX]
-			request.begin_async()
-			in_process_tts_messages += list(entry)
+			handle_request(entry)
 		var/list/less_priority_list = queued_tts_messages
 		while(length(in_process_tts_messages) < max_concurrent_requests && less_priority_list.len > 0)
 			var/list/entry = popleft(less_priority_list)
-			if(entry[TIMEOUT_INDEX] < world.time)
-				continue
-			var/datum/http_request/request = entry[REQUEST_INDEX]
-			request.begin_async()
-			in_process_tts_messages += list(entry)
+			handle_request(entry)
 		current_processing_tts_messages = in_process_tts_messages.Copy()
 
 	// For speed
@@ -146,6 +180,8 @@ SUBSYSTEM_DEF(tts)
 		for(var/atom/movable/target in current_message[EXTRA_TARGETS_INDEX])
 			play_tts(target, new_sound, current_message[LANGUAGE_INDEX])
 		cached_voices -= identifier
+		var/time_taken = (message_timeout - (current_message[TIMEOUT_INDEX] - world.time)) / 10
+		rtf = time_taken / estimate_word_processing_length(current_message[MESSAGE_INDEX], 1)
 		if(MC_TICK_CHECK)
 			return
 
@@ -187,13 +223,15 @@ SUBSYSTEM_DEF(tts)
 	else if(high_priority)
 		waiting_list = priority_queued_tts_messages
 
-	var/list/data = list(target, identifier, world.time + message_timeout, request, list(), language)
+	var/list/data = list(target, identifier, world.time + message_timeout, request, shell_scrubbed_input, list(), language)
 	cached_voices[identifier] = data
 	waiting_list += list(data)
+	sortTim(waiting_list, GLOBAL_PROC_REF(cmp_word_length_asc))
 
 #undef TARGET_INDEX
 #undef IDENTIFIER_INDEX
 #undef TIMEOUT_INDEX
 #undef REQUEST_INDEX
+#undef MESSAGE_INDEX
 #undef EXTRA_TARGETS_INDEX
 #undef LANGUAGE_INDEX
