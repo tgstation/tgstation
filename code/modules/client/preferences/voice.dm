@@ -14,9 +14,7 @@
 	if(SStts.tts_enabled)
 		return SStts.available_speakers
 	if(fexists("data/cached_tts_voices.json"))
-		var/list/text_data = ""
-		// Can't use rustg to read the file here because this can run before auxtools has time to even load.
-		READ_FILE(file("data/cached_tts_voices.json"), text_data)
+		var/list/text_data = rustg_file_read("data/cached_tts_voices.json")
 		var/list/cached_data = json_decode(text_data)
 		return cached_data
 	return list("invalid")

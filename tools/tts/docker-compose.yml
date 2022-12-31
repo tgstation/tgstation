@@ -1,13 +1,12 @@
 services:
   tts:
     container_name: tts
-    
+
     build: .
     ports:
       - "5002:5002"
-    tty: true
     volumes:
-      - "./persistent_data/.local_cache:/root/.local"
+      - "./persistent_data/tts_models:/root/pth"
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://localhost:5002/health-check"]
