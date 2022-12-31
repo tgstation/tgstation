@@ -9,8 +9,6 @@
 		NO_UNDERWEAR,
 		DYNCOLORS,
 		AGENDER,
-		HAS_FLESH,
-		HAS_BONE,
 	)
 	mutant_bodyparts = list(
 		"beef_color" = "#e73f4e",
