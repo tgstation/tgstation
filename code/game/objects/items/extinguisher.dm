@@ -18,18 +18,33 @@
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
+	/// The max amount of water this extinguisher can hold.
 	var/max_water = 50
+	/// Does the welder extinguisher start with water.
+	var/starting_water = TRUE
+	/// Cooldown between uses.
 	var/last_use = 1
+	/// Chem we use for our extinguishing.
 	var/chem = /datum/reagent/water
+	/// Can we actually fire currently?
 	var/safety = TRUE
+	/// Can we refill this at a water tank?
 	var/refilling = FALSE
+	/// What tank we need to refill this.
 	var/tanktype = /obj/structure/reagent_dispensers/watertank
+	/// something that should be replaced with base_icon_state
 	var/sprite_name = "fire_extinguisher"
-	var/power = 5 //Maximum distance launched water will travel
-	var/precision = FALSE //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
-	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
-	/// Icon state when inside a tank holder
+	/// Maximum distance launched water will travel.
+	var/power = 5
+	/// By default, turfs picked from a spray are random, set to TRUE to make it always have at least one water effect per row.
+	var/precision = FALSE
+	/// Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled.
+	var/cooling_power = 2
+	/// Icon state when inside a tank holder.
 	var/tank_holder_icon_state = "holder_extinguisher"
+
+/obj/item/extinguisher/empty
+	starting_water = FALSE
 
 /obj/item/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -46,6 +61,9 @@
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
+
+/obj/item/extinguisher/mini/empty
+	starting_water = FALSE
 
 /obj/item/extinguisher/crafted
 	name = "Improvised cooling spray"
@@ -80,7 +98,10 @@
 	. = ..()
 	if(tank_holder_icon_state)
 		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
-	refill()
+	if(starting_water)
+		refill()
+	else if(chem)
+		create_reagents(max_water, AMOUNT_VISIBLE)
 
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"

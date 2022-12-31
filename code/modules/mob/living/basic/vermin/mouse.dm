@@ -29,6 +29,8 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
 
+	/// Whether this rat is friendly to players
+	var/tame = FALSE
 	/// What color our mouse is. Brown, gray and white - leave blank for random.
 	var/body_color
 	/// Does this mouse contribute to the ratcap?
@@ -36,23 +38,30 @@
 	/// Probability that, if we successfully bite a shocked cable, that we will die to it.
 	var/cable_zap_prob = 85
 
-/mob/living/basic/mouse/Initialize(mapload)
+/mob/living/basic/mouse/Initialize(mapload, tame = FALSE)
 	. = ..()
 	if(contributes_to_ratcap)
 		SSmobs.cheeserats |= src
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
+	src.tame = tame
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
 		held_state = "mouse_[body_color]" // not handled by variety element
 		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
-
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	make_tameable()
+
+/mob/living/basic/mouse/proc/make_tameable()
+	if (tame)
+		faction |= FACTION_NEUTRAL
+	else
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -137,6 +146,14 @@
 	if(ishuman(entered) && stat == CONSCIOUS)
 		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
 
+/// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
+/mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+	new /obj/effect/temp_visual/heart(loc)
+	faction |= FACTION_NEUTRAL
+	tame = TRUE
+	try_consume_cheese(cheese)
+	ai_controller.CancelActions() // Interrupt any current fleeing
+
 /// Attempts to consume a piece of cheese, causing a few effects.
 /mob/living/basic/mouse/proc/try_consume_cheese(obj/item/food/cheese/cheese)
 	// Royal cheese will evolve us into a regal rat
@@ -183,7 +200,7 @@
 
 /// Creates a new mouse based on this mouse's subtype.
 /mob/living/basic/mouse/proc/create_a_new_rat()
-	new /mob/living/basic/mouse(loc)
+	new /mob/living/basic/mouse(loc, /* tame = */ tame)
 
 /// Biting into a cable will cause a mouse to get shocked and die if applicable. Or do nothing if they're lucky.
 /mob/living/basic/mouse/proc/try_bite_cable(obj/structure/cable/cable)
@@ -235,6 +252,10 @@
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
 
+/mob/living/basic/mouse/brown/tom/make_tameable()
+	tame = TRUE
+	return ..()
+
 /mob/living/basic/mouse/brown/tom/Initialize(mapload)
 	. = ..()
 	// Tom fears no cable.
@@ -242,7 +263,7 @@
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 
 /mob/living/basic/mouse/brown/tom/create_a_new_rat()
-	new /mob/living/basic/mouse/brown(loc) // dominant gene
+	new /mob/living/basic/mouse/brown(loc, /* tame = */ tame) // dominant gene
 
 /mob/living/basic/mouse/rat
 	name = "rat"
@@ -255,6 +276,9 @@
 	health = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse/rat
+
+/mob/living/basic/mouse/rat/make_tameable()
+	return // Unlike in real life, space rats are horrible creatures who don't like you
 
 /mob/living/basic/mouse/rat/create_a_new_rat()
 	new /mob/living/basic/mouse/rat(loc)
@@ -326,36 +350,63 @@
 /// The mouse AI controller
 /datum/ai_controller/basic_controller/mouse
 	blackboard = list(
+		BB_BASIC_MOB_FLEEING = TRUE, // Always cowardly
 		BB_CURRENT_HUNTING_TARGET = null, // cheese
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(), // Use this to find people to run away from
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		// Top priority is to look for and execute hunts for cheese
+		// Top priority is to look for and execute hunts for cheese even if someone is looking at us
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
-		// Try to speak after a cheese hunt, because it's cute
+		// Next priority is see if anyone is looking at us
+		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
+		// Skedaddle
+		/datum/ai_planning_subtree/flee_target/mouse,
+		// Try to speak, because it's cute
 		/datum/ai_planning_subtree/random_speech/mouse,
 		// Otherwise, look for and execute hunts for cabling
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
 	)
 
+/// Don't look for anything to run away from if you are distracted by being adjacent to cheese
+/datum/ai_planning_subtree/flee_target/mouse
+	flee_behaviour = /datum/ai_behavior/run_away_from_target/mouse
+
+/datum/ai_planning_subtree/flee_target/mouse
+
+/datum/ai_planning_subtree/flee_target/mouse/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	var/datum/weakref/hunting_weakref = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
+	var/atom/hunted_cheese = hunting_weakref?.resolve()
+	if (!isnull(hunted_cheese))
+		return // We see some cheese, which is more important than our life
+	return ..()
+
+/datum/ai_planning_subtree/flee_target/mouse/select
+
+/datum/ai_behavior/run_away_from_target/mouse
+	run_distance = 3 // Mostly exists in small tunnels, don't get ahead of yourself
+
 /// AI controller for rats, slightly more complex than mice becuase they attack people
 /datum/ai_controller/basic_controller/mouse/rat
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
 		BB_BASIC_MOB_CURRENT_TARGET = null, // heathen
 		BB_CURRENT_HUNTING_TARGET = null, // cheese
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/attack_obstacle_in_path/rat,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/rat,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
 		/datum/ai_planning_subtree/random_speech/mouse,
@@ -366,4 +417,10 @@
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/rat
 
 /datum/ai_behavior/basic_melee_attack/rat
+	action_cooldown = 2 SECONDS
+
+/datum/ai_planning_subtree/attack_obstacle_in_path/rat
+	attack_behaviour = /datum/ai_behavior/attack_obstructions/rat
+
+/datum/ai_behavior/attack_obstructions/rat
 	action_cooldown = 2 SECONDS

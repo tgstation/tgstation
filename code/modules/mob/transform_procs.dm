@@ -300,7 +300,7 @@
 
 /mob/living/carbon/human/Animalize()
 
-	var/list/mobtypes = typesof(/mob/living/simple_animal)
+	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
 	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(mobpath))
 		return
@@ -334,7 +334,7 @@
 
 /mob/proc/Animalize()
 
-	var/list/mobtypes = typesof(/mob/living/simple_animal)
+	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
 	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(mobpath))
 		return
@@ -372,7 +372,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/crab))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
+	if(ispath(MP, /mob/living/basic/carp))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
 		return TRUE

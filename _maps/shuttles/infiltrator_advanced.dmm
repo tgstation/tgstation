@@ -1888,11 +1888,9 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)
 "dW" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/recharge_station,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "dX" = (

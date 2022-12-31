@@ -144,7 +144,15 @@ Slimecrossing Items
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
-	armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, BOMB = 0, BIO = 0, FIRE = -80, ACID = 30)
+	armor_type = /datum/armor/structure_ice_stasis
+
+/datum/armor/structure_ice_stasis
+	melee = 30
+	bullet = 50
+	laser = -50
+	energy = -50
+	fire = -80
+	acid = 30
 
 /obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
@@ -185,7 +193,7 @@ Slimecrossing Items
 			to_chat(user, span_warning("[M] refused to enter the device."))
 			return
 	else
-		if(ishostile(M) && !("neutral" in M.faction))
+		if(ishostile(M) && !(FACTION_NEUTRAL in M.faction))
 			to_chat(user, span_warning("This creature is too aggressive to capture."))
 			return
 	to_chat(user, span_notice("You store [M] in the capture device."))

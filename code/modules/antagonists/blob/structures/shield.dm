@@ -10,7 +10,11 @@
 	explosion_block = 3
 	point_return = BLOB_REFUND_STRONG_COST
 	atmosblock = TRUE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/blob_shield
+
+/datum/armor/blob_shield
+	fire = 90
+	acid = 90
 
 /obj/structure/blob/shield/scannerreport()
 	if(atmosblock)

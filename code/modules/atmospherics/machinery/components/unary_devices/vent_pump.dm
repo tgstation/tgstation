@@ -28,15 +28,47 @@
 	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
+	///id of air sensor its connected to
+	var/chamber_id
+
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
+		var/static/list/tool_screentips = list(
+			TOOL_MULTITOOL = list(
+				SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
+			)
+		)
+		AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	. = ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	. = ..()
-
 	assign_to_area()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
+	. = ..()
+	. += span_notice("You can link it with an air sensor using a multitool.")
+
+/obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	. = ..()
+	if (!istype(multi_tool))
+		return .
+
+	balloon_alert(user, "saved in buffer")
+	multi_tool.buffer = src
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/vent_pump/wrench_act(mob/living/user, obj/item/wrench)
+	. = ..()
+	if(.)
+		disconnect_chamber()
+
+///called when its either unwrenched or destroyed
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_chamber()
+	if(chamber_id != null)
+		GLOB.objects_by_id_tag -= CHAMBER_OUTPUT_FROM_ID(chamber_id)
+		chamber_id = null
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()
@@ -44,6 +76,8 @@
 	var/area/vent_area = get_area(src)
 	if(vent_area)
 		vent_area.air_vents -= src
+
+	disconnect_chamber()
 
 	return ..()
 
@@ -269,7 +303,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer4
 	piping_layer = 4
-	icon_state = "map_vent-4"
+	icon_state = "vent_map-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
 	on = TRUE
@@ -281,7 +315,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer4
 	piping_layer = 4
-	icon_state = "map_vent_on-4"
+	icon_state = "vent_map_on-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon
 	pump_direction = ATMOS_DIRECTION_SIPHONING
@@ -295,7 +329,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer4
 	piping_layer = 4
-	icon_state = "map_vent-4"
+	icon_state = "vent_map-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
 	on = TRUE

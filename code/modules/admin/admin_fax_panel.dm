@@ -24,7 +24,7 @@
 	/// Default name of fax. Used when field with fax name not edited.
 	var/sending_fax_name = "Secret"
 	/// Default name of paper. paper - bluh-bluh. Used when field with paper name not edited.
-	var/default_paper_name = "Standart Report"
+	var/default_paper_name = "Standard Report"
 
 /datum/fax_panel_interface/New()
 	//Get all faxes, and save them to our list.

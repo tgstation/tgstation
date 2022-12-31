@@ -47,8 +47,9 @@
 	SHOULD_CALL_PARENT(FALSE)
 	air = space_gas
 
-	if(flags_1 & INITIALIZED_1)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	if (PERFORM_ALL_TESTS(focus_only/multiple_space_initialization))
+		if(flags_1 & INITIALIZED_1)
+			stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
 
@@ -105,7 +106,7 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			set_light(2)
+			set_light(2, 1.25, COLOR_BLUE_WHITE)
 			return
 		set_light(0)
 
@@ -211,7 +212,7 @@
 /turf/open/space/rust_heretic_act()
 	return FALSE
 
-/turf/open/space/ReplaceWithLattice()
+/turf/open/space/attempt_lattice_replacement()
 	var/dest_x = destination_x
 	var/dest_y = destination_y
 	var/dest_z = destination_z

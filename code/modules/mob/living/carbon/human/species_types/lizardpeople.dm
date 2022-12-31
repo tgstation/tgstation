@@ -3,7 +3,11 @@
 	name = "\improper Lizardperson"
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
-	species_traits = list(MUTCOLORS, EYECOLOR, LIPS, HAS_FLESH, HAS_BONE)
+	species_traits = list(
+		MUTCOLORS,
+		EYECOLOR,
+		LIPS,
+	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_TAILED_DEFENDER,
@@ -122,9 +126,13 @@ Lizard subspecies: ASHWALKERS
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = SPECIES_LIZARD_ASH
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAS_FLESH,HAS_BONE)
-	mutantlungs = /obj/item/organ/internal/lungs/ashwalker
+	mutantlungs = /obj/item/organ/internal/lungs/lavaland
 	mutantbrain = /obj/item/organ/internal/brain/primitive
+	species_traits = list(
+		MUTCOLORS,
+		EYECOLOR,
+		LIPS,
+	)
 	inherent_traits = list(
 		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,

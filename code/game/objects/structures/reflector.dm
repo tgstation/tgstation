@@ -6,7 +6,7 @@
 	anchored = FALSE
 	density = FALSE
 	var/deflector_icon_state
-	var/image/deflector_overlay
+	var/mutable_appearance/deflector_overlay
 	var/finished = FALSE
 	var/admin = FALSE //Can't be rotated or deconstructed
 	var/can_rotate = TRUE
@@ -22,7 +22,10 @@
 	icon_state = "reflector_base"
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
 	if(deflector_icon_state)
-		deflector_overlay = image(icon, deflector_icon_state)
+		deflector_overlay = mutable_appearance(icon, deflector_icon_state)
+		// We offset our physical position DOWN, because TRANSFORM IS A FUCK
+		deflector_overlay.pixel_y = -32
+		deflector_overlay.pixel_z = 32
 		add_overlay(deflector_overlay)
 
 	if(rotation_angle == -1)
