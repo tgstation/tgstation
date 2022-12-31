@@ -251,8 +251,8 @@
 ///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
 /datum/reagent/water/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
-	// Chek if this is the exact same type
-	if(chems.has_reagent(src, 1))
+	// Chek if this is the exact same reagent
+	if(chems.has_reagent(/datum/reagent/water))
 		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
 		//You don't belong in this world, monster!
 		chems.remove_reagent(/datum/reagent/water, chems.get_reagent_amount(type))
@@ -1097,8 +1097,8 @@
 /datum/reagent/uranium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	mytray.mutation_roll(user)
-	// Chek if this is the exact same type
-	if(chems.has_reagent(src, 1))
+	// Chek if this is the exact same reagent
+	if(chems.has_reagent(/datum/reagent/uranium))
 		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
 
