@@ -61,16 +61,17 @@
 	cost = 4
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
+// Low progression cost
+
 /datum/uplink_item/stealthy_weapons/origami_kit
 	name = "Boxed Origami Kit"
 	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into \
 			perfectly aerodynamic (and potentially lethal) paper airplanes."
 	item = /obj/item/storage/box/syndie_kit/origami_bundle
+	progression_minimum = 10 MINUTES
 	cost = 4
 	surplus = 0
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
-
-// Low progression cost
 
 // Medium progression cost
 
