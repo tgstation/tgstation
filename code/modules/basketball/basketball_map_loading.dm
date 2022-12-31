@@ -10,7 +10,7 @@
 	name = "Home Team Spawn"
 
 // locations where players for the away team will spawn
-/obj/effect/landmark/basaketball/team_spawn/away
+/obj/effect/landmark/basketball/team_spawn/away
 	name = "Away Team Spawn"
 
 /area/centcom/basketball
