@@ -124,6 +124,14 @@
 		terrorize_spell.Grant(reciever)
 
 /obj/item/organ/internal/eyes/night_vision/nightmare/Remove(mob/living/carbon/eye_owner, special)
+	. = ..()
+
+	if(!.)
+		return
+
+	terrorize_spell.Remove(eye_owner)
+
+/obj/item/organ/internal/eyes/night_vision/nightmare/Destroy(mob/living/carbon/eye_owner, special)
 	QDEL_NULL(terrorize_spell)
 	return ..()
 
