@@ -75,14 +75,12 @@
 			balloon_alert(user, "not enough reagents!")
 			return
 		add_overlay("active")
-		if(!do_after(user, 2 SECONDS, src))
-			cut_overlays()
-			return
-		medipen.reagents.maximum_volume = initial(medipen.reagents.maximum_volume)
-		medipen.add_initial_reagents()
-		reagents.remove_reagent(allowed_pens[medipen.type], 10)
-		balloon_alert(user, "refilled")
-		use_power(active_power_usage)
+		if(do_after(user, 2 SECONDS, src))
+			medipen.reagents.maximum_volume = initial(medipen.reagents.maximum_volume)
+			medipen.add_initial_reagents()
+			reagents.remove_reagent(allowed_pens[medipen.type], 10)
+			balloon_alert(user, "refilled")
+			use_power(active_power_usage)
 		cut_overlays()
 		return
 	return ..()
