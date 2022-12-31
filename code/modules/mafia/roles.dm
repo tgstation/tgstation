@@ -1,25 +1,41 @@
-///how many people can play basketball without issues (running out of spawns, procs not expecting more than this amount of people, etc)
-#define BASKETBALL_MAX_PLAYER_COUNT 8 // shoould be 6
+/datum/mafia_role
+	var/name = JOB_ASSISTANT
+	var/desc = "You are a crewmember without any special abilities."
+	var/win_condition = "kill all mafia and solo killing roles."
+	var/team = MAFIA_TEAM_TOWN
+	///how the random setup chooses which roles get put in
+	var/role_type = TOWN_OVERFLOW
 
-#define BASKETBALL_TEAM_HOME "home"
-#define BASKETBALL_TEAM_AWAY "away"
-
-//#define MAFIA_PHASE_SETUP 1
-//#define MAFIA_PHASE_VICTORY_LAP 6
-/// signal sent to roles when the game is confirmed ending
-// #define COMSIG_MAFIA_GAME_END "game_end"
-
-/// list of ghosts who want to play mafia, every time someone enters the list it checks to see if enough are in
-GLOBAL_LIST_EMPTY(mafia_signup)
-/// list of ghosts who want to play mafia that have since disconnected. They are kept in the lobby, but not counted for starting a game.
-GLOBAL_LIST_EMPTY(mafia_bad_signup)
-/// the current global mafia game running.
-GLOBAL_VAR(mafia_game)
-
-/datum/basketball_role
-	var/team = BASKETBALL_TEAM_HOME //MAFIA_TEAM_TOWN
 	var/player_key
 	var/mob/living/carbon/human/body
+	var/obj/effect/landmark/mafia/assigned_landmark
+
+	///role flags (special status of roles like detection immune)
+	var/role_flags = NONE
+	///how many votes submitted when you vote. used in voting, but not victory
+	var/vote_power = 1
+	///how many votes your role COULD count for, now or later. used in checking victory
+	var/vote_potential = 1
+	///what they get equipped with when they are revealed
+	var/datum/outfit/revealed_outfit = /datum/outfit/mafia/assistant
+	///action = uses
+	var/list/actions = list()
+	var/list/targeted_actions = list()
+	///what the role gets when it wins a game
+	var/winner_award = /datum/award/achievement/mafia/assistant
+
+	///so mafia have to also kill them to have a majority
+	var/game_status = MAFIA_ALIVE
+
+	///icon state in the mafia dmi of the hud of the role, used in the mafia ui
+	var/hud_icon = "hudassistant"
+	///icon state in the mafia dmi of the hud of the role, used in the mafia ui
+	var/revealed_icon = "assistant"
+	///set this to something cool for antagonists and their window will look different
+	var/special_theme
+
+	var/list/role_notes = list()
+
 
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
