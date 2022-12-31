@@ -934,6 +934,8 @@
 						matching_container = TRUE
 				if (isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 					matching_container = FALSE
+				if (istype(cached_my_atom, /obj/item/food/grown) && !reaction.plant_react)
+					matching_container = FALSE
 				if(!reaction.required_other)
 					matching_other = TRUE
 
