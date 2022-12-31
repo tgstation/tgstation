@@ -34,6 +34,11 @@
 		/obj/item/stack/sheet/bluespace_crystal,
 	)
 
+/datum/storage/rped/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
+	. = ..()
+	var/atom/resolve_parent = src.parent?.resolve()
+	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(rped_mass_empty), TRUE)
+
 /datum/storage/rped/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
 	. = ..()
 
@@ -78,7 +83,7 @@
 	return .
 
 /// overridden mass_empty, so as to dump only the lowest tier of parts currently in the RPED
-/datum/storage/rped/mass_empty(datum/source, atom/location, force)
+/datum/storage/rped/proc/rped_mass_empty(datum/source, atom/location, force)
 	SIGNAL_HANDLER
 
 	if(!allow_quick_empty && !force)
