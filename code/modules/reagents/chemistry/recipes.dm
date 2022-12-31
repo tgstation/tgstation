@@ -21,6 +21,8 @@
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
+	///Determines if a chemical reaction can occur inside harvested plants. Used to stop food items from being mass produced on harvest by crops.
+	var/plant_react = TRUE
 	///The message shown to nearby people upon mixing, if applicable
 	var/mix_message = "The solution begins to bubble."
 	///The sound played upon mixing, if applicable
