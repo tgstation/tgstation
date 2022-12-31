@@ -163,6 +163,13 @@
 	contains = list(/obj/item/storage/box/wall_flash = 4)
 	crate_name = "wall-mounted flash crate"
 
+/datum/supply_pack/security/pepper_tank
+	name = "Wall-Mounted Peppertank Crate"
+	desc = "Contains four wall-mounted peppertanks. Requires Security access to open."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/wallframe/reagent_dispenser/peppertank = 4)
+	crate_name = "wall-mounted peppertank crate"
+
 /datum/supply_pack/security/constable
 	name = "Traditional Equipment Crate"
 	desc = "Spare equipment found in a warehouse. Contains a constable's outfit, \

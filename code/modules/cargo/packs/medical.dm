@@ -149,6 +149,13 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
 
+/datum/supply_pack/security/virus_food
+	name = "Wall-Mounted Virus Food Dispenser Crate"
+	desc = "Contains four wall-mounted virus food dispensers. Requires Security access to open."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/wallframe/reagent_dispenser/virus_food = 4)
+	crate_name = "wall-mounted virus food dispenser crate"
+
 /datum/supply_pack/medical/cmoturtlenecks
 	name = "Chief Medical Officer Turtlenecks"
 	desc = "Contains the CMO's turtleneck and turtleneck skirt. Requires CMO access to open."

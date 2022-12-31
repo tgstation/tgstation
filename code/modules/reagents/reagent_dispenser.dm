@@ -300,9 +300,31 @@
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall
+	name = "wall-mounted reagent dispenser"
+	desc = "A conveniently wall-mounted refillable reagent dispenser."
+	icon_state = "empty"
+	reagent_id = null
 	anchored = TRUE
 	density = FALSE
 	can_be_tanked = FALSE
+
+/obj/structure/reagent_dispensers/wall/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/wallframe/reagent_dispenser(loc)
+		chem_splash(get_turf(src), reagents, 1)
+	qdel(src)
+
+/obj/item/wallframe/reagent_dispenser
+	name = "wall-mounted reagent dispenser"
+	desc = "An unmounted reagent dispenser. Attach it to a wall to use."
+	icon = 'icons/obj/medical/chemical_tanks.dmi'
+	icon_state = "empty"
+	custom_materials = list(
+		/datum/material/iron = MINERAL_MATERIAL_AMOUNT,
+		/datum/material/plastic = MINERAL_MATERIAL_AMOUNT,
+	)
+	result_path = /obj/structure/reagent_dispensers/wall
+	pixel_shift = 30
 
 /obj/structure/reagent_dispensers/wall/peppertank
 	name = "pepper spray refiller"
@@ -316,6 +338,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
+
+/obj/item/wallframe/reagent_dispenser/peppertank
+	name = "wall-mounted peppertank"
+	desc = "An unmounted peppertank. Attach it to a wall to use."
+	icon = 'icons/obj/medical/chemical_tanks.dmi'
+	icon_state = "pepper"
+
+/obj/structure/reagent_dispensers/wall/virusfood
+	name = "virus food dispenser"
+	desc = "A dispenser of low-potency virus mutagenic."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/consumable/virus_food
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
+
+/obj/item/wallframe/reagent_dispenser/virus_food
+	name = "wall-mounted virus food dispenser"
+	desc = "An unmounted virus food dispenser. Attach it to a wall to use."
+	icon = 'icons/obj/medical/chemical_tanks.dmi'
+	icon_state = "virus_food"
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"
@@ -358,14 +400,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	explosion(src, heavy_impact_range = 3, light_impact_range = 5, flame_range = 10, flash_range = 7)
 	if(!QDELETED(src))
 		qdel(src)
-
-/obj/structure/reagent_dispensers/wall/virusfood
-	name = "virus food dispenser"
-	desc = "A dispenser of low-potency virus mutagenic."
-	icon_state = "virus_food"
-	reagent_id = /datum/reagent/consumable/virus_food
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
