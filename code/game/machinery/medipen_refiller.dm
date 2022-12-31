@@ -103,4 +103,4 @@
 	return TRUE
 
 /obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", tool)
+	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), tool)
