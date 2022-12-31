@@ -1,3 +1,6 @@
+#define MINING_SHIPPING_MULTIPLIER 0.65
+#define GET_MINING_SHIPPING_MULTIPLIER(cost) round(cost * MINING_SHIPPING_MULTIPLIER,5)
+
 /obj/machinery/computer/order_console/mining
 	name = "mining equipment vendor"
 	desc = "An equipment shop for miners, points collected at an ore redemption machine can be spent here."
@@ -10,7 +13,6 @@
 
 	cooldown_time = 10 SECONDS //just time to let you know your order went through.
 	express_cost_multiplier = 1
-	var/cargo_shipping_multiplier = 0.65
 
 	order_categories = list(
 		CATEGORY_MINING,
@@ -23,7 +25,7 @@
 	var/final_cost = get_total_cost()
 	var/failure_message = "Sorry, but you do not have enough mining points."
 	if(!express)
-		final_cost = round(final_cost * cargo_shipping_multiplier)
+		final_cost = GET_MINING_SHIPPING_MULTIPLIER(final_cost)
 	if(final_cost <= card.mining_points)
 		card.mining_points -= final_cost
 		return TRUE
@@ -58,6 +60,8 @@
 
 /obj/machinery/computer/order_console/mining/ui_data(mob/user)
 	var/list/data = ..()
+	var/cost = get_total_cost()
+	data["total_cost"] = "[GET_MINING_SHIPPING_MULTIPLIER(cost)] (Express: [cost]) "
 	if(!isliving(user))
 		return data
 	var/mob/living/living_user = user
@@ -71,6 +75,22 @@
 	. = ..()
 	if(!.)
 		flick("mining-deny", src)
+
+/obj/machinery/computer/order_console/mining/ui_static_data(mob/user)
+	var/list/data = ..()
+	data["order_datums"] = list()
+	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
+		if(!(item.category_index in order_categories))
+			continue
+		data["order_datums"] += list(list(
+			"name" = item.name,
+			"desc" = item.desc,
+			"cat" = item.category_index,
+			"ref" = REF(item),
+			"cost" = GET_MINING_SHIPPING_MULTIPLIER(item.cost_per_order),
+			"amt" = grocery_list[item],
+		))
+	return data
 
 /obj/machinery/computer/order_console/mining/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/mining_voucher))
@@ -187,3 +207,5 @@
 
 #undef TO_POINT_CARD
 #undef TO_USER_ID
+#undef MINING_SHIPPING_MULTIPLIER
+#undef GET_MINING_SHIPPING_MULTIPLIER
