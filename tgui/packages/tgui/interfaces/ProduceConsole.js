@@ -153,7 +153,7 @@ const CheckoutTab = (props, context) => {
                   icon="plane-departure"
                   content="Purchase"
                   tooltip={`
-                  Your groceries will arrive at cargo,
+                  Your purchases will arrive at cargo,
                   and hopefully get delivered by them.
                   ${cargo_cheaper ? 'Cheaper than express delivery.' : ''}
                   `}
@@ -169,7 +169,7 @@ const CheckoutTab = (props, context) => {
                 color="yellow"
                 content="Express"
                 tooltip={`
-                Sends the groceries instantly${
+                Sends your purchases instantly${
                   !cargo_cheaper
                     ? ',\nbut locks the console longer and increases the price!'
                     : '.'
