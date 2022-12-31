@@ -344,6 +344,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "An unmounted peppertank. Attach it to a wall to use."
 	icon = 'icons/obj/medical/chemical_tanks.dmi'
 	icon_state = "pepper"
+	result_path = /obj/structure/reagent_dispensers/wall/peppertank
 
 /obj/structure/reagent_dispensers/wall/virusfood
 	name = "virus food dispenser"
@@ -358,6 +359,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "An unmounted virus food dispenser. Attach it to a wall to use."
 	icon = 'icons/obj/medical/chemical_tanks.dmi'
 	icon_state = "virus_food"
+	result_path = /obj/structure/reagent_dispensers/wall/virusfood
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"

@@ -149,7 +149,7 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
 
-/datum/supply_pack/security/virus_food
+/datum/supply_pack/medical/virus_food
 	name = "Wall-Mounted Virus Food Dispenser Crate"
 	desc = "Contains four wall-mounted virus food dispensers. Requires Security access to open."
 	cost = CARGO_CRATE_VALUE * 2
