@@ -173,6 +173,14 @@
 	build_path = /obj/item/organ/internal/stomach/bone/plasmaman
 	category = list(SPECIES_PLASMAMAN)
 
+/datum/design/beefman_tongue
+	name = "Beef Tongue"
+	id = "beefman_tongue"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/tongue/beefman
+	category = list(SPECIES_BEEFMAN)
+
 /datum/design/ethereal_stomach
 	name = "Biological Battery"
 	id = "etherealstomach"
@@ -270,6 +278,16 @@
 	desc = "Contains designs for plasmaman organs for the limbgrower - Plasmaman tongue, liver, stomach, and lungs."
 	id = "limbdesign_plasmaman"
 	build_path = /obj/item/disk/design_disk/limbs/plasmaman
+
+/obj/item/disk/design_disk/limbs/beefman
+	name = "Beefman Organ Design Disk"
+	limb_designs = list(/datum/design/beefman_tongue)
+
+/datum/design/limb_disk/beefman
+	name = "Beefman Organ Design Disk"
+	desc = "Contains designs for beefmen tongues for the limbgrower"
+	id = "limbdesign_beefman"
+	build_path = /obj/item/disk/design_disk/limbs/beefman
 
 /obj/item/disk/design_disk/limbs/ethereal
 	name = "Ethereal Organ Design Disk"

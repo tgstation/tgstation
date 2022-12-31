@@ -115,6 +115,8 @@
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	if(job.plasmaman_outfit)
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
+	else if(job.beefman_outfit)
+		equipping.equipOutfit(job.beefman_outfit, visuals_only)
 	equipping.open_internals(equipping.get_item_for_held_index(2))
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)

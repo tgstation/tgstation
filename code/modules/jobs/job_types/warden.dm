@@ -18,6 +18,7 @@
 
 	outfit = /datum/outfit/job/warden
 	plasmaman_outfit = /datum/outfit/plasmaman/warden
+	beefman_outfit = /datum/outfit/beefman/warden
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC

@@ -13,6 +13,7 @@
 
 	outfit = /datum/outfit/job/doctor
 	plasmaman_outfit = /datum/outfit/plasmaman/medical
+	beefman_outfit = /datum/outfit/beefman/medical
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED

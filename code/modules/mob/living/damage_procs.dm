@@ -165,6 +165,9 @@
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
+/mob/living/proc/getBruteLoss_non_prosthetic()
+	return getBruteLoss()
+
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
@@ -223,6 +226,9 @@
 
 /mob/living/proc/getFireLoss()
 	return fireloss
+
+/mob/living/proc/getFireLoss_non_prosthetic()
+	return getFireLoss()
 
 /mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))

@@ -12,6 +12,7 @@
 
 	outfit = /datum/outfit/job/janitor
 	plasmaman_outfit = /datum/outfit/plasmaman/janitor
+	beefman_outfit = /datum/outfit/beefman/janitor
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
