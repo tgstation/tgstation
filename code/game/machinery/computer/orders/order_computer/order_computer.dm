@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				say("For the delivery order needs to cost more or equal to [CARGO_CRATE_VALUE] points!")
 				return
-			order_groceries(living_user, used_id_card, grocery_list, ltsrbt_delivered = (action == "ltsrbt_deliver"))
+			order_groceries(living_user, used_id_card, grocery_list)
 			grocery_list.Cut()
 			COOLDOWN_START(src, order_cooldown, cooldown_time)
 		if("express")
@@ -175,5 +175,5 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	say(failure_message)
 	return FALSE
 
-/obj/machinery/computer/order_console/proc/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries, ltsrbt_delivered = FALSE)
+/obj/machinery/computer/order_console/proc/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	return
