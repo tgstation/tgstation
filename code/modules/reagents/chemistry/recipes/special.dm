@@ -281,7 +281,10 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /datum/chemical_reaction/randomized/metalgen/GetPossibleReagents(kind)
 	switch(kind)
 		if(RNGCHEM_INPUT)
-			return GLOB.medicine_reagents
+			var/list/forbidden_reagents = (
+				/datum/reagent/medicine/strange_reagent/instant // Unobtainable
+			)
+			return (GLOB.medicine_reagents - forbidden_reagents)
 	return ..()
 
 /obj/item/paper/secretrecipe
