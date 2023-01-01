@@ -25,9 +25,9 @@ GENERAL_PROTECT_DATUM(/mob/admin_verb_holder)
 
 /mob/admin_verb_holder/proc/_wrap()
 	set src in usr.group
-	set category = "Admin.Debug"
 
-	holder.invoke()
+	if(check_rights_for(usr.client, holder.permission_required))
+		holder.invoke()
 
 /datum/admin_verb_datum
 	var/verb_name = "Default Admin Verb"
@@ -50,6 +50,8 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb_datum)
 /datum/admin_verb_datum/Topic(href, list/href_list)
 	..()
 	if(!usr.client?.holder?.CheckAdminHref(href, href_list))
+		return
+	if(!check_rights_for(usr.client, permission_required))
 		return
 
 	if(href_list["invoke"])
@@ -104,27 +106,3 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb_datum)
 	permission_required = R_SERVER
 	abstract = /datum/admin_verb_datum/server
 	verb_category = "Server"
-
-/datum/admin_verb_datum/debug/ping_a
-	verb_name = "PingA"
-
-/datum/admin_verb_datum/debug/ping_b
-	verb_name = "PingB"
-
-/datum/admin_verb_datum/debug/ping_c
-	verb_name = "PingC"
-
-/datum/admin_verb_datum/debug/ping_d
-	verb_name = "PingD"
-
-/datum/admin_verb_datum/server/ping_a
-	verb_name = "PingSA"
-
-/datum/admin_verb_datum/server/ping_b
-	verb_name = "PingSB"
-
-/datum/admin_verb_datum/server/ping_c
-	verb_name = "PingSC"
-
-/datum/admin_verb_datum/server/ping_d
-	verb_name = "PingSD"
