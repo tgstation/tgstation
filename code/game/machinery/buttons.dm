@@ -352,3 +352,40 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	. = ..()
 	. += span_notice("There's a small inscription on the button...")
 	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
+
+/obj/machinery/button/emergency_release
+	name = "emergency door release panel"
+	desc = "In the event of a tram emergency, lift the cover and pull the handle to manually release the doors."
+	icon_state = "launcher"
+	skin = "launcher"
+	device_type = /obj/item/assembly/control/emergency_release
+	req_access = list()
+	id = 1
+	/// The specific lift id of the tram we're calling.
+	var/lift_id = MAIN_STATION_TRAM
+
+/obj/machinery/button/emergency_release/examine(mob/user)
+	. = ..()
+	. += span_notice("Penalty for misuse!")
+
+/obj/machinery/button/emergency_release/setup_device()
+	var/obj/item/assembly/control/tram/tram_device = device
+	tram_device.initial_id = id
+	tram_device.specific_lift_id = lift_id
+	return ..()
+
+/obj/machinery/button/emergency_release/northeast
+	pixel_x = -6
+	pixel_y = 7
+
+/obj/machinery/button/emergency_release/northwest
+	pixel_x = 6
+	pixel_y = 7
+
+/obj/machinery/button/emergency_release/southeast
+	pixel_x = -6
+	pixel_y = -7
+
+/obj/machinery/button/emergency_release/southwest
+	pixel_x = 6
+	pixel_y = -7

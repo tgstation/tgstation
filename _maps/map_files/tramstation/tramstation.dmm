@@ -20130,6 +20130,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
+"hoZ" = (
+/obj/structure/industrial_lift/tram/subfloor,
+/obj/structure/tramwall/titanium,
+/obj/machinery/button/emergency_release/northwest,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "hpb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27089,6 +27095,12 @@
 /obj/item/pipe_dispenser,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"jST" = (
+/obj/structure/industrial_lift/tram/subfloor,
+/obj/structure/tramwall/titanium,
+/obj/machinery/button/emergency_release/northeast,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "jTx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -54535,6 +54547,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
+"tBV" = (
+/obj/structure/industrial_lift/tram/subfloor,
+/obj/structure/tramwall/titanium,
+/obj/machinery/button/emergency_release/southwest,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "tCa" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/structure/disposalpipe/segment{
@@ -66216,6 +66234,12 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/large,
 /area/station/service/library)
+"xOX" = (
+/obj/structure/industrial_lift/tram/subfloor,
+/obj/structure/tramwall/titanium,
+/obj/machinery/button/emergency_release/southeast,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "xPg" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/structure/table,
@@ -164207,11 +164231,11 @@ vyH
 qGw
 bqI
 izU
-nYh
+hoZ
 qeb
 qia
 pmD
-nYh
+tBV
 izU
 gYR
 vJF
@@ -165749,11 +165773,11 @@ vyH
 jfC
 kBX
 izU
-nYh
+jST
 ePF
 qia
 vqF
-nYh
+xOX
 izU
 nWl
 vJF
