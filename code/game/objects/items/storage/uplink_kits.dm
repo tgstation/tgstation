@@ -524,6 +524,12 @@
 	new /obj/item/book/granter/action/spell/mime/mimery_blockade(src)
 	new /obj/item/book/granter/action/spell/mime/mimery_guns(src)
 
+/obj/item/storage/box/syndie_kit/combat_baking/PopulateContents()
+	new /obj/item/food/baguette/combat(src)
+	for(var/i in 1 to 2)
+		new /obj/item/food/croissant/throwing(src)
+	new /obj/item/book/granter/crafting_recipe/combat_baking(src)
+
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
