@@ -113,6 +113,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	hit_count++
 	update_appearance()
 
+	if(hit_count >= 11)
+		icon_state = "tram_hits_alert"
+
 /obj/structure/sign/collision_counter/update_overlays()
 	. = ..()
 
