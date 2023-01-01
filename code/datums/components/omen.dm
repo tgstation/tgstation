@@ -160,6 +160,7 @@
  * Has only a 50% chance of bad things happening, and takes only 25% of normal damage.
  */
 /datum/component/omen/quirk
+	permanent = TRUE
 	luck_mod = 0.5 // 50% chance of bad things happening
 	damage_mod = 0.25 // 25% of normal damage
 
