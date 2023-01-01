@@ -37,10 +37,18 @@
 
 /obj/structure/sign/barsign/update_overlays()
 	. = ..()
-	if(broken || !chosen_sign)
-		return
 
-	. += emissive_appearance('icons/obj/barsigns.dmi', chosen_sign.icon, src, alpha = src.alpha)
+	if(!(machine_stat & (NOPOWER|BROKEN)))
+		// fix the icon states plox
+		. += mutable_appearance(icon, icon_state)
+		. += emissive_appearance(icon, chosen_sign.icon, src, alpha = src.alpha)
+
+/obj/structure/sign/barsign/update_appearance(updates=ALL)
+	. = ..()
+	if(machine_stat & (NOPOWER|BROKEN))
+		set_light(0)
+		return
+	set_light(MINIMUM_USEFUL_LIGHT_RANGE, 0.7, choosen_sign.neon_color)
 
 /obj/structure/sign/barsign/proc/set_sign_by_name(sign_name)
 	for(var/d in subtypesof(/datum/barsign))
@@ -159,6 +167,8 @@
 	var/hidden = FALSE
 	/// Rename the area when this sign is selected.
 	var/rename_area = TRUE
+	/// The emission color of the neon light
+	var/neon_color
 
 /datum/barsign/New()
 	if(!desc)
@@ -170,149 +180,174 @@
 	name = "Maltese Falcon"
 	icon = "maltesefalcon"
 	desc = "The Maltese Falcon, Space Bar and Grill."
+	neon_color = "#5E8EAC"
 
 /datum/barsign/thebark
 	name = "The Bark"
 	icon = "thebark"
 	desc = "Ian's bar of choice."
+	neon_color = "#f7a604"
 
 /datum/barsign/harmbaton
 	name = "The Harmbaton"
 	icon = "theharmbaton"
 	desc = "A great dining experience for both security members and assistants."
+	neon_color = "#ff7a4d"
 
 /datum/barsign/thesingulo
 	name = "The Singulo"
 	icon = "thesingulo"
 	desc = "Where people go that'd rather not be called by their name."
+	neon_color = "#E600DB"
 
 /datum/barsign/thedrunkcarp
 	name = "The Drunk Carp"
 	icon = "thedrunkcarp"
 	desc = "Don't drink and swim."
+	neon_color = "#a82196"
 
 /datum/barsign/scotchservinwill
 	name = "Scotch Servin Willy's"
 	icon = "scotchservinwill"
 	desc = "Willy sure moved up in the world from clown to bartender."
+	neon_color = "#fee4bf"
 
 /datum/barsign/officerbeersky
 	name = "Officer Beersky's"
 	icon = "officerbeersky"
 	desc = "Man eat a dong, these drinks are great."
+	neon_color = "#16C76B"
 
 /datum/barsign/thecavern
 	name = "The Cavern"
 	icon = "thecavern"
 	desc = "Fine drinks while listening to some fine tunes."
+	neon_color = "#0fe500"
 
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
 	icon = "theouterspess"
 	desc = "This bar isn't actually located in outer space."
+	neon_color = "#30f3cc"
 
 /datum/barsign/slipperyshots
 	name = "Slippery Shots"
 	icon = "slipperyshots"
 	desc = "Slippery slope to drunkeness with our shots!"
+	neon_color = "#70DF00"
 
 /datum/barsign/thegreytide
 	name = "The Grey Tide"
 	icon = "thegreytide"
 	desc = "Abandon your toolboxing ways and enjoy a lazy beer!"
+	neon_color = "#00F4D6"
 
 /datum/barsign/honkednloaded
 	name = "Honked 'n' Loaded"
 	icon = "honkednloaded"
 	desc = "Honk."
+	neon_color = "#FF998A"
 
 /datum/barsign/thenest
 	name = "The Nest"
 	icon = "thenest"
 	desc = "A good place to retire for a drink after a long night of crime fighting."
+	neon_color = "#4d6796"
 
 /datum/barsign/thecoderbus
 	name = "The Coderbus"
 	icon = "thecoderbus"
 	desc = "A very controversial bar known for its wide variety of constantly-changing drinks."
+	neon_color = "#ffffff"
 
 /datum/barsign/theadminbus
 	name = "The Adminbus"
 	icon = "theadminbus"
 	desc = "An establishment visited mainly by space-judges. It isn't bombed nearly as much as court hearings."
+	neon_color = "#ffffff"
 
 /datum/barsign/oldcockinn
 	name = "The Old Cock Inn"
 	icon = "oldcockinn"
 	desc = "Something about this sign fills you with despair."
+	neon_color = "#a4352b"
 
 /datum/barsign/thewretchedhive
 	name = "The Wretched Hive"
 	icon = "thewretchedhive"
 	desc = "Legally obligated to instruct you to check your drinks for acid before consumption."
+	neon_color = "#26b000"
 
 /datum/barsign/robustacafe
 	name = "The Robusta Cafe"
 	icon = "robustacafe"
 	desc = "Holder of the 'Most Lethal Barfights' record 5 years uncontested."
+	neon_color = "#c45f7a"
 
 /datum/barsign/emergencyrumparty
 	name = "The Emergency Rum Party"
 	icon = "emergencyrumparty"
 	desc = "Recently relicensed after a long closure."
+	neon_color = "#f90011"
 
 /datum/barsign/combocafe
 	name = "The Combo Cafe"
 	icon = "combocafe"
 	desc = "Renowned system-wide for their utterly uncreative drink combinations."
+	neon_color = "#33ca40"
 
 /datum/barsign/vladssaladbar
 	name = "Vlad's Salad Bar"
 	icon = "vladssaladbar"
 	desc = "Under new management. Vlad was always a bit too trigger happy with that shotgun."
+	neon_color = "#306900"
 
 /datum/barsign/theshaken
 	name = "The Shaken"
 	icon = "theshaken"
 	desc = "This establishment does not serve stirred drinks."
+	neon_color = "#dcd884"
 
 /datum/barsign/thealenath
 	name = "The Ale' Nath"
 	icon = "thealenath"
 	desc = "All right, buddy. I think you've had EI NATH. Time to get a cab."
+	neon_color = "#ed0000"
 
 /datum/barsign/thealohasnackbar
 	name = "The Aloha Snackbar"
 	icon = "alohasnackbar"
 	desc = "A tasteful, inoffensive tiki bar sign."
+	neon_color = ""
 
 /datum/barsign/thenet
 	name = "The Net"
 	icon = "thenet"
 	desc = "You just seem to get caught up in it for hours."
+	neon_color = "#0e8a00"
 
 /datum/barsign/maidcafe
 	name = "Maid Cafe"
 	icon = "maidcafe"
 	desc = "Welcome back, master!"
+	neon_color = "#ff0051"
 
 /datum/barsign/the_lightbulb
 	name = "The Lightbulb"
 	icon = "the_lightbulb"
 	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
+	neon_color = "#faff82"
 
 /datum/barsign/goose
 	name = "The Loose Goose"
 	icon = "goose"
 	desc = "Drink till you puke and/or break the laws of reality!"
+	neon_color = "#00cc33"
+
+// Hidden signs list below this point
 
 /datum/barsign/hiddensigns
 	hidden = TRUE
-
-
-//Hidden signs list below this point
-
-
 
 /datum/barsign/hiddensigns/empbarsign
 	name = "EMP'd"
@@ -324,6 +359,7 @@
 	name = "Syndi Cat"
 	icon = "syndibarsign"
 	desc = "Syndicate or die."
+	neon_color = "#ff0000"
 
 /datum/barsign/hiddensigns/signoff
 	name = "Off"
