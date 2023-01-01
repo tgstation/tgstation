@@ -252,7 +252,6 @@
 
 /// Gives the key that will be saved in the database.
 /// Must be 64 characters or less.
-// MBTODO: Unit test that all of these are <= 64
 /datum/tutorial_manager/proc/get_key()
 	SHOULD_BE_PURE(TRUE)
 	return copytext("[tutorial_type]", length("[/datum/tutorial]") + 2)
