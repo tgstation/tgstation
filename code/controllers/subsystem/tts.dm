@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(tts)
 	/// This'll determine the minimum extent of how late it is allowed to begin timing messages out
 	var/message_timeout_early_minimum = 3 SECONDS
 
-	var/max_concurrent_requests = 15
+	var/max_concurrent_requests = 5
 
 	/// The real time factor. For example, an RTF of 0.33 means it'll take 2 seconds to create a 6 second voice clip
 	/// This is estimated based on how long it takes to receive text based on how long it take to process on the server
