@@ -162,7 +162,6 @@ SUBSYSTEM_DEF(tts)
 	while(processing_messages.len)
 		var/current_message = processing_messages[processing_messages.len]
 		processing_messages.len--
-		var/atom/movable/target = current_message[TARGET_INDEX]
 		if(current_message[TIMEOUT_INDEX] < world.time)
 			in_process_tts_messages -= list(current_message)
 			cached_voices -= current_message[IDENTIFIER_INDEX]
