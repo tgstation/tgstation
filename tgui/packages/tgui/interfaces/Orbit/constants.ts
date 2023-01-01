@@ -12,6 +12,8 @@ export const ANTAG2GROUP = {
   'Ash Walker': 'Ash Walkers',
 
   'Blob': 'Biohazards',
+  'Blob Spore': 'Biohazards',
+  'Blobbernaut': 'Biohazards',
   'Sentient Disease': 'Biohazards',
 
   'Admiral': 'CentCom',
@@ -53,6 +55,6 @@ export const THREAT = {
 } as const;
 
 export const HEALTH = {
-  Good: 69,
+  Good: 69, // nice
   Average: 19,
 } as const;
