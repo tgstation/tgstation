@@ -89,7 +89,7 @@
 	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
 	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
 	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)//This can be changed if this is too much //It's been 5 years
-	SSwardrobe.provide_type(/obj/item/multitool, src)
+	SSwardrobe.provide_type(/obj/item/multitool/blueprint, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
 	SSwardrobe.provide_type(/obj/item/analyzer, src)
@@ -100,7 +100,7 @@
 	to_preload += /obj/item/screwdriver/power
 	to_preload += /obj/item/crowbar/power
 	to_preload += /obj/item/weldingtool/experimental
-	to_preload += /obj/item/multitool
+	to_preload += /obj/item/multitool/blueprint
 	to_preload += /obj/item/stack/cable_coil
 	to_preload += /obj/item/extinguisher/mini
 	to_preload += /obj/item/analyzer
@@ -153,7 +153,7 @@
 	SSwardrobe.provide_type(/obj/item/weldingtool/largetank, src)
 	SSwardrobe.provide_type(/obj/item/crowbar, src)
 	SSwardrobe.provide_type(/obj/item/wirecutters, src)
-	SSwardrobe.provide_type(/obj/item/multitool, src)
+	SSwardrobe.provide_type(/obj/item/multitool/blueprint, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 
 /obj/item/storage/belt/utility/full/engi/get_types_to_preload()
@@ -163,7 +163,7 @@
 	to_preload += /obj/item/weldingtool/largetank
 	to_preload += /obj/item/crowbar
 	to_preload += /obj/item/wirecutters
-	to_preload += /obj/item/multitool
+	to_preload += /obj/item/multitool/blueprint
 	to_preload += /obj/item/stack/cable_coil
 	return to_preload
 

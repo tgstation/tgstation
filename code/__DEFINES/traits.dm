@@ -1008,3 +1008,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEAKING_FROM_TONGUE "tongue"
 ///trait source that sign language should use
 #define SPEAKING_FROM_HANDS "hands"
+
+///trait associated with the blueprint multitool
+#define BLUEPRINT_MULTITOOL "blueprint_multitool"

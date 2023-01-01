@@ -140,3 +140,17 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "multitool_cyborg"
 	toolspeed = 0.5
+
+/obj/item/multitool/blueprint
+	name = "blueprint multitool"
+	desc = "A multitool with a build in database of the basic wiring system withing the station. Allowing users to know what each wire will do on airlocks and APCs."
+	icon_state = "multitool_blueprint"
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/multitool/blueprint/pickup(mob/living/user)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_KNOW_ENGI_WIRES, BLUEPRINT_MULTITOOL)
+
+/obj/item/multitool/blueprint/dropped(mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_KNOW_ENGI_WIRES, BLUEPRINT_MULTITOOL)
