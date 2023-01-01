@@ -78,18 +78,11 @@
 
 /obj/machinery/computer/order_console/mining/ui_static_data(mob/user)
 	var/list/data = ..()
-	data["order_datums"] = list()
-	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
-		if(!(item.category_index in order_categories))
+	for(var/list/order in data["order_datums"])
+		var/cost = order["cost"]
+		if(isnull(cost)) //sanity check
 			continue
-		data["order_datums"] += list(list(
-			"name" = item.name,
-			"desc" = item.desc,
-			"cat" = item.category_index,
-			"ref" = REF(item),
-			"cost" = GET_MINING_SHIPPING_MULTIPLIER(item.cost_per_order),
-			"amt" = grocery_list[item],
-		))
+		order["cost"] = GET_MINING_SHIPPING_MULTIPLIER(cost) // change costs to reflect mining shipping instead
 	return data
 
 /obj/machinery/computer/order_console/mining/attackby(obj/item/weapon, mob/user, params)
