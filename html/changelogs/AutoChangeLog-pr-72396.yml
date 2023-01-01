@@ -1,0 +1,4 @@
+author: "FernandoJ8"
+delete-after: True
+changes:
+  - bugfix: "Stranger Reagent can no longer be a componet in Metalgen"
