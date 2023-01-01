@@ -115,7 +115,7 @@
 	if(parts_list.len > 0)
 		parts_list = reverse_range(sortTim(parts_list, GLOBAL_PROC_REF(cmp_rped_sort)))
 		current_lowest_tier = parts_list[1].get_part_rating()
-		resolve_parent.balloon_alert(resolve_parent.loc, "dropping tier [current_lowest_tier]...")
+		resolve_parent.balloon_alert(resolve_parent.loc, "dropping lowest rated parts...")
 		for(var/obj/item/part in parts_list)
 			if(part.get_part_rating() != current_lowest_tier)
 				break

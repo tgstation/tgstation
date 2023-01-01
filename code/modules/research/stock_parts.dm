@@ -227,11 +227,10 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /proc/cmp_rped_sort(obj/item/A, obj/item/B)
 	/**
-	 * stacks components like cable,glass,plasteel are not component parts hence their get_part_rating() method is undefined and would return undefined values causing errors
-	 * so we assign them an default rating of 1 when the RPED sorts these components
+	 * even though stacks aren't stock parts, get_part_rating() is defined on the item level (see /obj/item/proc/get_part_rating()) and defaults to returning 0.
 	 */
-	var/a_rating = isstack(A) ? 1 : A.get_part_rating()
-	var/b_rating = isstack(B) ? 1 : B.get_part_rating()
+	var/a_rating = A.get_part_rating()
+	var/b_rating = B.get_part_rating()
 	return b_rating - a_rating
 
 /obj/item/stock_parts
