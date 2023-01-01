@@ -35,6 +35,13 @@
 
 	return sign
 
+/obj/structure/sign/barsign/update_overlays()
+	. = ..()
+	if(broken || !chosen_sign)
+		return
+
+	. += emissive_appearance('icons/obj/barsigns.dmi', chosen_sign.icon, src, alpha = src.alpha)
+
 /obj/structure/sign/barsign/proc/set_sign_by_name(sign_name)
 	for(var/d in subtypesof(/datum/barsign))
 		var/datum/barsign/D = d
