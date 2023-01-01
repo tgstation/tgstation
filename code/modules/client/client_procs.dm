@@ -220,6 +220,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
+	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -231,6 +232,17 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	tgui_say = new(src, "tgui_say")
 
 	set_right_click_menu_mode(TRUE)
+
+	/// Used for assigning admin verb datums, and so it needs to be up here
+	var/reconnecting = FALSE
+	if(GLOB.player_details[ckey])
+		reconnecting = TRUE
+		player_details = GLOB.player_details[ckey]
+		player_details.byond_version = full_version
+	else
+		player_details = new(ckey)
+		player_details.byond_version = full_version
+		GLOB.player_details[ckey] = player_details
 
 	GLOB.ahelp_tickets.ClientLogin(src)
 	GLOB.interviews.client_login(src)
@@ -273,7 +285,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(fexists("data/server_last_roundend_report.html"))
 		add_verb(src, /client/proc/show_servers_last_roundend_report)
 
-	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
 
 	var/alert_mob_dupe_login = FALSE
@@ -315,16 +326,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				else
 					message_admins(span_danger("<B>[message_type]: </B></span><span class='notice'>Connecting player [key_name_admin(src)] has the same [matches] as [joined_player_ckey](no longer logged in)<b>[in_round]</b>. "))
 					log_admin_private("[message_type]: Connecting player [key_name(src)] has the same [matches] as [joined_player_ckey](no longer logged in)[in_round].")
-	var/reconnecting = FALSE
-	if(GLOB.player_details[ckey])
-		reconnecting = TRUE
-		player_details = GLOB.player_details[ckey]
-		player_details.byond_version = full_version
-	else
-		player_details = new(ckey)
-		player_details.byond_version = full_version
-		GLOB.player_details[ckey] = player_details
-
 
 	. = ..() //calls mob.Login()
 	if (length(GLOB.stickybanadminexemptions))

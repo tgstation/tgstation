@@ -1396,10 +1396,7 @@
 	if(!canon_client)
 		return
 
-	for(var/foo in canon_client.player_details.post_logout_callbacks)
-		var/datum/callback/CB = foo
-		CB.Invoke()
-
+	canon_client.player_details.do_logout(src)
 	if(canon_client?.movingmob)
 		LAZYREMOVE(canon_client.movingmob.client_mobs_in_contents, src)
 		canon_client.movingmob = null
