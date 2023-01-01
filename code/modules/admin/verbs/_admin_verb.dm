@@ -6,7 +6,9 @@ GLOBAL_PROTECT(admin_verb_datums)
 
 /proc/init_admin_verb_datums()
 	var/list/datums = list()
-	for(var/admin_verb_datum in subtypesof(/datum/admin_verb_datum))
+	for(var/datum/admin_verb_datum/admin_verb_datum as anything in subtypesof(/datum/admin_verb_datum))
+		if(initial(admin_verb_datum.abstract) == admin_verb_datum)
+			continue
 		datums[admin_verb_datum] = new admin_verb_datum
 	return datums
 
@@ -29,10 +31,11 @@ GENERAL_PROTECT_DATUM(/mob/admin_verb_holder)
 
 /datum/admin_verb_datum
 	var/verb_name = "Default Admin Verb"
-	var/verb_desc = "Broken Admin Verb"
-	var/verb_category = "Admin.Default"
+	var/verb_desc = ""
+	var/verb_category = "Default"
 
 	var/permission_required = R_ADMIN
+	var/abstract = /datum/admin_verb_datum
 
 	VAR_PRIVATE/procpath/verb_instance
 	VAR_PRIVATE/mob/admin_verb_holder/verb_holder
@@ -92,11 +95,36 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb_datum)
 #undef MOB_LOG_IN
 #undef MOB_LOG_OUT
 
-/datum/admin_verb_datum/ping
-	verb_name = "VerbPing"
-	verb_desc = "Does this even work?"
-	verb_category = "Admin.Debug"
+/datum/admin_verb_datum/debug
 	permission_required = R_DEBUG
+	abstract = /datum/admin_verb_datum/debug
+	verb_category = "Debug"
 
-/datum/admin_verb_datum/ping/invoke()
-	to_chat(usr, "hello")
+/datum/admin_verb_datum/server
+	permission_required = R_SERVER
+	abstract = /datum/admin_verb_datum/server
+	verb_category = "Server"
+
+/datum/admin_verb_datum/debug/ping_a
+	verb_name = "PingA"
+
+/datum/admin_verb_datum/debug/ping_b
+	verb_name = "PingB"
+
+/datum/admin_verb_datum/debug/ping_c
+	verb_name = "PingC"
+
+/datum/admin_verb_datum/debug/ping_d
+	verb_name = "PingD"
+
+/datum/admin_verb_datum/server/ping_a
+	verb_name = "PingSA"
+
+/datum/admin_verb_datum/server/ping_b
+	verb_name = "PingSB"
+
+/datum/admin_verb_datum/server/ping_c
+	verb_name = "PingSC"
+
+/datum/admin_verb_datum/server/ping_d
+	verb_name = "PingSD"
