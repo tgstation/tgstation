@@ -67,21 +67,6 @@
 	usr << browse(output,"window=radioreport")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Radio Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/reload_admins()
-	set name = "Reload Admins"
-	set category = "Admin"
-
-	if(!src.holder)
-		return
-
-	var/confirm = tgui_alert(usr, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
-	if(confirm !="Yes")
-		return
-
-	load_admins()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reload All Admins") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	message_admins("[key_name_admin(usr)] manually reloaded admins")
-
 /client/proc/toggle_cdn()
 	set name = "Toggle CDN"
 	set category = "Server"
