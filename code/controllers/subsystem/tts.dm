@@ -163,8 +163,9 @@ SUBSYSTEM_DEF(tts)
 		var/current_message = processing_messages[processing_messages.len]
 		processing_messages.len--
 		var/atom/movable/target = current_message[TARGET_INDEX]
-		if(QDELETED(target) || current_message[TIMEOUT_INDEX] < world.time)
+		if(current_message[TIMEOUT_INDEX] < world.time)
 			in_process_tts_messages -= list(current_message)
+			cached_voices -= current_message[IDENTIFIER_INDEX]
 			continue
 
 		var/datum/http_request/request = current_message[REQUEST_INDEX]
@@ -174,6 +175,7 @@ SUBSYSTEM_DEF(tts)
 		var/datum/http_response/response = request.into_response()
 		in_process_tts_messages -= list(current_message)
 		if(response.errored)
+			cached_voices -= current_message[IDENTIFIER_INDEX]
 			continue
 		var/identifier = current_message[IDENTIFIER_INDEX]
 		var/sound/new_sound = new("tmp/[identifier].ogg")
