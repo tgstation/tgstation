@@ -20,6 +20,8 @@ GLOBAL_PROTECT(admin_verb_datums)
 	if(!admin_verb || !check_rights_for(target, admin_verb.permission_required))
 		return
 
+
+	SSblackbox.record_feedback("tally", "admin_verb_datum", 1, admin_verb.verb_name) // remember to record feedback before invocation
 	admin_verb.invoke(target, length(arguments) ? arguments : admin_verb.get_arguments(target))
 
 /**
@@ -43,6 +45,7 @@ GENERAL_PROTECT_DATUM(/mob/admin_verb_holder)
 
 	// But we still double check rights
 	if(check_rights_for(usr.client, holder.permission_required))
+		SSblackbox.record_feedback("tally", "admin_verb_datum", 1, holder.verb_name) // remember to record feedback before invocation
 		holder.invoke(usr.client, holder.get_arguments(usr.client))
 
 /**
@@ -81,6 +84,7 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb_datum)
 		return
 
 	if(href_list["invoke"])
+		SSblackbox.record_feedback("tally", "admin_verb_datum", 1, verb_name) // remember to record feedback before invocation
 		invoke(usr.client, get_arguments(usr.client))
 
 // The following procs only exist to support verb bar usage and can be removed when that is no longer required.
