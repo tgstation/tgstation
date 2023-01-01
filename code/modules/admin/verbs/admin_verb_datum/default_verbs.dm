@@ -40,7 +40,7 @@
 	var/whom = input(target, "To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
 	if(!whom)
 		return list()
-	return list(ADMINVERB_ARGUMENT_TARGET = whom)
+	return list(ADMINVERB_ARGUMENT_TARGET = targets[whom])
 
 /datum/admin_verb_datum/admin_pm/invoke(client/target, list/arguments)
 	var/whom = arguments[ADMINVERB_ARGUMENT_TARGET]
