@@ -190,12 +190,13 @@
 
 
 //BOMBANANA
-
 /obj/item/seeds/banana/bombanana
 	name = "pack of bombanana seeds"
 	desc = "They're seeds that grow into bombanana trees. When grown, give to the clown."
 	plantname = "Bombanana Tree"
 	product = /obj/item/food/grown/banana/bombanana
+	icon_harvest = "banana-harvest"
+	icon_dead = "banana-dead"
 
 /obj/item/food/grown/banana/bombanana
 	trash_type = /obj/item/grown/bananapeel/bombanana

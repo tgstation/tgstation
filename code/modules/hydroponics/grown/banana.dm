@@ -99,6 +99,8 @@
 	icon_state = "seed-mimana"
 	species = "mimana"
 	plantname = "Mimana Tree"
+	icon_harvest = "mimana-harvest"
+	icon_dead = "banana-dead"
 	product = /obj/item/food/grown/banana/mime
 	growthstages = 4
 	mutatelist = null
