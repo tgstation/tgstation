@@ -91,6 +91,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	is_editable = TRUE
 	var/hit_count = 0
 	var/tram_id = TRAM_LIFT_ID
+	var/hazard_flash = FALSE
 
 /obj/structure/sign/collision_counter/Initialize(mapload)
 	..()
@@ -111,10 +112,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	SIGNAL_HANDLER
 
 	hit_count++
-	update_appearance()
+	if(hazard_flash)
+		update_appearance()
+		return
 
-	if(hit_count >= 11)
+	if(hit_count == 11)
+		hazard_flash = TRUE
 		icon_state = "tram_hits_alert"
+		update_appearance()
+		return
+
+	update_appearance()
 
 /obj/structure/sign/collision_counter/update_overlays()
 	. = ..()
