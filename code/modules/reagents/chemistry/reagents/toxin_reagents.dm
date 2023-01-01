@@ -19,7 +19,7 @@
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	// Chek if this is the exact same reagent
+	// Check if this isnt just a subtype of that reagent
 	if(chems.has_reagent(/datum/reagent/toxin))
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
 
@@ -351,7 +351,7 @@
 	// Plant-B-Gone is just as bad
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	// Chek if this is the exact same reagent
+	// Check if this isnt just a subtype of that reagent
 	if(chems.has_reagent(/datum/reagent/toxin/plantbgone))
 		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 10))
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 6))
@@ -403,7 +403,7 @@
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	// Chek if this is the exact same reagent
+	// Check if this isnt just a subtype of that reagent
 	if(chems.has_reagent(/datum/reagent/toxin/pestkiller))
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
 		mytray.adjust_pestlevel(-rand(1,2))
@@ -1049,7 +1049,7 @@
 // ...Why? I mean, clearly someone had to have done this and thought, well, acid doesn't hurt plants, but what brought us here, to this point?
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	// Chek if this is the exact same reagent
+	// Check if this isnt just a subtype of that reagent
 	if(chems.has_reagent(/datum/reagent/toxin/acid))
 		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
