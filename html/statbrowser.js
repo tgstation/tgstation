@@ -411,11 +411,8 @@ function draw_admin_verbs() {
 			var verbIdx = 0;
 
 			for(var l = 0; l < verbList.length; l++) {
-				if(!(verbIdx++ % 3)) {
-					categoryTable.appendChild(currentRow);
-				}
-
 				var verbInfo = verbList[l];
+
 				var verbName = verbInfo[0];
 				var verbDesc = verbInfo[1];
 				var verbRef = verbInfo[2];
@@ -430,14 +427,13 @@ function draw_admin_verbs() {
 				verbTitle.title = verbDesc;
 
 				verbEntry.appendChild(verbTitle);
-				verbCell.appendChild(verbEntry);
-				categoryTable.appendChild(verbCell);
+				categoryTable.appendChild(verbEntry);
 			}
 			statcontentdiv.appendChild(categoryHeader);
 			statcontentdiv.appendChild(categoryTable);
 		}
 	} catch(except) {
-		statcontentdiv.textContent = "Exception: " + except
+		statcontentdiv.textContent = "NTOS Exception: " + except + "\nReport this to your nearest Technical Resolution Specialist"
 	}
 }
 
