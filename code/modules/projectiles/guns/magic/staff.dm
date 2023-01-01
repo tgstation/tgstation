@@ -70,7 +70,7 @@
 
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
-	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
+	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead. On the handle is a beautiful engraving in High Spaceman, \"Thou shalt not crosseth thy beams.\""
 	fire_sound = 'sound/magic/staff_healing.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
