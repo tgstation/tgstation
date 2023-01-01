@@ -519,11 +519,6 @@
 	armor_type = /datum/armor/space_changeling
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/datum/armor/space_changeling
-	bio = 100
-	fire = 90
-	acid = 90
-
 /obj/item/clothing/head/helmet/space/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)

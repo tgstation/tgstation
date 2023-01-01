@@ -355,10 +355,6 @@
 	health_regen = BLOB_REGULAR_HP_REGEN
 	brute_resist = BLOB_BRUTE_RESIST * 0.5
 
-/datum/armor/structure_blob
-	fire = 80
-	acid = 70
-
 /obj/structure/blob/normal/Initialize(mapload, owner_overmind)
 	. = ..()
 	update_integrity(initial_integrity)

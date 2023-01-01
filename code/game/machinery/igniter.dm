@@ -80,15 +80,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 /obj/machinery/sparker/ordmix
 	id = INCINERATOR_ORDMIX_IGNITER
 
-/datum/armor/machinery_igniter
-	melee = 50
-	bullet = 30
-	laser = 70
-	energy = 50
-	bomb = 20
-	fire = 100
-	acid = 70
-
 /obj/machinery/sparker/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread

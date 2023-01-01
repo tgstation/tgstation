@@ -24,7 +24,7 @@
 	resistance_flags = FIRE_PROOF
 
 	light_power = 0
-	light_range = 7
+	light_range = 3
 	light_color = COLOR_VIVID_RED
 
 	//Trick to get the glowing overlay visible from a distance
@@ -111,7 +111,7 @@
 /obj/machinery/firealarm/update_appearance(updates)
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)) && !(obj_flags & EMAGGED) && !(machine_stat & (BROKEN|NOPOWER)))
-		set_light(l_power = 0.8)
+		set_light(l_power = 2)
 	else
 		set_light(l_power = 0)
 
@@ -441,10 +441,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	desc = "Cuban Pete is in the house!"
 	var/static/party_overlay
 
-/datum/armor/machinery_firealarm
-	fire = 90
-	acid = 30
-
 /obj/machinery/firealarm/partyalarm/reset()
 	if (machine_stat & (NOPOWER|BROKEN))
 		return
@@ -480,10 +476,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	var/datum/port/output/reset
 
 	var/obj/machinery/firealarm/attached_alarm
-
-/datum/armor/machinery_firealarm
-	fire = 90
-	acid = 30
 
 /obj/item/circuit_component/firealarm/populate_ports()
 	alarm_trigger = add_input_port("Set", PORT_TYPE_SIGNAL)

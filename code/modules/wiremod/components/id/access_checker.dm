@@ -62,7 +62,7 @@
 
 /obj/item/circuit_component/compare/access/ui_perform_action(mob/user, action)
 	if(length(required_accesses.connected_ports))
-		balloon_alert(user, "Disconnect port before manually configuring!")
+		balloon_alert(user, "disconnect port before manually configuring!")
 		return
 	interact(user)
 

@@ -325,11 +325,6 @@
 	armor_type = /datum/armor/medical_cmo
 
 // Chemist
-/datum/armor/medical_cmo
-	bio = 50
-	fire = 20
-	acid = 30
-
 /obj/item/clothing/suit/hooded/wintercoat/medical/chemistry
 	name = "chemistry winter coat"
 	desc = "A lab-grade winter coat made with acid resistant polymers. For the enterprising chemist who was exiled to a frozen wasteland on the go."
@@ -434,10 +429,6 @@
 	armor_type = /datum/armor/science_rd
 
 // Roboticist
-/datum/armor/science_rd
-	bomb = 20
-	fire = 30
-
 /obj/item/clothing/suit/hooded/wintercoat/science/robotics
 	name = "robotics winter coat"
 	desc = "A black winter coat with a badass flaming robotic skull for the zipper tab. This one has bright red designs and a few useless buttons."
@@ -525,10 +516,6 @@
 	armor_type = /datum/armor/engineering_ce
 
 // Atmospherics Technician
-/datum/armor/engineering_ce
-	fire = 30
-	acid = 10
-
 /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
 	name = "atmospherics winter coat"
 	desc = "A yellow and blue winter coat. The zipper pull-tab is made to look like a miniature breath mask."

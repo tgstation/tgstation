@@ -208,15 +208,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/datum/armor/machinery_button
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 10
-	fire = 90
-	acid = 70
-
 /obj/machinery/button/door/setup_device()
 	if(!device)
 		if(normaldoorcontrol)
@@ -315,15 +306,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	device_type = /obj/item/assembly/control/curtain
 	var/sync_doors = TRUE
 
-/datum/armor/machinery_button
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 10
-	fire = 90
-	acid = 70
-
 /obj/machinery/button/curtain/setup_device()
 	var/obj/item/assembly/control/curtain = device
 	curtain.sync_doors = sync_doors
@@ -359,15 +341,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	id = 1
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
-
-/datum/armor/machinery_button
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 10
-	fire = 90
-	acid = 70
 
 /obj/machinery/button/tram/setup_device()
 	var/obj/item/assembly/control/tram/tram_device = device

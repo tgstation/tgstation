@@ -42,9 +42,6 @@
 	icon_state = "clockwork_treads"
 	can_be_tied = FALSE
 
-/datum/armor/shoes_roman
-	bio = 10
-
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
