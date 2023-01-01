@@ -22,6 +22,10 @@ GLOBAL_PROTECT(admin_verb_datums)
 
 	admin_verb.invoke(target, length(arguments) ? arguments : admin_verb.get_arguments(target))
 
+/**
+ * This acts a verb holder for all of the admin verbs, one is instantiated for every verb datum.
+ * This is done to ensure that admins can still use the verb bar to call verbs, as this is a requirement for admin tooling.
+ */
 /mob/admin_verb_holder
 	var/datum/admin_verb_datum/holder
 
@@ -31,24 +35,36 @@ GENERAL_PROTECT_DATUM(/mob/admin_verb_holder)
 	flags_1 |= INITIALIZED_1
 	holder = verb_datum
 	var/verb_ref = PROC_REF(_wrap)
-	UNLINT(holder.verb_instance = new verb_ref(src, holder.verb_name, holder.verb_desc))
+	new verb_ref(src, holder.verb_name, holder.verb_desc)
 
 /mob/admin_verb_holder/proc/_wrap()
+	// We use group to act as a list of clients allowed to access this verb
 	set src in usr.group
 
+	// But we still double check rights
 	if(check_rights_for(usr.client, holder.permission_required))
 		holder.invoke(usr.client, holder.get_arguments(usr.client))
 
+/**
+ * The base admin verb datum.
+ * Essentially just a more readable wrapper for admin verbs over dumping them in a giant ass list.
+ */
 /datum/admin_verb_datum
+	/// The name that will appear in the verb panel
 	var/verb_name = "Default Admin Verb"
+	/// An optional, CANNOT BE NULL, description to appear when you hover over a verb in the panel.
 	var/verb_desc = ""
+	/// The category of this verb, needs to be set to something
 	var/verb_category = "Default"
 
+	/// The permissions required to both see and invoke this datum verb
 	var/permission_required
+	/// The abstract of the verb datum, to prevent creating abstract types
 	var/abstract = /datum/admin_verb_datum
 
-	VAR_PRIVATE/procpath/verb_instance
+	/// The verb holder for this datum, ensuring admins retain verb bar usage
 	VAR_PRIVATE/mob/admin_verb_holder/verb_holder
+	/// An assosciative list of client -> callbacks[] to allow for mob tracking to update verb grouping
 	VAR_PRIVATE/list/client_to_callbacks
 
 GENERAL_PROTECT_DATUM(/datum/admin_verb_datum)
@@ -66,6 +82,8 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb_datum)
 
 	if(href_list["invoke"])
 		invoke(usr.client, get_arguments(usr.client))
+
+// The following procs only exist to support verb bar usage and can be removed when that is no longer required.
 
 /datum/admin_verb_datum/proc/on_mob_login(mob/logged_in)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -99,7 +117,9 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb_datum)
 		return
 
 	LAZYREMOVE(client_to_callbacks, admin.ckey)
-	callback.Invoke()
+	callback.Invoke(admin.mob)
+
+// end group //
 
 /datum/admin_verb_datum/proc/get_arguments(client/target)
 	return
