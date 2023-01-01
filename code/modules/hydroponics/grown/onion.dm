@@ -25,7 +25,7 @@
 	tastes = list("onions" = 1)
 	wine_power = 30
 
-/obj/item/food/grown/onion/MakeProcessable()
+/obj/item/food/grown/onion/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice, 2, 15, screentip_verb = "Cut")
 
 /obj/item/seeds/onion/red
@@ -45,7 +45,7 @@
 	icon_state = "onion_red"
 	wine_power = 60
 
-/obj/item/food/grown/onion/red/MakeProcessable()
+/obj/item/food/grown/onion/red/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15, screentip_verb = "Cut")
 
 /obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)
@@ -65,7 +65,7 @@
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/food/onion_slice/make_microwavable()
+/obj/item/food/onion_slice/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/onionrings)
 
 /obj/item/food/onion_slice/red

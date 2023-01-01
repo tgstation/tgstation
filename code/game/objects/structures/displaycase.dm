@@ -233,12 +233,6 @@
 	var/obj/item/electronics/airlock/electronics
 
 
-/datum/armor/structure_displaycase
-	melee = 30
-	bomb = 10
-	fire = 70
-	acid = 100
-
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH) //The player can only deconstruct the wooden frame
 		to_chat(user, span_notice("You start disassembling [src]..."))
@@ -318,12 +312,6 @@
 	var/historian_mode = FALSE
 	///the trophy message
 	var/trophy_message = ""
-
-/datum/armor/structure_displaycase
-	melee = 30
-	bomb = 10
-	fire = 70
-	acid = 100
 
 /obj/structure/displaycase/trophy/Initialize(mapload)
 	. = ..()
@@ -441,12 +429,6 @@
 /obj/item/showpiece_dummy
 	name = "holographic replica"
 
-/datum/armor/structure_displaycase
-	melee = 30
-	bomb = 10
-	fire = 70
-	acid = 100
-
 /obj/item/showpiece_dummy/Initialize(mapload, path)
 	. = ..()
 	var/obj/item/item_path = path
@@ -471,12 +453,6 @@
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
-
-/datum/armor/structure_displaycase
-	melee = 30
-	bomb = 10
-	fire = 70
-	acid = 100
 
 /obj/structure/displaycase/forsale/update_icon_state()
 	icon_state = "[initial(icon_state)][broken ? "_broken" : (open ? "_open" : (!showpiece ? "_empty" : null))]"
