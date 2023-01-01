@@ -143,7 +143,7 @@
 
 /obj/item/multitool/blueprint
 	name = "blueprint multitool"
-	desc = "A multitool with a build in database of the basic wiring system withing the station. Allowing users to know what each wire will do on airlocks and APCs."
+	desc = "A multitool with a build in database on the basic wiring system of airlocks and APCs. Allowing users to know what each wire will do."
 	icon_state = "multitool_blueprint"
 	w_class = WEIGHT_CLASS_NORMAL
 
