@@ -135,6 +135,7 @@ SUBSYSTEM_DEF(tts)
 	var/time_left = entry[TIMEOUT_INDEX]
 	var/estimated_processing_time = estimate_word_processing_length(entry[MESSAGE_INDEX])
 	if(time_left < world.time || (time_left < world.time + message_timeout_early_minimum && time_left - estimated_processing_time < world.time))
+		cached_voices -= entry[IDENTIFIER_INDEX]
 		return
 	var/datum/http_request/request = entry[REQUEST_INDEX]
 	request.begin_async()
