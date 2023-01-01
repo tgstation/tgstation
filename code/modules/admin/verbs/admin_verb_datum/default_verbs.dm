@@ -1,6 +1,5 @@
 /*
 	/client/proc/cmd_admin_pm_context, /*right-click adminPM interface*/
-	/client/proc/cmd_admin_pm_panel, /*admin-pm list*/
 	/client/proc/debugstatpanel,
 	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
@@ -46,13 +45,12 @@
 	var/whom = arguments[ADMINVERB_ARGUMENT_TARGET]
 	if(!whom)
 		return
+	whom = disambiguate_client(whom)
 
-	var/message = target.request_adminpm_message(disambiguate_client(whom), arguments[ADMINVERB_ARGUMENT_MESSAGE])
-
-	if(!target.sends_adminpm_message(disambiguate_client(whom), message))
+	var/message = target.request_adminpm_message(whom, arguments[ADMINVERB_ARGUMENT_MESSAGE])
+	if(!target.sends_adminpm_message(whom, message))
 		return
-
-	target.notify_adminpm_message(disambiguate_client(whom), message)
+	target.notify_adminpm_message(whom, message)
 
 /datum/admin_verb_datum/deadmin
 	verb_name = "DeAdmin"

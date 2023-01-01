@@ -55,7 +55,7 @@ GENERAL_PROTECT_DATUM(/mob/admin_verb_holder)
 	/// An optional, CANNOT BE NULL, description to appear when you hover over a verb in the panel.
 	var/verb_desc = ""
 	/// The category of this verb, needs to be set to something
-	var/verb_category = "Default"
+	var/verb_category = "Admin"
 
 	/// The permissions required to both see and invoke this datum verb
 	var/permission_required

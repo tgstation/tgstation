@@ -123,7 +123,7 @@
 			return
 	cmd_admin_pm(whom, message)
 
-//takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
+//takes input from cmd_admin_pm_context or /client/Topic and sends them a PM.
 //Fetching a message if needed.
 //whom here is a client, a ckey, or [EXTERNAL_PM_USER] if this is from tgs. message is the default message to send
 /client/proc/cmd_admin_pm(whom, message)
