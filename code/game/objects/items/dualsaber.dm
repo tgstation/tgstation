@@ -63,6 +63,9 @@
 	set_light_on(TRUE)
 
 
+/obj/item/dualsaber/add_blood_DNA(list/blood_DNA_to_add)
+	return FALSE
+
 /// Triggered on unwield of two handed item
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
