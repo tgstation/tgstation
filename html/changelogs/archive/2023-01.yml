@@ -1,0 +1,21 @@
+2023-01-01:
+  ChungusGamer666:
+  - bugfix: Static light sources update properly now when carried by a mob.
+  Fikou:
+  - rscadd: Venom antag
+  - bugfix: fixed pellet clouds (buckshot, improv shells) dealing insane wounds to
+      armored people
+  LemonInTheDark:
+  - admin: Added a new chat category for prayers. Filter them out, move them to their
+      own pane, live your best life
+  NamelessFairy:
+  - bugfix: CTF downtown's red hat store's beret is now red again rather than green.
+  Rhials:
+  - balance: Instant Summons will now violently tear out embedded objects as they
+      are summoned, and will drag embedee to you if nearby.
+  SyncIt21:
+  - bugfix: atmos control can detect distro & waste loop sensors
+  jughu:
+  - bugfix: Fixes missing hop ticket incremement button at icebox
+  san7890:
+  - bugfix: There is no longer a floating camera on RuntimeStation

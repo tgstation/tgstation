@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "There is no longer a floating camera on RuntimeStation"
