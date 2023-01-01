@@ -16,7 +16,7 @@
 	. = ..()
 	if(.)
 		return
-	user.get_admin_say()
+	dynamic_invoke_admin_verb(user, /datum/admin_verb_datum/admin_say)
 	return TRUE
 
 /datum/keybinding/admin/admin_ghost

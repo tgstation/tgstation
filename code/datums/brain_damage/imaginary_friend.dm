@@ -203,7 +203,7 @@
 	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		dynamic_invoke_admin_verb(client, /datum/admin_verb_datum/admin_say, list(ADMINVERB_ARGUMENT_MESSAGE = message))
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)

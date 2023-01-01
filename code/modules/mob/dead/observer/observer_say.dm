@@ -33,7 +33,7 @@
 		message = trim_left(copytext_char(message, length(message_mods[RADIO_KEY]) + 2))
 		switch(message_mods[RADIO_EXTENSION])
 			if(MODE_ADMIN)
-				client.cmd_admin_say(message)
+				dynamic_invoke_admin_verb(client, /datum/admin_verb_datum/admin_say, list(ADMINVERB_ARGUMENT_MESSAGE = message))
 			if(MODE_DEADMIN)
 				client.dsay(message)
 			if(MODE_PUPPET)

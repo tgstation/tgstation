@@ -12,6 +12,16 @@ GLOBAL_PROTECT(admin_verb_datums)
 		datums[admin_verb_datum] = new admin_verb_datum
 	return datums
 
+/proc/dynamic_invoke_admin_verb(client/target, verb_type, list/arguments)
+	if(IsAdminAdvancedProcCall())
+		return
+
+	var/datum/admin_verb_datum/admin_verb = GLOB.admin_verb_datums[verb_type]
+	if(!admin_verb || !check_rights_for(target, admin_verb.permission_required))
+		return
+
+	admin_verb.invoke(target, length(arguments) ? arguments : admin_verb.get_arguments(target))
+
 /mob/admin_verb_holder
 	var/datum/admin_verb_datum/holder
 
@@ -27,14 +37,14 @@ GENERAL_PROTECT_DATUM(/mob/admin_verb_holder)
 	set src in usr.group
 
 	if(check_rights_for(usr.client, holder.permission_required))
-		holder.invoke()
+		holder.invoke(usr.client, holder.get_arguments(usr.client))
 
 /datum/admin_verb_datum
 	var/verb_name = "Default Admin Verb"
 	var/verb_desc = ""
 	var/verb_category = "Default"
 
-	var/permission_required = R_ADMIN
+	var/permission_required
 	var/abstract = /datum/admin_verb_datum
 
 	VAR_PRIVATE/procpath/verb_instance
@@ -55,7 +65,7 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb_datum)
 		return
 
 	if(href_list["invoke"])
-		invoke()
+		invoke(usr.client, get_arguments(usr.client))
 
 /datum/admin_verb_datum/proc/on_mob_login(mob/logged_in)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -91,18 +101,11 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb_datum)
 	LAZYREMOVE(client_to_callbacks, admin.ckey)
 	callback.Invoke()
 
-/datum/admin_verb_datum/proc/invoke()
+/datum/admin_verb_datum/proc/get_arguments(client/target)
+	return
+
+/datum/admin_verb_datum/proc/invoke(client/target, list/arguments)
 	return
 
 #undef MOB_LOG_IN
 #undef MOB_LOG_OUT
-
-/datum/admin_verb_datum/debug
-	permission_required = R_DEBUG
-	abstract = /datum/admin_verb_datum/debug
-	verb_category = "Debug"
-
-/datum/admin_verb_datum/server
-	permission_required = R_SERVER
-	abstract = /datum/admin_verb_datum/server
-	verb_category = "Server"
