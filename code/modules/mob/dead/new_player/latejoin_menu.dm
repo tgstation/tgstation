@@ -82,7 +82,8 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 				department_data["open_slots"] = "∞"
 
 			if(department_data["open_slots"] != "∞")
-				department_data["open_slots"] += job_datum.total_positions - job_datum.current_positions
+				if(job_datum.total_positions - job_datum.current_positions > 0)
+					department_data["open_slots"] += job_datum.total_positions - job_datum.current_positions
 
 			department_jobs[job_datum.title] = job_data
 

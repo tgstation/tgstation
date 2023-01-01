@@ -49,7 +49,7 @@
 ///overwrites default opening behavior until it is unlocked via the syndicrate key
 /obj/structure/closet/crate/syndicrate/can_open(mob/living/user, force = FALSE)
 	if(!created_items)
-		balloon_alert(user, "Locked!")
+		balloon_alert(user, "locked!")
 		return FALSE
 	return ..()
 
@@ -65,12 +65,6 @@
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "syndicrate_key"
 	w_class = WEIGHT_CLASS_TINY
-
-/datum/armor/crate_syndicrate
-	melee = 30
-	bullet = 50
-	laser = 50
-	energy = 100
 
 /obj/item/syndicrate_key/Initialize(mapload)
 	. = ..()

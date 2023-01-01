@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - code_imp: "Removes a rendundant call of create_internal_organs() from the /mob/living/carbon/human/Intialize()"

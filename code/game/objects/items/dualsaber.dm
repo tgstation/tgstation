@@ -192,10 +192,6 @@
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
 
-/datum/armor/item_dualsaber
-	fire = 100
-	acid = 70
-
 /obj/item/dualsaber/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)

@@ -1281,11 +1281,6 @@
 	var/list/base64_cache = list()
 	panel_type = "panel20"
 
-/datum/armor/machinery_vending
-	melee = 20
-	fire = 50
-	acid = 70
-
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
 	if(!isliving(user))
@@ -1442,11 +1437,6 @@
 	machine_name = "Custom Vendor"
 	icon_state = "refill_custom"
 	custom_premium_price = PAYCHECK_CREW
-
-/datum/armor/machinery_vending
-	melee = 20
-	fire = 50
-	acid = 70
 
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
 	icon_state = "greed"
