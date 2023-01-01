@@ -1877,10 +1877,10 @@
 	pixel_y = 16
 	},
 /obj/structure/table/reinforced,
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -6
 	},
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 6
 	},
 /obj/item/hemostat,
@@ -1888,11 +1888,9 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)
 "dW" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/recharge_station,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "dX" = (

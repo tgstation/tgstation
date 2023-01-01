@@ -8,13 +8,17 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.03
 	max_integrity = 150
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 40, ACID = 0)
+	armor_type = /datum/armor/machinery_meter
 	greyscale_config = /datum/greyscale_config/meter
 	greyscale_colors = COLOR_GRAY
 	///The pipe we are attaching to
 	var/obj/machinery/atmospherics/pipe/target
 	///The piping layer of the target
 	var/target_layer = PIPING_LAYER_DEFAULT
+
+/datum/armor/machinery_meter
+	energy = 100
+	fire = 40
 
 /obj/machinery/meter/Destroy()
 	SSair.stop_processing_machine(src)
@@ -159,7 +163,7 @@
 	var/obj/machinery/meter/connected_meter
 
 /obj/item/circuit_component/atmos_meter/populate_ports()
-	request_data = add_input_port("Request Meter Data", PORT_TYPE_SIGNAL, trigger = .proc/request_meter_data)
+	request_data = add_input_port("Request Meter Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(request_meter_data))
 
 	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
 	temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)

@@ -16,6 +16,10 @@
 	/// How many uses are left
 	var/paintleft = 10
 
+/obj/item/paint/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/falling_hazard, damage = 20, wound_bonus = 5, hardhat_safety = TRUE, crushes = FALSE) // You ever watched home alone?
+
 /obj/item/paint/red
 	name = "red paint"
 	paint_color = COLOR_RED
@@ -66,7 +70,7 @@
 		"white" = image(icon = src.icon, icon_state = "paint_white"),
 		"yellow" = image(icon = src.icon, icon_state = "paint_yellow")
 		)
-	var/picked_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
+	var/picked_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 38, require_near = TRUE)
 	switch(picked_color)
 		if("black")
 			paint_color = COLOR_ALMOST_BLACK

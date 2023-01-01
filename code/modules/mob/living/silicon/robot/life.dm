@@ -19,11 +19,11 @@
 /mob/living/silicon/robot/proc/use_power(delta_time, times_fired)
 	if(cell?.charge)
 		if(cell.charge <= 100)
-			uneq_all()
+			drop_all_held_items()
 		var/amt = clamp(lamp_enabled * lamp_intensity * delta_time, 0.5 * delta_time, cell.charge) //Lamp will use a max of 5 charge, depending on brightness of lamp. If lamp is off, borg systems consume 1 point of charge, or the rest of the cell if it's lower than that.
 		cell.use(amt) //Usage table: 0.5/second if off/lowest setting, 4 = 2/second, 6 = 4/second, 8 = 6/second, 10 = 8/second
 	else
-		uneq_all()
+		drop_all_held_items()
 		low_power_mode = TRUE
 		toggle_headlamp(TRUE)
 	diag_hud_set_borgcell()

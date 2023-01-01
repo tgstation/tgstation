@@ -54,7 +54,7 @@
 	if(has_radio)
 		var/obj/item/radio/headset = human_to_equip.ears
 		headset.set_frequency(team_radio_freq)
-		headset.freqlock = TRUE
+		headset.freqlock = RADIO_FREQENCY_LOCKED
 		headset.independent = TRUE
 	human_to_equip.dna.species.stunmod = 0
 

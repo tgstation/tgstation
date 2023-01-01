@@ -3,7 +3,7 @@
 /datum/unit_test/bloody_footprints
 
 /datum/unit_test/bloody_footprints/Run()
-	var/mob/living/carbon/human/blood_master = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/blood_master = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/shoes/holds_blood = allocate(/obj/item/clothing/shoes)
 
 	blood_master.equip_to_slot_if_possible(holds_blood, ITEM_SLOT_FEET)

@@ -38,12 +38,13 @@
 	if(isliving(target))
 		var/mob/living/victim = target
 		if(victim.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			if(victim.revive(full_heal = TRUE, admin_revive = TRUE))
-				victim.grab_ghost(force = TRUE) // even suicides
+			if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
+				victim.grab_ghost(force = TRUE)
 				to_chat(victim, span_notice("You rise with a start, you're undead!!!"))
 			else if(victim.stat != DEAD)
 				to_chat(victim, span_notice("You feel great!"))
 			return
+		victim.investigate_log("has been killed by a bolt of death.", INVESTIGATE_DEATHS)
 		victim.death()
 
 	if(istype(target, /obj/machinery/hydroponics))
@@ -67,11 +68,11 @@
 		var/mob/living/victim = target
 
 		if(victim.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+			victim.investigate_log("has been killed by a bolt of life.", INVESTIGATE_DEATHS)
 			victim.death()
 			return
 
-		if(victim.revive(full_heal = TRUE, admin_revive = TRUE))
-			victim.grab_ghost(force = TRUE) // even suicides
+		if(victim.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)) // This heals suicides
 			to_chat(victim, span_notice("You rise with a start, you're alive!!!"))
 		else if(victim.stat != DEAD)
 			to_chat(victim, span_notice("You feel great!"))
@@ -192,7 +193,7 @@
 	target.animate_atom_living(firer)
 
 /atom/proc/animate_atom_living(mob/living/owner = null)
-	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.mimic_blacklist))
+	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.animatable_blacklist))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
@@ -301,7 +302,7 @@
 /obj/structure/closet/decay/Initialize(mapload)
 	. = ..()
 	if(auto_destroy)
-		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
+		addtimer(CALLBACK(src, PROC_REF(bust_open)), 5 MINUTES)
 
 /obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
@@ -317,12 +318,12 @@
 	icon_state = weakened_icon
 	update_appearance()
 
-	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(decay)), 15 SECONDS)
 
 ///Fade away into nothing
 /obj/structure/closet/decay/proc/decay()
 	animate(src, alpha = 0, time = 3 SECONDS)
-	addtimer(CALLBACK(src, .proc/decay_finished), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(decay_finished)), 3 SECONDS)
 
 /obj/structure/closet/decay/proc/decay_finished()
 	dump_contents()
@@ -366,14 +367,15 @@
 		var/atom/throw_target = get_edge_target_turf(target, get_dir(target, firer))
 		target.throw_at(throw_target, 200, 4)
 
-/obj/projectile/magic/sapping
-	name = "bolt of sapping"
-	icon_state = "sapping"
+/obj/projectile/magic/babel
+	name = "bolt of babel"
+	icon_state = "babel"
 
-/obj/projectile/magic/sapping/on_hit(mob/living/target)
+/obj/projectile/magic/babel/on_hit(mob/living/carbon/target)
 	. = ..()
-	if(isliving(target))
-		target.add_mood_event(REF(src), /datum/mood_event/sapped)
+	if(iscarbon(target))
+		if(curse_of_babel(target))
+			target.add_mood_event("curse_of_babel", /datum/mood_event/tower_of_babel)
 
 /obj/projectile/magic/necropotence
 	name = "bolt of necropotence"

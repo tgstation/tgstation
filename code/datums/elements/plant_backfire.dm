@@ -4,7 +4,7 @@
 /// If they're not protected properly, we invoke a callback on the user, harming or inconveniencing them.
 /datum/element/plant_backfire
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Whether we stop the current action if backfire is triggered (EX: returning CANCEL_ATTACK_CHAIN)
 	var/cancel_action = FALSE
 	/// Any extra traits we want to check in addition to TRAIT_PLANT_SAFE. Mobs with a trait in this list will be considered safe. List of traits.
@@ -21,9 +21,9 @@
 	src.extra_traits = extra_traits
 	src.extra_genes = extra_genes
 
-	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, .proc/attack_safety_check)
-	RegisterSignal(target, COMSIG_ITEM_PICKUP, .proc/pickup_safety_check)
-	RegisterSignal(target, COMSIG_MOVABLE_PRE_THROW, .proc/throw_safety_check)
+	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, PROC_REF(attack_safety_check))
+	RegisterSignal(target, COMSIG_ITEM_PICKUP, PROC_REF(pickup_safety_check))
+	RegisterSignal(target, COMSIG_MOVABLE_PRE_THROW, PROC_REF(throw_safety_check))
 
 /datum/element/plant_backfire/Detach(datum/target)
 	. = ..()

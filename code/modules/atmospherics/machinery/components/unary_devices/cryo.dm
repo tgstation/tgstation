@@ -8,7 +8,7 @@
 #define CRYO_TX_QTY 0.5
 // The minimum O2 moles in the cryotube before it switches off.
 #define CRYO_MIN_GAS_MOLES 5
-#define CRYO_BREAKOUT_TIME 30 SECONDS
+#define CRYO_BREAKOUT_TIME (30 SECONDS)
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/visual/cryo_occupant
@@ -30,8 +30,8 @@
 	// It will follow this as the animation goes, but that's no problem as the "mask" icon state
 	// already accounts for this.
 	add_filter("alpha_mask", 1, list("type" = "alpha", "icon" = icon('icons/obj/medical/cryogenics.dmi', "mask"), "y" = -22))
-	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, .proc/on_set_occupant)
-	RegisterSignal(parent, COMSIG_CRYO_SET_ON, .proc/on_set_on)
+	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, PROC_REF(on_set_occupant))
+	RegisterSignal(parent, COMSIG_CRYO_SET_ON, PROC_REF(on_set_on))
 
 /// COMSIG_MACHINERY_SET_OCCUPANT callback
 /atom/movable/visual/cryo_occupant/proc/on_set_occupant(datum/source, mob/living/new_occupant)
@@ -73,7 +73,7 @@
 	icon_state = "pod-off"
 	density = TRUE
 	max_integrity = 350
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/unary_cryo_cell
 	layer = MOB_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
@@ -114,6 +114,11 @@
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 
+
+/datum/armor/unary_cryo_cell
+	energy = 100
+	fire = 30
+	acid = 30
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize(mapload)
 	. = ..()
@@ -213,22 +218,16 @@
 	. = ..()
 	SET_PLANE_IMPLICIT(src, initial(plane))
 
-GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_on, /mutable_appearance, list(create_cryo_overlay(0, "cover-on")))
-GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_off, /mutable_appearance, list(create_cryo_overlay(0, "cover-off")))
-
-/proc/create_cryo_overlay(offset, icon_state)
-	var/mutable_appearance/cryo_overlay = mutable_appearance('icons/obj/medical/cryogenics.dmi', icon_state, ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE, offset_const = offset)
-	return cryo_overlay
-
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_overlays()
 	. = ..()
 	if(panel_open)
 		. += "pod-panel"
 	if(state_open)
 		return
-	var/turf/our_turf = get_turf(src)
-	var/offset = GET_TURF_PLANE_OFFSET(our_turf) + 1
-	. += (on && is_operational) ? GLOB.cryo_overlays_cover_on[offset] : GLOB.cryo_overlays_cover_off[offset]
+	if(on && is_operational)
+		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+	else
+		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()

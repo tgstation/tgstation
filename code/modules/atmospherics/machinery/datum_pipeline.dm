@@ -92,9 +92,9 @@
 					var/static/pipenetwarnings = 10
 					if(pipenetwarnings > 0)
 						log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
-					if(pipenetwarnings == 0)
-						log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
-					pipenetwarnings--
+						pipenetwarnings--
+						if(pipenetwarnings == 0)
+							log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
 
 				members += item
 				possible_expansions += item
@@ -208,9 +208,8 @@
 
 /datum/pipeline/proc/return_air()
 	. = other_airs + air
-	if(null in .)
+	if(list_clear_nulls(.))
 		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
-		return remove_nulls_from_list(.)
 
 /// Called when the pipenet needs to update and mix together all the air mixes
 /datum/pipeline/proc/reconcile_air()

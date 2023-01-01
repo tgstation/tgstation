@@ -52,9 +52,8 @@
 					unset_inhand_var_message += "\n\t[item_path] does not have an inhand_icon_state value[missing_var_message]"
 			continue
 
-		var/match_message = (held_icon_state in possible_icon_states) ? TRUE : null
-		if(match_message)
-			match_message = null
+		var/match_message
+		if(held_icon_state in possible_icon_states)
 			for(var/file_place in possible_icon_states[held_icon_state])
 				match_message += (match_message ? " & '[file_place]'" : " - Matching sprite found in: '[file_place]'")
 
@@ -68,8 +67,8 @@
 			if(!lefthand_file)
 				TEST_FAIL("Missing left inhand icon file for [item_path].\n\tinhand_icon_state = \"[held_icon_state]\"[match_message]")
 			else
-				missing_left = !("[lefthand_file]" in possible_icon_states[held_icon_state])
-				if(missing_left && ("[lefthand_file]" in possible_icon_states[""]))
+				missing_left = !icon_exists(lefthand_file, held_icon_state)
+				if(missing_left && icon_exists(lefthand_file, ""))
 					left_fallback = TRUE
 
 		var/missing_right
@@ -78,8 +77,8 @@
 			if(!righthand_file)
 				TEST_FAIL("Missing right inhand icon file for [item_path].\n\tinhand_icon_state = \"[held_icon_state]\"[match_message]")
 			else
-				missing_right = !("[righthand_file]" in possible_icon_states[held_icon_state])
-				if(missing_right && ("[righthand_file]" in possible_icon_states[""]))
+				missing_right = !icon_exists(righthand_file, held_icon_state)
+				if(missing_right && icon_exists(righthand_file, ""))
 					right_fallback = TRUE
 
 		if(missing_right && missing_left)

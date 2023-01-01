@@ -17,6 +17,7 @@
 	progression_reward = list(2 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
 
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 
 	var/list/applicable_heads = list(
@@ -75,8 +76,8 @@
 			bug.balloon_alert(user, "the bug materializes in your hand")
 			bug.target_area_type = applicable_heads[target_office.title]
 			AddComponent(/datum/component/traitor_objective_register, bug, \
-				succeed_signals = COMSIG_TRAITOR_BUG_PLANTED_GROUND, \
-				fail_signals = COMSIG_PARENT_QDELETING, \
+				succeed_signals = list(COMSIG_TRAITOR_BUG_PLANTED_GROUND), \
+				fail_signals = list(COMSIG_PARENT_QDELETING), \
 				penalty = TRUE)
 
 /datum/traitor_objective/bug_room/generate_objective(datum/mind/generating_for, list/possible_duplicates)
@@ -98,11 +99,6 @@
 
 /datum/traitor_objective/bug_room/ungenerate_objective()
 	bug = null
-
-/datum/traitor_objective/bug_room/is_duplicate(datum/traitor_objective/bug_room/objective_to_compare)
-	if(objective_to_compare.target_office == target_office)
-		return TRUE
-	return FALSE
 
 /obj/item/traitor_bug
 	name = "suspicious device"
@@ -171,7 +167,7 @@
 	target.vis_contents += src
 	vis_flags |= VIS_INHERIT_PLANE
 	planted_on = target
-	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, .proc/handle_planted_on_deletion)
+	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, PROC_REF(handle_planted_on_deletion))
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, target)
 
 /obj/item/traitor_bug/proc/handle_planted_on_deletion()
@@ -206,7 +202,7 @@
 
 /obj/structure/traitor_bug/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/fade_out, 10 SECONDS), 3 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(fade_out), 10 SECONDS), 3 MINUTES)
 
 /obj/structure/traitor_bug/proc/fade_out(seconds)
 	animate(src, alpha = 30, time = seconds)

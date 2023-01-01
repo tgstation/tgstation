@@ -37,7 +37,7 @@
 
 /datum/action/changeling/humanform/from_monkey/Grant(mob/granted_to)
 	. = ..()
-	RegisterSignal(granted_to, COMSIG_MONKEY_HUMANIZE, .proc/give_lesserform)
+	RegisterSignal(granted_to, COMSIG_MONKEY_HUMANIZE, PROC_REF(give_lesserform))
 
 /datum/action/changeling/humanform/from_monkey/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, COMSIG_MONKEY_HUMANIZE)

@@ -11,8 +11,10 @@
 	icon_state = null
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	///The power cell, null by default as we use the APC we're in
+	var/internal_cell = null
 	///A flag that describes this device type
-	var/hardware_flag = 0
+	var/hardware_flag = NONE
 	///Power usage during last tick
 	var/last_power_usage = 0
 	/// Amount of programs that can be ran at once
@@ -27,13 +29,11 @@
 	var/screen_icon_state_menu = "menu"
 	///Icon state overlay when the computer is powered, but not 'switched on'.
 	var/screen_icon_screensaver = "standby"
-	///Maximal hardware size. Currently, tablets have 1, laptops 2 and consoles 3. Limits what hardware types can be installed.
-	var/max_hardware_size = 0
 	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
 	var/steel_sheet_cost = 10
 	///Light luminosity when turned on
 	var/light_strength = 0
-	///Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
+	///Power usage when the computer is open (screen is active) and can be interacted with.
 	var/base_active_power_usage = 100
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
 	var/base_idle_power_usage = 10
@@ -112,13 +112,6 @@
 	if(cpu)
 		return cpu.interact(user)
 	return ..()
-
-// Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/machinery/modular_computer/process(delta_time)
-	if(cpu)
-		// Keep names in sync.
-		cpu.name = name
-		cpu.process(delta_time)
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()

@@ -5,7 +5,7 @@
 	icon_state = "card_scanner"
 	alpha = 150
 	anchored = TRUE
-	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/structure_holopay
 	max_integrity = 15
 	layer = FLY_LAYER
 	/// ID linked to the holopay
@@ -16,6 +16,13 @@
 	var/shop_logo = "donate"
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
 	var/force_fee = 0
+
+/datum/armor/structure_holopay
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holopay/examine(mob/user)
 	. = ..()
@@ -203,10 +210,10 @@
 	return TRUE
 
 /obj/structure/holopay/proc/track(atom/movable/thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
 	for(var/atom/movable/location in locations)
-		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+		RegisterSignal(location, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
 /obj/structure/holopay/proc/untrack(atom/movable/thing)
 	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)

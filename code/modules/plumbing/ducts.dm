@@ -8,7 +8,6 @@ All the important duct code:
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
 	layer = PLUMBING_PIPE_VISIBILE_LAYER
-
 	use_power = NO_POWER_USE
 
 	///bitfield with the directions we're connected in
@@ -123,7 +122,7 @@ All the important duct code:
 	add_neighbour(other, direction)
 
 	//Delegate to timer subsystem so its handled the next tick and doesnt cause byond to mistake it for an infinite loop and kill the game
-	addtimer(CALLBACK(other, .proc/attempt_connect))
+	addtimer(CALLBACK(other, PROC_REF(attempt_connect)))
 
 	return TRUE
 

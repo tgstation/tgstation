@@ -14,6 +14,7 @@
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	sharpness = SHARP_POINTY
 	force = 18
+	antimagic_flags = NONE
 
 /obj/item/gun/magic/hook/shoot_with_empty_chamber(mob/living/user)
 	balloon_alert(user, "not ready yet!")
@@ -26,7 +27,6 @@
 	desc = "A hook."
 	projectile_type = /obj/projectile/hook
 	caliber = CALIBER_HOOK
-	icon_state = "hook"
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/projectile/hook
@@ -44,7 +44,7 @@
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "chain")
+		chain = firer.Beam(src, icon_state = "chain", emissive = FALSE)
 	..()
 	//TODO: root the firer until the chain returns
 

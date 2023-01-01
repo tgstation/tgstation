@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes: 
-  - bugfix: "made regenerate_organs() apply to external organs as well as internal ones"

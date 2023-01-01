@@ -41,7 +41,7 @@
 	signal = add_output_port("Scanned", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/wiremod_scanner/register_shell(atom/movable/shell)
-	RegisterSignal(shell, COMSIG_ITEM_AFTERATTACK, .proc/handle_afterattack)
+	RegisterSignal(shell, COMSIG_ITEM_AFTERATTACK, PROC_REF(handle_afterattack))
 
 /obj/item/circuit_component/wiremod_scanner/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, COMSIG_ITEM_AFTERATTACK)

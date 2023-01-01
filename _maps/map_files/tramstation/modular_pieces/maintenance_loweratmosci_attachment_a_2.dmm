@@ -96,11 +96,11 @@
 /area/station/maintenance/starboard/lesser)
 "x" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
+/area/lavaland/surface)
 "z" = (
 /obj/item/pickaxe/rusted,
 /turf/open/misc/asteroid/airless,
-/area/mine/explored)
+/area/lavaland/surface)
 "A" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three"
@@ -119,7 +119,7 @@
 "E" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/mine/explored)
+/area/lavaland/surface)
 "F" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -161,13 +161,13 @@
 "T" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/airless,
-/area/mine/explored)
+/area/lavaland/surface)
 "U" = (
 /turf/template_noop,
 /area/template_noop)
 "Z" = (
 /turf/open/misc/asteroid/airless,
-/area/mine/explored)
+/area/lavaland/surface)
 
 (1,1,1) = {"
 L

@@ -54,6 +54,7 @@
 		it will become easier for others to find your item of power."
 	spell_type =  /datum/action/cooldown/spell/lichdom
 	category = "Defensive"
+	no_coexistance_typecache = list(/datum/action/cooldown/spell/splattercasting)
 
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"

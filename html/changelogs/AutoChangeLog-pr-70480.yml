@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes: 
-  - bugfix: "You no longer get stuck standing still if a cryo cell you were inside is broken."

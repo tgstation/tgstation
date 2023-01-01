@@ -382,12 +382,13 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,
 		/obj/item/gps,
+		/obj/item/mining_stabilizer,
 		/obj/item/key/lasso,
 		/obj/item/knife,
 		/obj/item/lighter,
 		/obj/item/mining_scanner,
 		/obj/item/multitool,
-		/obj/item/organ/internal/regenerative_core,
+		/obj/item/organ/internal/monster_core,
 		/obj/item/pickaxe,
 		/obj/item/radio,
 		/obj/item/reagent_containers/cup/glass,
@@ -416,13 +417,22 @@
 		))
 
 
-/obj/item/storage/belt/mining/vendor
-	contents = newlist(/obj/item/survivalcapsule)
+/obj/item/storage/belt/mining/vendor/PopulateContents()
+	new /obj/item/survivalcapsule(src)
 
 /obj/item/storage/belt/mining/alt
 	icon_state = "explorer2"
 	inhand_icon_state = "explorer2"
 	worn_icon_state = "explorer2"
+
+/obj/item/storage/belt/mining/healing/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/survival/luxury(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/survival(src)
+	for(var/i in 1 to 2)
+		var/obj/item/organ/internal/monster_core/core = new /obj/item/organ/internal/monster_core/regenerative_core/legion(src)
+		core.preserve()
 
 /obj/item/storage/belt/mining/primitive
 	name = "hunter's belt"
@@ -471,13 +481,6 @@
 	atom_storage.set_holdable(list(
 		/obj/item/clothing/mask/luchador
 		))
-
-/obj/item/storage/belt/cummerbund
-	name = "cummerbund"
-	desc = "A pleated sash that pairs well with a suit jacket."
-	icon_state = "cummerbund"
-	inhand_icon_state = null
-	worn_icon_state = "cummerbund"
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -759,6 +762,13 @@
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	worn_icon_state = "fannypack_yellow"
+
+/obj/item/storage/belt/fannypack/cummerbund
+	name = "cummerbund"
+	desc = "A pleated sash that pairs well with a suit jacket."
+	icon_state = "cummerbund"
+	inhand_icon_state = null
+	worn_icon_state = "cummerbund"
 
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"

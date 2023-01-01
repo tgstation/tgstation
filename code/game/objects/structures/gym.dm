@@ -9,6 +9,25 @@
 	var/list/hit_sounds = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg',\
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
+/obj/structure/punching_bag/Initialize(mapload)
+	. = ..()
+
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Punch", \
+	)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_CROWBAR = list(
+			SCREENTIP_CONTEXT_RMB = "Deconstruct",
+		),
+
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_RMB = "Anchor",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /obj/structure/punching_bag/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -20,12 +39,56 @@
 		L.add_mood_event("exercise", /datum/mood_event/exercise)
 		L.apply_status_effect(/datum/status_effect/exercised)
 
+/obj/structure/punching_bag/wrench_act_secondary(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	if(anchored)
+		balloon_alert(user, "unsecured")
+		anchored = FALSE
+	else
+		balloon_alert(user, "secured")
+		anchored = TRUE
+	return TRUE
+
+/obj/structure/punching_bag/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(anchored)
+		balloon_alert(user, "unsecure first!")
+		return FALSE
+	tool.play_tool_sound(src)
+	balloon_alert(user, "deconstructing...")
+	if (!do_after(user, 10 SECONDS, target = src))
+		return FALSE
+	new /obj/item/stack/sheet/iron(get_turf(src))
+	new /obj/item/stack/sheet/iron(get_turf(src))
+	new /obj/item/stack/rods(get_turf(src))
+	new /obj/item/pillow(get_turf(src))
+	qdel(src)
+	return TRUE
+
 /obj/structure/weightmachine
 	desc = "Just looking at this thing makes you feel tired."
 	density = TRUE
 	anchored = TRUE
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	icon = 'icons/obj/gym_equipment.dmi'
+
+/obj/structure/weightmachine/Initialize(mapload)
+	. = ..()
+
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Work out", \
+	)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_CROWBAR = list(
+			SCREENTIP_CONTEXT_RMB = "Deconstruct",
+		),
+
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_RMB = "Anchor",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/structure/weightmachine/proc/AnimateMachine(mob/living/user)
 	return
@@ -47,7 +110,7 @@
 	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	if(obj_flags & IN_USE)
-		to_chat(user, span_warning("It's already in use - wait a bit!"))
+		balloon_alert(user, "wait your turn!")
 		return
 	else
 		obj_flags |= IN_USE
@@ -67,6 +130,31 @@
 		user.add_mood_event("exercise", /datum/mood_event/exercise)
 		to_chat(user, finishmessage)
 		user.apply_status_effect(/datum/status_effect/exercised)
+
+/obj/structure/weightmachine/wrench_act_secondary(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	if(anchored)
+		balloon_alert(user, "unsecured")
+		anchored = FALSE
+	else
+		balloon_alert(user, "secured")
+		anchored = TRUE
+	return TRUE
+
+/obj/structure/weightmachine/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(anchored)
+		balloon_alert(user, "unsecure first!")
+		return FALSE
+	tool.play_tool_sound(src)
+	balloon_alert(user, "deconstructing...")
+	if (!do_after(user, 10 SECONDS, target = src))
+		return FALSE
+	new /obj/item/stack/sheet/iron/five(get_turf(src))
+	new /obj/item/stack/rods(get_turf(src))
+	new /obj/item/stack/rods(get_turf(src))
+	new /obj/item/chair(get_turf(src))
+	qdel(src)
+	return TRUE
 
 /obj/structure/weightmachine/stacklifter
 	name = "chest press machine"

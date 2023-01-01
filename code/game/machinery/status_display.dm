@@ -97,13 +97,17 @@
 	line1 = uppertext(line1)
 	line2 = uppertext(line2)
 
+	var/message_changed = FALSE
 	if(line1 != message1)
 		message1 = line1
+		message_changed = TRUE
 
 	if(line2 != message2)
 		message2 = line2
+		message_changed = TRUE
 
-	update_appearance()
+	if(message_changed)
+		update_appearance()
 
 /**
  * Remove both message objs and null the fields.
@@ -133,6 +137,9 @@
 		qdel(overlay)
 
 	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message, text_color, header_text_color)
+	// Draw our object visually "in front" of this display, taking advantage of sidemap
+	new_status_display_text.pixel_y = -32
+	new_status_display_text.pixel_z = 32
 	vis_contents += new_status_display_text
 	return new_status_display_text
 

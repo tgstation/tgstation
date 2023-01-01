@@ -1,6 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes: 
-  - balance: "You can no longer order new weakpoint locators/bombs if the originals were destroyed."
-  - balance: "The weakpoint objective requires both areas to be scanned before you can blow up the weakpoint."
-  - bugfix: "Fixes parts of the weakpoint locator description that were meant to say the scan locations being missing."

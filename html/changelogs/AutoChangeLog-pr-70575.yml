@@ -1,4 +1,0 @@
-author: "etherware-novice"
-delete-after: True
-changes: 
-  - bugfix: "you can now clean storage items (toolbox) with soap"

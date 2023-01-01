@@ -79,8 +79,9 @@
 		return FALSE
 
 	LAZYADD(new_atom_host.light_sources, src)
-	if(ismovable(new_atom_host) && new_atom_host == source_atom)
-		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, .proc/update_host_lights)
+	//yes, we register the signal to the top atom too, this is intentional and ensures contained lighting updates properly
+	if(ismovable(new_atom_host))
+		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, PROC_REF(update_host_lights))
 	return TRUE
 
 ///remove this light source from old_atom_host's light_sources list, unsetting movement registrations
@@ -89,7 +90,7 @@
 		return FALSE
 
 	LAZYREMOVE(old_atom_host.light_sources, src)
-	if(ismovable(old_atom_host) && old_atom_host == source_atom)
+	if(ismovable(old_atom_host))
 		UnregisterSignal(old_atom_host, COMSIG_MOVABLE_MOVED)
 	return TRUE
 
