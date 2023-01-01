@@ -1,7 +1,6 @@
 /*
 	/client/proc/cmd_admin_pm_context, /*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel, /*admin-pm list*/
-	/client/proc/cmd_admin_say, /*admin-only ooc chat*/
 	/client/proc/debugstatpanel,
 	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
@@ -16,6 +15,44 @@
 	/client/proc/stop_sounds,
 	/client/proc/tag_datum_mapview,
 */
+
+/datum/admin_verb_datum/admin_pm
+	verb_name = "Admin PM"
+	verb_desc = "Set a message directly to a client"
+
+/datum/admin_verb_datum/admin_pm/get_arguments(client/target)
+	var/list/targets = list()
+	for(var/client/client in GLOB.clients)
+		var/nametag = ""
+		var/mob/lad = client.mob
+		var/mob_name = lad?.name
+		var/real_mob_name = lad?.real_name
+		if(!lad)
+			nametag = "(No Mob)"
+		else if(isnewplayer(lad))
+			nametag = "(New Player)"
+		else if(isobserver(lad))
+			nametag = "[mob_name](Ghost)"
+		else
+			nametag = "[real_mob_name](as [mob_name])"
+		targets["[nametag] - [client]"] = client
+
+	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
+	if(!target)
+		return list()
+	return list(ADMINVERB_ARGUMENT_TARGET = target)
+
+/datum/admin_verb_datum/admin_pm/invoke(client/target, list/arguments)
+	var/whom = arguments[ADMINVERB_ARGUMENT_TARGET]
+	if(!whom)
+		return
+
+	var/message = target.request_adminpm_message(disambiguate_client(whom), arguments[ADMINVERB_ARGUMENT_MESSAGE])
+
+	if(!target.sends_adminpm_message(disambiguate_client(whom), message))
+		return
+
+	target.notify_adminpm_message(disambiguate_client(whom), message)
 
 /datum/admin_verb_datum/deadmin
 	verb_name = "DeAdmin"

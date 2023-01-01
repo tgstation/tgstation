@@ -30,40 +30,6 @@
 			confidential = TRUE)
 		return
 	cmd_admin_pm(M.client, null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/// Shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
-/client/proc/cmd_admin_pm_panel()
-	set category = "Admin"
-	set name = "Admin PM"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Panel: Only administrators may use this command."),
-			confidential = TRUE)
-		return
-
-	var/list/targets = list()
-	for(var/client/client in GLOB.clients)
-		var/nametag = ""
-		var/mob/lad = client.mob
-		var/mob_name = lad?.name
-		var/real_mob_name = lad?.real_name
-		if(!lad)
-			nametag = "(No Mob)"
-		else if(isnewplayer(lad))
-			nametag = "(New Player)"
-		else if(isobserver(lad))
-			nametag = "[mob_name](Ghost)"
-		else
-			nametag = "[real_mob_name](as [mob_name])"
-		targets["[nametag] - [client]"] = client
-
-	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
-	if (isnull(target))
-		return
-	cmd_admin_pm(targets[target], null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /// Replys to some existing ahelp, reply to whom, which can be a client or ckey
 /client/proc/cmd_ahelp_reply(whom)
