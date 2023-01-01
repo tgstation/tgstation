@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(statpanels)
 		else
 			target.stat_panel.send_message("update_split_admin_tabs", !!(target.prefs.toggles & SPLIT_ADMIN_TABS))
 
-			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
+			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs) || !("Admin Verbs" in target.panel_tabs))
 				target.stat_panel.send_message("add_admin_tabs", target.holder.href_token)
 
 			if(target.stat_tab == "MC" && ((num_fires % mc_wait == 0) || target?.prefs.read_preference(/datum/preference/toggle/fast_mc_refresh)))
@@ -145,6 +145,15 @@ SUBSYSTEM_DEF(statpanels)
 
 	// Push update
 	target.stat_panel.send_message("update_interviews", data)
+
+/datum/controller/subsystem/statpanels/proc/set_admin_verb_tab(client/target)
+	var/list/verb_data = list()
+	for(var/datum/admin_verb_datum/admin_verb as anything in GLOB.admin_verb_datums)
+		admin_verb = GLOB.admin_verb_datums[admin_verb]
+		if(!check_rights_for(target, admin_verb.permission_required))
+			continue
+		verb_data[admin_verb.verb_category] += list(list(admin_verb.verb_name, admin_verb.verb_desc, text_ref(admin_verb)))
+	target.stat_panel.send_message("update_admin_verbs", verb_data)
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()
@@ -292,6 +301,9 @@ SUBSYSTEM_DEF(statpanels)
 	if(target.stat_tab == "Tickets")
 		set_tickets_tab(target)
 		return TRUE
+
+	if(target.stat_tab == "Admin Verbs")
+		set_admin_verb_tab(target)
 
 	if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
 		target.stat_panel.send_message("remove_sdql2")

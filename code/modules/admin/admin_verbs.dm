@@ -234,6 +234,10 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/add_admin_verbs()
 	if(holder)
+		for(var/datum/admin_verb_datum/admin_verb as anything in GLOB.admin_verb_datums)
+			admin_verb = GLOB.admin_verb_datums[admin_verb]
+			admin_verb.assosciate(src)
+
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank_flags()
@@ -264,8 +268,12 @@ GLOBAL_PROTECT(admin_verbs_poll)
 				add_verb(src, /client/proc/play_web_sound)
 		if(rights & R_SPAWN)
 			add_verb(src, GLOB.admin_verbs_spawn)
+		SSstatpanels.set_admin_verb_tab(src)
 
 /client/proc/remove_admin_verbs()
+	for(var/datum/admin_verb_datum/admin_verb as anything in GLOB.admin_verb_datums)
+		admin_verb = GLOB.admin_verb_datums[admin_verb]
+		admin_verb.deassosciate(src)
 	remove_verb(src, list(
 		GLOB.admin_verbs_default,
 		/client/proc/togglebuildmodeself,
@@ -286,6 +294,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		/client/proc/disable_mapping_verbs,
 		/client/proc/readmin
 		))
+	SSstatpanels.set_admin_verb_tab(src)
 
 /client/proc/hide_verbs()
 	set name = "Adminverbs - Hide All"

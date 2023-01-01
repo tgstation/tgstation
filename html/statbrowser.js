@@ -18,6 +18,7 @@ if (!String.prototype.trim) {
 var status_tab_parts = ["Loading..."];
 var current_tab = null;
 var mc_tab_parts = [["Loading...", ""]];
+var admin_verb_cats = [];
 var href_token = null;
 var spells = [];
 var spell_tabs = [];
@@ -252,6 +253,8 @@ function tab_change(tab) {
 		draw_status();
 	} else if (tab == "MC") {
 		draw_mc();
+	} else if (tab == "Admin Verbs") {
+		draw_admin_verbs();
 	} else if (spell_tabs_thingy) {
 		draw_spells(tab);
 	} else if (verb_tabs_thingy) {
@@ -393,6 +396,51 @@ function draw_mc() {
 	document.getElementById("statcontent").appendChild(table);
 }
 
+function draw_admin_verbs() {
+	try {
+		statcontentdiv.textContent = "";
+		var categories = Object.keys(admin_verb_cats);
+		for(var i = 0; i < categories.length; i++) {
+			var category = categories[i];
+			var categoryHeader = document.createElement("h3");
+			categoryHeader.textContent = category;
+
+			var verbList = admin_verb_cats[category];
+			var categoryTable = document.createElement("div");
+			categoryTable.className = "grid-container";
+			var verbIdx = 0;
+
+			for(var l = 0; l < verbList.length; l++) {
+				if(!(verbIdx++ % 3)) {
+					categoryTable.appendChild(currentRow);
+				}
+
+				var verbInfo = verbList[l];
+				var verbName = verbInfo[0];
+				var verbDesc = verbInfo[1];
+				var verbRef = verbInfo[2];
+
+				var verbEntry = document.createElement("a");
+				verbEntry.href = "?src=" + verbRef + ";admin_token=" + href_token + ";invoke=1";
+				verbEntry.className = "grid-item";
+
+				var verbTitle = document.createElement("span");
+				verbTitle.textContent = verbName;
+				verbTitle.className = "grid-item-text";
+				verbTitle.title = verbDesc;
+
+				verbEntry.appendChild(verbTitle);
+				verbCell.appendChild(verbEntry);
+				categoryTable.appendChild(verbCell);
+			}
+			statcontentdiv.appendChild(categoryHeader);
+			statcontentdiv.appendChild(categoryTable);
+		}
+	} catch(except) {
+		statcontentdiv.textContent = "Exception: " + except
+	}
+}
+
 function remove_tickets() {
 	if (tickets) {
 		tickets = [];
@@ -509,6 +557,13 @@ function remove_mc() {
 		tab_change("Status");
 	}
 };
+
+function remove_admin_verbs() {
+	removePermanentTab("Admin Verbs");
+	if(current_tab == "Admin Verbs") {
+		tab_change("Status");
+	}
+}
 
 function draw_sdql2() {
 	statcontentdiv.textContent = "";
@@ -892,6 +947,19 @@ Byond.subscribeTo('update_mc', function (payload) {
 	}
 });
 
+Byond.subscribeTo('update_admin_verbs', function(payload) {
+	admin_verb_cats = payload;
+
+	if(!verb_tabs.includes("Admin Verbs")) {
+		verb_tabs.push("Admin Verbs");
+	}
+
+	createStatusTab("Admin Verbs");
+	if(current_tab == "Admin Verbs") {
+		draw_admin_verbs();
+	}
+})
+
 Byond.subscribeTo('remove_spells', function () {
 	for (var s = 0; s < spell_tabs.length; s++) {
 		removeStatusTab(spell_tabs[s]);
@@ -933,6 +1001,7 @@ Byond.subscribeTo('create_listedturf', function (TN) {
 Byond.subscribeTo('remove_admin_tabs', function () {
 	href_token = null;
 	remove_mc();
+	remove_admin_verbs();
 	remove_tickets();
 	remove_sdql2();
 	remove_interviews();
@@ -969,6 +1038,7 @@ Byond.subscribeTo('update_split_admin_tabs', function (status) {
 Byond.subscribeTo('add_admin_tabs', function (ht) {
 	href_token = ht;
 	addPermanentTab("MC");
+	addPermanentTab("Admin Verbs");
 	addPermanentTab("Tickets");
 });
 
