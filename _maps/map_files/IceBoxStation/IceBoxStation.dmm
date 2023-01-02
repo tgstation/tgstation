@@ -27364,7 +27364,8 @@
 	},
 /obj/machinery/button/flasher{
 	pixel_y = -32;
-	id = "hopflash"
+	id = "hopflash";
+	pixel_x = 8
 	},
 /obj/machinery/button/door/directional/south{
 	pixel_x = -8;
@@ -27373,7 +27374,6 @@
 	name = "Queue Shutters Control"
 	},
 /obj/machinery/button/door/directional/south{
-	pixel_y = -24;
 	pixel_x = 8;
 	name = "Privacy Shutters Control";
 	req_access = list("hop");
@@ -27381,6 +27381,10 @@
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
+	},
+/obj/machinery/button/ticket_machine{
+	pixel_x = -8;
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
