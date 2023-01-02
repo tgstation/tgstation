@@ -62,3 +62,7 @@
 		return FALSE
 
 	return is_admin(preferences.parent)
+/datum/preference/toggle/comms_notification
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "comms_notification"
+	savefile_identifier = PREFERENCE_PLAYER
