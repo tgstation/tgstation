@@ -62,7 +62,7 @@ GLOBAL_VAR(basketball_game)
  */
 /datum/basketball_controller/proc/prepare_game(ready_players)
 	var/list/possible_maps = subtypesof(/datum/map_template/basketball)
-	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/basketball) in GLOB.landmarks_list)
+	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/basketball/game_area) in GLOB.landmarks_list)
 
 	current_map = pick(possible_maps)
 	current_map = new current_map
@@ -72,7 +72,7 @@ GLOBAL_VAR(basketball_game)
 	var/list/bounds = current_map.load(spawn_area)
 	if(!bounds)
 		CRASH("Loading basketball map failed!")
-	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23,spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
+	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23, spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
 
 	if(!home_team_landmarks.len)
 		for(var/obj/effect/landmark/basketball/team_spawn/home/possible_spawn in GLOB.landmarks_list)
@@ -84,14 +84,6 @@ GLOBAL_VAR(basketball_game)
 
 	var/list/home_spawnpoints = home_team_landmarks.Copy()
 	var/list/away_spawnpoints = away_team_landmarks.Copy()
-
-	for(var/player_key in ready_players)
-		if(length(ready_players) % 2) // odd is home team
-			landmark = pick_n_take(home_spawnpoints) // make sure to do something with landmark
-			home_team_players |= player_key
-		else // even is away team
-			landmark = pick_n_take(away_spawnpoints)
-			away_team_players |= player_key // make sure to do something with landmark
 
 	create_bodies(ready_players)
 
@@ -124,16 +116,25 @@ GLOBAL_VAR(basketball_game)
 	var/obj/effect/landmark/basketball/team_spawn/spawn_landmark
 
 	var/team_uniform
+	var/team_name
 
 	for(var/player_key in ready_players)
+
+
+		// we need an iterator that ++1 so we can get correct even/odds
+
+
+
 		if(length(ready_players) % 2) // odd is home team
-			spawn_location = pick_n_take(home_spawnpoints)
-			home_team_players += player_key
+			spawn_landmark = pick_n_take(home_spawnpoints)
+			home_team_players |= player_key
 			team_uniform = current_map.home_team_uniform
+			team_name = current_map.team_name
 		else // even is away team
-			spawn_location = pick_n_take(away_spawnpoints)
-			away_team_players += player_key
+			spawn_landmark = pick_n_take(away_spawnpoints)
+			away_team_players |= player_key
 			team_uniform = away_map.home_team_uniform
+			team_name = away_map.team_name
 
 		var/mob/living/carbon/human/baller = new(get_turf(spawn_landmark))
 
@@ -146,6 +147,9 @@ GLOBAL_VAR(basketball_game)
 		// this is basketball, not a boxing match
 		ADD_TRAIT(baller, TRAIT_PACIFISM, BASKETBALL_MINIGAME_TRAIT)
 		baller.status_flags |= GODMODE
+
+		if(!team_uniform)
+			team_uniform = prob(50) ? /obj/item/clothing/under/shorts/blue : /obj/item/clothing/under/shorts/red
 
 		baller.equipOutfit(team_uniform)
 
