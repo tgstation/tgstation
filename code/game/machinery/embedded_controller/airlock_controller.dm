@@ -181,7 +181,10 @@
 					if(pump.pump_direction == ATMOS_DIRECTION_RELEASING)
 						pump.pressure_checks &= ~ATMOS_EXTERNAL_BOUND
 						pump.pump_direction = ATMOS_DIRECTION_SIPHONING
-						pump.update_appearance(UPDATE_ICON)
+					else if(pump.pump_direction == ATMOS_DIRECTION_SIPHONING)
+						pump.on = TRUE
+
+					pump.update_appearance(UPDATE_ICON)
 
 			if(AIRLOCK_STATE_OUTOPEN) //state 2
 				if(target_state != AIRLOCK_STATE_OUTOPEN)
@@ -262,7 +265,7 @@
 
 /// Starts an airlock cycle
 /obj/machinery/airlock_controller/proc/cycle()
-	if (state < AIRLOCK_STATE_CLOSED)
+	if (state == AIRLOCK_STATE_INOPEN || state == AIRLOCK_STATE_PRESSURIZE)
 		target_state = AIRLOCK_STATE_OUTOPEN
 	else
 		target_state = AIRLOCK_STATE_INOPEN
