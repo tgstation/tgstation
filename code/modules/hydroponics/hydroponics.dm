@@ -471,6 +471,13 @@
 		return
 	set_light(0)
 
+/obj/machinery/hydroponics/update_name(updates)
+	. = ..()
+	if(myseed)
+		name = "[initial(name)] ([myseed.plantname])"
+	else
+		name = initial(name)
+
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()
 	if(myseed)
@@ -691,7 +698,6 @@
 	set_weedlevel(0, update_icon = FALSE) // Reset
 	set_pestlevel(0) // Reset
 	visible_message(span_warning("The [oldPlantName] is overtaken by some [myseed.plantname]!"))
-	TRAY_NAME_UPDATE
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3) // Mutates the current seed
 	if(!myseed)
@@ -754,9 +760,9 @@
  * Called after plant mutation, update the appearance of the tray content and send a visible_message()
  */
 /obj/machinery/hydroponics/proc/after_mutation(message)
-		update_appearance()
-		visible_message(message)
-		TRAY_NAME_UPDATE
+	update_appearance()
+	visible_message(message)
+
 /**
  * Plant Death Proc.
  * Cleans up various stats for the plant upon death, including pests, harvestability, and plant health.
@@ -881,7 +887,6 @@
 			SEND_SIGNAL(O, COMSIG_SEED_ON_PLANTED, src)
 			to_chat(user, span_notice("You plant [O]."))
 			set_seed(O)
-			TRAY_NAME_UPDATE
 			age = 1
 			set_plant_health(myseed.endurance)
 			lastcycle = world.time
@@ -987,8 +992,6 @@
 				set_plant_health(0, update_icon = FALSE, forced = TRUE)
 				lastproduce = 0
 				set_seed(null)
-				name = initial(name)
-				desc = initial(desc)
 			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
 			return
 	else if(istype(O, /obj/item/storage/part_replacer))
@@ -1053,8 +1056,6 @@
 	else if(plant_status == HYDROTRAY_PLANT_DEAD)
 		to_chat(user, span_notice("You remove the dead plant from [src]."))
 		set_seed(null)
-		update_appearance()
-		TRAY_NAME_UPDATE
 	else
 		if(user)
 			user.examinate(src)
@@ -1104,9 +1105,6 @@
 		to_chat(user, span_notice("You harvest [product_count] items from the [myseed.plantname]."))
 	if(!myseed.get_gene(/datum/plant_gene/trait/repeated_harvest))
 		set_seed(null)
-		name = initial(name)
-		desc = initial(desc)
-		TRAY_NAME_UPDATE
 		if(self_sustaining) //No reason to pay for an empty tray.
 			set_self_sustaining(FALSE)
 	else
