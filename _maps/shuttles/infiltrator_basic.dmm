@@ -88,7 +88,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/bridge)
 "ap" = (
-/obj/effect/turf_decal/trimline/dark/filled/corner,
 /obj/effect/turf_decal/trimline/dark_red/corner,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
@@ -282,19 +281,16 @@
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/shuttle/syndicate/engineering)
 "bk" = (
-/obj/effect/turf_decal/trimline/dark/filled/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark/filled/mid_joiner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_red/mid_joiner{
-	dir = 8
-	},
 /obj/structure/sign/poster/contraband/random/directional/west,
+/obj/structure/chair/sofa/bench/right/maroon{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 8
 	},
@@ -571,7 +567,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/engineering)
 "cf" = (
-/obj/effect/turf_decal/tile/dark_red/full,
 /obj/effect/turf_decal/syndicateemblem/middle/middle,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
@@ -716,7 +711,6 @@
 /area/shuttle/syndicate/medical)
 "df" = (
 /obj/machinery/newscaster/directional/south,
-/obj/effect/turf_decal/trimline/dark/filled/line,
 /obj/effect/turf_decal/trimline/dark/filled/mid_joiner,
 /obj/effect/turf_decal/trimline/dark_red/warning,
 /obj/effect/turf_decal/trimline/dark_red/mid_joiner,
@@ -737,16 +731,10 @@
 /area/shuttle/syndicate/medical)
 "el" = (
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/trimline/dark/filled/line{
+/obj/effect/turf_decal/trimline/dark/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/dark/filled/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark_red/mid_joiner{
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_half{
@@ -763,6 +751,20 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/engineering)
+"fZ" = (
+/obj/structure/chair/sofa/bench/left/maroon{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/shuttle/syndicate/hallway)
 "gt" = (
 /obj/item/storage/box/handcuffs{
 	pixel_x = 3;
@@ -862,16 +864,10 @@
 /area/shuttle/syndicate/medical)
 "nq" = (
 /obj/machinery/light/directional/west,
-/obj/effect/turf_decal/trimline/dark/filled/line{
+/obj/effect/turf_decal/trimline/dark/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/dark/filled/mid_joiner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_red/mid_joiner{
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_half{
@@ -954,7 +950,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/engineering)
 "tO" = (
-/obj/effect/turf_decal/tile/dark_red/full,
 /obj/effect/turf_decal/syndicateemblem/middle/right,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
@@ -1012,13 +1007,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/bridge)
 "vI" = (
-/obj/effect/turf_decal/tile/dark_red/full,
 /obj/effect/turf_decal/syndicateemblem/middle/left,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "vQ" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/effect/turf_decal/trimline/dark/filled/line,
 /obj/effect/turf_decal/trimline/dark/filled/mid_joiner,
 /obj/effect/turf_decal/trimline/dark_red/warning,
 /obj/effect/turf_decal/trimline/dark_red/mid_joiner,
@@ -1036,6 +1029,20 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/syndicate/eva)
+"xY" = (
+/obj/structure/chair/sofa/bench/right/maroon{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/shuttle/syndicate/hallway)
 "ye" = (
 /obj/effect/turf_decal/trimline/dark/line{
 	dir = 4
@@ -1056,17 +1063,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/airlock)
 "yx" = (
-/obj/effect/turf_decal/trimline/dark/filled/line{
+/obj/structure/chair/sofa/bench/right/maroon{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/dark/filled/mid_joiner{
-	dir = 4
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 8
 	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark_red/mid_joiner{
-	dir = 4
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 8
@@ -1146,33 +1150,19 @@
 /obj/effect/turf_decal/trimline/dark/filled/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/dark/filled/mid_joiner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_red/mid_joiner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured_half{
-	dir = 8
-	},
-/area/shuttle/syndicate/hallway)
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/shuttle/syndicate/eva)
 "Dg" = (
-/obj/effect/turf_decal/trimline/dark/filled/arrow_ccw{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark/filled/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark_red/mid_joiner{
-	dir = 4
-	},
 /obj/machinery/status_display/evac/directional/east,
+/obj/structure/chair/sofa/bench/left/maroon{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 8
 	},
@@ -1261,23 +1251,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
-"HC" = (
-/obj/effect/turf_decal/trimline/dark/filled/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark/filled/mid_joiner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_red/mid_joiner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured_half{
-	dir = 8
-	},
-/area/shuttle/syndicate/hallway)
 "HV" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/smooth_half,
@@ -1418,9 +1391,6 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/syndicate/hallway)
 "Tz" = (
-/obj/effect/turf_decal/trimline/dark/filled/corner{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/dark_red/corner{
 	dir = 8
 	},
@@ -1452,22 +1422,25 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/shuttle/syndicate/eva)
-"WA" = (
-/obj/effect/turf_decal/trimline/dark/filled/arrow_ccw{
+"Wn" = (
+/obj/structure/chair/sofa/bench/left/maroon{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 4
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 8
 	},
-/obj/effect/turf_decal/trimline/dark/filled/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark_red/mid_joiner{
-	dir = 4
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 8
 	},
+/area/shuttle/syndicate/hallway)
+"WA" = (
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 8
+	},
+/turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
 "WH" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark/end,
@@ -1656,8 +1629,8 @@ ao
 df
 ac
 af
-af
-Xw
+WA
+CZ
 UN
 UN
 Xw
@@ -1680,11 +1653,11 @@ ai
 TZ
 Tz
 ac
-CZ
+Wn
 bk
 nq
-HC
-CZ
+Wn
+yx
 aV
 YN
 Qb
@@ -1730,11 +1703,11 @@ al
 jf
 ap
 ac
-yx
+xY
 Dg
 el
-WA
-yx
+xY
+fZ
 aV
 Ma
 Qb
