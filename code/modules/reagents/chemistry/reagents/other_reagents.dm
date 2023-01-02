@@ -1402,7 +1402,7 @@
 /datum/reagent/ammonia/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!check_tray(chems, mytray))
 		return
-			// Ammonia is bad ass.
+	// Ammonia is bad ass.
 	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.12))
 	if(myseed && prob(10))
 		myseed.adjust_yield(1)
