@@ -177,7 +177,7 @@ SUBSYSTEM_DEF(tts)
 			cached_voices -= current_message[IDENTIFIER_INDEX]
 			continue
 		var/identifier = current_message[IDENTIFIER_INDEX]
-		var/sound/new_sound = new("tmp/[identifier].ogg")
+		var/sound/new_sound = new("tmp/tts/[copytext(identifier, 1, 3)]/[identifier].ogg")
 		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX])
 		for(var/atom/movable/target in current_message[EXTRA_TARGETS_INDEX])
 			play_tts(target, new_sound, current_message[LANGUAGE_INDEX])
@@ -204,8 +204,8 @@ SUBSYSTEM_DEF(tts)
 	if(islist(cached_voice))
 		cached_voice[EXTRA_TARGETS_INDEX] += target
 		return
-	else if(fexists("tmp/[identifier].ogg"))
-		var/sound/new_sound = new("tmp/[identifier].ogg")
+	else if(fexists("tmp/tts/[copytext(identifier, 1, 3)]/[identifier].ogg"))
+		var/sound/new_sound = new("tmp/tts/[copytext(identifier, 1, 3)]/[identifier].ogg")
 		play_tts(target, new_sound, language)
 		return
 
@@ -216,7 +216,7 @@ SUBSYSTEM_DEF(tts)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
 	var/datum/http_request/request = new()
-	var/file_name = "tmp/[identifier].ogg"
+	var/file_name = "tmp/tts/[copytext(identifier, 1, 3)]/[identifier].ogg"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
 	var/list/waiting_list = queued_tts_messages
 	if(length(in_process_tts_messages) < max_concurrent_requests)
