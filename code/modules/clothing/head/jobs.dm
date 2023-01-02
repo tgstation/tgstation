@@ -117,6 +117,7 @@
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	var/candy_cooldown = 0
+	var/flask = /obj/item/reagent_containers/cup/glass/flask/det
 	dog_fashion = /datum/dog_fashion/head/detective
 
 /datum/armor/fedora_det_hat
@@ -133,7 +134,7 @@
 
 	create_storage(type = /datum/storage/pockets/small/fedora/detective)
 
-	new /obj/item/reagent_containers/cup/glass/flask/det(src)
+	new flask(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
@@ -150,6 +151,9 @@
 		candy_cooldown = world.time+1200
 	else
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+
+/obj/item/clothing/head/fedora/det_hat/minor
+	flask = /obj/item/reagent_containers/cup/glass/flask/det/minor
 
 //Mime
 /obj/item/clothing/head/beret
