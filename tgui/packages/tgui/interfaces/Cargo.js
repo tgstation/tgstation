@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 
 export const Cargo = (props, context) => {
   return (
-    <Window width={850} height={750}>
+    <Window width={920} height={750}>
       <Window.Content scrollable>
         <CargoContent />
       </Window.Content>
@@ -360,10 +360,7 @@ const CargoCartButtons = (props, context) => {
   const { act, data } = useBackend(context);
   const { requestonly, can_send, can_approve_requests } = data;
   const cart = data.cart || [];
-  const total = cart.reduce(
-    (total, entry) => total + entry.cost * entry.amount,
-    0
-  );
+  const total = cart.reduce((total, entry) => total + entry.cost, 0);
   return (
     <>
       <Box inline mx={1}>
@@ -407,7 +404,7 @@ const CartHeader = (props, context) => {
           </Stack.Item>
         )) ||
           ''}
-        <Stack.Item ml="100px">
+        <Stack.Item ml="20px">
           <CargoCartButtons />
         </Stack.Item>
       </Stack>
@@ -438,7 +435,6 @@ const CargoCart = (props, context) => {
                     onEnter={(e, value) =>
                       act('modify', {
                         order_name: entry.object,
-                        pack_id: entry.sid,
                         amount: value,
                       })
                     }
@@ -450,7 +446,9 @@ const CargoCart = (props, context) => {
                   {(entry.can_be_cancelled && (
                     <Button
                       icon="plus"
-                      onClick={() => act('add', { id: entry.sid, amount: 1 })}
+                      onClick={() =>
+                        act('add_by_name', { order_name: entry.object })
+                      }
                     />
                   )) ||
                     ''}
@@ -458,21 +456,23 @@ const CargoCart = (props, context) => {
               )) ||
                 ''}
               {(can_send && (
-                <Table.Cell inline ml="50px" width="30px">
+                <Table.Cell inline ml="50px" width="40px">
                   {(entry.can_be_cancelled && (
                     <Button
                       icon="minus"
-                      onClick={() => act('remove', { id: entry.id })}
+                      onClick={() =>
+                        act('remove', { order_name: entry.object })
+                      }
                     />
                   )) ||
                     ''}
                 </Table.Cell>
               )) ||
                 ''}
-              <Table.Cell collapsing textAlign="right" inline ml="120px">
-                {!!entry.paid && <b>[Paid Privately]&nbsp;</b>}
-                {formatMoney(entry.cost * entry.amount)} {entry.cost_type}
-                {entry.dep_order ? <b>&nbsp; earned on delivery</b> : ''}
+              <Table.Cell collapsing textAlign="right" inline ml="28px">
+                {entry.paid > 0 && <b>[Paid Privately x {entry.paid}]</b>}
+                {formatMoney(entry.cost)} {entry.cost_type}
+                {entry.dep_order > 0 && <b>[Department x {entry.dep_order}]</b>}
               </Table.Cell>
             </Table.Row>
           ))}

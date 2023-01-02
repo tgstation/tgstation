@@ -122,25 +122,22 @@
 	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
 		if(cart_list[SO.pack.name])
 			cart_list[SO.pack.name][1]["amount"]++
+			cart_list[SO.pack.name][1]["cost"] += SO.get_final_cost()
+			if(SO.department_destination)
+				cart_list[SO.pack.name][1]["dep_order"]++
+			if(!isnull(SO.paying_account))
+				cart_list[SO.pack.name][1]["paid"]++
 			continue
-
-		var/supply_pack_id
-		for(var/pack in SSshuttle.supply_packs)
-			var/datum/supply_pack/supply = SSshuttle.supply_packs[pack]
-			if(supply.name == SO.pack.name)
-				supply_pack_id = pack
-				break
 
 		cart_list[SO.pack.name] = list(list(
 			"cost_type" = SO.cost_type,
 			"object" = SO.pack.name,
-			"cost" = SO.pack.get_cost(),
+			"cost" = SO.get_final_cost(),
 			"id" = SO.id,
-			"sid" = supply_pack_id,
 			"amount" = 1,
 			"orderer" = SO.orderer,
-			"paid" = !isnull(SO.paying_account), //paid by requester
-			"dep_order" = !!SO.department_destination,
+			"paid" = !isnull(SO.paying_account) ? 1 : 0, //number of orders purchased privatly
+			"dep_order" = SO.department_destination ? 1 : 0, //number of orders purchased by a department
 			"can_be_cancelled" = SO.can_be_cancelled,
 		))
 	data["cart"] = list()
@@ -274,6 +271,15 @@
 		. = TRUE
 		break
 
+///map order name to its id
+/obj/machinery/computer/cargo/proc/name_to_id(order_name)
+	for(var/pack in SSshuttle.supply_packs)
+		var/datum/supply_pack/supply = SSshuttle.supply_packs[pack]
+		if(order_name == supply.name)
+			return pack
+	return null
+
+
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -287,6 +293,7 @@
 				say(blockade_warning)
 				return
 
+			//make an copy of the cart before its cleared by the shuttle
 			var/list/cart_list = list()
 			for(var/datum/supply_order/SO in SSshuttle.shopping_list)
 				if(cart_list[SO.pack.name])
@@ -296,6 +303,7 @@
 					"order" = SO,
 					"amount" = 1
 				)
+
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.supply.export_categories = get_export_categories()
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
@@ -308,6 +316,7 @@
 			if(cart_list.len == 0)
 				return TRUE
 
+			//create the paper from the cart list
 			var/obj/item/paper/requisition_paper = new(get_turf(src))
 			requisition_paper.name = "requisition form"
 			var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
@@ -342,35 +351,47 @@
 				. = TRUE
 		if("add")
 			return add_item(params)
+		if("add_by_name")
+			var/supply_pack_id = name_to_id(params["order_name"])
+			if(!supply_pack_id)
+				return
+			return add_item(list("id" = supply_pack_id, "amount" = 1))
 		if("remove")
-			return remove_item(params)
+			var/order_name = params["order_name"]
+			//try removing atleast one item with the specified name. An order may not be removed if it was from the department
+			//also we create an copy of the cart list else we would get runtimes when removing & iterating over the same SSshuttle.shopping_list
+			var/list/shopping_cart = SSshuttle.shopping_list.Copy()
+			for(var/datum/supply_order/SO in shopping_cart)
+				if(SO.pack.name != order_name)
+					continue
+				if(remove_item(list("id" = SO.id)))
+					return TRUE
+
+			return TRUE
 		if("modify")
 			var/order_name = params["order_name"]
 
-			//clear out all orders currently to make space for the new amount
-			var/order_id = ""
-			while(TRUE)
-				order_id = null
-				for(var/datum/supply_order/SO in SSshuttle.shopping_list) //find corresponding order id for the order name
-					if(SO.pack.name == order_name)
-						order_id = SO.id
-						break
-				if(!order_id)
-					break
-				remove_item(list("id" = "[order_id]"))
+			//clear out all orders with the above mentioned order_name name to make space for the new amount
+			var/list/shopping_cart = SSshuttle.shopping_list.Copy() //we operate on the list copy else we would get runtimes when removing & iterating over the same SSshuttle.shopping_list
+			for(var/datum/supply_order/SO in shopping_cart) //find corresponding order id for the order name
+				if(SO.pack.name == order_name)
+					remove_item(list("id" = "[SO.id]"))
 
+			//now add the new amount stuff
 			var/amount = text2num(params["amount"])
 			if(amount == 0)
 				return TRUE
-			add_item(list("id" = params["pack_id"], "amount" = amount))
-
-			return TRUE
+			var/supply_pack_id = name_to_id(order_name) //map order name to supply pack id for adding
+			if(!supply_pack_id)
+				return
+			return add_item(list("id" = supply_pack_id, "amount" = amount))
 		if("clear")
-			for(var/datum/supply_order/cancelled_order in SSshuttle.shopping_list)
-				if(cancelled_order.department_destination || cancelled_order.can_be_cancelled)
+			//create copy of list else we will get runtimes when iterating & removing items on the same list SSshuttle.shopping_list
+			var/list/shopping_cart = SSshuttle.shopping_list.Copy()
+			for(var/datum/supply_order/cancelled_order in shopping_cart)
+				if(cancelled_order.department_destination || !cancelled_order.can_be_cancelled)
 					continue //don't cancel other department's orders or orders that can't be cancelled
-				SSshuttle.shopping_list -= cancelled_order
-			. = TRUE
+				remove_item(list("id" = "[cancelled_order.id]")) //remove & properly refund any coupons attached with this order
 		if("approve")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
