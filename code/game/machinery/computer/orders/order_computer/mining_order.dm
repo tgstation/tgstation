@@ -2,7 +2,7 @@
 #define GET_MINING_SHIPPING_MULTIPLIER(cost) round(cost * MINING_SHIPPING_MULTIPLIER,5)
 
 /obj/machinery/computer/order_console/mining
-	name = "mining equipment vendor"
+	name = "mining equipment order console"
 	desc = "An equipment shop for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
@@ -43,16 +43,18 @@
 		contains = things_to_order,
 	)
 	var/datum/supply_order/new_order = new(
-		pack = mining_pack, \
-		orderer = purchaser, \
-		orderer_rank = "Mining Vendor", \
-		orderer_ckey = purchaser.ckey, \
-		reason = "", \
-		paying_account = card.registered_account, \
-		department_destination = null, \
-		coupon = null, \
+		pack = mining_pack,
+		orderer = purchaser,
+		orderer_rank = "Mining Vendor",
+		orderer_ckey = purchaser.ckey,
+		reason = "",
+		paying_account = card.registered_account,
+		department_destination = null,
+		coupon = null,
 		charge_on_purchase = FALSE,
 		manifest_can_fail = FALSE,
+		cost_type = "mp",
+		can_be_cancelled = FALSE,
 	)
 	say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 	radio.talk_into(src, "A shaft miner has ordered equipment which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)

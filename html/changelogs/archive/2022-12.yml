@@ -1080,3 +1080,23 @@
   - qol: the metastation custodial closet can now be found using the navigate verb
   san7890:
   - qol: Ghosts are freely able to go between abductor ships now.
+2022-12-31:
+  ChungusGamer666:
+  - rscadd: Meth becomes bluer the higher the purity
+  Ebin-Halcyon:
+  - imageadd: The wendigo has been resprited
+  Jacquerel:
+  - rscadd: New station traits can vary how large and comfortable the station escape
+      pods are.
+  Salex08:
+  - bugfix: indestructible windows cant be destroyed by ingame means anymore
+  Tattle:
+  - rscadd: chocolate boxes now contain bonbons (formerly tiny chocolates), truffles,
+      and peanut butter cups
+  - balance: changed the sugar in clown cakes' food_reagents to banana juice
+  - balance: increased the amount of vitamin in pound cakes
+  - bugfix: slices of bread now taste like their respective breads instead of tasting
+      "indescribable"
+  - bugfix: fiesta skewers are now MEAT and VEGETABLES
+  mc-oofert:
+  - bugfix: Basicmobs can no longer shoot mobs inside indestructibles

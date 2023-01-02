@@ -23,7 +23,7 @@
 		external_power_immediate += projectile.damage * bullet_energy + kiss_power
 		log_activation(who = projectile.firer, how = projectile.fired_from)
 	else
-		external_damage_immediate += projectile.damage * bullet_energy
+		external_damage_immediate += projectile.damage * bullet_energy * 0.1
 		// Stop taking damage at emergency point, yell to players at danger point.
 		// This isn't clean and we are repeating [/obj/machinery/power/supermatter_crystal/proc/calculate_damage], sorry for this.
 		var/damage_to_be = damage + external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
@@ -94,7 +94,7 @@
 			user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
 			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
 			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
-			external_damage_immediate += 100
+			external_damage_immediate += 10
 			external_power_trickle += 500
 			log_activation(who = user, how = destabilizing_crystal)
 			qdel(destabilizing_crystal)

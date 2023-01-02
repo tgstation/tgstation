@@ -1,0 +1,8 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Mining order consoles are now named 'order console'."
+  - qol: "Orders from said mining order consoles can now no longer be cancelled, and are listed as 'mp' (mining points) in the Cargo console instead of 'cr'."
+  - qol: "Order consoles now have a + button that will instantly add 1 of the item."
+  - bugfix: "Departmental orders can no longer be cancelled through the NTos cargo application."
+  - bugfix: "Wearing an ID will no longer break order consoles."
