@@ -751,20 +751,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/engineering)
-"fZ" = (
-/obj/structure/chair/sofa/bench/left/maroon{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark/mid_joiner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured_half{
-	dir = 8
-	},
-/area/shuttle/syndicate/hallway)
 "gt" = (
 /obj/item/storage/box/handcuffs{
 	pixel_x = 3;
@@ -806,13 +792,7 @@
 /obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/turf_decal/siding/dark_red{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/dark_red{
-	dir = 2
-	},
-/turf/open/floor/iron/dark/diagonal,
+/turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "lo" = (
 /obj/effect/mapping_helpers/airlock/autoname,
@@ -903,6 +883,20 @@
 	},
 /turf/open/floor/iron/white/small,
 /area/shuttle/syndicate/medical)
+"oW" = (
+/obj/structure/chair/sofa/bench/right/maroon{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/shuttle/syndicate/hallway)
 "pd" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 5
@@ -1029,7 +1023,7 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/syndicate/eva)
-"xY" = (
+"xS" = (
 /obj/structure/chair/sofa/bench/right/maroon{
 	dir = 8
 	},
@@ -1063,7 +1057,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/airlock)
 "yx" = (
-/obj/structure/chair/sofa/bench/right/maroon{
+/obj/structure/chair/sofa/bench/left/maroon{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/dark/line{
@@ -1249,6 +1243,9 @@
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "HV" = (
@@ -1325,13 +1322,19 @@
 /turf/open/floor/iron/dark/small,
 /area/shuttle/syndicate/airlock)
 "NL" = (
-/obj/effect/turf_decal/trimline/yellow/line,
-/obj/effect/turf_decal/trimline/dark_blue/warning,
-/obj/effect/turf_decal/tile/dark_red{
+/obj/structure/chair/sofa/bench/left/maroon{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/line{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
-/area/shuttle/syndicate/engineering)
+/obj/effect/turf_decal/trimline/dark/mid_joiner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/shuttle/syndicate/hallway)
 "Oa" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
@@ -1346,9 +1349,6 @@
 "Qf" = (
 /obj/effect/turf_decal/trimline/yellow/line,
 /obj/effect/turf_decal/trimline/dark_blue/warning,
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/engineering)
 "Qq" = (
@@ -1382,13 +1382,7 @@
 /obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/turf_decal/siding/dark_red{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/dark_red{
-	dir = 2
-	},
-/turf/open/floor/iron/dark/diagonal,
+/turf/open/floor/iron/dark,
 /area/shuttle/syndicate/hallway)
 "Tz" = (
 /obj/effect/turf_decal/trimline/dark_red/corner{
@@ -1422,20 +1416,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/shuttle/syndicate/eva)
-"Wn" = (
-/obj/structure/chair/sofa/bench/left/maroon{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark/mid_joiner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured_half{
-	dir = 8
-	},
-/area/shuttle/syndicate/hallway)
 "WA" = (
 /obj/effect/turf_decal/trimline/dark/filled/line{
 	dir = 8
@@ -1653,11 +1633,11 @@ ai
 TZ
 Tz
 ac
-Wn
+yx
 bk
 nq
-Wn
 yx
+oW
 aV
 YN
 Qb
@@ -1703,11 +1683,11 @@ al
 jf
 ap
 ac
-xY
+xS
 Dg
 el
-xY
-fZ
+xS
+NL
 aV
 Ma
 Qb
@@ -1863,7 +1843,7 @@ bd
 aB
 bn
 bB
-NL
+Qf
 ch
 EH
 fk
