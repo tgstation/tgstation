@@ -193,9 +193,10 @@
 /obj/effect/temp_visual/drawing_heretic_rune
 	duration = 30 SECONDS
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "transmutation_rune_draw"
+	icon_state = "transmutation_rune"
 	pixel_x = -32
 	pixel_y = -32
+	plane = GAME_PLANE
 	layer = SIGIL_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune
 
@@ -203,3 +204,4 @@
 	. = ..()
 	if (path_colour)
 		set_greyscale(colors = list(path_colour))
+		icon_state = "transmutation_rune_draw"
