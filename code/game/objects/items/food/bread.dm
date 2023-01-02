@@ -395,6 +395,24 @@
 	if(!(slot & ITEM_SLOT_HANDS))
 		end_swordplay()
 
+/// Deadly bread used by a mime
+/obj/item/food/baguette/combat
+	sharpness = SHARP_EDGED
+	/// Force when wielded as a sword by a mime
+	var/active_force = 20
+	/// Block chance when wielded as a sword by a mime
+	var/active_block = 50
+
+/obj/item/food/baguette/combat/begin_swordplay(mob/user)
+	. = ..()
+	force = active_force
+	block_chance = active_block
+
+/obj/item/food/baguette/combat/end_swordplay(mob/user)
+	. = ..()
+	force = initial(force)
+	block_chance = initial(block_chance)
+
 /obj/item/food/garlicbread
 	name = "garlic bread"
 	desc = "Alas, it is limited."
@@ -502,3 +520,37 @@
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
+
+/obj/item/food/raw_croissant
+	name = "raw croissant"
+	desc = "Folded dough ready to bake into a croissant."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "raw_croissant"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("raw dough" = 1)
+	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/raw_croissant/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/croissant, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
+/obj/item/food/croissant
+	name = "croissant"
+	desc = "A delicious, buttery croissant. The perfect start to the day."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "croissant"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("fluffy bread" = 1, "butter" = 2)
+	foodtypes = GRAIN | DAIRY | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
+
+// Enhanced weaponised bread
+/obj/item/food/croissant/throwing
+	throwforce = 20
+	tastes = list("fluffy bread" = 1, "butter" = 2, "metal" = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/iron = 1)
+
+/obj/item/food/croissant/throwing/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/boomerang, throw_range, TRUE)

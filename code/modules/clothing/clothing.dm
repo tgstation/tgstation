@@ -286,7 +286,7 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	if(armor.has_any_armor() || flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
+	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)))
 		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/Topic(href, href_list)
@@ -295,6 +295,7 @@
 	if(href_list["list_armor"])
 		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES</u></b>")
 
+		var/datum/armor/armor = get_armor()
 		var/added_damage_header = FALSE
 		for(var/damage_key in ARMOR_LIST_DAMAGE())
 			var/rating = armor.get_rating(damage_key)
