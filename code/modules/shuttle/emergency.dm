@@ -181,7 +181,7 @@
 
 /obj/machinery/computer/emergency_shuttle/proc/increase_hijack_stage()
 	var/obj/docking_port/mobile/emergency/shuttle = SSshuttle.emergency
-	// Begin loading this early, otherwise we get an awkward 30 second delay on the 
+	// Begin loading this early, otherwise we get an awkward 30 second delay on the
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	shuttle.hijack_status++
 	if(hijack_announce)
@@ -593,6 +593,7 @@
 	icon_state = "dorm_available"
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
+	circuit = /obj/item/circuitboard/computer/emergency_pod
 
 /obj/machinery/computer/shuttle/pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
