@@ -39,6 +39,7 @@ export const ANTAG2GROUP = {
   'Religious Response Officer': 'Emergency Response Team',
   'Janitorial Response Officer': 'Emergency Response Team',
   'Entertainment Response Officer': 'Emergency Response Team',
+  'Emergency Response Officer': 'Emergency Response Team',
 
   'Nuclear Operative': 'Nuclear Operatives',
   'Nuclear Operative Leader': 'Nuclear Operatives',
