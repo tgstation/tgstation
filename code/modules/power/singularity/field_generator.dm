@@ -51,6 +51,7 @@ no power level overlay is currently in the overlays list.
 	var/list/obj/machinery/field/generator/connected_gens = list()
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
+	var/generator_distance = 7
 
 /datum/armor/field_generator
 	melee = 25
@@ -93,10 +94,7 @@ no power level overlay is currently in the overlays list.
 		to_chat(user, span_warning("You are unable to turn off [src] once it is online!"))
 		return TRUE
 
-	user.visible_message(
-		span_notice("[user] turns on [src]."),
-		span_notice("You turn on [src]."),
-		span_hear("You hear heavy droning."))
+	balloon_alert(user, "turned on")
 	turn_on()
 	investigate_log("activated by [key_name(user)].", INVESTIGATE_ENGINE)
 
@@ -295,7 +293,7 @@ no power level overlay is currently in the overlays list.
 	var/steps = 0
 	if(!NSEW)//Make sure its ran right
 		return FALSE
-	for(var/dist in 0 to 7) // checks out to 8 tiles away for another generator
+	for(var/dist in 0 to generator_distance) // checks out to 8 tiles away for another generator
 		current_turf = get_step(current_turf, NSEW)
 		if(current_turf.density)//We cant shoot a field though this
 			return FALSE
