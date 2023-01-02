@@ -13,9 +13,9 @@
 				continue
 			TEST_FAIL("[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
 
-		if(!(icon_exists(seed.icon_dead, seed.icon_grow)))
+		if(!(icon_exists(seed.growing_icon, seed.icon_dead)))
 			TEST_FAIL("[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
 
 		if(seed.icon_harvest) // mushrooms have no grown sprites, same for items with no product
-			if(!(icon_exists(seed.icon_harvest, seed.icon_grow)))
+			if(!(icon_exists(seed.growing_icon, seed.icon_harvest)))
 				TEST_FAIL("[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")
