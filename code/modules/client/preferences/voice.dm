@@ -20,4 +20,6 @@
 	return list("invalid")
 
 /datum/preference/choiced/voice/apply_to_human(mob/living/carbon/human/target, value)
+	if(SStts.tts_enabled && !(value in SStts.available_speakers))
+		value = pick(SStts.available_speakers) // As a failsafe
 	target.voice = value
