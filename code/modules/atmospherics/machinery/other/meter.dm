@@ -162,10 +162,6 @@
 	///The component parent object
 	var/obj/machinery/meter/connected_meter
 
-/datum/armor/machinery_meter
-	energy = 100
-	fire = 40
-
 /obj/item/circuit_component/atmos_meter/populate_ports()
 	request_data = add_input_port("Request Meter Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(request_meter_data))
 
@@ -192,10 +188,6 @@
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 // why are you yelling?
 /obj/machinery/meter/turf
-
-/datum/armor/machinery_meter
-	energy = 100
-	fire = 40
 
 /obj/machinery/meter/turf/reattach_to_layer()
 	target = loc

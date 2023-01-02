@@ -17,38 +17,40 @@ type Transactions = {
 let name_to_token, money_to_send, token;
 
 export const NtosPay = (props, context) => {
+  return (
+    <NtosWindow width={495} height={655}>
+      <NtosWindow.Content>
+        <NtosPayContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+export const NtosPayContent = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { name } = data;
 
   if (!name) {
     return (
-      <NtosWindow width={512} height={130}>
-        <NtosWindow.Content>
-          <NoticeBox>
-            You need to insert your ID card into the card slot in order to use
-            this application.
-          </NoticeBox>
-        </NtosWindow.Content>
-      </NtosWindow>
+      <NoticeBox>
+        You need to insert your ID card into the card slot in order to use this
+        application.
+      </NoticeBox>
     );
   }
 
   return (
-    <NtosWindow width={495} height={655}>
-      <NtosWindow.Content>
-        <Stack fill vertical>
-          <Stack.Item>
-            <Introduction />
-          </Stack.Item>
-          <Stack.Item>
-            <TransferSection />
-          </Stack.Item>
-          <Stack.Item grow>
-            <TransactionHistory />
-          </Stack.Item>
-        </Stack>
-      </NtosWindow.Content>
-    </NtosWindow>
+    <Stack fill vertical>
+      <Stack.Item>
+        <Introduction />
+      </Stack.Item>
+      <Stack.Item>
+        <TransferSection />
+      </Stack.Item>
+      <Stack.Item grow>
+        <TransactionHistory />
+      </Stack.Item>
+    </Stack>
   );
 };
 

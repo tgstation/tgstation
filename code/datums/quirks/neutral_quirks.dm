@@ -501,10 +501,10 @@
 	lose_text = "<span class='danger'>You feel only slightly less fruity than before.</span>"
 	medical_record_text = "Patient appears to be fruity."
 
-/datum/quirk/item_quirk/pride_pin/add_unique()
+/datum/quirk/item_quirk/pride_pin/add_unique(client/client_source)
 	var/obj/item/clothing/accessory/pride/pin = new(get_turf(quirk_holder))
 
-	var/pride_choice = quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/pride_pin) || assoc_to_keys(GLOB.pride_pin_reskins)[1]
+	var/pride_choice = client_source?.prefs?.read_preference(/datum/preference/choiced/pride_pin) || assoc_to_keys(GLOB.pride_pin_reskins)[1]
 	var/pride_reskin = GLOB.pride_pin_reskins[pride_choice]
 
 	pin.current_skin = pride_choice
