@@ -166,3 +166,34 @@
 
 /datum/ai_behavior/basic_melee_attack/sewer
 	action_cooldown = 0.8 SECONDS
+
+/mob/living/basic/cockroach/glockroach/mobroach
+    name = "mobroach"
+    desc = "WE'RE FUCKED, THAT GLOCKROACH HAS A TOMMYGUN!"
+    icon_state = "mobroach"
+    melee_damage_lower = 2.5
+    melee_damage_upper = 10
+    obj_damage = 10
+    gold_core_spawnable = HOSTILE_SPAWN
+    faction = list("hostile", FACTION_MAINT_CREATURES)
+    ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach/mobroach
+
+/mob/living/basic/cockroach/glockroach/Initialize(mapload)
+    . = ..()
+    AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
+
+/datum/ai_controller/basic_controller/cockroach/glockroach/mobroach
+    planning_subtrees = list(
+        /datum/ai_planning_subtree/pet_planning,
+        /datum/ai_planning_subtree/random_speech/cockroach,
+        /datum/ai_planning_subtree/simple_find_target,
+        /datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach/mobroach, //If we are attacking someone, this will prevent us from hunting
+        /datum/ai_planning_subtree/find_and_hunt_target/roach,
+    )
+
+/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach/mobroach
+    ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach/mobroach
+
+/datum/ai_behavior/basic_ranged_attack/glockroach/mobroach
+    shots = 4
+    action_cooldown = 2 SECONDS
