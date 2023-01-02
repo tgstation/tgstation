@@ -21,7 +21,6 @@
 	name = "Specialist Laser Pack"
 	desc = "Contains a set of Nanotransets more specialized laser weaponry."
 	cost = CARGO_CRATE_VALUE * 60
-	hidden = TRUE
 	contains = list(
 		/obj/item/gun/energy/lasercannon
 		/obj/item/gun/energy/laser/scatter
