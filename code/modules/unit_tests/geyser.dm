@@ -24,6 +24,3 @@
 
 		TEST_ASSERT(do_we_do_autorefill, "Geyser is not refilling! Current volume: [geyser.reagents.total_volume]. Target volume: [geyser.max_volume]. Source: [geyser.type]")
 		TEST_ASSERT(geyser.reagents.has_reagent(geyser.reagent_id), "Geyser should produce [geyser.reagent_id], produced [geyser.reagents.get_reagent_log_string()] instead. Source: [geyser.type]")
-
-
-
