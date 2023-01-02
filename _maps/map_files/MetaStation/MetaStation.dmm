@@ -46455,7 +46455,7 @@
 /obj/machinery/door/window/right/directional/south{
 	dir = 8;
 	name = "Jim Norton's Quebecois Coffee";
-	req_one_access_txt = list("service","maint_tunnels")
+	req_one_access = list("service","maint_tunnels")
 	},
 /obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
@@ -50123,7 +50123,7 @@
 /obj/machinery/button/door{
 	id = "ordnancebridge";
 	pixel_x = -24;
-	req_one_access_txt = list("maint_tunnels","science")
+	req_one_access = list("maint_tunnels","science")
 	},
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 1
@@ -50356,7 +50356,7 @@
 /obj/machinery/button/door{
 	id = "ordnancebridge";
 	pixel_y = 24;
-	req_one_access_txt = list("maint_tunnels","science")
+	req_one_access = list("maint_tunnels","science")
 	},
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4

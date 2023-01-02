@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - qol: "Tram controls unlock faster on arrival at a station"
