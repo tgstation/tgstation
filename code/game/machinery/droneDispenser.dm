@@ -128,8 +128,8 @@
 	var/material_requirement_string = "It needs "
 	if (iron_cost > 0)
 		material_requirement_string += "[iron_cost] iron "
-	if (iron_cost > 0 && glass_cost > 0)
-		material_requirement_string += "and "
+		if (glass_cost > 0)
+			material_requirement_string += "and "
 	if (glass_cost > 0)
 		material_requirement_string += "[glass_cost] glass "
 	if (iron_cost > 0 || glass_cost > 0)
