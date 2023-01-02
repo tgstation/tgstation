@@ -10,8 +10,6 @@
 	endurance = 30
 	instability = 10
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	icon_harvest = "banana-harvest"
-	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
 	reagents_add = list(/datum/reagent/consumable/banana = 0.1, /datum/reagent/potassium = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
@@ -99,7 +97,6 @@
 	icon_state = "seed-mimana"
 	species = "mimana"
 	plantname = "Mimana Tree"
-	icon_harvest = "mimana-harvest"
 	icon_dead = "banana-dead"
 	product = /obj/item/food/grown/banana/mime
 	growthstages = 4
