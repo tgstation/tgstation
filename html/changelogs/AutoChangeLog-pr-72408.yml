@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - admin: "Added config for disabling station traits"
