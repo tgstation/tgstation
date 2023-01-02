@@ -234,6 +234,7 @@ Primarily used in reagents/reaction_agents
 
 /datum/reagent/proc/check_tray(datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	if(!mytray)
+		ASSERT(mytray)
 		return FALSE
 	// Check if we have atleast a single amount of the reagent
 	if(!chems.has_reagent(type, 1))
