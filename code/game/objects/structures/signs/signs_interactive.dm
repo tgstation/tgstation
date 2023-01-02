@@ -91,6 +91,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	is_editable = TRUE
 	var/hit_count = 0
 	var/tram_id = TRAM_LIFT_ID
+	/// Has the tram hit enough people it now flashes hazard lights?
 	var/hazard_flash = FALSE
 
 /obj/structure/sign/collision_counter/Initialize(mapload)
