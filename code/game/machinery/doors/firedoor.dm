@@ -684,15 +684,6 @@
 	density = TRUE
 	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
-/datum/armor/door_firedoor
-	melee = 10
-	bullet = 30
-	laser = 20
-	energy = 20
-	bomb = 30
-	fire = 95
-	acid = 70
-
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
 	adjust_lights_starting_offset()
@@ -764,15 +755,6 @@
 	density = TRUE
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
-
-/datum/armor/door_firedoor
-	melee = 10
-	bullet = 30
-	laser = 20
-	energy = 20
-	bomb = 30
-	fire = 95
-	acid = 70
 
 /obj/structure/firelock_frame/examine(mob/user)
 	. = ..()

@@ -458,9 +458,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 20)
 
-/datum/armor/mineral_bamboo
-	fire = 50
-
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
 	. += GLOB.cloth_recipes
@@ -490,9 +487,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/durathread
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-
-/datum/armor/mineral_bamboo
-	fire = 50
 
 /obj/item/stack/sheet/durathread/get_main_recipes()
 	. = ..()
@@ -592,9 +586,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	null, \
 ))
 
-/datum/armor/mineral_bamboo
-	fire = 50
-
 /obj/item/stack/sheet/cardboard //BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
@@ -616,9 +607,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
-
-/datum/armor/mineral_bamboo
-	fire = 50
 
 /obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
@@ -680,9 +668,6 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	material_type = /datum/material/bronze
 	walltype = /turf/closed/wall/mineral/bronze
 	has_unique_girder = TRUE
-
-/datum/armor/mineral_bamboo
-	fire = 50
 
 /obj/item/stack/sheet/bronze/get_main_recipes()
 	. = ..()
@@ -766,9 +751,6 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 /obj/item/stack/sheet/plastic/five
 	amount = 5
 
-/datum/armor/mineral_bamboo
-	fire = 50
-
 /obj/item/stack/sheet/plastic/get_main_recipes()
 	. = ..()
 	. += GLOB.plastic_recipes
@@ -788,9 +770,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 20)
 	material_type = /datum/material/paper
-
-/datum/armor/mineral_bamboo
-	fire = 50
 
 /obj/item/stack/sheet/paperframes/get_main_recipes()
 	. = ..()

@@ -174,15 +174,6 @@
 	var/checkdir = 4 //door won't open if turf in this dir is `turftype`
 	var/turftype = /turf/open/space
 
-/datum/armor/door_poddoor
-	melee = 50
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 50
-	fire = 100
-	acid = 70
-
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/turf = get_step(src, checkdir)
 	if(!istype(turf, turftype))

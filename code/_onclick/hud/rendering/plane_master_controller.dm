@@ -57,7 +57,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 /atom/movable/plane_master_controller/transition_filter(name, time, list/new_params, easing, loop)
 	. = ..()
 	for(var/atom/movable/screen/plane_master/pm_iterator as anything in get_planes())
-		pm_iterator.transition_filter(name, time, new_params, easing, loop)
+		pm_iterator.transition_filter(name, new_params, time, easing, loop)
 
 ///Full override so we can just use filterrific
 /atom/movable/plane_master_controller/add_atom_colour(coloration, colour_priority)

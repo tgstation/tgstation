@@ -7,7 +7,6 @@
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = SUPERVISOR_QM
-	selection_color = "#dcba97"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "SHAFT_MINER"
 
