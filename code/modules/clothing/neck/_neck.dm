@@ -301,10 +301,6 @@
 	greyscale_colors = "#B40000#545350"
 	armor_type = /datum/armor/large_scarf_syndie
 
-/obj/item/clothing/neck/large_scarf/syndie/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/surgery_initiator)
-
 /obj/item/clothing/neck/infinity_scarf
 	name = "infinity scarf"
 	icon_state = "infinity_scarf"
