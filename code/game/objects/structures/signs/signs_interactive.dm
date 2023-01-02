@@ -1,3 +1,5 @@
+#define COLLISION_HAZARD_THRESHOLD 11
+
 /obj/structure/sign/clock
 	name = "wall clock"
 	desc = "It's your run-of-the-mill wall clock showing both the local Coalition Standard Time and the galactic Treaty Coordinated Time. Perfect for staring at instead of working."
@@ -117,7 +119,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 		update_appearance()
 		return
 
-	if(hit_count == 11)
+	if(hit_count == COLLISION_HAZARD_THRESHOLD) // When we hit the threshold, enable flashing the lights
 		hazard_flash = TRUE
 		icon_state = "tram_hits_alert"
 		update_appearance()
