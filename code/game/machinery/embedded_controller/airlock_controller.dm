@@ -110,10 +110,9 @@
 						if(pump.pump_direction == ATMOS_DIRECTION_SIPHONING)
 							pump.pressure_checks |= ATMOS_EXTERNAL_BOUND
 							pump.pump_direction = ATMOS_DIRECTION_RELEASING
-						else if(pump.pump_direction == ATMOS_DIRECTION_RELEASING)
+						else if(pump.on != TRUE)
 							pump.on = TRUE
-
-						pump.update_appearance(UPDATE_ICON)
+							pump.update_appearance(UPDATE_ICON)
 				else
 					state = AIRLOCK_STATE_CLOSED
 					process_again = TRUE
@@ -181,10 +180,9 @@
 					if(pump.pump_direction == ATMOS_DIRECTION_RELEASING)
 						pump.pressure_checks &= ~ATMOS_EXTERNAL_BOUND
 						pump.pump_direction = ATMOS_DIRECTION_SIPHONING
-					else if(pump.pump_direction == ATMOS_DIRECTION_SIPHONING)
+					else if(pump.on != TRUE)
 						pump.on = TRUE
-
-					pump.update_appearance(UPDATE_ICON)
+						pump.update_appearance(UPDATE_ICON)
 
 			if(AIRLOCK_STATE_OUTOPEN) //state 2
 				if(target_state != AIRLOCK_STATE_OUTOPEN)
