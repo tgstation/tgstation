@@ -689,6 +689,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Receives echolocation images.
 #define TRAIT_ECHOLOCATION_RECEIVER "echolocation_receiver"
+/// Echolocation has a higher range.
+#define TRAIT_ECHOLOCATION_EXTRA_RANGE "echolocation_extra_range"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
