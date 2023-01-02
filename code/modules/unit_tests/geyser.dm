@@ -7,6 +7,7 @@
 		geyser.potency = geyser.max_volume //make it recharge in 1 tick
 
 		TEST_ASSERT(geyser.reagents, "Geyser does not have a reagent datum! Source: [geyser.type]")
+		TEST_ASSERT(geyser.reagents.has_reagent(geyser.reagent_id), "Geyser should start with [geyser.reagent_id], but started with [geyser.reagents.get_reagent_log_string()] instead. Source: [geyser.type]")
 
 		geyser.reagents.clear_reagents() //this should awaken the geyser to start refilling
 
