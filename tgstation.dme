@@ -1838,6 +1838,7 @@
 #include "code\game\objects\items\granters\crafting\_crafting_granter.dm"
 #include "code\game\objects\items\granters\crafting\bone_notes.dm"
 #include "code\game\objects\items\granters\crafting\cannon.dm"
+#include "code\game\objects\items\granters\crafting\combat_baking.dm"
 #include "code\game\objects\items\granters\crafting\desserts.dm"
 #include "code\game\objects\items\granters\crafting\pipegun.dm"
 #include "code\game\objects\items\granters\magic\_spell_granter.dm"
