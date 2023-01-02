@@ -312,8 +312,7 @@
 		return
 
 	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.3))
-	if(myseed)
-		myseed.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
+	myseed?.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.getBruteLoss() && DT_PROB(10, delta_time))

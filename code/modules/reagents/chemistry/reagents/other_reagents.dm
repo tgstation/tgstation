@@ -281,8 +281,7 @@
 
 	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
 	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
-	if(myseed)
-		myseed.adjust_instability(round(chems.get_reagent_amount(type) * 0.15))
+	myseed?.adjust_instability(round(chems.get_reagent_amount(type) * 0.15))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/affected_mob)
 	..()
@@ -1632,10 +1631,10 @@
 /datum/reagent/plantnutriment/eznutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	if(!check_tray(chems, mytray))
 		return
-
-	myseed.adjust_instability(0.2)
-	myseed.adjust_potency(round(chems.get_reagent_amount(type) * 0.3))
-	myseed.adjust_yield(round(chems.get_reagent_amount(type) * 0.1))
+	if(myseed)
+		myseed.adjust_instability(0.2)
+		myseed.adjust_potency(round(chems.get_reagent_amount(type) * 0.3))
+		myseed.adjust_yield(round(chems.get_reagent_amount(type) * 0.1))
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
@@ -1649,7 +1648,7 @@
 		return
 
 	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
-	myseed.adjust_instability(round(chems.get_reagent_amount(type) * 0.2))
+	myseed?.adjust_instability(round(chems.get_reagent_amount(type) * 0.2))
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
@@ -1662,9 +1661,10 @@
 	if(!check_tray(chems, mytray))
 		return
 
-	myseed.adjust_instability(-0.25)
-	myseed.adjust_potency(round(chems.get_reagent_amount(type) * 0.1))
-	myseed.adjust_yield(round(chems.get_reagent_amount(type) * 0.2))
+	if(myseed)
+		myseed.adjust_instability(-0.25)
+		myseed.adjust_potency(round(chems.get_reagent_amount(type) * 0.1))
+		myseed.adjust_yield(round(chems.get_reagent_amount(type) * 0.2))
 
 /datum/reagent/plantnutriment/endurogrow
 	name = "Enduro Grow"
@@ -1677,9 +1677,10 @@
 	if(!check_tray(chems, mytray))
 		return
 
-	myseed.adjust_potency(-round(chems.get_reagent_amount(type) * 0.1))
-	myseed.adjust_yield(-round(chems.get_reagent_amount(type) * 0.075))
-	myseed.adjust_endurance(round(chems.get_reagent_amount(type) * 0.35))
+	if(myseed)
+		myseed.adjust_potency(-round(chems.get_reagent_amount(type) * 0.1))
+		myseed.adjust_yield(-round(chems.get_reagent_amount(type) * 0.075))
+		myseed.adjust_endurance(round(chems.get_reagent_amount(type) * 0.35))
 
 /datum/reagent/plantnutriment/liquidearthquake
 	name = "Liquid Earthquake"
@@ -1692,9 +1693,10 @@
 	if(!check_tray(chems, mytray))
 		return
 
-	myseed.adjust_weed_rate(round(chems.get_reagent_amount(type) * 0.1))
-	myseed.adjust_weed_chance(round(chems.get_reagent_amount(type) * 0.3))
-	myseed.adjust_production(-round(chems.get_reagent_amount(type) * 0.075))
+	if(myseed)
+		myseed.adjust_weed_rate(round(chems.get_reagent_amount(type) * 0.1))
+		myseed.adjust_weed_chance(round(chems.get_reagent_amount(type) * 0.3))
+		myseed.adjust_production(-round(chems.get_reagent_amount(type) * 0.075))
 
 // GOON OTHERS
 
@@ -2870,8 +2872,7 @@
 	mytray.adjust_weedlevel(-1)
 	mytray.adjust_pestlevel(-1)
 	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
-	if(myseed)
-		myseed.adjust_potency(round(chems.get_reagent_amount(type) * 0.5))
+	myseed?.adjust_potency(round(chems.get_reagent_amount(type) * 0.5))
 
 // I made this food....with love.
 // Reagent added to food by chef's with a chef's kiss. Makes people happy.
