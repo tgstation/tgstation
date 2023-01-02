@@ -1,4 +1,0 @@
-author: "Improvedname"
-delete-after: True
-changes:
-  - bugfix: "fixes cummerbunds holding 7 items instead of 3(as fannypacks do)"
