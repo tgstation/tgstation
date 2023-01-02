@@ -1,7 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes:
-  - code_imp: "rescaled supermatter health from 900 to 100."
-  - balance: "we didn't do a 1:1 rescale of the damage though, atmos based damage should be slightly higher across the board but have lower caps. All external damage is slightly lower."
-  - code_imp: "made the less important parts of the visual supermatter effects same between different delams so we have an easier time changing the code."
-  - qol: "added a delta symbol to the SM UI on damage and energy breakdown to denote that they are actually changes instead of exact values."
