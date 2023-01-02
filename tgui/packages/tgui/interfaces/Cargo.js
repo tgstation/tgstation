@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 
 export const Cargo = (props, context) => {
   return (
-    <Window width={780} height={750}>
+    <Window width={850} height={750}>
       <Window.Content scrollable>
         <CargoContent />
       </Window.Content>
@@ -16,11 +16,12 @@ export const Cargo = (props, context) => {
 };
 
 export const CargoContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const [tab, setTab] = useSharedState(context, 'tab', 'catalog');
   const { requestonly } = data;
   const cart = data.cart || [];
   const requests = data.requests || [];
+  const cart_length = cart.reduce((total, entry) => total + entry.amount, 0);
   return (
     <Box>
       <CargoStatus />
@@ -43,10 +44,10 @@ export const CargoContent = (props, context) => {
             <>
               <Tabs.Tab
                 icon="shopping-cart"
-                textColor={tab !== 'cart' && cart.length > 0 && 'yellow'}
+                textColor={tab !== 'cart' && cart_length > 0 && 'yellow'}
                 selected={tab === 'cart'}
                 onClick={() => setTab('cart')}>
-                Checkout ({cart.length})
+                Checkout ({cart_length})
               </Tabs.Tab>
               <Tabs.Tab
                 icon="question"
@@ -268,6 +269,7 @@ export const CargoCatalog = (props, context) => {
                       onClick={() =>
                         act('add', {
                           id: pack.id,
+                          amount: 1,
                         })
                       }>
                       {formatMoney(
@@ -358,10 +360,10 @@ const CargoCartButtons = (props, context) => {
   const { act, data } = useBackend(context);
   const { requestonly, can_send, can_approve_requests } = data;
   const cart = data.cart || [];
-  const total = cart.reduce((total, entry) => total + entry.cost, 0);
-  if (requestonly || !can_send || !can_approve_requests) {
-    return null;
-  }
+  const total = cart.reduce(
+    (total, entry) => total + entry.cost * entry.amount,
+    0
+  );
   return (
     <>
       <Box inline mx={1}>
@@ -370,13 +372,46 @@ const CargoCartButtons = (props, context) => {
         {cart.length >= 2 && cart.length + ' items'}{' '}
         {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
-      <Button
-        icon="times"
-        color="transparent"
-        content="Clear"
-        onClick={() => act('clear')}
-      />
+      {(!(requestonly || !can_send || !can_approve_requests) && (
+        <Button
+          icon="times"
+          color="transparent"
+          content="Clear"
+          onClick={() => act('clear')}
+        />
+      )) ||
+        ''}
     </>
+  );
+};
+
+const CartHeader = (props, context) => {
+  const { data } = useBackend(context);
+  const { can_send } = data;
+  return (
+    <Section>
+      <Stack>
+        <Stack.Item mt="4px">Current-Cart</Stack.Item>
+        <Stack.Item ml="200px" mt="3px">
+          Quantity
+        </Stack.Item>
+        {(can_send && (
+          <Stack.Item ml="50px" mt="3px">
+            Add
+          </Stack.Item>
+        )) ||
+          ''}
+        {(can_send && (
+          <Stack.Item ml="50px" mt="3px">
+            Remove
+          </Stack.Item>
+        )) ||
+          ''}
+        <Stack.Item ml="100px">
+          <CargoCartButtons />
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
@@ -385,42 +420,54 @@ const CargoCart = (props, context) => {
   const { requestonly, away, docked, location, can_send } = data;
   const cart = data.cart || [];
   return (
-    <Section title="Current Cart" buttons={<CargoCartButtons />}>
+    <Section fill>
+      <CartHeader />
       {cart.length === 0 && <Box color="label">Nothing in cart</Box>}
       {cart.length > 0 && (
         <Table>
           {cart.map((entry) => (
             <Table.Row key={entry.id} className="candystripe">
-              <Table.Cell collapsing color="label">
-                #{entry.id}
+              <Table.Cell collapsing color="label" inline width="210px">
+                #{entry.id}&nbsp;{entry.object}
               </Table.Cell>
-              <Table.Cell>{entry.object}</Table.Cell>
-              <Table.Cell collapsing>
-                {!!entry.paid && <b>[Paid Privately]</b>}
+              <Table.Cell inline ml="65px" width="40px">
+                {(can_send && (
+                  <Input
+                    width="40px"
+                    value={entry.amount}
+                    onEnter={(e, value) =>
+                      act('modify', {
+                        order_name: entry.object,
+                        pack_id: entry.sid,
+                        amount: value,
+                      })
+                    }
+                  />
+                )) || <Input width="40px" value={entry.amount} disabled />}
               </Table.Cell>
-              {(entry.dep_order && (
-                <Table.Cell collapsing textAlign="right">
-                  {formatMoney(entry.cost)} cr earned on delivery
+              {(can_send && (
+                <Table.Cell inline ml="60px">
+                  <Button
+                    icon="plus"
+                    onClick={() => act('add', { id: entry.sid, amount: 1 })}
+                  />
                 </Table.Cell>
-              )) || (
-                <>
-                  <Table.Cell collapsing textAlign="right">
-                    {formatMoney(entry.cost)} cr
-                  </Table.Cell>
-                  <Table.Cell collapsing>
-                    {can_send && (
-                      <Button
-                        icon="minus"
-                        onClick={() =>
-                          act('remove', {
-                            id: entry.id,
-                          })
-                        }
-                      />
-                    )}
-                  </Table.Cell>
-                </>
-              )}
+              )) ||
+                ''}
+              {(can_send && (
+                <Table.Cell inline ml="50px">
+                  <Button
+                    icon="minus"
+                    onClick={() => act('remove', { id: entry.id })}
+                  />
+                </Table.Cell>
+              )) ||
+                ''}
+              <Table.Cell collapsing textAlign="right" inline ml="120px">
+                {!!entry.paid && <b>[Paid Privately]&nbsp;</b>}
+                {formatMoney(entry.cost * entry.amount)}&nbsp;cr
+                {entry.dep_order ? <b>&nbsp; earned on delivery</b> : ''}
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table>
