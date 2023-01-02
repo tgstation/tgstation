@@ -27,17 +27,11 @@ type Design = {
 const TilePreview = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { selected_icon, selected_direction } = data;
-  const rotation = (direction) => {
-    if (direction === 'north') {
-      return 'rotateZ(-180deg)';
-    } else if (direction === 'west') {
-      return 'rotateZ(90deg)';
-    } else if (direction === 'east') {
-      return 'rotateZ(-90deg)';
-    } else {
-      return '';
-    }
-  };
+  const ROTATION_MAP = {
+    north: 'rotateZ(-180deg)',
+    west: 'rotateZ(90deg)',
+    east: 'rotateZ(-90deg)',
+  } as const;
 
   return (
     <Section
@@ -50,7 +44,8 @@ const TilePreview = (props, context) => {
         className={classes(['rtd32x32', selected_icon])}
         style={{
           transform:
-            'scale(1.5) translate(9.5%, 9.5%) ' + rotation(selected_direction),
+            'scale(1.5) translate(9.5%, 9.5%) ' +
+            (ROTATION_MAP[selected_direction] || ''),
         }}
       />
     </Section>
