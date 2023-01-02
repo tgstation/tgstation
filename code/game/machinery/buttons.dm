@@ -370,7 +370,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 
 /obj/machinery/button/emergency_release/setup_device()
 	var/obj/item/assembly/control/tram/tram_device = device
-	tram_device.initial_id = id
 	tram_device.specific_lift_id = lift_id
 	return ..()
 
