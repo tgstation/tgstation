@@ -401,7 +401,7 @@ const CartHeader = (props, context) => {
           </Stack.Item>
         )) ||
           ''}
-        {(can_send && (
+        {(can_send && !!entry.can_be_cancelled && (
           <Stack.Item ml="50px" mt="3px">
             Remove
           </Stack.Item>
@@ -431,7 +431,7 @@ const CargoCart = (props, context) => {
                 #{entry.id}&nbsp;{entry.object}
               </Table.Cell>
               <Table.Cell inline ml="65px" width="40px">
-                {(can_send && (
+                {(can_send && !!entry.can_be_cancelled && (
                   <Input
                     width="40px"
                     value={entry.amount}
@@ -454,7 +454,7 @@ const CargoCart = (props, context) => {
                 </Table.Cell>
               )) ||
                 ''}
-              {(can_send && (
+              {(can_send && !!entry.can_be_cancelled && (
                 <Table.Cell inline ml="50px">
                   <Button
                     icon="minus"
