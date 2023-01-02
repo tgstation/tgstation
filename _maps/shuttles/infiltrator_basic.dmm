@@ -631,6 +631,12 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cv" = (
@@ -650,30 +656,48 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cz" = (
 /obj/machinery/power/shuttle_engine/propulsion/left,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cA" = (
 /obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cB" = (
 /obj/machinery/power/shuttle_engine/propulsion/right,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cE" = (
 /obj/machinery/power/shuttle_engine/propulsion/left,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cF" = (
 /obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cG" = (
 /obj/machinery/power/shuttle_engine/propulsion/right,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cT" = (
@@ -1187,6 +1211,11 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/engineering)
+"EP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/syndicate/engineering)
 "Fs" = (
 /obj/machinery/computer/station_alert{
 	dir = 8
@@ -1362,6 +1391,12 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/syndicate/eva)
+"Ry" = (
+/obj/machinery/computer/terminal/infiltrator{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/syndicate/engineering)
 "RO" = (
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/airlock)
@@ -1812,7 +1847,7 @@ ch
 tM
 cg
 bj
-cs
+Ry
 cy
 cE
 "}
@@ -1837,7 +1872,7 @@ HV
 bj
 bj
 bj
-fk
+EP
 cy
 cF
 "}
