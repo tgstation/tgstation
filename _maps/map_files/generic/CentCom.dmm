@@ -3745,7 +3745,7 @@
 "sj" = (
 /obj/docking_port/stationary{
 	dwidth = 1;
-	height = 4;
+	height = 5;
 	name = "recovery ship";
 	shuttle_id = "pod_4_away";
 	width = 3
@@ -8065,7 +8065,7 @@
 "Qt" = (
 /obj/docking_port/stationary{
 	dwidth = 1;
-	height = 4;
+	height = 5;
 	name = "recovery ship";
 	shuttle_id = "pod_3_away";
 	width = 3
@@ -9781,7 +9781,7 @@
 /obj/docking_port/stationary{
 	dir = 4;
 	dwidth = 1;
-	height = 4;
+	height = 5;
 	name = "recovery ship";
 	shuttle_id = "pod_2_away";
 	width = 3

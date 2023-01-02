@@ -72,10 +72,6 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
-/datum/armor/item_screwdriver
-	fire = 50
-	acid = 30
-
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_alien")
 
@@ -104,10 +100,6 @@
 	greyscale_config_belt = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
-
-/datum/armor/item_screwdriver
-	fire = 50
-	acid = 30
 
 /obj/item/screwdriver/power/Initialize(mapload)
 	. = ..()
@@ -156,10 +148,6 @@
 
 /obj/item/screwdriver/red
 	random_color = FALSE
-
-/datum/armor/item_screwdriver
-	fire = 50
-	acid = 30
 
 /obj/item/screwdriver/red/Initialize(mapload)
 	. = ..()

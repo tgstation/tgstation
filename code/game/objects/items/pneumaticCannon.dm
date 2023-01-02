@@ -311,10 +311,6 @@
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
-/datum/armor/item_pneumatic_cannon
-	fire = 60
-	acid = 50
-
 /obj/item/pneumatic_cannon/pie/Initialize(mapload)
 	. = ..()
 	allowed_typecache = pie_typecache

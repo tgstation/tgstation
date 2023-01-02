@@ -66,12 +66,6 @@
 	icon_state = "syndicrate_key"
 	w_class = WEIGHT_CLASS_TINY
 
-/datum/armor/crate_syndicrate
-	melee = 30
-	bullet = 50
-	laser = 50
-	energy = 100
-
 /obj/item/syndicrate_key/Initialize(mapload)
 	. = ..()
 	register_item_context()

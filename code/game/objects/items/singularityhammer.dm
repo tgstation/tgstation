@@ -88,14 +88,6 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 
-/datum/armor/item_singularityhammer
-	melee = 50
-	bullet = 50
-	laser = 50
-	bomb = 50
-	fire = 100
-	acid = 100
-
 /obj/item/mjollnir/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, \

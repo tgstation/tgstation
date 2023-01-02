@@ -20,7 +20,7 @@
 	/// Used by examine to report what this thing is holding.
 	var/contents_tag = "errors"
 	/// What type of thing to fill this storage with.
-	var/spawn_type = null
+	var/spawn_type
 	/// How many of the things to fill this storage with.
 	var/spawn_count = 0
 	/// Whether the container is open or not
@@ -39,7 +39,8 @@
 	if(!spawn_type)
 		return
 	for(var/i = 1 to spawn_count)
-		new spawn_type(src)
+		var/thing_in_box = pick(spawn_type)
+		new thing_in_box(src)
 
 /obj/item/storage/fancy/update_icon_state()
 	icon_state = "[base_icon_state][has_open_closed_states && is_open ? contents.len : null]"
@@ -461,12 +462,18 @@
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	contents_tag = "chocolate"
-	spawn_type = /obj/item/food/tinychocolate
+	spawn_type = list(
+		/obj/item/food/bonbon,
+		/obj/item/food/bonbon/chocolate_truffle,
+		/obj/item/food/bonbon/caramel_truffle,
+		/obj/item/food/bonbon/peanut_truffle,
+		/obj/item/food/bonbon/peanut_butter_cup,
+	)
 	spawn_count = 8
 
 /obj/item/storage/fancy/heart_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/tinychocolate))
+	atom_storage.set_holdable(list(/obj/item/food/bonbon))
 
 
 /obj/item/storage/fancy/nugget_box
