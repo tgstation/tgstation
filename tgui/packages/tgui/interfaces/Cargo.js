@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 
 export const Cargo = (props, context) => {
   return (
-    <Window width={920} height={750}>
+    <Window width={800} height={750}>
       <Window.Content scrollable>
         <CargoContent />
       </Window.Content>
@@ -391,7 +391,7 @@ const CartHeader = (props, context) => {
         <Stack.Item ml="200px" mt="3px">
           Quantity
         </Stack.Item>
-        <Stack.Item ml="75px">
+        <Stack.Item ml="72px">
           <CargoCartButtons />
         </Stack.Item>
       </Stack>
@@ -429,7 +429,7 @@ const CargoCart = (props, context) => {
                 )) || <Input width="40px" value={entry.amount} disabled />}
               </Table.Cell>
               {(can_send && (
-                <Table.Cell inline ml="10px" width="10px">
+                <Table.Cell inline ml="5px" width="10px">
                   {(entry.can_be_cancelled && (
                     <Button
                       icon="plus"
