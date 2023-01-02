@@ -216,7 +216,6 @@
 	. = ..()
 	if(flag)
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!ScientistCheck(user))
 		return .
 	if(!console)
