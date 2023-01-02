@@ -384,7 +384,6 @@ const CargoCartButtons = (props, context) => {
 
 const CartHeader = (props, context) => {
   const { data } = useBackend(context);
-  const { can_send } = data;
   return (
     <Section>
       <Stack>
@@ -392,19 +391,7 @@ const CartHeader = (props, context) => {
         <Stack.Item ml="200px" mt="3px">
           Quantity
         </Stack.Item>
-        {(can_send && (
-          <Stack.Item ml="50px" mt="3px">
-            Add
-          </Stack.Item>
-        )) ||
-          ''}
-        {(can_send && (
-          <Stack.Item ml="50px" mt="3px">
-            Remove
-          </Stack.Item>
-        )) ||
-          ''}
-        <Stack.Item ml="20px">
+        <Stack.Item ml="75px">
           <CargoCartButtons />
         </Stack.Item>
       </Stack>
@@ -442,7 +429,7 @@ const CargoCart = (props, context) => {
                 )) || <Input width="40px" value={entry.amount} disabled />}
               </Table.Cell>
               {(can_send && (
-                <Table.Cell inline ml="60px" width="30px">
+                <Table.Cell inline ml="10px" width="10px">
                   {(entry.can_be_cancelled && (
                     <Button
                       icon="plus"
@@ -456,7 +443,7 @@ const CargoCart = (props, context) => {
               )) ||
                 ''}
               {(can_send && (
-                <Table.Cell inline ml="50px" width="40px">
+                <Table.Cell inline ml="15px" width="10px">
                   {(entry.can_be_cancelled && (
                     <Button
                       icon="minus"
@@ -469,11 +456,12 @@ const CargoCart = (props, context) => {
                 </Table.Cell>
               )) ||
                 ''}
-              <Table.Cell collapsing textAlign="right" inline ml="28px">
+              <Table.Cell collapsing textAlign="right" inline ml="50px">
                 {entry.paid > 0 && <b>[Paid Privately x {entry.paid}]</b>}
                 {formatMoney(entry.cost)} {entry.cost_type}
                 {entry.dep_order > 0 && <b>[Department x {entry.dep_order}]</b>}
               </Table.Cell>
+              <Table.Cell inline mt="20px" />
             </Table.Row>
           ))}
         </Table>
