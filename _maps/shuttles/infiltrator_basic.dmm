@@ -254,7 +254,7 @@
 /area/shuttle/syndicate/airlock)
 "bd" = (
 /obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/shuttle/syndicate/airlock)
 "be" = (
 /obj/machinery/suit_storage_unit/syndicate,
@@ -1837,7 +1837,7 @@ aa
 aa
 bO
 aB
-aB
+aS
 aY
 bd
 aB
