@@ -634,4 +634,4 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 #FORBID_ADMIN_PROFILING
 
 ## Link to a HTTP server that's been set up on a server. Docker-compose file can be found in tools/tts
-TTS_HTTP_URL http://localhost:5002
+#TTS_HTTP_URL http://localhost:5002
