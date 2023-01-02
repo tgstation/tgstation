@@ -36,16 +36,6 @@
 	equip_delay_other = 20
 	species_exception = null
 
-/datum/armor/pirate_armored
-	melee = 30
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 60
-	acid = 75
-
 /obj/item/clothing/suit/costume/pirate/captain
 	name = "pirate captain coat"
 	desc = "Yarr."
@@ -57,16 +47,6 @@
 	strip_delay = 40
 	equip_delay_other = 20
 	species_exception = null
-
-/datum/armor/pirate_armored
-	melee = 30
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 60
-	acid = 75
 
 /obj/item/clothing/suit/costume/cyborg_suit
 	name = "cyborg suit"
@@ -496,14 +476,6 @@
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
 	icon_state = "clockwork_cuirass_old"
 	armor_type = /datum/armor/costume_bronze
-
-/datum/armor/costume_bronze
-	melee = 5
-	laser = -5
-	energy = -15
-	bomb = 10
-	fire = 20
-	acid = 20
 
 /obj/item/clothing/suit/hooded/mysticrobe
 	name = "mystic's robe"

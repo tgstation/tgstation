@@ -30,7 +30,7 @@
 	if(isopenspaceturf(rift_spawn_turf))
 		owner.balloon_alert(dragon, "needs stable ground!")
 		return
-	owner.balloon_alert(owner, "You begin to open a rift...")
+	owner.balloon_alert(owner, "opening rift...")
 	if(!do_after(owner, 10 SECONDS, target = owner))
 		return
 	if(locate(/obj/structure/carp_rift) in owner.loc)
