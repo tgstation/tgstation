@@ -28,7 +28,7 @@
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
-/obj/item/food/grown/banana/MakeEdible()
+/obj/item/food/grown/banana/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 

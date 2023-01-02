@@ -55,9 +55,7 @@
 /code/modules/autowiki/ @Mothblocks
 /code/modules/unit_tests/ @Mothblocks
 /code/modules/client/preferences/ @Mothblocks
-/code/modules/preferences.dm @Mothblocks
-/code/modules/preferences_menu.dm @Mothblocks
-/code/modules/preferences_savefile.dm @Mothblocks
+/code/modules/client/preferences_menu.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
 /tools/pull_request_hooks/ @Mothblocks
 /tools/screenshot-test-comparison/ @Mothblocks
@@ -175,8 +173,6 @@
 
 /code/datums/json_savefile.dm @ZephyrTFA
 /code/datums/armor/ @ZephyrTFA
-/code/modules/client/preferences.dm @ZephyrTFA
-/code/modules/client/preferences_savefile.dm @ZephyrTFA
 
 # MULTIPLE OWNERS
 
@@ -187,6 +183,8 @@
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
+/code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
+/code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll

@@ -335,7 +335,7 @@
 
 /obj/machinery/door/airlock/external/Initialize(mapload, ...)
 	// default setting is for mapping only, let overrides work
-	if(!mapload || req_access_txt || req_one_access_txt)
+	if(!mapload)
 		req_access = null
 
 	return ..()

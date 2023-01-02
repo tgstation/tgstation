@@ -289,15 +289,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	temp_limit = 1e12
 	pressure_limit = 1e14
 
-/datum/armor/portable_atmospherics_canister
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 100
-	bomb = 10
-	fire = 80
-	acid = 50
-
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
 	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/tritium)
 	air_contents.gases[/datum/gas/hydrogen][MOLES] = 300
@@ -310,15 +301,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	desc = "A mixture of N2O and Oxygen"
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9fba6c#3d4680"
-
-/datum/armor/portable_atmospherics_canister
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 100
-	bomb = 10
-	fire = 80
-	acid = 50
 
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix/create_gas()
 	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
@@ -370,15 +352,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
  * Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
  * Used for canisters spawned in maps and by admins
  */
-/datum/armor/portable_atmospherics_canister
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 100
-	bomb = 10
-	fire = 80
-	acid = 50
-
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(!gas_type)
 		return

@@ -132,6 +132,7 @@
 				break
 
 		cart_list[SO.pack.name] = list(list(
+			"cost_type" = SO.cost_type,
 			"object" = SO.pack.name,
 			"cost" = SO.pack.get_cost(),
 			"id" = SO.id,
@@ -139,7 +140,8 @@
 			"amount" = 1,
 			"orderer" = SO.orderer,
 			"paid" = !isnull(SO.paying_account), //paid by requester
-			"dep_order" = SO.department_destination ? TRUE : FALSE
+			"dep_order" = !!SO.department_destination,
+			"can_be_cancelled" = SO.can_be_cancelled,
 		))
 	data["cart"] = list()
 	for(var/item_id in cart_list)
@@ -365,8 +367,8 @@
 			return TRUE
 		if("clear")
 			for(var/datum/supply_order/cancelled_order in SSshuttle.shopping_list)
-				if(cancelled_order.department_destination)
-					continue //don't cancel other department's orders
+				if(cancelled_order.department_destination || cancelled_order.can_be_cancelled)
+					continue //don't cancel other department's orders or orders that can't be cancelled
 				SSshuttle.shopping_list -= cancelled_order
 			. = TRUE
 		if("approve")

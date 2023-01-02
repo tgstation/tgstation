@@ -572,15 +572,6 @@
 	icon_state = "LZ_Slider"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 
-/datum/armor/closet_supplypod
-	melee = 30
-	bullet = 50
-	laser = 50
-	energy = 100
-	bomb = 100
-	fire = 100
-	acid = 80
-
 /obj/effect/pod_landingzone_effect/Initialize(mapload, obj/structure/closet/supplypod/pod)
 	. = ..()
 	if(!pod)

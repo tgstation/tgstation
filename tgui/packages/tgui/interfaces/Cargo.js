@@ -465,7 +465,7 @@ const CargoCart = (props, context) => {
                 ''}
               <Table.Cell collapsing textAlign="right" inline ml="120px">
                 {!!entry.paid && <b>[Paid Privately]&nbsp;</b>}
-                {formatMoney(entry.cost * entry.amount)}&nbsp;cr
+                {formatMoney(entry.cost * entry.amount)} {entry.cost_type} cr
                 {entry.dep_order ? <b>&nbsp; earned on delivery</b> : ''}
               </Table.Cell>
             </Table.Row>
