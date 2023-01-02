@@ -3,12 +3,12 @@
 /obj/structure/sign/departments/xenobio/alt/directional/north,
 /obj/structure/alien/weeds,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "aw" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "be" = (
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
@@ -17,7 +17,7 @@
 	name = "Xenobiology Blast Door"
 	},
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "bA" = (
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
@@ -25,7 +25,7 @@
 	name = "Containment Control"
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "cz" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph,
 /turf/closed/indestructible/reinforced{
@@ -33,40 +33,40 @@
 	base_icon_state = "resin_wall";
 	icon_state = "resin_wall-0"
 	},
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dg" = (
 /obj/structure/alien/weeds,
 /obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dr" = (
 /obj/item/bodypart/head/monkey,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dC" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dJ" = (
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
 /obj/item/storage/box/monkeycubes,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dM" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
 	name = "Containment Pen"
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dS" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg,
 /obj/structure/alien/egg,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "eS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -77,32 +77,32 @@
 /obj/machinery/disposal/bin,
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "eU" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood/xgibs,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "fi" = (
 /obj/structure/alien/weeds,
 /obj/structure/statue/plasma/xeno,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "fj" = (
 /obj/structure/sign/departments/xenobio/alt/directional/south,
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/decoration,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "fu" = (
 /obj/item/bodypart/leg/right/monkey,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "gk" = (
 /obj/structure/sign/departments/xenobio,
 /turf/closed/indestructible/resin,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "gq" = (
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
@@ -115,17 +115,17 @@
 	pixel_y = 4
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "hf" = (
 /obj/structure/alien/weeds,
 /obj/item/stack/sheet/iron,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "hB" = (
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "jj" = (
 /obj/structure/sign/xenobio_guide/directional/east,
 /obj/structure/alien/weeds,
@@ -133,24 +133,24 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "kc" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "kp" = (
 /obj/structure/bed/nest,
 /obj/item/bodypart/chest/monkey,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "ku" = (
 /obj/effect/turf_decal/bot,
 /turf/closed/indestructible/resin/membrane,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "kT" = (
 /obj/item/organ/internal/body_egg/alien_embryo,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "lh" = (
 /obj/structure/sign/departments/xenobio/alt/directional/south,
 /obj/structure/alien/weeds,
@@ -164,7 +164,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "ly" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -176,7 +176,7 @@
 	name = "Xenobiology Blast Door"
 	},
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "lD" = (
 /obj/structure/alien/weeds,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
@@ -185,7 +185,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "lR" = (
 /obj/structure/sign/departments/xenobio/alt/directional/north,
 /obj/structure/disposaloutlet{
@@ -195,16 +195,16 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "mp" = (
 /obj/structure/alien/weeds/node,
 /obj/machinery/shower/directional/west,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "my" = (
 /obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "nE" = (
 /obj/structure/sign/departments/xenobio/alt/directional/north,
 /obj/structure/disposaloutlet{
@@ -214,27 +214,27 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "oh" = (
 /obj/structure/alien/weeds,
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "oR" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "pu" = (
 /mob/living/simple_animal/slime/random,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "qU" = (
 /obj/structure/sign/xenobio_guide/directional/west,
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood/xgibs/down,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "rU" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/north{
@@ -248,51 +248,51 @@
 	name = "Xenobiology Blast Door"
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "sb" = (
 /obj/structure/alien/weeds,
 /obj/structure/chair/office/light{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "tO" = (
 /turf/open/space/basic,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "tU" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood/xgibs/limb,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "tX" = (
 /obj/structure/alien/weeds,
 /obj/structure/chair/office/light{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "uH" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "uW" = (
 /obj/structure/sign/departments/xenobio/alt/directional/south,
 /obj/structure/alien/weeds,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "vo" = (
 /obj/structure/alien/weeds,
 /obj/item/stack/sheet/animalhide/xeno,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "wZ" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs/larva,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "zy" = (
 /obj/structure/alien/weeds,
 /turf/closed/indestructible/fakeglass,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "zZ" = (
 /obj/structure/window/reinforced/fulltile/damaged,
 /obj/effect/particle_effect/water/extinguisher/stomach_acid,
@@ -301,7 +301,7 @@
 	name = "Xenobiology Blast Door"
 	},
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ax" = (
 /obj/structure/alien/weeds,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
@@ -311,12 +311,12 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "AC" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "AI" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/north{
@@ -330,17 +330,17 @@
 	name = "Xenobiology Blast Door"
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "AU" = (
 /obj/structure/alien/weeds,
 /obj/structure/statue/plasma/scientist,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Bd" = (
 /obj/structure/alien/weeds,
 /obj/item/organ/internal/body_egg/alien_embryo,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Cv" = (
 /obj/structure/hoop{
 	dir = 4;
@@ -348,20 +348,20 @@
 	},
 /obj/structure/alien/weeds/node,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Cw" = (
 /turf/closed/indestructible/resin/membrane,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "CD" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood/xgibs/core,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "CV" = (
 /obj/structure/alien/weeds,
 /obj/structure/door_assembly/door_assembly_research,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Dt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -372,7 +372,7 @@
 /obj/machinery/disposal/bin,
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "DP" = (
 /obj/structure/hoop{
 	dir = 8;
@@ -380,42 +380,46 @@
 	},
 /obj/structure/alien/weeds/node,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Gh" = (
 /obj/structure/alien/egg/burst,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Gi" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
 	name = "Containment Pen"
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Hu" = (
 /turf/closed/indestructible/riveted,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ic" = (
 /obj/structure/sign/xenobio_guide/directional/east,
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "IA" = (
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "JM" = (
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
+"Le" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/engine,
+/area/centcom/basketball)
 "Lu" = (
 /turf/closed/indestructible/resin,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "LI" = (
 /obj/item/bodypart/arm/right/monkey,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "LS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -424,18 +428,18 @@
 	name = "Xenobiology Blast Door"
 	},
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "LU" = (
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "LV" = (
 /obj/structure/alien/weeds,
 /obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "MS" = (
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup,
 /obj/structure/alien/weeds,
@@ -445,7 +449,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Nt" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -461,20 +465,24 @@
 	dir = 9
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Oj" = (
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "OB" = (
 /obj/structure/chair/office/light{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
+"OS" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/engine,
+/area/centcom/basketball)
 "PU" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "PW" = (
 /obj/structure/window/reinforced/fulltile/damaged,
 /obj/machinery/door/poddoor/preopen{
@@ -482,7 +490,7 @@
 	name = "Xenobiology Blast Door"
 	},
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Qh" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -498,16 +506,16 @@
 	dir = 5
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Qi" = (
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
 /turf/closed/indestructible/resin,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ql" = (
 /obj/structure/alien/weeds,
 /obj/structure/sink/directional/west,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Rl" = (
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup{
 	pixel_x = 0
@@ -516,26 +524,26 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Se" = (
 /obj/machinery/computer/camera_advanced/xenobio,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Tc" = (
 /obj/machinery/monkey_recycler,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ul" = (
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Uq" = (
 /obj/machinery/processor/slime,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Uv" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs/torso,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Uy" = (
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
 /obj/structure/alien/weeds,
@@ -545,56 +553,56 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Vr" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "WB" = (
 /obj/structure/sign/xenobio_guide/directional/west,
 /obj/structure/alien/weeds,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "WK" = (
 /obj/machinery/door/poddoor{
 	id = "xenobio_maint_fore";
 	name = "Xenobiology Blast Door"
 	},
 /turf/closed/indestructible/fakeglass,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "WM" = (
 /turf/closed/indestructible/reinforced{
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi';
 	base_icon_state = "resin_wall";
 	icon_state = "resin_wall-0"
 	},
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Xm" = (
 /obj/structure/bed/nest,
 /obj/effect/mob_spawn/corpse/human/monkey,
 /obj/effect/mob_spawn/corpse/facehugger,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Xo" = (
 /obj/structure/alien/weeds,
 /obj/machinery/shower/directional/west,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "YH" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
 /turf/open/floor/iron/white,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "YX" = (
 /obj/item/toy/basketball,
 /obj/structure/bed/nest,
 /obj/structure/alien/weeds,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "ZM" = (
 /obj/item/toy/plush/slimeplushie,
 /turf/open/floor/engine,
-/area/centcom/mafia)
+/area/centcom/basketball)
 
 (1,1,1) = {"
 Hu
@@ -756,11 +764,11 @@ PU
 kc
 Vr
 Cw
-Oj
+OS
 uH
 uH
 uH
-Oj
+OS
 Cw
 Vr
 Vr
@@ -782,9 +790,9 @@ Vr
 Vr
 Cw
 Oj
-Oj
-Oj
-Oj
+OS
+OS
+OS
 Oj
 Cw
 Vr
@@ -982,9 +990,9 @@ Vr
 Vr
 Cw
 Oj
-Oj
-Oj
-Oj
+Le
+Le
+Le
 Oj
 Cw
 Vr
@@ -1006,11 +1014,11 @@ PU
 Bd
 kc
 Cw
-Oj
+Le
 uH
 uH
 uH
-Oj
+Le
 Cw
 Vr
 Vr

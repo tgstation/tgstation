@@ -8145,6 +8145,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"QS" = (
+/obj/effect/landmark/basketball/game_area,
+/turf/open/space/basic,
+/area/space)
 "QU" = (
 /obj/structure/table/wood,
 /obj/item/phone{
@@ -35061,7 +35065,7 @@ aa
 aa
 aa
 aa
-aa
+QS
 aa
 aa
 aa

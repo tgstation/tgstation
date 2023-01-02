@@ -2,7 +2,7 @@
 "at" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "aw" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
@@ -15,7 +15,7 @@
 	dir = 4
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "be" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -25,17 +25,17 @@
 	},
 /obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "bA" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/deck,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "cz" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/coin,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dg" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -45,11 +45,11 @@
 	},
 /obj/effect/turf_decal/trimline/red/filled/arrow_cw,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dr" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dC" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -59,7 +59,7 @@
 	},
 /obj/effect/turf_decal/trimline/red/filled/shrink_cw,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dJ" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -72,13 +72,13 @@
 	dir = 1
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dM" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dS" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/trimline/blue/warning,
@@ -86,20 +86,20 @@
 	dir = 1
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "eS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "eU" = (
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "fi" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21";
@@ -107,24 +107,24 @@
 	pixel_y = 3
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "fj" = (
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "fu" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "gk" = (
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "gq" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/trimline/red/warning,
@@ -132,26 +132,26 @@
 	dir = 1
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "hf" = (
 /obj/effect/spawner/random/structure/billboard/roadsigns,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "hB" = (
 /obj/structure/table/wood,
 /obj/item/storage/dice,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "jj" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "kc" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "kp" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
@@ -161,7 +161,7 @@
 	dir = 5
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "ku" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -171,7 +171,7 @@
 	dir = 5
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "kT" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -180,14 +180,14 @@
 	dir = 8
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "lh" = (
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "ly" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "lD" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
@@ -197,7 +197,7 @@
 	dir = 6
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "lR" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -207,7 +207,7 @@
 	},
 /obj/effect/turf_decal/trimline/dark_green/filled/warning,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "mp" = (
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
@@ -216,33 +216,34 @@
 	dir = 4
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "my" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "nE" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "oh" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning,
+/obj/effect/landmark/basketball/team_spawn/away,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "oR" = (
 /obj/effect/turf_decal/tile/dark_green/half/contrasted,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "pu" = (
 /obj/structure/chair/plastic,
 /turf/open/floor/carpet/red,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "qU" = (
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 4
@@ -251,7 +252,7 @@
 	dir = 8
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "rU" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -260,7 +261,7 @@
 	dir = 4
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "sb" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -268,18 +269,18 @@
 	dir = 6
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "tO" = (
 /turf/open/space/basic,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "tU" = (
 /obj/structure/chair/plastic,
 /obj/item/toy/foamfinger,
 /turf/open/floor/carpet/blue,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "tX" = (
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "uH" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/trimline/red/warning,
@@ -287,7 +288,7 @@
 	dir = 1
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "uW" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/trimline/blue/warning,
@@ -295,7 +296,7 @@
 	dir = 1
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "vo" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
@@ -308,12 +309,12 @@
 	dir = 4
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "wZ" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/bottle/whiskey,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "zy" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/line{
@@ -321,33 +322,33 @@
 	},
 /obj/effect/turf_decal/trimline/blue/corner,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "zZ" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/money_medium,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ax" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "AC" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "AI" = (
 /obj/machinery/status_display,
 /turf/closed/indestructible/fakeglass,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "AU" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Bd" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
@@ -359,7 +360,7 @@
 	dir = 4
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Cv" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -372,19 +373,19 @@
 	name = "A La Penners"
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Cw" = (
 /turf/closed/indestructible/fakeglass,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "CD" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/decoration,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "CV" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Dt" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -393,7 +394,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "DP" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
@@ -406,17 +407,17 @@
 	name = "Hopping Jezzertons"
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ev" = (
 /mob/living/simple_animal/robot_customer,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Gh" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Gi" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -425,10 +426,10 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Hu" = (
 /turf/closed/indestructible/riveted,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "HH" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -438,7 +439,7 @@
 	dir = 9
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ic" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -447,8 +448,9 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 1
 	},
+/obj/effect/landmark/basketball/team_spawn/home,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "IA" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -460,13 +462,13 @@
 	dir = 1
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "JM" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "KH" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/trimline/dark_green/warning,
@@ -474,33 +476,34 @@
 	dir = 1
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Lu" = (
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "LI" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "LS" = (
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "LU" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning,
+/obj/effect/landmark/basketball/team_spawn/home,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "LV" = (
 /obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ma" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -509,13 +512,14 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
+/obj/effect/landmark/basketball/team_spawn/away,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "MS" = (
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup,
 /obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Nt" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -524,7 +528,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Oj" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
@@ -534,7 +538,7 @@
 	dir = 9
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Om" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -549,21 +553,21 @@
 	dir = 2
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "OB" = (
 /obj/structure/chair/plastic,
 /turf/open/floor/carpet/blue,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "PU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "PW" = (
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Qa" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -573,7 +577,7 @@
 	},
 /obj/effect/turf_decal/trimline/blue/filled/shrink_ccw,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Qh" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -582,7 +586,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Qi" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
@@ -594,41 +598,42 @@
 	dir = 8
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ql" = (
 /obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Rl" = (
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup{
 	pixel_x = 0
 	},
 /obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Se" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/fireplace,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Tc" = (
 /obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "TV" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 4
 	},
+/obj/effect/landmark/basketball/team_spawn/home,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ul" = (
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Uq" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Uv" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -636,22 +641,22 @@
 	dir = 10
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Uy" = (
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
 /obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Vr" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "WB" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "WK" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes/cigars/havana,
@@ -660,22 +665,22 @@
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "WM" = (
 /turf/closed/indestructible/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Xm" = (
 /obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
 	dir = 1
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Xn" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Xo" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
@@ -685,25 +690,26 @@
 	dir = 10
 	},
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "YH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
 	},
+/obj/effect/landmark/basketball/team_spawn/away,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "YX" = (
 /obj/item/toy/basketball,
 /obj/effect/turf_decal/trimline/dark_green,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/noslip,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "ZM" = (
 /obj/structure/chair/plastic,
 /obj/item/toy/foamfinger,
 /turf/open/floor/carpet/red,
-/area/centcom/mafia)
+/area/centcom/basketball)
 
 (1,1,1) = {"
 Hu

@@ -7,14 +7,14 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "aw" = (
 /obj/machinery/power/smes,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "bA" = (
 /obj/structure/chair/stool/directional/south,
 /obj/structure/cable,
@@ -22,37 +22,37 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dg" = (
 /obj/structure/lattice,
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "dC" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "fj" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/structure/lattice,
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "fu" = (
 /turf/closed/indestructible/fakeglass,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "ku" = (
 /obj/structure/grille/indestructible,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "lD" = (
 /obj/structure/grille/indestructible,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "oR" = (
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "rU" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup{
@@ -62,7 +62,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "sb" = (
 /obj/machinery/power/solar_control{
 	dir = 1;
@@ -74,17 +74,17 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "tO" = (
 /turf/open/space/basic,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "uH" = (
 /turf/open/floor/iron/solarpanel,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "vo" = (
 /obj/structure/lattice/catwalk,
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "zZ" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
@@ -92,7 +92,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Cv" = (
 /obj/structure/hoop{
 	dir = 4;
@@ -100,14 +100,14 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Cw" = (
 /obj/structure/sign/warning/electric_shock,
 /turf/closed/indestructible/fakeglass,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Dt" = (
 /turf/closed/indestructible/fakedoor/glass_airlock,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "DP" = (
 /obj/structure/hoop{
 	dir = 8;
@@ -115,31 +115,36 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Gh" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Hu" = (
 /turf/closed/indestructible/riveted,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Lu" = (
 /turf/closed/indestructible/reinforced,
-/area/centcom/mafia)
+/area/centcom/basketball)
+"Lx" = (
+/obj/structure/lattice,
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/fakespace,
+/area/centcom/basketball)
 "LV" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/olive,
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Nt" = (
 /turf/closed/indestructible/grille,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Oj" = (
 /obj/structure/lattice,
 /obj/structure/marker_beacon/olive,
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "OB" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -149,43 +154,48 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ql" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Rl" = (
 /obj/structure/cable,
 /obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Se" = (
 /turf/closed/indestructible/fakedoor/engineering,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Tc" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Ul" = (
 /turf/open/floor/fakespace,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "Uv" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
+"UT" = (
+/obj/structure/lattice,
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/fakespace,
+/area/centcom/basketball)
 "Vr" = (
 /obj/machinery/power/solar/fake,
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel,
-/area/centcom/mafia)
+/area/centcom/basketball)
 "YX" = (
 /obj/item/toy/basketball,
 /obj/structure/marker_beacon/yellow,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/centcom/basketball)
 
 (1,1,1) = {"
 Hu
@@ -347,11 +357,11 @@ Ul
 Ul
 Ul
 ku
-dg
+Lx
 vo
 vo
 vo
-dg
+Lx
 ku
 Ul
 Ul
@@ -373,9 +383,9 @@ Ul
 Ul
 ku
 Ul
-dg
-dg
-dg
+Lx
+Lx
+Lx
 Ul
 ku
 Vr
@@ -573,9 +583,9 @@ Ul
 Ul
 ku
 Ul
-dg
-dg
-dg
+UT
+UT
+UT
 Ul
 ku
 Vr
@@ -597,11 +607,11 @@ Ul
 Ul
 Ul
 ku
-dg
+UT
 vo
 vo
 vo
-dg
+UT
 ku
 Ul
 Ul
