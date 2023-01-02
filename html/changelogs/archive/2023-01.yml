@@ -19,3 +19,43 @@
   - bugfix: Fixes missing hop ticket incremement button at icebox
   san7890:
   - bugfix: There is no longer a floating camera on RuntimeStation
+2023-01-02:
+  FernandoJ8:
+  - bugfix: Stranger Reagent can no longer be a componet in Metalgen
+  Fikou:
+  - qol: examining armor tags now shows you the wound armor value
+  Gorock:
+  - qol: Improved Chem Dispenser Reagent Search
+  Helg2:
+  - bugfix: smoke spell becomes robeless
+  Improvedname:
+  - bugfix: fixes cummerbunds holding 7 items instead of 3(as fannypacks do)
+  Jacquerel:
+  - rscadd: You can now bake croissants to add to your breakfast.
+  - rscadd: Traitorous chefs can bake dangerous throwing croissants, Mimes can do
+      this and gain the additional benefit of a deadly combat baguette.
+  JohnFulpWillard:
+  - bugfix: Researching now checks the techweb it's linked to for node availability,
+      rather than only the Science one.
+  - imageadd: Nukie tablets are now using PDA sprites w/ GAGS instead of tablets.
+  Melbert:
+  - bugfix: Secrets menu Summon Guns / Summon Magic work again.
+  ShizCalev:
+  - bugfix: Dual sabers will no longer get covered in blood when attacking someone.
+  Tattle:
+  - bugfix: projectile hits on mobs are logged globally
+  ZephyrTFA:
+  - bugfix: You can inspect armor again
+  san7890:
+  - bugfix: Those with kitchen access should now once again be the only one who are
+      allowed to vending-machine-restock individual snacking items via their trusty
+      tray.
+  vincentiusvin:
+  - code_imp: rescaled supermatter health from 900 to 100.
+  - balance: we didn't do a 1:1 rescale of the damage though, atmos based damage should
+      be slightly higher across the board but have lower caps. All external damage
+      is slightly lower.
+  - code_imp: made the less important parts of the visual supermatter effects same
+      between different delams so we have an easier time changing the code.
+  - qol: added a delta symbol to the SM UI on damage and energy breakdown to denote
+      that they are actually changes instead of exact values.

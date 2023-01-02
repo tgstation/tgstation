@@ -39,9 +39,9 @@
 
 	src.check_access(null)
 
-	if(req_access.len || req_one_access.len)
+	if(length(req_access) || length(req_one_access))
 		board = new(src)
-		if(req_access.len)
+		if(length(req_access))
 			board.accesses = req_access
 		else
 			board.one_access = 1

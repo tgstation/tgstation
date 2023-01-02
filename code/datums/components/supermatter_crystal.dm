@@ -43,7 +43,7 @@
 	if(!blob || isspaceturf(atom_source)) //does nothing in space
 		return
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
-	consume_returns(damage_increase = blob.get_integrity() * 0.5)
+	consume_returns(damage_increase = blob.get_integrity() * 0.05)
 	if(blob.get_integrity() > 100)
 		blob.visible_message(span_danger("\The [blob] strikes at \the [atom_source] and flinches away!"),
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
@@ -247,7 +247,7 @@
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
-			damage_increase += rand(-300, 300) // HONK
+			damage_increase += rand(-30, 30) // HONK
 		consume_returns(matter_increase, damage_increase)
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
