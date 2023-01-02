@@ -171,17 +171,7 @@
 	name = "mobroach"
 	desc = "WE'RE FUCKED, THAT GLOCKROACH HAS A TOMMYGUN!"
 	icon_state = "mobroach"
-	melee_damage_lower = 2.5
-	melee_damage_upper = 10
-	obj_damage = 10
-	gold_core_spawnable = HOSTILE_SPAWN
-	faction = list("hostile", FACTION_MAINT_CREATURES)
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach/mobroach
-
-/mob/living/basic/cockroach/glockroach/Initialize(mapload)
-	 . = ..()
-	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
-
 /datum/ai_controller/basic_controller/cockroach/glockroach/mobroach
 	planning_subtrees = list(
     	/datum/ai_planning_subtree/pet_planning,
