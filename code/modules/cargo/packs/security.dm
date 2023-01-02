@@ -23,7 +23,7 @@
 	cost = CARGO_CRATE_VALUE * 60
 	contains = list(
 		/obj/item/gun/energy/lasercannon,
-		/obj/item/gun/energy/laser/scatter
+		/obj/item/gun/energy/laser/scatter,
 	)
 	crate_name = "specialist laser crate"	
 
