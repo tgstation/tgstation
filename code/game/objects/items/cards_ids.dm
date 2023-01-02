@@ -46,6 +46,7 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "card_grey"
 	inhand_icon_state = "card-id"
+	worn_icon_state = "nothing"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
