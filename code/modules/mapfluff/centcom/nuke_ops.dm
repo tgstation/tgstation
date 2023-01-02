@@ -52,6 +52,7 @@
 	upperinfo = "YOU ARE RUNNING SYNDIX ON REVISION #31410. REPORT ANY BUGS PROMPTLY." // References the (/tg/station) PR plastitanium smoothing was added!
 	content = list(
 		"<b>C:/Users/ADMIN/Desktop/'Chords, Read Me.txt'</b><br> \
+		<br> \
 		Chords, I'm sorry about our last night out. I know you didn't like what you saw, and I know I dissapointed you, \
 		greatly, when I acted the way I did - did what I did. I'm sorry, Chords, I can't hammer that home enough. \
 		I've spent days now trying to think of something to say, trying to think of some way to fix things, and I... \
