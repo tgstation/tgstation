@@ -294,7 +294,8 @@
 	return ..()
 
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..() | AFTERATTACK_PROCESSED_ITEM
+	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(target.reagents)
 		if(!user.transferItemToLoc(src, target))
 			return .

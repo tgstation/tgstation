@@ -68,7 +68,8 @@
 	balloon_alert(user, "switch [scanning ? "on" : "off"]")
 
 /obj/item/geiger_counter/afterattack(atom/target, mob/living/user, params)
-	. = ..() | AFTERATTACK_PROCESSED_ITEM
+	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 
 	if (user.combat_mode)
 		return

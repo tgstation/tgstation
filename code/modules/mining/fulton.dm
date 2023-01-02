@@ -33,7 +33,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, span_notice("You link the extraction pack to the beacon system."))
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
-	. = ..() | AFTERATTACK_PROCESSED_ITEM
+	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!beacon)
 		to_chat(user, span_warning("[src] is not linked to a beacon, and cannot be used!"))
 		return

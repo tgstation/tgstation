@@ -100,7 +100,8 @@
 	to_chat(user, span_notice("You [blink_activated ? "enable" : "disable"] the blink function on [src]."))
 
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..() | AFTERATTACK_PROCESSED_ITEM
+	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	// If our target is the beacon and the hierostaff is next to the beacon, we're trying to pick it up.
 	if((target == beacon) && target.Adjacent(src))
 		return
@@ -1090,7 +1091,8 @@
 	user.log_message("has dispelled a storm at [AREACOORD(user_turf)].", LOG_GAME)
 
 /obj/item/storm_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..() | AFTERATTACK_PROCESSED_ITEM
+	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!thunder_charges)
 		balloon_alert(user, "needs to charge!")
 		return
