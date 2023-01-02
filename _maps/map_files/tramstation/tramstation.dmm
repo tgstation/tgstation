@@ -8425,7 +8425,7 @@
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/sofa/bench/tram/right,
+/obj/structure/chair/sofa/bench/right/cyan,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "dac" = (
@@ -13477,7 +13477,7 @@
 "ePF" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
-/obj/structure/chair/sofa/bench/tram/right,
+/obj/structure/chair/sofa/bench/right/cyan,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "ePZ" = (
@@ -35741,7 +35741,7 @@
 "mQW" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
-/obj/structure/chair/sofa/bench/tram/left,
+/obj/structure/chair/sofa/bench/left/cyan,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "mRd" = (
@@ -39948,7 +39948,7 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/sofa/bench/tram/right{
+/obj/structure/chair/sofa/bench/right/cyan{
 	dir = 1
 	},
 /turf/open/openspace,
@@ -42205,7 +42205,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/chair/sofa/bench/tram/right{
+/obj/structure/chair/sofa/bench/right/cyan{
 	dir = 1
 	},
 /turf/open/openspace,
@@ -49068,7 +49068,7 @@
 "rEn" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/sofa/bench/tram/left,
+/obj/structure/chair/sofa/bench/left/cyan,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "rEu" = (
@@ -59315,7 +59315,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/chair/sofa/bench/tram/left{
+/obj/structure/chair/sofa/bench/left/cyan{
 	dir = 1
 	},
 /turf/open/openspace,

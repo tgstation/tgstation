@@ -13,6 +13,20 @@ path/corner/color_name {\
 	color = sofa_color; \
 }
 
+#define COLORED_BENCH(path, color_name, sofa_color) \
+path/color_name {\
+	greyscale_colors = sofa_color; \
+} \
+path/right/color_name {\
+	greyscale_colors = sofa_color; \
+} \
+path/left/color_name {\
+	greyscale_colors = sofa_color; \
+} \
+path/corner/color_name {\
+	greyscale_colors = sofa_color; \
+}
+
 /obj/structure/chair/sofa
 	name = "old ratty sofa"
 	icon_state = "error"
@@ -117,6 +131,9 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	greyscale_config = /datum/greyscale_config/bench_corner
 	greyscale_colors = "#af7d28"
 
+COLORED_BENCH(/obj/structure/chair/sofa/bench, cyan, CIRCUIT_COLOR_MEDICAL) // Same exact color these were originally, just switched to using an existing color define for it.
+COLORED_BENCH(/obj/structure/chair/sofa/bench, maroon, SOFA_MAROON)
+
 // Bamboo benches
 /obj/structure/chair/sofa/bamboo
 	name = "bamboo bench"
@@ -134,3 +151,5 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	icon_state = "bamboo_sofaend_right"
 
 #undef COLORED_SOFA
+
+#undef COLORED_BENCH
