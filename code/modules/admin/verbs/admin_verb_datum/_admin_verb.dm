@@ -36,8 +36,7 @@ GENERAL_PROTECT_DATUM(/mob/admin_verb_holder)
 /mob/admin_verb_holder/New(loc, verb_datum)
 	flags_1 |= INITIALIZED_1
 	holder = verb_datum
-	var/verb_ref = PROC_REF(_wrap)
-	new verb_ref(src, holder.verb_name, holder.verb_desc)
+	new /mob/admin_verb_holder/proc/_wrap(src, holder.verb_name, holder.verb_desc)
 
 /mob/admin_verb_holder/proc/_wrap()
 	// We use group to act as a list of clients allowed to access this verb
