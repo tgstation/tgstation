@@ -199,9 +199,18 @@
 	plane = GAME_PLANE
 	layer = SIGIL_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune
+	/// We only set this state after setting the colour, otherwise the animation doesn't colour correctly
+	var/animation_state = "transmutation_rune_draw"
 
-/obj/effect/temp_visual/drawing_heretic_rune/Initialize(mapload, path_colour)
+/obj/effect/temp_visual/drawing_heretic_rune/Initialize(mapload, path_colour = COLOR_WHITE)
 	. = ..()
-	if (path_colour)
-		set_greyscale(colors = list(path_colour))
-		icon_state = "transmutation_rune_draw"
+	set_greyscale(colors = list(path_colour))
+	icon_state = animation_state
+
+/obj/effect/temp_visual/drawing_heretic_rune/fast
+	duration = 12 SECONDS
+	animation_state = "transmutation_rune_fast"
+
+/obj/effect/temp_visual/drawing_heretic_rune/fail
+	duration = 0.25 SECONDS
+	animation_state = "transmutation_rune_fail"
