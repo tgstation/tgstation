@@ -401,7 +401,7 @@ const CartHeader = (props, context) => {
           </Stack.Item>
         )) ||
           ''}
-        {(can_send && !!entry.can_be_cancelled && (
+        {(can_send && (
           <Stack.Item ml="50px" mt="3px">
             Remove
           </Stack.Item>
@@ -431,7 +431,7 @@ const CargoCart = (props, context) => {
                 #{entry.id}&nbsp;{entry.object}
               </Table.Cell>
               <Table.Cell inline ml="65px" width="40px">
-                {(can_send && !!entry.can_be_cancelled && (
+                {(can_send && entry.can_be_cancelled && (
                   <Input
                     width="40px"
                     value={entry.amount}
@@ -446,26 +446,32 @@ const CargoCart = (props, context) => {
                 )) || <Input width="40px" value={entry.amount} disabled />}
               </Table.Cell>
               {(can_send && (
-                <Table.Cell inline ml="60px">
-                  <Button
-                    icon="plus"
-                    onClick={() => act('add', { id: entry.sid, amount: 1 })}
-                  />
+                <Table.Cell inline ml="60px" width="30px">
+                  {(entry.can_be_cancelled && (
+                    <Button
+                      icon="plus"
+                      onClick={() => act('add', { id: entry.sid, amount: 1 })}
+                    />
+                  )) ||
+                    ''}
                 </Table.Cell>
               )) ||
                 ''}
-              {(can_send && !!entry.can_be_cancelled && (
-                <Table.Cell inline ml="50px">
-                  <Button
-                    icon="minus"
-                    onClick={() => act('remove', { id: entry.id })}
-                  />
+              {(can_send && (
+                <Table.Cell inline ml="50px" width="30px">
+                  {(entry.can_be_cancelled && (
+                    <Button
+                      icon="minus"
+                      onClick={() => act('remove', { id: entry.id })}
+                    />
+                  )) ||
+                    ''}
                 </Table.Cell>
               )) ||
                 ''}
               <Table.Cell collapsing textAlign="right" inline ml="120px">
                 {!!entry.paid && <b>[Paid Privately]&nbsp;</b>}
-                {formatMoney(entry.cost * entry.amount)} {entry.cost_type} cr
+                {formatMoney(entry.cost * entry.amount)} {entry.cost_type}
                 {entry.dep_order ? <b>&nbsp; earned on delivery</b> : ''}
               </Table.Cell>
             </Table.Row>
