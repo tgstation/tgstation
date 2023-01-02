@@ -530,6 +530,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
 /turf/open/floor/catwalk_floor/titanium,
 /area/centcom/syndicate_mothership/control)
+"gr" = (
+/obj/item/toy/plush/carpplushie{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/item/toy/figure/syndie{
+	pixel_y = -2;
+	pixel_x = 11
+	},
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/floor/fakespace,
+/area/centcom/syndicate_mothership/control)
 "gs" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/mineral/titanium,
@@ -1256,7 +1268,9 @@
 /area/centcom/syndicate_mothership)
 "nD" = (
 /obj/effect/turf_decal/stripes/full,
-/turf/open/floor/mineral/titanium/yellow,
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing,
+/turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "nL" = (
 /obj/structure/chair/office/light{
@@ -2437,6 +2451,10 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
+"AQ" = (
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/floor/fakespace,
+/area/centcom/syndicate_mothership/control)
 "AR" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/indestructible/syndicate,
@@ -2563,6 +2581,8 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "Cm" = (
@@ -3458,6 +3478,8 @@
 	dir = 4
 	},
 /obj/machinery/mech_bay_recharge_port,
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "Ns" = (
@@ -4481,6 +4503,13 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
+"YK" = (
+/obj/effect/decal/cleanable/generic,
+/obj/effect/decal/cleanable/glass,
+/obj/item/toy/nuke,
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/floor/fakespace,
+/area/centcom/syndicate_mothership/control)
 "YO" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
@@ -10126,7 +10155,7 @@ Xj
 iV
 ov
 Cg
-DZ
+AQ
 Ox
 Ox
 Ox
@@ -10228,7 +10257,7 @@ LB
 iV
 ov
 Nr
-DZ
+gr
 Ox
 sq
 sq
@@ -10330,7 +10359,7 @@ tu
 iV
 ov
 nD
-DZ
+YK
 Ox
 Ox
 Ox

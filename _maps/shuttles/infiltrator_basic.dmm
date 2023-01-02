@@ -298,17 +298,6 @@
 "bn" = (
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/engineering)
-"bo" = (
-/obj/item/toy/plush/carpplushie{
-	pixel_x = 6;
-	pixel_y = 9
-	},
-/obj/item/toy/figure/syndie{
-	pixel_y = -2;
-	pixel_x = 11
-	},
-/turf/open/floor/fakespace,
-/area/shuttle/syndicate/hallway)
 "bq" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/beaker/large{
@@ -453,7 +442,7 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/syndicate/medical)
 "bD" = (
-/turf/open/floor/fakespace,
+/turf/open/floor/plating/elevatorshaft,
 /area/shuttle/syndicate/hallway)
 "bJ" = (
 /obj/machinery/nuclearbomb/syndicate{
@@ -600,12 +589,6 @@
 	dir = 1
 	},
 /area/shuttle/syndicate/eva)
-"cl" = (
-/obj/effect/decal/cleanable/generic,
-/obj/effect/decal/cleanable/glass,
-/obj/item/toy/nuke,
-/turf/open/floor/fakespace,
-/area/shuttle/syndicate/hallway)
 "cp" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
@@ -614,6 +597,12 @@
 "cr" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -636,14 +625,20 @@
 /area/shuttle/syndicate/medical)
 "cv" = (
 /obj/machinery/power/shuttle_engine/propulsion/left,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cw" = (
 /obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cx" = (
 /obj/machinery/power/shuttle_engine/propulsion/right,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cy" = (
@@ -1672,7 +1667,7 @@ sX
 Qb
 SE
 bJ
-bo
+bD
 cr
 cw
 aa
@@ -1697,7 +1692,7 @@ hT
 Qb
 Oa
 bV
-cl
+bD
 cr
 cx
 aa
