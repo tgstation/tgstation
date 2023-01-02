@@ -531,7 +531,7 @@
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_croissant/MakeBakeable()
+/obj/item/food/raw_croissant/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/croissant, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/food/croissant
