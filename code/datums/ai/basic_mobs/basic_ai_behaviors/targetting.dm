@@ -7,14 +7,20 @@
 
 /datum/ai_behavior/find_potential_targets/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
-	var/list/potential_targets
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
 	if(!targetting_datum)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
-	potential_targets = hearers(vision_range, controller.pawn) - living_mob //Remove self, so we don't suicide
+	var/datum/weakref/weak_target = controller.blackboard[target_key]
+	var/atom/current_target = weak_target?.resolve()
+	if (targetting_datum.can_attack(living_mob, current_target))
+		finish_action(controller, succeeded = TRUE)
+		return
+
+	controller.blackboard[target_key] = null
+	var/list/potential_targets = hearers(vision_range, controller.pawn) - living_mob //Remove self, so we don't suicide
 
 	for(var/HM in typecache_filter_list(range(vision_range, living_mob), hostile_machines)) //Can we see any hostile machines?
 		if(can_see(living_mob, HM, vision_range))
