@@ -367,7 +367,6 @@
 	if(!check_tray(chems, mytray))
 		return
 
-
 	mytray.adjust_toxic(-(round(chems.get_reagent_amount(type) * 2)*normalise_creation_purity())) //0-2.66, 2 by default (0.75 purity).
 
 #define issyrinormusc(A) (istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
