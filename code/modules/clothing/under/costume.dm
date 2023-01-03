@@ -346,4 +346,3 @@
 	icon_state = "tmc_jumpsuit"
 	inhand_icon_state = null
 	can_adjust = FALSE
-

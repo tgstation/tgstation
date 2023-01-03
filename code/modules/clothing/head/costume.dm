@@ -202,3 +202,8 @@
 	It's only a replica, and probably wouldn't protect you from anything."
 	icon_state = "allies_helmet"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/Maid_Syndie_Headband
+	name = "'Tactical' Maid headband"
+	desc = "Hey! This is just a normal Maid headband dyed Red! You feel like you've been scammed."
+	icon_state = "syndieheadband"

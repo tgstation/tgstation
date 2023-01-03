@@ -245,3 +245,8 @@
 	name = "red nightcap"
 	desc = "A red nightcap for all the sleepyheads and dozers out there."
 	icon_state = "sleep_red"
+
+/obj/item/clothing/head/costume/syndieheadband
+	name = "Tactical maid headband"
+	desc = "Tacticute."
+	icon_state = "syndieheadband"

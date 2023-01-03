@@ -99,3 +99,18 @@
 	icon_state = "scrubswine"
 	can_adjust = FALSE
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 40)
+
+/obj/item/clothing/under/syndicate/syndimaid
+	name = "'Tactical maid outfit"
+	desc = "A 'tactical' turtleneck fashioned to the likeness of a maid outfit. Why the Syndicate has these, you'll never know."
+	icon_state = "syndimaid"
+	has_sensor = HAS_SENSORS
+	can_adjust = FALSE
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
+
+/obj/item/clothing/under/syndicate/syndimaid_Fake
+	name = "'Tactical' maid outfit?"
+	desc = "A 'tactical' turtleneck fashioned to the likeness of a maid outfit. Tailored by a assistant out to mock fallen syndicate agents whose bomb have failed to explode. You have a feeling these aren't very protective..."
+	icon_state = "syndimaid"
+	has_sensor = HAS_SENSORS
+	can_adjust = FALSE

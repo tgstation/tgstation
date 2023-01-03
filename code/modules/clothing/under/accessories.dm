@@ -482,3 +482,9 @@
 	name = "deaf personnel pin"
 	desc = "Indicates that the wearer is deaf."
 	icon_state = "deaf_pin"
+
+
+/obj/item/clothing/accessory/maidapronsynd
+	name = "Really 'Tactical' Maid Apron"
+	desc = "Useful? Not really. Cute? Definitively is. It is the only known item confirmed found related to 'Tactical' maid outfit tales... to be replicated to ages"
+	icon_state = "maidapronsynd"

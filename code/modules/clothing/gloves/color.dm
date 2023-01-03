@@ -278,3 +278,10 @@
 	icon_state = "maid_arms"
 	inhand_icon_state = null
 	greyscale_colors = null
+
+/obj/item/clothing/gloves/syndimaid_arms_fake
+	name = "''Combat'' maid sleeves"
+	desc = "That's some ''Combat'' maid sleeves. These ''tactical'' gloves and sleeves while looking nice, seems to be made with the cheapest materials maintenance could provide. You have a feeling these aren't very protective..."
+	icon_state = "syndimaid_arms"
+	inhand_icon_state = null
+	greyscale_colors = null

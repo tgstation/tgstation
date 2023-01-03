@@ -586,6 +586,17 @@
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
 
+/obj/item/storage/box/syndie_kit/SyndieKit_MaidSet
+	name = "'Tactical' Maid Set."
+
+/obj/item/storage/box/syndie_kit/SyndieKit_MaidSet/PopulateContents()
+	new /obj/item/clothing/under/syndicate/syndimaid(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/gloves/syndimaid_arms(src)
+	new /obj/item/clothing/head/costume/Maid_Syndie_Headband(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/clothing/accessory/maidapronsynd(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY

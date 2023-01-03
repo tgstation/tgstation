@@ -78,3 +78,12 @@
 	purchasable_from = ALL
 	progression_minimum = 110 MINUTES
 	item = /obj/item/storage/box/syndie_kit/centcom_costume
+
+/datum/uplink_item/badass/costumes/SyndieKit_MaidSet
+	name = "'Tactical' Maid Set"
+	desc = "Get yourself a replica of the legendary 'Maid Syndicate Agents' outfit. \
+			It does not come with the skill and grace of the former legendary agents."
+	purchasable_from = ALL
+	progression_minimum = 110 MINUTES
+	cost = 2
+	item = /obj/item/storage/box/syndie_kit/SyndieKit_MaidSet
