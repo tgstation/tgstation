@@ -611,6 +611,7 @@
 		"rpd_loaded",
 		"sheetifier",
 		"weldingmask",
+		"bolter_wrench",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
 	discount_experiments = list(

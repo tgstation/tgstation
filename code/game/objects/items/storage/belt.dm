@@ -149,7 +149,7 @@
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver, src)
-	SSwardrobe.provide_type(/obj/item/wrench, src)
+	SSwardrobe.provide_type(/obj/item/wrench/bolter, src)
 	SSwardrobe.provide_type(/obj/item/weldingtool/largetank, src)
 	SSwardrobe.provide_type(/obj/item/crowbar, src)
 	SSwardrobe.provide_type(/obj/item/wirecutters, src)
@@ -159,7 +159,7 @@
 /obj/item/storage/belt/utility/full/engi/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/screwdriver
-	to_preload += /obj/item/wrench
+	to_preload += /obj/item/wrench/bolter
 	to_preload += /obj/item/weldingtool/largetank
 	to_preload += /obj/item/crowbar
 	to_preload += /obj/item/wirecutters
