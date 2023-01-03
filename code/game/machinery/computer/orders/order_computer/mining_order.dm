@@ -13,7 +13,7 @@
 	cooldown_time = 10 SECONDS //just time to let you know your order went through.
 	express_cost_multiplier = 1
 	purchase_tooltip = @{"Your purchases will arrive at cargo,
-    and hopefully get delivered by them.
+	and hopefully get delivered by them.
 	35% cheaper than express delivery."}
 	express_tooltip = @{"Sends your purchases instantly."}
 

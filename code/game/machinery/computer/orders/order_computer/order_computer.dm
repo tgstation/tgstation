@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	but locks the console longer and increases the price!"}
 	///Tooltip for the purchase button in TGUI
 	var/purchase_tooltip = @{"Your purchases will arrive at cargo,
-    and hopefully get delivered by them."}
+	and hopefully get delivered by them."}
 
 	///Cooldown between order uses.
 	COOLDOWN_DECLARE(order_cooldown)
