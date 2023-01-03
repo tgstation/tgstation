@@ -42,7 +42,6 @@
 		return
 
 	target_animal.lazarus_revive(user, malfunctioning)
-	target_animal.revive(HEAL_ALL)
 	loaded = FALSE
 	user.visible_message(span_notice("[user] injects [target_animal] with [src], reviving it."))
 	SSblackbox.record_feedback("tally", "lazarus_injector", 1, target_animal.type)
