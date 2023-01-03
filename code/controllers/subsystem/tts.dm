@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(tts)
 	rustg_file_write(json_encode(available_speakers), "data/cached_tts_voices.json")
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, sound, datum/language/language)
+/datum/controller/subsystem/tts/proc/play_tts(target, sound, datum/language/language, text_url = null, source = FALSE, asset_md5_cache = null)
 
 	var/turf/turf_source = get_turf(target)
 
@@ -116,20 +116,28 @@ SUBSYSTEM_DEF(tts)
 
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
-		if(get_dist(listening_mob, turf_source) <= SOUND_RANGE && listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts) && holder.has_language(language, spoken = FALSE))
-			listening_mob.playsound_local(
-				turf_source,
-				sound,
-				vol = listening_mob == target? 60 : 85,
-				falloff_exponent = SOUND_FALLOFF_EXPONENT,
-				channel = channel,
-				pressure_affected = TRUE,
-				sound_to_use = sound,
-				max_distance = SOUND_RANGE,
-				falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE,
-				distance_multiplier = 1,
-				use_reverb = TRUE
-			)
+		if(!istype(SSassets.transport, /datum/asset_transport/webroot) && asset_md5_cache) // set up a CDN
+			SSassets.transport.send_assets(listening_mob, list(asset_md5_cache))
+		if(!listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts_use_html_audio)) // If they're using HTML audio, that subsystem handles hearing it.
+			if(get_dist(listening_mob, turf_source) <= SOUND_RANGE && listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts) && holder.has_language(language, spoken = FALSE))
+				listening_mob.playsound_local(
+					turf_source,
+					sound,
+					vol = listening_mob == target? 60 : 85,
+					falloff_exponent = SOUND_FALLOFF_EXPONENT,
+					channel = channel,
+					pressure_affected = TRUE,
+					sound_to_use = sound,
+					max_distance = SOUND_RANGE,
+					falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE,
+					distance_multiplier = 1,
+					use_reverb = TRUE
+				)
+
+	if(source) // Since we're the source, we'll need to register if we haven't already and send the sound.
+		if(!SShtml_audio.channel_assignment.Find(target))
+			SShtml_audio.register_player(target, TRUE) // we require LOS for speakers on TTS
+		SShtml_audio.play_audio(target, text_url)
 
 /datum/controller/subsystem/tts/proc/handle_request(list/entry)
 	var/time_left = entry[TIMEOUT_INDEX]
@@ -176,11 +184,24 @@ SUBSYSTEM_DEF(tts)
 		if(response.errored)
 			cached_voices -= current_message[IDENTIFIER_INDEX]
 			continue
+		var/asset_md5_cache
 		var/identifier = current_message[IDENTIFIER_INDEX]
-		var/sound/new_sound = new("tmp/tts/[copytext(identifier, 1, 3)]/[identifier].ogg")
-		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX])
+		var/sound/new_sound = new("tmp/tts/[copytext(identifier, 1, 3)]/[identifier].mp3")
+		var/filepath_md5 = md5filepath("tmp/tts/[copytext(identifier, 1, 3)]/[identifier]")
+		var/datum/asset_transport/AS = SSassets.transport
+		var/asset_md5 = "[filepath_md5].mp3"
+		var/datum/asset_cache_item/ACI = new(asset_md5, "tmp/tts/[copytext(identifier, 1, 3)]/[identifier].mp3")
+		ACI.namespace = "text_to_speech"
+		if(istype(AS, /datum/asset_transport/webroot))
+			var/datum/asset_transport/webroot/WR = AS
+			WR.save_asset_to_webroot(ACI)
+		else
+			AS.register_asset(asset_md5, ACI)
+			asset_md5_cache = asset_md5
+		var/current_text_url = AS.get_asset_url(null, ACI) // TODO: cache this shit
+		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX], current_text_url, TRUE, asset_md5_cache)
 		for(var/atom/movable/target in current_message[EXTRA_TARGETS_INDEX])
-			play_tts(target, new_sound, current_message[LANGUAGE_INDEX])
+			play_tts(target, new_sound, current_message[LANGUAGE_INDEX], current_text_url, TRUE, asset_md5_cache)
 		cached_voices -= identifier
 		var/time_taken = (message_timeout - (current_message[TIMEOUT_INDEX] - world.time)) / 10
 		rtf = time_taken / estimate_word_processing_length(current_message[MESSAGE_INDEX], 1)
@@ -206,9 +227,14 @@ SUBSYSTEM_DEF(tts)
 		return
 	else if(fexists("tmp/tts/[copytext(identifier, 1, 3)]/[identifier].ogg"))
 		var/sound/new_sound = new("tmp/tts/[copytext(identifier, 1, 3)]/[identifier].ogg")
-		play_tts(target, new_sound, language)
+		var/filepath_md5 = md5filepath("tmp/tts/[copytext(identifier, 1, 3)]/[identifier]")
+		var/datum/asset_transport/AS = SSassets.transport
+		var/asset_md5 = "[filepath_md5].mp3"
+		var/datum/asset_cache_item/ACI = new(asset_md5, "tmp/tts/[copytext(identifier, 1, 3)]/[identifier].mp3")
+		ACI.namespace = "text_to_speech"
+		var/current_text_url = AS.get_asset_url(null, ACI) // since we've already uploaded this one we can just pull the URL down after calcing the md5 and shit
+		play_tts(target, new_sound, language, current_text_url, TRUE, asset_md5)
 		return
-
 	if(!(speaker in available_speakers))
 		return
 	speaker = tts_alphanumeric_filter(speaker)

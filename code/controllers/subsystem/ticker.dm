@@ -284,6 +284,8 @@ SUBSYSTEM_DEF(ticker)
 
 	PostSetup()
 
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ROUND_STARTED)
+
 	return TRUE
 
 /datum/controller/subsystem/ticker/proc/PostSetup()

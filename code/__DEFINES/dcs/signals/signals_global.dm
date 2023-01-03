@@ -74,3 +74,6 @@
 #define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
 /// Global Signal sent when the crew wins the revolution (No arguments).
 #define COMSIG_GLOB_REVOLUTION_VICTORY "!revolution_victory"
+
+/// Global signal sent when the round officially starts(everyone's in their mob, we're sending the "welcome to the station crew" audio, etc.)
+#define COMSIG_GLOB_ROUND_STARTED "!round_just_started"

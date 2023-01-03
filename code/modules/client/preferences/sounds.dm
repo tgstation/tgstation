@@ -28,6 +28,12 @@
 	savefile_key = "sound_instruments"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/toggle/sound_tts_use_html_audio
+	savefile_identifier = PREFERENCE_PLAYER
+	savefile_key = "sound_tts_use_html_audio"
+	default_value = TRUE // We default this to on as it's the more performant option.
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+
 /datum/preference/toggle/sound_tts
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_tts"
