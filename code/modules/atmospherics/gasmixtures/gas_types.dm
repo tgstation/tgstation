@@ -255,7 +255,7 @@
 
 /datum/gas/halon
 	id = "halon"
-	specific_heat = 500
+	specific_heat = 175
 	name = "Halon"
 	dangerous = TRUE
 	gas_overlay = "halon"
