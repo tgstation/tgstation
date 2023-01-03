@@ -38,7 +38,6 @@
 	SIGNAL_HANDLER
 
 	var/atom/atom_parent = parent
-	atom_parent.balloon_alert_to_viewers("check_connection")
 
 	var/turf/turf_loc = atom_parent.loc
 	if (!isturf(turf_loc))
@@ -79,7 +78,6 @@
 
 	var/atom/atom_parent = parent
 	ADD_TRAIT(atom_parent, TRAIT_CONNECTED_TO_SINGULARITY_CONSOLE, "[type]")
-	atom_parent.maptext = MAPTEXT("O")
 
 /datum/component/connects_to_singularity_console/proc/connect_cable(obj/structure/cable/our_cable)
 	if (!IS_WEAKREF_OF(our_cable, last_cable_ref) || !IS_WEAKREF_OF(our_cable.powernet, last_powernet_ref))
@@ -94,12 +92,11 @@
 
 /datum/component/connects_to_singularity_console/proc/disconnect_computer()
 	var/obj/machinery/computer/singularity/current_connected_computer = current_connected_computer_ref?.resolve()
-	current_connected_computer?.connected_machines -= src
+	current_connected_computer?.connected_machines -= parent
 	current_connected_computer_ref = null
 
 	var/atom/atom_parent = parent
 	REMOVE_TRAIT(atom_parent, TRAIT_CONNECTED_TO_SINGULARITY_CONSOLE, "[type]")
-	atom_parent.maptext = MAPTEXT("X")
 
 /datum/component/connects_to_singularity_console/proc/disconnect_cable()
 	var/obj/structure/cable/last_cable = last_cable_ref?.resolve()
