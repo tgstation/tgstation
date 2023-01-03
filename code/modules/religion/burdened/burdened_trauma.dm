@@ -139,6 +139,12 @@
 /datum/brain_trauma/special/burdened/proc/is_burdensome_to_lose_organ(mob/burdened, obj/item/organ/old_organ, special)
 	if(special) //aheals
 		return
+	if(!ishuman(burdened))
+		return //mobs that don't care about organs
+	var/mob/living/carbon/human/burdened_human = burdened
+	var/datum/species/burdened_species = burdened_human.dna?.species
+	if(!burdened_species)
+		return
 
 	/// only organs that are slotted in these count. because there's a lot of useless organs to cheese with.
 	var/list/critical_slots = list(
@@ -151,15 +157,16 @@
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
 	)
-	var/list/bad_traits = list(
-		TRAIT_NOHUNGER = ORGAN_SLOT_STOMACH,
-		TRAIT_NOBREATH = ORGAN_SLOT_LUNGS,
-		TRAIT_NOMETABOLISM = ORGAN_SLOT_LIVER,
-		TRAIT_NOBLOOD = ORGAN_SLOT_HEART,
-	)
-	for(var/bad_trait in bad_traits)
-		if(HAS_TRAIT(burdened, bad_trait))
-			critical_slots -= bad_traits[bad_trait]
+	if(!burdened_species.mutantheart)
+		critical_slots -= ORGAN_SLOT_HEART
+	if(!burdened_species.mutanttongue)
+		critical_slots -= ORGAN_SLOT_TONGUE
+	if(!burdened_species.mutantlungs)
+		critical_slots -= ORGAN_SLOT_LUNGS
+	if(!burdened_species.mutantstomach)
+		critical_slots -= ORGAN_SLOT_STOMACH
+	if(!burdened_species.mutantliver)
+		critical_slots -= ORGAN_SLOT_LIVER
 
 	if(!(old_organ.slot in critical_slots))
 		return FALSE

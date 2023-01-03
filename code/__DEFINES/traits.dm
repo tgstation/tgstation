@@ -214,9 +214,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents plasmamen from self-igniting if only their helmet is missing
 #define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
-///This carbon doesn't get hungry, has no stomach or appendix
+///This carbon doesn't get hungry
 #define TRAIT_NOHUNGER "no_hunger"
-///This carbon doesn't bleed, has no heart
+///This carbon doesn't bleed
 #define TRAIT_NOBLOOD "noblood"
 #define TRAIT_NOMETABOLISM "no_metabolism"
 #define TRAIT_NOCLONELOSS "no_cloneloss"

@@ -33,6 +33,9 @@
 	mutanttongue = /obj/item/organ/internal/tongue/bone
 	mutantstomach = /obj/item/organ/internal/stomach/bone
 	mutantappendix = null
+	mutantheart = null
+	mutantliver = null
+	mutantlungs = null
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW | GORE
 	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)

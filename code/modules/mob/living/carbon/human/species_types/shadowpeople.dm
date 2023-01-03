@@ -19,6 +19,8 @@
 
 	mutantbrain = /obj/item/organ/internal/brain/shadow
 	mutanteyes = /obj/item/organ/internal/eyes/night_vision/shadow
+	mutantheart = null
+	mutantlungs = null
 
 	species_language_holder = /datum/language_holder/shadowpeople
 

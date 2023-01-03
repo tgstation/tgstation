@@ -23,6 +23,7 @@
 	mutantliver = /obj/item/organ/internal/liver/plasmaman
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
 	mutantappendix = null
+	mutantheart = null
 	burnmod = 1.5
 	heatmod = 1.5
 	brutemod = 1.5

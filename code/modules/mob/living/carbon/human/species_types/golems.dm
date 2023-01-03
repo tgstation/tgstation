@@ -21,6 +21,8 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_NOBLOOD,
 	)
+	mutantheart = null
+	mutantlungs = null
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
 	speedmod = 2
