@@ -16,13 +16,14 @@
 			var/damage_desc = part.damage_examines[damage_type]
 			if(!seen_damage[damage_type])
 				seen_damage[damage_type] = list()
-			var/list/type_description_list = seen_damage[damage_type]
-			if(!type_description_list[damage_desc])
-				type_description_list[damage_desc] = 1
+
+			if(!seen_damage[damage_type][damage_desc])
+				seen_damage[damage_type][damage_desc] = 1
 			else
-				type_description_list[damage_desc] += 1
-			if(type_description_list[damage_desc] > most_seen_damage[damage_type])
-				most_seen_damage[damage_type] = type_description_list[damage_desc]
+				seen_damage[damage_type][damage_desc] += 1
+
+			if(seen_damage[damage_type][damage_desc] > most_seen_damage[damage_type])
+				most_seen_damage[damage_type] = seen_damage[damage_type][damage_desc]
 				final_descriptions[damage_type] = damage_desc
 	return final_descriptions
 
