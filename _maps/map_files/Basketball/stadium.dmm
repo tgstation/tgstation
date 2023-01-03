@@ -271,7 +271,7 @@
 /turf/open/floor/noslip,
 /area/centcom/basketball)
 "tO" = (
-/turf/open/space/basic,
+/turf/closed/indestructible,
 /area/centcom/basketball)
 "tU" = (
 /obj/structure/chair/plastic,
@@ -625,9 +625,6 @@
 /obj/effect/landmark/basketball/team_spawn/home,
 /turf/open/floor/noslip,
 /area/centcom/basketball)
-"Ul" = (
-/turf/open/floor/fakespace,
-/area/centcom/basketball)
 "Uq" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
@@ -763,7 +760,7 @@ Hu
 Hu
 tO
 tO
-Ul
+tO
 tO
 WM
 fi
@@ -788,7 +785,7 @@ Hu
 Hu
 tO
 tO
-Ul
+tO
 tO
 WM
 tX
@@ -811,7 +808,7 @@ Hu
 "}
 (5,1,1) = {"
 Hu
-Ul
+tO
 WM
 WM
 WM
@@ -836,7 +833,7 @@ Hu
 "}
 (6,1,1) = {"
 Hu
-Ul
+tO
 WM
 dr
 PU
@@ -861,7 +858,7 @@ Hu
 "}
 (7,1,1) = {"
 Hu
-Ul
+tO
 WM
 ly
 pu

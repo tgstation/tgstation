@@ -274,7 +274,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "tO" = (
-/turf/open/space/basic,
+/turf/closed/indestructible,
 /area/centcom/basketball)
 "tU" = (
 /obj/structure/closet/firecloset,
@@ -591,9 +591,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/centcom/basketball)
-"Ul" = (
-/turf/open/floor/fakespace,
-/area/centcom/basketball)
 "Uq" = (
 /obj/structure/closet/crate/cardboard,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -747,7 +744,7 @@ Hu
 Hu
 tO
 tO
-Ul
+tO
 tO
 CV
 dJ
@@ -772,7 +769,7 @@ Hu
 Hu
 tO
 tO
-Ul
+tO
 tO
 CV
 Qh
@@ -795,7 +792,7 @@ Hu
 "}
 (5,1,1) = {"
 Hu
-Ul
+tO
 CV
 CV
 CV
@@ -820,7 +817,7 @@ Hu
 "}
 (6,1,1) = {"
 Hu
-Ul
+tO
 CV
 Dt
 PU
@@ -845,7 +842,7 @@ Hu
 "}
 (7,1,1) = {"
 Hu
-Ul
+tO
 CV
 Qh
 AI
