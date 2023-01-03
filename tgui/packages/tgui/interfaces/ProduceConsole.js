@@ -94,7 +94,13 @@ const ShoppingTab = (props, context) => {
 
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const { purchase_tooltip, express_tooltip, forced_express, order_datums, total_cost } = data;
+  const {
+    purchase_tooltip,
+    express_tooltip,
+    forced_express,
+    order_datums,
+    total_cost,
+  } = data;
   const checkout_list = order_datums.filter((food) => food && (food.amt || 0));
   return (
     <Stack vertical fill>
@@ -160,7 +166,7 @@ const CheckoutTab = (props, context) => {
                   fluid
                   icon="plane-departure"
                   content="Purchase"
-				  tooltip={purchase_tooltip}
+                  tooltip={purchase_tooltip}
                   tooltipPosition="top"
                   onClick={() => act('purchase')}
                 />
