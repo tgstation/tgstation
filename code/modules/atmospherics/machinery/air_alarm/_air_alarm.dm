@@ -12,7 +12,7 @@
 	armor_type = /datum/armor/machinery_airalarm
 	resistance_flags = FIRE_PROOF
 
-	/// Current alert level, found in code/__DEFINES/atmospherics/atmos_machinery.dm
+	/// Current alert level of our air alarm.
 	/// [AIR_ALARM_ALERT_NONE], [AIR_ALARM_ALERT_MINOR], [AIR_ALARM_ALERT_SEVERE]
 	var/danger_level = AIR_ALARM_ALERT_NONE
 
@@ -390,15 +390,13 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		set_light(0)
 		return
 
-	var/area/our_area = get_area(src)
 	var/color
-	switch(max(danger_level, !!our_area.active_alarms[ALARM_ATMOS]))
-		if(0)
-			color = "#03A728" // green
-		if(1)
-			color = "#EC8B2F" // yellow
-		if(2)
-			color = "#DA0205" // red
+	if(danger_level == AIR_ALARM_ALERT_HAZARD)
+		color = "#DA0205" // red
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
+		color = "#EC8B2F" // yellow
+	else
+		color = "#03A728" // green
 
 	set_light(1.4, 1, color)
 
@@ -422,15 +420,13 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if(panel_open || (machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
-	var/area/our_area = get_area(src)
 	var/state
-	switch(max(danger_level, !!our_area.active_alarms[ALARM_ATMOS]))
-		if(0)
-			state = "alarm0"
-		if(1)
-			state = "alarm2" //yes, alarm2 is yellow alarm
-		if(2)
-			state = "alarm1"
+	if(danger_level == AIR_ALARM_ALERT_HAZARD)
+		state = "alarm1"
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
+		color = "alarm2"
+	else
+		state = "alarm0"
 
 	. += mutable_appearance(icon, state)
 	. += emissive_appearance(icon, state, src, alpha = src.alpha)
