@@ -28306,6 +28306,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "kjM" = (
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/singularity_bay)
 "kjO" = (
@@ -35713,6 +35714,10 @@
 	dir = 1
 	},
 /area/station/security/prison)
+"mQE" = (
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating/airless,
+/area/station/singularity_bay)
 "mQR" = (
 /obj/machinery/pdapainter/supply,
 /turf/open/floor/carpet/red,
@@ -42401,10 +42406,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
-"pkc" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/singularity_bay)
 "pke" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -45077,7 +45078,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "qhD" = (
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/singularity_bay)
 "qhF" = (
@@ -46692,6 +46692,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/research)
+"qLJ" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/singularity_bay)
 "qLP" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/bureaucracy/folder{
@@ -47664,10 +47668,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
-"rcM" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/main)
 "rcW" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -59317,8 +59317,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "vds" = (
-/turf/closed/wall/r_wall,
-/area/station/singularity_bay)
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/engineering/main)
 "vdx" = (
 /obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
@@ -67275,6 +67276,9 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/security/medical)
+"xUJ" = (
+/turf/closed/wall/r_wall,
+/area/station/singularity_bay)
 "xUK" = (
 /obj/structure/sign/poster/contraband/missing_gloves,
 /turf/closed/wall,
@@ -109694,17 +109698,17 @@ lMx
 rlu
 pTw
 uXd
-rcM
+vds
 vuJ
-rcM
+vds
 cFu
 uXd
-rcM
+vds
 wBM
-rcM
+vds
 dOs
 cFu
-rcM
+vds
 pqb
 sNt
 uXd
@@ -109952,7 +109956,7 @@ cuZ
 pTw
 uXd
 aaa
-kjM
+qhD
 aaa
 aaa
 aaa
@@ -109962,7 +109966,7 @@ aaa
 aaa
 aaa
 aaa
-kjM
+qhD
 aaa
 uXd
 aOA
@@ -110207,9 +110211,9 @@ brE
 vtp
 fbf
 shV
-rcM
+vds
 aaa
-kjM
+qhD
 aaa
 aaa
 aaa
@@ -110219,7 +110223,7 @@ aaa
 aaa
 aaa
 aaa
-kjM
+qhD
 aaa
 uXd
 dKL
@@ -110464,9 +110468,9 @@ hqL
 iSI
 qaA
 fqV
-rcM
+vds
 aaa
-kjM
+qhD
 lMJ
 lMJ
 lMJ
@@ -110476,7 +110480,7 @@ lMJ
 lMJ
 lMJ
 lMJ
-kjM
+qhD
 aaa
 uXd
 qtH
@@ -110722,19 +110726,19 @@ jRZ
 kYG
 sGC
 uXd
-kjM
-kIz
 qhD
-kjM
-kjM
-kjM
-qhD
-kjM
-kjM
-kjM
-kjM
 kIz
 kjM
+kjM
+kjM
+kjM
+kjM
+qhD
+qhD
+qhD
+qhD
+kIz
+qhD
 uXd
 uJz
 iHy
@@ -110980,7 +110984,7 @@ syX
 nTA
 cKx
 lMJ
-qhD
+kjM
 lou
 nWF
 nWF
@@ -110990,7 +110994,7 @@ nWF
 nWF
 nWF
 baS
-qhD
+kjM
 lMJ
 fJy
 bDW
@@ -111235,9 +111239,9 @@ orT
 sph
 nTA
 qZI
-rcM
+vds
 lMJ
-qhD
+kjM
 gFb
 aaa
 aaa
@@ -111247,7 +111251,7 @@ aaa
 aaa
 aaa
 wjU
-kjM
+qhD
 lMJ
 fJy
 oUh
@@ -111492,9 +111496,9 @@ gDA
 sph
 owp
 tmq
-rcM
+vds
 lMJ
-kjM
+qhD
 gFb
 aaa
 aaa
@@ -111504,7 +111508,7 @@ aaa
 aaa
 aaa
 wjU
-kjM
+qhD
 lMJ
 fKg
 uhu
@@ -111749,9 +111753,9 @@ orT
 sph
 vGw
 tmq
-rcM
+vds
 lMJ
-kjM
+qhD
 gFb
 aaa
 aaa
@@ -111761,7 +111765,7 @@ lMJ
 aaa
 aaa
 wjU
-kjM
+qhD
 lMJ
 fJy
 fJy
@@ -112008,7 +112012,7 @@ pmj
 pmj
 bgs
 lMJ
-kjM
+mQE
 lMJ
 lMJ
 lMJ
@@ -112018,7 +112022,7 @@ lMJ
 lMJ
 lMJ
 hqb
-kjM
+qhD
 lMJ
 aUP
 dgd
@@ -112265,7 +112269,7 @@ kYG
 sGC
 uXd
 lMJ
-kjM
+qhD
 gFb
 aaa
 aaa
@@ -112275,9 +112279,9 @@ lMJ
 aaa
 aaa
 wjU
-kjM
+qhD
 lMJ
-pkc
+qLJ
 aaa
 aYx
 dgf
@@ -112522,7 +112526,7 @@ aaa
 lAu
 lXN
 lMJ
-kjM
+qhD
 gFb
 aaa
 aaa
@@ -112532,7 +112536,7 @@ aaa
 aaa
 aaa
 wjU
-kjM
+qhD
 lMJ
 aUP
 dge
@@ -112777,9 +112781,9 @@ tCS
 aaa
 aaa
 aaa
-vds
+xUJ
 lMJ
-kjM
+qhD
 gFb
 aaa
 aaa
@@ -112789,9 +112793,9 @@ aaa
 aaa
 aaa
 wjU
-qhD
+kjM
 lMJ
-vds
+xUJ
 dgf
 dgk
 dgt
@@ -113034,9 +113038,9 @@ tCS
 aaa
 aaa
 aaa
-vds
+xUJ
 lMJ
-kjM
+qhD
 kZI
 mWd
 mWd
@@ -113046,9 +113050,9 @@ mWd
 mWd
 mWd
 lCd
-qhD
+kjM
 lMJ
-vds
+xUJ
 aWK
 dgk
 dgt
@@ -113291,21 +113295,21 @@ aaa
 aaa
 aaa
 aaa
-vds
-kjM
-kIz
+xUJ
 qhD
-qhD
-kjM
-kjM
-kjM
-kjM
-kjM
-kjM
-kjM
 kIz
 kjM
-vds
+kjM
+qhD
+qhD
+qhD
+qhD
+qhD
+qhD
+qhD
+kIz
+qhD
+xUJ
 dgg
 azd
 azd
@@ -113548,9 +113552,9 @@ aaa
 aaa
 aaa
 aaa
-vds
+xUJ
 aaa
-kjM
+qhD
 lMJ
 lMJ
 lMJ
@@ -113560,9 +113564,9 @@ lMJ
 lMJ
 lMJ
 lMJ
-kjM
+qhD
 aaa
-vds
+xUJ
 aWK
 dgk
 dgt
@@ -113805,9 +113809,9 @@ aaa
 aaa
 aaa
 aaa
-vds
+xUJ
 aaa
-kjM
+qhD
 aaa
 aaa
 aaa
@@ -113817,9 +113821,9 @@ aaa
 aaa
 aaa
 aaa
-kjM
+qhD
 aaa
-vds
+xUJ
 dgh
 dgk
 dgk
@@ -114062,9 +114066,9 @@ lMJ
 lMJ
 lMJ
 lMJ
-vds
+xUJ
 aaa
-kjM
+qhD
 aaa
 aaa
 aaa
@@ -114074,9 +114078,9 @@ aaa
 aaa
 aaa
 aaa
-kjM
+qhD
 aaa
-vds
+xUJ
 aWK
 dgm
 dgu

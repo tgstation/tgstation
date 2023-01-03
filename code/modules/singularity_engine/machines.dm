@@ -14,6 +14,11 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
+/obj/machinery/singularity_generator/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/connects_to_singularity_console)
+
 // MBTODO: It must be coiled to the computer.
 // You still need to go outside and interface with them, but it has to be attached to the computer to function.
 /obj/machinery/field/generator/singularity
@@ -29,6 +34,11 @@
 	active_power_usage = 0
 
 	generator_distance = 12
+
+/obj/machinery/field/generator/singularity/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/connects_to_singularity_console)
 
 /obj/machinery/field/generator/singularity/calc_power(set_power_draw)
 	return TRUE
@@ -51,3 +61,8 @@
 	// Handwaived
 	use_power = NO_POWER_USE
 	active_power_usage = 0
+
+/obj/machinery/singularity_turret/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/connects_to_singularity_console)

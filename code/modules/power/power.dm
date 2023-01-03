@@ -337,6 +337,8 @@
 		if(!Node.connect_to_network())
 			Node.disconnect_from_network() //if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
 
+	SEND_SIGNAL(net1, COMSIG_POWERNET_MERGED)
+
 	return net1
 
 /// Extracts the powernet and cell of the provided power source

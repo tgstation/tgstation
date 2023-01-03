@@ -39,6 +39,8 @@
 /datum/powernet/proc/remove_cable(obj/structure/cable/C)
 	cables -= C
 	C.powernet = null
+	SEND_SIGNAL(src, COMSIG_POWERNET_REMOVED_CABLE)
+	SEND_SIGNAL(C, COMSIG_CABLE_POWERNET_CHANGED)
 	if(is_empty())//the powernet is now empty...
 		qdel(src)///... delete it
 
@@ -51,7 +53,9 @@
 		else
 			C.powernet.remove_cable(C) //..remove it
 	C.powernet = src
-	cables +=C
+	cables += C
+	SEND_SIGNAL(src, COMSIG_POWERNET_ADDED_CABLE)
+	SEND_SIGNAL(C, COMSIG_CABLE_POWERNET_CHANGED)
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
