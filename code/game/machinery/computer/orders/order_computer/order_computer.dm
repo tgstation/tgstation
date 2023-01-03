@@ -7,13 +7,17 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	icon_screen = "request"
 	icon_keyboard = "generic_key"
 	light_color = LIGHT_COLOR_ORANGE
+	///Tooltip for the express button in TGUI
+	var/express_tooltip = @{"Sends your purchases instantly,
+	but locks the console longer and increases the price!"}
+	///Tooltip for the purchase button in TGUI
+	var/purchase_tooltip = @{"Your purchases will arrive at cargo,
+    and hopefully get delivered by them."}
 
 	///Cooldown between order uses.
 	COOLDOWN_DECLARE(order_cooldown)
 	///Cooldown time between uses, express console will have extra time depending on express_cost_multiplier.
 	var/cooldown_time = 60 SECONDS
-	/// Change TGUI texts to imply that cargo delivery is cheaper and express costs 1x
-	var/cargo_cheaper = FALSE
 	///The radio the console can speak into
 	var/obj/item/radio/radio
 	///The channel we will attempt to speak into through our radio.
@@ -76,7 +80,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/ui_static_data(mob/user)
 	var/list/data = list()
-	data["cargo_cheaper"] = cargo_cheaper
+	data["express_tooltip"] = express_tooltip
+	data["purchase_tooltip"] = purchase_tooltip
 	data["forced_express"] = forced_express
 	data["order_categories"] = order_categories
 	data["order_datums"] = list()

@@ -94,7 +94,7 @@ const ShoppingTab = (props, context) => {
 
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const { cargo_cheaper, forced_express, order_datums, total_cost } = data;
+  const { purchase_tooltip, express_tooltip, forced_express, order_datums, total_cost } = data;
   const checkout_list = order_datums.filter((food) => food && (food.amt || 0));
   return (
     <Stack vertical fill>
@@ -160,11 +160,7 @@ const CheckoutTab = (props, context) => {
                   fluid
                   icon="plane-departure"
                   content="Purchase"
-                  tooltip={`
-                  Your purchases will arrive at cargo,
-                  and hopefully get delivered by them.
-                  ${cargo_cheaper ? '35% cheaper than express delivery.' : ''}
-                  `}
+				  tooltip={purchase_tooltip}
                   tooltipPosition="top"
                   onClick={() => act('purchase')}
                 />
@@ -176,13 +172,7 @@ const CheckoutTab = (props, context) => {
                 icon="parachute-box"
                 color="yellow"
                 content="Express"
-                tooltip={`
-                Sends your purchases instantly${
-                  !cargo_cheaper
-                    ? ',\nbut locks the console longer and increases the price!'
-                    : ', at normal price.'
-                }
-                `}
+                tooltip={express_tooltip}
                 tooltipPosition="top-start"
                 onClick={() => act('express')}
               />
