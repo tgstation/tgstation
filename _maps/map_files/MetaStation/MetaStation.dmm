@@ -3442,7 +3442,7 @@
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/reagent_containers/cup/rag,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "bje" = (
 /obj/structure/closet/emcloset,
 /obj/structure/disposalpipe/segment{
@@ -3804,7 +3804,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/office/light,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "bnX" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/blue{
@@ -3905,7 +3905,7 @@
 "bpK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "bpY" = (
 /obj/machinery/light/small/directional/west,
 /obj/item/clothing/mask/animal/horsehead,
@@ -4661,7 +4661,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "bER" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -5318,7 +5318,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "bTq" = (
 /obj/machinery/camera/motion/directional/south{
 	c_tag = "AI Upload Chamber - Port";
@@ -6860,7 +6860,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "czs" = (
 /obj/structure/easel,
 /obj/effect/mapping_helpers/broken_floor,
@@ -10091,7 +10091,7 @@
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/cup/glass/bottle/vodka,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "dLu" = (
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/disposal/bin,
@@ -10572,7 +10572,7 @@
 /obj/item/toy/figure/md,
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "dTQ" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
@@ -15555,7 +15555,7 @@
 /obj/item/tank/internals/anesthetic,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "fNH" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Dock Maintenance"
@@ -16846,7 +16846,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "gmt" = (
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
@@ -17957,7 +17957,7 @@
 	name = "decommissioned cloner"
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "gIC" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
@@ -18508,7 +18508,7 @@
 /obj/effect/spawner/random/medical/memeorgans,
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "gSH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/rnd/server/master,
@@ -25564,7 +25564,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "jhA" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -26988,7 +26988,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white/smooth_large,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "jGA" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/wood,
@@ -28312,7 +28312,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "keK" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
@@ -39051,7 +39051,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "nRZ" = (
 /turf/closed/wall/r_wall,
 /area/station/security/medical)
@@ -39689,7 +39689,7 @@
 /obj/item/storage/box/syringes,
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "oet" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -42823,7 +42823,7 @@
 	name = "decommissioned cloning scanner"
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "plw" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral{
@@ -43081,7 +43081,7 @@
 "pqp" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "pqu" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/landmark/start/chaplain,
@@ -43959,7 +43959,7 @@
 /obj/effect/spawner/random/maintenance/three,
 /obj/structure/closet/crate/medical,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "pGu" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
@@ -47394,7 +47394,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "qQu" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
@@ -49231,7 +49231,7 @@
 /obj/effect/spawner/random/medical/patient_stretcher,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "ryJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -49746,7 +49746,7 @@
 /obj/effect/decal/cleanable/greenglow,
 /obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "rHz" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/tile/blue{
@@ -50259,7 +50259,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "rPe" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -51112,7 +51112,7 @@
 	name = "Tends-the-Wounds"
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "sch" = (
 /turf/closed/wall,
 /area/station/security/medical)
@@ -52063,7 +52063,7 @@
 /obj/structure/light_construct/directional/west,
 /obj/item/storage/fancy/cigarettes/cigpack_uplift,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "suD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -53382,7 +53382,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/iv_drip,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "sSn" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance,
@@ -55508,7 +55508,7 @@
 /area/station/science/robotics/mechbay)
 "tBJ" = (
 /turf/closed/wall,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "tBM" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
@@ -57637,7 +57637,7 @@
 	},
 /obj/item/toy/cattoy,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "upR" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -59931,7 +59931,7 @@
 	pixel_y = -1
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "veO" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
@@ -62839,7 +62839,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "wen" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -63368,7 +63368,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "wnR" = (
 /obj/machinery/vending/wardrobe/hydro_wardrobe,
 /obj/effect/turf_decal/stripes/line{
@@ -64630,7 +64630,7 @@
 /obj/item/surgicaldrill,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "wNa" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/purple{
@@ -66256,7 +66256,7 @@
 /obj/effect/spawner/random/medical/patient_stretcher,
 /obj/item/food/pizzaslice/moldy/bacteria,
 /turf/open/floor/iron/white,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "xpX" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,

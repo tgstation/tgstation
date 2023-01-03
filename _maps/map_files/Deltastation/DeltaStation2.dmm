@@ -58,7 +58,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/basic/cockroach,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "aaY" = (
 /obj/effect/landmark/start/hangover/closet,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -257,7 +257,7 @@
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "adb" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt,
@@ -429,7 +429,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "aeM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/prisoner,
@@ -477,7 +477,7 @@
 	},
 /obj/item/pen,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "afp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate,
@@ -571,7 +571,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "agb" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
@@ -725,7 +725,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "ahV" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine/co2,
@@ -761,7 +761,7 @@
 "aii" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "aix" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/supply{
@@ -1023,7 +1023,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "amr" = (
 /obj/structure/reflector/double,
 /turf/open/floor/plating,
@@ -1182,7 +1182,7 @@
 /obj/structure/musician/piano,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "anL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -2210,7 +2210,7 @@
 /obj/effect/spawner/random/maintenance/two,
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "axQ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -2230,7 +2230,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/basic/cockroach,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "ayH" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Permabrig - Central";
@@ -2323,7 +2323,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "azR" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /turf/closed/wall/r_wall,
@@ -2385,7 +2385,7 @@
 /obj/machinery/status_display/ai/directional/north,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "aAA" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -3227,7 +3227,7 @@
 /area/station/maintenance/port/aft)
 "aKt" = (
 /turf/closed/wall,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "aKw" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/effect/landmark/start/hangover,
@@ -3833,7 +3833,7 @@
 "aSV" = (
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "aSW" = (
 /obj/structure/cable,
 /obj/machinery/button/flasher{
@@ -4488,7 +4488,7 @@
 "bcg" = (
 /obj/structure/chair/wood,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "bcj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark/textured,
@@ -4765,7 +4765,7 @@
 /obj/structure/table/wood/poker,
 /obj/item/storage/wallet/random,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "bfM" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4834,7 +4834,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "bgA" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -5317,7 +5317,7 @@
 "blc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "ble" = (
 /obj/effect/turf_decal/tile/dark_blue/half{
 	dir = 4
@@ -5578,7 +5578,7 @@
 /obj/effect/landmark/blobstart,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "bnR" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
@@ -5708,7 +5708,7 @@
 	pixel_y = 13
 	},
 /turf/open/floor/iron/checker,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "bpz" = (
 /obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/dark/textured_large,
@@ -5939,7 +5939,7 @@
 "bsk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "bsx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/yellow{
@@ -5974,7 +5974,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "bsN" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/table,
@@ -6004,7 +6004,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "bta" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
@@ -6231,7 +6231,7 @@
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "bvT" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -6554,7 +6554,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "bAA" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -6812,7 +6812,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "bDu" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -6874,7 +6874,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "bEf" = (
 /obj/machinery/door/window{
 	base_state = "rightsecure";
@@ -7750,7 +7750,7 @@
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "bMh" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -7796,7 +7796,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "bNs" = (
 /obj/machinery/iv_drip,
 /obj/machinery/firealarm/directional/south,
@@ -8414,7 +8414,7 @@
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "bTZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8757,7 +8757,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "bYc" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/blue{
@@ -8851,7 +8851,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "bYR" = (
 /obj/structure/closet/cabinet,
 /obj/effect/spawner/random/food_or_drink/booze,
@@ -8887,7 +8887,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "bZJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -9048,7 +9048,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "cbB" = (
 /obj/machinery/food_cart,
 /obj/effect/turf_decal/bot/right,
@@ -9790,7 +9790,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "clq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9873,7 +9873,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "cmd" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -10118,7 +10118,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/shard,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "coj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10303,7 +10303,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "crg" = (
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
@@ -10887,7 +10887,7 @@
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "czf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
@@ -11320,7 +11320,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "cEo" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -11465,7 +11465,7 @@
 	},
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "cFQ" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
@@ -11481,7 +11481,7 @@
 "cGl" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "cGx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -11969,7 +11969,7 @@
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/iron/grimy,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "cMG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
 	dir = 4
@@ -12074,7 +12074,7 @@
 "cOq" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "cOt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -12104,7 +12104,7 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "cOD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12339,7 +12339,7 @@
 "cRl" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "cRs" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -12373,10 +12373,10 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "cRT" = (
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "cRW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -12683,7 +12683,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "cWB" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/stripes/line{
@@ -12787,7 +12787,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "cXS" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/white{
@@ -12910,7 +12910,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "cZo" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -13032,7 +13032,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "daB" = (
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/grimy,
@@ -13043,7 +13043,7 @@
 	},
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "daR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -13203,7 +13203,7 @@
 /obj/effect/landmark/blobstart,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "dds" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Virology - Break Room";
@@ -13551,7 +13551,7 @@
 /obj/item/pen,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "dip" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/sign/poster/contraband/hacking_guide{
@@ -13599,7 +13599,7 @@
 /obj/item/toy/talking/codex_gigas,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "djp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13640,7 +13640,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "djC" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/siding/blue{
@@ -14001,7 +14001,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "doM" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Permabrig Cell 1"
@@ -14157,7 +14157,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "dqH" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -14334,7 +14334,7 @@
 /obj/structure/table,
 /obj/effect/spawner/random/trash/soap,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "dsM" = (
 /obj/structure/table/glass,
 /obj/item/storage/backpack/duffelbag/med/surgery,
@@ -14446,7 +14446,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "dtR" = (
 /turf/open/floor/carpet/purple,
 /area/station/commons/dorms)
@@ -14778,7 +14778,7 @@
 /area/station/engineering/main)
 "dxe" = (
 /turf/closed/wall,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "dxi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/window{
@@ -15208,7 +15208,7 @@
 "dEe" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "dEk" = (
 /obj/machinery/modular_computer/console/preset/research{
 	dir = 1
@@ -15504,7 +15504,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "dHp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15651,7 +15651,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "dJM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -15661,7 +15661,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "dJO" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -15691,7 +15691,7 @@
 /obj/item/clothing/suit/costume/cardborg,
 /obj/item/clothing/head/costume/cardborg,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "dKg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15855,7 +15855,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/taperecorder,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "dMy" = (
 /obj/structure/flora/bush/ferny/style_random,
 /obj/structure/flora/bush/leavy/style_random,
@@ -15938,7 +15938,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "dNc" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -16010,7 +16010,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "dNN" = (
 /turf/closed/wall/r_wall,
 /area/station/science/research)
@@ -16084,7 +16084,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "dOW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16277,7 +16277,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "dRy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16688,7 +16688,7 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/carpet,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "dXF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light_switch/directional/south{
@@ -16783,12 +16783,12 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "dYS" = (
 /obj/structure/displaycase_chassis,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/large,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "dZi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -16867,7 +16867,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "dZW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -17015,7 +17015,7 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "ebQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -17155,7 +17155,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "edx" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
@@ -17288,7 +17288,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "efg" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/red/half/contrasted,
@@ -17307,7 +17307,7 @@
 "efi" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "efQ" = (
 /obj/structure/grille,
 /obj/structure/lattice,
@@ -17324,7 +17324,7 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "egk" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/fancy/cigarettes/dromedaryco{
@@ -17334,7 +17334,7 @@
 /obj/item/storage/fancy/cigarettes/dromedaryco,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "egm" = (
 /obj/docking_port/stationary/mining_home{
 	dir = 4
@@ -17355,7 +17355,7 @@
 	},
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "egE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -17536,7 +17536,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "eiT" = (
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -17680,7 +17680,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "elq" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Science - Circuits Lab";
@@ -17990,7 +17990,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "epy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -18220,7 +18220,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "erQ" = (
 /obj/structure/window/reinforced,
 /obj/item/target,
@@ -18427,7 +18427,7 @@
 /obj/structure/table/wood,
 /obj/item/toy/talking/ai,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "etr" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
@@ -18615,7 +18615,7 @@
 /area/station/security/checkpoint/customs/aft)
 "evq" = (
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "evr" = (
 /obj/machinery/door/window/left/directional/east{
 	name = "Medical Delivery";
@@ -18736,7 +18736,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "exi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
@@ -18758,7 +18758,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "exA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -18885,7 +18885,7 @@
 "eAe" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/grimy,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "eAf" = (
 /obj/machinery/door/window/left/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -19128,7 +19128,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "eDV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19305,12 +19305,12 @@
 "eGb" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "eGp" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "eGq" = (
 /obj/structure/sign/poster/official/do_not_question{
 	pixel_x = -32
@@ -19532,7 +19532,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "eIu" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -19617,7 +19617,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "eJG" = (
 /obj/effect/turf_decal/delivery/red,
 /obj/machinery/power/port_gen/pacman/pre_loaded,
@@ -20086,7 +20086,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "ePC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -20750,7 +20750,7 @@
 	},
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "eXw" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
@@ -21172,7 +21172,7 @@
 	},
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "fcI" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/junction{
@@ -21324,7 +21324,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "fem" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -21490,7 +21490,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "ffn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -21528,7 +21528,7 @@
 /obj/item/clothing/accessory/waistcoat,
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "ffH" = (
 /obj/structure/table,
 /obj/item/disk/holodisk{
@@ -21588,7 +21588,7 @@
 "ffY" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "fgj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -21676,7 +21676,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "fhE" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Access"
@@ -21735,12 +21735,12 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "fiu" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /mob/living/basic/cockroach,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fiB" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -21777,7 +21777,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "fiO" = (
 /turf/closed/wall,
 /area/station/security/prison)
@@ -21809,7 +21809,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "fjQ" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -22013,7 +22013,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fmk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -22027,7 +22027,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fmD" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -22037,7 +22037,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "fmI" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/bluespace_vendor/directional/south,
@@ -22419,7 +22419,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fst" = (
 /obj/item/clothing/suit/hazardvest{
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
@@ -23046,7 +23046,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fzm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23266,7 +23266,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "fBP" = (
 /obj/structure/chair{
 	dir = 8
@@ -23318,7 +23318,7 @@
 "fCj" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "fCk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -23341,7 +23341,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "fCX" = (
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/circuit,
@@ -23445,14 +23445,14 @@
 /obj/item/kirbyplants/random,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "fEI" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fEY" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -23612,7 +23612,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "fGZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/structure/steam_vent,
@@ -23729,7 +23729,7 @@
 "fIE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "fIF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -23894,7 +23894,7 @@
 /obj/effect/turf_decal/trimline/white/warning,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fKS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -23913,7 +23913,7 @@
 /obj/item/clothing/head/hats/tophat,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "fLd" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "scicell";
@@ -24043,7 +24043,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fNb" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -24565,7 +24565,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "fTP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24585,7 +24585,7 @@
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/grimy,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fUn" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -24633,7 +24633,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "fUQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -24708,7 +24708,7 @@
 "fWr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "fWx" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
@@ -24739,7 +24739,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fWN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -24768,7 +24768,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fXi" = (
 /obj/machinery/light/directional/north,
 /obj/structure/sign/plaques/kiddie/badger{
@@ -24953,7 +24953,7 @@
 /area/station/security/prison/work)
 "fYR" = (
 /turf/closed/wall,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "fYU" = (
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
@@ -25147,7 +25147,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "gbe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
@@ -25175,7 +25175,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/chococoin,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "gbt" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral,
@@ -25348,7 +25348,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "gdE" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/chair/office,
@@ -25387,7 +25387,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "gej" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -25488,7 +25488,7 @@
 "geY" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "gfb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -25584,7 +25584,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "ggc" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -25758,7 +25758,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "giF" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -26285,7 +26285,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron/dark/textured_half,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "gpg" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -26306,7 +26306,7 @@
 "gpi" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "gpq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -26560,7 +26560,7 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "grA" = (
 /obj/effect/spawner/random/structure/furniture_parts,
 /obj/structure/closet/crate/decorations,
@@ -26658,7 +26658,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "gsV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -26715,7 +26715,7 @@
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
 /turf/open/floor/iron/grimy,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "gtG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -26744,7 +26744,7 @@
 /obj/item/taperecorder,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "gtX" = (
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/cafeteria,
@@ -26752,7 +26752,7 @@
 "gtY" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "gua" = (
 /obj/structure/table/wood,
 /obj/item/storage/briefcase,
@@ -26876,7 +26876,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "gvj" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/atmos/glass{
@@ -26940,7 +26940,7 @@
 /obj/structure/table/wood/poker,
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "gvN" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -27009,7 +27009,7 @@
 /obj/structure/chair/stool/bar/directional/west,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "gwL" = (
 /obj/machinery/hydroponics/soil,
 /obj/effect/decal/cleanable/dirt,
@@ -27303,7 +27303,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "gBh" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil,
@@ -27551,7 +27551,7 @@
 "gDT" = (
 /obj/structure/displaycase_chassis,
 /turf/open/floor/wood/large,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "gDU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -27957,7 +27957,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "gIV" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -28746,7 +28746,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "gUi" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 10
@@ -28799,7 +28799,7 @@
 	pixel_x = -4
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "gUB" = (
 /obj/structure/table/reinforced,
 /obj/structure/microscope{
@@ -28923,7 +28923,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "gWu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28970,7 +28970,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "gWz" = (
 /obj/structure/closet/secure_closet/chief_medical,
 /obj/item/clothing/head/costume/nursehat,
@@ -29076,7 +29076,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "gYo" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -29313,7 +29313,7 @@
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "hbH" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
@@ -30028,7 +30028,7 @@
 	},
 /mob/living/basic/cockroach,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "hkU" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/turf_decal/stripes/line{
@@ -30461,7 +30461,7 @@
 /obj/effect/spawner/random/structure/chair_flipped,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "hqK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30905,7 +30905,7 @@
 "hww" = (
 /mob/living/basic/cockroach,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "hwB" = (
 /obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -31102,7 +31102,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "hzj" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Xenobiology - Secure Cell Exterior";
@@ -31445,7 +31445,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "hFf" = (
 /obj/machinery/firealarm/directional/west,
 /obj/item/kirbyplants/random,
@@ -31648,7 +31648,7 @@
 "hHx" = (
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "hHF" = (
 /turf/open/floor/plating{
 	icon_state = "foam_plating"
@@ -31689,7 +31689,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "hIf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -31924,7 +31924,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "hMd" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -32271,7 +32271,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "hQA" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/machinery/camera/directional/east{
@@ -32425,7 +32425,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "hSu" = (
 /obj/effect/spawner/random/trash/box,
 /obj/effect/spawner/random/food_or_drink/seed,
@@ -32452,7 +32452,7 @@
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "hSM" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/directional/south,
@@ -32464,7 +32464,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "hTi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -32576,7 +32576,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "hUE" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
@@ -32919,7 +32919,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "hZi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32932,7 +32932,7 @@
 /obj/effect/landmark/xeno_spawn,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "hZl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/morgue{
@@ -32941,7 +32941,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "hZo" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
@@ -33172,7 +33172,7 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "ibC" = (
 /obj/structure/chair/pew/left,
 /turf/open/floor/iron/chapel,
@@ -33235,12 +33235,12 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "ick" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "icn" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair/sofa/right/brown{
@@ -33636,7 +33636,7 @@
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "ifp" = (
 /obj/structure/easel,
 /obj/item/canvas/twentythree_twentythree,
@@ -33703,7 +33703,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "igo" = (
 /obj/machinery/computer/exoscanner_control,
 /obj/effect/turf_decal/stripes/line{
@@ -33795,7 +33795,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "iib" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
@@ -34032,7 +34032,7 @@
 /obj/structure/chair/office,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "ikZ" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
@@ -34110,7 +34110,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "ilX" = (
 /obj/structure/rack,
 /obj/item/analyzer{
@@ -34212,7 +34212,7 @@
 /obj/structure/table/wood,
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "imV" = (
 /obj/machinery/gravity_generator/main,
 /obj/effect/turf_decal/bot_white,
@@ -34238,7 +34238,7 @@
 "ind" = (
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/wall,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "inm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -34253,7 +34253,7 @@
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "inv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -34602,7 +34602,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "itn" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -34753,7 +34753,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "iuI" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -35116,7 +35116,7 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "izM" = (
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/random/contraband/prison,
@@ -35262,7 +35262,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "iBz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -35394,7 +35394,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "iDq" = (
 /turf/closed/wall/r_wall,
 /area/station/security/range)
@@ -35423,7 +35423,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "iDS" = (
 /obj/machinery/computer/department_orders/engineering{
 	dir = 1
@@ -35443,7 +35443,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "iEe" = (
 /obj/effect/turf_decal/siding/yellow,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -35496,7 +35496,7 @@
 	},
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "iED" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/blue/filled/warning,
@@ -35595,7 +35595,7 @@
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/engineering_hacking,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "iFI" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -35628,7 +35628,7 @@
 /obj/item/poster/random_contraband,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "iGd" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -35770,7 +35770,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "iIn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35778,7 +35778,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "iIz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/electric_shock/directional/west,
@@ -35811,7 +35811,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/white/side,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "iJr" = (
 /obj/structure/chair/office,
 /obj/effect/landmark/start/cargo_technician,
@@ -35901,7 +35901,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "iKr" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -35966,7 +35966,7 @@
 /obj/item/clothing/under/rank/civilian/curator,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "iKZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35985,7 +35985,7 @@
 /area/station/maintenance/department/science)
 "iLr" = (
 /turf/closed/wall,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "iLB" = (
 /obj/structure/sign/directions/evac{
 	pixel_y = -8
@@ -36004,7 +36004,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/chococoin,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "iLH" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
@@ -36094,7 +36094,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "iNe" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 10
@@ -36155,7 +36155,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "iNH" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -36265,7 +36265,7 @@
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "iPb" = (
 /obj/structure/table,
 /obj/item/storage/box/tail_pin,
@@ -36312,7 +36312,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "iQr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -36671,7 +36671,7 @@
 /obj/machinery/vending/wallmed/directional/west,
 /obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "iVo" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/closet/firecloset,
@@ -37025,7 +37025,7 @@
 "iZO" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "iZU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -37237,7 +37237,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "jbO" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -37817,7 +37817,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "jhQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -37895,7 +37895,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "jjc" = (
 /obj/structure/frame/computer{
 	dir = 4
@@ -38380,7 +38380,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "jof" = (
 /obj/structure/table/wood,
 /obj/machinery/door/window/right/directional/south{
@@ -38832,10 +38832,10 @@
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "jtC" = (
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "jtV" = (
 /obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
@@ -38962,7 +38962,7 @@
 /obj/item/stack/sheet/glass,
 /obj/item/circuitboard/machine/microwave,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "jvC" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner,
@@ -39343,7 +39343,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "jzZ" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -39465,7 +39465,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "jBB" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/east,
@@ -39589,7 +39589,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "jCu" = (
 /obj/machinery/computer/order_console/mining,
 /obj/effect/decal/cleanable/dirt,
@@ -39652,7 +39652,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "jDa" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -39695,7 +39695,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "jDq" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/cable,
@@ -39716,7 +39716,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "jDY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -39740,7 +39740,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/structure/table/wood,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "jEh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39816,7 +39816,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "jEY" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -40500,7 +40500,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "jNn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -40889,7 +40889,7 @@
 "jRg" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "jRj" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -41350,7 +41350,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "jXN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/effect/spawner/structure/window/reinforced,
@@ -41476,7 +41476,7 @@
 /obj/structure/chair/stool/bar/directional/west,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "jYX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -41601,7 +41601,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/white/warning,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "kaG" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -41797,7 +41797,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "kcN" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
@@ -41994,7 +41994,7 @@
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "kfa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -42359,7 +42359,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "kjc" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/monkeycubes{
@@ -42597,7 +42597,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "klE" = (
 /obj/structure/table,
 /obj/effect/spawner/random/entertainment/drugs,
@@ -42607,7 +42607,7 @@
 /obj/machinery/duct,
 /obj/effect/spawner/random/medical/minor_healing,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "klM" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -42691,7 +42691,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "knH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
@@ -42769,7 +42769,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "koB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -42929,7 +42929,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "krO" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -43026,7 +43026,7 @@
 /obj/effect/landmark/blobstart,
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "ksy" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
@@ -43188,7 +43188,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "kvo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -43271,7 +43271,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "kvM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -43296,7 +43296,7 @@
 /obj/item/gun/ballistic/automatic/pistol/toy,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "kwd" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -43372,7 +43372,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "kxx" = (
 /obj/structure/table/reinforced,
 /obj/item/crowbar,
@@ -43556,14 +43556,14 @@
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "kzI" = (
 /obj/structure/table/wood,
 /obj/item/electronics/airalarm,
 /obj/item/circuitboard/computer/med_data,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "kzP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/do_not_question{
@@ -43751,7 +43751,7 @@
 "kBV" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "kCa" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -43945,7 +43945,7 @@
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "kEv" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
@@ -44035,7 +44035,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "kGa" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -44072,7 +44072,7 @@
 /area/station/engineering/supermatter/room)
 "kGi" = (
 /turf/closed/wall,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "kGo" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -44229,7 +44229,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "kIe" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced,
@@ -44374,7 +44374,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "kKm" = (
 /obj/structure/sign/warning/pods,
 /turf/closed/wall,
@@ -44452,7 +44452,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/bookcase/random,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "kLx" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -44962,7 +44962,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "kSg" = (
 /obj/structure/closet/secure_closet/brig{
 	name = "Prisoner Locker"
@@ -45070,7 +45070,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "kTQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -45221,7 +45221,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "kVx" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Emergency Access"
@@ -45265,7 +45265,7 @@
 /obj/structure/bookcase,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "kVL" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -45282,7 +45282,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plating,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "kWi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/box/white/corners{
@@ -45483,7 +45483,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "kYn" = (
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "kYq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -45567,7 +45567,7 @@
 "kZP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "kZT" = (
 /obj/machinery/air_sensor/mix_tank,
 /turf/open/floor/engine/vacuum,
@@ -45759,7 +45759,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "lbX" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -45850,7 +45850,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "lcY" = (
 /obj/structure/bed,
 /obj/item/bedsheet/orange,
@@ -46153,7 +46153,7 @@
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "lgs" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "AI Satellite - Antechamber";
@@ -46197,7 +46197,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "lhn" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/landmark/start/depsec/engineering,
@@ -46333,7 +46333,7 @@
 "liM" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "liV" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -46545,7 +46545,7 @@
 /obj/structure/cable,
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "llJ" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/effect/decal/cleanable/dirt,
@@ -47194,7 +47194,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "ltZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/glass,
@@ -47507,7 +47507,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "lyE" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -47688,7 +47688,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "lBb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -47834,7 +47834,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "lCw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -48036,7 +48036,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "lEM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/hangover,
@@ -48496,7 +48496,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/item/reagent_containers/cup/rag,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "lKe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -49284,7 +49284,7 @@
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "lTG" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -49510,7 +49510,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "lXx" = (
 /obj/structure/table/wood,
 /obj/item/lipstick/random{
@@ -49523,7 +49523,7 @@
 	},
 /obj/item/lipstick/random,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "lXI" = (
 /obj/machinery/suit_storage_unit/rd,
 /obj/item/radio/intercom/directional/west,
@@ -50172,7 +50172,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "mhj" = (
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
@@ -50521,7 +50521,7 @@
 /obj/structure/bookcase,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "mmr" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -50996,7 +50996,7 @@
 /obj/item/kirbyplants/random,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "msB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/engine,
@@ -51647,7 +51647,7 @@
 /area/station/maintenance/port/aft)
 "mAt" = (
 /turf/closed/wall/r_wall,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "mAv" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -51946,7 +51946,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "mDO" = (
 /obj/machinery/door/airlock/glass_large{
 	name = "Laundromat"
@@ -52033,7 +52033,7 @@
 /obj/item/pen,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "mEI" = (
 /obj/machinery/newscaster/directional/north,
 /obj/structure/table/wood,
@@ -52041,7 +52041,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "mFi" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/emergency,
@@ -52145,7 +52145,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "mGq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -52600,7 +52600,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "mKv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -52717,7 +52717,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "mMd" = (
 /obj/machinery/computer/upload/ai{
 	dir = 1
@@ -53000,7 +53000,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "mPV" = (
 /obj/structure/cable,
 /obj/machinery/power/smes,
@@ -53065,7 +53065,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "mQC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
@@ -53136,7 +53136,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "mRh" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/brown{
@@ -53375,7 +53375,7 @@
 "mVi" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/grimy,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "mVr" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -53429,7 +53429,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "mVS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -53585,7 +53585,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "mXQ" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -53723,7 +53723,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "mZr" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
@@ -53838,7 +53838,7 @@
 /area/station/maintenance/fore)
 "nbc" = (
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "nbd" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -53961,7 +53961,7 @@
 /obj/machinery/newscaster/directional/south,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "ncE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -54101,7 +54101,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "nez" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -54179,7 +54179,7 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "nfZ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
@@ -54358,7 +54358,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "nii" = (
 /obj/structure/chair/office,
 /turf/open/floor/wood,
@@ -54497,7 +54497,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "nkH" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
@@ -54658,7 +54658,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "nmi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -55072,7 +55072,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "ntc" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Prisoner Workroom"
@@ -55112,7 +55112,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "ntK" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -55138,7 +55138,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "nuc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -55168,7 +55168,7 @@
 	spawn_scatter_radius = 1
 	},
 /turf/open/floor/iron/white/side,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "nuC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -55426,7 +55426,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "nxI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/plasticflaps/opaque,
@@ -55533,7 +55533,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "nyN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -55899,7 +55899,7 @@
 "nCI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "nCK" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/duct,
@@ -56748,7 +56748,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "nNz" = (
 /obj/machinery/computer/atmos_control/mix_tank{
 	dir = 4
@@ -56962,7 +56962,7 @@
 "nQa" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "nQg" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
@@ -57215,7 +57215,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "nTe" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -57320,7 +57320,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "nUR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/xeno_spawn,
@@ -57328,7 +57328,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/basic/cockroach,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "nUT" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
@@ -58097,7 +58097,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "oeX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -58213,7 +58213,7 @@
 "ogn" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "ogs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -58493,7 +58493,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "okk" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
@@ -58617,7 +58617,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror/directional/south,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "olv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -58723,7 +58723,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "omI" = (
 /obj/machinery/door/airlock{
 	name = "Custodial Closet"
@@ -58978,7 +58978,7 @@
 /obj/item/reagent_containers/blood/random,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "oqn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -59043,7 +59043,7 @@
 /obj/effect/spawner/random/entertainment/cigarette_pack,
 /obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "orH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -59251,7 +59251,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "ovQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -60360,7 +60360,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "oLD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -60394,7 +60394,7 @@
 "oLT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "oLU" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -60992,7 +60992,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "oTH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61023,7 +61023,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "oUh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
 	dir = 1
@@ -61166,7 +61166,7 @@
 "oWm" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "oWn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
@@ -61374,7 +61374,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "pal" = (
 /obj/structure/rack,
 /obj/item/storage/briefcase{
@@ -61525,7 +61525,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "pch" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -61547,7 +61547,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "pcp" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light/small/directional/north,
@@ -61564,7 +61564,7 @@
 /obj/item/coin/antagtoken,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "pcJ" = (
 /obj/machinery/mecha_part_fabricator{
 	dir = 4
@@ -62317,7 +62317,7 @@
 "pkI" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "pkZ" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -62545,7 +62545,7 @@
 	},
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "pok" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
@@ -62662,7 +62662,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table_frame/wood,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "pqm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -62769,7 +62769,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "prt" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
@@ -62962,7 +62962,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "puj" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/siding/green{
@@ -63145,7 +63145,7 @@
 /area/station/engineering/atmos)
 "pxb" = (
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "pxh" = (
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -63435,7 +63435,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "pAd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -63643,7 +63643,7 @@
 "pBY" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "pCf" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/west,
@@ -63704,7 +63704,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "pCZ" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -63815,7 +63815,7 @@
 /area/station/engineering/main)
 "pEi" = (
 /turf/open/floor/iron/grimy,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "pEk" = (
 /obj/effect/landmark/start/assistant,
 /obj/structure/chair/stool/bar/directional/east,
@@ -64005,7 +64005,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "pGi" = (
 /obj/machinery/atmospherics/components/tank/oxygen{
 	dir = 4
@@ -64062,7 +64062,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/knife/kitchen,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "pGC" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -64070,7 +64070,7 @@
 	pixel_x = -8
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "pGJ" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/blue{
@@ -64087,7 +64087,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "pHa" = (
 /obj/structure/lattice,
 /obj/structure/sign/warning/directional/west,
@@ -64240,7 +64240,7 @@
 /obj/item/clipboard,
 /obj/item/electronics/apc,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "pJi" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -64349,7 +64349,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "pKm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -64456,7 +64456,7 @@
 /obj/structure/cable,
 /obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "pLr" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line{
@@ -64512,7 +64512,7 @@
 "pLI" = (
 /obj/structure/bookcase,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "pLR" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64655,7 +64655,7 @@
 "pNA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "pNH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -64881,7 +64881,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/sign/calendar/directional/south,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "pQd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -64901,7 +64901,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "pQz" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -64951,7 +64951,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "pRk" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line{
@@ -65185,7 +65185,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "pTE" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/navbeacon{
@@ -65200,7 +65200,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "pTV" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/structure/cable,
@@ -65214,7 +65214,7 @@
 	spawn_loot_count = 1
 	},
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "pUf" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
@@ -65417,7 +65417,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "pVw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -65529,7 +65529,7 @@
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "pWL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -65560,7 +65560,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "pXg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -65595,7 +65595,7 @@
 "pXw" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "pXB" = (
 /obj/structure/table/reinforced,
 /obj/machinery/coffeemaker/impressa,
@@ -65689,7 +65689,7 @@
 "pYE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "pYG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -65787,7 +65787,7 @@
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "qam" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -65813,7 +65813,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "qat" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /obj/effect/turf_decal/bot,
@@ -65987,7 +65987,7 @@
 	},
 /obj/machinery/oven,
 /turf/open/floor/plating,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "qbW" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/railing{
@@ -66273,7 +66273,7 @@
 /obj/structure/bed/roller,
 /obj/item/bot_assembly/medbot,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "qgx" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -66369,7 +66369,7 @@
 /obj/item/canvas/twentythree_twentythree,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "qhC" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/rods/fifty,
@@ -66469,7 +66469,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "qiX" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66790,7 +66790,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "qnr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -66993,7 +66993,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "qpF" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
@@ -67095,7 +67095,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "qrP" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair/stool/bar/directional/south,
@@ -67158,7 +67158,7 @@
 /obj/structure/table/wood,
 /obj/item/wrench,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "qsB" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -67280,7 +67280,7 @@
 "qul" = (
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "quA" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -67392,7 +67392,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "qvw" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -67605,7 +67605,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "qyy" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -67614,7 +67614,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "qyK" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -67949,7 +67949,7 @@
 /obj/machinery/vending/assist,
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "qCA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -68204,7 +68204,7 @@
 /obj/structure/bookcase,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "qGJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -68352,7 +68352,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "qHJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/bot,
@@ -68397,7 +68397,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "qHY" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light/directional/east,
@@ -68582,7 +68582,7 @@
 /obj/item/lighter,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "qKs" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/disposalpipe/segment{
@@ -69145,7 +69145,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/carpet,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "qQg" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
@@ -69252,7 +69252,7 @@
 	},
 /mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "qRZ" = (
 /obj/structure/table,
 /obj/item/storage/bag/tray/cafeteria,
@@ -69295,7 +69295,7 @@
 /obj/structure/table/wood,
 /obj/item/clothing/glasses/regular/hipster,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "qSm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
@@ -69371,7 +69371,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/large,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "qTF" = (
 /obj/machinery/porta_turret/ai,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -69460,7 +69460,7 @@
 /obj/machinery/vending/boozeomat/all_access,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "qVv" = (
 /obj/machinery/power/shieldwallgen,
 /obj/effect/decal/cleanable/dirt,
@@ -69632,7 +69632,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "qYx" = (
 /obj/machinery/igniter/incinerator_atmos,
 /turf/open/floor/engine,
@@ -69671,7 +69671,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "qZb" = (
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
@@ -70243,7 +70243,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "rhC" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -70288,7 +70288,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "riq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
@@ -70348,7 +70348,7 @@
 /obj/machinery/vending/dinnerware,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "riP" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -70469,7 +70469,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "rjN" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -70605,7 +70605,7 @@
 /obj/machinery/light_switch/directional/north,
 /obj/effect/spawner/random/medical/minor_healing,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "rls" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -71121,7 +71121,7 @@
 "rrL" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "rrU" = (
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -71350,7 +71350,7 @@
 /obj/structure/sign/poster/contraband/random/directional/east,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "rvb" = (
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood,
@@ -71534,7 +71534,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "rxC" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -71665,7 +71665,7 @@
 "ryQ" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "ryR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -71723,7 +71723,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "rAc" = (
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -71921,7 +71921,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "rCd" = (
 /obj/structure/table,
 /obj/machinery/light/directional/south,
@@ -72219,7 +72219,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "rGZ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -72312,7 +72312,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "rIn" = (
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/iron/white/smooth_edge{
@@ -72441,7 +72441,7 @@
 	name = "old sink"
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "rJQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology/glass{
@@ -72640,7 +72640,7 @@
 /obj/effect/spawner/random/techstorage/arcade_boards,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "rMq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 6
@@ -72725,7 +72725,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "rNo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -73000,7 +73000,7 @@
 /area/station/commons/dorms)
 "rPY" = (
 /turf/closed/wall/r_wall,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "rQd" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -73462,7 +73462,7 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/iron,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "rVf" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/light/directional/east,
@@ -73817,7 +73817,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "rZI" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/costume,
@@ -73826,7 +73826,7 @@
 /obj/effect/turf_decal/bot/right,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "rZL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -73943,7 +73943,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "saR" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -74052,7 +74052,7 @@
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "sch" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/landmark/event_spawn,
@@ -74420,7 +74420,7 @@
 /obj/item/storage/dice,
 /obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/iron/grimy,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "sik" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -74558,7 +74558,7 @@
 /obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "skf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
@@ -74588,7 +74588,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "skv" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -74914,7 +74914,7 @@
 /obj/structure/table/wood/poker,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "spd" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/disposalpipe/sorting/mail/flip{
@@ -75113,7 +75113,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "srZ" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -75293,7 +75293,7 @@
 	name = "justice helmet"
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "suj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -75393,7 +75393,7 @@
 /obj/structure/chair/office,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "svm" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -75561,7 +75561,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "sxp" = (
 /obj/structure/table/reinforced,
 /obj/item/analyzer{
@@ -76012,7 +76012,7 @@
 	},
 /obj/item/poster/random_contraband,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "sCF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -76458,7 +76458,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "sIp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -76743,7 +76743,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "sLa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -76814,7 +76814,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "sLB" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/white{
@@ -76929,7 +76929,7 @@
 "sNa" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/grimy,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "sNd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -77020,7 +77020,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "sOs" = (
 /obj/structure/chair/pew/left,
 /turf/open/floor/iron/chapel{
@@ -77539,7 +77539,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "sUC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -78016,7 +78016,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "sZC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -78674,7 +78674,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "tkp" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
@@ -78761,7 +78761,7 @@
 	},
 /obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "tlL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -78797,7 +78797,7 @@
 "tmc" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "tme" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
@@ -78893,7 +78893,7 @@
 "tnJ" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "tnR" = (
 /obj/structure/sign/painting/library{
 	pixel_y = -32
@@ -79054,7 +79054,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "tpJ" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
@@ -79299,7 +79299,7 @@
 /area/station/medical/surgery/theatre)
 "tsz" = (
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "tsB" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -79524,13 +79524,13 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "tus" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "tuv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -79823,7 +79823,7 @@
 "tyU" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "tyV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -80188,7 +80188,7 @@
 /area/station/maintenance/port/fore)
 "tDs" = (
 /turf/closed/wall,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "tDw" = (
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
@@ -80284,7 +80284,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "tEd" = (
 /obj/machinery/flasher/directional/south{
 	id = "AI";
@@ -80354,7 +80354,7 @@
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "tEX" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -80506,7 +80506,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "tHf" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -80855,7 +80855,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "tLZ" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -81238,7 +81238,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/box/red/corners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "tPD" = (
 /obj/machinery/biogenerator,
 /obj/item/reagent_containers/cup/watering_can,
@@ -81427,7 +81427,7 @@
 /obj/item/food/meat/slab/human,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "tRq" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/bot/right,
@@ -82224,7 +82224,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "ubL" = (
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes,
@@ -82504,7 +82504,7 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "udG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -82547,7 +82547,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "uec" = (
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
@@ -82569,7 +82569,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "ueB" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/blue,
@@ -82653,7 +82653,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "ugq" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/firecloset,
@@ -82917,7 +82917,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "ukd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -82941,7 +82941,7 @@
 "uko" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "ukq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
@@ -83415,7 +83415,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "urq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -83476,7 +83476,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "urV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -83505,7 +83505,7 @@
 /obj/effect/turf_decal/bot/left,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "usD" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/depsec/engineering,
@@ -83787,7 +83787,7 @@
 /obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "uwi" = (
 /obj/effect/turf_decal/trimline/purple/filled/warning{
 	dir = 1
@@ -83799,7 +83799,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/dark,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "uwn" = (
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
@@ -84498,7 +84498,7 @@
 "uDR" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "uEo" = (
 /obj/structure/bed/double,
 /obj/item/bedsheet/dorms_double,
@@ -84700,7 +84700,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "uHd" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -84725,11 +84725,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/briefcase,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "uHG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "uHJ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/closet/emcloset,
@@ -84774,7 +84774,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "uIF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
 	dir = 4
@@ -84886,7 +84886,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "uKw" = (
 /turf/closed/wall,
 /area/station/commons/fitness/recreation)
@@ -84899,7 +84899,7 @@
 "uKK" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "uKO" = (
 /obj/structure/table,
 /obj/item/clothing/under/rank/security/officer,
@@ -85358,7 +85358,7 @@
 /obj/item/electronics/airalarm,
 /obj/item/electronics/airlock,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "uPV" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -85439,7 +85439,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "uQO" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 10
@@ -85694,14 +85694,14 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "uTB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "uTG" = (
 /obj/structure/showcase/cyborg/old{
 	dir = 4;
@@ -85849,7 +85849,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "uWi" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
@@ -86220,7 +86220,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "vap" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -86525,7 +86525,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "vdU" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -86916,7 +86916,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "vjw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -86959,7 +86959,7 @@
 	},
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "vjY" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/east,
@@ -87201,7 +87201,7 @@
 /area/station/hallway/primary/central/fore)
 "vno" = (
 /turf/closed/wall,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "vnq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
 	dir = 4
@@ -87585,7 +87585,7 @@
 "vrg" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "vrk" = (
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/light/small/directional/south,
@@ -88067,7 +88067,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "vwK" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -88172,7 +88172,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "vxZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -88229,13 +88229,13 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "vyG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "vyL" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -89233,7 +89233,7 @@
 "vLq" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "vLA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -89401,7 +89401,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "vOs" = (
 /obj/machinery/door/airlock/command{
 	name = "Head of Security's Office"
@@ -89926,7 +89926,7 @@
 /area/station/engineering/supermatter/room)
 "vVa" = (
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "vVc" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -90109,7 +90109,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "vXS" = (
 /obj/structure/sign/warning/secure_area/directional/south,
 /obj/structure/table,
@@ -90316,7 +90316,7 @@
 "wak" = (
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "wan" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -90482,7 +90482,7 @@
 /obj/structure/chair/wood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "wce" = (
 /obj/structure/chair/stool/directional/east,
 /obj/machinery/airalarm/directional/west,
@@ -90670,7 +90670,7 @@
 "weX" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "weZ" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair/sofa/bench/right{
@@ -90802,7 +90802,7 @@
 /obj/structure/mirror/directional/south,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "wgn" = (
 /obj/structure/closet/masks,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -90865,7 +90865,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "wgL" = (
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "wgN" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -90974,7 +90974,7 @@
 "whC" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "whK" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -91025,7 +91025,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "wiN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -91460,7 +91460,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "wnj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -91582,13 +91582,13 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "wog" = (
 /obj/machinery/photocopier,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "woh" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -91864,7 +91864,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "wqz" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -92298,7 +92298,7 @@
 	pixel_x = -6
 	},
 /turf/open/floor/iron,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "wvb" = (
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
@@ -92754,7 +92754,7 @@
 /obj/item/folder/red,
 /obj/item/pen,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "wAN" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -92883,7 +92883,7 @@
 "wBX" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "wCc" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/grassy/style_random,
@@ -93028,7 +93028,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "wDD" = (
 /obj/machinery/firealarm/directional/north{
 	pixel_x = -4
@@ -93111,7 +93111,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "wEQ" = (
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -93170,7 +93170,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "wFz" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -93222,7 +93222,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "wFX" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -93373,7 +93373,7 @@
 /obj/structure/mirror/directional/west,
 /obj/structure/sink/directional/east,
 /turf/open/floor/iron,
-/area/station/medical/abandoned)
+/area/station/maintenance/abandoned_medbay)
 "wHU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -93387,7 +93387,7 @@
 /obj/structure/sign/poster/contraband/random/directional/east,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "wIa" = (
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
@@ -93904,7 +93904,7 @@
 	},
 /obj/item/storage/briefcase,
 /turf/open/floor/iron/checker,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "wRf" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -94088,7 +94088,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "wTl" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -94168,7 +94168,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "wTU" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -94208,7 +94208,7 @@
 /obj/item/dice/d20,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "wVe" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -94375,7 +94375,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron/grimy,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "wXH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -94954,7 +94954,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "xfd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -95179,7 +95179,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "xhV" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/igniter,
@@ -95203,7 +95203,7 @@
 "xih" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plating,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "xin" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -95348,7 +95348,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "xkU" = (
 /obj/effect/turf_decal/bot_white{
 	color = "#435a88"
@@ -95606,7 +95606,7 @@
 "xnT" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "xoa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -95669,7 +95669,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron/grimy,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "xpr" = (
 /obj/effect/spawner/random/decoration/carpet,
 /obj/effect/spawner/random/structure/furniture_parts,
@@ -96219,7 +96219,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "xxa" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/flashlight,
@@ -96664,7 +96664,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "xAL" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -96794,7 +96794,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron,
-/area/station/service/kitchen/abandoned)
+/area/station/maintenance/kitchen/abandoned_kitchen)
 "xCF" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -96871,7 +96871,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "xDz" = (
 /obj/structure/chair/office/light,
 /obj/structure/sign/warning/secure_area/directional/west,
@@ -97234,7 +97234,7 @@
 /obj/structure/bookcase/random,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "xHs" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -97262,7 +97262,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "xHz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -97343,7 +97343,7 @@
 /obj/item/storage/toolbox/electrical,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "xIx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/warning/test_chamber/directional/south,
@@ -97508,7 +97508,7 @@
 	},
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/station/service/theater/abandoned)
+/area/station/maintenance/abandoned_theater)
 "xKD" = (
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain)
@@ -97531,7 +97531,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron/dark,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "xLi" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 10
@@ -97627,7 +97627,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/abandoned_gambling_den/gaming)
 "xMy" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -97903,7 +97903,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /mob/living/basic/cockroach,
 /turf/open/floor/iron/dark,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "xQr" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 6
@@ -98253,7 +98253,7 @@
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "xVv" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
@@ -98304,7 +98304,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron/grimy,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "xWf" = (
 /turf/closed/wall,
 /area/station/science/research)
@@ -98413,7 +98413,7 @@
 /obj/item/clipboard,
 /obj/item/folder/red,
 /turf/open/floor/carpet,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "xXm" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/camera/directional/south{
@@ -98807,7 +98807,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/pai_card,
 /turf/open/floor/carpet,
-/area/station/service/library/abandoned)
+/area/station/maintenance/abandoned_library)
 "ycR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -98878,7 +98878,7 @@
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/service/abandoned_gambling_den)
+/area/station/maintenance/abandoned_gambling_den)
 "ydL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -99438,7 +99438,7 @@
 /obj/item/electronics/firelock,
 /obj/item/electronics/airlock,
 /turf/open/floor/wood,
-/area/station/service/electronic_marketing_den)
+/area/station/maintenance/electronic_marketing_den)
 "yle" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
