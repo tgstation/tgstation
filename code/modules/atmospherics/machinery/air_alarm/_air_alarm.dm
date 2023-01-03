@@ -1,5 +1,3 @@
-#define AALARM_REPORT_TIMEOUT 100
-
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
@@ -18,21 +16,27 @@
 	/// AIR_ALARM_ALERT_NONE, AIR_ALARM_ALERT_MINOR, AIR_ALARM_ALERT_SEVERE
 	var/danger_level = AIR_ALARM_ALERT_NONE
 
+	/// Currently selected mode of the alarm. An instance of [/datum/air_alarm_mode].
 	var/datum/air_alarm_mode/selected_mode
 	///A reference to the area we are in
 	var/area/my_area
 
+	/// Boolean for whether the current air alarm can be tweaked by players or not.
 	var/locked = TRUE
-	var/aidisabled = 0
-	var/shorted = 0
-	var/buildstage = AIRALARM_BUILD_COMPLETE // 2 = complete, 1 = no wires,  0 = circuit gone
+	/// Boolean to prevent AI from tampering with this alarm.
+	var/aidisabled = FALSE
+	/// Boolean of whether alarm is currently shorted. Mess up some functionalities.
+	var/shorted = FALSE
+
+	/// Current build stage. [AIRALARM_BUILD_COMPLETE], [AIRALARM_BUILD_NO_WIRES], [AIRALARM_BUILD_NO_CIRCUIT]
+	var/buildstage = AIRALARM_BUILD_COMPLETE
 
 	///Represents a signel source of atmos alarms, complains to all the listeners if one of our thresholds is violated
 	var/datum/alarm_handler/alarm_manager
 
 	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = PROC_REF(check_air_dangerlevel))
 
-	// An assoc list of [datum/tlv]s, indexed by "pressure", "temperature", and [datum/gas] typepaths.
+	/// An assoc list of [datum/tlv]s, indexed by "pressure", "temperature", and [datum/gas] typepaths.
 	var/list/datum/tlv/tlv_collection
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
@@ -69,7 +73,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
 
-	selected_mode = GLOB.air_alarm_modes[/datum/air_alarm_mode/filtering]
+	select_mode(src, /datum/air_alarm_mode/filtering)
 
 	alarm_manager = new(src)
 	my_area = get_area(src)
@@ -142,7 +146,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/datum/gas_mixture/environment = turf.return_air()
 	var/total_moles = environment.total_moles()
 	var/temp = environment.temperature
-	var/pressure = total_moles * R_IDEAL_GAS_EQUATION * temp / environment.volume
+	var/pressure = environment.return_pressure()
 
 	data["envData"] = list()
 	data["envData"] += list(list(
@@ -169,27 +173,19 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		var/datum/tlv/tlv = tlv_collection[threshold]
 		var/list/singular_tlv = list()
 		if(threshold == "pressure")
-			singular_tlv += list(
-				"name" = "Pressure",
-				"unit" = "kPa",
-			)
+			singular_tlv["name"] = "Pressure"
+			singular_tlv["unit"] = "kPa"
 		else if (threshold == "temperature")
-			singular_tlv += list(
-				"name" = "Temperature",
-				"unit" = "K",
-			)
+			singular_tlv["name"] = "Temperature"
+			singular_tlv["unit"] = "K"
 		else
-			singular_tlv += list(
-				"name" = GLOB.meta_gas_info[threshold][META_GAS_NAME],
-				"unit" = "kPa",
-			)
-		singular_tlv += list(
-			"id" = threshold,
-			"warning_min" = tlv.warning_min,
-			"hazard_min" = tlv.hazard_min,
-			"warning_max" = tlv.warning_max,
-			"hazard_max" = tlv.hazard_max,
-		)
+			singular_tlv["name"] = GLOB.meta_gas_info[threshold][META_GAS_NAME]
+			singular_tlv["unit"] = "kPa"
+		singular_tlv["id"] = threshold
+		singular_tlv["warning_min"] = tlv.warning_min
+		singular_tlv["hazard_min"] = tlv.hazard_min
+		singular_tlv["warning_max"] = tlv.warning_max
+		singular_tlv["hazard_max"] = tlv.hazard_max
 		data["tlvSettings"] += list(singular_tlv)
 
 	if(!locked || user.has_unlimited_silicon_privilege)

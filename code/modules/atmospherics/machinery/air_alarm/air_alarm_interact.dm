@@ -121,9 +121,9 @@
 						cable.use(5)
 						to_chat(user, span_notice("You wire the air alarm."))
 						wires.repair()
-						aidisabled = 0
+						aidisabled = FALSE
 						locked = FALSE
-						shorted = 0
+						shorted = FALSE
 						danger_level = AIR_ALARM_ALERT_NONE
 						buildstage = AIRALARM_BUILD_COMPLETE
 						select_mode(user, /datum/air_alarm_mode/filtering)
