@@ -39,6 +39,12 @@
 
 	fire_beam()
 
+/obj/machinery/singularity_turret/singularity_pull(singularity, current_size)
+	if (istype(singularity, /obj/contained_singularity))
+		return
+
+	return ..()
+
 /obj/machinery/singularity_turret/proc/prepare_fire()
 	SHOULD_NOT_SLEEP(TRUE)
 	begin_processing()

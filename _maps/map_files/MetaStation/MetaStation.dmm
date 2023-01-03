@@ -103,6 +103,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "abi" = (
+/obj/machinery/singularity_turret{
+	dir = 9
+	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/singularity_bay)
@@ -2961,9 +2964,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "baS" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/singularity_bay)
+/obj/structure/railing,
+/turf/open/space/basic,
+/area/space)
 "baW" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -3190,9 +3193,11 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/surgery/aft)
 "bfi" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/main)
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space)
 "bfj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6861,10 +6866,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "cAm" = (
-/obj/effect/spawner/random/trash,
-/obj/structure/railing/corner,
+/obj/structure/lattice,
+/obj/item/trash/energybar,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cAn" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -14322,8 +14327,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "fnC" = (
-/obj/structure/railing/corner{
-	dir = 1
+/obj/structure/railing{
+	dir = 9
 	},
 /turf/open/space/basic,
 /area/space)
@@ -14548,12 +14553,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fuE" = (
-/obj/machinery/singularity_turret{
-	dir = 9
+/obj/structure/railing{
+	dir = 6
 	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/station/singularity_bay)
+/turf/open/space/basic,
+/area/space)
 "fvE" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/medical/central)
@@ -19710,10 +19714,12 @@
 /area/station/science/robotics/mechbay)
 "hqb" = (
 /obj/structure/railing{
-	dir = 6
+	dir = 8
 	},
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "hqj" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
@@ -24992,6 +24998,13 @@
 /obj/item/shard,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"jbJ" = (
+/obj/machinery/singularity_turret{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/station/singularity_bay)
 "jcd" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -28319,12 +28332,11 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "kjM" = (
-/obj/machinery/singularity_turret{
+/obj/structure/railing{
 	dir = 5
 	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/station/singularity_bay)
+/turf/open/space/basic,
+/area/space)
 "kjO" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable/white,
@@ -29603,9 +29615,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "kIz" = (
-/obj/machinery/singularity_turret{
-	dir = 6
-	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/singularity_bay)
@@ -31458,11 +31467,8 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "lou" = (
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space)
+/turf/closed/wall/r_wall,
+/area/station/singularity_bay)
 "loA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -42412,9 +42418,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "pkc" = (
-/obj/structure/railing{
-	dir = 9
-	},
+/obj/structure/railing/corner,
 /turf/open/space/basic,
 /area/space)
 "pke" = (
@@ -45089,8 +45093,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "qhD" = (
-/turf/open/floor/plating/airless,
-/area/station/singularity_bay)
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space)
 "qhF" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -46704,11 +46711,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/research)
 "qLJ" = (
-/obj/structure/railing{
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space)
+/turf/open/floor/plating/airless,
+/area/station/singularity_bay)
 "qLP" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/bureaucracy/folder{
@@ -47300,12 +47304,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
-"qVG" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/space/basic,
-/area/space)
 "qVM" = (
 /obj/structure/table,
 /obj/item/storage/bag/plants,
@@ -47688,11 +47686,12 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "rcM" = (
-/obj/structure/railing{
-	dir = 5
+/obj/machinery/singularity_turret{
+	dir = 10
 	},
-/turf/open/space/basic,
-/area/space)
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/station/singularity_bay)
 "rcW" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -50374,8 +50373,11 @@
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "rXh" = (
-/turf/closed/wall/r_wall,
-/area/station/singularity_bay)
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
 "rXB" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
@@ -54555,6 +54557,12 @@
 /obj/item/knife/kitchen,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
+"tsF" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
 "tsP" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
@@ -55175,13 +55183,12 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "tEG" = (
-/obj/structure/railing{
-	dir = 8
+/obj/machinery/singularity_turret{
+	dir = 6
 	},
-/obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/space/basic,
-/area/space/nearstation)
+/turf/open/floor/plating/airless,
+/area/station/singularity_bay)
 "tEP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -59348,12 +59355,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "vds" = (
-/obj/machinery/singularity_turret{
-	dir = 10
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/station/singularity_bay)
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/engineering/main)
 "vdx" = (
 /obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
@@ -62656,9 +62660,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "wjU" = (
+/obj/structure/lattice,
 /obj/structure/railing,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "wjW" = (
 /obj/structure/table/wood,
 /obj/item/cigbutt/cigarbutt{
@@ -67311,10 +67316,9 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "xUJ" = (
-/obj/structure/lattice,
-/obj/structure/railing,
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/singularity_bay)
 "xUK" = (
 /obj/structure/sign/poster/contraband/missing_gloves,
 /turf/closed/wall,
@@ -109734,17 +109738,17 @@ lMx
 rlu
 pTw
 uXd
-bfi
+vds
 vuJ
-bfi
+vds
 cFu
 uXd
-bfi
+vds
 wBM
-bfi
+vds
 dOs
 cFu
-bfi
+vds
 pqb
 sNt
 uXd
@@ -109992,7 +109996,7 @@ cuZ
 pTw
 uXd
 aaa
-qhD
+qLJ
 lMJ
 lMJ
 lMJ
@@ -110002,7 +110006,7 @@ lMJ
 lMJ
 lMJ
 lMJ
-qhD
+qLJ
 aaa
 uXd
 aOA
@@ -110247,20 +110251,20 @@ brE
 vtp
 fbf
 shV
-bfi
-qhD
+vds
+qLJ
 lCd
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
 lCd
-qhD
+qLJ
 uXd
 dKL
 oFH
@@ -110504,19 +110508,19 @@ hqL
 iSI
 qaA
 fqV
-bfi
+vds
 lMJ
-abi
 kIz
-pkc
-nWF
-nWF
 tEG
+fnC
 nWF
 nWF
-qLJ
-kjM
-abi
+hqb
+nWF
+nWF
+bfi
+jbJ
+kIz
 lMJ
 uXd
 qtH
@@ -110763,17 +110767,17 @@ kYG
 sGC
 uXd
 lMJ
-abi
-pkc
+kIz
 fnC
+qhD
 aaa
 aaa
 dJN
 aaa
 aaa
-qVG
-qLJ
-abi
+tsF
+bfi
+kIz
 lMJ
 uXd
 uJz
@@ -111019,8 +111023,8 @@ bwE
 syX
 nTA
 cKx
-qhD
-abi
+qLJ
+kIz
 gFb
 aaa
 aaa
@@ -111029,8 +111033,8 @@ dJN
 aaa
 aaa
 aaa
-wjU
-abi
+baS
+kIz
 lMJ
 fJy
 bDW
@@ -111275,9 +111279,9 @@ orT
 sph
 nTA
 qZI
-bfi
+vds
 lMJ
-abi
+kIz
 gFb
 aaa
 aaa
@@ -111286,8 +111290,8 @@ dJN
 lMJ
 aaa
 aaa
-wjU
-abi
+baS
+kIz
 lMJ
 fJy
 oUh
@@ -111532,19 +111536,19 @@ gDA
 sph
 owp
 tmq
-bfi
+vds
 lMJ
 kZI
 lMJ
-lMJ
+cAm
 lMJ
 lMJ
 mQE
 lMJ
 lMJ
 lMJ
-xUJ
-abi
+wjU
+kIz
 lMJ
 fKg
 uhu
@@ -111789,9 +111793,9 @@ orT
 sph
 vGw
 tmq
-bfi
+vds
 lMJ
-abi
+kIz
 gFb
 aaa
 aaa
@@ -111800,8 +111804,8 @@ lMJ
 lMJ
 aaa
 aaa
-wjU
-abi
+baS
+kIz
 lMJ
 fJy
 fJy
@@ -112047,8 +112051,8 @@ yli
 pmj
 pmj
 bgs
-qhD
-abi
+qLJ
+kIz
 gFb
 aaa
 aaa
@@ -112057,8 +112061,8 @@ lMJ
 aaa
 aaa
 aaa
-wjU
-abi
+baS
+kIz
 lMJ
 aUP
 dgd
@@ -112305,19 +112309,19 @@ kYG
 sGC
 uXd
 lMJ
-abi
-rcM
-lou
+kIz
+kjM
+rXh
 aaa
 aaa
 lMJ
 aaa
 aaa
-cAm
-hqb
-abi
+pkc
+fuE
+kIz
 lMJ
-baS
+xUJ
 aaa
 aYx
 dgf
@@ -112562,17 +112566,17 @@ aaa
 lAu
 lXN
 lMJ
-abi
-vds
+kIz
 rcM
+kjM
 mWd
 mWd
 lMJ
 mWd
 mWd
-hqb
 fuE
 abi
+kIz
 lMJ
 aUP
 dge
@@ -112817,21 +112821,21 @@ tCS
 aaa
 aaa
 aaa
-rXh
-qhD
+lou
+qLJ
 lCd
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
 lCd
-qhD
-rXh
+qLJ
+lou
 dgf
 dgk
 dgt
@@ -113074,7 +113078,7 @@ tCS
 aaa
 aaa
 aaa
-rXh
+lou
 lMJ
 lMJ
 lMJ
@@ -113088,7 +113092,7 @@ lMJ
 lMJ
 lMJ
 lMJ
-rXh
+lou
 aWK
 dgk
 dgt
@@ -113331,7 +113335,7 @@ aaa
 aaa
 aaa
 aaa
-rXh
+lou
 aaa
 aaa
 aaa
@@ -113345,7 +113349,7 @@ aaa
 aaa
 aaa
 aaa
-rXh
+lou
 dgg
 azd
 azd
@@ -113588,9 +113592,9 @@ aaa
 aaa
 aaa
 aaa
-rXh
+lou
 aaa
-qhD
+qLJ
 lMJ
 lMJ
 lMJ
@@ -113600,9 +113604,9 @@ lMJ
 lMJ
 lMJ
 lMJ
-qhD
+qLJ
 aaa
-rXh
+lou
 aWK
 dgk
 dgt
@@ -113845,9 +113849,9 @@ aaa
 aaa
 aaa
 aaa
-rXh
+lou
 aaa
-qhD
+qLJ
 aaa
 aaa
 aaa
@@ -113857,9 +113861,9 @@ aaa
 aaa
 aaa
 aaa
-qhD
+qLJ
 aaa
-rXh
+lou
 dgh
 dgk
 dgk
@@ -114102,9 +114106,9 @@ lMJ
 lMJ
 lMJ
 lMJ
-rXh
+lou
 aaa
-qhD
+qLJ
 aaa
 aaa
 aaa
@@ -114114,9 +114118,9 @@ aaa
 aaa
 aaa
 aaa
-qhD
+qLJ
 aaa
-rXh
+lou
 aWK
 dgm
 dgu

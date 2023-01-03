@@ -260,7 +260,7 @@
 
 	for (var/_thing in to_move)
 		var/atom/thing = _thing
-		if (SEND_SIGNAL(thing, COMSIG_ATOM_SINGULARITY_TRY_MOVE) & SINGULARITY_TRY_MOVE_BLOCK)
+		if (SEND_SIGNAL(thing, COMSIG_ATOM_SINGULARITY_TRY_MOVE, parent) & SINGULARITY_TRY_MOVE_BLOCK)
 			return FALSE
 
 	return TRUE
