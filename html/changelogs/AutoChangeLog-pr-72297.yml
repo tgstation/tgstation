@@ -1,4 +1,0 @@
-author: "lnGoror"
-delete-after: True
-changes:
-  - bugfix: "fixed pAIs and simplemobs getting deaf when moving out of a headwear slot."
