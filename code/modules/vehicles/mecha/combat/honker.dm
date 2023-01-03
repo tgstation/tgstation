@@ -76,6 +76,20 @@
 		return
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 
+/obj/vehicle/sealed/mecha/honker/dark/add_scanmod(obj/item/stock_parts/scanning_module/sm=null)
+	if(sm)
+		sm.forceMove(src)
+		scanmod = sm
+		return
+	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
+
+/obj/vehicle/sealed/mecha/honker/dark/add_capacitor(obj/item/stock_parts/capacitor/cap=null)
+	if(cap)
+		cap.forceMove(src)
+		capacitor = cap
+	else
+		capacitor = new /obj/item/stock_parts/capacitor/super(src)
+
 /obj/structure/mecha_wreckage/honker/dark
 	name = "\improper Dark H.O.N.K wreckage"
 	icon_state = "darkhonker-broken"
