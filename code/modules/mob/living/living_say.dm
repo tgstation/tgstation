@@ -382,7 +382,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(length(tts_filter) > 0)
 		filter += tts_filter.Join(",")
 
-	if(src.voice && found_client)
+	if(src.voice && found_client && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, src.voice, filter.Join(","), client != null)
 
 
