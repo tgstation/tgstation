@@ -6,7 +6,7 @@
 	/// The keg located within the beer nuke.
 	var/obj/structure/reagent_dispensers/beerkeg/keg
 	/// Reagent that is produced once the nuke detonates.
-	var/datum/reagent/flood_reagent = /datum/reagent/consumable/ethanol/beer
+	var/flood_reagent = /datum/reagent/consumable/ethanol/beer
 
 /obj/machinery/nuclearbomb/beer/Initialize(mapload)
 	. = ..()
@@ -61,7 +61,7 @@
 
 /obj/machinery/nuclearbomb/beer/really_actually_explode(detonation_status)
 	disarm_nuke()
-	if (flood_reagent != /datum/reagent/consumable/ethanol/beer)
+	if (flood_reagent != initial(flood_reagent))
 		var/datum/round_event_control/scrubber_overflow/custom/event = locate(/datum/round_event_control/scrubber_overflow/custom) in SSevents.control
 		event.custom_reagent = flood_reagent
 		event.runEvent()

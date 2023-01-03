@@ -156,9 +156,9 @@
 	typepath = /datum/round_event/scrubber_overflow/custom
 	weight = 0
 	max_occurrences = 0
-	description = "The scrubbers release a tide of custom froth"
+	description = "The scrubbers release a tide of custom froth."
 	///Reagent thats going to be flooded.
-	var/datum/reagent/custom_reagent
+	var/custom_reagent
 
 /datum/round_event_control/scrubber_overflow/custom/admin_setup(mob/admin)
 	if(!check_rights(R_FUN))
@@ -175,4 +175,4 @@
 /datum/round_event/scrubber_overflow/custom/start()
 	var/datum/round_event_control/scrubber_overflow/custom/event_controller = control
 	forced_reagent = event_controller.custom_reagent
-	. = ..()
+	return ..()
