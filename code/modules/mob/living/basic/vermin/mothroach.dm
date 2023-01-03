@@ -57,13 +57,22 @@
 	else
 		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
 
-/mob/living/basic/mothroach/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if("help")
-	user.visible_message(span_notice("[user] pets [src]."), span_notice("You rest your hand on the [src]'s head for a moment."))
-	if(flags_1 & HOLOGRAM_1)
-		return
-	user.add_mood_event(REF(src), /datum/mood_event/pet_animal, src)
-	return
+/mob/living/basic/mothroach/attack_hand(mob/living/carbon/human/userM)
+. = ..()
+	switch(userM.a_intent)
+		if("help")
+			habby(TRUE, userM)
+		if("harm")
+			habby(FALSE, userM)
+
+/mob/living/basic/mothroach/proc/habby(change, mob/userM)
+	if(change)
+		if(userM && stat != DEAD)
+			userM.visible_message(span_notice("[userM] pets [src]."), span_notice("You rest your hand on the [src]'s head for a moment."))
+			if(flags_1 & HOLOGRAM_1)
+				return
+			userM.add_mood_event(REF(src), /datum/mood_event/pet_animal, src)
+			return
 
 /mob/living/basic/mothroach/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
