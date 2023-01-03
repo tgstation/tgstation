@@ -2412,7 +2412,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/lazarus_revive(mob/living/reviver, malfunctioning)
 	revive(HEAL_ALL)
 	befriend(reviver)
-	faction = (malfunctioning) ? list("[REF(reviver)]") : reviver.faction.Copy()
+	faction = (malfunctioning) ? list("[REF(reviver)]") : list(FACTION_NEUTRAL)
 	if (malfunctioning)
 		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)
 
