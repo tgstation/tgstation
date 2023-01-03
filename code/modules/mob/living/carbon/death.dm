@@ -6,9 +6,8 @@
 
 	if(!gibbed)
 		INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp")
+		add_memory_in_range(src, 7, /datum/memory/witnessed_death, protagonist = src)
 	reagents.end_metabolization(src)
-
-	add_memory_in_range(src, 7, MEMORY_DEATH, list(DETAIL_PROTAGONIST = src), memory_flags = MEMORY_FLAG_NOMOOD, story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF)
 
 	. = ..()
 
@@ -26,7 +25,7 @@
 	animate(src, time = 40, transform = M, easing = SINE_EASING)
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts, safe_gib = FALSE)
-	add_memory_in_range(src, 7, MEMORY_GIBBED, list(DETAIL_PROTAGONIST = src), STORY_VALUE_AMAZING, MEMORY_FLAG_NOMOOD, memory_flags = MEMORY_CHECK_BLINDNESS)
+	add_memory_in_range(src, 7, /datum/memory/witness_gib, protagonist = src)
 	if(safe_gib) // If you want to keep all the mob's items and not have them deleted
 		for(var/obj/item/W in src)
 			dropItemToGround(W)

@@ -221,20 +221,12 @@
 		var/loaded_rounds = get_ammo(FALSE, FALSE) // check before it is fired
 
 		if(loaded_rounds && is_target_face)
-			add_memory_in_range(
-				user,
-				7,
-				MEMORY_RUSSIAN_ROULETTE,
-				list(
-					DETAIL_PROTAGONIST = user,
-					DETAIL_LOADED_ROUNDS = loaded_rounds,
-					DETAIL_BODYPART = affecting.name,
-					DETAIL_OUTCOME = (chambered ? "lost" : "won")
-				),
-				story_value = chambered ? STORY_VALUE_SHIT : max(STORY_VALUE_NONE, loaded_rounds), // the more bullets, the greater the story (but losing is always SHIT)
-				memory_flags = MEMORY_CHECK_BLINDNESS,
-				protagonist_memory_flags = NONE
-			)
+			add_memory_in_range(user, 7, /datum/memory/witnessed_russian_roulette, \
+				protagonist = user, \
+				antagonist = src, \
+				rounds_loaded = loaded_rounds, \
+				aimed_at =  affecting.name, \
+				result = (chambered ? "lost" : "won"))
 
 		if(chambered)
 			var/obj/item/ammo_casing/AC = chambered
