@@ -1384,7 +1384,8 @@
 "aDV" = (
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
-/obj/structure/industrial_lift/tram/accessible,
+/obj/structure/industrial_lift/tram,
+/obj/structure/chair/sofa/bench/tram/right,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "aEo" = (
@@ -44619,8 +44620,9 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
 "qeb" = (
-/obj/structure/industrial_lift/tram/accessible,
+/obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
+/obj/structure/chair/sofa/bench/tram/left,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "qec" = (
@@ -48295,7 +48297,10 @@
 /area/station/medical/storage)
 "rrF" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram/accessible,
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "rrM" = (
@@ -66818,7 +66823,8 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram/accessible,
+/obj/structure/railing,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "xZx" = (

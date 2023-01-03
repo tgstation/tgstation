@@ -31,11 +31,15 @@
 	greyscale_colors = "#00CCFF"
 
 /obj/structure/chair/sofa/bench/tram/left
+	name = "tram seating"
+	desc = "Not the most comfortable, but easy to keep clean!"
 	icon_state = "bench_left"
 	greyscale_config = /datum/greyscale_config/bench_left
 	greyscale_colors = "#00CCFF"
 
 /obj/structure/chair/sofa/bench/tram/right
+	name = "tram seating"
+	desc = "Not the most comfortable, but easy to keep clean!"
 	icon_state = "bench_right"
 	greyscale_config = /datum/greyscale_config/bench_right
 	greyscale_colors = "#00CCFF"
