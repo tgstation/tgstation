@@ -169,7 +169,7 @@
 
 /datum/round_event/scrubber_overflow/custom
 	overflow_probability = 100
-	forced_reagent = /datum/reagent/consumable/ethanol/beer
+	forced_reagent = /datum/reagent/lube/superlube
 	reagents_amount = 100
 
 /datum/round_event/scrubber_overflow/custom/start()
