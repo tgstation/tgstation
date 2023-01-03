@@ -29,11 +29,11 @@
 	. = ..()
 	if(!loaded || !(isliving(target) && proximity_flag) )
 		return
-	if(!isanimal(target))
+	if(!isanimal_or_basicmob(target))
 		to_chat(user, span_info("[src] is only effective on lesser beings."))
 		return
 
-	var/mob/living/simple_animal/target_animal = target
+	var/mob/living/simple_animal/target_animal = target // It might actually be a basic mob but sentience_type isn't on Living
 	if(target_animal.sentience_type != revive_type)
 		to_chat(user, span_info("[src] does not work on this sort of creature."))
 		return
@@ -41,6 +41,7 @@
 		to_chat(user, span_info("[src] is only effective on the dead."))
 		return
 
+	target_animal.lazarus_revive(user, malfunctioning)
 	target_animal.faction = list(FACTION_NEUTRAL)
 	target_animal.revive(HEAL_ALL)
 	if(ishostile(target))
@@ -50,7 +51,6 @@
 			target_hostile.robust_searching = TRUE
 			target_hostile.friends += user
 			target_hostile.attack_same = TRUE
-			user.log_message("has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector.", LOG_GAME)
 		else
 			target_hostile.attack_same = FALSE
 	loaded = FALSE

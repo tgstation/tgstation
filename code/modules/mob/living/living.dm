@@ -2408,6 +2408,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. = ..()
 	add_mood_event("gaming", /datum/mood_event/gaming)
 
+/mob/living/proc/lazarus_revive(mob/living/reviver, malfunctioning)
+	faction = (malfunctioning) ? list("[REF(reviver)]") : reviver.faction.Copy()
+	befriend(reviver)
+	revive(HEAL_ALL)
+	if (malfunctioning)
+		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)
+
 /// Proc for giving a mob a new 'friend', generally used for AI control and targetting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
