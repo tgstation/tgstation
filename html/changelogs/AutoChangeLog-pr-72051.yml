@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Rats won't continue attacking someone they've been ordered to kill past the point of death."

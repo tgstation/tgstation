@@ -48,11 +48,10 @@
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_pestlevel(-rand(1,5))
-		mytray.adjust_weedlevel(-rand(1,5))
+	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
+	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
+	mytray.adjust_pestlevel(-rand(1,5))
+	mytray.adjust_weedlevel(-rand(1,5))
 	if(chems.has_reagent(type, 3))
 		switch(rand(100))
 			if(66  to 100)
@@ -86,7 +85,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjust_drowsyness(-5 * REM * delta_time)
+	affected_mob.adjust_drowsiness(-10 SECONDS * REM * delta_time)
 	affected_mob.AdjustStun(-20 * REM * delta_time)
 	affected_mob.AdjustKnockdown(-20 * REM * delta_time)
 	affected_mob.AdjustUnconscious(-20 * REM * delta_time)
@@ -108,7 +107,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjust_drowsyness(-5 * REM * delta_time)
+	affected_mob.adjust_drowsiness(-10 SECONDS * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/histamine))
@@ -558,7 +557,7 @@
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		affected_mob.adjust_drowsyness(1)
+		affected_mob.adjust_drowsiness(2 SECONDS)
 	affected_mob.adjust_jitter(-2 SECONDS * REM * delta_time)
 	holder.remove_reagent(/datum/reagent/toxin/histamine, 3 * REM * delta_time)
 	..()
@@ -589,7 +588,7 @@
 		if(11)
 			to_chat(affected_mob, span_warning("You start to feel tired...") )
 		if(12 to 24)
-			affected_mob.adjust_drowsyness(1 * REM * delta_time)
+			affected_mob.adjust_drowsiness(2 SECONDS * REM * delta_time)
 		if(24 to INFINITY)
 			affected_mob.Sleeping(40 * REM * delta_time)
 			. = TRUE
@@ -658,7 +657,7 @@
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjust_blindness(-2 * REM * delta_time * normalise_creation_purity())
-	affected_mob.adjust_blurriness(-2 * REM * delta_time * normalise_creation_purity())
+	affected_mob.adjust_eye_blur(-4 SECONDS * REM * delta_time * normalise_creation_purity())
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return ..()
@@ -671,11 +670,11 @@
 			to_chat(affected_mob, span_warning("Your vision slowly returns..."))
 			affected_mob.cure_blind(EYE_DAMAGE)
 			affected_mob.cure_nearsighted(EYE_DAMAGE)
-			affected_mob.blur_eyes(35)
+			affected_mob.set_eye_blur_if_lower(70 SECONDS)
 	else if(HAS_TRAIT_FROM(affected_mob, TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(affected_mob, span_warning("The blackness in your peripheral vision fades."))
 		affected_mob.cure_nearsighted(EYE_DAMAGE)
-		affected_mob.blur_eyes(10)
+		affected_mob.set_eye_blur_if_lower(20 SECONDS)
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/affected_mob)
@@ -840,8 +839,7 @@
 // FEED ME SEYMOUR
 /datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.spawnplant()
+	mytray.spawnplant()
 
 /// Calculates the amount of reagent to at a bare minimum make the target not dead
 /datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_revive(mob/living/benefactor)
@@ -1021,12 +1019,18 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/antihol
+	/// All status effects we remove on metabolize.
+	/// Does not include drunk (despite what you may thing) as that's decresed gradually
+	var/static/list/status_effects_to_clear = list(
+		/datum/status_effect/confusion,
+		/datum/status_effect/dizziness,
+		/datum/status_effect/drowsiness,
+		/datum/status_effect/speech/slurring/drunk,
+	)
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.remove_status_effect(/datum/status_effect/dizziness)
-	affected_mob.set_drowsyness(0)
-	affected_mob.remove_status_effect(/datum/status_effect/speech/slurring/drunk)
-	affected_mob.remove_status_effect(/datum/status_effect/confusion)
+	for(var/effect in status_effects_to_clear)
+		affected_mob.remove_status_effect(effect)
 	affected_mob.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	affected_mob.adjustToxLoss(-0.2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	affected_mob.adjust_drunk_effect(-10 * REM * delta_time * normalise_creation_purity())
@@ -1221,7 +1225,7 @@
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	for(var/datum/reagent/drug/R in affected_mob.reagents.reagent_list)
 		affected_mob.reagents.remove_reagent(R.type, 5 * REM * delta_time)
-	affected_mob.adjust_drowsyness(2 * REM * delta_time)
+	affected_mob.adjust_drowsiness(4 SECONDS * REM * delta_time)
 
 	if(affected_mob.get_timed_status_effect_duration(/datum/status_effect/jitter) >= 6 SECONDS)
 		affected_mob.adjust_jitter(-6 SECONDS * REM * delta_time)
