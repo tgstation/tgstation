@@ -159,12 +159,6 @@
 			if(occupants)
 				SSexplosions.low_mov_atom += occupants
 
-/obj/vehicle/sealed/mecha/handle_atom_del(atom/A)
-	if(A in occupants) //todo does not work and in wrong file
-		LAZYREMOVE(occupants, A)
-		icon_state = initial(icon_state)+"-open"
-		setDir(dir_in)
-
 /obj/vehicle/sealed/mecha/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
@@ -173,6 +167,13 @@
 		use_power((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
+
+	//Mess with the focus of the inbuilt camera if present
+	if(chassis_camera && !chassis_camera.is_emp_scrambled)
+		chassis_camera.setViewRange(chassis_camera.short_range)
+		chassis_camera.is_emp_scrambled = TRUE
+		diag_hud_set_camera()
+		addtimer(CALLBACK(chassis_camera, TYPE_PROC_REF(/obj/machinery/camera/exosuit, emp_refocus), src), 10 SECONDS / severity)
 
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
@@ -313,6 +314,10 @@
 /obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/I)
 	..()
 	. = TRUE
+	if(istype(I, /obj/item/crowbar/mechremoval))
+		var/obj/item/crowbar/mechremoval/remover = I
+		remover.empty_mech(src, user)
+		return
 	if(construction_state == MECHA_LOOSE_BOLTS)
 		construction_state = MECHA_OPEN_HATCH
 		to_chat(user, span_notice("You open the hatch to the power unit."))

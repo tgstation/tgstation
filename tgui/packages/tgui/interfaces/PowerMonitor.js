@@ -60,7 +60,7 @@ export const PowerMonitorContent = (props, context) => {
               <Icon name="plug-circle-exclamation" size={2} />
             </Stack.Item>
             <Stack.Item>
-              <h1>No powernet found!</h1>
+              <h1>No APCs found!</h1>
             </Stack.Item>
           </Stack>
         </Dimmer>

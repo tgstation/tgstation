@@ -6,7 +6,7 @@
  */
 /datum/element/backblast
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	/// How many "pellets" of backblast we're shooting backwards, spread between the angle defined in angle_spread
 	var/plumes

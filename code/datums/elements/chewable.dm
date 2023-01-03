@@ -2,7 +2,7 @@
 /// item to the user when it is equipped.
 /datum/element/chewable
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY | ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	/// The amount to metabolize per second
 	var/metabolization_amount = REAGENTS_METABOLISM

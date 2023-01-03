@@ -116,14 +116,16 @@
 		return TRUE
 	return ..()
 
-/mob/living/simple_animal/hostile/mushroom/revive(full_heal = FALSE, admin_revive = FALSE)
-	if(..())
-		icon_state = "mushroom_color"
-		UpdateMushroomCap()
-		. = 1
+/mob/living/simple_animal/hostile/mushroom/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	icon_state = "mushroom_color"
+	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/death(gibbed)
-	..(gibbed)
+	. = ..()
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
@@ -138,7 +140,7 @@
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message(span_notice("[src] slowly begins to recover."))
 	faint_ticker = 0
-	revive(full_heal = TRUE, admin_revive = FALSE)
+	revive(HEAL_ALL)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
 	addtimer(CALLBACK(src, PROC_REF(recovery_recharge)), 300)

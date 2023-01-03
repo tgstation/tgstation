@@ -507,7 +507,7 @@
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
@@ -1367,9 +1367,9 @@ GLOBAL_LIST_EMPTY(intento_players)
 #define STATE_END_OF_GAME "end_of_game"
 #define STATE_RETALIATION "retaliation"
 
-#define TIME_TO_BEGIN 1.6 SECONDS
-#define TIME_PER_DEMO_STEP 0.6 SECONDS
-#define TIME_TO_RESET_ICON 0.5 SECONDS
+#define TIME_TO_BEGIN (1.6 SECONDS)
+#define TIME_PER_DEMO_STEP (0.6 SECONDS)
+#define TIME_TO_RESET_ICON (0.5 SECONDS)
 
 /obj/item/toy/intento
 	name = "\improper Intento"
@@ -1414,8 +1414,8 @@ GLOBAL_LIST_EMPTY(intento_players)
 		return
 
 	var/input
-	var/icon_x = text2num(modifiers["icon-x"])
-	var/icon_y = text2num(modifiers["icon-y"])
+	var/icon_x = text2num(modifiers[ICON_X])
+	var/icon_y = text2num(modifiers[ICON_Y])
 	if(icon_x > ICON_SPLIT && icon_y > ICON_SPLIT)
 		input = DISARM
 	if(icon_x < ICON_SPLIT && icon_y > ICON_SPLIT)

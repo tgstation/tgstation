@@ -49,15 +49,8 @@
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
-
-/datum/antagonist/heretic/Destroy()
-	LAZYNULL(sac_targets)
-	return ..()
-
-/datum/antagonist/heretic/ui_data(mob/user)
-	var/list/data = list()
-
-	var/static/list/path_to_color = list(
+	/// Static list of what each path converts to in the UI (colors are TGUI colors)
+	var/static/list/path_to_ui_color = list(
 		PATH_START = "grey",
 		PATH_SIDE = "green",
 		PATH_RUST = "brown",
@@ -67,8 +60,20 @@
 		PATH_BLADE = "label", // my favorite color is label
 	)
 
-	data["charges"] = knowledge_points
+/datum/antagonist/heretic/Destroy()
+	LAZYNULL(sac_targets)
+	return ..()
 
+/datum/antagonist/heretic/ui_data(mob/user)
+	var/list/data = list()
+
+	data["charges"] = knowledge_points
+	data["total_sacrifices"] = total_sacrifices
+	data["ascended"] = ascended
+
+	// This should be cached in some way, but the fact that final knowledge
+	// has to update its disabled state based on whether all objectives are complete,
+	// makes this very difficult. I'll figure it out one day maybe
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = list()
 		knowledge_data["path"] = knowledge
@@ -83,9 +88,16 @@
 			knowledge_data["disabled"] = !can_ascend()
 
 		knowledge_data["hereticPath"] = initial(knowledge.route)
-		knowledge_data["color"] = path_to_color[initial(knowledge.route)] || "grey"
+		knowledge_data["color"] = path_to_ui_color[initial(knowledge.route)] || "grey"
 
 		data["learnableKnowledge"] += list(knowledge_data)
+
+	return data
+
+/datum/antagonist/heretic/ui_static_data(mob/user)
+	var/list/data = list()
+
+	data["objectives"] = get_objectives()
 
 	for(var/path in researched_knowledge)
 		var/list/knowledge_data = list()
@@ -95,18 +107,9 @@
 		knowledge_data["gainFlavor"] = found_knowledge.gain_text
 		knowledge_data["cost"] = found_knowledge.cost
 		knowledge_data["hereticPath"] = found_knowledge.route
-		knowledge_data["color"] = path_to_color[found_knowledge.route] || "grey"
+		knowledge_data["color"] = path_to_ui_color[found_knowledge.route] || "grey"
 
 		data["learnedKnowledge"] += list(knowledge_data)
-
-	return data
-
-/datum/antagonist/heretic/ui_static_data(mob/user)
-	var/list/data = list()
-
-	data["total_sacrifices"] = total_sacrifices
-	data["ascended"] = ascended
-	data["objectives"] = get_objectives()
 
 	return data
 
@@ -122,9 +125,9 @@
 				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path])")
 
 			if(initial(researched_path.cost) > knowledge_points)
-				return
+				return TRUE
 			if(!gain_knowledge(researched_path))
-				return
+				return TRUE
 
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			knowledge_points -= initial(researched_path.cost)
@@ -183,7 +186,7 @@
 /datum/antagonist/heretic/on_removal()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_lose(owner.current)
+		knowledge.on_lose(owner.current, src)
 
 	GLOB.reality_smash_track.remove_tracked_mind(owner)
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
@@ -194,7 +197,7 @@
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
 
-	RegisterSignal(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
+	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(on_item_afterattack))
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, PROC_REF(fix_influence_network))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
@@ -218,8 +221,8 @@
 	. = ..()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_lose(old_body)
-		knowledge.on_gain(new_body)
+		knowledge.on_lose(old_body, src)
+		knowledge.on_gain(new_body, src)
 
 /*
  * Signal proc for [COMSIG_MOB_BEFORE_SPELL_CAST] and [COMSIG_MOB_SPELL_ACTIVATED].
@@ -476,7 +479,7 @@
 
 	.["Adjust Knowledge Points"] = CALLBACK(src, PROC_REF(admin_change_points))
 
-/*
+/**
  * Admin proc for giving a heretic a Living Heart easily.
  */
 /datum/antagonist/heretic/proc/give_living_heart(mob/admin)
@@ -489,9 +492,9 @@
 		to_chat(admin, span_warning("The heretic doesn't have a living heart knowledge for some reason. What?"))
 		return
 
-	heart_knowledge.on_research(owner.current)
+	heart_knowledge.on_research(owner.current, src)
 
-/*
+/**
  * Admin proc for adding a marked mob to a heretic's sac list.
  */
 /datum/antagonist/heretic/proc/add_marked_as_target(mob/admin)
@@ -510,7 +513,7 @@
 
 	add_sacrifice_target(new_target)
 
-/*
+/**
  * Admin proc for removing a mob from a heretic's sac list.
  */
 /datum/antagonist/heretic/proc/remove_target(mob/admin)
@@ -536,7 +539,7 @@
 	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
 		to_chat(owner.current, span_danger("The Mansus has modified your targets."))
 
-/*
+/**
  * Admin proc for easily adding / removing knowledge points.
  */
 /datum/antagonist/heretic/proc/admin_change_points(mob/admin)
@@ -575,7 +578,7 @@
 		. += "<i>None!</i><br>"
 	. += "<br>"
 
-/*
+/**
  * Learns the passed [typepath] of knowledge, creating a knowledge datum
  * and adding it to our researched knowledge list.
  *
@@ -589,10 +592,11 @@
 		return FALSE
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
 	researched_knowledge[knowledge_type] = initialized_knowledge
-	initialized_knowledge.on_research(owner.current)
+	initialized_knowledge.on_research(owner.current, src)
+	update_static_data(owner.current)
 	return TRUE
 
-/*
+/**
  * Get a list of all knowledge TYPEPATHS that we can currently research.
  */
 /datum/antagonist/heretic/proc/get_researchable_knowledge()
@@ -606,13 +610,13 @@
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
 
-/*
+/**
  * Check if the wanted type-path is in the list of research knowledge.
  */
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
 
-/*
+/**
  * Get a list of all rituals this heretic can invoke on a rune.
  * Iterates over all of our knowledge and, if we can invoke it, adds it to our list.
  *
@@ -629,7 +633,7 @@
 
 	return sortTim(rituals, GLOBAL_PROC_REF(cmp_heretic_knowledge), associative = TRUE)
 
-/*
+/**
  * Checks to see if our heretic can ccurrently ascend.
  *
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
@@ -640,7 +644,7 @@
 			return FALSE
 	return TRUE
 
-/*
+/**
  * Helper to determine if a Heretic
  * - Has a Living Heart
  * - Has a an organ in the correct slot that isn't a living heart
@@ -666,7 +670,7 @@
 
 /datum/objective/minor_sacrifice/New(text)
 	. = ..()
-	target_amount = rand(2, 3)
+	target_amount = rand(3, 4)
 	update_explanation_text()
 
 /datum/objective/minor_sacrifice/update_explanation_text()

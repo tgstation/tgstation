@@ -11,7 +11,6 @@
 	var/list/atom/movable/screen/plane_master/plane_masters = list()
 	/// The visual offset we are currently using
 	var/active_offset = 0
-
 	/// What, if any, submap we render onto
 	var/map = ""
 
@@ -94,7 +93,8 @@
 // It's hard, and potentially expensive. be careful
 /datum/plane_master_group/proc/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
 	// Check if this feature is disabled for the client, in which case don't use scale.
-	if(!our_hud?.mymob?.client?.prefs?.read_preference(/datum/preference/toggle/multiz_parallax))
+	var/mob/our_mob = our_hud?.mymob
+	if(!our_mob?.client?.prefs?.read_preference(/datum/preference/toggle/multiz_parallax))
 		use_scale = FALSE
 
 	// No offset? piss off
@@ -115,8 +115,15 @@
 		scale_by = 1
 
 	var/list/offsets = list()
+	var/multiz_boundary = our_mob?.client?.prefs?.read_preference(/datum/preference/numeric/multiz_performance)
+
 	// We accept negatives so going down "zooms" away the drop above as it goes
 	for(var/offset in -SSmapping.max_plane_offset to SSmapping.max_plane_offset)
+		// Multiz boundaries disable transforms
+		if(multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && (multiz_boundary < abs(offset)))
+			offsets += null
+			continue
+
 		// No transformations if we're landing ON you
 		if(offset == 0)
 			offsets += null
@@ -132,11 +139,23 @@
 
 	for(var/plane_key in plane_masters)
 		var/atom/movable/screen/plane_master/plane = plane_masters[plane_key]
-		if(!plane.multiz_scaled || !plane.allows_offsetting)
+		if(!plane.allows_offsetting)
 			continue
 
 		var/visual_offset = plane.offset - new_offset
-		if(plane.force_hidden || visual_offset < 0)
+		// we get like 47 -> 42 from just no AO/displace on lower levels. 39 with no FOV blocking
+		// 31 with only barebones lower planes
+
+		// Basically uh, if we're showing something down X amount of levels, or up any amount of levels
+		if(multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && (visual_offset > multiz_boundary || visual_offset < 0))
+			plane.outside_bounds(our_mob)
+		else if(plane.is_outside_bounds)
+			plane.inside_bounds(our_mob)
+
+		if(!plane.multiz_scaled)
+			continue
+
+		if(plane.force_hidden || plane.is_outside_bounds || visual_offset < 0)
 			// We don't animate here because it should be invisble, but we do mark because it'll look nice
 			plane.transform = offsets[visual_offset + offset_offset]
 			continue

@@ -1,3 +1,7 @@
+// don't produce a comment if the dice has less than this many sides
+// so you don't have d1's and d4's constantly producing comments
+#define MIN_SIDES_ALERT 5
+
 ///holding bag for dice
 /obj/item/storage/dice
 	name = "bag of dice"
@@ -136,7 +140,7 @@
 	desc = "A die with six sides but only three results. Is this a plus or a minus? Your mind is drawing a blank..."
 	sides = 3 //shhh
 	icon_state = "fudge"
-	special_faces = list("minus","blank","plus")
+	special_faces = list("minus","blank" = "You aren't sure how to feel.","plus")
 
 /obj/item/dice/d8
 	name = "d8"
@@ -155,6 +159,9 @@
 	desc = "A die with ten sides. Works better for d100 rolls than a golf ball."
 	icon_state = "d00"
 	sides = 10
+
+/obj/item/dice/d00/manipulate_result(original)
+	return (original - 1)*10  // 10, 20, 30, etc
 
 /obj/item/dice/d12
 	name = "d12"
@@ -222,15 +229,18 @@
 
 	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
-	if(sides == 20 && result == 20)
-		comment = "NAT 20!"
-	else if(sides == 20 && result == 1)
+	if(sides > MIN_SIDES_ALERT && result == 1)  // less comment spam
 		comment = "Ouch, bad luck."
+	if(sides == 20 && result == 20)
+		comment = "NAT 20!"  // maint wanted this hardcoded to nat20 don't blame me
 	update_appearance()
-	if(initial(icon_state) == "d00")
-		result = (result - 1)*10
+	result = manipulate_result(result)
 	if(special_faces.len == sides)
+		comment = ""  // its not a number
 		result = special_faces[result]
+		if(!ISINTEGER(result))
+			comment = special_faces[result]  // should be a str now
+
 	if(user != null) //Dice was rolled in someone's hand
 		user.visible_message(span_notice("[user] throws [src]. It lands on [result]. [comment]"), \
 			span_notice("You throw [src]. It lands on [result]. [comment]"), \
@@ -248,6 +258,10 @@
 		rigged_value = result
 
 	return ..() | COMPONENT_MICROWAVE_SUCCESS
+
+/// A proc to modify the displayed result. (Does not affect what the icon_state is passed.)
+/obj/item/dice/proc/manipulate_result(original)
+	return original
 
 // Die of fate stuff
 /obj/item/dice/d20/fate
@@ -382,7 +396,7 @@
 		if(12)
 			//Healing
 			selected_turf.visible_message(span_userdanger("[user] looks very healthy!"))
-			user.revive(full_heal = TRUE, admin_revive = TRUE)
+			user.revive(ADMIN_HEAL_ALL)
 		if(13)
 			//Mad Dosh
 			selected_turf.visible_message(span_userdanger("Mad dosh shoots out of [src]!"))
@@ -411,18 +425,18 @@
 			var/mob/living/carbon/human/human_servant = new(drop_location())
 			do_smoke(0, holder = src, location = drop_location())
 
-			human_servant.equipOutfit(/datum/outfit/butler)
-			var/datum/mind/servant_mind = new /datum/mind()
-			var/datum/antagonist/magic_servant/servant_antagonist = new
-			servant_mind.add_antag_datum(servant_antagonist)
-			servant_antagonist.setup_master(user)
-			servant_mind.transfer_to(human_servant)
-
 			var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [user.real_name]'s Servant?", ROLE_WIZARD, ROLE_WIZARD, 5 SECONDS, human_servant)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/candidate = pick(candidates)
 				message_admins("[ADMIN_LOOKUPFLW(candidate)] was spawned as Dice Servant")
 				human_servant.key = candidate.key
+
+			human_servant.equipOutfit(/datum/outfit/butler)
+			var/datum/mind/servant_mind = new /datum/mind()
+			var/datum/antagonist/magic_servant/servant_antagonist = new
+			servant_mind.transfer_to(human_servant)
+			servant_antagonist.setup_master(user)
+			servant_mind.add_antag_datum(servant_antagonist)
 
 			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, human_servant)
 			summon_servant.Grant(user)
@@ -495,3 +509,5 @@
 		asoundout = 'sound/magic/wand_teleport.ogg',
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
+
+#undef MIN_SIDES_ALERT

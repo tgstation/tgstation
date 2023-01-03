@@ -80,19 +80,14 @@
 	var/stand_up = (target.stat == DEAD) || (target.stat == UNCONSCIOUS)
 
 	//Fully heal the zombie's damage the first time they rise
-	target.setToxLoss(0, 0)
-	target.setOxyLoss(0, 0)
-	target.heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE)
-
-	if(!target.revive())
+	if(!target.heal_and_revive(0, span_danger("[target] suddenly convulses, as [target.p_they()][stand_up ? " stagger to [target.p_their()] feet and" : ""] gain a ravenous hunger in [target.p_their()] eyes!")))
 		return
 
-	target.grab_ghost()
-	target.visible_message(span_danger("[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!"), span_alien("You HUNGER!"))
-	playsound(target.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+	to_chat(target, span_alien("You HUNGER!"))
+	to_chat(target, span_alertalien("You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence."))
+	playsound(target, 'sound/hallucinations/far_noise.ogg', 50, 1)
 	target.do_jitter_animation(living_transformation_time)
 	target.Stun(living_transformation_time)
-	to_chat(target, span_alertalien("You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence."))
 
 /obj/item/organ/internal/zombie_infection/nodamage
 	causes_damage = FALSE

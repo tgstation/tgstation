@@ -5,7 +5,7 @@ This element is used in vat growing to allow for the object to be
 */
 /datum/element/swabable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///The define of the cell_line list to use
 	var/cell_line_define
 	///The define of the cell_virus list to use

@@ -15,8 +15,8 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 #define MAX_SCAN_DISTANCE 10
 
 #define WIDE_SCAN_COST(BAND, SCAN_POWER) (((BAND*BAND)/(SCAN_POWER))*2*60*10)
-#define BASE_POINT_SCAN_TIME 5 MINUTES
-#define BASE_DEEP_SCAN_TIME 5 MINUTES
+#define BASE_POINT_SCAN_TIME (5 MINUTES)
+#define BASE_DEEP_SCAN_TIME (5 MINUTES)
 
 /// Represents scan in progress, only one globally for now, todo later split per z or allow partial dish swarm usage
 /datum/exoscan
@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /obj/machinery/exoscanner/Initialize(mapload)
 	. = ..()
-	RegisterSignal(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED), PROC_REF(scan_change))
+	RegisterSignals(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED), PROC_REF(scan_change))
 	update_readiness()
 
 /obj/machinery/exoscanner/proc/scan_change()

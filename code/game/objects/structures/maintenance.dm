@@ -116,7 +116,7 @@ at the cost of risking a vicious bite.**/
 #define ALTAR_STAGEONE 1
 #define ALTAR_STAGETWO 2
 #define ALTAR_STAGETHREE 3
-#define ALTAR_TIME 9.5 SECONDS
+#define ALTAR_TIME (9.5 SECONDS)
 
 /obj/structure/destructible/cult/pants_altar
 	name = "strange structure"
@@ -198,7 +198,7 @@ at the cost of risking a vicious bite.**/
 	update_icon()
 	visible_message(span_warning("You start feeling nauseous..."))
 	for(var/mob/living/viewing_mob in viewers(7, src))
-		viewing_mob.blur_eyes(10)
+		viewing_mob.set_eye_blur_if_lower(20 SECONDS)
 		viewing_mob.adjust_confusion(10 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(pants_stagethree)), ALTAR_TIME)
 

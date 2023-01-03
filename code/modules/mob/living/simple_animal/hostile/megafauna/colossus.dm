@@ -262,7 +262,7 @@
 		. += observer_desc
 		. += "It is activated by [activation_method]."
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -430,20 +430,23 @@
 	use_time = 3 SECONDS
 
 /obj/machinery/anomalous_crystal/dark_reprise/ActivationReaction(mob/user, method)
-	if(..())
-		for(var/i in range(1, src))
-			if(isturf(i))
-				new /obj/effect/temp_visual/cult/sparks(i)
+	. = ..()
+	if(!.)
+		return
+	for(var/atom/thing as anything in range(1, src))
+		if(isturf(thing))
+			new /obj/effect/temp_visual/cult/sparks(thing)
+			continue
+
+		if(ishuman(thing))
+			var/mob/living/carbon/human/to_revive = thing
+			if(to_revive.stat != DEAD)
 				continue
-			if(ishuman(i))
-				var/mob/living/carbon/human/H = i
-				if(H.stat == DEAD)
-					H.set_species(/datum/species/shadow, 1)
-					H.regenerate_limbs()
-					H.regenerate_organs()
-					H.revive(full_heal = TRUE, admin_revive = FALSE)
-					ADD_TRAIT(H, TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
-					H.grab_ghost(force = TRUE)
+			to_revive.set_species(/datum/species/shadow, TRUE)
+			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+			//Free revives, but significantly limits your options for reviving except via the crystal
+			//except JK who cares about BADDNA anymore. this even heals suicides.
+			ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
 	observer_desc = "This crystal allows ghosts to turn into a fragile creature that can heal people."
@@ -474,71 +477,6 @@
 		var/mob/dead/observer/ghost = usr
 		if(istype(ghost))
 			attack_ghost(ghost)
-
-/mob/living/simple_animal/hostile/lightgeist
-	name = "lightgeist"
-	desc = "This small floating creature is a completely unknown form of life... being near it fills you with a sense of tranquility."
-	icon_state = "lightgeist"
-	icon_living = "lightgeist"
-	icon_dead = "butterfly_dead"
-	turns_per_move = 1
-	response_help_continuous = "waves away"
-	response_help_simple = "wave away"
-	response_disarm_continuous = "brushes aside"
-	response_disarm_simple = "brush aside"
-	response_harm_continuous = "disrupts"
-	response_harm_simple = "disrupt"
-	speak_emote = list("oscillates")
-	maxHealth = 2
-	health = 2
-	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 5
-	friendly_verb_continuous = "taps"
-	friendly_verb_simple = "tap"
-	density = FALSE
-	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = HOSTILE_SPAWN
-	verb_say = "warps"
-	verb_ask = "floats inquisitively"
-	verb_exclaim = "zaps"
-	verb_yell = "bangs"
-	initial_language_holder = /datum/language_holder/lightbringer
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	light_range = 4
-	faction = list("neutral")
-	del_on_death = TRUE
-	unsuitable_atmos_damage = 0
-	minbodytemp = 0
-	maxbodytemp = 1500
-	obj_damage = 0
-	environment_smash = ENVIRONMENT_SMASH_NONE
-	AIStatus = AI_OFF
-	stop_automated_movement = TRUE
-
-/mob/living/simple_animal/hostile/lightgeist/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/simple_flying)
-	remove_verb(src, /mob/living/verb/pulled)
-	remove_verb(src, /mob/verb/me_verb)
-	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medsensor.show_to(src)
-
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-/mob/living/simple_animal/hostile/lightgeist/AttackingTarget()
-	if(isliving(target) && target != src)
-		var/mob/living/L = target
-		if(L.stat != DEAD)
-			L.heal_overall_damage(melee_damage_upper, melee_damage_upper)
-			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
-			visible_message(span_notice("[src] mends the wounds of [target]."),span_notice("You mend the wounds of [target]."))
-
-/mob/living/simple_animal/hostile/lightgeist/ghost()
-	. = ..()
-	if(.)
-		death()
 
 /obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
 	observer_desc = "When activated, this crystal allows you to take over small animals, and then exit them at the possessors leisure. Exiting the animal kills it, and if you die while possessing the animal, you die as well."
@@ -617,7 +555,7 @@
 /datum/action/exit_possession
 	name = "Exit Possession"
 	desc = "Exits the body you are possessing. They will explode violently when this occurs."
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "exit_possession"
 
 /datum/action/exit_possession/IsAvailable(feedback = FALSE)

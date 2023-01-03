@@ -17,6 +17,7 @@
  *
  * Mark of Flesh
  * Ritual of Knowledge
+ * Flesh Surgery
  * Raw Ritual
  * > Sidepaths:
  *   Blood Siphon
@@ -45,11 +46,8 @@
 	limit = 3 // Bumped up so they can arm up their ghouls too.
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user)
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
-
 	var/datum/objective/heretic_summon/summon_objective = new()
 	summon_objective.owner = our_heretic.owner
 	our_heretic.objectives += summon_objective
@@ -68,10 +66,10 @@
 	cost = 1
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user)
+/datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -219,7 +217,19 @@
 	mark_type = /datum/status_effect/eldritch/flesh
 
 /datum/heretic_knowledge/knowledge_ritual/flesh
+	next_knowledge = list(/datum/heretic_knowledge/spell/flesh_surgery)
+	route = PATH_FLESH
+
+/datum/heretic_knowledge/spell/flesh_surgery
+	name = "Knitting of Flesh"
+	desc = "Grants you the spell Knit Flesh. This spell allows you to remove organs from victims \
+		without requiring a lengthy surgery. This process is much longer if the target is not dead. \
+		This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status."
+	gain_text = "But they were not out of my reach for long. With every step, the screams grew, until at last \
+		I learned that they could be silenced."
 	next_knowledge = list(/datum/heretic_knowledge/summon/raw_prophet)
+	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
+	cost = 1
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/summon/raw_prophet

@@ -6,7 +6,7 @@
  */
 /datum/element/series
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/list/subtype_list
 	var/series_name
 

@@ -120,7 +120,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/modular_computer/tablet/pda/chameleon/broken{
+/obj/item/modular_computer/pda/chameleon/broken{
 	pixel_x = 5;
 	pixel_y = 4
 	},

@@ -6,7 +6,7 @@
 	lose_text = "<span class='warning'>The voices in your head fall silent.</span>"
 	can_gain = TRUE
 	random_gain = FALSE
-	resilience = TRAUMA_RESILIENCE_SURGERY
+	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 	var/mob/living/obsession
 	var/datum/objective/spendtime/attachedobsessedobj
 	var/datum/antagonist/obsessed/antagonist
@@ -95,7 +95,7 @@
 	switch(rand(1, 100))
 		if(1 to 40)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), pick("blink", "blink_r"))
-			owner.blur_eyes(10)
+			owner.set_eye_blur_if_lower(20 SECONDS)
 			to_chat(owner, span_userdanger("You sweat profusely and have a hard time focusing..."))
 		if(41 to 80)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "pale")

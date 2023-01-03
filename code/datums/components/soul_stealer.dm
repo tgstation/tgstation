@@ -49,7 +49,7 @@
 
 	if(istype(target, /obj/structure/constructshell) && souls.len)
 		var/obj/item/soulstone/soulstone = souls[1]
-		INVOKE_ASYNC(soulstone, /obj/item/soulstone/proc/transfer_to_construct, target, user)
+		INVOKE_ASYNC(soulstone, TYPE_PROC_REF(/obj/item/soulstone, transfer_to_construct), target, user)
 		///soulstone will be deleted from souls if successful
 
 /datum/component/soul_stealer/proc/try_capture(mob/living/carbon/human/victim, mob/living/captor)

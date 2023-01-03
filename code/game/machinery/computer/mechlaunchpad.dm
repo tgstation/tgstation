@@ -44,7 +44,7 @@
 		if(mechpads.len > maximum_pads)
 			break
 
-#define MECH_LAUNCH_TIME 5 SECONDS
+#define MECH_LAUNCH_TIME (5 SECONDS)
 
 /obj/machinery/computer/mechpad/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(user.combat_mode || machine_stat & (NOPOWER|BROKEN) || DOING_INTERACTION_WITH_TARGET(user, src))

@@ -101,7 +101,7 @@ DEFINE_BITFIELD(foodtypes, list(
 /// Finger food can be eaten while walking / running around
 #define FOOD_FINGER_FOOD (1<<1)
 
-DEFINE_BITFIELD(food_types, list(
+DEFINE_BITFIELD(food_flags, list(
 	"FOOD_FINGER_FOOD" = FOOD_FINGER_FOOD,
 	"FOOD_IN_CONTAINER" = FOOD_IN_CONTAINER,
 ))
@@ -174,3 +174,5 @@ DEFINE_BITFIELD(food_types, list(
 #define DEFAULT_MAX_ICE_CREAM_SCOOPS 3
 // the vertical distance in pixels from an ice cream scoop and another.
 #define ICE_CREAM_SCOOP_OFFSET 4
+
+#define BLACKBOX_LOG_FOOD_MADE(food) SSblackbox.record_feedback("tally", "food_made", 1, food)

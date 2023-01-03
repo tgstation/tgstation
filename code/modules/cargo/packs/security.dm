@@ -90,7 +90,7 @@
 					/obj/item/clothing/head/beret/sec/navywarden,
 					/obj/item/clothing/under/rank/security/head_of_security/formal,
 					/obj/item/clothing/suit/jacket/hos/blue,
-					/obj/item/clothing/head/hos/beret/navyhos,
+					/obj/item/clothing/head/hats/hos/beret/navyhos,
 				)
 	crate_name = "security clothing crate"
 

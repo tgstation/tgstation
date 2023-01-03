@@ -89,8 +89,7 @@
 		mind.transfer_to(body)
 	else
 		body.forceMove(T)
-		body.revive(full_heal = TRUE, admin_revive = TRUE)
-	mind.grab_ghost(TRUE)
+		body.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
 	body.flash_act()
 
 	if(ishuman(body) && istype(outfit))

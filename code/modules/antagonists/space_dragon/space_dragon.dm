@@ -21,9 +21,9 @@
 	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
 	/// What mob to spawn from ghosts using this dragon's rifts
-	var/minion_to_spawn = /mob/living/simple_animal/hostile/carp
+	var/minion_to_spawn = /mob/living/basic/carp
 	/// What AI mobs to spawn from this dragon's rifts
-	var/ai_to_spawn = /mob/living/simple_animal/hostile/carp
+	var/ai_to_spawn = /mob/living/basic/carp
 
 /datum/antagonist/space_dragon/greet()
 	. = ..()
@@ -92,6 +92,7 @@
 		to_chat(owner.current, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
 		destroy_rifts()
 		SEND_SOUND(owner.current, sound('sound/magic/demon_dies.ogg'))
+		owner.current.death(/* gibbed = */ TRUE)
 		QDEL_NULL(owner.current)
 
 /**

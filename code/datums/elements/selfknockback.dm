@@ -1,6 +1,6 @@
 /datum/element/selfknockback
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/override_throw_val
 	var/override_speed_val
 

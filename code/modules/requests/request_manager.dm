@@ -1,3 +1,14 @@
+/// Requests from prayers
+#define REQUEST_PRAYER "request_prayer"
+/// Requests for Centcom
+#define REQUEST_CENTCOM "request_centcom"
+/// Requests for the Syndicate
+#define REQUEST_SYNDICATE "request_syndicate"
+/// Requests for the nuke code
+#define REQUEST_NUKE "request_nuke"
+/// Requests somebody from fax
+#define REQUEST_FAX "request_fax"
+
 GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 /**
@@ -87,6 +98,16 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	request_for_client(C, REQUEST_NUKE, message)
 
 /**
+ * Creates a request for fax answer
+ *
+ * Arguments:
+ * * requester - The client who is sending the request
+ * * message - Paper with text.. some stamps.. and another things.
+ */
+/datum/request_manager/proc/fax_request(client/requester, message, additional_info)
+	request_for_client(requester, REQUEST_FAX, message, additional_info)
+
+/**
  * Creates a request and registers the request with all necessary internal tracking lists
  *
  * Arguments:
@@ -94,8 +115,8 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  * * type - The type of request, see defines
  * * message - The message
  */
-/datum/request_manager/proc/request_for_client(client/C, type, message)
-	var/datum/request/request = new(C, type, message)
+/datum/request_manager/proc/request_for_client(client/C, type, message, additional_info)
+	var/datum/request/request = new(C, type, message, additional_info)
 	if (!requests[C.ckey])
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
@@ -193,6 +214,13 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				SD.r_code = code
 			message_admins("[key_name_admin(usr)] has set the self-destruct code to \"[code]\".")
 			return TRUE
+		if ("show")
+			if(request.req_type != REQUEST_FAX)
+				to_chat(usr, "Request doesn't have a paper to read.", confidential = TRUE)
+				return TRUE
+			var/obj/item/paper/request_message = request.additional_information
+			request_message.ui_interact(usr)
+			return TRUE
 
 /datum/request_manager/ui_data(mob/user)
 	. = list(
@@ -207,7 +235,14 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				"owner_ckey" = request.owner_ckey,
 				"owner_name" = request.owner_name,
 				"message" = request.message,
+				"additional_info" = request.additional_information,
 				"timestamp" = request.timestamp,
 				"timestamp_str" = gameTimestamp(wtime = request.timestamp)
 			)
 			.["requests"] += list(data)
+
+#undef REQUEST_PRAYER
+#undef REQUEST_CENTCOM
+#undef REQUEST_SYNDICATE
+#undef REQUEST_NUKE
+#undef REQUEST_FAX

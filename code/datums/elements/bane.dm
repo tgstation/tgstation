@@ -1,7 +1,7 @@
 /// Deals extra damage to mobs of a certain type or species.
 /datum/element/bane
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// can be a mob or a species.
 	var/target_type
 	/// multiplier of the extra damage based on the force of the item.

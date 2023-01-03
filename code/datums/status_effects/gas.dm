@@ -52,6 +52,10 @@
 	duration = 8
 	can_melt = FALSE
 
+/datum/status_effect/freon/lasting
+	id = "lasting_frozen"
+	duration = -1
+
 /datum/status_effect/hypernob_protection
 	id = "hypernob_protection"
 	duration = 10 SECONDS
@@ -80,4 +84,3 @@
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium)
 	REMOVE_TRAIT(human_owner, TRAIT_NOFIRE, type)
-

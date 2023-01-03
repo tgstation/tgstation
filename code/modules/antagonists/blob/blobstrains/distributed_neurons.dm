@@ -3,7 +3,7 @@
 	name = "Distributed Neurons"
 	description = "will do medium-low toxin damage and turns unconscious targets into blob zombies."
 	effectdesc = "will also produce fragile spores when killed.  Spores produced by factories are sentient."
-	shortdesc = "will do medium-low toxin damage and will kill any unconcious targets when attacked.  Spores produced by factories are sentient."
+	shortdesc = "will do medium-low toxin damage and will kill any unconscious targets when attacked.  Spores produced by factories are sentient."
 	analyzerdescdamage = "Does medium-low toxin damage and kills unconscious humans."
 	analyzerdesceffect = "Produces spores when killed.  Spores produced by factories are sentient."
 	color = "#E88D5D"
@@ -37,6 +37,6 @@
 			spore.overmind = overmind
 			spore.update_icons()
 			overmind.blob_mobs.Add(spore)
-			spore.Zombify(exposed_mob)
+			spore.zombify(exposed_mob)
 			overmind.add_points(-5)
 			to_chat(overmind, span_notice("Spent 5 resources for the zombification of [exposed_mob]."))

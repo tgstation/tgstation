@@ -21,6 +21,8 @@
 	attack_verb_simple = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
+	melee_damage_lower = 1
+	melee_damage_upper = 2
 	health = 50
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -29,6 +31,8 @@
 
 /mob/living/basic/pig/Initialize()
 	AddElement(/datum/element/pet_bonus, "oinks!")
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/ai_flee_while_injured)
 	make_tameable()
 	. = ..()
 
@@ -43,7 +47,23 @@
 	visible_message(span_notice("[src] snorts respectfully."))
 
 /datum/ai_controller/basic_controller/pig
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+	)
+
+	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/pig,
+	)
+
+/datum/ai_planning_subtree/basic_melee_attack_subtree/pig
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/pig
+
+/datum/ai_behavior/basic_melee_attack/pig
+	action_cooldown = 2 SECONDS

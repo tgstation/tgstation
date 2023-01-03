@@ -5,7 +5,7 @@
  */
 /datum/element/beauty
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/beauty = 0
 	/**
 	  * Assoc list of atoms as keys and number of time the same element instance has been attached to them as assoc value.

@@ -40,7 +40,7 @@
 		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 		rotcomp.Rotate(usr, ROTATION_FLIP) // this only gets used by pipes created by RPDs or pipe dispensers
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/disposalconstruct/Move()
 	var/old_dir = dir

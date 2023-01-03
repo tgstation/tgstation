@@ -37,7 +37,7 @@
 	var/malfunction_probability_coeff_modifier = 0
 	var/resetTime = 15
 	var/cloneMode = FALSE
-	var/list/item_reactions = list()
+	var/list/item_reactions
 	var/static/list/valid_items //valid items for special reactions like transforming
 	var/list/critical_items_typecache //items that can cause critical reactions
 
@@ -48,14 +48,28 @@
 	return temp_list
 
 /obj/machinery/rnd/experimentor/proc/valid_items()
-	if (!isnull(valid_items))
-		return valid_items
+	RETURN_TYPE(/list)
 
+	if (isnull(valid_items))
+		generate_valid_items_and_item_reactions()
+
+	return valid_items
+
+/obj/machinery/rnd/experimentor/proc/item_reactions()
+	RETURN_TYPE(/list)
+
+	if (isnull(item_reactions))
+		generate_valid_items_and_item_reactions()
+
+	return item_reactions
+
+/obj/machinery/rnd/experimentor/proc/generate_valid_items_and_item_reactions()
 	var/static/list/banned_typecache = typecacheof(list(
 		/obj/item/stock_parts/cell/infinite,
 		/obj/item/grenade/chem_grenade/tuberculosis
 	))
 
+	item_reactions = list()
 	valid_items = list()
 
 	for(var/I in typesof(/obj/item))
@@ -77,12 +91,10 @@
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items["[I]"] += rand(1,4)
 
-	return valid_items
-
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
 
-	tracked_ian_ref = WEAKREF(locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list)
+	tracked_ian_ref = WEAKREF(locate(/mob/living/basic/pet/dog/corgi/ian) in GLOB.mob_living_list)
 	tracked_runtime_ref = WEAKREF(locate(/mob/living/simple_animal/pet/cat/runtime) in GLOB.mob_living_list)
 
 	critical_items_typecache = typecacheof(list(
@@ -100,8 +112,8 @@
 	resetTime = initial(resetTime)
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		resetTime = max(1, resetTime - M.rating)
-	for(var/obj/item/stock_parts/scanning_module/M in component_parts)
-		malfunction_probability_coeff += M.rating*2
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		malfunction_probability_coeff += scanning_module.tier * 2
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		malfunction_probability_coeff += M.rating
 
@@ -212,6 +224,7 @@
 /obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
 	var/obj/item/D = matching
 	if(D)
+		var/list/item_reactions = item_reactions()
 		if(item_reactions.Find("[D.type]"))
 			var/tor = item_reactions["[D.type]"]
 			if(tor == text2num(reaction))
@@ -474,7 +487,7 @@
 		var/globalMalf = rand(1,100)
 		if(globalMalf < 15)
 			visible_message(span_warning("[src]'s onboard detection system has malfunctioned!"))
-			item_reactions["[exp_on.type]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+			item_reactions()["[exp_on.type]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 			ejectItem()
 		if(globalMalf > 16 && globalMalf < 35)
 			visible_message(span_warning("[src] melts [exp_on], ian-izing the air around it!"))
@@ -485,7 +498,7 @@
 				tracked_ian.forceMove(loc)
 				investigate_log("Experimentor has stolen Ian!", INVESTIGATE_EXPERIMENTOR) //...if anyone ever fixes it...
 			else
-				new /mob/living/simple_animal/pet/dog/corgi(loc)
+				new /mob/living/basic/pet/dog/corgi(loc)
 				investigate_log("Experimentor has spawned a new corgi.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		if(globalMalf > 36 && globalMalf < 50)
@@ -603,8 +616,8 @@
 
 /obj/item/relic/proc/corgicannon(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
-	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throwSmoke), C))
+	var/mob/living/basic/pet/dog/corgi/sad_corgi = new(get_turf(user))
+	sad_corgi.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throwSmoke), sad_corgi))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/relic/proc/clean(mob/user)
@@ -629,15 +642,15 @@
 		/mob/living/simple_animal/parrot/natural,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/pet/dog/corgi,
+		/mob/living/basic/pet/dog/corgi,
+		/mob/living/basic/pet/dog/pug,
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/pet/fox,
 		/mob/living/simple_animal/hostile/lizard,
 		/mob/living/basic/mouse,
-		/mob/living/simple_animal/pet/dog/pug,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)

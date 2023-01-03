@@ -50,15 +50,15 @@
 	if(start)
 		//We're registering here because I need to check whether we start active or not, and this is just easier
 		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
-		RegisterSignal(parent, list(COMSIG_COMPONENT_ADDED), PROC_REF(enable))
+		RegisterSignal(parent, COMSIG_COMPONENT_ADDED, PROC_REF(enable))
 
 /datum/component/plumbing/RegisterWithParent()
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(disable))
-	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), PROC_REF(toggle_active))
-	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), PROC_REF(hide))
-	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), PROC_REF(create_overlays)) //called by lateinit on startup
-	RegisterSignal(parent, list(COMSIG_ATOM_DIR_CHANGE), PROC_REF(on_parent_dir_change)) //called when placed on a shuttle and it moves, and other edge cases
-	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), PROC_REF(change_ducting_layer))
+	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(disable))
+	RegisterSignals(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), PROC_REF(toggle_active))
+	RegisterSignal(parent, COMSIG_OBJ_HIDE, PROC_REF(hide))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(create_overlays)) //called by lateinit on startup
+	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_parent_dir_change)) //called when placed on a shuttle and it moves, and other edge cases
+	RegisterSignal(parent, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, PROC_REF(change_ducting_layer))
 
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, COMSIG_OBJ_HIDE, \
@@ -307,12 +307,14 @@
 		net.add_plumber(src, dir)
 		net.add_plumber(plumbing, opposite_dir)
 
-/datum/component/plumbing/proc/hide(atom/movable/parent_obj, should_hide)
+/datum/component/plumbing/proc/hide(atom/movable/parent_obj, underfloor_accessibility)
 	SIGNAL_HANDLER
 
 	// If machine is unanchored, keep connector visible.
 	// This doesn't necessary map to `active`, so check parent.
 	var/atom/movable/parent_movable = parent
+
+	var/should_hide = !underfloor_accessibility
 
 	if(parent_movable.anchored || !should_hide)
 		tile_covered = should_hide

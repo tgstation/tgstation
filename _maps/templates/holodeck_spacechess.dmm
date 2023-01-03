@@ -6,18 +6,98 @@
 /obj/structure/chess/blackbishop,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
+"c" = (
+/obj/structure/chess/blackpawn,
+/obj/effect/turf_decal/board_number/two{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"e" = (
+/obj/effect/turf_decal/board_number/one{
+	dir = 4
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
+"f" = (
+/obj/effect/turf_decal/board_number/four{
+	dir = 4
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
 "g" = (
 /obj/structure/chess/whitepawn,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
 /area/template_noop)
+"h" = (
+/obj/effect/turf_decal/board_letter/b{
+	dir = 1
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
+"i" = (
+/obj/effect/turf_decal/board_number/six{
+	dir = 4
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
+"j" = (
+/obj/effect/turf_decal/board_number/five{
+	dir = 4
+	},
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/template_noop)
+"k" = (
+/obj/structure/chess/whitepawn,
+/obj/effect/turf_decal/board_number/seven{
+	dir = 4
+	},
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/template_noop)
+"l" = (
+/obj/effect/turf_decal/board_letter/a{
+	dir = 1
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
+"m" = (
+/obj/effect/turf_decal/board_number/seven{
+	dir = 4
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
+"n" = (
+/obj/effect/turf_decal/board_number/three{
+	dir = 4
+	},
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/template_noop)
 "o" = (
 /obj/structure/chess/whitebishop,
+/obj/effect/turf_decal/board_letter/f{
+	dir = 1
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"p" = (
+/obj/effect/turf_decal/board_number/four{
+	dir = 4
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "q" = (
 /obj/structure/chess/blackrook,
+/obj/effect/turf_decal/board_number/one{
+	dir = 4
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -28,13 +108,40 @@
 /area/template_noop)
 "s" = (
 /obj/structure/chess/whiterook,
+/obj/effect/turf_decal/board_number/eight{
+	dir = 4
+	},
+/obj/effect/turf_decal/board_letter/h{
+	dir = 1
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"t" = (
+/obj/effect/turf_decal/board_number/six{
+	dir = 4
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "u" = (
 /obj/structure/chess/whiteknight,
+/obj/effect/turf_decal/board_letter/g{
+	dir = 1
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
+/area/template_noop)
+"v" = (
+/obj/effect/turf_decal/board_letter/c{
+	dir = 1
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
+"w" = (
+/obj/effect/turf_decal/board_number/three{
+	dir = 4
+	},
+/turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "y" = (
 /obj/structure/chess/blackbishop,
@@ -44,6 +151,9 @@
 /area/template_noop)
 "z" = (
 /obj/structure/chess/whiterook,
+/obj/effect/turf_decal/board_letter/a{
+	dir = 1
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -54,13 +164,49 @@
 	icon_state = "white"
 	},
 /area/template_noop)
+"B" = (
+/obj/effect/turf_decal/board_letter/g{
+	dir = 1
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
+"C" = (
+/obj/effect/turf_decal/board_number/five{
+	dir = 4
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
+"E" = (
+/obj/effect/turf_decal/board_letter/d{
+	dir = 1
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
 "G" = (
 /obj/structure/chess/whiteknight,
+/obj/effect/turf_decal/board_letter/b{
+	dir = 1
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "H" = (
 /obj/structure/chess/whiteking,
+/obj/effect/turf_decal/board_letter/d{
+	dir = 1
+	},
 /turf/open/floor/holofloor/dark,
+/area/template_noop)
+"J" = (
+/obj/effect/turf_decal/board_letter/h{
+	dir = 1
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
+"K" = (
+/obj/effect/turf_decal/board_letter/e{
+	dir = 1
+	},
+/turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "L" = (
 /obj/structure/chess/blackknight,
@@ -82,11 +228,26 @@
 	icon_state = "white"
 	},
 /area/template_noop)
+"P" = (
+/obj/effect/turf_decal/board_number/two{
+	dir = 4
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
 "Q" = (
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
+"S" = (
+/obj/effect/turf_decal/board_number/eight{
+	dir = 4
+	},
+/turf/open/floor/holofloor/carpet,
+/area/template_noop)
 "U" = (
 /obj/structure/chess/whitebishop,
+/obj/effect/turf_decal/board_letter/c{
+	dir = 1
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -94,6 +255,12 @@
 "V" = (
 /obj/structure/chess/blackrook,
 /turf/open/floor/holofloor/dark,
+/area/template_noop)
+"W" = (
+/obj/effect/turf_decal/board_letter/f{
+	dir = 1
+	},
+/turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "X" = (
 /turf/open/floor/holofloor{
@@ -106,6 +273,9 @@
 /area/template_noop)
 "Z" = (
 /obj/structure/chess/whitequeen,
+/obj/effect/turf_decal/board_letter/e{
+	dir = 1
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -113,14 +283,14 @@
 
 (1,1,1) = {"
 a
-a
-a
-a
-a
-a
-a
-a
-a
+S
+m
+i
+C
+f
+w
+P
+e
 a
 "}
 (2,1,1) = {"
@@ -133,7 +303,7 @@ X
 Q
 A
 V
-a
+l
 "}
 (3,1,1) = {"
 a
@@ -145,7 +315,7 @@ Q
 X
 r
 O
-a
+h
 "}
 (4,1,1) = {"
 a
@@ -157,7 +327,7 @@ X
 Q
 A
 b
-a
+v
 "}
 (5,1,1) = {"
 a
@@ -169,7 +339,7 @@ Q
 X
 r
 M
-a
+E
 "}
 (6,1,1) = {"
 a
@@ -181,7 +351,7 @@ X
 Q
 A
 Y
-a
+K
 "}
 (7,1,1) = {"
 a
@@ -193,7 +363,7 @@ Q
 X
 r
 y
-a
+W
 "}
 (8,1,1) = {"
 a
@@ -205,17 +375,17 @@ X
 Q
 A
 L
-a
+B
 "}
 (9,1,1) = {"
 a
 s
-g
-Q
-X
-Q
-X
-r
+k
+t
+j
+p
+n
+c
 q
-a
+J
 "}

@@ -522,13 +522,17 @@
 	. = TRUE
 	switch(action)
 		if("add")
-			var/new_chem_name = params["name"]
-			var/chem_id = get_chem_id(new_chem_name)
-			if(!chem_id || !new_chem_name)
-				to_chat(usr, span_warning("No such known reagent exists!"))
-				return
+			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.chemical_name_list)
+			if(!selected_reagent)
+				return TRUE
+			
+			var/chem_id = get_chem_id(selected_reagent)
+			if(!chem_id)
+				return TRUE
+				
 			if(!(chem_id in whitelist))
-				whitelist[chem_id] = new_chem_name
+				whitelist[chem_id] = selected_reagent
+				
 
 
 		if("remove")

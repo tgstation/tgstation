@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(!overuse_cooldown) // check if we can reset recent uses
 		recent_uses = 0
 		overuse_cooldown = TRUE
-		addtimer(CALLBACK(src, /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown), OVERUSE_COOLDOWN)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/clothing/mask/gas/sechailer, reset_overuse_cooldown)), OVERUSE_COOLDOWN)
 
 	switch(recent_uses)
 		if(3)

@@ -2,7 +2,7 @@
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
 /// The time it takes for the crying visual to be removed
-#define CRY_DURATION 12.8 SECONDS
+#define CRY_DURATION (12.8 SECONDS)
 
 /datum/emote/living/carbon/human/cry
 	key = "cry"
@@ -10,6 +10,7 @@
 	message = "cries."
 	message_mime = "sobs silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	stat_allowed = SOFT_CRIT
 
 /datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
 	. = ..()

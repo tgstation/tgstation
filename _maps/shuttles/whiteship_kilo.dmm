@@ -296,7 +296,6 @@
 	id = "ntms_exterior";
 	name = "NTMS-037 Mining Airlock Bolt Control";
 	normaldoorcontrol = 1;
-	req_access = list("syndicate_leader");
 	specialfunctions = 4
 	},
 /turf/open/floor/plating,

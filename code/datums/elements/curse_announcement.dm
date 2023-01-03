@@ -7,7 +7,7 @@
  */
 /datum/element/curse_announcement
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///message sent on announce
 	var/announcement_message
 	///color of the outline filter on announce

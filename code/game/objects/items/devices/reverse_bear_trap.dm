@@ -1,4 +1,4 @@
-#define REVERSE_BEAR_TRAP_COUNTDOWN 60 SECONDS
+#define REVERSE_BEAR_TRAP_COUNTDOWN (60 SECONDS)
 
 /obj/item/reverse_bear_trap
 	name = "reverse bear trap"

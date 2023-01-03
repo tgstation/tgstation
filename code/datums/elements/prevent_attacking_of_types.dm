@@ -2,7 +2,7 @@
 /// a balloon alert when it tries to.
 /datum/element/prevent_attacking_of_types
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	/// The typecache of things this hostile can't attack
 	var/list/typecache

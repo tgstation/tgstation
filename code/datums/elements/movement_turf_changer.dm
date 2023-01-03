@@ -5,7 +5,7 @@
  */
 /datum/element/movement_turf_changer
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///Path of the turf added on top
 	var/turf_type
 

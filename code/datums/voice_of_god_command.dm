@@ -1,7 +1,7 @@
-#define COOLDOWN_STUN 120 SECONDS
-#define COOLDOWN_DAMAGE 60 SECONDS
-#define COOLDOWN_MEME 30 SECONDS
-#define COOLDOWN_NONE 10 SECONDS
+#define COOLDOWN_STUN (120 SECONDS)
+#define COOLDOWN_DAMAGE (60 SECONDS)
+#define COOLDOWN_MEME (30 SECONDS)
+#define COOLDOWN_NONE (10 SECONDS)
 
 /// Used to stop listeners with silly or clown-esque (first) names such as "Honk" or "Flip" from screwing up certain commands.
 GLOBAL_DATUM(all_voice_of_god_triggers, /regex)
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/say_my_name/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, user.name), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), user.name), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces the listeners to say "Who's there?".
@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/knock_knock/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, "Who's there?"), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), "Who's there?"), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces silicon listeners to state all their laws.
@@ -316,7 +316,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/state_laws/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 0
 	for(var/mob/living/silicon/target in listeners)
-		addtimer(CALLBACK(target, /mob/living/silicon/proc/statelaws, TRUE), (3 SECONDS * iteration) + 0.5 SECONDS)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/silicon, statelaws), TRUE), (3 SECONDS * iteration) + 0.5 SECONDS)
 		iteration++
 
 /// This command forces the listeners to take step in a direction chosen by the user, otherwise a random cardinal one.
@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/speak/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces the listeners to get the fuck up, resetting all stuns.
@@ -417,7 +417,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
 		if(prob(25))
-			addtimer(CALLBACK(target, /atom/movable/proc/say, "HOW HIGH?!!"), 0.5 SECONDS * iteration)
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), "HOW HIGH?!!"), 0.5 SECONDS * iteration)
 		else
 			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/, emote), "jump"), 0.5 SECONDS * iteration)
 		iteration++

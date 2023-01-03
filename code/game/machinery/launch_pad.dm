@@ -1,4 +1,4 @@
-#define BEAM_FADE_TIME 1 SECONDS
+#define BEAM_FADE_TIME (1 SECONDS)
 
 /obj/machinery/launchpad
 	name = "bluespace launchpad"

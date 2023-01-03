@@ -3,7 +3,7 @@
  */
 /datum/element/firestacker
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// How many firestacks to apply per hit
 	var/amount
 

@@ -1219,7 +1219,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "MS" = (
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /obj/item/mop,
 /mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/mineral/titanium/yellow,

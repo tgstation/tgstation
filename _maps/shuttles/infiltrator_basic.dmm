@@ -543,12 +543,6 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/engineering)
-"ct" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate/engineering)
 "cu" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
@@ -1510,7 +1504,7 @@ bi
 bi
 ch
 Ed
-ct
+cs
 cy
 cF
 "}
