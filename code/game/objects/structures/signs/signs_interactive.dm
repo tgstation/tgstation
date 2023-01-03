@@ -154,3 +154,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 			. += span_info("Good work! Nanotrasen's finest!")
 		if(11 to INFINITY)
 			. += span_info("Incredible! You're probably reading this from medbay.")
+
+#undef COLLISION_HAZARD_THRESHOLD
