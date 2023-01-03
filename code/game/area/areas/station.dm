@@ -40,9 +40,6 @@
 	name = "EVA Maintenance"
 	icon_state = "maint_eva"
 
-/area/station/maintenance/department/eva/abandoned
-	name = "Abandoned EVA Storage"
-
 /area/station/maintenance/department/electrical
 	name = "Electrical Maintenance"
 	icon_state = "maint_electrical"
@@ -233,6 +230,39 @@
 
 /area/station/maintenance/space_hut/observatory
 	name = "\improper Space Observatory"
+
+/area/station/maintenance/abandoned_library
+	name = "\improper Abandoned Library"
+	icon_state = "abandoned_library"
+
+/area/station/maintenance/abandoned_gambling_den
+	name = "\improper Abandoned Gambling Den"
+	icon_state = "abandoned_gambling_den"
+
+/area/station/maintenance/abandoned_gambling_den/gaming
+	name = "\improper Abandoned Gaming Den"
+	icon_state = "abandoned_gaming_den"
+
+/area/station/maintenance/kitchen/abandoned_kitchen
+	name = "\improper Abandoned Kitchen"
+	icon_state = "abandoned_kitchen"
+
+/area/station/maintenance/electronic_marketing_den
+	name = "\improper Electronic Marketing Den"
+	icon_state = "abandoned_marketing_den"
+
+/area/station/maintenance/department/eva/abandoned
+	name = "Abandoned EVA Storage"
+
+/area/station/maintenance/abandoned_theater
+	name = "\improper Abandoned Theater"
+	icon_state = "abandoned_theatre"
+
+/area/station/maintenance/abandoned_medbay
+	name = "\improper Abandoned Medbay"
+	icon_state = "abandoned_medbay"
+	ambientsounds = list('sound/ambience/signal.ogg')
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 //Radation storm shelter
 /area/station/maintenance/radshelter
@@ -571,10 +601,6 @@
 	name = "\improper Diner"
 	icon_state = "diner"
 
-/area/station/service/kitchen/abandoned
-	name = "\improper Abandoned Kitchen"
-	icon_state = "abandoned_kitchen"
-
 /area/station/service/bar
 	name = "\improper Bar"
 	icon_state = "bar"
@@ -597,26 +623,10 @@
 	name = "\improper Bar Backroom"
 	icon_state = "bar_backroom"
 
-/area/station/service/electronic_marketing_den
-	name = "\improper Electronic Marketing Den"
-	icon_state = "abandoned_marketing_den"
-
-/area/station/service/abandoned_gambling_den
-	name = "\improper Abandoned Gambling Den"
-	icon_state = "abandoned_gambling_den"
-
-/area/station/service/abandoned_gambling_den/gaming
-	name = "\improper Abandoned Gaming Den"
-	icon_state = "abandoned_gaming_den"
-
 /area/station/service/theater
 	name = "\improper Theater"
 	icon_state = "theatre"
 	sound_environment = SOUND_AREA_WOODFLOOR
-
-/area/station/service/theater/abandoned
-	name = "\improper Abandoned Theater"
-	icon_state = "abandoned_theatre"
 
 /area/station/service/library
 	name = "\improper Library"
@@ -647,10 +657,6 @@
 /area/station/service/library/printer
 	name = "\improper Library Printer Room"
 	icon_state = "library"
-
-/area/station/service/library/abandoned
-	name = "\improper Abandoned Library"
-	icon_state = "abandoned_library"
 
 /area/station/service/chapel
 	name = "\improper Chapel"
@@ -945,12 +951,6 @@
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	min_ambience_cooldown = 90 SECONDS
 	max_ambience_cooldown = 180 SECONDS
-
-/area/station/medical/abandoned
-	name = "\improper Abandoned Medbay"
-	icon_state = "abandoned_medbay"
-	ambientsounds = list('sound/ambience/signal.ogg')
-	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/station/medical/medbay/central
 	name = "Medbay Central"

@@ -1,0 +1,7 @@
+/area/station/service/library/abandoned : /area/station/maintenance/abandoned_library{@OLD}
+/area/station/service/abandoned_gambling_den : /area/station/maintenance/abandoned_gambling_den{@OLD}
+/area/station/service/abandoned_gambling_den/gaming : /area/station/maintenance/abandoned_gambling_den/gaming{@OLD}
+/area/station/service/kitchen/abandoned : /area/station/maintenance/kitchen/abandoned_kitchen{@OLD}
+/area/station/service/electronic_marketing_den : /area/station/maintenance/electronic_marketing_den{@OLD}
+/area/station/service/theater/abandoned : /area/station/maintenance/abandoned_theater{@OLD}
+/area/station/medical/abandoned : /area/station/maintenance/abandoned_medbay{@OLD}
