@@ -73,10 +73,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
 
-	select_mode(src, /datum/air_alarm_mode/filtering)
-
-	alarm_manager = new(src)
 	my_area = get_area(src)
+	alarm_manager = new(src)
+	select_mode(src, /datum/air_alarm_mode/filtering)
 	update_appearance()
 
 	AddElement(/datum/element/connect_loc, atmos_connections)
