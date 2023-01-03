@@ -215,7 +215,7 @@
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M90-SOCOM Carbine"
-	desc = "A high-calibre full-length battle rifle, adoptated as the main rifleman weapon in the year FUCK DATES. \
+	desc = "A high-caliber full-length battle rifle, adopted as the main rifleman weapon in the year FUCK DATES. \
 			Contained within the heat-shield is an integrated 40 millimeter grenade launcher, loaded from a special compartment within the magazine. \
 			Originally an attempt by Waffle Corp to win the contract for the new Federation service rifle, but the cost-per-unit was too high for the Federation. \
 			However, per specific request, a contract to manufacture for the Company was soon signed."

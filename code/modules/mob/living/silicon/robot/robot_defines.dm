@@ -189,7 +189,7 @@
 	lawupdate = FALSE
 	scrambledcodes = TRUE // These are rogue borgs.
 	ionpulse = TRUE
-	var/playstyle_string = "<span class='big bold'>You are a GAC-14-A, or a Syndicate Assualt Cyborg!</span><br>\
+	var/playstyle_string = "<span class='big bold'>You are a GAC-14-A, or a Syndicate Assault Cyborg!</span><br>\
 							<b>You are armed with powerful offensive tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
