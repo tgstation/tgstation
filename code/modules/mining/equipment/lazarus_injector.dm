@@ -29,12 +29,9 @@
 	. = ..()
 	if(!loaded || !(isliving(target) && proximity_flag) )
 		return
-	if(!isanimal_or_basicmob(target))
-		to_chat(user, span_info("[src] is only effective on lesser beings."))
-		return
 
-	var/mob/living/simple_animal/target_animal = target // It might actually be a basic mob but sentience_type isn't on Living
-	if(target_animal.sentience_type != revive_type)
+	var/mob/living/target_animal = target
+	if(!target_animal.compare_sentience_type(revive_type))
 		to_chat(user, span_info("[src] does not work on this sort of creature."))
 		return
 	if(target_animal.stat != DEAD)

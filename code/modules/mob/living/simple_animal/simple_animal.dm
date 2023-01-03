@@ -751,3 +751,6 @@
 		hunted = null
 		COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 		return
+
+/mob/living/simple_animal/compare_sentience_type(compare_type)
+	return sentience_type == compare_type

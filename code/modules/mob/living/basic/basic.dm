@@ -202,3 +202,6 @@
 	. = ..()
 	. += "Health: [round((health / maxHealth) * 100)]%"
 	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
+
+/mob/living/basic/compare_sentience_type(compare_type)
+	return sentience_type == compare_type

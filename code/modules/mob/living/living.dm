@@ -2408,6 +2408,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. = ..()
 	add_mood_event("gaming", /datum/mood_event/gaming)
 
+/**
+ * Helper proc for basic and simple animals to return true if the passed sentience type matches theirs
+ * Living doesn't have a sentience type though so it returns false by default
+ */
+/mob/living/proc/compare_sentience_type(compare_type)
+	return FALSE
+
 /// Proc called when targetted by a lazarus injector
 /mob/living/proc/lazarus_revive(mob/living/reviver, malfunctioning)
 	revive(HEAL_ALL)
