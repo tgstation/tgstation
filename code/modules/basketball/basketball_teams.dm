@@ -3,10 +3,16 @@
 	name = "Basketball Team Uniform"
 	uniform = /obj/item/clothing/under/color/black
 	shoes = /obj/item/clothing/shoes/sneakers/white
+	id = /obj/item/card/id/away
 	///Do they get an ID?
 	var/has_card = FALSE
 	///Which slots to apply TRAIT_NODROP to the items in
-	var/list/nodrop_slots = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_EARS)
+	var/list/nodrop_slots = list(
+		ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET,
+		ITEM_SLOT_ICLOTHING, ITEM_SLOT_EARS, ITEM_SLOT_BELT,
+		ITEM_SLOT_MASK, ITEM_SLOT_EYES, ITEM_SLOT_ID,
+		ITEM_SLOT_HEAD, ITEM_SLOT_BACK, ITEM_SLOT_NECK,
+	)
 
 /datum/outfit/basketball/post_equip(mob/living/carbon/human/human_to_equip, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -34,22 +40,25 @@
 	human_to_equip.dna.species.stunmod = 0
 
 /datum/outfit/basketball/blue
-	name = "Blue Team"
+	name = "Basketball Blue Team"
 	undershirt = /datum/sprite_accessory/undershirt/bluejersey
 	uniform = /obj/item/clothing/under/shorts/blue
 
 /datum/outfit/basketball/red
-	name = "Red Team"
+	name = "Basketball Red Team"
 	undershirt = /datum/sprite_accessory/undershirt/redjersey
 	uniform = /obj/item/clothing/under/shorts/red
 
 /datum/outfit/basketball/greytide_worldwide
-	name = "Greytide Worldwide"
+	name = "Basketball Greytide Worldwide"
 	uniform = /obj/item/clothing/under/color/grey/ancient
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	mask = /obj/item/clothing/mask/gas // assistants should be random unknowns so no id card
+	mask = /obj/item/clothing/mask/gas/prop
 	gloves = /obj/item/clothing/gloves/color/fyellow
 	belt = /obj/item/storage/belt/utility
+	// assistants should be random unknowns so no id card
+	id = null
+	has_card = FALSE
 
 // No slowdown for these uniforms
 /obj/item/clothing/suit/space/basketball
@@ -59,19 +68,18 @@
 	slowdown_active = 0
 
 /datum/outfit/basketball/space_surfers
-	name = "Space Surfers"
+	name = "Basketball Space Surfers"
 	shoes = /obj/item/clothing/shoes/magboots/basketball
 	suit = /obj/item/clothing/suit/space/basketball
 	head = /obj/item/clothing/head/helmet/space
 	mask = /obj/item/clothing/mask/breath
-	back = /obj/item/bedsheet/cosmos
-	has_card = TRUE
+	neck = /obj/item/bedsheet/cosmos
 
 /datum/outfit/basketball/lusty_xenomorphs
-	name = "Lusty Xenomorphs"
+	name = "Basketball Lusty Xenomorphs"
 	suit = /obj/item/clothing/suit/costume/xenos
 	head = /obj/item/clothing/head/costume/xenos
-	has_card = TRUE
+	mask = /obj/item/clothing/mask/chameleon
 
 /datum/outfit/basketball/lusty_xenomorphs/post_equip(mob/living/carbon/human/human_to_equip, visualsOnly=FALSE)
 	. = ..()
