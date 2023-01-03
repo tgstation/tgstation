@@ -62,7 +62,7 @@
 		if(obj_flags & EMAGGED)
 			balloon_alert(user, "the interface is broken!")
 			return
-		panel_open = !panel_open
+		toggle_panel_open()
 		balloon_alert(user, "wires are [panel_open ? "exposed" : "unexposed"]")
 		update_appearance()
 		return
@@ -217,7 +217,7 @@
 	else
 		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack && !remote_control_user)
 			locked = !locked
-			balloon_alert(user, "APC [ locked ? "locked" : "unlocked"]")
+			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()
 			if(!locked)
 				ui_interact(user)

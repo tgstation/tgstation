@@ -1,12 +1,14 @@
 /obj/machinery/computer/tram_controls
 	name = "tram controls"
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
+	icon_state = "tram_controls"
 	base_icon_state = "tram_"
 	icon_screen = "tram_Central Wing_idle"
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	layer = SIGN_LAYER
 
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 

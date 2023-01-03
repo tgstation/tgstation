@@ -5,7 +5,7 @@
 	base_icon_state = "marauder"
 	movedelay = 5
 	max_integrity = 500
-	armor = list(MELEE = 50, BULLET = 55, LASER = 40, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/mecha_marauder
 	max_temperature = 60000
 	destruction_sleep_duration = 40
 	exit_delay = 40
@@ -22,6 +22,15 @@
 		MECHA_ARMOR = 3,
 	)
 	bumpsmash = TRUE
+
+/datum/armor/mecha_marauder
+	melee = 50
+	bullet = 55
+	laser = 40
+	energy = 30
+	bomb = 30
+	fire = 100
+	acid = 100
 
 /obj/vehicle/sealed/mecha/marauder/generate_actions()
 	. = ..()

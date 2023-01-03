@@ -99,9 +99,9 @@
 /obj/item/grenade/chem_grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(dud_flags & GRENADE_USED)
-		balloon_alert(user, span_notice("resetting trigger..."))
+		balloon_alert(user, "resetting trigger...")
 		if (do_after(user, 2 SECONDS, src))
-			balloon_alert(user, span_notice("trigger reset"))
+			balloon_alert(user, "trigger reset")
 			dud_flags &= ~GRENADE_USED
 		return
 

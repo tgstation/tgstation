@@ -93,6 +93,9 @@
 #define NOAUGMENTS 20
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
 #define BLOOD_CLANS 21
+/// Stops species from spawning with tongue. Doesn't actually make the species able to talk with no tongue
+#define NO_TONGUE 22
+#define NOAPPENDIX 23
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"

@@ -50,7 +50,7 @@
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 			adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
 			if(DT_PROB(2.5, delta_time))
-				blur_eyes(6)
+				set_eye_blur_if_lower(12 SECONDS)
 				to_chat(src, span_warning("You feel very [word]."))
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 			adjustOxyLoss(2.5 * delta_time)

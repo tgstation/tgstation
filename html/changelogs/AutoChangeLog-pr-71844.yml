@@ -1,5 +1,0 @@
-author: "Zergspower"
-delete-after: True
-changes:
-  - imageadd: "Containers - New Interdyne Container with new mapping default icon"
-  - bugfix: "Containers - unified the apperance of each one, fixed blemishes and stray pixels"

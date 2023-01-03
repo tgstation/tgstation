@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
+// eye damage, eye_blind, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
 #define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUNIMMUNE))))
 
@@ -483,15 +483,24 @@
 			priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
 
-/mob/living/proc/add_quirk(quirktype) //separate proc due to the way these ones are handled
-	if(HAS_TRAIT(src, quirktype))
-		return
-	var/datum/quirk/quirk = quirktype
-	var/qname = initial(quirk.name)
+/**
+ * Adds the passed quirk to the mob
+ *
+ * Arguments
+ * * quirktype - Quirk typepath to add to the mob
+ * * override_client - optional, allows a client to be passed to the quirks on add procs.
+ * If not passed, defaults to this mob's client.
+ *
+ * Returns TRUE on success, FALSE on failure (already has the quirk, etc)
+ */
+/mob/living/proc/add_quirk(datum/quirk/quirktype, client/override_client)
+	if(has_quirk(quirktype))
+		return FALSE
+	var/qname = initial(quirktype.name)
 	if(!SSquirks || !SSquirks.quirks[qname])
-		return
-	quirk = new quirktype()
-	if(quirk.add_to_holder(src))
+		return FALSE
+	var/datum/quirk/quirk = new quirktype()
+	if(quirk.add_to_holder(new_holder = src, client_source = override_client))
 		return TRUE
 	qdel(quirk)
 	return FALSE

@@ -7,11 +7,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	name = "modular microcomputer"
 	desc = "A small portable microcomputer."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "laptop-open"
+	icon_state = "laptop"
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/item_modular_computer
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
 	///The ID currently stored in the computer.
@@ -109,6 +109,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/stored_paper = 10
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
+
+/datum/armor/item_modular_computer
+	bullet = 20
+	laser = 20
+	energy = 100
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
@@ -510,14 +515,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
-	visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
+	loc.visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
 	else
 		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	visible_message("*[ringtone]*")
+	audible_message("*[ringtone]*")
 
 /obj/item/modular_computer/proc/send_sound()
 	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)

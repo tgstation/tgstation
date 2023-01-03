@@ -27,8 +27,8 @@
 	var/list/covering_clothing = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/obj/item/clothing/clothing_item in covering_clothing)
 		if(clothing_item.body_parts_covered & def_zone.body_part)
-			protection *= (100 - min(clothing_item.armor.getRating(damage_type), 100)) * 0.01
-	protection *= (100 - min(physiology.armor.getRating(damage_type), 100)) * 0.01
+			protection *= (100 - min(clothing_item.get_armor_rating(damage_type), 100)) * 0.01
+	protection *= (100 - min(physiology.armor.get_rating(damage_type), 100)) * 0.01
 	return 100 - protection
 
 ///Get all the clothing on a specific body part
@@ -329,23 +329,6 @@
 		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(L.zone_selected))
 		var/armor_block = run_armor_check(affecting, MELEE)
 		apply_damage(damage, BRUTE, affecting, armor_block)
-
-
-/mob/living/carbon/human/attack_basic_mob(mob/living/basic/user, list/modifiers)
-	. = ..()
-	if(!.)
-		return
-	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-	if(check_shields(user, damage, "the [user.name]", MELEE_ATTACK, user.armour_penetration))
-		return FALSE
-	var/dam_zone = dismembering_strike(user, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-	if(!dam_zone) //Dismemberment successful
-		return TRUE
-	var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(dam_zone))
-	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration)
-	var/attack_direction = get_dir(user, src)
-	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness, attack_direction = attack_direction)
-
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()

@@ -380,11 +380,10 @@
 /obj/machinery/power/emitter/prototype
 	name = "Prototype Emitter"
 	icon = 'icons/obj/weapons/turrets.dmi'
-	icon_state = "proto_emitter"
-	base_icon_state = "proto_emitter"
-	icon_state_on = "proto_emitter_+a"
-	icon_state_underpowered = "proto_emitter_+u"
-	base_icon_state = "proto_emitter"
+	icon_state = "protoemitter"
+	base_icon_state = "protoemitter"
+	icon_state_on = "protoemitter_+a"
+	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
 	buckle_lying = 0
 	///Sets the view size for the user

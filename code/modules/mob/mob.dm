@@ -831,7 +831,8 @@
 
 /// Adds this list to the output to the stat browser
 /mob/proc/get_status_tab_items()
-	. = list()
+	. = list("") //we want to offset unique stuff from standard stuff
+	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
 
 /**
  * Convert a list of spells into a displyable list for the statpanel
@@ -1361,9 +1362,6 @@
 			. = TRUE
 		if(NAMEOF(src, eye_blind))
 			set_blindness(var_value)
-			. = TRUE
-		if(NAMEOF(src, eye_blurry))
-			set_blurriness(var_value)
 			. = TRUE
 
 	if(!isnull(.))

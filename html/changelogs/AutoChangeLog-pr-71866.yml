@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - code_imp: "there can now be more than one grey tide event running at once."

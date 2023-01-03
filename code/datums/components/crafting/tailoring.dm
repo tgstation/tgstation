@@ -14,41 +14,13 @@
 	time = 4 SECONDS
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/durathread_jumpsuit
-	name = "Durathread Jumpsuit"
-	result = /obj/item/clothing/under/misc/durathread
-	reqs = list(/obj/item/stack/sheet/durathread = 4)
-	time = 4 SECONDS
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/durathread_beret
-	name = "Durathread Beret"
-	result = /obj/item/clothing/head/beret/durathread
-	reqs = list(/obj/item/stack/sheet/durathread = 2)
-	time = 4 SECONDS
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/durathread_beanie
-	name = "Durathread Beanie"
-	result = /obj/item/clothing/head/beanie/durathread
-	reqs = list(/obj/item/stack/sheet/durathread = 2)
-	time = 4 SECONDS
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/durathread_bandana
-	name = "Durathread Bandana"
-	result = /obj/item/clothing/mask/bandana/durathread
-	reqs = list(/obj/item/stack/sheet/durathread = 1)
-	time = 2.5 SECONDS
-	category = CAT_CLOTHING
-
 /datum/crafting_recipe/fannypack
 	name = "Fannypack"
 	result = /obj/item/storage/belt/fannypack
 	reqs = list(/obj/item/stack/sheet/cloth = 2,
 				/obj/item/stack/sheet/leather = 1)
 	time = 2 SECONDS
-	category = CAT_CLOTHING
+	category = CAT_CONTAINERS
 
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"
@@ -58,7 +30,7 @@
 	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/hudsunsecremoval
 	name = "Security HUD removal"
@@ -66,7 +38,7 @@
 	time = 2 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/security/sunglasses = 1)
-	category = CAT_CLOTHING
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/hudsunmed
 	name = "Medical HUDsunglasses"
@@ -76,7 +48,7 @@
 	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/hudsunmedremoval
 	name = "Medical HUD removal"
@@ -84,7 +56,7 @@
 	time = 2 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/health/sunglasses = 1)
-	category = CAT_CLOTHING
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/hudsundiag
 	name = "Diagnostic HUDsunglasses"
@@ -94,7 +66,7 @@
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/hudsundiagremoval
 	name = "Diagnostic HUD removal"
@@ -102,7 +74,7 @@
 	time = 2 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses = 1)
-	category = CAT_CLOTHING
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/scienceglasses
 	name = "Science Glasses"
@@ -112,7 +84,7 @@
 	reqs = list(/obj/item/clothing/glasses/science = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/scienceglassesremoval
 	name = "Chemical Scanner removal"
@@ -120,7 +92,7 @@
 	time = 2 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/sunglasses/chemical = 1)
-	category = CAT_CLOTHING
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/ghostsheet
 	name = "Ghost Sheet"

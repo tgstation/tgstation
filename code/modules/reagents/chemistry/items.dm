@@ -137,7 +137,7 @@
 	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."
 
 /obj/item/burner
-	name = "Alcohol burner"
+	name = "burner"
 	desc = "A small table size burner used for heating up beakers."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "burner"
@@ -265,12 +265,10 @@
 	return lit * heat
 
 /obj/item/burner/oil
-	name = "Oil burner"
 	reagent_type = /datum/reagent/fuel/oil
 	grind_results = list(/datum/reagent/fuel/oil = 5, /datum/reagent/silicon = 10)
 
 /obj/item/burner/fuel
-	name = "Fuel burner"
 	reagent_type = /datum/reagent/fuel
 	grind_results = list(/datum/reagent/fuel = 5, /datum/reagent/silicon = 10)
 
