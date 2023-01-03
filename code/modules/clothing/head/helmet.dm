@@ -260,7 +260,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEEYES|HIDEFACE
 
-/obj/item/clothing/head/helmet/swat/gorlex/tt
+/obj/item/clothing/head/helmet/swat/gorlex/trauma_team
 	name = "\improper Trauma Team helmet"
 	desc = "A white-painted helmet, with a speciality face-mask attached to block bio-hazardous materials and chemicals."
 	icon_state = "trauma_team"

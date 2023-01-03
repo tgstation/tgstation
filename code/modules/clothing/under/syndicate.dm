@@ -106,7 +106,7 @@
 	desc = "A non-descript and slightly suspicious looking turtleneck with baggy cargo pants. Wearing this makes you feel like a smart dude."
 	can_adjust = FALSE
 
-/obj/item/clothing/under/syndicate/interdyne/tt
+/obj/item/clothing/under/syndicate/interdyne/trauma_team
 	name = "\improper Trauma Team scrubs"
 	desc = "A baggy Interdyne-blue coloured tactical uniform. Sewed from special synthetic fabrics designed to both protect the wearer, and repel bodily fluids."
 	icon_state = "interdyne_tt"

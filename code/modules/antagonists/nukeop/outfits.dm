@@ -115,9 +115,9 @@
 
 /datum/outfit/syndicate/reinforcement/interdyne
 	name = "Syndicate Operative - Interdyne Trauma Team"
-	uniform = /obj/item/clothing/under/syndicate/interdyne/tt
-	suit = /obj/item/clothing/suit/armor/vest/tt
-	head = /obj/item/clothing/head/helmet/swat/gorlex/tt
+	uniform = /obj/item/clothing/under/syndicate/interdyne/trauma_team
+	suit = /obj/item/clothing/suit/armor/vest/trauma_team
+	head = /obj/item/clothing/head/helmet/swat/gorlex/trauma_team
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile/trauma
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	mask = /obj/item/clothing/mask/breath/medical
