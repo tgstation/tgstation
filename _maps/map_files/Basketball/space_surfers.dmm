@@ -30,7 +30,9 @@
 "dC" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/floor/fakespace,
+/turf/open/floor/fakespace{
+	underfloor_accessibility = 1
+	},
 /area/centcom/basketball)
 "fj" = (
 /obj/structure/marker_beacon/burgundy,
@@ -39,6 +41,9 @@
 /area/centcom/basketball)
 "fu" = (
 /turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"gY" = (
+/turf/closed/indestructible,
 /area/centcom/basketball)
 "ku" = (
 /obj/structure/grille/indestructible,
@@ -51,7 +56,9 @@
 /area/centcom/basketball)
 "oR" = (
 /obj/structure/cable,
-/turf/open/floor/iron/solarpanel,
+/turf/open/floor/iron/solarpanel{
+	underfloor_accessibility = 1
+	},
 /area/centcom/basketball)
 "rU" = (
 /obj/structure/table,
@@ -79,7 +86,9 @@
 /turf/open/space/basic,
 /area/centcom/basketball)
 "uH" = (
-/turf/open/floor/iron/solarpanel,
+/turf/open/floor/iron/solarpanel{
+	underfloor_accessibility = 1
+	},
 /area/centcom/basketball)
 "vo" = (
 /obj/structure/lattice/catwalk,
@@ -105,7 +114,10 @@
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Dt" = (
-/turf/closed/indestructible/fakedoor/glass_airlock,
+/obj/structure/cable,
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "DP" = (
 /obj/structure/hoop{
@@ -117,7 +129,9 @@
 "Gh" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/solarpanel,
+/turf/open/floor/iron/solarpanel{
+	underfloor_accessibility = 1
+	},
 /area/centcom/basketball)
 "Hu" = (
 /turf/closed/indestructible/riveted,
@@ -187,7 +201,9 @@
 "Vr" = (
 /obj/machinery/power/solar/fake,
 /obj/structure/cable,
-/turf/open/floor/iron/solarpanel,
+/turf/open/floor/iron/solarpanel{
+	underfloor_accessibility = 1
+	},
 /area/centcom/basketball)
 "YX" = (
 /obj/item/toy/basketball,
@@ -222,10 +238,10 @@ Hu
 "}
 (2,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Nt
 Nt
 Nt
@@ -239,18 +255,18 @@ Nt
 Nt
 Nt
 Nt
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Hu
 "}
 (3,1,1) = {"
 Hu
-tO
-tO
-Ul
-Ul
+gY
+gY
+gY
+gY
 Nt
 Ul
 Ul
@@ -264,18 +280,18 @@ Ul
 Ul
 Ul
 Nt
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Hu
 "}
 (4,1,1) = {"
 Hu
-tO
-tO
-Ul
-Ul
+gY
+gY
+gY
+gY
 Nt
 Ul
 Ul
@@ -289,15 +305,15 @@ Ul
 Ul
 Ul
 Nt
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Hu
 "}
 (5,1,1) = {"
 Hu
-Ul
+gY
 Nt
 Nt
 Nt
@@ -317,12 +333,12 @@ Nt
 Nt
 Nt
 Nt
-tO
+gY
 Hu
 "}
 (6,1,1) = {"
 Hu
-Ul
+gY
 Nt
 Ul
 dg
@@ -342,12 +358,12 @@ Ul
 Ul
 Ul
 Nt
-tO
+gY
 Hu
 "}
 (7,1,1) = {"
 Hu
-Ul
+gY
 Nt
 dg
 dg
@@ -367,7 +383,7 @@ Ul
 Ul
 Ul
 Nt
-tO
+gY
 Hu
 "}
 (8,1,1) = {"
@@ -404,13 +420,13 @@ dg
 Ul
 Ul
 Ul
-ku
+lD
 dC
 oR
 dC
 oR
 dC
-ku
+lD
 Vr
 dC
 Vr
@@ -554,13 +570,13 @@ dg
 Ul
 tO
 tO
-ku
+lD
 dC
 oR
 dC
 oR
 dC
-ku
+lD
 Vr
 dC
 Vr
@@ -597,7 +613,7 @@ Hu
 "}
 (17,1,1) = {"
 Hu
-tO
+gY
 Nt
 dg
 dg
@@ -617,12 +633,12 @@ Ul
 Ul
 Ul
 Nt
-tO
+gY
 Hu
 "}
 (18,1,1) = {"
 Hu
-tO
+gY
 Nt
 Ul
 dg
@@ -642,12 +658,12 @@ Ul
 Ul
 Ul
 Nt
-tO
+gY
 Hu
 "}
 (19,1,1) = {"
 Hu
-tO
+gY
 Nt
 Nt
 Nt
@@ -667,15 +683,15 @@ Nt
 Nt
 Nt
 Nt
-tO
+gY
 Hu
 "}
 (20,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Nt
 Ul
 Ul
@@ -689,18 +705,18 @@ Ul
 Ul
 Ul
 Nt
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Hu
 "}
 (21,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Nt
 Ul
 Ul
@@ -714,18 +730,18 @@ Ul
 Ul
 Ul
 Nt
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Hu
 "}
 (22,1,1) = {"
 Hu
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Nt
 Nt
 Nt
@@ -739,10 +755,10 @@ Nt
 Nt
 Nt
 Nt
-tO
-tO
-tO
-tO
+gY
+gY
+gY
+gY
 Hu
 "}
 (23,1,1) = {"
