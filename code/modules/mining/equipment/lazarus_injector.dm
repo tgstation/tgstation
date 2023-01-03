@@ -42,7 +42,6 @@
 		return
 
 	target_animal.lazarus_revive(user, malfunctioning)
-	target_animal.faction = list(FACTION_NEUTRAL)
 	target_animal.revive(HEAL_ALL)
 	loaded = FALSE
 	user.visible_message(span_notice("[user] injects [target_animal] with [src], reviving it."))
