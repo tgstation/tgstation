@@ -32,10 +32,10 @@
 
 	var/mob/living/target_animal = target
 	if(!target_animal.compare_sentience_type(revive_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
-		to_chat(user, span_info("[src] does not work on this sort of creature."))
+		balloon_alert(user, "invalid creature!")
 		return
 	if(target_animal.stat != DEAD)
-		to_chat(user, span_info("[src] is only effective on the dead."))
+		balloon_alert(user, "it's not dead!")
 		return
 
 	target_animal.lazarus_revive(user, malfunctioning)
