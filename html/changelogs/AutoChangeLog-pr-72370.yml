@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - code_imp: "Added a unit test for ALL worn icons."
+  - bugfix: "Fixed a bunch of broken worn icons!"
