@@ -56,6 +56,12 @@
 		return
 	else
 		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
+		if("help")
+		user.visible_message(span_notice("[user] pets [src]."), span_notice("You rest your hand on the [src]'s head for a moment."))
+		if(flags_1 & HOLOGRAM_1)
+			return
+		user.add_mood_event(REF(src), /datum/mood_event/pet_animal, src)
+		return
 
 /mob/living/basic/mothroach/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
