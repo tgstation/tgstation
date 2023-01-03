@@ -84,9 +84,11 @@
 	if(!is_wizard_or_friend(user))
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
 		user.balloon_alert(user, "the staff feels weaker as you touch it")
-		desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead. On the handle is a beautiful engraving in High Spaceman, \"Thou shalt not crosseth thy beams.\""
-	else
-		desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
+		
+/obj/item/gun/magic/staff/healing/examine(mob/user)
+	. = ..()
+	if(!is_wizard_or_friend(user))
+		. += span_notice("On the handle you notice a beautiful engraving in High Spaceman, \"Thou shalt not crosseth thy beams.\"")
 
 /obj/item/gun/magic/staff/healing/Initialize(mapload)
 	. = ..()
