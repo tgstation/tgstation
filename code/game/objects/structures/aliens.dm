@@ -456,6 +456,10 @@
 	status = BURST
 	icon_state = "egg_hatched"
 
+/obj/structure/alien/egg/fake
+	status = BURST
+	icon_state = "egg_growing"
+
 #undef BURSTING
 #undef BURST
 #undef GROWING
