@@ -10,7 +10,7 @@
 
 /obj/item/toy/basketball
 	name = "basketball"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/basketball.dmi'
 	icon_state = "basketball"
 	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
@@ -330,7 +330,7 @@
 		if(WEST)
 			dir_offset_x = 32
 
-	var/mutable_appearance/scoreboard = mutable_appearance('icons/obj/signs.dmi', "days_since_explosion")
+	var/mutable_appearance/scoreboard = mutable_appearance('icons/obj/signs.dmi', "basketball_scorecard")
 	scoreboard.pixel_x = dir_offset_x
 	scoreboard.pixel_y = dir_offset_y
 	SET_PLANE_EXPLICIT(scoreboard, GAME_PLANE, src)
@@ -338,19 +338,21 @@
 	//add_overlay(scoreboard)
 
 	var/ones = total_score % 10
-	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]")
+	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]", layer + 0.01)
 	ones_overlay.pixel_x = 4
-	//SET_PLANE_EXPLICIT(ones_overlay, FLOOR_PLANE, src)
-	//. += ones_overlay
+	var/mutable_appearance/emissive_ones_overlay  = emissive_appearance('icons/obj/signs.dmi', "days_[ones]", src, alpha = src.alpha)
+	emissive_ones_overlay.pixel_x = 4
 	scoreboard.add_overlay(ones_overlay)
+	scoreboard.add_overlay(emissive_ones_overlay)
 
 	var/tens = (total_score / 10) % 10
-	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]")
-	tens_overlay.pixel_x = -5 + dir_offset_x
-	tens_overlay.pixel_y = dir_offset_y
-	//SET_PLANE_EXPLICIT(tens_overlay, FLOOR_PLANE, src)
-	. += tens_overlay
-	//scoreboard.add_overlay(ten_overlay)
+	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]", layer + 0.01)
+	tens_overlay.pixel_x = -5
+
+	var/mutable_appearance/emissive_tens_overlay  = emissive_appearance('icons/obj/signs.dmi', "days_[tens]", src, alpha = src.alpha)
+	emissive_tens_overlay.pixel_x = -5
+	scoreboard.add_overlay(tens_overlay)
+	scoreboard.add_overlay(emissive_tens_overlay)
 
 /obj/structure/hoop/attackby(obj/item/ball, mob/living/baller, params)
 	if(get_dist(src, baller) < 2) // TK users aren't allowed to dunk (not sure if this code even works tbh)
@@ -365,8 +367,10 @@
 			animate(baller, pixel_x = 0, pixel_y = 0, time = 3) // easing = BOUNCE_EASING)
 
 			visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
-			score(2)
-			baller.adjustStaminaLoss(10) // dunking is more strenous than shooting
+
+			if(istype(ball, /obj/item/toy/basketball))
+				score(2)
+				baller.adjustStaminaLoss(10) // dunking is more strenous than shooting
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()
@@ -380,7 +384,7 @@
 		loser.forceMove(loc)
 		loser.Paralyze(100)
 		visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
-		score(2)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 		baller.adjustStaminaLoss(30)
 		baller.stop_pulling()
 	else
