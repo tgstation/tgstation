@@ -694,6 +694,7 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 
 #define UPPER_BODY "upper body"
 #define LOWER_BODY "lower body"
+#define NO_MODIFY "do not modify"
 
 /// Used for human height overlay adjustments
 /// Certain standing overlay layers shouldn't have a filter applied and should instead just offset by a pixel y
@@ -701,10 +702,10 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 GLOBAL_LIST_INIT(layers_to_offset, list(
 	// Weapons commonly go over the middle point so they shouldn't displace
 	"[HANDS_LAYER]" = LOWER_BODY,
-	// very tall hats will get cutoff
+	// Very tall hats will get cutoff
 	"[HEAD_LAYER]" = UPPER_BODY,
 	"[HAIR_LAYER]" = UPPER_BODY,
-	// Everything below looks fine without stretching and doesn't need a filter (optimization)
+	// Everything below looks fine without a filter, so we can skip it and just offset, just to optimize things
 	"[GLASSES_LAYER]" = UPPER_BODY,
 	"[ABOVE_BODY_FRONT_GLASSES_LAYER]" = UPPER_BODY, // currently unused
 	"[ABOVE_BODY_FRONT_HEAD_LAYER]" = UPPER_BODY, // only used for head stuff
@@ -715,7 +716,10 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[ID_LAYER]" = UPPER_BODY,
 	"[FACEMASK_LAYER]" = UPPER_BODY,
 	"[BELT_LAYER]" = LOWER_BODY,
-	// these DO get a filter, i'm leaving them here as reference
+	// These two are cached, and have their appearance shared, so it's safer to just not touch it
+	"[MUTATIONS_LAYER]" = NO_MODIFY,
+	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
+	// - these DO get a filter, i'm leaving them here as reference, so you can see how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
 	// BODY_ADJ_LAYER (external organs like wings)
@@ -723,8 +727,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// BODY_FRONT_LAYER (external organs like wings)
 	// DAMAGE_LAYER (full body)
 	// FIRE_LAYER (full body)
-	// FRONT_MUTATIONS_LAYER (full body)
-	// MUTATIONS_LAYER (full body)
 	// UNIFORM_LAYER (full body)
 	// WOUND_LAYER (full body)
 ))

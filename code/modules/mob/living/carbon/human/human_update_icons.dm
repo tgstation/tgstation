@@ -851,13 +851,16 @@ generate/load female uniform sprites matching all previously decided variables
  * upper_torso is to specify whether the appearance is locate in the upper half of the mob rather than the lower half,
  * higher up things (hats for example) need to be offset more due to the location of the filter displacement
  */
-/mob/living/carbon/human/proc/apply_height_offsets(mutable_appearance/appearance, upper_torso = LOWER_BODY)
+/mob/living/carbon/human/proc/apply_height_offsets(mutable_appearance/appearance, upper_torso)
 	var/height_to_use = num2text(get_mob_height())
 	var/final_offset = 0
-	if(upper_torso == UPPER_BODY)
-		final_offset = GLOB.human_heights_to_offsets[height_to_use][1]
-	else
-		final_offset = GLOB.human_heights_to_offsets[height_to_use][2]
+	switch(upper_torso)
+		if(UPPER_BODY)
+			final_offset = GLOB.human_heights_to_offsets[height_to_use][1]
+		if(LOWER_BODY)
+			final_offset = GLOB.human_heights_to_offsets[height_to_use][2]
+		else
+			return
 
 	appearance.pixel_y += final_offset
 	return appearance
