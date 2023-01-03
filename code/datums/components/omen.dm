@@ -177,6 +177,12 @@
 		our_guy.gib()
 		return
 
+	// Don't explode if buckled to a stasis bed
+	if(our_guy.buckled)
+		var/obj/machinery/stasis/stasis_bed = our_guy.buckled
+		if(istype(stasis_bed))
+			return
+
 	death_explode(our_guy)
 	var/mob/living/carbon/player = our_guy
 	player.spread_bodyparts(skip_head = TRUE)
