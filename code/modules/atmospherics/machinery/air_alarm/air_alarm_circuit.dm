@@ -82,7 +82,7 @@
 
 	if(port == enable_fire_alarm)
 		if(connected_alarm.alarm_manager.send_alarm(ALARM_ATMOS))
-			connected_alarm.danger_level = AIR_ALARM_ALERT_SEVERE
+			connected_alarm.danger_level = AIR_ALARM_ALERT_HAZARD
 	else
 		if(connected_alarm.alarm_manager.clear_alarm(ALARM_ATMOS))
 			connected_alarm.danger_level = AIR_ALARM_ALERT_NONE

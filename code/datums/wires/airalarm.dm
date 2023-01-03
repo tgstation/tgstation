@@ -68,5 +68,5 @@
 				A.select_mode(usr, /datum/air_alarm_mode/panic_siphon)
 		if(WIRE_ALARM) // Post alarm.
 			if(A.alarm_manager.send_alarm(ALARM_ATMOS))
-				A.danger_level = AIR_ALARM_ALERT_SEVERE
+				A.danger_level = AIR_ALARM_ALERT_HAZARD
 			A.update_appearance()

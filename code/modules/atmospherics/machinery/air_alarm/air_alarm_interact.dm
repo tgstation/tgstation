@@ -1,21 +1,21 @@
 
 /obj/machinery/airalarm/crowbar_act(mob/living/user, obj/item/tool)
-	if(buildstage != AIRALARM_BUILD_NO_WIRES)
+	if(buildstage != AIR_ALARM_BUILD_NO_WIRES)
 		return
 	user.visible_message(span_notice("[user.name] removes the electronics from [name]."), \
 						span_notice("You start prying out the circuit..."))
 	tool.play_tool_sound(src)
 	if (tool.use_tool(src, user, 20))
-		if (buildstage == AIRALARM_BUILD_NO_WIRES)
+		if (buildstage == AIR_ALARM_BUILD_NO_WIRES)
 			to_chat(user, span_notice("You remove the air alarm electronics."))
 			new /obj/item/electronics/airalarm(drop_location())
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			buildstage = AIRALARM_BUILD_NO_CIRCUIT
+			buildstage = AIR_ALARM_BUILD_NO_CIRCUIT
 			update_appearance()
 	return TRUE
 
 /obj/machinery/airalarm/screwdriver_act(mob/living/user, obj/item/tool)
-	if(buildstage != AIRALARM_BUILD_COMPLETE)
+	if(buildstage != AIR_ALARM_BUILD_COMPLETE)
 		return
 	tool.play_tool_sound(src)
 	toggle_panel_open()
@@ -24,18 +24,18 @@
 	return TRUE
 
 /obj/machinery/airalarm/wirecutter_act(mob/living/user, obj/item/tool)
-	if(!(buildstage == AIRALARM_BUILD_COMPLETE && panel_open && wires.is_all_cut()))
+	if(!(buildstage == AIR_ALARM_BUILD_COMPLETE && panel_open && wires.is_all_cut()))
 		return
 	tool.play_tool_sound(src)
 	to_chat(user, span_notice("You cut the final wires."))
 	var/obj/item/stack/cable_coil/cables = new(drop_location(), 5)
 	user.put_in_hands(cables)
-	buildstage = AIRALARM_BUILD_NO_WIRES
+	buildstage = AIR_ALARM_BUILD_NO_WIRES
 	update_appearance()
 	return TRUE
 
 /obj/machinery/airalarm/wrench_act(mob/living/user, obj/item/tool)
-	if(buildstage != AIRALARM_BUILD_NO_CIRCUIT)
+	if(buildstage != AIR_ALARM_BUILD_NO_CIRCUIT)
 		return
 	to_chat(user, span_notice("You detach \the [src] from the wall."))
 	tool.play_tool_sound(src)
@@ -46,7 +46,7 @@
 
 
 /obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((buildstage == AIRALARM_BUILD_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if((buildstage == AIR_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 	return FALSE
 
@@ -55,7 +55,7 @@
 		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
 			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 			span_notice("You adapt an air alarm circuit and slot it into the assembly."))
-			buildstage = AIRALARM_BUILD_NO_WIRES
+			buildstage = AIR_ALARM_BUILD_NO_WIRES
 			update_appearance()
 			return TRUE
 	return FALSE
@@ -101,14 +101,14 @@
 /obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
 	update_last_used(user)
 	switch(buildstage)
-		if(AIRALARM_BUILD_COMPLETE)
+		if(AIR_ALARM_BUILD_COMPLETE)
 			if(W.GetID())// trying to unlock the interface with an ID card
 				togglelock(user)
 				return
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
 				return
-		if(AIRALARM_BUILD_NO_WIRES)
+		if(AIR_ALARM_BUILD_NO_WIRES)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
@@ -117,7 +117,7 @@
 				user.visible_message(span_notice("[user.name] wires the air alarm."), \
 									span_notice("You start wiring the air alarm..."))
 				if (do_after(user, 20, target = src))
-					if (cable.get_amount() >= 5 && buildstage == AIRALARM_BUILD_NO_WIRES)
+					if (cable.get_amount() >= 5 && buildstage == AIR_ALARM_BUILD_NO_WIRES)
 						cable.use(5)
 						to_chat(user, span_notice("You wire the air alarm."))
 						wires.repair()
@@ -125,15 +125,15 @@
 						locked = FALSE
 						shorted = FALSE
 						danger_level = AIR_ALARM_ALERT_NONE
-						buildstage = AIRALARM_BUILD_COMPLETE
+						buildstage = AIR_ALARM_BUILD_COMPLETE
 						select_mode(user, /datum/air_alarm_mode/filtering)
 						update_appearance()
 				return
-		if(AIRALARM_BUILD_NO_CIRCUIT)
+		if(AIR_ALARM_BUILD_NO_CIRCUIT)
 			if(istype(W, /obj/item/electronics/airalarm))
 				if(user.temporarilyRemoveItemFromInventory(W))
 					to_chat(user, span_notice("You insert the circuit."))
-					buildstage = AIRALARM_BUILD_NO_WIRES
+					buildstage = AIR_ALARM_BUILD_NO_WIRES
 					update_appearance()
 					qdel(W)
 				return
@@ -144,7 +144,7 @@
 					return
 				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 				span_notice("You adapt an air alarm circuit and slot it into the assembly."))
-				buildstage = AIRALARM_BUILD_NO_WIRES
+				buildstage = AIR_ALARM_BUILD_NO_WIRES
 				update_appearance()
 				return
 

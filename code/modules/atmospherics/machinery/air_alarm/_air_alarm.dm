@@ -13,7 +13,7 @@
 	resistance_flags = FIRE_PROOF
 
 	/// Current alert level, found in code/__DEFINES/atmospherics/atmos_machinery.dm
-	/// AIR_ALARM_ALERT_NONE, AIR_ALARM_ALERT_MINOR, AIR_ALARM_ALERT_SEVERE
+	/// [AIR_ALARM_ALERT_NONE], [AIR_ALARM_ALERT_MINOR], [AIR_ALARM_ALERT_SEVERE]
 	var/danger_level = AIR_ALARM_ALERT_NONE
 
 	/// Currently selected mode of the alarm. An instance of [/datum/air_alarm_mode].
@@ -29,12 +29,12 @@
 	var/shorted = FALSE
 
 	/// Current build stage. [AIRALARM_BUILD_COMPLETE], [AIRALARM_BUILD_NO_WIRES], [AIRALARM_BUILD_NO_CIRCUIT]
-	var/buildstage = AIRALARM_BUILD_COMPLETE
+	var/buildstage = AIR_ALARM_BUILD_COMPLETE
 
 	///Represents a signel source of atmos alarms, complains to all the listeners if one of our thresholds is violated
 	var/datum/alarm_handler/alarm_manager
 
-	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = PROC_REF(check_air_dangerlevel))
+	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = PROC_REF(check_danger))
 
 	/// An assoc list of [datum/tlv]s, indexed by "pressure", "temperature", and [datum/gas] typepaths.
 	var/list/datum/tlv/tlv_collection
@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		setDir(ndir)
 
 	if(nbuild)
-		buildstage = AIRALARM_BUILD_NO_CIRCUIT
+		buildstage = AIR_ALARM_BUILD_NO_CIRCUIT
 		set_panel_open(TRUE)
 
 	if(name == initial(name))
@@ -100,11 +100,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
 	switch(buildstage)
-		if(AIRALARM_BUILD_NO_CIRCUIT)
+		if(AIR_ALARM_BUILD_NO_CIRCUIT)
 			. += span_notice("It is missing air alarm electronics.")
-		if(AIRALARM_BUILD_NO_WIRES)
+		if(AIR_ALARM_BUILD_NO_WIRES)
 			. += span_notice("It is missing wiring.")
-		if(AIRALARM_BUILD_COMPLETE)
+		if(AIR_ALARM_BUILD_COMPLETE)
 			. += span_notice("Right-click to [locked ? "unlock" : "lock"] the interface.")
 
 /obj/machinery/airalarm/ui_status(mob/user)
@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/ui_act(action, params)
 	. = ..()
 
-	if(. || buildstage != AIRALARM_BUILD_COMPLETE)
+	if(. || buildstage != AIR_ALARM_BUILD_COMPLETE)
 		return
 	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
@@ -251,10 +251,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	ASSERT(!isnull(area))
 
 	var/ref = params["ref"]
-
-	// Possible machines this can refer to
-	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = isnull(ref) ? null : locate(ref) in area.air_vents
-	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = isnull(ref) ? null : locate(ref) in area.air_scrubbers
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber
+	if(!isnull(ref))
+		scrubber = locate(ref) in area.air_scrubbers
+		vent = locate(ref) in area.air_vents
 
 	switch (action)
 		if ("power")
@@ -355,7 +356,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 			var/turf/our_turf = get_turf(src)
 			var/datum/gas_mixture/environment = our_turf.return_air()
-			check_air_dangerlevel(our_turf, environment, environment.temperature)
+			check_danger(our_turf, environment, environment.temperature)
 
 		if("reset_threshold")
 			var/threshold = text2path(params["threshold"]) || params["threshold"]
@@ -368,11 +369,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 			var/turf/our_turf = get_turf(src)
 			var/datum/gas_mixture/environment = our_turf.return_air()
-			check_air_dangerlevel(our_turf, environment, environment.temperature)
+			check_danger(our_turf, environment, environment.temperature)
 
 		if ("alarm")
 			if (alarm_manager.send_alarm(ALARM_ATMOS))
-				danger_level = AIR_ALARM_ALERT_SEVERE
+				danger_level = AIR_ALARM_ALERT_HAZARD
 
 		if ("reset")
 			if (alarm_manager.clear_alarm(ALARM_ATMOS))
@@ -404,11 +405,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/update_icon_state()
 	if(panel_open)
 		switch(buildstage)
-			if(AIRALARM_BUILD_COMPLETE)
+			if(AIR_ALARM_BUILD_COMPLETE)
 				icon_state = "alarmx"
-			if(AIRALARM_BUILD_NO_WIRES)
+			if(AIR_ALARM_BUILD_NO_WIRES)
 				icon_state = "alarm_b2"
-			if(AIRALARM_BUILD_NO_CIRCUIT)
+			if(AIR_ALARM_BUILD_NO_CIRCUIT)
 				icon_state = "alarm_b1"
 		return ..()
 
@@ -434,64 +435,37 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	. += mutable_appearance(icon, state)
 	. += emissive_appearance(icon, state, src, alpha = src.alpha)
 
-/**
- * main proc for throwing a shitfit if the air isnt right.
- * goes into warning mode if gas parameters are beyond the tlv warning bounds, goes into hazard mode if gas parameters are beyond tlv hazard bounds
- *
- */
-/obj/machinery/airalarm/proc/check_air_dangerlevel(turf/location, datum/gas_mixture/environment, exposed_temperature)
+/// Check the current air and update our danger level.
+/// [/obj/machinery/airalarm/var/danger_level]
+/obj/machinery/airalarm/proc/check_danger(turf/location, datum/gas_mixture/environment, exposed_temperature)
 	SIGNAL_HANDLER
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
-	var/datum/tlv/current_tlv
-	//cache for sanic speed (lists are references anyways)
-	var/list/cached_tlv = tlv_collection
+	var/old_danger = danger_level
+	danger_level = AIR_ALARM_ALERT_NONE
 
-	var/list/env_gases = environment.gases
-	var/partial_pressure = R_IDEAL_GAS_EQUATION * exposed_temperature / environment.volume
+	var/total_moles = environment.total_moles()
+	var/pressure = environment.return_pressure()
+	var/temp = environment.return_temperature()
 
-	current_tlv = cached_tlv["pressure"]
-	var/environment_pressure = environment.return_pressure()
-	var/pressure_dangerlevel = current_tlv.check_value(environment_pressure)
+	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
+	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
+	for(var/gas_path in environment.gases)
+		var/moles = environment.gases[gas_path][MOLES]
+		danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
-	current_tlv = cached_tlv["temperature"]
-	var/temperature_dangerlevel = current_tlv.check_value(exposed_temperature)
-
-	var/gas_dangerlevel = 0
-	for(var/gas_id in env_gases)
-		current_tlv = cached_tlv[gas_id]
-		if(!current_tlv) // We're not interested in this gas, it seems.
-			continue
-		gas_dangerlevel = max(gas_dangerlevel, current_tlv.check_value(env_gases[gas_id][MOLES] * partial_pressure))
-
-	environment.garbage_collect()
-
-	var/old_danger_level = danger_level
-	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)
-
-	if(old_danger_level != danger_level)
-		INVOKE_ASYNC(src, PROC_REF(apply_danger_level))
-	if(istype(selected_mode, /datum/air_alarm_mode/cycle) && environment_pressure < ONE_ATMOSPHERE * 0.05)
-		var/datum/air_alarm_mode/cycle/typed_mode = selected_mode
-		typed_mode.replace(my_area)
-
-/obj/machinery/airalarm/proc/apply_danger_level()
-
-	var/new_area_danger_level = 0
-	for(var/obj/machinery/airalarm/AA in my_area)
-		if (!(AA.machine_stat & (NOPOWER|BROKEN)) && !AA.shorted)
-			new_area_danger_level = clamp(max(new_area_danger_level, AA.danger_level), 0, 1)
-
-	var/did_anything_happen
-	if(new_area_danger_level)
-		did_anything_happen = alarm_manager.send_alarm(ALARM_ATMOS)
+	if(danger_level)
+		alarm_manager.send_alarm(ALARM_ATMOS)
 	else
-		did_anything_happen = alarm_manager.clear_alarm(ALARM_ATMOS)
-	if(did_anything_happen) //if something actually changed
-		danger_level = new_area_danger_level
+		alarm_manager.clear_alarm(ALARM_ATMOS)
 
-	update_appearance()
+	if(old_danger != danger_level)
+		update_appearance()
+
+	if(istype(selected_mode, /datum/air_alarm_mode/cycle) && pressure < ONE_ATMOSPHERE * 0.05)
+		var/datum/air_alarm_mode/cycle/cycle_mode = selected_mode
+		cycle_mode.replace(my_area)
 
 /obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path)
 	var/datum/air_alarm_mode/new_mode = GLOB.air_alarm_modes[mode_path]

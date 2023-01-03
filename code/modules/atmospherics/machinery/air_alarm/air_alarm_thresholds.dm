@@ -21,15 +21,15 @@
 
 /datum/tlv/proc/check_value(val)
 	if(hazard_max != TLV_VALUE_IGNORE && val >= hazard_max)
-		return TLV_RET_HAZARD
+		return AIR_ALARM_ALERT_HAZARD
 	if(hazard_min != TLV_VALUE_IGNORE && val <= hazard_min)
-		return TLV_RET_HAZARD
+		return AIR_ALARM_ALERT_HAZARD
 	if(warning_max != TLV_VALUE_IGNORE && val >= warning_max)
-		return TLV_RET_WARNING
+		return AIR_ALARM_ALERT_WARNING
 	if(warning_min != TLV_VALUE_IGNORE && val <= warning_min)
-		return TLV_RET_WARNING
+		return AIR_ALARM_ALERT_WARNING
 
-	return TLV_RET_SAFE
+	return AIR_ALARM_ALERT_NONE
 
 /** Set this particular TLV
  *
