@@ -31,7 +31,7 @@
 		return
 
 	var/mob/living/target_animal = target
-	if(!target_animal.compare_sentience_type(revive_type))
+	if(!target_animal.compare_sentience_type(revive_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		to_chat(user, span_info("[src] does not work on this sort of creature."))
 		return
 	if(target_animal.stat != DEAD)

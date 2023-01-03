@@ -2410,7 +2410,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /**
  * Helper proc for basic and simple animals to return true if the passed sentience type matches theirs
- * Living doesn't have a sentience type though so it returns false by default
+ * Living doesn't have a sentience type though so it always returns false if not a basic or simple mob
  */
 /mob/living/proc/compare_sentience_type(compare_type)
 	return FALSE

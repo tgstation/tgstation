@@ -697,7 +697,7 @@
 	if(dumb_mob.stat)
 		to_chat(user, span_warning("[dumb_mob] is dead!"))
 		return
-	if(!dumb_mob.compare_sentience_type(sentience_type))
+	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		to_chat(user, span_warning("[src] won't work on [dumb_mob]."))
 		return
 
