@@ -1791,45 +1791,6 @@
 		),
 	)
 
-/**
- *
- * Currently not in use.
- *
- */
-
-/datum/mod_theme/syndicate/ponos
-	name = "ponos"
-	desc = "Property of Gorlex Security Consulting, LLC. Use only with license. All rights reserved."
-	extended_desc = "An advanced \"modular environment\" suit created for specialist engineers within strike-teams, \
-		with blood-red plastitanium plates overlaying a inner cover-all of ceramic-woven fabric. The suit is specially designed \
-		to protect it's users from both hazardous mechanical work, and intense combat use. Unlike the parent suit, it uses a \
-		longer, continous visor instead of cameras, allowing for an inner-HUD to be more properly used. \
-		On the inside of the gauntlet reads; 'Property of Gorlex Security Consulting, LLC. Use only with license. \
-		All rights reserved, tampering with suit will void warranty."
-	default_skin = "ponos"
-
-/datum/mod_theme/syndicate/ponos
-	name = "cratos"
-	desc = "Property of Gorlex Security Consulting, LLC. Use only with license. All rights reserved."
-	extended_desc = "A hulking dumptruck of a suit, designed specifically for intense combat use and \
-		to sustain as many rounds of punishment as can possible be dished out.  It's design is complex, with \
-		layers upon layers of painted titanium plates interwoven with layers of fabric, and air pockets to reduce the \
-		impact of ballistic impacts. On the outer-layer it uses a coating of ablative \"paint\" to protect and \
-		absorb energy and laser fire. Within the gauntlets and arms are a series of mechanical presses and hydraulics used \
-		to increase the amount of weight the operator's upper-body can lift and handle. \
-		Etched on the underside of the right boot reads; 'Property of Gorlex Security Consulting, LLC. Use only with license. \
-		All rights reserved, tampering with suit will void warranty."
-	default_skin = "cratos"
-
-/datum/mod_theme/syndicate/panacea
-	name = "panacea"
-	desc = "Property of Gorlex Security Consulting, LLC. Use only with license. All rights reserved."
-	extended_desc = "A slimed-down version of the parent, \"Keres\" suit, for medical specialists in-combat. Using the same basic design; \
-		instead of a visor, however, it uses a \"dome\" design, chosen to allow operator's to have a more free-form view. \
-		Etched on the inside of the left glove reads; 'Property of Gorlex Security Consulting, LLC. Use only with license. \
-		All rights reserved, tampering with suit will void warranty."
-	default_skin = "ponos"
-
 /datum/armor/mod_theme_administrative
 	melee = 100
 	bullet = 100

@@ -1060,4 +1060,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 	desc = "A poster that informs of active holidays. None are today, so you should get back to work."
 	icon_state = "holiday_none"
 
+// Start of Syndicate Posters // TODO-SYNDIE
+
+/obj/structure/sign/poster/contraband/dark
+	name = "W.I.P."
+	desc = "W.I.P."
+	icon_state = "gorlex_dark"
+
 #undef PLACE_SPEED

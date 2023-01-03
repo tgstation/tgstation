@@ -28,3 +28,7 @@
 	name = "combat gauntlets"
 	desc = "Fireproof and insulated combat equipment that extends up to the forearm."
 	icon_state = "black_gauntlets"
+
+/obj/item/clothing/gloves/combat/red
+	name = "red gauntlets"
+	icon_state = "trauma"
