@@ -452,17 +452,17 @@
 /turf/open/floor/plasteel/whiteyellow/side {dir=9} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted {dir=1} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
 /turf/open/floor/plasteel/whiteyellow/side {dir=10} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted {dir=8} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
 /turf/open/floor/plasteel/whiteyellow/corner : /obj/effect/turf_decal/tile/yellow {dir=@OLD} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow : /obj/effect/turf_decal/tile/yellow/fourcorners , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/side {dir=1} : /obj/effect/turf_decal/tile/yellow/half/contrasted {dir=1} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/side {dir=@UNSET} : /obj/effect/turf_decal/tile/yellow/half/contrasted , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/side {dir=2} : /obj/effect/turf_decal/tile/yellow/half/contrasted , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/side {dir=4} : /obj/effect/turf_decal/tile/yellow/half/contrasted {dir=4} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/side {dir=5} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted {dir=4} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/side {dir=6} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/side {dir=8} : /obj/effect/turf_decal/tile/yellow/half/contrasted {dir=8} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/side {dir=9} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted {dir=1} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/side {dir=10} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted {dir=8} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
-/turf/open/floor/plasteel/yellow/corner : /obj/effect/turf_decal/tile/yellow {dir=@OLD} , /turf/open/floor/iron/white {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow : /obj/effect/turf_decal/tile/yellow/fourcorners , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/side {dir=1} : /obj/effect/turf_decal/tile/yellow/half/contrasted {dir=1} , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/side {dir=@UNSET} : /obj/effect/turf_decal/tile/yellow/half/contrasted , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/side {dir=2} : /obj/effect/turf_decal/tile/yellow/half/contrasted , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/side {dir=4} : /obj/effect/turf_decal/tile/yellow/half/contrasted {dir=4} , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/side {dir=5} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted {dir=4} , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/side {dir=6} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/side {dir=8} : /obj/effect/turf_decal/tile/yellow/half/contrasted {dir=8} , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/side {dir=9} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted {dir=1} , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/side {dir=10} : /obj/effect/turf_decal/tile/yellow/anticorner/contrasted {dir=8} , /turf/open/floor/iron {@OLD;dir=@SKIP}
+/turf/open/floor/plasteel/yellow/corner : /obj/effect/turf_decal/tile/yellow {dir=@OLD} , /turf/open/floor/iron {@OLD;dir=@SKIP}
 /turf/open/floor/plating/airless/astplate : /obj/effect/turf_decal/sand/plating , /turf/open/floor/plating/airless  {@OLD;dir=@SKIP}
 /turf/open/floor/plating/astplate : /obj/effect/turf_decal/sand/plating , /turf/open/floor/plating  {@OLD;dir=@SKIP}
 /turf/open/floor/plasteel/bot : /obj/effect/turf_decal/bot , /turf/open/floor/iron
