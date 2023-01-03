@@ -223,7 +223,7 @@
 	. = ..()
 	duel?.clear_duel()
 
-/obj/item/gun/energy/dueling/can_trigger_gun(mob/living/user)
+/obj/item/gun/energy/dueling/can_trigger_gun(mob/living/user, akimbo_usage)
 	. = ..()
 	if(!check_valid_duel(user, TRUE))
 		return FALSE
