@@ -70,7 +70,7 @@
 		return
 
 	var/mob/living/carbon/human/carbon_target = quirk_holder
-	if(NOBLOOD in carbon_target.dna.species.species_traits) //can't lose blood if your species doesn't have any
+	if(HAS_TRAIT(carbon_target, TRAIT_NOBLOOD)) //can't lose blood if your species doesn't have any
 		return
 
 	if (carbon_target.blood_volume <= min_blood)

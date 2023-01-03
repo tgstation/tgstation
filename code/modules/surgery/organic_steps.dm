@@ -31,7 +31,7 @@
 /datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if ishuman(target)
 		var/mob/living/carbon/human/human_target = target
-		if (!(NOBLOOD in human_target.dna.species.species_traits))
+		if (!HAS_TRAIT(human_target, TRAIT_NOBLOOD))
 			display_results(
 				user,
 				target,
