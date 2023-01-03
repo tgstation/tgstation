@@ -33,6 +33,10 @@
 			ui.close()
 			ctf()
 			return TRUE
+		if("basketball")
+			ui.close()
+			basketball()
+			return TRUE
 
 /datum/minigames_menu/proc/mafia()
 	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
@@ -45,3 +49,9 @@
 	if(!ctf_panel)
 		ctf_panel = new(src)
 	ctf_panel.ui_interact(usr)
+
+/datum/minigames_menu/proc/basketball()
+	var/datum/basketball_controller/game = GLOB.basketball_game
+	if(!game)
+		game = create_basketball_game()
+	game.ui_interact(usr)

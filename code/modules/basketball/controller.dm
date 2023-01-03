@@ -1,5 +1,5 @@
 ///how many people can play basketball without issues (running out of spawns, procs not expecting more than this amount of people, etc)
-#define BASKETBALL_MIN_PLAYER_COUNT 2
+#define BASKETBALL_MIN_PLAYER_COUNT 1 // should be 2
 #define BASKETBALL_MAX_PLAYER_COUNT 8 // shoould be 6
 
 #define BASKETBALL_TEAM_HOME "home"
@@ -14,7 +14,7 @@
 GLOBAL_LIST_EMPTY(basketball_signup)
 /// list of ghosts who want to play mafia that have since disconnected. They are kept in the lobby, but not counted for starting a game.
 GLOBAL_LIST_EMPTY(basketball_bad_signup)
-/// the current global mafia game running.
+/// the current global basketball game running.
 GLOBAL_VAR(basketball_game)
 
 /**
@@ -41,6 +41,8 @@ GLOBAL_VAR(basketball_game)
 	. = ..()
 	GLOB.basketball_game = src
 	map_deleter = new
+	/// make sure to remove this later
+	//prepare_game(list("tilus"))
 
 /datum/basketball_controller/Destroy(force, ...)
 	. = ..()
@@ -82,8 +84,8 @@ GLOBAL_VAR(basketball_game)
 		for(var/obj/effect/landmark/basketball/team_spawn/away/possible_spawn in GLOB.landmarks_list)
 			away_team_landmarks += possible_spawn
 
-	var/list/home_spawnpoints = home_team_landmarks.Copy()
-	var/list/away_spawnpoints = away_team_landmarks.Copy()
+	//var/list/home_spawnpoints = home_team_landmarks.Copy()
+	//var/list/away_spawnpoints = away_team_landmarks.Copy()
 
 	create_bodies(ready_players)
 
@@ -146,10 +148,10 @@ GLOBAL_VAR(basketball_game)
 		ADD_TRAIT(baller, TRAIT_CANNOT_CRYSTALIZE, BASKETBALL_MINIGAME_TRAIT)
 		// this is basketball, not a boxing match
 		ADD_TRAIT(baller, TRAIT_PACIFISM, BASKETBALL_MINIGAME_TRAIT)
-		baller.status_flags |= GODMODE
+		//baller.status_flags |= GODMODE
 
 		if(!team_uniform)
-			team_uniform = prob(50) ? /obj/item/clothing/under/shorts/blue : /obj/item/clothing/under/shorts/red
+			team_uniform = prob(50) ? /datum/outfit/basketball/blue : /datum/outfit/basketball/red
 
 		baller.equipOutfit(team_uniform)
 
@@ -199,7 +201,8 @@ GLOBAL_VAR(basketball_game)
 
 	var/req_players = length(possible_keys) >= BASKETBALL_MAX_PLAYER_COUNT ? BASKETBALL_MAX_PLAYER_COUNT : length(possible_keys)
 	// both teams need to have the same number of players, so we remove one person if it's an odd number
-	req_players -= req_players % 2
+//	if(req_players % 2)
+//		req_players -= 1
 
 	//if there were too many players, still start but only make filtered keys as big as it needs to be (cut excess)
 	//also removes people who do get into final player list from the signup so they have to sign up again when game ends
@@ -216,3 +219,104 @@ GLOBAL_VAR(basketball_game)
 
 	prepare_game(filtered_keys)
 	//start_game()
+
+/**
+ * Filters inactive player into a different list until they reconnect, and removes players who are no longer ghosts.
+ *
+ * If a disconnected player gets a non-ghost mob and reconnects, they will be first put back into mafia_signup then filtered by that.
+ */
+/datum/basketball_controller/proc/check_signups()
+	for(var/bad_key in GLOB.basketball_bad_signup)
+		if(GLOB.directory[bad_key])//they have reconnected if we can search their key and get a client
+			GLOB.basketball_bad_signup -= bad_key
+			GLOB.basketball_signup += bad_key
+	for(var/key in GLOB.basketball_signup)
+		var/client/signup_client = GLOB.directory[key]
+		if(!signup_client)//vice versa but in a variable we use later
+			GLOB.basketball_signup -= key
+			GLOB.basketball_bad_signup += key
+			continue
+		if(!isobserver(signup_client.mob))
+			//they are back to playing the game, remove them from the signups
+			GLOB.basketball_signup -= key
+
+/**
+ * Called when someone signs up, and sees if there are enough people in the signup list to begin.
+ *
+ * Only checks if everyone is actually valid to start (still connected and an observer) if there are enough players (basic_setup)
+ */
+/datum/basketball_controller/proc/try_autostart()
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+		return
+	if(GLOB.basketball_signup.len >= BASKETBALL_MIN_PLAYER_COUNT)//enough people to try and make something (or debug mode)
+		basic_setup()
+
+/datum/basketball_controller/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/basketball_controller/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BasketballPanel")
+		ui.open()
+
+/datum/basketball_controller/ui_data(mob/user)
+	var/list/data = list()
+
+	data["voters"] = GLOB.basketball_signup.len
+	data["voters_required"] = BASKETBALL_MIN_PLAYER_COUNT
+	data["voted"] = (user.ckey in GLOB.basketball_signup)
+
+	return data
+
+/datum/basketball_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/mob/user = ui.user
+
+	switch(action)
+		/**
+		if("jump")
+			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"])
+			if(istype(ctf_spawner))
+				user.forceMove(get_turf(ctf_spawner))
+				return TRUE
+		**/
+		if ("vote")
+			var/client/signup_client = user.client
+			if(!SSticker.HasRoundStarted())
+				to_chat(signup_client, span_warning("Wait for the round to start."))
+				return
+			if(GLOB.basketball_signup[signup_client.ckey])
+				GLOB.basketball_signup -= signup_client.ckey
+				to_chat(signup_client, span_notice("You unregister from Mafia."))
+				return TRUE
+			else
+				GLOB.basketball_signup[signup_client.ckey] = signup_client
+				to_chat(signup_client, span_notice("You sign up for Mafia."))
+
+			check_signups()
+			try_autostart()
+
+			return TRUE
+		/**
+		if ("unvote")
+			if (ctf_enabled())
+				to_chat(user, span_warning("CTF is already enabled!"))
+				return TRUE
+
+			var/datum/ctf_voting_controller/ctf_controller = get_ctf_voting_controller(CTF_GHOST_CTF_GAME_ID)
+			ctf_controller.unvote(user)
+
+			return TRUE
+		**/
+
+/**
+ * Creates the global datum for playing mafia games, destroys the last if that's required and returns the new.
+ */
+/proc/create_basketball_game()
+	if(GLOB.basketball_game)
+		QDEL_NULL(GLOB.basketball_game)
+	var/datum/basketball_controller/basketball_minigame = new()
+	return basketball_minigame
