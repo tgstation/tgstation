@@ -80,11 +80,6 @@
 #define AGENDER 14
 /// Do not draw eyes or eyeless overlay
 #define NOEYESPRITES 15
-/// Used for determining which wounds are applicable to this species.
-/// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have TRAIT_NOBLOOD)
-#define HAS_FLESH 16
-/// if we have bones (can suffer bone wounds)
-#define HAS_BONE 17
 ///If we have a limb-specific overlay sprite
 #define HAS_MARKINGS 18
 /// Do not draw blood overlay
@@ -93,9 +88,6 @@
 #define NOAUGMENTS 20
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
 #define BLOOD_CLANS 21
-/// Stops species from spawning with tongue. Doesn't actually make the species able to talk with no tongue
-#define NO_TONGUE 22
-#define NOAPPENDIX 23
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
