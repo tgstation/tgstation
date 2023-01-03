@@ -3,7 +3,6 @@
 	name = "Golem"
 	id = SPECIES_GOLEM
 	species_traits = list(
-		NOBLOOD,
 		NOTRANSSTING,
 		MUTCOLORS,
 		NO_UNDERWEAR,
@@ -1047,8 +1046,8 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_NOBLOOD,
-		TRAIT_NOTONGUE,
 	)
+	mutanttongue = null
 	fixed_mut_color = null
 	armor = 25
 	burnmod = 1.25
@@ -1163,7 +1162,6 @@
 	sexes = FALSE
 	fixed_mut_color = null
 	species_traits = list(
-		NOBLOOD,
 		NO_UNDERWEAR,
 		NOEYESPRITES,
 	)

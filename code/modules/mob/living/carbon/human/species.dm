@@ -350,7 +350,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/used_neworgan = FALSE
 		neworgan = SSwardrobe.provide_type(neworgan)
-		var/should_have = neworgan.get_availability(C) //organ proc that points back to a species trait (so if the species is supposed to have this organ)
+		var/should_have = neworgan.get_availability(src, C) //organ proc that points back to a species trait (so if the species is supposed to have this organ)
 
 		/*
 		 * There is an existing organ in this slot, what should we do with it? Probably remove it!

@@ -218,10 +218,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOHUNGER "no_hunger"
 ///This carbon doesn't bleed, has no heart
 #define TRAIT_NOBLOOD "noblood"
-///This carbon doesn't have an appendix. Which is funny, because that doesn't change a whole lot out of dodging appendicitis
-#define TRAIT_NOAPPENDIX "no_appendix"
-///This carbon doesn't have a tongue.
-#define TRAIT_NOTONGUE "no_tongue"
 #define TRAIT_NOMETABOLISM "no_metabolism"
 #define TRAIT_NOCLONELOSS "no_cloneloss"
 #define TRAIT_TOXIMMUNE "toxin_immune"

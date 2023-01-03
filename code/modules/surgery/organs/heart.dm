@@ -95,8 +95,8 @@
 		owner.set_heartattack(TRUE)
 		failed = TRUE
 
-/obj/item/organ/internal/heart/get_availability(mob/living/owner_mob)
-	return !HAS_TRAIT(owner_mob, TRAIT_NOBLOOD)
+/obj/item/organ/internal/heart/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantheart
 
 /obj/item/organ/internal/heart/cursed
 	name = "cursed heart"

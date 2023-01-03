@@ -3,7 +3,6 @@
 	id = SPECIES_ABDUCTOR
 	sexes = FALSE
 	species_traits = list(
-		NOBLOOD,
 		NOEYESPRITES,
 		NOSTOMACH,
 	)

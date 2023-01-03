@@ -6,7 +6,6 @@
 	species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,
-		NOBLOOD,
 	)
 	inherent_traits = list(
 		TRAIT_TOXINLOVER,

@@ -8,7 +8,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
 	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	species_traits = list(
-		NOBLOOD,
 		NOZOMBIE,
 		NOTRANSSTING,
 	)

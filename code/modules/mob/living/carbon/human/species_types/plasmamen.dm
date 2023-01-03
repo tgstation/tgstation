@@ -5,7 +5,6 @@
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(
-		NOBLOOD,
 		NOTRANSSTING,
 		NOAPPENDIX,
 	)
@@ -16,7 +15,6 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_NOBLOOD,
-		TRAIT_NOAPPENDIX,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL

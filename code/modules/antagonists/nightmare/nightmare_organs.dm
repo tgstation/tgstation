@@ -97,7 +97,7 @@
 	playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	respawn_progress = 0
 
-/obj/item/organ/internal/heart/nightmare/get_availability(mob/living/owner_mob)
+/obj/item/organ/internal/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	if(isnightmare(owner_mob))
 		return TRUE
 	return ..()
