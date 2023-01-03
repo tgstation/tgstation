@@ -81,6 +81,7 @@
 #include "area_contents.dm"
 #include "autowiki.dm"
 #include "barsigns.dm"
+#include "baseturfs.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "bloody_footprints.dm"
@@ -171,6 +172,7 @@
 #include "screenshot_antag_icons.dm"
 #include "screenshot_basic.dm"
 #include "screenshot_humanoids.dm"
+#include "screenshot_husk.dm"
 #include "screenshot_saturnx.dm"
 #include "security_officer_distribution.dm"
 #include "security_levels.dm"
@@ -206,6 +208,7 @@
 #include "verify_config_tags.dm"
 #include "verify_emoji_names.dm"
 #include "wizard_loadout.dm"
+#include "worn_icons.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif

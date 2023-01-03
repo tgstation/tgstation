@@ -138,11 +138,19 @@
 	anchored = FALSE
 	max_integrity = 180
 	proj_pass_rate = 20
-	armor = list(MELEE = 10, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 10, ACID = 0)
+	armor_type = /datum/armor/barricade_security
 
 	var/deploy_time = 40
 	var/deploy_message = TRUE
 
+
+/datum/armor/barricade_security
+	melee = 10
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 10
+	fire = 10
 
 /obj/structure/barricade/security/Initialize(mapload)
 	. = ..()

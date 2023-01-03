@@ -102,6 +102,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		return
 	var/mob/living/living_user = usr
 	switch(action)
+		if("add_one")
+			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
+			grocery_list[wanted_item] += 1
+			update_static_data(living_user)
 		if("cart_set")
 			//this is null if the action doesn't need it (purchase, quickpurchase)
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products

@@ -335,7 +335,7 @@
 
 /obj/machinery/door/airlock/external/Initialize(mapload, ...)
 	// default setting is for mapping only, let overrides work
-	if(!mapload || req_access_txt || req_one_access_txt)
+	if(!mapload)
 		req_access = null
 
 	return ..()
@@ -582,7 +582,7 @@
 	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
 	normal_integrity = 150
 	damage_deflection = 5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 
 
 //////////////////////////////////

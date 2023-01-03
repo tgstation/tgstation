@@ -459,6 +459,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
+"cQ" = (
+/obj/effect/landmark/basketball/game_area,
+/turf/open/space/basic,
+/area/space)
 "cS" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -2232,6 +2236,16 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
+"lE" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_4_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "lJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office"
@@ -3742,16 +3756,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"sj" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "recovery ship";
-	shuttle_id = "pod_4_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "sn" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security"
@@ -6872,6 +6876,16 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"JR" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_3_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "JV" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -8062,16 +8076,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/prison)
-"Qt" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "recovery ship";
-	shuttle_id = "pod_3_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "Qv" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -8145,10 +8149,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
-"QS" = (
-/obj/effect/landmark/basketball/game_area,
-/turf/open/space/basic,
-/area/space)
 "QU" = (
 /obj/structure/table/wood,
 /obj/item/phone{
@@ -8764,6 +8764,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
+"Ug" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_2_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "Uh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -9781,17 +9792,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
-"YS" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "recovery ship";
-	shuttle_id = "pod_2_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "YT" = (
 /obj/structure/table/wood,
 /obj/structure/plaque/static_plaque/thunderdome{
@@ -35065,7 +35065,7 @@ aa
 aa
 aa
 aa
-QS
+cQ
 aa
 aa
 aa
@@ -36197,7 +36197,7 @@ aa
 aa
 aa
 aa
-sj
+lE
 KO
 KV
 KV
@@ -37225,7 +37225,7 @@ aa
 aa
 aa
 aa
-Qt
+JR
 KO
 KV
 KV
@@ -38261,7 +38261,7 @@ KQ
 KH
 aa
 aa
-YS
+Ug
 aa
 aa
 aa

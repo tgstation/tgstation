@@ -6082,11 +6082,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
-"cnn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/toy/basketball,
-/turf/open/floor/iron,
-/area/station/security/prison)
 "cnu" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
@@ -6879,6 +6874,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"cAc" = (
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
 "cAf" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/yellow{
@@ -10215,27 +10216,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
-"dOo" = (
-/obj/structure/safe,
-/obj/item/storage/secure/briefcase{
-	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/gun/ballistic/automatic/pistol,/obj/item/suppressor,/obj/item/melee/baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/soap/nanotrasen)
-	},
-/obj/item/storage/backpack/duffelbag/syndie/hitman,
-/obj/item/card/id/advanced/silver/reaper,
-/obj/item/lazarus_injector,
-/obj/item/gun/energy/disabler,
-/obj/item/gun/ballistic/revolver/russian,
-/obj/item/ammo_box/a357,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/book{
-	desc = "An undeniably handy book.";
-	icon_state = "bookknock";
-	name = "\improper A Simpleton's Guide to Safe-cracking with Stethoscopes"
-	},
-/obj/effect/turf_decal/bot_white/left,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/command/nuke_storage)
 "dOs" = (
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/wall/r_wall,
@@ -15134,19 +15114,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
-"fFK" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock{
-	name = "Custodial Closet"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/service/janitor,
-/turf/open/floor/iron,
-/area/station/maintenance/starboard/greater)
 "fGb" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Prison Sanitarium"
@@ -15167,6 +15134,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"fGr" = (
+/obj/item/toy/basketball,
+/turf/open/floor/plating,
+/area/station/maintenance/fore)
 "fGv" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/scientist,
@@ -20116,6 +20087,20 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"huu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/hoop{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Prison Yard";
+	network = list("ss13","prison")
+	},
+/turf/open/floor/iron,
+/area/station/security/prison)
 "huv" = (
 /obj/structure/window,
 /obj/structure/window{
@@ -23085,6 +23070,25 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"iuR" = (
+/obj/structure/safe,
+/obj/item/storage/secure/briefcase/riches,
+/obj/item/storage/backpack/duffelbag/syndie/hitman,
+/obj/item/card/id/advanced/silver/reaper,
+/obj/item/lazarus_injector,
+/obj/item/gun/energy/disabler,
+/obj/item/gun/ballistic/revolver/russian,
+/obj/item/ammo_box/a357,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/book{
+	desc = "An undeniably handy book.";
+	icon_state = "bookknock";
+	name = "\improper A Simpleton's Guide to Safe-cracking with Stethoscopes"
+	},
+/obj/effect/turf_decal/bot_white/left,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/command/nuke_storage)
 "iva" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance"
@@ -24171,6 +24175,21 @@
 	},
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/qm)
+"iLW" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "ordnancebridge"
+	},
+/obj/machinery/button/door{
+	id = "ordnancebridge";
+	pixel_x = -24;
+	req_one_access = list("maint_tunnels","science")
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft/lesser)
 "iMc" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer,
@@ -26751,10 +26770,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
-"jCj" = (
-/obj/item/toy/basketball,
-/turf/open/floor/plating,
-/area/station/maintenance/fore)
 "jCk" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -28955,6 +28970,21 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/security/prison)
+"krJ" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "ordnancebridge"
+	},
+/obj/machinery/button/door{
+	id = "ordnancebridge";
+	pixel_y = 24;
+	req_one_access = list("maint_tunnels","science")
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft/lesser)
 "krL" = (
 /turf/open/floor/wood,
 /area/station/command/corporate_showroom)
@@ -29876,6 +29906,10 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
 /area/station/service/library)
+"kJD" = (
+/obj/docking_port/stationary/escape_pod,
+/turf/open/space/basic,
+/area/space)
 "kJH" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/south,
@@ -36748,20 +36782,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
-"ncv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/hoop{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Prison Yard";
-	network = list("ss13","prison")
-	},
-/turf/open/floor/iron,
-/area/station/security/prison)
 "ncx" = (
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -41172,6 +41192,20 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"oFb" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock{
+	name = "Custodial Closet"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/service/janitor,
+/obj/effect/landmark/navigate_destination/janitor,
+/turf/open/floor/iron,
+/area/station/maintenance/starboard/greater)
 "oFn" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
 	dir = 4
@@ -44672,6 +44706,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"pTF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/window/right/directional/south{
+	dir = 8;
+	name = "Jim Norton's Quebecois Coffee";
+	req_one_access = list("service","maint_tunnels")
+	},
+/obj/effect/turf_decal/trimline/green/line,
+/turf/open/floor/iron/dark,
+/area/station/service/cafeteria)
 "pTK" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/structure/window/reinforced{
@@ -46451,16 +46495,6 @@
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/wood,
 /area/station/service/library)
-"qzV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/window/right/directional/south{
-	dir = 8;
-	name = "Jim Norton's Quebecois Coffee";
-	req_one_access_txt = list("service","maint_tunnels")
-	},
-/obj/effect/turf_decal/trimline/green/line,
-/turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
 "qAc" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -47256,6 +47290,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
+"qOf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/basketball,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "qOs" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Genetics Maintenance"
@@ -48155,15 +48194,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
-"rec" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
-/turf/open/space/basic,
-/area/space)
 "ret" = (
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
@@ -50121,21 +50151,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
-"rMx" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "ordnancebridge"
-	},
-/obj/machinery/button/door{
-	id = "ordnancebridge";
-	pixel_x = -24;
-	req_one_access_txt = list("maint_tunnels","science")
-	},
-/obj/effect/turf_decal/caution/stand_clear{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
 "rMz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/green{
@@ -50354,21 +50369,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
-"rQO" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
-	id = "ordnancebridge"
-	},
-/obj/machinery/button/door{
-	id = "ordnancebridge";
-	pixel_y = 24;
-	req_one_access_txt = list("maint_tunnels","science")
-	},
-/obj/effect/turf_decal/caution/stand_clear{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
 "rQS" = (
 /obj/structure/table,
 /obj/item/storage/box/evidence{
@@ -62678,16 +62678,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
-"waq" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
-/turf/open/space/basic,
-/area/space)
 "was" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -78492,7 +78482,7 @@ tkr
 aaa
 aaa
 aaa
-rec
+kJD
 cSk
 auJ
 jMZ
@@ -90560,7 +90550,7 @@ rlU
 vis
 mCi
 ixT
-dOo
+iuR
 rlU
 aaa
 aEH
@@ -91085,7 +91075,7 @@ vvH
 cFp
 guX
 mgl
-qzV
+pTF
 wAj
 pPH
 hSg
@@ -92078,7 +92068,7 @@ uYm
 grb
 tdW
 qNI
-cnn
+qOf
 gQw
 mQr
 qgz
@@ -92335,7 +92325,7 @@ hxW
 cTp
 tdW
 iFe
-ncv
+huu
 cez
 mQr
 iem
@@ -94124,7 +94114,7 @@ isc
 aaa
 aaa
 aaa
-rec
+kJD
 tYS
 lgS
 jKq
@@ -99131,7 +99121,7 @@ wna
 oFX
 lWN
 hND
-rMx
+iLW
 iKL
 nFa
 nFa
@@ -101192,7 +101182,7 @@ svS
 svS
 svS
 svS
-rQO
+krJ
 dKC
 anS
 lMJ
@@ -102881,7 +102871,7 @@ ilh
 mQe
 rXX
 cur
-jCj
+fGr
 ihX
 xwZ
 loW
@@ -106290,7 +106280,7 @@ unL
 uNd
 unL
 unL
-fFK
+oFb
 unL
 tUn
 tUn
@@ -106728,7 +106718,7 @@ aaa
 aaa
 szp
 aaa
-waq
+cAc
 aaa
 szp
 szp
@@ -114740,7 +114730,7 @@ dgm
 dgB
 fJy
 aaa
-waq
+cAc
 aaa
 fJy
 oAQ

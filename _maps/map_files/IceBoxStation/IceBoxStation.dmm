@@ -9414,6 +9414,11 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/warden)
+"cMG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/basketball,
+/turf/open/floor/iron,
+/area/station/security/prison/workout)
 "cMI" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
@@ -12047,6 +12052,12 @@
 "dBZ" = (
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"dCe" = (
+/obj/structure/bed/dogbed/lia,
+/mob/living/basic/carp/pet/lia,
+/obj/structure/cable,
+/turf/open/floor/carpet/royalblue,
+/area/station/command/heads_quarters/hos)
 "dCk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -18927,11 +18938,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
-"fKh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/toy/basketball,
-/turf/open/floor/iron,
-/area/station/security/prison/workout)
 "fKi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/bed/roller,
@@ -27358,32 +27364,6 @@
 	dir = 8
 	},
 /area/station/service/chapel)
-"isa" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
-/obj/machinery/button/flasher{
-	pixel_y = -32;
-	id = "hopflash"
-	},
-/obj/machinery/button/door/directional/south{
-	pixel_x = -8;
-	req_access = list("hop");
-	id = "hopqueue";
-	name = "Queue Shutters Control"
-	},
-/obj/machinery/button/door/directional/south{
-	pixel_y = -24;
-	pixel_x = 8;
-	name = "Privacy Shutters Control";
-	req_access = list("hop");
-	id = "hop"
-	},
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/hop)
 "isb" = (
 /obj/machinery/atmospherics/components/binary/pump/off{
 	dir = 1;
@@ -35880,6 +35860,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"kVJ" = (
+/obj/docking_port/stationary/escape_pod{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "kVM" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
@@ -37029,16 +37015,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
-"lmR" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "lnc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -41069,14 +41045,6 @@
 /obj/machinery/atmospherics/components/tank,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
-"mHv" = (
-/obj/structure/hoop{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/warm/directional/west,
-/turf/open/floor/iron,
-/area/station/security/prison/workout)
 "mHw" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -46639,6 +46607,36 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
+"onb" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/machinery/button/flasher{
+	pixel_y = -32;
+	id = "hopflash";
+	pixel_x = 8
+	},
+/obj/machinery/button/door/directional/south{
+	pixel_x = -8;
+	req_access = list("hop");
+	id = "hopqueue";
+	name = "Queue Shutters Control"
+	},
+/obj/machinery/button/door/directional/south{
+	pixel_x = 8;
+	name = "Privacy Shutters Control";
+	req_access = list("hop");
+	id = "hop"
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/button/ticket_machine{
+	pixel_x = -8;
+	pixel_y = -32
+	},
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/hop)
 "ond" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -47274,12 +47272,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"oxJ" = (
-/obj/structure/bed/dogbed/lia,
-/mob/living/simple_animal/hostile/carp/lia,
-/obj/structure/cable,
-/turf/open/floor/carpet/royalblue,
-/area/station/command/heads_quarters/hos)
 "oxO" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
@@ -48668,6 +48660,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"oUB" = (
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "oUE" = (
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/light/directional/south,
@@ -58887,17 +58885,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"shl" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "shB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -69024,17 +69011,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
-"vpI" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "vpR" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -74369,6 +74345,10 @@
 /obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"wSn" = (
+/obj/docking_port/stationary/escape_pod,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "wSo" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -77355,6 +77335,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"xNW" = (
+/obj/structure/hoop{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/iron,
+/area/station/security/prison/workout)
 "xOb" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 4
@@ -107630,7 +107618,7 @@ ghx
 axF
 dcw
 fGI
-mHv
+xNW
 etw
 lXJ
 xbv
@@ -107887,7 +107875,7 @@ ghx
 ghx
 dcw
 fGI
-fKh
+cMG
 nks
 cfh
 nLW
@@ -218178,7 +218166,7 @@ bln
 sEB
 bln
 sEB
-vpI
+kVJ
 sEB
 bln
 bln
@@ -218192,7 +218180,7 @@ bln
 bln
 bln
 sEB
-vpI
+kVJ
 sEB
 bln
 bln
@@ -235948,7 +235936,7 @@ wjv
 pec
 fJl
 iaS
-isa
+onb
 cpm
 dnq
 ylU
@@ -238452,7 +238440,7 @@ lQc
 nbp
 mgU
 nlz
-oxJ
+dCe
 nBx
 azx
 tDw
@@ -241279,7 +241267,7 @@ xiI
 bln
 bln
 bln
-lmR
+wSn
 pDC
 clq
 qgO
@@ -243701,7 +243689,7 @@ kcG
 qwF
 wYJ
 sEB
-shl
+oUB
 sEB
 nyA
 njm

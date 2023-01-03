@@ -20,7 +20,7 @@
 	tastes = list("milky batter" = 1)
 	burns_on_grill = FALSE
 
-/obj/item/food/pancakes/raw/MakeGrillable()
+/obj/item/food/pancakes/raw/make_grillable()
 	AddComponent(/datum/component/grillable,\
 				cook_result = /obj/item/food/pancakes,\
 				required_cook_time = rand(30 SECONDS, 40 SECONDS),\
@@ -55,14 +55,20 @@
 	name = "blueberry pancake"
 	desc = "A fluffy and delicious blueberry pancake."
 	icon_state = "bbpancakes_1"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
 	tastes = list("pancakes" = 1, "blueberries" = 1)
 
 /obj/item/food/pancakes/chocolatechip
 	name = "chocolate chip pancake"
 	desc = "A fluffy and delicious chocolate chip pancake."
 	icon_state = "ccpancakes_1"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
 	tastes = list("pancakes" = 1, "chocolate" = 1)
 
 /obj/item/food/pancakes/Initialize(mapload)
