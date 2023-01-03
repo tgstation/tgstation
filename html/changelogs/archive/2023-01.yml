@@ -1,0 +1,97 @@
+2023-01-01:
+  ChungusGamer666:
+  - bugfix: Static light sources update properly now when carried by a mob.
+  Fikou:
+  - rscadd: Venom antag
+  - bugfix: fixed pellet clouds (buckshot, improv shells) dealing insane wounds to
+      armored people
+  LemonInTheDark:
+  - admin: Added a new chat category for prayers. Filter them out, move them to their
+      own pane, live your best life
+  NamelessFairy:
+  - bugfix: CTF downtown's red hat store's beret is now red again rather than green.
+  Rhials:
+  - balance: Instant Summons will now violently tear out embedded objects as they
+      are summoned, and will drag embedee to you if nearby.
+  SyncIt21:
+  - bugfix: atmos control can detect distro & waste loop sensors
+  jughu:
+  - bugfix: Fixes missing hop ticket incremement button at icebox
+  san7890:
+  - bugfix: There is no longer a floating camera on RuntimeStation
+2023-01-02:
+  FernandoJ8:
+  - bugfix: Stranger Reagent can no longer be a componet in Metalgen
+  Fikou:
+  - qol: examining armor tags now shows you the wound armor value
+  Gorock:
+  - qol: Improved Chem Dispenser Reagent Search
+  Helg2:
+  - bugfix: smoke spell becomes robeless
+  Improvedname:
+  - bugfix: fixes cummerbunds holding 7 items instead of 3(as fannypacks do)
+  Jacquerel:
+  - rscadd: You can now bake croissants to add to your breakfast.
+  - rscadd: Traitorous chefs can bake dangerous throwing croissants, Mimes can do
+      this and gain the additional benefit of a deadly combat baguette.
+  JohnFulpWillard:
+  - bugfix: Researching now checks the techweb it's linked to for node availability,
+      rather than only the Science one.
+  - imageadd: Nukie tablets are now using PDA sprites w/ GAGS instead of tablets.
+  Melbert:
+  - bugfix: Secrets menu Summon Guns / Summon Magic work again.
+  ShizCalev:
+  - bugfix: Dual sabers will no longer get covered in blood when attacking someone.
+  Tattle:
+  - bugfix: projectile hits on mobs are logged globally
+  ZephyrTFA:
+  - bugfix: You can inspect armor again
+  san7890:
+  - bugfix: Those with kitchen access should now once again be the only one who are
+      allowed to vending-machine-restock individual snacking items via their trusty
+      tray.
+  vincentiusvin:
+  - code_imp: rescaled supermatter health from 900 to 100.
+  - balance: we didn't do a 1:1 rescale of the damage though, atmos based damage should
+      be slightly higher across the board but have lower caps. All external damage
+      is slightly lower.
+  - code_imp: made the less important parts of the visual supermatter effects same
+      between different delams so we have an easier time changing the code.
+  - qol: added a delta symbol to the SM UI on damage and energy breakdown to denote
+      that they are actually changes instead of exact values.
+2023-01-03:
+  FernandoJ8:
+  - bugfix: Boxes created through the crafting menu no longer spawn with their contents
+      full
+  Fikou:
+  - balance: adds more ammunition, and also signing on the psyker ship
+  - qol: you can see other echolocation receivers as fully purple now, rather than
+      just their outline
+  - bugfix: echolocating people have night vision, to prevent bugs with them not being
+      able to see echolocated tiles
+  - rscadd: psyker pirates have headsets that increase their echolocation range
+  - bugfix: partially fixes the psyker ship shuttle docker
+  JohnFulpWillard:
+  - qol: Mining order consoles are now named 'order console'.
+  - qol: Orders from said mining order consoles can now no longer be cancelled, and
+      are listed as 'mp' (mining points) in the Cargo console instead of 'cr'.
+  - qol: Order consoles now have a + button that will instantly add 1 of the item.
+  - bugfix: Departmental orders can no longer be cancelled through the NTos cargo
+      application.
+  - bugfix: Wearing an ID will no longer break order consoles.
+  LT3:
+  - qol: Tram controls unlock faster on arrival at a station
+  - imageadd: Minor improvements to station wayfinding signage
+  Mothblocks:
+  - admin: Added config for disabling station traits
+  RedBaronFlyer:
+  - soundadd: Added a new sound for stamping papers with a stamp. On an unrelated
+      note, there are reports of stamp-based suicides becoming more noisy.
+  ShizCalev:
+  - imageadd: Added a bunch of missing suit storage item icons! There's still a number
+      left to make, but we're getting there!
+  Xander3359:
+  - balance: Origami kit costs 4 from 14, and is available at 100 reputation from
+      150.
+  lnGoror:
+  - bugfix: fixed pAIs and simplemobs getting deaf when moving out of a headwear slot.

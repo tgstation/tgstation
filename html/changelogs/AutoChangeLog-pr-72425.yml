@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Fixed a minor runtime which occurred when an airlock got deleted if an AI was actively hacking it."

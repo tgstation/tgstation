@@ -300,11 +300,6 @@
 	on = TRUE
 	icon_state = "thermo_base_1"
 
-/datum/armor/unary_thermomachine
-	energy = 100
-	fire = 80
-	acid = 30
-
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
 	if(target_temperature == initial(target_temperature))
@@ -313,11 +308,6 @@
 	name = "Cold room temperature control unit"
 	icon_state = "thermo_base_1"
 	greyscale_colors = COLOR_CYAN
-
-/datum/armor/unary_thermomachine
-	energy = 100
-	fire = 80
-	acid = 30
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
 	. = ..()

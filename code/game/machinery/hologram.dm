@@ -105,13 +105,6 @@ Possible to do for anyone motivated enough:
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
 	secure = TRUE
 
-/datum/armor/machinery_holopad
-	melee = 50
-	bullet = 20
-	laser = 20
-	energy = 20
-	fire = 50
-
 /obj/machinery/holopad/secure/Initialize(mapload)
 	. = ..()
 	var/obj/item/circuitboard/machine/holopad/board = circuit
@@ -125,13 +118,6 @@ Possible to do for anyone motivated enough:
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
-
-/datum/armor/machinery_holopad
-	melee = 50
-	bullet = 20
-	laser = 20
-	energy = 20
-	fire = 50
 
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
@@ -844,13 +830,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	initial_language_holder = /datum/language_holder/universal
 	var/mob/living/Impersonation
 	var/datum/holocall/HC
-
-/datum/armor/machinery_holopad
-	melee = 50
-	bullet = 20
-	laser = 20
-	energy = 20
-	fire = 50
 
 /obj/effect/overlay/holo_pad_hologram/Destroy()
 	Impersonation = null

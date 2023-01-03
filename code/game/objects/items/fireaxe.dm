@@ -57,8 +57,9 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
 		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
-			var/obj/structure/W = A
-			W.atom_destruction("fireaxe")
+			if(!(A.resistance_flags & INDESTRUCTIBLE))
+				var/obj/structure/W = A
+				W.atom_destruction("fireaxe")
 
 /*
  * Bone Axe
@@ -74,10 +75,6 @@
 /*
  * Metal Hydrogen Axe
  */
-/datum/armor/item_fireaxe
-	fire = 100
-	acid = 30
-
 /obj/item/fireaxe/metal_h2_axe
 	icon_state = "metalh2_axe0"
 	base_icon_state = "metalh2_axe"
