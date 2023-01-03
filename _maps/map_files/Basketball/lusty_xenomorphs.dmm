@@ -28,11 +28,7 @@
 /area/centcom/basketball)
 "cz" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph,
-/turf/closed/indestructible/reinforced{
-	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi';
-	base_icon_state = "resin_wall";
-	icon_state = "resin_wall-0"
-	},
+/turf/closed/indestructible/resin,
 /area/centcom/basketball)
 "dg" = (
 /obj/structure/alien/weeds,
@@ -45,7 +41,7 @@
 /area/centcom/basketball)
 "dC" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/egg,
+/obj/structure/alien/egg/fake,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "dJ" = (
@@ -60,12 +56,6 @@
 	name = "Containment Pen"
 	},
 /turf/open/floor/iron/white,
-/area/centcom/basketball)
-"dS" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg,
-/obj/structure/alien/egg,
-/turf/open/floor/engine,
 /area/centcom/basketball)
 "eS" = (
 /obj/effect/turf_decal/stripes/line{
@@ -142,10 +132,6 @@
 /obj/structure/bed/nest,
 /obj/item/bodypart/chest/monkey,
 /turf/open/floor/engine,
-/area/centcom/basketball)
-"ku" = (
-/obj/effect/turf_decal/bot,
-/turf/closed/indestructible/resin/membrane,
 /area/centcom/basketball)
 "kT" = (
 /obj/item/organ/internal/body_egg/alien_embryo,
@@ -343,8 +329,7 @@
 /area/centcom/basketball)
 "Cv" = (
 /obj/structure/hoop{
-	dir = 4;
-	name = "A La Penners"
+	dir = 4
 	},
 /obj/structure/alien/weeds/node,
 /turf/open/floor/engine,
@@ -375,8 +360,7 @@
 /area/centcom/basketball)
 "DP" = (
 /obj/structure/hoop{
-	dir = 8;
-	name = "Hopping Jezzertons"
+	dir = 8
 	},
 /obj/structure/alien/weeds/node,
 /turf/open/floor/engine,
@@ -570,13 +554,6 @@
 	},
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
-"WM" = (
-/turf/closed/indestructible/reinforced{
-	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi';
-	base_icon_state = "resin_wall";
-	icon_state = "resin_wall-0"
-	},
-/area/centcom/basketball)
 "Xm" = (
 /obj/structure/bed/nest,
 /obj/effect/mob_spawn/corpse/human/monkey,
@@ -635,15 +612,15 @@ tO
 tO
 tO
 tO
-WM
-WM
-WM
-WM
-WM
-WM
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
 cz
-WM
-WM
+Lu
+Lu
 Lu
 Lu
 Lu
@@ -660,7 +637,7 @@ tO
 tO
 Ul
 Ul
-WM
+Lu
 fi
 YH
 Vr
@@ -685,7 +662,7 @@ tO
 tO
 Ul
 Ul
-WM
+Lu
 Vr
 Vr
 Vr
@@ -844,7 +821,7 @@ uH
 uH
 uH
 uH
-ku
+Cw
 Vr
 Vr
 PW
@@ -968,7 +945,7 @@ dC
 dC
 dC
 dC
-dS
+dC
 Cw
 Vr
 Vr

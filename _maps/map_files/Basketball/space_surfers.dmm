@@ -95,8 +95,7 @@
 /area/centcom/basketball)
 "Cv" = (
 /obj/structure/hoop{
-	dir = 4;
-	name = "A La Penners"
+	dir = 4
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/floor/fakespace,
@@ -110,8 +109,7 @@
 /area/centcom/basketball)
 "DP" = (
 /obj/structure/hoop{
-	dir = 8;
-	name = "Hopping Jezzertons"
+	dir = 8
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/floor/fakespace,

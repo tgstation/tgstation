@@ -369,8 +369,7 @@
 	dir = 8
 	},
 /obj/structure/hoop{
-	dir = 4;
-	name = "A La Penners"
+	dir = 4
 	},
 /turf/open/floor/noslip,
 /area/centcom/basketball)
@@ -403,8 +402,7 @@
 	dir = 4
 	},
 /obj/structure/hoop{
-	dir = 8;
-	name = "Hopping Jezzertons"
+	dir = 8
 	},
 /turf/open/floor/noslip,
 /area/centcom/basketball)

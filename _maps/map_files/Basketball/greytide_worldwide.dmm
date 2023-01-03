@@ -363,8 +363,7 @@
 /area/centcom/basketball)
 "Cv" = (
 /obj/structure/hoop{
-	dir = 4;
-	name = "A La Penners"
+	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plating,
@@ -391,8 +390,7 @@
 /area/centcom/basketball)
 "DP" = (
 /obj/structure/hoop{
-	dir = 8;
-	name = "Hopping Jezzertons"
+	dir = 8
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
