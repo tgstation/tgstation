@@ -499,3 +499,115 @@
 	W.registered_name = H.real_name
 	W.update_label()
 	W.update_icon()
+
+// Syndicate Factions
+
+/datum/outfit/syndi_faction
+	name = "Syndicate Factioner"
+	uniform = /obj/item/clothing/under/syndicate
+	implants = list(/obj/item/implant/weapons_auth)
+
+/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
+	H.faction |= ROLE_SYNDICATE
+
+/datum/outfit/syndi_faction/interdyne
+	name = "Syndicate Factioner - Interdyne"
+
+/datum/outfit/syndi_faction/interdyne/researcher
+	name = "Syndicate Factioner - Interdyne Agent"
+
+	id = null // TODO-SYNDIE: FACTIONAL IDS
+	id_trim = null
+
+	uniform = /obj/item/clothing/under/pants/jeans
+	suit = /obj/item/clothing/suit/toggle/labcoat/interdyne
+	back = /obj/item/storage/backpack/satchel
+	backpack_contents = list(
+		/obj/item/storage/bag/bio = 1,
+		/obj/item/reagent_containers/hypospray = 1,
+	)
+	ears = /obj/item/radio/headset/syndicate
+	glasses = /obj/item/clothing/glasses/hud/health/biochem
+	gloves = /obj/item/clothing/gloves/color/black
+	mask = /obj/item/clothing/mask/breath/medical/interdyne
+	shoes = /obj/item/clothing/shoes/combat
+	r_pocket = /obj/item/reagent_containers/syringe
+	box = /obj/item/storage/box/survival/medical
+
+/datum/outfit/syndi_faction/cybersun
+	name = "Syndicate Factioner - Cybersun"
+
+/datum/outfit/syndi_faction/cybersun/executive
+	name = "Syndicate Factioner - Cybersun Executive (Male)"
+
+	id = null // TODO-SYNDIE: FACTIONAL IDS
+	id_trim = null
+
+	uniform = /obj/item/clothing/under/syndicate/cybersun/corpo
+	glasses = /obj/item/clothing/glasses/thermal/sunglasses
+
+	back = /obj/item/storage/backpack/satchel/leather
+	backpack_contents = list(
+		/obj/item/gun/ballistic/revolver/syndicate = 1,
+		/obj/item/ammo_box/a357 = 2,
+	)
+
+	ears = /obj/item/radio/headset/syndicate
+	shoes = /obj/item/clothing/shoes/laceup
+
+/datum/outfit/syndi_faction/cybersun/executive
+	name = "Syndicate Factioner - Cybersun Executive (Female)"
+
+	uniform = /obj/item/clothing/under/syndicate/cybersun/corpo/fem
+
+/datum/outfit/syndi_faction/cybersun/pmc
+	name = "Syndicate Factioner - Cybersun PMC"
+
+	id = null // TODO-SYNDIE: FACTIONAL IDS
+	id_trim = null
+
+	uniform = /obj/item/clothing/under/syndicate/cybersun/combat
+	glasses = /obj/item/clothing/glasses/thermal/sunglasses
+	mask = /obj/item/clothing/mask/white_balaclava
+	suit = /obj/item/clothing/suit/armor/vest/cybersun
+	suit_store = /obj/item/gun/ballistic/automatic/c20r
+	gloves = /obj/item/clothing/gloves/combat/gauntlets
+	back = /obj/item/storage/backpack
+	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	ears = /obj/item/radio/headset/syndicate/alt
+	shoes = /obj/item/clothing/shoes/combat
+	box = /obj/item/storage/box/survival/syndie
+
+	backpack_contents = list(
+		/obj/item/ammo_box/magazine/smgm45 = 2,
+		/obj/item/storage/medkit/advanced = 1,
+	)
+
+	l_pocket = /obj/item/ammo_box/magazine/m10mm
+	r_pocket = /obj/item/reagent_containers/syringe
+
+/datum/outfit/syndi_faction/cybersun/pmc
+	name = "Syndicate Factioner - Cybersun PMC (MOD)"
+
+	back = /obj/item/mod/control/pre_equipped/elite
+	backpack_contents = list(
+		/obj/item/ammo_box/magazine/smgm45 = 2,
+		/obj/item/storage/medkit/advanced = 1,
+	)
+
+/datum/outfit/syndi_faction/tigercoop
+	name = "Syndicate Factioner - Tiger Coop"
+
+/datum/outfit/syndi_faction/interdyne/researcher
+	name = "Syndicate Factioner - Tiger Coop Priest"
+
+	uniform = /obj/item/clothing/under/syndicate/tiger/priest
+	back = /obj/item/storage/backpack/satchel/leather
+	ears = /obj/item/radio/headset/syndicate
+	gloves = /obj/item/clothing/gloves/combat/red
+	shoes = /obj/item/clothing/shoes/jackboots/red
+	mask = /obj/item/clothing/mask/breath/medical/interdyne
+
+	r_pocket = /obj/item/reagent_containers/syringe
+
+	box = /obj/item/storage/box/survival/syndie

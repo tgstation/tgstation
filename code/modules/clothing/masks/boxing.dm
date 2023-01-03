@@ -62,3 +62,8 @@
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/mask/white_balaclava
+	name = "white balaclava"
+	desc = "Hides your face from those pesky civilians and journalists."
+	icon_state = "white_balaclava"

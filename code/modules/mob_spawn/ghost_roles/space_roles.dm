@@ -192,7 +192,7 @@
 	return ..()
 
 /datum/outfit/syndicate_empty/battlecruiser
-	name = "Syndicate Battlecruiser Ship Operative"
+	name = "Gorlex Battlecruiser Ship Operative"
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol/clandestine
 	r_pocket = /obj/item/knife/combat/survival
 	box = /obj/item/storage/box/survival/syndie

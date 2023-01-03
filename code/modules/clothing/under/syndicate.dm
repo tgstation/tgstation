@@ -40,7 +40,7 @@
 */
 
 /obj/item/clothing/under/syndicate/gorlex
-	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. This one in particular makes you feel like a terrorist of some sort."
+	desc = "A non-descript and slightly suspicious looking turtleneck with baggy cargo pants. This one in particular makes you feel like a terrorist of some sort."
 	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/gorlex/combat
@@ -66,14 +66,21 @@
 */
 
 /obj/item/clothing/under/syndicate/cybersun
-	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. This one in particular makes you feel like a terrorist of some sort."
+	desc = "A non-descript and slightly suspicious looking turtleneck with baggy cargo pants. Wearing this makes you feel like a true corpo."
 	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/cybersun/combat
-	name = "gorlex combat under"
+	name = "\improper Cybersun private military jumpsuit"
+	desc = "A white jumpsuit woven with durable nano-kevlar fibres. The Cybersun logo are emblazed in white onto two mirrored black arm bands."
+	icon_state = "cybersun_pmc"
 
-/obj/item/clothing/under/syndicate/cybersun/enlisted
-	name = "enlisted service uniform"
+/obj/item/clothing/under/syndicate/cybersun/corpo
+	name = "\improper Cybersun executive suit"
+	desc = "A true symbol of corporate seniority. Black and red is the colour of the game, just the feeling of wearing this alone makes you feel superior."
+	icon_state = "cybersun_exec_m"
+
+/obj/item/clothing/under/syndicate/cybersun/corpo/fem
+	female_sprite_flags = FEMALE_UNIFORM_FULL
 
 /*
 
@@ -83,7 +90,7 @@
 */
 
 /obj/item/clothing/under/syndicate/interdyne
-	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. This one in particular makes you feel like a terrorist of some sort."
+	desc = "A non-descript and slightly suspicious looking turtleneck with baggy cargo pants. Wearing this makes you feel like a smart dude."
 	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/interdyne/tt
@@ -91,5 +98,17 @@
 	desc = "A baggy Interdyne-blue coloured tactical uniform. Sewed from special synthetic fabrics designed to both protect the wearer, and repel bodily fluids."
 	icon_state = "interdyne_tt"
 
-/obj/item/clothing/under/syndicate/interdyne/add
-	name = "enlisted service uniform"
+/*
+
+	TIGER COOPERATIVE
+
+*/
+
+/obj/item/clothing/under/syndicate/tiger
+	desc = "A non-descript and slightly suspicious looking turtleneck with baggy cargo pants. You feel like some sort of cultist wearing this.."
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/tiger/priest
+	name = "\improper Tiger-Coop priest's uniform"
+	desc = "A tight-fitting red and black priest uniform. Reserved for the upper echelon of Tiger-Coop; those with prestige, and those worshipped. A person wearing this is probably a Changeling. Or not, who knows."
+	icon_state = "tiger_coop_priest"

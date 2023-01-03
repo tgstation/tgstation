@@ -18,3 +18,8 @@
 	icon_state = "wizard"
 	greyscale_colors = null
 	inhand_icon_state = null
+
+/obj/item/clothing/gloves/combat/gauntlets
+	name = "combat gauntlets"
+	desc = "Fireproof and insulated combat equipment that extends up to the forearm."
+	icon_state = "black_gauntlets"

@@ -123,3 +123,8 @@
 	desc = "A crisp, clean set of boots for working long hours on the beat."
 	icon_state = "aerostatic_boots"
 	inhand_icon_state = null
+
+/obj/item/clothing/shoes/jackboots/red // Tiger-Coop priest boots
+	name = "red metal boots"
+	desc = "Red... metal jackboots. Seem rather obnoxious to wear."
+	armor = list(MELEE = 15, BULLET = 20, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)

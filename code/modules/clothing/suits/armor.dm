@@ -39,6 +39,11 @@
 	desc = "A titanium-fibre webbed vest, sewed with kevlar. It adorns the Interdyne logo on it's chest, and carries pouches for both weaponry and medical supplies."
 	icon_state = "tt_vest"
 
+/obj/item/clothing/suit/armor/vest/cybersun
+	name = "\improper Cybersun private military vest"
+	desc = "W.I.P."
+	icon_state = "cybersun_vest"
+
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
 	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."

@@ -792,8 +792,8 @@
 	)
 
 /datum/mod_theme/syndicate
-	name = "hybris"
-	desc = "Property of Gorlex Security Consulting, LLC. Use only with license. All rights reserved.."
+	name = "keres"
+	desc = "Property of Gorlex Security Consulting, LLC. Use only with license. All rights reserved."
 	extended_desc = "An advanced combat suit adorned in a sinister crimson red color scheme, produced and manufactured \
 		for special mercenary operations. The build is a streamlined layering consisting of shaped Plasteel, \
 		and composite ceramic, while the under suit is lined with a lightweight Kevlar and durathread hybrid weave \
@@ -801,7 +801,7 @@
 		ablative shield module to provide resistance against conventional energy firearms. \
 		A small tag hangs off of it reading; 'Property of the Gorlex Marauders, with assistance from Cybersun Industries. \
 		All rights reserved, tampering with suit will void warranty."
-	default_skin = "syndicate"
+	default_skin = "keres"
 	armor = list(MELEE = 15, BULLET = 20, LASER = 15, ENERGY = 15, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
@@ -820,7 +820,82 @@
 		/obj/item/shield/energy,
 	)
 	skins = list(
-		"syndicate" = list(
+		"keres" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+		"ponos" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+		"cratos" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+		"panacea" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -879,7 +954,7 @@
 		this suit is only produced for high ranking Syndicate officers and elite strike teams. \
 		It comes built with a secondary layering of ceramic and Kevlar into the plating providing it with \
 		exceptionally better protection along with fire and acid proofing. A small tag hangs off of it reading; \
-		'Property of the Gorlex Marauders, with assistance from Cybersun Industries. \
+		'Property of Saibāsan Sangyou, K.K. \
 		All rights reserved, tampering with suit will void life expectancy.'"
 	default_skin = "elite"
 	armor = list(MELEE = 35, BULLET = 30, LASER = 35, ENERGY = 35, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
@@ -1456,3 +1531,42 @@
 			),
 		),
 	)
+
+/**
+ *
+ * Currently not in use.
+ *
+ */
+
+/datum/mod_theme/syndicate/ponos
+	name = "ponos"
+	desc = "Property of Gorlex Security Consulting, LLC. Use only with license. All rights reserved."
+	extended_desc = "An advanced \"modular environment\" suit created for specialist engineers within strike-teams, \
+		with blood-red plastitanium plates overlaying a inner cover-all of ceramic-woven fabric. The suit is specially designed \
+		to protect it's users from both hazardous mechanical work, and intense combat use. Unlike the parent suit, it uses a \
+		longer, continous visor instead of cameras, allowing for an inner-HUD to be more properly used. \
+		On the inside of the gauntlet reads; 'Property of Gorlex Security Consulting, LLC. Use only with license. \
+		All rights reserved, tampering with suit will void warranty."
+	default_skin = "ponos"
+
+/datum/mod_theme/syndicate/ponos
+	name = "cratos"
+	desc = "Property of Gorlex Security Consulting, LLC. Use only with license. All rights reserved."
+	extended_desc = "A hulking dumptruck of a suit, designed specifically for intense combat use and \
+		to sustain as many rounds of punishment as can possible be dished out.  It's design is complex, with \
+		layers upon layers of painted titanium plates interwoven with layers of fabric, and air pockets to reduce the \
+		impact of ballistic impacts. On the outer-layer it uses a coating of ablative \"paint\" to protect and \
+		absorb energy and laser fire. Within the gauntlets and arms are a series of mechanical presses and hydraulics used \
+		to increase the amount of weight the operator's upper-body can lift and handle. \
+		Etched on the underside of the right boot reads; 'Property of Gorlex Security Consulting, LLC. Use only with license. \
+		All rights reserved, tampering with suit will void warranty."
+	default_skin = "cratos"
+
+/datum/mod_theme/syndicate/panacea
+	name = "panacea"
+	desc = "Property of Gorlex Security Consulting, LLC. Use only with license. All rights reserved."
+	extended_desc = "A slimed-down version of the parent, \"Keres\" suit, for medical specialists in-combat. Using the same basic design; \
+		instead of a visor, however, it uses a \"dome\" design, chosen to allow operator's to have a more free-form view. \
+		Etched on the inside of the left glove reads; 'Property of Gorlex Security Consulting, LLC. Use only with license. \
+		All rights reserved, tampering with suit will void warranty."
+	default_skin = "ponos"

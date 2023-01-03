@@ -36,3 +36,9 @@
 	inhand_icon_state = "m_mask"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 0, ACID = 0)
 	equip_delay_other = 10
+
+/obj/item/clothing/mask/breath/medical/interdyne
+	desc = "A close-fitting metal mask, designed for protection against any number of biochemical, pharmaceutical and biohazardous threats."
+	name = "biochemical protection mask"
+	worn_icon_state = "medical"
+	icon_state = "sechailer"
