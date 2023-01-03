@@ -59,9 +59,17 @@ const ShoppingTab = (props, context) => {
                     </Box>
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
+                    <Button
+                      icon="plus"
+                      onClick={() =>
+                        act('add_one', {
+                          target: item.ref,
+                        })
+                      }
+                    />
                     <NumberInput
                       animated
-                      value={(item.amt && item.amt) || 0}
+                      value={item.amt || 0}
                       width="41px"
                       minValue={0}
                       maxValue={20}
@@ -87,7 +95,7 @@ const ShoppingTab = (props, context) => {
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
   const { ltsrbt_available, forced_express, order_datums, total_cost } = data;
-  const checkout_list = order_datums.filter((food) => food && food.amt);
+  const checkout_list = order_datums.filter((food) => food && (food.amt || 0));
   return (
     <Stack vertical fill>
       <Stack.Item grow>
@@ -120,7 +128,7 @@ const CheckoutTab = (props, context) => {
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
-                        value={(item.amt && item.amt) || 0}
+                        value={item.amt || 0}
                         width="41px"
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}
@@ -219,7 +227,7 @@ export const ProduceConsole = (props, context) => {
   const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
-    <Window title="Produce Orders" width={500} height={400}>
+    <Window width={500} height={400}>
       <Window.Content>
         {!off_cooldown && <OrderSent />}
         <Stack vertical fill>
@@ -251,7 +259,9 @@ export const ProduceConsole = (props, context) => {
           </Stack.Item>
           <Section>
             <Stack grow>
-              <Stack.Item>Currently available balance: {points}</Stack.Item>
+              <Stack.Item>
+                Currently available balance: {points || 0}
+              </Stack.Item>
             </Stack>
           </Section>
           <Stack.Item grow>

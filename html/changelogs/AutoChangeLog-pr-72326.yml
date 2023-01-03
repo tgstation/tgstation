@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Starlight will actually show now, instead of just being replaced by fullbright most of the time"
-  - bugfix: "Emissive lighting will once again work. Sorry lads"

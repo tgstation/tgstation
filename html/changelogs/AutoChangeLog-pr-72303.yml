@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - admin: "Integrated Circuits now have an admin only subtype, functionally the same as VVed regular circuits."
