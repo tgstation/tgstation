@@ -678,12 +678,12 @@ def text_to_speech():
 
 		ffmpeg_result = None
 		if filter_complex != "":
-			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=wav_bytes.getvalue(), capture_output = True)
+			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libmp3lame", "-b:a", "64k", "-f", "mp3", "pipe:1"], input=wav_bytes.getvalue(), capture_output = True)
 		else:
-			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=wav_bytes.getvalue(), capture_output = True)
+			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libmp3lame", "-b:a", "64k", "-f", "mp3", "pipe:1"], input=wav_bytes.getvalue(), capture_output = True)
 		print(f"ffmpeg result size: {len(ffmpeg_result.stdout)} stderr = \n{ffmpeg_result.stderr.decode()}")
 
-		result = send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='{identifier}.ogg', mimetype="audio/ogg")
+		result = send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='{identifier}.mp3', mimetype="audio/mp3")
 
 	return result
 

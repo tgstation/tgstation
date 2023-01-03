@@ -24,11 +24,16 @@ SUBSYSTEM_DEF(html_audio)
 			function setVolume(volume, element_id)
 			{
 				var audio_player = document.getElementById(element_id);
-				audio_player.volume = parseFloat(volume);
+				if(audio_player) {
+					audio_player.volume = parseFloat(volume);
+				}
 			}
 			function playAudio(url, element_id)
 			{
 				var audio_player = document.getElementById(element_id);
+				if(!audio_player) {
+					return;
+				}
 				audio_player.pause();
 				audio_player.src = url;
 				audio_player.load();
@@ -37,6 +42,9 @@ SUBSYSTEM_DEF(html_audio)
 			function setLooping(loop, element_id)
 			{
 				var audio_player = document.getElementById(element_id);
+				if(!audio_player) {
+					return;
+				}
 				var isTrueSet = (loop === 'true');
 				if(isTrueSet)
 				{
@@ -77,12 +85,12 @@ SUBSYSTEM_DEF(html_audio)
 /datum/controller/subsystem/html_audio/proc/update_listener_volume(client/listener)
 	for(var/i in 1 to max_channels)
 		var/volume_to_use = 0
-		var/distance = get_dist(channel_assignment[i], listener.mob)
+		var/distance = max(get_dist(channel_assignment[i], listener.mob), 0)
 		if(!channel_assignment[i] || distance >= 10 || (channel_requires_LOS_at_start[i] && !(listener in channel_requires_LOS_at_start_listeners[i])) || !listener.prefs.read_preference(/datum/preference/toggle/sound_tts_use_html_audio))
 			volume_to_use = 0
 		else
-			volume_to_use = (1-(1/10*distance))**2
-		listener << output(list2params(list(num2text(volume_to_use), "channel_[i]")), "html_audio_player:setVolume")
+			volume_to_use = ((1-(0.1*distance))**2) * 0.7
+		listener << output(list2params(list("[round(volume_to_use, 0.1)]", "channel_[i]")), "html_audio_player:setVolume")
 
 /datum/controller/subsystem/html_audio/proc/handle_listener_move(mob/listener, atom/old_loc)
 	SIGNAL_HANDLER
