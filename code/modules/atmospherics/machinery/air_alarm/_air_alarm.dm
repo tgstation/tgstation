@@ -468,9 +468,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	var/gas_dangerlevel = 0
 	for(var/gas_id in env_gases)
-		if(!(gas_id in cached_tlv)) // We're not interested in this gas, it seems.
-			continue
 		current_tlv = cached_tlv[gas_id]
+		if(!current_tlv) // We're not interested in this gas, it seems.
+			continue
 		gas_dangerlevel = max(gas_dangerlevel, current_tlv.check_value(env_gases[gas_id][MOLES] * partial_pressure))
 
 	environment.garbage_collect()
