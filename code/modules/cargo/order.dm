@@ -90,7 +90,7 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost -= (cost * applied_coupon.discount_pct_off)
-	if(!isnull(paying_account)) //privatly purchased means 1.1x the cost
+	if(!isnull(paying_account)) //privately purchased means 1.1x the cost
 		cost *= 1.1
 	return cost
 
