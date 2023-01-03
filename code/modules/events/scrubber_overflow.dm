@@ -151,3 +151,27 @@
 	forced_reagent = /datum/reagent/consumable/ethanol/beer
 	reagents_amount = 100
 
+/datum/round_event_control/scrubber_overflow/custom
+	name = "Scrubber Overflow: Custom"
+	typepath = /datum/round_event/scrubber_overflow/custom
+	weight = 0
+	max_occurrences = 0
+	description = "The scrubbers release a tide of custom froth"
+	var/datum/reagent/custom_reagent
+
+/datum/round_event_control/scrubber_overflow/custom/admin_setup(mob/admin)
+	if(!check_rights(R_FUN))
+		return
+	custom_reagent = tgui_input_list(usr, "Choose a reagent to flood.", "Choose a reagent.", sort_list(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc))
+	if (isnull(custom_reagent))
+		return ADMIN_CANCEL_EVENT
+
+/datum/round_event/scrubber_overflow/custom
+	overflow_probability = 100
+	forced_reagent = /datum/reagent/consumable/ethanol/beer
+	reagents_amount = 100
+
+/datum/round_event/scrubber_overflow/custom/start()
+	var/datum/round_event_control/scrubber_overflow/custom/event_controller = control
+	forced_reagent = event_controller.custom_reagent
+	. = ..()
