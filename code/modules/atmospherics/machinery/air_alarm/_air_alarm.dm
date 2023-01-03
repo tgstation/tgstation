@@ -474,18 +474,3 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
-
-/proc/extract_id_tags(list/objects)
-	var/list/tags = list()
-
-	for (var/obj/object as anything in objects)
-		tags += object.id_tag
-
-	return tags
-
-/proc/find_by_id_tag(list/objects, id_tag)
-	for (var/obj/object as anything in objects)
-		if (object.id_tag == id_tag)
-			return object
-
-	return null
