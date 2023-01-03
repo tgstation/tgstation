@@ -16,6 +16,8 @@
 	pixel_x = -28
 	pixel_y = -28
 
+	COOLDOWN_DECLARE(hit_cooldown)
+
 /obj/contained_singularity/Initialize(mapload)
 	. = ..()
 
@@ -38,4 +40,61 @@
 	return .
 
 /obj/contained_singularity/singularity_act()
+	return
+
+/obj/contained_singularity/bullet_act(obj/projectile/projectile)
+	if (istype(projectile, /obj/projectile/beam/singularity_turret))
+		addtimer(CALLBACK(src, PROC_REF(try_fire_particle)), 0.3 SECONDS)
+
+	return ..()
+
+/obj/contained_singularity/proc/try_fire_particle()
+	if (!COOLDOWN_FINISHED(src, hit_cooldown))
+		return
+
+	COOLDOWN_START(src, hit_cooldown, 0.2 SECONDS)
+
+	var/obj/projectile/singularity_particle/particle = new(get_turf(src))
+	particle.fired_from = src
+	particle.fire(rand(0, 360))
+	RegisterSignal(particle, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
+	addtimer(CALLBACK(src, PROC_REF(projectile_expired, particle)), 3.5 SECONDS)
+
+	playsound(particle, sound("sound/effects/singulo_particle_throw[rand(1, 2)].ogg"), vol = 50, pressure_affected = FALSE)
+
+/obj/contained_singularity/proc/on_projectile_hit(obj/projectile/source, obj/contained_singularity/firer, atom/target)
+	SIGNAL_HANDLER
+
+	if (istype(target, /obj/machinery/field/containment/singularity))
+		return
+
+	discharge_from(source)
+
+/obj/contained_singularity/proc/projectile_expired(obj/projectile/projectile)
+	if (QDELETED(projectile))
+		return
+
+	discharge_from(projectile)
+
+/obj/contained_singularity/proc/discharge_from(obj/projectile/projectile)
+	var/turf/projectile_turf = get_turf(projectile)
+	playsound(projectile_turf, 'sound/effects/singulo_particle_missed.ogg', vol = 50, pressure_affected = FALSE)
+	Beam(projectile_turf, icon_state = "sm_arc_supercharged", time = 0.8 SECONDS)
+	projectile_turf.balloon_alert_to_viewers("it discharges back!")
+
+	qdel(source)
+
+/obj/projectile/singularity_particle
+	name = "singularity particle"
+	icon_state = "pulse1"
+	hitsound = 'sound/magic/mm_hit.ogg'
+	damage = 60
+	damage_type = BRUTE
+	armour_penetration = 40
+	pass_flags = PASSTABLE | PASSSTRUCTURE
+
+/obj/projectile/singularity_particle/singularity_act()
+	return
+
+/obj/projectile/singularity_particle/singularity_pull()
 	return

@@ -47,6 +47,8 @@
 
 /obj/machinery/singularity_turret/proc/prepare_fire()
 	SHOULD_NOT_SLEEP(TRUE)
+
+	icon_state = icon_state_on
 	begin_processing()
 
 // MBTODO: Make you deaf for a bit if you're near it when it fires.

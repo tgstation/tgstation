@@ -53,6 +53,8 @@ no power level overlay is currently in the overlays list.
 	var/clean_up = FALSE
 	var/generator_distance = 7
 
+	var/containment_field_type = /obj/machinery/field/containment
+
 /datum/armor/field_generator
 	melee = 25
 	bullet = 10
@@ -298,7 +300,11 @@ no power level overlay is currently in the overlays list.
 		if(current_turf.density)//We cant shoot a field though this
 			return FALSE
 
-		found_generator = locate(/obj/machinery/field/generator) in current_turf
+		for (var/obj/machinery/field/generator/generator in current_turf)
+			if (generator.type == type)
+				found_generator = generator
+				break
+
 		if(found_generator)
 			steps -= 1
 			if(!found_generator.active)
@@ -321,8 +327,15 @@ no power level overlay is currently in the overlays list.
 	for(var/dist in 0 to steps) // creates each field tile
 		var/field_dir = get_dir(current_turf, get_step(found_generator.loc, NSEW))
 		current_turf = get_step(current_turf, NSEW)
-		if(!locate(/obj/machinery/field/containment) in current_turf)
-			var/obj/machinery/field/containment/created_field = new(current_turf)
+
+		var/found_containment_field = FALSE
+		for (var/obj/object as anything in current_turf)
+			if (object.type == containment_field_type)
+				found_containment_field = TRUE
+				break
+
+		if(!found_containment_field)
+			var/obj/machinery/field/containment/created_field = new containment_field_type(current_turf)
 			created_field.set_master(src,found_generator)
 			created_field.setDir(field_dir)
 			fields += created_field
