@@ -259,9 +259,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	switch (action)
 		if ("power")
 			var/obj/machinery/atmospherics/components/powering = vent || scrubber
-			powering .on = !!params["val"]
-			powering .update_appearance(UPDATE_ICON)
-			powering .check_atmos_process()
+			powering.on = !!params["val"]
+			powering.update_appearance(UPDATE_ICON)
+			powering.check_atmos_process()
 		if ("direction")
 			if (isnull(vent))
 				return TRUE
