@@ -243,7 +243,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "tO" = (
-/turf/open/space/basic,
+/turf/closed/indestructible,
 /area/centcom/basketball)
 "tU" = (
 /obj/structure/alien/weeds,
@@ -517,9 +517,6 @@
 /obj/machinery/monkey_recycler,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
-"Ul" = (
-/turf/open/floor/fakespace,
-/area/centcom/basketball)
 "Uq" = (
 /obj/machinery/processor/slime,
 /turf/open/floor/iron/white,
@@ -635,8 +632,8 @@ Hu
 Hu
 tO
 tO
-Ul
-Ul
+tO
+tO
 Lu
 fi
 YH
@@ -660,8 +657,8 @@ Hu
 Hu
 tO
 tO
-Ul
-Ul
+tO
+tO
 Lu
 Vr
 Vr
@@ -683,7 +680,7 @@ Hu
 "}
 (5,1,1) = {"
 Hu
-Ul
+tO
 Lu
 Lu
 Lu
@@ -708,7 +705,7 @@ Hu
 "}
 (6,1,1) = {"
 Hu
-Ul
+tO
 Lu
 Oj
 Oj
@@ -733,7 +730,7 @@ Hu
 "}
 (7,1,1) = {"
 Hu
-Ul
+tO
 Lu
 Oj
 pu

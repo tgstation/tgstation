@@ -323,6 +323,7 @@
 #define BURST "burst"
 #define GROWING "growing"
 #define GROWN "grown"
+#define FAKE "fake"
 #define MIN_GROWTH_TIME 900 //time it takes to grow a hugger
 #define MAX_GROWTH_TIME 1500
 
@@ -363,6 +364,8 @@
 			icon_state = "[base_icon_state]"
 		if(BURST)
 			icon_state = "[base_icon_state]_hatched"
+		if(FAKE)
+			icon_state = "[base_icon_state]_growing"
 	return ..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user, list/modifiers)
@@ -457,9 +460,10 @@
 	icon_state = "egg_hatched"
 
 /obj/structure/alien/egg/fake
-	status = BURST
+	status = FAKE
 	icon_state = "egg_growing"
 
+#undef FAKE
 #undef BURSTING
 #undef BURST
 #undef GROWING
