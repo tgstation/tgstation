@@ -70,7 +70,7 @@
 
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
-	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead. On the handle is a beautiful engraving in High Spaceman, \"Thou shalt not crosseth thy beams.\""
+	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
 	fire_sound = 'sound/magic/staff_healing.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
@@ -84,6 +84,9 @@
 	if(!is_wizard_or_friend(user))
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
 		user.balloon_alert(user, "the staff feels weaker as you touch it")
+		desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead. On the handle is a beautiful engraving in High Spaceman, \"Thou shalt not crosseth thy beams.\""
+	else
+		desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
 
 /obj/item/gun/magic/staff/healing/Initialize(mapload)
 	. = ..()
