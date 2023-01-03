@@ -424,7 +424,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
 		state = "alarm1"
 	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
-		color = "alarm2"
+		state = "alarm2"
 	else
 		state = "alarm0"
 
