@@ -95,3 +95,47 @@
       150.
   lnGoror:
   - bugfix: fixed pAIs and simplemobs getting deaf when moving out of a headwear slot.
+2023-01-04:
+  Addust:
+  - admin: The Shuttle Manipulator now has descriptions for the Infiltrator, the shuttles
+      that spawn in space ruins, and the escape pods.
+  Fikou:
+  - qol: makes modsuits with magboots have those pinned by default, pins active modules
+      on the admin suit, mining suit and the additional module of the ert suits
+  Iamgoofball:
+  - bugfix: Adds an engraving to the staff of healing regarding proper healing beam
+      usage.
+  Improvedname:
+  - bugfix: Adds missing contrabrand spawners to deltastation locker
+  - bugfix: fixes being able to instantly build carving blocks/mineral doors
+  Melbert:
+  - rscadd: Roundstart captains will now memorize the code to the spare ID safe.
+  - rscadd: Traitors will now memorize the location and code to their uplink.
+  - rscadd: Heads of staff winning a revolution will now get a memory of their success.
+  - rscadd: Heads of staff and head revolutionaries who lose their respective sides
+      of the revolution also get a memory of their failure.
+  - rscadd: Completing a ritual of knowledge as a heretic grants you a quality memory.
+  - rscadd: Successfully defusing a bomb now grants you a cool memory. Failing it
+      will also grant you a memory, though you will likely not be alive to see it.
+  - rscadd: Planting bombs now increase their memory quality depending on how cool
+      the bomb is.
+  - refactor: Memories have been refactored to be much easier to add.
+  NamelessFairy:
+  - qol: Drone dispensers now tell you how much material they need per drone.
+  ShizCalev:
+  - bugfix: You'll now point when freaked out about something.
+  - code_imp: Added a unit test for ALL worn icons.
+  - bugfix: Fixed a bunch of broken worn icons!
+  - bugfix: Fixed a minor runtime which occurred when an airlock got deleted if an
+      AI was actively hacking it.
+  Time-Green:
+  - rscadd: You can now fly around the shuttle during transit! Woohoo! You can either
+      cling to the side or grab a jetpack and try and keep up with the shuttle! Carps
+      can move around freely in hyperspace
+  - qol: Increased shuttle hyperspace size from 8 tiles to 16
+  jlsnow301:
+  - rscadd: 'Hope you saved for a rainy day: Added the ''Cursed'' quirk which causes
+      excessive slippage and... other difficulties.'
+  - bugfix: Fixed blob minions getting their own antag category
+  tralezab:
+  - bugfix: Removed some cheese strategies from burdened sect.

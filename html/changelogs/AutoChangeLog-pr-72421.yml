@@ -1,4 +1,0 @@
-author: "Improvedname"
-delete-after: True
-changes:
-  - bugfix: "Adds missing contrabrand spawners to deltastation locker"

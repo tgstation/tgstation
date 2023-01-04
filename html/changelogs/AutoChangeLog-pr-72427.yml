@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - qol: "makes modsuits with magboots have those pinned by default, pins active modules on the admin suit, mining suit and the additional module of the ert suits"
