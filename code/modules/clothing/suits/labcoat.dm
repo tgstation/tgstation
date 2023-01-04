@@ -101,4 +101,4 @@
 	name = "interdyne labcoat"
 	desc = "A heavy-duty corporate labcoat, on the shoulder is the Interdyne Pharmaceuticals logo. It feels a tad overdesigned."
 	icon_state = "labcoat_interdyne"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 75, FIRE = 50, ACID = 75)
+	armor_type = /datum/armor/jacket_research_director

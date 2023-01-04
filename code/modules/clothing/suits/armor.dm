@@ -44,7 +44,7 @@
 /obj/item/clothing/suit/armor/vest/alt/sec
 	icon_state = "armor_sec"
 
-/obj/item/clothing/suit/armor/vest/tt
+/obj/item/clothing/suit/armor/vest/trauma_team
 	name = "\improper Trauma Team vest"
 	desc = "A titanium-fibre webbed vest, sewed with kevlar. It adorns the Interdyne logo on it's chest, and carries pouches for both weaponry and medical supplies."
 	icon_state = "tt_vest"
@@ -194,6 +194,16 @@
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
 
+/datum/armor/vest_capcarapace
+	melee = 50
+	bullet = 40
+	laser = 50
+	energy = 50
+	bomb = 25
+	fire = 100
+	acid = 90
+	wound = 10
+
 /obj/item/clothing/suit/armor/vest/capcarapace/gorlex
 	name = "gorlex officer's coat"
 	desc = "A durathread and leather overcoat, singed at the waist with a belt. It has a really excessively high collar."
@@ -325,15 +335,6 @@
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-// Marauder Corps / SyndieParatrooper Suit
-/obj/item/clothing/suit/armor/swat/gorlex
-	name = "tactical armour suit"
-	desc = "A tactical full-body armour suit, dubbed the \"NOVA\". Spaceproof, with a decent armour and emblazed with black and red colours. Property of Gorlex Security Consulting, LLC."
-	icon_state = "marauder_suit"
-	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 90, FIRE = 100, ACID = 100, WOUND = 10)
-
-//All of the armor below is mostly unused
-
 /datum/armor/armor_swat
 	melee = 40
 	bullet = 30
@@ -344,6 +345,26 @@
 	fire = 100
 	acid = 100
 	wound = 15
+
+// Marauder Corps / SyndieParatrooper Suit
+/obj/item/clothing/suit/armor/swat/gorlex
+	name = "tactical armour suit"
+	desc = "A tactical full-body armour suit, dubbed the \"NOVA\". Spaceproof, with a decent armour and emblazed with black and red colours. Property of Gorlex Security Consulting, LLC."
+	icon_state = "marauder_suit"
+	armor_type = /datum/armor/armor_nova
+
+/datum/armor/armor_nova
+	melee = 35
+	bullet = 30
+	laser = 30
+	energy = 40
+	bomb = 25
+	bio = 90
+	fire = 100
+	acid = 100
+	wound = 10
+
+//All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"

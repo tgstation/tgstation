@@ -39,11 +39,6 @@
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Kosmologistika, the logistics company owned and operated by the SSC."
 	icon_state = "kosmologistika"
 
-/obj/structure/shipping_container/interdyne
-	name = "\improper Interdyne shipping container"
-	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Interdyne, a private pharmaceutical company. Probably carrying medical or research supplies, probably."
-	icon_state = "interdyne"
-
 /obj/structure/shipping_container/nakamura
 	name = "\improper Nakamura Engineering shipping container"
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Nakamura, presumably for transporting tools or heavy industrial equipment."
@@ -65,8 +60,8 @@
 
 //Syndies
 /obj/structure/shipping_container/cybersun
-	name = "\improper Cybersun Industries shipping container"
-	desc = "A standard-measure shipping container for bulk transport of goods. This one prominently features Cybersun's logo, and so presumably could be carrying almost anything."
+	name = "\improper /"Saibasan"/ shipping container"
+	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Saibasan, or Cybersun- probably carrying something expensive."
 	icon_state = "cybersun"
 
 /obj/structure/shipping_container/donk_co
@@ -76,8 +71,12 @@
 
 /obj/structure/shipping_container/gorlex
 	name = "\improper Gorlex Security Consulting shipping container"
-	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Gorlex Security Consulting, and is probably carrying their primary export: war crimes."
+	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Gorlex Security Consulting, LLC., and is probably carrying their primary export: war crimes."
 	icon_state = "gorlex"
 
-/obj/structure/shipping_container/gorlex/red
-	icon_state = "gorlex_red"
+/obj/structure/shipping_container/interdyne
+	name = "\improper Interdyne Pharmaceuticals shipping container"
+	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Interdyne, a private pharmaceutical company. A warning on it says \"WARNING - BIOHAZARDOUS SUBSTENCES POSSIBLY INSIDE: HANDLE WITH CAUTION.\ \
+			You suddenly think standing around this isn't a good idea."
+	icon_state = "interdyne"
+

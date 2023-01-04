@@ -109,7 +109,14 @@
 /obj/item/clothing/under/syndicate/interdyne/trauma_team
 	name = "\improper Trauma Team scrubs"
 	desc = "A baggy Interdyne-blue coloured tactical uniform. Sewed from special synthetic fabrics designed to both protect the wearer, and repel bodily fluids."
-	icon_state = "interdyne_tt"
+	icon_state = "interdyne_trauma_team"
+	armor_type = /datum/armor/syndicate_scrubs
+
+/datum/armor/syndicate_scrubs
+	melee = 10
+	bio = 50
+	fire = 50
+	acid = 40
 
 /*
 
@@ -125,3 +132,17 @@
 	name = "\improper Tiger-Coop priest's uniform"
 	desc = "A tight-fitting red and black priest uniform. Reserved for the upper echelon of Tiger-Coop; those with prestige, and those worshipped. A person wearing this is probably a Changeling. Or not, who knows."
 	icon_state = "tiger_coop_priest"
+
+
+/*
+
+	MISC. / NOT-DIRECTLY SYNDICATE.
+
+*/
+
+/obj/item/clothing/under/syndicate/suit
+	name = "tactical turtleneck suit"
+	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp."
+	icon_state = "tactical_suit"
+	inhand_icon_state = "bl_suit"
+	can_adjust = FALSE
