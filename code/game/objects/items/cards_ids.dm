@@ -1603,7 +1603,7 @@
 	if(isitem(target))
 		context[SCREENTIP_CONTEXT_RMB] = "Scan for access"
 		return CONTEXTUAL_SCREENTIP_SET
-	return NONE
+	return .
 
 /// A special variant of the classic chameleon ID card which accepts all access.
 /obj/item/card/id/advanced/chameleon/black
