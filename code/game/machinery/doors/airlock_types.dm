@@ -628,3 +628,14 @@
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
 	return
+
+/// Subtype used in unit tests to ensure instant airlock opening/closing. Pretty much just excises everything that would delay the process or is un-needed for the sake of the test (sleeps, icon animations).
+/obj/machinery/door/airlock/instant
+
+// set_density on both procs has a check and return builtin.
+
+/obj/machinery/door/airlock/instant/open(forced = FALSE)
+	set_density(FALSE)
+
+/obj/machinery/door/airlock/instant/close(forced = FALSE, force_crush = FALSE)
+	set_density(TRUE)

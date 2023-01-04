@@ -1,15 +1,15 @@
 /// Tests to make sure door access works correctly.
 /datum/unit_test/door_access_check
-	priority = TEST_LONGER // The open() and  close() proc on doors sleeps, which prolongs the duration of this test as we either await results or execute the proc.
+
+TEST_FOCUS(/datum/unit_test/door_access_check)
 
 /datum/unit_test/door_access_check/Run()
 	var/turf/open/door_stage = get_step(run_loc_floor_bottom_left, EAST)
 	var/mob/living/carbon/human/subject = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
-	var/obj/machinery/door/airlock/door = allocate(/obj/machinery/door/airlock, door_stage)
+	var/obj/machinery/door/airlock/door = allocate(/obj/machinery/door/airlock/instant, door_stage) //special subtype that just flips the density var on open() and close(), akin to a real airlock.
 
 	// First, test that someone without any access can open a door that doesn't have any access requirements. Call move() on the subject to simulate real-world behavior.
 	subject.Move(door_stage)
-	sleep(1 SECONDS) // Wait for the door to open.
 	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to open access-free airlock!")
 	door.close() // close it here just to be clean to the next steps.
 
@@ -21,14 +21,12 @@
 	keycard.access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
 	door.req_access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
 	subject.Move(door_stage)
-	sleep(1 SECONDS)
 	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject with valid access failed to open airlock access-locked behind req_access!")
 	door.close()
 
 	// Okay, now let's edit the req_access on the door to make sure the subject can't open it with the requirements of req_access (must have all accesses required on keycard to open door).
 	door.req_access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS, ACCESS_CARGO)
 	subject.Move(door_stage)
-	sleep(1 SECONDS)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with invalid access succeeded in opening airlock access-locked behind req_access!")
 	door.close() // included for completeness, will early return if the door is already closed.
 
@@ -37,13 +35,11 @@
 	door.req_one_access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
 	keycard.access = list(ACCESS_MAINT_TUNNELS)
 	subject.Move(door_stage)
-	sleep(1 SECONDS)
 	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject with valid access failed to open airlock access-locked behind req_one_access!")
 	door.close()
 
 	// Now, let's test req_one_access with an invalid access. The keycard is still on ACCESS_MAINT_TUNNELS from last step.
 	door.req_one_access = list(ACCESS_ENGINEERING, ACCESS_CARGO)
 	subject.Move(door_stage)
-	sleep(1 SECONDS)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with invalid access succeeded in opening airlock access-locked behind req_one_access!")
 	door.close()
