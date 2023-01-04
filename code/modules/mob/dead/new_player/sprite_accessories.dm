@@ -132,7 +132,7 @@
 	icon_state = "hair_bedheadv3"
 
 /datum/sprite_accessory/hair/bedheadv4
-	name = "BedHead 4x"
+	name = "Bedhead 4x"
 	icon_state = "hair_bedheadv4"
 
 /datum/sprite_accessory/hair/bedheadlong
