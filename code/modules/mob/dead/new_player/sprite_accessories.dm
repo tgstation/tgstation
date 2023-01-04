@@ -103,6 +103,10 @@
 	name = "Afro (Large)"
 	icon_state = "hair_bigafro"
 
+/datum/sprite_accessory/hair/allthefuzz
+	name = "All The Fuzz"
+	icon_state = "hair_allthefuzz"
+
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
@@ -128,7 +132,7 @@
 	icon_state = "hair_bedheadv3"
 
 /datum/sprite_accessory/hair/bedheadv4
-	name = "BedHead 4X"
+	name = "BedHead 4x"
 	icon_state = "hair_bedheadv4"
 
 /datum/sprite_accessory/hair/bedheadlong
@@ -139,8 +143,8 @@
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
 
-/datum/sprite_accessory/hair/BadlyCut
-	name = "Marginally shorter yet Long Bedhead"
+/datum/sprite_accessory/hair/badlycut
+	name = "Shorter Long Bedhead"
 	icon_state = "hair_verybadlycut"
 
 /datum/sprite_accessory/hair/beehive
@@ -422,6 +426,10 @@
 /datum/sprite_accessory/hair/hitop
 	name = "Hitop"
 	icon_state = "hair_hitop"
+
+/datum/sprite_accessory/hair/izutsumi
+	name = "Izutsumi"
+	icon_state = "hair_izutsumi"
 
 /datum/sprite_accessory/hair/jade
 	name = "Jade"
