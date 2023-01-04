@@ -112,7 +112,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	// we use canon_client here because ckey will already have moved when this is called
 	var/list/client_context_verbs = admin_linkup_map[adwas.canon_client.ckey][LINKUPMAP_CONTEXT_MAP]
 	for(var/entry in client_context_verbs)
-		adwas.client.verbs -= entry
+		adwas.canon_client.verbs -= entry
 
 /datum/controller/subsystem/admin_verbs/proc/assosciate_admin(client/admin)
 	if(!initialized)
