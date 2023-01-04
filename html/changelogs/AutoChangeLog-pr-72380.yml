@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - rscdel: "Removed Mining LTSRBT"
+  - balance: "Mining Vendors express option now has no cost changes and no cooldown, but cargo delivery option is now 35% cheaper to encourage miners communicating with cargo techs"
