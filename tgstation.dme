@@ -2262,7 +2262,6 @@
 #include "code\modules\admin\verbs\lua\lua_editor.dm"
 #include "code\modules\admin\verbs\lua\lua_state.dm"
 #include "code\modules\admin\verbs\modules\_module_holder.dm"
-#include "code\modules\admin\verbs\modules\verb_module_admin.dm"
 #include "code\modules\admin\verbs\SDQL2\SDQL_2.dm"
 #include "code\modules\admin\verbs\SDQL2\SDQL_2_parser.dm"
 #include "code\modules\admin\verbs\SDQL2\SDQL_2_wrappers.dm"
