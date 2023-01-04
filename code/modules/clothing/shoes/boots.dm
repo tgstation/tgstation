@@ -164,4 +164,14 @@
 /obj/item/clothing/shoes/jackboots/red // Tiger-Coop priest boots
 	name = "red metal boots"
 	desc = "Red... metal jackboots. Seem rather obnoxious to wear."
-	armor = list(MELEE = 15, BULLET = 20, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)
+	armor_type = /datum/armor/shoes_red_boots
+
+/datum/armor/shoes_red_boots
+	melee = 15
+	bullet = 20
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 90
+	fire = 70
+	acid = 50

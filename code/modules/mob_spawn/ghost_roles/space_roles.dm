@@ -211,7 +211,7 @@
 
 /datum/outfit/syndicate_empty/battlecruiser/assault
 	name = "Gorlex Battlecruiser Assault Operative"
-	uniform = /obj/item/clothing/under/syndicate/combat
+	uniform = /obj/item/clothing/under/syndicate/gorlex/combat
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = /obj/item/gun/ballistic/automatic/pistol/clandestine
 	back = /obj/item/storage/backpack
@@ -234,12 +234,10 @@
 /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Gorlex Battlecruiser Captain"
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
-	id_trim = /datum/id_trim/battlecruiser/captain
-	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
+	id_trim = /datum/id_trim/syndicom/officer/captain
+	suit = /obj/item/clothing/suit/armor/vest/capcarapace/gorlex
 	suit_store = /obj/item/gun/ballistic/revolver/mateba
 	back = /obj/item/storage/backpack/satchel/leather
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	glasses = /obj/item/clothing/glasses/thermal/sunglasses
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
-	id_trim = /datum/id_trim/syndicom/officer/captain
-

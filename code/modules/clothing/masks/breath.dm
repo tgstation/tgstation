@@ -42,3 +42,9 @@
 
 /datum/armor/breath_medical
 	bio = 90
+
+/obj/item/clothing/mask/breath/medical/interdyne
+	desc = "A close-fitting metal mask, designed for protection against any number of biochemical, pharmaceutical and biohazardous threats."
+	name = "biochemical protection mask"
+	worn_icon_state = "medical"
+	icon_state = "sechailer"

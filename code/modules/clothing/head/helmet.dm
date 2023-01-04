@@ -251,7 +251,6 @@
 	fire = 100
 	acid = 100
 	wound = 15
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
 /obj/item/clothing/head/helmet/swat/gorlex
 	name = "tactical helmet"
