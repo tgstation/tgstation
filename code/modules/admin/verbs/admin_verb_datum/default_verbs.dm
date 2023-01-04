@@ -53,3 +53,6 @@
 
 // /datum/admin_verb_datum/secrets_menu/invoke(client/target, list/arguments)
 // 	target.secrets()
+
+ADMIN_CONTEXT_ENTRY(context_admin_pm, "Admin PM", NONE, mob/target in GLOB.player_list)
+	to_chat(target, span_warning("Cope"))
