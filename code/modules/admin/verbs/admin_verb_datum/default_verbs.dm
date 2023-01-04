@@ -7,12 +7,10 @@
 // 	/client/proc/debugstatpanel,
 // 	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 // 	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
-// 	/client/proc/fix_air, /*resets air in designated radius to its default atmos composition*/
 // 	/client/proc/hide_verbs, /*hides all our adminverbs*/
 // 	/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/
 // 	/client/proc/mark_datum_mapview,
 // 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
-// 	/client/proc/tag_datum_mapview,
 // */
 
 ADMIN_VERB_DEFAULT(admin, deadmin, "Become a normal player")
@@ -94,3 +92,20 @@ ADMIN_VERB_DEFAULT(admin, admin_pm, "Send a message directly to a client")
 	if(!usr.client.sends_adminpm_message(whom, message))
 		return
 	usr.client.notify_adminpm_message(whom, message)
+
+ADMIN_CONTEXT_ENTRY(contextcmd_tag_atom, "Tag Atom", NONE, datum/target in view(view))
+	tag_datum(target)
+
+/client/proc/tag_datum(datum/target_datum)
+	if(!holder || QDELETED(target_datum))
+		return
+	holder.add_tagged_datum(target_datum)
+
+/client/proc/toggle_tag_datum(datum/target_datum)
+	if(!holder || !target_datum)
+		return
+
+	if(LAZYFIND(holder.tagged_datums, target_datum))
+		holder.remove_tagged_datum(target_datum)
+	else
+		holder.add_tagged_datum(target_datum)
