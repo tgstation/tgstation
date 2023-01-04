@@ -1,9 +1,10 @@
 ADMIN_CONTEXT_ENTRY(contextcmd_vv, "View Variables", NONE, datum/target in world)
 	SSadmin_verbs.dynamic_invoke_admin_verb(src, /mob/admin_module_holder/debug/view_variables, list(target))
 
-ADMIN_VERB(debug, view_variables, "View a list of all vars on most datums aswell as provide additional functions via a dropdown", NONE, datum/target in world)
+ADMIN_VERB(debug, view_variables, "View a list of all vars on most datums aswell as provide additional functions via a dropdown", NONE, selected as anything)
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
+	var/datum/target = selected
 	if(!target)
 		return
 
@@ -26,7 +27,7 @@ ADMIN_VERB(debug, view_variables, "View a list of all vars on most datums aswell
 		sprite = getFlatIcon(target)
 		if(sprite)
 			hash = md5(sprite)
-			src << browse_rsc(sprite, "vv[hash].png")
+			usr.client << browse_rsc(sprite, "vv[hash].png")
 		else
 			no_icon = TRUE
 
@@ -271,7 +272,7 @@ datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 	</body>
 </html>
 "}
-	src << browse(html, "window=variables[refid];size=475x650")
+	usr.client << browse(html, "window=variables[refid];size=475x650")
 
 /client/proc/vv_update_display(datum/target, span, content)
 	src << output("[span]:[content]", "variables[REF(target)].browser:replace_span")
