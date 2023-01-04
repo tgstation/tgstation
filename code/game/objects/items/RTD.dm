@@ -1,4 +1,6 @@
+/// time taken to create tile
 #define CONSTRUCTION_TIME 0.4 SECONDS
+/// time taken to destroy a tile
 #define DECONSTRUCTION_TIME 0.2 SECONDS
 
 /obj/item/construction/rtd
@@ -16,13 +18,18 @@
 	has_ammobar = TRUE
 	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
+	/// main category for tile design
 	var/root_category = "Conventional"
+	/// sub category for tile design
 	var/design_category = "Standard"
+	/// design selected by player
 	var/datum/tile_info/selected_design
+	/// temp var to store an single design from GLOB.floor_design while iterating through this list
 	var/datum/tile_info/tile_design
+	/// overlays on a tile
 	var/list/design_overlays = list()
 
-///stores the name, type, icon & cost for each tile type
+/// stores the name, type, icon & cost for each tile type
 /datum/tile_info
 	var/name
 	var/obj/item/stack/tile/tile_type
@@ -33,7 +40,7 @@
 	var/tile_directions
 	var/selected_direction
 
-///decompress a single tile design list element from GLOB.floor_designs into its individual variables
+/// decompress a single tile design list element from GLOB.floor_designs into its individual variables
 /datum/tile_info/proc/set_info(list/design)
 	name = design["name"]
 	tile_type = design["type"]
@@ -51,7 +58,7 @@
 		ui_directional_data += dir2text(tile_direction)
 	selected_direction = tile_directions[1]
 
-///fill all information to be sent to the UI
+/// fill all information to be sent to the UI
 /datum/tile_info/proc/fill_ui_data(list/data)
 	data["selected_recipe"] = name
 	data["selected_icon"] = get_icon_state()
@@ -63,16 +70,18 @@
 	data["tile_dirs"] = ui_directional_data
 	data["selected_direction"] = selected_direction? "[dir2text(selected_direction)]" : null
 
-///change the direction of this design which will also effect its icon
+/// change the direction the tile is laid on the turf
 /datum/tile_info/proc/set_direction(direction)
 	if(tile_directions == null || !(direction in tile_directions))
 		return
 	selected_direction = direction
 
-///retrive the icon for this tile design based on its direction
-///for complex directions like NORTHSOUTH etc we create an seperated blended icon in the asset file for example floor-northsouth
-///so we check which icons we want to retrive based on its direction
-///for basic directions its rotated with CSS so there is no need for icon
+/**
+ * retrive the icon for this tile design based on its direction
+ * for complex directions like NORTHSOUTH etc we create an seperated blended icon in the asset file for example floor-northsouth
+ * so we check which icons we want to retrive based on its direction
+ * for basic directions its rotated with CSS so there is no need for icon
+ */
 /datum/tile_info/proc/get_icon_state()
 	var/prefix = ""
 	if(selected_direction)
@@ -85,14 +94,21 @@
 	final_tile.turf_dir = selected_direction
 	return final_tile
 
-///Stores the decal & overlays on the floor to preserve texture of the design
-///in short its just an wrapper for mutable appearance where we retrive the nessassary information
-///to recreate an mutable appearance
+/**
+ * Stores the decal & overlays on the floor to preserve texture of the design
+ * in short its just an wrapper for mutable appearance where we retrive the nessassary information
+ * to recreate an mutable appearance
+ */
 /datum/overlay_info
+	/// icon var of the mutable appearance
 	var/icon/icon
+	/// icon_state var of the mutable appearance
 	var/icon_state
+	/// direction var of the mutable appearance
 	var/direction
+	/// alpha var of the mutable appearance
 	var/alpha
+	/// color var of the mutable appearance
 	var/color
 
 //decompressing nessasary information required to re-create an mutable appearance
@@ -103,7 +119,7 @@
 	direction = appearance.dir
 	color = appearance.color
 
-//re-create the appearance
+/// re create the appearance
 /datum/overlay_info/proc/add_decal(turf/the_turf)
 	the_turf.AddElement(/datum/element/decal, icon, icon_state, direction, null, null, alpha, color, null, FALSE, null)
 
@@ -197,7 +213,7 @@
 
 	return TRUE
 
-///RTD can lay floor tiles only on these 2 types of platings. this procs checks for that
+/// RTD can lay floor tiles only on these 2 types of platings. this procs checks for that
 /obj/item/construction/rtd/proc/is_valid_plating(turf/open/floor)
 	return floor.type == /turf/open/floor/plating ||  floor.type == /turf/open/floor/plating/reinforced
 
