@@ -653,7 +653,7 @@
 
 	if(!holder)
 		return
-	debug_variables(GLOB.huds[i])
+	SSadmin_verbs.dynamic_invoke_admin_verb(src, /mob/admin_module_holder/debug/view_variables, list(GLOB.huds[i]))
 
 /client/proc/jump_to_ruin()
 	set category = "Debug"

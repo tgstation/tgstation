@@ -1230,4 +1230,4 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
 		usr.log_message("non-holder clicked on a statclick! ([src])", LOG_ADMIN)
 		return
-	usr.client.debug_variables(GLOB.sdql2_queries)
+	SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, list(GLOB.sdql2_queries))

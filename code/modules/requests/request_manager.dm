@@ -155,7 +155,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			return TRUE
 		if ("vv")
 			var/mob/M = request.owner?.mob
-			usr.client.debug_variables(M)
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, list(M))
 			return TRUE
 		if ("sm")
 			var/mob/M = request.owner?.mob

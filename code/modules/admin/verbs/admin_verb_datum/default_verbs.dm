@@ -5,7 +5,6 @@
 
 // /*
 // 	/client/proc/debugstatpanel,
-// 	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 // 	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
 // 	/client/proc/hide_verbs, /*hides all our adminverbs*/
 // 	/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/

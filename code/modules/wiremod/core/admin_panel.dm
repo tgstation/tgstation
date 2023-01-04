@@ -63,7 +63,7 @@
 		if ("save_circuit")
 			circuit.attempt_save_to(usr.client)
 		if ("vv_circuit")
-			usr.client?.debug_variables(circuit)
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, list(circuit))
 		if ("open_circuit")
 			circuit.ui_interact(usr)
 		if ("open_player_panel")

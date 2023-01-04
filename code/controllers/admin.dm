@@ -41,9 +41,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 		else
 			class = "unknown"
 
-	usr.client.debug_variables(target)
+	SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, list(target))
 	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
-
 
 // Debug verbs.
 /client/proc/restart_controller(controller in list("Master", "Failsafe"))
@@ -85,7 +84,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
 	if (!istype(controller))
 		return
-	debug_variables(controller)
+	SSadmin_verbs.dynamic_invoke_admin_verb(src, /mob/admin_module_holder/debug/view_variables, list(controller))
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
 	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")
