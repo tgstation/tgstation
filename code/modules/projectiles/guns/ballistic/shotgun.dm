@@ -97,6 +97,10 @@
 	alt_mag_type = alt_mag_type || mag_type
 	alternate_magazine = new alt_mag_type(src)
 
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Destroy()
+	QDEL_NULL(alternate_magazine)
+	return ..()
+
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
 	if(!chambered && magazine.contents.len)
 		rack()
@@ -157,6 +161,10 @@
 	secondary_magazine_type = secondary_magazine_type || mag_type
 	secondary_magazine = new secondary_magazine_type(src)
 	update_appearance()
+
+/obj/item/gun/ballistic/shotgun/bulldog/Destroy()
+	QDEL_NULL(secondary_magazine)
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/bulldog/examine(mob/user)
 	. = ..()
@@ -305,6 +313,10 @@
 /obj/item/gun/ballistic/shotgun/hook/Initialize(mapload)
 	. = ..()
 	hook = new /obj/item/gun/magic/hook/bounty(src)
+
+/obj/item/gun/ballistic/shotgun/hook/Destroy()
+	QDEL_NULL(hook)
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
 	. = ..()

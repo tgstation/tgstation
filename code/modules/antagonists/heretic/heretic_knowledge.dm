@@ -634,6 +634,7 @@
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
+	user.add_mob_memory(/datum/memory/heretic_knowlege_ritual)
 	return TRUE
 
 #undef KNOWLEDGE_RITUAL_POINTS

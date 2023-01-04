@@ -64,7 +64,7 @@
 				to_chat(H, span_danger("[src] overloads and blinds you!"))
 				H.flash_act(visual = 1)
 				H.adjust_blindness(3)
-				H.blur_eyes(5)
+				H.set_eye_blur_if_lower(10 SECONDS)
 				eyes.applyOrganDamage(5)
 
 /obj/item/clothing/glasses/AltClick(mob/user)
@@ -148,8 +148,12 @@
 	inhand_icon_state = "glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/glasses_science
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
+
+/datum/armor/glasses_science
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)
@@ -560,7 +564,8 @@
 
 /obj/item/clothing/glasses/debug
 	name = "debug glasses"
-	desc = "Medical, security and diagnostic hud. Alt click to toggle xray."
+	desc = "Medical, security and diagnostic hud."
+	desc_controls = "Alt click to toggle xray."
 	icon_state = "nvgmeson"
 	inhand_icon_state = "nvgmeson"
 	flags_cover = GLASSESCOVERSEYES

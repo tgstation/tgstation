@@ -96,7 +96,7 @@
 /obj/item/soulstone/proc/attempt_exorcism(mob/exorcist)
 	if(IS_CULTIST(exorcist) || theme == THEME_HOLY)
 		return
-	balloon_alert(exorcist, span_notice("exorcising [src]..."))
+	balloon_alert(exorcist, "exorcising...")
 	playsound(src, 'sound/hallucinations/veryfar_noise.ogg', 40, TRUE)
 	if(!do_after(exorcist, 4 SECONDS, target = src))
 		return

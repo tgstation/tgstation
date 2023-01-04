@@ -13,7 +13,7 @@
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
 	max_integrity = 250
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 10)
+	armor_type = /datum/armor/machinery_space_heater
 	circuit = /obj/item/circuitboard/machine/space_heater
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
@@ -39,6 +39,10 @@
 	var/settable_temperature_range = 30
 	///Should we add an overlay for open spaceheaters
 	var/display_panel = TRUE
+
+/datum/armor/machinery_space_heater
+	fire = 80
+	acid = 10
 
 /obj/machinery/space_heater/get_cell()
 	return cell
@@ -99,7 +103,7 @@
 /obj/machinery/space_heater/on_set_panel_open()
 	update_appearance()
 	return ..()
-	
+
 /obj/machinery/space_heater/process_atmos()
 	if(!on || !is_operational)
 		if (on) // If it's broken, turn it off too

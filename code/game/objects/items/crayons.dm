@@ -685,7 +685,7 @@
 		to_chat(target, span_userdanger("[user] sprays [src] into your face!"))
 
 		if(C.client)
-			C.blur_eyes(3)
+			C.set_eye_blur_if_lower(6 SECONDS)
 			C.adjust_blindness(1)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
 			C.apply_effects(eyeblur = 5, jitter = 10)

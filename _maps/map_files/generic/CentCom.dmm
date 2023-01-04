@@ -2,11 +2,17 @@
 "aa" = (
 /turf/open/space/basic,
 /area/space)
-"ab" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/admin)
 "ad" = (
+/turf/open/space,
+/area/space)
+"ai" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_3_away";
+	width = 3
+	},
 /turf/open/space,
 /area/space)
 "ar" = (
@@ -98,6 +104,17 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
+"aL" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_2_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "aM" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/food/meat/rawbacon,
@@ -508,6 +525,10 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
+"de" = (
+/obj/effect/landmark/start/new_player,
+/turf/closed/indestructible/start_area,
+/area/misc/start)
 "di" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -673,20 +694,6 @@
 	},
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/courtroom)
-"eu" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/reagent_containers/condiment/saltshaker{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/condiment/peppermill{
-	pixel_x = -8
-	},
-/obj/item/reagent_containers/cup/glass/mug/britcup,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/centcom/tdome/observation)
 "eB" = (
 /obj/structure/bookcase/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1938,6 +1945,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/administration)
+"kh" = (
+/obj/machinery/telecomms/allinone/nuclear,
+/turf/open/indestructible/hierophant,
+/area/centcom/central_command_areas/admin)
 "kj" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -3752,16 +3763,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"sj" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "recovery ship";
-	shuttle_id = "pod_4_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "sn" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security"
@@ -4194,6 +4195,9 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
+"tW" = (
+/turf/open/indestructible/hierophant/two,
+/area/centcom/central_command_areas/admin)
 "ub" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -5467,10 +5471,6 @@
 /obj/machinery/light/floor,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/briefing)
-"zV" = (
-/obj/effect/landmark/start/new_player,
-/turf/closed/indestructible/start_area,
-/area/misc/start)
 "zZ" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -6007,9 +6007,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
-"CA" = (
-/turf/open/indestructible/hierophant,
-/area/centcom/central_command_areas/admin)
 "CD" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -6444,10 +6441,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
-"GG" = (
-/obj/machinery/telecomms/allinone/nuclear,
-/turf/open/indestructible/hierophant,
-/area/centcom/central_command_areas/admin)
 "GJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
@@ -6538,6 +6531,24 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
+"Id" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/cup/glass/mug/britcup,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
+"Ie" = (
+/obj/structure/sign/poster/contraband/syndicate_recruitment,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/admin)
 "Ii" = (
 /obj/structure/bed{
 	dir = 4
@@ -6580,6 +6591,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"Iv" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_4_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "Iz" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
@@ -7112,16 +7133,6 @@
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium,
 /area/centcom/central_command_areas/evacuation/ship)
-"Lz" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/reagent_containers/cup/glass/mug/britcup,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
 "LA" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
@@ -7399,6 +7410,10 @@
 /obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
+"Nk" = (
+/obj/structure/sign/poster/contraband/syndicate_pistol,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/admin)
 "Nl" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral{
@@ -8068,16 +8083,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/prison)
-"Qt" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "recovery ship";
-	shuttle_id = "pod_3_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "Qv" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -8849,6 +8854,9 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
+"Ux" = (
+/turf/open/indestructible/hierophant,
+/area/centcom/central_command_areas/admin)
 "UA" = (
 /obj/item/cardboard_cutout{
 	desc = "They seem to be ignoring you... Typical.";
@@ -8939,10 +8947,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
-"UZ" = (
-/obj/structure/sign/poster/contraband/syndicate_pistol,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/admin)
 "Vc" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/dark,
@@ -9066,9 +9070,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
-"VE" = (
-/turf/open/indestructible/hierophant/two,
-/area/centcom/central_command_areas/admin)
 "VF" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -9450,6 +9451,16 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
+"Xa" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/reagent_containers/cup/glass/mug/britcup,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "Xb" = (
 /obj/machinery/computer/security{
 	dir = 8
@@ -9777,17 +9788,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
-"YS" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "recovery ship";
-	shuttle_id = "pod_2_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "YT" = (
 /obj/structure/table/wood,
 /obj/structure/plaque/static_plaque/thunderdome{
@@ -11813,7 +11813,7 @@ fX
 fX
 fX
 fX
-zV
+de
 fX
 fX
 fX
@@ -36193,7 +36193,7 @@ aa
 aa
 aa
 aa
-sj
+Iv
 KO
 KV
 KV
@@ -37221,7 +37221,7 @@ aa
 aa
 aa
 aa
-Qt
+ai
 KO
 KV
 KV
@@ -38257,7 +38257,7 @@ KQ
 KH
 aa
 aa
-YS
+aL
 aa
 aa
 aa
@@ -48713,9 +48713,9 @@ aa
 aa
 aa
 aa
-ab
-VE
-CA
+Ie
+tW
+Ux
 On
 yO
 To
@@ -48970,9 +48970,9 @@ aa
 aa
 aa
 aa
-UZ
-GG
-VE
+Nk
+kh
+tW
 On
 On
 Oc
@@ -51325,7 +51325,7 @@ Zj
 bi
 ni
 zw
-eu
+Id
 Bs
 di
 QC
@@ -54138,7 +54138,7 @@ mQ
 io
 io
 iu
-Lz
+Xa
 DI
 iu
 in

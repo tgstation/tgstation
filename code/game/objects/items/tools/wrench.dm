@@ -22,7 +22,11 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_wrench
+
+/datum/armor/item_wrench
+	fire = 50
+	acid = 30
 
 /obj/item/wrench/Initialize(mapload)
 	. = ..()

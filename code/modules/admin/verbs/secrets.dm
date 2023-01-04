@@ -277,7 +277,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("All Antags!")
 					survivor_probability = 100
 
-			summon_guns(holder, survivor_probability)
+			summon_guns(holder.mob, survivor_probability)
 
 		if("magic")
 			if(!is_funmin)
@@ -290,7 +290,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("All Antags!")
 					survivor_probability = 100
 
-			summon_magic(holder, survivor_probability)
+			summon_magic(holder.mob, survivor_probability)
 
 		if("towerOfBabel")
 			if(!is_funmin)
