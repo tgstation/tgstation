@@ -62,7 +62,11 @@
 		return
 	if(!message)
 		message = "circuit input"
+	if(!(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)))
+		return
 	var/picked = tgui_input_list(user, message = message, items = showed_list)
+	if(!(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)))
+		return
 	if(picked)
 		output.set_output(picked)
 		succes.set_output(COMPONENT_SIGNAL)

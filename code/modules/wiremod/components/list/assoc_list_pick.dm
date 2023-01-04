@@ -60,7 +60,11 @@
 	if(!showed_list || showed_list.len == 0)
 		failure.set_output(COMPONENT_SIGNAL)
 		return
-	var/picked = tgui_input_list(user, message = message || "circuit input", items = showed_list)
+	if(!(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)))
+		return
+	var/picked = tgui_input_list(user, message = message, items = showed_list)
+	if(!(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)))
+		return
 	if(showed_list[picked])
 		output.set_output(showed_list[picked])
 		success.set_output(COMPONENT_SIGNAL)
