@@ -799,10 +799,18 @@
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 
-	if (SSpower_bars.enabled)
-		QDEL_LIST(component_parts)
-	else
-		for(var/datum/part in component_parts)
+	for(var/datum/part in component_parts)
+		if (SSpower_bars.enabled)
+			if (istype(part, /datum/stock_part))
+				continue
+
+			var/obj/item/obj_part = part
+			if (istype(obj_part, /obj/item/stock_parts) && !istype(obj_part, /obj/item/stock_parts/cell))
+				qdel(obj_part)
+				continue
+
+			obj_part.forceMove(loc)
+		else
 			if(istype(part, /datum/stock_part))
 				var/datum/stock_part/datum_part = part
 				new datum_part.physical_object_type(loc)

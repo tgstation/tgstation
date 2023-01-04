@@ -23,10 +23,21 @@ SUBSYSTEM_DEF(power_bars)
 	return enabled ? "ON": "OFF"
 
 /datum/controller/subsystem/power_bars/proc/delete_stock_part_designs()
+	var/stock_part_designs = list()
+
 	for (var/design_id in SSresearch.techweb_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 		if ( \
 			(ispath(design.build_path, /obj/item/stock_parts) && !ispath(design.build_path, /obj/item/stock_parts/cell)) \
 			|| ispath(design.build_path, /obj/item/storage/part_replacer) \
 		)
-			qdel(design)
+			stock_part_designs += design_id
+			design.departmental_flags = NONE
+
+	for (var/node_id in SSresearch.techweb_nodes)
+		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_id]
+		for (var/design_id in node.design_ids)
+			if (!(design_id in stock_part_designs))
+				continue
+
+			node.prune_design_id(design_id)
