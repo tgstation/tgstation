@@ -90,10 +90,10 @@
 		if(!(locate(/obj/structure/disposaloutlet) in get_turf(src))) /// Checks if there's an outlet so it doesn't keep trying to damage you there.
 			for(var/mob/living/trashed_individual in src)
 				if(prob(20))
-					playsound(loc, 'sound/effects/clang.ogg', 30, TRUE, FALSE)
+					playsound(loc, 'sound/effects/clang.ogg', 50, TRUE, FALSE)
 				else if(prob(5))
 					trashed_individual.apply_damage(1, BRUTE)
-					playsound(loc, 'sound/effects/wounds/crack2.ogg', 50, TRUE, FALSE)
+					playsound(loc, 'sound/effects/wounds/crack2.ogg', 30, TRUE, FALSE)
 		return
 	last_pipe.expel(src, get_turf(src), dir)
 
