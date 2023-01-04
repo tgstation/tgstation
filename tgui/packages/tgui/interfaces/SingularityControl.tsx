@@ -85,7 +85,7 @@ export const SingularityControl = (props, context) => {
                 }
               />
 
-              {/* MBTODO: If singulo, replace this */}
+              {/* MBTODO: If singulo, replace this entire menu with a power readout */}
               <ConnectedMachine
                 icon="circle-plus"
                 bottomText={
@@ -117,6 +117,7 @@ export const SingularityControl = (props, context) => {
               {data.stage === Stage.NotStarted && (
                 <Stack.Item>
                   {/* MBTOOD: Warning if you aren't ready */}
+                  {/* MBTODO: Define flag that determines if you are ALLOWED to click this, or if it's a warning. Useful for very early test merge. */}
                   <Button
                     fontSize="18px"
                     onClick={() => {
