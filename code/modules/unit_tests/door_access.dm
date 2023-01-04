@@ -1,8 +1,6 @@
 /// Tests to make sure door access works correctly.
 /datum/unit_test/door_access_check
 
-TEST_FOCUS(/datum/unit_test/door_access_check)
-
 /datum/unit_test/door_access_check/Run()
 	var/mob/living/carbon/human/subject = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
 	var/obj/machinery/door/airlock/instant/door = allocate(/obj/machinery/door/airlock/instant, run_loc_floor_bottom_left, EAST) //special subtype that just flips the density var on open() and close(), akin to a real airlock.
