@@ -1,4 +1,0 @@
-author: "Improvedname"
-delete-after: True
-changes:
-  - bugfix: "fixes being able to instantly build carving blocks/mineral doors"
