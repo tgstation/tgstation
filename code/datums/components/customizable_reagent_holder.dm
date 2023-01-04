@@ -124,7 +124,7 @@
 	SIGNAL_HANDLER
 
 	// This is for stuff like adding flour from a flour sack into a bowl, we handle the transfer of the reagent elsewhere, but we shouldn't regard it beyond some user feedback.
-	if (iistype(ingredient, /obj/item/reagent_containers))
+	if (istype(ingredient, /obj/item/reagent_containers))
 		attacker.balloon_alert(attacker, "transferring...")
 		return
 
