@@ -1,11 +1,12 @@
 /datum/crafting_recipe/paperframes
 	name = "Paper Frames"
-	result = /obj/item/stack/sheet/paperframes/five
 	time = 1 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 5,
 		/obj/item/paper = 20,
 	)
+	result = /obj/item/stack/sheet/paperframes
+	result_amount = 5
 	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/rib
