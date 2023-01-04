@@ -76,9 +76,8 @@
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
-		mytray.adjust_pestlevel(-rand(1, 2))
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
+	mytray.adjust_pestlevel(-rand(1, 2))
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(DT_PROB(0.5, delta_time))
@@ -139,12 +138,27 @@
 	name = "Methamphetamine"
 	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
-	color = "#FAFAFA"
+	color = "#78C8FA" //best case scenario is the "default", gets muddled depending on purity
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	ph = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 12) //4.8 per 2 seconds
+
+/datum/reagent/drug/methamphetamine/on_new(data)
+	. = ..()
+	//the more pure, the less non-blue colors get involved - best case scenario is rgb(135, 200, 250) AKA #78C8FA
+	//worst case scenario is rgb(250, 250, 250) AKA #FAFAFA
+	//minimum purity of meth is 50%, therefore we base values on that
+	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
+	//yes i know that purity doesn't actually affect how meth works at all but this is so funny
+	color = BlendRGB(initial(color), "#FAFAFA", effective_impurity)
+
+//we need to update the color whenever purity gets changed
+/datum/reagent/drug/methamphetamine/on_merge(data, amount)
+	. = ..()
+	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
+	color = BlendRGB(initial(color), "#FAFAFA", effective_impurity)
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()

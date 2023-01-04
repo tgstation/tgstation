@@ -204,6 +204,7 @@
 	desc = "A hand-held long-range environmental scanner which reports current gas levels."
 	name = "long-range gas analyzer"
 	icon_state = "analyzerranged"
+	worn_icon_state = "analyzer"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 20, /datum/material/gold = 300, /datum/material/bluespace=200)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)

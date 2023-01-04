@@ -853,6 +853,17 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)
+	var/static/lazy_loading = FALSE
+	UNTIL(!lazy_loading)
+
+	lazy_loading = TRUE
+	. = _lazy_load_template(template_key, force)
+	lazy_loading = FALSE
+	return .
+
+/datum/controller/subsystem/mapping/proc/_lazy_load_template(template_key, force = FALSE)
+	PRIVATE_PROC(TRUE)
+
 	if(LAZYACCESS(loaded_lazy_templates, template_key)  && !force)
 		var/datum/lazy_template/template = GLOB.lazy_templates[template_key]
 		return template.reservations[1]
@@ -861,7 +872,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/datum/lazy_template/target = GLOB.lazy_templates[template_key]
 	if(!target)
 		CRASH("Attempted to lazy load a template key that does not exist: '[template_key]'")
-
 	return target.lazy_load()
 
 /proc/generate_lighting_appearance_by_z(z_level)

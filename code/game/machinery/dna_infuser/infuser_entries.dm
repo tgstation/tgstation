@@ -135,3 +135,25 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 		/obj/item/organ/internal/ears/fox,
 	)
 	infusion_desc = "inexcusable"
+
+/datum/infuser_entry/goliath
+	name = "Goliath"
+	infuse_mob_name = "Goliath"
+	desc = "The guy who said 'Whoever fights monsters should see to it that in the process he does not become a monster' clearly didn't see what a goliath miner can do!"
+	threshold_desc = "You can walk on lava!"
+	qualities = list(
+		"can breath both the station and lavaland air but can't deal with pure O2",
+		"immune to ashstorms",
+		"eyes that can see in the dark",
+		"a tendril hand can easily dig through basalt and obliterate hostile fauna, won't be fitting on gloves any time soon tho...",
+	)
+	input_obj_or_mob = list(
+		/mob/living/simple_animal/hostile/asteroid/goliath,
+	)
+	output_organs = list(
+		/obj/item/organ/internal/eyes/night_vision/goliath,
+		/obj/item/organ/internal/lungs/lavaland/goliath,
+		/obj/item/organ/internal/heart/goliath,
+		/obj/item/organ/internal/brain/goliath,
+	)
+	infusion_desc = "armored tendril-like"
