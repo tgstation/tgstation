@@ -66,7 +66,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/ui_data(mob/user)
 	var/list/data = list()
-	data["total_cost"] = get_total_cost()
+	var/cost = get_total_cost()
+	data["total_cost"] = "[cost] (Express: [cost*express_cost_multiplier])"
 	data["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
 	if(!isliving(user))
