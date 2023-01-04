@@ -22,6 +22,7 @@
 	var/datum/tile_info/tile_design
 	var/list/design_overlays = list()
 
+///stores the name, type, icon & cost for each tile type
 /datum/tile_info
 	var/name
 	var/obj/item/stack/tile/tile_type
@@ -32,6 +33,7 @@
 	var/tile_directions
 	var/selected_direction
 
+///decompress a single tile design list element from GLOB.floor_designs into its individual variables
 /datum/tile_info/proc/set_info(list/design)
 	name = design["name"]
 	tile_type = design["type"]
@@ -49,6 +51,7 @@
 		ui_directional_data += dir2text(tile_direction)
 	selected_direction = tile_directions[1]
 
+///fill all information to be sent to the UI
 /datum/tile_info/proc/fill_ui_data(list/data)
 	data["selected_recipe"] = name
 	data["selected_icon"] = get_icon_state()
@@ -60,22 +63,31 @@
 	data["tile_dirs"] = ui_directional_data
 	data["selected_direction"] = selected_direction? "[dir2text(selected_direction)]" : null
 
+///change the direction of this design which will also effect its icon
 /datum/tile_info/proc/set_direction(direction)
 	if(tile_directions == null || !(direction in tile_directions))
 		return
 	selected_direction = direction
 
+///retrive the icon for this tile design based on its direction
+///for complex directions like NORTHSOUTH etc we create an seperated blended icon in the asset file for example floor-northsouth
+///so we check which icons we want to retrive based on its direction
+///for basic directions its rotated with CSS so there is no need for icon
 /datum/tile_info/proc/get_icon_state()
 	var/prefix = ""
 	if(selected_direction)
 		prefix = (selected_direction in GLOB.tile_dont_rotate) ? "" : "-[dir2text(selected_direction)]"
 	return icon_state + prefix
 
+///convinience proc to quickly convert the tile design into an physical tile to lay on the plating
 /datum/tile_info/proc/new_tile(loc)
 	var/obj/item/stack/tile/final_tile = new tile_type(loc, 1)
 	final_tile.turf_dir = selected_direction
 	return final_tile
 
+///Stores the decal & overlays on the floor to preserve texture of the design
+///in short its just an wrapper for mutable appearance where we retrive the nessassary information
+///to recreate an mutable appearance
 /datum/overlay_info
 	var/icon/icon
 	var/icon_state
@@ -185,6 +197,7 @@
 
 	return TRUE
 
+///RTD can lay floor tiles only on these 2 types of platings. this procs checks for that
 /obj/item/construction/rtd/proc/is_valid_plating(turf/open/floor)
 	return floor.type == /turf/open/floor/plating ||  floor.type == /turf/open/floor/plating/reinforced
 
