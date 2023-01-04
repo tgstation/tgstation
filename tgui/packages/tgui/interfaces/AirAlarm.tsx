@@ -57,6 +57,7 @@ export const AirAlarm = (props, context) => {
 
 const AirAlarmStatus = (props, context) => {
   const { data } = useBackend<AirAlarmData>(context);
+  const { envData } = data;
   const dangerMap = {
     0: {
       color: 'good',
@@ -75,9 +76,9 @@ const AirAlarmStatus = (props, context) => {
   return (
     <Section title="Air Status">
       <LabeledList>
-        {(data.envData.length > 0 && (
+        {(envData.length > 0 && (
           <>
-            {data.envData.map((entry) => {
+            {envData.map((entry) => {
               const status = dangerMap[entry.danger] || dangerMap[0];
               return (
                 <LabeledList.Item
@@ -135,10 +136,12 @@ const AIR_ALARM_ROUTES = {
     title: 'Alarm Thresholds',
     component: () => AirAlarmControlThresholds,
   },
-};
+} as const;
+
+type Screen = keyof typeof AIR_ALARM_ROUTES;
 
 const AirAlarmControl = (props, context) => {
-  const [screen, setScreen] = useLocalState(context, 'screen', 'home');
+  const [screen, setScreen] = useLocalState<Screen>(context, 'screen', 'home');
   const route = AIR_ALARM_ROUTES[screen] || AIR_ALARM_ROUTES.home;
   const Component = route.component();
   return (
@@ -163,7 +166,7 @@ const AirAlarmControl = (props, context) => {
 
 const AirAlarmControlHome = (props, context) => {
   const { act, data } = useBackend<AirAlarmData>(context);
-  const [screen, setScreen] = useLocalState(context, 'screen', 'home');
+  const [screen, setScreen] = useLocalState<Screen>(context, 'screen', 'home');
   const { selectedModePath, panicSiphonPath, filteringPath, atmosAlarm } = data;
   const isPanicSiphoning = selectedModePath === panicSiphonPath;
   return (
@@ -220,9 +223,15 @@ const AirAlarmControlVents = (props, context) => {
   const { data } = useBackend<AirAlarmData>(context);
   const { vents } = data;
   if (!vents || vents.length === 0) {
-    return 'Nothing to show';
+    return <span>Nothing to show</span>;
   }
-  return vents.map((vent) => <Vent key={vent.refID} {...vent} />);
+  return (
+    <>
+      {vents.map((vent) => (
+        <Vent key={vent.refID} {...vent} />
+      ))}
+    </>
+  );
 };
 
 //  Scrubbers
@@ -232,11 +241,15 @@ const AirAlarmControlScrubbers = (props, context) => {
   const { data } = useBackend<AirAlarmData>(context);
   const { scrubbers } = data;
   if (!scrubbers || scrubbers.length === 0) {
-    return 'Nothing to show';
+    return <span>Nothing to show</span>;
   }
-  return scrubbers.map((scrubber) => (
-    <Scrubber key={scrubber.refID} {...scrubber} />
-  ));
+  return (
+    <>
+      {scrubbers.map((scrubber) => (
+        <Scrubber key={scrubber.refID} {...scrubber} />
+      ))}
+    </>
+  );
 };
 
 //  Modes
@@ -246,21 +259,27 @@ const AirAlarmControlModes = (props, context) => {
   const { act, data } = useBackend<AirAlarmData>(context);
   const { modes, selectedModePath } = data;
   if (!modes || modes.length === 0) {
-    return 'Nothing to show';
+    return <span>Nothing to show</span>;
   }
-  return modes.map((mode) => (
-    <Fragment key={mode.path}>
-      <Button
-        icon={mode.path === selectedModePath ? 'check-square-o' : 'square-o'}
-        color={
-          mode.path === selectedModePath && (mode.danger ? 'red' : 'green')
-        }
-        content={mode.name + ' - ' + mode.desc}
-        onClick={() => act('mode', { mode: mode.path })}
-      />
-      <Box mt={1} />
-    </Fragment>
-  ));
+  return (
+    <>
+      {modes.map((mode) => (
+        <Fragment key={mode.path}>
+          <Button
+            icon={
+              mode.path === selectedModePath ? 'check-square-o' : 'square-o'
+            }
+            color={
+              mode.path === selectedModePath && (mode.danger ? 'red' : 'green')
+            }
+            content={mode.name + ' - ' + mode.desc}
+            onClick={() => act('mode', { mode: mode.path })}
+          />
+          <Box mt={1} />
+        </Fragment>
+      ))}
+    </>
+  );
 };
 
 //  Thresholds
