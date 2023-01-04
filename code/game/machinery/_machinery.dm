@@ -883,8 +883,10 @@
 		circuit = null
 	if((deleting_atom in component_parts) && !QDELETED(src))
 		component_parts.Remove(deleting_atom)
-		// It would be unusual for a component_part to be qdel'd ordinarily.
-		deconstruct(FALSE)
+
+		if (!SSpower_bars.enabled)
+			// It would be unusual for a component_part to be qdel'd ordinarily.
+			deconstruct(FALSE)
 	return ..()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
