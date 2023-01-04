@@ -74,6 +74,7 @@
 
 	glasses = null
 	head = null
+	ears = /obj/item/radio/headset/syndicate/alt/psyker
 	uniform = /obj/item/clothing/under/pants/track
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = /obj/item/clothing/shoes/jackboots

@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes:
+  - bugfix: "tram consoles will no longer randomly depower if they return from an area without power"

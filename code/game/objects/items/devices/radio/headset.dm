@@ -132,6 +132,20 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "team leader headset"
 	command = TRUE
 
+/obj/item/radio/headset/syndicate/alt/psyker
+	name = "psychic headset"
+	desc = "A headset designed to boost psychic waves. Protects ears from flashbangs."
+	icon_state = "psyker_headset"
+
+/obj/item/radio/headset/syndicate/alt/psyker/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		ADD_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
+
+/obj/item/radio/headset/syndicate/alt/psyker/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
+
 /obj/item/radio/headset/binary
 	keyslot = /obj/item/encryptionkey/binary
 

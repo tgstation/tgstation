@@ -194,6 +194,14 @@
 	y_offset = 0
 	see_hidden = FALSE
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/psyker
+	name = "psyker navigation warper"
+	desc = "Used to designate a precise transit location for the psyker shuttle, using sent out brainwaves as detailed sight."
+	icon_screen = "recharge_comp_on"
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE //blind friendly
+	x_offset = 0
+	y_offset = 11
+
 /obj/docking_port/mobile/pirate
 	name = "pirate shuttle"
 	shuttle_id = "pirate"
