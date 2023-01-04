@@ -847,3 +847,58 @@
 
 /datum/memory/caught_fish/get_sad_moods()
 	return list("partakes in therapy fishing")
+
+/// Becoming a mutant via infusion
+/datum/memory/dna_infusion
+	story_value = STORY_VALUE_MEH
+	///describing what they turn into, "skittish", "nomadic", etc
+	var/mutantlike
+
+/datum/memory/dna_infusion/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	mutantlike,
+)
+	src.mutantlike = mutantlike
+	return ..()
+
+/datum/memory/dna_infusion/get_names()
+	return list(
+		"[protagonist_name] infusing with a [deuteragonist_name].",
+		"[protagonist_name] infusing a [deuteragonist_name] into themselves.",
+	)
+
+/datum/memory/dna_infusion/get_starts()
+	return list(
+		"[protagonist_name] enters a creepy DNA machine",
+		"[protagonist_name]'s partakes in some mad science",
+		"the DNA infuser closes with [protagonist_name] inside",
+		"a [deuteragonist_name] is in the infusion slot"
+	)
+
+/datum/memory/dna_infusion/get_moods()
+	return list(
+		"[protagonist_name] [mood_verb] as they infuse with a [deuteragonist_name]!",
+		"[protagonist_name] [mood_verb] as they become one the [deuteragonist_name].",
+		"[protagonist_name] [mood_verb] as their DNA has [deuteragonist_name] folded into it.",
+		"[protagonist_name] becomes more [mutantlike] as they infuse with a [deuteragonist_name]!",
+		"[protagonist_name] becomes more [mutantlike] as they become one the [deuteragonist_name].",
+		"[protagonist_name] becomes more [mutantlike] as their DNA has [deuteragonist_name] folded into it.",
+	)
+
+/datum/memory/dna_infusion/get_happy_moods()
+	return list(
+		"endures the pain for science",
+		"confidently winces through the pain"
+	)
+
+/datum/memory/dna_infusion/get_neutral_moods()
+	return list(
+		"screams with pain",
+		"begins to have second thoughts"
+	)
+
+/datum/memory/dna_infusion/get_sad_moods()
+	return list("bitterly rejects their humanity")
