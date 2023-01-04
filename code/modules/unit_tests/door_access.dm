@@ -2,8 +2,6 @@
 /datum/unit_test/door_access_check
 	priority = TEST_LONGER // The open() and  close() proc on doors sleeps, which prolongs the duration of this test as we either await results or execute the proc.
 
-TEST_FOCUS(/datum/unit_test/door_access_check)
-
 /datum/unit_test/door_access_check/Run()
 	var/turf/open/door_stage = get_step(run_loc_floor_bottom_left, EAST)
 	var/mob/living/carbon/human/subject = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
