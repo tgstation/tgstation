@@ -660,46 +660,49 @@ request_count = 0
 
 @app.route("/tts")
 def text_to_speech():
-	global request_count
-	request_count += 1
+    global request_count
+    request_count += 1
 
-	voice = request.args.get("voice", '')
-	if not voice in voices:
-		return "Invalid voice", 400
-	text = request.json.get("text", '')
-	voice_to_use = voices[voice]
-	filter_complex = request.args.get("filter", '')
-	filter_complex = filter_complex.replace("\"", "")
+    voice = request.args.get("voice", '')
+    if not voice in voices:
+        return "Invalid voice", 400
+    text = request.json.get("text", '')
+    voice_to_use = voices[voice]
+    filter_complex = request.args.get("filter", '')
+    filter_complex = filter_complex.replace("\"", "")
 
-	result = None
-	with io.BytesIO() as wav_bytes:
-		audio = do_inference_clean(text, voice_to_use)
-		write(wav_bytes, hps.data.sampling_rate, audio)
+    result = None
+    with io.BytesIO() as wav_bytes:
+        text_end = text.strip()[-1]
+        if text_end != "!" or text_end != "." or text_end != "?":
+            text += "."
+        audio = do_inference_clean(text, voice_to_use)
+        write(wav_bytes, hps.data.sampling_rate, audio)
 
-		ffmpeg_result = None
-		if filter_complex != "":
-			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libmp3lame", "-b:a", "64k", "-f", "mp3", "pipe:1"], input=wav_bytes.getvalue(), capture_output = True)
-		else:
-			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libmp3lame", "-b:a", "64k", "-f", "mp3", "pipe:1"], input=wav_bytes.getvalue(), capture_output = True)
-		print(f"ffmpeg result size: {len(ffmpeg_result.stdout)} stderr = \n{ffmpeg_result.stderr.decode()}")
+        ffmpeg_result = None
+        if filter_complex != "":
+            ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libmp3lame", "-b:a", "64k", "-f", "mp3", "pipe:1"], input=wav_bytes.getvalue(), capture_output = True)
+        else:
+            ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libmp3lame", "-b:a", "64k", "-f", "mp3", "pipe:1"], input=wav_bytes.getvalue(), capture_output = True)
+        print(f"ffmpeg result size: {len(ffmpeg_result.stdout)} stderr = \n{ffmpeg_result.stderr.decode()}")
 
-		result = send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='{identifier}.mp3', mimetype="audio/mp3")
+        result = send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='{identifier}.mp3', mimetype="audio/mp3")
 
-	return result
+    return result
 
 @app.route("/tts-voices")
 def voices_list():
-	return list(voices.keys())
+    return list(voices.keys())
 
 @app.route("/health-check")
 def tts_health_check():
-	gc.collect()
-	if request_count > 2048:
-		return f"EXPIRED: {request_count}", 500
-	return f"OK: {request_count}", 200
+    gc.collect()
+    if request_count > 2048:
+        return f"EXPIRED: {request_count}", 500
+    return f"OK: {request_count}", 200
 
 if __name__ == "__main__":
-	if os.getenv('TTS_LD_LIBRARY_PATH', "") != "":
-		os.putenv('LD_LIBRARY_PATH', os.getenv('TTS_LD_LIBRARY_PATH'))
-	from waitress import serve
-	serve(app, host="0.0.0.0", port=5002, threads=2, backlog=16, connection_limit=24, channel_timeout=10)
+    if os.getenv('TTS_LD_LIBRARY_PATH', "") != "":
+        os.putenv('LD_LIBRARY_PATH', os.getenv('TTS_LD_LIBRARY_PATH'))
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=5002, threads=2, backlog=16, connection_limit=24, channel_timeout=10)
