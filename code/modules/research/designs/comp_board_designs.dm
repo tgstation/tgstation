@@ -374,3 +374,14 @@
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/accounting_console
+	name = "Account Lookup Console Board"
+	desc = "Allows for the construction of circuit boards used to assess the wealth of crewmates on station."
+	id = "account_console"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/computer/accounting
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RECORDS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

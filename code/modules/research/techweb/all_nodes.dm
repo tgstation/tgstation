@@ -1106,6 +1106,7 @@
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
 	design_ids = list(
+		"account_console",
 		"cargo",
 		"cargorequest",
 		"comconsole",

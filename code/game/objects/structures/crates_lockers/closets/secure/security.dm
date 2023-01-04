@@ -43,7 +43,6 @@
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/hop(src)
 	new /obj/item/storage/lockbox/medal/hop(src)
-	new /obj/item/circuitboard/computer/accounting(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
