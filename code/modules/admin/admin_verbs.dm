@@ -233,18 +233,12 @@ R_SOUND & CONFIG_GET(string/invoke_youtubedl)
 /client/proc/remove_admin_verbs()
 	SSadmin_verbs.deassosciate_admin(src)
 
-/client/proc/hide_verbs()
-	set name = "Adminverbs - Hide All"
-	set category = "Admin"
-
-	remove_admin_verbs()
+ADMIN_VERB(admin, hide_all_verbs, "Hide all of your Admin Verbs", NONE)
+	SSadmin_verbs.deassosciate_admin(usr.client)
 	add_verb(src, /client/proc/show_verbs)
+	to_chat(src, span_admin("Almost all of your adminverbs have been hidden."))
 
-	to_chat(src, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hide All Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
-/client/proc/show_verbs()
+/client/proc/show_verbs() // This is not an ADMIN_VERB for a reason
 	set name = "Adminverbs - Show"
 	set category = "Admin"
 

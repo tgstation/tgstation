@@ -6,9 +6,6 @@
 // /*
 // 	/client/proc/debugstatpanel,
 // 	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
-// 	/client/proc/hide_verbs, /*hides all our adminverbs*/
-// 	/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/
-// 	/client/proc/mark_datum_mapview,
 // 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
 // */
 
@@ -92,8 +89,11 @@ ADMIN_VERB_DEFAULT(admin, admin_pm, "Send a message directly to a client")
 		return
 	usr.client.notify_adminpm_message(whom, message)
 
-ADMIN_CONTEXT_ENTRY(contextcmd_tag_atom, "Tag Atom", NONE, datum/target in view(view))
+ADMIN_CONTEXT_ENTRY(contextcmd_tag_atom, "Tag Atom", NONE, atom/target in view(view))
 	tag_datum(target)
+
+ADMIN_VERB(debug, tag_datum, "Tag an atom in view", NONE, atom/target)
+	usr.client.tag_datum(target)
 
 /client/proc/tag_datum(datum/target_datum)
 	if(!holder || QDELETED(target_datum))
@@ -108,3 +108,87 @@ ADMIN_CONTEXT_ENTRY(contextcmd_tag_atom, "Tag Atom", NONE, datum/target in view(
 		holder.remove_tagged_datum(target_datum)
 	else
 		holder.add_tagged_datum(target_datum)
+
+ADMIN_CONTEXT_ENTRY(contextcmd_mark_atom, "Mark Atom", NONE, atom/target in view(view))
+	mark_datum(target)
+
+ADMIN_VERB(debug, mark_object, "Mark an atom in view", NONE, atom/target)
+	usr.client.mark_datum(target)
+
+/client/proc/mark_datum(datum/D)
+	if(!holder)
+		return
+	if(holder.marked_datum)
+		holder.UnregisterSignal(holder.marked_datum, COMSIG_PARENT_QDELETING)
+		vv_update_display(holder.marked_datum, "marked", "")
+	holder.marked_datum = D
+	holder.RegisterSignal(holder.marked_datum, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/admins, handle_marked_del))
+	vv_update_display(D, "marked", VV_MSG_MARKED)
+
+/datum/admins/proc/handle_marked_del(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(marked_datum, COMSIG_PARENT_QDELETING)
+	marked_datum = null
+
+/atom/proc/investigate_log(message, subject)
+	if(!message || !subject)
+		return
+	var/F = file("[GLOB.log_directory]/[subject].html")
+	var/source = "[src]"
+
+	if(isliving(src))
+		var/mob/living/source_mob = src
+		source += " ([source_mob.ckey ? source_mob.ckey : "*no key*"])"
+
+	WRITE_FILE(F, "[time_stamp(format = "YYYY-MM-DD hh:mm:ss")] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
+
+ADMIN_VERB(game, investigate, "Look at various detailed investigate sources", NONE)
+	var/list/investigates = list(
+		INVESTIGATE_ACCESSCHANGES,
+		INVESTIGATE_ATMOS,
+		INVESTIGATE_BOTANY,
+		INVESTIGATE_CARGO,
+		INVESTIGATE_CRAFTING,
+		INVESTIGATE_DEATHS,
+		INVESTIGATE_ENGINE,
+		INVESTIGATE_EXPERIMENTOR,
+		INVESTIGATE_GRAVITY,
+		INVESTIGATE_HALLUCINATIONS,
+		INVESTIGATE_HYPERTORUS,
+		INVESTIGATE_PORTAL,
+		INVESTIGATE_PRESENTS,
+		INVESTIGATE_RADIATION,
+		INVESTIGATE_RECORDS,
+		INVESTIGATE_RESEARCH,
+		INVESTIGATE_WIRES,
+	)
+
+	var/list/logs_present = list("notes, memos, watchlist")
+	var/list/logs_missing = list("---")
+
+	for(var/subject in investigates)
+		var/temp_file = file("[GLOB.log_directory]/[subject].html")
+		if(fexists(temp_file))
+			logs_present += subject
+		else
+			logs_missing += "[subject] (empty)"
+
+	var/list/combined = sort_list(logs_present) + sort_list(logs_missing)
+
+	var/selected = tgui_input_list(usr, "Investigate what?", "Investigation", combined)
+	if(isnull(selected))
+		return
+	if(!(selected in combined) || selected == "---")
+		return
+
+	selected = replacetext(selected, " (empty)", "")
+
+	if(selected == "notes, memos, watchlist" && check_rights(R_ADMIN))
+		browse_messages()
+		return
+
+	var/F = file("[GLOB.log_directory]/[selected].html")
+	if(!fexists(F))
+		to_chat(usr, span_danger("No [selected] logfile was found."), confidential = TRUE)
+		return
+	usr << browse(F,"window=investigate[selected];size=800x300")

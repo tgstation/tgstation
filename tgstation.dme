@@ -2271,7 +2271,6 @@
 #include "code\modules\admin\view_variables\debug_variables.dm"
 #include "code\modules\admin\view_variables\filterrific.dm"
 #include "code\modules\admin\view_variables\get_variables.dm"
-#include "code\modules\admin\view_variables\mark_datum.dm"
 #include "code\modules\admin\view_variables\mass_edit_variables.dm"
 #include "code\modules\admin\view_variables\modify_variables.dm"
 #include "code\modules\admin\view_variables\particle_editor.dm"
