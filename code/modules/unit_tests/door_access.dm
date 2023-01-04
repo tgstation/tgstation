@@ -47,9 +47,3 @@
 	sleep(1 SECONDS)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with invalid access succeeded in opening airlock access-locked behind req_one_access!")
 	door.close()
-
-
-
-
-
-
