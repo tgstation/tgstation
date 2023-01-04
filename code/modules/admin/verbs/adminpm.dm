@@ -13,23 +13,13 @@
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
-/// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
-	set category = null
-	set name = "Admin PM Mob"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Context: Only administrators may use this command."),
-			confidential = TRUE)
+/// Allows the admin to send an AdminPM directly to the client of a mob
+ADMIN_CONTEXT_ENTRY(contextcmd_admin_pm, "Admin PM Mob", NONE, mob/target in GLOB.mob_list)
+	if(!istype(target))
+		to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_danger("Error: Admin-PM-Context: Target mob is somehow not a mob!"))
 		return
-	if(!ismob(M))
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Context: Target mob is not a mob, somehow."),
-			confidential = TRUE)
-		return
-	cmd_admin_pm(M.client, null)
+
+	cmd_admin_pm(target.client, null)
 
 /// Replys to some existing ahelp, reply to whom, which can be a client or ckey
 /client/proc/cmd_ahelp_reply(whom)
