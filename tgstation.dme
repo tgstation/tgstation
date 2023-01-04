@@ -217,6 +217,7 @@
 #include "code\__DEFINES\uplink.dm"
 #include "code\__DEFINES\vehicles.dm"
 #include "code\__DEFINES\verb_manager.dm"
+#include "code\__DEFINES\visual_helpers.dm"
 #include "code\__DEFINES\vv.dm"
 #include "code\__DEFINES\wall_dents.dm"
 #include "code\__DEFINES\weather.dm"
