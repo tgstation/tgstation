@@ -553,7 +553,7 @@ SUBSYSTEM_DEF(job)
 
 	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping
-		wageslave.mind.add_memory(MEMORY_ACCOUNT, list(DETAIL_ACCOUNT_ID = wageslave.account_id), story_value = STORY_VALUE_SHIT, memory_flags = MEMORY_FLAG_NOLOCATION)
+		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
 
 
 	job.after_spawn(equipping, player_client)
@@ -1023,6 +1023,7 @@ SUBSYSTEM_DEF(job)
 		to_chat(new_captain, span_notice("Due to your position in the chain of command, you have been promoted to Acting Captain. You can find in important note about this [where]."))
 	else
 		to_chat(new_captain, span_notice("You can find the code to obtain your spare ID from the secure safe on the Bridge [where]."))
+		new_captain.add_mob_memory(/datum/memory/key/captains_spare_code, safe_code = SSid_access.spare_id_safe_code)
 
 	// Force-give their ID card bridge access.
 	var/obj/item/id_slot = new_captain.get_item_by_slot(ITEM_SLOT_ID)

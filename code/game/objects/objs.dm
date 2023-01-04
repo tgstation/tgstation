@@ -28,10 +28,13 @@
 	var/infinite_reskin = FALSE
 
 	// Access levels, used in modules\jobs\access.dm
+	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
+	/// Example: If req_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have both ACCESS_ENGINE and ACCESS_CE in order to use the object.
 	var/list/req_access
-	var/req_access_txt = "0"
+	/// List of accesses needed to use this object: The user must possess at least one access in this list in order to use the object.
+	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
 	var/list/req_one_access
-	var/req_one_access_txt = "0"
+
 	/// Custom fire overlay icon
 	var/custom_fire_overlay
 

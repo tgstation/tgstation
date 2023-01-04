@@ -298,14 +298,6 @@
 	icon_state = "disposal"
 
 // attack by item places it in to disposal
-/datum/armor/machinery_disposal
-	melee = 25
-	bullet = 10
-	laser = 10
-	energy = 100
-	fire = 90
-	acid = 30
-
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
@@ -485,14 +477,6 @@
 	density = TRUE
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
-
-/datum/armor/machinery_disposal
-	melee = 25
-	bullet = 10
-	laser = 10
-	energy = 100
-	fire = 90
-	acid = 30
 
 /obj/machinery/disposal/delivery_chute/place_item_in_disposal(obj/item/I, mob/user)
 	if(I.CanEnterDisposals())

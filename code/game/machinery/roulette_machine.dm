@@ -443,15 +443,6 @@
 	icon_state = "floor_beacon"
 	var/used
 
-/datum/armor/machinery_roulette
-	melee = 45
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 10
-	fire = 30
-	acid = 30
-
 /obj/item/roulette_wheel_beacon/attack_self()
 	if(used)
 		return

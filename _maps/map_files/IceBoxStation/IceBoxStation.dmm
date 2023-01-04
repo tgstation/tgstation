@@ -27364,7 +27364,8 @@
 	},
 /obj/machinery/button/flasher{
 	pixel_y = -32;
-	id = "hopflash"
+	id = "hopflash";
+	pixel_x = 8
 	},
 /obj/machinery/button/door/directional/south{
 	pixel_x = -8;
@@ -27373,7 +27374,6 @@
 	name = "Queue Shutters Control"
 	},
 /obj/machinery/button/door/directional/south{
-	pixel_y = -24;
 	pixel_x = 8;
 	name = "Privacy Shutters Control";
 	req_access = list("hop");
@@ -27381,6 +27381,10 @@
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
+	},
+/obj/machinery/button/ticket_machine{
+	pixel_x = -8;
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -37030,13 +37034,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "lmR" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "lnc" = (
@@ -58888,13 +58886,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "shl" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -69025,13 +69018,8 @@
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "vpI" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 8
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
