@@ -1,5 +1,5 @@
 /obj/item/stock_parts
-	var/initial_parent
+	var/initial_parent_ref
 
 /obj/item/stock_parts/Initialize(mapload)
 	. = ..()
@@ -11,10 +11,10 @@
 		new /obj/item/paper/fluff/no_stock_parts(loc)
 		return INITIALIZE_HINT_QDEL
 
-	initial_parent = loc
+	initial_parent_ref = WEAKREF(loc)
 
 /obj/item/stock_parts/Destroy(force)
-	initial_parent = null
+	initial_parent_ref = null
 	return ..()
 
 /obj/item/stock_parts/proc/should_hack()
@@ -27,12 +27,12 @@
 	if (!should_hack())
 		return ..()
 
-	if (old_loc == initial_parent)
+	if (IS_WEAKREF_OF(old_loc, initial_parent_ref))
 		return ..()
 
 	new /obj/item/paper/fluff/no_stock_parts(loc)
 	qdel(src)
-	initial_parent = null
+	initial_parent_ref = null
 
 /obj/item/paper/fluff/no_stock_parts
 	name = "cease and desist"
@@ -42,3 +42,9 @@
 		embargo on all stock parts. To improve machines, please ask engineering to provide your department
 		with additional power upgrades. We apologize for the inconvenience.
 	"}
+
+/obj/item/storage/part_replacer/Initialize(mapload)
+	if (SSpower_bars.enabled)
+		return INITIALIZE_HINT_QDEL
+
+	return ..()

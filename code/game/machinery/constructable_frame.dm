@@ -35,7 +35,9 @@
 	if(state != 3)
 		return
 
-	if(!length(req_components))
+	var/list/filtered_req_components = components_left_to_build()
+
+	if(!length(filtered_req_components))
 		. += span_info("It requires no components.")
 		return .
 
@@ -44,15 +46,32 @@
 		return
 
 	var/list/nice_list = list()
-	for(var/component in req_components)
+	for(var/component in filtered_req_components)
 		if(!ispath(component))
 			stack_trace("An item in [src]'s req_components list is not a path!")
 			continue
-		if(!req_components[component])
+		if(!filtered_req_components[component])
 			continue
 
-		nice_list += list("[req_components[component]] [req_component_names[component]]\s")
+		nice_list += list("[filtered_req_components[component]] [req_component_names[component]]\s")
 	. += span_info("It requires [english_list(nice_list, "no more components")].")
+
+/obj/structure/frame/machine/proc/components_left_to_build()
+	if (!SSpower_bars.enabled)
+		return req_components
+
+	var/list/filtered_req_components = list()
+
+	for (var/req_component in req_components)
+		if (ispath(req_component, /datum/stock_part))
+			continue
+
+		if (ispath(req_component, /obj/item/stock_parts) && !ispath(req_component, /obj/item/stock_parts/cell))
+			continue
+
+		filtered_req_components[req_component] = req_components[req_component]
+
+	return filtered_req_components
 
 /**
  * Collates the displayed names of the machine's components
@@ -215,7 +234,7 @@
 
 			if(P.tool_behaviour == TOOL_SCREWDRIVER)
 				var/component_check = TRUE
-				for(var/R in req_components)
+				for(var/R in components_left_to_build())
 					if(req_components[R] > 0)
 						component_check = FALSE
 						break
@@ -374,6 +393,13 @@
 
 /obj/structure/frame/machine/dump_contents()
 	for (var/component in components)
+		if (SSpower_bars.enabled)
+			if (istype(component, /obj/item/stock_parts) && !istype(component, /obj/item/stock_parts/cell))
+				continue
+
+			if (istype(component, /datum/stock_part))
+				continue
+
 		if (ismovable(component))
 			var/atom/movable/atom_component = component
 			atom_component.forceMove(drop_location())

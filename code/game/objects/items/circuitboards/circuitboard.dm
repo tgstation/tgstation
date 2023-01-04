@@ -124,12 +124,18 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if(initial(stack_path.singular_name))
 				component_name = initial(stack_path.singular_name) //e.g. "glass sheet" vs. "glass"
 		else if(ispath(component_path, /obj/item/stock_parts) && !specific_parts)
+			if (SSpower_bars.enabled && !ispath(component_path, /obj/item/stock_parts/cell))
+				continue
 			var/obj/item/stock_parts/stock_part = component_path
 			component_name = initial(stock_part.base_name) || initial(stock_part.name)
 		else if(ispath(component_path, /obj/item/stock_parts))
+			if (SSpower_bars.enabled && !ispath(component_path, /obj/item/stock_parts/cell))
+				continue
 			var/obj/item/stock_parts/stock_part = component_path
 			component_name = initial(stock_part.name)
 		else if(ispath(component_path, /datum/stock_part))
+			if (SSpower_bars.enabled)
+				continue
 			var/datum/stock_part/stock_part = component_path
 			var/obj/item/stock_parts/physical_object_type = initial(stock_part.physical_object_type)
 			component_name = initial(physical_object_type.base_name) || initial(physical_object_type.name)

@@ -17,5 +17,16 @@ SUBSYSTEM_DEF(power_bars)
 /datum/controller/subsystem/power_bars/Initialize()
 	enabled = GLOB.singularity_computers.len > 0
 
+	delete_stock_part_designs()
+
 /datum/controller/subsystem/power_bars/stat_entry(msg)
-	return ..(enabled ? "ON": "OFF")
+	return enabled ? "ON": "OFF"
+
+/datum/controller/subsystem/power_bars/proc/delete_stock_part_designs()
+	for (var/design_id in SSresearch.techweb_designs)
+		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+		if ( \
+			(ispath(design.build_path, /obj/item/stock_parts) && !ispath(design.build_path, /obj/item/stock_parts/cell)) \
+			|| ispath(design.build_path, /obj/item/storage/part_replacer) \
+		)
+			qdel(design)

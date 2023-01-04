@@ -799,13 +799,16 @@
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 
-	for(var/datum/part in component_parts)
-		if(istype(part, /datum/stock_part))
-			var/datum/stock_part/datum_part = part
-			new datum_part.physical_object_type(loc)
-		else
-			var/obj/item/obj_part = part
-			obj_part.forceMove(loc)
+	if (SSpower_bars.enabled)
+		QDEL_LIST(component_parts)
+	else
+		for(var/datum/part in component_parts)
+			if(istype(part, /datum/stock_part))
+				var/datum/stock_part/datum_part = part
+				new datum_part.physical_object_type(loc)
+			else
+				var/obj/item/obj_part = part
+				obj_part.forceMove(loc)
 
 	LAZYCLEARLIST(component_parts)
 	return ..()
@@ -940,6 +943,8 @@
 	return TRUE
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
+	ASSERT(!SSpower_bars.enabled)
+
 	if(!istype(replacer_tool))
 		return FALSE
 
@@ -1044,6 +1049,9 @@
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
+	if (SSpower_bars.enabled)
+		return ""
+
 	var/list/part_count = list()
 
 	for(var/component_part in component_parts)
