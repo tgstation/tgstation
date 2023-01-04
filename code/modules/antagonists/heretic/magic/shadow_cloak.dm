@@ -29,6 +29,7 @@
 
 /datum/action/cooldown/spell/shadow_cloak/is_valid_target(atom/cast_on)
 	return isliving(cast_on) && !HAS_TRAIT(cast_on, TRAIT_HULK) // Hulks are not stealthy. Need not apply
+	cast_on.balloon_alert(cast_on, "can't cast while hulk!")
 
 /datum/action/cooldown/spell/shadow_cloak/before_cast(mob/living/cast_on)
 	. = ..()
