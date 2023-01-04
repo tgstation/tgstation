@@ -172,14 +172,6 @@ Slimecrossing Items
 	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "capturedevice"
 
-/datum/armor/structure_ice_stasis
-	melee = 30
-	bullet = 50
-	laser = -50
-	energy = -50
-	fire = -80
-	acid = 30
-
 /obj/item/capturedevice/attack(mob/living/M, mob/user)
 	if(length(contents))
 		to_chat(user, span_warning("The device already has something inside."))

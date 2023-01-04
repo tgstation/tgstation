@@ -119,7 +119,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		// Display the supermatter crystal integrity
 		if(istype(atom_poi, /obj/machinery/power/supermatter_crystal))
 			var/obj/machinery/power/supermatter_crystal/crystal = atom_poi
-			misc[length(misc)]["extra"] = "Integrity: [crystal.get_integrity_percent()]%"
+			misc[length(misc)]["extra"] = "Integrity: [round(crystal.get_integrity_percent())]%"
 			continue
 		// Display the nuke timer
 		if(istype(atom_poi, /obj/machinery/nuclearbomb))

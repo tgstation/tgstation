@@ -6,19 +6,21 @@
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/shadow
 	species_traits = list(
-		NOBLOOD,
 		NOEYESPRITES,
 	)
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_RADIMMUNE,
 		TRAIT_VIRUSIMMUNE,
+		TRAIT_NOBLOOD,
 	)
 	inherent_factions = list("faithless")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 
 	mutantbrain = /obj/item/organ/internal/brain/shadow
 	mutanteyes = /obj/item/organ/internal/eyes/night_vision/shadow
+	mutantheart = null
+	mutantlungs = null
 
 	species_language_holder = /datum/language_holder/shadowpeople
 

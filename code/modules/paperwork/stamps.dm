@@ -15,6 +15,7 @@
 
 /obj/item/stamp/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead."))
+	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 	return OXYLOSS
 
 /obj/item/stamp/get_writing_implement_details()
