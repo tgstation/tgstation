@@ -10,7 +10,6 @@
 	school = SCHOOL_MIME
 	cooldown_time = 5 MINUTES
 
-	spell_requirements = SPELL_REQUIRES_HUMAN
 	spell_max_level = 1
 
 /datum/action/cooldown/spell/vow_of_silence/Grant(mob/grant_to)
