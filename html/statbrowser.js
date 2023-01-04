@@ -418,13 +418,13 @@ function draw_admin_verbs() {
 				var verbRef = verbInfo[2];
 
 				var verbEntry = document.createElement("a");
-				verbEntry.href = "?src=" + verbRef + ";admin_token=" + href_token + ";invoke=1";
+				verbEntry.onclick = make_verb_onclick(verbRef)
 				verbEntry.className = "grid-item";
+				verbEntry.title = verbDesc;
 
 				var verbTitle = document.createElement("span");
 				verbTitle.textContent = verbName;
 				verbTitle.className = "grid-item-text";
-				verbTitle.title = verbDesc;
 
 				verbEntry.appendChild(verbTitle);
 				categoryTable.appendChild(verbEntry);

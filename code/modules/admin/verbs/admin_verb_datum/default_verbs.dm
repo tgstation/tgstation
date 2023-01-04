@@ -1,130 +1,55 @@
-/*
-	/client/proc/cmd_admin_pm_context, /*right-click adminPM interface*/
-	/client/proc/debugstatpanel,
-	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
-	/client/proc/fix_air, /*resets air in designated radius to its default atmos composition*/
-	/client/proc/hide_verbs, /*hides all our adminverbs*/
-	/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/mark_datum_mapview,
-	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
-	/client/proc/requests,
-	/client/proc/tag_datum_mapview,
-*/
+// /*
+// 	/client/proc/cmd_admin_pm_context, /*right-click adminPM interface*/
+// 	/client/proc/debugstatpanel,
+// 	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+// 	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
+// 	/client/proc/fix_air, /*resets air in designated radius to its default atmos composition*/
+// 	/client/proc/hide_verbs, /*hides all our adminverbs*/
+// 	/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/
+// 	/client/proc/mark_datum_mapview,
+// 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
+// 	/client/proc/requests,
+// 	/client/proc/tag_datum_mapview,
+// */
 
-/datum/admin_verb_datum/admin_pm
-	verb_name = "Admin PM"
-	verb_desc = "Set a message directly to a client"
+// /datum/admin_verb_datum/deadmin
+// 	verb_name = "DeAdmin"
+// 	verb_desc = "Become a normal player"
 
-/datum/admin_verb_datum/admin_pm/get_arguments(client/target)
-	var/list/targets = list()
-	for(var/client/client in GLOB.clients)
-		var/nametag = ""
-		var/mob/lad = client.mob
-		var/mob_name = lad?.name
-		var/real_mob_name = lad?.real_name
-		if(!lad)
-			nametag = "(No Mob)"
-		else if(isnewplayer(lad))
-			nametag = "(New Player)"
-		else if(isobserver(lad))
-			nametag = "[mob_name](Ghost)"
-		else
-			nametag = "[real_mob_name](as [mob_name])"
-		targets["[nametag] - [client]"] = client
+// /datum/admin_verb_datum/deadmin/invoke()
+// 	usr.client.holder.deactivate()
 
-	var/whom = input(target, "To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
-	if(!whom)
-		return list()
-	return list(ADMINVERB_ARGUMENT_TARGET = targets[whom])
+// /datum/admin_verb_datum/reload_admins
+// 	verb_name = "Reload Admins"
+// 	verb_desc = "Reloads all admins from the data store"
+// 	verb_category = "Debug"
 
-/datum/admin_verb_datum/admin_pm/invoke(client/target, list/arguments)
-	var/whom = arguments[ADMINVERB_ARGUMENT_TARGET]
-	if(!whom)
-		return
-	whom = disambiguate_client(whom)
+// /datum/admin_verb_datum/reload_admins/invoke(client/target, list/arguments)
+// 	var/confirm = tgui_alert(target, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
+// 	if(confirm != "Yes")
+// 		return
 
-	var/message = target.request_adminpm_message(whom, arguments[ADMINVERB_ARGUMENT_MESSAGE])
-	if(!target.sends_adminpm_message(whom, message))
-		return
-	target.notify_adminpm_message(whom, message)
+// 	message_admins("[key_name_admin(usr)] manually reloaded admins.")
+// 	load_admins()
 
-/datum/admin_verb_datum/deadmin
-	verb_name = "DeAdmin"
-	verb_desc = "Become a normal player"
+// /datum/admin_verb_datum/stop_all_sounds
+// 	verb_name = "Stop All Sounds"
+// 	verb_desc = "Stop all sounds on every connected client"
+// 	verb_category = "Debug"
 
-/datum/admin_verb_datum/deadmin/invoke()
-	usr.client.holder.deactivate()
+// /datum/admin_verb_datum/stop_all_sounds/invoke(client/target, list/arguments)
+// 	log_admin("[key_name(target)] stopped all currently playing sounds.")
+// 	message_admins("[key_name_admin(target)] stopped all currently playing sounds.")
+// 	for(var/mob/player as anything in GLOB.player_list)
+// 		SEND_SOUND(player, sound(null))
+// 		// player list is only supposed to contain mobs with an attached client,
+// 		// but clients can just poof in and out of existence
+// 		player.client?.tgui_panel?.stop_music()
 
-/datum/admin_verb_datum/admin_say
-	verb_name = "ASay"
-	verb_desc = "Talk to your fellow jannies"
+// /datum/admin_verb_datum/secrets_menu
+// 	verb_name = "Secrets Panel"
+// 	verb_desc = "Abuse harder than you even knew was possible"
+// 	verb_category = "Game"
 
-/datum/admin_verb_datum/admin_say/get_arguments(client/target)
-	var/msg = input(target, null, "asay message") as text|null
-	return list(ADMINVERB_ARGUMENT_MESSAGE = msg)
-
-/datum/admin_verb_datum/admin_say/invoke(client/target, list/arguments)
-	var/msg = arguments[ADMINVERB_ARGUMENT_MESSAGE]
-
-	msg = emoji_parse(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
-	if(!msg)
-		return
-
-	if(findtext(msg, "@") || findtext(msg, "#"))
-		var/list/link_results = check_asay_links(msg)
-		if(length(link_results))
-			msg = link_results[ASAY_LINK_NEW_MESSAGE_INDEX]
-			link_results[ASAY_LINK_NEW_MESSAGE_INDEX] = null
-			var/list/pinged_admin_clients = link_results[ASAY_LINK_PINGED_ADMINS_INDEX]
-			for(var/iter_ckey in pinged_admin_clients)
-				var/client/iter_admin_client = pinged_admin_clients[iter_ckey]
-				if(!iter_admin_client?.holder)
-					continue
-				window_flash(iter_admin_client)
-				SEND_SOUND(iter_admin_client.mob, sound('sound/misc/asay_ping.ogg'))
-
-	usr.log_talk(msg, LOG_ASAY)
-	msg = keywords_lookup(msg)
-	var/asay_color = target.prefs.read_preference(/datum/preference/color/asay_color)
-	var/custom_asay_color = (CONFIG_GET(flag/allow_admin_asaycolor) && asay_color) ? "<font color=[asay_color]>" : "<font color='[DEFAULT_ASAY_COLOR]'>"
-	msg = "[span_adminsay("[span_prefix("ADMIN:")] <EM>[key_name(usr, 1)]</EM> [ADMIN_FLW(usr)]: [custom_asay_color]<span class='message linkify'>[msg]")]</span>[custom_asay_color ? "</font>":null]"
-	to_chat(GLOB.admins,
-		type = MESSAGE_TYPE_ADMINCHAT,
-		html = msg,
-		confidential = TRUE)
-
-/datum/admin_verb_datum/reload_admins
-	verb_name = "Reload Admins"
-	verb_desc = "Reloads all admins from the data store"
-	verb_category = "Debug"
-
-/datum/admin_verb_datum/reload_admins/invoke(client/target, list/arguments)
-	var/confirm = tgui_alert(target, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
-	if(confirm != "Yes")
-		return
-
-	message_admins("[key_name_admin(usr)] manually reloaded admins.")
-	load_admins()
-
-/datum/admin_verb_datum/stop_all_sounds
-	verb_name = "Stop All Sounds"
-	verb_desc = "Stop all sounds on every connected client"
-	verb_category = "Debug"
-
-/datum/admin_verb_datum/stop_all_sounds/invoke(client/target, list/arguments)
-	log_admin("[key_name(target)] stopped all currently playing sounds.")
-	message_admins("[key_name_admin(target)] stopped all currently playing sounds.")
-	for(var/mob/player as anything in GLOB.player_list)
-		SEND_SOUND(player, sound(null))
-		// player list is only supposed to contain mobs with an attached client,
-		// but clients can just poof in and out of existence
-		player.client?.tgui_panel?.stop_music()
-
-/datum/admin_verb_datum/secrets_menu
-	verb_name = "Secrets Panel"
-	verb_desc = "Abuse harder than you even knew was possible"
-	verb_category = "Game"
-
-/datum/admin_verb_datum/secrets_menu/invoke(client/target, list/arguments)
-	target.secrets()
+// /datum/admin_verb_datum/secrets_menu/invoke(client/target, list/arguments)
+// 	target.secrets()

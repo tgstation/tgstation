@@ -7,7 +7,7 @@
 		/mob/living/carbon,
 		/mob/dview,
 		/mob/oranges_ear,
-		/mob/admin_verb_holder,
+		/mob/admin_module_holder,
 	)
 	ignored += typesof(/mob/camera/imaginary_friend)
 	ignored += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)

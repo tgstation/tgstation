@@ -1,3 +1,4 @@
+
 /**
  * AVD TODO
 
@@ -226,18 +227,11 @@ R_SOUND & CONFIG_GET(string/invoke_youtubedl)
 
 /client/proc/add_admin_verbs()
 	if(holder)
-		for(var/datum/admin_verb_datum/admin_verb as anything in GLOB.admin_verb_datums)
-			admin_verb = GLOB.admin_verb_datums[admin_verb]
-			admin_verb.assosciate(src)
-
+		SSadmin_verbs.assosciate_admin(src)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
-		SSstatpanels.set_admin_verb_tab(src)
 
 /client/proc/remove_admin_verbs()
-	for(var/datum/admin_verb_datum/admin_verb as anything in GLOB.admin_verb_datums)
-		admin_verb = GLOB.admin_verb_datums[admin_verb]
-		admin_verb.deassosciate(src)
-	SSstatpanels.set_admin_verb_tab(src)
+	SSadmin_verbs.deassosciate_admin(src)
 
 /client/proc/hide_verbs()
 	set name = "Adminverbs - Hide All"

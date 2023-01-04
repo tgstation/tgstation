@@ -147,13 +147,7 @@ SUBSYSTEM_DEF(statpanels)
 	target.stat_panel.send_message("update_interviews", data)
 
 /datum/controller/subsystem/statpanels/proc/set_admin_verb_tab(client/target)
-	var/list/verb_data = list()
-	for(var/datum/admin_verb_datum/admin_verb as anything in GLOB.admin_verb_datums)
-		admin_verb = GLOB.admin_verb_datums[admin_verb]
-		if(!check_rights_for(target, admin_verb.permission_required))
-			continue
-		verb_data[admin_verb.verb_category] += list(list(admin_verb.verb_name, admin_verb.verb_desc, text_ref(admin_verb)))
-	target.stat_panel.send_message("update_admin_verbs", verb_data)
+	target.stat_panel.send_message("update_admin_verbs", SSadmin_verbs.generate_stat_data(target))
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()

@@ -1,3 +1,5 @@
-// Argument names for admin verbs
-#define ADMINVERB_ARGUMENT_MESSAGE "message"
-#define ADMINVERB_ARGUMENT_TARGET "target"
+#define ADMIN_VERB_MAP_MODULE 1
+#define ADMIN_VERB_MAP_NAME 2
+#define ADMIN_VERB_MAP_DESC 3
+#define ADMIN_VERB_MAP_PERMISSIONS 4
+

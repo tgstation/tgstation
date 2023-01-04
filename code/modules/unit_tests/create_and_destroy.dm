@@ -31,7 +31,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		//briefcase launchpads erroring
 		/obj/machinery/launchpad/briefcase,
 		//Shouldn't be created
-		/mob/admin_verb_holder,
+		/mob/admin_module_holder,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)

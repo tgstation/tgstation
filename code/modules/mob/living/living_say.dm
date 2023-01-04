@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		dynamic_invoke_admin_verb(client, /datum/admin_verb_datum/admin_say, list(ADMINVERB_ARGUMENT_MESSAGE = message))
+		SSadmin_verbs.dynamic_invoke_admin_verb(client, /mob/admin_module_holder/admin/admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
