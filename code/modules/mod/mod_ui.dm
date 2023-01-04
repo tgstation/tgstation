@@ -25,7 +25,7 @@
 			"description" = module.desc,
 			"module_type" = module.module_type,
 			"module_active" = module.active,
-			"pinned" = module.pinned_to[user],
+			"pinned" = module.pinned_to[REF(user)],
 			"idle_power" = module.idle_power_cost,
 			"active_power" = module.active_power_cost,
 			"use_power" = module.use_power_cost,

@@ -147,7 +147,7 @@ There are several things that need to be remembered:
 		var/icon_file
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-			icon_file = 'icons/mob/simple/mob.dmi'
+			icon_file = 'icons/mob/clothing/id.dmi'
 
 		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
 

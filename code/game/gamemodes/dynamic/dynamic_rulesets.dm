@@ -85,6 +85,9 @@
 	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
 	var/antag_cap = 0
 
+	/// A list, or null, of templates that the ruleset depends on to function correctly
+	var/list/ruleset_lazy_templates
+
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks
 	// "Execute Midround Ruleset". Thus, it would be wrong to perform any
@@ -172,6 +175,11 @@
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
 /datum/dynamic_ruleset/proc/ready(forced = 0)
 	return check_candidates()
+
+/// This should always be called before ready is, to ensure that the ruleset can locate map/template based landmarks as needed
+/datum/dynamic_ruleset/proc/load_templates()
+	for(var/template in ruleset_lazy_templates)
+		SSmapping.lazy_load_template(template)
 
 /// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.

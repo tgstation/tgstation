@@ -462,15 +462,6 @@
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
 
-/datum/armor/machinery_door
-	melee = 30
-	bullet = 30
-	laser = 20
-	energy = 20
-	bomb = 10
-	fire = 80
-	acid = 70
-
 /obj/machinery/door/get_dumping_location()
 	return null
 
