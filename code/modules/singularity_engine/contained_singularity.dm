@@ -58,7 +58,7 @@
 	particle.fired_from = src
 	particle.fire(rand(0, 360))
 	RegisterSignal(particle, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
-	addtimer(CALLBACK(src, PROC_REF(projectile_expired, particle)), 3.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(projectile_expired), particle), 3.5 SECONDS)
 
 	playsound(particle, sound("sound/effects/singulo_particle_throw[rand(1, 2)].ogg"), vol = 50, pressure_affected = FALSE)
 
@@ -82,7 +82,7 @@
 	Beam(projectile_turf, icon_state = "sm_arc_supercharged", time = 0.8 SECONDS)
 	projectile_turf.balloon_alert_to_viewers("it discharges back!")
 
-	qdel(source)
+	qdel(projectile)
 
 /obj/projectile/singularity_particle
 	name = "singularity particle"
