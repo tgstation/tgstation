@@ -818,3 +818,32 @@
 		"[protagonist_name] helping up [deuteragonist_name]",
 		"[deuteragonist_name] taking the hand offered graciously by [protagonist_name] to get up",
 	)
+
+/// Catching a fish
+/datum/memory/caught_fish
+	story_value = STORY_VALUE_OKAY
+
+/datum/memory/caught_fish/get_names()
+	return list(
+		"[protagonist_name] catching an absolute honker.",
+		"[protagonist_name] caught a [deuteragonist_name].",
+	)
+
+/datum/memory/caught_fish/get_starts()
+	return list(
+		"[protagonist_name] reels in the line",
+		"[protagonist_name]'s eye glints, and they begin reeling",
+		"in a fishing trance, [protagonist_name] catches something",
+		"[protagonist_name] begins battle with a fish",
+		"a whole lot of fishing going on",
+	)
+
+/datum/memory/caught_fish/get_moods()
+	return list(
+		"[protagonist_name] [mood_verb] as a [deuteragonist_name] flies out of the water!",
+		"[protagonist_name] [mood_verb] as they catch a [deuteragonist_name]!",
+		"[protagonist_name] [mood_verb] as they pose holding a [deuteragonist_name]!",
+	)
+
+/datum/memory/caught_fish/get_sad_moods()
+	return list("partakes in therapy fishing")

@@ -64,9 +64,16 @@
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
 	. = ..()
-	if(!length(SSpersistence.prison_tattoos_to_use) || visualsOnly)
+
+	var/crime_name = new_prisoner.client?.prefs?.read_preference(/datum/preference/choiced/prisoner_crime)
+	if(!crime_name)
 		return
-	var/obj/item/bodypart/tatted_limb = pick(new_prisoner.bodyparts)
-	var/list/tattoo = pick(SSpersistence.prison_tattoos_to_use)
-	tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])
-	SSpersistence.prison_tattoos_to_use -= tattoo
+	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
+
+	var/list/limbs_to_tat = new_prisoner.bodyparts.Copy()
+	for(var/i in 1 to crime.tattoos)
+		if(!length(SSpersistence.prison_tattoos_to_use) || visualsOnly)
+			return
+		var/obj/item/bodypart/tatted_limb = pick_n_take(limbs_to_tat)
+		var/list/tattoo = pick_n_take(SSpersistence.prison_tattoos_to_use)
+		tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])
