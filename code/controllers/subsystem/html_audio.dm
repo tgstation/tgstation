@@ -162,7 +162,7 @@ SUBSYSTEM_DEF(html_audio)
 		hearers = get_hearers_in_view(10, player)
 		for(var/mob/mob_hearing in hearers)
 			if(mob_hearing.client)
-				channel_requires_LOS_at_start_listeners[our_id].Add(mob_hearing.client)
+				channel_requires_LOS_at_start_listeners[our_id] += mob_hearing.client
 	for(var/client/listener in listeners)
 		if(!listener)
 			continue
