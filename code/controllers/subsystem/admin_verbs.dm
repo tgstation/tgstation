@@ -24,9 +24,10 @@ SUBSYSTEM_DEF(admin_verbs)
 GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 
 /datum/controller/subsystem/admin_verbs/Recover()
-	SSadmin_verbs.admin_verb_map = admin_verb_map
-	SSadmin_verbs.holder_map = holder_map
-	SSadmin_verbs.admin_linkup_map = admin_linkup_map
+	admin_verb_map = SSadmin_verbs.admin_verb_map
+	holder_map = SSadmin_verbs.holder_map
+	context_map = SSadmin_verbs.context_map
+	admin_linkup_map = SSadmin_verbs.admin_linkup_map
 
 /datum/controller/subsystem/admin_verbs/Initialize()
 	RegisterSignal(src, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(assosciate_with_waiting))
