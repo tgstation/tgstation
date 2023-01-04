@@ -1,7 +1,10 @@
-# TTS library
-Can be found [here](https://github.com/coqui-ai/TTS)
-Documentation for the library can be found [here](https://tts.readthedocs.io/en/latest/)
-
 ## Basic documentation
-To run, simply do `docker-compose up -d`
-Do `docker-compose up -d --build` if you need to force a rebuild after making changes
+Just a fair warning, if you train a model, you will need to include the config in the `vits/configs` folder. This folder should ideally exist in the persistent_data folder, but it doesn't as of now.
+
+Before running, make sure you set up a `persistent_data` folder with a `tts_models` folder containing the checkpoint file that you plan to use (`.pth`).
+The checkpoint file should be called `vits.pth`
+
+To run, simply do `docker compose up -d`
+This will build the container if it isn't build already, but if it is, then it'll re-use the built image.
+
+To build the container after making any changes to the non-persistent files, you can do `docker compose build`
