@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(floor_designs, list(
 			list("name" = "Textured Large", "type" = /obj/item/stack/tile/iron/textured_large, "tile_cost" = 6),
 		),
 		//Looks slightly transparent or faded
-		"Translusent" = list(
+		"Translucent" = list(
 			list("name" = "Smooth", "type" = /obj/item/stack/tile/iron/smooth, "tile_cost" = 4),
 			list("name" = "Smooth Edge", "type" = /obj/item/stack/tile/iron/smooth_edge, "tile_cost" = 4, "tile_rotate_dirs" = list(SOUTH, NORTH, EAST, WEST)),
 			list("name" = "Smooth Half", "type" = /obj/item/stack/tile/iron/smooth_half, "tile_cost" = 4, "tile_rotate_dirs" = list(SOUTH, NORTH)),

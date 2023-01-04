@@ -24,14 +24,15 @@ type Design = {
   icon: string;
 };
 
+const ROTATION_MAP = {
+  north: 'rotateZ(-180deg)',
+  west: 'rotateZ(90deg)',
+  east: 'rotateZ(-90deg)',
+} as const;
+
 const TilePreview = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { selected_icon, selected_direction } = data;
-  const ROTATION_MAP = {
-    north: 'rotateZ(-180deg)',
-    west: 'rotateZ(90deg)',
-    east: 'rotateZ(-90deg)',
-  } as const;
 
   return (
     <Section
