@@ -4189,6 +4189,7 @@
 #include "code\modules\power\turbine\turbine_parts.dm"
 #include "code\modules\power_bars\_defines.dm"
 #include "code\modules\power_bars\stock_part_hack.dm"
+#include "code\modules\power_bars\stock_part_refill.dm"
 #include "code\modules\power_bars\subsystem.dm"
 #include "code\modules\procedural_mapping\mapGenerator.dm"
 #include "code\modules\procedural_mapping\mapGeneratorModule.dm"

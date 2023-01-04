@@ -758,6 +758,10 @@
 
 /obj/machinery/proc/RefreshParts()
 	SHOULD_CALL_PARENT(TRUE)
+
+	if (SSpower_bars.enabled)
+		refill_parts()
+
 	//reset to baseline
 	idle_power_usage = initial(idle_power_usage)
 	active_power_usage = initial(active_power_usage)

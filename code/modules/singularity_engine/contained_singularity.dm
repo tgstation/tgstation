@@ -91,6 +91,7 @@
 	damage = 60
 	damage_type = BRUTE
 	armour_penetration = 40
+	// MBTODO: This doesn't work, needs to pass through lattice, probably just check specifically :-(
 	pass_flags = PASSTABLE | PASSSTRUCTURE
 
 /obj/projectile/singularity_particle/singularity_act()

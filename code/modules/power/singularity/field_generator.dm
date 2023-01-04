@@ -97,6 +97,7 @@ no power level overlay is currently in the overlays list.
 		return TRUE
 
 	balloon_alert(user, "turned on")
+	playsound(src, 'sound/machines/synth_yes.ogg', 50, vary = TRUE, frequency = rand(5120, 8800))
 	turn_on()
 	investigate_log("activated by [key_name(user)].", INVESTIGATE_ENGINE)
 
