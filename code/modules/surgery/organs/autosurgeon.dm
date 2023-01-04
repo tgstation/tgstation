@@ -123,6 +123,7 @@
 
 		to_chat(user, span_notice("You remove the [stored_organ] from [src]."))
 		screwtool.play_tool_sound(src)
+		update_appearance()
 	return TRUE
 
 /obj/item/autosurgeon/medical_hud
