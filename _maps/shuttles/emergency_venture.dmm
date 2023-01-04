@@ -110,7 +110,7 @@
 /area/shuttle/escape)
 "dU" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "shuttle airlock"
+	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -573,7 +573,7 @@
 /area/shuttle/escape)
 "KG" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "shuttle airlock"
+	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -785,7 +785,7 @@
 /area/shuttle/escape)
 "ZI" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "shuttle airlock"
+	name = "Emergency Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium,
