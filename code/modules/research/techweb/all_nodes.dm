@@ -1106,7 +1106,6 @@
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
 	design_ids = list(
-		"account_console",
 		"cargo",
 		"cargorequest",
 		"comconsole",
@@ -1150,6 +1149,7 @@
 	description = "Organized record databases and how they're used."
 	prereq_ids = list("comptech")
 	design_ids = list(
+		"account_console",
 		"automated_announcement",
 		"med_data",
 		"prisonmanage",
