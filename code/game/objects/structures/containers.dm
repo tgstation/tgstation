@@ -60,7 +60,7 @@
 
 //Syndies
 /obj/structure/shipping_container/cybersun
-	name = "\improper /"Saibasan"/ shipping container"
+	name = "\improper \"Saibasan\" shipping container"
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Saibasan, or Cybersun- probably carrying something expensive."
 	icon_state = "cybersun"
 
