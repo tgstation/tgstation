@@ -50,8 +50,8 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 		if(!check_rights_for(target, verb_permissions))
 			continue
 
-		var/verb_module = capitalize(verb_information[VERB_MAP_MODULE])
-		if(!verb_module || verb_module == "null")
+		var/verb_module = capitalize(lowertext(verb_information[VERB_MAP_MODULE]))
+		if(!verb_module || verb_module == "Null")
 			continue
 
 		var/formatted_name = ""
