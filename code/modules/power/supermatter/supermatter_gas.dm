@@ -226,5 +226,4 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	gas_path = /datum/gas/antinoblium
 	heat_modifier = 14
 	power_transmission = -0.5
-	powerloss_inhibition = 3
 	heat_power_generation = 1
