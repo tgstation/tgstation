@@ -4,7 +4,7 @@
 #define DECONSTRUCTION_TIME 0.2 SECONDS
 
 /**
- * An tool used to create, destroy,  and copy & clear decals of floor tiles
+ * An tool used to create, destroy, and copy & clear decals of floor tiles
  * Great for janitor but can be made only in engineering
  * Supports silo link upgrade and refill with glass, plasteel & iron
  */
