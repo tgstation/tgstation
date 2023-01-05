@@ -8,7 +8,7 @@ multiple modular subtrees with behaviors
 	///The atom this controller is controlling
 	var/atom/pawn
 	///Bitfield of traits for this AI to handle extra behavior
-	var/ai_traits
+	var/ai_traits = STOP_ACTING_WHILE_DEAD
 	///Current actions planned to be performed by the AI in the upcoming plan
 	var/list/planned_behaviors
 	///Current actions being performed by the AI.
@@ -19,6 +19,8 @@ multiple modular subtrees with behaviors
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
 	var/atom/current_movement_target
+	///Identifier for what last touched our movement target, so it can be cleared conditionally
+	var/movement_target_source
 	///This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.
 	var/list/blackboard = list()
 	///Stored arguments for behaviors given during their initial creation
@@ -64,7 +66,8 @@ multiple modular subtrees with behaviors
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
-/datum/ai_controller/proc/set_movement_target(atom/target, datum/ai_movement/new_movement)
+/datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
+	movement_target_source = source
 	current_movement_target = target
 	if(new_movement)
 		change_ai_movement_type(new_movement)
@@ -103,16 +106,26 @@ multiple modular subtrees with behaviors
 	pawn = new_pawn
 	pawn.ai_controller = src
 
-	if(!continue_processing_when_client && istype(new_pawn, /mob))
-		var/mob/possible_client_holder = new_pawn
-		if(possible_client_holder.client)
-			set_ai_status(AI_STATUS_OFF)
-		else
-			set_ai_status(AI_STATUS_ON)
-	else
+	if (!ismob(new_pawn))
 		set_ai_status(AI_STATUS_ON)
+	else
+		set_ai_status(get_setup_mob_ai_status(new_pawn))
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
+
+/// Mobs have more complicated factors about whether their AI should be on or not
+/datum/ai_controller/proc/get_setup_mob_ai_status(mob/mob_pawn)
+	var/final_status = AI_STATUS_ON
+
+	if(!continue_processing_when_client && mob_pawn.client)
+		final_status = AI_STATUS_OFF
+
+	if(ai_traits & STOP_ACTING_WHILE_DEAD)
+		RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
+		if(mob_pawn.stat == DEAD)
+			final_status = AI_STATUS_OFF
+
+	return final_status
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
@@ -120,7 +133,7 @@ multiple modular subtrees with behaviors
 
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
+	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE))
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 	pawn.ai_controller = null
@@ -157,6 +170,7 @@ multiple modular subtrees with behaviors
 		if(get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
 			CancelActions()
 			return
+
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 
@@ -280,6 +294,12 @@ multiple modular subtrees with behaviors
 		if(stored_arguments)
 			arguments += stored_arguments
 		current_behavior.finish_action(arglist(arguments))
+
+/// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
+/datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
+	SIGNAL_HANDLER
+	var/new_ai_status = (new_stat == DEAD) ? AI_STATUS_OFF : AI_STATUS_ON
+	set_ai_status(new_ai_status)
 
 /datum/ai_controller/proc/on_sentience_gained()
 	SIGNAL_HANDLER

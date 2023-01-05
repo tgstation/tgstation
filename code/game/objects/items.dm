@@ -908,11 +908,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return ..()
 	return 0
 
-/obj/item/attack_basic_mob(mob/living/basic/user, list/modifiers)
-	if (obj_flags & CAN_BE_HIT)
-		return ..()
-	return 0
-
 /obj/item/burn()
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
@@ -1330,9 +1325,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
  * * Return TRUE if you want to interrupt the offer.
  *
  * * Arguments:
- * * offerer - the person offering the item
+ * * offerer - The person offering the item.
+ * * offered - The person being offered the item.
  */
-/obj/item/proc/on_offered(mob/living/carbon/offerer)
+/obj/item/proc/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 

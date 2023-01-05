@@ -42,10 +42,11 @@
 	if(!IS_SPACE_NINJA(ninja))
 		to_chat(ninja, span_notice("While it appears normal, you can't seem to detonate the charge."))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if (!check_loc(ninja))
-		return
+		return .
 	detonator = WEAKREF(ninja)
-	return ..()
+	return . | ..()
 
 /obj/item/grenade/c4/ninja/detonate(mob/living/lanced_by)
 	if(!check_loc(detonator.resolve())) // if its moved, deactivate the c4

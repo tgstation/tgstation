@@ -187,7 +187,7 @@
 		/datum/reagent/oxygen = -3)
 
 	virus_suspectibility = 2
-	resulting_atoms = list(/mob/living/simple_animal/hostile/carp = 1)
+	resulting_atoms = list(/mob/living/basic/carp = 1)
 
 /datum/micro_organism/cell_line/megacarp
 	desc = "Cartilaginous cyprinid cells"
@@ -208,7 +208,7 @@
 		/datum/reagent/oxygen = -3)
 
 	virus_suspectibility = 1
-	resulting_atoms = list(/mob/living/simple_animal/hostile/carp/megacarp = 1)
+	resulting_atoms = list(/mob/living/basic/carp/mega = 1)
 
 /datum/micro_organism/cell_line/snake
 	desc = "Ophidic cells"
@@ -581,7 +581,7 @@
 		/datum/reagent/toxin = -1)
 
 	virus_suspectibility = 0.5
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/frog = 1)
+	resulting_atoms = list(/mob/living/basic/frog = 1)
 
 /datum/micro_organism/cell_line/walking_mushroom
 	desc = "motile fungal hyphae"

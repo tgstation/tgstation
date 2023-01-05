@@ -24,9 +24,10 @@
 			// construct the icon and slap it into the resource cache
 			var/atom/item = initial(path.build_path)
 			if (!ispath(item, /atom))
-				// biogenerator outputs to beakers by default
-				if (initial(path.build_type) & BIOGENERATOR)
-					item = /obj/item/reagent_containers/cup/beaker/large
+				// biogenerator reagent designs display their default container
+				if(initial(path.make_reagent))
+					var/datum/reagent/reagent = initial(path.make_reagent)
+					item = initial(reagent.default_container)
 				else
 					continue  // shouldn't happen, but just in case
 

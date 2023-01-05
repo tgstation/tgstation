@@ -487,7 +487,7 @@
 		else
 			to_chat(H, span_userdanger("You are knocked down by a wave of... blood?!"))
 		H.Stun(20)
-		H.blur_eyes(20)
+		H.set_eye_blur_if_lower(40 SECONDS)
 		eyes?.applyOrganDamage(5)
 		H.adjust_confusion(3 SECONDS)
 	for(var/mob/living/silicon/S in view(2,owner))

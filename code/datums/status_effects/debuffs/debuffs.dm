@@ -213,9 +213,9 @@
 			break //Only count the first bedsheet
 
 		if(healing > 0 && health_ratio > 0.8)
-			owner.adjustBruteLoss(-1 * healing)
-			owner.adjustFireLoss(-1 * healing)
-			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE)
+			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
 		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
@@ -849,7 +849,7 @@
 					leg.receive_damage(3,0)
 				if(50) // 2% chance
 					to_chat(victim, span_danger("You rub some ants away from your eyes!"))
-					victim.blur_eyes(3)
+					victim.set_eye_blur_if_lower(6 SECONDS)
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)

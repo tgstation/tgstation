@@ -390,6 +390,10 @@
 #define COMSIG_ITEM_ATTACK_SECONDARY "item_pre_attack_secondary"
 ///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
+	/// Flag for when /afterattack potentially acts on an item.
+	/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
+	/// Does not necessarily imply success, or even that it did hit an item, just intent.
+	#define COMPONENT_AFTERATTACK_PROCESSED_ITEM (1<<0)
 ///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK_SECONDARY "item_afterattack_secondary"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
@@ -407,3 +411,6 @@
 
 /// from /obj/structure/sign/poster/trap_succeeded() : (mob/user)
 #define COMSIG_POSTER_TRAP_SUCCEED "poster_trap_succeed"
+
+/// from /obj/item/detective_scanner/scan(): (mob/user, list/extra_data)
+#define COMSIG_DETECTIVE_SCANNED "det_scanned"

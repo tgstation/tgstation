@@ -5423,12 +5423,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "bFQ" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/space/basic,
 /area/space)
 "bGx" = (
@@ -6608,12 +6603,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "ccg" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space)
@@ -9166,12 +9157,8 @@
 /turf/open/floor/plating/lowpressure,
 /area/space/nearstation)
 "cOd" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 1;
-	height = 4;
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/space)
@@ -15496,6 +15483,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/security/prison)
+"eEt" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
 "eEz" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -23495,13 +23486,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gKV" = (
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 2
 	},
 /turf/open/space/basic,
 /area/space)
@@ -40802,6 +40788,10 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/chemistry)
+"lzW" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "lAk" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -41496,6 +41486,11 @@
 "lKq" = (
 /turf/closed/wall,
 /area/station/cargo/storage)
+"lKx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/xmastree,
+/turf/open/floor/iron/dark,
+/area/station/service/chapel)
 "lKC" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -45146,6 +45141,12 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
+"mPb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "mPo" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty,
@@ -59617,6 +59618,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
+"rbF" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/spawner/xmastree,
+/turf/open/floor/iron/showroomfloor,
+/area/station/service/bar/atrium)
 "rbH" = (
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
@@ -63189,6 +63198,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
+"sbs" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "sby" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -67355,7 +67370,7 @@
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 11;
-	height = 22;
+	height = 24;
 	name = "SS13: Auxiliary Dock, Station-Fore";
 	shuttle_id = "whiteship_home";
 	width = 35
@@ -76832,7 +76847,7 @@
 /obj/structure/bed/dogbed/cayenne{
 	name = "Lia's bed"
 	},
-/mob/living/simple_animal/hostile/carp/lia,
+/mob/living/basic/carp/pet/lia,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "vPd" = (
@@ -78729,7 +78744,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "woH" = (
-/mob/living/simple_animal/hostile/carp{
+/mob/living/basic/carp{
 	environment_smash = 0;
 	name = "Tuna";
 	real_name = "Tuna"
@@ -79326,7 +79341,6 @@
 	name = "lavaland";
 	shuttle_id = "pod_4_lavaland"
 	},
-/obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
 "wxF" = (
@@ -79768,6 +79782,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/security/prison/safe)
+"wEB" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/space/basic,
+/area/space/nearstation)
 "wEI" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -96665,9 +96683,9 @@ wDI
 aeu
 aeu
 aDT
-beK
+sbs
 lHD
-beK
+sbs
 sRm
 aeu
 ycx
@@ -98143,7 +98161,7 @@ vmZ
 ewC
 qER
 xmn
-kUJ
+lKx
 ggj
 aSu
 kVd
@@ -102626,7 +102644,7 @@ aaa
 aaa
 aaa
 cry
-aoe
+wEB
 acK
 aaa
 aaa
@@ -103140,7 +103158,7 @@ aaa
 aaa
 aaa
 cry
-aoe
+wEB
 acK
 aaa
 aaa
@@ -115676,7 +115694,7 @@ eDT
 fzL
 bji
 qTC
-hNL
+rbF
 hVU
 mCs
 vYn
@@ -126173,7 +126191,7 @@ aaa
 aaa
 aaa
 acK
-aDU
+mPb
 cry
 aaa
 aaa
@@ -126687,7 +126705,7 @@ aaB
 aaa
 aaa
 acK
-aDU
+mPb
 cry
 aaa
 aaa
@@ -131088,9 +131106,9 @@ cmU
 aeU
 aof
 qJs
-acK
+cry
 wxy
-acK
+cry
 qJs
 aeu
 aeU
@@ -131345,9 +131363,9 @@ cmU
 aeU
 aeU
 aaQ
-aaa
-aaa
-aaa
+eEt
+lzW
+eEt
 acm
 aeu
 aeu

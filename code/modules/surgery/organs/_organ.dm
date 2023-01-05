@@ -170,10 +170,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
 ///Adjusts an organ's damage by the amount "damage_amount", up to a maximum amount, which is by default max damage
-/obj/item/organ/proc/applyOrganDamage(damage_amount, maximum = maxHealth) //use for damaging effects
+/obj/item/organ/proc/applyOrganDamage(damage_amount, maximum = maxHealth, required_organtype) //use for damaging effects
 	if(!damage_amount) //Micro-optimization.
 		return
 	if(maximum < damage)
+		return
+	if(required_organtype && (status != required_organtype))
 		return
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
@@ -183,8 +185,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		to_chat(owner, mess)
 
 ///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
-/obj/item/organ/proc/setOrganDamage(damage_amount) //use mostly for admin heals
-	applyOrganDamage(damage_amount - damage)
+/obj/item/organ/proc/setOrganDamage(damage_amount, required_organtype) //use mostly for admin heals
+	applyOrganDamage(damage_amount - damage, required_organtype = required_organtype)
 
 /** check_damage_thresholds
  * input: mob/organ_owner (a mob, the owner of the organ we call the proc on)
@@ -289,9 +291,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * For example, lungs won't be given if you have NO_BREATH, stomachs check for NO_HUNGER, and livers check for NO_METABOLISM.
  * If you want a carbon to have a trait that normally blocks an organ but still want the organ. Attach the trait to the organ using the organ_traits var
  * Arguments:
- * owner_species - species, needed to return whether the species has an organ specific trait
+ * owner_species - species, needed to return the mutant slot as true or false. stomach set to null means it shouldn't have one.
+ * owner_mob - for more specific checks, like nightmares.
  */
-/obj/item/organ/proc/get_availability(datum/species/owner_species)
+/obj/item/organ/proc/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return TRUE
 
 /// Called before organs are replaced in regenerate_organs with new ones

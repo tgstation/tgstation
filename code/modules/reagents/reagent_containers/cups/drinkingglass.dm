@@ -18,44 +18,22 @@
 	//the screwdriver cocktail can make a drinking glass into the world's worst screwdriver. beautiful.
 	toolspeed = 25
 
+/obj/item/reagent_containers/cup/glass/drinkingglass/Initialize(mapload, vol)
+	. = ..()
+	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_glass_change)), CALLBACK(src, PROC_REF(on_glass_reset)))
+
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
 		renamedByPlayer = FALSE //so new drinks can rename the glass
 
-/obj/item/reagent_containers/cup/glass/drinkingglass/update_name(updates)
-	if(renamedByPlayer)
-		return
-	. = ..()
-	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	name = largest_reagent?.glass_name || initial(name)
+/// Having our icon state change removes fill thresholds
+/obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_glass_change(datum/glass_style/style)
+	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/cup/glass/drinkingglass/update_desc(updates)
-	if(renamedByPlayer)
-		return
-	. = ..()
-	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	desc = largest_reagent?.glass_desc || initial(desc)
-
-/obj/item/reagent_containers/cup/glass/drinkingglass/update_icon_state()
-	if(!reagents.total_volume)
-		icon_state = base_icon_state
-		return ..()
-
-	var/glass_icon = get_glass_icon(reagents.get_master_reagent())
-	if(glass_icon)
-		icon_state = glass_icon
-		fill_icon_thresholds = null
-	else
-		//Make sure the fill_icon_thresholds and the icon_state are reset. We'll use reagent overlays.
-		fill_icon_thresholds = fill_icon_thresholds || list(1)
-		icon_state = base_icon_state
-	return ..()
-
-/obj/item/reagent_containers/cup/glass/drinkingglass/proc/get_glass_icon(datum/reagent/largest_reagent)
-	if(!largest_reagent)
-		return FALSE
-	return largest_reagent.glass_icon_state
+/// And having our icon reset restores our fill thresholds
+/obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_glass_reset()
+	fill_icon_thresholds ||= list(0)
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -67,6 +45,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
+	icon = 'icons/obj/drinks/shot_glasses.dmi'
 	icon_state = "shotglass"
 	base_icon_state = "shotglass"
 	gulp_size = 15
@@ -81,21 +60,16 @@
 	if(renamedByPlayer)
 		return
 	. = ..()
-	name = "[length(reagents.reagent_list) ? "filled " : null]shot glass"
+	name = "[length(reagents.reagent_list) ? "filled " : ""]shot glass"
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_desc(updates)
 	if(renamedByPlayer)
 		return
 	. = ..()
-	if(!length(reagents.reagent_list))
-		desc = "A shot glass - the universal symbol for bad decisions."
-	else
+	if(length(reagents.reagent_list))
 		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
-
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/get_glass_icon(datum/reagent/largest_reagent)
-	if(!largest_reagent)
-		return FALSE
-	return largest_reagent.shot_glass_icon_state
+	else
+		desc = "A shot glass - the universal symbol for bad decisions."
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/soda
 	name = "Soda Water"

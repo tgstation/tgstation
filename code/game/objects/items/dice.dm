@@ -425,18 +425,18 @@
 			var/mob/living/carbon/human/human_servant = new(drop_location())
 			do_smoke(0, holder = src, location = drop_location())
 
-			human_servant.equipOutfit(/datum/outfit/butler)
-			var/datum/mind/servant_mind = new /datum/mind()
-			var/datum/antagonist/magic_servant/servant_antagonist = new
-			servant_mind.add_antag_datum(servant_antagonist)
-			servant_antagonist.setup_master(user)
-			servant_mind.transfer_to(human_servant)
-
 			var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [user.real_name]'s Servant?", ROLE_WIZARD, ROLE_WIZARD, 5 SECONDS, human_servant)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/candidate = pick(candidates)
 				message_admins("[ADMIN_LOOKUPFLW(candidate)] was spawned as Dice Servant")
 				human_servant.key = candidate.key
+
+			human_servant.equipOutfit(/datum/outfit/butler)
+			var/datum/mind/servant_mind = new /datum/mind()
+			var/datum/antagonist/magic_servant/servant_antagonist = new
+			servant_mind.transfer_to(human_servant)
+			servant_antagonist.setup_master(user)
+			servant_mind.add_antag_datum(servant_antagonist)
 
 			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, human_servant)
 			summon_servant.Grant(user)

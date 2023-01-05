@@ -235,7 +235,7 @@
 				else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
 					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
 					debrain_overlay.icon_state = "debrained_larva"
-				else if(!(NOBLOOD in species_flags_list))
+				else if(!(TRAIT_NOBLOOD in species_flags_list))
 					debrain_overlay.icon = 'icons/mob/species/human/human_face.dmi'
 					debrain_overlay.icon_state = "debrained"
 				. += debrain_overlay
@@ -335,7 +335,7 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 500
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 
@@ -348,6 +348,6 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
