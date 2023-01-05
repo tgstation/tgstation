@@ -29,7 +29,7 @@
 
 /datum/action/cooldown/spell/shadow_cloak/is_valid_target(atom/cast_on)
 	if(HAS_TRAIT(cast_on, TRAIT_HULK))
-		cast_on.balloon_alert(cast_on, "cannot cast while hulk")
+		cast_on.balloon_alert(cast_on, "cannot cast while hulk!")
 		return FALSE
 	return isliving(cast_on)
 
