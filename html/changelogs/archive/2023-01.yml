@@ -139,3 +139,37 @@
   - bugfix: Fixed blob minions getting their own antag category
   tralezab:
   - bugfix: Removed some cheese strategies from burdened sect.
+2023-01-05:
+  Kylerace:
+  - bugfix: tram consoles will no longer randomly depower if they return from an area
+      without power
+  MTandi:
+  - qol: Biogenerator shows default reagent containers instead of beakers
+  Mothblocks:
+  - bugfix: Fixes a bunch of cases of windows not being where they were supposed to
+      be, tables/chairs stacking on each other, and other very small stuff you've
+      never noticed before.
+  ShizCalev:
+  - bugfix: Crew AIs can no longer interact with ANY syndicate machinery (ie shuttle
+      computers, buttons, ect.)
+  - bugfix: Crew AIs can no longer attempt to track mobs on the syndicate base to
+      determine the gamemode.
+  - bugfix: Fixed Black Carpet and Paper Frames crafting recipes only giving you 1
+      item in return.
+  ZephyrTFA:
+  - server: Preferences now support guests
+  kawoppi:
+  - rscadd: added reagent splashing animation for spilling reagents on things
+  - rscadd: added reagent splashing animation for spilling reagents onto floors
+  - rscadd: added reagent splashing animation for pouring reagents into hydroponics
+      trays
+  - soundadd: slosh sound now plays when spilling reagents on things, both directly
+      and by throwing
+  mc-oofert:
+  - rscdel: Removed Mining LTSRBT
+  - balance: Mining Vendors express option now has no cost changes and no cooldown,
+      but cargo delivery option is now 35% cheaper to encourage miners communicating
+      with cargo techs
+  san7890:
+  - code_imp: Nanotrasen has updated the copyright on their NToS Software to be valid
+      for the New Year! (It's 2563 now!)
