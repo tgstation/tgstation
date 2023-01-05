@@ -1017,3 +1017,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEAKING_FROM_TONGUE "tongue"
 ///trait source that sign language should use
 #define SPEAKING_FROM_HANDS "hands"
+
+/// This mob is holding an item that lets them read the wires on a machine, like how the station blueprints work.
+#define HOLDING_WIRE_READING_ITEM "holding_wire_reading_item"
+/// Trait that allows the owner to see the function of wires on any machine.
+#define TRAIT_KNOW_STATION_WIRES "trait_know_station_wires"
+/// Trait that allows the owner to see the function of wires on machines that don't have randomized wires.
+#define TRAIT_KNOW_ALL_WIRES "trait_know_all_wires"

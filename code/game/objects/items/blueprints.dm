@@ -56,6 +56,14 @@
 	var/client/viewing
 	var/legend = FALSE //Viewing the wire legend
 
+/obj/item/areaeditor/blueprints/pickup(mob/living/user)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_KNOW_STATION_WIRES, HOLDING_WIRE_READING_ITEM)
+
+/obj/item/areaeditor/blueprints/dropped(mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_KNOW_STATION_WIRES, HOLDING_WIRE_READING_ITEM)
+
 
 /obj/item/areaeditor/blueprints/Destroy()
 	clear_viewer()

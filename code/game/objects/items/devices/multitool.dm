@@ -134,6 +134,14 @@
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	toolspeed = 0.1
 
+/obj/item/multitool/abductor/pickup(mob/living/user)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_KNOW_ALL_WIRES, HOLDING_WIRE_READING_ITEM)
+
+/obj/item/multitool/abductor/dropped(mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_KNOW_ALL_WIRES, HOLDING_WIRE_READING_ITEM)
+
 /obj/item/multitool/cyborg
 	name = "electronic multitool"
 	desc = "Optimised version of a regular multitool. Streamlines processes handled by its internal microchip."

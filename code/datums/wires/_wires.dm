@@ -246,12 +246,12 @@
 	if(isAdminGhostAI(user))
 		return TRUE
 
-	// Same for anyone with an abductor multitool.
-	if(user.is_holding_item_of_type(/obj/item/multitool/abductor))
+	// Same for anyone holding an abductor multitool.
+	if(HAS_TRAIT(user, TRAIT_KNOW_ALL_WIRES))
 		return TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
-	if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
+	if(HAS_TRAIT(user, TRAIT_KNOW_STATION_WIRES) && !randomize)
 		return TRUE
 
 	return FALSE
