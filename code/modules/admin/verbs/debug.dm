@@ -802,7 +802,7 @@
 		if(GLOB.total_runtimes >= 100000)
 			warning = "There are a TON of runtimes, clicking any button (especially \"linear\") WILL LIKELY crash the server"
 		// Not using TGUI alert, because it's view runtimes, stuff is probably broken
-		alert(usr, "[warning]. Proceed with caution.", "HEED THIS WARNING CAREFULLY MORTAL")
+		alert(usr, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
 
 /client/proc/pump_random_event()
 	set category = "Debug"
