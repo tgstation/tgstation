@@ -27,6 +27,9 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 /datum/air_alarm_mode/proc/apply(area/applied)
 	return
 
+/datum/air_alarm_mode/proc/replace(area/applied, pressure)
+	return
+
 /// The default.
 /datum/air_alarm_mode/filtering
 	name = "Filtering"
@@ -120,7 +123,10 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 /// Special case for cycles. Cycles need to refill the air again after it's scrubbed out so this proc is called.
 /// Same as [/datum/air_alarm_mode/filtering/apply]
-/datum/air_alarm_mode/cycle/proc/replace(area/applied)
+/datum/air_alarm_mode/cycle/replace(area/applied, pressure)
+	if(pressure >= ONE_ATMOSPHERE * 0.05)
+		return
+
 	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND

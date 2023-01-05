@@ -458,9 +458,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if(old_danger != danger_level)
 		update_appearance()
 
-	if(istype(selected_mode, /datum/air_alarm_mode/cycle) && pressure < ONE_ATMOSPHERE * 0.05)
-		var/datum/air_alarm_mode/cycle/cycle_mode = selected_mode
-		cycle_mode.replace(my_area)
+	selected_mode.replace(my_area, pressure)
 
 /obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path)
 	var/datum/air_alarm_mode/new_mode = GLOB.air_alarm_modes[mode_path]
