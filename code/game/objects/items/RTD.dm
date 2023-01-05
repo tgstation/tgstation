@@ -265,7 +265,7 @@
 		return TRUE
 
 	//All special effect stuff
-	user.Beam(floor, icon_state="light_beam", time = CONSTRUCTION_TIME)
+	user.Beam(floor, icon_state = "light_beam", time = CONSTRUCTION_TIME)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, CONSTRUCTION_TIME, RCD_FLOORWALL)
 	if(!do_after(user, CONSTRUCTION_TIME, target = floor))
 		rcd_effect.end_animation()
