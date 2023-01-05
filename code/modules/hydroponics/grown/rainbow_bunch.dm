@@ -33,12 +33,13 @@
 	throw_range = 3
 	attack_verb_continuous = list("pompfs")
 	attack_verb_simple = list("pompf")
+	greyscale_colors = "#000000" //only here for unit testing. overriden in initialize()
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 
 /obj/item/food/grown/rainbow_flower/Initialize(mapload)
 	. = ..()
-	if(greyscale_colors)
+	if(greyscale_colors != initial(greyscale_colors))
 		return
 
 	var/flower_color = rand(1,8)

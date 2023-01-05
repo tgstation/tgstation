@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - qol: "Drone dispensers now tell you how much material they need per drone."

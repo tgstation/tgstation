@@ -1,0 +1,5 @@
+author: "Vire, MrMelbert"
+delete-after: True
+changes:
+  - bugfix: "The engineering lobby and lathe are no longer public access"
+  - bugfix: "Doors will no longer be treated as public access when they have multiple accesses set on them"
