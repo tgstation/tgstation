@@ -130,6 +130,11 @@
 
 	if (!valid_ingredient(ingredient))
 		attacker.balloon_alert(attacker, "doesn't go on that!")
+	if (!valid_ingredient(ingredient))
+		if (istype(ingredient, /obj/item/reagent_containers))
+			attacker.balloon_alert(attacker, "transferring...")
+			return
+		attacker.balloon_alert(attacker, "doesn't go on that!")
 		return
 
 	if (LAZYLEN(ingredients) >= max_ingredients)
