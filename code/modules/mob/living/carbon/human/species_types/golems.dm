@@ -1336,25 +1336,36 @@
 	QDEL_NULL(cryo)
 	return ..()
 
-/datum/species/golem/mhydrogen
+/datum/species/golem/mhydrogen //Effectively most other metal-based golem types rolled into one - immune to all weather, lava, flashes, and magic, while being just as hardened as diamond golems.
 	name = "Metallic Hydrogen Golem"
 	id = SPECIES_GOLEM_HYDROGEN
-	fixed_mut_color = "#dddddd"
-	info_text = "As a <span class='danger'>Metallic Hydrogen Golem</span>, you were forged in the highest pressures and the highest heats. Your unique mineral makeup makes you immune to most types of damages."
+	fixed_mut_color = "#535469"
+	armor = 70 //equal to a diamond golem
+	info_text = "As a <span class='danger'>Metallic Hydrogen Golem</span>, you were forged in the highest pressures and the highest heats. Your unique material makeup makes you immune to magic, most environmental damage, and you take less damage from attacks."
 	prefix = "Metallic Hydrogen"
-	special_names = null
+	special_names = list("Pressure","Crush")
+	species_traits = list(
+		NO_UNDERWEAR,
+		NOEYESPRITES,
+	)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_GENELESS,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
 		TRAIT_NOFLASH,
+		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOBLOOD,
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_LITERATE,
+		TRAIT_WEATHER_IMMUNE,
+		TRAIT_LAVA_IMMUNE,
 	)
 	examine_limb_id = SPECIES_GOLEM
 
