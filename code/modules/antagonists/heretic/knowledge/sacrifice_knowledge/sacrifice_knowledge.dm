@@ -371,9 +371,9 @@
 	sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/supernatural, TRAUMA_RESILIENCE_MAGIC)
 	if (ROLE_HERETIC || ROLE_WIZARD || ROLE_CULTIST)
 		sac_target.cure_trauma_type(/datum/brain_trauma/mild/phobia/supernatural,TRAUMA_RESILIENCE_MAGIC)
-		var/obj/item/organ/internal/brain/B = sac_target.getorganslot(ORGAN_SLOT_BRAIN)
-		if(B)
-			. = B.cure_trauma_type(/datum/brain_trauma/mild/phobia/supernatural,TRAUMA_RESILIENCE_MAGIC)
+		var/obj/item/organ/internal/brain/sac_target_brain = sac_target.getorganslot(ORGAN_SLOT_BRAIN)
+		if(sac_target_brain)
+			. = sac_target_brain.cure_trauma_type(/datum/brain_trauma/mild/phobia/supernatural,TRAUMA_RESILIENCE_MAGIC)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
