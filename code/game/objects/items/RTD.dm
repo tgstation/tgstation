@@ -70,12 +70,12 @@
 	data["selected_recipe"] = name
 	data["selected_icon"] = get_icon_state()
 
-	if(isnull(tile_direction))
+	if(!tile_directions)
 		data["selected_direction"] = null
 		return
 
 	data["tile_dirs"] = ui_directional_data
-	data["selected_direction"] = selected_direction? "[dir2text(selected_direction)]" : null
+	data["selected_direction"] = dir2text(selected_direction)
 
 /// change the direction the tile is laid on the turf
 /datum/tile_info/proc/set_direction(direction)
@@ -177,8 +177,8 @@
 		var/list/target_category =  floor_designs[root_category][sub_category]
 
 		var/list/designs = list() //initialize all designs under this category
-		for(var/i in 1 to target_category.len)
-			tile_design.set_info(target_category[i])
+		for(var/list/design as anything in target_category)
+			tile_design.set_info(design)
 			designs += list(list("name" = tile_design.name, "icon" = tile_design.get_icon_state()))
 
 		data["categories"] += list(list("category_name" = sub_category, "recipes" = designs))
@@ -241,12 +241,13 @@
 
 					//infer available overlays on the floor to recreate them to the best extent
 					QDEL_LIST(design_overlays)
-					if(!isnull(floor.managed_overlays))
-						if(islist(floor.managed_overlays))
-							for(var/mutable_appearance/appearance as anything in floor.managed_overlays)
-								design_overlays += new /datum/overlay_info(appearance)
-						else
-							design_overlays += new /datum/overlay_info(floor.managed_overlays)
+					var/floor_designs = floor.managed_overlays
+					if(isnull(floor_designs))
+						floor_designs = list()
+					else if(!islist(floor_designs))
+						floor_designs = list(floor.managed_overlays)
+					for(var/mutable_appearance/appearance as anything in floor_designs)
+						design_overlays += new /datum/overlay_info(appearance)
 
 					//store all information about this tile
 					root_category = main_root
