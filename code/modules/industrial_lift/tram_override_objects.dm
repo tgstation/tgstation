@@ -53,6 +53,8 @@
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	var/associated_lift = MAIN_STATION_TRAM
 	var/datum/weakref/tram_ref
+	/// Directions the tram door can be forced open in an emergency
+	var/space_dir = null
 	name = "tram door"
 	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 
@@ -75,6 +77,17 @@
 	associated_lift = MAIN_STATION_TRAM
 	INVOKE_ASYNC(src, PROC_REF(open))
 	find_tram()
+
+/obj/machinery/door/window/tram/examine(mob/user)
+	. = ..()
+		. += span_notice("It has labels indicating that it has an emergency mechanism to open from the inside using <b>just your hands</b> in the event of an emergency.")
+
+/obj/machinery/door/window/tram/try_safety_unlock(mob/user)
+	if(!hasPower())
+		to_chat(user, span_notice("You begin pulling the tram emergency exit handle..."))
+		if(do_after(user, 7 SECONDS, target = src))
+			try_to_crowbar(null, user, TRUE)
+			return TRUE
 
 /obj/machinery/door/window/tram/open_and_close()
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()

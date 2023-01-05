@@ -230,25 +230,3 @@
 
 	say("The tram has been called to [current_location.name]. Please wait for its arrival.")
 	tram.tram_travel(current_location)
-
-/obj/item/assembly/control/emergency_release
-	name = "emergency door release panel"
-	desc = "In the event of a tram emergency, lift the cover and pull the handle to manually release the doors."
-	///ID to link to allow us to link to one specific tram in the world
-	var/specific_lift_id = MAIN_STATION_TRAM
-
-/obj/item/assembly/control/emergency_release/activate()
-	if(cooldown)
-		return
-	cooldown = TRUE
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 7 SECONDS)
-	var/datum/lift_master/tram/tram
-	for(var/datum/lift_master/tram/possible_match as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
-		if(possible_match.specific_lift_id == specific_lift_id)
-			tram = possible_match
-			break
-
-	say("Emergency exit activated!")
-	tram.update_tram_doors(LOCK_DOORS)
-	tram.update_tram_doors(OPEN_DOORS)
-
