@@ -89,6 +89,11 @@ const DepartmentEntry = (
                 <Button
                   width="100%"
                   height="100%"
+                  style={{
+                    border:
+                      allocations >= data.max_power_bars - index &&
+                      `5px inset ${USED_POWER_BAR_COLOR}`,
+                  }}
                   backgroundColor={
                     data.max_power_bars - index >
                     (hoveredAllocations ?? allocations)

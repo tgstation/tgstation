@@ -35,6 +35,7 @@
 
 	return data
 
+// MBTODO: Check access in ui_status (through get_id and friends)
 /obj/machinery/computer/power_distribution/ui_act(action, list/params)
 	var/mob/user = usr
 

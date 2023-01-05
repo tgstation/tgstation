@@ -1,6 +1,1 @@
-#define POWER_BAR_DEPARTMENT_COMMON "common"
-#define POWER_BAR_DEPARTMENT_CARGO "cargo"
-#define POWER_BAR_DEPARTMENT_ENGINEERING "engineering"
-#define POWER_BAR_DEPARTMENT_MEDICAL "medical"
-#define POWER_BAR_DEPARTMENT_SCIENCE "science"
-#define POWER_BAR_DEPARTMENT_SECURITY "security"
+#define COMSIG_POWER_BARS_UPDATED "power_bars_updated"
