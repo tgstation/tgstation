@@ -842,7 +842,7 @@
 	if(heal_flags & HEAL_BURN)
 		setFireLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_STAM)
-		setStaminaLoss(0, forced = TRUE) // update stamina now. updatehealth isn't guaranteed to update stamina for us
+		setStaminaLoss(0, FALSE, TRUE)
 
 	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
