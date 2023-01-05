@@ -62,6 +62,7 @@
 
 	playsound(particle, sound("sound/effects/singulo_particle_throw[rand(1, 2)].ogg"), vol = 50, pressure_affected = FALSE)
 
+// Should count field gens themselves
 /obj/contained_singularity/proc/on_projectile_hit(obj/projectile/source, obj/contained_singularity/firer, atom/target)
 	SIGNAL_HANDLER
 
@@ -92,6 +93,7 @@
 	damage_type = BRUTE
 	armour_penetration = 40
 	// MBTODO: This doesn't work, needs to pass through lattice, probably just check specifically :-(
+	// Maybe it's shooting at the coil? Something funky is going on, might even be railing/corner, but could just be the gens/turrets themselves
 	pass_flags = PASSTABLE | PASSSTRUCTURE
 
 /obj/projectile/singularity_particle/singularity_act()

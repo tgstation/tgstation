@@ -18,6 +18,7 @@ export const ProgressBar = (props) => {
     color,
     ranges = {},
     children,
+    fillPosition = 'left',
     ...rest
   } = props;
   const scaledValue = scale(value, minValue, maxValue);
@@ -48,6 +49,11 @@ export const ProgressBar = (props) => {
     outerProps.style = (outerProps.style || "")
       + `border-color: ${effectiveColor};`;
     fillStyles['background-color'] = effectiveColor;
+  }
+
+  if (fillPosition === 'right') {
+    fillStyles['right'] = '0px';
+    fillStyles['left'] = 'auto';
   }
 
   return (
