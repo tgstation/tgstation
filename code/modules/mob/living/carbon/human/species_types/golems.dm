@@ -1344,10 +1344,6 @@
 	info_text = "As a <span class='danger'>Metallic Hydrogen Golem</span>, you were forged in the highest pressures and the highest heats. Your unique material makeup makes you immune to magic, most environmental damage, and you take less damage from attacks."
 	prefix = "Metallic Hydrogen"
 	special_names = list("Pressure","Crush")
-	species_traits = list(
-		NO_UNDERWEAR,
-		NOEYESPRITES,
-	)
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_NOBREATH,
