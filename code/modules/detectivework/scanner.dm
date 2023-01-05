@@ -92,11 +92,11 @@
 
 		// GATHER INFORMATION
 
-		//Make our lists
-		var/list/fingerprints = list()
+		//Make our assoc list array
+		// The keys are the headers used for it, and the value is a list of each line printed
+		var/list/det_data = list()
 		var/list/blood = GET_ATOM_BLOOD_DNA(A)
-		var/list/fibers = GET_ATOM_FIBRES(A)
-		var/list/reagents = list()
+		det_data[DETSCAN_CATEGORY_FIBER] = GET_ATOM_FIBRES(A)
 
 		var/target_name = A.name
 
@@ -106,62 +106,60 @@
 
 			var/mob/living/carbon/human/H = A
 			if(!H.gloves)
-				fingerprints += md5(H.dna.unique_identity)
+				LAZYADD(det_data[DETSCAN_CATEGORY_FINGERS], md5(H.dna?.unique_identity))
 
 		else if(!ismob(A))
 
-			fingerprints = GET_ATOM_FINGERPRINTS(A)
+			det_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(A)
 
 			// Only get reagents from non-mobs.
-			if(A.reagents && A.reagents.reagent_list.len)
+			for(var/datum/reagent/present_reagent as anything in A.reagents?.reagent_list)
+				LAZYADD(det_data[DETSCAN_CATEGORY_DRINK], \
+					"Reagent: <font color='red'>[present_reagent.name]</font> Volume: <font color='red'>[present_reagent.volume]</font>")
 
-				for(var/datum/reagent/R in A.reagents.reagent_list)
-					reagents[R.name] = R.volume
+				// Get blood data from the blood reagent.
+				if(!istype(present_reagent, /datum/reagent/blood))
+					continue
 
-					// Get blood data from the blood reagent.
-					if(istype(R, /datum/reagent/blood))
+				var/blood_DNA = present_reagent.data["blood_DNA"]
+				var/blood_type = present_reagent.data["blood_type"]
+				if(!blood_DNA || !blood_type)
+					continue
 
-						if(R.data["blood_DNA"] && R.data["blood_type"])
-							var/blood_DNA = R.data["blood_DNA"]
-							var/blood_type = R.data["blood_type"]
-							LAZYINITLIST(blood)
-							blood[blood_DNA] = blood_type
+				LAZYSET(blood, blood_DNA, blood_type)
+
+		if(istype(A, /obj/item/card/id))
+			var/obj/item/card/id/user_id = A
+			for(var/region in DETSCAN_ACCESS_ORDER())
+				var/access_in_region = SSid_access.accesses_by_region[region] & user_id.GetAccess()
+				if(!length(access_in_region))
+					continue
+				LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], "[region]:")
+				var/list/access_names = list()
+				for(var/access_num in access_in_region)
+					access_names += SSid_access.get_access_desc(access_num)
+				LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], english_list(access_names))
+
+
+		for(var/bloodtype in blood)
+			LAZYADD(det_data[DETSCAN_CATEGORY_BLOOD], \
+			"Type: <font color='red'>[blood[bloodtype]]</font> DNA (UE): <font color='red'>[bloodtype]</font>")
+
+		// sends it off to be modified by the items
+		SEND_SIGNAL(A, COMSIG_DETECTIVE_SCANNED, user, det_data)
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
 		var/found_something = FALSE
 		add_log("<B>[station_time_timestamp()][get_timestamp()] - [target_name]</B>", 0)
 
-		// Fingerprints
-		if(length(fingerprints))
+		for(var/category in DETSCAN_DEFAULT_ORDER())
+			if(!LAZYLEN(det_data[category]))
+				continue  // no data found, move to next category
 			sleep(3 SECONDS)
-			add_log(span_info("<B>Prints:</B>"))
-			for(var/finger in fingerprints)
-				add_log("[finger]")
-			found_something = TRUE
-
-		// Blood
-		if (length(blood))
-			sleep(3 SECONDS)
-			add_log(span_info("<B>Blood:</B>"))
-			found_something = TRUE
-			for(var/B in blood)
-				add_log("Type: <font color='red'>[blood[B]]</font> DNA (UE): <font color='red'>[B]</font>")
-
-		//Fibers
-		if(length(fibers))
-			sleep(3 SECONDS)
-			add_log(span_info("<B>Fibers:</B>"))
-			for(var/fiber in fibers)
-				add_log("[fiber]")
-			found_something = TRUE
-
-		//Reagents
-		if(length(reagents))
-			sleep(3 SECONDS)
-			add_log(span_info("<B>Reagents:</B>"))
-			for(var/R in reagents)
-				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
+			add_log(span_info("<B>[category]:</B>"))
+			for(var/line in det_data[category])
+				add_log(line)
 			found_something = TRUE
 
 		// Get a new user

@@ -1,0 +1,4 @@
+author: "Gorock"
+delete-after: True
+changes:
+  - qol: "Improved Chem Dispenser Reagent Search"

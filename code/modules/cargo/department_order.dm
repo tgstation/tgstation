@@ -191,6 +191,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	name = "security order console"
 	circuit = /obj/item/circuitboard/computer/security_orders
 	department_delivery_areas = list(
+		/area/station/security/office,
 		/area/station/security/brig,
 		/area/station/security/brig/upper,
 	)

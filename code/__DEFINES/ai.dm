@@ -26,7 +26,10 @@
 #define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
 
 ///AI flags
+/// Don't move if being pulled
 #define STOP_MOVING_WHEN_PULLED (1<<0)
+/// Don't act if you're dead
+#define STOP_ACTING_WHILE_DEAD	(1<<1)
 
 //Base Subtree defines
 
@@ -157,14 +160,11 @@
 ///Dog AI controller blackboard keys
 
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
-#define BB_FETCH_TARGET "BB_FETCH_TARGET"
 #define BB_FETCH_IGNORE_LIST "BB_FETCH_IGNORE_LISTlist"
 #define BB_FETCH_DELIVER_TO "BB_FETCH_DELIVER_TO"
-#define BB_DOG_FRIENDS "BB_DOG_FRIENDS"
-#define BB_DOG_ORDER_MODE "BB_DOG_ORDER_MODE"
-#define BB_DOG_PLAYING_DEAD "BB_DOG_PLAYING_DEAD"
 #define BB_DOG_HARASS_TARGET "BB_DOG_HARASS_TARGET"
-#define BB_DOG_HARASS_FRUSTRATION "BB_DOG_HARASS_FRUSTRATION"
+#define BB_DOG_HARASS_HARM "BB_DOG_HARASS_HARM"
+#define BB_DOG_IS_SLOW "BB_DOG_IS_SLOW"
 
 /// Basically, what is our vision/hearing range for picking up on things to fetch/
 #define AI_DOG_VISION_RANGE	10
@@ -219,8 +219,22 @@
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 
+///List of mobs who have damaged us
+#define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
+
+/// Flag to set on or off if you want your mob to prioritise running away
+#define BB_BASIC_MOB_FLEEING "BB_basic_fleeing"
+
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
+
+///Baby-making blackboard
+///Types of animal we can make babies with.
+#define BB_BABIES_PARTNER_TYPES "BB_babies_partner"
+///Types of animal that we make as a baby.
+#define BB_BABIES_CHILD_TYPES "BB_babies_child"
+///Current partner target
+#define BB_BABIES_TARGET "BB_babies_target"
 
 ///Bileworm AI keys
 

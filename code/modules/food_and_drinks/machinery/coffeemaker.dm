@@ -272,19 +272,19 @@
 
 /obj/machinery/coffeemaker/proc/try_brew()
 	if(!cartridge)
-		balloon_alert("no coffee cartidge inserted!")
+		balloon_alert(usr, "no coffee cartidge inserted!")
 		return FALSE
 	if(cartridge.charges < 1)
-		balloon_alert("coffee cartidge empty!")
+		balloon_alert(usr, "coffee cartidge empty!")
 		return FALSE
 	if(!coffeepot)
-		balloon_alert("no coffeepot inside!")
+		balloon_alert(usr, "no coffeepot inside!")
 		return FALSE
 	if(machine_stat & (NOPOWER|BROKEN))
-		balloon_alert("machine unpowered!")
+		balloon_alert(usr, "machine unpowered!")
 		return FALSE
 	if(coffeepot.reagents.total_volume >= coffeepot.reagents.maximum_volume)
-		balloon_alert("the coffeepot is already full!")
+		balloon_alert(usr, "the coffeepot is already full!")
 		return FALSE
 	return TRUE
 
@@ -427,7 +427,7 @@
 /obj/item/coffee_cartridge
 	name = "coffeemaker cartridge- Caffè Generico"
 	desc = "A coffee cartridge manufactured by Piccionaia Coffee, for use with the Modello 3 system."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/cartridges.dmi'
 	icon_state = "cartridge_basic"
 	var/charges = 4
 	var/list/drink_type = list(/datum/reagent/consumable/coffee = 120)
@@ -477,7 +477,7 @@
 /obj/item/blank_coffee_cartridge
 	name = "blank coffee cartridge"
 	desc = "A blank coffee cartridge, ready to be filled with coffee paste."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/cartridges.dmi'
 	icon_state = "cartridge_blank"
 
 //now, how do you store coffee carts? well, in a rack, of course!
@@ -711,7 +711,7 @@
 
 /obj/machinery/coffeemaker/impressa/take_cup(mob/user)
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
-		balloon_alert("no cups left!")
+		balloon_alert(user, "no cups left!")
 		return
 	balloon_alert_to_viewers("took cup")
 	var/obj/item/reagent_containers/cup/glass/coffee/no_lid/new_cup = new(get_turf(src))

@@ -323,7 +323,7 @@
 	var/turf/spawned_turf = get_turf(parent)
 	message_admins("A singulo has been created at [ADMIN_VERBOSEJMP(spawned_turf)].")
 	var/atom/atom_parent = parent
-	atom_parent.investigate_log("was made a singularity at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
+	atom_parent.investigate_log("was made into a singularity at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
 
 /// Fired when the singularity is fired at with the BSA and deletes it
 /datum/component/singularity/proc/bluespace_reaction()

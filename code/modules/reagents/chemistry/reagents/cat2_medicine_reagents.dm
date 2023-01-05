@@ -26,60 +26,60 @@
 	var/reaping = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/helbital/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/medicine/c2/helbital/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	. = TRUE
-	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())*normalise_creation_purity()
+	var/death_is_coming = (affected_mob.getToxLoss() + affected_mob.getOxyLoss() + affected_mob.getFireLoss() + affected_mob.getBruteLoss())*normalise_creation_purity()
 	var/thou_shall_heal = 0
 	var/good_kind_of_healing = FALSE
-	switch(M.stat)
+	switch(affected_mob.stat)
 		if(CONSCIOUS) //bad
 			thou_shall_heal = death_is_coming/50
-			M.adjustOxyLoss(2 * REM * delta_time, TRUE)
+			affected_mob.adjustOxyLoss(2 * REM * delta_time, TRUE, required_biotype = affected_biotype)
 		if(SOFT_CRIT) //meh convert
 			thou_shall_heal = round(death_is_coming/47,0.1)
-			M.adjustOxyLoss(1 * REM * delta_time, TRUE)
+			affected_mob.adjustOxyLoss(1 * REM * delta_time, TRUE, required_biotype = affected_biotype)
 		else //no convert
 			thou_shall_heal = round(death_is_coming/45, 0.1)
 			good_kind_of_healing = TRUE
-	M.adjustBruteLoss(-thou_shall_heal * REM * delta_time, FALSE)
+	affected_mob.adjustBruteLoss(-thou_shall_heal * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 
 	if(good_kind_of_healing && !reaping && DT_PROB(0.00005, delta_time)) //janken with the grim reaper!
 		reaping = TRUE
 		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
-		if(M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING))
+		if(affected_mob.apply_status_effect(/datum/status_effect/necropolis_curse, CURSE_BLINDING))
 			helbent = TRUE
-		to_chat(M, span_hierophant("Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?"))
+		to_chat(affected_mob, span_hierophant("Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?"))
 		var/timeisticking = world.time
-		var/RPSchoice = tgui_alert(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors", RockPaperScissors, 60)
-		if(QDELETED(M) || (timeisticking+(1.1 MINUTES) < world.time))
+		var/RPSchoice = tgui_alert(affected_mob, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors", RockPaperScissors, 60)
+		if(QDELETED(affected_mob) || (timeisticking+(1.1 MINUTES) < world.time))
 			reaping = FALSE
 			return //good job, you ruined it
 		if(!RPSchoice)
-			to_chat(M, span_hierophant("You decide to not press your luck, but the spirits remain... hopefully they'll go away soon."))
+			to_chat(affected_mob, span_hierophant("You decide to not press your luck, but the spirits remain... hopefully they'll go away soon."))
 			reaping = FALSE
 			return
 		var/grim = pick(RockPaperScissors)
 		if(grim == RPSchoice) //You Tied!
-			to_chat(M, span_hierophant("You tie, and the malevolent spirits disappear... for now."))
+			to_chat(affected_mob, span_hierophant("You tie, and the malevolent spirits disappear... for now."))
 			reaping = FALSE
 		else if(RockPaperScissors[RPSchoice] == grim) //You lost!
-			to_chat(M, span_hierophant("You lose, and the malevolent spirits smirk eerily as they surround your body."))
-			M.investigate_log("has lost rock paper scissors with the grim reaper and been dusted.", INVESTIGATE_DEATHS)
-			M.dust()
+			to_chat(affected_mob, span_hierophant("You lose, and the malevolent spirits smirk eerily as they surround your body."))
+			affected_mob.investigate_log("has lost rock paper scissors with the grim reaper and been dusted.", INVESTIGATE_DEATHS)
+			affected_mob.dust()
 			return
 		else //VICTORY ROYALE
-			to_chat(M, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
-			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
-			M.revive(HEAL_ALL)
+			to_chat(affected_mob, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
+			affected_mob.client.give_award(/datum/award/achievement/misc/helbitaljanken, affected_mob)
+			affected_mob.revive(HEAL_ALL)
 			holder.del_reagent(type)
 			return
 
 	..()
 	return
 
-/datum/reagent/medicine/c2/helbital/overdose_process(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/medicine/c2/helbital/overdose_process(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(!helbent)
-		M.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
+		affected_mob.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
 		helbent = TRUE
 	..()
 	return TRUE
@@ -98,9 +98,9 @@
 	reagent_state = SOLID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * delta_time)
-	M.adjustBruteLoss(-3 * REM * normalise_creation_purity() * delta_time)
+/datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustBruteLoss(-3 * REM * normalise_creation_purity() * delta_time, required_bodytype = affected_bodytype)
 	..()
 	return TRUE
 
@@ -115,28 +115,28 @@
 	inverse_chem = /datum/reagent/medicine/metafactor //Seems thematically intact
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * delta_time, FALSE)
+/datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * delta_time, FALSE, required_bodytype = affected_bodytype)
 	var/ooo_youaregettingsleepy = 3.5
-	switch(round(M.getStaminaLoss()))
+	switch(round(affected_mob.getStaminaLoss()))
 		if(10 to 40)
 			ooo_youaregettingsleepy = 3
 		if(41 to 60)
 			ooo_youaregettingsleepy = 2.5
 		if(61 to 200) //you really can only go to 120
 			ooo_youaregettingsleepy = 2
-	M.adjustStaminaLoss(ooo_youaregettingsleepy * REM * delta_time, FALSE)
+	affected_mob.adjustStaminaLoss(ooo_youaregettingsleepy * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/probital/overdose_process(mob/living/M, delta_time, times_fired)
-	M.adjustStaminaLoss(3 * REM * delta_time, 0)
-	if(M.getStaminaLoss() >= 80)
-		M.adjust_drowsyness(1 * REM * delta_time)
-	if(M.getStaminaLoss() >= 100)
-		to_chat(M,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
-		M.adjustStaminaLoss(-100, TRUE)
-		M.Sleeping(10 SECONDS)
+/datum/reagent/medicine/c2/probital/overdose_process(mob/living/affected_mob, delta_time, times_fired)
+	affected_mob.adjustStaminaLoss(3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	if(affected_mob.getStaminaLoss() >= 80)
+		affected_mob.adjust_drowsiness(2 SECONDS * REM * delta_time)
+	if(affected_mob.getStaminaLoss() >= 100)
+		to_chat(affected_mob,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
+		affected_mob.adjustStaminaLoss(-100, TRUE, required_biotype = affected_biotype)
+		affected_mob.Sleeping(10 SECONDS)
 	..()
 	. = TRUE
 
@@ -161,9 +161,9 @@
 	var/spammer = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss(-3 * REM * normalise_creation_purity() * delta_time)
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM * delta_time)
+/datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjustFireLoss(-3 * REM * normalise_creation_purity() * delta_time, required_bodytype = affected_bodytype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM * delta_time, required_organtype = affected_organtype)
 	..()
 	return TRUE
 
@@ -177,9 +177,9 @@
 	var/message_cd = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss(-2 * REM * normalise_creation_purity() * delta_time)
-	M.adjustOrganLoss(ORGAN_SLOT_EYES, 0.25 * REM * delta_time)
+/datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjustFireLoss(-2 * REM * normalise_creation_purity() * delta_time, required_bodytype = affected_bodytype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 0.25 * REM * delta_time, required_organtype = affected_organtype)
 	..()
 	return TRUE
 
@@ -195,17 +195,17 @@
 	inverse_chem_val = 0.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.getFireLoss() > 50)
-		M.adjustFireLoss(-2 * REM * delta_time * normalise_creation_purity(), FALSE)
+/datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	if(affected_mob.getFireLoss() > 50)
+		affected_mob.adjustFireLoss(-2 * REM * delta_time * normalise_creation_purity(), FALSE, required_bodytype = affected_bodytype)
 	else
-		M.adjustFireLoss(-1.25 * REM * delta_time * normalise_creation_purity(), FALSE)
-	M.adjust_bodytemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50)
-	if(ishuman(M))
-		var/mob/living/carbon/human/humi = M
+		affected_mob.adjustFireLoss(-1.25 * REM * delta_time * normalise_creation_purity(), FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjust_bodytemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50)
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/humi = affected_mob
 		humi.adjust_coretemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50)
-	M.reagents?.chem_temp += (-10 * REM * delta_time)
-	M.adjust_fire_stacks(-1 * REM * delta_time)
+	affected_mob.reagents?.chem_temp += (-10 * REM * delta_time)
+	affected_mob.adjust_fire_stacks(-1 * REM * delta_time)
 	..()
 	. = TRUE
 
@@ -219,10 +219,10 @@
 	if(reac_volume >= metabolization_rate)
 		exposed_mob.extinguish_mob()
 
-/datum/reagent/medicine/c2/hercuri/overdose_process(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50) //chilly chilly
-	if(ishuman(M))
-		var/mob/living/carbon/human/humi = M
+/datum/reagent/medicine/c2/hercuri/overdose_process(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50) //chilly chilly
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/humi = affected_mob
 		humi.adjust_coretemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50)
 	..()
 
@@ -242,18 +242,18 @@
 	inverse_chem = /datum/reagent/inverse/healing/convermol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/human/M, delta_time, times_fired)
+/datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/human/affected_mob, delta_time, times_fired)
 	var/oxycalc = 2.5 * REM * current_cycle
 	if(!overdosed)
-		oxycalc = min(oxycalc, M.getOxyLoss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
-	M.adjustOxyLoss(-oxycalc * delta_time * normalise_creation_purity(), 0)
-	M.adjustToxLoss(oxycalc * delta_time / CONVERMOL_RATIO, 0)
-	if(DT_PROB(current_cycle / 2, delta_time) && M.losebreath)
-		M.losebreath--
+		oxycalc = min(oxycalc, affected_mob.getOxyLoss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
+	affected_mob.adjustOxyLoss(-oxycalc * delta_time * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustToxLoss(oxycalc * delta_time / CONVERMOL_RATIO, FALSE, required_biotype = affected_biotype)
+	if(DT_PROB(current_cycle / 2, delta_time) && affected_mob.losebreath)
+		affected_mob.losebreath--
 	..()
 	return TRUE
 
-/datum/reagent/medicine/c2/convermol/overdose_process(mob/living/carbon/human/M, delta_time, times_fired)
+/datum/reagent/medicine/c2/convermol/overdose_process(mob/living/carbon/human/affected_mob, delta_time, times_fired)
 	metabolization_rate += 2.5 * REAGENTS_METABOLISM
 	..()
 	return TRUE
@@ -267,16 +267,16 @@
 	ph = 5.6
 	inverse_chem = /datum/reagent/inverse/healing/tirimol
 	inverse_chem_val = 0.4
-	/// A cooldown for spacing bursts of stamina damage
-	COOLDOWN_DECLARE(drowsycd)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+	/// A cooldown for spacing bursts of stamina damage
+	COOLDOWN_DECLARE(drowsycd)
 
-/datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/M, delta_time, times_fired)
-	M.adjustOxyLoss(-3 * REM * delta_time * normalise_creation_purity())
-	M.adjustStaminaLoss(2 * REM * delta_time)
+/datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/affected_mob, delta_time, times_fired)
+	affected_mob.adjustOxyLoss(-3 * REM * delta_time * normalise_creation_purity(), required_biotype = affected_biotype)
+	affected_mob.adjustStaminaLoss(2 * REM * delta_time, required_biotype = affected_biotype)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
-		M.adjust_drowsyness(10)
+		affected_mob.adjust_drowsiness(20 SECONDS)
 		COOLDOWN_START(src, drowsycd, 45 SECONDS)
 	else if(!drowsycd)
 		COOLDOWN_START(src, drowsycd, 15 SECONDS)
@@ -301,11 +301,11 @@
 	inverse_chem_val = 0.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/M)
+/datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/affected_mob)
 	. = ..()
 	radbonustemp = rand(radbonustemp - 50, radbonustemp + 50) // Basically this means 50K and below will always give the percent heal, and upto 150K could. Calculated once.
 
-/datum/reagent/medicine/c2/seiver/on_mob_life(mob/living/carbon/human/M, delta_time, times_fired)
+/datum/reagent/medicine/c2/seiver/on_mob_life(mob/living/carbon/human/affected_mob, delta_time, times_fired)
 	var/chemtemp = min(holder.chem_temp, 1000)
 	chemtemp = chemtemp ? chemtemp : 273 //why do you have null sweaty
 	var/healypoints = 0 //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
@@ -313,23 +313,23 @@
 	//you're hot
 	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * delta_time * normalise_creation_purity() //max 2.5 tox healing per second
 	if(toxcalc > 0)
-		M.adjustToxLoss(-toxcalc * delta_time * normalise_creation_purity())
+		affected_mob.adjustToxLoss(-toxcalc * delta_time * normalise_creation_purity(), required_biotype = affected_biotype)
 		healypoints += toxcalc
 
 	//and you're cold
 	var/radcalc = round((T0C-chemtemp) / 6, 0.1) * REM * delta_time //max ~45 rad loss unless you've hit below 0K. if so, wow.
-	if(radcalc > 0 && HAS_TRAIT(M, TRAIT_IRRADIATED))
+	if(radcalc > 0 && HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 		radcalc *= normalise_creation_purity()
 		// no cost percent healing if you are SUPER cold (on top of cost healing)
 		if(chemtemp < radbonustemp*0.1)
-			M.adjustToxLoss(-radcalc * (0.9**(REM * delta_time)))
+			affected_mob.adjustToxLoss(-radcalc * (0.9**(REM * delta_time)), required_biotype = affected_biotype)
 		else if(chemtemp < radbonustemp)
-			M.adjustToxLoss(-radcalc * (0.75**(REM * delta_time)))
+			affected_mob.adjustToxLoss(-radcalc * (0.75**(REM * delta_time)), required_biotype = affected_biotype)
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
 	healypoints = round(healypoints, 0.1)
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, healypoints / 5)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, healypoints / 5, required_organtype = affected_organtype)
 	..()
 	return TRUE
 
@@ -341,24 +341,24 @@
 	ph = 9.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/multiver/on_mob_life(mob/living/carbon/human/M, delta_time, times_fired)
+/datum/reagent/medicine/c2/multiver/on_mob_life(mob/living/carbon/human/affected_mob, delta_time, times_fired)
 	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
-	for(var/r in M.reagents.reagent_list)
+	for(var/r in affected_mob.reagents.reagent_list)
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
 	if(creation_purity >= 1) //Perfectly pure multivers gives a bonus of 2!
 		medibonus += 1
-	M.adjustToxLoss(-0.5 * min(medibonus, 3 * normalise_creation_purity()) * REM * delta_time) //not great at healing but if you have nothing else it will work
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * delta_time) //kills at 40u
-	for(var/r2 in M.reagents.reagent_list)
+	affected_mob.adjustToxLoss(-0.5 * min(medibonus, 3 * normalise_creation_purity()) * REM * delta_time, required_biotype = affected_biotype) //not great at healing but if you have nothing else it will work
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * delta_time, required_organtype = affected_organtype) //kills at 40u
+	for(var/r2 in affected_mob.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
 		var/amount2purge = 3
 		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
 			continue
-		M.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * delta_time)
+		affected_mob.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * delta_time)
 	..()
 	return TRUE
 
@@ -385,7 +385,7 @@
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), 0)	  //This is to promote iv pole use for that chemotherapy feel.
+		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)	  //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/internal/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if(!L || L.organ_flags & ORGAN_FAILING)
 		return
@@ -394,21 +394,21 @@
 	C.reagents.add_reagent(/datum/reagent/medicine/c2/musiver, conversion_amount)
 	..()
 
-/datum/reagent/medicine/c2/syriniver/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8 * REM * delta_time)
-	M.adjustToxLoss(-1 * REM * delta_time, 0)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
+/datum/reagent/medicine/c2/syriniver/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
-		M.reagents.remove_reagent(R.type, 0.4 * REM * delta_time)
+		affected_mob.reagents.remove_reagent(R.type, 0.4 * REM * delta_time)
 
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/syriniver/overdose_process(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time)
-	M.adjust_disgust(3 * REM * delta_time)
-	M.reagents.add_reagent(/datum/reagent/medicine/c2/musiver, 0.225 * REM * delta_time)
+/datum/reagent/medicine/c2/syriniver/overdose_process(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjust_disgust(3 * REM * delta_time)
+	affected_mob.reagents.add_reagent(/datum/reagent/medicine/c2/musiver, 0.225 * REM * delta_time)
 	..()
 	. = TRUE
 
@@ -420,32 +420,32 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 	ph = 9.1
-	var/datum/brain_trauma/mild/muscle_weakness/U
+	var/datum/brain_trauma/mild/muscle_weakness/trauma
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * delta_time)
-	M.adjustToxLoss(-1 * REM * delta_time * normalise_creation_purity(), 0)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
+/datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustToxLoss(-1 * REM * delta_time * normalise_creation_purity(), FALSE, required_biotype = affected_biotype)
+	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
-		M.reagents.remove_reagent(R.type, 0.2 * REM * delta_time)
+		affected_mob.reagents.remove_reagent(R.type, 0.2 * REM * delta_time)
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/musiver/overdose_start(mob/living/carbon/M)
-	U = new()
-	M.gain_trauma(U, TRAUMA_RESILIENCE_ABSOLUTE)
+/datum/reagent/medicine/c2/musiver/overdose_start(mob/living/carbon/affected_mob)
+	trauma = new()
+	affected_mob.gain_trauma(trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 	..()
 
-/datum/reagent/medicine/c2/musiver/on_mob_delete(mob/living/carbon/M)
-	if(U)
-		QDEL_NULL(U)
+/datum/reagent/medicine/c2/musiver/on_mob_delete(mob/living/carbon/affected_mob)
+	if(trauma)
+		QDEL_NULL(trauma)
 	return ..()
 
-/datum/reagent/medicine/c2/musiver/overdose_process(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time)
-	M.adjust_disgust(3 * REM * delta_time)
+/datum/reagent/medicine/c2/musiver/overdose_process(mob/living/carbon/affected_mob, delta_time, times_fired)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjust_disgust(3 * REM * delta_time)
 	..()
 	. = TRUE
 
@@ -469,12 +469,12 @@
 		show_message = 0
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
-	var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
+	var/harmies = min(carbies.getBruteLoss(), carbies.adjustBruteLoss(-1.25 * reac_volume, required_bodytype = affected_bodytype)*-1)
+	var/burnies = min(carbies.getFireLoss(), carbies.adjustFireLoss(-1.25 * reac_volume, required_bodytype = affected_bodytype)*-1)
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
-	carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity)))) //0.5 - 0.75
+	carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity))), required_biotype = affected_biotype) //0.5 - 0.75
 	if(show_message)
 		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
 	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
@@ -518,17 +518,17 @@
 	ADD_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
-	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time)
+	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time, required_organtype = affected_organtype)
 	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT * (2 * normalise_creation_purity()))) //we cannot save someone below our lowered crit threshold.
 
-		H.adjustToxLoss(-2 * REM * delta_time, 0)
-		H.adjustBruteLoss(-2 * REM * delta_time, 0)
-		H.adjustFireLoss(-2 * REM * delta_time, 0)
-		H.adjustOxyLoss(-6 * REM * delta_time, 0)
+		H.adjustToxLoss(-2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		H.adjustBruteLoss(-2 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
+		H.adjustFireLoss(-2 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
+		H.adjustOxyLoss(-6 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 
 		H.losebreath = 0
 
-		H.adjustOrganLoss(ORGAN_SLOT_HEART, max(volume/10, 1) * REM * delta_time) // your heart is barely keeping up!
+		H.adjustOrganLoss(ORGAN_SLOT_HEART, max(volume/10, 1) * REM * delta_time, required_organtype = affected_organtype) // your heart is barely keeping up!
 
 		H.set_jitter_if_lower(rand(0 SECONDS, 4 SECONDS) * REM * delta_time)
 		H.set_dizzy_if_lower(rand(0 SECONDS, 4 SECONDS) * REM * delta_time)
@@ -554,8 +554,8 @@
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)
 	REMOVE_TRAIT(H, TRAIT_STABLEHEART, type)
-	H.adjustStaminaLoss(10 * REM * delta_time)
-	H.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * delta_time)
+	H.adjustStaminaLoss(10 * REM * delta_time, required_biotype = affected_biotype)
+	H.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * delta_time, required_organtype = affected_organtype)
 	H.set_heartattack(TRUE)
 
 

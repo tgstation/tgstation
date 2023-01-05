@@ -60,35 +60,14 @@
 		var/turf/place = turfs[i]
 		if(isspaceturf(place)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
 			continue
-		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
+
+		if (place.count_baseturfs() < 2) // Some snowflake shuttle shit
 			continue
-		var/list/sanity = place.baseturfs.Copy()
-		sanity.Insert(3, /turf/baseturf_skipover/shuttle)
-		place.baseturfs = baseturfs_string_list(sanity, place)
+
+		place.insert_baseturf(3, /turf/baseturf_skipover/shuttle)
 
 		for(var/obj/docking_port/mobile/port in place)
-			if(!isnull(port_x_offset))
-				switch(port.dir) // Yeah this looks a little ugly but mappers had to do this in their head before
-					if(NORTH)
-						port.width = width
-						port.height = height
-						port.dwidth = port_x_offset - 1
-						port.dheight = port_y_offset - 1
-					if(EAST)
-						port.width = height
-						port.height = width
-						port.dwidth = height - port_y_offset
-						port.dheight = port_x_offset - 1
-					if(SOUTH)
-						port.width = width
-						port.height = height
-						port.dwidth = width - port_x_offset
-						port.dheight = height - port_y_offset
-					if(WEST)
-						port.width = height
-						port.height = width
-						port.dwidth = port_y_offset - 1
-						port.dheight = width - port_x_offset
+			port.calculate_docking_port_information(src)
 			// initTemplateBounds explicitly ignores the shuttle's docking port, to ensure that it calculates the bounds of the shuttle correctly
 			// so we need to manually initialize it here
 			SSatoms.InitializeAtoms(list(port))
@@ -472,6 +451,13 @@
 	description = "Guaranteed to get you somewhere FAST. With a custom-built plasma engine, this bad boy will put more distance between you and certain danger than any other!"
 	credit_cost = CARGO_CRATE_VALUE * 50
 
+/datum/map_template/shuttle/emergency/fish
+	suffix = "fish"
+	name = "Angler's Choice Emergency Shuttle"
+	description = "Trades such amenities as 'storage space' and 'sufficient seating' for an artifical environment ideal for fishing, plus ample supplies (also for fishing)."
+	admin_notes = "There's a chasm in it, it has railings but that won't stop determined players."
+	credit_cost = CARGO_CRATE_VALUE * 10
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
@@ -688,6 +674,14 @@
 	suffix = "large"
 	name = "escape pod (Large)"
 
+/datum/map_template/shuttle/escape_pod/luxury
+	suffix = "luxury"
+	name = "escape pod (Luxury)"
+
+/datum/map_template/shuttle/escape_pod/cramped
+	suffix = "cramped"
+	name = "escape pod (Cramped)"
+
 /datum/map_template/shuttle/assault_pod/default
 	suffix = "default"
 	name = "assault pod (Default)"
@@ -703,6 +697,10 @@
 /datum/map_template/shuttle/pirate/dutchman
 	suffix = "dutchman"
 	name = "pirate ship (Flying Dutchman)"
+
+/datum/map_template/shuttle/pirate/psykers
+	suffix = "psyker"
+	name = "pirate ship (Psyker-gang)"
 
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
@@ -735,6 +733,10 @@
 /datum/map_template/shuttle/starfury/corvette
 	suffix = "corvette"
 	name = "SBC Starfury Corvette"
+
+/datum/map_template/shuttle/ruin/cyborg_mothership
+	suffix = "cyborg_mothership"
+	name = "Cyborg Mothership"
 
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"

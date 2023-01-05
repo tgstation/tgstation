@@ -25,6 +25,10 @@
 	basic_mob_flags = DEL_ON_DEATH
 	faction = list("hostile", FACTION_MAINT_CREATURES)
 
+	unsuitable_atmos_damage = 0
+	minimum_survivable_temperature = 270
+	maximum_survivable_temperature = INFINITY
+
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
 	var/cockroach_cell_line = CELL_LINE_TABLE_COCKROACH
@@ -49,10 +53,11 @@
 
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
@@ -88,6 +93,7 @@
 
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach, //If we are attacking someone, this will prevent us from hunting
@@ -133,6 +139,7 @@
 	return FALSE
 /datum/ai_controller/basic_controller/cockroach/hauberoach
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach,  //If we are attacking someone, this will prevent us from hunting
@@ -147,6 +154,7 @@
 
 /datum/ai_controller/basic_controller/cockroach/sewer
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/sewer,

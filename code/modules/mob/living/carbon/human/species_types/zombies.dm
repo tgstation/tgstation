@@ -7,7 +7,11 @@
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
 	mutanttongue = /obj/item/organ/internal/tongue/zombie
-	species_traits = list(NOBLOOD,NOZOMBIE,NOTRANSSTING, HAS_FLESH, HAS_BONE)
+	species_traits = list(
+		NOBLOOD,
+		NOZOMBIE,
+		NOTRANSSTING,
+	)
 	inherent_traits = list(
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,

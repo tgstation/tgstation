@@ -264,7 +264,7 @@
 	for(var/t in bodyparts) //this really should not be necessary
 		qdel(t)
 
-	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
+	var/mob/living/basic/pet/dog/corgi/new_corgi = new /mob/living/basic/pet/dog/corgi (loc)
 	new_corgi.set_combat_mode(TRUE)
 	new_corgi.key = key
 
@@ -300,7 +300,7 @@
 
 /mob/living/carbon/human/Animalize()
 
-	var/list/mobtypes = typesof(/mob/living/simple_animal)
+	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
 	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(mobpath))
 		return
@@ -334,7 +334,7 @@
 
 /mob/proc/Animalize()
 
-	var/list/mobtypes = typesof(/mob/living/simple_animal)
+	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
 	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(mobpath))
 		return
@@ -368,11 +368,11 @@
 //Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/pet/cat))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/pet/dog/corgi))
+	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/crab))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
+	if(ispath(MP, /mob/living/basic/carp))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
 		return TRUE

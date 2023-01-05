@@ -288,6 +288,7 @@
 	name = "Blood Mark your Target"
 	desc = "Marks whatever you are orbiting for the entire cult to track."
 	button_icon_state = "cult_mark"
+	check_flags = NONE
 	/// The duration of the mark on the target
 	var/cult_mark_duration = 60 SECONDS
 	/// The cooldown between marks - the ability can be used in between cooldowns, but can't mark (only clear)

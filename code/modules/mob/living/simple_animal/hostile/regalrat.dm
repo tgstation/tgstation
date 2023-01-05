@@ -49,29 +49,22 @@
 	QDEL_NULL(riot)
 	return ..()
 
+/mob/living/simple_animal/hostile/regalrat/proc/become_player_controlled(mob/user)
+	log_message("took control of [name].", LOG_GAME)
+	key = user.key
+	notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
+	to_chat(src, span_notice("You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!"))
+
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
 	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Regal Rat, cheesey be their crown?", ROLE_SENTIENCE, ROLE_SENTIENCE, 100, POLL_IGNORE_REGAL_RAT)
 	if(LAZYLEN(candidates) && !mind)
-		var/mob/dead/observer/C = pick(candidates)
-		key = C.key
-		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
-	to_chat(src, span_notice("You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!"))
+		var/mob/dead/observer/candidate = pick(candidates)
+		become_player_controlled(candidate)
 
 /mob/living/simple_animal/hostile/regalrat/attack_ghost(mob/user)
 	. = ..()
 	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
-	get_clicked_player(user)
-
-/**
- * Sets a ghost to control the rat if the rat is eligible
- *
- * Asks the interacting ghost if they would like to control the rat.
- * If they answer yes, and another ghost hasn't taken control, sets the ghost to control the rat.
- * Arguments:
- * * mob/user - The ghost to possibly control the rat
- */
-/mob/living/simple_animal/hostile/regalrat/proc/get_clicked_player(mob/user)
 	if(key || stat)
 		return
 	if(!SSticker.HasRoundStarted())
@@ -83,8 +76,7 @@
 	if(key)
 		to_chat(user, span_warning("Someone else already took the rat!"))
 		return
-	key = user.key
-	src.log_message("took control of [name].", LOG_GAME)
+	become_player_controlled(user)
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
@@ -237,8 +229,8 @@
 	StartCooldown()
 
 /**
- * This action checks all nearby mice, and converts them into hostile rats.
- * If no mice are nearby, creates a new one.
+ * This action checks some nearby maintenance animals and makes them your minions.
+ * If none are nearby, creates a new mouse.
  */
 /datum/action/cooldown/riot
 	name = "Raise Army"
@@ -250,111 +242,162 @@
 	overlay_icon_state = "bg_clock_border"
 	cooldown_time = 8 SECONDS
 	melee_cooldown_time = 0 SECONDS
+	/// How close does something need to be for us to recruit it?
+	var/range = 5
+	/// Commands you can give to your mouse army
+	var/static/list/mouse_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targetting/attack/mouse
+	)
+	/// Commands you can give to glockroaches
+	var/static/list/glockroach_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targetting/attack/glockroach
+	)
 
 /datum/action/cooldown/riot/Activate(atom/target)
 	StartCooldown(10 SECONDS)
 	riot()
 	StartCooldown()
 
+/**
+ * Attempts to, in order and ending at any successful step:
+ * * Convert nearby mice into aggressive rats.
+ * * Convert nearby roaches into aggressive roaches.
+ * * Convert nearby frogs into aggressive frogs.
+ * * Spawn a single mouse if below the mouse cap.
+ */
 /datum/action/cooldown/riot/proc/riot()
-	var/cap = CONFIG_GET(number/ratcap)
 	var/uplifted_mice = FALSE
-	var/uplifted_frog = FALSE
+	for (var/mob/living/basic/mouse/nearby_mouse in oview(owner, range))
+		uplifted_mice = convert_mouse(nearby_mouse) || uplifted_mice
+	if (uplifted_mice)
+		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
+		return
+
+	var/static/list/converted_check_list = list(FACTION_RAT)
 	var/uplifted_roach = FALSE
-	var/list/converted_check_list = list(FACTION_RAT)
-	for(var/mob/living/simple_animal/hostile/retaliate/frog/nearby_frog in oview(owner, 5))
-		// No need to convert when not on the same team.
-		if(faction_check(nearby_frog.faction, converted_check_list))
-			continue
-		if(nearby_frog.name == "frog")
-			nearby_frog.name = "trash frog"
-			nearby_frog.icon_state += "_trash"
-			nearby_frog.icon_living += "_trash"
-			nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
-		else if(nearby_frog.name == "rare frog")
-			nearby_frog.name = "rare trash frog"
-			nearby_frog.icon_state += "_trash"
-			nearby_frog.icon_living += "_trash"
-			nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
-		nearby_frog.desc += " ...Except this one lives in a trash bag."
-		nearby_frog.maxHealth += 10
-		nearby_frog.health += 10
-		nearby_frog.melee_damage_lower += 1
-		nearby_frog.melee_damage_upper += 5
-		nearby_frog.faction = owner.faction.Copy()
-		uplifted_frog = TRUE
-		break
-
-	if(uplifted_frog)
-		owner.visible_message(span_warning("[owner] commands their army to action, mutating them trash frogs!"))
-	else
-		for(var/mob/living/basic/cockroach/nearby_roach in oview(owner, 5))
-			// No need to convert when not on the same team.
-			if(faction_check(nearby_roach.faction, converted_check_list))
-				continue
-			if(istype(nearby_roach, /mob/living/basic/cockroach/glockroach))
-				if(nearby_roach.name == "glockroach")
-					nearby_roach.name = "sewer glockroach"
-				nearby_roach.melee_damage_lower += 0.5
-				nearby_roach.melee_damage_upper += 2
-			else if(istype(nearby_roach, /mob/living/basic/cockroach/hauberoach))
-				if(nearby_roach.name == "hauberoach")
-					nearby_roach.name = "sewer hauberoach"
-				nearby_roach.melee_damage_lower += 0.5
-				nearby_roach.melee_damage_upper += 2
-			else
-				if(nearby_roach.name == "cockroach")
-					nearby_roach.name = "sewer cockroach"
-				nearby_roach.melee_damage_lower += 2
-				nearby_roach.melee_damage_upper += 4
-				nearby_roach.obj_damage += 5
-				nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
-			nearby_roach.desc += " ...Except this one looks very robust."
-			nearby_roach.icon_state += "_sewer"
-			nearby_roach.maxHealth += 1
-			nearby_roach.health += 1
-			nearby_roach.faction = owner.faction.Copy()
-			uplifted_roach = TRUE
-			break
-
-	if(uplifted_roach)
+	for (var/mob/living/basic/cockroach/nearby_roach in oview(owner, range))
+		uplifted_roach = convert_roach(nearby_roach, converted_check_list) || uplifted_roach
+	if (uplifted_roach)
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into sewer roaches!"))
-	else if(!uplifted_frog)
-		for(var/mob/living/basic/mouse/nearby_mouse in oview(owner, 5))
-			// This mouse is already rat controlled, let's not bother with it.
-			if(istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat))
-				continue
-			var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
+		return
 
-			// Change name
-			if(nearby_mouse.name == "mouse")
-				nearby_mouse.name = initial(rat_path.name)
-			// Buffs our combat stats to that of a rat
-			nearby_mouse.melee_damage_lower = initial(rat_path.melee_damage_lower)
-			nearby_mouse.melee_damage_upper = initial(rat_path.melee_damage_upper)
-			nearby_mouse.obj_damage = initial(rat_path.obj_damage)
-			nearby_mouse.maxHealth = initial(rat_path.maxHealth)
-			nearby_mouse.health = initial(rat_path.health)
-			// Replace our AI with a rat one
-			nearby_mouse.ai_controller = new /datum/ai_controller/basic_controller/mouse/rat(nearby_mouse)
-			// Give a hint in description too
-			nearby_mouse.desc += " ...Except this one looks corrupted and aggressive."
-			// Now we share factions!
-			nearby_mouse.faction = owner.faction.Copy()
-			uplifted_mice = TRUE
-			break
+	var/uplifted_frog = FALSE
+	for (var/mob/living/basic/frog/nearby_frog in oview(owner, range))
+		uplifted_frog = convert_frog(nearby_frog, converted_check_list) || uplifted_frog
+	if (uplifted_frog)
+		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into trash frogs!"))
+		return
 
-		if(uplifted_mice)
-			owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
+	var/rat_cap = CONFIG_GET(number/ratcap)
+	if (LAZYLEN(SSmobs.cheeserats) >= rat_cap)
+		to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
+		return
+	new /mob/living/basic/mouse(owner.loc)
+	owner.visible_message(span_warning("[owner] commands a rat to their side!"))
 
-		else if(LAZYLEN(SSmobs.cheeserats) < cap)
-			new /mob/living/basic/mouse(owner.loc)
-			owner.visible_message(span_warning("[owner] commands a rat to their side!"))
+/// Makes a passed mob into our minion
+/datum/action/cooldown/riot/proc/make_minion(mob/living/new_minion, minion_desc, list/command_list = mouse_commands)
+	if (isbasicmob(new_minion))
+		new_minion.AddComponent(/datum/component/obeys_commands, command_list)
+		qdel(new_minion.GetComponent(/datum/component/tameable)) // Rats don't share
+	new_minion.befriend(owner)
+	new_minion.faction = owner.faction.Copy()
+	// Give a hint in description too
+	new_minion.desc += minion_desc
+	new_minion.balloon_alert_to_viewers("squeak")
 
-		else
-			to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
+/// Turns a mouse into an angry mouse
+/datum/action/cooldown/riot/proc/convert_mouse(mob/living/basic/mouse/nearby_mouse)
+	// This mouse is already rat controlled, let's not bother with it.
+	if (istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat))
+		return FALSE
 
-	StartCooldown()
+	var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
+	// Change name
+	if (nearby_mouse.name == "mouse")
+		nearby_mouse.name = initial(rat_path.name)
+	// Buffs our combat stats to that of a rat
+	nearby_mouse.melee_damage_lower = initial(rat_path.melee_damage_lower)
+	nearby_mouse.melee_damage_upper = initial(rat_path.melee_damage_upper)
+	nearby_mouse.obj_damage = initial(rat_path.obj_damage)
+	nearby_mouse.maxHealth = initial(rat_path.maxHealth)
+	nearby_mouse.health = initial(rat_path.health)
+	// Replace our AI with a rat one
+	nearby_mouse.ai_controller = new /datum/ai_controller/basic_controller/mouse/rat(nearby_mouse)
+	make_minion(nearby_mouse, " ...Except this one looks corrupted and aggressive.")
+	return TRUE
+
+/// Turns a roach into an angry roach
+/datum/action/cooldown/riot/proc/convert_roach(mob/living/basic/cockroach/nearby_roach, list/converted_check_list)
+	// No need to convert when not on the same team.
+	if (faction_check(nearby_roach.faction, converted_check_list))
+		return FALSE
+
+	var/list/minion_commands = mouse_commands
+	if (!findtext(nearby_roach.name, "sewer"))
+		nearby_roach.name = "sewer [nearby_roach.name]"
+
+	if (istype(nearby_roach, /mob/living/basic/cockroach/glockroach) || istype(nearby_roach, /mob/living/basic/cockroach/hauberoach))
+		if (istype(nearby_roach, /mob/living/basic/cockroach/glockroach))
+			minion_commands = glockroach_commands
+		nearby_roach.melee_damage_lower += 0.5
+		nearby_roach.melee_damage_upper += 2
+	else
+		nearby_roach.melee_damage_lower += 2
+		nearby_roach.melee_damage_upper += 4
+		nearby_roach.obj_damage += 5
+		nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
+
+	nearby_roach.icon_state += "_sewer"
+	nearby_roach.maxHealth += 1
+	nearby_roach.health += 1
+	make_minion(nearby_roach, " <br>This one looks extra robust.", minion_commands)
+	return TRUE
+
+/// Turns a frog into a crazy frog. This doesn't do anything interesting and should when it becomes a basic mob.
+/datum/action/cooldown/riot/proc/convert_frog(mob/living/basic/frog/nearby_frog, list/converted_check_list)
+	// No need to convert when not on the same team.
+	if(faction_check(nearby_frog.faction, converted_check_list) || nearby_frog.stat == DEAD)
+		return FALSE
+
+	var/list/minion_commands = mouse_commands
+	if (!findtext(nearby_frog.name, "trash"))
+		nearby_frog.name = replacetext(nearby_frog.name, "frog", "trash frog")
+
+	nearby_frog.icon_state += "_trash"
+	nearby_frog.icon_living += "_trash"
+	nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
+	nearby_frog.maxHealth += 10
+	nearby_frog.health += 10
+	nearby_frog.melee_damage_lower += 1
+	nearby_frog.melee_damage_upper += 5
+	nearby_frog.obj_damage += 10
+	nearby_frog.ai_controller = new /datum/ai_controller/basic_controller/frog/trash(nearby_frog)
+	var/crazy_frog_desc = " ...[findtext(nearby_frog.name, "rare") ? "even though" : "perhaps because"] they live in a trash bag."
+	make_minion(nearby_frog, crazy_frog_desc, minion_commands)
+	return TRUE
+
+// Command you can give to a mouse to make it kill someone
+/datum/pet_command/point_targetting/attack/mouse
+	speech_commands = list("attack", "sic", "kill", "cheese em")
+	command_feedback = "squeak!" // Frogs and roaches can squeak too it's fine
+	pointed_reaction = "and squeaks aggressively"
+	refuse_reaction = "quivers"
+	attack_behaviour = /datum/ai_behavior/basic_melee_attack/rat
+
+// Command you can give to a mouse to make it kill someone
+/datum/pet_command/point_targetting/attack/glockroach
+	speech_commands = list("attack", "sic", "kill", "cheese em")
+	command_feedback = "squeak!"
+	pointed_reaction = "and cocks its gun"
+	refuse_reaction = "quivers"
+	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/glockroach
 
 /**
  *Spittle; harmless reagent that is added by rat king, and makes you disgusted.

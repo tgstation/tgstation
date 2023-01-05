@@ -126,6 +126,14 @@
 	storage_type = /obj/item/tank/jetpack/oxygen/harness
 	mod_type = /obj/item/mod/control/pre_equipped/nuclear
 
+/obj/machinery/suit_storage_unit/void_old
+	suit_type = /obj/item/clothing/suit/space/nasavoid/old
+	helmet_type = /obj/item/clothing/head/helmet/space/nasavoid/old
+	storage_type = /obj/item/tank/internals/oxygen/yellow
+
+/obj/machinery/suit_storage_unit/void_old/jetpack
+	storage_type = /obj/item/tank/jetpack/void
+
 /obj/machinery/suit_storage_unit/radsuit
 	name = "radiation suit storage unit"
 	suit_type = /obj/item/clothing/suit/utility/radiation

@@ -337,8 +337,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CAN_SIGN_ON_COMMS "can_sign_on_comms"
 /// nobody can use martial arts on this mob
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
-/// You've been cursed with a living duffelbag, and can't have more added
-#define TRAIT_DUFFEL_CURSE_PROOF "duffel_cursed"
 /// Immune to being afflicted by time stop (spell)
 #define TRAIT_TIME_STOP_IMMUNE "time_stop_immune"
 /// Revenants draining you only get a very small benefit.
@@ -442,6 +440,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
 #define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
+
+/// If applied to a mob, nearby dogs will have a small chance to nonharmfully harass said mob
+#define TRAIT_HATED_BY_DOGS "hated_by_dogs"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -689,12 +690,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Receives echolocation images.
 #define TRAIT_ECHOLOCATION_RECEIVER "echolocation_receiver"
 
-//Medical Categories for quirks
-#define CAT_QUIRK_ALL 0
-#define CAT_QUIRK_NOTES 1
-#define CAT_QUIRK_MINOR_DISABILITY 2
-#define CAT_QUIRK_MAJOR_DISABILITY 3
-
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define UNCONSCIOUS_TRAIT "unconscious"
@@ -921,6 +916,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
 #define STATION_TRAIT_BOTS_GLITCHED "station_trait_bot_glitch"
 #define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
+#define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
+#define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -1011,4 +1008,3 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEAKING_FROM_TONGUE "tongue"
 ///trait source that sign language should use
 #define SPEAKING_FROM_HANDS "hands"
-

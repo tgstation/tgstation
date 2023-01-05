@@ -26,16 +26,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/taste_description = "metaphorical salt"
 	///how this taste compares to others. Higher values means it is more noticable
 	var/taste_mult = 1
-	/// use for specialty drinks.
-	var/glass_name = "glass of ...what?"
-	/// desc applied to glasses with this reagent
-	var/glass_desc = "You can't really tell what this is."
-	/// Otherwise just sets the icon to a normal glass with the mixture of the reagents in the glass.
-	var/glass_icon_state = null
-	/// used for shot glasses, mostly for alcohol
-	var/shot_glass_icon_state = null
-	/// fallback icon if  the reagent has no glass or shot glass icon state. Used for restaurants.
-	var/fallback_icon_state = null
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
 	/// LIQUID, SOLID, GAS
@@ -92,9 +82,27 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/burning_volume = 0.5
 	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
 	var/list/addiction_types = null
+	/// The affected bodytype, if the reagent damages/heals bodyparts (Brute/Fire) of an affected mob.
+	/// See "Bodytype defines" in /code/_DEFINES/mobs.dm
+	var/affected_bodytype = BODYTYPE_ORGANIC
+	/// The affected biotype, if the reagent damages/heals generic damage (Toxin/Oxygen) of an affected mob.
+	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
+	var/affected_biotype = MOB_ORGANIC
+	/// The affected organtype, if the reagent damages/heals organ damage of an affected mob.
+	/// See "Organ defines for carbon mobs" in /code/_DEFINES/mobs.dm
+	var/affected_organtype = ORGAN_ORGANIC
+
+	// Used for restaurants.
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
 	var/glass_price
 
+	///The default reagent container for the reagent
+	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
+
+	/// Icon for fallback item displayed in a tourist's thought bubble for if this reagent had no associated glass_style datum.
+	var/fallback_icon
+	/// Icon state for fallback item displayed in a tourist's thought bubble for if this reagent had no associated glass_style datum.
+	var/fallback_icon_state
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -221,9 +229,14 @@ Primarily used in reagents/reaction_agents
  * New, standardized method for chemicals to affect hydroponics trays.
  * Defined on a per-chem level as opposed to by the tray.
  * Can affect plant's health, stats, or cause the plant to react in certain ways.
+ * If you want to exclude subtypes use chems.has_reagent(src, [amount])
+ * Forexample: you use radium which is a subtype of uranium but dont want to apply the effect of uranium
  */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!mytray)
+		return
+	// Check if we have atleast a single amount of the reagent
+	if(!chems.has_reagent(type, 1))
 		return
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios

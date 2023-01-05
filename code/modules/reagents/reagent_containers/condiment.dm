@@ -299,6 +299,13 @@
 	list_reagents = list(/datum/reagent/consumable/cherryjelly = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/honey
+	name = "honey"
+	desc = "A jar of sweet and viscous honey."
+	icon_state = "honey"
+	list_reagents = list(/datum/reagent/consumable/honey = 50)
+	fill_icon_thresholds = null
+
 //technically condiment packs but they are non transparent
 
 /obj/item/reagent_containers/condiment/creamer

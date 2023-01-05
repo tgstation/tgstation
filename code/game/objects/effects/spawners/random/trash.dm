@@ -138,12 +138,12 @@
 	loot = list( // This spawner will scatter water related items around a moist site.
 		/obj/item/clothing/head/cone = 7,
 		/obj/item/clothing/suit/caution = 3,
-		/mob/living/simple_animal/hostile/retaliate/frog = 2,
+		/mob/living/basic/frog = 2,
 		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/reagent_containers/cup/bucket = 2,
 		/obj/effect/decal/cleanable/blood/old = 2,
 		/obj/structure/mop_bucket = 2,
-		/mob/living/simple_animal/axolotl = 1,
+		/mob/living/basic/axolotl = 1,
 	)
 
 /obj/effect/spawner/random/trash/graffiti

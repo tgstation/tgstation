@@ -37,13 +37,13 @@
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
 		if("brute")
-			owner.adjustBruteLoss(-0.5)
+			owner.adjustBruteLoss(-0.5, required_bodytype = affected_bodytype)
 		if("burn")
-			owner.adjustFireLoss(-0.5)
+			owner.adjustFireLoss(-0.5, required_bodytype = affected_bodytype)
 		if("tox")
-			owner.adjustToxLoss(-0.5)
+			owner.adjustToxLoss(-0.5, required_biotype = affected_biotype)
 		if("oxy")
-			owner.adjustOxyLoss(-0.5)
+			owner.adjustOxyLoss(-0.5, required_biotype = affected_biotype)
 	..()
 
 // C2 medications
@@ -250,19 +250,17 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 3.1
 	addiction_types = list(/datum/addiction/medicine = 1.5)
 	liver_damage = 0.1
-	//blurriness at the start of taking the med
-	var/cached_blurriness
+	/// blurriness at the start of taking the med
+	var/amount_of_blur_applied = 0 SECONDS
 
 /datum/reagent/impurity/aiuri/on_mob_add(mob/living/owner, amount)
 	. = ..()
-	cached_blurriness = owner.eye_blurry
-	owner.set_blurriness(((creation_purity*10)*(volume/metabolization_rate)) + cached_blurriness)
+	amount_of_blur_applied = creation_purity * (volume / metabolization_rate) * 2 SECONDS
+	owner.adjust_eye_blur(amount_of_blur_applied)
 
 /datum/reagent/impurity/aiuri/on_mob_delete(mob/living/owner, amount)
 	. = ..()
-	if(owner.eye_blurry <= cached_blurriness)
-		return
-	owner.set_blurriness(cached_blurriness)
+	owner.adjust_eye_blur(-amount_of_blur_applied)
 
 //Hercuri
 //inverse
@@ -297,7 +295,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, delta_time, times_fired)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time, required_organtype = affected_organtype) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
 	var/heating = 10 * creation_purity * REM * delta_time * TEMPERATURE_DAMAGE_COEFFICIENT
 	owner.adjust_bodytemperature(heating) //hot hot
 	if(ishuman(owner))
@@ -440,7 +438,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	time_until_next_poison -= delta_time * (1 SECONDS)
 	if (time_until_next_poison <= 0)
 		time_until_next_poison = poison_interval
-		owner.adjustToxLoss(creation_purity * 1)
+		owner.adjustToxLoss(creation_purity * 1, required_biotype = affected_biotype)
 
 	..()
 
@@ -454,11 +452,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 1.75)
 
-/datum/reagent/inverse/healing/syriniver/on_mob_add(mob/living/living_mob)
-	if(!(iscarbon(living_mob)))
+/datum/reagent/inverse/healing/syriniver/on_mob_add(mob/living/affected_mob)
+	if(!(iscarbon(affected_mob)))
 		return ..()
-	var/mob/living/carbon/owner = living_mob
-	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+	var/mob/living/carbon/affected_carbon = affected_mob
+	for(var/datum/reagent/reagent as anything in affected_carbon.reagents.reagent_list)
 		if(reagent in cached_reagent_list)
 			continue
 		if(istype(reagent, /datum/reagent/medicine))
@@ -467,9 +465,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		cached_reagent_list += reagent
 	..()
 
-/datum/reagent/inverse/healing/syriniver/on_mob_delete(mob/living/living_mob)
+/datum/reagent/inverse/healing/syriniver/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	if(!(iscarbon(living_mob)))
+	if(!(iscarbon(affected_mob)))
 		return
 	if(!cached_reagent_list)
 		return
@@ -489,11 +487,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 3.5)
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
-/datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	if(length(owner.reagents.reagent_list) > 1)
-		owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time) //Hey! It's everyone's favourite drawback from multiver!
+/datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	if(length(affected_mob.reagents.reagent_list) > 1)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time, required_organtype = affected_organtype) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
-	owner.adjustToxLoss(-2 * REM * creation_purity * delta_time, 0)
+	affected_mob.adjustToxLoss(-2 * REM * creation_purity * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	return TRUE
 
@@ -514,81 +512,81 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
 
-/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner, delta_time)
-	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, delta_time)
+	var/obj/item/organ/internal/heart/heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
 	metabolization_rate = 0.2 * REM
-	ADD_TRAIT(owner, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
-	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
-	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
-	ADD_TRAIT(owner, TRAIT_NODEATH, type)
-	ADD_TRAIT(owner, TRAIT_NOCRITOVERLAY, type)
-	owner.set_stat(CONSCIOUS) //This doesn't touch knocked out
-	owner.updatehealth()
-	owner.update_sight()
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, STAT_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT) //Prevents the user from being knocked out by oxyloss
-	owner.set_resting(FALSE)//Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
-	owner.SetAllImmobility(0)
+	ADD_TRAIT(affected_mob, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(affected_mob, TRAIT_NOHARDCRIT, type)
+	ADD_TRAIT(affected_mob, TRAIT_NOSOFTCRIT, type)
+	ADD_TRAIT(affected_mob, TRAIT_NOCRITDAMAGE, type)
+	ADD_TRAIT(affected_mob, TRAIT_NODEATH, type)
+	ADD_TRAIT(affected_mob, TRAIT_NOCRITOVERLAY, type)
+	affected_mob.set_stat(CONSCIOUS) //This doesn't touch knocked out
+	affected_mob.updatehealth()
+	affected_mob.update_sight()
+	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, STAT_TRAIT)
+	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
+	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT) //Prevents the user from being knocked out by oxyloss
+	affected_mob.set_resting(FALSE)//Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
+	affected_mob.SetAllImmobility(0)
 	back_from_the_dead = TRUE
-	owner.emote("gasp")
-	owner.playsound_local(owner, 'sound/health/fastbeat.ogg', 65)
+	affected_mob.emote("gasp")
+	affected_mob.playsound_local(affected_mob, 'sound/health/fastbeat.ogg', 65)
 	..()
 
-/datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(!back_from_the_dead)
 		return ..()
 	//Following is for those brought back from the dead only
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
-	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
+	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
+	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		iter_wound.adjust_blood_flow(1-creation_purity)
-	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
-	owner.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time)
-	if(owner.health < HEALTH_THRESHOLD_CRIT)
-		owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
-	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
-		owner.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
-	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	affected_mob.adjustBruteLoss(5 * (1-creation_purity) * delta_time, required_bodytype = affected_bodytype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time, required_organtype = affected_organtype)
+	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
+		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
+		affected_mob.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
+	var/obj/item/organ/internal/heart/heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
-		remove_buffs(owner)
+		remove_buffs(affected_mob)
 	..()
 
-/datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/owner)
-	remove_buffs(owner)
-	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
-	if(owner.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
-		explosion(owner, light_impact_range = 1, explosion_cause = src)
+/datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/affected_mob)
+	remove_buffs(affected_mob)
+	var/obj/item/organ/internal/heart/heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
+	if(affected_mob.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
+		explosion(affected_mob, light_impact_range = 1, explosion_cause = src)
 		qdel(heart)
-		owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
+		affected_mob.visible_message(span_boldwarning("[affected_mob]'s heart explodes!"))
 	return ..()
 
-/datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/owner)
+/datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/affected_mob)
 	if(!back_from_the_dead)
 		return ..()
-	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart) //No heart? No life!
-		REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
-		owner.stat = DEAD
+		REMOVE_TRAIT(affected_mob, TRAIT_NODEATH, type)
+		affected_mob.stat = DEAD
 		return ..()
-	explosion(owner, light_impact_range = 1, explosion_cause = src)
+	explosion(affected_mob, light_impact_range = 1, explosion_cause = src)
 	qdel(heart)
-	owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
+	affected_mob.visible_message(span_boldwarning("[affected_mob]'s heart explodes!"))
 	return..()
 
-/datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/owner)
-	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, type)
-	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
-	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
-	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
-	REMOVE_TRAIT(owner, TRAIT_NOCRITOVERLAY, type)
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
-	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
-	owner.update_sight()
+/datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/affected_mob)
+	REMOVE_TRAIT(affected_mob, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_NOHARDCRIT, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_NOSOFTCRIT, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_NOCRITDAMAGE, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_NODEATH, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_NOCRITOVERLAY, type)
+	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+	affected_mob.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
+	affected_mob.update_sight()
 
 /*				Non c2 medicines 				*/
 
@@ -599,15 +597,15 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 5)
 	ph = 12.4
 	liver_damage = 0
-	///The speech we're forcing on the owner
+	///The speech we're forcing on the affected mob
 	var/speech_option
 
-/datum/reagent/impurity/mannitol/on_mob_add(mob/living/owner, amount)
+/datum/reagent/impurity/mannitol/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
-	if(!iscarbon(owner))
+	if(!iscarbon(affected_mob))
 		return
-	var/mob/living/carbon/carbon = owner
-	if(!carbon.dna)
+	var/mob/living/carbon/affected_carbon = affected_mob
+	if(!affected_carbon.dna)
 		return
 	var/list/speech_options = list(
 		/datum/mutation/human/swedish,
@@ -621,17 +619,17 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		)
 	speech_options = shuffle(speech_options)
 	for(var/option in speech_options)
-		if(carbon.dna.get_mutation(option))
+		if(affected_carbon.dna.get_mutation(option))
 			continue
-		carbon.dna.add_mutation(option)
+		affected_carbon.dna.add_mutation(option)
 		speech_option = option
 		return
 
-/datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
+/datum/reagent/impurity/mannitol/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	if(!iscarbon(owner))
+	if(!iscarbon(affected_mob))
 		return
-	var/mob/living/carbon/carbon = owner
+	var/mob/living/carbon/carbon = affected_mob
 	carbon.dna?.remove_mutation(speech_option)
 
 /datum/reagent/inverse/neurine
@@ -642,10 +640,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 8)
 	metabolization_rate = 0.025 * REM
 	tox_damage = 0
-	//The temporary trauma passed to the owner
+	//The temporary trauma passed to the affected mob
 	var/datum/brain_trauma/temp_trauma
 
-/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	.=..()
 	if(temp_trauma)
 		return
@@ -657,20 +655,20 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		/datum/brain_trauma/hypnosis // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
 		)
 	traumalist -= forbiddentraumas
-	var/obj/item/organ/internal/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = affected_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	traumalist = shuffle(traumalist)
 	for(var/trauma in traumalist)
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
 			temp_trauma = trauma
 			return
 
-/datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/owner)
+/datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/affected_mob)
 	.=..()
 	if(!temp_trauma)
 		return
 	if(istype(temp_trauma, /datum/brain_trauma/special/imaginary_friend))//Good friends stay by you, no matter what
 		return
-	owner.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
+	affected_mob.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
 
 /datum/reagent/inverse/corazargh
 	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free. Also an omage to an older chem
@@ -688,11 +686,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/internal/heart/cursed/manual_heart
 
 ///Creates a new cursed heart and puts the old inside of it, then replaces the position of the old
-/datum/reagent/inverse/corazargh/on_mob_metabolize(mob/living/owner)
-	if(!iscarbon(owner))
+/datum/reagent/inverse/corazargh/on_mob_metabolize(mob/living/affected_mob)
+	if(!iscarbon(affected_mob))
 		return
-	var/mob/living/carbon/carbon_mob = owner
-	original_heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	var/mob/living/carbon/carbon_mob = affected_mob
+	original_heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
 	if(!original_heart)
 		return
 	manual_heart = new(null, src)
@@ -703,22 +701,22 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	//these last so instert doesn't call them
 	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
 	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
-	to_chat(owner, span_userdanger("You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!"))
+	to_chat(affected_mob, span_userdanger("You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!"))
 	..()
 
 ///Intercepts the new heart and creates a new cursed heart - putting the old inside of it
-/datum/reagent/inverse/corazargh/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
+/datum/reagent/inverse/corazargh/proc/on_gained_organ(mob/affected_mob, obj/item/organ/organ)
 	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/internal/heart))
 		return
-	var/mob/living/carbon/carbon_mob = owner
+	var/mob/living/carbon/affected_carbon = affected_mob
 	original_heart = organ
-	original_heart.Remove(carbon_mob, special = TRUE)
+	original_heart.Remove(affected_carbon, special = TRUE)
 	original_heart.forceMove(manual_heart)
 	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
 	if(!manual_heart)
 		manual_heart = new(null, src)
-	manual_heart.Insert(carbon_mob, special = TRUE)
+	manual_heart.Insert(affected_carbon, special = TRUE)
 
 ///If we're ejecting out the organ - replace it with the original
 /datum/reagent/inverse/corazargh/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
@@ -730,18 +728,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	qdel(organ)
 
 ///We're done - remove the curse and restore the old one
-/datum/reagent/inverse/corazargh/on_mob_end_metabolize(mob/living/owner)
+/datum/reagent/inverse/corazargh/on_mob_end_metabolize(mob/living/affected_mob)
 	//Do these first so Insert doesn't call them
-	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
-	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
-	if(!iscarbon(owner))
+	UnregisterSignal(affected_mob, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(affected_mob, COMSIG_CARBON_GAIN_ORGAN)
+	if(!iscarbon(affected_mob))
 		return
-	var/mob/living/carbon/carbon_mob = owner
+	var/mob/living/carbon/affected_carbon = affected_mob
 	if(original_heart) //Mostly a just in case
 		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
-		original_heart.Insert(carbon_mob, special = TRUE)
+		original_heart.Insert(affected_carbon, special = TRUE)
 	qdel(manual_heart)
-	to_chat(owner, span_userdanger("You feel your heart start beating normally again!"))
+	to_chat(affected_mob, span_userdanger("You feel your heart start beating normally again!"))
 	..()
 
 /datum/reagent/inverse/antihol
@@ -773,19 +771,19 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///Did we get a headache?
 	var/headache = FALSE
 
-/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(headache)
 		return ..()
 	if(DT_PROB(100*(1-creation_purity), delta_time))
-		owner.become_blind(IMPURE_OCULINE)
-		to_chat(owner, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
+		affected_mob.become_blind(IMPURE_OCULINE)
+		to_chat(affected_mob, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
 		headache = TRUE
 	..()
 
-/datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/owner)
-	owner.cure_blind(IMPURE_OCULINE)
+/datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/affected_mob)
+	affected_mob.cure_blind(IMPURE_OCULINE)
 	if(headache)
-		to_chat(owner, span_notice("Your headache clears up!"))
+		to_chat(affected_mob, span_notice("Your headache clears up!"))
 	..()
 
 /datum/reagent/impurity/inacusiate
@@ -801,17 +799,22 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///The random span we start hearing in
 	var/randomSpan
 
-/datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/owner, delta_time, times_fired)
+/datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/affected_mob, delta_time, times_fired)
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
-	to_chat(owner, span_warning("Your hearing seems to be a bit off!"))
+	RegisterSignal(affected_mob, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
+	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off!"))
 	..()
 
-/datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/owner)
-	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	to_chat(owner, span_notice("You start hearing things normally again."))
+/datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/affected_mob)
+	UnregisterSignal(affected_mob, COMSIG_MOVABLE_HEAR)
+	to_chat(affected_mob, span_notice("You start hearing things normally again."))
 	..()
 
-/datum/reagent/impurity/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
+/datum/reagent/impurity/inacusiate/proc/owner_hear(mob/living/owner, list/hearing_args)
 	SIGNAL_HANDLER
+
+	// don't skip messages that the owner says or can't understand (since they still make sounds)
+	if(!owner.can_hear())
+		return
+
 	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"

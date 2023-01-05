@@ -127,13 +127,14 @@
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
+	var/max_multiplier
+	var/coefficient
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
-
+		coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
 		for(var/datum/material/material in design.materials)
-			var/coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
 			cost[material.name] = design.materials[material] * coefficient
-
+			max_multiplier = min(50, round(materials.mat_container.get_material_amount(material) / (design.materials[material] * coefficient)))
 		var/icon_size = spritesheet.icon_size_id(design.id)
 
 		designs[design.id] = list(
@@ -143,7 +144,8 @@
 			"id" = design.id,
 			"categories" = design.category,
 			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = 0
+			"constructionTime" = 0,
+			"maxmult" = max_multiplier
 		)
 
 	data["designs"] = designs
@@ -217,8 +219,8 @@
 	return ..()
 
 /obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, notify_admins)
-	if(notify_admins)
-		investigate_log("[key_name(usr)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
+	if(notify_admins && ismob(usr))
+		usr.investigate_log("built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at \a [src]([type]).")
 
 	for(var/i in 1 to amount)
