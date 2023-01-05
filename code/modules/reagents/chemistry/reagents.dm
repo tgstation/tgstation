@@ -232,6 +232,7 @@ Primarily used in reagents/reaction_agents
  */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 
+/// Proc is used to see if the tray and the reagents inside dont have unintended behaviour
 /datum/reagent/proc/check_tray(datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	ASSERT(mytray)
 	// Check if we have atleast a single amount of the reagent
