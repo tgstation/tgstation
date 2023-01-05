@@ -85,7 +85,7 @@
 /obj/machinery/door/window/tram/try_safety_unlock(mob/user)
 	if(!hasPower())
 		to_chat(user, span_notice("You begin pulling the tram emergency exit handle..."))
-		if(do_after(user, 7 SECONDS, target = src))
+		if(do_after(user, 15 SECONDS, target = src))
 			try_to_crowbar(null, user, TRUE)
 			return TRUE
 
