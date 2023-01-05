@@ -184,6 +184,9 @@
 				I = new R.result (get_turf(a.loc), R.result_amount || 1)
 			else
 				I = new R.result (get_turf(a.loc))
+				if(I.atom_storage)
+					for(var/obj/item/thing in I)
+						qdel(thing)
 			I.CheckParts(parts, R)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)

@@ -656,15 +656,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_cycle_equip_off"
 
-/datum/armor/machinery_porta_turret
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 30
-	fire = 90
-	acid = 90
-
 /datum/action/turret_toggle/Trigger(trigger_flags)
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
@@ -675,15 +666,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	name = "Release Control"
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_eject"
-
-/datum/armor/machinery_porta_turret
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 30
-	fire = 90
-	acid = 90
 
 /datum/action/turret_quit/Trigger(trigger_flags)
 	var/obj/machinery/porta_turret/P = target
@@ -750,15 +732,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	base_icon_state = "syndie"
 	faction = list(ROLE_SYNDICATE)
 	desc = "A ballistic machine gun auto-turret."
-
-/datum/armor/machinery_porta_turret
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 30
-	fire = 90
-	acid = 90
 
 /obj/machinery/porta_turret/syndicate/Initialize(mapload)
 	. = ..()
@@ -830,15 +803,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	faction = list("silicon")
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
-/datum/armor/syndicate_shuttle
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 80
-	fire = 90
-	acid = 90
-
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction
 
@@ -850,15 +814,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	mode = TURRET_LETHAL //It would be useless in stun mode anyway
 	faction = list(FACTION_NEUTRAL,"silicon","turret") //Minebots, medibots, etc that should not be shot.
-
-/datum/armor/syndicate_shuttle
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 80
-	fire = 90
-	acid = 90
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
 	return 0 //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
@@ -889,15 +844,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	base_icon_state = "syndie"
 	faction = list(FACTION_NEUTRAL,"silicon","turret")
 	mode = TURRET_LETHAL
-
-/datum/armor/syndicate_shuttle
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 80
-	fire = 90
-	acid = 90
 
 /obj/machinery/porta_turret/centcom_shuttle/Initialize(mapload)
 	. = ..()
@@ -945,15 +891,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/shoot_cyborgs = FALSE
 	/// List of weakrefs to all turrets
 	var/list/turrets = list()
-
-/datum/armor/syndicate_shuttle
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 80
-	fire = 90
-	acid = 90
 
 /obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
@@ -1114,15 +1051,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	pixel_shift = 29
 
-/datum/armor/syndicate_shuttle
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 80
-	fire = 90
-	acid = 90
-
 /obj/item/gun/proc/get_turret_properties()
 	. = list()
 	.["lethal_projectile"] = null
@@ -1183,15 +1111,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	turret_flags = TURRET_FLAG_AUTH_WEAPONS
 	var/team_color
 
-/datum/armor/syndicate_shuttle
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 80
-	fire = 90
-	acid = 90
-
 /obj/machinery/porta_turret/lasertag/assess_perp(mob/living/carbon/human/perp)
 	. = 0
 	if(team_color == "blue") //Lasertag turrets target the opposing team, how great is that? -Sieve
@@ -1234,15 +1153,6 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/lasertag/blue
 	installation = /obj/item/gun/energy/laser/bluetag
 	team_color = "blue"
-
-/datum/armor/syndicate_shuttle
-	melee = 50
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 80
-	fire = 90
-	acid = 90
 
 /obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/P)
 	. = ..()

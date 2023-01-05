@@ -636,6 +636,11 @@
 		aiHacking = TRUE
 		to_chat(user, span_warning("Airlock AI control has been blocked. Beginning fault-detection."))
 		sleep(5 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -646,8 +651,18 @@
 			return
 		to_chat(user, span_notice("Fault confirmed: airlock control wire disabled or cut."))
 		sleep(2 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		to_chat(user, span_notice("Attempting to hack into airlock. This may take some time."))
 		sleep(20 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -658,6 +673,11 @@
 			return
 		to_chat(user, span_notice("Upload access confirmed. Loading control program into airlock software."))
 		sleep(17 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -668,10 +688,20 @@
 			return
 		to_chat(user, span_notice("Transfer complete. Forcing airlock to execute program."))
 		sleep(5 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		//disable blocked control
 		aiControlDisabled = AI_WIRE_HACKED
 		to_chat(user, span_notice("Receiving control information from airlock."))
 		sleep(1 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		//bring up airlock dialog
 		aiHacking = FALSE
 		if(user)
@@ -1364,7 +1394,6 @@
 			var/obj/item/electronics/airlock/ae
 			if(!electronics)
 				ae = new/obj/item/electronics/airlock(loc)
-				gen_access()
 				if(length(req_one_access))
 					ae.one_access = 1
 					ae.accesses = req_one_access

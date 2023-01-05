@@ -401,6 +401,10 @@
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
+/obj/item/clothing/under/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
+
 /obj/item/clothing/under/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -440,6 +444,10 @@
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
+/obj/item/clothing/suit/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
+
 /obj/item/clothing/suit/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -475,6 +483,10 @@
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/clothing/glasses/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity)
 	. = ..()
@@ -514,6 +526,10 @@
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
+/obj/item/clothing/gloves/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
+
 /obj/item/clothing/gloves/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -551,6 +567,10 @@
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
+/obj/item/clothing/head/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
+
 /obj/item/clothing/head/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -566,13 +586,6 @@
 	// drone itself.
 	armor_type = /datum/armor/none
 	// which means it offers no protection, it's just air and light
-
-/datum/armor/head_chameleon
-	melee = 5
-	bullet = 5
-	laser = 5
-	fire = 50
-	acid = 50
 
 /obj/item/clothing/head/chameleon/drone/Initialize(mapload)
 	. = ..()
@@ -616,6 +629,10 @@
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
+/obj/item/clothing/mask/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
+
 /obj/item/clothing/mask/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -636,14 +653,6 @@
 	armor_type = /datum/armor/none
 	// Can drones use the voice changer part? Let's not find out.
 	voice_change = 0
-
-/datum/armor/mask_chameleon
-	melee = 5
-	bullet = 5
-	laser = 5
-	bio = 100
-	fire = 50
-	acid = 50
 
 /obj/item/clothing/mask/chameleon/drone/Initialize(mapload)
 	. = ..()
@@ -690,6 +699,10 @@
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
+/obj/item/clothing/shoes/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
+
 /obj/item/clothing/shoes/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -700,14 +713,6 @@
 	clothing_flags = NOSLIP
 	can_be_bloody = FALSE
 
-/datum/armor/shoes_chameleon
-	melee = 10
-	bullet = 10
-	laser = 10
-	bio = 90
-	fire = 50
-	acid = 50
-
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize(mapload)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
@@ -716,14 +721,6 @@
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/datum/armor/shoes_chameleon
-	melee = 10
-	bullet = 10
-	laser = 10
-	bio = 90
-	fire = 50
-	acid = 50
-
 /obj/item/storage/backpack/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -731,6 +728,10 @@
 	chameleon_action.chameleon_name = "Backpack"
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/storage/backpack/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/storage/backpack/chameleon/emp_act(severity)
 	. = ..()
@@ -747,14 +748,6 @@
 	desc = "Holds tools."
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/datum/armor/shoes_chameleon
-	melee = 10
-	bullet = 10
-	laser = 10
-	bio = 90
-	fire = 50
-	acid = 50
-
 /obj/item/storage/belt/chameleon/Initialize(mapload)
 	. = ..()
 
@@ -765,6 +758,10 @@
 	add_item_action(chameleon_action)
 
 	atom_storage.silent = TRUE
+
+/obj/item/storage/belt/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/storage/belt/chameleon/emp_act(severity)
 	. = ..()
@@ -780,14 +777,6 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/datum/armor/shoes_chameleon
-	melee = 10
-	bullet = 10
-	laser = 10
-	bio = 90
-	fire = 50
-	acid = 50
-
 /obj/item/radio/headset/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -795,6 +784,10 @@
 	chameleon_action.chameleon_name = "Headset"
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/radio/headset/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/radio/headset/chameleon/emp_act(severity)
 	. = ..()
@@ -810,14 +803,6 @@
 	name = "tablet"
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
 
-/datum/armor/shoes_chameleon
-	melee = 10
-	bullet = 10
-	laser = 10
-	bio = 90
-	fire = 50
-	acid = 50
-
 /obj/item/modular_computer/pda/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -826,6 +811,10 @@
 	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/modular_computer/pda/heads), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/modular_computer/pda/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/modular_computer/pda/chameleon/emp_act(severity)
 	. = ..()
@@ -840,14 +829,6 @@
 /obj/item/stamp/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/datum/armor/shoes_chameleon
-	melee = 10
-	bullet = 10
-	laser = 10
-	bio = 90
-	fire = 50
-	acid = 50
-
 /obj/item/stamp/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -855,6 +836,10 @@
 	chameleon_action.chameleon_name = "Stamp"
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
+
+/obj/item/stamp/chameleon/Destroy()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/stamp/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -912,10 +897,6 @@
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
 
-/datum/armor/neck_chameleon
-	fire = 50
-	acid = 50
-
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -929,8 +910,9 @@
 	set_chameleon_disguise(/obj/item/gun/energy/laser)
 
 /obj/item/gun/energy/laser/chameleon/Destroy()
-	. = ..()
 	chameleon_projectile_vars.Cut()
+	QDEL_NULL(chameleon_action)
+	return ..()
 
 /obj/item/gun/energy/laser/chameleon/emp_act(severity)
 	return

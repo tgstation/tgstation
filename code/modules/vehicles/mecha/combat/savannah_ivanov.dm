@@ -78,15 +78,6 @@
 	///skyfall builds up in charges every 2 seconds, when it reaches 5 charges the ability actually starts
 	var/skyfall_charge_level = 0
 
-/datum/armor/mecha_savannah_ivanov
-	melee = 45
-	bullet = 40
-	laser = 30
-	energy = 30
-	bomb = 40
-	fire = 100
-	acid = 100
-
 /datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
@@ -253,15 +244,6 @@
 	var/rockets_left = 0
 	var/aiming_missile = FALSE
 
-/datum/armor/mecha_savannah_ivanov
-	melee = 45
-	bullet = 40
-	laser = 30
-	energy = 30
-	bomb = 40
-	fire = 100
-	acid = 100
-
 /datum/action/vehicle/sealed/mecha/ivanov_strike/Destroy()
 	if(aiming_missile)
 		end_missile_targeting()
@@ -371,15 +353,6 @@
 	alpha = 0
 	///reference to mecha following
 	var/obj/vehicle/sealed/mecha/mecha
-
-/datum/armor/mecha_savannah_ivanov
-	melee = 45
-	bullet = 40
-	laser = 30
-	energy = 30
-	bomb = 40
-	fire = 100
-	acid = 100
 
 /obj/effect/skyfall_landingzone/Initialize(mapload, obj/vehicle/sealed/mecha/mecha)
 	. = ..()
