@@ -31,7 +31,7 @@
 	var/available_on_syndinet = FALSE
 	/// Name of the tgui interface
 	var/tgui_id
-	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
+	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images must also be inserted into /datum/asset/simple/headers.
 	var/ui_header = null
 	/// Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.
 	var/program_icon = "window-maximize-o"

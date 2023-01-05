@@ -1,6 +1,7 @@
 /datum/computer_file/program/maintenance/modsuit_control
 	filename = "modsuit_control"
 	filedesc = "MODsuit Control"
+	program_icon_state = "modsuit_control"
 	category = PROGRAM_CATEGORY_SCI
 	extended_desc = "This program allows people to connect a MODsuit to it, allowing remote control."
 	size = 2
