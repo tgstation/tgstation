@@ -665,11 +665,11 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	var/pack = tgui_input_list(usr, "Which pack should we test?", "You fucked it didn't you", sort_list(SStrading_card_game.card_packs))
 	if(!pack)
 		return
-	var/batchCount = tgui_input_number(usr, "How many times should we open it?", "Don't worry, I understand")
-	var/batchSize = tgui_input_number(usr, "How many cards per batch?", "I hope you remember to check the validation")
+	var/batch_count = tgui_input_number(usr, "How many times should we open it?", "Don't worry, I understand")
+	var/batch_size = tgui_input_number(usr, "How many cards per batch?", "I hope you remember to check the validation")
 	var/guar = tgui_input_number(usr, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
 
-	SStrading_card_game.checkCardDistribution(pack, batchSize, batchCount, guar)
+	SStrading_card_game.checkCardDistribution(pack, batch_size, batch_count, guar)
 
 /client/proc/print_cards()
 	set name = "Print Cards"

@@ -171,7 +171,7 @@ SUBSYSTEM_DEF(trading_card_game)
 	return toReturn
 
 ///Used to test open a large amount of cardpacks
-/datum/controller/subsystem/trading_card_game/proc/checkCardDistribution(cardPack, batchSize, batchCount, guaranteed)
+/datum/controller/subsystem/trading_card_game/proc/check_card_distribution(cardPack, batchSize, batchCount, guaranteed)
 	var/totalCards = 0
 	//Gotta make this look like an associated list so the implicit "does this exist" checks work proper later
 	var/list/cardsByCount = list("" = 0)
