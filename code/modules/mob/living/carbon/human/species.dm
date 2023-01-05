@@ -360,18 +360,22 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		 * - The replaced organ is not in an excluded zone
 		 * - The replaced organ is not unremovable or synthetic (an implant)
 		 */
-		if(oldorgan && (!neworgan || (neworgan && neworgan.type != oldorgan.type)) && replace_current && !(oldorgan.zone in excluded_zones) && !(oldorgan.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_SYNTHETIC)))
-			if(slot == ORGAN_SLOT_BRAIN)
-				var/obj/item/organ/internal/brain/brain = oldorgan
-				if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
-					brain.before_organ_replacement(neworgan)
-					brain.Remove(C, special=TRUE, no_id_transfer=TRUE) //brain argument used so it doesn't cause any... sudden death.
-					brain = null
-					QDEL_NULL(oldorgan)
-			else
-				oldorgan.before_organ_replacement(neworgan)
-				oldorgan.Remove(C, special=TRUE)
-				QDEL_NULL(oldorgan) //we cannot just tab this out because we need to skip the deleting if it is a decoy brain.
+		if(oldorgan && replace_current && !(oldorgan.zone in excluded_zones) && !(oldorgan.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_SYNTHETIC)))
+			if(!neworgan)
+				oldorgan.Remove(C)
+				QDEL_NULL(oldorgan)
+			else if(neworgan && neworgan.type != oldorgan.type)
+				if(slot == ORGAN_SLOT_BRAIN)
+					var/obj/item/organ/internal/brain/brain = oldorgan
+					if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
+						brain.before_organ_replacement(neworgan)
+						brain.Remove(C, special=TRUE, no_id_transfer=TRUE) //brain argument used so it doesn't cause any... sudden death.
+						brain = null
+						QDEL_NULL(oldorgan)
+				else
+					oldorgan.before_organ_replacement(neworgan)
+					oldorgan.Remove(C, special=TRUE)
+					QDEL_NULL(oldorgan) //we cannot just tab this out because we need to skip the deleting if it is a decoy brain.
 
 		if(oldorgan)
 			oldorgan.setOrganDamage(0)
