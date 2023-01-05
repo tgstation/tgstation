@@ -266,7 +266,7 @@
 
 /datum/gas/helium
 	id = "helium"
-	specific_heat = 250
+	specific_heat = 15
 	name = "Helium"
 	fusion_power = 7
 	rarity = 50
