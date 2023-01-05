@@ -330,7 +330,7 @@
 		qdel(decal)
 
 	//All special effect stuff
-	user.Beam(floor, icon_state="light_beam", time = DECONSTRUCTION_TIME)
+	user.Beam(floor, icon_state = "light_beam", time = DECONSTRUCTION_TIME)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, DECONSTRUCTION_TIME, RCD_FLOORWALL)
 	if(!do_after(user, DECONSTRUCTION_TIME, target = floor))
 		rcd_effect.end_animation()
