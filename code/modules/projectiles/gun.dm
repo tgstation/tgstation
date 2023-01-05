@@ -210,8 +210,8 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	return fire_gun(target, user, flag, params)
+	..()
+	return fire_gun(target, user, flag, params) | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))

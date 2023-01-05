@@ -110,6 +110,8 @@
 
 /datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees, silent=FALSE)
 	var/obj/rotated_obj = parent
+	if(!rotated_obj.Adjacent(user))
+		silent = TRUE
 
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		if(!isliving(user))

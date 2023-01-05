@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "You'll no longer see rotation failed messages when clicking on something far away."
