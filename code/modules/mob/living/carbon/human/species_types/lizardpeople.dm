@@ -21,7 +21,43 @@
 		/obj/item/organ/external/spines = "None",
 		/obj/item/organ/external/tail/lizard = "Smooth",
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/lizard
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/lizard,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix,
+
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
+
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = NO_ORGAN,
+		ORGAN_SLOT_GROIN_BONUS = NO_ORGAN,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
+	)
 	coldmod = 1.5
 	heatmod = 0.67
 	payday_modifier = 0.75
@@ -126,8 +162,6 @@ Lizard subspecies: ASHWALKERS
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = SPECIES_LIZARD_ASH
-	mutantlungs = /obj/item/organ/internal/lungs/lavaland
-	mutantbrain = /obj/item/organ/internal/brain/primitive
 	species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,
@@ -140,6 +174,43 @@ Lizard subspecies: ASHWALKERS
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED
 	examine_limb_id = SPECIES_LIZARD
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain/primitive,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/lizard,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs/lavaland,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix,
+
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
+
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = NO_ORGAN,
+		ORGAN_SLOT_GROIN_BONUS = NO_ORGAN,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
+	)
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
@@ -165,9 +236,44 @@ Lizard subspecies: SILVER SCALED
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_WINE_TASTER,
 	)
-	mutantlungs = null
 	species_language_holder = /datum/language_holder/lizard/silver
-	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/lizard/silver,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix,
+
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
+
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = NO_ORGAN,
+		ORGAN_SLOT_GROIN_BONUS = NO_ORGAN,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
+	)
 	armor = 10 //very light silvery scales soften blows
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	examine_limb_id = SPECIES_LIZARD

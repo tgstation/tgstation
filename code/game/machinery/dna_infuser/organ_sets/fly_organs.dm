@@ -125,6 +125,7 @@
 /obj/item/organ/internal/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
 	visual = FALSE
+	slot = ORGAN_SLOT_CHEST_BONUS
 
 /obj/item/organ/internal/fly/Initialize(mapload)
 	. = ..()
@@ -132,4 +133,4 @@
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/internal/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
-	zone = BODY_ZONE_PRECISE_GROIN
+	slot = ORGAN_SLOT_GROIN_BONUS

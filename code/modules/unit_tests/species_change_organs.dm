@@ -25,8 +25,8 @@
 	// Set up a species to pass over
 	var/datum/species/lizard/changed_species = new()
 	// But make sure the lizard's mutant organs are "normal"
-	changed_species.mutantheart = dummy.dna.species.mutantheart
-	changed_species.mutantappendix = dummy.dna.species.mutantappendix
+	changed_species.internal_organs[ORGAN_SLOT_HEART] = dummy.dna.species.internal_organs[ORGAN_SLOT_HEART]
+	changed_species.internal_organs[ORGAN_SLOT_APPENDIX] = dummy.dna.species.internal_organs[ORGAN_SLOT_APPENDIX]
 	// and make sure they're not a TRAIT_NOBLOOD species so they need a heart
 	changed_species.inherent_traits -= TRAIT_NOBLOOD
 

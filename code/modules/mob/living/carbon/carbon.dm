@@ -895,7 +895,12 @@
 		regenerate_limbs()
 
 	if(heal_flags & HEAL_ORGANS)
-		regenerate_organs()
+		if(heal_flags & HEAL_ADMIN)
+			regenerate_organs(replace_current = FALSE)
+		else
+			for(var/obj/item/organ/organ as anything in internal_organs+external_organs)
+				organ.setOrganDamage(0)
+			set_heartattack(FALSE)
 
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)

@@ -6,7 +6,6 @@
 	id = SPECIES_ZOMBIE
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	species_traits = list(
 		NOZOMBIE,
 		NOTRANSSTING,
@@ -29,10 +28,6 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOBLOOD,
 	)
-	mutantstomach = null
-	mutantheart = null
-	mutantliver = null
-	mutantlungs = null
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = NONE
@@ -41,7 +36,43 @@
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
 	bodytemp_cold_damage_limit = MINIMUM_TEMPERATURE_TO_MOVE // take damage below minimum movement temp
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/zombie,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix,
 
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
+
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = NO_ORGAN,
+		ORGAN_SLOT_GROIN_BONUS = NO_ORGAN,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
+	)
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/zombie,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/zombie,
@@ -89,15 +120,44 @@
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision/zombie
-	mutantbrain = /obj/item/organ/internal/brain/zombie
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
-	/// The rate the zombies regenerate at
-	var/heal_rate = 0.5
-	/// The cooldown before the zombie can start regenerating
-	COOLDOWN_DECLARE(regen_cooldown)
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes/night_vision/zombie,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/zombie,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix,
 
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
+
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = NO_ORGAN,
+		ORGAN_SLOT_GROIN_BONUS = NO_ORGAN,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
+	)
 	inherent_traits = list(
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,
@@ -114,6 +174,10 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
 	)
+	/// The rate the zombies regenerate at
+	var/heal_rate = 0.5
+	/// The cooldown before the zombie can start regenerating
+	COOLDOWN_DECLARE(regen_cooldown)
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE

@@ -1110,13 +1110,13 @@
 
 /datum/quirk/body_purist/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
-	if(new_organ.organ_flags & ORGAN_SYNTHETIC || new_organ.status == ORGAN_ROBOTIC) //why the fuck are there 2 of them
+	if(new_organ.organ_flags & ORGAN_SYNTHETIC)
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_organ_lose(datum/source, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
-	if(old_organ.organ_flags & ORGAN_SYNTHETIC || old_organ.status == ORGAN_ROBOTIC)
+	if(old_organ.organ_flags & ORGAN_SYNTHETIC)
 		cybernetics_level--
 		update_mood()
 

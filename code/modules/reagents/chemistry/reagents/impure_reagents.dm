@@ -19,7 +19,7 @@
 	if(!L)//Though, lets be safe
 		affected_mob.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)//Incase of no liver!
 		return ..()
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, liver_damage * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, liver_damage * REM * delta_time, affects_synthetic = FALSE)
 	return ..()
 
 //Basically just so people don't forget to adjust metabolization_rate

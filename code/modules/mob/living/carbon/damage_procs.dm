@@ -114,13 +114,12 @@
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
  * * amount - damage to be done
  * * maximum - currently an arbitrarily large number, can be set so as to limit damage
- * * required_organtype - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
  */
-/mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organtype)
+/mob/living/carbon/adjustOrganLoss(slot, amount, maximum, affects_synthetic = TRUE)
 	var/obj/item/organ/affected_organ = getorganslot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
 		return
-	if(required_organtype && (affected_organ.status != required_organtype))
+	if(!affects_synthetic && affected_organ.organ_flags & ORGAN_SYNTHETIC)
 		return
 	affected_organ.applyOrganDamage(amount, maximum)
 
@@ -131,13 +130,12 @@
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
  * * amount - damage to be set to
- * * required_organtype - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
  */
-/mob/living/carbon/setOrganLoss(slot, amount, required_organtype)
+/mob/living/carbon/setOrganLoss(slot, amount, affects_synthetic = TRUE)
 	var/obj/item/organ/affected_organ = getorganslot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
 		return
-	if(required_organtype && (affected_organ.status != required_organtype))
+	if(!affects_synthetic && affected_organ.organ_flags & ORGAN_SYNTHETIC)
 		return
 	if(affected_organ.damage == amount)
 		return

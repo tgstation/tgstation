@@ -295,7 +295,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, delta_time, times_fired)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time, required_organtype = affected_organtype) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time, affects_synthetic = FALSE) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
 	var/heating = 10 * creation_purity * REM * delta_time * TEMPERATURE_DAMAGE_COEFFICIENT
 	owner.adjust_bodytemperature(heating) //hot hot
 	if(ishuman(owner))
@@ -489,7 +489,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(length(affected_mob.reagents.reagent_list) > 1)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time, required_organtype = affected_organtype) //Hey! It's everyone's favourite drawback from multiver!
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time, affects_synthetic = FALSE) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
 	affected_mob.adjustToxLoss(-2 * REM * creation_purity * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
@@ -545,7 +545,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		iter_wound.adjust_blood_flow(1-creation_purity)
 	affected_mob.adjustBruteLoss(5 * (1-creation_purity) * delta_time, required_bodytype = affected_bodytype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time, affects_synthetic = FALSE)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)

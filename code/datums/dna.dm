@@ -371,6 +371,25 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		update_instability(FALSE)
 		return
 
+/datum/dna/proc/check_mutant()
+	if(!ishuman(holder))
+		return FALSE
+	var/mob/living/carbon/human/human_holder = holder
+	if(check_mutation(/datum/mutation/human/hulk))
+		return TRUE
+	for(var/obj/item/organ/external/external_organ as anything in human_holder.external_organs)
+		if(external_organ.organ_flags & ORGAN_SYNTHETIC)
+			continue
+		if(is_type_in_list(external_organ, species.external_organs))
+			continue
+		return TRUE
+	for(var/obj/item/bodypart/bodypart as anything in human_holder.bodyparts)
+		if(!IS_ORGANIC_LIMB(bodypart))
+			continue
+		if(is_type_in_list(bodypart, flatten_list(species.bodypart_overrides)))
+			continue
+		return TRUE
+
 /**
  * Checks if two DNAs are practically the same by comparing their most defining features
  *

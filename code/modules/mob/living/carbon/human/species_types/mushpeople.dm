@@ -25,13 +25,46 @@
 	burnmod = 1.25
 	heatmod = 1.5
 
-	mutanttongue = /obj/item/organ/internal/tongue/mush
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
-	mutantlungs = null
 	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
 	species_language_holder = /datum/language_holder/mushroom
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes/night_vision/mushroom,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/mush,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart,
+		ORGAN_SLOT_LUNGS = NO_ORGAN,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix,
 
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
+
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = NO_ORGAN,
+		ORGAN_SLOT_GROIN_BONUS = NO_ORGAN,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
+	)
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/mushroom,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/mushroom,

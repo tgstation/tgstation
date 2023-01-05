@@ -18,14 +18,48 @@
 	liked_food = VEGETABLES | DAIRY | CLOTH
 	disliked_food = FRUIT | GROSS | BUGS | GORE
 	toxic_food = MEAT | RAW | SEAFOOD
-	mutanttongue = /obj/item/organ/internal/tongue/moth
-	mutanteyes = /obj/item/organ/internal/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/moth
 	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
 	payday_modifier = 0.75
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes/moth,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/moth,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix,
 
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
+
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = NO_ORGAN,
+		ORGAN_SLOT_GROIN_BONUS = NO_ORGAN,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
+	)
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/moth,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/moth,
@@ -34,12 +68,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/moth,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/moth,
 	)
-
-/datum/species/moth/regenerate_organs(mob/living/carbon/C, datum/species/old_species, replace_current= TRUE, list/excluded_zones, visual_only)
-	. = ..()
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		handle_mutant_bodyparts(H)
 
 /datum/species/moth/random_name(gender,unique,lastname)
 	if(unique)

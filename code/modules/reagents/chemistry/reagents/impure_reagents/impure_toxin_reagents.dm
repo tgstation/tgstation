@@ -32,7 +32,7 @@
 	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return ..()
-	eyes.applyOrganDamage(0.5 * REM * delta_time, required_organtype = affected_organtype)
+	eyes.applyOrganDamage(0.5 * REM * delta_time, affects_synthetic = FALSE)
 	..()
 
 

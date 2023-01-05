@@ -57,7 +57,7 @@
 
 /obj/item/organ/internal/cyberimp/arm/examine(mob/user)
 	. = ..()
-	if(status == ORGAN_ROBOTIC)
+	if(organ_flags & ORGAN_SYNTHETIC)
 		. += span_info("[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.")
 
 /obj/item/organ/internal/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/screwtool)
@@ -94,7 +94,7 @@
 
 /obj/item/organ/internal/cyberimp/arm/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF || status == ORGAN_ROBOTIC)
+	if(. & EMP_PROTECT_SELF || !(organ_flags & ORGAN_SYNTHETIC))
 		return
 	if(prob(15/severity) && owner)
 		to_chat(owner, span_warning("The electromagnetic pulse causes [src] to malfunction!"))

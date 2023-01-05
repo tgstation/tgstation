@@ -664,7 +664,7 @@
 	var/fix_prob = 10
 	if(creation_purity >= 1)
 		fix_prob = 100
-	eyes.applyOrganDamage(-2 * REM * delta_time * normalise_creation_purity(), required_organtype = affected_organtype)
+	eyes.applyOrganDamage(-2 * REM * delta_time * normalise_creation_purity(), affects_synthetic = FALSE)
 	if(HAS_TRAIT_FROM(affected_mob, TRAIT_BLIND, EYE_DAMAGE))
 		if(DT_PROB(fix_prob, delta_time))
 			to_chat(affected_mob, span_warning("Your vision slowly returns..."))
@@ -925,7 +925,7 @@
 	inverse_chem_val = 0.45
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * delta_time * normalise_creation_purity(), required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * delta_time * normalise_creation_purity(), affects_synthetic = FALSE)
 	..()
 
 //Having mannitol in you will pause the brain damage from brain tumor (so it heals an even 2 brain damage instead of 1.8)
@@ -991,7 +991,7 @@
 	..()
 
 /datum/reagent/medicine/neurine/on_mob_dead(mob/living/carbon/affected_mob, delta_time)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM * delta_time * normalise_creation_purity(), required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM * delta_time * normalise_creation_purity(), affects_synthetic = FALSE)
 	..()
 
 /datum/reagent/medicine/mutadone
@@ -1176,7 +1176,7 @@
 		affected_mob.adjustToxLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustCloneLoss(-0.1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustStaminaLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150, affected_organtype) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150, affects_synthetic = TRUE) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	else
 		affected_mob.adjustBruteLoss(-5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype) //slow to start, but very quick healing once it gets going
 		affected_mob.adjustFireLoss(-5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
@@ -1185,7 +1185,7 @@
 		affected_mob.adjustCloneLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustStaminaLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjust_jitter_up_to(6 SECONDS * REM * delta_time, 1 MINUTES)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time, 150, affected_organtype)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time, 150, affects_synthetic = TRUE)
 		if(DT_PROB(5, delta_time))
 			affected_mob.say(pick("Yeah, well, you know, that's just, like, uh, your opinion, man.", "Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?", "It ain't me, it ain't me...", "Make love, not war!", "Stop, hey, what's that sound? Everybody look what's going down...", "Do you believe in magic in a young girl's heart?"), forced = /datum/reagent/medicine/earthsblood)
 	affected_mob.adjust_drugginess_up_to(20 SECONDS * REM * delta_time, 30 SECONDS * REM * delta_time)
@@ -1234,7 +1234,7 @@
 		affected_mob.adjust_hallucinations(-10 SECONDS * REM * delta_time)
 
 	if(DT_PROB(10, delta_time))
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 50, affected_organtype)
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 50, affects_synthetic = TRUE)
 	affected_mob.adjustStaminaLoss(2.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	return TRUE
@@ -1468,7 +1468,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -2 * REM * delta_time, required_organtype = affected_organtype)//Add a chance to cure liver trauma once implemented.
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -2 * REM * delta_time, affects_synthetic = FALSE)//Add a chance to cure liver trauma once implemented.
 	..()
 	. = TRUE
 
@@ -1484,7 +1484,7 @@
 
 /datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired) //I wanted a collection of small positive effects, this is as hard to obtain as coniine after all.
 	. = ..()
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25 * REM * delta_time, affects_synthetic = FALSE)
 	affected_mob.adjustBruteLoss(-0.35 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	return TRUE
 
@@ -1497,7 +1497,7 @@
 	exposed_human.update_body_parts()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/affected_mob, delta_time, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * delta_time, affects_synthetic = FALSE)
 	..()
 	. = TRUE
 
@@ -1519,7 +1519,7 @@
 
 /datum/reagent/medicine/granibitaluri/overdose_process(mob/living/affected_mob, delta_time, times_fired)
 	. = TRUE
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.2 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.2 * REM * delta_time, affects_synthetic = FALSE)
 	affected_mob.adjustToxLoss(0.2 * REM * delta_time, FALSE, required_biotype = affected_biotype) //Only really deadly if you eat over 100u
 	..()
 

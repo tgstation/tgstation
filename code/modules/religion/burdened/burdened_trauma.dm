@@ -147,7 +147,7 @@
 		return
 
 	/// only organs that are slotted in these count. because there's a lot of useless organs to cheese with.
-	var/list/critical_slots = list(
+	var/static/list/critical_slots = list(
 		ORGAN_SLOT_BRAIN,
 		ORGAN_SLOT_HEART,
 		ORGAN_SLOT_LUNGS,
@@ -157,16 +157,9 @@
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
 	)
-	if(!burdened_species.mutantheart)
-		critical_slots -= ORGAN_SLOT_HEART
-	if(!burdened_species.mutanttongue)
-		critical_slots -= ORGAN_SLOT_TONGUE
-	if(!burdened_species.mutantlungs)
-		critical_slots -= ORGAN_SLOT_LUNGS
-	if(!burdened_species.mutantstomach)
-		critical_slots -= ORGAN_SLOT_STOMACH
-	if(!burdened_species.mutantliver)
-		critical_slots -= ORGAN_SLOT_LIVER
+	for(var/slot in critical_slots)
+		if(!burdened_species.internal_organs[slot])
+			critical_slots -= slot
 
 	if(!(old_organ.slot in critical_slots))
 		return FALSE

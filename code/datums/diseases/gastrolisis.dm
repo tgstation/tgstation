@@ -85,11 +85,13 @@
 		var/mob/living/carbon/human/H = affected_mob
 		var/obj/item/organ/internal/tongue/tongue = locate(/obj/item/organ/internal/tongue/snail) in H.internal_organs
 		if(tongue)
-			var/obj/item/organ/internal/tongue/new_tongue = new H.dna.species.mutanttongue ()
+			var/tongue_path = H.dna.species.internal_organs[ORGAN_SLOT_TONGUE] || /obj/item/organ/internal/tongue
+			var/obj/item/organ/internal/tongue/new_tongue = new tongue_path()
 			new_tongue.Insert(H)
 		var/obj/item/organ/internal/eyes/eyes = locate(/obj/item/organ/internal/eyes/snail) in H.internal_organs
 		if(eyes)
-			var/obj/item/organ/internal/eyes/new_eyes = new H.dna.species.mutanteyes ()
+			var/eyes_path = H.dna.species.internal_organs[ORGAN_SLOT_EYES] || /obj/item/organ/internal/eyes
+			var/obj/item/organ/internal/eyes/new_eyes = new eyes_path()
 			new_eyes.Insert(H)
 		var/obj/item/storage/backpack/bag = H.get_item_by_slot(ITEM_SLOT_BACK)
 		if(istype(bag, /obj/item/storage/backpack/snail))

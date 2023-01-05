@@ -2,10 +2,6 @@
 	name = "\improper Ethereal"
 	id = SPECIES_ETHEREAL
 	meat = /obj/item/food/meat/slab/human/mutant/ethereal
-	mutantlungs = /obj/item/organ/internal/lungs/ethereal
-	mutantstomach = /obj/item/organ/internal/stomach/ethereal
-	mutanttongue = /obj/item/organ/internal/tongue/ethereal
-	mutantheart = /obj/item/organ/internal/heart/ethereal
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
@@ -29,7 +25,43 @@
 	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
 	hair_color = "fixedmutcolor"
 	hair_alpha = 140
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/ethereal,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart/ethereal,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs/ethereal,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach/ethereal,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix,
 
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
+
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = NO_ORGAN,
+		ORGAN_SLOT_GROIN_BONUS = NO_ORGAN,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
+	)
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ethereal,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ethereal,
@@ -77,6 +109,7 @@
 
 	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = C.getorganslot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
+	ethereal_heart.add_atom_colour(default_color, FIXED_COLOUR_PRIORITY)
 
 	for(var/obj/item/bodypart/limb as anything in C.bodyparts)
 		if(limb.limb_id == SPECIES_ETHEREAL)

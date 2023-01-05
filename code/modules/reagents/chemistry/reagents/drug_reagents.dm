@@ -127,7 +127,7 @@
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/affected_mob, delta_time, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * REM * delta_time, affects_synthetic = FALSE)
 	affected_mob.adjustToxLoss(0.25 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE
@@ -180,7 +180,7 @@
 	affected_mob.AdjustImmobilized(-40 * REM * delta_time)
 	affected_mob.adjustStaminaLoss(-2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * delta_time)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * delta_time, affects_synthetic = FALSE)
 	if(DT_PROB(2.5, delta_time))
 		affected_mob.emote(pick("twitch", "shiver"))
 	..()
@@ -197,7 +197,7 @@
 		affected_mob.drop_all_held_items()
 	..()
 	affected_mob.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 10) * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 10) * REM * delta_time, affects_synthetic = FALSE)
 	. = TRUE
 
 /datum/reagent/drug/bath_salts
@@ -234,7 +234,7 @@
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("salted", /datum/mood_event/stimulant_heavy, name)
 	affected_mob.adjustStaminaLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4 * REM * delta_time, affects_synthetic = FALSE)
 	affected_mob.adjust_hallucinations(10 SECONDS * REM * delta_time)
 	if(!HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && !ismovable(affected_mob.loc))
 		step(affected_mob, pick(GLOB.cardinals))
@@ -297,7 +297,7 @@
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	affected_mob.remove_status_effect(/datum/status_effect/confusion)
 	affected_mob.disgust = 0
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * REM * delta_time, affects_synthetic = FALSE)
 	..()
 	. = TRUE
 
@@ -314,7 +314,7 @@
 			if(3)
 				affected_mob.emote("frown")
 				affected_mob.add_mood_event("happiness_drug", /datum/mood_event/happiness_drug_bad_od)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5 * REM * delta_time, affects_synthetic = FALSE)
 	..()
 	. = TRUE
 
@@ -379,7 +379,7 @@
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	. = ..()
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.1 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.1 * REM * delta_time, affects_synthetic = FALSE)
 	// 5x if you want to OD, you can potentially go higher, but good luck managing the brain damage.
 	var/amt = max(round(volume/3, 0.1), 1)
 	affected_mob?.mind?.experience_multiplier_reasons |= type
@@ -392,7 +392,7 @@
 
 /datum/reagent/drug/maint/powder/overdose_process(mob/living/affected_mob, delta_time, times_fired)
 	. = ..()
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 6 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 6 * REM * delta_time, affects_synthetic = FALSE)
 
 /datum/reagent/drug/maint/sludge
 	name = "Maintenance Sludge"
@@ -445,13 +445,13 @@
 	affected_mob.AdjustUnconscious(-10 * REM * delta_time)
 	affected_mob.AdjustParalyzed(-10 * REM * delta_time)
 	affected_mob.AdjustImmobilized(-10 * REM * delta_time)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time, affects_synthetic = FALSE)
 
 /datum/reagent/drug/maint/tar/overdose_process(mob/living/affected_mob, delta_time, times_fired)
 	. = ..()
 
 	affected_mob.adjustToxLoss(5 * REM * delta_time, required_biotype = affected_biotype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 3 * REM * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 3 * REM * delta_time, affects_synthetic = FALSE)
 
 /datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
@@ -592,7 +592,7 @@
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/dancer, delta_time, times_fired)
 	. = ..()
 
-	dancer.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time, required_organtype = affected_organtype)
+	dancer.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time, affects_synthetic = FALSE)
 	dancer.AdjustKnockdown(-20)
 
 	if(DT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, delta_time))
@@ -600,7 +600,7 @@
 
 /datum/reagent/drug/blastoff/overdose_process(mob/living/dancer, delta_time, times_fired)
 	. = ..()
-	dancer.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time, required_organtype = affected_organtype)
+	dancer.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time, affects_synthetic = FALSE)
 
 	if(DT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, delta_time))
 		dancer.emote("spin")
@@ -663,7 +663,7 @@
 
 /datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/invisible_man, delta_time, times_fired)
 	. = ..()
-	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * delta_time, required_organtype = affected_organtype)
+	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * delta_time, affects_synthetic = FALSE)
 
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/invisible_man)
 	. = ..()
@@ -748,7 +748,7 @@
 		invisible_man.emote("giggle")
 	if(DT_PROB(5, delta_time))
 		invisible_man.emote("laugh")
-	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time, required_organtype = affected_organtype)
+	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time, affects_synthetic = FALSE)
 
 /datum/reagent/drug/kronkaine
 	name = "Kronkaine"
@@ -783,7 +783,7 @@
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, delta_time, times_fired)
 	. = ..()
 	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium, name)
-	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time, required_organtype = affected_organtype)
+	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time, affects_synthetic = FALSE)
 	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * delta_time)
 	kronkaine_fiend.AdjustSleeping(-20 * REM * delta_time)
 	kronkaine_fiend.adjust_drowsiness(-10 SECONDS * REM * delta_time)
@@ -796,7 +796,7 @@
 
 /datum/reagent/drug/kronkaine/overdose_process(mob/living/kronkaine_fiend, delta_time, times_fired)
 	. = ..()
-	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * delta_time, required_organtype = affected_organtype)
+	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * delta_time, affects_synthetic = FALSE)
 	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * delta_time)
 	if(DT_PROB(10, delta_time))
 		to_chat(kronkaine_fiend, span_danger(pick("You feel like your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))

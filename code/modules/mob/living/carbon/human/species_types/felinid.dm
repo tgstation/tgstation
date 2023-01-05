@@ -5,10 +5,45 @@
 
 	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
 
-	mutanttongue = /obj/item/organ/internal/tongue/cat
-	mutantears = /obj/item/organ/internal/ears/cat
 	external_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
+	)
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears/cat,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/cat,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix,
+
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
+
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = NO_ORGAN,
+		ORGAN_SLOT_GROIN_BONUS = NO_ORGAN,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
 	)
 	inherent_traits = list(TRAIT_CAN_USE_FLIGHT_POTION, TRAIT_HATED_BY_DOGS)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -40,7 +75,7 @@
 			var/obj/item/organ/internal/ears/cat/ears = new
 			ears.Insert(target_human, drop_if_replaced = FALSE)
 		else
-			mutantears = /obj/item/organ/internal/ears
+			internal_organs[ORGAN_SLOT_EARS] = /obj/item/organ/internal/ears
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
@@ -121,7 +156,7 @@
 
 		var/obj/item/organ/internal/ears/old_ears = purrbated_human.getorganslot(ORGAN_SLOT_EARS)
 		if(istype(old_ears, /obj/item/organ/internal/ears/cat))
-			var/obj/item/organ/new_ears = new target_species.mutantears()
+			var/obj/item/organ/new_ears = new target_species.internal_organs[ORGAN_SLOT_EARS]
 			new_ears.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
 	if(!silent)
 		to_chat(purrbated_human, span_boldnotice("You are no longer a cat."))

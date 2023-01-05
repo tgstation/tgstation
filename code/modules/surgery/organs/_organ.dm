@@ -6,7 +6,6 @@
 	throwforce = 0
 	///The mob that owns this organ.
 	var/mob/living/carbon/owner = null
-	var/status = ORGAN_ORGANIC
 	///The body zone this organ is supposed to inhabit.
 	var/zone = BODY_ZONE_CHEST
 	///The organ slot this organ is supposed to inhabit. This should be unique by type. (Lungs, Appendix, Stomach, etc)
@@ -146,7 +145,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	. += span_notice("It should be inserted in the [parse_zone(zone)].")
 
 	if(organ_flags & ORGAN_FAILING)
-		if(status == ORGAN_ROBOTIC)
+		if(organ_flags & ORGAN_SYNTHETIC)
 			. += span_warning("[src] seems to be broken.")
 			return
 		. += span_warning("[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.")
@@ -170,12 +169,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
 ///Adjusts an organ's damage by the amount "damage_amount", up to a maximum amount, which is by default max damage
-/obj/item/organ/proc/applyOrganDamage(damage_amount, maximum = maxHealth, required_organtype) //use for damaging effects
+/obj/item/organ/proc/applyOrganDamage(damage_amount, maximum = maxHealth, affects_synthetic = TRUE) //use for damaging effects
 	if(!damage_amount) //Micro-optimization.
 		return
 	if(maximum < damage)
 		return
-	if(required_organtype && (status != required_organtype))
+	if(!affects_synthetic && organ_flags & ORGAN_SYNTHETIC)
 		return
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
@@ -185,8 +184,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		to_chat(owner, mess)
 
 ///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
-/obj/item/organ/proc/setOrganDamage(damage_amount, required_organtype) //use mostly for admin heals
-	applyOrganDamage(damage_amount - damage, required_organtype = required_organtype)
+/obj/item/organ/proc/setOrganDamage(damage_amount, affects_synthetic = TRUE) //use mostly for admin heals
+	applyOrganDamage(damage_amount - damage, affects_synthetic = affects_synthetic)
 
 /** check_damage_thresholds
  * input: mob/organ_owner (a mob, the owner of the organ we call the proc on)
@@ -226,14 +225,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /**
  * Recreates all of this mob's organs, and heals them to full.
  */
-/mob/living/carbon/proc/regenerate_organs()
+/mob/living/carbon/proc/regenerate_organs(replace_current = TRUE)
 	// Delegate to species if possible.
 	if(dna?.species)
-		dna.species.regenerate_organs(src)
-		// Species regenerate organs doesn't handling healing the organs here,
-		// it's more concerned with just putting the necessary organs back in.
-		for(var/obj/item/organ/organ as anything in internal_organs)
-			organ.setOrganDamage(0)
+		dna.species.regenerate_organs(src, replace_current)
 		set_heartattack(FALSE)
 		return
 

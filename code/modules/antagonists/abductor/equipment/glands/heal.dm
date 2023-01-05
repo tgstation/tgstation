@@ -97,9 +97,7 @@
 	else
 		to_chat(owner, span_warning("You feel a weird rumble in your bowels..."))
 
-	var/appendix_type = /obj/item/organ/internal/appendix
-	if(owner?.dna?.species?.mutantappendix)
-		appendix_type = owner.dna.species.mutantappendix
+	var/appendix_type = owner?.dna?.species?.internal_organs[ORGAN_SLOT_APPENDIX] || /obj/item/organ/internal/appendix
 	var/obj/item/organ/internal/appendix/new_appendix = new appendix_type()
 	new_appendix.Insert(owner)
 
@@ -112,9 +110,7 @@
 	else
 		to_chat(owner, span_warning("You feel a weird rumble in your bowels..."))
 
-	var/liver_type = /obj/item/organ/internal/liver
-	if(owner?.dna?.species?.mutantliver)
-		liver_type = owner.dna.species.mutantliver
+	var/liver_type = owner?.dna?.species?.internal_organs[ORGAN_SLOT_LIVER] || /obj/item/organ/internal/liver
 	var/obj/item/organ/internal/liver/new_liver = new liver_type()
 	new_liver.Insert(owner)
 
@@ -127,9 +123,7 @@
 	else
 		to_chat(owner, span_warning("You feel a weird rumble inside your chest..."))
 
-	var/lung_type = /obj/item/organ/internal/lungs
-	if(owner.dna.species && owner.dna.species.mutantlungs)
-		lung_type = owner.dna.species.mutantlungs
+	var/lung_type = owner?.dna?.species?.internal_organs[ORGAN_SLOT_LUNGS] || /obj/item/organ/internal/lungs
 	var/obj/item/organ/internal/lungs/new_lungs = new lung_type()
 	new_lungs.Insert(owner)
 
@@ -142,9 +136,7 @@
 	else
 		to_chat(owner, span_warning("You feel a weird rumble in your bowels..."))
 
-	var/stomach_type = /obj/item/organ/internal/stomach
-	if(owner?.dna?.species?.mutantstomach)
-		stomach_type = owner.dna.species.mutantstomach
+	var/stomach_type = owner?.dna?.species?.internal_organs[ORGAN_SLOT_STOMACH] || /obj/item/organ/internal/stomach
 	var/obj/item/organ/internal/stomach/new_stomach = new stomach_type()
 	new_stomach.Insert(owner)
 
@@ -161,8 +153,8 @@
 
 /obj/item/organ/internal/heart/gland/heal/proc/finish_replace_eyes()
 	var/eye_type = /obj/item/organ/internal/eyes
-	if(owner.dna.species && owner.dna.species.mutanteyes)
-		eye_type = owner.dna.species.mutanteyes
+	if(owner.dna.species && owner.dna.species.internal_organs[ORGAN_SLOT_EYES])
+		eye_type = owner.dna.species.internal_organs[ORGAN_SLOT_EYES]
 	var/obj/item/organ/internal/eyes/new_eyes = new eye_type()
 	new_eyes.Insert(owner)
 	owner.visible_message(span_warning("A pair of new eyes suddenly inflates into [owner]'s eye sockets!"), span_userdanger("A pair of new eyes suddenly inflates into your eye sockets!"))

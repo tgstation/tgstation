@@ -375,7 +375,7 @@
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
 			var/cyberimp_detect
 			for(var/obj/item/organ/internal/cyberimp/CI in internal_organs)
-				if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
+				if(CI.organ_flags & ORGAN_SYNTHETIC && !CI.syndicate_implant)
 					cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
 			if(cyberimp_detect)
 				. += "<span class='notice ml-1'>Detected cybernetic modifications:</span>"

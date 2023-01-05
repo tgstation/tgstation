@@ -264,24 +264,21 @@
 						[advanced ? "<td><font color='#ff3333'>[CEILING(organ.damage,1)]</font></td>" : ""]\
 						<td>[status]</td></tr>"
 
-			var/datum/species/the_dudes_species = humantarget.dna.species
 			var/missing_organs = list()
-			if(!humantarget.getorganslot(ORGAN_SLOT_BRAIN))
-				missing_organs += "brain"
-			if(!HAS_TRAIT(humantarget, TRAIT_NOBLOOD) && !humantarget.getorganslot(ORGAN_SLOT_HEART))
-				missing_organs += "heart"
-			if(!(TRAIT_NOBREATH in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LUNGS))
-				missing_organs += "lungs"
-			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
-				missing_organs += "liver"
-			if(!the_dudes_species.mutantstomach && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
-				missing_organs += "stomach"
-			if(!the_dudes_species.mutanttongue && !humantarget.getorganslot(ORGAN_SLOT_TONGUE))
-				missing_organs += "tongue"
-			if(!humantarget.getorganslot(ORGAN_SLOT_EARS))
-				missing_organs += "ears"
-			if(!humantarget.getorganslot(ORGAN_SLOT_EYES))
-				missing_organs += "eyes"
+			//organ slots we care about, associated with the string we give for each of them
+			var/static/list/important_slots = list(
+				ORGAN_SLOT_BRAIN = "brain",
+				ORGAN_SLOT_EARS = "ears",
+				ORGAN_SLOT_EYES = "eyes",
+				ORGAN_SLOT_TONGUE = "tongue",
+				ORGAN_SLOT_HEART = "heart",
+				ORGAN_SLOT_LUNGS = "lungs",
+				ORGAN_SLOT_STOMACH = "stomach",
+				ORGAN_SLOT_LIVER = "liver",
+			)
+			for(var/slot in important_slots)
+				if(!humantarget.getorganslot(slot) && humantarget.dna.species.internal_organs[slot])
+					missing_organs += important_slots[slot]
 
 			if(length(missing_organs))
 				render = TRUE
@@ -297,22 +294,9 @@
 		if(advanced && humantarget.has_dna())
 			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span>\n"
 
-		// Species and body temperature
-		var/datum/species/targetspecies = humantarget.dna.species
-		var/mutant = humantarget.dna.check_mutation(/datum/mutation/human/hulk) \
-			|| targetspecies.mutantlungs != initial(targetspecies.mutantlungs) \
-			|| targetspecies.mutantbrain != initial(targetspecies.mutantbrain) \
-			|| targetspecies.mutantheart != initial(targetspecies.mutantheart) \
-			|| targetspecies.mutanteyes != initial(targetspecies.mutanteyes) \
-			|| targetspecies.mutantears != initial(targetspecies.mutantears) \
-			|| targetspecies.mutanthands != initial(targetspecies.mutanthands) \
-			|| targetspecies.mutanttongue != initial(targetspecies.mutanttongue) \
-			|| targetspecies.mutantliver != initial(targetspecies.mutantliver) \
-			|| targetspecies.mutantstomach != initial(targetspecies.mutantstomach) \
-			|| targetspecies.mutantappendix != initial(targetspecies.mutantappendix) \
-			|| istype(humantarget.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
+		var/mutant = humantarget.dna.check_mutant()
 
-		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
+		render_list += "<span class='info ml-1'>Species: [humantarget.dna.species.name][mutant ? "-derived mutant" : ""]</span>\n"
 		render_list += "<span class='info ml-1'>Core temperature: [round(humantarget.coretemperature-T0C,0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 	render_list += "<span class='info ml-1'>Body temperature: [round(target.bodytemperature-T0C,0.1)] &deg;C ([round(target.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 
@@ -368,7 +352,7 @@
 		var/mob/living/carbon/carbontarget = target
 		var/cyberimp_detect
 		for(var/obj/item/organ/internal/cyberimp/CI in carbontarget.internal_organs)
-			if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
+			if(CI.organ_flags & ORGAN_SYNTHETIC && !CI.syndicate_implant)
 				cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
 		if(cyberimp_detect)
 			render_list += "<span class='notice ml-1'>Detected cybernetic modifications:</span>\n"

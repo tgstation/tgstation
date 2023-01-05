@@ -9,22 +9,49 @@
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	meat = /obj/item/food/meat/slab/human/mutant/fly
-	mutanteyes = /obj/item/organ/internal/eyes/fly
 	liked_food = GROSS | GORE
 	disliked_food = NONE
 	toxic_food = NONE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
 	payday_modifier = 0.75
+	internal_organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/internal/brain,
+		ORGAN_SLOT_EARS = /obj/item/organ/internal/ears,
+		ORGAN_SLOT_EYES = /obj/item/organ/internal/eyes/fly,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/internal/tongue/fly,
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart/fly,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs/fly,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach/fly,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver/fly,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/internal/appendix/fly,
 
-	mutanttongue = /obj/item/organ/internal/tongue/fly
-	mutantheart = /obj/item/organ/internal/heart/fly
-	mutantlungs = /obj/item/organ/internal/lungs/fly
-	mutantliver = /obj/item/organ/internal/liver/fly
-	mutantstomach = /obj/item/organ/internal/stomach/fly
-	mutantappendix = /obj/item/organ/internal/appendix/fly
-	mutant_organs = list(/obj/item/organ/internal/fly, /obj/item/organ/internal/fly/groin)
+		ORGAN_SLOT_BRAIN_ANTIDROP = NO_ORGAN,
+		ORGAN_SLOT_BRAIN_ANTISTUN = NO_ORGAN,
+		ORGAN_SLOT_HUD = NO_ORGAN,
+		ORGAN_SLOT_BREATHING_TUBE = NO_ORGAN,
+		ORGAN_SLOT_HEART_AID = NO_ORGAN,
+		ORGAN_SLOT_STOMACH_AID = NO_ORGAN,
+		ORGAN_SLOT_THRUSTERS = NO_ORGAN,
+		ORGAN_SLOT_RIGHT_ARM_AUG = NO_ORGAN,
+		ORGAN_SLOT_LEFT_ARM_AUG = NO_ORGAN,
 
+		ORGAN_SLOT_ADAMANTINE_RESONATOR = NO_ORGAN,
+		ORGAN_SLOT_VOICE = NO_ORGAN,
+		ORGAN_SLOT_MONSTER_CORE = NO_ORGAN,
+		ORGAN_SLOT_CHEST_BONUS = /obj/item/organ/internal/fly,
+		ORGAN_SLOT_GROIN_BONUS = /obj/item/organ/internal/fly/groin,
+
+		ORGAN_SLOT_ZOMBIE = NO_ORGAN,
+		ORGAN_SLOT_PARASITE_EGG = NO_ORGAN,
+
+		ORGAN_SLOT_XENO_HIVENODE = NO_ORGAN,
+		ORGAN_SLOT_XENO_ACIDGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = NO_ORGAN,
+		ORGAN_SLOT_XENO_RESINSPINNER = NO_ORGAN,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = NO_ORGAN,
+		ORGAN_SLOT_XENO_EGGSAC = NO_ORGAN,
+	)
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/fly,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/fly,

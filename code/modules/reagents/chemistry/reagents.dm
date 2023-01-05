@@ -88,9 +88,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	/// The affected biotype, if the reagent damages/heals generic damage (Toxin/Oxygen) of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
 	var/affected_biotype = MOB_ORGANIC
-	/// The affected organtype, if the reagent damages/heals organ damage of an affected mob.
-	/// See "Organ defines for carbon mobs" in /code/_DEFINES/mobs.dm
-	var/affected_organtype = ORGAN_ORGANIC
 
 	// Used for restaurants.
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)

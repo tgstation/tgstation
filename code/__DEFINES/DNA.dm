@@ -95,6 +95,8 @@
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
+#define ORGAN_SLOT_CHEST_BONUS "chest_bonus"
+#define ORGAN_SLOT_GROIN_BONUS "groin_bonus"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"
 #define ORGAN_SLOT_HEART "heart"
@@ -169,6 +171,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_TONGUE,
 	ORGAN_SLOT_VOICE,
 	ORGAN_SLOT_ADAMANTINE_RESONATOR,
+	ORGAN_SLOT_CHEST_BONUS,
+	ORGAN_SLOT_GROIN_BONUS,
 	ORGAN_SLOT_HEART_AID,
 	ORGAN_SLOT_BRAIN_ANTIDROP,
 	ORGAN_SLOT_BRAIN_ANTISTUN,
@@ -179,7 +183,11 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_RESINSPINNER,
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
-	ORGAN_SLOT_XENO_EGGSAC,))
+	ORGAN_SLOT_XENO_EGGSAC,
+))
+
+/// Define for species not having one organ from the organ map.
+#define NO_ORGAN null
 
 //Defines for Golem Species IDs
 #define SPECIES_GOLEM "golem"

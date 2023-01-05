@@ -95,9 +95,6 @@
 		owner.set_heartattack(TRUE)
 		failed = TRUE
 
-/obj/item/organ/internal/heart/get_availability(datum/species/owner_species, mob/living/owner_mob)
-	return owner_species.mutantheart
-
 /obj/item/organ/internal/heart/cursed
 	name = "cursed heart"
 	desc = "A heart that, when inserted, will force you to pump it manually."
@@ -485,13 +482,13 @@
 		. += shine
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
-	ethereal_heart.owner.revive(HEAL_ALL)
+	ethereal_heart.owner.revive(HEAL_ALL & ~(HEAL_LIMBS|HEAL_TRAUMAS))
 	to_chat(ethereal_heart.owner, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
 	var/datum/brain_trauma/picked_trauma
 	if(prob(10)) //10% chance for a severe trauma
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/severe))
 	else
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/mild))
-	ethereal_heart.owner.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
+	ethereal_heart.owner.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_MAGIC)
 	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive.ogg', 100)
 	qdel(src)
