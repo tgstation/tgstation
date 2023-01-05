@@ -827,14 +827,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	acid = 50
 
 /obj/structure/industrial_lift/tram/accessible
-	icon_state = "titanium_accessible_north"
-
-/obj/structure/industrial_lift/tram/accessible/north
-	icon_state = "titanium_accessible_north"
-
-/obj/structure/industrial_lift/tram/accessible/south
-	icon_state = "titanium_accessible_south"
-
+	icon_state = "titanium_accessible"
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()
