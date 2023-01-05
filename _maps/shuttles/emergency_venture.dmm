@@ -103,6 +103,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/iron/large,
 /area/shuttle/escape)
 "bx" = (
@@ -294,6 +297,9 @@
 "pH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
 	},
 /turf/open/floor/iron/large,
 /area/shuttle/escape)
@@ -694,6 +700,10 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Td" = (
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "TS" = (
 /obj/structure/window/reinforced,
 /obj/machinery/power/shuttle_engine/heater{
@@ -718,6 +728,12 @@
 "Uj" = (
 /obj/machinery/light/directional/north,
 /obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Un" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Uw" = (
@@ -838,7 +854,7 @@ Jz
 AC
 ai
 mD
-mD
+Un
 mD
 AC
 MD
@@ -925,9 +941,9 @@ uR
 AC
 AC
 AC
-Ea
-Ea
-Ea
+MD
+Td
+oJ
 AC
 AC
 uR
