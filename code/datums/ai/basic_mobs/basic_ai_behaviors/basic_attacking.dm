@@ -82,8 +82,9 @@
 	if(shots>1)
 		var/atom/burst_target = final_target
 		var/datum/callback/callback = CALLBACK(basic_mob, TYPE_PROC_REF(/mob/living/basic,RangedAttack), burst_target)
-		for(var/i in 1 to shots)
+		for(var/i in 2 to shots)
 			addtimer(callback, (i - 1) * burst_interval)
+		callback.Invoke()
 	else
 		basic_mob.RangedAttack(final_target)
 
