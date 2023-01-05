@@ -48297,7 +48297,7 @@
 /area/station/medical/storage)
 "rrF" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram/accessible,
+/obj/structure/industrial_lift/tram/accessible/north,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "rrM" = (
@@ -66820,7 +66820,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram/accessible,
+/obj/structure/industrial_lift/tram/accessible/south,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "xZx" = (
