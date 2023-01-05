@@ -31,13 +31,20 @@
 
 /// stores the name, type, icon & cost for each tile type
 /datum/tile_info
+	/// name of this tile design for ui
 	var/name
+	/// path to create this tile type
 	var/obj/item/stack/tile/tile_type
+	/// icon for this tile to display for ui
 	var/icon_state
+	/// rcd units to consume for this tile creation
 	var/cost
 
-	var/ui_directional_data
-	var/tile_directions
+	///directions this tile can be placed on the turf
+	var/list/tile_directions
+	/// user friendly names of the tile_directions to be sent to ui
+	var/list/ui_directional_data
+	/// current direction this tile should be rotated in before being placed on the plating
 	var/selected_direction
 
 /// decompress a single tile design list element from GLOB.floor_designs into its individual variables
