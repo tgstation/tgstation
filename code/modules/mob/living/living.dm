@@ -842,7 +842,7 @@
 	if(heal_flags & HEAL_BURN)
 		setFireLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_STAM)
-		setStaminaLoss(0, FALSE, TRUE)
+		setStaminaLoss(0, forced = TRUE) // update stamina now. updatehealth isn't guaranteed to update stamina for us
 
 	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
@@ -2523,4 +2523,3 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client || "AI"] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")
-
