@@ -231,7 +231,7 @@
 
 	var/floor_designs = GLOB.floor_designs
 	if(!is_valid_plating(floor)) //we infer what floor type it is if its not the usual plating
-		user.Beam(floor, icon_state="light_beam", time = 5)
+		user.Beam(floor, icon_state = "light_beam", time = 5)
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])
 				for(var/list/design_info in floor_designs[main_root][sub_category])
