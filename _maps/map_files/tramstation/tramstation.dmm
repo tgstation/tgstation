@@ -48284,7 +48284,7 @@
 /area/station/medical/storage)
 "rrF" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram/accessible/north,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "rrM" = (
@@ -56616,10 +56616,6 @@
 /obj/structure/sign/clock/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison)
-"uqi" = (
-/obj/structure/industrial_lift/tram/accessible,
-/turf/open/floor/noslip/tram_plate,
-/area/station/hallway/primary/tram/center)
 "uqm" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -66799,7 +66795,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram/accessible/south,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "xZx" = (
@@ -163957,7 +163953,7 @@ wHs
 gej
 tqL
 aDV
-uqi
+qia
 vqF
 tqL
 sqz
@@ -166013,7 +166009,7 @@ waf
 odj
 tqL
 rEn
-uqi
+qia
 ota
 tqL
 kXK
