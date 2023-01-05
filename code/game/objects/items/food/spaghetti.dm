@@ -13,7 +13,7 @@
 	var/list/display_message = list(
 		span_notice("Something wet falls out of their pocket and hits the ground. Is that... [name]?"),
 		span_warning("Oh shit! All your pocket [name] fell out!"))
-	AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg', MEMORY_SPAGHETTI_SPILL)
+	AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg', /datum/memory/lost_spaghetti)
 
 	return ..()
 

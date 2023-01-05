@@ -59,6 +59,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!dissolvable || !target.is_refillable())
 		return
 	if(target.is_drainable() && !target.reagents.total_volume)

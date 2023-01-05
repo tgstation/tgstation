@@ -134,7 +134,7 @@
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
 	if(istype(user))
-		user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_OKAY)
+		user.add_mob_memory(/datum/memory/bomb_planted, antagonist = src)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
@@ -249,3 +249,4 @@
 	. = ..()
 	if(active)
 		user.throw_item(target)
+		return . | AFTERATTACK_PROCESSED_ITEM

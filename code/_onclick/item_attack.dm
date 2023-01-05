@@ -59,7 +59,7 @@
 		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 			return TRUE
 
-	return afterattack(target, user, TRUE, params)
+	return afterattack(target, user, TRUE, params) == TRUE
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)
@@ -271,7 +271,9 @@
 		return ..()
 
 /**
- * Last proc in the [/obj/item/proc/melee_attack_chain]
+ * Last proc in the [/obj/item/proc/melee_attack_chain].
+ * Returns a bitfield containing AFTERATTACK_PROCESSED_ITEM if the user is likely intending to use this item on another item.
+ * Some consumers currently return TRUE to mean "processed". These are not consistent and should be taken with a grain of salt.
  *
  * Arguments:
  * * atom/target - The thing that was hit
@@ -280,8 +282,10 @@
  * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
  */
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
+	. = NONE
+	. |= SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, src, proximity_flag, click_parameters)
+	return .
 
 /**
  * Called at the end of the attack chain if the user right-clicked.

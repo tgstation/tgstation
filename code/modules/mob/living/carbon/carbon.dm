@@ -851,7 +851,7 @@
 
 /mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		if(dna && !(NOBLOOD in dna.species.species_traits))
+		if(dna && !HAS_TRAIT(src, TRAIT_NOBLOOD))
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood
 
 		for(var/obj/item/organ/organ as anything in internal_organs)
