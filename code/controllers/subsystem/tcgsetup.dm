@@ -124,9 +124,9 @@ SUBSYSTEM_DEF(trading_card_game)
 			message_admins(toPrint.name)
 
 ///Checks the passed type list for missing raritys, or raritys out of bounds
-/datum/controller/subsystem/trading_card_game/proc/checkCardpacks(cardPackList)
+/datum/controller/subsystem/trading_card_game/proc/check_cardpacks(card_pack_list)
 	var/toReturn = ""
-	for(var/cardPack in cardPackList)
+	for(var/cardPack in card_pack_list)
 		var/obj/item/cardpack/pack = new cardPack()
 		//Lets see if someone made a type yeah?
 		if(!cached_cards[pack.series])
@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(trading_card_game)
 	return toReturn
 
 ///Checks the global card list for cards that don't override all the default values of the card datum
-/datum/controller/subsystem/trading_card_game/proc/checkCardDatums()
+/datum/controller/subsystem/trading_card_game/proc/check_card_datums()
 	var/toReturn = ""
 	var/datum/thing = new()
 	for(var/series in cached_cards)

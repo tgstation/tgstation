@@ -647,8 +647,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
-	var/message = SStrading_card_game.checkCardpacks(SStrading_card_game.card_packs)
-	message += SStrading_card_game.checkCardDatums()
+	var/message = SStrading_card_game.check_cardpacks(SStrading_card_game.card_packs)
+	message += SStrading_card_game.check_card_datums()
 	if(message)
 		message_admins(message)
 	else
@@ -669,7 +669,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	var/batch_size = tgui_input_number(usr, "How many cards per batch?", "I hope you remember to check the validation")
 	var/guar = tgui_input_number(usr, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
 
-	SStrading_card_game.checkCardDistribution(pack, batch_size, batch_count, guar)
+	SStrading_card_game.check_card_distribution(pack, batch_size, batch_count, guar)
 
 /client/proc/print_cards()
 	set name = "Print Cards"
