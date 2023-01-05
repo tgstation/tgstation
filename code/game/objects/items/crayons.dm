@@ -266,11 +266,8 @@
 	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=&%#+/\-]", "ig")
 	return lowertext(crayon_regex.Replace(text, ""))
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
-	if(!proximity || !check_allowed_items(target))
-		return
-
+/// Attempts to color the target. Returns how many charges were used.
+/obj/item/toy/crayon/proc/use_on(atom/target, mob/user, params)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 
@@ -283,13 +280,13 @@
 		if (istagger)
 			cost *= 0.5
 	if(check_empty(user, cost))
-		return
+		return 0
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 
 	if(!isValidSurface(target))
-		return
+		return 0
 
 	var/drawing = drawtype
 	switch(drawtype)
@@ -361,11 +358,11 @@
 
 	if(!instant)
 		if(!do_after(user, 50, target = target))
-			return
+			return 0
 
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
-		return
+		return 0
 	. = charges_used
 
 	if(length(text_buffer))
@@ -418,6 +415,22 @@
 	for(var/t in affected_turfs)
 		reagents.trans_to(t, ., volume_multiplier, transfered_by = user, methods = TOUCH)
 	check_empty(user)
+	return .
+
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
+	. = ..()
+
+	if(!proximity)
+		return .
+
+	if (isitem(target))
+		. |= AFTERATTACK_PROCESSED_ITEM
+
+	if (!check_allowed_items(target))
+		return .
+
+	use_on(target, user, params)
+	return .
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
@@ -665,16 +678,13 @@
 		. += "It is empty."
 	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"]. Right-click a colored object to match its existing color.")
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity)
-		return
-
+/obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, params)
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
-		return
+		return 0
 
 	if(check_empty(user))
-		return
+		return 0
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
@@ -697,7 +707,7 @@
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(C, VAPOR, fraction * volume_multiplier)
 
-		return
+		return .
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
@@ -735,9 +745,9 @@
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
-		return
+		return 0
 
-	. = ..()
+	return ..()
 
 /obj/item/toy/crayon/spraycan/afterattack_secondary(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -793,16 +803,25 @@
 	charges = -1
 
 /obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
-	var/diff = ..()
+	if (!proximity)
+		return
+
+	if (isitem(target))
+		. = AFTERATTACK_PROCESSED_ITEM
+
+	if (!check_allowed_items(target))
+		return .
+
+	var/diff = use_on(target, user, params)
 	if(!iscyborg(user))
 		to_chat(user, span_notice("How did you get this?"))
 		qdel(src)
-		return FALSE
+		return .
 
 	var/mob/living/silicon/robot/borgy = user
 
 	if(!diff)
-		return
+		return .
 	// 25 is our cost per unit of paint, making it cost 25 energy per
 	// normal tag, 50 per window, and 250 per attack
 	var/cost = diff * 25
@@ -810,6 +829,8 @@
 	// it's free.
 	if(borgy.cell)
 		borgy.cell.use(cost)
+
+	return .
 
 /obj/item/toy/crayon/spraycan/hellcan
 	name = "hellcan"

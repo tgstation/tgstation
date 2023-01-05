@@ -1033,6 +1033,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
 		return
 	slash(target, user, params)
+	return AFTERATTACK_PROCESSED_ITEM
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
