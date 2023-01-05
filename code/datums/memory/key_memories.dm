@@ -163,15 +163,3 @@
 		"[protagonist_name] being implanted by a scientist.",
 		"[protagonist_name] having surgery done on them by a scientist.",
 	)
-
-/// Who rev'd me, so if a mindreader reads a rev, they have a clue on who to hunt down
-/datum/memory/key/recruited_by_headrev
-
-/datum/memory/key/recruited_by_headrev/get_names()
-	return list("[protagonist_name] is converted into a revolutionary by [antagonist_name]")
-
-/datum/memory/key/recruited_by_headrev/get_starts()
-	return list(
-		"[protagonist_name]'s mind sets itself on a singular, violent purpose as they're flashed by [antagonist_name]: Kill the heads.",
-		"[antagonist_name] lifts an odd device to [protagonist_name]'s eyes and flashes him, imprinting murderous instructions.",
-	)
