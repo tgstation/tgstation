@@ -1341,7 +1341,7 @@
 	id = SPECIES_GOLEM_HYDROGEN
 	fixed_mut_color = "#535469"
 	armor = 70 //equal to a diamond golem
-	info_text = "As a <span class='danger'>Metallic Hydrogen Golem</span>, you were forged in the highest pressures and the highest heats. Your unique material makeup makes you immune to magic, most environmental damage, and you take less damage from attacks."
+	info_text = "As a <span class='danger'>Metallic Hydrogen Golem</span>, you were forged in the highest pressures and the highest heats. Your unique material makeup makes you immune to magic and most environmental damage. You also take less damage from attacks."
 	prefix = "Metallic Hydrogen"
 	special_names = list("Pressure","Crush")
 	inherent_traits = list(
