@@ -71,7 +71,7 @@
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
 	var/datum/component/material_container/mat_container = materials.mat_container
-	if(!mat_container || D.make_reagents.len)
+	if(!mat_container || D.make_reagent)
 		return FALSE
 
 	var/build_amount = 0
