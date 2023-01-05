@@ -80,7 +80,7 @@
 
 /obj/machinery/door/window/tram/examine(mob/user)
 	. = ..()
-		. += span_notice("It has labels indicating that it has an emergency mechanism to open from the inside using <b>just your hands</b> in the event of an emergency.")
+	. += span_notice("It has labels indicating that it has an emergency mechanism to open from the inside using <b>just your hands</b> in the event of an emergency.")
 
 /obj/machinery/door/window/tram/try_safety_unlock(mob/user)
 	if(!hasPower())
