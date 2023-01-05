@@ -70,7 +70,7 @@
 	data["selected_recipe"] = name
 	data["selected_icon"] = get_icon_state()
 
-	if(tile_directions == null)
+	if(isnull(tile_direction))
 		data["selected_direction"] = null
 		return
 
