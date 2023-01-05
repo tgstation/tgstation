@@ -162,6 +162,14 @@
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/head/beret/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/knockoff, 25, list(BODY_ZONE_PRECISE_BODY), slot_flags)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 //Security
 /obj/item/clothing/head/hats/hos
 	name = "head of security cap"
