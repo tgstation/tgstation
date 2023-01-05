@@ -856,6 +856,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	if(range_check(A,user))
 		pre_attack(A, user)
+		return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/construction/rcd/arcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if(range_check(target,user))
