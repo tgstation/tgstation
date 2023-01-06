@@ -55,14 +55,6 @@
 	name = "secure hydroponics crate"
 	icon_state = "hydrosecurecrate"
 
-/datum/armor/crate_secure
-	melee = 30
-	bullet = 50
-	laser = 50
-	energy = 100
-	fire = 80
-	acid = 80
-
 /obj/structure/closet/crate/secure/freezer //for consistency with other "freezer" closets/crates
 	desc = "An insulated crate with a lock on it, used to secure perishables."
 	name = "secure kitchen crate"
@@ -73,14 +65,6 @@
 	desc = "An insulated crate with a lock on it, used to secure pizza."
 	req_access = list(ACCESS_KITCHEN)
 	tamperproof = 10
-
-/datum/armor/crate_secure
-	melee = 30
-	bullet = 50
-	laser = 50
-	energy = 100
-	fire = 80
-	acid = 80
 
 /obj/structure/closet/crate/secure/freezer/pizza/PopulateContents()
 	. = ..()
@@ -108,14 +92,6 @@
 	var/privacy_lock = TRUE
 	///Is the crate being bought by a person, or a budget card?
 	var/department_purchase = FALSE
-
-/datum/armor/crate_secure
-	melee = 30
-	bullet = 50
-	laser = 50
-	energy = 100
-	fire = 80
-	acid = 80
 
 /obj/structure/closet/crate/secure/owned/examine(mob/user)
 	. = ..()

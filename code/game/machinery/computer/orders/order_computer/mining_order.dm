@@ -1,5 +1,8 @@
+#define MINING_SHIPPING_MULTIPLIER 0.65
+#define GET_MINING_SHIPPING_MULTIPLIER(cost) round(cost * MINING_SHIPPING_MULTIPLIER,5)
+
 /obj/machinery/computer/order_console/mining
-	name = "mining equipment vendor"
+	name = "mining equipment order console"
 	desc = "An equipment shop for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
@@ -8,8 +11,12 @@
 	circuit = /obj/item/circuitboard/computer/order_console/mining
 
 	cooldown_time = 10 SECONDS //just time to let you know your order went through.
-	express_cost_multiplier = 1.5
-	uses_ltsrbt = TRUE
+	express_cost_multiplier = 1
+	purchase_tooltip = @{"Your purchases will arrive at cargo,
+	and hopefully get delivered by them.
+	35% cheaper than express delivery."}
+	express_tooltip = @{"Sends your purchases instantly."}
+
 	order_categories = list(
 		CATEGORY_MINING,
 		CATEGORY_CONSUMABLES,
@@ -20,16 +27,15 @@
 /obj/machinery/computer/order_console/mining/purchase_items(obj/item/card/id/card, express = FALSE)
 	var/final_cost = get_total_cost()
 	var/failure_message = "Sorry, but you do not have enough mining points."
-	if(express)
-		final_cost *= express_cost_multiplier
-		failure_message += "Remember, Express upcharges the cost!"
+	if(!express)
+		final_cost = GET_MINING_SHIPPING_MULTIPLIER(final_cost)
 	if(final_cost <= card.mining_points)
 		card.mining_points -= final_cost
 		return TRUE
 	say(failure_message)
 	return FALSE
 
-/obj/machinery/computer/order_console/mining/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries, ltsrbt_delivered = FALSE)
+/obj/machinery/computer/order_console/mining/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	var/list/things_to_order = list()
 	for(var/datum/orderable_item/item as anything in groceries)
 		things_to_order[item.item_path] = groceries[item]
@@ -40,36 +46,27 @@
 		contains = things_to_order,
 	)
 	var/datum/supply_order/new_order = new(
-		pack = mining_pack, \
-		orderer = purchaser, \
-		orderer_rank = "Mining Vendor", \
-		orderer_ckey = purchaser.ckey, \
-		reason = "", \
-		paying_account = card.registered_account, \
-		department_destination = null, \
-		coupon = null, \
+		pack = mining_pack,
+		orderer = purchaser,
+		orderer_rank = "Mining Vendor",
+		orderer_ckey = purchaser.ckey,
+		reason = "",
+		paying_account = card.registered_account,
+		department_destination = null,
+		coupon = null,
 		charge_on_purchase = FALSE,
 		manifest_can_fail = FALSE,
+		cost_type = "mp",
+		can_be_cancelled = FALSE,
 	)
-	if(ltsrbt_delivered)
-		var/obj/machinery/mining_ltsrbt/ltsrbt
-		for(var/obj/machinery/mining_ltsrbt/all_ltsrbts as anything in GLOB.mining_ltsrbt)
-			if(all_ltsrbts.machine_stat & (NOPOWER|BROKEN|MAINT)) //not functional
-				continue
-			if(!all_ltsrbts.enabled) //not enabled
-				continue
-			ltsrbt = all_ltsrbts
-			break
-		if(ltsrbt && ltsrbt.recieve_order(new_order))
-			return
-		say("Found no functional mining LTSRBTs. If there is one, it is likely destroyed, powered down, or under maintenance. Your delivery has instead been rerouted to Cargo.")
-	else
-		say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
+	say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 	radio.talk_into(src, "A shaft miner has ordered equipment which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)
 	SSshuttle.shopping_list += new_order
 
 /obj/machinery/computer/order_console/mining/ui_data(mob/user)
 	var/list/data = ..()
+	var/cost = get_total_cost()
+	data["total_cost"] = "[GET_MINING_SHIPPING_MULTIPLIER(cost)] (Express: [cost]) "
 	if(!isliving(user))
 		return data
 	var/mob/living/living_user = user
@@ -83,6 +80,15 @@
 	. = ..()
 	if(!.)
 		flick("mining-deny", src)
+
+/obj/machinery/computer/order_console/mining/ui_static_data(mob/user)
+	var/list/data = ..()
+	for(var/list/order in data["order_datums"])
+		var/cost = order["cost"]
+		if(isnull(cost)) //sanity check
+			continue
+		order["cost"] = GET_MINING_SHIPPING_MULTIPLIER(cost) // change costs to reflect mining shipping instead
+	return data
 
 /obj/machinery/computer/order_console/mining/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/mining_voucher))
@@ -199,3 +205,5 @@
 
 #undef TO_POINT_CARD
 #undef TO_USER_ID
+#undef MINING_SHIPPING_MULTIPLIER
+#undef GET_MINING_SHIPPING_MULTIPLIER

@@ -281,10 +281,6 @@
 /obj/machinery/space_heater/constructed
 	cell = null
 
-/datum/armor/machinery_space_heater
-	fire = 80
-	acid = 10
-
 /obj/machinery/space_heater/constructed/Initialize(mapload)
 	. = ..()
 	set_panel_open(TRUE)
@@ -312,10 +308,6 @@
 	///How powerful the heating is, upgrades with parts. (ala chem_heater.dm's method, basically the same level of heating, but this is restricted)
 	var/chem_heating_power = 1
 	display_panel = FALSE
-
-/datum/armor/machinery_space_heater
-	fire = 80
-	acid = 10
 
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()

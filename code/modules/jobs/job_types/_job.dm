@@ -35,9 +35,6 @@
 	/// Supervisors, who this person answers to directly
 	var/supervisors = ""
 
-	/// Selection screen color
-	var/selection_color = "#ffffff"
-
 	/// What kind of mob type joining players with this job as their assigned role are spawned as.
 	var/spawn_type = /mob/living/carbon/human
 

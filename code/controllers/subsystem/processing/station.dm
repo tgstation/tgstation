@@ -26,6 +26,9 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
+	if (CONFIG_GET(flag/forbid_station_traits))
+		return
+
 	if (fexists(FUTURE_STATION_TRAITS_FILE))
 		var/forced_traits_contents = file2text(FUTURE_STATION_TRAITS_FILE)
 		fdel(FUTURE_STATION_TRAITS_FILE)

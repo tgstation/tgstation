@@ -336,12 +336,12 @@
 	cost = 10
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	flags = HIGH_IMPACT_RULESET
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
-	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WIZARDDEN)
-	if (!check_candidates())
+	if(!check_candidates())
 		return FALSE
-	if(GLOB.wizardstart.len == 0)
+	if(!length(GLOB.wizardstart))
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE

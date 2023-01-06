@@ -1,0 +1,4 @@
+author: "A.C.M.O."
+delete-after: True
+changes:
+  - bugfix: "Fixed the DNA Infuser's Goliaths infusion, which was not properly granting its organ set bonus. Having all 4 goliath organs infused now makes you lava-proof as expected."
