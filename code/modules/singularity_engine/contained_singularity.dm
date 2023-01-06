@@ -18,6 +18,9 @@
 
 	COOLDOWN_DECLARE(hit_cooldown)
 
+	VAR_PRIVATE/datum/delayed_power_bar/delayed_power_bar_one
+	VAR_PRIVATE/datum/delayed_power_bar/delayed_power_bar_two
+
 /obj/contained_singularity/Initialize(mapload)
 	. = ..()
 
@@ -29,6 +32,9 @@
 	)
 
 	update_appearance(UPDATE_ICON)
+
+	delayed_power_bar_one = new(initial_delay = 15 SECONDS, lifetime = 15 SECONDS, recharge_delay = 15 SECONDS)
+	delayed_power_bar_two = new(initial_delay = 5 MINUTES, lifetime = 30 SECONDS, recharge_delay = 90 SECONDS)
 
 /obj/contained_singularity/update_overlays()
 	. = ..()
@@ -44,6 +50,9 @@
 
 /obj/contained_singularity/bullet_act(obj/projectile/projectile)
 	if (istype(projectile, /obj/projectile/beam/singularity_turret))
+		delayed_power_bar_one.poke()
+		delayed_power_bar_two.poke()
+
 		addtimer(CALLBACK(src, PROC_REF(try_fire_particle)), 0.3 SECONDS)
 
 	return ..()
