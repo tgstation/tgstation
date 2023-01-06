@@ -278,7 +278,7 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/hardened
 	shoes = /obj/item/clothing/shoes/cult/alt
 	back = /obj/item/storage/backpack/cultpack
-	r_hand = /obj/item/melee/cultblade
+	r_hand = /obj/item/melee/cultblade/dagger
 
 /datum/outfit/wizard
 	name = "Blue Wizard"
