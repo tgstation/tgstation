@@ -45,18 +45,17 @@
 	/// The sound loop that can be heard when the generator is processing.
 	var/datum/looping_sound/generator/soundloop
 
-
 /obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
-	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
+	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator])
+		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator] = new /datum/techweb/autounlocking/biogenerator
+	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator]
 	soundloop = new(src, processing)
-
 
 /obj/machinery/biogenerator/Destroy()
 	QDEL_NULL(beaker)
 	QDEL_NULL(soundloop)
 	return ..()
-
 
 /obj/machinery/biogenerator/contents_explosion(severity, target)
 	. = ..()
@@ -70,7 +69,6 @@
 			SSexplosions.med_mov_atom += beaker
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
-
 
 /obj/machinery/biogenerator/handle_atom_del(atom/deleting_atom)
 	. = ..()

@@ -20,11 +20,11 @@
 
 /obj/machinery/autolathe/Initialize(mapload)
 	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, PROC_REF(AfterMaterialInsert)))
-
 	. = ..()
-
 	wires = new /datum/wires/autolathe(src)
-	stored_research = new /datum/techweb/specialized/autounlocking/autolathe
+	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe])
+		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] = new /datum/techweb/autounlocking/autolathe
+	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
 
 /obj/machinery/autolathe/Destroy()
 	QDEL_NULL(wires)

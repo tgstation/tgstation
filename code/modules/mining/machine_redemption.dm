@@ -27,7 +27,9 @@
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
-	stored_research = new /datum/techweb/specialized/autounlocking/smelter
+	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
+		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
+	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
 	materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
 
 /obj/machinery/mineral/ore_redemption/Destroy()
@@ -238,7 +240,7 @@
 			var/index = 1
 			for (var/datum/design/thisdesign in inserted_disk.blueprints)
 				if(thisdesign)
-					data["diskDesigns"] += list(list("name" = thisdesign.name, "index" = index, "canupload" = thisdesign.build_type&SMELTER))
+					data["diskDesigns"] += list(list("name" = thisdesign.name, "index" = index, "canupload" = thisdesign.build_type & SMELTER))
 				index++
 	return data
 
