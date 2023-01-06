@@ -370,6 +370,12 @@
 /obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
+"Rl" = (
+/obj/modular_map_root/tramstation{
+	key = "barcargoupper_cave"
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/cargo)
 "Sy" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/loading_area{
@@ -683,7 +689,7 @@ SU
 SU
 FC
 Ps
-lN
+Rl
 tg
 SU
 SU

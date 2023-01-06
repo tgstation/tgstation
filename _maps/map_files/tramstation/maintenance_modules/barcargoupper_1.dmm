@@ -217,6 +217,12 @@
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
+"AP" = (
+/obj/modular_map_root/tramstation{
+	key = "barcargoupper_cave"
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/cargo)
 "Cx" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
@@ -606,7 +612,7 @@ Mc
 Mc
 Dm
 mJ
-QC
+AP
 hM
 Mc
 Mc
