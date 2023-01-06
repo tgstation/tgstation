@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "While Ian still enjoys being petted, his heart will now most closely belong to anyone who gives him an expensive luxury dog bone."
+  - code_imp: "Using an item which _can_ deal damage on a mob tracking hostile actions (such as a dog) won't automatically be considered to be a hostile action if you aren't actually hitting it with the item."

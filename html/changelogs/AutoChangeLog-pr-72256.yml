@@ -1,0 +1,8 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - rscadd: "RTD Rapid Tiling Device"
+  - imageadd: "Sprite for RTD"
+  - code_imp: "moved update_overlays() from rcd to obj/item/construction so anyone can use it"
+  - rscdel: "cooldown of 3 seconds when changing turf type"
+  - qol: "Faster Turf decoration"

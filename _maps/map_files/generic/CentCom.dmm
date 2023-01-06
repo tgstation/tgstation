@@ -5,6 +5,16 @@
 "ad" = (
 /turf/open/space,
 /area/space)
+"ai" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_3_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "ar" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -94,6 +104,17 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
+"aL" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_2_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "aM" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/food/meat/rawbacon,
@@ -3742,16 +3763,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"sj" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 5;
-	name = "recovery ship";
-	shuttle_id = "pod_4_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "sn" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security"
@@ -6580,6 +6591,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"Iv" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_4_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "Iz" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
@@ -8062,16 +8083,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/prison)
-"Qt" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 5;
-	name = "recovery ship";
-	shuttle_id = "pod_3_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "Qv" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -9777,17 +9788,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
-"YS" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 5;
-	name = "recovery ship";
-	shuttle_id = "pod_2_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "YT" = (
 /obj/structure/table/wood,
 /obj/structure/plaque/static_plaque/thunderdome{
@@ -36193,7 +36193,7 @@ aa
 aa
 aa
 aa
-sj
+Iv
 KO
 KV
 KV
@@ -37221,7 +37221,7 @@ aa
 aa
 aa
 aa
-Qt
+ai
 KO
 KV
 KV
@@ -38257,7 +38257,7 @@ KQ
 KH
 aa
 aa
-YS
+aL
 aa
 aa
 aa

@@ -65,7 +65,7 @@
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "n" = (
 /obj/structure/table,
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_y = 5
 	},
 /obj/item/plate{

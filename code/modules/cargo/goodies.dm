@@ -133,6 +133,12 @@
 	cost = PAYCHECK_CREW * 4
 	contains = list(/obj/item/toy/plush/beeplushie)
 
+/datum/supply_pack/goody/dog_bone
+	name = "Jumbo Dog Bone"
+	desc = "The best dog bone money can have exported to a space station. A perfect gift for a dog."
+	cost = PAYCHECK_COMMAND * 4
+	contains = list(/obj/item/dog_bone)
+
 /datum/supply_pack/goody/dyespray
 	name = "Hair Dye Spray"
 	desc = "A cool spray to dye your hair with awesome colors!"
