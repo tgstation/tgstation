@@ -13,11 +13,21 @@ GLOBAL_LIST(cardboard_cutouts)
 	var/pushed_over = FALSE
 	/// If the cutout actually appears as what it portray and not a discolored version
 	var/deceptive = FALSE
+	/// Should we load a cutout datum at the start?
+	var/starting_cutout
 
 /obj/item/cardboard_cutout/Initialize(mapload)
 	. = ..()
 	if(!GLOB.cardboard_cutouts)
 		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(generate_cardboard_cutouts))
+	if(starting_cutout)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/item/cardboard_cutout/LateInitialize()
+	var/datum/cardboard_cutout/cutout = GLOB.cardboard_cutouts[starting_cutout]
+	if(!cutout)
+		CRASH("Given invalid starting_cutout! [starting_cutout]")
+	cutout.apply(src)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)

@@ -197,26 +197,23 @@
 /datum/hallucination/delusion/preset/syndies
 	random_hallucination_weight = 1
 	delusion_icon_file = 'icons/mob/simple/simple_human.dmi'
-	delusion_icon_state = "syndicate_space"
 	delusion_name = "Syndicate"
 	affects_others = TRUE
 	affects_us = FALSE
 
 /datum/hallucination/delusion/preset/syndies/make_delusion_image(mob/over_who)
-	var/static/list/syndicate_icon_states
-
-	if(!syndicate_icon_states)
-		syndicate_icon_states = list()
-		for(var/state in icon_states(delusion_icon_file))
-			if(!findtext(state, "syndicate"))
-				continue
-
-			syndicate_icon_states += state
-
-	if(length(syndicate_icon_states) > 0)
-		delusion_name = over_who.name
-		delusion_icon_state = pick(syndicate_icon_states)
-	else
-		stack_trace("Hey! The hallucination [type] couldn't find a single icon state to use, it'll be invisible. Correct this.")
-
+	delusion_icon_file = get_dynamic_human_icon( \
+		mob_spawn_path = pick( \
+			/obj/effect/mob_spawn/corpse/human/syndicatesoldier, \
+			/obj/effect/mob_spawn/corpse/human/syndicatecommando, \
+			/obj/effect/mob_spawn/corpse/human/syndicatestormtrooper, \
+		), \
+		r_hand = pick( \
+			/obj/item/knife/combat/survival, \
+			/obj/item/melee/energy/sword/saber, \
+			/obj/item/gun/ballistic/automatic/pistol, \
+			/obj/item/gun/ballistic/automatic/c20r, \
+			/obj/item/gun/ballistic/shotgun/bulldog, \
+		), \
+	)
 	return ..()
