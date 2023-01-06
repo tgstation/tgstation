@@ -164,7 +164,7 @@ const TextHighlightSettings = (props, context) => {
   const dispatch = useDispatch(context);
   return (
     <Section fill scrollable>
-      <Section level={2} p={0}>
+      <Section p={0}>
         <Flex direction="column">
           {highlightSettings.map((id, i) => (
             <TextHighlightSetting
