@@ -2,7 +2,7 @@
 // MBTODO: Insta-red alert for the sake of the prototype...
 /obj/contained_singularity
 	name = "contained singularity"
-	desc = "A gravitational singularity. Through a battle-tested, though heavily confidential, technique, it is contained in the folds of space, making it reasonably safe to extract energy from. Looking at it gives you a headache."
+	desc = "A gravitational singularity. Through a battle-tested, though heavily confidential technique, it is contained in the folds of space, making it reasonably safe to extract energy from. Looking at it gives you a headache."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "boh_tear"
 	anchored = TRUE
