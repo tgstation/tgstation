@@ -48,6 +48,13 @@
 	///All research servers connected to this individual techweb.
 	var/list/obj/machinery/rnd/server/techweb_servers = list()
 
+	///Boolean on whether the techweb should generate research points overtime.
+	var/should_generate_points = FALSE
+	///A multiplier applied to all research gain, cut in half if the Master server was sabotaged.
+	var/income_modifier = 1
+	///The amount of research points generated the techweb generated the latest time it generated.
+	var/last_income
+
 	/**
 	 * Assoc list of relationships with various partners
 	 * scientific_cooperation[partner_typepath] = relationship
@@ -67,6 +74,15 @@
 		research_node(DN, TRUE, FALSE, FALSE)
 	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
 	initialize_published_papers()
+	return ..()
+
+/datum/techweb/Destroy()
+	researched_nodes = null
+	researched_designs = null
+	available_nodes = null
+	visible_nodes = null
+	custom_designs = null
+	SSresearch.techwebs -= src
 	return ..()
 
 /datum/techweb/admin
@@ -92,15 +108,6 @@
 	if(remove_tech)
 		SSresearch.techweb_nodes_experimental -= bepis_id
 		log_research("[BN.display_name] has been removed from experimental nodes through the BEPIS techweb's \"remove tech\" feature.")
-
-/datum/techweb/Destroy()
-	researched_nodes = null
-	researched_designs = null
-	available_nodes = null
-	visible_nodes = null
-	custom_designs = null
-	SSresearch.techwebs -= src
-	return ..()
 
 /datum/techweb/proc/recalculate_nodes(recalculate_designs = FALSE, wipe_custom_designs = FALSE)
 	var/list/datum/techweb_node/processing = list()
@@ -530,6 +537,7 @@
 /datum/techweb/science //Global science techweb for RND consoles.
 	id = "SCIENCE"
 	organization = "Nanotrasen"
+	should_generate_points = TRUE
 
 /datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only
 	. = ..()
