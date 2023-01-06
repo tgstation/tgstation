@@ -53,7 +53,8 @@
 	#ifdef TRACK_MAX_SHARE
 	var/max_share = 0
 	#endif
-
+/datum/gas_mixture/immutable/space/normal
+	initial_temperature = ROOM_TEMP
 /turf/open/Initialize(mapload)
 	/*if(!blocks_air)
 		//air = create_gas_mixture()
