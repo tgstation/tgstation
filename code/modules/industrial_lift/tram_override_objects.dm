@@ -44,6 +44,13 @@
 	greyscale_config = /datum/greyscale_config/bench_right
 	greyscale_colors = "#00CCFF"
 
+/obj/structure/chair/sofa/bench/tram/solo
+	name = "tram seating"
+	desc = "Not the most comfortable, but easy to keep clean!"
+	icon_state = "bench_solo"
+	greyscale_config = /datum/greyscale_config/bench_solo
+	greyscale_colors = "#00CCFF"
+
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
