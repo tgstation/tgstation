@@ -6,7 +6,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), parent), life_time, TIMER_DELETE_ME)
-	if (life_time > fade_time)
+	if (life_time > fade_time && fade_time > 0)
 		addtimer(CALLBACK(src, PROC_REF(fade_out), fade_time), life_time - fade_time, TIMER_DELETE_ME)
 
 /datum/component/temporary_atom/proc/fade_out(fade_time)
