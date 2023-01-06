@@ -61,7 +61,7 @@
 	trim_state = "trim_bartender"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_SERVICE_LIME
-	access = list(ACCESS_BAR)
+	access = list(ACCESS_BAR, ACCESS_KITCHEN)
 
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/bridge_officer
@@ -111,15 +111,19 @@
 	subdepartment_color = COLOR_MOSTLY_PURE_RED
 	access = list(ACCESS_SYNDICATE)
 
-/// Trim for pirates.
-/datum/id_trim/pirate/silverscale
-	assignment = "Silver Scale Member"
-
 /// Trim for the pirate captain.
 /datum/id_trim/pirate/captain
 	assignment = "Pirate Captain"
 	trim_state = "trim_captain"
 
-/// Trim for the pirate captain.
+/datum/id_trim/pirate/silverscale
+	assignment = "Silver Scale Member"
+
 /datum/id_trim/pirate/captain/silverscale
 	assignment = "Silver Scale VIP"
+
+/datum/id_trim/pirate/psykers
+	assignment = "Psyker-gang Member"
+
+/datum/id_trim/pirate/captain/psykers
+	assignment = "Psyker-gang Leader"

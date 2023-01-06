@@ -16,6 +16,7 @@ Buildable meters
 	throwforce = 7
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
+	icon_state_preview = "manifold4w"
 	inhand_icon_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
 	///Piping layer that we are going to be on
@@ -31,8 +32,41 @@ Buildable meters
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
+/obj/item/pipe/directional/he_junction
+	icon_state_preview = "junction"
+	pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/junction
+/obj/item/pipe/directional/vent
+	icon_state_preview = "uvent"
+	pipe_type = /obj/machinery/atmospherics/components/unary/vent_pump
+/obj/item/pipe/directional/scrubber
+	icon_state_preview = "scrubber"
+	pipe_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
+/obj/item/pipe/directional/connector
+	icon_state_preview = "connector"
+	pipe_type = /obj/machinery/atmospherics/components/unary/portables_connector
+/obj/item/pipe/directional/passive_vent
+	icon_state_preview = "pvent"
+	pipe_type = /obj/machinery/atmospherics/components/unary/passive_vent
+/obj/item/pipe/directional/injector
+	icon_state_preview = "injector"
+	pipe_type = /obj/machinery/atmospherics/components/unary/outlet_injector
+/obj/item/pipe/directional/he_exchanger
+	icon_state_preview = "heunary"
+	pipe_type = /obj/machinery/atmospherics/components/unary/heat_exchanger
 /obj/item/pipe/binary
 	RPD_type = PIPE_STRAIGHT
+/obj/item/pipe/binary/layer_adapter
+	icon_state_preview = "manifoldlayer"
+	pipe_type = /obj/machinery/atmospherics/pipe/layer_manifold
+/obj/item/pipe/binary/color_adapter
+	icon_state_preview = "adapter_center"
+	pipe_type = /obj/machinery/atmospherics/pipe/color_adapter
+/obj/item/pipe/binary/pressure_pump
+	icon_state_preview = "pump"
+	pipe_type = /obj/machinery/atmospherics/components/binary/pump
+/obj/item/pipe/binary/manual_valve
+	icon_state_preview = "mvalve"
+	pipe_type = /obj/machinery/atmospherics/components/binary/valve
 /obj/item/pipe/binary/bendable
 	RPD_type = PIPE_BENDABLE
 /obj/item/pipe/trinary
@@ -40,8 +74,20 @@ Buildable meters
 /obj/item/pipe/trinary/flippable
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
+/obj/item/pipe/trinary/flippable/filter
+	icon_state_preview = "filter"
+	pipe_type = /obj/machinery/atmospherics/components/trinary/filter
+/obj/item/pipe/trinary/flippable/mixer
+	icon_state_preview = "mixer"
+	pipe_type = /obj/machinery/atmospherics/components/trinary/mixer
 /obj/item/pipe/quaternary
 	RPD_type = PIPE_ONEDIR
+/obj/item/pipe/quaternary/pipe
+	icon_state_preview = "manifold4w"
+	pipe_type = /obj/machinery/atmospherics/pipe/smart
+/obj/item/pipe/quaternary/he_pipe
+	icon_state_preview = "he_manifold4w"
+	pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
 
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
 	if(make_from)
@@ -55,7 +101,7 @@ Buildable meters
 	update()
 	pixel_x += rand(-5, 5)
 	pixel_y += rand(-5, 5)
-	
+
 	//Flipping handled manually due to custom handling for trinary pipes
 	AddComponent(/datum/component/simple_rotation, ROTATION_NO_FLIPPING)
 	return ..()
@@ -92,6 +138,7 @@ Buildable meters
 /obj/item/pipe/proc/update()
 	var/obj/machinery/atmospherics/fakeA = pipe_type
 	name = "[initial(fakeA.name)] fitting"
+	desc = initial(fakeA.desc)
 	icon_state = initial(fakeA.pipe_state)
 	if(ispath(pipe_type,/obj/machinery/atmospherics/pipe/heat_exchanging))
 		resistance_flags |= FIRE_PROOF | LAVA_PROOF
@@ -286,15 +333,15 @@ Buildable meters
 	..()
 	T.flipped = flipped
 
-/obj/item/pipe/suicide_act(mob/user)
+/obj/item/pipe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] shoves [src] in [user.p_their()] mouth and turns it on! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		for(var/i=1 to 20)
+		for(var/i in 1 to 20)
 			C.vomit(0, TRUE, FALSE, 4, FALSE)
 			if(prob(20))
 				C.spew_organ()
-			sleep(5)
+			sleep(0.5 SECONDS)
 		C.blood_volume = 0
 	return(OXYLOSS|BRUTELOSS)
 

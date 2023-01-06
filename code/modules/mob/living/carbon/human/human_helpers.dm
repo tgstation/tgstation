@@ -4,11 +4,38 @@
 		return FALSE
 	return TRUE
 
+///returns a list of "damtype" => damage description based off of which bodypart description is most common
+///used in human examines
+/mob/living/carbon/human/proc/get_majority_bodypart_damage_desc()
+	var/most_seen_brute = 0
+	var/most_seen_burn = 0
+	var/brute_desc = ""
+	var/burn_desc = ""
+	var/list/seen_brute = list()
+	var/list/seen_burn = list()
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		//brute
+		if(!seen_brute[part.brute_damage_desc])
+			seen_brute[part.brute_damage_desc] = 1
+		else
+			seen_brute[part.brute_damage_desc] += 1
+		if(seen_brute[part.brute_damage_desc] > most_seen_brute)
+			brute_desc = part.brute_damage_desc
+		//burn
+		if(!seen_burn[part.burn_damage_desc])
+			seen_burn[part.burn_damage_desc] = 1
+		else
+			seen_burn[part.burn_damage_desc] += 1
+		if(seen_burn[part.burn_damage_desc] > most_seen_burn)
+			burn_desc = part.burn_damage_desc
+	return list(BRUTE = brute_desc, BURN = burn_desc)
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job", hand_first = TRUE)
 	var/obj/item/card/id/id = get_idcard(hand_first)
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return if_no_id
 	if(id)
 		. = id.assignment
 	else
@@ -24,6 +51,8 @@
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
 	var/obj/item/card/id/id = get_idcard(FALSE)
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return if_no_id
 	if(id)
 		return id.registered_name
 	var/obj/item/modular_computer/pda = wear_id
@@ -35,6 +64,8 @@
 /mob/living/carbon/human/get_visible_name()
 	var/face_name = get_face_name("")
 	var/id_name = get_id_name("")
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return "Unknown"
 	if(name_override)
 		return name_override
 	if(face_name)
@@ -47,6 +78,8 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return if_no_face //We're Unknown, no face information for you
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) ) //Wearing a mask which hides our face, use id-name if possible
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
@@ -60,16 +93,16 @@
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/modular_computer/tablet/pda/pda = wear_id
+	var/obj/item/modular_computer/pda/pda = wear_id
 	var/obj/item/card/id/id = wear_id
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		. = if_no_id //You get NOTHING, no id name, good day sir
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
-	else if(istype(pda))
-		var/obj/item/computer_hardware/card_slot/card_slot = pda.all_components[MC_CARD]
-		if(card_slot?.stored_card)
-			. = card_slot.stored_card.registered_name
+	else if(istype(pda) && pda.computer_id_slot)
+		. = pda.computer_id_slot.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
 	return
@@ -88,13 +121,17 @@
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
+		if(check_chunky_fingers())
 			balloon_alert(src, "fingers are too big!")
 			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
 
+/mob/living/carbon/human/proc/check_chunky_fingers()
+	if(HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT) && HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT))
+		return TRUE
+	return (active_hand_index % 2) ? HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT) : HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT)
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
 	. += "[dna.species.type]"
@@ -193,9 +230,6 @@
 	WRITE_FILE(F["scar[char_index]-[scar_index]"], sanitize_text(valid_scars))
 	WRITE_FILE(F["current_scar_index"], sanitize_integer(scar_index))
 
-/mob/living/carbon/human/get_biological_state()
-	return dna.species.get_biological_state()
-
 ///Returns death message for mob examine text
 /mob/living/carbon/human/proc/generate_death_examine_text()
 	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
@@ -219,7 +253,7 @@
 
 /// Fully randomizes everything according to the given flags.
 /mob/living/carbon/human/proc/randomize_human_appearance(randomize_flags = ALL)
-	var/datum/preferences/preferences = new
+	var/datum/preferences/preferences = new(new /datum/client_interface)
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (!preference.included_in_randomization_flags(randomize_flags))

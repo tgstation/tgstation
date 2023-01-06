@@ -24,6 +24,7 @@
 			activated to get an rough estimate of the AI's presence. Knowing when \
 			an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/multitool/ai_detect
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	cost = 1
 
 /datum/uplink_item/stealthy_tools/chameleon
@@ -56,6 +57,11 @@
 	item = /obj/item/flashlight/emp
 	cost = 4
 	surplus = 30
+
+/datum/uplink_item/stealthy_tools/emplight/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 3
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"

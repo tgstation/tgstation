@@ -211,6 +211,8 @@
 /obj/item/clothing/neck/scarf
 	name = "scarf"
 	icon_state = "scarf"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "scarf_cloth"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
@@ -266,7 +268,8 @@
 /obj/item/clothing/neck/large_scarf
 	name = "large scarf"
 	icon_state = "large_scarf"
-	custom_price = PAYCHECK_CREW * 0.2
+	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#C6C6C6#EEEEEE"
 	greyscale_config = /datum/greyscale_config/large_scarf
 	greyscale_config_worn = /datum/greyscale_config/large_scarf_worn
@@ -284,13 +287,33 @@
 	name = "large blue scarf"
 	greyscale_colors = "#20396C#6F7F91"
 
+/obj/item/clothing/neck/large_scarf/syndie
+	name = "suspicious looking striped scarf"
+	desc = "Ready to operate."
+	greyscale_colors = "#B40000#545350"
+	armor_type = /datum/armor/large_scarf_syndie
+
+/obj/item/clothing/neck/infinity_scarf
+	name = "infinity scarf"
+	icon_state = "infinity_scarf"
+	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_CREW
+	greyscale_colors = "#EEEEEE"
+	greyscale_config = /datum/greyscale_config/infinity_scarf
+	greyscale_config_worn = /datum/greyscale_config/infinity_scarf_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/clothing/neck/petcollar
 	name = "pet collar"
 	desc = "It's for pets."
 	icon_state = "petcollar"
 	var/tagname = null
 
-/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/datum/armor/large_scarf_syndie
+	fire = 50
+	acid = 40
+
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(!ismonkey(M))
 		return FALSE
 	return ..()
@@ -325,6 +348,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/datum/export_report/ex = export_item_and_contents(I, delete_unsold = selling, dry_run = !selling)
 	var/price = 0
 	for(var/x in ex.total_amount)
@@ -337,6 +361,8 @@
 			new /obj/item/holochip(get_turf(user),true_price)
 	else
 		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
+
+	return .
 
 /obj/item/clothing/neck/beads
 	name = "plastic bead necklace"

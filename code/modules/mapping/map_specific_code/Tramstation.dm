@@ -4,7 +4,7 @@
 /obj/item/paper/fluff/genpop_instructions
 	name = "Genpop - Inmate Processing and You"
 	desc = "A nicely folded paper explaining how to use the Genpop locker and brigging system."
-	info = @{"
+	default_raw_text = @{"
 
 <center><b>INSTRUCTIONAL GUIDE TO PROCESSING NEW INMATES</center>
 </b> <br>

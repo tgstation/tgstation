@@ -2,7 +2,7 @@
 	name = "magic eightball"
 	desc = "A black ball with a stenciled number eight in white on the side. It seems full of dark liquid.\nThe instructions state that you should ask your question aloud, and then shake."
 
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "eightball"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -64,7 +64,7 @@
 		say(answer)
 
 		on_cooldown = TRUE
-		addtimer(CALLBACK(src, .proc/clear_cooldown), cooldown_time)
+		addtimer(CALLBACK(src, PROC_REF(clear_cooldown)), cooldown_time)
 
 	shaking = FALSE
 
@@ -149,7 +149,7 @@
 	interact(user)
 	return ..()
 
-/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
+/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
 	. = ..()
 	last_message = raw_message
 

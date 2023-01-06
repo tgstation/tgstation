@@ -12,7 +12,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	///Currently active announcer. Starts as a type but gets initialized after traits are selected
 	var/datum/centcom_announcer/announcer = /datum/centcom_announcer/default
 
-/datum/controller/subsystem/processing/station/Initialize(timeofday)
+/datum/controller/subsystem/processing/station/Initialize()
 
 	//If doing unit tests we don't do none of that trait shit ya know?
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
@@ -22,10 +22,13 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 	announcer = new announcer() //Initialize the station's announcer datum
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
+	if (CONFIG_GET(flag/forbid_station_traits))
+		return
+
 	if (fexists(FUTURE_STATION_TRAITS_FILE))
 		var/forced_traits_contents = file2text(FUTURE_STATION_TRAITS_FILE)
 		fdel(FUTURE_STATION_TRAITS_FILE)

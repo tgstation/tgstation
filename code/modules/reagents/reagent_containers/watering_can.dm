@@ -1,4 +1,4 @@
-/obj/item/reagent_containers/glass/watering_can
+/obj/item/reagent_containers/cup/watering_can
 	name = "watering can"
 	desc = "It's a watering can. It is scientifically proved that using a watering can to simulate rain increases plant happiness!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
@@ -12,7 +12,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(20,100)
 
-/obj/item/reagent_containers/glass/watering_can/wood
+/obj/item/reagent_containers/cup/watering_can/wood
 	name = "wood watering can"
 	desc = "An old metal-made watering can but shoddily painted to look like it was made of wood for some dubious reason..."
 	icon_state = "watering_can_wood"
@@ -20,7 +20,7 @@
 	volume = 70
 	possible_transfer_amounts = list(20,70)
 
-/obj/item/reagent_containers/glass/watering_can/advanced
+/obj/item/reagent_containers/cup/watering_can/advanced
 	desc = "Everything a botanist would want in a watering can. This marvel of technology generates its own water!"
 	name = "advanced watering can"
 	icon_state = "adv_watering_can"
@@ -32,16 +32,16 @@
 	///Determins what reagent to use for refilling
 	var/datum/reagent/refill_reagent = /datum/reagent/water
 
-/obj/item/reagent_containers/glass/watering_can/advanced/Initialize(mapload)
+/obj/item/reagent_containers/cup/watering_can/advanced/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/reagent_containers/glass/watering_can/advanced/process(delta_time)
+/obj/item/reagent_containers/cup/watering_can/advanced/process(delta_time)
 	///How much to refill
 	var/refill_add = min(volume - reagents.total_volume, refill_rate * delta_time)
 	if(refill_add > 0)
 		reagents.add_reagent(refill_reagent, refill_add)
 
-/obj/item/reagent_containers/glass/watering_can/advanced/Destroy()
+/obj/item/reagent_containers/cup/watering_can/advanced/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()

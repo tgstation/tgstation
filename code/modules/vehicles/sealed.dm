@@ -31,7 +31,9 @@
 	. = ..()
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
-		for(var/occupant in occupants)
+		for(var/mob/occupant as anything in return_drivers())
+			if(conditionalwall.try_safety_unlock(occupant))
+				return
 			conditionalwall.bumpopen(occupant)
 
 /obj/vehicle/sealed/after_add_occupant(mob/M)
@@ -47,7 +49,7 @@
 /obj/vehicle/sealed/proc/mob_try_enter(mob/M)
 	if(!istype(M))
 		return FALSE
-	if(do_after(M, get_enter_delay(M), src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, .proc/enter_checks, M)))
+	if(do_after(M, get_enter_delay(M), src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(enter_checks), M)))
 		mob_enter(M)
 		return TRUE
 	return FALSE
@@ -73,7 +75,6 @@
 	mob_exit(M, silent, randomstep)
 
 /obj/vehicle/sealed/proc/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
-	SIGNAL_HANDLER
 	if(!istype(M))
 		return FALSE
 	remove_occupant(M)
@@ -97,6 +98,7 @@
 			if(inserted_key) //just in case there's an invalid key
 				inserted_key.forceMove(drop_location())
 			inserted_key = I
+			inserted_key.forceMove(src)
 		else
 			to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
 		return
@@ -110,7 +112,6 @@
 		to_chat(user, span_warning("You must be driving [src] to remove [src]'s key!"))
 		return
 	to_chat(user, span_notice("You remove [inserted_key] from [src]."))
-	inserted_key.forceMove(drop_location())
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		user.put_in_hands(inserted_key)
 	else
@@ -123,7 +124,7 @@
 
 /obj/vehicle/sealed/proc/dump_mobs(randomstep = TRUE)
 	for(var/i in occupants)
-		mob_exit(i, null, randomstep)
+		mob_exit(i, randomstep = randomstep)
 		if(iscarbon(i))
 			var/mob/living/carbon/Carbon = i
 			Carbon.Paralyze(40)
@@ -132,7 +133,7 @@
 	for(var/i in occupants)
 		if(!(occupants[i] & flag))
 			continue
-		mob_exit(i, null, randomstep)
+		mob_exit(i, randomstep = randomstep)
 		if(iscarbon(i))
 			var/mob/living/carbon/C = i
 			C.Paralyze(40)

@@ -10,7 +10,7 @@
 	var/datum/callback/on_squash_callback
 	///signal list given to connect_loc
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 
 

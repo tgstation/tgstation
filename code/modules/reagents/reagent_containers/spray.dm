@@ -27,8 +27,10 @@
 
 /obj/item/reagent_containers/spray/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(istype(target, /obj/structure/sink) || istype(target, /obj/structure/janitorialcart) || istype(target, /obj/machinery/hydroponics))
+	if(istype(target, /obj/structure/sink) || istype(target, /obj/structure/mop_bucket/janitorialcart) || istype(target, /obj/machinery/hydroponics))
 		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
 
 	if((target.is_drainable() && !target.is_refillable()) && (get_dist(src, target) <= 1) && can_fill_from_container)
 		if(!target.reagents.total_volume)
@@ -73,8 +75,8 @@
 	var/puff_reagent_string = reagent_puff.reagents.get_reagent_log_string()
 	var/turf/src_turf = get_turf(src)
 
-	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string]")
-	log_game("[key_name(user)] fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string] at [AREACOORD(src_turf)].")
+	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string].")
+	user.log_message("fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string].", LOG_ATTACK)
 
 	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
 	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
@@ -86,8 +88,8 @@
 	reagent_puff.sprayer = src
 	reagent_puff.lifetime = puff_reagent_left
 	reagent_puff.stream = stream_mode
-	reagent_puff.RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, /obj/effect/decal/chempuff/proc/loop_ended)
-	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, /obj/effect/decal/chempuff/proc/check_move)
+	reagent_puff.RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/obj/effect/decal/chempuff, loop_ended))
+	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/effect/decal/chempuff, check_move))
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
 	. = ..()
@@ -173,7 +175,7 @@
 	amount_per_transfer_from_this = 2
 	possible_transfer_amounts = list(2,5)
 
-/obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
+/obj/item/reagent_containers/spray/cleaner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
@@ -199,7 +201,7 @@
 /obj/item/reagent_containers/spray/pepper
 	name = "pepperspray"
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "pepperspray"
 	inhand_icon_state = "pepperspray"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -220,7 +222,7 @@
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
 	if (A.loc == user)
 		return
-	. = ..()
+	return ..() | AFTERATTACK_PROCESSED_ITEM
 
 //water flower
 /obj/item/reagent_containers/spray/waterflower
@@ -229,6 +231,8 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	inhand_icon_state = "sunflower"
+	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1)
 	can_toggle_range = FALSE
@@ -240,7 +244,7 @@
 /obj/item/reagent_containers/spray/waterflower/superlube
 	name = "clown flower"
 	desc = "A delightly devilish flower... you got a feeling where this is going."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "clownflower"
 	volume = 30
 	list_reagents = list(/datum/reagent/lube/superlube = 30)
@@ -289,7 +293,7 @@
 /obj/item/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"
 	desc = "A utility used to spray large amounts of reagents in a given area."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "chemsprayer"
 	inhand_icon_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -307,7 +311,7 @@
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
 	if (A.loc == user)
 		return
-	. = ..()
+	return ..() | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A, mob/user)
 	var/direction = get_dir(src, A)
@@ -370,7 +374,7 @@
 /obj/item/reagent_containers/spray/syndicate
 	name = "suspicious spray bottle"
 	desc = "A spray bottle, with a high performance plastic nozzle. The color scheme makes you feel slightly uneasy."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "sprayer_sus_8"
 	inhand_icon_state = "sprayer_sus"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -386,7 +390,7 @@
 
 /obj/item/reagent_containers/spray/medical
 	name = "medical spray bottle"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "sprayer_med_red"
 	inhand_icon_state = "sprayer_med_red"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -397,7 +401,7 @@
 						"Blue" = "sprayer_med_blue")
 
 /obj/item/reagent_containers/spray/medical/AltClick(mob/user)
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
 		reskin_obj(user)
 
 /obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
@@ -409,7 +413,7 @@
 			inhand_icon_state = "sprayer_med_yellow"
 		if("sprayer_med_blue")
 			inhand_icon_state = "sprayer_med_blue"
-	M.update_inv_hands()
+	M.update_held_items()
 
 /obj/item/reagent_containers/spray/hercuri
 	name = "medical spray (hercuri)"

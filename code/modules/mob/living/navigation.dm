@@ -15,13 +15,13 @@
 	if(incapacitated())
 		return
 	if(length(client.navigation_images))
-		addtimer(CALLBACK(src, .proc/cut_navigation), world.tick_lag)
+		addtimer(CALLBACK(src, PROC_REF(cut_navigation)), world.tick_lag)
 		balloon_alert(src, "navigation path removed")
 		return
 	if(!COOLDOWN_FINISHED(src, navigate_cooldown))
 		balloon_alert(src, "navigation on cooldown!")
 		return
-	addtimer(CALLBACK(src, .proc/create_navigation), world.tick_lag)
+	addtimer(CALLBACK(src, PROC_REF(create_navigation)), world.tick_lag)
 
 /mob/living/proc/create_navigation()
 	var/list/destination_list = list()
@@ -69,28 +69,29 @@
 		return
 	path |= get_turf(navigate_target)
 	for(var/i in 1 to length(path))
-		var/image/path_image = image(icon = 'icons/effects/navigation.dmi', layer = HIGH_PIPE_LAYER, loc = path[i])
-		path_image.plane = GAME_PLANE
+		var/turf/current_turf = path[i]
+		var/image/path_image = image(icon = 'icons/effects/navigation.dmi', layer = HIGH_PIPE_LAYER, loc = current_turf)
+		SET_PLANE(path_image, GAME_PLANE, current_turf)
 		path_image.color = COLOR_CYAN
 		path_image.alpha = 0
 		var/dir_1 = 0
 		var/dir_2 = 0
 		if(i == 1)
-			dir_2 = turn(angle2dir(get_angle(path[i+1], path[i])), 180)
+			dir_2 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
 		else if(i == length(path))
-			dir_2 = turn(angle2dir(get_angle(path[i-1], path[i])), 180)
+			dir_2 = turn(angle2dir(get_angle(path[i-1], current_turf)), 180)
 		else
-			dir_1 = turn(angle2dir(get_angle(path[i+1], path[i])), 180)
-			dir_2 = turn(angle2dir(get_angle(path[i-1], path[i])), 180)
+			dir_1 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
+			dir_2 = turn(angle2dir(get_angle(path[i-1], current_turf)), 180)
 			if(dir_1 > dir_2)
 				dir_1 = dir_2
-				dir_2 = turn(angle2dir(get_angle(path[i+1], path[i])), 180)
+				dir_2 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
 		path_image.icon_state = "[dir_1]-[dir_2]"
 		client.images += path_image
 		client.navigation_images += path_image
 		animate(path_image, 0.5 SECONDS, alpha = 150)
-	addtimer(CALLBACK(src, .proc/shine_navigation), 0.5 SECONDS)
-	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/cut_navigation)
+	addtimer(CALLBACK(src, PROC_REF(shine_navigation)), 0.5 SECONDS)
+	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(cut_navigation))
 	balloon_alert(src, "navigation path created")
 
 /mob/living/proc/shine_navigation()

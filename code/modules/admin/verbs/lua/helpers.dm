@@ -7,6 +7,9 @@
  * a proc directly called from auxtools sleeps, the hook returns with whatever
  * the called proc had as its return value at the moment it slept. This may not
  * be desired behavior, so this datum exists to wrap these procs.
+ *
+ * Some procs that don't sleep could take longer than the execution limit would
+ * allow for. We can wrap these in a promise as well.
  */
 /datum/auxtools_promise
 	var/datum/callback/callback
@@ -20,6 +23,7 @@
 
 /datum/auxtools_promise/proc/perform()
 	set waitfor = 0
+	sleep() //In case we have to call a super-expensive non-sleeping proc (like getFlatIcon)
 	try
 		return_value = callback.Invoke()
 		status = PROMISE_RESOLVED

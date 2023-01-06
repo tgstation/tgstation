@@ -1,0 +1,10 @@
+{
+	"jacket_oversized": [
+		{
+			"type": "icon_state",
+			"icon_state": "jacket_oversized",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

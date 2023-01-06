@@ -42,7 +42,7 @@
 				R.notify_ai(AI_NOTIFICATION_CYBORG_DISCONNECTED)
 				if(new_ai && (new_ai != R.connected_ai))
 					R.set_connected_ai(new_ai)
-					log_silicon("[key_name(usr)] synced [key_name(R)] [R.connected_ai ? "from [ADMIN_LOOKUP(R.connected_ai)]": ""] to [ADMIN_LOOKUP(new_ai)]")
+					log_silicon("[key_name(usr)] synced [key_name(R)] [R.connected_ai ? "from [key_name(R.connected_ai)]": ""] to [key_name(new_ai)]")
 					if(R.shell)
 						R.undeploy() //If this borg is an AI shell, disconnect the controlling AI and assign ti to a new AI
 						R.notify_ai(AI_NOTIFICATION_AI_SHELL)
@@ -74,7 +74,7 @@
 		if(WIRE_AI) // Cut the AI wire to reset AI control.
 			if(!mend)
 				R.notify_ai(AI_NOTIFICATION_CYBORG_DISCONNECTED)
-				log_silicon("[key_name(usr)] cut AI wire on [key_name(R)][R.connected_ai ? " and disconnected from [ADMIN_LOOKUP(R.connected_ai)]": ""]")
+				log_silicon("[key_name(usr)] cut AI wire on [key_name(R)][R.connected_ai ? " and disconnected from [key_name(R.connected_ai)]": ""]")
 				if(R.shell)
 					R.undeploy()
 				R.set_connected_ai(null)

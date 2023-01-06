@@ -39,7 +39,7 @@
 	amount--
 	if(delay > 0)
 		drone.set_busy(delay_message,delay)
-		addtimer(CALLBACK(src,.proc/delay_finished,WEAKREF(drone)),delay)
+		addtimer(CALLBACK(src, PROC_REF(delay_finished),WEAKREF(drone)),delay)
 	else
 		finish_event(drone)
 

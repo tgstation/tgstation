@@ -1,10 +1,10 @@
 import { useBackend } from '../backend';
-import { Box, Button, Icon, NoticeBox, ProgressBar, Section } from '../components';
+import { Box, Button, ByondUi, NoticeBox, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Gateway = () => {
   return (
-    <Window>
+    <Window width={350} height={440}>
       <Window.Content scrollable>
         <GatewayContent />
       </Window.Content>
@@ -19,6 +19,7 @@ const GatewayContent = (props, context) => {
     gateway_status = false,
     current_target = null,
     destinations = [],
+    gateway_mapkey,
   } = data;
   if (!gateway_present) {
     return (
@@ -33,8 +34,18 @@ const GatewayContent = (props, context) => {
   if (current_target) {
     return (
       <Section title={current_target.name}>
-        <Icon name="rainbow" size={4} color="green" />
-        <Button fluid onClick={() => act('deactivate')}>
+        <ByondUi
+          height="320px"
+          params={{
+            id: gateway_mapkey,
+            type: 'map',
+          }}
+        />
+        <Button
+          mt="2px"
+          textAlign="center"
+          fluid
+          onClick={() => act('deactivate')}>
           Deactivate
         </Button>
       </Section>

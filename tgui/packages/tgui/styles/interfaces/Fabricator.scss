@@ -1,0 +1,218 @@
+@use 'sass:math';
+
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+@use '../components/Button.scss' as button;
+@use '../components/Tabs.scss' as tabs;
+
+.Fabricator__Recipe {
+  padding: 0.25em 0;
+  border-bottom: 1px solid #000;
+  position: relative;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.Fabricator__PrintAmount {
+  min-height: 100%;
+}
+
+.Fabricator__PrintAmount {
+  transition: opacity 0.5s ease-out;
+}
+
+.Fabricator__PrintAmount--disabled {
+  opacity: 0.5;
+  background-color: transparent;
+}
+
+.Fabricator__PrintAmount--disabled {
+  text-decoration: line-through;
+}
+
+.MaterialDock {
+  position: relative;
+  padding: 0.5em;
+  border-radius: 0 0 0.25em 0.25em;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.MaterialDock--active {
+  background-color: #111;
+  transition: background-color 0.125s ease-out;
+}
+
+.MaterialDock__Label {
+  transition: opacity 0.5s ease-out;
+}
+
+.MaterialDock--disabled .MaterialDock__Label {
+  opacity: 0.5;
+}
+
+.MaterialDock__Dock {
+  position: absolute;
+  background-color: #111;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  padding: 1em;
+  border-radius: 0.25em 0.25em 0 0;
+  text-align: center;
+  box-shadow: 0 0 3px #000;
+}
+
+.MaterialDock--active .MaterialDock__Dock {
+  @keyframes materialdock-open {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  animation: materialdock-open 0.125s ease-out;
+}
+
+.MaterialDock__Button {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
+  box-shadow: 0 0 3px #000;
+}
+
+.FabricatorRecipe {
+  display: -ms-flexbox;
+  display: flex;
+  width: auto;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  position: relative;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &__Progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    transition: width 1s linear;
+  }
+
+  &__Title,
+  &__Button {
+    @include button.button-color(base.$color-bg);
+    background-color: rgba(base.$color-bg, 0);
+    color: button.$color-transparent-text;
+    position: relative;
+
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.25em 0.5em;
+    border-radius: 0;
+    margin: 0;
+    transition: opacity 0.5s ease-out;
+
+    &:first-child {
+      border-radius: 4px 0 0 4px;
+    }
+
+    &:last-child {
+      border-radius: 0 4px 4px 0;
+    }
+
+    &--disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &__Title {
+    flex-grow: 1;
+  }
+
+  &__Icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 1em;
+  }
+
+  &__Button {
+    justify-self: flex-end;
+
+    &--icon {
+      padding: 0 1em;
+    }
+
+    &--disabled {
+      text-decoration: line-through;
+    }
+  }
+}
+
+.FabricatorMaterialIcon {
+  display: inline-block;
+  position: relative;
+  width: 32px;
+  height: 32px;
+
+  &__Icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+
+    &--active {
+      opacity: 1;
+    }
+  }
+}
+
+.FabricatorTabs {
+  .FabricatorTabs {
+    margin-top: 0.5em;
+    padding-left: 0.25em;
+  }
+
+  &__Tab {
+    background-color: rgba(base.$color-bg, 0);
+    color: button.$color-transparent-text;
+    border-right: 2px solid transparent;
+    border-radius: 0.25em 0 0 0.25em;
+    padding: 0.5em 0 0.5em 0.5em;
+    padding-right: 1.25em;
+    margin-right: -0.5em;
+    padding-right: 0.5em;
+    transition: border-color 0.125s ease-out, background-color 0.0625s ease-out;
+
+    &:hover,
+    &--active {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    &--active {
+      color: #fff;
+      border-right: 2px solid colors.$primary;
+    }
+  }
+
+  &__Label {
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}

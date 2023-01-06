@@ -264,6 +264,13 @@
 	door.electronics = electronics
 	door.heat_proof = heat_proof_finished
 	door.security_level = 0
+	if(electronics.shell)
+		door.AddComponent( \
+			/datum/component/shell, \
+			unremovable_circuit_components = list(new /obj/item/circuit_component/airlock, new /obj/item/circuit_component/airlock_access_event), \
+			capacity = SHELL_CAPACITY_LARGE, \
+			shell_flags = SHELL_FLAG_ALLOW_FAILURE_ACTION|SHELL_FLAG_REQUIRE_ANCHOR \
+		)
 	if(electronics.one_access)
 		door.req_one_access = electronics.accesses
 	else
@@ -288,10 +295,10 @@
 /obj/structure/door_assembly/update_overlays()
 	. = ..()
 	if(!glass)
-		. += get_airlock_overlay("fill_construction", icon, TRUE)
+		. += get_airlock_overlay("fill_construction", icon, src, TRUE)
 	else
-		. += get_airlock_overlay("glass_construction", overlays_file, TRUE)
-	. += get_airlock_overlay("panel_c[state+1]", overlays_file, TRUE)
+		. += get_airlock_overlay("glass_construction", overlays_file, src, TRUE)
+	. += get_airlock_overlay("panel_c[state+1]", overlays_file, src, TRUE)
 
 /obj/structure/door_assembly/update_name()
 	name = ""

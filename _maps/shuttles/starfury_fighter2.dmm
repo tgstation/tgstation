@@ -6,9 +6,7 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter2)
 "j" = (
@@ -38,7 +36,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter2)
 "q" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter2)
 "r" = (
@@ -94,9 +92,7 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter2)
 "V" = (

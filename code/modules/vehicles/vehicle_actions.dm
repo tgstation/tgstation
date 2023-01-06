@@ -39,9 +39,21 @@
 		grant_passenger_actions(i) //refresh
 
 /**
+ * ## destroy_passenger_action_type
+ *
+ * Removes this action type from all occupants and stops autogranting it
+ * args:
+ * * actiontype: typepath of the action you want to remove from occupants and the autogrant list.
+ */
+/obj/vehicle/proc/destroy_passenger_action_type(actiontype)
+	autogrant_actions_passenger -= actiontype
+	for(var/i in occupants)
+		remove_action_type_from_mob(actiontype, i)
+
+/**
  * ## initialize_controller_action_type
  *
- * Gives any passenger that enters the mech this action... IF they have the correct vehicle control flag.
+ * Gives any passenger that enters the vehicle this action... IF they have the correct vehicle control flag.
  * This is used so passengers cannot press buttons only drivers should have, for example.
  * args:
  * * actiontype: typepath of the action you want to give occupants.
@@ -51,6 +63,19 @@
 	autogrant_actions_controller["[control_flag]"] += actiontype
 	for(var/i in occupants)
 		grant_controller_actions(i) //refresh
+
+/**
+ * ## destroy_controller_action_type
+ *
+ * As the name implies, removes the actiontype from autogrant and removes it from all occupants
+ * args:
+ * * actiontype: typepath of the action you want to remove from occupants and autogrant.
+ */
+/obj/vehicle/proc/destroy_controller_action_type(actiontype, control_flag)
+	autogrant_actions_controller["[control_flag]"] -= actiontype
+	UNSETEMPTY(autogrant_actions_controller["[control_flag]"])
+	for(var/i in occupants)
+		remove_action_type_from_mob(actiontype, i)
 
 /**
  * ## grant_action_type_to_mob
@@ -163,7 +188,7 @@
 
 /datum/action/vehicle
 	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_vehicle.dmi'
+	button_icon = 'icons/mob/actions/actions_vehicle.dmi'
 	button_icon_state = "vehicle_eject"
 	var/obj/vehicle/vehicle_target
 
@@ -285,7 +310,7 @@
 /datum/action/vehicle/ridden/wheelchair/bell
 	name = "Bell Ring"
 	desc = "Ring the bell."
-	icon_icon = 'icons/obj/bureaucracy.dmi'
+	button_icon = 'icons/obj/bureaucracy.dmi'
 	button_icon_state = "desk_bell"
 	check_flags = AB_CHECK_CONSCIOUS
 	var/bell_cooldown
@@ -326,10 +351,10 @@
 			rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)
 		vehicle.grinding = TRUE
 		vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
-		addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
+		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 2)
 	else
 		vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
-	rider.spin(4, 1)
+	rider.spin(spintime = 4, speed = 1)
 	animate(rider, pixel_y = -6, time = 4)
 	animate(vehicle, pixel_y = -6, time = 3)
 	playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
@@ -339,11 +364,53 @@
 	passtable_off(rider, VEHICLE_TRAIT)
 	vehicle.pass_flags &= ~PASSTABLE
 
+/datum/action/vehicle/ridden/scooter/skateboard/kickflip
+	name = "Kickflip"
+	desc = "Kick your board up and catch it."
+	button_icon_state = "skateboard_ollie"
+	check_flags = AB_CHECK_CONSCIOUS
+
+/datum/action/vehicle/ridden/scooter/skateboard/kickflip/Trigger(trigger_flags)
+	var/obj/vehicle/ridden/scooter/skateboard/board = vehicle_target
+	var/mob/living/rider = owner
+
+	rider.adjustStaminaLoss(board.instability)
+	if (rider.getStaminaLoss() >= 100)
+		playsound(src, 'sound/effects/bang.ogg', 20, vary = TRUE)
+		board.unbuckle_mob(rider)
+		rider.Paralyze(50)
+		if(prob(15))
+			rider.visible_message(
+				span_userdanger("You smack against the board, hard."),
+				span_danger("[rider] misses the landing and falls on [rider.p_their()] face!)"),
+			)
+			rider.emote("scream")
+			rider.adjustBruteLoss(10)  // thats gonna leave a mark
+			return
+		rider.visible_message(
+			span_userdanger("You fall flat onto the board!"),
+			span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"),
+		)
+		return
+
+	rider.visible_message(
+		span_notice("[rider] does a sick kickflip and catches [rider.p_their()] board in midair."),
+		span_notice("You do a sick kickflip, catching the board in midair! Stylish."),
+	)
+	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, vary = TRUE)
+	rider.spin(spintime = 4, speed = 1)
+	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
+	animate(board, pixel_y = -6, time = 0.3 SECONDS)
+	board.unbuckle_mob(rider)
+	addtimer(CALLBACK(board, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, pick_up_board), rider), 1 SECONDS)  // so the board can still handle "picking it up"
+
+
+
 //VIM ACTION DATUMS
 
 /datum/action/vehicle/sealed/climb_out/vim
 	name = "Eject From Mech"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_eject"
 
 /datum/action/vehicle/sealed/noise

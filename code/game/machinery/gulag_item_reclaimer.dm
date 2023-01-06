@@ -85,4 +85,5 @@
 		stored_items[user] -= W
 		W.forceMove(drop_location)
 	stored_items -= user
+	user.log_message("has reclaimed their items from the gulag item reclaimer.", LOG_GAME)
 	use_power(active_power_usage)

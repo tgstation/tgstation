@@ -9,7 +9,7 @@
 	var/scanning = FALSE
 	var/timing = FALSE
 	var/time = 20
-	var/sensitivity = 1
+	var/sensitivity = 0
 	var/hearing_range = 3
 	///Proximity monitor associated with this atom, needed for it to work.
 	var/datum/proximity_monitor/proximity_monitor
@@ -21,7 +21,8 @@
 
 /obj/item/assembly/prox_sensor/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	QDEL_NULL(proximity_monitor)
+	return ..()
 
 /obj/item/assembly/prox_sensor/examine(mob/user)
 	. = ..()
@@ -37,12 +38,35 @@
 	update_appearance()
 	return TRUE
 
+/obj/item/assembly/prox_sensor/dropped()
+	. = ..()
+	// Pick the first valid object in this list:
+	// Wiring datum's owner
+	// assembly holder's attached object
+	// assembly holder itself
+	// us
+	proximity_monitor?.set_host(connected?.holder || holder?.master || holder || src, src)
+
+/obj/item/assembly/prox_sensor/on_attach()
+	. = ..()
+	// Pick the first valid object in this list:
+	// Wiring datum's owner
+	// assembly holder's attached object
+	// assembly holder itself
+	// us
+	proximity_monitor.set_host(connected?.holder || holder?.master || holder || src, src)
+
 /obj/item/assembly/prox_sensor/on_detach()
 	. = ..()
 	if(!.)
 		return
 	else
-		proximity_monitor.set_host(src, src)
+		// Pick the first valid object in this list:
+		// Wiring datum's owner
+		// assembly holder's attached object
+		// assembly holder itself
+		// us
+		proximity_monitor.set_host(connected?.holder || holder?.master || holder || src, src)
 
 /obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured
@@ -66,7 +90,7 @@
 /obj/item/assembly/prox_sensor/proc/sense()
 	if(!scanning || !secured || next_activate > world.time)
 		return FALSE
-	pulse(FALSE)
+	pulse()
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
 		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)

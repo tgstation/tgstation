@@ -20,6 +20,12 @@
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
 
 
+/mob/living/brain/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	var/obj/item/organ/internal/brain/brain_loc = loc
+	if(brain_loc && isnull(new_turf) && brain_loc.owner) //we're actively being put inside a new body.
+		return ..(old_turf, get_turf(brain_loc.owner), same_z_layer, notify_contents)
+	return ..()
+
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
 	if(!stored_dna.species)
@@ -28,8 +34,8 @@
 
 /mob/living/brain/Destroy()
 	if(key) //If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
-		if(stat!=DEAD) //If not dead.
-			death(1) //Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
+		if(stat != DEAD)
+			death(TRUE)
 		if(mind) //You aren't allowed to return to brains that don't exist
 			mind.set_current(null)
 		ghostize() //Ghostize checks for key so nothing else is necessary.

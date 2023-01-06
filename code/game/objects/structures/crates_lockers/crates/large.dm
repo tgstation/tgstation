@@ -17,6 +17,10 @@
 	// Stops people from "diving into" a crate you can't open normally
 	divable = FALSE
 
+/obj/structure/closet/crate/large/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
+
 /obj/structure/closet/crate/large/attack_hand(mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(manifest)
@@ -28,7 +32,8 @@
 	if(W.tool_behaviour == TOOL_CROWBAR)
 		if(manifest)
 			tear_manifest(user)
-
+		if(!open(user))
+			return FALSE
 		user.visible_message(span_notice("[user] pries \the [src] open."), \
 			span_notice("You pry open \the [src]."), \
 			span_hear("You hear splitting wood."))
@@ -39,7 +44,6 @@
 			new material_drop(src)
 		for(var/atom/movable/AM in contents)
 			AM.forceMove(T)
-
 		qdel(src)
 
 	else

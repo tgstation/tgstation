@@ -2,8 +2,14 @@
 /datum/hud/proc/create_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
+
 	if (!apply_parallax_pref(viewmob)) //don't want shit computers to crash when specing someone with insane parallax, so use the viewer's pref
+		for(var/atom/movable/screen/plane_master/parallax as anything in get_true_plane_masters(PLANE_SPACE_PARALLAX))
+			parallax.hide_plane(screenmob)
 		return
+
+	for(var/atom/movable/screen/plane_master/parallax as anything in get_true_plane_masters(PLANE_SPACE_PARALLAX))
+		parallax.unhide_plane(screenmob)
 
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()
@@ -20,45 +26,49 @@
 		C.parallax_layers.len = C.parallax_layers_max
 
 	C.screen |= (C.parallax_layers)
-	var/atom/movable/screen/plane_master/PM = screenmob.hud_used.plane_masters["[PLANE_SPACE]"]
-	if(screenmob != mymob)
-		C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
-		C.screen += PM
-	PM.color = list(
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		1, 1, 1, 1,
-		0, 0, 0, 0
-		)
-
+	// We could do not do parallax for anything except the main plane group
+	// This could be changed, but it would require refactoring this whole thing
+	// And adding non client particular hooks for all the inputs, and I do not have the time I'm sorry :(
+	for(var/atom/movable/screen/plane_master/plane_master as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
+		if(screenmob != mymob)
+			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
+			C.screen += plane_master
+		plane_master.color = list(
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			1, 1, 1, 1,
+			0, 0, 0, 0
+			)
 
 /datum/hud/proc/remove_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	C.screen -= (C.parallax_layers_cached)
-	var/atom/movable/screen/plane_master/PM = screenmob.hud_used.plane_masters["[PLANE_SPACE]"]
-	if(screenmob != mymob)
-		C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
-		C.screen += PM
-	PM.color = initial(PM.color)
+	for(var/atom/movable/screen/plane_master/plane_master as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
+		if(screenmob != mymob)
+			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
+			C.screen += plane_master
+		plane_master.color = initial(plane_master.color)
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 
 	if(SSmapping.level_trait(screenmob.z, ZTRAIT_NOPARALLAX))
+		for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
+			white_space.hide_plane(screenmob)
 		return FALSE
+
+	for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
+		white_space.unhide_plane(screenmob)
+
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(viewmob, TRAIT_BYPASS_MEASURES))
 		return FALSE
 
 	var/client/C = screenmob.client
 	// Default to HIGH
-	var/parallax_selection = PARALLAX_HIGH
-	if(C.prefs)
-		parallax_selection = C.prefs.read_preference(/datum/preference/choiced/parallax)
-		if (!parallax_selection)
-			parallax_selection = PARALLAX_HIGH
+	var/parallax_selection = C?.prefs.read_preference(/datum/preference/choiced/parallax) || PARALLAX_HIGH
 
 	switch(parallax_selection)
 		if (PARALLAX_INSANE)
@@ -85,9 +95,12 @@
 			return FALSE
 
 /datum/hud/proc/update_parallax_pref(mob/viewmob)
-	remove_parallax(viewmob)
-	create_parallax(viewmob)
-	update_parallax(viewmob)
+	var/mob/screen_mob = viewmob || mymob
+	if(!screen_mob.client)
+		return
+	remove_parallax(screen_mob)
+	create_parallax(screen_mob)
+	update_parallax(screen_mob)
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
 /datum/hud/proc/set_parallax_movedir(new_parallax_movedir = 0, skip_windups, mob/viewmob)
@@ -139,7 +152,7 @@
 	C.parallax_movedir = new_parallax_movedir
 	if (C.parallax_animate_timer)
 		deltimer(C.parallax_animate_timer)
-	var/datum/callback/CB = CALLBACK(src, .proc/update_parallax_motionblur, C, animatedir, new_parallax_movedir, newtransform)
+	var/datum/callback/CB = CALLBACK(src, PROC_REF(update_parallax_motionblur), C, animatedir, new_parallax_movedir, newtransform)
 	if(skip_windups)
 		CB.Invoke()
 	else
@@ -251,7 +264,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0
-	var/view_sized
 	var/absolute = FALSE
 	blend_mode = BLEND_ADD
 	plane = PLANE_SPACE_PARALLAX
@@ -267,7 +279,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	// I do not want to know bestie
 	var/view = boss.view || world.view
 	update_o(view)
-	RegisterSignal(boss, COMSIG_VIEW_SET, .proc/on_view_change)
+	RegisterSignal(boss, COMSIG_VIEW_SET, PROC_REF(on_view_change))
 
 /atom/movable/screen/parallax_layer/proc/on_view_change(datum/source, new_size)
 	SIGNAL_HANDLER
@@ -293,7 +305,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 			new_overlays += texture_overlay
 	cut_overlays()
 	add_overlay(new_overlays)
-	view_sized = view
 
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "layer1"
@@ -338,8 +349,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	if(!owner?.client)
 		return
 	var/static/list/connections = list(
-		COMSIG_MOVABLE_Z_CHANGED = .proc/on_z_change,
-		COMSIG_MOB_LOGOUT = .proc/on_mob_logout,
+		COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_z_change),
+		COMSIG_MOB_LOGOUT = PROC_REF(on_mob_logout),
 	)
 	AddComponent(/datum/component/connect_mob_behalf, owner.client, connections)
 	on_z_change(owner)

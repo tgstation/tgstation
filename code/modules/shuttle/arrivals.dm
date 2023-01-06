@@ -1,10 +1,7 @@
 /obj/docking_port/mobile/arrivals
 	name = "arrivals shuttle"
-	id = "arrivals"
+	shuttle_id = "arrival"
 
-	dwidth = 3
-	width = 7
-	height = 15
 	dir = WEST
 	port_direction = SOUTH
 
@@ -37,7 +34,7 @@
 	areas = list()
 
 	var/list/new_latejoin = list()
-	for(var/area/shuttle/arrival/A in GLOB.sortedAreas)
+	for(var/area/shuttle/arrival/A in GLOB.areas)
 		for(var/obj/structure/chair/C in A)
 			new_latejoin += C
 		if(!console)
@@ -181,7 +178,7 @@
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
 		var/obj/docking_port/stationary/target = target_dock
 		if(QDELETED(target))
-			target = SSshuttle.getDock("arrivals_stationary")
+			target = SSshuttle.getDock("arrival_stationary")
 		request(target) //we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
@@ -205,7 +202,7 @@
 	if(mode != SHUTTLE_CALL)
 		announce_arrival(mob, rank)
 	else
-		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/announce_arrival, mob, rank))
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(announce_arrival), mob, rank))
 
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)

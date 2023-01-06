@@ -21,9 +21,11 @@
 	var/list/created_atoms = list()
 	//make sure this list is accounted for/cleared if you request it from ssatoms!
 
-	// vars for automatic ceiling generation
+	///If true, any openspace turfs above the template will be replaced with ceiling_turf when loading. Should probably be FALSE for lower levels of multi-z ruins.
 	var/has_ceiling = FALSE
+	///What turf to replace openspace with when has_ceiling is true
 	var/turf/ceiling_turf = /turf/open/floor/plating
+	///What baseturfs to set when replacing openspace when has_ceiling is true
 	var/list/ceiling_baseturfs = list()
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
@@ -75,6 +77,8 @@
 			continue
 
 		for(var/movable_in_turf in current_turf)
+			if(istype(movable_in_turf, /obj/docking_port/mobile))
+				continue // mobile docking ports need to be initialized after their template has finished loading, to ensure that their bounds are setup
 			movables += movable_in_turf
 			if(istype(movable_in_turf, /obj/structure/cable))
 				cables += movable_in_turf
@@ -129,14 +133,13 @@
 	var/x = round((world.maxx - width) * 0.5) + 1
 	var/y = round((world.maxy - height) * 0.5) + 1
 
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY)
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top)
+	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY, contain_turfs = FALSE)
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top, new_z = TRUE)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
 
-	repopulate_sorted_areas()
-
+	require_area_resort()
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 	smooth_zlevel(world.maxz)
@@ -149,17 +152,20 @@
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
 	if(!T)
 		return
-	if(T.x+width > world.maxx)
+	if((T.x+width) - 1 > world.maxx)
 		return
-	if(T.y+height > world.maxy)
+	if((T.y+height) - 1 > world.maxy)
 		return
 
 	var/list/border = block(locate(max(T.x-1, 1), max(T.y-1, 1),  T.z),
 							locate(min(T.x+width+1, world.maxx), min(T.y+height+1, world.maxy), T.z))
-	for(var/L in border)
-		var/turf/turf_to_disable = L
-		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
-		turf_to_disable.atmos_adjacent_turfs?.Cut()
+
+	// iterate over turfs in the border and clear them from active atmos processing
+	for(var/turf/border_turf as anything in border)
+		SSair.remove_from_active(border_turf)
+		for(var/turf/sub_turf as anything in border_turf.atmos_adjacent_turfs)
+			sub_turf.atmos_adjacent_turfs?.Remove(border_turf)
+		border_turf.atmos_adjacent_turfs?.Cut()
 
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
@@ -169,6 +175,7 @@
 	var/list/turf_blacklist = list()
 	update_blacklist(T, turf_blacklist)
 
+	UNSETEMPTY(turf_blacklist)
 	parsed.turf_blacklist = turf_blacklist
 	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
 		return
@@ -176,8 +183,7 @@
 	if(!bounds)
 		return
 
-	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
-		repopulate_sorted_areas()
+	require_area_resort()
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)

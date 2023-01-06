@@ -21,6 +21,7 @@
 	.["mainsettings"]["leader_experience"]["value"] = newtemplate.leader_experience ? "Yes" : "No"
 	.["mainsettings"]["random_names"]["value"] = newtemplate.random_names ? "Yes" : "No"
 	.["mainsettings"]["spawn_admin"]["value"] = newtemplate.spawn_admin ? "Yes" : "No"
+	.["mainsettings"]["use_custom_shuttle"]["value"] = newtemplate.use_custom_shuttle ? "Yes" : "No"
 
 
 /datum/admins/proc/equipAntagOnDummy(mob/living/carbon/human/dummy/mannequin, datum/antagonist/antag)
@@ -46,7 +47,6 @@
 
 	equipAntagOnDummy(mannequin, ert)
 
-	COMPILE_OVERLAYS(mannequin)
 	CHECK_TICK
 	var/icon/preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
@@ -78,9 +78,9 @@
 		ertemplate = new /datum/ert/centcom_official
 
 	var/list/settings = list(
-		"preview_callback" = CALLBACK(src, .proc/makeERTPreviewIcon),
+		"preview_callback" = CALLBACK(src, PROC_REF(makeERTPreviewIcon)),
 		"mainsettings" = list(
-		"template" = list("desc" = "Template", "callback" = CALLBACK(src, .proc/makeERTTemplateModified), "type" = "datum", "path" = "/datum/ert", "subtypesonly" = TRUE, "value" = ertemplate.type),
+		"template" = list("desc" = "Template", "callback" = CALLBACK(src, PROC_REF(makeERTTemplateModified)), "type" = "datum", "path" = "/datum/ert", "subtypesonly" = TRUE, "value" = ertemplate.type),
 		"teamsize" = list("desc" = "Team Size", "type" = "number", "value" = ertemplate.teamsize),
 		"mission" = list("desc" = "Mission", "type" = "string", "value" = ertemplate.mission),
 		"polldesc" = list("desc" = "Ghost poll description", "type" = "string", "value" = ertemplate.polldesc),
@@ -88,11 +88,12 @@
 		"open_armory" = list("desc" = "Open armory doors", "type" = "boolean", "value" = "[(ertemplate.opendoors ? "Yes" : "No")]"),
 		"leader_experience" = list("desc" = "Pick an experienced leader", "type" = "boolean", "value" = "[(ertemplate.leader_experience ? "Yes" : "No")]"),
 		"random_names" = list("desc" = "Randomize names", "type" = "boolean", "value" = "[(ertemplate.random_names ? "Yes" : "No")]"),
-		"spawn_admin" = list("desc" = "Spawn yourself as briefing officer", "type" = "boolean", "value" = "[(ertemplate.spawn_admin ? "Yes" : "No")]")
+		"spawn_admin" = list("desc" = "Spawn yourself as briefing officer", "type" = "boolean", "value" = "[(ertemplate.spawn_admin ? "Yes" : "No")]"),
+		"use_custom_shuttle" = list("desc" = "Use the ERT's custom shuttle (if it has one)", "type" = "boolean", "value" = "[(ertemplate.use_custom_shuttle ? "Yes" : "No")]"),
 		)
 	)
 
-	var/list/prefreturn = presentpreflikepicker(usr,"Customize ERT", "Customize ERT", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
+	var/list/prefreturn = presentpreflikepicker(usr, "Customize ERT", "Customize ERT", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
 
 	if (isnull(prefreturn))
 		return FALSE
@@ -110,36 +111,75 @@
 		ertemplate.teamsize = prefs["teamsize"]["value"]
 		ertemplate.mission = prefs["mission"]["value"]
 		ertemplate.polldesc = prefs["polldesc"]["value"]
-		ertemplate.enforce_human = prefs["enforce_human"]["value"] == "Yes" // these next 5 are effectively toggles
+		ertemplate.enforce_human = prefs["enforce_human"]["value"] == "Yes" // these next 6 are effectively toggles
 		ertemplate.opendoors = prefs["open_armory"]["value"] == "Yes"
 		ertemplate.leader_experience = prefs["leader_experience"]["value"] == "Yes"
 		ertemplate.random_names = prefs["random_names"]["value"] == "Yes"
 		ertemplate.spawn_admin = prefs["spawn_admin"]["value"] == "Yes"
+		ertemplate.use_custom_shuttle = prefs["use_custom_shuttle"]["value"] == "Yes"
 
 		var/list/spawnpoints = GLOB.emergencyresponseteamspawn
 		var/index = 0
 
+		var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad")
+		var/teamSpawned = FALSE
+
+		// This list will take priority over spawnpoints if not empty
+		var/list/spawn_turfs = list()
+
+		// Takes precedence over spawnpoints[1] if not null
+		var/turf/brief_spawn
+
+		if(!length(candidates))
+			return FALSE
+
+		if(ertemplate.use_custom_shuttle && ertemplate.ert_template)
+			to_chat(usr, span_boldnotice("Attempting to spawn ERT custom shuttle, this may take a few seconds..."))
+			var/datum/map_template/shuttle/ship = new ertemplate.ert_template
+			var/x = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE - ship.width)
+			var/y = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE - ship.height)
+			var/z = SSmapping.empty_space.z_value
+			var/turf/located_turf = locate(x, y, z)
+			if(!located_turf)
+				CRASH("ERT shuttle found no place to load in")
+
+			if(!ship.load(located_turf))
+				CRASH("Loading ERT shuttle failed!")
+
+			var/list/shuttle_turfs = ship.get_affected_turfs(located_turf)
+
+			for(var/turf/affected_turf as anything in shuttle_turfs)
+				for(var/obj/effect/landmark/ert_shuttle_spawn/spawner in affected_turf)
+					spawn_turfs += get_turf(spawner)
+
+				if(!brief_spawn)
+					brief_spawn = locate(/obj/effect/landmark/ert_shuttle_brief_spawn) in affected_turf
+
+			if(!length(spawn_turfs))
+				stack_trace("ERT shuttle loaded but found no spawnpoints, placing the ERT at wherever inside the shuttle instead.")
+
+				for(var/turf/open/floor/open_turf in shuttle_turfs)
+					if(!is_safe_turf(open_turf))
+						continue
+					spawn_turfs += open_turf
+
+
 		if(ertemplate.spawn_admin)
 			if(isobserver(usr))
-				var/mob/living/carbon/human/admin_officer = new (spawnpoints[1])
+				var/mob/living/carbon/human/admin_officer = new (brief_spawn || spawnpoints[1])
 				var/chosen_outfit = usr.client?.prefs?.read_preference(/datum/preference/choiced/brief_outfit)
 				usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE)
 				admin_officer.equipOutfit(chosen_outfit)
 				admin_officer.key = usr.key
+
 			else
 				to_chat(usr, span_warning("Could not spawn you in as briefing officer as you are not a ghost!"))
 
-		var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad")
-		var/teamSpawned = FALSE
-
-		if(candidates.len == 0)
-			return FALSE
-
 		//Pick the (un)lucky players
-		var/numagents = min(ertemplate.teamsize,candidates.len)
+		var/numagents = min(ertemplate.teamsize, length(candidates))
 
 		//Create team
-		var/datum/team/ert/ert_team = new ertemplate.team ()
+		var/datum/team/ert/ert_team = new ertemplate.team()
 		if(ertemplate.rename_team)
 			ert_team.name = ertemplate.rename_team
 
@@ -168,9 +208,14 @@
 			earmarked_leader = pick(candidates)
 
 		while(numagents && candidates.len)
-			var/spawnloc = spawnpoints[index+1]
-			//loop through spawnpoints one at a time
-			index = (index + 1) % spawnpoints.len
+			var/turf/spawnloc
+			if(length(spawn_turfs))
+				spawnloc = pick(spawn_turfs)
+			else
+				spawnloc = spawnpoints[index+1]
+				//loop through spawnpoints one at a time
+				index = (index + 1) % spawnpoints.len
+
 			var/mob/dead/observer/chosen_candidate = earmarked_leader || pick(candidates) // this way we make sure that our leader gets chosen
 			candidates -= chosen_candidate
 			if(!chosen_candidate?.key)
@@ -200,7 +245,7 @@
 			ert_operative.mind.set_assigned_role(SSjob.GetJobType(ert_antag.ert_job_path))
 
 			//Logging and cleanup
-			log_game("[key_name(ert_operative)] has been selected as an [ert_antag.name]")
+			ert_operative.log_message("has been selected as \a [ert_antag.name].", LOG_GAME)
 			numagents--
 			teamSpawned++
 

@@ -83,7 +83,10 @@ const ApcContent = (props, context) => {
   }
   return (
     <>
-      <InterfaceLockNoticeBox />
+      <InterfaceLockNoticeBox
+        siliconUser={data.remoteAccess || data.siliconUser}
+        preventLocking={data.remoteAccess}
+      />
       <Section title="Power Status">
         <LabeledList>
           <LabeledList.Item
@@ -222,6 +225,7 @@ const ApcContent = (props, context) => {
                 tooltip="Dim lights to reduce power consumption."
                 icon="lightbulb-o"
                 content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
+                disabled={data.disable_nightshift_toggle}
                 onClick={() => act('toggle_nightshift')}
               />
             }

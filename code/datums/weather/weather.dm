@@ -67,7 +67,7 @@
 	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
 	/// Taken from weather_glow.dmi
 	var/use_glow = TRUE
-	var/mutable_appearance/current_glow
+	var/list/offsets_to_overlays
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -114,16 +114,8 @@
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	SSweather.processing |= src
 	update_areas()
-	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
-			var/turf/mob_turf = get_turf(player)
-			if(!mob_turf)
-				continue
-			if(telegraph_message)
-				to_chat(player, telegraph_message)
-			if(telegraph_sound)
-				SEND_SOUND(player, sound(telegraph_sound))
-	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
+	send_alert(telegraph_message, telegraph_sound)
+	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
 /**
  * Starts the actual weather and effects from it
@@ -138,17 +130,9 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type))
 	stage = MAIN_STAGE
 	update_areas()
-	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
-			var/turf/mob_turf = get_turf(player)
-			if(!mob_turf)
-				continue
-			if(weather_message)
-				to_chat(player, weather_message)
-			if(weather_sound)
-				SEND_SOUND(player, sound(weather_sound))
+	send_alert(weather_message, weather_sound)
 	if(!perpetual)
-		addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
+		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 
 /**
  * Weather enters the winding down phase, stops effects
@@ -163,16 +147,8 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_WINDDOWN(type))
 	stage = WIND_DOWN_STAGE
 	update_areas()
-	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
-			var/turf/mob_turf = get_turf(player)
-			if(!mob_turf)
-				continue
-			if(end_message)
-				to_chat(player, end_message)
-			if(end_sound)
-				SEND_SOUND(player, sound(end_sound))
-	addtimer(CALLBACK(src, .proc/end), end_duration)
+	send_alert(end_message, end_sound)
+	addtimer(CALLBACK(src, PROC_REF(end)), end_duration)
 
 /**
  * Fully ends the weather
@@ -188,6 +164,22 @@
 	stage = END_STAGE
 	SSweather.processing -= src
 	update_areas()
+
+// handles sending all alerts
+/datum/weather/proc/send_alert(alert_msg, alert_sfx)
+	for(var/z_level in impacted_z_levels)
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
+			if(!can_get_alert(player))
+				continue
+			if(alert_msg)
+				to_chat(player, alert_msg)
+			if(alert_sfx)
+				SEND_SOUND(player, sound(alert_sfx))
+
+// the checks for if a mob should recieve alerts, returns TRUE if can
+/datum/weather/proc/can_get_alert(mob/player)
+	var/turf/mob_turf = get_turf(player)
+	return !isnull(mob_turf)
 
 /**
  * Returns TRUE if the living mob can be affected by the weather
@@ -239,26 +231,51 @@
 		if(END_STAGE)
 			using_icon_state = ""
 
-	var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, ABOVE_LIGHTING_PLANE, 100)
+	// Note: what we do here is effectively apply two overlays to each area, for every unique multiz layer they inhabit
+	// One is the base, which will be masked by lighting. the other is "glowing", and provides a nice contrast
+	// This method of applying one overlay per z layer has some minor downsides, in that it could lead to improperly doubled effects if some have alpha
+	// I prefer it to creating 2 extra plane masters however, so it's a cost I'm willing to pay
+	// LU
+	var/list/new_offsets_to_overlays = list()
 	for(var/V in impacted_areas)
 		var/area/N = V
-		if(current_glow)
-			N.overlays -= current_glow
-		if(stage == END_STAGE)
-			N.color = null
-			N.icon_state = using_icon_state
-			N.icon = 'icons/area/areas_misc.dmi'
-			N.layer = initial(N.layer)
-			N.plane = initial(N.plane)
-			N.set_opacity(FALSE)
-		else
-			N.layer = overlay_layer
-			N.plane = overlay_plane
-			N.icon = 'icons/effects/weather_effects.dmi'
-			N.icon_state = using_icon_state
-			N.color = weather_color
-			if(use_glow)
-				N.overlays += glow_overlay
 
-	current_glow = glow_overlay
+		// List of overlays this area uses
+		var/list/mutable_appearance/overlays = list()
+		// Use all possible offsets
+		// Yes this is a bit annoying, but it's too slow to calculate and store these, and it shouldn't (I hope) look weird
+		for(var/offset in 0 to SSmapping.max_plane_offset)
+			var/keyd_offset = offset + 1
+			if(length(new_offsets_to_overlays) < keyd_offset)
+				new_offsets_to_overlays.len = keyd_offset
+			var/list/mutable_appearance/existing_appearances = new_offsets_to_overlays[keyd_offset]
+			if(existing_appearances)
+				overlays += existing_appearances
+				continue
+
+			var/list/offset_overlays = list()
+			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, N, ABOVE_LIGHTING_PLANE, 100, offset_const = offset)
+			glow_overlay.color = weather_color
+			offset_overlays += glow_overlay
+
+			if(stage != END_STAGE)
+				var/mutable_appearance/weather_overlay = mutable_appearance('icons/effects/weather_effects.dmi', using_icon_state, overlay_layer, plane = overlay_plane, offset_const = offset)
+				weather_overlay.color = weather_color
+				offset_overlays += weather_overlay
+
+			new_offsets_to_overlays[keyd_offset] = offset_overlays
+			overlays += offset_overlays
+
+		var/list/mutable_appearance/old_glows = list()
+		// Offset (ha) by 1 to match the key
+		for(var/offset in 1 to SSmapping.max_plane_offset + 1)
+			if(length(offsets_to_overlays) >= offset)
+				old_glows += offsets_to_overlays[offset]
+
+		if(length(old_glows))
+			N.overlays -= old_glows
+		if(length(overlays))
+			N.overlays += overlays
+
+	offsets_to_overlays = new_offsets_to_overlays
 

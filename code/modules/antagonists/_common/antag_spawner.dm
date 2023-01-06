@@ -49,7 +49,7 @@
 	. = ..()
 	if(used || polling || !ishuman(usr))
 		return
-	INVOKE_ASYNC(src, .proc/poll_for_student, usr, params["school"])
+	INVOKE_ASYNC(src, PROC_REF(poll_for_student), usr, params["school"])
 	SStgui.close_uis(src)
 
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
@@ -100,11 +100,16 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
-	var/special_role_name = ROLE_NUCLEAR_OPERATIVE ///The name of the special role given to the recruit
-	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/no_crystals ///The applied outfit
-	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop ///The antag datam applied
+	/// The name of the special role given to the recruit
+	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
+	/// The applied outfit
+	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
+	/// The antag datam applied
+	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
+	/// Do we use a random subtype of the outfit?
+	var/use_subtypes = TRUE
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -152,7 +157,7 @@
 
 	antag_datum = new()
 	antag_datum.send_to_spawnpoint = FALSE
-	antag_datum.nukeop_outfit = outfit
+	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
@@ -168,6 +173,7 @@
 	outfit = /datum/outfit/syndicate/clownop/no_crystals
 	antag_datum = /datum/antagonist/nukeop/clownop
 	pod_style = STYLE_HONK
+	use_subtypes = FALSE
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
@@ -233,8 +239,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
-	var/shatter_msg = "<span class='notice'>You shatter the bottle, no turning back now!</span>"
-	var/veil_msg = "<span class='warning'>You sense a dark presence lurking just beyond the veil...</span>"
+	var/shatter_msg = span_notice("You shatter the bottle, no turning back now!")
+	var/veil_msg = span_warning("You sense a dark presence lurking just beyond the veil...")
 	var/mob/living/demon_type = /mob/living/simple_animal/hostile/imp/slaughter
 	var/antag_type = /datum/antagonist/slaughter
 
@@ -250,8 +256,9 @@
 		if(used || QDELETED(src))
 			return
 		used = TRUE
-		var/mob/dead/observer/C = pick(candidates)
-		spawn_antag(C.client, get_turf(src), initial(demon_type.name),user.mind)
+		var/mob/dead/observer/summoned = pick(candidates)
+		user.log_message("has summoned forth the [initial(demon_type.name)] (played by [key_name(summoned)]) using a [name].", LOG_GAME) // has to be here before we create antag otherwise we can't get the ckey of the demon
+		spawn_antag(summoned.client, get_turf(src), initial(demon_type.name), user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
@@ -278,6 +285,6 @@
 	icon_state = "vial"
 	color = "#FF69B4" // HOT PINK
 
-	veil_msg = "<span class='warning'>You sense an adorable presence lurking just beyond the veil...</span>"
+	veil_msg = span_warning("You sense an adorable presence lurking just beyond the veil...")
 	demon_type = /mob/living/simple_animal/hostile/imp/slaughter/laughter
 	antag_type = /datum/antagonist/slaughter/laughter

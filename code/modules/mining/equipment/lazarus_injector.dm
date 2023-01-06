@@ -9,7 +9,7 @@
 /obj/item/lazarus_injector
 	name = "lazarus injector"
 	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "lazarus_hypo"
 	inhand_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -41,8 +41,8 @@
 		to_chat(user, span_info("[src] is only effective on the dead."))
 		return
 
-	target_animal.faction = list("neutral")
-	target_animal.revive(full_heal = TRUE, admin_revive = TRUE)
+	target_animal.faction = list(FACTION_NEUTRAL)
+	target_animal.revive(HEAL_ALL)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/target_hostile = target_animal
 		if(malfunctioning)
@@ -50,7 +50,7 @@
 			target_hostile.robust_searching = TRUE
 			target_hostile.friends += user
 			target_hostile.attack_same = TRUE
-			log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
+			user.log_message("has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector.", LOG_GAME)
 		else
 			target_hostile.attack_same = FALSE
 	loaded = FALSE

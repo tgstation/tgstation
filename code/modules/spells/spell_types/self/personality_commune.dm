@@ -36,8 +36,6 @@
 		reset_cooldown()
 		return . | SPELL_CANCEL_CAST
 
-	return TRUE
-
 // Pillaged and adapted from telepathy code
 /datum/action/cooldown/spell/personality_commune/cast(mob/living/cast_on)
 	. = ..()

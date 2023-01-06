@@ -43,7 +43,7 @@
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	RegisterSignal(src,COMSIG_PARENT_ATTACKBY, .proc/feed_feedback)
+	RegisterSignal(src,COMSIG_PARENT_ATTACKBY, PROC_REF(feed_feedback))
 
 /obj/structure/aquarium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -101,7 +101,7 @@
 	. += span_notice("Alt-click to [panel_open ? "close" : "open"] the control panel.")
 
 /obj/structure/aquarium/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return ..()
 	panel_open = !panel_open
 	update_appearance()
@@ -171,7 +171,7 @@
 			update_appearance()
 
 ///Apply mood bonus depending on aquarium status
-/obj/structure/aquarium/proc/admire(mob/user)
+/obj/structure/aquarium/proc/admire(mob/living/user)
 	to_chat(user,span_notice("You take a moment to watch [src]."))
 	if(do_after(user, 5 SECONDS, target = src))
 		var/alive_fish = 0
@@ -185,9 +185,9 @@
 		//All fish dead - bad mood.
 		//No fish - nothing.
 		if(alive_fish > 0)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "aquarium", /datum/mood_event/aquarium_positive)
+			user.add_mood_event("aquarium", /datum/mood_event/aquarium_positive)
 		else if(dead_fish > 0)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "aquarium", /datum/mood_event/aquarium_negative)
+			user.add_mood_event("aquarium", /datum/mood_event/aquarium_negative)
 		// Could maybe scale power of this mood with number/types of fish
 
 /obj/structure/aquarium/ui_data(mob/user)

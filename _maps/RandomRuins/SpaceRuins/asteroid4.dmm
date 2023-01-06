@@ -4,37 +4,37 @@
 /area/template_noop)
 "b" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "c" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "d" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "e" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "f" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "g" = (
 /turf/closed/mineral/bananium,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "h" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "i" = (
 /turf/open/misc/asteroid,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "j" = (
 /turf/closed/wall/mineral/titanium,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "k" = (
 /obj/item/stack/sheet/mineral/bananium{
 	amount = 15
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "m" = (
 /obj/structure/chair{
 	dir = 1
@@ -49,26 +49,24 @@
 	amount = 15
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "n" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/storage/pod{
-	pixel_x = -26
-	},
+/obj/item/storage/pod/directional/west,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "o" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/closed/wall/mineral/titanium/overspace,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "p" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 
 (1,1,1) = {"
 a

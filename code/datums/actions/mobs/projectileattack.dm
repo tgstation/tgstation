@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack
 	name = "Projectile Attack"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Fires a set of projectiles at a selected target."
 	cooldown_time = 1.5 SECONDS
@@ -18,8 +18,10 @@
 	var/projectile_speed_multiplier = 1
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/proc/attack_sequence(mob/living/firer, atom/target)
 	shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
@@ -52,7 +54,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire
 	name = "Rapid Fire"
-	icon_icon = 'icons/obj/guns/energy.dmi'
+	button_icon = 'icons/obj/weapons/guns/energy.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires projectiles repeatedly at a given target."
 	cooldown_time = 1.5 SECONDS
@@ -74,7 +76,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel
 	name = "Shrapnel Fire"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Fires projectiles that will split into shrapnel after a period of time."
 	cooldown_time = 6 SECONDS
@@ -91,7 +93,7 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/attack_sequence(mob/living/firer, atom/target)
 	for(var/i in 1 to shot_count)
 		var/obj/projectile/to_explode = shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
-		addtimer(CALLBACK(src, .proc/explode_into_shrapnel, firer, target, to_explode), break_time)
+		addtimer(CALLBACK(src, PROC_REF(explode_into_shrapnel), firer, target, to_explode), break_time)
 		SLEEP_CHECK_DEATH(shot_delay, src)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/proc/explode_into_shrapnel(mob/living/firer, atom/target, obj/projectile/to_explode)
@@ -109,7 +111,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots
 	name = "Spiral Shots"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Fires projectiles in a spiral pattern."
 	cooldown_time = 3 SECONDS
@@ -121,7 +123,7 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/attack_sequence(mob/living/firer, atom/target)
 	if(enraged)
 		SLEEP_CHECK_DEATH(1 SECONDS, firer)
-		INVOKE_ASYNC(src, .proc/create_spiral_attack, firer, target, TRUE)
+		INVOKE_ASYNC(src, PROC_REF(create_spiral_attack), firer, target, TRUE)
 		create_spiral_attack(firer, target, FALSE)
 		return
 	create_spiral_attack(firer, target)
@@ -150,7 +152,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe
 	name = "All Directions"
-	icon_icon = 'icons/effects/effects.dmi'
+	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "at_shield2"
 	desc = "Fires projectiles in all directions."
 	cooldown_time = 3 SECONDS
@@ -172,7 +174,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast
 	name = "Shotgun Fire"
-	icon_icon = 'icons/obj/guns/ballistic.dmi'
+	button_icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	button_icon_state = "shotgun"
 	desc = "Fires projectiles in a shotgun pattern."
 	cooldown_time = 2 SECONDS
@@ -220,7 +222,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots
 	name = "Directional Shots"
-	icon_icon = 'icons/obj/guns/ballistic.dmi'
+	button_icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	button_icon_state = "pistol"
 	desc = "Fires projectiles in specific directions."
 	cooldown_time = 4 SECONDS
@@ -240,9 +242,8 @@
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
 	playsound(firer, projectile_sound, 200, TRUE, 2)
-	for(var/d in dirs)
-		var/turf/E = get_step(firer, d)
-		shoot_projectile(firer, E, null, firer, null, null)
+	for(var/dir in dirs)
+		shoot_projectile(firer, target, dir2angle(dir), firer)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating
 	name = "Alternating Shots"
@@ -266,7 +267,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
 	name = "Fire Kinetic Accelerator"
-	icon_icon = 'icons/obj/guns/energy.dmi'
+	button_icon = 'icons/obj/weapons/guns/energy.dmi'
 	button_icon_state = "kineticgun"
 	desc = "Fires a kinetic accelerator projectile at the target."
 	cooldown_time = 1.5 SECONDS
@@ -286,8 +287,7 @@
 	cooldown_time = 2.5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
-	attack_sequence(owner, target_atom)
-	StartCooldown()
+	. = ..()
 	Remove(owner)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/attack_sequence(mob/living/firer, atom/target)

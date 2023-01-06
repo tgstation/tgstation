@@ -1,8 +1,8 @@
 //Added by Jack Rost
 /obj/item/trash
 	icon = 'icons/obj/janitor.dmi'
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	desc = "This is rubbish."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
@@ -57,6 +57,16 @@
 /obj/item/trash/popcorn
 	name = "popcorn"
 	icon_state = "popcorn"
+
+/obj/item/trash/popcorn/caramel
+	name = "empty caramel popcorn"
+	desc = "Now it's not a sweet snack, but just a sticky bag..."
+	icon_state = "empty_caramel_popcorn"
+
+/obj/item/trash/popcorn/salty
+	name = "empty salty popcorn"
+	desc = "It looks like there are only a few grains of salt left at the bottom of the bag..."
+	icon_state = "empty_salty_popcorn"
 
 /obj/item/trash/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
@@ -153,3 +163,4 @@
 	name = "empty Ready-donk"
 	desc = "It's been Donk-decimated."
 	icon_state = "ready_donk"
+

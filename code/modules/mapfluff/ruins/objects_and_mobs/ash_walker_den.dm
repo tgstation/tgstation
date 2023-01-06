@@ -3,7 +3,7 @@
 /obj/structure/lavaland/ash_walker
 	name = "necropolis tendril nest"
 	desc = "A vile tendril of corruption. It's surrounded by a nest of rapidly growing eggs..."
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "ash_walker_nest"
 
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
@@ -36,7 +36,8 @@
 	return ..()
 
 /obj/structure/lavaland/ash_walker/deconstruct(disassembled)
-	new /obj/item/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
+	var/core_to_drop = pick(subtypesof(/obj/item/assembly/signaler/anomaly))
+	new core_to_drop (get_step(loc, pick(GLOB.alldirs)))
 	new /obj/effect/collapse(loc)
 	return ..()
 
@@ -51,7 +52,7 @@
 				if(!H.dropItemToGround(W))
 					qdel(W)
 			if(issilicon(H)) //no advantage to sacrificing borgs...
-				H.gib()
+				H.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
 				visible_message(span_notice("Serrated tendrils eagerly pull [H] apart, but find nothing of interest."))
 				return
 
@@ -64,7 +65,7 @@
 					deadmind = H.get_ghost(FALSE, TRUE)
 				to_chat(deadmind, "Your body has been returned to the nest. You are being remade anew, and will awaken shortly. </br><b>Your memories will remain intact in your new body, as your soul is being salvaged</b>")
 				SEND_SOUND(deadmind, sound('sound/magic/enter_blood.ogg',volume=100))
-				addtimer(CALLBACK(src, .proc/remake_walker, H.mind, H.real_name), 20 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(remake_walker), H.mind, H.real_name), 20 SECONDS)
 				new /obj/effect/gibspawner/generic(get_turf(H))
 				qdel(H)
 				return
@@ -81,13 +82,14 @@
 			if(deliverymob && (deliverymob.mind?.has_antag_datum(/datum/antagonist/ashwalker)) && (deliverykey in ashies.players_spawned) && (prob(40)))
 				to_chat(deliverymob, span_warning("<b>The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure.</b>"))
 				ashies.players_spawned -= deliverykey
+			H.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
 			H.gib()
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
 			for(var/mob/living/L in view(src, 5))
 				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))
-					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
+					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
 				else
-					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_bad)
+					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)
 
 /obj/structure/lavaland/ash_walker/proc/remake_walker(datum/mind/oldmind, oldname)
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_step(loc, pick(GLOB.alldirs)))

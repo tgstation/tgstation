@@ -89,7 +89,7 @@
 			on = FALSE
 			update_appearance()
 	else if(on && holding && direction == PUMP_OUT)
-		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -103,10 +103,12 @@
 	data["direction"] = direction
 	data["connected"] = !!connected_port
 	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["target_pressure"] = round(target_pressure ? target_pressure : 0)
-	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)
-	data["min_pressure"] = round(PUMP_MIN_PRESSURE)
-	data["max_pressure"] = round(PUMP_MAX_PRESSURE)
+	data["targetPressure"] = round(target_pressure ? target_pressure : 0)
+	data["defaultPressure"] = round(PUMP_DEFAULT_PRESSURE)
+	data["minPressure"] = round(PUMP_MIN_PRESSURE)
+	data["maxPressure"] = round(PUMP_MAX_PRESSURE)
+	data["hasHypernobCrystal"] = !!nob_crystal_inserted
+	data["reactionSuppressionEnabled"] = !!suppress_reactions
 
 	if(holding)
 		data["holding"] = list()
@@ -133,14 +135,14 @@
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [AREACOORD(src)]")
 			else if(on && direction == PUMP_OUT)
-				investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+				usr.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("direction")
 			if(direction == PUMP_OUT)
 				direction = PUMP_IN
 			else
 				if(on && holding)
-					investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+					usr.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 				direction = PUMP_OUT
 			. = TRUE
 		if("pressure")
@@ -164,6 +166,15 @@
 			if(holding)
 				replace_tank(usr, FALSE)
 				. = TRUE
+		if("reaction_suppression")
+			if(!nob_crystal_inserted)
+				stack_trace("[usr] tried to toggle reaction suppression on a pump without a noblium crystal inside, possible href exploit attempt.")
+				return
+			suppress_reactions = !suppress_reactions
+			SSair.start_processing_machine(src)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			. = TRUE
 	update_appearance()
 
 /obj/machinery/portable_atmospherics/pump/unregister_holding()

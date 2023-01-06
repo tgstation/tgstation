@@ -72,6 +72,7 @@
 /obj/effect/decal/cleanable/blood/splatter/over_window // special layer/plane set to appear on windows
 	layer = ABOVE_WINDOW_LAYER
 	plane = GAME_PLANE
+	vis_flags = VIS_INHERIT_PLANE
 	turf_loc_check = FALSE
 	alpha = 180
 
@@ -113,7 +114,11 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
+	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
+
+/obj/effect/decal/cleanable/blood/gibs/Destroy()
+	LAZYNULL(streak_diseases)
+	return ..()
 
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
 	return FALSE //Never fail to place us
@@ -144,9 +149,9 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions, mapload=FALSE)
+	LAZYINITLIST(streak_diseases)
 	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, streak_diseases)
 	var/direction = pick(directions)
-	streak_diseases = list()
 	var/delay = 2
 	var/range = pick(0, 200; 1, 150; 2, 50; 3, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
 	if(!step_to(src, get_step(src, direction), 0))
@@ -159,7 +164,7 @@
 		return
 
 	var/datum/move_loop/loop = SSmove_manager.move_to(src, get_step(src, direction), delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/spread_movement_effects)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(spread_movement_effects))
 
 /obj/effect/decal/cleanable/blood/gibs/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
@@ -305,11 +310,11 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			if(species == "unknown")
 				. += "Some <B>feet</B>."
 			else if(species == SPECIES_MONKEY)
-				. += "[icon2html('icons/mob/human.dmi', user, "monkey")] Some <B>monkey feet</B>."
+				. += "[icon2html('icons/mob/species/human/human.dmi', user, "monkey")] Some <B>monkey feet</B>."
 			else if(species == SPECIES_HUMAN)
-				. += "[icon2html('icons/mob/human_parts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
+				. += "[icon2html('icons/mob/species/human/bodyparts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
 			else
-				. += "[icon2html('icons/mob/human_parts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
+				. += "[icon2html('icons/mob/species/human/bodyparts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
@@ -354,9 +359,9 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/fly_towards(turf/target_turf, range)
 	var/delay = 2
 	var/datum/move_loop/loop = SSmove_manager.move_towards(src, target_turf, delay, timeout = delay * range, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
-	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/loop_done)
+	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
+	RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(loop_done))
 
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/pre_move(datum/move_loop/source)
 	SIGNAL_HANDLER
@@ -377,10 +382,10 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			var/mob/living/carbon/human/splashed_human = iter_atom
 			if(splashed_human.wear_suit)
 				splashed_human.wear_suit.add_blood_DNA(blood_dna_info)
-				splashed_human.update_inv_wear_suit()    //updates mob overlays to show the new blood (no refresh)
+				splashed_human.update_worn_oversuit()    //updates mob overlays to show the new blood (no refresh)
 			if(splashed_human.w_uniform)
 				splashed_human.w_uniform.add_blood_DNA(blood_dna_info)
-				splashed_human.update_inv_w_uniform()    //updates mob overlays to show the new blood (no refresh)
+				splashed_human.update_worn_undersuit()    //updates mob overlays to show the new blood (no refresh)
 			splatter_strength--
 	if(splatter_strength <= 0) // we used all the puff so we delete it.
 		qdel(src)

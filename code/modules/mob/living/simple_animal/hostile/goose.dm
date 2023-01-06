@@ -28,7 +28,7 @@
 	attack_sound = "goose"
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("honks")
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	attack_same = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/random_retaliate = TRUE
@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(goosement))
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
@@ -88,6 +88,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
+	faction = list(FACTION_NEUTRAL, FACTION_MAINT_CREATURES)
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
 	var/vomiting = FALSE
@@ -118,7 +119,7 @@
 	if(feed(O))
 		return TRUE
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed(obj/item/reagent_containers/food/tasty)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed(obj/item/food/tasty)
 	. = ..()
 	if(. || !istype(tasty))
 		return FALSE
@@ -127,7 +128,7 @@
 			visible_message(span_notice("[src] looks too full to eat \the [tasty]!"))
 			message_cooldown = world.time + 5 SECONDS
 		return FALSE
-	if (tasty.foodtype & GROSS)
+	if (tasty.foodtypes & GROSS)
 		visible_message(span_notice("[src] hungrily gobbles up \the [tasty]!"))
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, TRUE)
@@ -140,20 +141,20 @@
 			message_cooldown = world.time + 5 SECONDS
 			return FALSE
 
-/mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/reagent_containers/food/plastic)
+/mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/food/plastic)
 	if(stat == DEAD || choking)
 		return
-	addtimer(CALLBACK(src, .proc/suffocate), 300)
+	addtimer(CALLBACK(src, PROC_REF(suffocate)), 300)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/reagent_containers/food/plastic)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/food/plastic)
 	if(stat == DEAD || choking)
 		return
 	if(prob(25))
 		visible_message(span_warning("[src] is gagging on \the [plastic]!"))
 		manual_emote("gags!")
-		addtimer(CALLBACK(src, .proc/vomit), 300)
+		addtimer(CALLBACK(src, PROC_REF(vomit)), 300)
 	else
-		addtimer(CALLBACK(src, .proc/suffocate), 300)
+		addtimer(CALLBACK(src, PROC_REF(suffocate)), 300)
 
 /mob/living/simple_animal/hostile/retaliate/goose/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
@@ -165,7 +166,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/suffocate()
 	if(!choking)
 		return
-	deathmessage = "lets out one final oxygen-deprived honk before [p_they()] go[p_es()] limp and lifeless.."
+	death_message = "lets out one final oxygen-deprived honk before [p_they()] go[p_es()] limp and lifeless.."
 	death()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
@@ -183,15 +184,15 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(atom/A, hard = FALSE)
 	if (stat == DEAD)
 		return
-	if(!istype(A, /obj/item/reagent_containers/food))
+	if(!istype(A, /obj/item/food))
 		return
 	var/turf/currentTurf = get_turf(src)
-	var/obj/item/reagent_containers/food/consumed = A
+	var/obj/item/food/consumed = A
 	consumed.forceMove(currentTurf)
 	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 	var/throwRange = hard ? rand(2,8) : 1
 	consumed.safe_throw_at(destination, throwRange, 2) //Thow the food at a random tile 1 spot away
-	sleep(2)
+	sleep(0.2 SECONDS)
 	if (QDELETED(src) || QDELETED(consumed))
 		return
 	currentTurf = get_turf(consumed)
@@ -200,18 +201,18 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_prestart(duration)
 	flick("vomit_start",src)
-	addtimer(CALLBACK(src, .proc/vomit_start, duration), 13) //13 is the length of the vomit_start animation in gooseloose.dmi
+	addtimer(CALLBACK(src, PROC_REF(vomit_start), duration), 13) //13 is the length of the vomit_start animation in gooseloose.dmi
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
 	vomiting = TRUE
 	icon_state = "vomit"
 	vomit()
-	addtimer(CALLBACK(src, .proc/vomit_preend), duration)
+	addtimer(CALLBACK(src, PROC_REF(vomit_preend)), duration)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_preend()
 	for (var/obj/item/consumed in contents) //Get rid of any food left in the poor thing
 		barf_food(consumed, TRUE)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		if (QDELETED(src))
 			return
 	vomit_end()
@@ -224,7 +225,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	. = ..()
 	if(vomiting)
-		INVOKE_ASYNC(src, .proc/vomit) // its supposed to keep vomiting if you move
+		INVOKE_ASYNC(src, PROC_REF(vomit)) // its supposed to keep vomiting if you move
 		return
 	if(prob(vomitCoefficient * 0.2))
 		vomit_prestart(vomitTimeBonus + 25)
@@ -234,9 +235,9 @@
 /// A proc to make it easier for admins to make the goose playable by deadchat.
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
-		"vomit" = CALLBACK(src, .proc/vomit_prestart, 25),
-		"honk" = CALLBACK(src, /atom/movable.proc/say, "HONK!!!"),
-		"spin" = CALLBACK(src, /mob.proc/emote, "spin")), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+		"vomit" = CALLBACK(src, PROC_REF(vomit_prestart), 25),
+		"honk" = CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), "HONK!!!"),
+		"spin" = CALLBACK(src, TYPE_PROC_REF(/mob, emote), "spin")), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
 
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
@@ -247,7 +248,7 @@
 	name = "Vomit"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "vomit"
-	icon_icon = 'icons/mob/animal.dmi'
+	button_icon = 'icons/mob/simple/animal.dmi'
 	cooldown_time = 250
 
 /datum/action/cooldown/vomit/Activate(atom/target)

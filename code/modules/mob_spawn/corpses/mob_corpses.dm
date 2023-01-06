@@ -84,7 +84,11 @@
 /datum/outfit/piratecorpse/melee
 	name = "Pirate Swashbuckler Corpse"
 	glasses = /obj/item/clothing/glasses/eyepatch
-	head = /obj/item/clothing/head/bandana/armored
+	head = /obj/item/clothing/head/costume/pirate/bandana/armored
+
+/obj/effect/mob_spawn/corpse/human/pirate/melee/space
+	name = "Pirate Swashbuckler - Space"
+	outfit = /datum/outfit/piratecorpse/melee/space
 
 /datum/outfit/piratecorpse/melee/space
 	name = "Pirate Swashbuckler Corpse - Space"
@@ -102,6 +106,10 @@
 	suit = /obj/item/clothing/suit/costume/pirate/armored
 	head = /obj/item/clothing/head/pirate/armored
 
+/obj/effect/mob_spawn/corpse/human/pirate/ranged/space
+	name = "Pirate Gunner - Space"
+	outfit = /datum/outfit/piratecorpse/ranged/space
+
 /datum/outfit/piratecorpse/ranged/space
 	name = "Pirate Gunner Corpse - Space"
 	suit = /obj/item/clothing/suit/space/pirate
@@ -118,7 +126,7 @@
 	name = "Russian Corpse"
 	uniform = /obj/item/clothing/under/costume/soviet
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/bearpelt
+	head = /obj/item/clothing/head/costume/bearpelt
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas
 
@@ -129,7 +137,7 @@
 
 /datum/outfit/russiancorpse/ranged
 	name = "Ranged Russian Corpse"
-	head = /obj/item/clothing/head/ushanka
+	head = /obj/item/clothing/head/costume/ushanka
 
 
 /obj/effect/mob_spawn/corpse/human/russian/ranged/trooper
@@ -156,7 +164,7 @@
 	suit = /obj/item/clothing/suit/jacket/officer/tan
 	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/radio/headset
-	head = /obj/item/clothing/head/ushanka
+	head = /obj/item/clothing/head/costume/ushanka
 
 
 /obj/effect/mob_spawn/corpse/human/wizard

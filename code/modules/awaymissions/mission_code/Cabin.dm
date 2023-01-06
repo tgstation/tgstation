@@ -110,15 +110,26 @@
 	icon_state = "1"
 	color = rgb(0,0,255)
 
-/obj/structure/ladder/unbreakable/rune/Initialize()
-	. = ..()
+/obj/structure/ladder/unbreakable/rune/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
-/obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
-	user.visible_message(span_notice("[user] activates \the [src]."), span_notice("You activate \the [src]."))
+/obj/structure/ladder/unbreakable/rune/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(up)
+		context[SCREENTIP_CONTEXT_LMB] = "Warp up"
+	if(down)
+		context[SCREENTIP_CONTEXT_RMB] = "Warp down"
+	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
-	if(is_ghost || !IS_WIZARD(user))
+/obj/structure/ladder/unbreakable/rune/show_initial_fluff_message(mob/user, going_up)
+	user.balloon_alert_to_viewers("activating...")
+
+/obj/structure/ladder/unbreakable/rune/show_final_fluff_message(mob/user, going_up)
+	visible_message(span_notice("[user] activates [src] and teleports away."))
+	user.balloon_alert_to_viewers("warped in")
+
+/obj/structure/ladder/unbreakable/rune/use(mob/user, going_up = TRUE)
+	if(!IS_WIZARD(user))
 		..()
 
 /*Cabin's forest. Removed in the new cabin map since it was buggy and I prefer manual placement.*/
@@ -148,14 +159,7 @@
 	spawnableAtoms = list(/obj/structure/flora/bush/snow/style_random = 1)
 
 /datum/map_generator_module/snow/bunnies
-	spawnableAtoms = list(/mob/living/simple_animal/rabbit = 0.5)
+	spawnableAtoms = list(/mob/living/basic/rabbit = 0.5)
 
 /datum/map_generator_module/snow/rand_ice_rocks
 	spawnableAtoms = list(/obj/structure/flora/rock/icy/style_random = 5, /obj/structure/flora/rock/pile/icy/style_random = 5)
-
-/obj/effect/landmark/map_generator/snowy
-	mapGeneratorType = /datum/map_generator/snowy
-	endTurfX = 159
-	endTurfY = 157
-	startTurfX = 37
-	startTurfY = 35

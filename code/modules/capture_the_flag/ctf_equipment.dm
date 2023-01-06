@@ -198,7 +198,7 @@
 	worn_icon = 'icons/mob/clothing/suits/ctf.dmi'
 	icon_state = "standard"
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0) // CTF gear gives no protection outside of the shield
+	armor_type = /datum/armor/none
 	allowed = null
 	greyscale_config = /datum/greyscale_config/ctf_standard
 	greyscale_config_worn = /datum/greyscale_config/ctf_standard_worn
@@ -485,14 +485,14 @@
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/red
 	name = "red shielded vest"
-	inhand_icon_state = "ert_security"
+	inhand_icon_state = null
 	team_shield_icon = "shield-red"
 	greyscale_colors = COLOR_VIVID_RED
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/red
 	name = "light red shielded vest"
-	inhand_icon_state = "ert_security"
+	inhand_icon_state = null
 	team_shield_icon = "shield-red"
 	greyscale_colors = COLOR_VIVID_RED
 
@@ -501,14 +501,14 @@
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/blue
 	name = "blue shielded vest"
-	inhand_icon_state = "ert_command"
+	inhand_icon_state = null
 	team_shield_icon = "shield-old"
 	greyscale_colors = COLOR_DARK_CYAN
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/blue
 	name = "light blue shielded vest"
-	inhand_icon_state = "ert_command"
+	inhand_icon_state = null
 	team_shield_icon = "shield-old"
 	greyscale_colors = COLOR_DARK_CYAN
 
@@ -517,14 +517,14 @@
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/green
 	name = "green shielded vest"
-	inhand_icon_state = "ert_green"
+	inhand_icon_state = null
 	team_shield_icon = "shield-green"
 	greyscale_colors = COLOR_LIME
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/green
 	name = "light green shielded vest"
-	inhand_icon_state = "ert_green"
+	inhand_icon_state = null
 	team_shield_icon = "shield-green"
 	greyscale_colors = COLOR_LIME
 
@@ -533,13 +533,13 @@
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/yellow
 	name = "yellow shielded vest"
-	inhand_icon_state = "ert_engineer"
+	inhand_icon_state = null
 	team_shield_icon = "shield-yellow"
 	greyscale_colors = COLOR_VIVID_YELLOW
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/yellow
 	name = "light yellow shielded vest"
-	inhand_icon_state = "ert_engineer"
+	inhand_icon_state = null
 	team_shield_icon = "shield-yellow"
 	greyscale_colors = COLOR_VIVID_YELLOW

@@ -19,8 +19,8 @@
 	fade = 1 SECONDS
 	grow = -0.01
 	velocity = list(0, 0)
-	position = generator("circle", 0, 16, NORMAL_RAND)
-	drift = generator("vector", list(0, -0.2), list(0, 0.2))
+	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
 	gravity = list(0, 0.95)
 
 /particles/musical_notes/holy

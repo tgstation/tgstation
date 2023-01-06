@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(blackmarket)
 	/// Currently queued purchases.
 	var/list/queued_purchases = list()
 
-/datum/controller/subsystem/blackmarket/Initialize(timeofday)
+/datum/controller/subsystem/blackmarket/Initialize()
 	for(var/market in subtypesof(/datum/market))
 		markets[market] += new market
 
@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(blackmarket)
 				continue
 			markets[M].add_item(item)
 		qdel(I)
-	. = ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
 	while(length(queued_purchases))
@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(blackmarket)
 				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), span_notice("[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds."))
 
 				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
-				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/controller/subsystem/blackmarket,fake_teleport), purchase.entry.spawn_item(), targetturf), 60 SECONDS)
 				queued_purchases -= purchase
 				qdel(purchase)
 			// Get the current location of the uplink if it exists, then throws the item from space at the station from a random direction.

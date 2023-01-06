@@ -20,7 +20,7 @@
 	throwforce = 10
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 40)
+	armor_type = /datum/armor/melee_powerfist
 	resistance_flags = FIRE_PROOF
 	/// Delay between attacks
 	var/click_delay = 0.15 SECONDS
@@ -30,6 +30,10 @@
 	var/gas_per_fist = 3
 	/// Tank used for the gauntlet's piston-ram.
 	var/obj/item/tank/internals/tank
+
+/datum/armor/melee_powerfist
+	fire = 100
+	acid = 40
 
 /obj/item/melee/powerfist/examine(mob/user)
 	. = ..()
@@ -115,16 +119,17 @@
 			span_userdanger("[user]'s punch strikes with force!"))
 		return
 
-	target.apply_damage(force * fist_pressure_setting, BRUTE, wound_bonus = CANT_WOUND)
 	target.visible_message(span_danger("[user]'s powerfist lets out a loud hiss as [user.p_they()] punch[user.p_es()] [target.name]!"), \
 		span_userdanger("You cry out in pain as [user]'s punch flings you backwards!"))
 	new /obj/effect/temp_visual/kinetic_blast(target.loc)
-	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, TRUE)
-	playsound(loc, 'sound/weapons/genhit2.ogg', 50, TRUE)
+	target.apply_damage(force * fist_pressure_setting, BRUTE, wound_bonus = CANT_WOUND)
+	playsound(src, 'sound/weapons/resonator_blast.ogg', 50, TRUE)
+	playsound(src, 'sound/weapons/genhit2.ogg', 50, TRUE)
 
-	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
+	if(!QDELETED(target))
+		var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 
-	target.throw_at(throw_target, 5 * fist_pressure_setting, 0.5 + (fist_pressure_setting / 2))
+		target.throw_at(throw_target, 5 * fist_pressure_setting, 0.5 + (fist_pressure_setting / 2))
 
 	log_combat(user, target, "power fisted", src)
 

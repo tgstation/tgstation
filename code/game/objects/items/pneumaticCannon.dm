@@ -9,12 +9,12 @@
 	force = 8 //Very heavy
 	attack_verb_continuous = list("bludgeons", "smashes", "beats")
 	attack_verb_simple = list("bludgeon", "smash", "beat")
-	icon = 'icons/obj/pneumaticCannon.dmi'
+	icon = 'icons/obj/weapons/pneumaticCannon.dmi'
 	icon_state = "pneumaticCannon"
 	inhand_icon_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
+	armor_type = /datum/armor/item_pneumatic_cannon
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
@@ -38,6 +38,10 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 
+/datum/armor/item_pneumatic_cannon
+	fire = 60
+	acid = 50
+
 /obj/item/pneumatic_cannon/Initialize(mapload)
 	. = ..()
 	if(selfcharge)
@@ -47,7 +51,8 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/pneumatic_cannon/process()
-	if(++charge_tick >= charge_ticks && charge_type)
+	charge_tick++
+	if(charge_tick >= charge_ticks && charge_type)
 		fill_with_type(charge_type, charge_amount)
 
 /obj/item/pneumatic_cannon/Destroy()
@@ -156,6 +161,7 @@
 	if(!istype(user))
 		return
 	Fire(user, target)
+	return AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, atom/target)
 	if(!istype(user) && !target)

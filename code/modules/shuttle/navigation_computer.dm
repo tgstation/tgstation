@@ -36,17 +36,15 @@
 
 	set_init_ports()
 
-	if(!mapload)
-		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
-
+	if(connect_to_shuttle(mapload, SSshuttle.get_containing_shuttle(src)))
 		for(var/obj/docking_port/stationary/port as anything in SSshuttle.stationary_docking_ports)
-			if(port.id == shuttleId)
-				add_jumpable_port(port.id)
+			if(port.shuttle_id == shuttleId)
+				add_jumpable_port(port.shuttle_id)
 
 	for(var/obj/docking_port/stationary/port as anything in SSshuttle.stationary_docking_ports)
 		if(!port)
 			continue
-		if(jump_to_ports[port.id])
+		if(jump_to_ports[port.shuttle_id])
 			z_lock |= port.z
 	whitelist_turfs = typecacheof(whitelist_turfs)
 
@@ -56,7 +54,7 @@
 
 	if(my_port?.get_docked())
 		my_port.delete_after = TRUE
-		my_port.id = null
+		my_port.shuttle_id = null
 		my_port.name = "Old [my_port.name]"
 		my_port = null
 	else
@@ -110,7 +108,7 @@
 			var/y_off = T.y - origin.y
 			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 			I.layer = ABOVE_NORMAL_TURF_LAYER
-			I.plane = ABOVE_GAME_PLANE
+			SET_PLANE(I, ABOVE_GAME_PLANE, T)
 			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			the_eye.placement_images[I] = list(x_off, y_off)
 
@@ -149,7 +147,7 @@
 	if(designate_time && (landing_clear != SHUTTLE_DOCKER_BLOCKED))
 		to_chat(current_user, span_warning("Targeting transit location, please wait [DisplayTimeText(designate_time)]..."))
 		designating_target_loc = the_eye.loc
-		var/wait_completed = do_after(current_user, designate_time, designating_target_loc, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget))
+		var/wait_completed = do_after(current_user, designate_time, designating_target_loc, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/computer/camera_advanced/shuttle_docker, canDesignateTarget)))
 		designating_target_loc = null
 		if(!current_user)
 			return
@@ -170,7 +168,7 @@
 	if(my_port?.get_docked())
 		my_port.unregister()
 		my_port.delete_after = TRUE
-		my_port.id = null
+		my_port.shuttle_id = null
 		my_port.name = "Old [my_port.name]"
 		my_port = null
 
@@ -178,7 +176,7 @@
 		my_port = new()
 		my_port.unregister()
 		my_port.name = shuttlePortName
-		my_port.id = shuttlePortId
+		my_port.shuttle_id = shuttlePortId
 		my_port.height = shuttle_port.height
 		my_port.width = shuttle_port.width
 		my_port.dheight = shuttle_port.dheight
@@ -197,8 +195,8 @@
 		var/image/I = V
 		var/image/newI = image('icons/effects/alphacolors.dmi', the_eye.loc, "blue")
 		newI.loc = I.loc //It is highly unlikely that any landing spot including a null tile will get this far, but better safe than sorry.
-		newI.layer = ABOVE_OPEN_TURF_LAYER
-		newI.plane = ABOVE_GAME_PLANE
+		newI.layer = NAVIGATION_EYE_LAYER
+		SET_PLANE_EXPLICIT(newI, ABOVE_GAME_PLANE, V)
 		newI.mouse_opacity = 0
 		the_eye.placed_images += newI
 
@@ -296,12 +294,15 @@
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	if(!mapload)
+		return FALSE
 	if(port)
-		shuttleId = port.id
-		shuttlePortId = "[port.id]_custom"
+		shuttleId = port.shuttle_id
+		shuttlePortId = "[port.shuttle_id]_custom"
 	if(dock)
-		add_jumpable_port(dock.id)
+		add_jumpable_port(dock.shuttle_id)
+	return TRUE
 
 /mob/camera/ai_eye/remote/shuttle_docker
 	visible_icon = FALSE
@@ -319,14 +320,14 @@
 	console.checkLandingSpot()
 
 /mob/camera/ai_eye/remote/shuttle_docker/update_remote_sight(mob/living/user)
-	user.sight = BLIND|SEE_TURFS
+	user.set_sight(BLIND|SEE_TURFS)
 	user.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	user.sync_lighting_plane_alpha()
 	return TRUE
 
 /datum/action/innate/shuttledocker_rotate
 	name = "Rotate"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/innate/shuttledocker_rotate/Activate()
@@ -338,7 +339,7 @@
 
 /datum/action/innate/shuttledocker_place
 	name = "Place"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/innate/shuttledocker_place/Activate()
@@ -368,7 +369,7 @@
 		var/obj/docking_port/stationary/S = V
 		if(console.z_lock.len && !(S.z in console.z_lock))
 			continue
-		if(console.jump_to_ports[S.id])
+		if(console.jump_to_ports[S.shuttle_id])
 			L["([L.len])[S.name]"] = S
 
 	for(var/V in SSshuttle.beacon_list)

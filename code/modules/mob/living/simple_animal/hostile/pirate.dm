@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/pirate
 	name = "Pirate"
 	desc = "Does what he wants cause a pirate is free."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
@@ -24,12 +24,12 @@
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate)
 	del_on_death = 1
 	faction = list("pirate")
-	var/outfit = /datum/outfit/piratecorpse
+	var/mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate
 	var/held_item
 
 /mob/living/simple_animal/hostile/pirate/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/outfit_icon_gen, outfit, r_hand = held_item)
+	AddElement(/datum/element/outfit_icon_gen, mob_spawn_path = mob_spawner, r_hand = held_item)
 
 /mob/living/simple_animal/hostile/pirate/melee
 	name = "Pirate Swashbuckler"
@@ -46,10 +46,10 @@
 	light_color = COLOR_SOFT_RED
 	footstep_type = FOOTSTEP_MOB_SHOE
 	loot = list(
-		/obj/effect/mob_spawn/corpse/human/pirate,
+		/obj/effect/mob_spawn/corpse/human/pirate/melee,
 		/obj/item/melee/energy/sword/pirate,
 	)
-	outfit = /datum/outfit/piratecorpse/melee
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/melee
 	held_item = /obj/item/melee/energy/sword/pirate
 
 /mob/living/simple_animal/hostile/pirate/melee/space
@@ -57,7 +57,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	outfit = /datum/outfit/piratecorpse/melee/space
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/melee/space
 
 /mob/living/simple_animal/hostile/pirate/melee/space/Initialize(mapload)
 	. = ..()
@@ -73,7 +73,7 @@
 	minimum_distance = 5
 	projectiletype = /obj/projectile/beam/laser
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/ranged)
-	outfit = /datum/outfit/piratecorpse/ranged
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/ranged
 	held_item = /obj/item/gun/energy/laser
 
 /mob/living/simple_animal/hostile/pirate/ranged/space
@@ -81,7 +81,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	outfit = /datum/outfit/piratecorpse/ranged/space
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/ranged/space
 	held_item = /obj/item/gun/energy/e_gun/lethal
 
 /mob/living/simple_animal/hostile/pirate/ranged/space/Initialize(mapload)

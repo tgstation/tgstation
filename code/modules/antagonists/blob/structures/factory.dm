@@ -1,6 +1,6 @@
 /obj/structure/blob/special/factory
 	name = "factory blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blob_factory"
 	desc = "A thick spire of tendrils."
 	max_integrity = BLOB_FACTORY_MAX_HP
@@ -20,8 +20,8 @@
 
 /obj/structure/blob/special/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
-		if(spore.factory == src)
-			spore.factory = null
+		to_chat(spore, span_userdanger("Your factory was destroyed! You can no longer sustain yourself."))
+		spore.death()
 	if(naut)
 		naut.factory = null
 		to_chat(naut, span_userdanger("Your factory was destroyed! You feel yourself dying!"))

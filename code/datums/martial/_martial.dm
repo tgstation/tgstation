@@ -13,6 +13,8 @@
 	var/display_combos = FALSE //shows combo meter if true
 	var/combo_timer = 6 SECONDS // period of time after which the combo streak is reset.
 	var/timerid
+	/// If set to true this style allows you to punch people despite being a pacifist (for instance Boxing, which does no damage)
+	var/pacifist_style = FALSE
 
 /datum/martial_art/proc/help_act(mob/living/A, mob/living/D)
 	return MARTIAL_ATTACK_INVALID
@@ -37,7 +39,7 @@
 		streak = copytext(streak, 1 + length(streak[1]))
 	if (display_combos)
 		var/mob/living/holder_living = holder.resolve()
-		timerid = addtimer(CALLBACK(src, .proc/reset_streak, null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
+		timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
 		holder_living?.hud_used?.combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
 
 /datum/martial_art/proc/reset_streak(mob/living/new_target, update_icon = TRUE)

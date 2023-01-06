@@ -1,46 +1,46 @@
+/// Queues and manages JPS pathfinding steps
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
 	init_order = INIT_ORDER_PATH
-	flags = SS_NO_FIRE
-	var/datum/flowcache/mobs
+	priority = FIRE_PRIORITY_PATHFINDING
+	/// List of pathfind datums we are currently trying to process
+	var/list/datum/pathfind/active_pathing = list()
+	/// List of pathfind datums being ACTIVELY processed. exists to make subsystem stats readable
+	var/list/datum/pathfind/currentrun = list()
 	var/static/space_type_cache
 
 /datum/controller/subsystem/pathfinder/Initialize()
 	space_type_cache = typecacheof(/turf/open/space)
-	mobs = new(10)
+	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/pathfinder/stat_entry(msg)
+	msg = "P:[length(active_pathing)]"
 	return ..()
 
-/datum/flowcache
-	var/lcount
-	var/run
-	var/free
-	var/list/flow
+// This is another one of those subsystems (hey lighting) in which one "Run" means fully processing a queue
+// We'll use a copy for this just to be nice to people reading the mc panel
+/datum/controller/subsystem/pathfinder/fire(resumed)
+	if(!resumed)
+		src.currentrun = active_pathing.Copy()
 
-/datum/flowcache/New(n)
-	. = ..()
-	lcount = n
-	run = 0
-	free = 1
-	flow = new/list(lcount)
+	// Dies of sonic speed from caching datum var reads
+	var/list/currentrun = src.currentrun
+	while(length(currentrun))
+		var/datum/pathfind/path = currentrun[length(currentrun)]
+		if(!path.search_step()) // Something's wrong
+			path.early_exit()
+			currentrun.len--
+			continue
+		if(MC_TICK_CHECK)
+			return
+		path.finished()
+		// Next please
+		currentrun.len--
 
-/datum/flowcache/proc/getfree(atom/M)
-	if(run < lcount)
-		run += 1
-		while(flow[free])
-			CHECK_TICK
-			free = (free % lcount) + 1
-		var/t = addtimer(CALLBACK(src, /datum/flowcache.proc/toolong, free), 150, TIMER_STOPPABLE)
-		flow[free] = t
-		flow[t] = M
-		return free
-	else
-		return 0
-
-/datum/flowcache/proc/toolong(l)
-	log_game("Pathfinder route took longer than 150 ticks, src bot [flow[flow[l]]]")
-	found(l)
-
-/datum/flowcache/proc/found(l)
-	deltimer(flow[l])
-	flow[l] = null
-	run -= 1
+/// Initiates a pathfind. Returns true if we're good, FALSE if something's failed
+/datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/caller, atom/end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_safety=TRUE, datum/callback/on_finish)
+	var/datum/pathfind/path = new(caller, end, id, max_distance, mintargetdist, simulated_only, exclude, skip_first, diagonal_safety, on_finish)
+	if(path.start())
+		active_pathing += path
+		return TRUE
+	return FALSE

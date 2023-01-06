@@ -1,10 +1,10 @@
-import { Section, Button, Dropdown, Stack, Box, Input } from '../../components';
+import { Section, Button, Dropdown, Stack, Input } from '../../components';
 import { Component } from 'inferno';
 import { shallowDiffers } from 'common/react';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
-import { Port } from './Port';
-import { DEFAULT_COMPONENT_MENU_LIMIT, noop } from './constants';
+import { DisplayComponent } from './DisplayComponent';
+import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
 
 // Cache response so it's only sent once
 let fetchServerData;
@@ -138,52 +138,7 @@ export class ComponentMenu extends Component {
                   key={val.type}
                   mt={1}
                   onMouseDown={(e) => onMouseDownComponent(e, val)}>
-                  <Box
-                    backgroundColor={val.color || 'blue'}
-                    py={1}
-                    px={1}
-                    className="ObjectComponent__Titlebar">
-                    <Stack>
-                      <Stack.Item grow={1} unselectable="on">
-                        {val.name}
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Button
-                          color="transparent"
-                          icon="info"
-                          compact
-                          tooltip={val.description}
-                          tooltipPosition="top"
-                        />
-                      </Stack.Item>
-                    </Stack>
-                  </Box>
-                  <Box
-                    className="ObjectComponent__Content"
-                    unselectable="on"
-                    py={1}
-                    px={1}>
-                    <Stack>
-                      <Stack.Item grow>
-                        <Stack vertical fill>
-                          {val.input_ports.map((port, portIndex) => (
-                            <Stack.Item key={portIndex}>
-                              <Port port={port} act={noop} />
-                            </Stack.Item>
-                          ))}
-                        </Stack>
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Stack vertical>
-                          {val.output_ports.map((port, portIndex) => (
-                            <Stack.Item key={portIndex}>
-                              <Port port={port} act={noop} isOutput />
-                            </Stack.Item>
-                          ))}
-                        </Stack>
-                      </Stack.Item>
-                    </Stack>
-                  </Box>
+                  <DisplayComponent component={val} fixedSize />
                 </Stack.Item>
               ))}
               {trueLength > currentLimit && (

@@ -1,7 +1,7 @@
 /**
  * spinny.dm
  *
- * It's a component that spins things a whole bunch, like [proc/dance_rotate] but without the sleeps
+ * It's a component that spins things a whole bunch, like [proc/dance_rotate] but without the sleeps)
 */
 /datum/component/spinny
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -9,7 +9,7 @@
 	var/steps_left
 	/// Turns clockwise by default, or counterclockwise if the reverse argument is TRUE
 	var/turn_degrees = 90
-	
+
 /datum/component/spinny/Initialize(steps = 12, reverse = FALSE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -30,4 +30,4 @@
 		return
 
 	// 25% chance to make 2 turns instead of 1 since the old dance_rotate wasn't strictly clockwise/counterclockwise
-	spinny_boy.setDir(turn(spinny_boy.dir, turn_degrees * (prob(25) ? 2 : 1))) 
+	spinny_boy.setDir(turn(spinny_boy.dir, turn_degrees * (prob(25) ? 2 : 1)))

@@ -27,6 +27,8 @@
 
 	var/beauty_value
 	switch(story_value)
+		if(STORY_VALUE_KEY)
+			beauty_value = 0 // what is this
 		if(STORY_VALUE_SHIT)
 			beauty_value = rand(-50, 50) //Ugly or mediocre at best
 		if(STORY_VALUE_NONE)
@@ -47,20 +49,22 @@
 		engraved_wall.AddElement(/datum/element/beauty, beauty_value / ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR) //Old age does them harm
 	icon_state_append = rand(1, 2)
 	//must be here to allow overlays to be updated
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	engraved_wall.update_appearance()
 
 /datum/component/engraved/Destroy(force, silent)
-	. = ..()
+	if(!parent)
+		return ..()
 	parent.RemoveElement(/datum/element/art)
 	//must be here to allow overlays to be updated
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
-	if(parent && !QDELING(parent))
+	if(!QDELING(parent))
 		var/atom/parent_atom = parent
 		parent_atom.update_appearance()
+	return ..() //call this after since we null out the parent
 
 /datum/component/engraved/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	//supporting component transfer means putting these here instead of initialize
 	SSpersistence.wall_engravings += src
 	ADD_TRAIT(parent, TRAIT_NOT_ENGRAVABLE, TRAIT_GENERIC)
@@ -89,4 +93,3 @@
 	saved_data["story_value"] = story_value
 
 	return list(saved_data)
-

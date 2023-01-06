@@ -65,7 +65,7 @@
 /obj/item/circuit_component/object_overlay/register_shell(atom/movable/shell)
 	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
 		bci = shell
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 
 /obj/item/circuit_component/object_overlay/unregister_shell(atom/movable/shell)
 	bci = null
@@ -100,7 +100,7 @@
 		QDEL_NULL(overlay)
 
 	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = options_map[object_overlay_options.value], layer = RIPPLE_LAYER)
-	cool_overlay.plane = ABOVE_LIGHTING_PLANE
+	SET_PLANE_EXPLICIT(cool_overlay, ABOVE_LIGHTING_PLANE, target_atom)
 
 	if(image_pixel_x.value != null)
 		cool_overlay.pixel_x = image_pixel_x.value

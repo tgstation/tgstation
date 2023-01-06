@@ -1,0 +1,199 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/department/cargo)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"i" = (
+/turf/template_noop,
+/area/template_noop)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/stack/package_wrap{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/stack/wrapping_paper{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/dest_tagger,
+/obj/item/hand_labeler,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"t" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Cargo Storage"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"z" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Cargo Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/filingcabinet/filingcabinet,
+/obj/item/paper{
+	default_raw_text = "hello can u please order these for my next performance in the theatre pls. 1 pie cannon. 2 sets of honkin-squeezin balloons. 1 mime-catcher (144hz version pls). 3 seltzer bottles. okay that should be it, just put in on my tab.";
+	name = "clown prime orders"
+	},
+/obj/item/paper{
+	name = "mime prime orders"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/hydroponics,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/food_or_drink/seed_rare,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/medical,
+/obj/effect/spawner/random/medical/medkit,
+/obj/effect/spawner/random/medical/minor_healing,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance/two,
+/obj/item/stock_parts/cell/high/empty,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/structure/sign/poster/contraband/rip_badger{
+	pixel_y = 32
+	},
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/clipboard,
+/obj/item/pen/red,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/stack/sheet/cardboard{
+	amount = 25
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+
+(1,1,1) = {"
+a
+a
+a
+a
+i
+"}
+(2,1,1) = {"
+a
+O
+f
+R
+i
+"}
+(3,1,1) = {"
+a
+k
+r
+O
+i
+"}
+(4,1,1) = {"
+a
+H
+f
+L
+i
+"}
+(5,1,1) = {"
+a
+a
+t
+a
+i
+"}
+(6,1,1) = {"
+a
+p
+f
+f
+i
+"}
+(7,1,1) = {"
+a
+X
+f
+f
+i
+"}
+(8,1,1) = {"
+a
+V
+f
+f
+z
+"}
+(9,1,1) = {"
+a
+F
+T
+f
+i
+"}
+(10,1,1) = {"
+i
+i
+i
+i
+i
+"}

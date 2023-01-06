@@ -1,5 +1,8 @@
 /// Determines brightness of the light emitted by kudzu with the light mutation
 #define LIGHT_MUTATION_BRIGHTNESS 4
+/// Kudzu light states
+#define PASS_LIGHT 0
+#define BLOCK_LIGHT 1
 /// Determines the probability that the toxicity mutation will harm someone who passes through it
 #define TOXICITY_MUTATION_PROB 10
 /// Determines the impact radius of kudzu's explosive mutation
@@ -42,12 +45,18 @@
 /// Kudzu spread multiplier is a reciporal function of production speed, such that the better the production speed, ie. the lower the speed value is, the faster it spreads
 #define SPREAD_MULTIPLIER_MAX 50
 
+/// Kudzu's maximum possible maximum mutation severity (assuming ideal potency), used to balance mutation appearance chance
+#define IDEAL_MAX_SEVERITY 20
+
+
 /datum/round_event_control/spacevine
 	name = "Space Vines"
 	typepath = /datum/round_event/spacevine
 	weight = 15
 	max_occurrences = 3
 	min_players = 10
+	category = EVENT_CATEGORY_ENTITIES
+	description = "Kudzu begins to overtake the station. Might spawn man-traps."
 
 /datum/round_event/spacevine
 	fakeable = FALSE
@@ -57,8 +66,8 @@
 
 	var/obj/structure/spacevine/vine = new()
 
-	for(var/area/station/hallway/area in world)
-		for(var/turf/floor in area)
+	for(var/area/station/hallway/area in GLOB.areas)
+		for(var/turf/floor as anything in area.get_contained_turfs())
 			if(floor.Enter(vine))
 				turfs += floor
 
@@ -193,7 +202,7 @@
 	name = "Temperature stabilisation"
 	hue = "#B09856"
 	quality = POSITIVE
-	severity = SEVERITY_AVERAGE
+	severity = SEVERITY_MINOR
 
 /datum/spacevine_mutation/temp_stabilisation/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
 	. = ..()
@@ -243,7 +252,7 @@
 /datum/spacevine_mutation/aggressive_spread/aggrospread_act(obj/structure/spacevine/vine, mob/living/living_mob)
 	var/mob/living/carbon/victim = living_mob //If the mob is carbon then it now also exists as a victim, and not just an living mob.
 	if(istype(victim)) //If the mob (M) is a carbon subtype (C) we move on to pick a more complex damage proc, with damage zones, wounds and armor mitigation.
-		var/obj/item/bodypart/limb = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_CHEST) //Picks a random bodypart. Does not runtime even if it's missing.
+		var/obj/item/bodypart/limb = victim.get_bodypart(victim.get_random_valid_zone(even_weights = TRUE)) //Picks a random bodypart.
 		var/armor = victim.run_armor_check(limb, MELEE, null, null) //armor = the armor value of that randomly chosen bodypart. Nulls to not print a message, because it would still print on pierce.
 		var/datum/spacevine_mutation/thorns/thorn = locate() in vine.mutations //Searches for the thorns mutation in the "mutations"-list inside obj/structure/spacevine, and defines T if it finds it.
 		if(thorn && (prob(40))) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
@@ -284,7 +293,7 @@
 	severity = SEVERITY_TRIVIAL
 
 /datum/spacevine_mutation/transparency/on_grow(obj/structure/spacevine/holder)
-	holder.set_opacity(0)
+	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
 
 /datum/spacevine_mutation/oxy_eater
@@ -383,6 +392,19 @@
 	else
 		. = expected_damage
 
+/datum/spacevine_mutation/timid
+	name = "Timid"
+	hue = "#a4a9ac"
+	quality = POSITIVE
+	severity = SEVERITY_MINOR
+
+//This specific mutation only covers floors instead of structures, items, mobs and cant tangle mobs
+/datum/spacevine_mutation/timid/on_birth(obj/structure/spacevine/holder)
+	SET_PLANE_IMPLICIT(holder, FLOOR_PLANE)
+	holder.light_state = PASS_LIGHT
+	holder.can_tangle = FALSE
+	return ..()
+
 /datum/spacevine_mutation/flowering
 	name = "Flowering"
 	hue = "#66DE93"
@@ -412,19 +434,24 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
 	var/energy = 0
-	var/can_spread = TRUE //Can this kudzu spread?
+	/// Can this kudzu spread?
+	var/can_spread = TRUE
+	/// Can this kudzu buckle mobs in?
+	var/can_tangle = TRUE
 	var/datum/spacevine_controller/master = null
 	/// List of mutations for a specific vine
 	var/list/mutations = list()
 	var/trait_flags = 0
 	/// Should atmos always process this tile
 	var/always_atmos_process = FALSE
+	/// The kudzu blocks light on default once it grows
+	var/light_state = BLOCK_LIGHT
 
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -448,7 +475,7 @@
 	if(master)
 		master.VineDestroyed(src)
 	mutations = list()
-	set_opacity(0)
+	set_opacity(PASS_LIGHT)
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	return ..()
@@ -522,7 +549,7 @@
 	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, approaches 10% of total vines will spread per second
 	///Maximum spreading limit (ie. how many kudzu can there be) for this controller
 	var/spread_cap = 30 // corresponds to artifical kudzu with production speed of 3.5
-	var/list/vine_mutations_list
+	var/static/list/vine_mutations_list
 	var/mutativeness = 1
 	///Maximum sum of mutation severities
 	var/max_mutation_severity = 20
@@ -537,10 +564,11 @@
 	if(event)
 		event.announce_to_ghosts(vine)
 	START_PROCESSING(SSobj, src)
-	vine_mutations_list = list()
-	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
-	for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
-		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
+	if(!vine_mutations_list)
+		vine_mutations_list = list()
+		init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
+		for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
+			vine_mutations_list[mutation] = IDEAL_MAX_SEVERITY - mutation.severity // the ideal maximum potency is used for weighting
 	if(potency != null)
 		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 20 mutativeness; if 1: 0.2 mutativeness
 		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 25 max mutation severity; if 1, 10 max mutation severity
@@ -656,7 +684,7 @@
 	if(!energy)
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
-		set_opacity(1)
+		set_opacity(light_state)
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2
@@ -677,7 +705,7 @@
 		return
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_buckle(src, victim)
-	if((victim.stat != DEAD) && (victim.buckled != src)) //not dead or captured
+	if((victim.stat != DEAD) && (victim.buckled != src) && can_tangle) //not dead and not captured and can tangle
 		to_chat(victim, span_userdanger("The vines [pick("wind", "tangle", "tighten")] around you!"))
 		buckle_mob(victim, 1)
 
@@ -739,6 +767,8 @@
 	return FALSE
 
 #undef LIGHT_MUTATION_BRIGHTNESS
+#undef PASS_LIGHT
+#undef BLOCK_LIGHT
 #undef TOXICITY_MUTATION_PROB
 #undef EXPLOSION_MUTATION_IMPACT_RADIUS
 #undef GAS_MUTATION_REMOVAL_MULTIPLIER
@@ -758,3 +788,4 @@
 #undef SPREAD_CAP_LINEAR_COEFF
 #undef SPREAD_CAP_CONSTANT_TERM
 #undef SPREAD_MULTIPLIER_MAX
+#undef IDEAL_MAX_SEVERITY

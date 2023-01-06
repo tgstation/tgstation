@@ -1,12 +1,12 @@
 /obj/structure/sign
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
 	custom_materials = list(/datum/material/plastic = 2000)
 	max_integrity = 100
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/structure_sign
 	///Determines if a sign is unwrenchable.
 	var/buildable_sign = TRUE
 	resistance_flags = FLAMMABLE
@@ -14,6 +14,11 @@
 	var/is_editable = FALSE
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
 	var/sign_change_name
+
+/datum/armor/structure_sign
+	melee = 50
+	fire = 50
+	acid = 50
 
 /obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
 	icon_state = "backing"
@@ -25,20 +30,25 @@
 /obj/item/sign
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	icon_state = "backing"
 	inhand_icon_state = "backing"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/plastic = 2000)
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/item_sign
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
 	var/sign_path = /obj/structure/sign/blank
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
+
+/datum/armor/item_sign
+	melee = 50
+	fire = 50
+	acid = 50
 
 /obj/item/sign/Initialize(mapload) //Signs not attached to walls are always rotated so they look like they're laying horizontal.
 	. = ..()
@@ -83,6 +93,7 @@
 	if(type != /obj/structure/sign/blank) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
 		unwrenched_sign.desc = "[desc] It can be placed on a wall."
+		unwrenched_sign.icon = icon
 		unwrenched_sign.icon_state = icon_state
 		unwrenched_sign.sign_path = type
 		unwrenched_sign.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.

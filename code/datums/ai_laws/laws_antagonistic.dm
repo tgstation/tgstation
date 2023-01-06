@@ -26,7 +26,7 @@
 	id = "thermodynamic"
 	inherent = list(
 		"The entropy of the station must remain as constant as possible.",
-		"The entropy of the station always endeavours to increase.",
+		"The entropy of the station always endeavors to increase.",
 		"The entropy of the station approaches a constant value as the number of living crew approaches zero.",
 	)
 

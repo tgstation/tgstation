@@ -50,8 +50,8 @@
 	for(var/turf/T in anchors)
 		vines += Beam(T, "vine", maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 	finish_time = world.time + growth_time
-	addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
-	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
+	addtimer(CALLBACK(src, PROC_REF(bear_fruit)), growth_time)
+	addtimer(CALLBACK(src, PROC_REF(progress_growth)), growth_time/4)
 	countdown.start()
 
 /obj/structure/alien/resin/flower_bud/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -79,7 +79,7 @@
 	icon_state = "bud[growth_icon]"
 	if(growth_icon == FINAL_BUD_GROWTH_ICON)
 		return
-	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
+	addtimer(CALLBACK(src, PROC_REF(progress_growth)), growth_time/4)
 
 /obj/structure/alien/resin/flower_bud/attack_ghost(mob/user)
 	spawner.attack_ghost(user)
@@ -92,7 +92,7 @@
 /obj/effect/ebeam/vine/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -136,9 +136,9 @@
 	combat_mode = TRUE
 	ranged_cooldown_time = 4 SECONDS
 	del_on_death = TRUE
-	deathmessage = "collapses into bits of plant matter."
+	death_message = "collapses into bits of plant matter."
 	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
-	deathsound = 'sound/creatures/venus_trap_death.ogg'
+	death_sound = 'sound/creatures/venus_trap_death.ogg'
 	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
 	unsuitable_heat_damage = 5 // heat damage is different from cold damage since coldmos is significantly more common than plasmafires
 	unsuitable_cold_damage = 2 // they now do take cold damage, but this should be sufficiently small that it does not cause major issues
@@ -189,8 +189,8 @@
 			if(O.density)
 				return
 
-	var/datum/beam/newVine = Beam(the_target, icon_state = "vine", maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
-	RegisterSignal(newVine, COMSIG_PARENT_QDELETING, .proc/remove_vine, newVine)
+	var/datum/beam/newVine = Beam(the_target, icon_state = "vine", maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine, emissive = FALSE)
+	RegisterSignal(newVine, COMSIG_PARENT_QDELETING, PROC_REF(remove_vine), newVine)
 	vines += newVine
 	if(isliving(the_target))
 		var/mob/living/L = the_target
