@@ -427,10 +427,6 @@
 	name = "Hitop"
 	icon_state = "hair_hitop"
 
-/datum/sprite_accessory/hair/izutsumi
-	name = "Izutsumi"
-	icon_state = "hair_izutsumi"
-
 /datum/sprite_accessory/hair/jade
 	name = "Jade"
 	icon_state = "hair_jade"
@@ -534,6 +530,10 @@
 /datum/sprite_accessory/hair/over_eye
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"
+
+/datum/sprite_accessory/hair/hair_overeyed_izutsumi
+	name = "Over Eye (Izutsumi)"
+	icon_state = "hair_overeyed_izutsumi"
 
 /datum/sprite_accessory/hair/oxton
 	name = "Oxton"
