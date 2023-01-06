@@ -20,6 +20,7 @@
 	light_range = 2
 	light_power = 0.5
 	light_color = LIGHT_COLOR_FIRE
+	light_flags = LIGHT_NO_LUMCOUNT
 
 /obj/effect/particle_effect/sparks/Initialize(mapload)
 	..()
