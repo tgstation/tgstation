@@ -16,7 +16,10 @@
 	var/creation_efficiency = 1.6
 
 	var/datum/design/being_built
-	var/datum/techweb/stored_research
+	var/datum/techweb/autounlocking/autolathe/stored_research
+
+	///Designs imported from technology disks that we can print.
+	var/list/imported_designs = list()
 
 /obj/machinery/autolathe/Initialize(mapload)
 	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, PROC_REF(AfterMaterialInsert)))
@@ -47,6 +50,10 @@
 	var/list/data = list()
 
 	data["designs"] = handle_designs(stored_research.researched_designs)
+	if(imported_designs.len)
+		data["designs"] += handle_designs(imported_designs)
+	if(hacked)
+		data["designs"] += handle_designs(stored_research.hacked_designs)
 
 	return data
 
@@ -141,7 +148,6 @@
 
 /obj/machinery/autolathe/ui_act(action, list/params)
 	. = ..()
-
 	if(.)
 		return
 
@@ -151,9 +157,6 @@
 		if(!istext(design_id))
 			return
 
-		if(!stored_research.isDesignResearchedID(design_id))
-			return
-
 		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 
 		if(!(design.build_type & AUTOLATHE) || design.id != design_id)
@@ -161,7 +164,6 @@
 
 		if (busy)
 			to_chat(usr, span_alert("The autolathe is busy. Please wait for completion of previous operation."))
-
 			return
 
 		being_built = design
@@ -258,7 +260,7 @@
 				if(!blueprint)
 					continue
 				if(blueprint.build_type & AUTOLATHE)
-					stored_research.add_design(blueprint)
+					imported_designs[blueprint.id] = TRUE
 				else
 					LAZYADD(not_imported, blueprint.name)
 			if(not_imported)
@@ -318,11 +320,9 @@
 	if(is_stack)
 		var/obj/item/stack/N = new being_built.build_path(A, multiplier, FALSE)
 		N.update_appearance()
-		N.autolathe_crafted(src)
 	else
 		for(var/i in 1 to multiplier)
 			var/obj/item/new_item = new being_built.build_path(A)
-			new_item.autolathe_crafted(src)
 
 			if(length(picked_materials))
 				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
@@ -411,21 +411,8 @@
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
-	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if((D.build_type & AUTOLATHE) && (RND_CATEGORY_HACKED in D.category))
-			if(hacked)
-				stored_research.add_design(D)
-			else
-				stored_research.remove_design(D)
-
 	update_static_data_for_all_viewers()
 
 /obj/machinery/autolathe/hacked/Initialize(mapload)
 	. = ..()
 	adjust_hacked(TRUE)
-
-//Called when the object is constructed by an autolathe
-//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
-/obj/item/proc/autolathe_crafted(obj/machinery/autolathe/A)
-	return

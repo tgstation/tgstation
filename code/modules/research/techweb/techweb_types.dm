@@ -63,19 +63,33 @@ GLOBAL_LIST_EMPTY(autounlock_techwebs)
 /datum/techweb/autounlocking
 	///The buildtype we will automatically unlock.
 	var/allowed_buildtypes = ALL
+	///Designs that are only available when the printer is hacked.
+	var/list/hacked_designs = list()
 
 /datum/techweb/autounlocking/New()
 	. = ..()
-	GLOB.autounlock_techwebs[type] = src
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/design = SSresearch.techweb_designs[id]
-		if((design.build_type & allowed_buildtypes) && (RND_CATEGORY_INITIAL in design.category))
+		if(!(design.build_type & allowed_buildtypes))
+			continue
+		if(RND_CATEGORY_INITIAL in design.category)
 			add_design_by_id(id)
+		if(RND_CATEGORY_HACKED in design.category)
+			add_hacked_design_by_id(id)
 
 /datum/techweb/autounlocking/add_design(datum/design/design, custom = FALSE)
 	if(!(design.build_type & allowed_buildtypes))
 		return FALSE
 	return ..()
+
+/datum/techweb/autounlocking/proc/add_hacked_design_by_id(id, custom = FALSE)
+	return add_hacked_design(SSresearch.techweb_design_by_id(id), custom)
+
+/datum/techweb/autounlocking/proc/add_hacked_design(datum/design/design, custom = FALSE)
+	if(!istype(design))
+		return FALSE
+	hacked_designs[design.id] = TRUE
+	return TRUE
 
 /datum/techweb/autounlocking/autolathe
 	allowed_buildtypes = AUTOLATHE
