@@ -289,14 +289,22 @@
 								if(QDELETED(incoming_stack))
 									break
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
-						components += part
-						part.forceMove(src)
+						var/stock_part_datum = GLOB.stock_part_datums_per_object[part.type]
+						if (!isnull(stock_part_datum))
+							components += stock_part_datum
+							qdel(part)
+						else
+							components += part
+							part.forceMove(src)
 					to_chat(user, span_notice("You add [part] to [src]."))
 				if(added_components.len)
 					replacer.play_rped_sound()
 				return
 
 			for(var/stock_part_base in req_components)
+				if (req_components[stock_part_base] == 0)
+					continue
+
 				var/stock_part_path
 
 				if (ispath(stock_part_base, /obj/item))
@@ -306,9 +314,6 @@
 					stock_part_path = initial(stock_part_datum_type.physical_object_type)
 				else
 					stack_trace("Bad stock part in req_components: [stock_part_base]")
-					continue
-
-				if (req_components[stock_part_path] == 0)
 					continue
 
 				if (!istype(P, stock_part_path))

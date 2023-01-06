@@ -491,6 +491,7 @@
 
 /obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/obj/machinery/power/emitter/emitter = user.buckled
 	emitter.setDir(get_dir(emitter,targeted_atom))
 	user.setDir(emitter.dir)
