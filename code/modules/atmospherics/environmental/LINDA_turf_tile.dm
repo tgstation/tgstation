@@ -54,7 +54,7 @@
 	var/max_share = 0
 	#endif
 /datum/gas_mixture/immutable/space/normal
-	initial_temperature = ROOM_TEMP
+	initial_temperature = 293
 /turf/open/Initialize(mapload)
 	if(!blocks_air)
 		air = new/datum/gas_mixture/immutable/space/normal /*
