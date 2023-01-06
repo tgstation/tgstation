@@ -231,10 +231,8 @@
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
 				M.mineralAmt = rand(1, 5)
-				src = M
 				M.levelupdate()
 			else
-				src = T
 				T.levelupdate()
 
 		else

@@ -120,6 +120,12 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
     echo -e "${RED}ERROR: Changed files contains a proc argument starting with 'var'.${NC}"
     st=1
 fi;
+part "illegal src editing"
+if $grep '.*\tsrc = ' $code_files; then
+	echo
+    echo -e "${RED}ERROR: Illegal src edit detected, please amend.${NC}"
+    st=1
+fi;
 
 part "balloon_alert sanity"
 if $grep 'balloon_alert\(".*"\)' $code_files; then

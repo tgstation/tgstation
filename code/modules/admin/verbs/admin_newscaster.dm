@@ -3,11 +3,11 @@
 	set name = "Access Newscaster Network"
 	set desc = "Allows you to view, add and edit news feeds."
 
-	if (!istype(src, /datum/admins))
-		src = usr.client.holder
-	if (!istype(src, /datum/admins))
-		to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
-		return
+	if(!istype(src, /datum/admins))
+		var/datum/admins/holder = usr.client.holder
+		if(!istype(holder, /datum/admins))
+			to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
+			return
 
 	var/datum/newspanel/new_newspanel = new
 
