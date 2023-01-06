@@ -269,13 +269,6 @@
 	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
 	var/drying = FALSE
 
-/obj/machinery/smartfridge/drying_rack/Initialize(mapload)
-	. = ..()
-
-	RefreshParts()
-	component_parts = null
-	circuit = null
-
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 	..()
