@@ -435,7 +435,7 @@
 	else // Lost the [LIGHT_ATTACHED] property
 		overlay_lighting_flags &= ~LIGHTING_ATTACHED
 		set_parent_attached_to(null)
-	if(new_value & LIGHT_NO_LUMCOUNT)
+	if(old_flags & LIGHT_NO_LUMCOUNT)
 		if(!(movable_parent.light_flags & LIGHT_NO_LUMCOUNT)) //Gained the NO_LUMCOUNT property
 			overlay_lighting_flags |= LIGHT_NO_LUMCOUNT
 			//Recalculate affecting
