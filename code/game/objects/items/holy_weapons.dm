@@ -607,3 +607,28 @@
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
+
+/obj/item/nullrod/hfr
+	name = "high frequency blade"
+	desc = "A weaker version of a high frequency blade. Might call it a medium frequency blade?"
+	icon_state = "hfrequency1"
+	worn_icon_state = "hfrequency1"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	block_chance = 25
+	force = 6
+	throwforce = 20
+	sharpness = SHARP_EDGED
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	menu_description = "A sharp blade with low damage, but high attack speed."
+
+/obj/item/nullrod/hfr/attack(mob/living/target, mob/living/user, params)
+	. = ..()
+	user.changeNext_move(0.34 SECONDS)
+	var/x_slashed = text2num(modifiers[ICON_X]) || world.icon_size/2
+	var/y_slashed = text2num(modifiers[ICON_Y]) || world.icon_size/2
+	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed, COLOR_BLUE)
