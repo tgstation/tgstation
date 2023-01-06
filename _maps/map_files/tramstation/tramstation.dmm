@@ -1386,6 +1386,9 @@
 /obj/effect/landmark/start/hangover,
 /obj/structure/industrial_lift/tram,
 /obj/structure/chair/sofa/bench/tram/solo,
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "aEo" = (
@@ -39937,6 +39940,7 @@
 /obj/structure/chair/sofa/bench/tram/solo{
 	dir = 1
 	},
+/obj/structure/railing,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "otf" = (
