@@ -16,15 +16,16 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	combat_mode = TRUE
 	faction = list("stickman")
-	unsuitable_atmos_damage = 7.5
-	unsuitable_cold_damage = 7.5
-	unsuitable_heat_damage = 7.5
 
 	ai_controller = /datum/ai_controller/basic_controller/stickman
 
 /mob/living/basic/stickman/Initialize(mapload)
 	. = ..()
 	new /obj/effect/temp_visual/paper_scatter(get_turf(src))
+	// i will never understand why this mob has atmos requirements on a space ruin
+	// which lets people blatantly cheese it but whatever
+	AddElement(/datum/element/atmos_requirements, BASIC_ATMOS_REQUIREMENTS, 7.5)
+	AddElement(/datum/element/basic_body_temp_sensitive, 250, 350, 7.5, 7.5)
 
 /datum/ai_controller/basic_controller/stickman
 	blackboard = list(

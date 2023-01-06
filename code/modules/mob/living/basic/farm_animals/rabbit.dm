@@ -31,8 +31,6 @@
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	butcher_results = list(/obj/item/food/meat/slab = 1)
-	unsuitable_cold_damage = 0.5 // Cold damage is 0.5 here to account for low health on the rabbit.
-	unsuitable_heat_damage = 0.5 // Heat damage is 0.5 here to account for low health on the rabbit.
 	ai_controller = /datum/ai_controller/basic_controller/rabbit
 	/// passed to animal_varity as the prefix icon.
 	var/icon_prefix = "rabbit"
@@ -44,6 +42,10 @@
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown", "black", "white"), TRUE)
 	if(prob(20)) // bunny
 		name = "bunny"
+
+/mob/living/basic/rabbit/AddEnvironmentElements()
+	AddElement(/datum/element/atmos_requirements, BASIC_ATMOS_REQUIREMENTS, 1)
+	AddElement(/datum/element/basic_body_temp_sensitive, 250, 350, 0.5, 0.5)
 
 /datum/ai_controller/basic_controller/rabbit
 	blackboard = list(
@@ -102,14 +104,14 @@
 	icon_dead = "space_rabbit_white_dead"
 	icon_prefix = "space_rabbit"
 	ai_controller = /datum/ai_controller/basic_controller/rabbit/easter/space
-	unsuitable_atmos_damage = 0 // Zero because we are meant to survive in space.
-	minimum_survivable_temperature = 0 // Minimum Allowable Body Temp, zero because we are meant to survive in space and we have a fucking RABBIT SPACE MASK.
-	maximum_survivable_temperature = 1500 // Maximum Allowable Body Temp, 1500 because we might overheat and die in said RABBIT SPACE MASK.
-	unsuitable_cold_damage = 0 // Zero because we are meant to survive in space.
+
+/mob/living/basic/rabbit/easter/space/AddEnvironmentElements()
+	//no atmos, suspiciously high temperature to take damage
+	AddElement(/datum/element/basic_body_temp_sensitive, 0, 1500, 0, 0.5)
 
 /datum/ai_controller/basic_controller/rabbit/easter/space
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/rabbit/easter/space,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
-		)
+	)

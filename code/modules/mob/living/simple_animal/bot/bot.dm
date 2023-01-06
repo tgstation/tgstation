@@ -13,7 +13,6 @@
 	maxbodytemp = INFINITY
 	minbodytemp = 0
 	has_unlimited_silicon_privilege = TRUE
-	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	pass_flags = PASSFLAPS
 	verb_say = "states"
@@ -194,6 +193,8 @@
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
 		randomize_language_if_on_station()
+	AddElement(/datum/element/sentience_possible)
+	RegisterSignal(src, COMSIG_LIVING_GIVEN_SENTIENCE, PROC_REF(on_sentience_potioned))
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)
@@ -1029,7 +1030,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(paicard && (!client || stat == DEAD))
 		ejectpai(0)
 
-/mob/living/simple_animal/bot/sentience_act()
+/mob/living/simple_animal/bot/on_sentience_potioned(datum/source, mob/possible_creator)
+	..()
 	faction -= "silicon"
 
 /mob/living/simple_animal/bot/proc/set_path(list/newpath)

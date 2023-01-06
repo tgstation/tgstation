@@ -23,7 +23,7 @@
 	///Injector malf?
 	var/malfunctioning = FALSE
 	///So you can't revive boss monsters or robots with it
-	var/revive_type = SENTIENCE_ORGANIC
+	var/rejected_biotypes = MOB_EPIC|MOB_ROBOTIC
 
 /obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -34,7 +34,7 @@
 		return
 
 	var/mob/living/simple_animal/target_animal = target
-	if(target_animal.sentience_type != revive_type)
+	if(target_animal.mob_biotypes & rejected_biotypes)
 		to_chat(user, span_info("[src] does not work on this sort of creature."))
 		return
 	if(target_animal.stat != DEAD)

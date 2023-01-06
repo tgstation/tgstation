@@ -6,7 +6,6 @@
 	icon_dead = "old_dead"
 	icon_gib = "clown_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
 	gender = MALE
 	turns_per_move = 5
 	response_disarm_continuous = "gently pushes aside"
@@ -27,6 +26,10 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 0
 	footstep_type = FOOTSTEP_MOB_SHOE
+
+/mob/living/simple_animal/hostile/retaliate/spaceman/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/sentience_possible)
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
 	name = "\improper Nanotrasen Private Security Officer"
@@ -51,13 +54,16 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	faction = list("nanotrasenprivate")
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
 	combat_mode = TRUE
 	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
 	status_flags = CANPUSH
 	search_objects = 1
+
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/sentience_possible)
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/Aggro()
 	..()

@@ -264,7 +264,6 @@
 	maxbodytemp = INFINITY
 	layer = MOB_LAYER
 	del_on_death = TRUE
-	sentience_type = SENTIENCE_BOSS
 	loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 5)
 	move_to_delay = 14
 	vision_range = 5

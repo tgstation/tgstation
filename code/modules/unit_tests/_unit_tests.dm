@@ -74,6 +74,9 @@
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
+/// A unit testing trait
+#define TRAIT_UNIT_TESTS(type) "[type]"
+
 #include "ablative_hud.dm"
 #include "achievements.dm"
 #include "anchored_mobs.dm"
@@ -82,6 +85,7 @@
 #include "autowiki.dm"
 #include "barsigns.dm"
 #include "baseturfs.dm"
+#include "basic_mob_complexity.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "bloody_footprints.dm"
@@ -147,8 +151,8 @@
 #include "ntnetwork_tests.dm"
 #include "nuke_cinematic.dm"
 #include "objectives.dm"
-#include "orderable_items.dm"
 #include "operating_table.dm"
+#include "orderable_items.dm"
 #include "outfit_sanity.dm"
 #include "paintings.dm"
 #include "pills.dm"
@@ -174,8 +178,8 @@
 #include "screenshot_humanoids.dm"
 #include "screenshot_husk.dm"
 #include "screenshot_saturnx.dm"
-#include "security_officer_distribution.dm"
 #include "security_levels.dm"
+#include "security_officer_distribution.dm"
 #include "serving_tray.dm"
 #include "simple_animal_freeze.dm"
 #include "siunit.dm"

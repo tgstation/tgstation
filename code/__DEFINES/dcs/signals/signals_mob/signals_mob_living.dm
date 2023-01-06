@@ -46,6 +46,12 @@
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
 
+/// from /obj/item/slimepotion/slime/sentience/attack(): (datum/target, obj/sentience_source, sentience_biotypes, mob/user, try_sentience)
+#define COMSIG_LIVING_SENTIENCEPOTION "living_sentiencepotion"
+/// from base of /obj/item/slimepotion/slime/sentience/proc/try_sentience(): (datum/source, mob/possible_creator)
+/// specifically when guaranteed to be sentient
+#define COMSIG_LIVING_GIVEN_SENTIENCE "living_sentiencepotioned"
+
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
 ///from base of mob/living/death(): (gibbed)

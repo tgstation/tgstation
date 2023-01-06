@@ -23,7 +23,6 @@
 	aggro_vision_range = 9
 	turns_per_move = 5
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
 	faction = list(ROLE_WIZARD)
 	footstep_type = FOOTSTEP_MOB_SHOE
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
@@ -32,6 +31,10 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	loot = list(/obj/effect/decal/remains/human)
 	del_on_death = TRUE
+
+/mob/living/simple_animal/hostile/dark_wizard/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/sentience_possible)
 
 /obj/projectile/temp/earth_bolt
 	name = "earth bolt"

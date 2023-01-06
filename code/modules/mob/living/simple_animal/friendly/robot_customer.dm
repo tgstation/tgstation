@@ -13,7 +13,6 @@
 	AIStatus = AI_OFF
 	del_on_death = TRUE
 	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_ARTIFICIAL
 	ai_controller = /datum/ai_controller/robot_customer
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
@@ -21,12 +20,12 @@
 	var/clothes_set = "amerifat_clothes"
 	var/datum/atom_hud/hud_to_show_on_hover
 
-
 /mob/living/simple_animal/robot_customer/Initialize(mapload, datum/customer_data/customer_data = /datum/customer_data/american, datum/venue/attending_venue = SSrestaurant.all_venues[/datum/venue/restaurant])
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT) //dont push me bitch
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, INNATE_TRAIT) //dont teleport me bitch
 	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT) //strong arms bitch
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
+	AddElement(/datum/element/sentience_possible)
 	var/datum/customer_data/customer_info = SSrestaurant.all_customers[customer_data]
 	clothes_set = pick(customer_info.clothing_sets)
 	ai_controller = customer_info.ai_controller_used

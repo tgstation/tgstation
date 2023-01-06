@@ -7,7 +7,6 @@
 	icon_dead = "russianmelee_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	speed = 0
@@ -30,6 +29,9 @@
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
+/mob/living/simple_animal/hostile/russian/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/sentience_possible)
 
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"

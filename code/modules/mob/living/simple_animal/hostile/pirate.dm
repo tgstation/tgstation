@@ -6,7 +6,6 @@
 	icon_living = "piratemelee"
 	icon_dead = "pirate_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	response_help_continuous = "pushes"
@@ -29,6 +28,9 @@
 	del_on_death = 1
 	faction = list("pirate")
 
+/mob/living/simple_animal/hostile/pirate/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/sentience_possible)
 
 /mob/living/simple_animal/hostile/pirate/melee
 	name = "Pirate Swashbuckler"

@@ -30,6 +30,7 @@
 	if(crusher_loot)
 		AddElement(/datum/element/crusher_loot, crusher_loot, crusher_drop_mod, del_on_death)
 	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+	AddElement(/datum/element/sentience_possible)
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()

@@ -21,7 +21,6 @@
 	throw_message = "passes through the smokey body of"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	sentience_type = SENTIENCE_BOSS
 	layer = LARGE_MOB_LAYER
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	var/mob/living/set_target

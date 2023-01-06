@@ -35,8 +35,6 @@
 	worn_slot_flags = ITEM_SLOT_HEAD
 	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 
-	habitable_atmos = list("min_oxy" = 3, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 15, "min_co2" = 0, "max_co2" = 15, "min_n2" = 0, "max_n2" = 0)
-
 	ai_controller = /datum/ai_controller/basic_controller/frog
 
 	var/stepped_sound = 'sound/effects/huuu.ogg'
@@ -66,6 +64,8 @@
 	AddElement(/datum/element/venomous, poison_type, poison_per_bite)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_FROG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/atmos_requirements, list("min_oxy" = 3, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 15, "min_co2" = 0, "max_co2" = 15, "min_n2" = 0, "max_n2" = 0), 1)
+	AddElement(/datum/element/basic_body_temp_sensitive, 250, 350, 1, 1)
 
 /mob/living/basic/frog/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER

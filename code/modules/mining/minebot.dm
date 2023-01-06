@@ -27,7 +27,6 @@
 	attack_verb_continuous = "drills"
 	attack_verb_simple = "drill"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
-	sentience_type = SENTIENCE_MINEBOT
 	speak_emote = list("states")
 	wanted_objects = list(/obj/item/stack/ore/diamond, /obj/item/stack/ore/gold, /obj/item/stack/ore/silver,
 						  /obj/item/stack/ore/plasma, /obj/item/stack/ore/uranium, /obj/item/stack/ore/iron,
@@ -43,7 +42,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize(mapload)
 	. = ..()
-
+	AddElement(/datum/element/sentience_possible)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 
 	stored_gun = new(src)
@@ -63,13 +62,15 @@
 
 	SetCollectBehavior()
 
+	RegisterSignal(src, COMSIG_LIVING_GIVEN_SENTIENCE, PROC_REF(on_sentience_potioned))
+
 /mob/living/simple_animal/hostile/mining_drone/Destroy()
 	QDEL_NULL(stored_gun)
 	for (var/datum/action/innate/minedrone/action in actions)
 		qdel(action)
 	return ..()
 
-/mob/living/simple_animal/hostile/mining_drone/sentience_act()
+/mob/living/simple_animal/hostile/mining_drone/on_sentience_potioned(datum/source, mob/possible_creator)
 	..()
 	check_friendly_fire = 0
 
@@ -307,11 +308,16 @@
 	desc = "Can be used to grant sentience to minebots. It's incompatible with minebot armor and melee upgrades, and will override them."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
-	sentience_type = SENTIENCE_MINEBOT
 	var/base_health_add = 5 //sentient minebots are penalized for beign sentient; they have their stats reset to normal plus these values
 	var/base_damage_add = 1 //this thus disables other minebot upgrades
 	var/base_speed_add = 1
 	var/base_cooldown_add = 10 //base cooldown isn't reset to normal, it's just added on, since it's not practical to disable the cooldown module
+
+/obj/item/slimepotion/slime/sentience/mining/attack(mob/living/dumb_mob, mob/user)
+	if(!istype(dumb_mob, /mob/living/simple_animal/hostile/mining_drone))
+		balloon_alert(user, "only works on minebots!")
+		return
+	. = ..()
 
 /obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/simple_animal/simple_mob)
 	if(!istype(simple_mob, /mob/living/simple_animal/hostile/mining_drone))

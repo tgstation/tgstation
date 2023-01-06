@@ -18,6 +18,7 @@
 	icon_living = "base"
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
+	basic_mob_flags = NO_ATMOS_REQUIREMENTS
 	gold_core_spawnable = HOSTILE_SPAWN
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	movement_type = FLYING
@@ -40,9 +41,6 @@
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_survivable_temperature = 0
-	maximum_survivable_temperature = 1500
 
 	/// Cytology cells you can swab from this creature
 	var/cell_line = CELL_LINE_TABLE_CARP
@@ -100,6 +98,9 @@
 		on_tamed(tamer, FALSE)
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
+
+/mob/living/basic/carp/AddEnvironmentElements()
+	AddElement(/datum/element/basic_body_temp_sensitive, 0, 1500, 0, 1)
 
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()

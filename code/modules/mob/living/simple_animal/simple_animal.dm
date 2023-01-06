@@ -129,9 +129,6 @@
 
 	var/datum/component/spawner/nest
 
-	///Sentience type, for slime potions.
-	var/sentience_type = SENTIENCE_ORGANIC
-
 	///List of things spawned at mob's loc when it dies.
 	var/list/loot = list()
 	///Causes mob to be deleted on death, useful for mobs that spawn lootable corpses.
@@ -214,6 +211,7 @@
 		unsuitable_cold_damage = unsuitable_atmos_damage
 	if(isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
+	RegisterSignal(src, COMSIG_LIVING_GIVEN_SENTIENCE, PROC_REF(on_sentience_potioned))
 
 /mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
@@ -563,7 +561,8 @@
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
 	return ..()
 
-/mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
+/mob/living/simple_animal/proc/on_sentience_potioned(datum/source, mob/possible_creator) //Called when a simple animal gains sentience via gold slime potion
+	SIGNAL_HANDLER
 	toggle_ai(AI_OFF) // To prevent any weirdness.
 	can_have_ai = FALSE
 

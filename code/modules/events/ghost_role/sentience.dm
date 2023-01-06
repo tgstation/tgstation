@@ -89,7 +89,8 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 		SA.grant_all_languages(TRUE, FALSE, FALSE)
 
-		SA.sentience_act()
+		//no user, which is why sentiencepotioned should be checking for that
+		SEND_SIGNAL(SA, COMSIG_LIVING_GIVEN_SENTIENCE, null)
 
 		SA.maxHealth = max(SA.maxHealth, 200)
 		SA.health = SA.maxHealth

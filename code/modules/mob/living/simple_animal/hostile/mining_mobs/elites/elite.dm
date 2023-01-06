@@ -19,7 +19,6 @@
 	stat_attack = HARD_CRIT
 	layer = LARGE_MOB_LAYER
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
-	sentience_type = SENTIENCE_BOSS
 	var/chosen_attack = 1
 	var/list/attack_action_types = list()
 	var/can_talk = FALSE
@@ -212,7 +211,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(boosted)
 		mychild.key = elitemind.key
-		mychild.sentience_act()
+		SEND_SIGNAL(mychild, COMSIG_LIVING_GIVEN_SENTIENCE, null)
 		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
 	mychild.log_message("has been awakened by [key_name(activator)]!", LOG_GAME, color="#960000")
 	icon_state = "tumor_popped"
@@ -367,7 +366,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
 		var/mob/living/simple_animal/hostile/asteroid/elite/E = target
-		if(E.stat != DEAD || E.sentience_type != SENTIENCE_BOSS || !E.key)
+		if(E.stat != DEAD || !(E.mob_biotypes & MOB_EPIC) || !E.key)
 			user.visible_message(span_notice("It appears [E] is unable to be revived right now.  Perhaps try again later."))
 			return
 		E.faction = list("[REF(user)]")
@@ -379,7 +378,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		E.maxHealth = E.maxHealth * 0.4
 		E.health = E.maxHealth
 		E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
-		E.sentience_type = SENTIENCE_ORGANIC
 		qdel(src)
 	else
 		to_chat(user, span_info("[src] only works on the corpse of a sentient lavaland elite."))

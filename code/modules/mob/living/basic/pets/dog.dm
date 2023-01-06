@@ -52,6 +52,10 @@
 	AddElement(/datum/element/befriend_petting, tamed_reaction = "%SOURCE% licks at %TARGET% in a friendly manner!", untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
+/mob/living/basic/pet/dog/AddEnvironmentElements()
+	AddElement(/datum/element/atmos_requirements, BASIC_ATMOS_REQUIREMENTS, 1)
+	AddElement(/datum/element/basic_body_temp_sensitive, 250, 350, 1, 1)
+
 /mob/living/basic/pet/dog/proc/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
 	speech.speak = string_list(list("YAP", "Woof!", "Bark!", "AUUUUUU"))
 	speech.emote_hear = string_list(list("barks!", "woofs!", "yaps.","pants."))
@@ -740,13 +744,14 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_dead = "void_puppy_dead"
 	nofur = TRUE
 	held_state = "void_puppy"
-	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = TCMB
-	maximum_survivable_temperature = T0C + 40
 
 /mob/living/basic/pet/dog/corgi/puppy/void/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
+
+/mob/living/basic/pet/dog/corgi/puppy/void/AddEnvironmentElements()
+	//no atmos sensitivity, very cold temp range
+	AddElement(/datum/element/basic_body_temp_sensitive, TCMB, T0C + 40, 1, 1)
 
 /mob/living/basic/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return 1 //Void puppies can navigate space.

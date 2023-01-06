@@ -7,7 +7,6 @@
 	icon_dead = null
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	speed = 0
@@ -31,6 +30,10 @@
 	del_on_death = TRUE
 	dodging = TRUE
 	footstep_type = FOOTSTEP_MOB_SHOE
+
+/mob/living/simple_animal/hostile/nanotrasen/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/sentience_possible)
 
 /mob/living/simple_animal/hostile/nanotrasen/screaming
 	icon_state = "nanotrasen"

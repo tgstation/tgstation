@@ -316,13 +316,6 @@
 #define SLIME_FRIENDSHIP_STAY 3 //Min friendship to order it to stay
 #define SLIME_FRIENDSHIP_ATTACK 8 //Min friendship to order it to attack
 
-//Sentience types, to prevent things like sentience potions from giving bosses sentience
-#define SENTIENCE_ORGANIC 1
-#define SENTIENCE_ARTIFICIAL 2
-#define SENTIENCE_HUMANOID 3
-#define SENTIENCE_MINEBOT 4
-#define SENTIENCE_BOSS 5
-
 //Mob AI Status
 #define POWER_RESTORATION_OFF 0
 #define POWER_RESTORATION_START 1

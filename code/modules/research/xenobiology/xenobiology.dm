@@ -684,50 +684,37 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
-	var/list/not_interested = list()
 	var/being_used = FALSE
-	var/sentience_type = SENTIENCE_ORGANIC
+	var/sentience_biotype = MOB_ORGANIC
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
-	if(being_used || !ismob(dumb_mob))
+	if(being_used || !isliving(dumb_mob))
 		return
-	if((!isanimal(dumb_mob) && !isbasicmob(dumb_mob)) || dumb_mob.ckey) //only works on animals that aren't player controlled
+	if(iscarbon(dumb_mob) || dumb_mob.ckey) //only works on animals that aren't player controlled
 		to_chat(user, span_warning("[dumb_mob] is already too intelligent for this to work!"))
 		return
 	if(dumb_mob.stat)
 		to_chat(user, span_warning("[dumb_mob] is dead!"))
 		return
-	if(isanimal(dumb_mob))
-		var/mob/living/simple_animal/dumb_animal = dumb_mob
-		if(dumb_animal.sentience_type != sentience_type)
-			to_chat(user, span_warning("[src] won't work on [dumb_animal]."))
-			return
-	else if(isbasicmob(dumb_mob)) //duplicate shit code until all simple animasls are made into basic mobs. sentience_type is not on living, but it duplicated  on basic and animal
-		var/mob/living/basic/basic_dumb_bitch = dumb_mob
-		if(basic_dumb_bitch.sentience_type != sentience_type)
-			to_chat(user, span_warning("[src] won't work on [basic_dumb_bitch]."))
-			return
-
 	to_chat(user, span_notice("You offer [src] to [dumb_mob]..."))
 	being_used = TRUE
+	SEND_SIGNAL(dumb_mob, COMSIG_LIVING_SENTIENCEPOTION, src, sentience_biotype, user, PROC_REF(try_sentience))
+	..()
 
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as [dumb_mob.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, dumb_mob, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		dumb_mob.key = C.key
-		dumb_mob.mind.enslave_mind_to_creator(user)
-		SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
-		if(isanimal(dumb_mob))
-			var/mob/living/simple_animal/smart_animal = dumb_mob
-			smart_animal.sentience_act()
-		dumb_mob.mind.add_antag_datum(/datum/antagonist/sentient_creature)
-		to_chat(user, span_notice("[dumb_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
-		after_success(user, dumb_mob)
-		qdel(src)
-	else
-		to_chat(user, span_notice("[dumb_mob] looks interested for a moment, but then looks back down. Maybe you should try again later."))
+/obj/item/slimepotion/slime/sentience/proc/try_sentience(mob/living/user, mob/living/smart_mob)
+	var/list/candidates = poll_candidates_for_mob("Do you want to play as [smart_mob.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, smart_mob, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
+	if(!LAZYLEN(candidates))
+		to_chat(user, span_notice("[smart_mob] looks interested for a moment, but then looks back down. Maybe you should try again later."))
 		being_used = FALSE
-		..()
+		return
+	var/mob/dead/observer/candidate = pick(candidates)
+	smart_mob.key = candidate.key
+	smart_mob.mind.enslave_mind_to_creator(user)
+	SEND_SIGNAL(smart_mob, COMSIG_LIVING_GIVEN_SENTIENCE, user)
+	smart_mob.mind.add_antag_datum(/datum/antagonist/sentient_creature)
+	to_chat(user, span_notice("[smart_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
+	after_success(user, smart_mob)
+	qdel(src)
 
 /obj/item/slimepotion/slime/sentience/proc/after_success(mob/living/user, mob/living/smart_mob)
 	return
@@ -747,7 +734,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potorange"
 	var/prompted = 0
-	var/animal_type = SENTIENCE_ORGANIC
+	var/animal_type = MOB_ORGANIC
 
 /obj/item/slimepotion/transference/afterattack(mob/living/switchy_mob, mob/living/user, proximity)
 	if(!proximity)
@@ -760,16 +747,9 @@
 	if(switchy_mob.stat)
 		to_chat(user, span_warning("[switchy_mob] is dead!"))
 		return ..()
-	if(isanimal(switchy_mob))
-		var/mob/living/simple_animal/switchy_animal= switchy_mob
-		if(switchy_animal.sentience_type != animal_type)
-			to_chat(user, span_warning("You cannot transfer your consciousness to [switchy_animal].") )
-			return ..()
-	else	//ugly code duplication, but necccesary as sentience_type is implemented twice.
-		var/mob/living/basic/basic_mob = switchy_mob
-		if(basic_mob.sentience_type != animal_type)
-			to_chat(user, span_warning("You cannot transfer your consciousness to [basic_mob].") )
-			return ..()
+	if(!(switchy_mob.mob_biotypes & animal_type))
+		to_chat(user, span_warning("You cannot transfer your consciousness to [switchy_mob].") )
+		return ..()
 
 	var/job_banned = is_banned_from(user.ckey, ROLE_MIND_TRANSFER)
 	if(QDELETED(src) || QDELETED(switchy_mob) || QDELETED(user))
@@ -796,9 +776,7 @@
 	to_chat(switchy_mob, span_warning("You are now [switchy_mob]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))
 	switchy_mob.name = "[user.real_name]"
 	qdel(src)
-	if(isanimal(switchy_mob))
-		var/mob/living/simple_animal/switchy_animal= switchy_mob
-		switchy_animal.sentience_act()
+	SEND_SIGNAL(switchy_mob, COMSIG_LIVING_GIVEN_SENTIENCE, null)
 
 /obj/item/slimepotion/slime/steroid
 	name = "slime steroid"

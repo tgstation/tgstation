@@ -28,7 +28,7 @@
 		return FALSE
 	if(animal.stat == DEAD)
 		return FALSE
-	if(animal.sentience_type != SENTIENCE_ORGANIC)
+	if(animal.mob_biotypes & MOB_ORGANIC)
 		return FALSE
 	if("cult" in animal.faction)
 		return FALSE

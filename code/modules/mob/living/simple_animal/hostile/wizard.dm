@@ -6,7 +6,6 @@
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
 	turns_per_move = 3
 	speed = 0
@@ -55,6 +54,7 @@
 	blink.spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_MIND)
 	blink.outer_tele_radius = 3
 	blink.Grant(src)
+	AddElement(/datum/element/sentience_possible)
 
 /mob/living/simple_animal/hostile/wizard/Destroy()
 	QDEL_NULL(fireball)

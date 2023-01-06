@@ -71,6 +71,7 @@
 	// Set creator
 	if(creator)
 		src.creator = creator
+	RegisterSignal(src, COMSIG_LIVING_GIVEN_SENTIENCE, PROC_REF(on_sentience_potioned))
 
 /mob/living/simple_animal/hostile/netherworld/statue/add_cell_sample()
 	return
@@ -144,7 +145,8 @@
 	. = ..()
 	return . - creator
 
-/mob/living/simple_animal/hostile/netherworld/statue/sentience_act()
+/mob/living/simple_animal/hostile/netherworld/statue/on_sentience_potioned(datum/source, mob/possible_creator)
+	..()
 	faction -= FACTION_NEUTRAL
 
 // Statue powers

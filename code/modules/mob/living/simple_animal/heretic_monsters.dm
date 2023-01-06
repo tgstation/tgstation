@@ -140,7 +140,6 @@
 	pull_force = MOVE_FORCE_OVERPOWERING
 	movement_type = GROUND
 	mob_size = MOB_SIZE_HUGE
-	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	mob_biotypes = MOB_ORGANIC|MOB_EPIC
 	obj_damage = 200

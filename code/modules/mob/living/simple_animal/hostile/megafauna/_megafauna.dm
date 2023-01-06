@@ -4,7 +4,6 @@
 	health = 1000
 	maxHealth = 1000
 	combat_mode = TRUE
-	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	mob_biotypes = MOB_ORGANIC|MOB_EPIC
 	obj_damage = 400

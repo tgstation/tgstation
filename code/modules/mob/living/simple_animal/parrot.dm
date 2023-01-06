@@ -992,12 +992,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	color = "#FFFFFF77"
 	speak_chance = 20
 	status_flags = GODMODE
-	sentience_type = SENTIENCE_BOSS //This is so players can't mindswap into ghost poly to become a literal god
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
 	butcher_results = list(/obj/item/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/poly/ghost/Initialize(mapload)
 	memory_saved = TRUE //At this point nothing is saved
+	// very specific comment here to tell you /datum/element/sentience_possible is not here ON PURPOSE. this is a godmode creature
 	. = ..()
 
 /mob/living/simple_animal/parrot/poly/ghost/handle_automated_speech()

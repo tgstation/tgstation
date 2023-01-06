@@ -14,7 +14,6 @@
 	icon_dead = "syndicate_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
 	maxHealth = 100
 	health = 100
 	basic_mob_flags = DEL_ON_DEATH
@@ -26,12 +25,9 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	combat_mode = TRUE
-	unsuitable_atmos_damage = 7.5
-	unsuitable_cold_damage = 7.5
-	unsuitable_heat_damage = 7.5
 	faction = list(ROLE_SYNDICATE)
 	ai_controller = /datum/ai_controller/basic_controller/syndicate
-	
+
 	var/loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
 
 /mob/living/basic/syndicate/Initialize(mapload)
@@ -39,16 +35,23 @@
 	if(LAZYLEN(loot))
 		AddElement(/datum/element/death_drops, loot)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
+	AddElement(/datum/element/sentience_possible)
+
+/mob/living/basic/syndicate/AddEnvironmentElements()
+	AddElement(/datum/element/atmos_requirements, BASIC_ATMOS_REQUIREMENTS, 7.5)
+	AddElement(/datum/element/basic_body_temp_sensitive, 250, 350, 7.5, 7.5)
 
 /mob/living/basic/syndicate/space
 	icon_state = "syndicate_space"
 	icon_living = "syndicate_space"
 	name = "Syndicate Commando"
+	basic_mob_flags = NO_ATMOS_REQUIREMENTS | NO_TEMP_SENSITIVITY
 	maxHealth = 170
 	health = 170
 	loot = list(/obj/effect/gibspawner/human)
-	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
+
+/mob/living/basic/syndicate/space/AddEnvironmentElements()
+	return
 
 /mob/living/basic/syndicate/space/Initialize(mapload)
 	. = ..()
@@ -84,10 +87,12 @@
 	icon_state = "syndicate_space_knife"
 	icon_living = "syndicate_space_knife"
 	name = "Syndicate Commando"
+	basic_mob_flags = NO_ATMOS_REQUIREMENTS | NO_TEMP_SENSITIVITY
 	maxHealth = 170
 	health = 170
-	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
+
+/mob/living/basic/syndicate/melee/space/AddEnvironmentElements()
+	return
 
 /mob/living/basic/syndicate/melee/space/Initialize(mapload)
 	. = ..()
@@ -121,10 +126,9 @@
 	icon_state = "syndicate_space_sword"
 	icon_living = "syndicate_space_sword"
 	name = "Syndicate Commando"
+	basic_mob_flags = NO_ATMOS_REQUIREMENTS | NO_TEMP_SENSITIVITY
 	maxHealth = 170
 	health = 170
-	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
 	projectile_deflect_chance = 50
 	var/obj/effect/light_emitter/red_energy_sword/sord
 
@@ -133,6 +137,10 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	sord = new(src)
 	set_light(4)
+
+/mob/living/basic/syndicate/melee/sword/space/AddEnvironmentElements()
+	return
+
 /mob/living/basic/syndicate/melee/sword/space/Destroy()
 	QDEL_NULL(sord)
 	return ..()
@@ -167,15 +175,17 @@
 	icon_state = "syndicate_space_pistol"
 	icon_living = "syndicate_space_pistol"
 	name = "Syndicate Commando"
+	basic_mob_flags = NO_ATMOS_REQUIREMENTS | NO_TEMP_SENSITIVITY
 	maxHealth = 170
 	health = 170
-	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
 
 /mob/living/basic/syndicate/ranged/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
+
+/mob/living/basic/syndicate/ranged/space/AddEnvironmentElements()
+	return
 
 /mob/living/basic/syndicate/ranged/space/stormtrooper
 	icon_state = "syndicate_stormtrooper_pistol"
@@ -199,15 +209,17 @@
 	icon_state = "syndicate_space_smg"
 	icon_living = "syndicate_space_smg"
 	name = "Syndicate Commando"
+	basic_mob_flags = NO_ATMOS_REQUIREMENTS | NO_TEMP_SENSITIVITY
 	maxHealth = 170
 	health = 170
-	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
 
 /mob/living/basic/syndicate/ranged/smg/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
+
+/mob/living/basic/syndicate/ranged/smg/space/AddEnvironmentElements()
+	return
 
 /mob/living/basic/syndicate/ranged/smg/space/stormtrooper
 	icon_state = "syndicate_stormtrooper_smg"
@@ -226,16 +238,18 @@
 	icon_state = "syndicate_space_shotgun"
 	icon_living = "syndicate_space_shotgun"
 	name = "Syndicate Commando"
+	basic_mob_flags = NO_ATMOS_REQUIREMENTS | NO_TEMP_SENSITIVITY
 	maxHealth = 170
 	health = 170
-	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
 	speed = 1
 
 /mob/living/basic/syndicate/ranged/shotgun/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
+
+/mob/living/basic/syndicate/ranged/shotgun/space/AddEnvironmentElements()
+	return
 
 /mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper
 	icon_state = "syndicate_stormtrooper_shotgun"
@@ -254,11 +268,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	combat_mode = TRUE
 	mob_biotypes = MOB_ROBOTIC
-	basic_mob_flags = DEL_ON_DEATH
-	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
-	maximum_survivable_temperature = 700
-	unsuitable_cold_damage = 0
+	basic_mob_flags = DEL_ON_DEATH | NO_ATMOS_REQUIREMENTS
 	health = 25
 	maxHealth = 25
 	melee_damage_lower = 15
@@ -284,3 +294,7 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
+
+/mob/living/basic/viscerator/AddEnvironmentElements()
+	//no atmos requirements, can burn
+	AddElement(/datum/element/basic_body_temp_sensitive, 0, 700, 0, 1)

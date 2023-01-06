@@ -28,6 +28,7 @@
 		var/datum/action/innate/creature/teleport/teleport = new(src)
 		teleport.Grant(src)
 	add_cell_sample()
+	AddElement(/datum/element/sentience_possible)
 
 /mob/living/simple_animal/hostile/netherworld/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
