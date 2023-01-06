@@ -73,6 +73,8 @@
 	var/using_special = FALSE
 	/// Determines whether or not Space Dragon is currently tearing through a wall.
 	var/tearing_wall = FALSE
+	/// Determines whether or not the big fish is eating a dude
+	var/devouring = FALSE
 	/// The ability to make your sprite smaller
 	var/datum/action/small_sprite/space_dragon/small_sprite
 	/// The color of the space dragon.
@@ -141,15 +143,29 @@
 	if(isliving(target)) //Swallows corpses like a snake to regain health.
 		var/mob/living/L = target
 		if(L.stat == DEAD)
+			devouring = TRUE
+			update_appearance()
+			add_dragon_overlay()
 			to_chat(src, span_warning("You begin to swallow [L] whole..."))
 			if(do_after(src, 30, target = L))
 				if(eat(L))
 					adjustHealth(-L.maxHealth * 0.25)
+			devouring = FALSE
+			icon_state = initial(icon_state)
+			update_appearance()
+			add_dragon_overlay()
 			return
 	. = ..()
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
+
+/mob/living/simple_animal/hostile/space_dragon/update_icon_state()
+	..()
+	if(stat == DEAD)
+		icon_state = "spacedragon_dead"
+	else if(devouring)
+		icon_state = "spacedragon_devour"
 
 /mob/living/simple_animal/hostile/space_dragon/ranged_secondary_attack(atom/target, modifiers)
 	if(using_special)
@@ -237,6 +253,11 @@
 		var/mutable_appearance/overlay = mutable_appearance(icon, "overlay_gust")
 		overlay.appearance_flags = RESET_COLOR
 		add_overlay(overlay)
+	if(devouring)
+		var/mutable_appearance/overlay = mutable_appearance(icon, "overlay_devour")
+		overlay.appearance_flags = RESET_COLOR
+		add_overlay(overlay)
+
 
 /**
  * Determines a line of turfs from sources's position to the target with length range.
