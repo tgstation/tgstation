@@ -248,8 +248,8 @@
 				picture.picture_desc = "[desc1] - [picture.picture_desc]"
 			if(caption)
 				picture.caption = caption
-	else if(default_picture_name)
-		picture.picture_name = default_picture_name
+		else if(default_picture_name)
+			picture.picture_name = default_picture_name
 
 	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
