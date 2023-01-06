@@ -34,7 +34,7 @@
 			continue
 
 		var/old_power_bars = departments[new_department]
-		var/new_power_bars = power_bars_ss.last_distributed_allocations[new_department]
+		var/new_power_bars = power_bars_ss.power_bars_of_department(new_department)
 
 		if (ismovable(parent))
 			var/atom/movable/movable_parent = parent

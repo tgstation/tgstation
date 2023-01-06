@@ -21,7 +21,7 @@
 	var/list/data = list()
 
 	data["department_allocations"] = SSpower_bars.department_allocations
-	data["excess_power_bars"] = SSpower_bars.excess_power_bars
+	data["available_power_bars"] = SSpower_bars.available_power_bars
 	data["time_to_next_distribution"] = timeleft(SSpower_bars.next_distribution_timer_id)
 	data["can_fully_deplete"] = can_deplete(user)
 
