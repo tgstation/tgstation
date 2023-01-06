@@ -40,8 +40,8 @@
 		to_chat(owner, span_warning("[target_datum] was not already tagged."))
 
 /// Quick define for readability
-#define TAG_DEL(X) "<b>(<A href='?src=[REF(src)];[HrefToken(forceGlobal = TRUE)];del_tag=[REF(X)]'>UNTAG</a>)</b>"
-#define TAG_MARK(X) "<b>(<A href='?src=[REF(src)];[HrefToken(forceGlobal = TRUE)];mark_datum=[REF(X)]'>MARK</a>)</b>"
+#define TAG_DEL(X) "<b>(<A href='?src=[REF(holder)];[HrefToken(forceGlobal = TRUE)];del_tag=[REF(X)]'>UNTAG</a>)</b>"
+#define TAG_MARK(X) "<b>(<A href='?src=[REF(holder)];[HrefToken(forceGlobal = TRUE)];mark_datum=[REF(X)]'>MARK</a>)</b>"
 #define TAG_SIMPLE_HEALTH(X) "<font color='#ff0000'><b>Health: [X.health]</b></font>"
 #define TAG_CARBON_HEALTH(X) "<font color='#ff0000'><b>Health: [X.health]</b></font> (\
 					<font color='#ff3333'>[X.getBruteLoss()]</font> \
@@ -55,18 +55,22 @@
 	set category = "Admin.Game"
 	set name = "View Tags"
 
+	var/datum/admins/holder
+
 	if(!istype(src, /datum/admins))
-		var/datum/admins/holder = usr.client.holder
+		holder = usr.client.holder
 		if(!istype(holder, /datum/admins))
 			to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
 			return
+	else
+		holder = src
 
 	var/index = 0
 	var/list/dat = list("<center><B>Tag Menu</B></center><hr>")
 
-	dat += "<br><A href='?src=[REF(src)];[HrefToken(forceGlobal = TRUE)];show_tags=1'>Refresh</a><br>"
-	if(LAZYLEN(tagged_datums))
-		for(var/datum/iter_datum as anything in tagged_datums)
+	dat += "<br><A href='?src=[REF(holder)];[HrefToken(forceGlobal = TRUE)];show_tags=1'>Refresh</a><br>"
+	if(LAZYLEN(holder.tagged_datums))
+		for(var/datum/iter_datum as anything in holder.tagged_datums)
 			index++
 			var/specific_info
 
@@ -94,7 +98,7 @@
 				specific_info = "[resolved_subsystem.stat_entry()]"
 			// else, it's just a /datum
 
-			dat += "\t[index]: [iter_datum] | [specific_info] | [ADMIN_VV(iter_datum)] | [TAG_DEL(iter_datum)] | [iter_datum == marked_datum ? "<b>Marked</b>" : TAG_MARK(iter_datum)] "
+			dat += "\t[index]: [iter_datum] | [specific_info] | [ADMIN_VV(iter_datum)] | [TAG_DEL(iter_datum)] | [iter_datum == holder.marked_datum ? "<b>Marked</b>" : TAG_MARK(iter_datum)] "
 			dat += "\t(<b><font size='2'>[iter_datum.type])</font></b>"
 	else
 		dat += "No datums tagged :("
