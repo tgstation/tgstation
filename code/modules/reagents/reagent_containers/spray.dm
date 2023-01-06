@@ -30,6 +30,8 @@
 	if(istype(target, /obj/structure/sink) || istype(target, /obj/structure/mop_bucket/janitorialcart) || istype(target, /obj/machinery/hydroponics))
 		return
 
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if((target.is_drainable() && !target.is_refillable()) && (get_dist(src, target) <= 1) && can_fill_from_container)
 		if(!target.reagents.total_volume)
 			to_chat(user, span_warning("[target] is empty."))
@@ -220,7 +222,7 @@
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
 	if (A.loc == user)
 		return
-	. = ..()
+	return ..() | AFTERATTACK_PROCESSED_ITEM
 
 //water flower
 /obj/item/reagent_containers/spray/waterflower
@@ -309,7 +311,7 @@
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
 	if (A.loc == user)
 		return
-	. = ..()
+	return ..() | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A, mob/user)
 	var/direction = get_dir(src, A)

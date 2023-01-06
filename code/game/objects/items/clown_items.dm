@@ -144,10 +144,11 @@
 	to_chat(user, span_warning("The soap has ran out of chemicals"))
 
 /obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
+	. = isitem(target) ? AFTERATTACK_PROCESSED_ITEM : NONE
 	if(uses <= 0)
 		to_chat(user, span_warning("No good, you need to recharge!"))
-		return
-	return ..()
+		return .
+	return ..() | .
 
 /obj/item/soap/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
 	return !user?.combat_mode  // only cleans a storage item if on combat
