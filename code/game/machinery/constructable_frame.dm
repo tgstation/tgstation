@@ -233,6 +233,7 @@
 							// dont delete singleton datum parts
 							if(istype(old_part, /datum/stock_part))
 								continue
+							// move to nullspace & delete other parts like cells, beakers etc
 							var/obj/part = old_part
 							part.moveToNullspace()
 							qdel(part)
