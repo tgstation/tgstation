@@ -349,7 +349,7 @@
 
 /obj/item/flashlight/flare/process(delta_time)
 	open_flame(heat)
-	fuel = max(fuel -= delta_time * (1 SECONDS), 0)
+	fuel = max(fuel - delta_time * (1 SECONDS), 0)
 
 	if(!fuel || !on)
 		turn_off()
