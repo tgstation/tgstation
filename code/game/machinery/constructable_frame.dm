@@ -233,7 +233,9 @@
 							// dont delete singleton datum parts
 							if(istype(old_part, /datum/stock_part))
 								continue
-							qdel(old_part)
+							var/obj/part = old_part
+							part.moveToNullspace()
+							qdel(part)
 
 						// Set anchor state
 						new_machine.set_anchored(anchored)
