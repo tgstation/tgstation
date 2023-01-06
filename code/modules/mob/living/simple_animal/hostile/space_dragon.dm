@@ -164,7 +164,7 @@
 	..()
 	if(stat == DEAD)
 		icon_state = "spacedragon_dead"
-	else if(devouring == TRUE)
+	else if(devouring)
 		icon_state = "spacedragon_devour"
 
 /mob/living/simple_animal/hostile/space_dragon/ranged_secondary_attack(atom/target, modifiers)
