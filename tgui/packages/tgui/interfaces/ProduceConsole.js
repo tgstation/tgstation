@@ -1,4 +1,4 @@
-import { capitalize, multiline } from 'common/string';
+import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -94,7 +94,13 @@ const ShoppingTab = (props, context) => {
 
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const { ltsrbt_available, forced_express, order_datums, total_cost } = data;
+  const {
+    purchase_tooltip,
+    express_tooltip,
+    forced_express,
+    order_datums,
+    total_cost,
+  } = data;
   const checkout_list = order_datums.filter((food) => food && (food.amt || 0));
   return (
     <Stack vertical fill>
@@ -160,27 +166,9 @@ const CheckoutTab = (props, context) => {
                   fluid
                   icon="plane-departure"
                   content="Purchase"
-                  tooltip={multiline`
-                  Your groceries will arrive at cargo,
-                  and hopefully get delivered by them.
-                  `}
+                  tooltip={purchase_tooltip}
                   tooltipPosition="top"
                   onClick={() => act('purchase')}
-                />
-              </Stack.Item>
-            )}
-            {!!ltsrbt_available && (
-              <Stack.Item grow textAlign="center">
-                <Button
-                  fluid
-                  icon="shuttle-van"
-                  content="Deliver"
-                  tooltip={multiline`
-                  Your groceries will arrive to one of
-                  the on-station built LTSRBT devices.
-                  `}
-                  tooltipPosition="top"
-                  onClick={() => act('ltsrbt_deliver')}
                 />
               </Stack.Item>
             )}
@@ -190,10 +178,7 @@ const CheckoutTab = (props, context) => {
                 icon="parachute-box"
                 color="yellow"
                 content="Express"
-                tooltip={multiline`
-                Sends the ingredients instantly,
-                but locks the console longer and increases the price!
-                `}
+                tooltip={express_tooltip}
                 tooltipPosition="top-start"
                 onClick={() => act('express')}
               />
