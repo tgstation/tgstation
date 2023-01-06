@@ -283,7 +283,7 @@
 /obj/item/gun/ballistic/revolver/judge
 	name = "\improper Judge"
 	desc = "A novelty piece made for commissioned Gorlex commanders. It's special quality is that of being able to shoot shotgun shells instead of regular rounds. \
-			Not the most practical for field use, but definitely a cool show-piece."
+	Not the most practical for field use, but definitely a cool show-piece."
 	icon_state = "judge"
 	icon = 'icons/obj/weapons/guns/syndicate/ballistic.dmi'
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'

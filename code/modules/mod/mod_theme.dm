@@ -1105,8 +1105,7 @@
 		this suit is only produced for high ranking Syndicate officers and elite strike teams. \
 		It comes built with a secondary layering of ceramic and Kevlar into the plating providing it with \
 		exceptionally better protection along with fire and acid proofing. A small tag hangs off of it reading; \
-		'Property of Saibāsan Sangyou, K.K. \
-		All rights reserved, tampering with suit will void life expectancy.'"
+		'Property of Saibāsan Sangyou, K.K. All rights reserved, tampering with suit will void life expectancy.'"
 	default_skin = "elite"
 	armor_type = /datum/armor/mod_theme_elite
 	resistance_flags = FIRE_PROOF|ACID_PROOF
