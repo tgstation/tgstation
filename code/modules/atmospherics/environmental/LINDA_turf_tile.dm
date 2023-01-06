@@ -56,8 +56,8 @@
 /datum/gas_mixture/immutable/space/normal
 	initial_temperature = ROOM_TEMP
 /turf/open/Initialize(mapload)
-	/*if(!blocks_air)
-		//air = create_gas_mixture()
+	if(!blocks_air)
+		air = new/datum/gas_mixture/immutable/space/normal /*
 		if(planetary_atmos)
 			if(!SSair.planetary[initial_gas_mix])
 				var/datum/gas_mixture/immutable/planetary/mix = new
