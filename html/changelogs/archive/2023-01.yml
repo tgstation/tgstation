@@ -173,3 +173,21 @@
   san7890:
   - code_imp: Nanotrasen has updated the copyright on their NToS Software to be valid
       for the New Year! (It's 2563 now!)
+2023-01-06:
+  LT3:
+  - admin: Admins can now get an audible alert for communications console messages
+      coming from the bridge
+  - spellcheck: Fixed an incorrect line in preferences readme.md
+  Salex08:
+  - bugfix: fixes not properly working checks with hydroponic reagents
+  ShizCalev:
+  - bugfix: You'll no longer see rotation failed messages when clicking on something
+      far away.
+  Tattle:
+  - bugfix: alien closets now deconstruct into alien alloy
+  Unit2E:
+  - bugfix: Death berry juice is poisonous now, like poison berry's
+  Vire, MrMelbert:
+  - bugfix: The engineering lobby and lathe are no longer public access
+  - bugfix: Doors will no longer be treated as public access when they have multiple
+      accesses set on them
