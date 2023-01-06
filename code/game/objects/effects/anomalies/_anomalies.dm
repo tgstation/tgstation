@@ -1,4 +1,4 @@
-//Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
+//Anomalies, used for anomaly events. Anomalies cause adverse effects on their surroundings and can be mitigated by signalling their respective frequency.
 /obj/effect/anomaly
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
@@ -11,7 +11,7 @@
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
-	var/lifespan = 990
+	var/lifespan = 99 SECONDS
 	var/death_time
 
 	var/countdown_colour
