@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - admin: "Admins can now get an audible alert for communications console messages coming from the bridge"
-  - spellcheck: "Fixed an incorrect line in preferences readme.md"

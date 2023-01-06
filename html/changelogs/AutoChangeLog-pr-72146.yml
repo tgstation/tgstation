@@ -1,0 +1,12 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - soundadd: "Candles will now use the match lighting sound when lit"
+  - soundadd: "Light sources that burn will now have a welding hitsound"
+  - bugfix: "Fix candle light behaving erratically"
+  - bugfix: "Fix burning items that are held in hand will now have an ignition effect on the turf. (ex. lit welders in hand will now ignite plasma in the air)"
+  - balance: "Light sources that burn and are lit now do `BURN` damage while attacking"
+  - balance: "Light sources fuel amounts were rounded to exact numbers (ex. instead of 32.3333 minutes, it's now 35 minutes)"
+  - qol: "Light items that burn can now be extinguished by a fire extinguisher (except flares), used to ignite another object on fire, and will now leave a trash item once fuel is used"
+  - qol: "Add burnt flares and melted candles to trash spawners"
+  - refactor: "Refactor lighting items that use fuel to be more robust"

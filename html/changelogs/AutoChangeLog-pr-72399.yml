@@ -1,4 +1,0 @@
-author: "Salex08"
-delete-after: True
-changes:
-  - bugfix: "fixes not properly working checks with hydroponic reagents"

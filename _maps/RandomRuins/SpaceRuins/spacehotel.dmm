@@ -575,7 +575,7 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/siding/wood{
@@ -3661,7 +3661,7 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy,
@@ -4373,7 +4373,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "WZ" = (
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy,
