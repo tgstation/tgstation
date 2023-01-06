@@ -19,7 +19,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	status_flags = CANPUSH
-	deathmessage = "collapses, flesh gone in a pile of bones!"
+	death_message = "collapses, flesh gone in a pile of bones!"
 	del_on_death = TRUE
 	loot = list(/obj/effect/decal/remains/human)
 	var/infection_chance = 0
@@ -27,7 +27,7 @@
 
 /mob/living/simple_animal/hostile/zombie/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/outfit_icon_gen, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
+	apply_dynamic_human_icon(src, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
 
 /mob/living/simple_animal/hostile/zombie/AttackingTarget()
 	. = ..()

@@ -104,7 +104,7 @@
 	name = "Pirate Gunner Corpse"
 	glasses = /obj/item/clothing/glasses/eyepatch
 	suit = /obj/item/clothing/suit/costume/pirate/armored
-	head = /obj/item/clothing/head/pirate/armored
+	head = /obj/item/clothing/head/costume/pirate/armored
 
 /obj/effect/mob_spawn/corpse/human/pirate/ranged/space
 	name = "Pirate Gunner - Space"
@@ -182,15 +182,32 @@
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	head = /obj/item/clothing/head/wizard
 
+/obj/effect/mob_spawn/corpse/human/wizard/dark
+	name = "Dark Wizard Corpse"
+	outfit = /datum/outfit/wizardcorpse/dark
+
+/datum/outfit/wizardcorpse/dark
+	head = /obj/item/clothing/head/wizard/hood
+
+/obj/effect/mob_spawn/corpse/human/wizard/paper
+	name = "Paper Wizard Corpse"
+	outfit = /datum/outfit/paper_wizard
+
+/datum/outfit/paper_wizard
+	name = "Paper Wizard"
+	uniform = /obj/item/clothing/under/color/white
+	suit = /obj/item/clothing/suit/wizrobe/paper
+	shoes = /obj/item/clothing/shoes/sandal/magic
+	head = /obj/item/clothing/head/collectable/paper
 
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
 	name = "\improper Nanotrasen Private Security Officer"
-	outfit = /datum/outfit/nanotrasensoldiercorpse2
+	outfit = /datum/outfit/nanotrasensoldiercorpse
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 
-/datum/outfit/nanotrasensoldiercorpse2
-	name = "NT Private Security Officer Corpse"
+/datum/outfit/nanotrasensoldiercorpse
+	name = "\improper NT Private Security Officer Corpse"
 	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
@@ -203,13 +220,13 @@
 	id_trim = /datum/id_trim/centcom/corpse/private_security/tradepost_officer
 
 /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier
-	name = "Nanotrasen Private Security Officer"
+	name = "\improper Nanotrasen Assault Officer Corpse"
 	outfit = /datum/outfit/nanotrasenassaultsoldiercorpse
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 
 /datum/outfit/nanotrasenassaultsoldiercorpse
-	name = "NT Assault Officer Corpse"
+	name = "\improper NT Assault Officer Corpse"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
@@ -220,6 +237,22 @@
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/corpse/assault
+
+/obj/effect/mob_spawn/corpse/human/nanotrasenelitesoldier
+	name = "\improper Nanotrasen Elite Assault Officer Corpse"
+	outfit = /datum/outfit/nanotrasenelitesoldiercorpse
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
+
+/datum/outfit/nanotrasenelitesoldiercorpse
+	name = "\improper NT Elite Assault Officer Corpse"
+	uniform = /obj/item/clothing/under/rank/centcom/military
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	back = /obj/item/mod/control/pre_equipped/responsory/security
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/ert/security
 
 /obj/effect/mob_spawn/corpse/human/cat_butcher
 	name = "The Cat Surgeon"

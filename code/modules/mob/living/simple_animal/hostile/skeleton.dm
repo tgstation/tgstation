@@ -30,6 +30,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	footstep_type = FOOTSTEP_MOB_SHOE
 	death_message = "collapses into a pile of bones!"
+	del_on_death = TRUE
 	loot = list(/obj/effect/decal/remains/human)
 	var/outfit = /datum/outfit
 	var/species = /datum/species/skeleton
@@ -37,7 +38,7 @@
 
 /mob/living/simple_animal/hostile/skeleton/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/outfit_icon_gen, outfit, species, r_hand = FALSE, l_hand = FALSE)
+	apply_dynamic_human_icon(src, outfit, species, r_hand = held_item)
 
 /mob/living/simple_animal/hostile/skeleton/eskimo
 	name = "undead eskimo"
@@ -55,20 +56,12 @@
 		/obj/item/clothing/suit/hooded/wintercoat,
 	)
 	outfit = /datum/outfit/eskimo
+	held_item = /obj/item/spear
 
 /datum/outfit/eskimo
 	name = "Eskimo"
 	suit = /obj/item/clothing/suit/hooded/wintercoat
 	shoes = /obj/item/clothing/shoes/winterboots
-	r_hand = /obj/item/spear
-
-/datum/outfit/eskimo/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-	if(istype(H.wear_suit, /obj/item/clothing/suit/hooded))
-		var/obj/item/clothing/suit/hooded/hood = H.wear_suit
-		hood.ToggleHood()
 
 /mob/living/simple_animal/hostile/skeleton/templar
 	name = "undead templar"
@@ -123,7 +116,8 @@
 	light_range = 2
 	death_message = "collapses into a pile of bones, their suit dissolving among the plasma!"
 	loot = list(/obj/effect/decal/remains/plasma)
-	outfit = null
+	outfit = /datum/outfit/plasma_miner
+	species = /datum/species/plasmaman
 
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer
 	desc = "A plasma-soaked miner, their exposed limbs turned into a grossly incandescent bone seemingly made of plasma. They seem to still have their mining tool in their hand, gripping tightly."
@@ -140,3 +134,10 @@
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	attack_vis_effect = null // jackhammer moment
 	loot = list(/obj/effect/decal/remains/plasma, /obj/item/pickaxe/drill/jackhammer)
+	held_item = /obj/item/pickaxe/drill/jackhammer
+
+/datum/outfit/plasma_miner
+	name = "Plasma Miner"
+	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
+	suit = /obj/item/clothing/suit/hooded/explorer
+	mask = /obj/item/clothing/mask/gas/explorer

@@ -22,14 +22,14 @@
 	unsuitable_atmos_damage = 7.5
 	speak_emote = list("yarrs")
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate)
-	del_on_death = 1
+	del_on_death = TRUE
 	faction = list("pirate")
 	var/mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate
 	var/held_item
 
 /mob/living/simple_animal/hostile/pirate/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/outfit_icon_gen, mob_spawn_path = mob_spawner, r_hand = held_item)
+	apply_dynamic_human_icon(src, mob_spawn_path = mob_spawner, r_hand = held_item)
 
 /mob/living/simple_animal/hostile/pirate/melee
 	name = "Pirate Swashbuckler"
