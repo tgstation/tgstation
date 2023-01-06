@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 				icon_state = "card_holder_inactive"
 				update_appearance()
 				if(current_summon)
-					current_summon.Destroy()
+					qdel(current_summon)
 			if("Modify")
 				current_summon.modify_stats(user)
 			if(null)
@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
 /obj/machinery/trading_card_holder/Destroy()
 	if(current_summon)
-		current_summon.Destroy()
+		qdel(current_summon)
 	. = ..()
 	
 /obj/machinery/trading_card_holder/examine(mob/user)
@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
 /obj/structure/trading_card_summon/Destroy()
 	if(hologram)
-		hologram.Destroy()
+		qdel(hologram)
 	return ..()
 
 /obj/structure/trading_card_summon/red
