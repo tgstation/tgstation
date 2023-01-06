@@ -55,13 +55,13 @@
 	#endif
 
 /turf/open/Initialize(mapload)
-	if(!blocks_air)
-		air = create_gas_mixture()
+	/*if(!blocks_air)
+		//air = create_gas_mixture()
 		if(planetary_atmos)
 			if(!SSair.planetary[initial_gas_mix])
 				var/datum/gas_mixture/immutable/planetary/mix = new
 				mix.parse_string_immutable(initial_gas_mix)
-				SSair.planetary[initial_gas_mix] = mix
+				SSair.planetary[initial_gas_mix] = mix*/
 	. = ..()
 
 /turf/open/Destroy()

@@ -16,6 +16,10 @@
 	var/valve_open = FALSE
 	var/toggle = TRUE
 
+/obj/item/transfer_valve/Initialize(mapload)
+	..()
+	return INITIALIZE_HINT_QDEL
+
 /obj/item/transfer_valve/Destroy()
 	attached_device = null
 	return ..()
