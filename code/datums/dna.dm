@@ -494,7 +494,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	..()
 	if(icon_update)
 		update_body(is_creating = TRUE)
-		update_mutations_overlay(force_recreate = TRUE)// no lizard with human hulk overlay please.
+		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 
 /mob/proc/has_dna()
@@ -622,7 +622,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if(mutcolor_update)
 			update_body_parts(update_limb_data = TRUE)
 		if(mutations_overlay_update)
-			update_mutations_overlay(force_recreate = TRUE)
+			update_mutations_overlay()
 
 
 /mob/proc/domutcheck()

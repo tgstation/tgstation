@@ -66,7 +66,7 @@ There are several things that need to be remembered:
 		update_worn_neck()
 		update_transform()
 		//mutations
-		update_mutations_overlay(force_recreate = TRUE)
+		update_mutations_overlay()
 		//damage overlays
 		update_damage_overlays()
 
@@ -716,15 +716,19 @@ generate/load female uniform sprites matching all previously decided variables
 			if(human_loc.get_mob_height() != HUMAN_HEIGHT_MEDIUM)
 				var/string_form_layer = num2text(default_layer)
 				var/offset_amount = GLOB.layers_to_offset[string_form_layer]
-				if(offset_amount)
-					for(var/mutable_appearance/applied_appearance in worn_overlays)
-						human_loc.apply_height_offsets(applied_appearance, offset_amount)
-
-				else
+				if(isnull(offset_amount))
 					// Worn overlays don't get batched in with standing overlays because they are overlay overlays
 					// ...So we need to apply human height here as well
-					for(var/mutable_appearance/applied_appearance in worn_overlays)
+					for(var/mutable_appearance/applied_appearance as anything in worn_overlays)
+						if(isnull(applied_appearance))
+							continue
 						human_loc.apply_height_filters(applied_appearance)
+
+				else
+					for(var/mutable_appearance/applied_appearance in worn_overlays)
+						if(isnull(applied_appearance))
+							continue
+						human_loc.apply_height_offsets(applied_appearance, offset_amount)
 
 		standing.overlays.Add(worn_overlays)
 
@@ -829,19 +833,22 @@ generate/load female uniform sprites matching all previously decided variables
 	var/raw_applied = overlays_standing[cache_index]
 	var/string_form_index = num2text(cache_index)
 	var/offset_amount = GLOB.layers_to_offset[string_form_index]
-	if(offset_amount)
+	if(isnull(offset_amount))
 		if(islist(raw_applied))
-			for(var/mutable_appearance/applied_appearance in raw_applied) // can have nulls
-				apply_height_offsets(applied_appearance, offset_amount)
-		else if(!isnull(raw_applied))
-			apply_height_offsets(raw_applied, offset_amount)
-
-	else
-		if(islist(raw_applied))
-			for(var/mutable_appearance/applied_appearance in raw_applied) // can have nulls
+			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+				if(isnull(applied_appearance))
+					continue
 				apply_height_filters(applied_appearance)
 		else if(!isnull(raw_applied))
 			apply_height_filters(raw_applied)
+	else
+		if(islist(raw_applied))
+			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+				if(isnull(applied_appearance))
+					continue
+				apply_height_offsets(applied_appearance, offset_amount)
+		else if(!isnull(raw_applied))
+			apply_height_offsets(raw_applied, offset_amount)
 
 	return ..()
 

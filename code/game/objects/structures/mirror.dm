@@ -206,7 +206,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 						return TRUE
 
 			amazed_human.update_body(is_creating = TRUE)
-			amazed_human.update_mutations_overlay(force_recreate = TRUE) // no hulk lizard
+			amazed_human.update_mutations_overlay() // no hulk lizard
 
 		if("gender")
 			if(!(amazed_human.gender in list("male", "female"))) //blame the patriarchy
