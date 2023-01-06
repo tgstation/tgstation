@@ -291,7 +291,7 @@ GLOBAL_LIST(cardboard_cutouts)
 /datum/cardboard_cutout/death_squad/get_name()
 	return pick(GLOB.commando_names)
 
-/datum/cardboard_cutout/xenomorph_maid
+/datum/cardboard_cutout/ian
 	name = "Ian"
 	applied_name = "Ian"
 	applied_desc = "A cardboard cutout of the HoP's beloved corgi."
