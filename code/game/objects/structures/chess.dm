@@ -82,7 +82,7 @@
 	icon_state = "black_king"
 
 /obj/structure/chess/checker
-	icon_state = "white_checker"
+	icon_state = "white_checker_man"
 	name = "\improper Probably a White Checker"
 	desc = "This is weird. Please inform administration on how you managed to get the parent checker piece. Thanks!"
 

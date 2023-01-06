@@ -18,6 +18,8 @@
 	var/delusion_icon_file
 	/// The icon state of the delusion image
 	var/delusion_icon_state
+	/// Do we use a generated icon? If yes no icon file or state needed.
+	var/dynamic_icon = FALSE
 	/// The name of the delusion image
 	var/delusion_name
 
@@ -94,7 +96,7 @@
 	return TRUE
 
 /datum/hallucination/delusion/proc/make_delusion_image(mob/over_who)
-	var/image/funny_image = image(delusion_icon_file, over_who, delusion_icon_state)
+	var/image/funny_image = image(delusion_icon_file, over_who, dynamic_icon ? "" : delusion_icon_state)
 	funny_image.name = delusion_name
 	funny_image.override = TRUE
 	return funny_image
@@ -196,7 +198,7 @@
 
 /datum/hallucination/delusion/preset/syndies
 	random_hallucination_weight = 1
-	delusion_icon_file = 'icons/mob/simple/simple_human.dmi'
+	dynamic_icon = TRUE
 	delusion_name = "Syndicate"
 	affects_others = TRUE
 	affects_us = FALSE
