@@ -531,7 +531,7 @@
 	if(!log_message)
 		return
 
-	var/raw_message = log_message
+	var/raw_message = sanitize(trim(log_message))
 
 	if(holder)
 		log_message = emoji_parse(log_message)
