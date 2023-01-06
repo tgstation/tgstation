@@ -95,7 +95,7 @@
 	gloves = /obj/item/clothing/gloves/fingerless
 	glasses = /obj/item/clothing/glasses/sunglasses
 	mask = /obj/item/clothing/mask/cigarette/cigar
-	faction = "Saibasun Inc."
+	faction = "Cybersun Industries"
 
 /datum/outfit/syndicate/reinforcement/donk
 	name = "Syndicate Operative - Donk Reinforcement"

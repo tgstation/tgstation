@@ -42,6 +42,7 @@
 			complete with complimentary black and red colouring. Property of Gorlex Security Consulting, LLC."
 	icon = 'icons/obj/weapons/guns/syndicate/ballistic.dmi'
 	icon_state = "prokolot"
+	inhand_icon_state = "prokolot"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
 	suppressor_x_offset = 12
 
@@ -84,9 +85,13 @@
 	inhand_icon_state = "deagleg"
 
 /obj/item/gun/ballistic/automatic/pistol/aps
-	name = "\improper Stechkin APS machine pistol"
-	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."
+	name = "\improper AP-7 \"Spasitel\""
+	desc = "Automatic Pistol, Designation 7; an open-bolt nine millimetre machine-pistol. An older relic, designed in the 2400s by Aussec Armoury--now a wholly owned subsidiary of WaffleCorp--\
+			it earned a certain reputation as a \"angel\" weapon; one that always seems to prosper as a last line of defence, earning it the nickname \"Spasitel\", old Russian for savior. \
+			Whilst it's lime-light as a service weapon is long gone, it retains a popularity amongst private armies and those with the luxury to choose."
+	icon = 'icons/obj/weapons/guns/syndicate/ballistic.dmi'
 	icon_state = "aps"
+	inhand_icon_state = "aps"
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m9mm_aps
 	can_suppress = TRUE
@@ -95,6 +100,8 @@
 	spread = 10
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	suppressor_x_offset = 6
+	bolt_type = BOLT_TYPE_OPEN
+	show_bolt_icon = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/stickman
 	name = "flat gun"
