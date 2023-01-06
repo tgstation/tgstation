@@ -5,7 +5,7 @@
 /datum/unit_test/basic_mob_complexity/Run()
 	var/list/bmob_paths = subtypesof(/mob/living/basic)
 
-	for(var/bmob_path as anything in basic_mob_paths)
+	for(var/bmob_path as anything in bmob_paths)
 		var/mob/living/basic/bmob = allocate(bmob_path)
 
 		//consider atmos
