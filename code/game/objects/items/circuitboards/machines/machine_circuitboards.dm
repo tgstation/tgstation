@@ -70,8 +70,8 @@
 	req_components = list(
 		/datum/stock_part/manipulator = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/subspace/filter = 1,
-		/datum/stock_part/subspace/crystal = 1,
+		/datum/stock_part/filter = 1,
+		/datum/stock_part/crystal = 1,
 		/datum/stock_part/micro_laser = 2)
 
 /obj/item/circuitboard/machine/telecomms/bus
@@ -81,7 +81,7 @@
 	req_components = list(
 		/datum/stock_part/manipulator = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/subspace/filter = 1)
+		/datum/stock_part/filter = 1)
 
 /obj/item/circuitboard/machine/telecomms/hub
 	name = "Hub Mainframe"
@@ -90,7 +90,7 @@
 	req_components = list(
 		/datum/stock_part/manipulator = 2,
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/subspace/filter = 2)
+		/datum/stock_part/filter = 2)
 
 /obj/item/circuitboard/machine/telecomms/message_server
 	name = "Messaging Server"
@@ -99,7 +99,7 @@
 	req_components = list(
 		/datum/stock_part/manipulator = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/subspace/filter = 3)
+		/datum/stock_part/filter = 3)
 
 /obj/item/circuitboard/machine/telecomms/processor
 	name = "Processor Unit"
@@ -107,19 +107,19 @@
 	build_path = /obj/machinery/telecomms/processor
 	req_components = list(
 		/datum/stock_part/manipulator = 3,
-		/datum/stock_part/subspace/filter = 1,
-		/datum/stock_part/subspace/treatment = 2,
-		/datum/stock_part/subspace/analyzer = 1,
+		/datum/stock_part/filter = 1,
+		/datum/stock_part/treatment = 2,
+		/datum/stock_part/analyzer = 1,
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/subspace/amplifier = 1)
+		/datum/stock_part/amplifier = 1)
 
 /obj/item/circuitboard/machine/telecomms/receiver
 	name = "Subspace Receiver"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/telecomms/receiver
 	req_components = list(
-		/datum/stock_part/subspace/ansible = 1,
-		/datum/stock_part/subspace/filter = 1,
+		/datum/stock_part/ansible = 1,
+		/datum/stock_part/filter = 1,
 		/datum/stock_part/manipulator = 2,
 		/datum/stock_part/micro_laser = 1)
 
@@ -130,7 +130,7 @@
 	req_components = list(
 		/datum/stock_part/manipulator = 2,
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/subspace/filter = 2)
+		/datum/stock_part/filter = 2)
 
 /obj/item/circuitboard/machine/telecomms/server
 	name = "Telecommunication Server"
@@ -139,7 +139,7 @@
 	req_components = list(
 		/datum/stock_part/manipulator = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/subspace/filter = 1)
+		/datum/stock_part/filter = 1)
 
 /obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Controller"
@@ -183,7 +183,7 @@
 	build_path = /obj/machinery/ntnet_relay
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/subspace/filter = 1)
+		/datum/stock_part/filter = 1)
 
 /obj/item/circuitboard/machine/pacman
 	name = "PACMAN-type Generator"
@@ -624,7 +624,7 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/fax
 	req_components = list(
-		/datum/stock_part/subspace/crystal = 1,
+		/datum/stock_part/crystal = 1,
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/manipulator = 1,)
