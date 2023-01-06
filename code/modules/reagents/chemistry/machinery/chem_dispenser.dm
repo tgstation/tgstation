@@ -417,16 +417,16 @@
 	var/parts_rating = 0
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		newpowereff += 0.0166666666*M.rating
-		parts_rating += M.rating
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		recharge_amount *= C.rating
-		parts_rating += C.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if (M.rating > 3)
+	for(var/datum/stock_part/matter_bin/M in component_parts)
+		newpowereff += 0.0166666666 * M.tier
+		parts_rating += M.tier
+	for(var/datum/stock_part/capacitor/C in component_parts)
+		recharge_amount *= C.tier
+		parts_rating += C.tier
+	for(var/datum/stock_part/manipulator/M in component_parts)
+		if (M.tier > 3)
 			dispensable_reagents |= upgrade_reagents
-		parts_rating += M.rating
+		parts_rating += M.tier
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)

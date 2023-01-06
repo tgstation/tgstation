@@ -18,16 +18,16 @@
 /obj/machinery/medipen_refiller/Initialize(mapload)
 	. = ..()
 	create_reagents(100, TRANSPARENT)
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		reagents.maximum_volume += 100 * B.rating
+	for(var/datum/stock_part/matter_bin/B in component_parts)
+		reagents.maximum_volume += 100 * B.tier
 	AddComponent(/datum/component/plumbing/simple_demand)
 
 
 /obj/machinery/medipen_refiller/RefreshParts()
 	. = ..()
 	var/new_volume = 100
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		new_volume += 100 * B.rating
+	for(var/datum/stock_part/matter_bin/B in component_parts)
+		new_volume += 100 * B.tier
 	if(!reagents)
 		create_reagents(new_volume, TRANSPARENT)
 	reagents.maximum_volume = new_volume

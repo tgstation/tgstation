@@ -209,8 +209,8 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/RefreshParts()
 	. = ..()
 	var/holograph_range = 4
-	for(var/obj/item/stock_parts/capacitor/B in component_parts)
-		holograph_range += 1 * B.rating
+	for(var/datum/stock_part/capacitor/B in component_parts)
+		holograph_range += 1 * B.tier
 	holo_range = holograph_range
 
 /obj/machinery/holopad/examine(mob/user)

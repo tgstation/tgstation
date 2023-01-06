@@ -445,10 +445,10 @@
 	. = ..()
 	var/lasers_rating = 0
 	var/capacitors_rating = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		lasers_rating += laser.rating
-	for(var/obj/item/stock_parts/capacitor/capacitor in component_parts)
-		capacitors_rating += capacitor.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		lasers_rating += laser.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		capacitors_rating += capacitor.tier
 
 	heating_power = lasers_rating * 20000
 

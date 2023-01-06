@@ -146,10 +146,10 @@
 	. = ..()
 	var/manipulator = 0
 	var/cap = 0
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		manipulator += M.rating
-	for(var/obj/item/stock_parts/capacitor/M in component_parts)
-		cap += M.rating
+	for(var/datum/stock_part/manipulator/M in component_parts)
+		manipulator += M.tier
+	for(var/datum/stock_part/capacitor/M in component_parts)
+		cap += M.tier
 
 	working_power = manipulator //used in the amount of moles processed
 
