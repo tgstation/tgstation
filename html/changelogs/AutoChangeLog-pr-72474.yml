@@ -1,0 +1,4 @@
+author: "Striders13"
+delete-after: True
+changes:
+  - qol: "added a balloon alert to hulks trying to use cloak of shadows (they can't use it)"
