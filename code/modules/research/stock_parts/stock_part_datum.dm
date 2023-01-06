@@ -154,10 +154,13 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 
 /// Subspace stock parts
 
-/datum/stock_part/subspace/ansible
+/datum/stock_part/subspace
 	tier = 1
 	physical_object_type = /obj/item/stock_parts/subspace/ansible
 	physical_object_base_type = /obj/item/stock_parts/subspace/ansible
+
+/datum/stock_part/subspace/ansible
+	tier = 1
 
 /datum/stock_part/subspace/filter
 	tier = 1
