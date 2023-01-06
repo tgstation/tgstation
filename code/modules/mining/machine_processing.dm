@@ -160,7 +160,7 @@
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	mineral_machine = null
-	QDEL_NULL(stored_research)
+	stored_research = null
 	return ..()
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
