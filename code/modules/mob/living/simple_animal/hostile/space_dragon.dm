@@ -151,6 +151,7 @@
 				if(eat(L))
 					adjustHealth(-L.maxHealth * 0.25)
 			devouring = FALSE
+			icon_state = initial(icon_state)
 			update_appearance()
 			add_dragon_overlay()
 			return
