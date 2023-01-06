@@ -123,17 +123,12 @@
 /datum/component/customizable_reagent_holder/proc/customizable_attack(datum/source, obj/ingredient, mob/attacker, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
-	// This is for stuff like adding flour from a flour sack into a bowl, we handle the transfer of the reagent elsewhere, but we shouldn't regard it beyond some user feedback.
-	if (istype(ingredient, /obj/item/reagent_containers))
-		attacker.balloon_alert(attacker, "transferring...")
+	if (istype(ingredient, /obj/item/reagent_containers) && !valid_ingredient(ingredient))
+		if (ingredient.is_drainable()) // special message to handle the edgecase of adding flour from a beaker into a bowl or something like that
+			attacker.balloon_alert(attacker, "transferring...")
 		return
 
 	if (!valid_ingredient(ingredient))
-		attacker.balloon_alert(attacker, "doesn't go on that!")
-	if (!valid_ingredient(ingredient))
-		if (istype(ingredient, /obj/item/reagent_containers))
-			attacker.balloon_alert(attacker, "transferring...")
-			return
 		attacker.balloon_alert(attacker, "doesn't go on that!")
 		return
 
