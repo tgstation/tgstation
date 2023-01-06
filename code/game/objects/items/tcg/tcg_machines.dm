@@ -1,13 +1,15 @@
 /obj/machinery/trading_card_holder
 	name = "card slot"
-	desc = "a slot for placing Tactical Game Cards"
+	desc = "a slot for placing Tactical Game Cards."
 	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "card_holder_inactive"
 	use_power = NO_POWER_USE
 
-	//Card thats currently inside the holder
+	///Card thats currently inside the holder
 	var/obj/item/tcgcard/current_card
-	//Reference to holographic currently active holographic summon
+	///Holds all the details such as stats for the card.
+	var/datum/card/card_template
+	///Reference to holographic currently active holographic summon
 	var/obj/structure/trading_card_summon/current_summon
 
 	var/summon_offset_x = 0
@@ -17,7 +19,7 @@
 /obj/machinery/trading_card_holder/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/tcgcard) && current_card == null)
 		current_card = I
-		var/datum/card/card_template = current_card.extract_datum()
+		card_template = current_card.extract_datum()
 		if(card_template.cardtype == "Creature")
 			if(!user.transferItemToLoc(current_card, src))
 				return
@@ -55,6 +57,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 				user.put_in_hands(current_card)
 				to_chat(user, span_notice("You take the [current_card] card out of [src]."))
 				current_card = null
+				card_template = null
 				icon_state = "card_holder_inactive"
 				update_appearance()
 				if(current_summon)
@@ -80,6 +83,12 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		current_summon.Destroy()
 	. = ..()
 	
+/obj/machinery/trading_card_holder/examine(mob/user)
+	. = ..()
+	if(card_template)
+		. += span_notice("There is currently a [card_template.name] card inserted.")
+	else
+		. += span_notice("There is no card currently inserted.")
 
 /obj/machinery/trading_card_holder/red
 	summon_offset_y = -1
