@@ -14,7 +14,7 @@
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/point_return = 0
 	max_integrity = BLOB_REGULAR_MAX_HP
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/structure_blob
 	/// how much health this blob regens when pulsed
 	var/health_regen = BLOB_REGULAR_HP_REGEN
 	/// We got pulsed when?
@@ -31,6 +31,10 @@
 	var/atmosblock = FALSE
 	var/mob/camera/blob/overmind
 
+
+/datum/armor/structure_blob
+	fire = 80
+	acid = 70
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -124,6 +128,8 @@
 
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
+		if(!A.can_blob_attack())
+			continue
 		if(isliving(A) && overmind && !isblobmonster(A)) // Make sure to inject strain-reagents with automatic attacks when needed.
 			overmind.blobstrain.attack_living(A)
 			continue // Don't smack them twice though
@@ -175,6 +181,8 @@
 	for(var/atom/A in T)
 		if(!A.CanPass(src, get_dir(T, src))) //is anything in the turf impassable
 			make_blob = FALSE
+		if(!A.can_blob_attack())
+			continue
 		if(isliving(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
 			overmind.blobstrain.attack_living(A)
 			continue // Don't smack them twice though
@@ -288,7 +296,7 @@
 			return 0
 	var/armor_protection = 0
 	if(damage_flag)
-		armor_protection = armor.getRating(damage_flag)
+		armor_protection = get_armor_rating(damage_flag)
 	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 	if(overmind && damage_flag)
 		damage_amount = overmind.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)

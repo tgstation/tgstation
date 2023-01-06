@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscadd: "Adds a new rendering option to the gameplay preferences. You can now limit the rendering intensity of multiz levels. This will make things look a bit worse, but run a LOT better. Try it out if your machine chokes on icebox or somethin."

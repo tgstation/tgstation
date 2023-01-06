@@ -245,6 +245,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>If you want something to look as if it has parallax on it, draw it to this plane."
 	plane = PLANE_SPACE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	render_relay_planes = list(RENDER_PLANE_GAME, EMISSIVE_MASK_PLANE)
 	critical = PLANE_CRITICAL_FUCKO_PARALLAX // goes funny when touched. no idea why I don't trust byond
 
 ///Contains space parallax
@@ -259,7 +260,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	multiz_scaled = FALSE
-	critical = PLANE_CRITICAL_FUCKO_PARALLAX
 
 /atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -286,6 +286,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
 		is_outside_bounds = TRUE // I'm sorry :(
 		return
+	// If we can't render, and we aren't the bottom layer, don't render us
+	// This way we only multiply against stuff that's not fullwhite space
+	var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+	var/turf/viewing_turf = get_turf(relevant)
+	if(!viewing_turf || offset != GET_LOWEST_STACK_OFFSET(viewing_turf.z))
+		parent_parallax.remove_relay_from(plane)
+	else
+		parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
 	return ..()
 
 /atom/movable/screen/plane_master/parallax/inside_bounds(mob/relevant)
@@ -293,6 +301,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
 		is_outside_bounds = FALSE
 		return
+	// Always readd, just in case we lost it
+	var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+	parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
 	return ..()
 
 /atom/movable/screen/plane_master/gravpulse
@@ -312,6 +323,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Floor"
 	documentation = "The well, floor. This is mostly used as a sorting mechanism, but it also lets us create a \"border\" around the game world plane, so its drop shadow will actually work."
 	plane = FLOOR_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME, EMISSIVE_MASK_PLANE)
+
+/atom/movable/screen/plane_master/wall
+	name = "Wall"
+	documentation = "Holds all walls. We render this onto the game world. Separate so we can use this + space and floor planes as a guide for where byond blackness is NOT."
+	plane = WALL_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, EMISSIVE_MASK_PLANE)
 
 /atom/movable/screen/plane_master/game
 	name = "Lower game world"
@@ -355,6 +373,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = GAME_PLANE_UPPER
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
+/atom/movable/screen/plane_master/wall_upper
+	name = "Upper wall"
+	documentation = "There are some walls that want to render above most things (mostly minerals since they shift over.\
+		<br>We draw them to their own plane so we can hijack them for our emissive mask stuff"
+	plane = WALL_PLANE_UPPER
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, EMISSIVE_MASK_PLANE)
+
 /atom/movable/screen/plane_master/game_world_upper_fov_hidden
 	name = "Upper game world fov hidden"
 	documentation = "Just as we need a place to draw things \"above\" the hidden fov plane, we also need to be able to hide stuff that draws over the upper game plane."
@@ -381,76 +406,20 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
 /**
- * Plane master handling byond internal blackness
- * vars are set as to replicate behavior when rendering to other planes
- * do not touch this unless you know what you are doing
+ * Plane master that byond will by default draw to
+ * Shouldn't be used, exists to prevent people using plane 0
+ * NOTE: If we used SEE_BLACKNESS on a map format that wasn't SIDE_MAP, this is where its darkness would land
+ * This would allow us to control it and do fun things. But we can't because side map doesn't support it, so this is just a stub
  */
-// Blackness renders weird when you view down openspace, because of transforms and borders and such
-// This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
-// Sight flags, and shooting vis_contents usage to the moon. So we're doin it different.
-// Look into lessening this, maybe mirror down all the time? idk
-// Part of the issue is it isn't actually the blackness plane, it's just normal blackness
-// (If image vis contents worked (it should in 515), and we were ok with a maptick cost (wait for threaded maptick)) this could be fixed
-/atom/movable/screen/plane_master/blackness
-	name = "Darkness"
+/atom/movable/screen/plane_master/default
+	name = "Default"
 	documentation = "This is quite fiddly, so bear with me. By default (in byond) everything in the game is rendered onto plane 0. It's the default plane. \
 		<br>But, because we've moved everything we control off plane 0, all that's left is stuff byond internally renders. \
-		<br>What we're doing here is using plane 0 to capture \"Blackness\", or the mask that hides tiles. Note, this only works if our mob has the SEE_PIXELS or SEE_BLACKNESS sight flags.\
-		<br>We relay this plane master (on plane 0) down to other copies of itself, depending on the layer your mob is on at the moment.\
-		<br>Of note: plane master blackness, and the blackness that comes from having nothing to display look similar, but are not the same thing,\
-		mind yourself when you're working with this plane, you might have accidentially been trying to work with the wrong thing."
-	plane = BLACKNESS_PLANE
-	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	// Note: we don't set this to blend multiply because it just dies when its alpha is modified, because of fun byond bugs
-	// Marked as multiz_scaled = FALSE because it should not scale, scaling lets you see "through" the floor
+		<br>What I'd like to do with this is capture byond blackness by giving mobs the SEE_BLACKNESS sight flag. \
+		<br>But we CAN'T because SEE_BLACKNESS does not work with our rendering format. So I just eat it I guess"
+	plane = DEFAULT_PLANE
 	multiz_scaled = FALSE
-
-/atom/movable/screen/plane_master/blackness/show_to(mob/mymob)
-	. = ..()
-	if(!.)
-		return
-	if(offset != 0)
-		// You aren't the source? don't change yourself
-		return
-	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight_value))
-	handle_sight_value(mymob, mymob.sight, 0)
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
-	offset_change(0, hud?.current_plane_offset || 0)
-
-/atom/movable/screen/plane_master/blackness/hide_from(mob/oldmob)
-	. = ..()
-	if(offset != 0)
-		return
-	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE)
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
-
-/// Reacts to some new plane master value
-/atom/movable/screen/plane_master/blackness/proc/handle_sight_value(datum/source, new_sight, old_sight)
-	SIGNAL_HANDLER
-	// Tryin to set a sight flag that cuts blackness eh?
-	if(new_sight & BLACKNESS_CUTTING)
-		// Better set alpha then, so it'll actually work
-		// We just get the one because there is only one blackness PM, it's just mirrored around
-		disable_alpha()
-	else
-		enable_alpha()
-
-/atom/movable/screen/plane_master/blackness/proc/on_offset_change(datum/source, old_offset, new_offset)
-	SIGNAL_HANDLER
-	offset_change(old_offset, new_offset)
-
-/atom/movable/screen/plane_master/blackness/proc/offset_change(old_offset, new_offset)
-	// Basically, the rule here is the blackness we harvest from the mob using the SEE_BLACKNESS flag will be relayed to the darkness
-	// Plane that we're actually on
-	if(old_offset != 0) // If our old target wasn't just ourselves
-		remove_relay_from(GET_NEW_PLANE(plane, old_offset))
-
-	if(new_offset != 0)
-		add_relay_to(GET_NEW_PLANE(plane, new_offset))
+	start_hidden = TRUE // Doesn't DO anything, exists to hold this place
 
 /atom/movable/screen/plane_master/area
 	name = "Area"
@@ -520,7 +489,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/emissive/Initialize(mapload)
 	. = ..()
-	add_filter("em_block_masking", 1, color_matrix_filter(GLOB.em_mask_matrix))
+	add_filter("emissive_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_MASK_RENDER_TARGET, offset)))
+	add_filter("em_block_masking", 2, color_matrix_filter(GLOB.em_mask_matrix))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"

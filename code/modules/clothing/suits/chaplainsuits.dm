@@ -9,10 +9,19 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80, WOUND = 20)
+	armor_type = /datum/armor/chaplainsuit_armor
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
+
+/datum/armor/chaplainsuit_armor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 20
 
 /obj/item/clothing/suit/hooded/chaplainsuit
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
@@ -106,11 +115,19 @@
 	desc = "It has the unyielding gaze of a god eternally forgotten."
 	icon_state = "clockwork_helmet"
 	inhand_icon_state = null
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/chaplain_clock
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 8 SECONDS
 	dog_fashion = null
+
+/datum/armor/chaplain_clock
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
 
 /obj/item/clothing/suit/chaplainsuit/armor/clock
 	name = "forgotten armour"
@@ -128,11 +145,19 @@
 	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
 	icon_state = "knight_templar"
 	inhand_icon_state = null
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/helmet_chaplain
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+
+/datum/armor/helmet_chaplain
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
 
 /obj/item/clothing/suit/chaplainsuit/armor/templar
 	name = "crusader armour"
@@ -192,7 +217,16 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/armor_crusader
+
+/datum/armor/armor_crusader
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 60
+	fire = 60
+	acid = 60
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader/red
 	icon_state = "crusader-red"

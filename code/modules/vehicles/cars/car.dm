@@ -95,9 +95,9 @@
 
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
-		var/did_move = step(src, direction)
+		var/did_move = try_step_multiz(direction)
 		if(did_move)
 			step(trailer, dir_to_move)
 		return did_move
 	after_move(direction)
-	return step(src, direction)
+	return try_step_multiz(direction)

@@ -48,10 +48,7 @@
 	achievement_type = /datum/award/achievement/boss/legion_kill
 	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
 	score_achievement_type = /datum/award/score/legion_score
-	pixel_x = -32
-	base_pixel_x = -32
-	pixel_y = -16
-	base_pixel_y = -16
+	SET_BASE_PIXEL(-32, -16)
 	maptext_height = 96
 	maptext_width = 96
 	loot = list(/obj/item/stack/sheet/bone = 3)
@@ -99,21 +96,21 @@
 
 /datum/action/innate/megafauna_attack/create_skull
 	name = "Create Legion Skull"
-	icon_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "legion_head"
 	chosen_message = "<span class='colossus'>You are now creating legion skulls.</span>"
 	chosen_attack_num = 1
 
 /datum/action/innate/megafauna_attack/charge_target
 	name = "Charge Target"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	chosen_message = "<span class='colossus'>You are now charging at your target.</span>"
 	chosen_attack_num = 2
 
 /datum/action/innate/megafauna_attack/create_turrets
 	name = "Create Sentinels"
-	icon_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "legion_turret"
 	chosen_message = "<span class='colossus'>You are now creating legion sentinels.</span>"
 	chosen_attack_num = 3
@@ -206,7 +203,7 @@
 	return ..()
 
 
-///In addition to parent functionality, this will also turn the target into a small legion if they are unconcious.
+///In addition to parent functionality, this will also turn the target into a small legion if they are unconscious.
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	. = ..()
 	if(!. || !ishuman(target))
@@ -273,7 +270,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
-	armor = list(MELEE = 0, BULLET = 0, LASER = 100,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/structure_legionturret
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
@@ -282,6 +279,9 @@
 	var/shot_delay = 8
 	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
 	var/faction = list("mining")
+
+/datum/armor/structure_legionturret
+	laser = 100
 
 /obj/structure/legionturret/Initialize(mapload)
 	. = ..()

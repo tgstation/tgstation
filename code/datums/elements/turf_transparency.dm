@@ -181,8 +181,6 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 
 	var/turf/our_turf = target
 
-	our_turf.layer = OPENSPACE_LAYER
-
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, PROC_REF(on_multiz_turf_del))
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, PROC_REF(on_multiz_turf_new))
 

@@ -6,7 +6,7 @@
 /datum/unit_test/species_change_organs
 
 /datum/unit_test/species_change_organs/Run()
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 
 	// Give a trauma
 	dummy.gain_trauma(/datum/brain_trauma/severe/blindness)
@@ -27,8 +27,8 @@
 	// But make sure the lizard's mutant organs are "normal"
 	changed_species.mutantheart = dummy.dna.species.mutantheart
 	changed_species.mutantappendix = dummy.dna.species.mutantappendix
-	// and make sure they're not a NOBLOOD species so they need a heart
-	changed_species.species_traits -= NOBLOOD
+	// and make sure they're not a TRAIT_NOBLOOD species so they need a heart
+	changed_species.inherent_traits -= TRAIT_NOBLOOD
 
 	// Now make them a lizard
 	dummy.set_species(changed_species)

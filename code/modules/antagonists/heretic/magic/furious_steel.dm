@@ -3,19 +3,19 @@
 	desc = "Summon three silver blades which orbit you. \
 		While orbiting you, these blades will protect you from from attacks, but will be consumed on use. \
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
-	button_icon_state = "furious_steel0"
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "furious_steel"
 	sound = 'sound/weapons/guillotine.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
+	cooldown_time = 60 SECONDS
 	invocation = "F'LSH'NG S'LV'R!"
 	invocation_type = INVOCATION_SHOUT
 
 	spell_requirements = NONE
 
-	base_icon_state = "furious_steel"
 	active_msg = "You summon forth three blades of furious silver."
 	deactive_msg = "You conceal the blades of furious silver."
 	cast_range = 20
@@ -122,5 +122,9 @@
 			var/datum/antagonist/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
 			if(monster?.master == caster.mind)
 				return PROJECTILE_PIERCE_PHASE
+
+		if(victim.can_block_magic(MAGIC_RESISTANCE))
+			visible_message(span_warning("[src] drops to the ground and melts on contact [victim]!"))
+			return PROJECTILE_DELETE_WITHOUT_HITTING
 
 	return ..()

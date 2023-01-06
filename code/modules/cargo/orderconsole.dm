@@ -120,12 +120,14 @@
 	data["cart"] = list()
 	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
 		data["cart"] += list(list(
+			"cost_type" = SO.cost_type,
 			"object" = SO.pack.name,
 			"cost" = SO.pack.get_cost(),
 			"id" = SO.id,
 			"orderer" = SO.orderer,
 			"paid" = !isnull(SO.paying_account), //paid by requester
-			"dep_order" = SO.department_destination ? TRUE : FALSE
+			"dep_order" = !!SO.department_destination,
+			"can_be_cancelled" = SO.can_be_cancelled,
 		))
 
 	data["requests"] = list()
@@ -178,9 +180,9 @@
 				SSshuttle.supply.export_categories = get_export_categories()
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
-				investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
+				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
-				investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
+				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
@@ -199,7 +201,7 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				say("The supply shuttle has been loaned to CentCom.")
-				investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				usr.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
 				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
@@ -238,7 +240,10 @@
 				if(!istype(account))
 					say("Invalid bank account.")
 					return
-
+				var/list/access = id_card.GetAccess()
+				if(pack.access_view && !(pack.access_view in access))
+					say("[id_card] lacks the requisite access for this purchase.")
+					return
 			var/reason = ""
 			if(requestonly && !self_paid)
 				reason = tgui_input_text(usr, "Reason", name)
@@ -288,8 +293,8 @@
 				break
 		if("clear")
 			for(var/datum/supply_order/cancelled_order in SSshuttle.shopping_list)
-				if(cancelled_order.department_destination)
-					continue //don't cancel other department's orders
+				if(cancelled_order.department_destination || cancelled_order.can_be_cancelled)
+					continue //don't cancel other department's orders or orders that can't be cancelled
 				SSshuttle.shopping_list -= cancelled_order
 			. = TRUE
 		if("approve")

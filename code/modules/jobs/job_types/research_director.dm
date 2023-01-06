@@ -10,7 +10,6 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = SUPERVISOR_CAPTAIN
-	selection_color = "#ffddff"
 	req_admin_notify = 1
 	minimal_player_age = 7
 	exp_required_type_department = EXP_TYPE_SCIENCE
@@ -62,7 +61,7 @@
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/heads/rd
+	belt = /obj/item/modular_computer/pda/heads/rd
 	head = /obj/item/clothing/head/beret/science/rd
 	ears = /obj/item/radio/headset/heads/rd
 	shoes = /obj/item/clothing/shoes/jackboots

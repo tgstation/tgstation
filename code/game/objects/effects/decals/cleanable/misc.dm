@@ -54,6 +54,11 @@
 /obj/effect/decal/cleanable/glass/plastitanium
 	icon_state = "plastitaniumtiny"
 
+//Screws that are dropped on the Z level below when deconstructing a reinforced floor plate.
+/obj/effect/decal/cleanable/glass/plastitanium/screws //I don't know how to sprite scattered screws, this can work until a spriter gets their hands on it.
+	name = "pile of screws"
+	desc = "Looks like they fell from the ceiling"
+
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
@@ -61,8 +66,8 @@
 	icon_state = "dirt"
 	base_icon_state = "dirt"
 	smoothing_flags = NONE
-	smoothing_groups = list(SMOOTH_GROUP_CLEANABLE_DIRT)
-	canSmoothWith = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_CLEANABLE_DIRT)
+	smoothing_groups = SMOOTH_GROUP_CLEANABLE_DIRT
+	canSmoothWith = SMOOTH_GROUP_CLEANABLE_DIRT + SMOOTH_GROUP_WALLS
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	beauty = -75
 

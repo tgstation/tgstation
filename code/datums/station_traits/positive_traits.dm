@@ -45,9 +45,9 @@
 /datum/station_trait/premium_internals_box
 	name = "Premium internals boxes"
 	trait_type = STATION_TRAIT_POSITIVE
-	weight = 10
+	weight = 5
 	show_in_report = TRUE
-	report_message = "The internals boxes for your crew have been filled with bonus equipment."
+	report_message = "The internals boxes for your crew have been upsized and filled with bonus equipment."
 	trait_to_give = STATION_TRAIT_PREMIUM_INTERNALS
 
 /datum/station_trait/bountiful_bounties
@@ -333,3 +333,12 @@
 		return
 	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
 	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
+
+/datum/station_trait/luxury_escape_pods
+	name = "Luxury Escape Pods"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Due to good performance, we've provided your station with luxury escape pods."
+	trait_to_give = STATION_TRAIT_BIGGER_PODS
+	blacklist = list(/datum/station_trait/cramped_escape_pods)

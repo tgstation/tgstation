@@ -12,8 +12,21 @@
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	/// What medipen should be present in this box?
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+	/// Are we crafted?
+	var/crafted = FALSE
+
+/obj/item/storage/box/survival/Initialize(mapload)
+	. = ..()
+	if(crafted || !HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		return
+	atom_storage.max_slots += 2
+	atom_storage.max_total_storage += 4
+	name = "large [name]"
+	transform = transform.Scale(1.25, 1)
 
 /obj/item/storage/box/survival/PopulateContents()
+	if(crafted)
+		return
 	if(!isnull(mask_type))
 		new mask_type(src)
 
@@ -64,18 +77,37 @@
 // Syndie survival box
 /obj/item/storage/box/survival/syndie
 	name = "operation-ready survival box"
-	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank."
+	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank and a handy guide on survival."
 	icon_state = "syndiebox"
 	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
-	medipen_type = null
+	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
 
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
-	new /obj/item/crowbar/red(src)
-	new /obj/item/screwdriver/red(src)
-	new /obj/item/weldingtool/mini(src)
+	new /obj/item/tool_parcel(src)
+	new /obj/item/paper/fluff/operative(src)
+
+/obj/item/tool_parcel
+	name = "operative toolkit care package"
+	desc = "A small parcel. It contains a few items every operative needs."
+	w_class =  WEIGHT_CLASS_SMALL
+	icon = 'icons/obj/storage/wrapping.dmi'
+	icon_state = "deliverypackage2"
+
+/obj/item/tool_parcel/attack_self(mob/user)
+	. = ..()
+	new /obj/item/crowbar/red(get_turf(user))
+	new /obj/item/screwdriver/red(get_turf(user))
+	new /obj/item/weldingtool/mini(get_turf(user))
+	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+	if(prob(5))
+		new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(get_turf(user))
+		new /obj/item/lighter(get_turf(user))
+		to_chat(user, span_notice("...oh, someone left some cigarettes in here."))
+	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
+	qdel(src)
 
 /obj/item/storage/box/survival/centcom
 	name = "emergency response survival box"
@@ -98,6 +130,12 @@
 // Medical survival box
 /obj/item/storage/box/survival/medical
 	mask_type = /obj/item/clothing/mask/breath/medical
+
+/obj/item/storage/box/survival/crafted
+	crafted = TRUE
+
+/obj/item/storage/box/survival/engineer/crafted
+	crafted = TRUE
 
 //Mime spell boxes
 
@@ -209,6 +247,31 @@
 	for(var/i in 1 to 7)
 		var/plush_path = /obj/effect/spawner/random/entertainment/plushie
 		new plush_path(src)
+
+/obj/item/storage/box/survival/mining/bonus
+	mask_type = null
+	internal_type = /obj/item/tank/internals/emergency_oxygen/double
+
+/obj/item/storage/box/survival/mining/bonus/PopulateContents()
+	..()
+	new /obj/item/gps/mining(src)
+	new /obj/item/t_scanner/adv_mining_scanner(src)
+
+/obj/item/storage/box/miner_modkits
+	name = "miner modkit/trophy box"
+	desc = "Contains every modkit and trophy in the game."
+
+/obj/item/storage/box/miner_modkits/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/borg/upgrade/modkit, /obj/item/crusher_trophy))
+	atom_storage.numerical_stacking = TRUE
+
+/obj/item/storage/box/miner_modkits/PopulateContents()
+	for(var/trophy in subtypesof(/obj/item/crusher_trophy))
+		new trophy(src)
+	for(var/modkit in subtypesof(/obj/item/borg/upgrade/modkit))
+		for(var/i in 1 to 10) //minimum cost ucrrently is 20, and 2 pkas, so lets go with that
+			new modkit(src)
 
 /obj/item/storage/box/skillchips
 	name = "box of skillchips"

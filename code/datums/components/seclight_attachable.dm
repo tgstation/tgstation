@@ -170,7 +170,7 @@
 /datum/component/seclite_attachable/proc/update_light()
 	var/obj/item/item_parent = parent
 	item_parent.update_appearance()
-	item_parent.update_action_buttons()
+	item_parent.update_item_action_buttons()
 
 /// Signal proc for [COMSIG_ATOM_EXITED] that handles our light being removed or deleted from our parent.
 /datum/component/seclite_attachable/proc/on_light_exit(obj/item/source, atom/movable/gone, direction)

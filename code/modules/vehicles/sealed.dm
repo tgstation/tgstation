@@ -98,6 +98,7 @@
 			if(inserted_key) //just in case there's an invalid key
 				inserted_key.forceMove(drop_location())
 			inserted_key = I
+			inserted_key.forceMove(src)
 		else
 			to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
 		return
@@ -111,7 +112,6 @@
 		to_chat(user, span_warning("You must be driving [src] to remove [src]'s key!"))
 		return
 	to_chat(user, span_notice("You remove [inserted_key] from [src]."))
-	inserted_key.forceMove(drop_location())
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		user.put_in_hands(inserted_key)
 	else

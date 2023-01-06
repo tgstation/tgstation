@@ -155,10 +155,8 @@ Key procs
 /// Checks if you can speak the language. Tongue limitations should be supplied as an argument.
 /datum/language_holder/proc/can_speak_language(language)
 	var/atom/movable/ouratom = get_atom()
-	var/tongue = ouratom.could_speak_language(language)
-	if((omnitongue || tongue) && has_language(language, TRUE))
-		return TRUE
-	return FALSE
+	var/can_speak_language_path = omnitongue || ouratom.could_speak_language(language)
+	return (can_speak_language_path && has_language(language, TRUE))
 
 /// Returns selected language if it can be spoken, or decides, sets and returns a new selected language if possible.
 /datum/language_holder/proc/get_selected_language()
@@ -409,6 +407,20 @@ Key procs
 								/datum/language/monkey = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/monkey = list(LANGUAGE_ATOM))
+
+/datum/language_holder/syndicate
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/codespeak = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/codespeak = list(LANGUAGE_ATOM))
+
+/datum/language_holder/beachbum
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/beachbum = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/beachbum = list(LANGUAGE_ATOM))
+	selected_language = /datum/language/beachbum
+
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()

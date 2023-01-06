@@ -181,6 +181,9 @@
 
 /obj/machinery/computer/emergency_shuttle/proc/increase_hijack_stage()
 	var/obj/docking_port/mobile/emergency/shuttle = SSshuttle.emergency
+	// Begin loading this early, prevents a delay when the shuttle goes to land
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_NUKIEBASE)
+
 	shuttle.hijack_status++
 	if(hijack_announce)
 		announce_hijack_stage()
@@ -545,6 +548,8 @@
 				// unless the shuttle is "hijacked"
 				var/destination_dock = "emergency_away"
 				if(is_hijacked() || elimination_hijack())
+					// just double check
+					SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 					destination_dock = "emergency_syndicate"
 					minor_announce("Corruption detected in \
 						shuttle navigation protocols. Please contact your \
@@ -677,8 +682,14 @@
 	anchored = TRUE
 	density = FALSE
 	icon = 'icons/obj/storage/storage.dmi'
-	icon_state = "safe"
+	icon_state = "wall_safe_locked"
 	var/unlocked = FALSE
+
+/obj/item/storage/pod/update_icon_state()
+	. = ..()
+	icon_state = "wall_safe[unlocked ? "" : "_locked"]"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 
 /obj/item/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)

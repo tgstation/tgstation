@@ -4,6 +4,7 @@
 // Eating stuff
 /// From datum/component/edible/proc/TakeBite: (mob/living/eater, mob/feeder, bitecount, bitesize)
 #define COMSIG_FOOD_EATEN "food_eaten"
+	#define DESTROY_FOOD (1<<0)
 /// From base of datum/component/edible/on_entered: (mob/crosser, bitecount)
 #define COMSIG_FOOD_CROSSED "food_crossed"
 /// From base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)
@@ -14,10 +15,10 @@
 #define COMSIG_FOOD_INGREDIENT_ADDED "edible_ingredient_added"
 
 // Deep frying foods
-/// From obj/item/food/deepfryholder/Initialize
+/// An item becomes fried - From /datum/element/fried_item/Attach: (fry_time)
 #define COMSIG_ITEM_FRIED "item_fried"
-	/// Return to not burn the item
-	#define COMSIG_FRYING_HANDLED (1<<0)
+/// An item entering the deep frying (not fried yet) - From obj/machinery/deepfryer/start_fry: ()
+#define COMSIG_ITEM_ENTERED_FRYER "item_entered_fryer"
 
 // Microwaving foods
 ///called on item when microwaved (): (obj/machinery/microwave/microwave, mob/microwaver)

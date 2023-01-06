@@ -34,6 +34,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			return TRUE
 		if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 			return TRUE //no tele-grooming
+		if(HAS_TRAIT(hairdresser, TRAIT_SHAVED))
+			to_chat(hairdresser, span_notice("If only growing back facial hair were that easy for you..."))
 		hairdresser.facial_hairstyle = new_style
 	else
 		hairdresser.facial_hairstyle = "Shaved"
@@ -63,7 +65,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	. = ..()
 	if(broken) // breaking a mirror truly gets you bad luck!
 		to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
-		user.AddComponent(/datum/component/omen, silent = TRUE) // we have our own message
+		user.AddComponent(/datum/component/omen)
 
 /obj/structure/mirror/bullet_act(obj/projectile/P)
 	if(broken || !isliving(P.firer) || !P.damage)
@@ -73,7 +75,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	if(broken) // breaking a mirror truly gets you bad luck!
 		var/mob/living/unlucky_dude = P.firer
 		to_chat(unlucky_dude, span_warning("A chill runs down your spine as [src] shatters..."))
-		unlucky_dude.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
+		unlucky_dude.AddComponent(/datum/component/omen)
 
 /obj/structure/mirror/atom_break(damage_flag, mapload)
 	. = ..()

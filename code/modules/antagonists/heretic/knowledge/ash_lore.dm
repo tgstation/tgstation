@@ -66,7 +66,7 @@
 
 	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
 	target.adjustOrganLoss(ORGAN_SLOT_EYES, 15)
-	target.blur_eyes(10)
+	target.set_eye_blur_if_lower(20 SECONDS)
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"
@@ -103,7 +103,7 @@
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in source.actions
 	if(grasp)
 		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75, 0), 0)
-		grasp.UpdateButtons()
+		grasp.build_all_button_icons()
 
 /datum/heretic_knowledge/knowledge_ritual/ash
 	next_knowledge = list(/datum/heretic_knowledge/spell/fire_blast)

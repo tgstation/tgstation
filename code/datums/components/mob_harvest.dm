@@ -109,10 +109,12 @@
 
 	if(istype(used_item, harvest_tool))
 		INVOKE_ASYNC(src, PROC_REF(harvest_item), user)
+		return COMPONENT_NO_AFTERATTACK
+
 	if(istype(used_item, fed_item))
 		remove_wait_time(user)
 		qdel(used_item)
-	return COMPONENT_NO_AFTERATTACK
+		return COMPONENT_NO_AFTERATTACK
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_ICON_STATE]
 /datum/component/mob_harvest/proc/on_update_icon_state(datum/source)

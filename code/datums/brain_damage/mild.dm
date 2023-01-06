@@ -54,7 +54,7 @@
 	if(DT_PROB(1.5, delta_time))
 		owner.emote("drool")
 	else if(owner.stat == CONSCIOUS && DT_PROB(1.5, delta_time))
-		owner.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), forced = "brain damage")
+		owner.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), forced = "brain damage", filterproof = TRUE)
 
 /datum/brain_trauma/mild/dumbness/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
@@ -93,7 +93,7 @@
 				owner.adjust_dizzy(20 SECONDS)
 			if(4,5)
 				owner.adjust_confusion(10 SECONDS)
-				owner.blur_eyes(10)
+				owner.set_eye_blur_if_lower(20 SECONDS)
 			if(6 to 9)
 				owner.adjust_slurring(1 MINUTES)
 			if(10)
@@ -237,8 +237,9 @@
 	var/list/speak_dejavu = list()
 
 /datum/brain_trauma/mild/mind_echo/handle_hearing(datum/source, list/hearing_args)
-	if(owner == hearing_args[HEARING_SPEAKER])
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
 		return
+
 	if(hear_dejavu.len >= 5)
 		if(prob(25))
 			var/deja_vu = pick_n_take(hear_dejavu)

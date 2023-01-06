@@ -31,22 +31,34 @@
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	butcher_results = list(/obj/item/food/meat/slab = 1)
+	unsuitable_cold_damage = 0.5 // Cold damage is 0.5 here to account for low health on the rabbit.
+	unsuitable_heat_damage = 0.5 // Heat damage is 0.5 here to account for low health on the rabbit.
 	ai_controller = /datum/ai_controller/basic_controller/rabbit
 	/// passed to animal_varity as the prefix icon.
 	var/icon_prefix = "rabbit"
 
 /mob/living/basic/rabbit/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "hops around happily!")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown", "black", "white"), TRUE)
 	if(prob(20)) // bunny
 		name = "bunny"
 
 /datum/ai_controller/basic_controller/rabbit
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	blackboard = list(
+		BB_BASIC_MOB_FLEEING = TRUE,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+	)
+	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/rabbit)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/rabbit,
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/flee_target,
+		)
+
 
 /// The easter subtype of rabbits, will lay eggs and say Eastery catchphrases.
 /mob/living/basic/rabbit/easter
@@ -76,7 +88,12 @@
 	)
 
 /datum/ai_controller/basic_controller/rabbit/easter
-	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/rabbit/easter)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/rabbit/easter,
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/flee_target,
+		)
+
 
 /// Same deal as the standard easter subtype, but these ones are able to brave the cold of space with their handy gas mask.
 /mob/living/basic/rabbit/easter/space
@@ -85,27 +102,14 @@
 	icon_dead = "space_rabbit_white_dead"
 	icon_prefix = "space_rabbit"
 	ai_controller = /datum/ai_controller/basic_controller/rabbit/easter/space
-	// Minimum Allowable Body Temp, zero because we are meant to survive in space and we have a fucking RABBIT SPACE MASK.
-	var/minimum_survivable_temperature = 0
-	// Maximum Allowable Body Temp, 1500 because we might overheat and die in said RABBIT SPACE MASK.
-	var/maximum_survivable_temperature = 1500
-
-/mob/living/basic/rabbit/easter/space/Initialize(mapload)
-	. = ..()
-	// string_assoc_list returns a cached list, which we then use as a static list to pass into the below AddElement
-	var/list/habitable_atmos = string_assoc_list(list(
-		"min_oxy" = 0,
-		"max_oxy" = 0,
-		"min_plas" = 0,
-		"max_plas" = 0,
-		"min_co2" = 0,
-		"max_co2" = 0,
-		"min_n2" = 0,
-		"max_n2" = 0,
-	))
-	AddElement(/datum/element/atmos_requirements, atmos_requirements = habitable_atmos, unsuitable_atmos_damage = 0)
-	// heat_damage is 0.5 here to account for low health on the rabbit.
-	AddElement(/datum/element/basic_body_temp_sensitive, min_body_temp = minimum_survivable_temperature, max_body_temp = maximum_survivable_temperature, cold_damage = 0, heat_damage = 0.5)
+	unsuitable_atmos_damage = 0 // Zero because we are meant to survive in space.
+	minimum_survivable_temperature = 0 // Minimum Allowable Body Temp, zero because we are meant to survive in space and we have a fucking RABBIT SPACE MASK.
+	maximum_survivable_temperature = 1500 // Maximum Allowable Body Temp, 1500 because we might overheat and die in said RABBIT SPACE MASK.
+	unsuitable_cold_damage = 0 // Zero because we are meant to survive in space.
 
 /datum/ai_controller/basic_controller/rabbit/easter/space
-	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/rabbit/easter/space)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/rabbit/easter/space,
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/flee_target,
+		)

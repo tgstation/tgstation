@@ -120,6 +120,7 @@
 #define BODYPART_ID_ROBOTIC "robotic"
 #define BODYPART_ID_DIGITIGRADE "digitigrade"
 #define BODYPART_ID_LARVA "larva"
+#define BODYPART_ID_PSYKER "psyker"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -340,9 +341,9 @@
 
 //determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE 0
-#define ENVIRONMENT_SMASH_STRUCTURES (1<<0) //crates, lockers, ect
-#define ENVIRONMENT_SMASH_WALLS (1<<1)  //walls
-#define ENVIRONMENT_SMASH_RWALLS (1<<2) //rwalls
+#define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
+#define ENVIRONMENT_SMASH_WALLS 2  //walls
+#define ENVIRONMENT_SMASH_RWALLS 3 //rwalls
 
 #define NO_SLIP_WHEN_WALKING (1<<0)
 #define SLIDE (1<<1)
@@ -599,12 +600,14 @@
 
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
-#define TOTAL_LAYERS 32 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS 33 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 32
+#define MUTATIONS_LAYER 33
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 31
-/// Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_BEHIND_LAYER 32
+/// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
+#define BODYPARTS_LOW_LAYER 31
+/// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
 #define BODYPARTS_LAYER 30
 /// Mutantrace features (snout, body markings) that must appear above the body parts
 #define BODY_ADJ_LAYER 29
@@ -620,8 +623,8 @@
 #define ID_LAYER 24
 /// ID card layer
 #define ID_CARD_LAYER 23
-/// Hands body part layer (or is this for the arm? not sure...)
-#define HANDS_PART_LAYER 22
+/// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
+#define BODYPARTS_HIGH_LAYER 22
 /// Gloves layer
 #define GLOVES_LAYER 21
 /// Shoes layer
@@ -674,6 +677,14 @@
 #define EXTERNAL_BEHIND (1 << 3)
 /// Draws organ on all EXTERNAL layers
 #define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
+
+// Bitflags for external organs restylability
+/// This organ allows restyle through plant restyling (like secateurs)
+#define EXTERNAL_RESTYLE_PLANT (1 << 1)
+/// This organ allows restyling with flesh restyling stuff (surgery or something idk)
+#define EXTERNAL_RESTYLE_FLESH (1 << 2)
+/// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
+#define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
 
 //Mob Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"

@@ -38,6 +38,9 @@
 	var/switchcount = 0
 	///Cell reference
 	var/obj/item/stock_parts/cell/cell
+	/// If TRUE, then cell is null, but one is pretending to exist.
+	/// This is to defer emergency cell creation unless necessary, as it is very expensive.
+	var/has_mock_cell = TRUE
 	///If true, this fixture generates a very weak cell at roundstart
 	var/start_with_cell = TRUE
 	///Currently in night shift mode?
@@ -63,11 +66,16 @@
 	///Multiplier for this light's base brightness in low power power mode
 	var/bulb_low_power_brightness_mul = 0.25
 	///Determines the colour of the light while it's in low power mode
-	var/bulb_low_power_colour = "#FF3232"
+	var/bulb_low_power_colour = COLOR_VIVID_RED
 	///The multiplier for determining the light's power in low power mode
 	var/bulb_low_power_pow_mul = 0.75
 	///The minimum value for the light's power in low power mode
 	var/bulb_low_power_pow_min = 0.5
+	///The Light range to use when working in fire alarm status
+	var/fire_brightness = 4
+	///The Light colour to use when working in fire alarm status
+	var/fire_colour = COLOR_FIRE_LIGHT_RED
+
 	///Power usage - W per unit of luminosity
 	var/power_consumption_rate = 20
 
@@ -85,8 +93,11 @@
 		var/obj/machinery/power/apc/temp_apc = our_area.apc
 		nightshift_enabled = temp_apc?.nightshift_lights
 
-	if(start_with_cell && !no_low_power)
-		cell = new/obj/item/stock_parts/cell/emergency_light(src)
+	if(!start_with_cell || no_low_power)
+		has_mock_cell = FALSE
+
+	if(is_station_level(z))
+		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -146,7 +157,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/area/our_area =get_room_area(src)
+	var/area/our_area = get_room_area(src)
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 
 /obj/machinery/light/on_enter_area(datum/source, area/area_to_register)
@@ -178,7 +189,8 @@
 			START_PROCESSING(SSmachines, src)
 		var/area/local_area =get_room_area(src)
 		if (local_area?.fire)
-			color_set = bulb_low_power_colour
+			color_set = fire_colour
+			brightness_set = fire_brightness
 		else if (nightshift_enabled)
 			brightness_set = nightshift_brightness
 			power_set = nightshift_light_power
@@ -264,6 +276,10 @@
 	update()
 
 /obj/machinery/light/get_cell()
+	if (has_mock_cell)
+		cell = new /obj/item/stock_parts/cell/emergency_light(src)
+		has_mock_cell = FALSE
+
 	return cell
 
 // examine verb
@@ -278,8 +294,8 @@
 			. += "The [fitting] is burnt out."
 		if(LIGHT_BROKEN)
 			. += "The [fitting] has been smashed."
-	if(cell)
-		. += "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%."
+	if(cell || has_mock_cell)
+		. += "Its backup power charge meter reads [has_mock_cell ? 100 : round((cell.charge / cell.maxcharge) * 100, 0.1)]%."
 
 
 
@@ -366,9 +382,11 @@
 			drop_light_tube()
 		new /obj/item/stack/cable_coil(loc, 1, "red")
 	transfer_fingerprints_to(new_light)
-	if(!QDELETED(cell))
-		new_light.cell = cell
-		cell.forceMove(new_light)
+
+	var/obj/item/stock_parts/cell/real_cell = get_cell()
+	if(!QDELETED(real_cell))
+		new_light.cell = real_cell
+		real_cell.forceMove(new_light)
 		cell = null
 	qdel(src)
 
@@ -415,23 +433,27 @@
 // returns whether this light has emergency power
 // can also return if it has access to a certain amount of that power
 /obj/machinery/light/proc/has_emergency_power(power_usage_amount)
-	if(no_low_power || !cell)
+	if(no_low_power || (!cell && !has_mock_cell))
 		return FALSE
+	if (has_mock_cell)
+		return status == LIGHT_OK
 	if(power_usage_amount ? cell.charge >= power_usage_amount : cell.charge)
 		return status == LIGHT_OK
+	return FALSE
 
 // attempts to use power from the installed emergency cell, returns true if it does and false if it doesn't
 /obj/machinery/light/proc/use_emergency_power(power_usage_amount = LIGHT_EMERGENCY_POWER_USE)
 	if(!has_emergency_power(power_usage_amount))
 		return FALSE
-	if(cell.charge > 300) //it's meant to handle 120 W, ya doofus
+	var/obj/item/stock_parts/cell/real_cell = get_cell()
+	if(real_cell.charge > 300) //it's meant to handle 120 W, ya doofus
 		visible_message(span_warning("[src] short-circuits from too powerful of a power cell!"))
 		burn_out()
 		return FALSE
-	cell.use(power_usage_amount)
+	real_cell.use(power_usage_amount)
 	set_light(
 		l_range = brightness * bulb_low_power_brightness_mul,
-		l_power = max(bulb_low_power_pow_min, bulb_low_power_pow_mul * (cell.charge / cell.maxcharge)),
+		l_power = max(bulb_low_power_pow_min, bulb_low_power_pow_mul * (real_cell.charge / real_cell.maxcharge)),
 		l_color = bulb_low_power_colour
 		)
 	return TRUE
@@ -628,11 +650,17 @@
 	tube?.burn()
 	return
 
+/obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
+	SIGNAL_HANDLER
 
-
+	for(var/area_type in grey_tide_areas)
+		if(!istype(get_area(src), area_type))
+			continue
+		INVOKE_ASYNC(src, PROC_REF(flicker))
 
 /obj/machinery/light/floor
 	name = "floor light"
+	desc = "A lightbulb you can walk on without breaking it, amazing."
 	icon = 'icons/obj/lighting.dmi'
 	base_state = "floor" // base description and icon_state
 	icon_state = "floor"
@@ -641,3 +669,4 @@
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
+	fire_brightness = 2

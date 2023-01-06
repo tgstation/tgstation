@@ -13,9 +13,11 @@
 	var/animation_time
 	///After we somehow moved (because ss13 is godless and does not respect anything), how long do we need to stand still to feel safe to setup our "behind" area again
 	var/perimeter_reset_timer
+	///Does this object let clicks from players its transparent to pass through it
+	var/clickthrough
 
 ///see_through_map is a define pointing to a specific map. It's basically defining the area which is considered behind. See see_through_maps.dm for a list of maps
-/datum/component/seethrough/Initialize(see_through_map = SEE_THROUGH_MAP_DEFAULT, target_alpha = 100, animation_time = 0.5 SECONDS, perimeter_reset_timer = 2 SECONDS)
+/datum/component/seethrough/Initialize(see_through_map = SEE_THROUGH_MAP_DEFAULT, target_alpha = 100, animation_time = 0.5 SECONDS, perimeter_reset_timer = 2 SECONDS, clickthrough = TRUE)
 	. = ..()
 
 	relative_turf_coords = GLOB.see_through_maps[see_through_map]
@@ -28,6 +30,7 @@
 	src.target_alpha = target_alpha
 	src.animation_time = animation_time
 	src.perimeter_reset_timer = perimeter_reset_timer
+	src.clickthrough = clickthrough
 
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(dismantle_perimeter))
 
@@ -96,14 +99,16 @@
 ///Apply the trickery image and animation
 /datum/component/seethrough/proc/trick_mob(mob/fool)
 	var/datum/hud/our_hud = fool.hud_used
-	var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
-	seethrough.unhide_plane(fool)
+	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+		seethrough.unhide_plane(fool)
 
 	var/image/user_overlay = new(parent)
 	user_overlay.loc = parent
 	user_overlay.override = TRUE
-	//Special plane so we can click through the overlay
-	SET_PLANE_EXPLICIT(user_overlay, SEETHROUGH_PLANE, parent)
+
+	if(clickthrough)
+		//Special plane so we can click through the overlay
+		SET_PLANE_EXPLICIT(user_overlay, SEETHROUGH_PLANE, parent)
 
 	//These are inherited, but we already use the atom's loc so we end up at double the pixel offset
 	user_overlay.pixel_x = 0
@@ -140,8 +145,9 @@
 		fool.client?.images -= trickery_image
 		UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 		var/datum/hud/our_hud = fool.hud_used
-		var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
-		seethrough.hide_plane(fool)
+
+		for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+			seethrough.hide_plane(fool)
 
 	tricked_mobs.Cut()
 
@@ -153,5 +159,5 @@
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 	RegisterSignal(fool, COMSIG_MOB_LOGIN, PROC_REF(trick_mob))
 	var/datum/hud/our_hud = fool.hud_used
-	var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
-	seethrough.hide_plane(fool)
+	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+		seethrough.hide_plane(fool)

@@ -333,7 +333,11 @@
 		var/datum/bank_account/science_department_bank_account = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		science_department_bank_account?.adjust_money(SSeconomy.techweb_bounty)
 		log_message += ", gaining [SSeconomy.techweb_bounty] to [science_department_bank_account] for it."
-	log_research(log_message)
+
+	// Avoid logging the same 300+ lines at the beginning of every round
+	if (MC_RUNNING())
+		log_research(log_message)
+
 	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)

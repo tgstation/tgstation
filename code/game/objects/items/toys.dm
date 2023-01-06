@@ -507,7 +507,7 @@
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
@@ -872,6 +872,7 @@
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
 
@@ -1414,8 +1415,8 @@ GLOBAL_LIST_EMPTY(intento_players)
 		return
 
 	var/input
-	var/icon_x = text2num(modifiers["icon-x"])
-	var/icon_y = text2num(modifiers["icon-y"])
+	var/icon_x = text2num(modifiers[ICON_X])
+	var/icon_y = text2num(modifiers[ICON_Y])
 	if(icon_x > ICON_SPLIT && icon_y > ICON_SPLIT)
 		input = DISARM
 	if(icon_x < ICON_SPLIT && icon_y > ICON_SPLIT)

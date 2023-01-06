@@ -26,7 +26,10 @@ GLOBAL_LIST(chemical_reactions_results_lookup_list) //List of all reactions with
 GLOBAL_LIST(fake_reagent_blacklist) //List of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
 GLOBAL_LIST_EMPTY(tech_list) //list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list) //list of all surgeries by name, associated with their path.
-GLOBAL_LIST_EMPTY(crafting_recipes) //list of all table craft recipes
+GLOBAL_LIST_EMPTY(crafting_recipes) //list of all crafting recipes
+GLOBAL_LIST_EMPTY(crafting_recipes_atoms) //list of all atoms occuring in crafting recipes
+GLOBAL_LIST_EMPTY(cooking_recipes) //list of all cooking recipes
+GLOBAL_LIST_EMPTY(cooking_recipes_atoms) //list of all atoms occuring in cooking recipes
 GLOBAL_LIST_EMPTY(rcd_list) //list of Rapid Construction Devices.
 GLOBAL_LIST_EMPTY(intercoms_list) //list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(apcs_list) //list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.
@@ -51,9 +54,6 @@ GLOBAL_LIST_EMPTY(ai_status_displays)
 
 GLOBAL_LIST_EMPTY(mob_spawners)     // All mob_spawn objects
 GLOBAL_LIST_EMPTY(alert_consoles) // Station alert consoles, /obj/machinery/computer/station_alert
-
-GLOBAL_LIST_EMPTY(air_scrub_names) // Name list of all air scrubbers
-GLOBAL_LIST_EMPTY(air_vent_names) // Name list of all air vents
 
 GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas) // List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas) // List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.

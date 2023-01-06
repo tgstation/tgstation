@@ -8,7 +8,6 @@
 	total_positions = 3
 	spawn_positions = 2
 	supervisors = SUPERVISOR_QM
-	selection_color = "#dcba97"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CARGO_TECHNICIAN"
 
@@ -45,7 +44,7 @@
 	)
 	id_trim = /datum/id_trim/job/cargo_technician
 	uniform = /obj/item/clothing/under/rank/cargo/tech
-	belt = /obj/item/modular_computer/tablet/pda/cargo
+	belt = /obj/item/modular_computer/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
 	l_hand = /obj/item/universal_scanner
 

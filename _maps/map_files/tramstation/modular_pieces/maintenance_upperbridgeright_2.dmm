@@ -352,7 +352,7 @@
 /obj/item/key/security,
 /obj/machinery/door/window/left/directional/north{
 	name = "Secway Storage";
-	req_access_txt = "security"
+	req_access = list("security")
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)

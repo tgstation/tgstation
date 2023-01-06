@@ -109,8 +109,6 @@
 				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
 			return TRUE
 		if ("researchNode")
-			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
-				return TRUE
 			research_node(params["node_id"], usr)
 			return TRUE
 
@@ -199,7 +197,7 @@
 		return FALSE
 	var/list/price = tech_node.get_price(stored_research)
 	if(stored_research.can_afford(price))
-		computer.investigate_log("[key_name(user)] researched [id]([json_encode(price)]) on techweb id [stored_research.id] via [computer].", INVESTIGATE_RESEARCH)
+		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id] via [computer].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = tech_node.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 		if(stored_research.research_node_id(id))

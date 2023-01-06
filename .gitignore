@@ -1,5 +1,8 @@
 ###Files and folders specified here will never be tracked.
 
+# Local overrides--you can use this to change the config for your dev environment (like setting up SQL) without worrying about committing it
+/config/dev_overrides.txt
+
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*
@@ -214,8 +217,14 @@ libaux*.so
 aux*.pdb
 
 # byond-tracy, we intentionally do not ship this and do not want to maintain it
+# https://github.com/mafemergency/byond-tracy/
 prof.dll
 libprof.so
+
+# Tracy can read source files when it is in the root folder, even without absolute paths.
+# If you're interested, run this hack:
+# https://gist.github.com/Mothblocks/db5462aa84d7d6b1d1b1276b820f62da
+Tracy.exe
 
 # JavaScript tools
 **/node_modules

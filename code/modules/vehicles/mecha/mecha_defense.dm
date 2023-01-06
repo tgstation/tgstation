@@ -168,6 +168,13 @@
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
+	//Mess with the focus of the inbuilt camera if present
+	if(chassis_camera && !chassis_camera.is_emp_scrambled)
+		chassis_camera.setViewRange(chassis_camera.short_range)
+		chassis_camera.is_emp_scrambled = TRUE
+		diag_hud_set_camera()
+		addtimer(CALLBACK(chassis_camera, TYPE_PROC_REF(/obj/machinery/camera/exosuit, emp_refocus), src), 10 SECONDS / severity)
+
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/mecha, restore_equipment)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)

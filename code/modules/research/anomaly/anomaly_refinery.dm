@@ -125,7 +125,7 @@
 /obj/machinery/research/anomaly_refinery/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if (obj_flags & EMAGGED)
-		balloon_alert(user, span_warning("already hacked!"))
+		balloon_alert(user, "already hacked!")
 		return
 
 	obj_flags |= EMAGGED
@@ -168,8 +168,8 @@
  * Triggered by attempting to operate an emagged anomaly refinery.
  */
 /obj/machinery/research/anomaly_refinery/proc/error_test()
-	message_admins("[src] was emagged and ejected a TTV")
-	investigate_log("was emagged and ejected a TTV", INVESTIGATE_RESEARCH)
+	message_admins("[src] was emagged and ejected a TTV.")
+	investigate_log("was emagged and ejected a TTV.", INVESTIGATE_RESEARCH)
 	obj_flags &= ~EMAGGED
 
 	say("Issue resolved. Have a nice day!")
