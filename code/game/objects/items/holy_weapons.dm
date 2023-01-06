@@ -629,6 +629,7 @@
 /obj/item/nullrod/hfr/attack(mob/living/target, mob/living/user, params)
 	. = ..()
 	user.changeNext_move(0.34 SECONDS)
+	var/list/modifiers = params2list(params)
 	var/x_slashed = text2num(modifiers[ICON_X]) || world.icon_size/2
 	var/y_slashed = text2num(modifiers[ICON_Y]) || world.icon_size/2
 	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed, COLOR_BLUE)
