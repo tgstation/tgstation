@@ -163,41 +163,33 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 	tier = 1
 
 /datum/stock_part/subspace/filter
-	tier = 1
 	physical_object_type = /obj/item/stock_parts/subspace/filter
 	physical_object_base_type = /obj/item/stock_parts/subspace/filter
 
 /datum/stock_part/subspace/amplifier
-	tier = 1
 	physical_object_type = /obj/item/stock_parts/subspace/amplifier
 	physical_object_base_type = /obj/item/stock_parts/subspace/amplifier
 
 /datum/stock_part/subspace/treatment
-	tier = 1
 	physical_object_type = /obj/item/stock_parts/subspace/treatment
 	physical_object_base_type = /obj/item/stock_parts/subspace/treatment
 
 /datum/stock_part/subspace/analyzer
-	tier = 1
 	physical_object_type = /obj/item/stock_parts/subspace/analyzer
 	physical_object_base_type = /obj/item/stock_parts/subspace/analyzer
 
 /datum/stock_part/subspace/crystal
-	tier = 1
 	physical_object_type = /obj/item/stock_parts/subspace/crystal
 	physical_object_base_type = /obj/item/stock_parts/subspace/crystal
 
 /datum/stock_part/subspace/transmitter
-	tier = 1
 	physical_object_type = /obj/item/stock_parts/subspace/transmitter
 	physical_object_base_type = /obj/item/stock_parts/subspace/transmitter
 
 /datum/stock_part/card_reader
-	tier = 1
 	physical_object_type = /obj/item/stock_parts/card_reader
 	physical_object_base_type = /obj/item/stock_parts/card_reader
 
 /datum/stock_part/water_recycler
-	tier = 1
 	physical_object_type = /obj/item/stock_parts/water_recycler
 	physical_object_base_type = /obj/item/stock_parts/water_recycler
