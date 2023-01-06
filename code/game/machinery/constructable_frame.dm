@@ -229,11 +229,12 @@
 							// Move to nullspace and delete.
 							new_machine.circuit.moveToNullspace()
 							QDEL_NULL(new_machine.circuit)
-						for(var/obj/old_part in new_machine.component_parts)
-							//dont delete singleton datum parts
+						for(var/old_part in new_machine.component_parts)
+							// dont delete singleton datum parts
 							if(istype(old_part, /datum/stock_part))
 								continue
 							// Move to nullspace and delete.
+							var/obj/part = old_part
 							old_part.moveToNullspace()
 							qdel(old_part)
 
