@@ -33,6 +33,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
+	AddComponent(/datum/component/pry_open_door)
 
 /datum/ai_controller/basic_controller/faithless
 	blackboard = list(
@@ -44,7 +45,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/smash_open_door,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/low_priority_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/faithless,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,

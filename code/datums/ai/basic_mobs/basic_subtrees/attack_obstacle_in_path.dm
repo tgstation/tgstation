@@ -62,9 +62,6 @@
 		if (!can_smash_object(basic_mob, object))
 			continue
 		basic_mob.melee_attack(object)
-		if(istype(object, /obj/machinery/door/airlock) && bump_open_airlock)
-			var/obj/machinery/door/airlock/airlock_target = object
-			airlock_target.bumpopen(basic_mob)
 		return TRUE
 
 	if (can_attack_turfs)
@@ -83,9 +80,3 @@
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/low_priority_target
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/smash_open_door
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/smash_open_door
-
-/datum/ai_behavior/attack_obstructions/smash_open_door
-	bump_open_airlock = TRUE
