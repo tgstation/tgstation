@@ -235,7 +235,6 @@
 								continue
 							// Move to nullspace and delete.
 							var/obj/part = old_part
-							old_part.moveToNullspace()
 							qdel(old_part)
 
 						// Set anchor state
