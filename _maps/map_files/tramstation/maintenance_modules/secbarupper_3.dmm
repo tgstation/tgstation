@@ -1,0 +1,2032 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"by" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=1";
+	dir = 1;
+	freq = 1400;
+	location = "Law Office";
+	name = "navigation beacon (Law Office Delivery)"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "lawyerdropoff"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"bB" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"bX" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random{
+	loot = list(/obj/effect/decal/cleanable/oil/slippery = 10, /obj/effect/decal/cleanable/oil = 90);
+	name = "funny slipper :)";
+	spawn_loot_chance = 100
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"cs" = (
+/obj/structure/ladder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"dh" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"eT" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy,
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"fh" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/openspace,
+/area/station/maintenance/department/security)
+"fi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"fW" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"gx" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"hV" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"id" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"jx" = (
+/obj/modular_map_root/tramstation{
+	key = "secbarupper_attachment_a"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"jL" = (
+/obj/structure/flora/tree/jungle/style_4,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"jU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/plasticflaps/opaque{
+	name = "airtight delivery flaps"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"kv" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/department/security)
+"li" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/bucket,
+/obj/structure/sign/poster/official/nanotrasen_logo{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"nk" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"ok" = (
+/obj/structure/plasticflaps/opaque{
+	name = "airtight delivery flaps"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"oQ" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"oU" = (
+/obj/structure/flora/bush/grassy,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"oZ" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"qw" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"rm" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"ro" = (
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"rv" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"tg" = (
+/obj/structure/flora/bush/grassy,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"ty" = (
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/station/maintenance/department/security)
+"tZ" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"wA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/plumbing/synthesizer{
+	reagent_id = /datum/reagent/water
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"wG" = (
+/obj/modular_map_root/tramstation{
+	key = "secbarupper_cave"
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"wQ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"xb" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"xg" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"yk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"zO" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"Ac" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/station/asteroid)
+"AT" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"Bo" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"Bq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/mopbucket,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"Df" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"Dh" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/security)
+"Dn" = (
+/obj/structure/cable/multilayer/multiz,
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"DD" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"Ez" = (
+/obj/modular_map_root/tramstation{
+	key = "secbarupper_attachment_b"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"EM" = (
+/turf/open/floor/grass,
+/area/station/asteroid)
+"FL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"GV" = (
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"Hr" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/spawner/random/mod/maint,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"Ib" = (
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/station/asteroid)
+"Kc" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/maintenance/department/security)
+"Lk" = (
+/turf/template_noop,
+/area/template_noop)
+"LN" = (
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"Mr" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"Pk" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"QK" = (
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Bar Maintenance Hatch"
+	},
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"QU" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/department/security)
+"Sb" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"SD" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"Tr" = (
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"Ty" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Security Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/modular_map_connector,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"Uk" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"VE" = (
+/obj/structure/plasticflaps/opaque{
+	name = "airtight delivery flaps"
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"VW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"Wj" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"WG" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/warning/secure_area{
+	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
+	name = "MULE CROSSING - LOOK BOTH WAYS";
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"WS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"Xf" = (
+/turf/open/openspace,
+/area/station/maintenance/department/security)
+"Xp" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"Yj" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/ladder,
+/obj/machinery/light/small/directional/west,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/maintenance/department/security)
+"YR" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/floor/grass,
+/area/station/asteroid)
+"YT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"Zh" = (
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"ZA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Water Access Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/janitor,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+
+(1,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Dh
+Dh
+Dh
+Dh
+Dh
+Ty
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(2,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+AT
+AT
+AT
+AT
+AT
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(3,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+SD
+SD
+SD
+SD
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(4,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+jx
+id
+id
+id
+id
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(5,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(6,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(7,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+id
+id
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(8,1,1) = {"
+Lk
+QU
+Xp
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+id
+id
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(9,1,1) = {"
+Lk
+QU
+Sb
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(10,1,1) = {"
+id
+SD
+xg
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+id
+id
+id
+id
+EM
+YR
+GV
+EM
+oU
+EM
+Lk
+Lk
+Lk
+"}
+(11,1,1) = {"
+id
+QU
+VE
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+hV
+hV
+EM
+GV
+GV
+EM
+eT
+YR
+tZ
+EM
+Lk
+Lk
+Lk
+"}
+(12,1,1) = {"
+id
+kv
+oQ
+oQ
+xg
+xg
+oQ
+oQ
+xg
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+EM
+EM
+oU
+YR
+EM
+EM
+EM
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(13,1,1) = {"
+id
+QU
+QU
+kv
+rm
+QU
+QU
+QU
+xg
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+id
+ro
+EM
+hV
+id
+hV
+YR
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(14,1,1) = {"
+id
+id
+id
+id
+id
+id
+id
+kv
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+hV
+hV
+EM
+EM
+EM
+hV
+id
+kv
+bB
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(15,1,1) = {"
+id
+id
+id
+id
+id
+id
+id
+QU
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+hV
+EM
+EM
+YR
+YR
+id
+id
+id
+EM
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(16,1,1) = {"
+Lk
+id
+id
+id
+id
+id
+id
+QU
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+hV
+EM
+EM
+oU
+oU
+jL
+Ac
+Ib
+EM
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(17,1,1) = {"
+id
+id
+id
+id
+id
+id
+id
+SD
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+EM
+GV
+YR
+YR
+YR
+YR
+YR
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(18,1,1) = {"
+id
+id
+id
+id
+id
+id
+id
+QU
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+kv
+rv
+YR
+nk
+YR
+dh
+YR
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(19,1,1) = {"
+id
+id
+id
+id
+id
+id
+id
+QU
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+id
+id
+EM
+EM
+EM
+YR
+YR
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(20,1,1) = {"
+Lk
+id
+id
+id
+id
+id
+id
+QU
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+id
+id
+id
+id
+EM
+EM
+EM
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(21,1,1) = {"
+Lk
+Lk
+Lk
+id
+id
+id
+id
+kv
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+id
+id
+id
+EM
+YR
+EM
+id
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(22,1,1) = {"
+Lk
+Lk
+id
+id
+id
+id
+id
+QU
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+AT
+SD
+id
+id
+id
+id
+id
+id
+id
+id
+id
+EM
+EM
+tg
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(23,1,1) = {"
+Lk
+Lk
+id
+id
+id
+id
+id
+QU
+Wj
+xg
+xg
+Lk
+Lk
+Lk
+Lk
+Lk
+fW
+fW
+AT
+SD
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+EM
+GV
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(24,1,1) = {"
+Lk
+Lk
+Lk
+id
+id
+id
+id
+QU
+SD
+QU
+xg
+Lk
+Lk
+Lk
+Lk
+Lk
+Bq
+fW
+AT
+SD
+id
+id
+SD
+SD
+SD
+SD
+SD
+SD
+SD
+hV
+EM
+hV
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(25,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+QU
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+gx
+Hr
+Df
+SD
+id
+id
+SD
+fh
+Dn
+Yj
+zO
+Xf
+SD
+hV
+hV
+id
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(26,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+QU
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Xf
+Xf
+Bo
+SD
+id
+id
+SD
+Xf
+Xf
+Kc
+Xf
+Xf
+SD
+Tr
+SD
+SD
+SD
+SD
+SD
+SD
+SD
+id
+"}
+(27,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+kv
+oQ
+Lk
+Lk
+Lk
+Lk
+Lk
+SD
+SD
+xb
+SD
+id
+id
+SD
+Xf
+Xf
+Kc
+Xf
+Xf
+SD
+qw
+LN
+SD
+Xf
+Xf
+Xf
+ty
+SD
+id
+"}
+(28,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+QU
+oQ
+oQ
+oQ
+bX
+xg
+xg
+fW
+ok
+AT
+SD
+SD
+SD
+SD
+Xf
+Xf
+Kc
+Xf
+Xf
+SD
+Zh
+SD
+SD
+Xf
+Xf
+Xf
+Xf
+SD
+id
+"}
+(29,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+QU
+wG
+SD
+SD
+QU
+QU
+SD
+SD
+SD
+AT
+AT
+AT
+AT
+oZ
+Uk
+Uk
+FL
+Uk
+DD
+xb
+AT
+Pk
+Xf
+Xf
+SD
+SD
+SD
+SD
+id
+"}
+(30,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+SD
+SD
+SD
+SD
+SD
+fW
+fW
+YT
+WS
+fW
+fW
+fW
+AT
+Pk
+Xf
+Xf
+SD
+id
+id
+id
+id
+"}
+(31,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+SD
+Ez
+SD
+SD
+SD
+SD
+SD
+SD
+AT
+SD
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+"}
+(32,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+SD
+wA
+fi
+SD
+AT
+VW
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+"}
+(33,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+SD
+li
+fi
+ZA
+wQ
+yk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+"}
+(34,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+SD
+cs
+fW
+SD
+wQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(35,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+SD
+SD
+SD
+SD
+WG
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(36,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+SD
+Xf
+by
+jU
+Mr
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(37,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+SD
+SD
+SD
+SD
+wQ
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
+(38,1,1) = {"
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+id
+SD
+QK
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+"}
