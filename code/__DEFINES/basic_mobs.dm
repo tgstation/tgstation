@@ -12,4 +12,4 @@
 #define NO_SENTIENCE_POSSIBILITY (1<<5)
 
 /// typical atmos requirements you'd expect most mobs who have atmos requirements at all to have.
-#define BASIC_ATMOS_REQUIREMENTS list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+#define BASIC_ATMOS_REQUIREMENTS string_assoc_list(list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0))
