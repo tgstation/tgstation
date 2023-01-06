@@ -622,6 +622,8 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, span_warning("\The [src] can only transport items!"))
 		return
 
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	var/list/cultists = list()
 	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
 		if(M.current && M.current.stat != DEAD)
@@ -855,7 +857,7 @@ Striking a noncultist, however, will tear their flesh."}
 		angle = get_angle(user, A)
 	else
 		qdel(src)
-		return
+		return . | AFTERATTACK_PROCESSED_ITEM
 	charging = TRUE
 	INVOKE_ASYNC(src, PROC_REF(charge), user)
 	if(do_after(user, 9 SECONDS, target = user))

@@ -341,6 +341,7 @@
 	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	user.visible_message(span_notice("[user] chants deeply and waves [user.p_their()] staff!"))
 	if(do_after(user, 2 SECONDS, src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
