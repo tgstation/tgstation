@@ -531,7 +531,7 @@
 	if(!log_message)
 		return
 
-	var/raw_message = sanitize(trim(log_message))
+	var/raw_message = log_message
 
 	if(holder)
 		log_message = emoji_parse(log_message)
@@ -549,9 +549,9 @@
 	if(ambiguious_recipient == EXTERNAL_PM_USER)
 		// Guard against the possibility of a null, since it'll runtime and spit out the contents of what should be a private ticket.
 		if(ticket)
-			log_admin_private("PM: Ticket #[ticket_id]: [our_name]->External: [raw_message]")
+			log_admin_private("PM: Ticket #[ticket_id]: [our_name]->External: [sanitize_text(trim(raw_message))]")
 		else
-			log_admin_private("PM: [our_name]->External: [raw_message]")
+			log_admin_private("PM: [our_name]->External: [sanitize_text(trim(raw_message))]")
 		for(var/client/lad in GLOB.admins)
 			to_chat(lad,
 				type = MESSAGE_TYPE_ADMINPM,
@@ -575,9 +575,9 @@
 
 	window_flash(recipient, ignorepref = TRUE)
 	if(ticket)
-		log_admin_private("PM: Ticket #[ticket_id]: [our_name]->[recipient_name]: [raw_message]")
+		log_admin_private("PM: Ticket #[ticket_id]: [our_name]->[recipient_name]: [sanitize_text(trim(raw_message))]")
 	else
-		log_admin_private("PM: [our_name]->[recipient_name]: [raw_message]")
+		log_admin_private("PM: [our_name]->[recipient_name]: [sanitize_text(trim(raw_message))]")
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/lad in GLOB.admins)
 		if(lad.key == key || lad.key == recipient_key) //check to make sure client/lad isn't the sender or recipient
