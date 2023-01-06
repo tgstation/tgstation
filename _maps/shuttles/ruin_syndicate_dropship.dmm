@@ -25,7 +25,7 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
-/obj/item/clothing/under/syndicate/combat,
+/obj/item/clothing/under/syndicate/gorlex/combat,
 /obj/item/storage/belt/military,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/ruin/caravan/syndicate3)
@@ -118,7 +118,7 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
-/obj/item/clothing/under/syndicate/combat,
+/obj/item/clothing/under/syndicate/gorlex/combat,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/ruin/caravan/syndicate3)
 "im" = (
@@ -174,7 +174,7 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
-/obj/item/clothing/under/syndicate/combat,
+/obj/item/clothing/under/syndicate/gorlex/combat,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/storage/belt/military,
 /obj/item/crowbar/red,

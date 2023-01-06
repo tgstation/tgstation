@@ -1095,7 +1095,7 @@
 	req_access = list("syndicate");
 	secure = 1
 	},
-/obj/item/clothing/under/syndicate/combat,
+/obj/item/clothing/under/syndicate/gorlex/combat,
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/shoes/combat,
 /obj/item/clothing/mask/gas/syndicate,
@@ -1112,8 +1112,8 @@
 	req_access = list("syndicate");
 	secure = 1
 	},
-/obj/item/clothing/head/hats/hos/beret/syndicate,
-/obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
+/obj/item/clothing/head/caphat/beret/gorlex,
+/obj/item/clothing/suit/armor/vest/capcarapace/gorlex,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/under/syndicate/skirt,

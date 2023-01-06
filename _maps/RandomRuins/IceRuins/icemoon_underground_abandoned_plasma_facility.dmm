@@ -2608,7 +2608,7 @@
 "PP" = (
 /obj/structure/dresser,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/glasses/thermal/eyepatch{
+/obj/item/clothing/glasses/thermal/sunglasses{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/grimy,

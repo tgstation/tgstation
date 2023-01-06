@@ -57,7 +57,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_corvette)
 "ai" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/corvette{
+/obj/machinery/computer/camera_advanced/shuttle_docker/gorlex/corvette{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/red/line{
