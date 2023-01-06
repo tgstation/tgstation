@@ -1,13 +1,40 @@
+import { BooleanLike } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../../backend';
 import { Button, LabeledList, NumberInput, Section } from '../../components';
 import { getGasLabel } from '../../constants';
 
-export const Vent = (props, context) => {
-  const { vent } = props;
+export type VentProps = {
+  refID: string;
+  long_name: string;
+  power: BooleanLike;
+  checks: number;
+  excheck: BooleanLike;
+  incheck: BooleanLike;
+  direction: number;
+  external: number;
+  internal: number;
+  extdefault: number;
+  intdefault: number;
+};
+
+export type ScrubberProps = {
+  refID: string;
+  long_name: string;
+  power: BooleanLike;
+  scrubbing: BooleanLike;
+  widenet: BooleanLike;
+  filter_types: {
+    gas_id: string;
+    gas_name: string;
+    enabled: BooleanLike;
+  }[];
+};
+
+export const Vent = (props: VentProps, context) => {
   const { act } = useBackend(context);
   const {
-    ref,
+    refID,
     long_name,
     power,
     checks,
@@ -18,10 +45,9 @@ export const Vent = (props, context) => {
     internal,
     extdefault,
     intdefault,
-  } = vent;
+  } = props;
   return (
     <Section
-      level={2}
       title={decodeHtmlEntities(long_name)}
       buttons={
         <Button
@@ -30,7 +56,7 @@ export const Vent = (props, context) => {
           content={power ? 'On' : 'Off'}
           onClick={() =>
             act('power', {
-              ref,
+              ref: refID,
               val: Number(!power),
             })
           }
@@ -44,7 +70,7 @@ export const Vent = (props, context) => {
             color={!direction && 'danger'}
             onClick={() =>
               act('direction', {
-                ref,
+                ref: refID,
                 val: Number(!direction),
               })
             }
@@ -57,7 +83,7 @@ export const Vent = (props, context) => {
             selected={incheck}
             onClick={() =>
               act('incheck', {
-                ref,
+                ref: refID,
                 val: checks,
               })
             }
@@ -68,7 +94,7 @@ export const Vent = (props, context) => {
             selected={excheck}
             onClick={() =>
               act('excheck', {
-                ref,
+                ref: refID,
                 val: checks,
               })
             }
@@ -85,7 +111,7 @@ export const Vent = (props, context) => {
               maxValue={5066}
               onChange={(e, value) =>
                 act('set_internal_pressure', {
-                  ref,
+                  ref: refID,
                   value,
                 })
               }
@@ -96,7 +122,7 @@ export const Vent = (props, context) => {
               content="Reset"
               onClick={() =>
                 act('reset_internal_pressure', {
-                  ref,
+                  ref: refID,
                 })
               }
             />
@@ -113,7 +139,7 @@ export const Vent = (props, context) => {
               maxValue={5066}
               onChange={(e, value) =>
                 act('set_external_pressure', {
-                  ref,
+                  ref: refID,
                   value,
                 })
               }
@@ -124,7 +150,7 @@ export const Vent = (props, context) => {
               content="Reset"
               onClick={() =>
                 act('reset_external_pressure', {
-                  ref,
+                  ref: refID,
                 })
               }
             />
@@ -135,13 +161,11 @@ export const Vent = (props, context) => {
   );
 };
 
-export const Scrubber = (props, context) => {
-  const { scrubber } = props;
+export const Scrubber = (props: ScrubberProps, context) => {
   const { act } = useBackend(context);
-  const { long_name, power, scrubbing, ref, widenet, filter_types } = scrubber;
+  const { long_name, power, scrubbing, refID, widenet, filter_types } = props;
   return (
     <Section
-      level={2}
       title={decodeHtmlEntities(long_name)}
       buttons={
         <Button
@@ -150,7 +174,7 @@ export const Scrubber = (props, context) => {
           selected={power}
           onClick={() =>
             act('power', {
-              ref,
+              ref: refID,
               val: Number(!power),
             })
           }
@@ -164,7 +188,7 @@ export const Scrubber = (props, context) => {
             content={scrubbing ? 'Scrubbing' : 'Siphoning'}
             onClick={() =>
               act('scrubbing', {
-                ref,
+                ref: refID,
                 val: Number(!scrubbing),
               })
             }
@@ -175,7 +199,7 @@ export const Scrubber = (props, context) => {
             content={widenet ? 'Expanded range' : 'Normal range'}
             onClick={() =>
               act('widenet', {
-                ref,
+                ref: refID,
                 val: Number(!widenet),
               })
             }
@@ -192,7 +216,7 @@ export const Scrubber = (props, context) => {
                 selected={filter.enabled}
                 onClick={() =>
                   act('toggle_filter', {
-                    ref,
+                    ref: refID,
                     val: filter.gas_id,
                   })
                 }
