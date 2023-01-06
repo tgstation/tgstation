@@ -233,8 +233,6 @@
 							// dont delete singleton datum parts
 							if(istype(old_part, /datum/stock_part))
 								continue
-							// Move to nullspace and delete.
-							var/obj/part = old_part
 							qdel(old_part)
 
 						// Set anchor state
