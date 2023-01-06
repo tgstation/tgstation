@@ -61,10 +61,10 @@
 	rift_list = null
 	return ..()
 
+/// Uses a custom icon for the preview icon, change this if the sprite is changed in a significant way.
 /datum/antagonist/space_dragon/get_preview_icon()
-	var/icon/icon = icon('code/modules/unit_tests/screenshots/screenshot_antag_icons_spacedragon.png')
+	var/icon/icon = icon('icons/mob/nonhuman-player/spacedragon_preview.png') 
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
-
 	return icon
 
 /**
