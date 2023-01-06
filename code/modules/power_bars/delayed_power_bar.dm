@@ -2,11 +2,12 @@
 #define POWER_BAR_STATE_WAITING_RECHARGE_DELAY 2
 
 /datum/delayed_power_bar
+	var/gave_power_bars = FALSE
+
 	VAR_PRIVATE
 		state = POWER_BAR_STATE_WAITING_LIFETIME
 
 		creation_time
-		gave_power_bars = FALSE
 		last_poke_time = 0
 		last_inactive_time = 0
 

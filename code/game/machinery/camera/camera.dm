@@ -31,6 +31,9 @@
 	var/view_range = 7
 	var/short_range = 2
 
+	var/offset_x = 0
+	var/offset_y = 0
+
 	var/alarm_on = FALSE
 	var/busy = FALSE
 	var/emped = FALSE  //Number of consecutive EMP's on this camera

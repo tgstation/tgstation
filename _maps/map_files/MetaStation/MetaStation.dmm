@@ -47326,6 +47326,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"qWd" = (
+/obj/structure/lattice,
+/obj/machinery/camera/directional/west{
+	c_tag = "Singularity Bay";
+	offset_x = 6;
+	offset_y = -1;
+	view_range = 6
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "qWw" = (
 /obj/structure/closet/boxinggloves,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -110001,7 +110011,7 @@ qhD
 lMJ
 lMJ
 lMJ
-lMJ
+qWd
 dJN
 lMJ
 lMJ

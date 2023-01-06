@@ -132,7 +132,9 @@
 	var/list/visible_turfs = list()
 
 	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
-	var/new_cam_turf = get_turf(active_camera)
+	var/turf/new_cam_turf = get_turf(active_camera)
+	if (active_camera.offset_x != 0 || active_camera.offset_y != 0)
+		new_cam_turf = locate(new_cam_turf.x + active_camera.offset_x, new_cam_turf.y + active_camera.offset_y, new_cam_turf.z)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.

@@ -217,7 +217,7 @@ export const PowerLevelDistribution = (props, context) => {
   );
 
   return (
-    <Window title="Power Level Distribution" width={990} height={510}>
+    <Window title="Power Level Distribution Console" width={990} height={510}>
       <Window.Content>
         <Stack vertical fill>
           {/* MBTODO: Hovering over this area (not the bars) should tell you what is giving what */}
