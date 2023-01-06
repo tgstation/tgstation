@@ -279,7 +279,6 @@
 	component_parts = null
 	circuit = null
 
-	QDEL_LIST(old_parts)
 	RefreshParts()
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
