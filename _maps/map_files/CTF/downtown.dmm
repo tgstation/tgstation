@@ -660,7 +660,7 @@
 /obj/structure/rack{
 	resistance_flags = 64
 	},
-/obj/item/clothing/head/helmet/space/syndicate/blue,
+/obj/item/clothing/head/helmet/space/syndicate,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/carpet/blue,
 /area/centcom/ctf)
