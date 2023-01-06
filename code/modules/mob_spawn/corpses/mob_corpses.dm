@@ -65,6 +65,27 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+/obj/effect/mob_spawn/corpse/human/syndicatepilot
+	name = "Syndicate Pilot"
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
+	outfit = /datum/outfit/syndicatepilotcorpse
+
+/datum/outfit/syndicatepilotcorpse
+	name = "Syndicate Pilot Corpse"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	shoes = /obj/item/clothing/shoes/combat
+	neck = /obj/item/clothing/neck/large_scarf/syndie
+	glasses = /obj/item/clothing/glasses/cold
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/radio/headset
+	mask = /obj/item/clothing/mask/gas
+	head = /obj/item/clothing/head/helmet/swat
+	back = /obj/item/storage/backpack
+	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
+
 /obj/effect/mob_spawn/corpse/human/pirate
 	name = "Pirate"
 	skin_tone = "caucasian1" //all pirates are white because it's easier that way

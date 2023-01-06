@@ -6,6 +6,9 @@
 	armour_penetration = 30
 	wound_bonus = -40
 
+/obj/projectile/bullet/a556/weak //centcom
+	damage = 20
+
 /obj/projectile/bullet/a556/phasic
 	name = "5.56mm phasic bullet"
 	icon_state = "gaussphase"

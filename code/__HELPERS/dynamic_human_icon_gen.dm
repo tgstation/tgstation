@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(dynamic_human_icons)
 
-/proc/get_dynamic_human_icon(outfit_path, species_path = /datum/species/human, mob_spawn_path, l_hand, r_hand, bloody_slots = NONE, generated_dirs = GLOB.cardinals)
+/proc/get_dynamic_human_icon(outfit_path, species_path = /datum/species/human, mob_spawn_path, r_hand, l_hand, bloody_slots = NONE, generated_dirs = GLOB.cardinals)
 	if(!species_path)
 		return FALSE
 	var/arg_string = "[outfit_path]_[species_path]_[mob_spawn_path]_[l_hand]_[r_hand]_[bloody_slots]_[english_list(generated_dirs, nothing_text = "", and_text = ",", comma_text = ",")]"
@@ -14,10 +14,10 @@ GLOBAL_LIST_EMPTY(dynamic_human_icons)
 	dummy.socks = "Nude"
 	if(outfit_path)
 		var/datum/outfit/outfit = new outfit_path()
-		if(l_hand != FALSE) //we can still override to be null, false means just use outfit's
-			outfit.l_hand = l_hand
-		if(r_hand != FALSE)
+		if(r_hand != FALSE) //we can still override to be null, false means just use outfit's
 			outfit.r_hand = r_hand
+		if(l_hand != FALSE)
+			outfit.l_hand = l_hand
 		dummy.equipOutfit(outfit)
 	else if(mob_spawn_path)
 		var/obj/effect/mob_spawn/spawner = new mob_spawn_path(null, TRUE)
@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(dynamic_human_icons)
 	qdel(dummy)
 	return output
 
-/proc/apply_dynamic_human_icon(atom/target, outfit_path, species_path = /datum/species/human, mob_spawn_path, l_hand, r_hand, bloody_slots = NONE, generated_dirs = GLOB.cardinals)
+/proc/apply_dynamic_human_icon(atom/target, outfit_path, species_path = /datum/species/human, mob_spawn_path, r_hand, l_hand, bloody_slots = NONE, generated_dirs = GLOB.cardinals)
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(set_dynamic_human_icon), args)
 
 /proc/set_dynamic_human_icon(list/arguments)
