@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Space Carp seem to have begun associating the station with food and attempting to enter from the outside, rather than simply congregating around solar panels. Employees are advised that these are wild animals, and should not be fed."
+  - rscadd: "Space Carp can intermittently teleport short distances, leaving a short lived rift which other nearby carp will be attracted to follow them through."
