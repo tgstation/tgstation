@@ -2690,7 +2690,7 @@
 	pixel_x = 2
 	},
 /obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare,
-/obj/item/clothing/head/hats/hos/syndicate,
+/obj/item/clothing/head/hats/caphat/parade/gorlex,
 /obj/item/clothing/head/caphat/beret/gorlex,
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/under/syndicate,
