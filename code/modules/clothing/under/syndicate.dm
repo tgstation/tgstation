@@ -1,7 +1,7 @@
 /obj/item/clothing/under/syndicate
 	name = "tactical turtleneck"
-	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants."
-	icon_state = "syndicate"
+	desc = "A non-descript and slightly suspicious looking turtleneck with baggy cargo pants."
+	icon_state = "tac_turtleneck"
 	inhand_icon_state = "bl_suit"
 	has_sensor = NO_SENSORS
 	armor_type = /datum/armor/under_syndicate
@@ -125,7 +125,7 @@
 */
 
 /obj/item/clothing/under/syndicate/tiger
-	desc = "A non-descript and slightly suspicious looking turtleneck with baggy cargo pants. You feel like some sort of cultist wearing this.."
+	desc = "A non-descript and slightly suspicious looking turtleneck with baggy cargo pants. You feel like some sort of cultist wearing this."
 	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/tiger/priest

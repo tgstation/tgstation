@@ -264,6 +264,9 @@
 	desc = "A white-painted helmet, with a speciality face-mask attached to block bio-hazardous materials and chemicals."
 	icon_state = "trauma_team"
 
+/obj/item/clothing/head/helmet/swat/gorlex/trauma_team/assault
+	icon_state = "trauma_team_assault"
+
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"

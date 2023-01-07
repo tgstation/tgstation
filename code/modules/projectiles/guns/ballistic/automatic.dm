@@ -90,6 +90,7 @@
 /obj/item/gun/ballistic/automatic/plastikov
 	name = "\improper PP-95 SMG"
 	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs, though perhaps simplified too much."
+	icon = 'icons/obj/weapons/guns/syndicate/ballistic.dmi'
 	icon_state = "plastikov"
 	inhand_icon_state = "plastikov"
 	mag_type = /obj/item/ammo_box/magazine/plastikov9mm
