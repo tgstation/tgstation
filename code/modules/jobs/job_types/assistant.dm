@@ -44,6 +44,7 @@ Assistant
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
 	..()
 	give_jumpsuit(target)
+	give_maintenance_card(target)
 
 /datum/outfit/job/assistant/proc/give_jumpsuit(mob/living/carbon/human/target)
 	var/static/jumpsuit_number = 0
@@ -61,6 +62,10 @@ Assistant
 		uniform = GLOB.colored_assistant.jumpsuits[index]
 	else
 		uniform = GLOB.colored_assistant.jumpskirts[index]
+
+/datum/outfit/job/assistant/proc/give_maintenance_card(mob/libing/carbon/human/target)
+	if(CONFIG_GET(flag/assistants_have_maint_access))
+		l_hand = /obj/item/card/id/advanced/maintenance_access
 
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"

@@ -36,6 +36,7 @@
 /obj/item/storage/box/ids/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/card/id/advanced(src)
+
 /obj/item/storage/box/silver_ids
 	name = "box of spare silver IDs"
 	desc = "Shiny IDs for important people."
@@ -44,6 +45,15 @@
 /obj/item/storage/box/silver_ids/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/card/id/advanced/silver(src)
+
+/obj/item/storage/box/maintenance_access
+	name = "box of spare maintenance access IDs"
+	desc = "Old IDs meant to be given for emergency maintenance crew. Treasured by assistants."
+	illustration = "id"
+
+/obj/item/storage/box/maintenance_access/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/card/id/advanced/maintenance_access(src)
 
 /obj/item/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"

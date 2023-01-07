@@ -1046,6 +1046,16 @@
 	assigned_icon_state = "assigned_silver"
 	wildcard_slots = WILDCARD_LIMIT_SILVER
 
+/obj/item/card/id/advanced/maintenance_access
+	name = "Maintenance Access Card"
+	trim = /datum/id_trim/maint_access
+	registered_name = "Maintenance Access Card"
+
+/datum/id_trim/maint_access
+	access = list(ACCESS_MAINT_TUNNELS)
+	trim_state = "trim_maintenance"
+	assignment = "Maintenance Access Crew"
+
 /datum/id_trim/maint_reaper
 	access = list(ACCESS_MAINT_TUNNELS)
 	trim_state = "trim_janitor"

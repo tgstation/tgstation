@@ -92,17 +92,6 @@
 		)
 	job = /datum/job/assistant
 
-/datum/id_trim/job/assistant/refresh_trim_access()
-	. = ..()
-
-	if(!.)
-		return
-
-	// Config has assistant maint access set.
-	if(CONFIG_GET(flag/assistants_have_maint_access))
-		access |= list(
-			ACCESS_MAINT_TUNNELS)
-
 /datum/id_trim/job/atmospheric_technician
 	assignment = "Atmospheric Technician"
 	trim_state = "trim_atmospherictechnician"
