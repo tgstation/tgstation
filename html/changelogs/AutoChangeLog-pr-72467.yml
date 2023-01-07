@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "check for stock parts that can be added to a machine frame by hand"
-  - bugfix: "RPED converts stock parts into datum parts before inserting it into a machine frame only if possible. e.g. for scanning modules"

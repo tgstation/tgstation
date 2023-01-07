@@ -661,17 +661,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/large,
 /area/ruin/plasma_facility/commons)
-"jb" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/storage/box/lights/mixed{
-	pixel_x = 15;
-	pixel_y = 14
-	},
-/mob/living/basic/frog{
-	name = "Peter Jr."
-	},
-/turf/open/floor/plating/icemoon,
-/area/ruin/plasma_facility/operations)
 "js" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -1115,6 +1104,15 @@
 /obj/machinery/space_heater/improvised_chem_heater,
 /turf/open/floor/plating,
 /area/ruin/plasma_facility/commons)
+"pE" = (
+/obj/structure/bed/maint,
+/obj/item/bedsheet/dorms,
+/obj/item/flashlight/flare/candle{
+	pixel_x = 12;
+	pixel_y = 9
+	},
+/turf/open/floor/plating/icemoon,
+/area/ruin/plasma_facility/operations)
 "pR" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating/icemoon,
@@ -1624,15 +1622,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/iron/smooth_half,
-/area/ruin/plasma_facility/operations)
-"Ak" = (
-/obj/structure/bed/maint,
-/obj/item/bedsheet/dorms,
-/obj/item/candle{
-	pixel_x = 12;
-	pixel_y = 9
-	},
-/turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "An" = (
 /obj/effect/turf_decal/tile/brown/half{
@@ -2807,6 +2796,17 @@
 	},
 /turf/open/floor/stone,
 /area/ruin/plasma_facility/commons)
+"TE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/lights/mixed{
+	pixel_x = 15;
+	pixel_y = 14
+	},
+/mob/living/basic/frog{
+	name = "Peter Jr."
+	},
+/turf/open/floor/plating/icemoon,
+/area/ruin/plasma_facility/operations)
 "TK" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -3888,7 +3888,7 @@ pd
 XI
 Hv
 SR
-Ak
+pE
 hR
 oc
 rs
@@ -3958,7 +3958,7 @@ vt
 hR
 qW
 EZ
-jb
+TE
 QY
 rk
 rs

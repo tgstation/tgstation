@@ -191,3 +191,64 @@
   - bugfix: The engineering lobby and lathe are no longer public access
   - bugfix: Doors will no longer be treated as public access when they have multiple
       accesses set on them
+2023-01-07:
+  A.C.M.O.:
+  - bugfix: Fixed the DNA Infuser's Goliaths infusion, which was not properly granting
+      its organ set bonus. Having all 4 goliath organs infused now makes you lava-proof
+      as expected.
+  Guillaume Prata:
+  - bugfix: Legion infested golem corpses can drop power tools again (Drill, Jaws,
+      Experimental Welder) but they were moved away from their pockets and into the
+      belt slot.
+  Jacquerel:
+  - balance: While Ian still enjoys being petted, his heart will now most closely
+      belong to anyone who gives him an expensive luxury dog bone.
+  - code_imp: Using an item which _can_ deal damage on a mob tracking hostile actions
+      (such as a dog) won't automatically be considered to be a hostile action if
+      you aren't actually hitting it with the item.
+  JohnFulpWillard:
+  - qol: Xenomorphs can now pick up xenomorph action figures.
+  LeDrascol:
+  - bugfix: Fixed the advanced mop displaying as a normal mop when held
+  Melbert:
+  - bugfix: Fixes runtimes from cursed people dying
+  Rhials:
+  - code_imp: Ghosts are now basic mobs! You might not notice any difference, but...
+  - code_imp: Ghost mobs now spawn with hair and sometimes facial hair.
+  - bugfix: backing out of the Test Card Packs debug menu will no longer cause a runtime
+  - bugfix: Validate Cards debug verb now gives feedback if no errors are detected.
+  ShizCalev:
+  - bugfix: Fixed the gulag item reclaimer sometimes not giving you all your items
+      back.
+  Striders13:
+  - qol: added a balloon alert to hulks trying to use cloak of shadows (they can't
+      use it)
+  SyncIt21:
+  - rscadd: RTD Rapid Tiling Device
+  - imageadd: Sprite for RTD
+  - code_imp: moved update_overlays() from rcd to obj/item/construction so anyone
+      can use it
+  - rscdel: cooldown of 3 seconds when changing turf type
+  - qol: Faster Turf decoration
+  - bugfix: check for stock parts that can be added to a machine frame by hand
+  - bugfix: RPED converts stock parts into datum parts before inserting it into a
+      machine frame only if possible. e.g. for scanning modules
+  san7890:
+  - bugfix: You should now no longer get a confusing message whenever you try to add
+      flour from a flour sack into a bowl.
+  timothymtorres:
+  - soundadd: Candles will now use the match lighting sound when lit
+  - soundadd: Light sources that burn will now have a welding hitsound
+  - bugfix: Fix candle light behaving erratically
+  - bugfix: Fix burning items that are held in hand will now have an ignition effect
+      on the turf. (ex. lit welders in hand will now ignite plasma in the air)
+  - balance: Light sources that burn and are lit now do `BURN` damage while attacking
+  - balance: Light sources fuel amounts were rounded to exact numbers (ex. instead
+      of 32.3333 minutes, it's now 35 minutes)
+  - qol: Light items that burn can now be extinguished by a fire extinguisher (except
+      flares), used to ignite another object on fire, and will now leave a trash item
+      once fuel is used
+  - qol: Add burnt flares and melted candles to trash spawners
+  - refactor: Refactor lighting items that use fuel to be more robust
+  tralezab:
+  - bugfix: Fixes Honorbound Sect not granting the right spell
