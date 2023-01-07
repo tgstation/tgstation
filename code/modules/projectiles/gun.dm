@@ -260,13 +260,13 @@
 	var/loop_counter = 0
 	if(ishuman(user) && user.combat_mode)
 		var/mob/living/carbon/human/H = user
-		for(var/obj/item/gun/G in H.held_items)
-			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
+		for(var/obj/item/gun/gun in H.held_items)
+			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
 				continue
-			else if(G.can_trigger_gun(user, akimbo_usage = TRUE))
+			else if(gun.can_trigger_gun(user, akimbo_usage = TRUE))
 				bonus_spread += dual_wield_spread
 				loop_counter++
-				addtimer(CALLBACK(G, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), loop_counter)
+				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), loop_counter)
 
 	return process_fire(target, user, TRUE, params, null, bonus_spread)
 
