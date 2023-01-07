@@ -8,9 +8,8 @@
 	icon_state = "ship"
 	base_icon_state = "ship" //Prefix of all the icons used by the ship. (ex. [base_icon_state]_moving)
 
-
 	/**
-	 * Template
+	 * Template and docking port.
 	 */
 	///The docking port of the linked shuttle
 	var/obj/docking_port/mobile/voidcrew/shuttle
@@ -18,7 +17,7 @@
 	var/datum/map_template/shuttle/voidcrew/source_template
 
 	/**
-	 * Ship stuff
+	 * Ship states and deletion.
 	 */
 	///State of the shuttle: idle, flying, docking, or undocking
 	var/state = OVERMAP_SHIP_IDLE
@@ -28,52 +27,59 @@
 	var/deletion_timer
 
 	/**
-	 * Player stuff
+	 * Player-facing Ship stuff.
 	 */
 	///Shipwide bank account
-	// var/datum/bank_account/ship/ship_account
+	var/datum/bank_account/ship/ship_account
+	///Voidcrew-unique team we link everyone's mind to.
+	var/datum/team/voidcrew/ship_team
+
+	///Boolean on whether players are allowed to latejoin into this ship, toggled by the job managing console.
+	var/joining_allowed = TRUE
+	///Name of the ship.
+	var/map_name
+	///Short memo of the ship, set by the crew, and shown to latejoiners.
+	var/memo
 
 	///Timer between job managing delays
 	COOLDOWN_DECLARE(job_slot_adjustment_cooldown)
-	///Whether players are allowed to latejoin into this ship, toggled by the job managing console.
-	var/joining_allowed = TRUE
-	///Short memo of the ship shown to new joins
-	var/memo = ""
+
 	///Manifest list of people on the ship
 	var/list/manifest = list()
 	///Assoc list of remaining open job slots (job = remaining slots)
 	var/list/job_slots
 
 	/**
-	 * Faction stuff
-	 */
-	/// The prefix the shuttle currently possesses
-	var/faction_prefix
-	///Voidcrew-unique team we link everyone's mind to.
-	var/datum/team/voidcrew/ship_team
-
-	/**
 	 * Movement stuff
 	 */
 	var/y_thrust = 0
 	var/x_thrust = 0
+
 	/**
 	 * Stuff needed to render the map
 	 */
-
-	/// Name of the map
-	var/map_name
 	/// The actual map screen
 	var/atom/movable/screen/map_view/cam_screen
 	/// The background of the map, usually doesn't do anything, but this is here so ships can customize the background ig?
 	var/atom/movable/screen/background/cam_background
 
-/obj/structure/overmap/ship/Initialize(mapload)
+/obj/structure/overmap/ship/Initialize(mapload, datum/map_template/shuttle/voidcrew/template)
 	. = ..()
-	ship_team = new()
-	ship_team.name = faction_prefix
+	if(!template) //no template, don't load
+		qdel(src)
+		return FALSE
+	src.source_template = template
 
-	display_name = "[faction_prefix] [name]"
+	ship_team = new()
+	ship_team.name = template.name
+
+	//now build the job slots.
+	job_slots = source_template.assemble_job_slots()
+
+	//then the account, which relies on there having a job, as we set it to the captain's.
+	ship_account = new(newname = ship_team.name, job = job_slots[1], player_account = FALSE)
+
+	display_name = "[source_template.faction_prefix] [name]"
 
 	map_name = "overmap_[REF(src)]_map"
 
@@ -87,18 +93,12 @@
 
 	SSovermap.simulated_ships += src
 
-/obj/structure/overmap/ship/proc/assign_source_template(datum/map_template/shuttle/voidcrew/template)
-	if(source_template)
-		CRASH("ship [type] already has a source template but [template.type] was trying to assign itself as the source template")
-	source_template = template
-	job_slots = template.assemble_job_slots()
-
 /obj/structure/overmap/ship/Destroy()
 	source_template = null
 	shuttle?.intoTheSunset()
 	shuttle = null
 	SSovermap.simulated_ships -= src
-	// QDEL_NULL(ship_account)
+	QDEL_NULL(ship_account)
 	manifest?.Cut()
 	job_slots?.Cut()
 	QDEL_NULL(ship_team)
@@ -179,6 +179,19 @@
 /obj/structure/overmap/ship/proc/register_crewmember(mob/living/carbon/human/crewmate)
 	ship_team.add_member(crewmate.mind)
 	RegisterSignal(crewmate, COMSIG_LIVING_DEATH, PROC_REF(on_member_death))
+
+	//set their ID to use our bank account
+	var/obj/item/card/id/card = crewmate.wear_id
+	if(!istype(card))
+		return
+	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[crewmate.account_id]"]
+	if(account && (account.account_id == crewmate.account_id))
+		qdel(account) //delete the individual account.
+		card.registered_account = ship_account
+		ship_account.bank_cards += card
+
+	crewmate.mind.wipe_memory() //clears ALL memories, but currently all they have is their old bank account.
+
 	//Adds a faction hud to a newplayer documentation in _HELPERS/game.dm
 //	add_faction_hud(FACTION_HUD_GENERAL, faction_prefix, crewmate)
 

@@ -206,3 +206,7 @@
 	prereq_ids = list("adv_biotech", "adv_engi")
 	design_ids = list("sleeper")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+
+/datum/techweb_node/basic_mining/New()
+	. = ..()
+	design_ids += list("bankmachine")

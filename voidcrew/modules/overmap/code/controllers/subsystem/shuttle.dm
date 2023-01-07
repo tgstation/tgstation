@@ -2,12 +2,11 @@
 	RETURN_TYPE(/obj/structure/overmap/ship)
 
 	UNTIL(!shuttle_loading)
-	var/obj/structure/overmap/ship/ship_to_spawn = new(SSovermap.get_unused_overmap_square(tries = INFINITY))
-	ship_template_to_spawn = new ship_template_to_spawn
+	var/obj/structure/overmap/ship/ship_to_spawn = new(SSovermap.get_unused_overmap_square(tries = INFINITY), new ship_template_to_spawn)
 
 	shuttle_loading = TRUE
 	SSair.can_fire = FALSE // fuck you
-	var/obj/docking_port/mobile/voidcrew/loaded = action_load(ship_template_to_spawn)
+	var/obj/docking_port/mobile/voidcrew/loaded = action_load(ship_to_spawn.source_template)
 	SSair.can_fire = TRUE
 	shuttle_loading = FALSE
 
@@ -17,7 +16,6 @@
 
 	loaded.current_ship = ship_to_spawn
 	ship_to_spawn.name = loaded.name
-	ship_to_spawn.assign_source_template(ship_template_to_spawn)
 	ship_to_spawn.shuttle = loaded
 
 	// assign landmarks as needed

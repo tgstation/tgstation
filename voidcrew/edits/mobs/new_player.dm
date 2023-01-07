@@ -91,7 +91,7 @@
 		return FALSE
 
 	if(!joined_ship.job_slots[job])
-		to_chat(usr, "<span class='danger'>There are no more [job.title] positions available on this ship!</span>")
+		to_chat(usr, span_danger("There are no more [job.title] positions available on this ship!"))
 		return FALSE
 
 	//Removes a job slot
