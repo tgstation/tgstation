@@ -382,6 +382,9 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
+	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
+		muck()
+		return
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
 		muck()
 		return
@@ -467,12 +470,16 @@
 
 		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
 
+	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(5))
+		spark()
+		broken = REALLY_BROKEN
+		explosion(src, light_impact_range = 2, flame_range = 1)
+
 	if(metal_amount)
 		spark()
 		broken = REALLY_BROKEN
-		if(prob(max(metal_amount / 2, 33)))
+		if(HAS_TRAIT(cooker, TRAIT_CURSED) || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
-
 	else
 		dump_inventory_contents()
 

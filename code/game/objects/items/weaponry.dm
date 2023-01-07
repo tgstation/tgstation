@@ -139,7 +139,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(ishuman(loc))
 		var/mob/living/carbon/human/holder = loc
 		SET_PLANE_EXPLICIT(holder, GAME_PLANE_UPPER_FOV_HIDDEN, src) //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
-		ADD_TRAIT(holder, TRAIT_NOBLEED, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
+		ADD_TRAIT(holder, TRAIT_NOBLOOD, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
@@ -903,7 +903,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/mob/living/living_target = target
 		living_target.adjustBruteLoss(extra_strength_damage)
 
-/obj/item/proc/can_trigger_gun(mob/living/user)
+/obj/item/proc/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(!user.can_use_guns(src))
 		return FALSE
 	return TRUE
@@ -1033,6 +1033,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
 		return
 	slash(target, user, params)
+	return AFTERATTACK_PROCESSED_ITEM
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
