@@ -41,11 +41,6 @@
 		span_notice("[user] begins to sever [target]'s [parse_zone(target_zone)]!"),
 		span_notice("[user] begins to sever [target]'s [parse_zone(target_zone)]!"),
 	)
-	if(surgery.operated_bodypart)
-		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
-		if(HAS_TRAIT(target_limb, TRAIT_BODYPART_UNREMOVABLE))
-			to_chat(user, span_warning("[target_limb] is too well connected to remove!"))
-			return SURGERY_STEP_FAIL
 	display_pain(target, "You feel a gruesome pain in your [parse_zone(target_zone)]'s joint!")
 
 

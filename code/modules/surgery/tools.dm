@@ -438,10 +438,6 @@
 			return
 		candidate_name = limb_snip_candidate.name
 
-		if(user.zone_selected != BODY_ZONE_PRECISE_GROIN && HAS_TRAIT(limb_snip_candidate, TRAIT_BODYPART_UNREMOVABLE))
-			to_chat(user, span_warning("[limb_snip_candidate] is too well connected to remove!"))
-			return
-
 	var/amputation_speed_mod = 1
 
 	patient.visible_message(span_danger("[user] begins to secure [src] around [patient]'s [candidate_name]."), span_userdanger("[user] begins to secure [src] around your [candidate_name]!"))
