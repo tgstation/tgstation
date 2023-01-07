@@ -520,6 +520,9 @@
 	hardcore_value = 3
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
+	var/list/surplus_limb_typecahce = list(/obj/item/bodypart/arm/left/robot/surplus, /obj/item/bodypart/arm/right/robot/surplus, /obj/item/bodypart/leg/left/robot/surplus, /obj/item/bodypart/leg/right/robot/surplus)
+	var/list/checked_limb_type
+	var/limp_slowdown = 3
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -528,22 +531,55 @@
 	switch(limb_slot)
 		if(BODY_ZONE_L_ARM)
 			prosthetic = new /obj/item/bodypart/arm/left/robot/surplus
+			checked_limb_type = /obj/item/bodypart/arm/left
 			slot_string = "left arm"
 		if(BODY_ZONE_R_ARM)
 			prosthetic = new /obj/item/bodypart/arm/right/robot/surplus
+			checked_limb_type = /obj/item/bodypart/arm/right
 			slot_string = "right arm"
 		if(BODY_ZONE_L_LEG)
 			prosthetic = new /obj/item/bodypart/leg/left/robot/surplus
+			checked_limb_type = /obj/item/bodypart/leg/left
+			RegisterSignal(human_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 			slot_string = "left leg"
 		if(BODY_ZONE_R_LEG)
 			prosthetic = new /obj/item/bodypart/leg/right/robot/surplus
+			checked_limb_type = /obj/item/bodypart/leg/right
+			RegisterSignal(human_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 			slot_string = "right leg"
-	ADD_TRAIT(prosthetic, TRAIT_BODYPART_UNREMOVABLE, QUIRK_TRAIT)
 	human_holder.del_and_replace_bodypart(prosthetic)
+
+/datum/quirk/prosthetic_limb/add(client/client_source)
+	limb_typecahce = typecacheof(limb_typecahce)
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment. It cannot be removed or replaced through surgery."))
+
+/datum/quirk/prosthetic_limb/on_moved(mob/guy, OldLoc, Dir, forced)
+	SIGNAL_HANDLER
+
+	if(!ishuman(quirk_holder)) //Just here to be safe
+		return
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	if(!human_holder.client || human_holder.body_position == LYING_DOWN || !human_holder.has_gravity() || (human_holder.movement_type & FLYING) || forced || human_holder.buckled)
+		return
+
+	var/limping_message
+	for(var/obj/item/bodypart/leg/leg in human_holder.bodyparts)
+		if(checked_limb_type && !istype(bodypart, checked_limb_type))
+			continue
+		if(is_type_in_typecache(bodypart, limb_typecahce))
+			continue
+		if(prob(50))
+			limping_message = TRUE
+			human_holder.client.move_delay += limp_slowdown
+	if(limping_message && prob(20)) ///Don't want to spam this
+		to_chat(human_holder, "You limp on one of your legs, due to not getting used to them.")
+
+/datum/quirk/prosthetic_limb/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
 
 /datum/quirk/quadruple_amputee
 	name = "Quadruple Amputee"
@@ -560,13 +596,10 @@
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus)
-	for(var/obj/item/bodypart/bodypart in human_holder.bodyparts)
-		if(istype(bodypart, /obj/item/bodypart/arm) || istype(bodypart, /obj/item/bodypart/leg))
-			ADD_TRAIT(bodypart, TRAIT_BODYPART_UNREMOVABLE, QUIRK_TRAIT)
 
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment. They cannot be removed or replaced through surgery."))
+	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment. "))
 
 /datum/quirk/pushover
 	name = "Pushover"
