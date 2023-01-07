@@ -765,18 +765,6 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
-"rW" = (
-/obj/structure/bed/dogbed/cayenne{
-	name = "Paprika's bed"
-	},
-/mob/living/basic/carp/pet/cayenne{
-	desc = "It's Paprika! One of the Spider Clan's lovable Space Carp!";
-	faction = list("neutral");
-	name = "Paprika";
-	real_name = "Paprika"
-	},
-/turf/open/floor/carpet/black,
-/area/centcom/central_command_areas/holding)
 "sc" = (
 /obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
@@ -801,16 +789,6 @@
 	icon_state = "plant-10"
 	},
 /turf/open/floor/stone,
-/area/centcom/central_command_areas/holding)
-"ti" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/table/wood/fancy/green,
-/obj/item/candle/infinite{
-	pixel_y = 6
-	},
-/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "ts" = (
 /obj/item/food/meat/slab/chicken,
@@ -1165,6 +1143,18 @@
 /obj/machinery/vending/hydroseeds,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/tile,
+/area/centcom/central_command_areas/holding)
+"Cr" = (
+/obj/structure/bed/dogbed/cayenne{
+	name = "Paprika's bed"
+	},
+/mob/living/basic/carp/pet/cayenne{
+	desc = "It's Paprika! One of the Spider Clan's lovable Space Carp!";
+	faction = list("neutral");
+	name = "Paprika";
+	real_name = "Paprika"
+	},
+/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "CD" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1954,6 +1944,16 @@
 /area/centcom/central_command_areas/holding)
 "UO" = (
 /obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
+"UW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 6
+	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "UY" = (
@@ -2789,7 +2789,7 @@ XP
 dg
 PX
 hO
-ti
+UW
 jf
 hO
 hO
@@ -3159,7 +3159,7 @@ xw
 So
 dg
 xi
-rW
+Cr
 dg
 iH
 mw

@@ -29,6 +29,8 @@
 	var/static/list/danger_turfs
 	/// A matrix that turns everything except #ffffff into pure blackness, used for our images (the outlines are #ffffff).
 	var/static/list/black_white_matrix = list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0)
+	/// A matrix that turns everything into pure white.
+	var/static/list/white_matrix = list(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 0, 0, 0, 1, 0, -0, 0, 0)
 	/// Cooldown for the echolocation.
 	COOLDOWN_DECLARE(cooldown_last)
 
@@ -38,7 +40,7 @@
 	if(!istype(echolocator))
 		return COMPONENT_INCOMPATIBLE
 	if(!danger_turfs)
-		danger_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/chasm, /turf/open/lava))
+		danger_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/chasm, /turf/open/lava, /turf/open/floor/fakespace, /turf/open/floor/fakepit, /turf/closed/wall/space))
 	if(!allowed_paths)
 		allowed_paths = typecacheof(list(/turf/closed, /obj, /mob/living)) + danger_turfs - typecacheof(/obj/effect/decal)
 	if(!isnull(echo_range))
@@ -59,6 +61,7 @@
 		client_color = echolocator.add_client_colour(color_path)
 	src.echo_group = echo_group || REF(src)
 	ADD_TRAIT(echolocator, TRAIT_ECHOLOCATION_RECEIVER, echo_group)
+	ADD_TRAIT(echolocator, TRAIT_TRUE_NIGHT_VISION, echo_group) //so they see all the tiles they echolocated, even if they are in the dark
 	echolocator.become_blind(ECHOLOCATION_TRAIT)
 	echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo, echo_icon)
 	START_PROCESSING(SSfastprocess, src)
@@ -68,6 +71,7 @@
 	var/mob/living/echolocator = parent
 	QDEL_NULL(client_color)
 	REMOVE_TRAIT(echolocator, TRAIT_ECHOLOCATION_RECEIVER, echo_group)
+	REMOVE_TRAIT(echolocator, TRAIT_TRUE_NIGHT_VISION, echo_group)
 	echolocator.cure_blind(ECHOLOCATION_TRAIT)
 	echolocator.clear_fullscreen("echo")
 	for(var/timeframe in images)
@@ -85,8 +89,11 @@
 		return
 	COOLDOWN_START(src, cooldown_last, cooldown_time)
 	var/mob/living/echolocator = parent
+	var/real_echo_range = echo_range
+	if(HAS_TRAIT(echolocator, TRAIT_ECHOLOCATION_EXTRA_RANGE))
+		real_echo_range += 2
 	var/list/filtered = list()
-	var/list/seen = dview(echo_range, echolocator.loc, invis_flags = echolocator.see_invisible)
+	var/list/seen = dview(real_echo_range, get_turf(echolocator.client?.eye || echolocator), invis_flags = echolocator.see_invisible)
 	for(var/atom/seen_atom as anything in seen)
 		if(!seen_atom.alpha)
 			continue
@@ -116,6 +123,8 @@
 	if(images_are_static)
 		final_image.pixel_x = input.pixel_x
 		final_image.pixel_y = input.pixel_y
+	if(HAS_TRAIT_FROM(input, TRAIT_ECHOLOCATION_RECEIVER, echo_group)) //mark other echolocation with full white
+		final_image.color = white_matrix
 	images[current_time] += final_image
 	for(var/mob/living/echolocate_receiver as anything in receivers[current_time])
 		if(echolocate_receiver == input)
@@ -129,6 +138,7 @@
 	var/mutable_appearance/copied_appearance = new /mutable_appearance()
 	copied_appearance.appearance = input
 	if(istype(input, /obj/machinery/door/airlock)) //i hate you
+		copied_appearance.cut_overlays()
 		copied_appearance.icon = 'icons/obj/doors/airlocks/station/public.dmi'
 		copied_appearance.icon_state = "closed"
 	else if(danger_turfs[input.type])

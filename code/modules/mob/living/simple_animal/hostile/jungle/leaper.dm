@@ -136,10 +136,7 @@
 	icon_state = "lily_pad"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
-	pixel_x = -32
-	base_pixel_x = -32
-	pixel_y = -32
-	base_pixel_y = -32
+	SET_BASE_PIXEL(-32, -32)
 	duration = 30
 
 /mob/living/simple_animal/hostile/jungle/leaper/Initialize(mapload)
