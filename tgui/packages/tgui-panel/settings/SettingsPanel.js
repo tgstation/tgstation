@@ -163,7 +163,7 @@ const TextHighlightSettings = (props, context) => {
   const highlightSettings = useSelector(context, selectHighlightSettings);
   const dispatch = useDispatch(context);
   return (
-    <Section fill scrollable>
+    <Section fill scrollable height="200px">
       <Section p={0}>
         <Flex direction="column">
           {highlightSettings.map((id, i) => (
@@ -214,9 +214,9 @@ const TextHighlightSetting = (props, context) => {
   return (
     <Flex.Item {...rest}>
       <Flex mb={1} color="label" align="baseline">
-        <Flex.Item grow={1}>
+        <Flex.Item grow>
           <Button
-            content="Highlight words:"
+            content="Delete"
             color="transparent"
             icon="times"
             onClick={() =>
@@ -228,10 +228,11 @@ const TextHighlightSetting = (props, context) => {
             }
           />
         </Flex.Item>
-        <Flex.Item shrink={0}>
+        <Flex.Item>
           <Button.Checkbox
             checked={highlightWholeMessage}
-            content="Highlight Whole Message"
+            content="Whole Message"
+            tooltip="If this option is selected, the entire message will be highlighted in yellow."
             mr="5px"
             onClick={() =>
               dispatch(
@@ -242,11 +243,13 @@ const TextHighlightSetting = (props, context) => {
               )
             }
           />
+        </Flex.Item>
+        <Flex.Item>
           <Button.Checkbox
-            content="Match word"
+            content="Exact"
             checked={matchWord}
             tooltipPosition="bottom-start"
-            tooltip="Not compatible with punctuation. Overriden if regex is used."
+            tooltip="If this option is selected, only exact matches (no extra letters before or after) will trigger. Not compatible with punctuation. Overriden if regex is used."
             onClick={() =>
               dispatch(
                 updateHighlightSetting({
@@ -256,8 +259,11 @@ const TextHighlightSetting = (props, context) => {
               )
             }
           />
+        </Flex.Item>
+        <Flex.Item>
           <Button.Checkbox
-            content="Match case"
+            content="Case"
+            tooltip="If this option is selected, the highlight will be case-sensitive."
             checked={matchCase}
             onClick={() =>
               dispatch(
@@ -290,7 +296,7 @@ const TextHighlightSetting = (props, context) => {
       <TextArea
         height="3em"
         value={highlightText}
-        placeholder="Separate terms with commas, i.e. (term1, term2, term3)"
+        placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
         onChange={(e, value) =>
           dispatch(
             updateHighlightSetting({
