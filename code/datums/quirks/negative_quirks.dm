@@ -538,6 +538,7 @@
 		if(BODY_ZONE_R_LEG)
 			prosthetic = new /obj/item/bodypart/leg/right/robot/surplus
 			slot_string = "right leg"
+	ADD_TRAIT(prosthetic, TRAIT_BODYPART_UNREMOVABLE, QUIRK_TRAIT)
 	human_holder.del_and_replace_bodypart(prosthetic)
 
 /datum/quirk/prosthetic_limb/post_add()
@@ -559,6 +560,9 @@
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus)
+	for(var/obj/item/bodypart/bodypart in human_holder.bodyparts)
+		if(istype(bodypart, /obj/item/bodypart/arm) || istype(bodypart, /obj/item/bodypart/leg))
+			ADD_TRAIT(bodypart, TRAIT_BODYPART_UNREMOVABLE, QUIRK_TRAIT)
 
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
