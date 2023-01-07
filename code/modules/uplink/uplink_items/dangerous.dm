@@ -94,8 +94,8 @@
 	restricted = TRUE
 
 /datum/uplink_item/dangerous/revolver
-	name = "Syndicate Revolver"
-	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
+	name = "tactical revolver"
+	desc = "Waffle Co.'s modernized tactical revolver. Fires 7 brutal rounds of .357 Magnum."
 	item = /obj/item/gun/ballistic/revolver/syndicate
 	progression_minimum = 30 MINUTES
 	cost = 13

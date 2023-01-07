@@ -523,7 +523,6 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat/interdyne
 	back = /obj/item/storage/backpack/satchel
 	backpack_contents = list(
-		/obj/item/storage/bag/bio = 1,
 		/obj/item/reagent_containers/hypospray = 1,
 	)
 	ears = /obj/item/radio/headset/syndicate
@@ -531,6 +530,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/breath/medical/interdyne
 	shoes = /obj/item/clothing/shoes/combat
+	belt = /obj/item/storage/bag/bio
 	r_pocket = /obj/item/reagent_containers/syringe
 	box = /obj/item/storage/box/survival/medical
 
@@ -598,7 +598,7 @@
 /datum/outfit/syndi_faction/tigercoop
 	name = "Syndicate Factioner - Tiger Coop"
 
-/datum/outfit/syndi_faction/interdyne/researcher
+/datum/outfit/syndi_faction/tigercoop/priest
 	name = "Syndicate Factioner - Tiger Coop Priest"
 
 	uniform = /obj/item/clothing/under/syndicate/tiger/priest
@@ -611,3 +611,103 @@
 	r_pocket = /obj/item/reagent_containers/syringe
 
 	box = /obj/item/storage/box/survival/syndie
+
+/datum/outfit/syndi_faction/gorlex
+	name = "Syndicate Factioner - Gorlex Security Consulting, LLC."
+
+/datum/outfit/syndi_faction/gorlex/marauder
+	name = "Syndicate Factioner - Gorlex Marauder Corps"
+
+	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
+	id_trim = /datum/id_trim/syndicom/private
+
+	uniform = /obj/item/clothing/under/syndicate/gorlex/combat
+	back = /obj/item/storage/backpack
+	ears = /obj/item/radio/headset/syndicate/alt
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/combat
+	mask = /obj/item/clothing/mask/gas/syndicate
+
+	r_pocket = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	l_pocket = /obj/item/ammo_box/magazine/m10mm
+
+	box = /obj/item/storage/box/survival/syndie
+
+/datum/outfit/syndi_faction/gorlex/marauder/suit
+	name = "Syndicate Factioner - Gorlex Marauder Corps (Suited)"
+
+	suit = /obj/item/clothing/suit/armor/swat/gorlex
+	head = /obj/item/clothing/head/helmet/swat/gorlex
+
+	r_pocket = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	l_pocket = /obj/item/ammo_box/magazine/m10mm
+
+/datum/outfit/syndi_faction/gorlex/strike
+	name = "Syndicate Factioner - Gorlex Strike Team Operative"
+
+	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
+	id_trim = /datum/id_trim/syndicom/specialist
+
+	uniform = /obj/item/clothing/under/syndicate/gorlex/combat
+
+	back = /obj/item/storage/backpack
+	backpack_contents = list(
+		/obj/item/clothing/mask/gas/syndicate = 1,
+		/obj/item/gun/ballistic/automatic/pistol/clandestine = 1,
+		/obj/item/ammo_box/magazine/m10mm = 2,
+	)
+
+	suit = /obj/item/clothing/suit/armor/bulletproof
+	ears = /obj/item/radio/headset/syndicate/alt
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/combat
+
+	l_pocket = /obj/item/uplink/nuclear
+	r_pocket = /obj/item/modular_computer/pda/nukeops
+
+	box = /obj/item/storage/box/survival/syndie
+
+/datum/outfit/syndi_faction/gorlex/strike
+	name = "Syndicate Factioner - Gorlex Strike Team Operative (MODsuit)"
+
+	back = /obj/item/mod/control/pre_equipped/nuclear
+	suit = null
+	head = null
+	mask = /obj/item/clothing/mask/gas/syndicate
+	suit_store = /obj/item/tank/internals/emergency_oxygen/double
+	internals_slot = ITEM_SLOT_SUITSTORE
+
+/datum/outfit/syndi_faction/gorlex/colonel
+	name = "Syndicate Factioner - Gorlex Colonel"
+
+	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
+	id_trim = /datum/id_trim/syndicom/officer/colonel
+
+	uniform = /obj/item/clothing/under/syndicate/gorlex/enlisted/snr_officer
+
+	back = /obj/item/storage/backpack/satchel/leather
+
+	backpack_contents = list(
+		/obj/item/clothing/mask/gas/syndicate = 1,
+		/obj/item/ammo_box/a12 = 1,
+	)
+
+	suit = /obj/item/clothing/suit/armor/vest/capcarapace/gorlex
+	suit_store = /obj/item/gun/ballistic/revolver/judge
+	glasses = /obj/item/clothing/glasses/thermal/sunglasses
+	ears = /obj/item/radio/headset/syndicate/alt/leader
+	head = /obj/item/clothing/head/caphat/beret/gorlex
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/combat
+
+	l_pocket = /obj/item/uplink/nuclear
+	r_pocket = /obj/item/modular_computer/pda/nukeops
+
+	box = /obj/item/storage/box/survival/syndie
+
+/datum/outfit/syndi_faction/gorlex/colonel/captain
+	name = "Syndicate Factioner - Gorlex Captain"
+
+	id_trim = /datum/id_trim/syndicom/officer/captain
+
+	head = /obj/item/clothing/head/hats/caphat/parade/gorlex

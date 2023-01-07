@@ -8,11 +8,6 @@
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	item_flags = NO_MAT_REDEMPTION
 
-/obj/item/ammo_box/a357/match
-	name = "speed loader (.357 Match)"
-	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
-	ammo_type = /obj/item/ammo_casing/a357/match
-
 /obj/item/ammo_box/c38
 	name = "speed loader (.38)"
 	desc = "Designed to quickly reload revolvers."
@@ -52,6 +47,16 @@
 	name = "speed loader (.38 Iceblox)"
 	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
+
+/obj/item/ammo_box/a12
+	name = "speed loader (12G)"
+	desc = "Designed to quickly reload revolvers."
+	icon_state = "357"
+	ammo_type = /obj/item/ammo_casing/shotgun
+	max_ammo = 5
+	caliber = CALIBER_SHOTGUN
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"

@@ -236,7 +236,7 @@
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	id_trim = /datum/id_trim/syndicom/officer/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/gorlex
-	suit_store = /obj/item/gun/ballistic/revolver/mateba
+	suit_store = /obj/item/gun/ballistic/revolver/judge
 	back = /obj/item/storage/backpack/satchel/leather
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	glasses = /obj/item/clothing/glasses/thermal/sunglasses

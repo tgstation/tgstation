@@ -71,6 +71,11 @@
 	icon_state = "capcap"
 	dog_fashion = null
 
+/obj/item/clothing/head/hats/caphat/parade/gorlex
+	name = "officer's cap"
+	desc = "Fit for a private battlecruiser's senior officer."
+	icon_state = "gorlex_cap"
+
 /obj/item/clothing/head/caphat/beret
 	name = "captain's beret"
 	desc = "For the Captains known for their sense of fashion."
@@ -180,10 +185,6 @@
 	fire = 50
 	acid = 60
 	wound = 10
-
-/obj/item/clothing/head/hats/hos/syndicate
-	name = "syndicate cap"
-	desc = "A black cap fit for a high ranking syndicate officer."
 
 /obj/item/clothing/head/hats/hos/beret
 	name = "head of security's beret"
