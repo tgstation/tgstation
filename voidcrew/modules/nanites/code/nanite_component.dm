@@ -363,24 +363,23 @@
 
 	if(!full_scan)
 		if(!stealth)
-			to_chat(user, "<span class='notice'><b>Nanites Detected</b></span>")
-			to_chat(user, "<span class='notice'>Saturation: [nanite_volume]/[max_nanites]</span>")
+			to_chat(user, span_boldnotice("Nanites Detected"))
+			to_chat(user, span_notice("Saturation: [nanite_volume]/[max_nanites]"))
 			return TRUE
 	else
-		to_chat(user, "<span class='info'>NANITES DETECTED</span>")
-		to_chat(user, "<span class='info'>================</span>")
-		to_chat(user, "<span class='info'>Saturation: [nanite_volume]/[max_nanites]</span>")
-		to_chat(user, "<span class='info'>Safety Threshold: [safety_threshold]</span>")
-		to_chat(user, "<span class='info'>Cloud ID: [cloud_id ? cloud_id : "None"]</span>")
-		to_chat(user, "<span class='info'>Cloud Sync: [cloud_active ? "Active" : "Disabled"]</span>")
-		to_chat(user, "<span class='info'>================</span>")
-		to_chat(user, "<span class='info'>Program List:</span>")
+		to_chat(user, span_info("NANITES DETECTED"))
+		to_chat(user, span_info("================"))
+		to_chat(user, span_info("Saturation: [nanite_volume]/[max_nanites]"))
+		to_chat(user, span_info("Safety Threshold: [safety_threshold]"))
+		to_chat(user, span_info("Cloud ID: [cloud_id ? cloud_id : "None"]"))
+		to_chat(user, span_info("Cloud Sync: [cloud_active ? "Active" : "Disabled"]"))
+		to_chat(user, span_info("================"))
+		to_chat(user, span_info("Program List:"))
 		if(!diagnostics)
-			to_chat(user, "<span class='alert'>Diagnostics Disabled</span>")
+			to_chat(user, span_alert("Diagnostics Disabled"))
 		else
-			for(var/X in programs)
-				var/datum/nanite_program/NP = X
-				to_chat(user, "<span class='info'><b>[NP.name]</b> | [NP.activated ? "Active" : "Inactive"]</span>")
+			for(var/datum/nanite_program/NP as anything in programs)
+				to_chat(user, span_info("<b>[NP.name]</b> | [NP.activated ? "Active" : "Inactive"]"))
 		return TRUE
 
 /datum/component/nanites/proc/nanite_ui_data(datum/source, list/data, scan_level)

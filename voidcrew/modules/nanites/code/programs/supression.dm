@@ -29,11 +29,11 @@
 
 /datum/nanite_program/paralyzing/enable_passive_effect()
 	. = ..()
-	to_chat(host_mob, "<span class='warning'>Your muscles seize! You can't move!</span>")
+	to_chat(host_mob, span_warning("Your muscles seize! You can't move!"))
 
 /datum/nanite_program/paralyzing/disable_passive_effect()
 	. = ..()
-	to_chat(host_mob, "<span class='notice'>Your muscles relax, and you can move again.</span>")
+	to_chat(host_mob, span_notice("Your muscles relax, and you can move again."))
 
 /**
  * Electric Shock
@@ -181,7 +181,7 @@
 		return
 	if(host_mob.stat == DEAD)
 		return
-	to_chat(host_mob, "<span class='warning'>You feel compelled to speak...</span>")
+	to_chat(host_mob, span_warning("You feel compelled to speak..."))
 	host_mob.say(sent_message, forced = "nanite speech")
 
 /**

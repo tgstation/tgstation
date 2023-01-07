@@ -1,5 +1,6 @@
 /datum/latejoin_menu/ui_interact(mob/dead/new_player/user, datum/tgui/ui)
 	user.select_ship() //override ui_interact and send to our latejoin menu instead
+	return TRUE
 
 /**
  * Latejoin menu
@@ -50,7 +51,7 @@
 			continue
 		job_choices["[job.title] ([selected_ship.job_slots[job]] positions)"] = job
 	if(!job_choices.len)
-		to_chat(usr, "<span class='danger'>There are no jobs available on this ship!</span>")
+		to_chat(usr, span_danger("There are no jobs available on this ship!"))
 		return select_ship() //Send them back to shuttle selection
 
 	var/datum/job/selected_job = job_choices[tgui_input_list(src, "Select job.", "Welcome, [used_name].", job_choices)]
@@ -58,11 +59,11 @@
 		return select_ship() //Send them back to shuttle selection
 
 	if(!SSticker?.IsRoundInProgress())
-		to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+		to_chat(usr, span_danger("The round is either not ready, or has already finished..."))
 		return
 
 	if(!GLOB.enter_allowed)
-		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+		to_chat(usr, span_notice("There is an administrative lock on entering the game!"))
 		return
 
 	var/relevant_cap
@@ -75,7 +76,7 @@
 
 	if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
 		if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
-			to_chat(usr, "<span class='warning'>Server is full.</span>")
+			to_chat(usr, span_warning("Server is full."))
 
 	AttemptSpawnOnShip(selected_job, selected_ship)
 
@@ -137,7 +138,7 @@
 	if((job.job_flags & JOB_ASSIGN_QUIRKS) && humanc && CONFIG_GET(flag/roundstart_traits))
 		SSquirks.AssignQuirks(humanc, humanc.client)
 
-	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
+	log_manifest(character.mind.key,character.mind,character, latejoin = TRUE)
 	log_shuttle("[character.mind.key] / [character.mind.name] has joined [joined_ship.name] as [job.title]")
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, character, job.title)

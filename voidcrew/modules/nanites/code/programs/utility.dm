@@ -277,7 +277,7 @@
 		infectee.AddComponent(/datum/component/nanites, null, 5)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
 		log_game("[infectee] was infected by a nanite cluster by [key_name(host_mob)] at [AREACOORD(infectee)].")
-		to_chat(infectee, "<span class='warning'>You feel a tiny prick.</span>")
+		to_chat(infectee, span_warning("You feel a tiny prick."))
 
 /datum/nanite_program/mitosis
 	name = "Mitosis"
