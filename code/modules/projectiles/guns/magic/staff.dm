@@ -18,6 +18,11 @@
 		return FALSE
 	return TRUE
 
+/obj/item/gun/magic/staff/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage && !is_wizard_or_friend(user))
+		return FALSE
+	return ..()
+
 /obj/item/gun/magic/staff/check_botched(mob/living/user, atom/target)
 	if(!is_wizard_or_friend(user))
 		return !on_intruder_use(user, target)

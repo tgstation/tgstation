@@ -11,7 +11,7 @@
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
 		/obj/item/shard = 1,
-		/obj/item/candle = 1,
+		/obj/item/flashlight/flare/candle = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 	cost = 1
