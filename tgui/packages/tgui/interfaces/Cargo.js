@@ -1,21 +1,7 @@
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
-import {
-  AnimatedNumber,
-  Box,
-  Button,
-  Flex,
-  Icon,
-  Input,
-  RestrictedInput,
-  LabeledList,
-  NoticeBox,
-  Section,
-  Stack,
-  Table,
-  Tabs,
-} from '../components';
+import { AnimatedNumber, Box, Button, Flex, Icon, Input, RestrictedInput, LabeledList, NoticeBox, Section, Stack, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -443,24 +429,22 @@ const CargoCart = (props, context) => {
                 )) || <Input width="40px" value={entry.amount} disabled />}
               </Table.Cell>
               <Table.Cell inline ml="5px" width="10px">
-                {(can_send && entry.can_be_cancelled && (
+                {!!can_send && !!entry.can_be_cancelled && (
                   <Button
                     icon="plus"
                     onClick={() =>
                       act('add_by_name', { order_name: entry.object })
                     }
                   />
-                )) ||
-                  ''}
+                )}
               </Table.Cell>
               <Table.Cell inline ml="15px" width="10px">
-                {(can_send && entry.can_be_cancelled && (
+                {!!can_send && !!entry.can_be_cancelled && (
                   <Button
                     icon="minus"
                     onClick={() => act('remove', { order_name: entry.object })}
                   />
-                )) ||
-                  ''}
+                )}
               </Table.Cell>
               <Table.Cell collapsing textAlign="right" inline ml="50px">
                 {entry.paid > 0 && <b>[Paid Privately x {entry.paid}]</b>}
