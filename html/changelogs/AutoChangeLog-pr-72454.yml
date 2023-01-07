@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "You should now no longer get a confusing message whenever you try to add flour from a flour sack into a bowl."
