@@ -29,6 +29,9 @@
 	if(is_radio)
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/existing_human in GLOB.alive_mob_list)
+			// these roles usually have special names that can reveal antags
+			if(IS_WIZARD(existing_human) || IS_NUKE_OP(existing_human) || IS_SPACE_NINJA(existing_human))
+				continue
 			humans += existing_human
 		speaker = pick(humans)
 
