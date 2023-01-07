@@ -26,11 +26,11 @@ SUBSYSTEM_DEF(materials)
 		new /datum/stack_recipe("Toilet", /obj/structure/toilet/greyscale, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
 		new /datum/stack_recipe("Sink Frame", /obj/structure/sinkframe, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
 		new /datum/stack_recipe("Material floor tile", /obj/item/stack/tile/material, 1, 4, 20, applies_mats = TRUE, category = CAT_TILES),
-		new /datum/stack_recipe("Material airlock assembly", /obj/structure/door_assembly/door_assembly_material, 4, time = 50, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS),
+		new /datum/stack_recipe("Material airlock assembly", /obj/structure/door_assembly/door_assembly_material, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS),
 	)
 	///List of stackcrafting recipes for materials using rigid recipes
 	var/list/rigid_stack_recipes = list(
-		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_STRUCTURE),
+		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_STRUCTURE),
 	)
 
 ///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
