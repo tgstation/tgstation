@@ -105,7 +105,7 @@
 
 	// So he can't jump out the gate right away.
 	new_borg.SetLockdown()
-	if(masterAI)
+	if(masterAI && new_borg.connected_ai != masterAI)
 		new_borg.set_connected_ai(masterAI)
 		new_borg.lawsync()
 		new_borg.lawupdate = TRUE
