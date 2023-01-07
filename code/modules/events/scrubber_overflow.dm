@@ -148,7 +148,7 @@
 	///Reagent thats going to be flooded.
 	var/datum/reagent/custom_reagent
 
-/datum/round_event_control/scrubber_overflow/custom/annouce_name(random)
+/datum/round_event_control/scrubber_overflow/custom/announce_deadchat(random)
 	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>Scrubber Overflow: [initial(custom_reagent.name)]</b>", message_type=DEADCHAT_ANNOUNCEMENT)
 
 /datum/round_event_control/scrubber_overflow/custom/admin_setup(mob/admin)
