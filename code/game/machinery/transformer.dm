@@ -61,7 +61,7 @@
 		var/mob/living/carbon/human/victim = entering_thing
 		if((transform_standing || victim.body_position == LYING_DOWN) && move_dir == EAST)
 			entering_thing.forceMove(drop_location())
-			do_transform(victim)
+			do_transform(entering_thing)
 
 /obj/machinery/transformer/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
