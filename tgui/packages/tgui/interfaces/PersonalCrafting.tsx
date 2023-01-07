@@ -573,17 +573,18 @@ const FoodtypeContent = (props) => {
         {type.toLowerCase()}
       </Stack.Item>
       <Stack.Item>
-        {type === 'Can Make' ? (
-          craftableCount
-        ) : diet.liked_food.includes(type) ? (
-          <Icon name="face-laugh-beam" color={'good'} />
-        ) : diet.disliked_food.includes(type) ? (
-          <Icon name="face-tired" color={'average'} />
-        ) : (
-          diet.toxic_food.includes(type) && (
-            <Icon name="skull-crossbones" color={'bad'} />
-          )
-        )}
+        {type === 'Can Make'
+          ? craftableCount
+          : diet &&
+          (diet.liked_food.includes(type) ? (
+            <Icon name="face-laugh-beam" color={'good'} />
+          ) : diet.disliked_food.includes(type) ? (
+            <Icon name="face-tired" color={'average'} />
+          ) : (
+            diet.toxic_food.includes(type) && (
+              <Icon name="skull-crossbones" color={'bad'} />
+            )
+          ))}
       </Stack.Item>
     </Stack>
   );
