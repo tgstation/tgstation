@@ -196,6 +196,8 @@
 		power_throw++
 	if(neckgrab_throw)
 		power_throw++
+	do_attack_animation(target, no_effect = TRUE)
+		playsound(loc, 'sound/weapons/punchmiss.ogg', 50, TRUE, -1)
 	visible_message(span_danger("[src] throws [thrown_thing][power_throw ? " really hard!" : "."]"), \
 					span_danger("You throw [thrown_thing][power_throw ? " really hard!" : "."]"))
 	log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
