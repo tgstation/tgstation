@@ -229,14 +229,10 @@
 							// Move to nullspace and delete.
 							new_machine.circuit.moveToNullspace()
 							QDEL_NULL(new_machine.circuit)
-						for(var/old_part in new_machine.component_parts)
-							// dont delete singleton datum parts
-							if(istype(old_part, /datum/stock_part))
-								continue
+						for(var/obj/old_part in new_machine.component_parts)
 							// Move to nullspace & delete other parts like cells, beakers etc.
-							var/obj/part = old_part
-							part.moveToNullspace()
-							qdel(part)
+							old_part.moveToNullspace()
+							qdel(old_part)
 
 						// Set anchor state
 						new_machine.set_anchored(anchored)
