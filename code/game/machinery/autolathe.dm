@@ -153,8 +153,10 @@
 
 	if(action == "make")
 		var/design_id = params["id"]
-
 		if(!istext(design_id))
+			return
+
+		if(!stored_research.researched_designs.Find(design_id) && !imported_designs.Find(design_id))
 			return
 
 		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
@@ -260,7 +262,7 @@
 				if(!blueprint)
 					continue
 				if(blueprint.build_type & AUTOLATHE)
-					imported_designs[blueprint.id] = TRUE
+					imported_designs += blueprint.id
 				else
 					LAZYADD(not_imported, blueprint.name)
 			if(not_imported)

@@ -177,16 +177,30 @@
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
 
-/datum/techweb/proc/add_design_by_id(id, custom = FALSE)
-	return add_design(SSresearch.techweb_design_by_id(id), custom)
+/**
+ * add_design_by_id
+ * The main way to add add designs to techweb
+ * Uses the techweb node's ID
+ * Args:
+ * id - the ID of the techweb node to research
+ * custom - Boolean on whether the node should also be added to custom_designs
+ * add_to - A custom list to add the node to, overwriting research_designs.
+ */
+/datum/techweb/proc/add_design_by_id(id, custom = FALSE, list/add_to)
+	return add_design(SSresearch.techweb_design_by_id(id), custom, add_to)
 
-/datum/techweb/proc/add_design(datum/design/design, custom = FALSE)
+/datum/techweb/proc/add_design(datum/design/design, custom = FALSE, list/add_to)
 	if(!istype(design))
 		return FALSE
 	SEND_SIGNAL(src, COMSIG_TECHWEB_ADD_DESIGN, design, custom)
-	researched_designs[design.id] = TRUE
 	if(custom)
 		custom_designs[design.id] = TRUE
+
+	if(add_to)
+		add_to[design.id] = TRUE
+	else
+		researched_designs[design.id] = TRUE
+
 	return TRUE
 
 /datum/techweb/proc/remove_design_by_id(id, custom = FALSE)

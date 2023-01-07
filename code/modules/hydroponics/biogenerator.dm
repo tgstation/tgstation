@@ -216,23 +216,6 @@
 
 		return TRUE //no afterattack
 
-	else if (istype(attacking_item, /obj/item/disk/design_disk))
-		user.visible_message(
-			span_notice("[user] begins to load \the [attacking_item] in \the [src]..."),
-			span_notice("You begin to load a design from \the [attacking_item]..."),
-			span_hear("You hear the chatter of a floppy drive.")
-		)
-		processing = TRUE
-		var/obj/item/disk/design_disk/design_disk = attacking_item
-
-		if(do_after(user, 1 SECONDS, target = src))
-			for(var/blueprint in design_disk.blueprints)
-				if(blueprint)
-					stored_research.add_design(blueprint)
-
-		processing = FALSE
-		return TRUE
-
 	else
 		to_chat(user, span_warning("You cannot put \the [attacking_item] in \the [src]!"))
 

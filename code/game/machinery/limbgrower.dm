@@ -117,7 +117,7 @@
 /obj/machinery/limbgrower/on_deconstruction()
 	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
 		reagents.trans_to(our_beaker, our_beaker.reagents.maximum_volume)
-	..()
+	return ..()
 
 /obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
 	if (busy)
@@ -163,6 +163,9 @@
 			. = TRUE
 
 		if("make_limb")
+			var/design_id = params["design_id"]
+			if(!stored_research.researched_designs.Find(design_id) && !imported_designs.Find(design_id))
+				return
 			/// All the reagents we're using to make our organ.
 			var/list/consumed_reagents_list = being_built.reagents_list.Copy()
 			/// The amount of power we're going to use, based on how much reagent we use.
@@ -179,7 +182,7 @@
 
 			busy = TRUE
 			use_power(power)
-			flick("limbgrower_fill",src)
+			flick("limbgrower_fill", src)
 			icon_state = "limbgrower_idleon"
 			selected_category = params["active_tab"]
 			addtimer(CALLBACK(src, PROC_REF(build_item), consumed_reagents_list), production_speed * production_coefficient)
@@ -285,4 +288,4 @@
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
 		if((found_design.build_type & LIMBGROWER) && !(RND_CATEGORY_HACKED in found_design.category))
-			imported_designs[found_design.id] = TRUE
+			imported_designs += found_design.id
