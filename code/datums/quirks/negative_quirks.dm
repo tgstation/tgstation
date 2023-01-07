@@ -543,7 +543,7 @@
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment."))
+	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment. It cannot be removed or replaced through surgery."))
 
 /datum/quirk/quadruple_amputee
 	name = "Quadruple Amputee"
@@ -566,7 +566,7 @@
 
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment. They cannot be removed or replaced through surgery."))
 
 /datum/quirk/pushover
 	name = "Pushover"
