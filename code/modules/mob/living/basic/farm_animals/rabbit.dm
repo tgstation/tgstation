@@ -43,8 +43,8 @@
 	if(prob(20)) // bunny
 		name = "bunny"
 
-/mob/living/basic/rabbit/AddEnvironmentElements()
-	AddElement(/datum/element/atmos_requirements, BASIC_ATMOS_REQUIREMENTS, 1)
+/mob/living/basic/rabbit/add_environment_elements()
+	AddElement(/datum/element/atmos_requirements, GLOB.basic_atmos_requirements, 1)
 	AddElement(/datum/element/basic_body_temp_sensitive, 250, 350, 0.5, 0.5)
 
 /datum/ai_controller/basic_controller/rabbit
@@ -105,7 +105,7 @@
 	icon_prefix = "space_rabbit"
 	ai_controller = /datum/ai_controller/basic_controller/rabbit/easter/space
 
-/mob/living/basic/rabbit/easter/space/AddEnvironmentElements()
+/mob/living/basic/rabbit/easter/space/add_environment_elements()
 	//no atmos, suspiciously high temperature to take damage
 	AddElement(/datum/element/basic_body_temp_sensitive, 0, 1500, 0, 0.5)
 

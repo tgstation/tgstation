@@ -99,7 +99,7 @@
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
 
-/mob/living/basic/carp/AddEnvironmentElements()
+/mob/living/basic/carp/add_environment_elements()
 	AddElement(/datum/element/basic_body_temp_sensitive, 0, 1500, 0, 1)
 
 /// Tell the elements and the blackboard what food we want to eat

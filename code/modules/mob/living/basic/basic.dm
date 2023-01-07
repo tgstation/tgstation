@@ -97,10 +97,10 @@
 
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
-	AddEnvironmentElements()
+	add_environment_elements()
 
 /// Proc for adding/overriding temperature and atmos elements, as a lot of mobs have spaceworthy subtypes. **Do not call parent!**
-/mob/living/basic/proc/AddEnvironmentElements()
+/mob/living/basic/proc/add_environment_elements()
 	SHOULD_CALL_PARENT(FALSE)
 
 /mob/living/basic/Life(delta_time = SSMOBS_DT, times_fired)

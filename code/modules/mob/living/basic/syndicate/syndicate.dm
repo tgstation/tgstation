@@ -37,8 +37,8 @@
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/sentience_possible)
 
-/mob/living/basic/syndicate/AddEnvironmentElements()
-	AddElement(/datum/element/atmos_requirements, BASIC_ATMOS_REQUIREMENTS, 7.5)
+/mob/living/basic/syndicate/add_environment_elements()
+	AddElement(/datum/element/atmos_requirements, GLOB.basic_atmos_requirements, 7.5)
 	AddElement(/datum/element/basic_body_temp_sensitive, 250, 350, 7.5, 7.5)
 
 /mob/living/basic/syndicate/space
@@ -50,7 +50,7 @@
 	health = 170
 	loot = list(/obj/effect/gibspawner/human)
 
-/mob/living/basic/syndicate/space/AddEnvironmentElements()
+/mob/living/basic/syndicate/space/add_environment_elements()
 	return
 
 /mob/living/basic/syndicate/space/Initialize(mapload)
@@ -91,7 +91,7 @@
 	maxHealth = 170
 	health = 170
 
-/mob/living/basic/syndicate/melee/space/AddEnvironmentElements()
+/mob/living/basic/syndicate/melee/space/add_environment_elements()
 	return
 
 /mob/living/basic/syndicate/melee/space/Initialize(mapload)
@@ -138,7 +138,7 @@
 	sord = new(src)
 	set_light(4)
 
-/mob/living/basic/syndicate/melee/sword/space/AddEnvironmentElements()
+/mob/living/basic/syndicate/melee/sword/space/add_environment_elements()
 	return
 
 /mob/living/basic/syndicate/melee/sword/space/Destroy()
@@ -184,7 +184,7 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
 
-/mob/living/basic/syndicate/ranged/space/AddEnvironmentElements()
+/mob/living/basic/syndicate/ranged/space/add_environment_elements()
 	return
 
 /mob/living/basic/syndicate/ranged/space/stormtrooper
@@ -218,7 +218,7 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
 
-/mob/living/basic/syndicate/ranged/smg/space/AddEnvironmentElements()
+/mob/living/basic/syndicate/ranged/smg/space/add_environment_elements()
 	return
 
 /mob/living/basic/syndicate/ranged/smg/space/stormtrooper
@@ -248,7 +248,7 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
 
-/mob/living/basic/syndicate/ranged/shotgun/space/AddEnvironmentElements()
+/mob/living/basic/syndicate/ranged/shotgun/space/add_environment_elements()
 	return
 
 /mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper
@@ -295,6 +295,6 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 
-/mob/living/basic/viscerator/AddEnvironmentElements()
+/mob/living/basic/viscerator/add_environment_elements()
 	//no atmos requirements, can burn
 	AddElement(/datum/element/basic_body_temp_sensitive, 0, 700, 0, 1)

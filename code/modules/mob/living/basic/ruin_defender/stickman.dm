@@ -24,7 +24,7 @@
 	new /obj/effect/temp_visual/paper_scatter(get_turf(src))
 	// i will never understand why this mob has atmos requirements on a space ruin
 	// which lets people blatantly cheese it but whatever
-	AddElement(/datum/element/atmos_requirements, BASIC_ATMOS_REQUIREMENTS, 7.5)
+	AddElement(/datum/element/atmos_requirements, GLOB.basic_atmos_requirements, 7.5)
 	AddElement(/datum/element/basic_body_temp_sensitive, 250, 350, 7.5, 7.5)
 
 /datum/ai_controller/basic_controller/stickman
