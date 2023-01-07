@@ -805,7 +805,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/medical)
 "vv" = (
-/obj/item/clothing/head/hats/hos/syndicate,
+/obj/item/clothing/head/hats/caphat/parade/gorlex,
 /obj/item/stamp/syndicate{
 	pixel_x = -7
 	},
