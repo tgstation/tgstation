@@ -110,12 +110,12 @@
 	. = ..()
 	malfunction_probability_coeff = malfunction_probability_coeff_modifier
 	resetTime = initial(resetTime)
-	for(var/datum/stock_part/manipulator/M in component_parts)
-		resetTime = max(1, resetTime - M.tier)
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		resetTime = max(1, resetTime - manipulator.tier)
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		malfunction_probability_coeff += scanning_module.tier * 2
-	for(var/datum/stock_part/micro_laser/M in component_parts)
-		malfunction_probability_coeff += M.tier
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		malfunction_probability_coeff += micro_laser.tier
 
 /obj/machinery/rnd/experimentor/examine(mob/user)
 	. = ..()

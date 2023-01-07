@@ -34,8 +34,8 @@
 
 /obj/machinery/smartfridge/RefreshParts()
 	. = ..()
-	for(var/datum/stock_part/matter_bin/B in component_parts)
-		max_n_of_items = 1500 * B.tier
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		max_n_of_items = 1500 * matter_bin.tier
 
 /obj/machinery/smartfridge/examine(mob/user)
 	. = ..()

@@ -85,10 +85,10 @@
 /obj/machinery/microwave/RefreshParts()
 	. = ..()
 	efficiency = 0
-	for(var/datum/stock_part/micro_laser/M in component_parts)
-		efficiency += M.tier
-	for(var/datum/stock_part/matter_bin/M in component_parts)
-		max_n_of_items = 10 * M.tier
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		efficiency += micro_laser.tier
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		max_n_of_items = 10 * matter_bin.tier
 		break
 
 /obj/machinery/microwave/examine(mob/user)

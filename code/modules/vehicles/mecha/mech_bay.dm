@@ -43,8 +43,8 @@
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
 	. = ..()
 	var/total_rating = 0
-	for(var/datum/stock_part/capacitor/cap in component_parts)
-		total_rating += cap.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		total_rating += capacitor.tier
 	recharge_power = total_rating * 12.5
 
 /obj/machinery/mech_bay_recharge_port/examine(mob/user)

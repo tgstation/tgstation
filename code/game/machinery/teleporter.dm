@@ -26,8 +26,8 @@
 /obj/machinery/teleport/hub/RefreshParts()
 	. = ..()
 	var/A = 0
-	for(var/datum/stock_part/matter_bin/M in component_parts)
-		A += M.tier
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		A += matter_bin.tier
 	accuracy = A
 
 /obj/machinery/teleport/hub/examine(mob/user)

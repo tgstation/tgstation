@@ -91,11 +91,11 @@
 	var/M = 0
 	var/L = 0
 	var/S = 0
-	for(var/datum/stock_part/capacitor/Cap in component_parts)
-		C += ((Cap.tier - 1) * 0.1)
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		C += ((capacitor.tier - 1) * 0.1)
 	power_saver = 1 - C
-	for(var/datum/stock_part/manipulator/Manip in component_parts)
-		M += ((Manip.tier - 1) * PART_CASH_OFFSET_AMOUNT)
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		M += ((manipulator.tier - 1) * PART_CASH_OFFSET_AMOUNT)
 	positive_cash_offset = M
 	for(var/datum/stock_part/micro_laser/Laser in component_parts)
 		L += ((Laser.tier - 1) * PART_CASH_OFFSET_AMOUNT)

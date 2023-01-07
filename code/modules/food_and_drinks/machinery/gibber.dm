@@ -27,11 +27,11 @@
 	. = ..()
 	gibtime = 40
 	meat_produced = initial(meat_produced)
-	for(var/datum/stock_part/matter_bin/B in component_parts)
-		meat_produced += B.tier
-	for(var/datum/stock_part/manipulator/M in component_parts)
-		gibtime -= 5 * M.tier
-		if(M.tier >= 2)
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		meat_produced += matter_bin.tier
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		gibtime -= 5 * manipulator.tier
+		if(manipulator.tier >= 2)
 			ignore_clothing = TRUE
 
 /obj/machinery/gibber/examine(mob/user)

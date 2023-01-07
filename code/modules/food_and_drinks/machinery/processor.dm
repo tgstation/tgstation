@@ -40,10 +40,10 @@
 
 /obj/machinery/processor/RefreshParts()
 	. = ..()
-	for(var/datum/stock_part/matter_bin/B in component_parts)
-		rating_amount = B.tier
-	for(var/datum/stock_part/manipulator/M in component_parts)
-		rating_speed = M.tier
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		rating_amount = matter_bin.tier
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		rating_speed = manipulator.tier
 
 /obj/machinery/processor/examine(mob/user)
 	. = ..()

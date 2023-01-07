@@ -25,8 +25,8 @@
 	. = ..()
 	interval = 0
 	var/max_time = 40
-	for(var/datum/stock_part/micro_laser/L in component_parts)
-		max_time -= L.tier
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		max_time -= micro_laser.tier
 	interval = max(max_time,1)
 
 /obj/machinery/harvester/update_icon_state()
