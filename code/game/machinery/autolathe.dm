@@ -16,7 +16,7 @@
 	var/creation_efficiency = 1.6
 
 	var/datum/design/being_built
-	var/datum/techweb/autounlocking/autolathe/stored_research
+	var/datum/techweb/autounlocking/stored_research
 
 	///Designs imported from technology disks that we can print.
 	var/list/imported_designs = list()
