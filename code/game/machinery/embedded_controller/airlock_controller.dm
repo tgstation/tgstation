@@ -110,7 +110,7 @@
 						if(pump.pump_direction == ATMOS_DIRECTION_SIPHONING)
 							pump.pressure_checks |= ATMOS_EXTERNAL_BOUND
 							pump.pump_direction = ATMOS_DIRECTION_RELEASING
-						else if(pump.on != TRUE)
+						else if(!pump.on)
 							pump.on = TRUE
 							pump.update_appearance(UPDATE_ICON)
 				else
@@ -180,7 +180,7 @@
 					if(pump.pump_direction == ATMOS_DIRECTION_RELEASING)
 						pump.pressure_checks &= ~ATMOS_EXTERNAL_BOUND
 						pump.pump_direction = ATMOS_DIRECTION_SIPHONING
-					else if(pump.on != TRUE)
+					else if(!pump.on)
 						pump.on = TRUE
 						pump.update_appearance(UPDATE_ICON)
 
