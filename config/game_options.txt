@@ -135,6 +135,9 @@ DYNAMIC_CONFIG_ENABLED
 ## Comment this out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
 
+## Uncomment this to disable station traits.
+#FORBID_STATION_TRAITS
+
 ## Multiplier for earliest start time of dangerous events.
 ## Set to 0 to make dangerous events avaliable from round start.
 EVENTS_MIN_TIME_MUL 1

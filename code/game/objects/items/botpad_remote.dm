@@ -25,7 +25,7 @@
 	if(connected_botpad)
 		connected_botpad.recall(user)
 		return
-	user?.balloon_alert(user, "Controller has no connected pad!")
+	user?.balloon_alert(user, "no connected pad!")
 	return
 
 /obj/item/botpad_remote/multitool_act(mob/living/user, obj/item/tool)
@@ -47,12 +47,12 @@
 
 /obj/item/botpad_remote/proc/try_launch(mob/living/user)
 	if(!connected_botpad)
-		user?.balloon_alert(user, "Controller has no connected pad!")
+		user?.balloon_alert(user, "no connected pad!")
 		return
 	if(connected_botpad.panel_open)
-		user?.balloon_alert(user, "Connected pad has its panel open! It won't work!")
+		user?.balloon_alert(user, "close the panel!")
 		return
 	if(!(locate(/mob/living/simple_animal/bot) in get_turf(connected_botpad)))
-		user?.balloon_alert(user, "No bots detected on the pad!")
+		user?.balloon_alert(user, "no bots detected on the pad!")
 		return
 	connected_botpad.launch(user)

@@ -252,14 +252,12 @@
  */
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
-	icon = 'icons/obj/modular_tablet.dmi'
-	icon_state = "tablet-syndicate"
 	device_theme = "syndicate"
-	comp_light_luminosity = 6.3
-	light_color = COLOR_RED
 	has_pda_programs = FALSE
-	greyscale_config = null
-	greyscale_colors = null
+	comp_light_luminosity = 6.3 //matching a flashlight
+	light_color = COLOR_RED
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#a80001#5C070F#000000"
 
 	starting_programs = list(
 		/datum/computer_file/program/ntnetdownload/syndicate,

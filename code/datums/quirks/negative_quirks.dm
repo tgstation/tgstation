@@ -70,7 +70,7 @@
 		return
 
 	var/mob/living/carbon/human/carbon_target = quirk_holder
-	if(NOBLOOD in carbon_target.dna.species.species_traits) //can't lose blood if your species doesn't have any
+	if(HAS_TRAIT(carbon_target, TRAIT_NOBLOOD)) //can't lose blood if your species doesn't have any
 		return
 
 	if (carbon_target.blood_volume <= min_blood)
@@ -857,8 +857,7 @@
 
 /datum/quirk/item_quirk/junkie/smoker/post_add()
 	. = ..()
-	var/brand = initial(drug_container_type.name)
-	quirk_holder.mind.add_memory(MEMORY_QUIRK_DRUG, list(DETAIL_FAV_BRAND = brand), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
+	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/obj/item/organ/internal/lungs/smoker_lungs = quirk_holder.getorganslot(ORGAN_SLOT_LUNGS)
 	if (smoker_lungs && !(smoker_lungs.organ_flags & ORGAN_SYNTHETIC)) // robotic lungs aren't affected
@@ -922,7 +921,7 @@
 	give_item_to_holder(dogtag, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS), flavour_text = "Make sure medical staff can see this...")
 
 /datum/quirk/item_quirk/allergic/post_add()
-	quirk_holder.mind.add_memory(MEMORY_ALLERGY, list(DETAIL_ALLERGY_TYPE = allergy_string), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
+	quirk_holder.add_mob_memory(/datum/memory/key/quirk_allergy, allergy_string = allergy_string)
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
 
 /datum/quirk/item_quirk/allergic/process(delta_time)
@@ -1132,3 +1131,16 @@
 	if(!IS_ORGANIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
+/datum/quirk/cursed
+	name = "Cursed"
+	desc = "You are cursed with bad luck. You are much more likely to suffer from accidents and mishaps. When it rains, it pours."
+	icon = "cloud-showers-heavy"
+	value = -8
+	mob_trait = TRAIT_CURSED
+	gain_text = span_danger("You feel like you're going to have a bad day.")
+	lose_text = span_notice("You feel like you're going to have a good day.")
+	medical_record_text = "Patient is cursed with bad luck."
+	hardcore_value = 8
+
+/datum/quirk/cursed/add(client/client_source)
+	quirk_holder.AddComponent(/datum/component/omen/quirk)

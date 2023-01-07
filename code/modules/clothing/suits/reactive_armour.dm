@@ -122,10 +122,6 @@
 	reactivearmor_cooldown_duration = 10 SECONDS
 	var/tele_range = 6
 
-/datum/armor/armor_reactive
-	fire = 100
-	acid = 100
-
 /obj/item/clothing/suit/armor/reactive/teleport/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive teleport system flings [owner] clear of [attack_text]!"))
 	playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
@@ -149,10 +145,6 @@
 	desc = "An experimental suit of armor with a reactive sensor array rigged to a flame emitter. For the stylish pyromaniac."
 	cooldown_message = span_danger("The reactive incendiary armor activates, but fails to send out flames as it is still recharging its flame jets!")
 	emp_message = span_warning("The reactive incendiary armor's targeting system begins rebooting...")
-
-/datum/armor/armor_reactive
-	fire = 100
-	acid = 100
 
 /obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out jets of flame!"))
@@ -189,10 +181,6 @@
 	///how long it will animate back the alpha to the original
 	var/animation_time = 2 SECONDS
 	var/in_stealth = FALSE
-
-/datum/armor/armor_reactive
-	fire = 100
-	acid = 100
 
 /obj/item/clothing/suit/armor/reactive/stealth/cooldown_activation(mob/living/carbon/human/owner)
 	if(in_stealth)
@@ -243,10 +231,6 @@
 	/// What flags do we pass to the zaps we give off?
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
-/datum/armor/armor_reactive
-	fire = 100
-	acid = 100
-
 /obj/item/clothing/suit/armor/reactive/tesla/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	sparks.set_up(1, 1, src)
@@ -275,10 +259,6 @@
 	cooldown_message = span_danger("The repulse generator is still recharging! It fails to generate a strong enough wave!")
 	emp_message = span_warning("The repulse generator is reset to default settings...")
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
-
-/datum/armor/armor_reactive
-	fire = 100
-	acid = 100
 
 /obj/item/clothing/suit/armor/reactive/repulse/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
@@ -316,10 +296,6 @@
 	emp_message = span_danger("The reactive table armor's fabricators click and whirr ominously for a moment...")
 	var/tele_range = 10
 
-/datum/armor/armor_reactive
-	fire = 100
-	acid = 100
-
 /obj/item/clothing/suit/armor/reactive/table/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive teleport system flings [owner] clear of [attack_text] and slams [owner.p_them()] into a fabricated table!"))
 	owner.visible_message("<font color='red' size='3'>[owner] GOES ON THE TABLE!!!</font>")
@@ -351,10 +327,6 @@
 	cooldown_message = span_danger("The connection is currently out of sync... Recalibrating.")
 	emp_message = span_warning("You feel the backsurge of a mind pulse.")
 	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
-
-/datum/armor/armor_reactive
-	fire = 100
-	acid = 100
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -395,10 +367,6 @@
 	var/static/list/r_arms
 	var/static/list/l_legs
 	var/static/list/r_legs
-
-/datum/armor/armor_reactive
-	fire = 100
-	acid = 100
 
 /obj/item/clothing/suit/armor/reactive/bioscrambling/Initialize(mapload)
 	. = ..()
@@ -468,10 +436,6 @@
 	emp_message = span_warning("The reactive armor's dimensional coordinates are scrambled!")
 	cooldown_message = span_danger("The reactive barrier system is still recharging! It fails to activate!")
 	reactivearmor_cooldown_duration = 10 SECONDS
-
-/datum/armor/armor_reactive
-	fire = 100
-	acid = 100
 
 /obj/item/clothing/suit/armor/reactive/barricade/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)

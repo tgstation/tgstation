@@ -339,6 +339,8 @@
 
 /datum/config_entry/flag/allow_random_events // Enables random events mid-round when set
 
+/datum/config_entry/flag/forbid_station_traits
+
 /datum/config_entry/number/events_min_time_mul // Multipliers for random events minimal starting time and minimal players amounts
 	default = 1
 	min_val = 0

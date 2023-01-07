@@ -52,6 +52,7 @@
 	if(!proximity)
 		return
 	sweep(user, A)
+	return . | AFTERATTACK_PROCESSED_ITEM
 
 /**
  * Attempts to push up to BROOM_PUSH_LIMIT atoms from a given location the user's faced direction
