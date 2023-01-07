@@ -182,6 +182,11 @@
 	A.update_appearance()
 	return
 
+/obj/item/gun/ballistic/revolver/russian/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage)
+		return FALSE
+	return ..()
+
 /obj/item/gun/ballistic/revolver/russian/attack_self(mob/user)
 	if(!spun)
 		spin()
@@ -268,7 +273,9 @@
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = FALSE
 
-/obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
+/obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage)
+		return FALSE
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) || is_clown_job(user.mind?.assigned_role))
 		return ..()
 	if(process_fire(user, user, FALSE, null, BODY_ZONE_HEAD))
