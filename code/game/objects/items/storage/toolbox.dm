@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
-	force = 12
+	force = 11.9
 	throwforce = 12
 	throw_speed = 2
 	throw_range = 7
