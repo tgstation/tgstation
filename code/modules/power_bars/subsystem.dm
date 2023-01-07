@@ -145,6 +145,8 @@ SUBSYSTEM_DEF(power_bars)
 // MBTODO: Log, optional user arg
 // MBTODO: Make the computer UI care about excess bars
 /datum/controller/subsystem/power_bars/proc/reassign_power_bar(department, power_bars)
+	ASSERT(SSpower_bars.enabled)
+
 	if (!(department in department_allocations))
 		CRASH("[department] is not a valid department")
 
@@ -166,6 +168,8 @@ SUBSYSTEM_DEF(power_bars)
 		next_distribution_timer_id = addtimer(CALLBACK(src, PROC_REF(distribute_power_bars)), time_to_distribute, TIMER_STOPPABLE)
 
 /datum/controller/subsystem/power_bars/proc/distribute_power_bars()
+	ASSERT(SSpower_bars.enabled)
+
 	var/list/departments_to_update = list()
 	var/list/areas_to_update = list()
 
@@ -194,15 +198,33 @@ SUBSYSTEM_DEF(power_bars)
 	SEND_SIGNAL(src, COMSIG_POWER_BARS_UPDATED, departments_to_update)
 
 /datum/controller/subsystem/power_bars/proc/remove_power_bars(power_bars)
+	ASSERT(SSpower_bars.enabled)
+
 	available_power_bars -= power_bars
 
 	if (used_power_bars() > available_power_bars)
 		distribute_power_bars()
 
 /datum/controller/subsystem/power_bars/proc/used_power_bars()
+	ASSERT(SSpower_bars.enabled)
+
 	var/sum = 0
 
 	for (var/department in department_allocations)
 		sum += department_allocations[department].len
 
 	return sum
+
+// APCs charge themselves
+// MBTODO: Has to be connected to the computer
+/datum/controller/subsystem/power_bars/proc/surplus_power(obj/machinery/power/source)
+	ASSERT(SSpower_bars.enabled)
+
+	var/area/area = get_area(source)
+	if (!istype(area, /area/station))
+		return clamp(source.powernet.avail - source.powernet.load, 0, source.powernet.avail)
+
+	if (available_power_bars <= department_allocations.len)
+		return 0
+
+	return 1000000 WATTS

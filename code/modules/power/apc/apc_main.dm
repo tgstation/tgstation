@@ -199,6 +199,7 @@
 	var/power_department = SSpower_bars.department_from_area(our_area)
 	if (!isnull(power_department))
 		// We just want the alert message this gives
+		// MBTODO: Only station areas probably
 		AddComponent(/datum/component/power_bar_reactor, power_department, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pass)))
 
 /obj/machinery/power/apc/Destroy()

@@ -158,9 +158,11 @@
 /turf/open/space,
 /area/space/nearstation)
 "acs" = (
-/obj/machinery/power/smes/engineering,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
+/obj/item/paper{
+	default_raw_text = "Your SMES have been taken in for repairs. APCs will charge themselves if your engine is distributing power."
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "acB" = (
@@ -39471,7 +39473,6 @@
 /area/station/command/teleporter)
 "ofk" = (
 /obj/machinery/light_switch/directional/west,
-/obj/machinery/power/smes/engineering,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -49825,6 +49826,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/warden)
+"rOC" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "rOF" = (
 /turf/closed/wall,
 /area/station/medical/psychology)
@@ -107705,7 +107711,7 @@ uXd
 gMG
 dWG
 uGm
-acs
+rOC
 uXd
 qJd
 nLz

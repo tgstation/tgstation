@@ -242,15 +242,17 @@ const OutputWindow = (props, context) => {
   );
 };
 
-const EquipmentItem = (props: {
+const EquipmentItem: SFC<{
   icon: string;
   name: string;
   count: number;
-  enabled: number;
-  disabled: number;
-  handleEnableAll: () => void;
-  handleDisableAll: () => void;
-}) => {
+  control?: {
+    enabled: number;
+    disabled: number;
+    handleEnableAll: () => void;
+    handleDisableAll: () => void;
+  };
+}> = (props) => {
   return (
     <Stack fill align="center" fontSize="16px">
       <Stack.Item>
@@ -263,17 +265,19 @@ const EquipmentItem = (props: {
       </Stack.Item>
 
       <Stack.Item grow textAlign="right">
-        {props.disabled !== 0 && (
-          <Button onClick={props.handleEnableAll} color="good">
+        {props.control !== undefined && props.control.disabled !== 0 && (
+          <Button onClick={props.control.handleEnableAll} color="good">
             Enable
           </Button>
         )}
 
-        {props.enabled !== 0 && (
-          <Button onClick={props.handleDisableAll} color="bad">
+        {props.control !== undefined && props.control.enabled !== 0 && (
+          <Button onClick={props.control.handleDisableAll} color="bad">
             Disable
           </Button>
         )}
+
+        {props.children}
       </Stack.Item>
     </Stack>
   );
@@ -289,10 +293,12 @@ const EquipmentWindow = (props, context) => {
           icon={ICON_EMITTER}
           name="emitter"
           count={data.turrets}
-          enabled={data.turrets} // MBTODO
-          disabled={0} // MBTODO
-          handleEnableAll={() => act('enable_all_turrets')}
-          handleDisableAll={() => act('disable_all_turrets')}
+          control={{
+            enabled: data.turrets, // MBTODO
+            disabled: 0, // MBTODO
+            handleEnableAll: () => act('enable_all_turrets'),
+            handleDisableAll: () => act('disable_all_turrets'),
+          }}
         />
       </Stack.Item>
 
@@ -300,12 +306,13 @@ const EquipmentWindow = (props, context) => {
         <EquipmentItem
           icon={ICON_SHIELD}
           name="shield"
-          count={data.enabled_field_generators + data.disabled_field_generators}
-          enabled={data.enabled_field_generators}
-          disabled={data.disabled_field_generators}
-          handleEnableAll={() => act('enable_all_field_generators')}
-          handleDisableAll={() => act('disable_all_field_generators')}
-        />
+          count={
+            data.enabled_field_generators + data.disabled_field_generators
+          }>
+          <Button disabled tooltip="Must be disabled or enabled by hand.">
+            Disable
+          </Button>
+        </EquipmentItem>
       </Stack.Item>
     </Stack>
   );
