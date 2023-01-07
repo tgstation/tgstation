@@ -179,6 +179,10 @@
 		))
 	return data
 
+/**
+ * adds an supply pack to the checkout cart
+ * * params - an list with id of the supply pack to add to the cart as its only element
+ */
 /obj/machinery/computer/cargo/proc/add_item(params)
 	if(is_express)
 		return
@@ -194,17 +198,17 @@
 	var/rank = "*None Provided*"
 	var/ckey = usr.ckey
 	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		name = H.get_authentification_name()
-		rank = H.get_assignment(hand_first = TRUE)
+		var/mob/living/carbon/human/human = usr
+		name = human.get_authentification_name()
+		rank = human.get_assignment(hand_first = TRUE)
 	else if(issilicon(usr))
 		name = usr.real_name
 		rank = "Silicon"
 
 	var/datum/bank_account/account
 	if(self_paid && isliving(usr))
-		var/mob/living/L = usr
-		var/obj/item/card/id/id_card = L.get_idcard(TRUE)
+		var/mob/living/living_user = usr
+		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 		if(!istype(id_card))
 			say("No ID card detected.")
 			return
@@ -234,15 +238,22 @@
 	var/amount = params["amount"]
 	for(var/count in 1 to amount)
 		var/obj/item/coupon/applied_coupon
-		for(var/i in loaded_coupons)
-			var/obj/item/coupon/coupon_check = i
+		for(var/obj/item/coupon/coupon_check in loaded_coupons)
 			if(pack.type == coupon_check.discounted_pack)
 				say("Coupon found! [round(coupon_check.discount_pct_off * 100)]% off applied!")
 				coupon_check.moveToNullspace()
 				applied_coupon = coupon_check
 				break
 
-		var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, null, applied_coupon)
+		var/datum/supply_order/SO = new(
+		pack = pack
+		,orderer = name,
+		orderer_rank = rank,
+		orderer_ckey = ckey,
+		reason = reason,
+		paying_account = account,
+		coupon = applied_coupon
+		)
 		if(requestonly && !self_paid)
 			SSshuttle.request_list += SO
 		else
@@ -256,6 +267,10 @@
 		message_cooldown = world.time + 30 SECONDS
 	. = TRUE
 
+/**
+ * removes an item from the checkout cart
+ * * params - an list with the id of the cart item to remove as its only element
+ */
 /obj/machinery/computer/cargo/proc/remove_item(params)
 	var/id = text2num(params["id"])
 	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
@@ -271,14 +286,16 @@
 		. = TRUE
 		break
 
-///map order name to its id
+/**
+ * maps the ordename displayed on the ui to its supply pack id
+ * * order_name - the name of the order
+ */
 /obj/machinery/computer/cargo/proc/name_to_id(order_name)
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/supply = SSshuttle.supply_packs[pack]
 		if(order_name == supply.name)
 			return pack
 	return null
-
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	. = ..()
@@ -295,12 +312,12 @@
 
 			//make an copy of the cart before its cleared by the shuttle
 			var/list/cart_list = list()
-			for(var/datum/supply_order/SO in SSshuttle.shopping_list)
-				if(cart_list[SO.pack.name])
-					cart_list[SO.pack.name]["amount"]++
+			for(var/datum/supply_order/order in SSshuttle.shopping_list)
+				if(cart_list[order.pack.name])
+					cart_list[order.pack.name]["amount"]++
 					continue
-				cart_list[SO.pack.name] = list(
-					"order" = SO,
+				cart_list[order.pack.name] = list(
+					"order" = order,
 					"amount" = 1
 				)
 
@@ -313,7 +330,7 @@
 				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
-			if(cart_list.len == 0)
+			if(!length(cart_list))
 				return TRUE
 
 			//create the paper from the cart list
@@ -322,10 +339,9 @@
 			var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 			requisition_text += "<hr/>"
 			requisition_text += "Time of Order: [station_time_timestamp()]<br/>"
-			for(var/i in 1 to cart_list.len)
-				var/order_name = cart_list[i]
+			for(var/order_name in cart_list)
 				var/datum/supply_order/SO = cart_list[order_name]["order"]
-				requisition_text += "[i]) [cart_list[order_name]["amount"]] [SO.pack.name]("
+				requisition_text += "[cart_list[order_name]["amount"]] [SO.pack.name]("
 				requisition_text += "Access Restrictions: [SSid_access.get_access_desc(SO.pack.access)])</br>"
 			requisition_paper.add_raw_text(requisition_text)
 			requisition_paper.update_appearance()
