@@ -1,3 +1,9 @@
+#define STAT_Y -23
+#define POWER_X -14
+#define RESOLVE_X 12
+#define DEFAULT_POWER_COLOR "#af2323"
+#define DEFAULT_RESOLVE_COLOR "#3492d0"
+
 /obj/machinery/trading_card_holder
 	name = "card slot"
 	desc = "a slot for placing Tactical Game Cards."
@@ -94,32 +100,35 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	summon_offset_y = -1
 	summon_type = /obj/structure/trading_card_summon/red
 
-#define STAT_Y -23
-#define POWER_X -14
-#define RESOLVE_X 12
-#define DEFAULT_POWER_COLOR "#af2323"
-#define DEFAULT_RESOLVE_COLOR "#231ac0"
-
 /obj/structure/trading_card_summon
 	name = "coder"
 	icon = 'icons/obj/toys/tcgsummons.dmi'
 	icon_state = "hologram"
 	anchored = TRUE
 
-	//Holds all the default details of the card
+	///Holds all the default details of the card.
 	var/datum/card/template
 
+	///Power statistics for the hologram, stored seperately to the template as they can be modified.
 	var/summon_power
+	///Resolve statistics for the hologram, stored seperately to the template as they can be modified.
 	var/summon_resolve
+	///Is the card tapped (rotated) or not.
 	var/tapped = FALSE
 
+	///Reference to the hologram object itself.
 	var/obj/effect/overlay/card_summon/hologram
+	///Reference to the text overlay for power.
 	var/obj/effect/overlay/status_display_text/power_overlay
+	///Reference to the text overlay for resolve.
 	var/obj/effect/overlay/status_display_text/resolve_overlay
-	var/power_color = "#af2323"
-	var/resolve_color = "#3492d0"
+	///Color of the power stat.
+	var/power_color = DEFAULT_POWER_COLOR
+	///Color of the resolve stat.
+	var/resolve_color = DEFAULT_RESOLVE_COLOR
+	///Color that stats become if they've been changed from their default.
 	var/modified_color = "#1db327"
-
+	///Color of the holograms produced.
 	var/team_color = "#77abff"
 
 /obj/structure/trading_card_summon/proc/load_model(obj/item/tcgcard/current_card)
