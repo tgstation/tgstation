@@ -5,8 +5,12 @@ import { useBackend } from '../backend';
 import { Blink, Box, Button, ByondUi, Icon, ProgressBar, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
+// MBTODO: Remove this and just make it alpha, since overclock will be blue
 const UNUSED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.2)';
 const USED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.7)';
+
+const ICON_EMITTER = 'wand-sparkles';
+const ICON_SHIELD = 'shield';
 
 type PowerBar = {
   fill: number;
@@ -51,7 +55,7 @@ const CoolerSection: SFC<{
         {props.title}
       </legend>
 
-      <Box height="95%">{props.children}</Box>
+      <Box height="92%">{props.children}</Box>
     </fieldset>
   );
 };
@@ -90,7 +94,7 @@ const SetupScreen = (props, context) => {
           <Stack.Item grow>
             <Stack fill>
               <ConnectedMachine
-                icon="shield"
+                icon={ICON_SHIELD}
                 backgroundColor={
                   data.enabled_field_generators < 4 ? 'red' : undefined
                 }
@@ -142,10 +146,10 @@ const SetupScreen = (props, context) => {
               <ConnectedMachine
                 bottomText={
                   <Box fontSize="14px">
-                    <b>{data.turrets}</b> turret{data.turrets === 1 ? '' : 's'}
+                    <b>{data.turrets}</b> emitter{data.turrets === 1 ? '' : 's'}
                   </Box>
                 }
-                icon="wand-sparkles"
+                icon={ICON_EMITTER}
               />
             </Stack>
           </Stack.Item>
@@ -216,7 +220,7 @@ const PowerBarDisplay = ({ powerBar }: { powerBar: PowerBar }) => {
 };
 
 const OutputWindow = (props, context) => {
-  const { act, data } = useBackend<SingularityControlData>(context);
+  const { data } = useBackend<SingularityControlData>(context);
   const singularityData = data.singularity_data!;
 
   return (
@@ -238,12 +242,81 @@ const OutputWindow = (props, context) => {
   );
 };
 
+const EquipmentItem = (props: {
+  icon: string;
+  name: string;
+  count: number;
+  enabled: number;
+  disabled: number;
+  handleEnableAll: () => void;
+  handleDisableAll: () => void;
+}) => {
+  return (
+    <Stack fill align="center" fontSize="16px">
+      <Stack.Item>
+        <Icon name={props.icon} />
+      </Stack.Item>
+
+      <Stack.Item>
+        <b>{props.count}</b> {props.name}
+        {props.count === 1 ? '' : 's'}
+      </Stack.Item>
+
+      <Stack.Item grow textAlign="right">
+        {props.disabled !== 0 && (
+          <Button onClick={props.handleEnableAll} color="good">
+            Enable
+          </Button>
+        )}
+
+        {props.enabled !== 0 && (
+          <Button onClick={props.handleDisableAll} color="bad">
+            Disable
+          </Button>
+        )}
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const EquipmentWindow = (props, context) => {
+  const { act, data } = useBackend<SingularityControlData>(context);
+
+  return (
+    <Stack vertical fill>
+      <Stack.Item>
+        <EquipmentItem
+          icon={ICON_EMITTER}
+          name="emitter"
+          count={data.turrets}
+          enabled={data.turrets} // MBTODO
+          disabled={0} // MBTODO
+          handleEnableAll={() => act('enable_all_turrets')}
+          handleDisableAll={() => act('disable_all_turrets')}
+        />
+      </Stack.Item>
+
+      <Stack.Item>
+        <EquipmentItem
+          icon={ICON_SHIELD}
+          name="shield"
+          count={data.enabled_field_generators + data.disabled_field_generators}
+          enabled={data.enabled_field_generators}
+          disabled={data.disabled_field_generators}
+          handleEnableAll={() => act('enable_all_field_generators')}
+          handleDisableAll={() => act('disable_all_field_generators')}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 const ObserveScreen = (props, context) => {
   const { act, data } = useBackend<SingularityControlData>(context);
   const singularityData = data.singularity_data!;
 
   return (
-    <Window title="Singularity Control Console" width={800} height={540}>
+    <Window title="Singularity Control Console" width={800} height={480}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
@@ -286,7 +359,9 @@ const ObserveScreen = (props, context) => {
               </Stack.Item>
 
               <Stack.Item grow>
-                <CoolerSection title="EQUIPMENT" />
+                <CoolerSection title="EQUIPMENT">
+                  <EquipmentWindow />
+                </CoolerSection>
               </Stack.Item>
 
               <Stack.Item grow>

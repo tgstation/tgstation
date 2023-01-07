@@ -25,7 +25,7 @@ const createByondUiElement = (elementId) => {
   // Return a control structure
   return {
     render: (params) => {
-      logger.log(`rendering '${id}'`);
+      // logger.log(`rendering '${id}'`);
       byondUiStack[index] = id;
       Byond.winset(id, params);
     },
