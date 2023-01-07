@@ -3,3 +3,5 @@
 #define STAGE_SINGULARITY_CONSOLE_NOT_STARTED "not_started"
 #define STAGE_SINGULARITY_CONSOLE_PREPARING "preparing"
 #define STAGE_SINGULARITY_CONSOLE_FINISHED "finished"
+
+#define COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY "singularity_generator_created_singularity"

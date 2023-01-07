@@ -1,21 +1,60 @@
+import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { Fragment, InfernoNode, SFC } from 'inferno';
 import { useBackend } from '../backend';
-import { Blink, Box, Button, Icon, Stack } from '../components';
+import { Blink, Box, Button, ByondUi, Icon, ProgressBar, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
+
+const UNUSED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.2)';
+const USED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.7)';
+
+type PowerBar = {
+  fill: number;
+  time_to_fill: number;
+  power_bar_gain: number;
+};
 
 type SingularityControlData = {
   enabled_field_generators: number;
   disabled_field_generators: number;
+  map_name: string;
   singularity_generator: BooleanLike;
-  turrets: number;
   stage: Stage;
+  turrets: number;
+
+  singularity_data?: {
+    containment_percent: number;
+    delay_to_overclock: number;
+    power_bars: PowerBar[];
+  };
 };
 
 enum Stage {
   NotStarted = 'not_started',
   Preparing = 'preparing',
+  Finished = 'finished',
 }
+
+const CoolerSection: SFC<{
+  title: string;
+}> = (props) => {
+  return (
+    <fieldset
+      style={{
+        height: '100%',
+      }}>
+      <legend
+        style={{
+          'font-size': '16px',
+          'font-weight': 'bold',
+        }}>
+        {props.title}
+      </legend>
+
+      <Box height="95%">{props.children}</Box>
+    </fieldset>
+  );
+};
 
 const ConnectedMachine = (props: {
   icon: string;
@@ -38,7 +77,7 @@ const ConnectedMachine = (props: {
   );
 };
 
-export const SingularityControl = (props, context) => {
+const SetupScreen = (props, context) => {
   const { act, data } = useBackend<SingularityControlData>(context);
 
   const generatorCount =
@@ -85,7 +124,6 @@ export const SingularityControl = (props, context) => {
                 }
               />
 
-              {/* MBTODO: If singulo, replace this entire menu with a power readout */}
               <ConnectedMachine
                 icon="circle-plus"
                 bottomText={
@@ -147,4 +185,130 @@ export const SingularityControl = (props, context) => {
       </Window.Content>
     </Window>
   );
+};
+
+const PowerBarDisplay = ({ powerBar }: { powerBar: PowerBar }) => {
+  const timeText = `${(powerBar.time_to_fill / 10).toFixed()}s`;
+
+  return (
+    <Tooltip
+      content={
+        powerBar.fill === 1
+          ? `${timeText} until decay`
+          : `${timeText} until full`
+      }
+      position="bottom">
+      <Box
+        backgroundColor={UNUSED_POWER_BAR_COLOR}
+        height="100%"
+        width="100%"
+        position="relative">
+        <Box
+          backgroundColor={USED_POWER_BAR_COLOR}
+          height={`${powerBar.fill * 100}%`}
+          width="100%"
+          position="absolute"
+          bottom={0}
+        />
+      </Box>
+    </Tooltip>
+  );
+};
+
+const OutputWindow = (props, context) => {
+  const { act, data } = useBackend<SingularityControlData>(context);
+  const singularityData = data.singularity_data!;
+
+  return (
+    <Stack fill height="100%">
+      {singularityData.power_bars.map((bar) => (
+        <Fragment key={`power_bars_${bar}`}>
+          {range(0, bar.power_bar_gain).map((index) => (
+            <Stack.Item
+              key={`power_bar_${bar}_${index}`}
+              height="100%"
+              width="20%"
+              mr={1}>
+              <PowerBarDisplay powerBar={bar} />
+            </Stack.Item>
+          ))}
+        </Fragment>
+      ))}
+    </Stack>
+  );
+};
+
+const ObserveScreen = (props, context) => {
+  const { act, data } = useBackend<SingularityControlData>(context);
+  const singularityData = data.singularity_data!;
+
+  return (
+    <Window title="Singularity Control Console" width={800} height={540}>
+      <Window.Content>
+        <Stack fill>
+          <Stack.Item grow>
+            <Stack fill vertical>
+              <Stack.Item grow>
+                <ByondUi
+                  params={{
+                    id: data.map_name,
+                    type: 'map',
+                  }}
+                  style={{
+                    height: '100%',
+                  }}
+                />
+              </Stack.Item>
+
+              <Stack.Item height="30px">
+                <ProgressBar
+                  ranges={{
+                    good: [1, 1],
+                    average: [0.5, 1],
+                    bad: [-Infinity, 0.5],
+                  }}
+                  value={singularityData.containment_percent}>
+                  <Box width="100%" textAlign="left" fontSize="18px" my={1}>
+                    <b>{singularityData.containment_percent * 100}%</b>{' '}
+                    contained
+                  </Box>
+                </ProgressBar>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+
+          <Stack.Item grow>
+            <Stack vertical fill>
+              <Stack.Item height="50%">
+                <CoolerSection title="OUTPUT">
+                  <OutputWindow />
+                </CoolerSection>
+              </Stack.Item>
+
+              <Stack.Item grow>
+                <CoolerSection title="EQUIPMENT" />
+              </Stack.Item>
+
+              <Stack.Item grow>
+                <CoolerSection title="OVERCLOCK" />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const SingularityControl = (props, context) => {
+  const { data } = useBackend<SingularityControlData>(context);
+
+  // if (data.stage === )
+  switch (data.stage) {
+    case Stage.NotStarted:
+    case Stage.Preparing:
+      return <SetupScreen />;
+    case Stage.Finished:
+      return <ObserveScreen />;
+  }
 };

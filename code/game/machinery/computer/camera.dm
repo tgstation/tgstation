@@ -10,8 +10,6 @@
 
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/active_camera
-	/// The turf where the camera was last updated.
-	var/turf/last_camera_turf
 	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
@@ -129,36 +127,7 @@
 		show_camera_static()
 		return
 
-	var/list/visible_turfs = list()
-
-	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
-	var/turf/new_cam_turf = get_turf(active_camera)
-	if (active_camera.offset_x != 0 || active_camera.offset_y != 0)
-		new_cam_turf = locate(new_cam_turf.x + active_camera.offset_x, new_cam_turf.y + active_camera.offset_y, new_cam_turf.z)
-
-	// If we're not forcing an update for some reason and the cameras are in the same location,
-	// we don't need to update anything.
-	// Most security cameras will end here as they're not moving.
-	if(last_camera_turf == new_cam_turf)
-		return
-
-	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
-	last_camera_turf = new_cam_turf
-
-	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
-	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, new_cam_turf) : view(active_camera.view_range, new_cam_turf)
-
-	for(var/turf/visible_turf in visible_things)
-		visible_turfs += visible_turf
-
-	//Get coordinates for a rectangle area that contains the turfs we see so we can then clear away the static in the resulting rectangle area
-	var/list/bbox = get_bbox_of_atoms(visible_turfs)
-	var/size_x = bbox[3] - bbox[1] + 1
-	var/size_y = bbox[4] - bbox[2] + 1
-
-	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
+	active_camera.update_camera_screens(cam_screen, cam_background)
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	. = ..()

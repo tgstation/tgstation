@@ -15,6 +15,7 @@
 	appearance_flags = KEEP_TOGETHER
 	pixel_x = -28
 	pixel_y = -28
+	max_integrity = 100
 
 	COOLDOWN_DECLARE(hit_cooldown)
 
@@ -93,6 +94,16 @@
 	projectile_turf.balloon_alert_to_viewers("it discharges back!")
 
 	qdel(projectile)
+
+/obj/contained_singularity/proc/console_ui_data()
+	return list(
+		"containment_percent" = get_integrity() / max_integrity,
+		"delay_to_overclock" = 0,
+		"power_bars" = list(
+			delayed_power_bar_one.bar_ui_data(),
+			delayed_power_bar_two.bar_ui_data(),
+		),
+	)
 
 /obj/projectile/singularity_particle
 	name = "singularity particle"

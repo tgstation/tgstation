@@ -74,7 +74,7 @@
 
 	current_connected_computer_ref = WEAKREF(singularity_computer)
 
-	singularity_computer.connected_machines += parent
+	singularity_computer.connect_machine(parent)
 
 	var/atom/atom_parent = parent
 	ADD_TRAIT(atom_parent, TRAIT_CONNECTED_TO_SINGULARITY_CONSOLE, "[type]")
@@ -92,7 +92,7 @@
 
 /datum/component/connects_to_singularity_console/proc/disconnect_computer()
 	var/obj/machinery/computer/singularity/current_connected_computer = current_connected_computer_ref?.resolve()
-	current_connected_computer?.connected_machines -= parent
+	current_connected_computer?.disconnect_machine(parent)
 	current_connected_computer_ref = null
 
 	var/atom/atom_parent = parent

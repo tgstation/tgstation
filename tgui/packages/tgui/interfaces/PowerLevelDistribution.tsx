@@ -2,7 +2,6 @@ import { range } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ProgressBar, Stack } from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 const UNUSED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.2)';
 const USED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.7)';

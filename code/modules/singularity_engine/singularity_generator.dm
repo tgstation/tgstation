@@ -42,5 +42,7 @@
 	for (var/mob/living/carbon/viewer in viewers(10, src))
 		viewer.flash_act(intensity = FLASH_PROTECTION_WELDER + 1, visual = TRUE)
 
-	new /obj/contained_singularity(get_turf(src))
+	var/obj/contained_singularity/singularity = new(get_turf(src))
+	SEND_SIGNAL(src, COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY, singularity)
+
 	qdel(src)

@@ -9,7 +9,7 @@
 
 		creation_time
 		last_poke_time = 0
-		last_inactive_time = 0
+		last_inactive_time = INFINITY
 
 		initial_delay
 		lifetime
@@ -38,7 +38,13 @@
 	if (world.time - creation_time < initial_delay)
 		return
 
+	var/delay_since_last_poke = world.time - last_poke_time
+
 	if (state == POWER_BAR_STATE_WAITING_RECHARGE_DELAY)
+		if (delay_since_last_poke > lifetime)
+			return
+
+		ASSERT(last_inactive_time != INFINITY)
 		var/delay_since_last_inactive = world.time - last_inactive_time
 
 		if (delay_since_last_inactive < recharge_delay)
@@ -48,16 +54,46 @@
 
 	ASSERT(state == POWER_BAR_STATE_WAITING_LIFETIME)
 
-	var/delay_since_last_poke = world.time - last_poke_time
-
 	if (delay_since_last_poke < lifetime)
 		try_give_power_bars()
 	else
 		remove_power_bars()
 		state = POWER_BAR_STATE_WAITING_RECHARGE_DELAY
-		last_inactive_time = world.time
+		last_inactive_time = INFINITY
+
+/datum/delayed_power_bar/proc/bar_ui_data()
+	var/fill
+	var/time_to_fill
+
+	switch (state)
+		if (POWER_BAR_STATE_WAITING_RECHARGE_DELAY)
+			var/delay_since_last_poke = world.time - last_poke_time
+			var/delay_since_last_inactive = world.time - last_inactive_time
+
+			if (delay_since_last_poke > lifetime)
+				fill = 0
+				time_to_fill = recharge_delay
+			else
+				fill = delay_since_last_inactive / recharge_delay
+				time_to_fill = recharge_delay - delay_since_last_inactive
+		if (POWER_BAR_STATE_WAITING_LIFETIME)
+			if (world.time - creation_time < initial_delay)
+				time_to_fill = (initial_delay - (world.time - creation_time))
+				fill = 1 - (time_to_fill / initial_delay)
+			else
+				fill = 1
+				time_to_fill = lifetime - (world.time - last_poke_time)
+
+	return list(
+		"fill" = CLAMP01(fill),
+		"time_to_fill" = max(0, time_to_fill),
+		"power_bar_gain" = power_bar_gain,
+	)
 
 /datum/delayed_power_bar/proc/poke()
+	if (state == POWER_BAR_STATE_WAITING_RECHARGE_DELAY)
+		last_inactive_time = min(last_inactive_time, world.time)
+
 	last_poke_time = world.time
 
 /datum/delayed_power_bar/proc/try_give_power_bars()
@@ -73,6 +109,7 @@
 	if (!gave_power_bars)
 		return
 
+	gave_power_bars = FALSE
 	SSpower_bars.remove_power_bars(power_bar_gain)
 
 #if DM_VERSION >= 515
