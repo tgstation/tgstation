@@ -747,7 +747,7 @@
 
 	return TRUE
 
-// Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
+// Make sure you know what you're doing if you call this
 // You probably want CanPass()
 /atom/movable/Cross(atom/movable/crossed_atom)
 	. = TRUE
