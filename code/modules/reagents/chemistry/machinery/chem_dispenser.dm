@@ -415,8 +415,8 @@
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
 	var/parts_rating = 0
-	for(var/obj/item/stock_parts/cell/cell in component_parts)
-		cell = cell
+	for(var/obj/item/stock_parts/cell/stock_cell in component_parts)
+		cell = stock_cell
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		newpowereff += 0.0166666666 * matter_bin.tier
 		parts_rating += matter_bin.tier
