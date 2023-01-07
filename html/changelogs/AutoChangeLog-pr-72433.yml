@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Fixed the gulag item reclaimer sometimes not giving you all your items back."

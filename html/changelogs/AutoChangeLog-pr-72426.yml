@@ -1,0 +1,4 @@
+author: "khevy"
+delete-after: True
+changes:
+  - rscadd: "adds new type of glockroach, the mobroach"

@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - bugfix: "Fixes Honorbound Sect not granting the right spell"

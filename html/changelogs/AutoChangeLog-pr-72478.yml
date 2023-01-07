@@ -1,4 +1,0 @@
-author: "LeDrascol"
-delete-after: True
-changes:
-  - bugfix: "Fixed the advanced mop displaying as a normal mop when held"

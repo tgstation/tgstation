@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - bugfix: "Legion infested golem corpses can drop power tools again (Drill, Jaws, Experimental Welder) but they were moved away from their pockets and into the belt slot."
