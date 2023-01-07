@@ -10,7 +10,7 @@
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
 
-	if(QDELETED(target))
+	if(isnull(target))
 		return
 
 	var/turf/next_step = get_step_towards(controller.pawn, target)
@@ -50,6 +50,7 @@
 	for (var/direction in dirs_to_move)
 		if (attack_in_direction(controller, basic_mob, direction))
 			return
+	finish_action(controller, succeeded = TRUE)
 
 /datum/ai_behavior/attack_obstructions/proc/attack_in_direction(datum/ai_controller/controller, mob/living/basic/basic_mob, direction)
 	var/turf/next_step = get_step(basic_mob, direction)

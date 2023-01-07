@@ -1,0 +1,4 @@
+author: "softcerv"
+delete-after: True
+changes:
+  - balance: "Moved the account console board to the service lathe"

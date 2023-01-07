@@ -328,7 +328,7 @@
 		if(!length(ingredients))
 			balloon_alert(user, "it's empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		cook()
+		cook(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/microwave/ui_interact(mob/user)

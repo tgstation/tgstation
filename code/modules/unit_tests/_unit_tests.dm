@@ -101,6 +101,7 @@
 #include "create_and_destroy.dm"
 #include "dcs_get_id_from_elements.dm"
 #include "designs.dm"
+#include "door_access.dm"
 #include "dragon_expiration.dm"
 #include "drink_icons.dm"
 #include "dummy_spawn.dm"

@@ -1,0 +1,6 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Beer nukes no longer runtime on detonation."
+  - admin: "Admins can now modify what reagent beer nukes produce, now your parties can be alcohol free!"
+  - admin: "Admins can now creature custom reagent scrubber overflows, TC trade 20TC for superlube flood?"

@@ -111,6 +111,7 @@
 		return
 
 	if(isitem(target))
+		. |= AFTERATTACK_PROCESSED_ITEM
 		var/obj/item/item = target
 		if(!item.can_be_package_wrapped())
 			balloon_alert(user, "can't be wrapped!")

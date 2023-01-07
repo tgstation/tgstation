@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Medipen refillers now use balloon alerts and progress bars instead of to chat messages and invisible timers"
+  - code_imp: "Medipen refillers now refill your pen instead of delete it and create a new one. This also means that refilling them will leave the medipen in your hand instead of drop it at the refiller's tile."

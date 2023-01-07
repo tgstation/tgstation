@@ -28,9 +28,8 @@
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 	else
 
-		if(staminaloss > 0 && stam_regen_start_time <= world.time)
-			adjustStaminaLoss(-INFINITY, null, FALSE)
-			update_stamina()
+		if(getStaminaLoss() > 0 && stam_regen_start_time <= world.time)
+			adjustStaminaLoss(-INFINITY)
 		var/bprv = handle_bodyparts(delta_time, times_fired)
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
