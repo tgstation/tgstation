@@ -61,10 +61,6 @@
 
 /obj/machinery/nuclearbomb/beer/really_actually_explode(detonation_status)
 	disarm_nuke()
-	if (flood_reagent != initial(flood_reagent))
-		var/datum/round_event_control/scrubber_overflow/custom/event = locate(/datum/round_event_control/scrubber_overflow/custom) in SSevents.control
-		event.custom_reagent = flood_reagent
-		event.runEvent()
-	else
-		var/datum/round_event_control/event = locate(/datum/round_event_control/scrubber_overflow/beer) in SSevents.control
-		event.runEvent()
+	var/datum/round_event_control/scrubber_overflow/custom/event = locate(/datum/round_event_control/scrubber_overflow/custom) in SSevents.control
+	event.custom_reagent = flood_reagent
+	event.runEvent()

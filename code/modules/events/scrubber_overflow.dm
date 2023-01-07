@@ -139,26 +139,17 @@
 	danger_chance = 30
 	reagents_amount = 150
 
-/datum/round_event_control/scrubber_overflow/beer // Used when the beer nuke "detonates"
-	name = "Scrubber Overflow: Beer"
-	typepath = /datum/round_event/scrubber_overflow/beer
-	weight = 0
-	max_occurrences = 0
-	description = "The scrubbers release a tide of boozy froth."
-
-/datum/round_event/scrubber_overflow/beer
-	overflow_probability = 100
-	forced_reagent = /datum/reagent/consumable/ethanol/beer
-	reagents_amount = 100
-
-/datum/round_event_control/scrubber_overflow/custom
+/datum/round_event_control/scrubber_overflow/custom //Used for the beer nuke as well as admin abuse
 	name = "Scrubber Overflow: Custom"
 	typepath = /datum/round_event/scrubber_overflow/custom
 	weight = 0
 	max_occurrences = 0
 	description = "The scrubbers release a tide of custom froth."
 	///Reagent thats going to be flooded.
-	var/custom_reagent
+	var/datum/reagent/custom_reagent
+
+/datum/round_event_control/scrubber_overflow/custom/annouce_name(random)
+	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>Scrubber Overflow: [initial(custom_reagent.name)]</b>", message_type=DEADCHAT_ANNOUNCEMENT)
 
 /datum/round_event_control/scrubber_overflow/custom/admin_setup(mob/admin)
 	if(!check_rights(R_FUN))
@@ -169,7 +160,7 @@
 
 /datum/round_event/scrubber_overflow/custom
 	overflow_probability = 100
-	forced_reagent = /datum/reagent/lube/superlube
+	forced_reagent = /datum/reagent/consumable/ethanol/beer
 	reagents_amount = 100
 
 /datum/round_event/scrubber_overflow/custom/start()
