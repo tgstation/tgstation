@@ -16,3 +16,6 @@
 
 /datum/movespeed_modifier/sphere
 	multiplicative_slowdown = -0.5
+
+/datum/movespeed_modifier/tile_remover
+	multiplicative_slowdown = 2.5

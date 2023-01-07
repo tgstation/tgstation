@@ -126,3 +126,41 @@
 	balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/wrench/tile_remover
+	name = "tile remover"
+	desc = "A gigantic suction wrench. You're pretty sure it could pry open the plating of the floor tiles and suck them out of the floor creating a hole into space."
+	icon_state = "tile_remover"
+	icon = 'icons/obj/tools32x48.dmi'
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
+	toolspeed = 0.2
+	force = 25
+	throwforce = 20
+	throw_range = 2
+	demolition_mod = 2
+	armor_type = /datum/armor/tile_remover
+	resistance_flags = FIRE_PROOF
+	wound_bonus = -10
+	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
+	attack_verb_simple = list("bonks", "bludgeons", "pounds")
+	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+
+/datum/armor/tile_remover
+	acid = 30
+	bomb = 100
+	bullet = 30
+	fire = 100
+	laser = 30
+	melee = 30
+
+/obj/item/wrench/tile_remover/Initialize(mapload)
+	. = ..()
+	transform = transform.Translate(0, -8)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	AddComponent(/datum/component/item_slowdown, /datum/movespeed_modifier/tile_remover)

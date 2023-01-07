@@ -177,7 +177,7 @@
 	icon_state = "mechremoval0"
 	base_icon_state = "mechremoval"
 	inhand_icon_state = null
-	icon = 'icons/obj/mechremoval.dmi'
+	icon = 'icons/obj/tools32x48.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
 	toolspeed = 1.25
