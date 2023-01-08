@@ -531,9 +531,9 @@
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"
 
-/datum/sprite_accessory/hair/hair_overeyed_izutsumi
-	name = "Over Eye (Izutsumi)"
-	icon_state = "hair_overeyed_izutsumi"
+/datum/sprite_accessory/hair/hair_overeye_2
+	name = "Over Eye 2"
+	icon_state = "hair_overeye_2"
 
 /datum/sprite_accessory/hair/oxton
 	name = "Oxton"
