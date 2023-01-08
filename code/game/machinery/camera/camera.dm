@@ -51,9 +51,6 @@
 	/// A copy of the last paper object that was shown to this camera.
 	var/obj/item/paper/last_shown_paper
 
-	VAR_PRIVATE
-		last_camera_turf
-
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
@@ -599,7 +596,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		user.set_see_in_dark(2)
 	return 1
 
-/obj/machinery/camera/proc/update_camera_screens(atom/movable/screen/map_view/cam_screen, atom/movable/screen/background/cam_background)
+/obj/machinery/camera/proc/update_camera_screens(atom/movable/screen/map_view/cam_screen, atom/movable/screen/background/cam_background, force_xray = FALSE)
 	var/list/visible_turfs = list()
 
 	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
@@ -607,17 +604,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if (offset_x != 0 || offset_y != 0)
 		new_cam_turf = locate(new_cam_turf.x + offset_x, new_cam_turf.y + offset_y, new_cam_turf.z)
 
-	// If we're not forcing an update for some reason and the cameras are in the same location,
-	// we don't need to update anything.
-	// Most security cameras will end here as they're not moving.
-	if(last_camera_turf == new_cam_turf)
-		return
-
-	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
-	last_camera_turf = new_cam_turf
-
 	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
-	var/list/visible_things = isXRay() ? range(view_range, new_cam_turf) : view(view_range, new_cam_turf)
+	var/list/visible_things = (force_xray || isXRay()) ? range(view_range, new_cam_turf) : view(view_range, new_cam_turf)
 
 	for(var/turf/visible_turf in visible_things)
 		visible_turfs += visible_turf

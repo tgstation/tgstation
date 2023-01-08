@@ -36,6 +36,8 @@
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
 
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_SECURITY) // security only
+
 /obj/machinery/computer/security/Destroy()
 	QDEL_NULL(cam_screen)
 	QDEL_NULL(cam_background)
@@ -127,7 +129,12 @@
 		show_camera_static()
 		return
 
-	active_camera.update_camera_screens(cam_screen, cam_background)
+	active_camera.update_camera_screens(
+		cam_screen,
+		cam_background,
+		// Security only, but all camera consoles get access
+		force_xray = SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SECURITY) == 3,
+	)
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	. = ..()
@@ -169,6 +176,10 @@
 		if(tempnetwork.len)
 			D["[cam.c_tag]"] = cam
 	return D
+
+/obj/machinery/computer/security/proc/on_power_bar_update(new_power_bars)
+	update_active_camera_screen()
+	return POWER_BAR_DONT_REACT
 
 // SECURITY MONITORS
 
