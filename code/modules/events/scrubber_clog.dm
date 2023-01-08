@@ -44,6 +44,7 @@
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs) //The first one's free!
+	announce_to_ghosts(scrubber)
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob.
 	if(activeFor % spawn_delay == 0 && scrubber.clogged)
