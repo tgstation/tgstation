@@ -339,13 +339,13 @@
 	. = ..()
 	var/mat_capacity = 0
 	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
-		mat_capacity += new_matter_bin.tier*75000
+		mat_capacity += new_matter_bin.tier * 75000
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_capacity
 
 	var/efficiency=1.8
 	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
-		efficiency -= new_manipulator.tier*0.2
+		efficiency -= new_manipulator.tier * 0.2
 	creation_efficiency = max(1,efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of manipulator efficiency
 
 /obj/machinery/autolathe/examine(mob/user)

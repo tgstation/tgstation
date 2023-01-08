@@ -38,8 +38,8 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
-		for(var/obj/item/stock_parts/manipulator/M in component_parts)
-			if(M.rating >= 2)
+		for(var/datum/stock_part/manipulator/manipulator in component_parts)
+			if(manipulator.tier >= 2)
 				. += span_notice("[src] has been upgraded to process inorganic materials.")
 
 /obj/machinery/gibber/update_overlays()

@@ -15,9 +15,9 @@
 	var/panel_open = FALSE
 	///Parts used in building the wheelchair
 	var/list/required_parts = list(
-		/obj/item/stock_parts/manipulator,
-		/obj/item/stock_parts/manipulator,
-		/obj/item/stock_parts/capacitor,
+		/datum/stock_part/manipulator,
+		/datum/stock_part/manipulator,
+		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
 	var/obj/item/stock_parts/cell/power_cell
@@ -31,16 +31,16 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	speed = 1 // Should never be under 1
-	for(var/obj/item/stock_parts/manipulator/M in contents)
-		speed += M.rating
+	for(var/datum/stock_part/manipulator/manipulator in contents)
+		speed += manipulator.tier
 	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
 	if(icon_state != chair_icon)
-		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER) 
+		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER)
 
 	icon_state = chair_icon
 
-	for(var/obj/item/stock_parts/capacitor/C in contents)
-		power_efficiency = C.rating
+	for(var/datum/stock_part/capacitor/capacitor in contents)
+		power_efficiency = capacitor.tier
 
 /obj/vehicle/ridden/wheelchair/motorized/get_cell()
 	return power_cell
@@ -90,20 +90,21 @@
 			to_chat(user, span_notice("You install the [I]."))
 		refresh_parts()
 		return
-	if(!istype(I, /obj/item/stock_parts))
+	if(!istype(I, /datum/stock_part))
 		return ..()
 
-	var/obj/item/stock_parts/newstockpart = I
-	for(var/obj/item/stock_parts/oldstockpart in contents)
+	var/datum/stock_part/newstockpart = I
+	for(var/datum/stock_part/oldstockpart in contents)
 		var/type_to_check
 		for(var/pathtype in required_parts)
 			if(ispath(oldstockpart.type, pathtype))
 				type_to_check = pathtype
 				break
 		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
-			if(newstockpart.get_part_rating() > oldstockpart.get_part_rating())
-				newstockpart.forceMove(src)
-				user.put_in_hands(oldstockpart)
+			if(newstockpart.energy_rating() > oldstockpart.energy_rating())
+				/**newstockpart.forceMove(src)
+				user.put_in_hands(oldstockpart)*/
+
 				user.visible_message(span_notice("[user] replaces [oldstockpart] with [newstockpart] in [src]."), span_notice("You replace [oldstockpart] with [newstockpart]."))
 				break
 	refresh_parts()
