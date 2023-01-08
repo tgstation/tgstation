@@ -11,8 +11,7 @@
 	var/list/most_seen_damage = list() // This looks like: ({Damage type} = {Frequency of the most common description}, ...)
 	var/list/final_descriptions = list() // This looks like: ({Damage type} = {Most common damage description for that type}, ...)
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		for(var/i in 1 to part.damage_examines.len)
-			var/damage_type = part.damage_examines[i]
+		for(var/damage_type in part.damage_examines)
 			var/damage_desc = part.damage_examines[damage_type]
 			if(!seen_damage[damage_type])
 				seen_damage[damage_type] = list()
