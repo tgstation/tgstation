@@ -1,9 +1,11 @@
 /obj/item/clothing/head/helmet
 	name = "helmet"
-	desc = "Standard Security gear. Protects the head from impacts."
+	desc = "Standard Security gear. Protects the head from impacts, and flashes."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "helmet"
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 0
 	inhand_icon_state = "helmet"
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50, WOUND = 10)
 	cold_protection = HEAD
@@ -53,8 +55,10 @@
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
-	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry, and flashes along with explosives to a minor extent."
 	icon_state = "helmetalt"
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 0
 	inhand_icon_state = "helmet"
 	armor = list(MELEE = 15, BULLET = 60, LASER = 10, ENERGY = 10, BOMB = 40, BIO = 0, FIRE = 50, ACID = 50, WOUND = 5)
 	dog_fashion = null
@@ -67,6 +71,7 @@
 	name = "tactical combat helmet"
 	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."
 	icon_state = "marine_command"
+
 	inhand_icon_state = "marine_helmet"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 30, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 40, ACID = 50, WOUND = 20)
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -104,12 +109,14 @@
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
-	desc = "It's a helmet specifically designed to protect against close range attacks."
+	desc = "It's a helmet specifically designed to protect against close range attacks. Flashproof."
 	icon_state = "riot"
 	inhand_icon_state = "riot_helmet"
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 0
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80, WOUND = 15)
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
 	strip_delay = 80
@@ -181,6 +188,8 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 0
 	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
 	icon_state = "swatsyndie"
 	inhand_icon_state = "swatsyndie_helmet"
@@ -198,6 +207,8 @@
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 0
 	inhand_icon_state = "swat_helmet"
 	clothing_flags = PLASMAMAN_HELMET_EXEMPT
 	cold_protection = HEAD
