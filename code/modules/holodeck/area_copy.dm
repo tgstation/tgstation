@@ -1,147 +1,90 @@
-//Vars that will not be copied when using /DuplicateObject
-GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
-	"tag", "datum_components", "area", "type", "loc", "locs", "vars", "parent", "parent_type", "verbs", "ckey", "key",
-	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup",
-	"important_recursive_contents", "bodyparts", "internal_organs", "hand_bodyparts", "overlays_standing", "hud_list",
-	"actions", "AIStatus", "appearance", "managed_overlays", "managed_vis_overlays", "computer_id", "lastKnownIP", "implants",
-	"tgui_shared_states"
-	))
+///List of all vars that will not be copied over when using duplicate_object()
+GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
+	"actions",
+	"active_hud_list",
+	"active_timers",
+	"AIStatus",
+	"appearance",
+	"area",
+	"atmos_adjacent_turfs",
+	"bodyparts",
+	"ckey",
+	"comp_lookup",
+	"computer_id",
+	"contents",
+	"cooldowns",
+	"datum_components",
+	"external_organs",
+	"external_organs_slot",
+	"group",
+	"hand_bodyparts",
+	"held_items",
+	"hud_list",
+	"implants",
+	"important_recursive_contents",
+	"internal_organs",
+	"internal_organs_slot",
+	"key",
+	"lastKnownIP",
+	"loc",
+	"locs",
+	"managed_overlays",
+	"managed_vis_overlays",
+	"overlays",
+	"overlays_standing",
+	"parent",
+	"parent_type",
+	"power_supply",
+	"reagents",
+	"signal_procs",
+	"status_traits",
+	"stat",
+	"tag",
+	"tgui_shared_states",
+	"type",
+	"vars",
+	"verbs",
+	"x", "y", "z",
+))
+GLOBAL_PROTECT(duplicate_forbidden_vars)
 
-/proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc, atom/newloc = null, nerf, holoitem)
+/**
+ * # duplicate_object
+ *
+ * Makes a copy of an item and transfers most vars over, barring GLOB.duplicate_forbidden_vars
+ * Args:
+ * original - Atom being duplicated
+ * spawning_location - Turf where the duplicated atom will be spawned at.
+ */
+/proc/duplicate_object(atom/original, turf/spawning_location)
 	RETURN_TYPE(original.type)
 	if(!original)
 		return
-	var/atom/O
 
-	if(sameloc)
-		O = new original.type(original.loc)
-	else
-		O = new original.type(newloc)
+	var/atom/made_copy = new original.type(spawning_location)
 
-	if(perfectcopy && O && original)
-		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
-			if(islist(original.vars[V]))
-				var/list/L = original.vars[V]
-				O.vars[V] = L.Copy()
-			else if(istype(original.vars[V], /datum) || ismob(original.vars[V]))
-				continue // this would reference the original's object, that will break when it is used or deleted.
-			else
-				O.vars[V] = original.vars[V]
-
-	if(isobj(O))
-		var/obj/N = O
-		if(holoitem)
-			N.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // holoitems do not burn
-
-		if(nerf && isitem(O))
-			var/obj/item/I = O
-			I.damtype = STAMINA // thou shalt not
-
-		N.update_appearance()
-		if(ismachinery(O))
-			var/obj/machinery/M = O
-			M.power_change()
-			if(istype(O, /obj/machinery/button))
-				var/obj/machinery/button/B = O
-				B.setup_device()
-
-	if(holoitem)
-		O.flags_1 |= HOLOGRAM_1
-		for(var/atom/thing in O)
-			thing.flags_1 |= HOLOGRAM_1
-		if(ismachinery(O))
-			var/obj/machinery/M = O
-			for(var/atom/contained_atom in M.component_parts)
-				contained_atom.flags_1 |= HOLOGRAM_1
-			if(M.circuit)
-				M.circuit.flags_1 |= HOLOGRAM_1
-
-	if(ismob(O)) //Overlays are carried over despite disallowing them, if a fix is found remove this.
-		var/mob/M = O
-		M.cut_overlays()
-		M.regenerate_icons()
-	return O
-
-
-/area/proc/copy_contents_to(area/A , platingRequired = 0, nerf_weapons = 0 )
-	//Takes: Area. Optional: If it should copy to areas that don't have plating
-	//Returns: Nothing.
-	//Notes: Attempts to move the contents of one area to another area.
-	//       Movement based on lower left corner. Tiles that do not fit
-	//  into the new area will not be moved.
-
-	if(!A || !src)
-		return 0
-
-	var/list/turfs_src = get_area_turfs(src.type)
-	var/list/turfs_trg = get_area_turfs(A.type)
-
-	var/src_min_x = 99999
-	var/src_min_y = 99999
-	var/list/refined_src = new/list()
-
-	for (var/turf/T in turfs_src)
-		src_min_x = min(src_min_x,T.x)
-		src_min_y = min(src_min_y,T.y)
-	for (var/turf/T in turfs_src)
-		refined_src[T] = "[T.x - src_min_x].[T.y - src_min_y]"
-
-	var/trg_min_x = 99999
-	var/trg_min_y = 99999
-	var/list/refined_trg = new/list()
-
-	for (var/turf/T in turfs_trg)
-		trg_min_x = min(trg_min_x,T.x)
-		trg_min_y = min(trg_min_y,T.y)
-	for (var/turf/T in turfs_trg)
-		refined_trg["[T.x - trg_min_x].[T.y - trg_min_y]"] = T
-
-	var/list/toupdate = new/list()
-
-	var/copiedobjs = list()
-
-	for (var/turf/T in refined_src)
-		var/coordstring = refined_src[T]
-		var/turf/B = refined_trg[coordstring]
-		if(!istype(B))
+	for(var/atom_vars in original.vars - GLOB.duplicate_forbidden_vars)
+		if(islist(original.vars[atom_vars]))
+			var/list/var_list = original.vars[atom_vars]
+			made_copy.vars[atom_vars] = var_list.Copy()
 			continue
+		else if(istype(original.vars[atom_vars], /datum) || ismob(original.vars[atom_vars]))
+			continue // this would reference the original's object, that will break when it is used or deleted.
+		made_copy.vars[atom_vars] = original.vars[atom_vars]
 
-		if(platingRequired)
-			if(isspaceturf(B))
-				continue
+	if(isliving(made_copy))
 
-		var/old_dir1 = T.dir
-		var/old_icon_state1 = T.icon_state
-		var/old_icon1 = T.icon
+		if(iscarbon(made_copy))
+			var/mob/living/carbon/original_carbon = original
+			//transfer DNA over (also body features), we must do this before transfering vars over so they know what organs we have.
+			original_carbon.dna.transfer_identity(made_copy, transfer_SE = TRUE)
 
-		B = B.ChangeTurf(T.type)
-		B.setDir(old_dir1)
-		B.icon = old_icon1
-		B.icon_state = old_icon_state1
+		var/mob/living/original_living = original
+		//transfer implants
+		for(var/obj/item/implant/original_implants as anything in original_living.implants)
+			var/obj/item/implant/copied_implant = new original_implants.type
+			copied_implant.implant(made_copy, silent = TRUE, force = TRUE)
 
-		for(var/obj/O in T)
-			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = B, nerf=nerf_weapons, holoitem=TRUE)
-			if(!O2)
-				continue
-			copiedobjs += O2.get_all_contents()
+	made_copy.update_appearance()
 
-		for(var/mob/M in T)
-			if(iscameramob(M))
-				continue // If we need to check for more mobs, I'll add a variable
-			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
-			copiedobjs += SM.get_all_contents()
-
-		for(var/V in T.vars - GLOB.duplicate_forbidden_vars)
-			if(V == "air")
-				var/turf/open/O1 = B
-				var/turf/open/O2 = T
-				O1.air.copy_from(O2.return_air())
-				continue
-			B.vars[V] = T.vars[V]
-		toupdate += B
-
-	if(toupdate.len)
-		for(var/turf/T1 in toupdate)
-			CALCULATE_ADJACENT_TURFS(T1, KILL_EXCITED)
-
-	return copiedobjs
+	return made_copy
