@@ -780,7 +780,7 @@
 		return
 
 	prompted = 1
-	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) =="No")
+	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) == "No")
 		prompted = 0
 		return
 

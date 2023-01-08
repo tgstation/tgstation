@@ -173,10 +173,14 @@ do
     done < <(jq -r '[.map_file] | flatten | .[]' $json)
 done
 
+# find unspaced operators, ignore ones in strings
+
 section "code quality"
 part "logical operand spacing"
 if $grep -P '(\)|!?\w)(!=|==|<=|>=|&&|\|\|)' $code_files ||
-	$grep -P '(!=|==|<=|>=|&&|\|\|)(\(|!?\w)' $code_files ; then
+	$grep -P '(!=|==|<=|>=|&&|\|\|)(\(|!?\w)' $code_files ||
+	$grep -P ' (!=|==|<=|>=|&&|\|\|)"' $code_files ||
+	$grep -P '"(!=|==|<=|>=|&&|\|\|) ' $code_files	; then
 	echo
 	echo -e "${RED}ERROR: Logical operand not spaced in code, please use spaces around logical operands.${NC}"
 	st=1
