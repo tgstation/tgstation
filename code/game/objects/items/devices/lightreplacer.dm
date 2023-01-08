@@ -27,6 +27,9 @@
 // examines you when you're holding it in your hand, you will be discovered.
 //
 
+#define GLASS_SHEET_USES 5
+#define LIGHTBULB_COST 1
+#define BULB_SHARDS_REQUIRED 4
 
 /obj/item/lightreplacer
 
@@ -46,16 +49,10 @@
 
 	var/max_uses = 20
 	var/uses = 10
-	// How much to increase per each glass?
-	var/increment = 5
-	// How much to take from the glass?
-	var/decrement = 1
 	var/charge = 1
 
-	// Eating used bulbs gives us bulb shards
+	// Eating used bulbs gives us bulb shards. Requires BULB_SHARDS_MAXIMUM to produce a new light.
 	var/bulb_shards = 0
-	// when we get this many shards, we get a free bulb.
-	var/shards_required = 4
 
 	// whether it is "bluespace powered" (can be used at a range)
 	var/bluespace_toggle = FALSE
@@ -71,8 +68,8 @@
 		if(uses >= max_uses)
 			to_chat(user, span_warning("[src.name] is full."))
 			return
-		else if(G.use(decrement))
-			AddUses(increment)
+		else if(G.use(LIGHTBULB_COST))
+			AddUses(GLASS_SHEET_USES)
 			to_chat(user, span_notice("You insert a piece of glass into \the [src.name]. You have [uses] light\s remaining."))
 			return
 		else
@@ -84,7 +81,7 @@
 			return
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
-		AddUses(round(increment*0.75))
+		AddUses(round(GLASS_SHEET_USES*0.75))
 		to_chat(user, span_notice("You insert a shard of glass into \the [src]. You have [uses] light\s remaining."))
 		qdel(W)
 		return
@@ -164,10 +161,10 @@
 
 /obj/item/lightreplacer/proc/AddShards(amount = 1, user)
 	bulb_shards += amount
-	var/new_bulbs = round(bulb_shards / shards_required)
+	var/new_bulbs = round(bulb_shards / BULB_SHARDS_REQUIRED)
 	if(new_bulbs > 0)
 		AddUses(new_bulbs)
-	bulb_shards = bulb_shards % shards_required
+	bulb_shards = bulb_shards % BULB_SHARDS_REQUIRED
 	if(new_bulbs != 0)
 		to_chat(user, span_notice("\The [src] fabricates a new bulb from the broken glass it has stored. It now has [uses] uses."))
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
