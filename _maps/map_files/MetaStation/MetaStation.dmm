@@ -3239,10 +3239,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
-"bgk" = (
-/obj/machinery/power/emitter/prototype,
-/turf/closed/wall,
-/area/station/engineering/main)
 "bgm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30602,11 +30598,6 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"kYo" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/engineering/main)
 "kYv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"
@@ -33455,6 +33446,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/bar)
+"lZk" = (
+/turf/open/floor/engine,
+/area/station/maintenance/disposal/incinerator)
 "lZC" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -56356,8 +56350,10 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "uaB" = (
-/turf/open/floor/engine,
-/area/station/maintenance/disposal/incinerator)
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "uaN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -107693,7 +107689,7 @@ uXd
 gMG
 dWG
 uGm
-kYo
+uaB
 uXd
 qJd
 nLz
@@ -107996,7 +107992,7 @@ ydj
 aBW
 vQh
 pnH
-uaB
+lZk
 pnH
 pnH
 aaa
@@ -108253,7 +108249,7 @@ ldc
 xpB
 dli
 huZ
-uaB
+lZk
 xrr
 aaa
 aaa
@@ -108454,7 +108450,7 @@ cnK
 cOm
 uQG
 cOm
-bgk
+cnK
 cnK
 jPe
 dPy
@@ -108510,7 +108506,7 @@ lYM
 vzc
 gUY
 pnH
-uaB
+lZk
 pnH
 aaa
 aaa

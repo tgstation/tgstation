@@ -6,3 +6,5 @@
 #define POWER_BAR_DEPARTMENT_SECURITY "security"
 
 #define POWER_BAR_DONT_REACT (1 << 0)
+
+#define POWER_BAR_FLAG_FLIPPED(flag, default) (max(-1, ##flag) == -1 ? default : ##flag)

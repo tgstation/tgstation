@@ -28,10 +28,10 @@ SUBSYSTEM_DEF(power_bars)
 	enabled = GLOB.singularity_computers.len > 0
 	last_distributed_allocations = deep_copy_list(department_allocations)
 	areas_per_department = areas_for_department()
-	available_power_bars = department_allocations.len
+	available_power_bars = department_allocations.len + 3 // MBTODO: Remove +3
 
 	if (enabled)
-		delete_stock_part_designs()
+		delete_redundant_designs()
 
 	return SS_INIT_SUCCESS
 
@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(power_bars)
 
 	return "[enabled ? "ON": "OFF"] ([available_power_bars]) [entries.Join(" / ")]"
 
-/datum/controller/subsystem/power_bars/proc/delete_stock_part_designs()
+/datum/controller/subsystem/power_bars/proc/delete_redundant_designs()
 	var/stock_part_designs = list()
 
 	for (var/design_id in SSresearch.techweb_designs)
@@ -53,6 +53,7 @@ SUBSYSTEM_DEF(power_bars)
 		if ( \
 			(ispath(design.build_path, /obj/item/stock_parts) && !ispath(design.build_path, /obj/item/stock_parts/cell)) \
 			|| ispath(design.build_path, /obj/item/storage/part_replacer) \
+			|| ispath(design.build_path, /obj/item/rcd_upgrade) \
 		)
 			stock_part_designs += design_id
 			design.departmental_flags = NONE

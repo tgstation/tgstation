@@ -24,7 +24,7 @@
 
 	RegisterSignal(SSpower_bars, COMSIG_POWER_BARS_UPDATED, PROC_REF(on_power_bars_updated))
 
-	on_changed.InvokeAsync(SSpower_bars.last_distributed_allocations[department])
+	on_changed.InvokeAsync(SSpower_bars.power_bars_of_department(department))
 
 /datum/component/power_bar_reactor/proc/on_power_bars_updated(datum/controller/subsystem/power_bars/power_bars_ss, list/departments)
 	SIGNAL_HANDLER

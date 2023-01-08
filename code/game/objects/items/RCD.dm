@@ -49,7 +49,7 @@ RLD
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
-		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", mapload, FALSE)
+		install_silo_mats()
 
 ///used for examining the RCD and for its UI
 /obj/item/construction/proc/get_silo_iron()
@@ -96,10 +96,23 @@ RLD
 		to_chat(user, span_warning("[src] can't install this upgrade!"))
 		return
 	upgrade |= rcd_up.upgrade
-	if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
-		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
+	if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK))
+		install_silo_mats()
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rcd_up)
+
+/obj/item/construction/proc/install_silo_mats()
+	if (!isnull(silo_mats))
+		return
+
+	silo_mats = AddComponent(/datum/component/remote_materials, "RCD", mapload = FALSE, allow_standalone = FALSE, force_connect = SSpower_bars.enabled)
+
+/obj/item/construction/proc/uninstall_upgrades()
+	ASSERT(SSpower_bars.enabled)
+
+	upgrade = NONE
+	silo_link = FALSE
+	QDEL_NULL(silo_mats)
 
 /// Inserts matter into the RCD allowing it to build
 /obj/item/construction/proc/insert_matter(obj/O, mob/user)
@@ -429,6 +442,50 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/openspace_item_click_handler)
+	update_appearance()
+
+	if (type == /obj/item/construction/rcd)
+		AddComponent(/datum/component/power_bar_reactor, POWER_BAR_DEPARTMENT_ENGINEERING, CALLBACK(src, PROC_REF(on_power_bar_update)))
+
+/obj/item/construction/rcd/uninstall_upgrades()
+	. = ..()
+
+	if (design_category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
+		reset()
+		return
+
+	if (design_category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
+		reset()
+		return
+
+/obj/item/construction/rcd/proc/reset()
+	design_category = initial(design_category)
+	design_title = initial(design_title)
+	root_category = initial(root_category)
+	mode = initial(mode)
+	construction_mode = initial(construction_mode)
+
+	update_appearance()
+
+/obj/item/construction/rcd/proc/on_power_bar_update(power_bars)
+	SIGNAL_HANDLER
+
+	if (power_bars <= 1)
+		uninstall_upgrades()
+		return
+
+	var/new_upgrade = NONE
+
+	if (power_bars >= 2)
+		new_upgrade |= RCD_UPGRADE_FRAMES | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_SILO_LINK
+
+	if (power_bars >= 3)
+		new_upgrade |= RCD_UPGRADE_SILO_LINK
+
+		install_silo_mats()
+		silo_link = TRUE
+
+	upgrade = new_upgrade & ~banned_upgrades
 
 /obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag)
@@ -739,10 +796,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
 		if(ratio > 0)
 			. += "[icon_state]_charge[ratio]"
-
-/obj/item/construction/rcd/Initialize(mapload)
-	. = ..()
-	update_appearance()
 
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"

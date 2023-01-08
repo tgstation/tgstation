@@ -80,13 +80,17 @@
 	ADD_TRAIT(atom_parent, TRAIT_CONNECTED_TO_SINGULARITY_CONSOLE, "[type]")
 
 /datum/component/connects_to_singularity_console/proc/connect_cable(obj/structure/cable/our_cable)
-	if (!IS_WEAKREF_OF(our_cable, last_cable_ref) || !IS_WEAKREF_OF(our_cable.powernet, last_powernet_ref))
+	var/cable_changed = !IS_WEAKREF_OF(our_cable, last_cable_ref)
+	var/powernet_changed = !IS_WEAKREF_OF(our_cable.powernet, last_powernet_ref)
+
+	if (cable_changed || powernet_changed)
 		disconnect_cable()
 
-	last_cable_ref = WEAKREF(our_cable)
-	RegisterSignal(our_cable, COMSIG_CABLE_POWERNET_CHANGED, PROC_REF(check_connection))
+	if (cable_changed)
+		last_cable_ref = WEAKREF(our_cable)
+		RegisterSignal(our_cable, COMSIG_CABLE_POWERNET_CHANGED, PROC_REF(check_connection))
 
-	if (!isnull(our_cable.powernet))
+	if (powernet_changed)
 		last_powernet_ref = WEAKREF(our_cable.powernet)
 		RegisterSignals(our_cable.powernet, list(COMSIG_POWERNET_ADDED_CABLE, COMSIG_POWERNET_REMOVED_CABLE), PROC_REF(check_connection))
 
