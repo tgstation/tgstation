@@ -63,7 +63,7 @@ Assistant
 	else
 		uniform = GLOB.colored_assistant.jumpskirts[index]
 
-/datum/outfit/job/assistant/proc/give_maintenance_card(mob/libing/carbon/human/target)
+/datum/outfit/job/assistant/proc/give_maintenance_card(mob/living/carbon/human/target)
 	if(CONFIG_GET(flag/assistants_have_maint_access))
 		l_hand = /obj/item/card/id/advanced/maintenance_access
 
