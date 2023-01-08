@@ -160,7 +160,7 @@
 	var/l_limbs_missing = 0
 	var/r_limbs_missing = 0
 	for(var/t in missing)
-		if(t==BODY_ZONE_HEAD)
+		if(t == BODY_ZONE_HEAD)
 			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B><span class='warning'>\n"
 			continue
 		if(t == BODY_ZONE_L_ARM || t == BODY_ZONE_L_LEG)

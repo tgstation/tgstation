@@ -110,7 +110,7 @@
 	var/obj/machinery/power/apc/theAPC = null
 
 	var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
-	for (PRP=1, PRP<=4, PRP++)
+	for (PRP=1, PRP <= 4, PRP++)
 		T = get_turf(src)
 		AIarea = get_area(src)
 		if(AIarea)

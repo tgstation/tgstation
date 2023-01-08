@@ -323,7 +323,7 @@
 		return
 
 	if(nozzle_mode == RESIN_FOAM)
-		if(!Adj|| !isturf(target))
+		if(!Adj || !isturf(target))
 			balloon_alert(user, "too far!")
 			return
 		for(var/S in target)

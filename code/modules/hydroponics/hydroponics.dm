@@ -375,7 +375,7 @@
 
 			if(pestlevel >= 8)
 				if(!myseed.get_gene(/datum/plant_gene/trait/carnivory))
-					if(myseed.potency >=30)
+					if(myseed.potency >= 30)
 						myseed.adjust_potency(-rand(2,6)) //Pests eat leaves and nibble on fruit, lowering potency.
 						myseed.set_potency(min((myseed.potency), CARNIVORY_POTENCY_MIN, MAX_PLANT_POTENCY))
 				else
@@ -384,7 +384,7 @@
 
 			else if(pestlevel >= 4)
 				if(!myseed.get_gene(/datum/plant_gene/trait/carnivory))
-					if(myseed.potency >=30)
+					if(myseed.potency >= 30)
 						myseed.adjust_potency(-rand(1,4))
 						myseed.set_potency(min((myseed.potency), CARNIVORY_POTENCY_MIN, MAX_PLANT_POTENCY))
 
@@ -399,7 +399,7 @@
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-				if(myseed.yield >=3)
+				if(myseed.yield >= 3)
 					myseed.adjust_yield(-rand(1,2)) //Weeds choke out the plant's ability to bear more fruit.
 					myseed.set_yield(min((myseed.yield), WEED_HARDY_YIELD_MIN, MAX_PLANT_YIELD))
 

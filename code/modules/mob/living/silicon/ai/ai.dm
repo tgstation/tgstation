@@ -3,7 +3,7 @@
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
 	var/is_in_use = 0
-	if (subject!=null)
+	if (subject != null)
 		for(var/A in GLOB.ai_list)
 			var/mob/living/silicon/ai/M = A
 			if ((M.client && M.machine == subject))
@@ -1123,6 +1123,6 @@
 
 /mob/living/silicon/ai/GetVoice()
 	. = ..()
-	if(ai_voicechanger&&ai_voicechanger.changing_voice)
+	if(ai_voicechanger && ai_voicechanger.changing_voice)
 		return ai_voicechanger.say_name
 	return

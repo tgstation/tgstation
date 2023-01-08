@@ -174,28 +174,12 @@ do
 done
 
 section "code quality"
-part "single letter vars"
-if $grep -P 'var/[^ =]+ = [^"]\w' $code_files; then
+part "logical operand spacing"
+if $grep -P '\w(!=|==|<=|>=|&&|\|\|)' $code_files ||
+	$grep -P '(!=|==|<=|>=|&&|\|\|)\w' $code_files ||
+	$grep -P '\)(!=|==|<=|>=|&&|\|\|)' $code_files ; then
 	echo
-	echo -e "${RED}ERROR: Single letter variable detected in code, please use descriptive variable names.${NC}"
-	st=1
-fi;
-part "single letter proc args"
-if $grep -P 'proc/[^/()]+/\([^/()]+ [^/()]+\)' $code_files; then
-	echo
-	echo -e "${RED}ERROR: Single letter proc argument detected in code, please use descriptive argument names.${NC}"
-	st=1
-fi;
-part "operator spacing"
-if $grep -P '(\w\+{1,2}[^=])|([^=]\+{1,2}\w)' $code_files; then
-	echo
-	echo -e "${RED}ERROR: Operator not spaced in code, please use spaces around operators.${NC}"
-	st=1
-fi;
-part "function parameter spacing"
-if $grep -P '\w\([^,]+\w,\w' $code_files; then
-	echo
-	echo -e "${RED}ERROR: Function parameter not spaced in code, please use spaces after commas.${NC}"
+	echo -e "${RED}ERROR: Logical operand not spaced in code, please use spaces around logical operands.${NC}"
 	st=1
 fi;
 

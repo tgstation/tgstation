@@ -280,7 +280,7 @@ Behavior that's still missing from this component that original food items had t
 
 ///Makes sure the thing hasn't been destroyed or fully eaten to prevent eating phantom edibles
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
-	if(QDELETED(owner)|| !(IS_EDIBLE(owner)))
+	if(QDELETED(owner) || !(IS_EDIBLE(owner)))
 		return TRUE
 	if(owner.reagents.total_volume)
 		return FALSE

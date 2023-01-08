@@ -66,7 +66,7 @@
 				\n[span_info("Body temperature: ???")]")
 		return
 
-	if(ispodperson(M)&& !advanced)
+	if(ispodperson(M) && !advanced)
 		to_chat(user, "<span class='info'>[M]'s biological structure is too complex for the health analyzer.")
 		return
 

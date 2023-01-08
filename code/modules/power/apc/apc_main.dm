@@ -234,7 +234,7 @@
 		return
 	if(opened)
 		if(has_electronics && terminal)
-			. += "The cover is [opened==APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
+			. += "The cover is [opened == APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 		else
 			. += {"It's [ !terminal ? "not" : "" ] wired up.\n
 			The electronics are[!has_electronics?"n't":""] installed."}
