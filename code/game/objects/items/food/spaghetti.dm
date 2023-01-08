@@ -23,6 +23,9 @@
 	icon_state = "spaghetti"
 	tastes = list("pasta" = 1)
 
+/obj/item/food/spaghetti/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/spaghetti/boiledspaghetti, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
 /obj/item/food/spaghetti/raw/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/spaghetti/boiledspaghetti)
 

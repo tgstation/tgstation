@@ -252,3 +252,65 @@
   - refactor: Refactor lighting items that use fuel to be more robust
   tralezab:
   - bugfix: Fixes Honorbound Sect not granting the right spell
+2023-01-08:
+  Hatterhat:
+  - qol: Rapid Part Exchange Devices and their bluespace variants now automatically
+      drop their current lowest tier of parts, instead of all of their parts.
+  Iamgoofball:
+  - bugfix: Fixes being able to instantly create dense grilles
+  Jacquerel:
+  - rscadd: Space Carp seem to have begun associating the station with food and attempting
+      to enter from the outside, rather than simply congregating around solar panels.
+      Employees are advised that these are wild animals, and should not be fed.
+  - rscadd: Space Carp can intermittently teleport short distances, leaving a short
+      lived rift which other nearby carp will be attracted to follow them through.
+  JohnFulpWillard:
+  - bugfix: You can right-click microwaves again.
+  - qol: Medipen refillers now use balloon alerts and progress bars instead of to
+      chat messages and invisible timers
+  - code_imp: Medipen refillers now refill your pen instead of delete it and create
+      a new one. This also means that refilling them will leave the medipen in your
+      hand instead of drop it at the refiller's tile.
+  LT3:
+  - bugfix: Hilbert's tram call button is now linked to the correct tram
+  - imageadd: Hazard lights added to the tram collision counter
+  Melbert:
+  - bugfix: People should be stuck in infinite stamcrit less often.
+  - admin: Adds a warning to "View Runtimes" informing you (yes, you) that it can
+      (and will) crash the server if you attempt to render 100,000 runtimes into the
+      UI at once
+  NamelessFairy:
+  - bugfix: Beer nukes no longer runtime on detonation.
+  - admin: Admins can now modify what reagent beer nukes produce, now your parties
+      can be alcohol free!
+  - admin: Admins can now creature custom reagent scrubber overflows, TC trade 20TC
+      for superlube flood?
+  - bugfix: Autosurgeon overlays now correctly update when removing organs.
+  - bugfix: Autosurgeons now say what organ is removed from them when screwdrivered.
+  - bugfix: Single use auto-surgeons cannot be reloaded again.
+  - rscadd: Introducing a new holodeck map, the TGC Arena, featuring hologram projectors
+      for your trading cards.
+  - bugfix: Janitor and Intern TGC cards are now considered creatures rather than
+      just humans.
+  - balance: The price of card packs has been reduced from double a paycheck to 3
+      quarters of one.
+  - balance: The number of cards available in the good clean fun vendor has been doubled.
+  - rscadd: Minor detectives now spawn with a candy cigarette and a flask full of
+      apple juice.
+  - balance: Candy Cigarettes added to the detective vendor.
+  - bugfix: Minor detectives no longer spawn with real cigarettes or real alcohol,
+      you'll need to ask you colleagues to buy you some, hopefully they wont arrest
+      you for trying.
+  Paxilmaniac:
+  - qol: A few recipes that were microwave only (like boiling rice, heating ready
+      donk, so on) can now also be made in an oven
+  ShizCalev:
+  - bugfix: Non-magic inclined mobs will no longer fire staffs while duel wielding.
+  flowercuco:
+  - qol: agent id now has screentips when you can attempt to steal access for it
+  khevy:
+  - rscadd: adds new type of glockroach, the mobroach
+  softcerv:
+  - balance: Moved the account console board to the service lathe
+  timothymtorres:
+  - bugfix: Fix inconsistent runtime spam from baseturf on startup
