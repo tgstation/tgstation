@@ -4473,7 +4473,7 @@
 #include "code\modules\research\designs\autolathe\engineering_designs.dm"
 #include "code\modules\research\designs\autolathe\materials.dm"
 #include "code\modules\research\designs\autolathe\medsci_designs.dm"
-#include "code\modules\research\designs\autolathe\multi-department_designs.dm"
+#include "code\modules\research\designs\autolathe\multi_department_designs.dm"
 #include "code\modules\research\designs\autolathe\security_designs.dm"
 #include "code\modules\research\designs\autolathe\service_designs.dm"
 #include "code\modules\research\machinery\_production.dm"

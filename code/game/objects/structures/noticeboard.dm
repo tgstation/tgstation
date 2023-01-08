@@ -106,7 +106,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 
 /obj/structure/noticeboard/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/mineral/wood (loc, 1)
+		new /obj/item/stack/sheet/mineral/wood(loc)
 	for(var/obj/item/content in contents)
 		remove_item(content)
 	qdel(src)
@@ -123,7 +123,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 	pixel_shift = 32
 
 // Notice boards for the heads of staff (plus the qm)
-
 /obj/structure/noticeboard/captain
 	name = "Captain's Notice Board"
 	desc = "Important notices from the Captain."

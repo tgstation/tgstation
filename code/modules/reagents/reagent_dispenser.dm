@@ -5,7 +5,7 @@
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
-	pressure_resistance = 2*ONE_ATMOSPHERE
+	pressure_resistance = 2 * ONE_ATMOSPHERE
 	max_integrity = 300
 	/// In units, how much the dispenser can hold
 	var/tank_volume = 1000
@@ -307,23 +307,20 @@
 	anchored = TRUE
 	density = FALSE
 	can_be_tanked = FALSE
+	/// The type of wallframe we drop
+	var/wallframe = /obj/item/wallframe/reagent_dispenser
 
 /obj/structure/reagent_dispensers/wall/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/wallframe/reagent_dispenser(loc)
-		chem_splash(get_turf(src), reagents, 1)
+		new wallframe(loc)
 	qdel(src)
 
 /obj/item/wallframe/reagent_dispenser
-	name = "wall-mounted reagent dispenser"
-	desc = "An unmounted reagent dispenser. Attach it to a wall to use."
 	icon = 'icons/obj/medical/chemical_tanks.dmi'
-	icon_state = "empty"
 	custom_materials = list(
 		/datum/material/iron = MINERAL_MATERIAL_AMOUNT,
 		/datum/material/plastic = MINERAL_MATERIAL_AMOUNT,
 	)
-	result_path = /obj/structure/reagent_dispensers/wall
 	pixel_shift = 30
 
 /obj/structure/reagent_dispensers/wall/peppertank
@@ -331,6 +328,7 @@
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
 	icon_state = "pepper"
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
+	wallframe = /obj/item/wallframe/reagent_dispenser/peppertank
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 30)
 
@@ -342,7 +340,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/item/wallframe/reagent_dispenser/peppertank
 	name = "wall-mounted peppertank"
 	desc = "An unmounted peppertank. Attach it to a wall to use."
-	icon = 'icons/obj/medical/chemical_tanks.dmi'
 	icon_state = "pepper"
 	result_path = /obj/structure/reagent_dispensers/wall/peppertank
 
@@ -351,13 +348,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "A dispenser of low-potency virus mutagenic."
 	icon_state = "virus_food"
 	reagent_id = /datum/reagent/consumable/virus_food
+	wallframe = /obj/item/wallframe/reagent_dispenser/virus_food
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
 
 /obj/item/wallframe/reagent_dispenser/virus_food
 	name = "wall-mounted virus food dispenser"
 	desc = "An unmounted virus food dispenser. Attach it to a wall to use."
-	icon = 'icons/obj/medical/chemical_tanks.dmi'
 	icon_state = "virus_food"
 	result_path = /obj/structure/reagent_dispensers/wall/virusfood
 

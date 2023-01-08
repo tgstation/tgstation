@@ -215,7 +215,6 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/item/storage/secure/safe,
 	/obj/machinery/airalarm,
 	/obj/machinery/bluespace_vendor,
-	/obj/machinery/newscaster,
 	/obj/machinery/button,
 	/obj/machinery/computer/security/telescreen,
 	/obj/machinery/computer/security/telescreen/entertainment,
@@ -224,6 +223,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/machinery/flasher,
 	/obj/machinery/keycard_auth,
 	/obj/machinery/light_switch,
+	/obj/machinery/newscaster,
 	/obj/machinery/newscaster,
 	/obj/machinery/power/apc,
 	/obj/machinery/requests_console,
@@ -235,14 +235,14 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/structure/fireaxecabinet/mechremoval,
 	/obj/structure/mirror,
 	/obj/structure/noticeboard,
-	/obj/structure/urinal,
 	/obj/structure/reagent_dispensers/wall,
 	/obj/structure/sign,
 	/obj/structure/sign/picture_frame,
-	/obj/structure/sign/poster/random,
 	/obj/structure/sign/poster/contraband/random,
 	/obj/structure/sign/poster/official/random,
-	)))
+	/obj/structure/sign/poster/random,
+	/obj/structure/urinal,
+)))
 
 // Wall mounted machinery which are visually coming out of the wall.
 // These do not conflict with machinery which are visually placed on the wall.
@@ -251,4 +251,4 @@ GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/light,
 	/obj/structure/camera_assembly,
 	/obj/structure/light_construct
-	)))
+)))

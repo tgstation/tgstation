@@ -156,8 +156,10 @@
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
-	var/exposed = FALSE // can you currently put an item inside
-	var/obj/item/hiddenitem  // what's in the urinal
+	/// Can you currently put an item inside
+	var/exposed = FALSE
+	/// What's in the urinal
+	var/obj/item/hiddenitem
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
