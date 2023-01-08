@@ -77,7 +77,7 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 		if(iscarbon(made_copy))
 			var/mob/living/carbon/original_carbon = original
 			var/mob/living/carbon/copied_carbon = made_copy
-			//transfer DNA over (also body features), we must do this before transfering vars over so they know what organs we have.
+			//transfer DNA over (also body features), then update skin color.
 			original_carbon.dna.transfer_identity(copied_carbon, transfer_SE = TRUE)
 			copied_carbon.updateappearance(mutcolor_update = TRUE)
 
