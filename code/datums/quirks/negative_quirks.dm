@@ -532,10 +532,12 @@
 		if(BODY_ZONE_L_ARM)
 			prosthetic = new /obj/item/bodypart/arm/left/robot/surplus
 			checked_limb_type = /obj/item/bodypart/arm/left
+			RegisterSignal(human_holder, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 			slot_string = "left arm"
 		if(BODY_ZONE_R_ARM)
 			prosthetic = new /obj/item/bodypart/arm/right/robot/surplus
 			checked_limb_type = /obj/item/bodypart/arm/right
+			RegisterSignal(human_holder, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 			slot_string = "right arm"
 		if(BODY_ZONE_L_LEG)
 			prosthetic = new /obj/item/bodypart/leg/left/robot/surplus
@@ -550,7 +552,7 @@
 	human_holder.del_and_replace_bodypart(prosthetic)
 
 /datum/quirk/prosthetic_limb/add(client/client_source)
-	surplus_limb_typecahce = typecacheof(limb_typecahce)
+	surplus_limb_typecahce = typecacheof(surplus_limb_typecahce)
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
@@ -578,8 +580,27 @@
 	if(limping_message && prob(20)) ///Don't want to spam this
 		to_chat(human_holder, "You limp on one of your legs, due to not getting used to them.")
 
+/datum/quirk/prosthetic_limb/proc/on_life(mob/guy, delta_time, times_fired) ///Handles dropping items
+	SIGNAL_HANDLER
+
+	if(!ishuman(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	for(var/obj/item/bodypart/arm/arm in human_holder.bodyparts)
+		if(checked_limb_type && !istype(arm, checked_limb_type))
+			continue
+		if(is_type_in_typecache(arm, surplus_limb_typecahce))
+			continue
+		if(prob(10) && arm.held_index) ///Really small chance because dropping items sucks
+			var/obj/item/held_item = human_holder.get_item_for_held_index(arm.held_index)
+			human_holder.dropItemToGround(held_item)
+			to_chat(human_holder, "You drop [held_item] out of your [plaintext_zone], due to not being used to it!")
+
 /datum/quirk/prosthetic_limb/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(quirk_holder, COMSIG_LIVING_LIFE)
 
 /datum/quirk/quadruple_amputee
 	name = "Quadruple Amputee"
