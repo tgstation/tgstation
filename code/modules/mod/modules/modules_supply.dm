@@ -183,6 +183,10 @@
 /obj/item/mod/module/orebag/on_unequip()
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 
+/obj/item/mod/module/orebag/on_uninstall(deleting = FALSE)
+	if(mod && mod.wearer) // We need to do this in the event that the module is uninstalled while the MOD control is still being worn.
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+
 /obj/item/mod/module/orebag/proc/ore_pickup(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 
