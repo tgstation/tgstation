@@ -172,10 +172,15 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		RegisterSignal(parent, COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY, PROC_REF(on_created_singularity))
 
 /obj/machinery/computer/singularity/proc/disconnect_machine(parent)
-	connected_machines -= parent
-
+	// This is the most important part, we can't let you start it without the computer connected.
 	if (istype(parent, /obj/machinery/singularity_generator))
-		UnregisterSignal(parent, COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY)
+		// This hard-dels but it's a protoype I don't care
+		if (QDELETED(parent))
+			connected_machines -= parent
+
+		return
+
+	connected_machines -= parent
 
 /obj/machinery/computer/singularity/proc/on_created_singularity(datum/source, obj/contained_singularity/singularity)
 	SIGNAL_HANDLER
