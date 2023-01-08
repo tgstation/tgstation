@@ -8,7 +8,7 @@ multiple modular subtrees with behaviors
 	///The atom this controller is controlling
 	var/atom/pawn
 	///Bitfield of traits for this AI to handle extra behavior
-	var/ai_traits
+	var/ai_traits = NONE
 	///Current actions planned to be performed by the AI in the upcoming plan
 	var/list/planned_behaviors
 	///Current actions being performed by the AI.
