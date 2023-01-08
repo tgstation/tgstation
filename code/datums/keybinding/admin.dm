@@ -100,7 +100,7 @@
 	. = ..()
 	if(.)
 		return
-	user.get_dead_say()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/dead_say)
 	return TRUE
 
 /datum/keybinding/admin/deadmin

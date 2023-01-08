@@ -35,7 +35,7 @@
 			if(MODE_ADMIN)
 				SSadmin_verbs.dynamic_invoke_admin_verb(client, /mob/admin_module_holder/admin/admin_say, message)
 			if(MODE_DEADMIN)
-				client.dsay(message)
+				SSadmin_verbs.dynamic_invoke_admin_verb(client, /mob/admin_module_holder/game/dead_say, message)
 			if(MODE_PUPPET)
 				if(!mind.current.say(message))
 					to_chat(src, span_warning("Your linked body was unable to speak!"))

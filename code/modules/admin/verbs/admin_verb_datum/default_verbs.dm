@@ -3,11 +3,61 @@
 //
 #define ADMIN_VERB_DEFAULT(module, _name, _desc, params...) ADMIN_VERB(module, _name, _desc, NONE, ##params)
 
-// /*
-// 	/client/proc/debugstatpanel,
-// 	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
-// 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
-// */
+ADMIN_VERB_DEFAULT(server, reestablish_db_connection, "Attempts to establish a connection to the DB")
+	if(!CONFIG_GET(flag/sql_enabled))
+		to_chat(usr, span_adminnotice("The Database is not enabled!"))
+		return
+
+	if(SSdbcore.IsConnected())
+		if(!check_rights(R_DEBUG,0))
+			tgui_alert(usr, "The database is already connected! (Only those with +debug can force a reconnection)", "The database is already connected!")
+			return
+
+		var/reconnect = tgui_alert(usr, "The database is already connected! If you *KNOW* that this is incorrect, you can force a reconnection", "The database is already connected!", list("Force Reconnect", "Cancel"))
+		if(reconnect != "Force Reconnect")
+			return
+
+		SSdbcore.Disconnect()
+		log_admin("[key_name(usr)] has forced the database to disconnect")
+		message_admins("[key_name_admin(usr)] has <b>forced</b> the database to disconnect!")
+
+	log_admin("[key_name(usr)] is attempting to re-establish the DB Connection")
+	message_admins("[key_name_admin(usr)] is attempting to re-establish the DB Connection")
+
+	SSdbcore.failed_connections = 0
+	if(!SSdbcore.Connect())
+		message_admins("Database connection failed: " + SSdbcore.ErrorMsg())
+	else
+		message_admins("Database connection re-established")
+
+ADMIN_VERB_DEFAULT(debug, debug_stat_panel, "Enable advanced stat panel debugging")
+	usr.client.stat_panel.send_message("create_debug")
+
+ADMIN_VERB_DEFAULT(game, dead_say, "Speak a message to observers", message as text)
+	if(usr.client.prefs.muted & MUTE_DEADCHAT)
+		to_chat(src, span_danger("You cannot send DSAY messages (muted)."))
+		return
+
+	if(!message)
+		message = tgui_input_text(usr, "Message", "Dead Say")
+		if(!message)
+			return
+
+	if(usr.client.handle_spam_prevention(message, MUTE_DEADCHAT))
+		return
+
+	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
+	if(!message)
+		return
+	usr.log_talk(message, LOG_DSAY)
+
+	var/rank_name = usr.client.holder.rank_names()
+	var/admin_name = key
+	if(usr.client.holder.fakekey)
+		rank_name = pick(strings("admin_nicknames.json", "ranks", "config"))
+		admin_name = pick(strings("admin_nicknames.json", "names", "config"))
+	var/name_and_rank = "[span_tooltip(rank_name, "STAFF")] ([admin_name])"
+	deadchat_broadcast("[span_prefix("DEAD:")] [name_and_rank] says, <span class='message'>\"[emoji_parse(message)]\"</span>")
 
 ADMIN_VERB_DEFAULT(admin, deadmin, "Become a normal player")
 	usr.client.holder.deactivate()

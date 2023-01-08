@@ -787,12 +787,6 @@ ADMIN_VERB(admin, hide_all_verbs, "Hide all of your Admin Verbs", NONE)
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
-/client/proc/debugstatpanel()
-	set name = "Debug Stat Panel"
-	set category = "Debug"
-
-	src.stat_panel.send_message("create_debug")
-
 /client/proc/admin_2fa_verify()
 	set name = "Verify Admin"
 	set category = "Admin"

@@ -207,7 +207,7 @@
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_admin_verb(client, /mob/admin_module_holder/game/dead_say, message)
 		return
 
 	if(check_emote(message, forced))
