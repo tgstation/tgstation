@@ -754,7 +754,7 @@
 			. = TRUE
 			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
-			add_memory_in_range(L, 7, MEMORY_VENDING_CRUSHED, list(DETAIL_PROTAGONIST = L, DETAIL_WHAT_BY = src), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_CHECK_BLINDNESS, protagonist_memory_flags = MEMORY_SKIP_UNCONSCIOUS)
+			add_memory_in_range(L, 7, /datum/memory/witness_vendor_crush, protagonist = L, antagonist = src)
 
 	var/matrix/M = matrix()
 	M.Turn(pick(90, 270))

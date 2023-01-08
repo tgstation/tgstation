@@ -1,0 +1,4 @@
+author: "Zonespace27"
+delete-after: True
+changes:
+  - admin: "Logbuddy should no longer fail to parse logs with multi-line adminhelp replies"
