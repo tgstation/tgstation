@@ -37,6 +37,8 @@ enum Stage {
   NotStarted = 'not_started',
   Preparing = 'preparing',
   Finished = 'finished',
+  SelfDestructing = 'self_destructing',
+  Destroyed = 'destroyed',
 }
 
 const CoolerSection: SFC<{
@@ -382,6 +384,57 @@ const ObserveScreen = (props, context) => {
   );
 };
 
+const SelfDestructScreen = () => {
+  return (
+    <Window title="Singularity Control Console" width={800} height={480}>
+      <Window.Content backgroundColor="red">
+        <Stack fill vertical align="center" justify="center">
+          <Stack.Item>
+            <Box color="white" fontSize="35px" bold>
+              SELF DESTRUCTION IMMINENT
+            </Box>
+          </Stack.Item>
+
+          <Stack.Item>
+            <Blink time={300} interval={300}>
+              <Icon name="exclamation-triangle" size={20} />
+            </Blink>
+          </Stack.Item>
+
+          <Stack.Item>
+            <Box color="white" fontSize="35px" bold>
+              EVACUATE IMMEDIATELY
+            </Box>
+          </Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+};
+
+const DestroyedScreen = () => {
+  return (
+    <Window title="Singularity Control Console" width={800} height={480}>
+      <Window.Content backgroundColor="black">
+        <Stack
+          fill
+          vertical
+          align="center"
+          justify="center"
+          color="white"
+          fontFamily="monospace"
+          fontSize="12px">
+          <Stack.Item>singularity breached containment</Stack.Item>
+
+          <Stack.Item>
+            <Blink>SOS</Blink>
+          </Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+};
+
 export const SingularityControl = (props, context) => {
   const { data } = useBackend<SingularityControlData>(context);
 
@@ -392,5 +445,9 @@ export const SingularityControl = (props, context) => {
       return <SetupScreen />;
     case Stage.Finished:
       return <ObserveScreen />;
+    case Stage.SelfDestructing:
+      return <SelfDestructScreen />;
+    case Stage.Destroyed:
+      return <DestroyedScreen />;
   }
 };

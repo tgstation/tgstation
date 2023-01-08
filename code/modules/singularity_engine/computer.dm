@@ -3,8 +3,8 @@
 #define STAGE_SINGULARITY_CONSOLE_NOT_STARTED "not_started"
 #define STAGE_SINGULARITY_CONSOLE_PREPARING "preparing"
 #define STAGE_SINGULARITY_CONSOLE_FINISHED "finished"
-#define STAGE_SINGULARITY_CONSOLE_SELF_DESTRUCTING "self_destructing" // MBTODO
-#define STAGE_SINGULARITY_CONSOLE_DESTROYED "destroyed" // MBTODO, from qdeling
+#define STAGE_SINGULARITY_CONSOLE_SELF_DESTRUCTING "self_destructing"
+#define STAGE_SINGULARITY_CONSOLE_DESTROYED "destroyed"
 
 GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singularity)
 
@@ -94,10 +94,12 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		return .
 
 	// MBTODO: Access? Whatever
-	switch (action)
-		if ("fire_emitters")
-			fire_emitters()
-			return TRUE
+	switch (statge)
+		if (STAGE_SINGULARITY_CONSOLE_NOT_STARTED)
+			switch (action)
+				if ("fire_emitters")
+					fire_emitters()
+					return TRUE
 
 	return TRUE
 
