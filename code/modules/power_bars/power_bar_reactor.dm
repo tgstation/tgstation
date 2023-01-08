@@ -41,12 +41,13 @@
 		if (!(changed_flags & POWER_BAR_DONT_REACT) && ismovable(parent))
 			var/atom/movable/movable_parent = parent
 
-			if (new_power_bars > old_power_bars)
-				movable_parent.say("Power input increased!", forced = "power bars reactor")
-				playsound(movable_parent, 'sound/machines/ping.ogg', 30, vary = TRUE)
-			else if (old_power_bars > 0)
-				movable_parent.say("Power input decreased...", forced = "power bars reactor")
-				playsound(movable_parent, 'sound/machines/buzz-sigh.ogg', 30, vary = TRUE)
-			else
-				movable_parent.say("Power input depleted!", forced = "power bars reactor")
-				playsound(movable_parent, 'sound/machines/buzz-two.ogg', 30, vary = TRUE)
+			if (movable_parent.invisibility == 0)
+				if (new_power_bars > old_power_bars)
+					movable_parent.say("Power input increased!", forced = "power bars reactor")
+					playsound(movable_parent, 'sound/machines/ping.ogg', 30, vary = TRUE)
+				else if (old_power_bars > 0)
+					movable_parent.say("Power input decreased...", forced = "power bars reactor")
+					playsound(movable_parent, 'sound/machines/buzz-sigh.ogg', 30, vary = TRUE)
+				else
+					movable_parent.say("Power input depleted!", forced = "power bars reactor")
+					playsound(movable_parent, 'sound/machines/buzz-two.ogg', 30, vary = TRUE)
