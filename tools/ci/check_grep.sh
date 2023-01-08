@@ -180,7 +180,7 @@ if $grep -P '(\)|!?\w)(!=|==|<=|>=|&&|\|\|)' $code_files ||
 	$grep -P " (!=|==|<=|>=|&&|\|\|)(\"|')" $code_files ||
 	$grep -P "(\"|')(!=|==|<=|>=|&&|\|\|) " $code_files	; then
 	echo
-	echo -e "${RED}ERROR: Logical operator not spaced in code, please use spaces around logical operator.${NC}"
+	echo -e "${RED}ERROR: Logical operator not spaced in code, please use spaces around logical operators.${NC}"
 	st=1
 fi;
 
