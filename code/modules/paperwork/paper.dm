@@ -66,6 +66,9 @@
 	///If TRUE, staff can read paper everywhere, but usually from requests panel.
 	var/request_state = FALSE
 
+	/// If false, then some HTML will not be sanitized out (such as images), but non-staff players will no longer be able to write on it. Only accessable by VV and fax panel
+	var/sanitize_text = TRUE
+
 /obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
@@ -393,6 +396,8 @@
 	if(writing_stats["interaction_mode"] == MODE_WRITING)
 		if(!user.can_write(attacking_item))
 			return
+		if(!sanitize_text && !user?.client.holder)
+			return
 		if(get_total_length() >= MAX_PAPER_LENGTH)
 			to_chat(user, span_warning("This sheet of paper is full!"))
 			return
@@ -481,6 +486,8 @@
 	static_data["default_pen_color"] = COLOR_BLACK
 	static_data["signature_font"] = FOUNTAIN_PEN_FONT
 
+	static_data["sanitize_text"] = sanitize_text
+
 	return static_data;
 
 /obj/item/paper/ui_data(mob/user)
@@ -495,7 +502,10 @@
 		if(!istype(holding, /obj/item/stamp) && clipboard.pen)
 			holding = clipboard.pen
 
-	data["held_item_details"] = holding?.get_writing_implement_details()
+	if(sanitize_text || user?.client.holder)
+		data["held_item_details"] = holding?.get_writing_implement_details()
+	else
+		data["held_item_details"] = null
 
 	// If the paper is on an unwritable noticeboard, clear the held item details so it's read-only.
 	if(istype(loc, /obj/structure/noticeboard))

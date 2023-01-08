@@ -29,6 +29,7 @@ type PaperContext = {
   default_pen_font: string;
   default_pen_color: string;
   signature_font: string;
+  sanitize_text: boolean;
 
   // ui_data
   held_item_details?: WritingImplement;
@@ -649,13 +650,19 @@ export class PreviewView extends Component<PreviewViewProps> {
     forceReadonlyFields: boolean = false
   ): FieldCreationReturn => {
     // First lets make sure it ends in a new line
+    const { data } = useBackend<PaperContext>(this.context);
     rawText += rawText[rawText.length] === '\n' ? '\n' : '\n\n';
 
     // Second, parse the text using markup
     const parsedText = this.runMarkedDefault(rawText);
 
+    let sanitizedText = '';
     // Third, we sanitize the text of html
-    const sanitizedText = sanitizeText(parsedText);
+    if (data.sanitize_text) {
+      sanitizedText = sanitizeText(parsedText);
+    } else {
+      sanitizedText = parsedText;
+    }
 
     // Fourth we replace the [__] with fields
     const fieldedText = this.createFields(
