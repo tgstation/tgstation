@@ -55,6 +55,7 @@
 				allocations = max(allocations, 1)
 
 			SSpower_bars.reassign_power_bar(department, allocations)
+			user.log_message("updated power bar distribution, setting [department] to [allocations]. New distribution is [SSpower_bars.debug_power_bar_distributions()]", LOG_GAME)
 
 	return TRUE
 

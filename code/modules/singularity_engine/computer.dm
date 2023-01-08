@@ -89,6 +89,8 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		ui.open()
 
 /obj/machinery/computer/singularity/ui_act(action, list/params)
+	var/mob/user = usr
+
 	. = ..()
 	if (.)
 		return .
@@ -98,7 +100,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		if (STAGE_SINGULARITY_CONSOLE_NOT_STARTED)
 			switch (action)
 				if ("fire_emitters")
-					fire_emitters()
+					fire_emitters(user)
 					return TRUE
 
 	return TRUE
@@ -142,12 +144,15 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	return singularity.console_ui_data()
 
-/obj/machinery/computer/singularity/proc/fire_emitters()
+/obj/machinery/computer/singularity/proc/fire_emitters(mob/user)
 	if (stage != STAGE_SINGULARITY_CONSOLE_NOT_STARTED)
 		return
 
 	stage = STAGE_SINGULARITY_CONSOLE_PREPARING
 	speak("Preparing to fire emitters.")
+
+	// MBTODO: Message to admins when starting without shield generators
+	user?.log_message("started the emitters for the singularity.", LOG_GAME)
 
 	for (var/obj/machinery/singularity_turret/emitter in connected_machines)
 		emitter.prepare_fire()

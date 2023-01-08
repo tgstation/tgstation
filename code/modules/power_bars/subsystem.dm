@@ -36,6 +36,9 @@ SUBSYSTEM_DEF(power_bars)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/power_bars/stat_entry(msg)
+	return "[enabled ? "ON": "OFF"] ([debug_power_bar_distributions()])"
+
+/datum/controller/subsystem/power_bars/proc/debug_power_bar_distributions()
 	var/list/entries = list()
 	for (var/department in department_allocations)
 		var/current = last_distributed_allocations[department].len
@@ -43,7 +46,7 @@ SUBSYSTEM_DEF(power_bars)
 
 		entries += "[uppertext(copytext(department, 1, 4))]=[current == next ? current : "[current]->[next]"]"
 
-	return "[enabled ? "ON": "OFF"] ([available_power_bars]) [entries.Join(" / ")]"
+	return "+[available_power_bars] [entries.Join(" / ")]"
 
 /datum/controller/subsystem/power_bars/proc/delete_redundant_designs()
 	var/stock_part_designs = list()
