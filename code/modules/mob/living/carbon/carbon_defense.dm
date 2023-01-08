@@ -39,9 +39,9 @@
 		return glasses
 
 /mob/living/carbon/is_pepper_proof(check_head = TRUE, check_mask = TRUE)
-	if(check_head &&(head?.flags_cover & PEPPERPROOF))
+	if(check_head && (head?.flags_cover & PEPPERPROOF))
 		return head
-	if(check_mask &&(wear_mask?.flags_cover & PEPPERPROOF))
+	if(check_mask && (wear_mask?.flags_cover & PEPPERPROOF))
 		return wear_mask
 
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)

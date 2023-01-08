@@ -1007,7 +1007,7 @@
 
 	for(var/borgie in GLOB.available_ai_shells)
 		var/mob/living/silicon/robot/R = borgie
-		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
+		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai || (R.connected_ai == src)))
 			possible += R
 
 	if(!LAZYLEN(possible))
@@ -1018,7 +1018,7 @@
 
 	if(isnull(target))
 		return
-	if (target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
+	if (target.stat == DEAD || target.deployed || !(!target.connected_ai || (target.connected_ai == src)))
 		return
 
 	else if(mind)
