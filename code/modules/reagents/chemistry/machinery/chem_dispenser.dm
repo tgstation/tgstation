@@ -425,8 +425,9 @@
 		parts_rating += C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3)
-			// MBTODO: This is stupid and fucking broken
 			dispensable_reagents |= upgrade_reagents
+		else
+			dispensable_reagents -= upgrade_reagents
 		parts_rating += M.rating
 	powerefficiency = round(newpowereff, 0.01)
 
