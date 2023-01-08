@@ -329,6 +329,7 @@
 /obj/item/food/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
 	. = ..()
 	if(proximity_flag && reagents && target.is_open_container())
+		. |= AFTERATTACK_PROCESSED_ITEM
 		// is_open_container will not return truthy if target.reagents doesn't exist
 		var/datum/reagents/target_reagents = target.reagents
 		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
@@ -336,7 +337,7 @@
 			to_chat(user, span_notice("You dip [src] into [target]."))
 		else
 			to_chat(user, span_warning("That's a terrible idea."))
-		return
+		return .
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"
