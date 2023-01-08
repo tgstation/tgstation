@@ -608,7 +608,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	set name = "Load Away Mission"
 	set category = "Admin.Events"
 
-	if(!holder ||!check_rights(R_FUN))
+	if(!holder || !check_rights(R_FUN))
 		return
 
 
