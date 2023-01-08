@@ -14,7 +14,7 @@
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
-
+	flash_protect = FLASH_PROTECTION_FLASH
 	dog_fashion = /datum/dog_fashion/head/helmet
 
 /datum/armor/head_helmet
@@ -65,6 +65,7 @@
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "helmetalt"
+	flash_protect = FLASH_PROTECTION_FLASH
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/helmet_alt
 	dog_fashion = null
@@ -165,6 +166,7 @@
 
 /obj/item/clothing/head/helmet/toggleable/riot
 	name = "riot helmet"
+	flash_protect = FLASH_PROTECTION_FLASH
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	inhand_icon_state = "riot_helmet"
