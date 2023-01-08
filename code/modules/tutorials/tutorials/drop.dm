@@ -6,7 +6,7 @@
 /// Tutorial for showing how to drop items.
 /// Fired when clicking on an item with another item with a filled inactive hand.
 /datum/tutorial/drop
-	grandfather_date = "2022-12-25"
+	grandfather_date = "2023-01-07"
 
 	var/stage = STAGE_DROP_ITEM
 	var/atom/movable/screen/drop_preview
