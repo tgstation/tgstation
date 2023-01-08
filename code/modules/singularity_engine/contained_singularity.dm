@@ -68,6 +68,7 @@
 		delayed_power_bar_two.poke()
 
 		addtimer(CALLBACK(src, PROC_REF(try_fire_particle)), 0.3 SECONDS)
+		return
 
 	return ..()
 
