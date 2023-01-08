@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/revolver
 	name = "\improper .357 revolver"
-	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
+	desc = "A suspicious revolver. Uses .357 ammo."
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
@@ -124,11 +124,16 @@
 		"Police Positive Special" = "c38_police",
 		"Blued Steel" = "c38_blued",
 		"Stainless Steel" = "c38_stainless",
-		"Gold Trim" = "c38_gold",
-		"Leopard Spots" = "c38_leopard",
+		"Gold Trim" = "c38_trim",
+		"Golden" = "c38_gold",
 		"The Peacemaker" = "c38_peacemaker",
 		"Black Panther" = "c38_panther"
 	)
+
+/obj/item/gun/ballistic/revolver/syndicate
+	name = "\improper Syndicate Revolver"
+	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
+	icon_state = "revolversyndie"
 
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
@@ -177,6 +182,11 @@
 	A.update_appearance()
 	return
 
+/obj/item/gun/ballistic/revolver/russian/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage)
+		return FALSE
+	return ..()
+
 /obj/item/gun/ballistic/revolver/russian/attack_self(mob/user)
 	if(!spun)
 		spin()
@@ -216,22 +226,17 @@
 		var/loaded_rounds = get_ammo(FALSE, FALSE) // check before it is fired
 
 		if(loaded_rounds && is_target_face)
-			add_memory_in_range(
-				user,
-				7,
-				MEMORY_RUSSIAN_ROULETTE,
-				list(
-					DETAIL_PROTAGONIST = user,
-					DETAIL_LOADED_ROUNDS = loaded_rounds,
-					DETAIL_BODYPART = affecting.name,
-					DETAIL_OUTCOME = (chambered ? "lost" : "won")
-				),
-				story_value = chambered ? STORY_VALUE_SHIT : max(STORY_VALUE_NONE, loaded_rounds), // the more bullets, the greater the story (but losing is always SHIT)
-				memory_flags = MEMORY_CHECK_BLINDNESS,
-				protagonist_memory_flags = NONE
-			)
+			add_memory_in_range(user, 7, /datum/memory/witnessed_russian_roulette, \
+				protagonist = user, \
+				antagonist = src, \
+				rounds_loaded = loaded_rounds, \
+				aimed_at =  affecting.name, \
+				result = (chambered ? "lost" : "won"))
 
 		if(chambered)
+			if(HAS_TRAIT(user, TRAIT_CURSED)) // I cannot live, I cannot die, trapped in myself, body my holding cell.
+				to_chat(user, span_warning("What a horrible night... To have a curse!"))
+				return
 			var/obj/item/ammo_casing/AC = chambered
 			if(AC.fire_casing(user, user, params, distro = 0, quiet = 0, zone_override = null, spread = 0, fired_from = src))
 				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
@@ -268,7 +273,9 @@
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = FALSE
 
-/obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
+/obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage)
+		return FALSE
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) || is_clown_job(user.mind?.assigned_role))
 		return ..()
 	if(process_fire(user, user, FALSE, null, BODY_ZONE_HEAD))

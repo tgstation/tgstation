@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
+	armor_type = /datum/armor/structure_displaycase
 	max_integrity = 200
 	integrity_failure = 0.25
 	///The showpiece item inside the case
@@ -28,6 +28,12 @@
 	var/datum/alarm_handler/alarm_manager
 	///Used for subtypes that have a UI in them. The examine on click while adjecent will not fire, as we already get a popup
 	var/autoexamine_while_closed = TRUE
+
+/datum/armor/structure_displaycase
+	melee = 30
+	bomb = 10
+	fire = 70
+	acid = 100
 
 /obj/structure/displaycase/Initialize(mapload)
 	. = ..()

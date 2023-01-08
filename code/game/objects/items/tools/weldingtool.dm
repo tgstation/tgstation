@@ -25,7 +25,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/item_weldingtool
 	resistance_flags = FIRE_PROOF
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
@@ -39,6 +39,8 @@
 	var/status = TRUE
 	/// The max amount of fuel the welder can hold
 	var/max_fuel = 20
+	/// Does the welder start with fuel.
+	var/starting_fuel = TRUE
 	/// Whether or not we're changing the icon based on fuel left.
 	var/change_icons = TRUE
 	/// Used in process(), dictates whether or not we're calling STOP_PROCESSING whilst we're not welding.
@@ -49,6 +51,10 @@
 	var/activation_sound = 'sound/items/welderactivate.ogg'
 	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
 
+/datum/armor/item_weldingtool
+	fire = 100
+	acid = 30
+
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
@@ -56,7 +62,8 @@
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 	create_reagents(max_fuel)
-	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
+	if(starting_fuel)
+		reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_appearance()
 
 /obj/item/weldingtool/update_icon_state()
@@ -149,17 +156,22 @@
 	if(!proximity)
 		return
 
-	if(isOn() && !QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
-		handle_fuel_and_temps(1, user)
-		var/mob/living/attacked_mob = attacked_atom
-		if(attacked_mob.ignite_mob())
-			message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
-			user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
+	if(isOn())
+		. |= AFTERATTACK_PROCESSED_ITEM
+		if (!QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
+			handle_fuel_and_temps(1, user)
+			var/mob/living/attacked_mob = attacked_atom
+			if(attacked_mob.ignite_mob())
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
+				user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 	if(!status && attacked_atom.is_refillable())
+		. |= AFTERATTACK_PROCESSED_ITEM
 		reagents.trans_to(attacked_atom, reagents.total_volume, transfered_by = user)
 		to_chat(user, span_notice("You empty [src]'s fuel tank into [attacked_atom]."))
 		update_appearance()
+
+	return .
 
 /obj/item/weldingtool/attack_qdeleted(atom/attacked_atom, mob/user, proximity)
 	. = ..()
@@ -318,6 +330,9 @@
 	else
 		return ""
 
+/obj/item/weldingtool/empty
+	starting_fuel = FALSE
+
 /obj/item/weldingtool/largetank
 	name = "industrial welding tool"
 	desc = "A slightly larger welder with a larger tank."
@@ -327,6 +342,9 @@
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return
+
+/obj/item/weldingtool/largetank/empty
+	starting_fuel = FALSE
 
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -352,6 +370,9 @@
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
 	return
+
+/obj/item/weldingtool/mini/empty
+	starting_fuel = FALSE
 
 /obj/item/weldingtool/abductor
 	name = "alien welding tool"

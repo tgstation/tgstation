@@ -450,7 +450,6 @@
 		"dish_drive",
 		"fat_sucker",
 		"gibber",
-		"gibber",
 		"griddle",
 		"microwave",
 		"monkey_recycler",
@@ -610,6 +609,7 @@
 		"rcd_loaded",
 		"rcd_ammo",
 		"rpd_loaded",
+		"rtd_loaded",
 		"sheetifier",
 		"weldingmask",
 	)

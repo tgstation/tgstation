@@ -879,18 +879,20 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	else
 		. = SFX_DESECRATION
 
+/// Creates an ignition hotspot if item is lit and located on turf, in mask, or in hand
 /obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
 	if(ismob(location))
-		var/mob/M = location
+		var/mob/pyromanic = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(ITEM_SLOT_MASK))
+		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || (src in pyromanic.held_items))
 			success = TRUE
 		if(success)
-			location = get_turf(M)
+			location = get_turf(pyromanic)
 	if(isturf(location))
 		location.hotspot_expose(flame_heat, 5)
 
+/// If an object can successfully be used as a fire starter it will return a message
 /obj/item/proc/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
 		. = span_notice("[user] lights [A] with [src].")
@@ -904,11 +906,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	return FALSE
 
 /obj/item/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if (obj_flags & CAN_BE_HIT)
-		return ..()
-	return 0
-
-/obj/item/attack_basic_mob(mob/living/basic/user, list/modifiers)
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
 	return 0
@@ -1330,9 +1327,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
  * * Return TRUE if you want to interrupt the offer.
  *
  * * Arguments:
- * * offerer - the person offering the item
+ * * offerer - The person offering the item.
+ * * offered - The person being offered the item.
  */
-/obj/item/proc/on_offered(mob/living/carbon/offerer)
+/obj/item/proc/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 

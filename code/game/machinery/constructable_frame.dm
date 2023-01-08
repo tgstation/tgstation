@@ -1,5 +1,6 @@
 /obj/structure/frame
 	name = "frame"
+	desc = "A generic looking construction frame. One day this will be something greater."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
 	density = TRUE
@@ -24,6 +25,7 @@
 
 /obj/structure/frame/machine
 	name = "machine frame"
+	desc = "The standard frame for most station appliances. Its appearance and function is controlled by the inserted board."
 	var/list/components = null
 	var/list/req_components = null
 	var/list/req_component_names = null // user-friendly names of components
@@ -85,6 +87,13 @@
 				req_component_names[component_path] = initial(stock_part.base_name)
 			else
 				req_component_names[component_path] = initial(stock_part.name)
+		else if(ispath(component_path, /obj/item))
+			var/obj/item/part = component_path
+
+			req_component_names[component_path] = initial(part.name)
+		else
+			stack_trace("Invalid component part [component_path] in [type], couldn't get its name")
+			req_component_names[component_path] = "[component_path] (this is a bug)"
 
 /obj/structure/frame/machine/proc/get_req_components_amt()
 	var/amt = 0
@@ -280,14 +289,22 @@
 								if(QDELETED(incoming_stack))
 									break
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
-						components += part
-						part.forceMove(src)
+						var/stock_part_datum = GLOB.stock_part_datums_per_object[part.type]
+						if (!isnull(stock_part_datum))
+							components += stock_part_datum
+							qdel(part)
+						else
+							components += part
+							part.forceMove(src)
 					to_chat(user, span_notice("You add [part] to [src]."))
 				if(added_components.len)
 					replacer.play_rped_sound()
 				return
 
 			for(var/stock_part_base in req_components)
+				if (req_components[stock_part_base] == 0)
+					continue
+
 				var/stock_part_path
 
 				if (ispath(stock_part_base, /obj/item))
@@ -297,9 +314,6 @@
 					stock_part_path = initial(stock_part_datum_type.physical_object_type)
 				else
 					stack_trace("Bad stock part in req_components: [stock_part_base]")
-					continue
-
-				if (req_components[stock_part_path] == 0)
 					continue
 
 				if (!istype(P, stock_part_path))

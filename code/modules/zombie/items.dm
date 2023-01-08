@@ -38,6 +38,7 @@
 		if(ishuman(target))
 			try_to_zombie_infect(target)
 		else
+			. |= AFTERATTACK_PROCESSED_ITEM
 			check_feast(target, user)
 
 /proc/try_to_zombie_infect(mob/living/carbon/human/target)

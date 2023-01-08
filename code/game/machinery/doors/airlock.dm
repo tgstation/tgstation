@@ -96,7 +96,7 @@
 	autoclose = TRUE
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
-	smoothing_groups = list(SMOOTH_GROUP_AIRLOCK)
+	smoothing_groups = SMOOTH_GROUP_AIRLOCK
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	blocks_emissive = NONE // Custom emissive blocker. We don't want the normal behavior.
@@ -636,6 +636,11 @@
 		aiHacking = TRUE
 		to_chat(user, span_warning("Airlock AI control has been blocked. Beginning fault-detection."))
 		sleep(5 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -646,8 +651,18 @@
 			return
 		to_chat(user, span_notice("Fault confirmed: airlock control wire disabled or cut."))
 		sleep(2 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		to_chat(user, span_notice("Attempting to hack into airlock. This may take some time."))
 		sleep(20 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -658,6 +673,11 @@
 			return
 		to_chat(user, span_notice("Upload access confirmed. Loading control program into airlock software."))
 		sleep(17 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -668,10 +688,20 @@
 			return
 		to_chat(user, span_notice("Transfer complete. Forcing airlock to execute program."))
 		sleep(5 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		//disable blocked control
 		aiControlDisabled = AI_WIRE_HACKED
 		to_chat(user, span_notice("Receiving control information from airlock."))
 		sleep(1 SECONDS)
+
+
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+			return
 		//bring up airlock dialog
 		aiHacking = FALSE
 		if(user)
@@ -735,7 +765,7 @@
 	if(panel_open && detonated)
 		to_chat(user, span_warning("[src] has no maintenance panel!"))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
-	panel_open = !panel_open
+	toggle_panel_open()
 	to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the airlock."))
 	tool.play_tool_sound(src)
 	update_appearance()
@@ -1295,8 +1325,7 @@
 /obj/machinery/door/airlock/proc/on_break()
 	SIGNAL_HANDLER
 
-	if(!panel_open)
-		panel_open = TRUE
+	set_panel_open(TRUE)
 	wires.cut_all()
 
 /obj/machinery/door/airlock/emp_act(severity)
@@ -1365,7 +1394,6 @@
 			var/obj/item/electronics/airlock/ae
 			if(!electronics)
 				ae = new/obj/item/electronics/airlock(loc)
-				gen_access()
 				if(length(req_one_access))
 					ae.one_access = 1
 					ae.accesses = req_one_access
