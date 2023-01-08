@@ -596,7 +596,7 @@
 		if(prob(10) && arm.held_index) ///Really small chance because dropping items sucks
 			var/obj/item/held_item = human_holder.get_item_for_held_index(arm.held_index)
 			human_holder.dropItemToGround(held_item)
-			to_chat(human_holder, "You drop [held_item] out of your [plaintext_zone], due to not being used to it!")
+			to_chat(human_holder, "You drop [held_item] out of your [arm.plaintext_zone], due to not being used to it!")
 
 /datum/quirk/prosthetic_limb/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
