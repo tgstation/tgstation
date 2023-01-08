@@ -148,19 +148,17 @@
 	. = ..()
 	if(!can_use(user))
 		balloon_alert(user, "no more lights!")
+		return
 
 	if(!proximity && !bluespace_toggle)
 		return
 
 	if(!isturf(target))
 		if(istype(target, /obj/machinery/light))
-			if(!proximity)
-				if(bluespace_toggle)
-					if(replace_light(target, user))
-						user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
-						playsound(src, 'sound/items/pshoom.ogg', 40, 1)
-				else
-					balloon_alert(user, "get closer!")
+			if(!proximity && bluespace_toggle)
+				if(replace_light(target, user))
+					user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
+					playsound(src, 'sound/items/pshoom.ogg', 40, 1)
 		return
 
 	for(var/atom/target_atom in target)
@@ -202,19 +200,19 @@
 		add_uses(1)
 		charge = 1
 
-/obj/item/lightreplacer/proc/replace_light(obj/machinery/light/target, mob/living/U)
+/obj/item/lightreplacer/proc/replace_light(obj/machinery/light/target, mob/living/user)
 
 	if(!istype(target)) //Confirm that it's a light we're testing, because afterattack runs this for everything on a given turf and will runtime
 		return
 
 	if(target.status != LIGHT_OK)
-		if(can_use(U))
-			if(!Use(U))
+		if(can_use(user))
+			if(!Use(user))
 				return FALSE
-			to_chat(U, span_notice("You replace \the [target.fitting] with \the [src]."))
+			to_chat(user, span_notice("You replace \the [target.fitting] with \the [src]."))
 
 			if(target.status != LIGHT_EMPTY)
-				add_shards(1, U)
+				add_shards(1, user)
 				target.status = LIGHT_EMPTY
 				target.update()
 
@@ -232,10 +230,10 @@
 			return TRUE
 
 		else
-			to_chat(U, span_warning("\The [src]'s refill light blinks red."))
+			to_chat(user, span_warning("\The [src]'s refill light blinks red."))
 			return FALSE
 	else
-		to_chat(U, span_warning("There is a working [target.fitting] already inserted!"))
+		to_chat(user, span_warning("There is a working [target.fitting] already inserted!"))
 		return FALSE
 
 /obj/item/lightreplacer/proc/Emag()
