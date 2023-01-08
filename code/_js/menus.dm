@@ -4,12 +4,12 @@ function dropdowns() {
 	var headers = new Array();
 	var links = new Array();
 	for(var i=0;i<divs.length;i++){
-		if(divs\[i\].className =='header') {
+		if(divs\[i\].className == 'header') {
 			divs\[i\].className='header closed';
 			divs\[i\].innerHTML = divs\[i\].innerHTML+' +';
 			headers.push(divs\[i\]);
 		}
-		if(divs\[i\].className =='links') {
+		if(divs\[i\].className == 'links') {
 			divs\[i\].className='links hidden';
 			links.push(divs\[i\]);
 		}

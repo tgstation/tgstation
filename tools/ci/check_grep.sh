@@ -177,8 +177,8 @@ section "code quality"
 part "logical operator spacing"
 if $grep -P '(\)|!?\w)(!=|==|<=|>=|&&|\|\|)' $code_files ||
 	$grep -P '(!=|==|<=|>=|&&|\|\|)(\(|!?\w)' $code_files ||
-	$grep -P ' (!=|==|<=|>=|&&|\|\|)"' $code_files ||
-	$grep -P '"(!=|==|<=|>=|&&|\|\|) ' $code_files	; then
+	$grep -P " (!=|==|<=|>=|&&|\|\|)(\"|')" $code_files ||
+	$grep -P "(\"|')(!=|==|<=|>=|&&|\|\|) " $code_files	; then
 	echo
 	echo -e "${RED}ERROR: Logical operator not spaced in code, please use spaces around logical operator.${NC}"
 	st=1
