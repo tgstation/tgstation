@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(phobia_types, sort_list(list(
 	"spiders",
 	"strangers",
 	"the supernatural",
+	"herecy",
 )))
 
 GLOBAL_LIST_INIT(phobia_regexes, list(
@@ -48,6 +49,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"strangers" = construct_phobia_regex("strangers"),
 	"the supernatural" = construct_phobia_regex("the supernatural"),
 	"blood" = construct_phobia_regex("blood"),
+	"herecy" = construct_phobia_regex("herecy"),
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
@@ -99,6 +101,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/cockroach,
 		/mob/living/simple_animal/hostile/bee,
 	)),
+	"herecy" = typecacheof(list(/mob/living/simple_animal/hostile/heretic_summon)),
 ))
 
 GLOBAL_LIST_INIT(phobia_objs, list(
@@ -376,6 +379,20 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/structure/destructible/cult,
 		/obj/structure/destructible/eldritch_crucible,
 		/obj/structure/spirit_board,
+	)),
+
+	"herecy" = typecacheof(list(
+		/obj/effect/floating_blade,
+		/obj/effect/heretic_influence,
+		/obj/effect/heretic_rune,
+		/obj/effect/rune,
+		/obj/effect/visible_heretic_influence,
+		/obj/item/codex_cicatrix,
+		/obj/item/melee/rune_carver,
+		/obj/item/melee/sickly_blade
+		/obj/item/toy/eldritch_book,
+		/obj/item/toy/reality_pierce,
+		/obj/structure/destructible/eldritch_crucible,
 	)),
 
 	"aliens" = typecacheof(list(

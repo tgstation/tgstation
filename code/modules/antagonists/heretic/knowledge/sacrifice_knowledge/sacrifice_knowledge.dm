@@ -368,9 +368,8 @@
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)
 	sac_target.clear_mood_event("shadow_realm")
-
-	if(!(IS_WIZARD(sac_target) || IS_HERETIC(sac_target) || IS_CULTIST(sac_target) || sac_target.mind.holy_role))
-		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/supernatural, TRAUMA_RESILIENCE_MAGIC)
+	if(!(IS_HERETIC(sac_target)))
+		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/herecy, TRAUMA_RESILIENCE_MAGIC)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)

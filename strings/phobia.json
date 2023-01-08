@@ -194,7 +194,7 @@
 		"heretic",
 		"lich",
 		"magic",
-		"manusus",
+		"mansus",
 		"nar nar",
 		"nar'sie",
 		"nar-nar",
@@ -211,6 +211,13 @@
 		"wiz",
 		"wizard",
 		"zombie"
+	],
+
+	"herecy": [
+		"eldritch",
+		"heretic",
+		"mansus",
+		"tome"
 	],
 
 "aliens": [
