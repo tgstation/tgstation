@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_warp
 	name = "Blood Warp"
-	icon_icon = 'icons/effects/blood.dmi'
+	button_icon = 'icons/effects/blood.dmi'
 	button_icon_state = "floor1"
 	desc = "Allows you to teleport to blood at a clicked position."
 	cooldown_time = 0
@@ -14,6 +14,7 @@
 /datum/action/cooldown/mob_cooldown/blood_warp/Activate(atom/target_atom)
 	blood_warp(target_atom)
 	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(atom/target)
 	if(owner.Adjacent(target))

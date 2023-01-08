@@ -6,7 +6,6 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOP
-	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "MIME"
 
@@ -35,6 +34,8 @@
 	voice_of_god_power = 0.5 //Why are you speaking
 	voice_of_god_silence_power = 3
 
+	job_tone = "silence"
+
 
 /datum/job/mime/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
@@ -55,7 +56,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing = 1,
 		/obj/item/stamp/mime = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/mime
+	belt = /obj/item/modular_computer/pda/mime
 	ears = /obj/item/radio/headset/headset_srv
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
@@ -65,7 +66,7 @@
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime
 
-	box = /obj/item/storage/box/hug/black/survival
+	box = /obj/item/storage/box/survival/hug/black
 	chameleon_extras = /obj/item/stamp/mime
 
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -99,7 +100,7 @@
 		"Invisible Chair" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_chair"),
 		"Invisible Box" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_box")
 		)
-	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
 	var/datum/action/cooldown/spell/picked_spell_type
 	switch(picked_spell)
 		if("Invisible Wall")

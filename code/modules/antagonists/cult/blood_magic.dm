@@ -11,7 +11,7 @@
 		qdel(X)
 	..()
 
-/datum/action/innate/cult/blood_magic/IsAvailable()
+/datum/action/innate/cult/blood_magic/IsAvailable(feedback = FALSE)
 	if(!IS_CULTIST(owner))
 		return FALSE
 	return ..()
@@ -117,7 +117,7 @@
 		hand_magic = null
 	..()
 
-/datum/action/innate/cult/blood_spell/IsAvailable()
+/datum/action/innate/cult/blood_spell/IsAvailable(feedback = FALSE)
 	if(!IS_CULTIST(owner) || owner.incapacitated() || !charges)
 		return FALSE
 	return ..()
@@ -245,13 +245,13 @@
 	var/image/sparkle_image = image('icons/effects/cult/effects.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)
 	clicked_on.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", sparkle_image, NONE)
 
-	addtimer(CALLBACK(clicked_on, /atom/.proc/remove_alt_appearance, "cult_apoc", TRUE), 4 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(clicked_on, TYPE_PROC_REF(/atom/, remove_alt_appearance), "cult_apoc", TRUE), 4 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
 	to_chat(caller, span_cultbold("[clicked_on] has been cursed with living nightmares!"))
 
 	charges--
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-	UpdateButtons()
+	build_all_button_icons()
 	if(charges <= 0)
 		to_chat(caller, span_cult("You have exhausted the spell's power!"))
 		qdel(src)
@@ -309,7 +309,7 @@
 		qdel(src)
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/innate/cult/blood_spell/manipulation
 	name = "Blood Rites"
@@ -358,7 +358,7 @@
 			source.charges = uses
 			source.desc = source.base_desc
 			source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-			source.UpdateButtons()
+			source.build_all_button_icons()
 	return ..()
 
 /obj/item/melee/blood_magic/attack_self(mob/living/user)
@@ -387,7 +387,7 @@
 	else if(source)
 		source.desc = source.base_desc
 		source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-		source.UpdateButtons()
+		source.build_all_button_icons()
 
 //Stun
 /obj/item/melee/blood_magic/stun
@@ -553,6 +553,7 @@
 		if(channeling)
 			to_chat(user, span_cultitalic("You are already invoking twisted construction!"))
 			return
+		. |= AFTERATTACK_PROCESSED_ITEM
 		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/iron))
 			var/obj/item/stack/sheet/candidate = target
@@ -583,7 +584,7 @@
 				if(do_after(user, 90, target = candidate))
 					candidate.undeploy()
 					candidate.emp_act(EMP_HEAVY)
-					var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+					var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 					if(!check_menu(user))
 						return
 					if(QDELETED(candidate))
@@ -631,7 +632,7 @@
 		else
 			to_chat(user, span_warning("The spell will not work on [target]!"))
 			return
-		..()
+		return . | ..()
 
 /obj/item/melee/blood_magic/construction/proc/check_menu(mob/user)
 	if(!istype(user))
@@ -676,8 +677,8 @@
 	if(proximity)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			if(NOBLOOD in H.dna.species.species_traits)
-				to_chat(user,span_warning("Blood rites do not work on species with no blood!"))
+			if(HAS_TRAIT(H, TRAIT_NOBLOOD))
+				to_chat(user,span_warning("Blood rites do not work on people with no blood!"))
 				return
 			if(IS_CULTIST(H))
 				if(H.stat == DEAD)
@@ -783,7 +784,7 @@
 			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/weapons/guns/ballistic.dmi', icon_state = "arcane_barrage"),
 			"Blood Beam (500)" = image(icon = 'icons/obj/weapons/items_and_weapons.dmi', icon_state = "disintegrate")
 			)
-		var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+		var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE)
 		if(!check_menu(user))
 			to_chat(user, span_cultitalic("You decide against conducting a greater blood rite."))
 			return

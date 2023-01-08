@@ -10,7 +10,6 @@
 	spawn_positions = 1
 	minimal_player_age = 7
 	supervisors = SUPERVISOR_CAPTAIN
-	selection_color = "#d7b088"
 	exp_required_type_department = EXP_TYPE_SUPPLY
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "QUARTERMASTER"
@@ -46,7 +45,7 @@
 	id_trim = /datum/id_trim/job/quartermaster
 	id = /obj/item/card/id/advanced/silver
 	uniform = /obj/item/clothing/under/rank/cargo/qm
-	belt = /obj/item/modular_computer/tablet/pda/heads/quartermaster
+	belt = /obj/item/modular_computer/pda/heads/quartermaster
 	ears = /obj/item/radio/headset/heads/qm
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sneakers/brown

@@ -17,6 +17,7 @@
  *
  * Mark of Flesh
  * Ritual of Knowledge
+ * Flesh Surgery
  * Raw Ritual
  * > Sidepaths:
  *   Blood Siphon
@@ -45,11 +46,8 @@
 	limit = 3 // Bumped up so they can arm up their ghouls too.
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user)
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
-
 	var/datum/objective/heretic_summon/summon_objective = new()
 	summon_objective.owner = our_heretic.owner
 	our_heretic.objectives += summon_objective
@@ -68,10 +66,10 @@
 	cost = 1
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+/datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -110,8 +108,8 @@
 		/datum/status_effect/ghoul,
 		GHOUL_MAX_HEALTH,
 		user.mind,
-		CALLBACK(src, .proc/apply_to_ghoul),
-		CALLBACK(src, .proc/remove_from_ghoul),
+		CALLBACK(src, PROC_REF(apply_to_ghoul)),
+		CALLBACK(src, PROC_REF(remove_from_ghoul)),
 	)
 
 /// Callback for the ghoul status effect - Tracking all of our ghouls
@@ -195,8 +193,8 @@
 		/datum/status_effect/ghoul,
 		MUTE_MAX_HEALTH,
 		user.mind,
-		CALLBACK(src, .proc/apply_to_ghoul),
-		CALLBACK(src, .proc/remove_from_ghoul),
+		CALLBACK(src, PROC_REF(apply_to_ghoul)),
+		CALLBACK(src, PROC_REF(remove_from_ghoul)),
 	)
 
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
@@ -219,7 +217,19 @@
 	mark_type = /datum/status_effect/eldritch/flesh
 
 /datum/heretic_knowledge/knowledge_ritual/flesh
+	next_knowledge = list(/datum/heretic_knowledge/spell/flesh_surgery)
+	route = PATH_FLESH
+
+/datum/heretic_knowledge/spell/flesh_surgery
+	name = "Knitting of Flesh"
+	desc = "Grants you the spell Knit Flesh. This spell allows you to remove organs from victims \
+		without requiring a lengthy surgery. This process is much longer if the target is not dead. \
+		This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status."
+	gain_text = "But they were not out of my reach for long. With every step, the screams grew, until at last \
+		I learned that they could be silenced."
 	next_knowledge = list(/datum/heretic_knowledge/summon/raw_prophet)
+	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
+	cost = 1
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/summon/raw_prophet
@@ -238,7 +248,7 @@
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
 		/obj/effect/decal/cleanable/blood = 1,
-		/obj/item/bodypart/l_arm = 1,
+		/obj/item/bodypart/arm/left = 1,
 	)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/raw_prophet
 	cost = 1
@@ -268,7 +278,7 @@
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
 	next_knowledge = list(
-		/datum/heretic_knowledge/final/flesh_final,
+		/datum/heretic_knowledge/ultimate/flesh_final,
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/spell/cleave,
 	)
@@ -283,7 +293,7 @@
 	cost = 1
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/final/flesh_final
+/datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"
 	desc = "The ascension ritual of the Path of Flesh. \
 		Bring 4 corpses to a transumation rune to complete the ritual. \
@@ -299,7 +309,7 @@
 	required_atoms = list(/mob/living/carbon/human = 4)
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	priority_announce("[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]", "[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 

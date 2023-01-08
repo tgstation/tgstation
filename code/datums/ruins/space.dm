@@ -138,7 +138,7 @@
 	description = "Just somewhere quiet, where I can focus on my work with no interruptions."
 
 /datum/map_template/ruin/space/caravanambush
-	id = "space/caravanambush"
+	id = "caravanambush"
 	suffix = "caravanambush.dmm"
 	name = "Syndicate Ambush"
 	description = "A caravan route used by passing cargo freights has been ambushed by a salvage team manned by the syndicate. \
@@ -331,3 +331,9 @@
 	suffix = "spinwardsmoothies.dmm"
 	name = "Spinward Smoothies"
 	description = "A branch of the beloved Spinward Smoothies chain of smoothie bars."
+
+/datum/map_template/ruin/space/cyborg_mothership
+	id = "cyborg_mothership"
+	suffix = "cyborg_mothership.dmm"
+	name = "Cyborg Mothership"
+	description = "An abandoned cyborg mothership that was overtaken by space vines and hivebots. It appears that it hosted an experimental AI focused on mining before it was depowered."

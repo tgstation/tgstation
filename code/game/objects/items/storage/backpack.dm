@@ -56,7 +56,11 @@
 	inhand_icon_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
+	armor_type = /datum/armor/backpack_holding
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/holding/Initialize(mapload)
 	. = ..()
@@ -70,6 +74,7 @@
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(2 SECONDS)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
+	user.suicide_log()
 	qdel(user)
 
 /obj/item/storage/backpack/santabag
@@ -88,12 +93,12 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 60
 
-/obj/item/storage/backpack/santabag/suicide_act(mob/user)
+/obj/item/storage/backpack/santabag/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()
-	addtimer(CALLBACK(src, .proc/regenerate_presents), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(regenerate_presents)), 30 SECONDS)
 
 	var/mob/user = get(loc, /mob)
 	if(!istype(user))
@@ -360,7 +365,6 @@
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
 	slowdown = 2
-	item_flags = DROPDEL
 	max_integrity = 100
 
 /obj/item/storage/backpack/duffelbag/cursed/Initialize(mapload)
@@ -612,10 +616,10 @@
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a knock-off pair of magboots."
+	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a magboot MODsuit module."
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
-	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/mod/module/magboot(src)
 	new /obj/item/storage/medkit/tactical(src)
 	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
@@ -662,7 +666,7 @@
 	atom_storage.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
-	new /obj/item/modular_computer/tablet/pda/clown(src)
+	new /obj/item/modular_computer/pda/clown(src)
 	new /obj/item/clothing/under/rank/civilian/clown(src)
 	new /obj/item/clothing/shoes/clown_shoes(src)
 	new /obj/item/clothing/mask/gas/clown_hat(src)
@@ -679,3 +683,21 @@
 	name = "police bag"
 	desc = "A large duffel bag for holding extra police gear."
 	slowdown = 0
+
+/obj/item/storage/backpack/duffelbag/mining_conscript
+	name = "mining conscription kit"
+	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+
+/obj/item/storage/backpack/duffelbag/mining_conscript/PopulateContents()
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/clothing/suit/hooded/explorer(src)
+	new /obj/item/encryptionkey/headset_mining(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/card/id/advanced/mining(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
+	new /obj/item/knife/combat/survival(src)
+	new /obj/item/flashlight/seclite(src)

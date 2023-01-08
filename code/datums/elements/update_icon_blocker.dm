@@ -6,7 +6,7 @@
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ATOM_UPDATE_ICON, .proc/block_update_icon)
+	RegisterSignal(target, COMSIG_ATOM_UPDATE_ICON, PROC_REF(block_update_icon))
 
 /datum/element/update_icon_blocker/Detach(datum/source, ...)
 	UnregisterSignal(source, COMSIG_ATOM_UPDATE_ICON)

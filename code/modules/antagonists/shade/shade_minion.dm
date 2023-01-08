@@ -26,7 +26,7 @@
 
 	src.master_name = master_name
 	update_static_data(owner.current)
-	INVOKE_ASYNC(src, .proc/display_panel)
+	INVOKE_ASYNC(src, PROC_REF(display_panel))
 
 /// Shows the info panel, moved out into its own proc for signal handling reasons.
 /datum/antagonist/shade_minion/proc/display_panel()

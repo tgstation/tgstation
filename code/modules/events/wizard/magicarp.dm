@@ -1,94 +1,12 @@
 /datum/round_event_control/wizard/magicarp //these fish is loaded
 	name = "Magicarp"
 	weight = 1
-	typepath = /datum/round_event/wizard/magicarp
+	typepath = /datum/round_event/carp_migration/wizard
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	description = "Summons a school of carps with magic projectiles."
 
-/datum/round_event/wizard/magicarp
-	announce_when = 3
-	start_when = 50
-
-/datum/round_event/wizard/magicarp/setup()
-	start_when = rand(40, 60)
-
-/datum/round_event/wizard/magicarp/announce(fake)
-	priority_announce("Unknown magical entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
-
-/datum/round_event/wizard/magicarp/start()
-	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
-		if(prob(5))
-			new /mob/living/simple_animal/hostile/carp/ranged/chaos(C.loc)
-		else
-			new /mob/living/simple_animal/hostile/carp/ranged(C.loc)
-
-/mob/living/simple_animal/hostile/carp/ranged
-	name = "magicarp"
-	desc = "50% magic, 50% carp, 100% horrible."
-	icon_state = "magicarp"
-	icon_living = "magicarp"
-	icon_dead = "magicarp_dead"
-	icon_gib = "magicarp_gib"
-	ranged = 1
-	retreat_distance = 2
-	minimum_distance = 0 //Between shots they can and will close in to nash
-	projectiletype = /obj/projectile/magic
-	projectilesound = 'sound/weapons/emitter.ogg'
-	maxHealth = 50
-	health = 50
-	gold_core_spawnable = NO_SPAWN
-	random_color = FALSE
-	/// List of all projectiles we can fire.
-	/// Non-static, because subtypes can have their own lists.
-	var/list/allowed_projectile_types = list(
-		/obj/projectile/magic/animate,
-		/obj/projectile/magic/arcane_barrage,
-		/obj/projectile/magic/change,
-		/obj/projectile/magic/death,
-		/obj/projectile/magic/door,
-		/obj/projectile/magic/fireball,
-		/obj/projectile/magic/resurrection,
-		/obj/projectile/magic/spellblade,
-		/obj/projectile/magic/teleport,
-		/obj/projectile/magic/babel,
-	)
-
-/mob/living/simple_animal/hostile/carp/ranged/Initialize(mapload)
-	projectiletype = pick(allowed_projectile_types)
-	return ..()
-
-/mob/living/simple_animal/hostile/carp/ranged/chaos
-	name = "chaos magicarp"
-	desc = "50% carp, 100% magic, 150% horrible."
-	color = "#00FFFF"
-	maxHealth = 75
-	health = 75
-	gold_core_spawnable = NO_SPAWN
-
-/mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot()
-	projectiletype = pick(allowed_projectile_types)
-	return ..()
-
-/mob/living/simple_animal/hostile/carp/ranged/xenobiology // these are for the xenobio gold slime pool
-	gold_core_spawnable = HOSTILE_SPAWN
-
-	allowed_projectile_types = list(
-		/obj/projectile/magic/animate,
-		/obj/projectile/magic/teleport,
-		/obj/projectile/magic/door,
-		/obj/projectile/magic/fireball,
-		/obj/projectile/magic/spellblade,
-		/obj/projectile/magic/arcane_barrage,
-	) //thanks Lett1
-
-/mob/living/simple_animal/hostile/carp/ranged/chaos/xenobiology
-	gold_core_spawnable = HOSTILE_SPAWN
-	allowed_projectile_types = list(
-		/obj/projectile/magic/animate,
-		/obj/projectile/magic/teleport,
-		/obj/projectile/magic/door,
-		/obj/projectile/magic/fireball,
-		/obj/projectile/magic/spellblade,
-		/obj/projectile/magic/arcane_barrage,
-	)
+/datum/round_event/carp_migration/wizard
+	carp_type = /mob/living/basic/carp/magic
+	boss_type = /mob/living/basic/carp/magic/chaos
+	fluff_signal = "Unknown magical entities"

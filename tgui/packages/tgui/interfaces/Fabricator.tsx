@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Stack, Section, Icon, Dimmer, Box, Tooltip } from '../components';
+import { Stack, Section, Icon, Dimmer, Box, Tooltip, Button } from '../components';
 import { Window } from '../layouts';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
@@ -92,6 +92,40 @@ const PrintButton = (props: PrintButtonProps, context) => {
   );
 };
 
+type CustomPrintProps = {
+  design: Design;
+  available: MaterialMap;
+};
+
+const CustomPrint = (props: CustomPrintProps, context) => {
+  const { act } = useBackend(context);
+  const { design, available } = props;
+  const canPrint = !Object.entries(design.cost).some(
+    ([material, amount]) =>
+      !available[material] || amount > (available[material] ?? 0)
+  );
+
+  return (
+    <div
+      className={classes([
+        'FabricatorRecipe__Button',
+        !canPrint && 'FabricatorRecipe__Button--disabled',
+      ])}>
+      <Button.Input
+        content={'[Max: ' + design.maxmult + ']'}
+        color={'transparent'}
+        maxValue={design.maxmult}
+        onCommit={(_e, value: string) =>
+          act('build', {
+            ref: design.id,
+            amount: value,
+          })
+        }
+      />
+    </div>
+  );
+};
+
 const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
   const { design, available } = props;
@@ -139,6 +173,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
       </Tooltip>
       <PrintButton design={design} quantity={5} available={available} />
       <PrintButton design={design} quantity={10} available={available} />
+      <CustomPrint design={design} available={available} />
     </div>
   );
 };

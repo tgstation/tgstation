@@ -123,7 +123,9 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	for(var/i in 1 to length(turfs))
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
+		old_area.turfs_to_uncontain += thing
 		newA.contents += thing
+		newA.contained_turfs += thing
 		thing.transfer_area_lighting(old_area, newA)
 
 	newA.reg_in_areas_in_z()
@@ -143,18 +145,14 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 #undef BP_MAX_ROOM_SIZE
 
-//Repopulates sortedAreas list
-/proc/repopulate_sorted_areas()
-	GLOB.sortedAreas = list()
+/proc/require_area_resort()
+	GLOB.sortedAreas = null
 
-	for(var/area/A in world)
-		GLOB.sortedAreas.Add(A)
-
-	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
-
-/area/proc/addSorted()
-	GLOB.sortedAreas.Add(src)
-	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
+/// Returns a sorted version of GLOB.areas, by name
+/proc/get_sorted_areas()
+	if(!GLOB.sortedAreas)
+		GLOB.sortedAreas = sortTim(GLOB.areas.Copy(), /proc/cmp_name_asc)
+	return GLOB.sortedAreas
 
 //Takes: Area type as a text string from a variable.
 //Returns: Instance for the area in the world.
@@ -177,11 +175,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	var/list/areas = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(cache[area_to_check.type])
 				areas += area_to_check
 	else
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(area_to_check.type == areatype)
 				areas += area_to_check
 	return areas
@@ -204,24 +202,32 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		areatype = areatemp.type
 	else if(!ispath(areatype))
 		return null
-
-	var/list/turfs = list()
+	// Pull out the areas
+	var/list/areas_to_pull = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(!cache[area_to_check.type])
 				continue
-			for(var/turf/turf_in_area in area_to_check)
-				if(target_z == 0 || target_z == turf_in_area.z)
-					turfs += turf_in_area
+			areas_to_pull += area_to_check
 	else
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(area_to_check.type != areatype)
 				continue
-			for(var/turf/turf_in_area in area_to_check)
-				if(target_z == 0 || target_z == turf_in_area.z)
+			areas_to_pull += area_to_check
+
+	// Now their turfs
+	var/list/turfs = list()
+	for(var/area/pull_from as anything in areas_to_pull)
+		var/list/our_turfs = pull_from.get_contained_turfs()
+		if(target_z == 0)
+			turfs += our_turfs
+		else
+			for(var/turf/turf_in_area as anything in our_turfs)
+				if(target_z == turf_in_area.z)
 					turfs += turf_in_area
 	return turfs
+
 
 ///Takes: list of area types
 ///Returns: all mobs that are in an area type

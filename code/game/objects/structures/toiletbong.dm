@@ -28,10 +28,10 @@
 /obj/structure/toiletbong/attack_hand(mob/living/carbon/user)
 	. = ..()
 	if (!anchored)
-		user.balloon_alert(user, "Secure it first!")
+		user.balloon_alert(user, "secure it first!")
 		return
 	if (!LAZYLEN(contents))
-		user.balloon_alert(user, "It's empty!")
+		user.balloon_alert(user, "it's empty!")
 		return
 	user.visible_message(span_boldnotice("[user] takes a huge drag on the [src]."))
 	if (do_after(user, 2 SECONDS, target = src))
@@ -47,15 +47,14 @@
 			puff.start()
 			if (prob(5) && !emagged)
 				if(islizard(user))
-					to_chat(user, span_boldnotice("A hidden treat in the pipes!"))
-					user.balloon_alert(user, "A hidden treat in the pipes!")
+					user.balloon_alert(user, "a hidden treat!")
 					user.visible_message(span_danger("[user] fishes a mouse out of the pipes."))
 				else
 					to_chat(user, span_userdanger("There was something disgusting in the pipes!"))
 					user.visible_message(span_danger("[user] spits out a mouse."))
 					user.adjust_disgust(50)
 					user.vomit(10)
-				var/mob/living/spawned_mob = new /mob/living/simple_animal/mouse(get_turf(user))
+				var/mob/living/spawned_mob = new /mob/living/basic/mouse(get_turf(user))
 				spawned_mob.faction |= "[REF(user)]"
 				if(prob(50))
 					for(var/j in 1 to rand(1, 3))
@@ -98,7 +97,7 @@
 
 /obj/structure/toiletbong/emag_act(mob/user, obj/item/card/emag/emag_card)
 	playsound(src, 'sound/effects/fish_splash.ogg', 50)
-	user.balloon_alert(user, "Whoops!")
+	user.balloon_alert(user, "whoops!")
 	if(!emagged)
 		emagged = TRUE
 		smokeradius = 2

@@ -17,10 +17,10 @@
 
 /datum/component/splattercasting/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_SPECIES_LOSS, .proc/on_species_change)
-	RegisterSignal(parent, COMSIG_MOB_SPELL_PROJECTILE, .proc/on_spell_projectile)
-	RegisterSignal(parent, COMSIG_MOB_BEFORE_SPELL_CAST, .proc/on_before_spell_cast)
-	RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, .proc/on_after_spell_cast)
+	RegisterSignal(parent, COMSIG_SPECIES_LOSS, PROC_REF(on_species_change))
+	RegisterSignal(parent, COMSIG_MOB_SPELL_PROJECTILE, PROC_REF(on_spell_projectile))
+	RegisterSignal(parent, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(on_before_spell_cast))
+	RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(on_after_spell_cast))
 
 /datum/component/splattercasting/UnregisterFromParent()
 	. = ..()

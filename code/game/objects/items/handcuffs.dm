@@ -14,7 +14,7 @@
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return(OXYLOSS)
+	return OXYLOSS
 
 /**
  * # Handcuffs
@@ -33,19 +33,23 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_HANDCUFFED
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 1 MINUTES
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
+
+/datum/armor/restraints_handcuffs
+	fire = 50
+	acid = 50
 
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/user)
 	if(!istype(C))
@@ -358,6 +362,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
 	breakouttime = 30 SECONDS
+	slot_flags = ITEM_SLOT_LEGCUFFED
 
 /**
  * # Bear trap
@@ -382,7 +387,7 @@
 	. = ..()
 	update_appearance()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/spring_trap,
+		COMSIG_ATOM_ENTERED = PROC_REF(spring_trap),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -390,10 +395,10 @@
 	icon_state = "[initial(icon_state)][armed]"
 	return ..()
 
-/obj/item/restraints/legcuffs/beartrap/suicide_act(mob/user)
+/obj/item/restraints/legcuffs/beartrap/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
 	. = ..()
@@ -435,7 +440,7 @@
 		if(C.body_position == STANDING_UP)
 			def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 			if(!C.legcuffed && C.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
-				INVOKE_ASYNC(C, /mob/living/carbon.proc/equip_to_slot, src, ITEM_SLOT_LEGCUFFED)
+				INVOKE_ASYNC(C, TYPE_PROC_REF(/mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 	else if(snap && isanimal(L))
 		var/mob/living/simple_animal/SA = L
@@ -469,7 +474,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/dissipate), 100)
+	addtimer(CALLBACK(src, PROC_REF(dissipate)), 100)
 
 /**
  * Handles energy snares disappearing
@@ -493,6 +498,7 @@
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
 	icon_state = "bola"
+	icon_state_preview = "bola_preview"
 	inhand_icon_state = "bola"
 	lefthand_file = 'icons/mob/inhands/weapons/thrown_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/thrown_righthand.dmi'
@@ -571,6 +577,7 @@
 	name = "gonbola"
 	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
 	icon_state = "gonbola"
+	icon_state_preview = "gonbola_preview"
 	inhand_icon_state = "bola_r"
 	breakouttime = 30 SECONDS
 	slowdown = 0

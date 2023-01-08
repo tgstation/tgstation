@@ -8,28 +8,42 @@
 	limb_id = SPECIES_LIZARD
 	is_dimorphic = TRUE
 
-/obj/item/bodypart/l_arm/lizard
+/obj/item/bodypart/arm/left/lizard
+	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
+	limb_id = SPECIES_LIZARD
+	unarmed_attack_verb = "slash"
+	unarmed_attack_effect = ATTACK_EFFECT_CLAW
+	unarmed_attack_sound = 'sound/weapons/slash.ogg'
+	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+
+/obj/item/bodypart/arm/right/lizard
+	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
+	limb_id = SPECIES_LIZARD
+	unarmed_attack_verb = "slash"
+	unarmed_attack_effect = ATTACK_EFFECT_CLAW
+	unarmed_attack_sound = 'sound/weapons/slash.ogg'
+	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+
+/obj/item/bodypart/arm/left/lizard/ashwalker
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/arm/right/lizard/ashwalker
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/leg/left/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 
-/obj/item/bodypart/r_arm/lizard
+/obj/item/bodypart/leg/right/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 
-/obj/item/bodypart/l_leg/lizard
-	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
-	limb_id = SPECIES_LIZARD
-
-/obj/item/bodypart/r_leg/lizard
-	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
-	limb_id = SPECIES_LIZARD
-
-/obj/item/bodypart/l_leg/digitigrade
+/obj/item/bodypart/leg/left/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
-/obj/item/bodypart/l_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+/obj/item/bodypart/leg/left/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
@@ -50,12 +64,12 @@
 		else
 			limb_id = SPECIES_LIZARD
 
-/obj/item/bodypart/r_leg/digitigrade
+/obj/item/bodypart/leg/right/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
-/obj/item/bodypart/r_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+/obj/item/bodypart/leg/right/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner

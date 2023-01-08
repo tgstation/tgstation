@@ -1,7 +1,7 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/melee_energy
 	attack_verb_continuous = list("hits", "taps", "pokes")
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
@@ -30,6 +30,10 @@
 	/// The heat given off when active.
 	var/active_heat = 3500
 
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
+
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
 	make_transformable()
@@ -55,9 +59,9 @@
 		w_class_on = active_w_class, \
 		attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
 		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"))
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/melee/energy/suicide_act(mob/user)
+/obj/item/melee/energy/suicide_act(mob/living/user)
 	if(!blade_active)
 		attack_self(user)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
@@ -153,9 +157,9 @@
 		throw_speed_on = throw_speed, \
 		sharpness_on = sharpness, \
 		w_class_on = active_w_class)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/melee/energy/axe/suicide_act(mob/user)
+/obj/item/melee/energy/axe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS|FIRELOSS)
 

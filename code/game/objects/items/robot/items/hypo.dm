@@ -302,7 +302,7 @@
 /obj/item/reagent_containers/borghypo/borgshaker
 	name = "cyborg shaker"
 	desc = "An advanced drink synthesizer and mixer."
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
 	possible_transfer_amounts = list(5,10,20)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
@@ -348,17 +348,18 @@
 /obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
-		return
+		return .
 	if(!selected_reagent)
 		balloon_alert(user, "no reagent selected!")
-		return
+		return .
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(target.is_refillable())
 		if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
 			balloon_alert(user, "not enough [selected_reagent.name]!")
-			return
+			return .
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			balloon_alert(user, "[target] is full!")
-			return
+			return .
 
 		// This is the in-between where we're storing the reagent we're going to pour into the container
 		// because we cannot specify a singular reagent to transfer in trans_to
@@ -368,11 +369,13 @@
 
 		shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
+	return .
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"
 	desc = "Will mix drinks that knock them dead."
 	icon_state = "threemileislandglass"
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	tgui_theme = "syndicate"
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = HACKED_SERVICE_REAGENTS

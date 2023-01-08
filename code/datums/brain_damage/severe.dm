@@ -121,24 +121,27 @@
 	name = "Narcolepsy"
 	desc = "Patient may involuntarily fall asleep during normal activities."
 	scan_desc = "traumatic narcolepsy"
-	gain_text = "<span class='warning'>You have a constant feeling of drowsiness...</span>"
-	lose_text = "<span class='notice'>You feel awake and aware again.</span>"
+	gain_text = span_warning("You have a constant feeling of drowsiness...")
+	lose_text = span_notice("You feel awake and aware again.")
 
 /datum/brain_trauma/severe/narcolepsy/on_life(delta_time, times_fired)
-	..()
 	if(owner.IsSleeping())
 		return
+
 	var/sleep_chance = 1
+	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		sleep_chance += 2
-	if(owner.drowsyness)
+	if(drowsy)
 		sleep_chance += 3
+
 	if(DT_PROB(0.5 * sleep_chance, delta_time))
 		to_chat(owner, span_warning("You fall asleep."))
-		owner.Sleeping(60)
-	else if(!owner.drowsyness && DT_PROB(sleep_chance, delta_time))
+		owner.Sleeping(6 SECONDS)
+
+	else if(!drowsy && DT_PROB(sleep_chance, delta_time))
 		to_chat(owner, span_warning("You feel tired..."))
-		owner.adjust_drowsyness(10)
+		owner.adjust_drowsiness(20 SECONDS)
 
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"
@@ -170,7 +173,7 @@
 	for(var/mob/M in oview(owner, 7))
 		if(!isliving(M)) //ghosts ain't people
 			continue
-		if((istype(M, /mob/living/simple_animal/pet)) || M.ckey)
+		if(istype(M, /mob/living/simple_animal/pet) || istype(M, /mob/living/basic/pet) || M.ckey)
 			return FALSE
 	return TRUE
 
@@ -185,7 +188,7 @@
 				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
 			else
 				to_chat(owner, span_warning("You feel sick..."))
-			addtimer(CALLBACK(owner, /mob/living/carbon.proc/vomit, high_stress), 50) //blood vomit if high stress
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 50) //blood vomit if high stress
 		if(2)
 			if(high_stress)
 				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
@@ -286,15 +289,13 @@
 	owner.remove_status_effect(/datum/status_effect/trance)
 
 /datum/brain_trauma/severe/hypnotic_trigger/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear())
-		return
-	if(owner == hearing_args[HEARING_SPEAKER])
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
 
 	if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
-		addtimer(CALLBACK(src, .proc/hypnotrigger), 10) //to react AFTER the chat message
+		addtimer(CALLBACK(src, PROC_REF(hypnotrigger)), 10) //to react AFTER the chat message
 		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("*********"))
 
 /datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()

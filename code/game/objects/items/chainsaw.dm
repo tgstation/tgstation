@@ -45,7 +45,7 @@
 	else
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/weapons/genhit1.ogg', 100, TRUE)
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/chainsaw/attack_self(mob/user)
 	on = !on
@@ -64,7 +64,7 @@
 	toolspeed = on ? 0.5 : initial(toolspeed) //Turning it on halves the speed
 	if(src == user.get_active_held_item()) //update inhands
 		user.update_held_items()
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"

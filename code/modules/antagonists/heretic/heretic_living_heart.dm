@@ -25,8 +25,8 @@
 
 /datum/component/living_heart/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
-	RegisterSignal(parent, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
-	RegisterSignal(parent, COMSIG_ORGAN_BEING_REPLACED, .proc/on_organ_replaced)
+	RegisterSignal(parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
+	RegisterSignal(parent, COMSIG_ORGAN_BEING_REPLACED, PROC_REF(on_organ_replaced))
 
 /datum/component/living_heart/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
@@ -69,8 +69,8 @@
 	name = "Living Heartbeat"
 	desc = "LMB: Chose one of your sacrifice targets to track. RMB: Repeats last target you chose to track."
 	check_flags = AB_CHECK_CONSCIOUS
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/obj/eldritch.dmi'
+	background_icon_state = "bg_heretic"
+	button_icon = 'icons/obj/eldritch.dmi'
 	button_icon_state = "living_heart"
 	cooldown_time = 4 SECONDS
 
@@ -87,7 +87,7 @@
 
 	return ..()
 
-/datum/action/cooldown/track_target/IsAvailable()
+/datum/action/cooldown/track_target/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -125,7 +125,7 @@
 			owner,
 			owner,
 			targets_to_choose,
-			custom_check = CALLBACK(src, .proc/check_menu),
+			custom_check = CALLBACK(src, PROC_REF(check_menu)),
 			radius = 40,
 			require_near = TRUE,
 			tooltips = TRUE,

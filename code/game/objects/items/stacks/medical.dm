@@ -43,12 +43,12 @@
 	if(patient == user)
 		if(!silent)
 			user.visible_message(span_notice("[user] starts to apply [src] on [user.p_them()]self..."), span_notice("You begin applying [src] on yourself..."))
-		if(!do_mob(user, patient, self_delay, extra_checks=CALLBACK(patient, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
+		if(!do_mob(user, patient, self_delay, extra_checks=CALLBACK(patient, TYPE_PROC_REF(/mob/living, try_inject), user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 			return
 	else if(other_delay)
 		if(!silent)
 			user.visible_message(span_notice("[user] starts to apply [src] on [patient]."), span_notice("You begin applying [src] on [patient]..."))
-		if(!do_mob(user, patient, other_delay, extra_checks=CALLBACK(patient, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
+		if(!do_mob(user, patient, other_delay, extra_checks=CALLBACK(patient, TYPE_PROC_REF(/mob/living, try_inject), user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 			return
 
 	if(heal(patient, user))
@@ -116,9 +116,9 @@
 	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
 	merge_type = /obj/item/stack/medical/bruise_pack
 
-/obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
+/obj/item/stack/medical/bruise_pack/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
@@ -361,6 +361,9 @@
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 	merge_type = /obj/item/stack/medical/aloe
 
+/obj/item/stack/medical/aloe/fresh
+	amount = 2
+
 /obj/item/stack/medical/bone_gel
 	name = "bone gel"
 	singular_name = "bone gel"
@@ -382,14 +385,14 @@
 	to_chat(user, span_warning("Bone gel can only be used on fractured limbs!"))
 	return
 
-/obj/item/stack/medical/bone_gel/suicide_act(mob/user)
+/obj/item/stack/medical/bone_gel/suicide_act(mob/living/user)
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/C = user
 	C.visible_message(span_suicide("[C] is squirting all of [src] into [C.p_their()] mouth! That's not proper procedure! It looks like [C.p_theyre()] trying to commit suicide!"))
 	if(!do_after(C, 2 SECONDS))
 		C.visible_message(span_suicide("[C] screws up like an idiot and still dies anyway!"))
-		return (BRUTELOSS)
+		return BRUTELOSS
 
 	C.emote("scream")
 	for(var/i in C.bodyparts)
@@ -403,7 +406,7 @@
 		var/obj/item/bodypart/bone = i
 		bone.receive_damage(brute=60)
 	use(1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/stack/medical/bone_gel/four
 	amount = 4

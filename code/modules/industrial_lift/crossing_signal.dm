@@ -1,13 +1,17 @@
 #define XING_STATE_GREEN 0
 #define XING_STATE_AMBER 1
 #define XING_STATE_RED 2
+#define XING_STATE_MALF 3
+#define XING_SIGNAL_DIRECTION_WEST "west-"
+#define XING_SIGNAL_DIRECTION_EAST "east-"
+
+GLOBAL_LIST_EMPTY(tram_signals)
 
 /// Pedestrian crossing signal for tram
 /obj/machinery/crossing_signal
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
 	icon = 'icons/obj/machines/crossing_signal.dmi'
-	icon_state = "crossing-base"
 	base_icon_state = "crossing-"
 	max_integrity = 250
 	integrity_failure = 0.25
@@ -37,6 +41,10 @@
 	* If the value is set too high, it will cause the lights to turn red when the tram arrives at another station. You want to optimize the amount of warning without turning it red unnessecarily.
 	*/
 	var/red_distance_threshold = 33
+	/// If the signal is facing east or west
+	var/signal_direction
+	/// Are we malfunctioning?
+	var/malfunctioning = FALSE
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
@@ -48,9 +56,11 @@
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
-		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_travelling)
+		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
+		GLOB.tram_signals += src
 
 /obj/machinery/crossing_signal/Destroy()
+	GLOB.tram_signals -= src
 	. = ..()
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
@@ -61,9 +71,21 @@
 	if(obj_flags & EMAGGED)
 		return
 	balloon_alert(user, "disabled motion sensors")
-	if(signal_state != XING_STATE_GREEN)
-		set_signal_state(XING_STATE_GREEN)
+	if(signal_state != XING_STATE_MALF)
+		set_signal_state(XING_STATE_MALF)
 	obj_flags |= EMAGGED
+
+/obj/machinery/crossing_signal/proc/start_malfunction()
+	if(signal_state != XING_STATE_MALF)
+		malfunctioning = TRUE
+		set_signal_state(XING_STATE_MALF)
+
+/obj/machinery/crossing_signal/proc/end_malfunction()
+	if(obj_flags & EMAGGED)
+		return
+
+	malfunctioning = FALSE
+	process()
 
 /**
  * Finds the tram, just like the tram computer
@@ -96,8 +118,11 @@
  * Returns whether we are still processing.
  */
 /obj/machinery/crossing_signal/proc/update_operating()
-	//emagged crossing signals dont update
+	// Emagged crossing signals don't update
 	if(obj_flags & EMAGGED)
+		return
+	// Malfunctioning signals don't update
+	if(malfunctioning)
 		return
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
@@ -112,8 +137,8 @@
 	// Check for stopped states.
 	if(!tram || !is_operational)
 		// Tram missing, or we lost power.
-		// Tram missing is always safe (green)
-		set_signal_state(XING_STATE_GREEN, force = !is_operational)
+		// Tram missing throw the error message (blue)
+		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
 
 	use_power(active_power_usage)
@@ -121,7 +146,7 @@
 	var/obj/structure/industrial_lift/tram/tram_part = tram.return_closest_platform_to(src)
 
 	if(QDELETED(tram_part))
-		set_signal_state(XING_STATE_GREEN, force = !is_operational)
+		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
 
 	// Everything will be based on position and travel direction
@@ -192,6 +217,8 @@
 
 	var/new_color
 	switch(signal_state)
+		if(XING_STATE_MALF)
+			new_color = COLOR_BRIGHT_BLUE
 		if(XING_STATE_GREEN)
 			new_color = COLOR_VIBRANT_LIME
 		if(XING_STATE_AMBER)
@@ -207,31 +234,40 @@
 	if(!is_operational)
 		return
 
-	var/lights_overlay = "[base_icon_state][signal_state]"
+	var/lights_overlay = "[base_icon_state][signal_direction][signal_state]"
 
 	. += mutable_appearance(icon, lights_overlay)
 	. += emissive_appearance(icon, "[lights_overlay]e", offset_spokesman = src, alpha = src.alpha)
 
-/// Shifted to NE corner for east side of southern passage.
+/// Shifted to NE corner for east side of northern passage.
 /obj/machinery/crossing_signal/northeast
-	pixel_x = 11
-	pixel_y = 22
+	icon_state = "crossing-base-left"
+	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	pixel_x = -2
+	pixel_y = -1
 
-/// Shifted to NW corner for west side of southern passage.
+/// Shifted to NW corner for west side of northern passage.
 /obj/machinery/crossing_signal/northwest
-	pixel_x = -11
-	pixel_y = 22
+	icon_state = "crossing-base-right"
+	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = -32
+	pixel_y = -1
 
 /// Shifted to SE corner for east side of northern passage.
 /obj/machinery/crossing_signal/southeast
-	pixel_x = 11
-	pixel_y = 6
+	icon_state = "crossing-base-left"
+	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	pixel_x = -2
+	pixel_y = 20
 
 /// Shifted to SW corner for west side of northern passage.
 /obj/machinery/crossing_signal/southwest
-	pixel_x = -11
-	pixel_y = 6
+	icon_state = "crossing-base-right"
+	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = -32
+	pixel_y = 20
 
 #undef XING_STATE_GREEN
 #undef XING_STATE_AMBER
 #undef XING_STATE_RED
+#undef XING_STATE_MALF

@@ -25,12 +25,9 @@
 	},
 /obj/docking_port/mobile{
 	dir = 4;
-	dwidth = 3;
-	height = 12;
 	shuttle_id = "huntership";
 	name = "hunter shuttle";
-	rechargeTime = 1800;
-	width = 7
+	rechargeTime = 1800
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "Interpolship"

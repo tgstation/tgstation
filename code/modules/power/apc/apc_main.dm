@@ -109,12 +109,20 @@
 	var/datum/alarm_handler/alarm_manager
 	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
 	var/offset_old
+	armor_type = /datum/armor/power_apc
+
+/datum/armor/power_apc
+	melee = 20
+	bullet = 20
+	laser = 10
+	energy = 100
+	bomb = 30
+	fire = 90
+	acid = 50
 
 /obj/machinery/power/apc/New(turf/loc, ndir, building=0)
 	if(!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
-	if(!armor)
-		armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 100, BOMB = 30, BIO = 0, FIRE = 90, ACID = 50)
 	..()
 	GLOB.apcs_list += src
 
@@ -127,7 +135,7 @@
 		name = "\improper [get_area_name(area, TRUE)] APC"
 		set_machine_stat(machine_stat | MAINT)
 		update_appearance()
-		addtimer(CALLBACK(src, .proc/update), 5)
+		addtimer(CALLBACK(src, PROC_REF(update)), 5)
 		dir = ndir
 
 	switch(dir)
@@ -173,18 +181,20 @@
 
 	if(area)
 		if(area.apc)
-			log_mapping("Duplicate APC created at [AREACOORD(src)]. Original at [AREACOORD(area.apc)].")
+			log_mapping("Duplicate APC created at [AREACOORD(src)] [area.type]. Original at [AREACOORD(area.apc)] [area.type].")
 		area.apc = src
 
 	update_appearance()
 
 	make_terminal()
 
-	addtimer(CALLBACK(src, .proc/update), 5)
+	addtimer(CALLBACK(src, PROC_REF(update)), 5)
 
 	///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
 	if(abs(offset_old) != APC_PIXEL_OFFSET)
 		log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
@@ -206,6 +216,7 @@
 		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
+
 	. = ..()
 
 /obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
@@ -407,7 +418,7 @@
 			for(var/obj/machinery/light/L in area)
 				if(!initial(L.no_low_power)) //If there was an override set on creation, keep that override
 					L.no_low_power = emergency_lights
-					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+					INVOKE_ASYNC(L, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
 				CHECK_TICK
 	return TRUE
 
@@ -496,7 +507,7 @@
 			alarm_manager.send_alarm(ALARM_POWER)
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
-				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
+				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
 		else if(cell.percent() < 15 && long_term_power < 0) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
@@ -504,7 +515,7 @@
 			alarm_manager.send_alarm(ALARM_POWER)
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
-				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
+				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
 		else if(cell.percent() < 30 && long_term_power < 0) // <30%, turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
@@ -512,7 +523,7 @@
 			alarm_manager.send_alarm(ALARM_POWER)
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
-				INVOKE_ASYNC(src, .proc/set_nightshift, TRUE)
+				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
 		else // otherwise all can be on
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
@@ -520,7 +531,7 @@
 			if(nightshift_lights && low_power_nightshift_lights)
 				low_power_nightshift_lights = FALSE
 				if(!SSnightshift.nightshift_active)
-					INVOKE_ASYNC(src, .proc/set_nightshift, FALSE)
+					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
 			if(cell.percent() > 75)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
@@ -598,7 +609,7 @@
 		return
 	if(cell && cell.charge >= 20)
 		cell.use(20)
-		INVOKE_ASYNC(src, .proc/break_lights)
+		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
 	for(var/obj/machinery/light/breaked_light in area)
@@ -614,6 +625,19 @@
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_total]) : [cell? cell.percent() : "N/C"] ([charging])"
+
+/obj/machinery/power/apc/proc/grey_tide(datum/source, list/grey_tide_areas)
+	SIGNAL_HANDLER
+
+	if(!is_station_level(z))
+		return
+
+	for(var/area_type in grey_tide_areas)
+		if(!istype(get_area(src), area_type))
+			continue
+		lighting = APC_CHANNEL_OFF //Escape (or sneak in) under the cover of darkness
+		update_appearance(UPDATE_ICON)
+		update()
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

@@ -30,7 +30,7 @@
 	healable = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
-	sight = SEE_TURFS | SEE_OBJS| SEE_BLACKNESS
+	sight = SEE_TURFS | SEE_OBJS
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
@@ -43,7 +43,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
-	faction = list("neutral","silicon","turret")
+	faction = list(FACTION_NEUTRAL,"silicon","turret")
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -135,6 +135,7 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
+		/obj/item/rack_parts,
 	)
 	/// whitelisted drone items, recursive/includes descendants
 	var/list/drone_item_whitelist_recursive = list(
@@ -151,11 +152,14 @@
 		/obj/item/stack/rods,
 		/obj/item/stack/sheet,
 		/obj/item/stack/tile,
+		/obj/item/stack/ducts,
 		/obj/item/stock_parts,
 		/obj/item/toner,
 		/obj/item/wallframe,
 		/obj/item/clothing/head,
 		/obj/item/clothing/mask,
+		/obj/item/storage/box/lights,
+		/obj/item/lightreplacer,
 	)
 	/// machines whitelisted from being shy with
 	var/list/shy_machine_whitelist = list(
@@ -191,12 +195,13 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_LITERATE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_KNOW_ENGI_WIRES, INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
-	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(listener, COMSIG_ALARM_LISTENER_CLEARED, .proc/alarm_cleared)
-	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
-	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
+	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
+	RegisterSignal(listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
+	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -347,8 +352,8 @@
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
-		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
-		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
+		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, PROC_REF(blacklist_on_try_use_machine))
+		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, PROC_REF(blacklist_on_try_wires_interact))
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		qdel(GetComponent(/datum/component/shy))

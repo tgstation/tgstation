@@ -153,14 +153,14 @@
 	fades = TRUE
 
 /obj/effect/temp_visual/dir_setting/curse/hand
-	icon_state = "cursehand"
+	icon_state = "cursehand1"
 
 
 /obj/effect/temp_visual/bsa_splash
 	name = "\improper Bluespace energy wave"
 	desc = "A massive, rippling wave of bluepace energy, all rapidly exhausting itself the moment it leaves the concentrated beam of light."
 	icon = 'icons/effects/beam_splash.dmi'
-	icon_state = "beam_splash_l"
+	icon_state = "beam_splash_e"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
@@ -499,7 +499,7 @@
 	status = rcd_status
 	delay = rcd_delay
 	if (status == RCD_DECONSTRUCT)
-		addtimer(CALLBACK(src, /atom/.proc/update_appearance), 1.1 SECONDS)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 1.1 SECONDS)
 		delay -= 11
 		icon_state = "rcd_end_reverse"
 	else
@@ -525,7 +525,7 @@
 		qdel(src)
 	else
 		icon_state = "rcd_end"
-		addtimer(CALLBACK(src, .proc/end), 15)
+		addtimer(CALLBACK(src, PROC_REF(end)), 15)
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)

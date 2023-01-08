@@ -10,9 +10,8 @@
 
 /obj/item/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
-	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targeted by one. \
-		<span class='boldnotice'>Hold down left click while scoped to aim, when weapon is fully aimed (Tracer goes from red to green as it charges), release to fire. Moving while aiming or \
-		changing where you're pointing at while aiming will delay the aiming process depending on how much you changed.</span>"
+	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targeted by one."
+	desc_controls = "Hold down left click while scoped to aim, when weapon is fully aimed (Tracer goes from red to green as it charges), release to fire. Moving while aiming or changing where you're pointing at while aiming will delay the aiming process depending on how much you changed."
 	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "esniper"
 	inhand_icon_state = null
@@ -239,7 +238,7 @@
 	if(aiming)
 		delay_penalty(aiming_time_increase_user_movement)
 		process_aim()
-		INVOKE_ASYNC(src, .proc/aiming_beam, TRUE)
+		INVOKE_ASYNC(src, PROC_REF(aiming_beam), TRUE)
 
 /obj/item/gun/energy/beam_rifle/proc/start_aiming()
 	aiming_time_left = aiming_time
@@ -267,7 +266,7 @@
 		current_user = null
 	if(istype(user))
 		current_user = user
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_move))
 		listeningTo = user
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
@@ -303,6 +302,7 @@
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return

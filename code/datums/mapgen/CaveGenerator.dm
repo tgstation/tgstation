@@ -35,7 +35,7 @@
 	///Base chance of spawning flora
 	var/flora_spawn_chance = 2
 	///Base chance of spawning features
-	var/feature_spawn_chance = 0.1
+	var/feature_spawn_chance = 0.15
 	///Unique ID for this spawner
 	var/string_gen
 

@@ -27,8 +27,10 @@
 
 /obj/item/reagent_containers/spray/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(istype(target, /obj/structure/sink) || istype(target, /obj/structure/janitorialcart) || istype(target, /obj/machinery/hydroponics))
+	if(istype(target, /obj/structure/sink) || istype(target, /obj/structure/mop_bucket/janitorialcart) || istype(target, /obj/machinery/hydroponics))
 		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
 
 	if((target.is_drainable() && !target.is_refillable()) && (get_dist(src, target) <= 1) && can_fill_from_container)
 		if(!target.reagents.total_volume)
@@ -86,8 +88,8 @@
 	reagent_puff.sprayer = src
 	reagent_puff.lifetime = puff_reagent_left
 	reagent_puff.stream = stream_mode
-	reagent_puff.RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, /obj/effect/decal/chempuff/proc/loop_ended)
-	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, /obj/effect/decal/chempuff/proc/check_move)
+	reagent_puff.RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/obj/effect/decal/chempuff, loop_ended))
+	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/effect/decal/chempuff, check_move))
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
 	. = ..()
@@ -173,7 +175,7 @@
 	amount_per_transfer_from_this = 2
 	possible_transfer_amounts = list(2,5)
 
-/obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
+/obj/item/reagent_containers/spray/cleaner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
@@ -220,7 +222,7 @@
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
 	if (A.loc == user)
 		return
-	. = ..()
+	return ..() | AFTERATTACK_PROCESSED_ITEM
 
 //water flower
 /obj/item/reagent_containers/spray/waterflower
@@ -309,7 +311,7 @@
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
 	if (A.loc == user)
 		return
-	. = ..()
+	return ..() | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A, mob/user)
 	var/direction = get_dir(src, A)

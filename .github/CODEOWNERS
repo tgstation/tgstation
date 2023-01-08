@@ -21,6 +21,7 @@
 /code/modules/mapping/ @Cyberboss
 
 # Dragomagol/Tattle
+
 /code/__HELPERS/logging/ @dragomagol
 
 # Fikou
@@ -28,8 +29,8 @@
 /code/modules/awaymissions/ @Fikou
 /code/modules/mining/ @Fikou
 /code/modules/mod/ @Fikou
-/code/modules/ruins/lavalandruin_code/ @Fikou
-/code/modules/ruins/lavaland_ruin_code.dm @Fikou
+/code/modules/mapfluff/ruins/lavalandruin_code/ @Fikou
+/code/modules/mapfluff/ruins/lavaland_ruin_code.dm @Fikou
 
 # JohnFulpWizard
 
@@ -54,10 +55,9 @@
 /code/modules/autowiki/ @Mothblocks
 /code/modules/unit_tests/ @Mothblocks
 /code/modules/client/preferences/ @Mothblocks
-/code/modules/preferences.dm @Mothblocks
-/code/modules/preferences_menu.dm @Mothblocks
-/code/modules/preferences_savefile.dm @Mothblocks
+/code/modules/client/preferences_menu.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+/tools/maplint/source/ @Mothblocks
 /tools/pull_request_hooks/ @Mothblocks
 /tools/screenshot-test-comparison/ @Mothblocks
 /tools/test_merge_bot/ @Mothblocks
@@ -109,6 +109,11 @@
 
 /code/modules/forensics/ @SuperNovaa41
 /code/datums/mood.dm @SuperNovaa41
+
+# Time-Green
+
+/code/modules/plumbing/ @Time-Green
+/code/modules/surgery/organs/external/ @Time-Green
 
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab
@@ -165,10 +170,10 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
-# Time-Green
+# ZephyrTFA
 
-/code/modules/plumbing/ @Time-Green
-/code/modules/surgery/organs/external/ @Time-Green
+/code/datums/json_savefile.dm @ZephyrTFA
+/code/datums/armor/ @ZephyrTFA
 
 # MULTIPLE OWNERS
 
@@ -179,6 +184,8 @@
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
+/code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
+/code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll

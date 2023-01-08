@@ -72,6 +72,7 @@
 
 /obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(flag)
 		return // too close
 	if(ishuman(user))
@@ -243,7 +244,7 @@
 		if(create_with_tank)
 			ptank = new /obj/item/tank/internals/plasma/full(src)
 		update_appearance()
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_refill)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_refill))
 
 /obj/item/flamethrower/full
 	create_full = TRUE

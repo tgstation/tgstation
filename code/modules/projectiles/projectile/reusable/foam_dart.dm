@@ -21,14 +21,13 @@
 	newcasing.modified = modified
 	var/obj/projectile/bullet/reusable/foam_dart/newdart = newcasing.loaded_projectile
 	newdart.modified = modified
-	if(modified)
-		newdart.damage = 5
-		newdart.nodamage = FALSE
 	newdart.damage_type = damage_type
 	if(pen)
 		newdart.pen = pen
 		pen.forceMove(newdart)
 		pen = null
+		newdart.damage = 5
+		newdart.nodamage = FALSE
 	newdart.update_appearance()
 
 

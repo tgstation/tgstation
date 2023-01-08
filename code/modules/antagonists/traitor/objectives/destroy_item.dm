@@ -61,19 +61,14 @@
 	if(target_item.exists_on_map)
 		var/list/items = GLOB.steal_item_handler.objectives_by_path[target_item.targetitem]
 		for(var/obj/item/item as anything in items)
-			AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = COMSIG_PARENT_QDELETING)
+			AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_PARENT_QDELETING))
 			tracked_items += item
 	if(length(target_item.special_equipment))
 		special_equipment = target_item.special_equipment
 	replace_in_name("%ITEM%", target_item.name)
 	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
-		signals = list(COMSIG_MOB_EQUIPPED_ITEM = .proc/on_item_pickup))
+		signals = list(COMSIG_MOB_EQUIPPED_ITEM = PROC_REF(on_item_pickup)))
 	return TRUE
-
-/datum/traitor_objective/destroy_item/is_duplicate(datum/traitor_objective/destroy_item/objective_to_compare)
-	if(objective_to_compare.target_item.type == target_item.type)
-		return TRUE
-	return FALSE
 
 /datum/traitor_objective/destroy_item/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
@@ -96,7 +91,7 @@
 /datum/traitor_objective/destroy_item/proc/on_item_pickup(datum/source, obj/item/item, slot)
 	SIGNAL_HANDLER
 	if(istype(item, target_item.targetitem) && !(item in tracked_items))
-		AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = COMSIG_PARENT_QDELETING)
+		AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_PARENT_QDELETING))
 		tracked_items += item
 
 /datum/traitor_objective/destroy_item/ungenerate_objective()

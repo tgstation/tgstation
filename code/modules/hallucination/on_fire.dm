@@ -43,7 +43,7 @@
 	to_chat(hallucinator, span_userdanger("You're set on fire!"))
 	hallucinator.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire, override = TRUE)
 	times_to_lower_stamina = rand(5, 10)
-	addtimer(CALLBACK(src, .proc/start_expanding), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_expanding)), 2 SECONDS)
 	return TRUE
 
 /datum/hallucination/fire/Destroy()

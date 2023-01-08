@@ -18,8 +18,8 @@
 		stack_trace("particle holder was created with no loc!")
 		return INITIALIZE_HINT_QDEL
 	if(ismovable(loc))
-		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(loc, COMSIG_PARENT_QDELETING, .proc/on_qdel)
+		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(loc, COMSIG_PARENT_QDELETING, PROC_REF(on_qdel))
 	weak_attached = WEAKREF(loc)
 	particles = new particle_path
 	update_visual_contents(loc)

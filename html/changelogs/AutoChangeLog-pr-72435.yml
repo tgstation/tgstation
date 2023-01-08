@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Fixed indestructible glass sometimes having the grill ontop of it instead of underneath it."

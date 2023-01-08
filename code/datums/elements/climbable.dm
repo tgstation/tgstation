@@ -1,6 +1,6 @@
 /datum/element/climbable
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
+	argument_hash_start_idx = 2
 	///Time it takes to climb onto the object
 	var/climb_time = (2 SECONDS)
 	///Stun duration for when you get onto the object
@@ -18,10 +18,10 @@
 	if(climb_stun)
 		src.climb_stun = climb_stun
 
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/attack_hand)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
-	RegisterSignal(target, COMSIG_ATOM_BUMPED, .proc/try_speedrun)
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
+	RegisterSignal(target, COMSIG_ATOM_BUMPED, PROC_REF(try_speedrun))
 	ADD_TRAIT(target, TRAIT_CLIMBABLE, ELEMENT_TRAIT(type))
 
 /datum/element/climbable/Detach(datum/target)
@@ -116,7 +116,7 @@
 			if (!animal.dextrous)
 				return
 		if(living_target.mobility_flags & MOBILITY_MOVE)
-			INVOKE_ASYNC(src, .proc/climb_structure, climbed_thing, living_target, params)
+			INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params)
 			return
 
 ///Tries to climb onto the target if the forced movement of the mob allows it

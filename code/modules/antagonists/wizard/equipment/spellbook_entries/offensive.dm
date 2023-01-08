@@ -45,7 +45,7 @@
 /datum/spellbook_entry/teslablast
 	name = "Tesla Blast"
 	desc = "Charge up a tesla arc and release it at a random nearby target! You can move freely while it charges. The arc jumps between targets and can knock them down."
-	spell_type = /datum/action/cooldown/spell/tesla
+	spell_type = /datum/action/cooldown/spell/charged/beam/tesla
 	category = "Offensive"
 
 /datum/spellbook_entry/lightningbolt

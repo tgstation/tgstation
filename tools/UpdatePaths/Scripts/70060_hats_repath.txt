@@ -122,3 +122,4 @@
 /obj/item/clothing/head/festive : /obj/item/clothing/head/costume/festive {@OLD}
 /obj/item/clothing/head/bunnyhead : /obj/item/clothing/head/costume/bunnyhead {@OLD}
 /obj/item/clothing/head/beekeeper_head : /obj/item/clothing/head/utility/beekeeper_head {@OLD}
+/obj/item/clothing/head/rabbitears : /obj/item/clothing/head/costume/rabbitears {@OLD}

@@ -2,16 +2,18 @@
 	name = "\improper Plasmaman"
 	plural_form = "Plasmamen"
 	id = SPECIES_PLASMAMAN
-	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD, NOTRANSSTING, HAS_BONE, NOAPPENDIX)
+	species_traits = list(
+		NOTRANSSTING,
+	)
 	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_HARDLY_WOUNDED,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
+		TRAIT_NOBLOOD,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -19,6 +21,8 @@
 	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/internal/liver/plasmaman
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
+	mutantappendix = null
+	mutantheart = null
 	burnmod = 1.5
 	heatmod = 1.5
 	brutemod = 1.5
@@ -32,11 +36,11 @@
 	species_language_holder = /datum/language_holder/skeleton
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/plasmaman,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/plasmaman,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/plasmaman,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/plasmaman,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/plasmaman,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/plasmaman,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/plasmaman,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/plasmaman,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/plasmaman,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
 	)
 
@@ -69,7 +73,7 @@
 
 	var/flammable_limb = FALSE
 	for(var/obj/item/bodypart/found_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
-		if(IS_ORGANIC_LIMB(found_bodypart) && (found_bodypart.limb_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
+		if(IS_ORGANIC_LIMB(found_bodypart) && found_bodypart.limb_id == SPECIES_PLASMAMAN) //Allows for "donated" limbs and augmented limbs to prevent autoignition
 			flammable_limb = TRUE
 			break
 
@@ -116,7 +120,7 @@
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	if(job.plasmaman_outfit)
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
-	equipping.internal = equipping.get_item_for_held_index(2)
+	equipping.open_internals(equipping.get_item_for_held_index(2))
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)

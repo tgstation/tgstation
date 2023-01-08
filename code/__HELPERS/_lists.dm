@@ -9,6 +9,14 @@
  * Misc
  */
 
+// Generic listoflist safe add and removal macros:
+///If value is a list, wrap it in a list so it can be used with list add/remove operations
+#define LIST_VALUE_WRAP_LISTS(value) (islist(value) ? list(value) : value)
+///Add an untyped item to a list, taking care to handle list items by wrapping them in a list to remove the footgun
+#define UNTYPED_LIST_ADD(list, item) (list += LIST_VALUE_WRAP_LISTS(item))
+///Remove an untyped item to a list, taking care to handle list items by wrapping them in a list to remove the footgun
+#define UNTYPED_LIST_REMOVE(list, item) (list -= LIST_VALUE_WRAP_LISTS(item))
+
 ///Initialize the lazylist
 #define LAZYINITLIST(L) if (!L) { L = list(); }
 ///If the provided list is empty, set it to null
@@ -381,7 +389,7 @@
 	if(skiprep)
 		for(var/e in first)
 			if(!(e in result) && !(e in second))
-				result += e
+				UNTYPED_LIST_ADD(result, e)
 	else
 		result = first - second
 	return result
@@ -419,13 +427,50 @@
 			list_to_pick[item] = 0
 		total += list_to_pick[item]
 
-	total = rand(0, total)
+	total = rand(1, total)
 	for(item in list_to_pick)
 		total -= list_to_pick[item]
 		if(total <= 0 && list_to_pick[item])
 			return item
 
 	return null
+
+/**
+ * Like pick_weight, but allowing for nested lists.
+ *
+ * For example, given the following list:
+ * list(A = 1, list(B = 1, C = 1))
+ * A would have a 50% chance of being picked,
+ * and list(B, C) would have a 50% chance of being picked.
+ * If list(B, C) was picked, B and C would then each have a 50% chance of being picked.
+ * So the final probabilities would be 50% for A, 25% for B, and 25% for C.
+ *
+ * Weights should be integers. Entries without weights are assigned weight 1 (so unweighted lists can be used as well)
+ */
+/proc/pick_weight_recursive(list/list_to_pick)
+	var/result = pick_weight(fill_with_ones(list_to_pick))
+	while(islist(result))
+		result = pick_weight(fill_with_ones(result))
+	return result
+
+/**
+ * Given a list, return a copy where values without defined weights are given weight 1.
+ * For example, fill_with_ones(list(A, B=2, C)) = list(A=1, B=2, C=1)
+ * Useful for weighted random choices (loot tables, syllables in languages, etc.)
+ */
+/proc/fill_with_ones(list/list_to_pad)
+	if (!islist(list_to_pad))
+		return list_to_pad
+
+	var/list/final_list = list()
+
+	for (var/key in list_to_pad)
+		if (list_to_pad[key])
+			final_list[key] = list_to_pad[key]
+		else
+			final_list[key] = 1
+
+	return final_list
 
 /// Takes a weighted list (see above) and expands it into raw entries
 /// This eats more memory, but saves time when actually picking from it
@@ -445,7 +490,7 @@
 		if(!value)
 			continue
 		for(var/i in 1 to value / gcf)
-			output += item
+			UNTYPED_LIST_ADD(output, item)
 	return output
 
 /// Takes a list of numbers as input, returns the highest value that is cleanly divides them all
@@ -536,7 +581,7 @@
 /proc/unique_list(list/inserted_list)
 	. = list()
 	for(var/i in inserted_list)
-		. |= i
+		. |= LIST_VALUE_WRAP_LISTS(i)
 
 ///same as unique_list, but returns nothing and acts on list in place (also handles associated values properly)
 /proc/unique_list_in_place(list/inserted_list)
@@ -550,12 +595,12 @@
 
 ///for sorting clients or mobs by ckey
 /proc/sort_key(list/ckey_list, order=1)
-	return sortTim(ckey_list, order >= 0 ? /proc/cmp_ckey_asc : /proc/cmp_ckey_dsc)
+	return sortTim(ckey_list, order >= 0 ? GLOBAL_PROC_REF(cmp_ckey_asc) : GLOBAL_PROC_REF(cmp_ckey_dsc))
 
 ///Specifically for record datums in a list.
 /proc/sort_record(list/record_list, field = "name", order = 1)
 	GLOB.cmp_field = field
-	return sortTim(record_list, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
+	return sortTim(record_list, order >= 0 ? GLOBAL_PROC_REF(cmp_records_asc) : GLOBAL_PROC_REF(cmp_records_dsc))
 
 ///sort any value in a list
 /proc/sort_list(list/list_to_sort, cmp=/proc/cmp_text_asc)
@@ -563,7 +608,7 @@
 
 ///uses sort_list() but uses the var's name specifically. This should probably be using mergeAtom() instead
 /proc/sort_names(list/list_to_sort, order=1)
-	return sortTim(list_to_sort.Copy(), order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
+	return sortTim(list_to_sort.Copy(), order >= 0 ? GLOBAL_PROC_REF(cmp_name_asc) : GLOBAL_PROC_REF(cmp_name_dsc))
 
 ///Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield_to_list(bitfield = 0, list/wordlist)
@@ -698,11 +743,6 @@
 		if(checked_datum.vars[varname] == value)
 			return checked_datum
 
-///remove all nulls from a list
-/proc/remove_nulls_from_list(list/inserted_list)
-	while(inserted_list.Remove(null))
-		continue
-	return inserted_list
 
 ///Copies a list, and all lists inside it recusively
 ///Does not copy any other reference type
@@ -742,7 +782,7 @@
 		return null
 	. = list()
 	for(var/key in key_list)
-		. |= key_list[key]
+		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
 
 ///Make a normal list an associative one
 /proc/make_associative(list/flat_list)
@@ -788,7 +828,17 @@
 /proc/assoc_to_keys(list/input)
 	var/list/keys = list()
 	for(var/key in input)
-		keys += key
+		UNTYPED_LIST_ADD(keys, key)
+	return keys
+
+/// Turns an associative list into a flat list of keys, but for sprite accessories, respecting the locked variable
+/proc/assoc_to_keys_features(list/input)
+	var/list/keys = list()
+	for(var/key in input)
+		var/datum/sprite_accessory/value = input[key]
+		if(value?.locked)
+			continue
+		UNTYPED_LIST_ADD(keys, key)
 	return keys
 
 ///compare two lists, returns TRUE if they are the same
@@ -822,7 +872,7 @@
 	. = list()
 	for(var/i in list_to_filter)
 		if(condition.Invoke(i))
-			. |= i
+			. |= LIST_VALUE_WRAP_LISTS(i)
 
 ///Returns a list with all weakrefs resolved
 /proc/recursive_list_resolve(list/list_to_resolve)
@@ -836,7 +886,7 @@
 		else
 			. += list(recursive_list_resolve_element(element))
 
-///Helper for /proc/recursive_list_resolve
+///Helper for recursive_list_resolve()
 /proc/recursive_list_resolve_element(element)
 	if(islist(element))
 		var/list/inner_list = element
@@ -1039,7 +1089,7 @@
 	return ret
 
 /// Runtimes if the passed in list is not sorted
-/proc/assert_sorted(list/list, name, cmp = /proc/cmp_numeric_asc)
+/proc/assert_sorted(list/list, name, cmp = GLOBAL_PROC_REF(cmp_numeric_asc))
 	var/last_value = list[1]
 
 	for (var/index in 2 to list.len)
@@ -1049,3 +1099,11 @@
 			stack_trace("[name] is not sorted. value at [index] ([value]) is in the wrong place compared to the previous value of [last_value] (when compared to by [cmp])")
 
 		last_value = value
+
+/**
+ * Converts a list of coordinates, or an assosciative list if passed, into a turf by calling locate(x, y, z) based on the values in the list
+ */
+/proc/coords2turf(list/coords)
+	if("x" in coords)
+		return locate(coords["x"], coords["y"], coords["z"])
+	return locate(coords[1], coords[2], coords[3])

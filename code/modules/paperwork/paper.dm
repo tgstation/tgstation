@@ -63,6 +63,9 @@
 	/// state checking on if it should be shown to a viewer.
 	var/datum/weakref/camera_holder
 
+	///If TRUE, staff can read paper everywhere, but usually from requests panel.
+	var/request_state = FALSE
+
 /obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
@@ -301,9 +304,9 @@
 	add_fingerprint(usr)
 	update_static_data()
 
-/obj/item/paper/suicide_act(mob/user)
+/obj/item/paper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku..."))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
@@ -328,7 +331,7 @@
 	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
-	if(camera_holder && can_show_to_mob_through_camera(user))
+	if(camera_holder && can_show_to_mob_through_camera(user) || request_state)
 		return UI_UPDATE
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
@@ -404,6 +407,7 @@
 			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), rand(0, 360), writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
 			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
+			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 		else
 			to_chat(user, span_notice("You ready your stamp over the paper! "))
 			ui_interact(user)
@@ -537,6 +541,7 @@
 
 			add_stamp(stamp_class, stamp_x, stamp_y, stamp_rotation, stamp_icon_state)
 			user.visible_message(span_notice("[user] stamps [src] with \the [holding.name]!"), span_notice("You stamp [src] with \the [holding.name]!"))
+			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 			update_appearance()
 			update_static_data(user, ui)

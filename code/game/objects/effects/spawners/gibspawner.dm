@@ -69,7 +69,7 @@
 	return ..()
 
 /obj/effect/gibspawner/generic/animal
-	gib_mob_type = /mob/living/simple_animal/pet
+	gib_mob_type = /mob/living/basic/pet
 
 
 

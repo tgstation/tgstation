@@ -50,7 +50,7 @@
 			balloon_alert(user, "remove the floor plating!")
 			return
 		if(terminal)
-			balloon_alert(user, "APC is already wired!")
+			balloon_alert(user, "already wired!")
 			return
 		if(!has_electronics)
 			balloon_alert(user, "no board to wire!")
@@ -154,7 +154,7 @@
 		user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
 		balloon_alert(user, "replacing damaged frame...")
 		if(do_after(user, 50, target = src))
-			balloon_alert(user, "APC frame replaced")
+			balloon_alert(user, "replaced frame")
 			qdel(attacking_object)
 			set_machine_stat(machine_stat & ~BROKEN)
 			atom_integrity = max_integrity
@@ -204,13 +204,13 @@
 		return
 	if(ethereal.combat_mode)
 		if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
-			addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "safeties prevent draining!"), alert_timer_duration)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "safeties prevent draining!"), alert_timer_duration)
 			return
 		if(stomach.crystal_charge > charge_limit)
-			addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "charge is full!"), alert_timer_duration)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "charge is full!"), alert_timer_duration)
 			return
 		stomach.drain_time = world.time + APC_DRAIN_TIME
-		addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "draining power"), alert_timer_duration)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "draining power"), alert_timer_duration)
 		if(do_after(user, APC_DRAIN_TIME, target = src))
 			if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
 				return
@@ -220,13 +220,13 @@
 		return
 
 	if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
-		addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "APC can't receive more power!"), alert_timer_duration)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "APC can't receive more power!"), alert_timer_duration)
 		return
 	if(stomach.crystal_charge < APC_POWER_GAIN)
-		addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "charge is too low!"), alert_timer_duration)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "charge is too low!"), alert_timer_duration)
 		return
 	stomach.drain_time = world.time + APC_DRAIN_TIME
-	addtimer(CALLBACK(src, /atom.proc/balloon_alert, ethereal, "transfering power"), alert_timer_duration)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "transfering power"), alert_timer_duration)
 	if(!do_after(user, APC_DRAIN_TIME, target = src))
 		return
 	if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))
@@ -288,7 +288,7 @@
 	var/mob/living/silicon/robot/robot = user
 	if(aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai!=AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
 		if(!loud)
-			balloon_alert(user, "APC has been disabled!")
+			balloon_alert(user, "it's disabled!")
 		return FALSE
 	return TRUE
 

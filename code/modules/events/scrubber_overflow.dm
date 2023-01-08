@@ -14,6 +14,10 @@
 	var/danger_chance = 1
 	/// Amount of reagents ejected from each scrubber
 	var/reagents_amount = 50
+	/// Probability of an individual scrubber overflowing
+	var/overflow_probability = 50
+	/// Specific reagent to force all scrubbers to use, null for random reagent choice
+	var/forced_reagent
 	/// A list of scrubbers that will have reagents ejected from them
 	var/list/scrubbers = list()
 	/// The list of chems that scrubbers can produce
@@ -67,7 +71,7 @@
 			continue
 		if(temp_vent.welded)
 			continue
-		if(!prob(50))
+		if(!prob(overflow_probability))
 			continue
 		scrubbers += temp_vent
 
@@ -89,8 +93,6 @@
 		return TRUE //there's at least one. we'll let the codergods handle the rest with prob() i guess.
 	return FALSE
 
-
-
 /datum/round_event/scrubber_overflow/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/vent as anything in scrubbers)
 		if(!vent.loc)
@@ -98,14 +100,16 @@
 
 		var/datum/reagents/dispensed_reagent = new /datum/reagents(reagents_amount)
 		dispensed_reagent.my_atom = vent
-		if (prob(danger_chance))
+		if (forced_reagent)
+			dispensed_reagent.add_reagent(forced_reagent, reagents_amount)
+		else if (prob(danger_chance))
 			dispensed_reagent.add_reagent(get_random_reagent_id(), reagents_amount)
 			new /mob/living/basic/cockroach(get_turf(vent))
 			new /mob/living/basic/cockroach(get_turf(vent))
 		else
 			dispensed_reagent.add_reagent(pick(safer_chems), reagents_amount)
 
-		dispensed_reagent.create_foam(/datum/effect_system/fluid_spread/foam, reagents_amount)
+		dispensed_reagent.create_foam(/datum/effect_system/fluid_spread/foam/short, reagents_amount)
 
 		CHECK_TICK
 
@@ -134,3 +138,32 @@
 /datum/round_event/scrubber_overflow/catastrophic
 	danger_chance = 30
 	reagents_amount = 150
+
+/datum/round_event_control/scrubber_overflow/custom //Used for the beer nuke as well as admin abuse
+	name = "Scrubber Overflow: Custom"
+	typepath = /datum/round_event/scrubber_overflow/custom
+	weight = 0
+	max_occurrences = 0
+	description = "The scrubbers release a tide of custom froth."
+	///Reagent thats going to be flooded.
+	var/datum/reagent/custom_reagent
+
+/datum/round_event_control/scrubber_overflow/custom/announce_deadchat(random)
+	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>Scrubber Overflow: [initial(custom_reagent.name)]</b>", message_type=DEADCHAT_ANNOUNCEMENT)
+
+/datum/round_event_control/scrubber_overflow/custom/admin_setup(mob/admin)
+	if(!check_rights(R_FUN))
+		return
+	custom_reagent = tgui_input_list(usr, "Choose a reagent to flood.", "Choose a reagent.", sort_list(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc))
+	if (isnull(custom_reagent))
+		return ADMIN_CANCEL_EVENT
+
+/datum/round_event/scrubber_overflow/custom
+	overflow_probability = 100
+	forced_reagent = /datum/reagent/consumable/ethanol/beer
+	reagents_amount = 100
+
+/datum/round_event/scrubber_overflow/custom/start()
+	var/datum/round_event_control/scrubber_overflow/custom/event_controller = control
+	forced_reagent = event_controller.custom_reagent
+	return ..()

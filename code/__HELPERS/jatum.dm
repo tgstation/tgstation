@@ -42,7 +42,7 @@
 			"path" = value
 		)
 
-	var/ref = "\ref[value]"
+	var/ref = text_ref(value)
 	var/existing_ref = seen_references[ref]
 	if(existing_ref)
 		return list(

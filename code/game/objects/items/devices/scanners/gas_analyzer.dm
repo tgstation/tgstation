@@ -24,7 +24,15 @@
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), .proc/on_analyze)
+	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), PROC_REF(on_analyze))
+
+/obj/item/analyzer/equipped(mob/user, slot, initial)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_DETECT_STORM, CLOTHING_TRAIT)
+
+/obj/item/analyzer/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_DETECT_STORM, CLOTHING_TRAIT)
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
@@ -79,7 +87,7 @@
 		else
 			to_chat(user, span_warning("[src]'s barometer function says a storm will land in approximately [butchertime(fixed)]."))
 	cooldown = TRUE
-	addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/analyzer, ping)), cooldown_time)
 
 /obj/item/analyzer/proc/ping()
 	if(isliving(loc))
@@ -196,6 +204,7 @@
 	desc = "A hand-held long-range environmental scanner which reports current gas levels."
 	name = "long-range gas analyzer"
 	icon_state = "analyzerranged"
+	worn_icon_state = "analyzer"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 20, /datum/material/gold = 300, /datum/material/bluespace=200)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
@@ -204,4 +213,5 @@
 	. = ..()
 	if(!can_see(user, target, 15))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))

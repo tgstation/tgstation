@@ -36,7 +36,7 @@
 	name = "Cyborg Left Arm"
 	id = "borg_l_arm"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/l_arm/robot
+	build_path = /obj/item/bodypart/arm/left/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
 	category = list(
@@ -47,7 +47,7 @@
 	name = "Cyborg Right Arm"
 	id = "borg_r_arm"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/r_arm/robot
+	build_path = /obj/item/bodypart/arm/right/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
 	category = list(
@@ -58,7 +58,7 @@
 	name = "Cyborg Left Leg"
 	id = "borg_l_leg"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/l_leg/robot
+	build_path = /obj/item/bodypart/leg/left/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
 	category = list(
@@ -69,7 +69,7 @@
 	name = "Cyborg Right Leg"
 	id = "borg_r_leg"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/r_leg/robot
+	build_path = /obj/item/bodypart/leg/right/robot
 	materials = list(/datum/material/iron=10000)
 	construction_time = 200
 	category = list(
@@ -1294,6 +1294,34 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/silver = 200)
+	construction_time = 50
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_RIPLEY,
+		RND_CATEGORY_MECHFAB_GYGAX,
+		RND_CATEGORY_MECHFAB_DURAND,
+		RND_CATEGORY_MECHFAB_HONK,
+		RND_CATEGORY_MECHFAB_PHAZON,
+		RND_CATEGORY_MECHFAB_CLARKE
+	)
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mecha_camera
+	name = "Exosuit External Camera Kit"
+	desc = "A durable CCTV camera designed for exosuit operations."
+	id = "mecha_camera"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/camera_kit
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/plasma = 200, /datum/material/titanium = 200)
 	construction_time = 50
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,

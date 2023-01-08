@@ -12,11 +12,19 @@
 	throwforce = 15
 	throw_range = 1
 	w_class = WEIGHT_CLASS_HUGE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/item_singularityhammer
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
 	///Is it able to pull shit right now?
 	var/charged = TRUE
+
+/datum/armor/item_singularityhammer
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 50
+	fire = 100
+	acid = 100
 
 /obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
@@ -54,6 +62,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		if(charged)
 			charged = FALSE
@@ -63,7 +72,8 @@
 			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
 			var/turf/target = get_turf(A)
 			vortex(target,user)
-			addtimer(CALLBACK(src, .proc/recharge), 100)
+			addtimer(CALLBACK(src, PROC_REF(recharge)), 100)
+	return .
 
 /obj/item/mjollnir
 	name = "Mjolnir"

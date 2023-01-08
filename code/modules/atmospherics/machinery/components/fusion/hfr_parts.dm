@@ -4,7 +4,7 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
-	icon_state = "core"
+	icon_state = "core_off"
 
 	name = "thermomachine"
 	desc = "Heats or cools gas in connected pipes."
@@ -49,9 +49,9 @@
 		return FALSE
 	if(user.combat_mode)
 		return FALSE
-	balloon_alert(user, "You start repairing the crack...")
+	balloon_alert(user, "repairing...")
 	if(tool.use_tool(src, user, 10 SECONDS, volume=30, amount=5))
-		balloon_alert(user, "You repaired the crack.")
+		balloon_alert(user, "repaired")
 		cracked = FALSE
 		update_appearance()
 
@@ -127,7 +127,7 @@
 	name = "hypertorus_core"
 	desc = "hypertorus_core"
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
-	icon_state = "core"
+	icon_state = "core_off"
 	move_resist = INFINITY
 	anchored = TRUE
 	density = TRUE
@@ -407,7 +407,6 @@
 	icon_state_off = "corner_off"
 	icon_state_open = "corner_open"
 	icon_state_active = "corner_active"
-	dir = SOUTHEAST
 
 /obj/item/paper/guides/jobs/atmos/hypertorus
 	name = "paper- 'Quick guide to safe handling of the HFR'"
@@ -438,7 +437,7 @@
 	name = "HFR box"
 	desc = "If you see this, call the police."
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
-	icon_state = "box"
+	icon_state = "error"
 	///What kind of box are we handling?
 	var/box_type = "impossible"
 	///What's the path of the machine we making
@@ -490,6 +489,15 @@
 		var/direction = get_dir(src, box)
 		if(box.box_type == "corner")
 			if(ISDIAGONALDIR(direction))
+				switch(direction)
+					if(NORTHEAST)
+						direction = EAST
+					if(SOUTHEAST)
+						direction = SOUTH
+					if(SOUTHWEST)
+						direction = WEST
+					if(NORTHWEST)
+						direction = NORTH
 				box.dir = direction
 				parts |= box
 			continue

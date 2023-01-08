@@ -28,6 +28,7 @@
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
 	..()
+	new /obj/item/dog_bone(src)
 	new /obj/item/storage/bag/garment/hop(src)
 	new /obj/item/storage/lockbox/medal/service(src)
 	new /obj/item/computer_disk/command/hop(src)
@@ -79,6 +80,7 @@
 
 /obj/structure/closet/secure_closet/warden/PopulateContents()
 	..()
+	new /obj/item/dog_bone(src)
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/clothing/suit/armor/vest/warden(src)
 	new /obj/item/clothing/head/hats/warden(src)
@@ -275,7 +277,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/riot(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/head/helmet/riot(src)
+		new /obj/item/clothing/head/helmet/toggleable/riot(src)
 	for(var/i in 1 to 3)
 		new /obj/item/shield/riot(src)
 

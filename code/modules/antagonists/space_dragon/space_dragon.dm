@@ -21,9 +21,9 @@
 	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
 	/// What mob to spawn from ghosts using this dragon's rifts
-	var/minion_to_spawn = /mob/living/simple_animal/hostile/carp
+	var/minion_to_spawn = /mob/living/basic/carp
 	/// What AI mobs to spawn from this dragon's rifts
-	var/ai_to_spawn = /mob/living/simple_animal/hostile/carp
+	var/ai_to_spawn = /mob/living/basic/carp
 
 /datum/antagonist/space_dragon/greet()
 	. = ..()
@@ -46,8 +46,8 @@
 	rift_ability = new
 	rift_ability.Grant(owner.current)
 	owner.current.faction |= "carp"
-	RegisterSignal(owner.current, COMSIG_LIVING_LIFE, .proc/rift_checks)
-	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, .proc/destroy_rifts)
+	RegisterSignal(owner.current, COMSIG_LIVING_LIFE, PROC_REF(rift_checks))
+	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, PROC_REF(destroy_rifts))
 
 /datum/antagonist/space_dragon/on_removal()
 	. = ..()
@@ -92,6 +92,7 @@
 		to_chat(owner.current, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
 		destroy_rifts()
 		SEND_SOUND(owner.current, sound('sound/magic/demon_dies.ogg'))
+		owner.current.death(/* gibbed = */ TRUE)
 		QDEL_NULL(owner.current)
 
 /**
@@ -157,7 +158,7 @@
 	owner.current.fully_heal()
 	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
 	owner.current.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
-	addtimer(CALLBACK(src, .proc/rift_depower), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(rift_depower)), 30 SECONDS)
 
 /**
  * Removes Space Dragon's rift speed buff.

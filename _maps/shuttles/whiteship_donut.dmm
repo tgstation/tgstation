@@ -13,13 +13,10 @@
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/docking_port/mobile{
 	dir = 2;
-	dwidth = 8;
-	height = 17;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 2;
-	width = 9
+	port_direction = 2
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)

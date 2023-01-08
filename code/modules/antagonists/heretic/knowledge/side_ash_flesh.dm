@@ -11,7 +11,7 @@
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
 		/obj/item/shard = 1,
-		/obj/item/candle = 1,
+		/obj/item/flashlight/flare/candle = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 	cost = 1
@@ -28,8 +28,8 @@
 		/datum/heretic_knowledge/summon/raw_prophet,
 	)
 	required_atoms = list(
-		/obj/item/bodypart/l_leg = 1,
-		/obj/item/bodypart/r_leg = 1,
+		/obj/item/bodypart/leg/left = 1,
+		/obj/item/bodypart/leg/right = 1,
 		/obj/item/hatchet = 1,
 	)
 	duration = 3 MINUTES

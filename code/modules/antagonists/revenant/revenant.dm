@@ -20,7 +20,7 @@
 	maxHealth = INFINITY
 	plane = GHOST_PLANE
 	healable = FALSE
-	sight = SEE_SELF | SEE_BLACKNESS
+	sight = SEE_SELF
 	throwforce = 0
 
 	see_in_dark = NIGHTVISION_FOV_RANGE
@@ -71,6 +71,7 @@
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 
 	// Starting spells
 	var/datum/action/cooldown/spell/night_vision/revenant/vision = new(src)
@@ -95,7 +96,7 @@
 	var/datum/action/cooldown/spell/aoe/revenant/haunt_object/toolbox_go_bonk = new(src)
 	toolbox_go_bonk.Grant(src)
 
-	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
+	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	random_revenant_name()
 
 /mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
@@ -145,7 +146,7 @@
 		to_chat(src, span_revenboldnotice("You can move again!"))
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence + (essence_regen_amount * delta_time), essence_regen_cap)
-		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
+		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
 	..()
@@ -213,12 +214,12 @@
 	visible_message(span_warning("[src] violently flinches!"), \
 		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"))
 	inhibited = TRUE
-	update_action_buttons_icon()
-	addtimer(CALLBACK(src, .proc/reset_inhibit), 3 SECONDS)
+	update_mob_action_buttons()
+	addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 3 SECONDS)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
@@ -329,7 +330,7 @@
 	if(essence_excess < essence_cost)
 		return FALSE
 	essence_excess -= essence_cost
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	return TRUE
 
 /mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
@@ -342,7 +343,7 @@
 	if(essence_amt > 0)
 		essence_accumulated = max(0, essence_accumulated+essence_amt)
 		essence_excess = max(0, essence_excess+essence_amt)
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	if(!silent)
 		if(essence_amt > 0)
 			to_chat(src, span_revennotice("Gained [essence_amt]E[source ? " from [source]":""]."))
@@ -415,7 +416,7 @@
 
 /obj/item/ectoplasm/revenant/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/try_reform), 600)
+	addtimer(CALLBACK(src, PROC_REF(try_reform)), 600)
 
 /obj/item/ectoplasm/revenant/proc/scatter()
 	qdel(src)
@@ -491,10 +492,10 @@
 	revenant = null
 	qdel(src)
 
-/obj/item/ectoplasm/revenant/suicide_act(mob/user)
+/obj/item/ectoplasm/revenant/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!"))
 	scatter()
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))

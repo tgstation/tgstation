@@ -4,6 +4,7 @@
 #define INVESTIGATE_BOTANY "botany"
 #define INVESTIGATE_CARGO "cargo"
 #define INVESTIGATE_CRAFTING "crafting"
+#define INVESTIGATE_DEATHS "deaths"
 #define INVESTIGATE_ENGINE "engine"
 #define INVESTIGATE_EXPERIMENTOR "experimentor"
 #define INVESTIGATE_GRAVITY "gravity"
