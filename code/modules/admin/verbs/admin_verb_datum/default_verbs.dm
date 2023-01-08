@@ -52,7 +52,7 @@ ADMIN_VERB_DEFAULT(game, dead_say, "Speak a message to observers", message as te
 	usr.log_talk(message, LOG_DSAY)
 
 	var/rank_name = usr.client.holder.rank_names()
-	var/admin_name = key
+	var/admin_name = usr.ckey
 	if(usr.client.holder.fakekey)
 		rank_name = pick(strings("admin_nicknames.json", "ranks", "config"))
 		admin_name = pick(strings("admin_nicknames.json", "names", "config"))
