@@ -38138,8 +38138,8 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/structure/cable,
+/obj/structure/fireaxecabinet/tile_remover/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "nJV" = (
@@ -48500,6 +48500,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "rvq" = (

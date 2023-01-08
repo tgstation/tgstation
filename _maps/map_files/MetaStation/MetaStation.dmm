@@ -49390,6 +49390,7 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
+/obj/structure/fireaxecabinet/tile_remover/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "rBi" = (

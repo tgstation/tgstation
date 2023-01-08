@@ -18,6 +18,10 @@
 	var/item_path = /obj/item/fireaxe
 	/// Overlay we get when the item is inside us.
 	var/item_overlay = "axe"
+	/// Overlay for the cabinet being locked.
+	var/locked_overlay = "locked"
+	/// If the item can be unwielded when placing it in the cabinet.
+	var/is_un_wieldable = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
@@ -66,7 +70,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 			update_appearance()
 	else if(open || broken)
 		if(istype(attacking_item, item_path) && !held_item)
-			if(HAS_TRAIT(attacking_item, TRAIT_WIELDED))
+			if(HAS_TRAIT(attacking_item, TRAIT_WIELDED) && is_un_wieldable)
 				balloon_alert(user, "unwield it!")
 				return
 			if(!user.transferItemToLoc(attacking_item, src))
@@ -170,7 +174,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 			if(80 to INFINITY)
 				. += "glass"
 
-	. += locked ? "locked" : "unlocked"
+	. += locked ? locked_overlay : "unlocked"
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, span_notice("Resetting circuitry..."))
@@ -196,5 +200,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	icon_state = "mechremoval"
 	item_path = /obj/item/crowbar/mechremoval
 	item_overlay = "crowbar"
+	locked_overlay = "locked_purple"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
+
+/obj/structure/fireaxecabinet/tile_remover
+	name = "tile remover cabinet"
+	desc = "There is a small label that reads \"For authorized personnel use only\" along with details for safe use of the tile remover. As if."
+	icon_state = "tile_remover_cabinet"
+	item_path = /obj/item/wrench/tile_remover
+	item_overlay = "tile_remover"
+	locked_overlay = "locked_yellow"
+	is_un_wieldable = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/tile_remover, 32)

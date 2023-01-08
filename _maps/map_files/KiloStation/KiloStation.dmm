@@ -23590,7 +23590,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/east,
-/obj/item/radio/intercom/directional/east,
+/obj/structure/fireaxecabinet/tile_remover/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "gME" = (
@@ -83235,8 +83235,8 @@
 	dir = 8
 	},
 /obj/machinery/suit_storage_unit/engine,
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/airalarm/directional/east,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "xCy" = (

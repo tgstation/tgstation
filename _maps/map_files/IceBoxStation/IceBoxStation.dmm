@@ -27363,21 +27363,21 @@
 	dir = 8
 	},
 /obj/machinery/button/flasher{
-	pixel_y = -32;
 	id = "hopflash";
-	pixel_x = 8
-	},
-/obj/machinery/button/door/directional/south{
-	pixel_x = -8;
-	req_access = list("hop");
-	id = "hopqueue";
-	name = "Queue Shutters Control"
-	},
-/obj/machinery/button/door/directional/south{
 	pixel_x = 8;
+	pixel_y = -32
+	},
+/obj/machinery/button/door/directional/south{
+	id = "hopqueue";
+	name = "Queue Shutters Control";
+	pixel_x = -8;
+	req_access = list("hop")
+	},
+/obj/machinery/button/door/directional/south{
+	id = "hop";
 	name = "Privacy Shutters Control";
-	req_access = list("hop");
-	id = "hop"
+	pixel_x = 8;
+	req_access = list("hop")
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
@@ -43948,6 +43948,7 @@
 "nzI" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/fireaxecabinet/tile_remover/directional/south,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},

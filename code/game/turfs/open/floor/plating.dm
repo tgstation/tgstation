@@ -129,6 +129,14 @@
 /turf/open/floor/plating/make_plating(force = FALSE)
 	return
 
+/turf/open/floor/plating/wrench_act(mob/living/user, obj/item/item_target)
+	..()
+	if(istype(item_target, /obj/item/wrench/tile_remover))
+		var/obj/item/wrench/tile_remover/tool_target = item_target
+		if(tool_target.use_tool(src, user, 20 SECONDS, volume=50))
+			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+			tool_target.replace_floor(src)
+
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
 	desc = "Thin, fragile flooring created with metal foam."

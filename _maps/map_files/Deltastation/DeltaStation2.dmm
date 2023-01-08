@@ -64668,7 +64668,6 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/suit_storage_unit/engine,
 /obj/effect/turf_decal/stripes/line,
-/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/storage)
 "pNP" = (
@@ -75261,10 +75260,10 @@
 /area/station/command/corporate_showroom)
 "stD" = (
 /obj/machinery/suit_storage_unit/engine,
-/obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/storage)
 "stK" = (
@@ -98038,10 +98037,10 @@
 /obj/machinery/suit_storage_unit/engine,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/status_display/ai/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/fireaxecabinet/tile_remover/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/storage)
 "xTc" = (

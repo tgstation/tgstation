@@ -129,7 +129,7 @@
 
 /obj/item/wrench/tile_remover
 	name = "tile remover"
-	desc = "A gigantic suction wrench. You're pretty sure it could pry open the plating of the floor tiles and suck them out of the floor creating a hole into space."
+	desc = "A gigantic suction wrench. You're pretty sure it could pry open the plating of the station creating a hole into space."
 	icon_state = "tile_remover"
 	icon = 'icons/obj/tools32x48.dmi'
 	inhand_icon_state = null
@@ -149,6 +149,9 @@
 	wound_bonus = -10
 	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
 	attack_verb_simple = list("bonks", "bludgeons", "pounds")
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 
 /datum/armor/tile_remover
@@ -163,4 +166,9 @@
 	. = ..()
 	transform = transform.Translate(0, -8)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
-	AddComponent(/datum/component/item_slowdown, /datum/movespeed_modifier/tile_remover)
+	AddComponent(/datum/component/item_slowdown, /datum/movespeed_modifier/tile_remover, TRUE)
+
+/obj/item/wrench/tile_remover/proc/replace_floor(turf/target_turf)
+	if(!istype(target_turf, /turf/open/floor))
+		new /obj/structure/lattice(target_turf)
+		new /obj/item/stack/tile/iron(target_turf)
