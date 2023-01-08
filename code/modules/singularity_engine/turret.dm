@@ -1,7 +1,7 @@
 // MBTODO: It must be coiled to the computer
 /obj/machinery/singularity_turret
 	name = "experimental void emitter"
-	desc = "A robust, dramatic emitter that is uniquely capable of powering the singularity. Its blasts are so powerful that ear protection is a necessity if you plan to be around them for any period of time, oddly enough, even in space."
+	desc = "A robust, dramatic emitter that is uniquely capable of powering the singularity. Firing into an active singularity will generate power. Its blasts are so powerful that ear protection is a necessity if you plan to be around them for any period of time, oddly enough, even in space."
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "protoemitter"
 	base_icon_state = "protoemitter"
