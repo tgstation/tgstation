@@ -166,6 +166,9 @@
 			balloon_alert(user, "no more lights!")
 			return
 		replace_light(target_atom, user)
+		if(bluespace_toggle)
+			user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
+			playsound(src, 'sound/items/pshoom.ogg', 40, 1)
 
 /obj/item/lightreplacer/update_icon_state()
 	icon_state = "[initial(icon_state)][(obj_flags & EMAGGED ? "-emagged" : "")]"
