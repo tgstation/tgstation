@@ -94,6 +94,22 @@
 
 	var/turf/patient_turf = get_turf(patient)
 
+	var/obj/machinery/stasis/stasis_bed = patient.buckled
+	if (istype(stasis_bed) && stasis_bed.surgery_access)
+		var/list/available_surgeries = list()
+
+		for (var/design_id in SSresearch.science_tech.researched_designs)
+			var/datum/design/surgery/surgery_design = SSresearch.techweb_design_by_id(design_id)
+			if (!istype(surgery_design))
+				continue
+			available_surgeries += surgery_design.surgery
+
+		if (replaced_by in available_surgeries)
+			return FALSE
+
+		if (type in available_surgeries)
+			return TRUE
+
 	//Get the relevant operating computer
 	var/obj/machinery/computer/operating/opcomputer = locate_operating_computer(patient_turf)
 	if (isnull(opcomputer))

@@ -4,3 +4,5 @@
 #define POWER_BAR_DEPARTMENT_MEDICAL "medical"
 #define POWER_BAR_DEPARTMENT_SCIENCE "science"
 #define POWER_BAR_DEPARTMENT_SECURITY "security"
+
+#define POWER_BAR_DONT_REACT (1 << 0)

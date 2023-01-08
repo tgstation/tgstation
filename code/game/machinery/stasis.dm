@@ -17,13 +17,23 @@
 	var/stasis_can_toggle = 0
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
+	var/surgery_access = FALSE
 
-/obj/machinery/stasis/Destroy()
+/obj/machinery/stasis/RefreshParts()
 	. = ..()
+	if (!SSpower_bars.enabled)
+		return
+
+	var/obj/item/stock_parts/manipulator/manipulator = locate() in component_parts
+
+	surgery_access = manipulator?.rating == 4
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
+
+	if (surgery_access)
+		. += span_notice("Extra power being delivered to it has granted it the ability to perform any researched surgery.")
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()

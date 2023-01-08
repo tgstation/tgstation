@@ -36,7 +36,9 @@
 		var/old_power_bars = departments[new_department]
 		var/new_power_bars = power_bars_ss.power_bars_of_department(new_department)
 
-		if (ismovable(parent))
+		var/changed_flags = on_changed.InvokeAsync(new_power_bars)
+
+		if (!(changed_flags & POWER_BAR_DONT_REACT) && ismovable(parent))
 			var/atom/movable/movable_parent = parent
 
 			if (new_power_bars > old_power_bars)
@@ -48,6 +50,3 @@
 			else
 				movable_parent.say("Power input depleted!", forced = "power bars reactor")
 				playsound(movable_parent, 'sound/machines/buzz-two.ogg', 30, vary = TRUE)
-
-		on_changed.InvokeAsync(new_power_bars)
-

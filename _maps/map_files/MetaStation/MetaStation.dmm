@@ -20013,9 +20013,8 @@
 /area/station/hallway/primary/starboard)
 "huZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
+/turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
 "hvr" = (
 /obj/machinery/camera/directional/south{
@@ -30604,11 +30603,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kYo" = (
-/obj/machinery/power/turbine/turbine_outlet{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/maintenance/disposal/incinerator)
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "kYv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"
@@ -33457,12 +33455,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/bar)
-"lZk" = (
-/obj/machinery/power/turbine/inlet_compressor{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/maintenance/disposal/incinerator)
 "lZC" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -49826,11 +49818,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/warden)
-"rOC" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/engineering/main)
 "rOF" = (
 /turf/closed/wall,
 /area/station/medical/psychology)
@@ -56369,11 +56356,6 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "uaB" = (
-/obj/machinery/power/turbine/core_rotor{
-	dir = 4;
-	mapping_id = "main_turbine"
-	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "uaN" = (
@@ -107711,7 +107693,7 @@ uXd
 gMG
 dWG
 uGm
-rOC
+kYo
 uXd
 qJd
 nLz
@@ -108014,7 +107996,7 @@ ydj
 aBW
 vQh
 pnH
-lZk
+uaB
 pnH
 pnH
 aaa
@@ -108528,7 +108510,7 @@ lYM
 vzc
 gUY
 pnH
-kYo
+uaB
 pnH
 aaa
 aaa
