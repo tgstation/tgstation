@@ -550,13 +550,13 @@
 	human_holder.del_and_replace_bodypart(prosthetic)
 
 /datum/quirk/prosthetic_limb/add(client/client_source)
-	limb_typecahce = typecacheof(limb_typecahce)
+	surplus_limb_typecahce = typecacheof(limb_typecahce)
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment. It cannot be removed or replaced through surgery."))
 
-/datum/quirk/prosthetic_limb/on_moved(mob/guy, OldLoc, Dir, forced)
+/datum/quirk/prosthetic_limb/proc/on_moved(mob/guy, OldLoc, Dir, forced)
 	SIGNAL_HANDLER
 
 	if(!ishuman(quirk_holder)) //Just here to be safe
@@ -568,9 +568,9 @@
 
 	var/limping_message
 	for(var/obj/item/bodypart/leg/leg in human_holder.bodyparts)
-		if(checked_limb_type && !istype(bodypart, checked_limb_type))
+		if(checked_limb_type && !istype(leg, checked_limb_type))
 			continue
-		if(is_type_in_typecache(bodypart, limb_typecahce))
+		if(is_type_in_typecache(leg, surplus_limb_typecahce))
 			continue
 		if(prob(50))
 			limping_message = TRUE
