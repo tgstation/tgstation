@@ -976,7 +976,7 @@
 			TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLEED))
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 	..()
 
@@ -1186,6 +1186,8 @@
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
 		return FALSE
 	if(is_away_level(T.z))
+		return FALSE
+	if(onSyndieBase() && !(ROLE_SYNDICATE in user.faction))
 		return FALSE
 	if(user != null && src == user)
 		return FALSE
@@ -2521,4 +2523,3 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client || "AI"] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")
-

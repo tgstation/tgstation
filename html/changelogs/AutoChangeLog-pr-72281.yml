@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Those with kitchen access should now once again be the only one who are allowed to vending-machine-restock individual snacking items via their trusty tray."

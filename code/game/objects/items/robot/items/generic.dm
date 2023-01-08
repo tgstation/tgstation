@@ -190,6 +190,7 @@
 	. = ..()
 	if(!proximity_flag || !iscyborg(user))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
 			var/obj/machinery/target_machine = target

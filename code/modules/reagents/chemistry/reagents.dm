@@ -229,15 +229,17 @@ Primarily used in reagents/reaction_agents
  * New, standardized method for chemicals to affect hydroponics trays.
  * Defined on a per-chem level as opposed to by the tray.
  * Can affect plant's health, stats, or cause the plant to react in certain ways.
- * If you want to exclude subtypes use chems.has_reagent(src, [amount])
- * Forexample: you use radium which is a subtype of uranium but dont want to apply the effect of uranium
  */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!mytray)
-		return
+
+/// Proc is used by [/datum/reagent/proc/on_hydroponics_apply] to see if the tray and the reagents inside is in a valid state to apply reagent effects
+/datum/reagent/proc/check_tray(datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	ASSERT(mytray)
 	// Check if we have atleast a single amount of the reagent
 	if(!chems.has_reagent(type, 1))
-		return
+		return FALSE
+
+	return TRUE
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)

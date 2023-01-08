@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Researching now checks the techweb it's linked to for node availability, rather than only the Science one."
