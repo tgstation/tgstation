@@ -35,6 +35,7 @@
 	update_appearance()
 
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/storage/toolbox/update_overlays()
 	. = ..()
