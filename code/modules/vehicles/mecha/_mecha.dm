@@ -240,8 +240,11 @@
 	cabin_air.gases[/datum/gas/nitrogen][MOLES] = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 
 	add_cell()
-	add_scanmod()
-	add_capacitor()
+
+	if (!SSpower_bars.enabled)
+		add_scanmod()
+		add_capacitor()
+
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
 	log_message("[src.name] created.", LOG_MECHA)
@@ -271,6 +274,8 @@
 			equip_by_category[key] -= path
 
 	AddElement(/datum/element/falling_hazard, damage = 80, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE)
+
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_SCIENCE)
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
@@ -424,17 +429,35 @@
 	update_part_values()
 
 /obj/vehicle/sealed/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
-	if(scanmod)
-		normal_step_energy_drain = 20 - (5 * scanmod.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
-		step_energy_drain = normal_step_energy_drain
+	var/capacitor_rating = capacitor?.rating
+	var/scanmod_rating = scanmod?.rating
+
+	if (SSpower_bars.enabled)
+		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SCIENCE))
+			if (0, 1)
+				scanmod_rating = 1
+				capacitor_rating = 1
+			if (2)
+				scanmod_rating = 2
+				capacitor_rating = 2
+			if (3)
+				scanmod_rating = 4
+				capacitor_rating = 4
+
+	if (scanmod_rating)
+		normal_step_energy_drain = 20 - (5 * scanmod_rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
 	else
 		normal_step_energy_drain = 500
-		step_energy_drain = normal_step_energy_drain
 
-	if(capacitor)
+	step_energy_drain = normal_step_energy_drain
+
+	if(capacitor_rating)
 		var/datum/armor/stock_armor = get_armor_by_type(armor_type)
 		var/initial_energy = stock_armor.get_rating(ENERGY)
-		set_armor_rating(initial_energy + (capacitor.rating * 5))
+		set_armor_rating(initial_energy + (capacitor_rating * 5))
+
+/obj/vehicle/sealed/mecha/proc/on_power_bar_update()
+	update_part_values()
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()

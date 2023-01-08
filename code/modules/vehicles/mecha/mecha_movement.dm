@@ -78,7 +78,7 @@
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing power cell.")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
-	if(!scanmod || !capacitor)
+	if(!SSpower_bars.enabled && (!scanmod || !capacitor))
 		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [scanmod? "capacitor" : "scanning module"].")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)

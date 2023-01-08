@@ -240,7 +240,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	stage = STAGE_SINGULARITY_CONSOLE_SELF_DESTRUCTING
 
 	// talk_into directly so that we can't get snipped
-	internal_radio.talk_into("<b>Singularity containment FAILED, containment breach IMMINENT, repair IMPOSSIBLE. Emergency casualty destabilization field has been activated. [SINGULARITY_BREACH_TIME] seconds until containment breach.</b>", common = TRUE)
+	internal_radio.talk_into("<b>Singularity containment FAILED, containment breach IMMINENT, repair IMPOSSIBLE. Emergency casualty destabilization field has been activated. [SINGULARITY_BREACH_TIME] seconds until containment breach.</b>")
 
 /obj/machinery/computer/singularity/proc/on_advance_self_destruct_stage(datum/source, time_left)
 	SIGNAL_HANDLER

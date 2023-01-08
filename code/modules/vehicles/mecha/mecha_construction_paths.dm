@@ -166,37 +166,44 @@
 	var/prevstep_text = circuit_weapon ? "Weapon control module is secured" : "Peripherals control module is secured"
 	prevstep_text += ", and the <b>scanning module</b> can be added."
 	var/backward_text = circuit_weapon ? "unsecured weapon control module" : "unsecured peripheral module"
-	return list(
-		list(
-			"key" = /obj/item/stock_parts/scanning_module,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = prevstep_text,
-			"forward_message" = "added scanning module",
-			"backward_message" = backward_text
-		),
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
-			"forward_message" = "secured scanning module",
-			"backward_message" = "removed scanning module"
-		),
-		list(
-			"key" = /obj/item/stock_parts/capacitor,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
-			"forward_message" = "added capacitor",
-			"backward_message" = "unscecured scanning module"
-		),
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place.",
-			"forward_message" = "secured capacitor",
-			"backward_message" = "removed capacitor"
-		),
+
+	var/list/stock_part_steps = list()
+
+	if (!SSpower_bars.enabled)
+		stock_part_steps += list(
+			list(
+				"key" = /obj/item/stock_parts/scanning_module,
+				"action" = ITEM_MOVE_INSIDE,
+				"back_key" = TOOL_SCREWDRIVER,
+				"desc" = prevstep_text,
+				"forward_message" = "added scanning module",
+				"backward_message" = backward_text
+			),
+			list(
+				"key" = TOOL_SCREWDRIVER,
+				"back_key" = TOOL_CROWBAR,
+				"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+				"forward_message" = "secured scanning module",
+				"backward_message" = "removed scanning module"
+			),
+			list(
+				"key" = /obj/item/stock_parts/capacitor,
+				"action" = ITEM_MOVE_INSIDE,
+				"back_key" = TOOL_SCREWDRIVER,
+				"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+				"forward_message" = "added capacitor",
+				"backward_message" = "unscecured scanning module"
+			),
+			list(
+				"key" = TOOL_SCREWDRIVER,
+				"back_key" = TOOL_CROWBAR,
+				"desc" = "Capacitor is installed, and can be <b>screwed</b> into place.",
+				"forward_message" = "secured capacitor",
+				"backward_message" = "removed capacitor"
+			),
+		)
+
+	stock_part_steps += list(
 		list(
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
@@ -213,6 +220,8 @@
 			"backward_message" = "removed power cell"
 		)
 	)
+
+	return stock_part_steps
 
 // Default proc for inner armor plating
 // Fourth set of steps by default
@@ -622,37 +631,43 @@
 	outer_plating_amount = 1
 
 /datum/component/construction/mecha/phazon/get_stockpart_steps()
-	return list(
-		list(
-			"key" = /obj/item/stock_parts/scanning_module,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Weapon control module is secured, and the <b>scanning module</b> can be added.",
-			"forward_message" = "added scanning module",
-			"backward_message" = "unsecured weapon control module"
-		),
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
-			"forward_message" = "secured scanning module",
-			"backward_message" = "removed scanning module"
-		),
-		list(
-			"key" = /obj/item/stock_parts/capacitor,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanning module is secured, and the <b>capacitor</b> can be added.",
-			"forward_message" = "added capacitor",
-			"backward_message" = "unsecured scanning module"
-		),
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" =  "Capacitor is installed, and can be <b>screwed</b> into place.",
-			"forward_message" = "secured capacitor",
-			"backward_message" = "removed capacitor"
-		),
+	var/list/stock_part_steps = list()
+
+	if (!SSpower_bars.enabled)
+		stock_part_steps += list(
+			list(
+				"key" = /obj/item/stock_parts/scanning_module,
+				"action" = ITEM_MOVE_INSIDE,
+				"back_key" = TOOL_SCREWDRIVER,
+				"desc" = "Weapon control module is secured, and the <b>scanning module</b> can be added.",
+				"forward_message" = "added scanning module",
+				"backward_message" = "unsecured weapon control module"
+			),
+			list(
+				"key" = TOOL_SCREWDRIVER,
+				"back_key" = TOOL_CROWBAR,
+				"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+				"forward_message" = "secured scanning module",
+				"backward_message" = "removed scanning module"
+			),
+			list(
+				"key" = /obj/item/stock_parts/capacitor,
+				"action" = ITEM_MOVE_INSIDE,
+				"back_key" = TOOL_SCREWDRIVER,
+				"desc" = "Scanning module is secured, and the <b>capacitor</b> can be added.",
+				"forward_message" = "added capacitor",
+				"backward_message" = "unsecured scanning module"
+			),
+			list(
+				"key" = TOOL_SCREWDRIVER,
+				"back_key" = TOOL_CROWBAR,
+				"desc" =  "Capacitor is installed, and can be <b>screwed</b> into place.",
+				"forward_message" = "secured capacitor",
+				"backward_message" = "removed capacitor"
+			),
+		)
+
+	stock_part_steps += list(
 		list(
 			"key" = /obj/item/stack/ore/bluespace_crystal,
 			"amount" = 1,
@@ -694,6 +709,8 @@
 			// This is the point where a step icon is skipped, so "icon_state" had to be set manually starting from here.
 		)
 	)
+
+	return stock_part_steps
 
 /datum/component/construction/mecha/phazon/get_outer_plating_steps()
 	return list(
