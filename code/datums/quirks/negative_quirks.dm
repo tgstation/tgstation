@@ -521,7 +521,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
 	var/list/surplus_limb_typecahce = list(/obj/item/bodypart/arm/left/robot/surplus, /obj/item/bodypart/arm/right/robot/surplus, /obj/item/bodypart/leg/left/robot/surplus, /obj/item/bodypart/leg/right/robot/surplus)
-	var/list/checked_limb_type
+	var/list/checked_limb_type ///If there is only one robo limb, we check for it and it's subtypes
 	var/limp_slowdown = 3
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
@@ -556,7 +556,7 @@
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment. It cannot be removed or replaced through surgery."))
+	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment. And, finally, replacing it with a non-surplus limb will cripple you."))
 
 /datum/quirk/prosthetic_limb/proc/on_moved(mob/guy, OldLoc, Dir, forced)
 	SIGNAL_HANDLER
@@ -602,7 +602,7 @@
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(quirk_holder, COMSIG_LIVING_LIFE)
 
-/datum/quirk/quadruple_amputee
+/datum/quirk/prosthetic_limb/many
 	name = "Quadruple Amputee"
 	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been taken from you."
 	icon = "tg-prosthetic-full"
@@ -611,16 +611,18 @@
 	hardcore_value = 6
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 
-/datum/quirk/quadruple_amputee/add_unique(client/client_source)
+/datum/quirk/prosthetic_limb/many/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/left/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus)
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus)
+	RegisterSignal(human_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(human_holder, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-/datum/quirk/quadruple_amputee/post_add()
+/datum/quirk/prosthetic_limb/many/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment. "))
+	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment. Additionally, you are bad at using non-surplus limbs, so replacing one of them with a limb of a different type will cripple you."))
 
 /datum/quirk/pushover
 	name = "Pushover"
