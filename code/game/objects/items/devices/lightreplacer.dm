@@ -47,14 +47,17 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
 
-	var/max_uses = 20
+	/// How many uses does our light replacer have?
 	var/uses = 10
+	/// The maximum number of lights this replacer can hold
+	var/max_uses = 20
+	/// The light replacer's charge increment (used for adding to cyborg light replacers)
 	var/charge = 1
 
-	// Eating used bulbs gives us bulb shards. Requires BULB_SHARDS_MAXIMUM to produce a new light.
+	/// Eating used bulbs gives us bulb shards. Requires BULB_SHARDS_MAXIMUM to produce a new light.
 	var/bulb_shards = 0
 
-	// whether it is "bluespace powered" (can be used at a range)
+	/// whether it is "bluespace powered" (can be used at a range)
 	var/bluespace_toggle = FALSE
 
 /obj/item/lightreplacer/examine(mob/user)
@@ -69,7 +72,7 @@
 			to_chat(user, span_warning("[src.name] is full."))
 			return
 		else if(G.use(LIGHTBULB_COST))
-			AddUses(GLASS_SHEET_USES)
+			add_uses(GLASS_SHEET_USES)
 			to_chat(user, span_notice("You insert a piece of glass into \the [src.name]. You have [uses] light\s remaining."))
 			return
 		else
@@ -81,7 +84,7 @@
 			return
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
-		AddUses(round(GLASS_SHEET_USES*0.75))
+		add_uses(round(GLASS_SHEET_USES*0.75))
 		to_chat(user, span_notice("You insert a shard of glass into \the [src]. You have [uses] light\s remaining."))
 		qdel(W)
 		return
@@ -92,13 +95,13 @@
 			if(uses < max_uses)
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
-				AddUses(1)
+				add_uses(1)
 				qdel(L)
 		else
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			to_chat(user, span_notice("You insert [L] into \the [src]."))
-			AddShards(1, user)
+			add_shards(1, user)
 			qdel(L)
 		return
 
@@ -115,12 +118,12 @@
 					break
 				if(L.status == LIGHT_OK)
 					replaced_something = TRUE
-					AddUses(1)
+					add_uses(1)
 					qdel(L)
 
 				else if(L.status == LIGHT_BROKEN || L.status == LIGHT_BURNED)
 					replaced_something = TRUE
-					AddShards(1, user)
+					add_shards(1, user)
 					qdel(L)
 
 		if(!found_lightbulbs)
@@ -140,8 +143,33 @@
 
 /obj/item/lightreplacer/attack_self(mob/user)
 	for(var/obj/machinery/light/target in user.loc)
-		ReplaceLight(target, user)
+		replace_light(target, user)
 	to_chat(user, status_string())
+
+/obj/item/lightreplacer/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!can_use(user))
+		balloon_alert(user, "no more lights!")
+
+	if(!proximity && !bluespace_toggle)
+		return
+
+	if(!isturf(target))
+		if(istype(target, /obj/machinery/light))
+			if(!proximity)
+				if(bluespace_toggle)
+					user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
+					playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+					replace_light(target, user)
+				else
+					balloon_alert(user, "get closer!")
+		return
+
+	for(var/atom/target_atom in target)
+		if(!can_use(user)) //We check inside the loop in case we're filling multiple lights with one click
+			balloon_alert(user, "no more lights!")
+			return
+		replace_light(target_atom, user)
 
 /obj/item/lightreplacer/update_icon_state()
 	icon_state = "[initial(icon_state)][(obj_flags & EMAGGED ? "-emagged" : "")]"
@@ -152,18 +180,18 @@
 
 /obj/item/lightreplacer/proc/Use(mob/user)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-	AddUses(-1)
-	return 1
+	add_uses(-1)
+	return TRUE
 
 // Negative numbers will subtract
-/obj/item/lightreplacer/proc/AddUses(amount = 1)
+/obj/item/lightreplacer/proc/add_uses(amount = 1)
 	uses = clamp(uses + amount, 0, max_uses)
 
-/obj/item/lightreplacer/proc/AddShards(amount = 1, user)
+/obj/item/lightreplacer/proc/add_shards(amount = 1, user)
 	bulb_shards += amount
 	var/new_bulbs = round(bulb_shards / BULB_SHARDS_REQUIRED)
 	if(new_bulbs > 0)
-		AddUses(new_bulbs)
+		add_uses(new_bulbs)
 	bulb_shards = bulb_shards % BULB_SHARDS_REQUIRED
 	if(new_bulbs != 0)
 		to_chat(user, span_notice("\The [src] fabricates a new bulb from the broken glass it has stored. It now has [uses] uses."))
@@ -173,19 +201,19 @@
 /obj/item/lightreplacer/proc/Charge(mob/user)
 	charge += 1
 	if(charge > 3)
-		AddUses(1)
+		add_uses(1)
 		charge = 1
 
-/obj/item/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)
+/obj/item/lightreplacer/proc/replace_light(obj/machinery/light/target, mob/living/U)
 
 	if(target.status != LIGHT_OK)
-		if(CanUse(U))
+		if(can_use(U))
 			if(!Use(U))
 				return
 			to_chat(U, span_notice("You replace \the [target.fitting] with \the [src]."))
 
 			if(target.status != LIGHT_EMPTY)
-				AddShards(1, U)
+				add_shards(1, U)
 				target.status = LIGHT_EMPTY
 				target.update()
 
@@ -218,33 +246,12 @@
 		name = initial(name)
 	update_appearance()
 
-/obj/item/lightreplacer/proc/CanUse(mob/living/user)
+/obj/item/lightreplacer/proc/can_use(mob/living/user)
 	src.add_fingerprint(user)
 	if(uses > 0)
-		return 1
+		return TRUE
 	else
-		return 0
-
-/obj/item/lightreplacer/afterattack(atom/T, mob/U, proximity)
-	. = ..()
-	if(!proximity && !bluespace_toggle)
-		return
-	if(!isturf(T))
-		return
-
-	var/used = FALSE
-	for(var/atom/A in T)
-		if(!CanUse(U))
-			break
-		used = TRUE
-		if(istype(A, /obj/machinery/light))
-			if(!proximity && bluespace_toggle)
-				U.Beam(A, icon_state = "rped_upgrade", time = 1 SECONDS)
-				playsound(src, 'sound/items/pshoom.ogg', 40, 1)
-			ReplaceLight(A, U)
-
-	if(!used)
-		to_chat(U, span_warning("\The [src]'s refill light blinks red."))
+		return FALSE
 
 /obj/item/lightreplacer/cyborg/Initialize(mapload)
 	. = ..()
