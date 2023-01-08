@@ -15,12 +15,17 @@
 	appearance_flags = KEEP_TOGETHER
 	pixel_x = -28
 	pixel_y = -28
-	max_integrity = 100
 
 	COOLDOWN_DECLARE(hit_cooldown)
 
-	VAR_PRIVATE/datum/delayed_power_bar/delayed_power_bar_one
-	VAR_PRIVATE/datum/delayed_power_bar/delayed_power_bar_two
+	var/health = 100
+	var/max_health = 100
+
+	VAR_PRIVATE
+		datum/delayed_power_bar/delayed_power_bar_one
+		datum/delayed_power_bar/delayed_power_bar_two
+
+		damage_per_discharge = 1
 
 /obj/contained_singularity/Initialize(mapload)
 	. = ..()
@@ -93,17 +98,35 @@
 	Beam(projectile_turf, icon_state = "sm_arc_supercharged", time = 0.8 SECONDS)
 	projectile_turf.balloon_alert_to_viewers("it discharges back!")
 
+	// Logarithmic?
+	take_singularity_damage(damage_per_discharge)
+
 	qdel(projectile)
 
 /obj/contained_singularity/proc/console_ui_data()
 	return list(
-		"containment_percent" = get_integrity() / max_integrity,
+		"containment_percent" = health / max_health,
 		"delay_to_overclock" = 0,
 		"power_bars" = list(
 			delayed_power_bar_one.bar_ui_data(),
 			delayed_power_bar_two.bar_ui_data(),
 		),
 	)
+
+/obj/contained_singularity/proc/take_singularity_damage(damage)
+	if (health == 0)
+		return
+
+	health = clamp(health - damage, 0, max_health)
+	SEND_SIGNAL(src, COMSIG_SINGULARITY_TAKE_DAMAGE, damage)
+
+	if (health == 0)
+		self_destruct()
+
+/obj/contained_singularity/proc/self_destruct()
+	PRIVATE_PROC(TRUE)
+
+	to_chat(world, "<h1>OH NO! OUR SINGULARITY! IT'S BROKEN!</h1>")
 
 /obj/projectile/singularity_particle
 	name = "singularity particle"

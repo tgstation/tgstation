@@ -5,3 +5,4 @@
 #define STAGE_SINGULARITY_CONSOLE_FINISHED "finished"
 
 #define COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY "singularity_generator_created_singularity"
+#define COMSIG_SINGULARITY_TAKE_DAMAGE "singularity_take_damage"

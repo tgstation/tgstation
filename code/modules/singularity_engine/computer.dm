@@ -1,7 +1,10 @@
+#define CRITICAL_HEALTH_THRESHOLD 20
+
 GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singularity)
 
 // MBTODO: Make it have its own speaker for singularity operations.
 // Can be disabled with wirecutter.
+// MBTODO: When the singularity is gone, the console should give a new screen
 /obj/machinery/computer/singularity
 	name = "singularity control console"
 	desc = "Transforming the singularity from a terror-inducing class action lawsuit into a useful class action lawsuit, this console safely controls the equipment containing the singularity, as well as harnessing its energy output."
@@ -21,7 +24,10 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		atom/movable/screen/background/camera_background
 		obj/machinery/camera/active_camera
 
-		map_name
+		last_reported_health
+		report_health_timer_id
+
+		camera_map_name
 
 // HACK: We assume these won't be moving for the prototype.
 // Thus, we don't care about building a new one on top of an existing powernet.
@@ -35,7 +41,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	internal_radio.set_listening(TRUE)
 	internal_radio.recalculateChannels()
 
-	map_name = "singularity_camera_[REF(src)]"
+	camera_map_name = "singularity_camera_[REF(src)]"
 
 /obj/machinery/computer/singularity/LateInitialize()
 	. = ..()
@@ -117,7 +123,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 /obj/machinery/computer/singularity/ui_static_data(mob/user)
 	return list(
-		"map_name" = map_name,
+		"map_name" = camera_map_name,
 	)
 
 /obj/machinery/computer/singularity/proc/try_singularity_ui_data()
@@ -138,9 +144,11 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	for (var/obj/machinery/singularity_turret/emitter in connected_machines)
 		emitter.prepare_fire()
 
-/obj/machinery/computer/singularity/proc/speak(message)
+/obj/machinery/computer/singularity/proc/speak(message, common = FALSE)
 	if (talk_into_radio)
 		internal_radio.talk_into(src, message, RADIO_CHANNEL_ENGINEERING)
+		if (common)
+			internal_radio.talk_into(src, message)
 	else
 		say(message)
 
@@ -160,17 +168,66 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	SIGNAL_HANDLER
 
 	stage = STAGE_SINGULARITY_CONSOLE_FINISHED
+	last_reported_health = singularity.health
+
 	singularity_ref = WEAKREF(singularity)
+
+	RegisterSignal(singularity, COMSIG_SINGULARITY_TAKE_DAMAGE, PROC_REF(on_singularity_take_damage))
+
+/obj/machinery/computer/singularity/proc/on_singularity_take_damage(obj/contained_singularity/singularity)
+	SIGNAL_HANDLER
+
+	if (!isnull(report_health_timer_id))
+		var/difference = abs((singularity.health / singularity.max_health) - (last_reported_health / singularity.max_health))
+
+		if (difference > 0.35 || ((last_reported_health > CRITICAL_HEALTH_THRESHOLD) != (singularity.health > CRITICAL_HEALTH_THRESHOLD)))
+			report_singularity_health()
+
+		return
+
+	report_singularity_health()
+	start_singularity_health_report_timer()
+
+/obj/machinery/computer/singularity/proc/report_singularity_health()
+	deltimer(report_health_timer_id)
+	report_health_timer_id = null
+
+	var/obj/contained_singularity/singularity = singularity_ref?.resolve()
+	if (isnull(singularity))
+		return
+
+	var/health = singularity.health
+	if (health == last_reported_health)
+		return
+
+	if (health == singularity.max_health)
+		speak("Singularity containment fully restored.")
+	else if (health > last_reported_health)
+		speak("Singularity containment restoring, containment at [health]%.")
+	else if (health > CRITICAL_HEALTH_THRESHOLD)
+		speak("Singularity containment <b>dropping</b>, containment at [health]%.")
+	else if (health > 0)
+		speak("<b>DANGER:</b> SINGULARITY CONTAINMENT <b>CRITICALLY LOW</b>, containment at [health]%!", common = TRUE)
+	else
+		// We'll report it later
+		return
+
+	last_reported_health = health
+	if (health != singularity.max_health)
+		start_singularity_health_report_timer()
+
+/obj/machinery/computer/singularity/proc/start_singularity_health_report_timer()
+	report_health_timer_id = addtimer(CALLBACK(src, PROC_REF(report_singularity_health)), 45 SECONDS, TIMER_STOPPABLE)
 
 /obj/machinery/computer/singularity/proc/assign_camera(obj/machinery/camera/camera)
 	active_camera = camera
 	RegisterSignal(camera, COMSIG_PARENT_QDELETING, PROC_REF(clear_camera))
 
 	camera_screen = new
-	camera_screen.generate_view(map_name)
+	camera_screen.generate_view(camera_map_name)
 
 	camera_background = new
-	camera_background.assigned_map = map_name
+	camera_background.assigned_map = camera_map_name
 	camera_background.del_on_map_removal = FALSE
 
 	update_camera_view()
@@ -188,3 +245,5 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		camera_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 	else if (camera_screen.vis_contents.len == 0)
 		active_camera.update_camera_screens(camera_screen, camera_background)
+
+#undef CRITICAL_HEALTH_THRESHOLD
