@@ -367,15 +367,14 @@ const CargoCartButtons = (props, context) => {
         {cart.length >= 2 && cart.length + ' items'}{' '}
         {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
-      {(!(requestonly || !can_send || !can_approve_requests) && (
+      {!requestonly && !!can_send && !!can_approve_requests && (
         <Button
           icon="times"
           color="transparent"
           content="Clear"
           onClick={() => act('clear')}
         />
-      )) ||
-        ''}
+      )}
     </>
   );
 };

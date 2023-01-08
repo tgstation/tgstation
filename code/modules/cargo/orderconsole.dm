@@ -119,26 +119,26 @@
 	data["message"] = message
 
 	var/cart_list = list()
-	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
-		if(cart_list[SO.pack.name])
-			cart_list[SO.pack.name][1]["amount"]++
-			cart_list[SO.pack.name][1]["cost"] += SO.get_final_cost()
-			if(SO.department_destination)
-				cart_list[SO.pack.name][1]["dep_order"]++
-			if(!isnull(SO.paying_account))
-				cart_list[SO.pack.name][1]["paid"]++
+	for(var/datum/supply_order/order in SSshuttle.shopping_list)
+		if(cart_list[order.pack.name])
+			cart_list[order.pack.name][1]["amount"]++
+			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
+			if(order.department_destination)
+				cart_list[order.pack.name][1]["dep_order"]++
+			if(!isnull(order.paying_account))
+				cart_list[order.pack.name][1]["paid"]++
 			continue
 
-		cart_list[SO.pack.name] = list(list(
-			"cost_type" = SO.cost_type,
-			"object" = SO.pack.name,
-			"cost" = SO.get_final_cost(),
-			"id" = SO.id,
+		cart_list[order.pack.name] = list(list(
+			"cost_type" = order.cost_type,
+			"object" = order.pack.name,
+			"cost" = order.get_final_cost(),
+			"id" = order.id,
 			"amount" = 1,
-			"orderer" = SO.orderer,
-			"paid" = !isnull(SO.paying_account) ? 1 : 0, //number of orders purchased privatly
-			"dep_order" = SO.department_destination ? 1 : 0, //number of orders purchased by a department
-			"can_be_cancelled" = SO.can_be_cancelled,
+			"orderer" = order.orderer,
+			"paid" = !isnull(order.paying_account) ? 1 : 0, //number of orders purchased privatly
+			"dep_order" = order.department_destination ? 1 : 0, //number of orders purchased by a department
+			"can_be_cancelled" = order.can_be_cancelled,
 		))
 	data["cart"] = list()
 	for(var/item_id in cart_list)
@@ -245,15 +245,7 @@
 				applied_coupon = coupon_check
 				break
 
-		var/datum/supply_order/SO = new(
-		pack = pack
-		,orderer = name,
-		orderer_rank = rank,
-		orderer_ckey = ckey,
-		reason = reason,
-		paying_account = account,
-		coupon = applied_coupon
-		)
+		var/datum/supply_order/SO = new(pack = pack ,orderer = name, orderer_rank = rank, orderer_ckey = ckey, reason = reason, paying_account = account, coupon = applied_coupon)
 		if(requestonly && !self_paid)
 			SSshuttle.request_list += SO
 		else
@@ -273,16 +265,16 @@
  */
 /obj/machinery/computer/cargo/proc/remove_item(params)
 	var/id = text2num(params["id"])
-	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
-		if(SO.id != id)
+	for(var/datum/supply_order/order in SSshuttle.shopping_list)
+		if(order.id != id)
 			continue
-		if(SO.department_destination)
+		if(order.department_destination)
 			say("Only the department that ordered this item may cancel it.")
 			return
-		if(SO.applied_coupon)
+		if(order.applied_coupon)
 			say("Coupon refunded.")
-			SO.applied_coupon.forceMove(get_turf(src))
-		SSshuttle.shopping_list -= SO
+			order.applied_coupon.forceMove(get_turf(src))
+		SSshuttle.shopping_list -= order
 		. = TRUE
 		break
 
@@ -340,9 +332,9 @@
 			requisition_text += "<hr/>"
 			requisition_text += "Time of Order: [station_time_timestamp()]<br/>"
 			for(var/order_name in cart_list)
-				var/datum/supply_order/SO = cart_list[order_name]["order"]
-				requisition_text += "[cart_list[order_name]["amount"]] [SO.pack.name]("
-				requisition_text += "Access Restrictions: [SSid_access.get_access_desc(SO.pack.access)])</br>"
+				var/datum/supply_order/order = cart_list[order_name]["order"]
+				requisition_text += "[cart_list[order_name]["amount"]] [order.pack.name]("
+				requisition_text += "Access Restrictions: [SSid_access.get_access_desc(order.pack.access)])</br>"
 			requisition_paper.add_raw_text(requisition_text)
 			requisition_paper.update_appearance()
 
@@ -377,10 +369,10 @@
 			//try removing atleast one item with the specified name. An order may not be removed if it was from the department
 			//also we create an copy of the cart list else we would get runtimes when removing & iterating over the same SSshuttle.shopping_list
 			var/list/shopping_cart = SSshuttle.shopping_list.Copy()
-			for(var/datum/supply_order/SO in shopping_cart)
-				if(SO.pack.name != order_name)
+			for(var/datum/supply_order/order in shopping_cart)
+				if(order.pack.name != order_name)
 					continue
-				if(remove_item(list("id" = SO.id)))
+				if(remove_item(list("id" = order.id)))
 					return TRUE
 
 			return TRUE
@@ -389,9 +381,9 @@
 
 			//clear out all orders with the above mentioned order_name name to make space for the new amount
 			var/list/shopping_cart = SSshuttle.shopping_list.Copy() //we operate on the list copy else we would get runtimes when removing & iterating over the same SSshuttle.shopping_list
-			for(var/datum/supply_order/SO in shopping_cart) //find corresponding order id for the order name
-				if(SO.pack.name == order_name)
-					remove_item(list("id" = "[SO.id]"))
+			for(var/datum/supply_order/order in shopping_cart) //find corresponding order id for the order name
+				if(order.pack.name == order_name)
+					remove_item(list("id" = "[order.id]"))
 
 			//now add the new amount stuff
 			var/amount = text2num(params["amount"])
