@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "New players connecting via an active Panic Bunker Interview System can now close out the window once they have their interview approved by an admin."
