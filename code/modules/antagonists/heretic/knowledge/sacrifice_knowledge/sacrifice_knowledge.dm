@@ -369,7 +369,8 @@
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)
 	sac_target.clear_mood_event("shadow_realm")
 
-	if(IS_WIZARD(sac_target) || IS_HERETIC(sac_target) || IS_CULTIST(sac_target) || sac_target.mind.holy_role)
+	if(!(IS_WIZARD(sac_target) || IS_HERETIC(sac_target) || IS_CULTIST(sac_target) || sac_target.mind.holy_role))
+		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/supernatural, TRAUMA_RESILIENCE_MAGIC)
 	else
 		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/supernatural, TRAUMA_RESILIENCE_MAGIC)
 
