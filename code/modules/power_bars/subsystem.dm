@@ -19,8 +19,7 @@ SUBSYSTEM_DEF(power_bars)
 
 	// Without this, I would have to support every single map, which sucks ass
 	var/enabled
-
-	var/available_power_bars
+	var/list/datum/power_bar_allocation/available_power_bars
 
 	var/max_power_bars = 3
 
@@ -28,7 +27,10 @@ SUBSYSTEM_DEF(power_bars)
 	enabled = GLOB.singularity_computers.len > 0
 	last_distributed_allocations = deep_copy_list(department_allocations)
 	areas_per_department = areas_for_department()
-	available_power_bars = department_allocations.len + 3 // MBTODO: Remove +3
+
+	available_power_bars = list(
+		new /datum/power_bar_allocation("Base charge", department_allocations.len + 3), // MBTODO: Remove +3
+	)
 
 	if (enabled)
 		delete_redundant_designs()
@@ -92,7 +94,7 @@ SUBSYSTEM_DEF(power_bars)
 	sorted_allocation_entries = sortTim(sorted_allocation_entries, GLOBAL_PROC_REF(cmp_list_first_index_asc))
 
 	// Cut off latest entries
-	sorted_allocation_entries.len = available_power_bars
+	sorted_allocation_entries.len = available_power_bars()
 
 	var/list/counts = list()
 
@@ -157,7 +159,6 @@ SUBSYSTEM_DEF(power_bars)
 		if (3)
 			return 4
 
-// MBTODO: Log, optional user arg
 // MBTODO: Make the computer UI care about excess bars
 /datum/controller/subsystem/power_bars/proc/reassign_power_bar(department, power_bars)
 	ASSERT(SSpower_bars.enabled)
@@ -212,12 +213,12 @@ SUBSYSTEM_DEF(power_bars)
 
 	SEND_SIGNAL(src, COMSIG_POWER_BARS_UPDATED, departments_to_update)
 
-/datum/controller/subsystem/power_bars/proc/remove_power_bars(power_bars)
+/datum/controller/subsystem/power_bars/proc/remove_power_bars(datum/power_bar_allocation/power_bar_allocation)
 	ASSERT(SSpower_bars.enabled)
 
-	available_power_bars -= power_bars
+	available_power_bars -= power_bar_allocation
 
-	if (used_power_bars() > available_power_bars)
+	if (used_power_bars() > available_power_bars())
 		distribute_power_bars()
 
 /datum/controller/subsystem/power_bars/proc/used_power_bars()
@@ -239,7 +240,28 @@ SUBSYSTEM_DEF(power_bars)
 	if (area.protected_from_power_bars)
 		return clamp(source.powernet.avail - source.powernet.load, 0, source.powernet.avail)
 
-	if (available_power_bars <= department_allocations.len)
+	if (available_power_bars() <= department_allocations.len)
 		return 0
 
 	return 1000000 WATTS
+
+/datum/controller/subsystem/power_bars/proc/available_power_bars()
+	var/sum = 0
+	for (var/datum/power_bar_allocation/power_bar_allocation as anything in available_power_bars)
+		sum += power_bar_allocation.amount
+	return sum
+
+/datum/power_bar_allocation
+	var/source
+	var/amount
+
+/datum/power_bar_allocation/New(source, amount)
+	ASSERT(istext(source))
+	ASSERT(isnum(amount))
+
+	src.source = source
+	src.amount = amount
+
+/datum/power_bar_allocation/Destroy()
+	SSpower_bars.available_power_bars -= src
+	return ..()

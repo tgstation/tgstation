@@ -20,8 +20,12 @@
 /obj/machinery/computer/power_distribution/ui_data(mob/user)
 	var/list/data = list()
 
+	var/list/available_power_bars = list()
+	for (var/datum/power_bar_allocation/power_bar_allocation in SSpower_bars.available_power_bars)
+		available_power_bars[power_bar_allocation.source] += power_bar_allocation.amount
+
 	data["department_allocations"] = SSpower_bars.department_allocations
-	data["available_power_bars"] = SSpower_bars.available_power_bars
+	data["available_power_bars"] = available_power_bars
 	data["time_to_next_distribution"] = timeleft(SSpower_bars.next_distribution_timer_id)
 	data["can_fully_deplete"] = can_deplete(user)
 

@@ -1,6 +1,7 @@
 import { range } from 'common/collections';
+import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ProgressBar, Stack } from '../components';
+import { Box, Button, ProgressBar, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 const UNUSED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.2)';
@@ -16,16 +17,20 @@ enum DepartmentName {
 }
 
 type DepartmentAllocations = Record<DepartmentName, number[]>;
+type PowerBarAllocations = Record<string, number>;
 type PowerBarCounts = Record<DepartmentName, number>;
 
 type PowerLevelDistributionData = {
-  available_power_bars: number;
+  available_power_bars: PowerBarAllocations;
   can_fully_deplete: boolean;
   department_allocations: DepartmentAllocations;
   max_power_bars: number;
   time_to_distribute: number;
   time_to_next_distribution: number;
 };
+
+const sumAllocations = (allocations: PowerBarAllocations): number =>
+  Object.values(allocations).reduce((sum, value) => sum + value);
 
 const limitAllocations = (
   departmentAllocations: DepartmentAllocations,
@@ -74,6 +79,43 @@ const PowerBarDisplay = (props: { color: string }) => {
   );
 };
 
+const PowerBarTotal = ({
+  availablePowerBars,
+  usedPowerBars,
+}: {
+  availablePowerBars: PowerBarAllocations;
+  usedPowerBars: number;
+}) => {
+  return (
+    <Tooltip
+      content={
+        <>
+          {Object.entries(availablePowerBars).map(([source, count]) => (
+            <Fragment key={source}>
+              <b>{source}:</b> +{count}
+              <br />
+            </Fragment>
+          ))}
+        </>
+      }
+      position="bottom-start">
+      <Stack.Item grow>
+        {range(0, usedPowerBars).map((_, i) => (
+          <PowerBarDisplay color={USED_POWER_BAR_COLOR} key={i} />
+        ))}
+
+        {range(0, sumAllocations(availablePowerBars) - usedPowerBars).map(
+          (_, i) => (
+            <PowerBarDisplay color={UNUSED_POWER_BAR_COLOR} key={i} />
+          )
+        )}
+
+        {/* MBTODO: Show excess (like if you have too many bars allocated, show them as red) */}
+      </Stack.Item>
+    </Tooltip>
+  );
+};
+
 const DepartmentEntry = (
   {
     name,
@@ -92,7 +134,7 @@ const DepartmentEntry = (
 
   const [usedAllocations, excessAllocations] = limitAllocations(
     data.department_allocations,
-    data.available_power_bars
+    sumAllocations(data.available_power_bars)
   );
 
   const totalUsedBars = Object.values(usedAllocations).reduce(
@@ -134,7 +176,7 @@ const DepartmentEntry = (
 
             const wouldBeExcess =
               data.max_power_bars - index - usedPowerBars + totalUsedBars >
-              data.available_power_bars;
+              sumAllocations(data.available_power_bars);
 
             return (
               <Stack.Item key={index} grow width="100%">
@@ -207,7 +249,7 @@ export const PowerLevelDistribution = (props, context) => {
 
   const [usedAllocations, excessAllocations] = limitAllocations(
     data.department_allocations,
-    data.available_power_bars
+    sumAllocations(data.available_power_bars)
   );
 
   const usedPowerBars = Object.values(usedAllocations).reduce(
@@ -219,23 +261,12 @@ export const PowerLevelDistribution = (props, context) => {
     <Window title="Power Level Distribution Console" width={990} height={510}>
       <Window.Content>
         <Stack vertical fill>
-          {/* MBTODO: Hovering over this area (not the bars) should tell you what is giving what */}
-          {/* MBTODO: With the laser thing, show the bars as a special effect */}
           <Stack.Item height="18px">
             <Stack fill align="space-evenly">
-              <Stack.Item grow>
-                {range(0, usedPowerBars).map((_, i) => (
-                  <PowerBarDisplay color={USED_POWER_BAR_COLOR} key={i} />
-                ))}
-
-                {range(0, data.available_power_bars - usedPowerBars).map(
-                  (_, i) => (
-                    <PowerBarDisplay color={UNUSED_POWER_BAR_COLOR} key={i} />
-                  )
-                )}
-
-                {/* MBTODO: Show excess */}
-              </Stack.Item>
+              <PowerBarTotal
+                availablePowerBars={data.available_power_bars}
+                usedPowerBars={usedPowerBars}
+              />
 
               <Stack.Item width="25%">
                 {data.time_to_next_distribution && (

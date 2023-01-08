@@ -11,18 +11,22 @@
 		last_poke_time = 0
 		last_inactive_time = INFINITY
 
+		datum/power_bar_allocation/power_bar_allocation
+
 		initial_delay
 		lifetime
 		recharge_delay
 		power_bar_gain
 
-/datum/delayed_power_bar/New(initial_delay, lifetime, recharge_delay, power_bar_gain = 1)
+/datum/delayed_power_bar/New(source, initial_delay, lifetime, recharge_delay, power_bar_gain = 1)
 	creation_time = world.time
 
 	src.initial_delay = initial_delay
 	src.lifetime = lifetime
 	src.recharge_delay = recharge_delay
 	src.power_bar_gain = power_bar_gain
+
+	power_bar_allocation = new(source, power_bar_gain)
 
 	// This could be made into timers
 	START_PROCESSING(SSobj, src)
@@ -103,7 +107,7 @@
 		return
 
 	gave_power_bars = TRUE
-	SSpower_bars.available_power_bars += power_bar_gain
+	SSpower_bars.available_power_bars += power_bar_allocation
 
 /datum/delayed_power_bar/proc/remove_power_bars()
 	if (!gave_power_bars)
