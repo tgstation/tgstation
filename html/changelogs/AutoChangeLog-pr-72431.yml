@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Non-magic inclined mobs will no longer fire staffs while duel wielding."
