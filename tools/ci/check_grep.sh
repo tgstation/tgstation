@@ -175,8 +175,8 @@ done
 
 section "code quality"
 part "logical operand spacing"
-if $grep -P '[\)|\w](!=|==|<=|>=|&&|\|\|)' $code_files ||
-	$grep -P '(!=|==|<=|>=|&&|\|\|)[\(|\w]' $code_files	; then
+if $grep -P '(\)|\w)(!=|==|<=|>=|&&|\|\|)' $code_files ||
+	$grep -P '(!=|==|<=|>=|&&|\|\|)(\(|\w)' $code_files	; then
 	echo
 	echo -e "${RED}ERROR: Logical operand not spaced in code, please use spaces around logical operands.${NC}"
 	st=1
