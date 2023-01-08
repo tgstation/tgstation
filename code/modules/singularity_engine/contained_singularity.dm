@@ -22,6 +22,7 @@
 	var/max_health = 100
 
 	VAR_PRIVATE
+		datum/component/singularity/singularity
 		datum/delayed_power_bar/delayed_power_bar_one
 		datum/delayed_power_bar/delayed_power_bar_two
 
@@ -30,7 +31,7 @@
 /obj/contained_singularity/Initialize(mapload)
 	. = ..()
 
-	AddComponent( \
+	singularity = AddComponent( \
 		/datum/component/singularity, \
 		roaming = FALSE, \
 		singularity_size = STAGE_THREE, \
@@ -41,6 +42,13 @@
 
 	delayed_power_bar_one = new(initial_delay = 15 SECONDS, lifetime = 15 SECONDS, recharge_delay = 15 SECONDS)
 	delayed_power_bar_two = new(initial_delay = 5 MINUTES, lifetime = 30 SECONDS, recharge_delay = 90 SECONDS)
+
+/obj/contained_singularity/Destroy()
+	QDEL_NULL(singularity)
+	QDEL_NULL(delayed_power_bar_one)
+	QDEL_NULL(delayed_power_bar_two)
+
+	return ..()
 
 /obj/contained_singularity/update_overlays()
 	. = ..()
@@ -126,7 +134,26 @@
 /obj/contained_singularity/proc/self_destruct()
 	PRIVATE_PROC(TRUE)
 
-	to_chat(world, "<h1>OH NO! OUR SINGULARITY! IT'S BROKEN!</h1>")
+	SEND_SIGNAL(src, COMSIG_SINGULARITY_SELF_DESTRUCTING)
+
+	// Prototype: Would be dynamic to SINGULARITY_BREACH_TIME
+	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 20), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 10), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 5), 25 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 4), 26 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 3), 27 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 2), 28 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 1), 29 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(breach)), 30 SECONDS)
+
+/obj/contained_singularity/proc/step_self_destruct(time_left)
+	SEND_SIGNAL(src, COMSIG_SINGULARITY_ADVANCE_SELF_DESTRUCT_STAGE, time_left)
+
+/obj/contained_singularity/proc/breach()
+	// Make sure we don't try to suck up any singularities
+	qdel(singularity)
+	new /obj/singularity(get_turf(src), /* starting_energy = */ 800)
+	qdel(src)
 
 /obj/projectile/singularity_particle
 	name = "singularity particle"

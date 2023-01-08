@@ -1,5 +1,11 @@
 #define CRITICAL_HEALTH_THRESHOLD 20
 
+#define STAGE_SINGULARITY_CONSOLE_NOT_STARTED "not_started"
+#define STAGE_SINGULARITY_CONSOLE_PREPARING "preparing"
+#define STAGE_SINGULARITY_CONSOLE_FINISHED "finished"
+#define STAGE_SINGULARITY_CONSOLE_SELF_DESTRUCTING "self_destructing" // MBTODO
+#define STAGE_SINGULARITY_CONSOLE_DESTROYED "destroyed" // MBTODO, from qdeling
+
 GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singularity)
 
 // MBTODO: Make it have its own speaker for singularity operations.
@@ -173,6 +179,8 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	singularity_ref = WEAKREF(singularity)
 
 	RegisterSignal(singularity, COMSIG_SINGULARITY_TAKE_DAMAGE, PROC_REF(on_singularity_take_damage))
+	RegisterSignal(singularity, COMSIG_SINGULARITY_SELF_DESTRUCTING, PROC_REF(on_self_destructing))
+	RegisterSignal(singularity, COMSIG_SINGULARITY_ADVANCE_SELF_DESTRUCT_STAGE, PROC_REF(on_advance_self_destruct_stage))
 
 /obj/machinery/computer/singularity/proc/on_singularity_take_damage(obj/contained_singularity/singularity)
 	SIGNAL_HANDLER
@@ -219,6 +227,22 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 /obj/machinery/computer/singularity/proc/start_singularity_health_report_timer()
 	report_health_timer_id = addtimer(CALLBACK(src, PROC_REF(report_singularity_health)), 45 SECONDS, TIMER_STOPPABLE)
 
+/obj/machinery/computer/singularity/proc/on_self_destructing()
+	SIGNAL_HANDLER
+
+	stage = STAGE_SINGULARITY_CONSOLE_SELF_DESTRUCTING
+
+	// talk_into directly so that we can't get snipped
+	internal_radio.talk_into("<b>Singularity containment FAILED, containment breach IMMINENT, repair IMPOSSIBLE. Emergency casualty destabilization field has been activated. [SINGULARITY_BREACH_TIME] seconds until containment breach.</b>", common = TRUE)
+
+/obj/machinery/computer/singularity/proc/on_advance_self_destruct_stage(datum/source, time_left)
+	SIGNAL_HANDLER
+
+	if (time_left > 5)
+		internal_radio.talk_into("<b>[time_left] seconds until containment breach.</b>")
+	else
+		internal_radio.talk_into("[time_left]...")
+
 /obj/machinery/computer/singularity/proc/assign_camera(obj/machinery/camera/camera)
 	active_camera = camera
 	RegisterSignal(camera, COMSIG_PARENT_QDELETING, PROC_REF(clear_camera))
@@ -247,3 +271,8 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		active_camera.update_camera_screens(camera_screen, camera_background)
 
 #undef CRITICAL_HEALTH_THRESHOLD
+#undef STAGE_SINGULARITY_CONSOLE_DESTROYED
+#undef STAGE_SINGULARITY_CONSOLE_FINISHED
+#undef STAGE_SINGULARITY_CONSOLE_NOT_STARTED
+#undef STAGE_SINGULARITY_CONSOLE_PREPARING
+#undef STAGE_SINGULARITY_CONSOLE_SELF_DESTRUCTING
