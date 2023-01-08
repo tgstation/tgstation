@@ -88,7 +88,7 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 			copied_implant.implant(made_copy, silent = TRUE, force = TRUE)
 		//transfer quirks, we do this because transfering the original's quirks keeps the 'owner' as the original.
 		for(var/datum/quirk/original_quirks as anything in original_living.quirks)
-			original_living.add_quirk(target_quirk.type)
+			original_living.add_quirk(original_quirks.type)
 
 	else
 		made_copy.update_appearance()
