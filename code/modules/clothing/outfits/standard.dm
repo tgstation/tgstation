@@ -317,7 +317,7 @@
 	r_pocket = /obj/item/teleportation_scroll/apprentice
 	r_hand = null
 	l_hand = null
-	box = /obj/item/storage/box/survival
+	backpack_contents = list()
 
 /datum/outfit/wizard/red
 	name = "Red Wizard"
@@ -338,7 +338,7 @@
 	r_hand = null
 	suit = /obj/item/clothing/suit/wizrobe/red
 	head = /obj/item/clothing/head/wizard/red
-	backpack_contents = list(/obj/item/storage/box/survival = 1)
+	backpack_contents = list()
 
 /datum/outfit/centcom/soviet
 	name = "Soviet Admiral"

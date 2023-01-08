@@ -1,9 +1,9 @@
 GLOBAL_LIST_EMPTY(dynamic_human_icons)
 
-/proc/get_dynamic_human_icon(outfit_path, species_path = /datum/species/human, mob_spawn_path, r_hand, l_hand, bloody_slots = NONE, generated_dirs = GLOB.cardinals)
+/proc/get_dynamic_human_icon(outfit_path, species_path = /datum/species/human, mob_spawn_path, r_hand, l_hand, bloody_slots = NONE, list/generated_dirs = GLOB.cardinals)
 	if(!species_path)
 		return FALSE
-	var/arg_string = "[outfit_path]_[species_path]_[mob_spawn_path]_[l_hand]_[r_hand]_[bloody_slots]_[english_list(generated_dirs, nothing_text = "", and_text = ",", comma_text = ",")]"
+	var/arg_string = "[outfit_path]_[species_path]_[mob_spawn_path]_[l_hand]_[r_hand]_[bloody_slots]_[generated_dirs.Join(",")]"
 	if(GLOB.dynamic_human_icons[arg_string])
 		return GLOB.dynamic_human_icons[arg_string]
 	var/mob/living/carbon/human/dummy/consistent/dummy = new()
@@ -22,9 +22,9 @@ GLOBAL_LIST_EMPTY(dynamic_human_icons)
 	else if(mob_spawn_path)
 		var/obj/effect/mob_spawn/spawner = new mob_spawn_path(null, TRUE)
 		spawner.outfit_override = list()
-		if(r_hand != FALSE)
+		if(r_hand != NO_REPLACE)
 			spawner.outfit_override["r_hand"] = r_hand
-		if(l_hand != FALSE)
+		if(l_hand != NO_REPLACE)
 			spawner.outfit_override["l_hand"] = l_hand
 		spawner.special(dummy, dummy)
 		spawner.equip(dummy)

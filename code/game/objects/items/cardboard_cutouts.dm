@@ -157,8 +157,8 @@ GLOBAL_LIST(cardboard_cutouts)
 	var/direct_icon = null
 	var/direct_icon_state = ""
 	var/outfit = null
-	var/r_hand = FALSE
-	var/l_hand = FALSE
+	var/r_hand = NO_REPLACE
+	var/l_hand = NO_REPLACE
 	var/mob_spawner = null
 	var/species = /datum/species/human
 

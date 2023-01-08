@@ -373,8 +373,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/outfit_path
 	var/species_path = /datum/species/human
 	var/mob_spawn_path
-	var/r_hand
-	var/l_hand
+	var/r_hand = NO_REPLACE
+	var/l_hand = NO_REPLACE
 	var/bloody_slots = NONE
 	var/generated_dirs = list(NORTH, SOUTH, EAST, WEST)
 

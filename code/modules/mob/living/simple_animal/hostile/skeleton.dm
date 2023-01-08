@@ -34,7 +34,7 @@
 	loot = list(/obj/effect/decal/remains/human)
 	var/outfit = /datum/outfit
 	var/species = /datum/species/skeleton
-	var/held_item = null
+	var/held_item
 
 /mob/living/simple_animal/hostile/skeleton/Initialize(mapload)
 	. = ..()
