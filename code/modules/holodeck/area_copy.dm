@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"parent",
 	"parent_type",
 	"power_supply",
+	"quirks"
 	"reagents",
 	"signal_procs",
 	"status_traits",
@@ -73,18 +74,23 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 		made_copy.vars[atom_vars] = original.vars[atom_vars]
 
 	if(isliving(made_copy))
-
 		if(iscarbon(made_copy))
 			var/mob/living/carbon/original_carbon = original
+			var/mob/living/carbon/copied_carbon = made_copy
 			//transfer DNA over (also body features), we must do this before transfering vars over so they know what organs we have.
-			original_carbon.dna.transfer_identity(made_copy, transfer_SE = TRUE)
+			original_carbon.dna.transfer_identity(copied_carbon, transfer_SE = TRUE)
+			copied_carbon.updateappearance(mutcolor_update = TRUE)
 
 		var/mob/living/original_living = original
-		//transfer implants
+		//transfer implants, we do this so the original's implants being removed won't destroy ours.
 		for(var/obj/item/implant/original_implants as anything in original_living.implants)
 			var/obj/item/implant/copied_implant = new original_implants.type
 			copied_implant.implant(made_copy, silent = TRUE, force = TRUE)
+		//transfer quirks, we do this because transfering the original's quirks keeps the 'owner' as the original.
+		for(var/datum/quirk/original_quirks as anything in original_living.quirks)
+			original_living.add_quirk(target_quirk.type)
 
-	made_copy.update_appearance()
+	else
+		made_copy.update_appearance()
 
 	return made_copy
