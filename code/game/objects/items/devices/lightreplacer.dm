@@ -32,10 +32,8 @@
 #define BULB_SHARDS_REQUIRED 4
 
 /obj/item/lightreplacer
-
 	name = "light replacer"
 	desc = "A device to automatically replace lights. Refill with broken or working light bulbs, or sheets of glass."
-
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer"
 	inhand_icon_state = "electronic"
@@ -158,9 +156,9 @@
 		if(istype(target, /obj/machinery/light))
 			if(!proximity)
 				if(bluespace_toggle)
-					user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
-					playsound(src, 'sound/items/pshoom.ogg', 40, 1)
-					replace_light(target, user)
+					if(replace_light(target, user))
+						user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
+						playsound(src, 'sound/items/pshoom.ogg', 40, 1)
 				else
 					balloon_alert(user, "get closer!")
 		return
@@ -206,10 +204,13 @@
 
 /obj/item/lightreplacer/proc/replace_light(obj/machinery/light/target, mob/living/U)
 
+	if(!istype(target)) //Confirm that it's a light we're testing, because afterattack runs this for everything on a given turf and will runtime
+		return
+
 	if(target.status != LIGHT_OK)
 		if(can_use(U))
 			if(!Use(U))
-				return
+				return FALSE
 			to_chat(U, span_notice("You replace \the [target.fitting] with \the [src]."))
 
 			if(target.status != LIGHT_EMPTY)
@@ -228,14 +229,14 @@
 			target.on = target.has_power()
 			target.update()
 			qdel(L2)
-			return
+			return TRUE
 
 		else
 			to_chat(U, span_warning("\The [src]'s refill light blinks red."))
-			return
+			return FALSE
 	else
 		to_chat(U, span_warning("There is a working [target.fitting] already inserted!"))
-		return
+		return FALSE
 
 /obj/item/lightreplacer/proc/Emag()
 	obj_flags ^= EMAGGED
@@ -265,3 +266,7 @@
 
 /obj/item/lightreplacer/blue/emag_act()
 	return  // balancing against longrange explosions
+
+#undef GLASS_SHEET_USES
+#undef LIGHTBULB_COST
+#undef BULB_SHARDS_REQUIRED
