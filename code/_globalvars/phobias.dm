@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/effect/visible_heretic_influence,
 		/obj/item/codex_cicatrix,
 		/obj/item/melee/rune_carver,
-		/obj/item/melee/sickly_blade
+		/obj/item/melee/sickly_blade,
 		/obj/item/toy/eldritch_book,
 		/obj/item/toy/reality_pierce,
 		/obj/structure/destructible/eldritch_crucible,
