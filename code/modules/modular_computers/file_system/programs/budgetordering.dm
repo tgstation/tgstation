@@ -166,7 +166,7 @@
 				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
+				computer.say("The supply shuttle has been called and will arrive in [DisplayTimeText(divisor = 1)].")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
 		if("loan")

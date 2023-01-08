@@ -52,6 +52,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	//Export categories for this run, this is set by console sending the shuttle.
 	var/export_categories = EXPORT_CARGO
 
+/obj/docking_port/mobile/supply/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/power_bar_reactor, POWER_BAR_DEPARTMENT_CARGO, CALLBACK(src, PROC_REF(on_power_bar_changed)))
+
 /obj/docking_port/mobile/supply/register()
 	. = ..()
 	SSshuttle.supply = src
@@ -264,6 +269,15 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			empty_turfs += shuttle_floor
 
 	new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
+
+/obj/docking_port/mobile/supply/proc/on_power_bar_changed(power_bars)
+	switch (power_bars)
+		if (0, 1)
+			engine_coeff = 1
+		if (2)
+			engine_coeff = 0.8
+		if (3)
+			engine_coeff = 0.5
 
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX

@@ -10,7 +10,7 @@
 	src.department = department
 	src.on_changed = on_changed
 
-	if (MC_RUNNING(SSpower_bars.init_stage))
+	if (SSpower_bars.initialized)
 		attach()
 	else
 		RegisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(attach))
