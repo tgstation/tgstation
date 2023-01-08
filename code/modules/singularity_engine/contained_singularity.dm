@@ -22,6 +22,8 @@
 	VAR_PRIVATE/datum/delayed_power_bar/delayed_power_bar_one
 	VAR_PRIVATE/datum/delayed_power_bar/delayed_power_bar_two
 
+	var/direction = 45
+
 /obj/contained_singularity/Initialize(mapload)
 	. = ..()
 
@@ -66,7 +68,8 @@
 
 	var/obj/projectile/singularity_particle/particle = new(get_turf(src))
 	particle.fired_from = src
-	particle.fire(rand(0, 360))
+	// particle.fire(rand(0, 360))
+	particle.fire(direction)
 	RegisterSignal(particle, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
 	addtimer(CALLBACK(src, PROC_REF(projectile_expired), particle), 3.5 SECONDS)
 
@@ -112,8 +115,6 @@
 	damage = 60
 	damage_type = BRUTE
 	armour_penetration = 40
-	// MBTODO: This doesn't work, needs to pass through lattice, probably just check specifically :-(
-	// Maybe it's shooting at the coil? Something funky is going on, might even be railing/corner, but could just be the gens/turrets themselves
 	pass_flags = PASSTABLE | PASSSTRUCTURE
 
 /obj/projectile/singularity_particle/singularity_act()
@@ -121,3 +122,10 @@
 
 /obj/projectile/singularity_particle/singularity_pull()
 	return
+
+/obj/projectile/singularity_particle/can_hit_target(atom/target, direct_target, ignore_loc, cross_failed)
+	// Haaaaack
+	if (istype(target, /obj/machinery/singularity_turret) || istype(target, /obj/machinery/field/generator/singularity))
+		return FALSE
+
+	return ..()
