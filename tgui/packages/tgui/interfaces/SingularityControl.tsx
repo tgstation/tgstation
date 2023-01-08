@@ -194,7 +194,10 @@ const SetupScreen = (props, context) => {
 };
 
 const PowerBarDisplay = ({ powerBar }: { powerBar: PowerBar }) => {
-  const timeText = `${(powerBar.time_to_fill / 10).toFixed()}s`;
+  const timeLeft = powerBar.time_to_fill / 10;
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = Math.floor(timeLeft % 60);
+  const timeText = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
 
   return (
     <Tooltip
