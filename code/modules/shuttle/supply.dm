@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/Initialize(mapload)
 	. = ..()
 
-	AddComponent(/datum/component/power_bar_reactor, POWER_BAR_DEPARTMENT_CARGO, CALLBACK(src, PROC_REF(on_power_bar_changed)))
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_changed)), POWER_BAR_DEPARTMENT_CARGO)
 
 /obj/docking_port/mobile/supply/register()
 	. = ..()

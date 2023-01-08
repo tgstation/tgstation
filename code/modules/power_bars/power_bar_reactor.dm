@@ -2,12 +2,15 @@
 	var/department
 	var/datum/callback/on_changed
 
-/datum/component/power_bar_reactor/Initialize(department, datum/callback/on_changed)
-	if (!(department in SSpower_bars.department_allocations))
+/datum/component/power_bar_reactor/Initialize(datum/callback/on_changed, department)
+	if (!isnull(department) && !(department in SSpower_bars.department_allocations))
 		stack_trace("Invalid department for power bar reactor: [department]")
 		return COMPONENT_INCOMPATIBLE
 
-	src.department = department
+	if (isitem(parent))
+		ASSERT(!isnull(department))
+
+	src.department = department || SSpower_bars.department_from_area(get_area(parent))
 	src.on_changed = on_changed
 
 	if (SSpower_bars.initialized)
@@ -36,7 +39,7 @@
 		var/old_power_bars = departments[new_department]
 		var/new_power_bars = power_bars_ss.power_bars_of_department(new_department)
 
-		var/changed_flags = on_changed.InvokeAsync(new_power_bars)
+		var/changed_flags = on_changed.InvokeAsync(new_power_bars, old_power_bars)
 
 		if (!(changed_flags & POWER_BAR_DONT_REACT) && ismovable(parent))
 			var/atom/movable/movable_parent = parent

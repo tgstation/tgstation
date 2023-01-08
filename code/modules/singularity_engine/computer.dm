@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		return .
 
 	// MBTODO: Access? Whatever
-	switch (statge)
+	switch (stage)
 		if (STAGE_SINGULARITY_CONSOLE_NOT_STARTED)
 			switch (action)
 				if ("fire_emitters")

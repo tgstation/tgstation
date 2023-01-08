@@ -445,7 +445,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	update_appearance()
 
 	if (type == /obj/item/construction/rcd)
-		AddComponent(/datum/component/power_bar_reactor, POWER_BAR_DEPARTMENT_ENGINEERING, CALLBACK(src, PROC_REF(on_power_bar_update)))
+		AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_ENGINEERING)
 
 /obj/item/construction/rcd/uninstall_upgrades()
 	. = ..()
