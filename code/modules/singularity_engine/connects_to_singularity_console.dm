@@ -32,7 +32,7 @@
 		UnregisterSignal(old_loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 
 	if (isturf(source.loc))
-		RegisterSignal(source.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED), PROC_REF(check_connection))
+		RegisterSignals(source.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED), PROC_REF(check_connection))
 
 /datum/component/connects_to_singularity_console/proc/check_connection()
 	SIGNAL_HANDLER

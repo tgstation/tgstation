@@ -454,7 +454,9 @@
 	if(capacitor_rating)
 		var/datum/armor/stock_armor = get_armor_by_type(armor_type)
 		var/initial_energy = stock_armor.get_rating(ENERGY)
-		set_armor_rating(initial_energy + (capacitor_rating * 5))
+
+		for (var/damage_type in ARMOR_LIST_DAMAGE())
+			set_armor_rating(damage_type, initial_energy + (capacitor_rating * 5))
 
 /obj/vehicle/sealed/mecha/proc/on_power_bar_update()
 	update_part_values()

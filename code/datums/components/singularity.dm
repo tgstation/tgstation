@@ -154,7 +154,7 @@
 		stack_trace("Singularity tried to consume itself.")
 		return
 
-	consume_callback?.Invoke(thing, src)
+	consume_callback?.InvokeAsync(thing, src)
 
 /datum/component/singularity/proc/consume_attack(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -208,6 +208,8 @@
 			tile.singularity_pull(parent, singularity_size)
 
 		for (var/atom/movable/thing as anything in tile)
+			if (QDELETED(thing))
+				return
 			if(thing == parent)
 				continue
 			if (in_consume_range)
