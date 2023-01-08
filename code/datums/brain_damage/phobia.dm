@@ -178,8 +178,8 @@
 	phobia_type = "the supernatural"
 	random_gain = FALSE
 
-/datum/brain_trauma/mild/phobia/herecy
-	phobia_type = "herecy"
+/datum/brain_trauma/mild/phobia/heresy
+	phobia_type = "heresy"
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/aliens

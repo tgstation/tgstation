@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(phobia_types, sort_list(list(
 	"spiders",
 	"strangers",
 	"the supernatural",
-	"herecy",
+	"heresy",
 )))
 
 GLOBAL_LIST_INIT(phobia_regexes, list(
@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"strangers" = construct_phobia_regex("strangers"),
 	"the supernatural" = construct_phobia_regex("the supernatural"),
 	"blood" = construct_phobia_regex("blood"),
-	"herecy" = construct_phobia_regex("herecy"),
+	"heresy" = construct_phobia_regex("heresy"),
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/cockroach,
 		/mob/living/simple_animal/hostile/bee,
 	)),
-	"herecy" = typecacheof(list(/mob/living/simple_animal/hostile/heretic_summon)),
+	"heresy" = typecacheof(list(/mob/living/simple_animal/hostile/heretic_summon)),
 ))
 
 GLOBAL_LIST_INIT(phobia_objs, list(
@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/structure/spirit_board,
 	)),
 
-	"herecy" = typecacheof(list(
+	"heresy" = typecacheof(list(
 		/obj/effect/floating_blade,
 		/obj/effect/heretic_influence,
 		/obj/effect/heretic_rune,
