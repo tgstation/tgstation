@@ -208,7 +208,7 @@ SUBSYSTEM_DEF(power_bars)
 		if (!(area?.type in areas_to_update))
 			continue
 
-		machine.RefreshParts()
+		machine.update_for_power_bars()
 
 	SEND_SIGNAL(src, COMSIG_POWER_BARS_UPDATED, departments_to_update)
 

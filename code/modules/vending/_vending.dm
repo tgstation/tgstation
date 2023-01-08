@@ -263,6 +263,9 @@
 	for(var/obj/item/vending_refill/VR in component_parts)
 		restock(VR)
 
+/obj/machinery/vending/update_for_power_bars()
+	reset_prices(product_records, coin_records)
+
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
 		if(!(flags_1 & NODECONSTRUCT_1))
@@ -330,6 +333,18 @@
 			if (dump_amount >= 16)
 				return
 
+/obj/machinery/vending/proc/price_coefficient()
+	var/coefficient = SSeconomy.inflation_value()
+
+	if (SSpower_bars.enabled)
+		switch (SSpower_bars.power_bars_of_area(get_area(src)))
+			if (2)
+				coefficient *= 0.8
+			if (3)
+				coefficient *= 0.45
+
+	return coefficient
+
 /**
  * Build the inventory of the vending machine from it's product and record lists
  *
@@ -341,8 +356,8 @@
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
  */
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE)
-	default_price = round(initial(default_price) * SSeconomy.inflation_value())
-	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
+	default_price = round(initial(default_price) * price_coefficient())
+	extra_price = round(initial(extra_price) * price_coefficient())
 
 	var/list/product_to_category = list()
 	for (var/list/category as anything in categories)
@@ -363,8 +378,8 @@
 			R.amount = amount
 		R.max_amount = amount
 		///Prices of vending machines are all increased uniformly.
-		R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
-		R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
+		R.custom_price = round(initial(temp.custom_price) * price_coefficient())
+		R.custom_premium_price = round(initial(temp.custom_premium_price) * price_coefficient())
 		R.age_restricted = initial(temp.age_restricted)
 		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		R.category = product_to_category[typepath]
@@ -402,21 +417,22 @@
  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
  */
 /obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
-	default_price = round(initial(default_price) * SSeconomy.inflation_value())
-	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
+	default_price = round(initial(default_price) * price_coefficient())
+	extra_price = round(initial(extra_price) * price_coefficient())
 	for(var/R in recordlist)
 		var/datum/data/vending_product/record = R
 		var/obj/item/potential_product = record.product_path
-		record.custom_price = round(initial(potential_product.custom_price) * SSeconomy.inflation_value())
+		record.custom_price = round(initial(potential_product.custom_price) * price_coefficient())
 	for(var/R in premiumlist)
 		var/datum/data/vending_product/record = R
 		var/obj/item/potential_product = record.product_path
 		var/premium_sanity = round(initial(potential_product.custom_premium_price))
 		if(premium_sanity)
-			record.custom_premium_price = round(premium_sanity * SSeconomy.inflation_value())
+			record.custom_premium_price = round(premium_sanity * price_coefficient())
 			continue
 		//For some ungodly reason, some premium only items only have a custom_price
-		record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price) * (SSeconomy.inflation_value() - 1)))
+		record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price) * (price_coefficient() - 1)))
+	update_static_data_for_all_viewers()
 
 /**
  * Refill a vending machine from a refill canister

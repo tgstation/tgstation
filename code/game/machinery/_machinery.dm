@@ -759,9 +759,6 @@
 /obj/machinery/proc/RefreshParts()
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (SSpower_bars.enabled)
-		refill_parts()
-
 	//reset to baseline
 	idle_power_usage = initial(idle_power_usage)
 	active_power_usage = initial(active_power_usage)
@@ -778,6 +775,12 @@
 	idle_power_usage = initial(idle_power_usage) * (1 + parts_energy_rating)
 	active_power_usage = initial(active_power_usage) * (1 + parts_energy_rating)
 	update_current_power_usage()
+
+/obj/machinery/proc/update_for_power_bars()
+	ASSERT(SSpower_bars.enabled)
+
+	refill_parts()
+	RefreshParts()
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar)
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
