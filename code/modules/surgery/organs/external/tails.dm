@@ -6,10 +6,9 @@
 
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
-	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
 
-	feature_key = "tail"
 	render_key = "tail"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail
 
 	dna_block = DNA_TAIL_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
@@ -22,11 +21,6 @@
 /obj/item/organ/external/tail/Destroy()
 	original_owner = null
 	return ..()
-
-/obj/item/organ/external/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		return FALSE
-	return TRUE
 
 /obj/item/organ/external/tail/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -52,15 +46,6 @@
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 
-/obj/item/organ/external/tail/generate_icon_cache()
-	. = ..()
-	if((wag_flags & WAG_WAGGING))
-		. += "wagging"
-	return .
-
-/obj/item/organ/external/tail/get_global_feature_list()
-	return GLOB.tails_list
-
 /obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
 		return
@@ -75,31 +60,56 @@
 		wag_flags &= ~WAG_WAGGING
 	owner.update_body_parts()
 
+/datum/bodypart_overlay/mutant/tail
+	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+	feature_key = "tail"
+
+/datum/bodypart_overlay/mutant/tail/generate_icon_cache()
+	. = ..()
+	if(wag_flags & WAG_WAGGING)
+		. += "wagging"
+	return .
+
+/datum/bodypart_overlay/mutant/tail/get_global_feature_list()
+	return GLOB.tails_list
+
+/datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
+		return FALSE
+	return TRUE
+
 /obj/item/organ/external/tail/cat
 	name = "tail"
 	preference = "feature_human_tail"
-	feature_key = "tail_cat"
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cat
+
 	color_source = ORGAN_COLOR_HAIR
 	wag_flags = WAG_ABLE
 
-/obj/item/organ/external/tail/cat/get_global_feature_list()
+/datum/bodypart_overlay/mutant/tail/cat
+	feature_key = "tail_cat"
+
+/datum/bodypart_overlay/mutant/tail/cat/get_global_feature_list()
 	return GLOB.tails_list_human
 
 /obj/item/organ/external/tail/monkey
+	bodypart_overlay = /datum/bodypart_overlay/mutant/monkey
+
+/datum/bodypart_overlay/mutant/monkey
 	color_source = NONE
 
 /obj/item/organ/external/tail/lizard
 	name = "lizard tail"
 	desc = "A severed lizard tail. Somewhere, no doubt, a lizard hater is very pleased with themselves."
 	preference = "feature_lizard_tail"
-	feature_key = "tail_lizard"
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/lizard
+
 	wag_flags = WAG_ABLE
 	dna_block = DNA_LIZARD_TAIL_BLOCK
 	///A reference to the paired_spines, since for some fucking reason tail spines are tied to the spines themselves.
 	var/obj/item/organ/external/spines/paired_spines
-
-/obj/item/organ/external/tail/lizard/get_global_feature_list()
-	return GLOB.tails_list_lizard
 
 /obj/item/organ/external/tail/lizard/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -138,6 +148,12 @@
 			paired_spines.render_key = initial(paired_spines.render_key)
 
 	owner.update_body_parts()
+
+/datum/bodypart_overlay/mutant/lizard
+	feature_key = "tail_lizard"
+
+/datum/bodypart_overlay/mutant/lizard/get_global_feature_list()
+	return GLOB.tails_list_lizard
 
 /obj/item/organ/external/tail/lizard/fake
 	name = "fabricated lizard tail"

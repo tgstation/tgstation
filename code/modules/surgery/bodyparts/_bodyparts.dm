@@ -155,8 +155,8 @@
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
-	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
-	var/list/obj/item/organ/external/external_organs = list()
+	///A list of all bodypart overlays to draw
+	var/list/datum/bodypart_overlay/bodypart_overlays
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
@@ -203,8 +203,6 @@
 	if(length(wounds))
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
-	for(var/external_organ in external_organs)
-		qdel(external_organ)
 	return ..()
 
 /obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
@@ -364,9 +362,6 @@
 	seep_gauze(9999) // destroy any existing gauze if any exists
 	for(var/obj/item/organ/bodypart_organ in get_organs())
 		bodypart_organ.transfer_to_limb(src, owner)
-	for(var/obj/item/organ/external/external in external_organs)
-		external.remove_from_limb()
-		external.forceMove(drop_loc)
 	for(var/obj/item/item_in_bodypart in src)
 		item_in_bodypart.forceMove(drop_loc)
 
@@ -875,21 +870,16 @@
 			//add two masked images based on the old one
 			. += leg_source.generate_masked_leg(limb_image, image_dir)
 
-	// And finally put external organs on if not husked
+	// And finally put bodypart_overlays on if not husked
 	if(!is_husked)
 		//Draw external organs like horns and frills
-		for(var/obj/item/organ/external/external_organ as anything in external_organs)
-			if(!dropped && !external_organ.can_draw_on_bodypart(owner))
+		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+			if(!overlay.can_draw_on_bodypart(owner))
 				continue
 			//Some externals have multiple layers for background, foreground and between
-			for(var/external_layer in external_organ.all_layers)
+			for(var/external_layer in external_organ.overlay)
 				if(external_organ.layers & external_layer)
-					external_organ.generate_and_retrieve_overlays(
-						.,
-						image_dir,
-						external_organ.bitflag_to_layer(external_layer),
-						limb_gender,
-					)
+					. += overlay.get_image(external_layer, src)
 	return .
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)

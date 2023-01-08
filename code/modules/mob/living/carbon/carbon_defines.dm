@@ -15,10 +15,6 @@
 	var/list/obj/item/organ/internal/internal_organs = list()
 	///Same as [above][/mob/living/carbon/var/internal_organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/list/internal_organs_slot = list()
-	///List of [/obj/item/organ/external] in the mob, similarly used as internal_organs.
-	var/list/obj/item/organ/external/external_organs = list()
-	///Same as [above][/mob/living/carbon/var/external_organs], but stores "ID" = "organ" pairs.
-	var/list/external_organs_slot = list()
 	///How many dream images we have left to send
 	var/dreaming = 0
 

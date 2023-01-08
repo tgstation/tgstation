@@ -3,24 +3,16 @@
 	name = "moth wings"
 	desc = "Spread your wings and FLOOOOAAAAAT!"
 
-	feature_key = "moth_wings"
 	preference = "feature_moth_wings"
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
 
 	dna_block = DNA_MOTH_WINGS_BLOCK
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/moth
 
 	///Are we burned?
 	var/burnt = FALSE
 	///Store our old datum here for if our burned wings are healed
 	var/original_sprite_datum
-
-/obj/item/organ/external/wings/moth/get_global_feature_list()
-	return GLOB.moth_wings_list
-
-/obj/item/organ/external/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
-		return TRUE
-	return FALSE
 
 /obj/item/organ/external/wings/moth/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -65,7 +57,7 @@
 /obj/item/organ/external/wings/moth/proc/burn_wings()
 	burnt = TRUE
 
-	original_sprite_datum = sprite_datum
+	original_sprite_datum = bodypart_accessory.sprite_datum
 	simple_change_sprite(/datum/sprite_accessory/moth_wings/burnt_off)
 
 ///heal our wings back up!!
@@ -78,3 +70,15 @@
 	if(heal_flags & (HEAL_LIMBS|HEAL_ORGANS))
 		burnt = FALSE
 		simple_change_sprite(original_sprite_datum)
+
+/datum/bodypart_overlay/mutant/wings/moth
+	feature_key = "moth_wings"
+	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+
+/datum/bodypart_overlay/mutant/wings/moth/get_global_feature_list()
+	return GLOB.moth_wings_list
+
+/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
+		return TRUE
+	return FALSE

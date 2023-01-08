@@ -29,12 +29,6 @@
 	///Are our wings open or closed?
 	var/wings_open = FALSE
 
-/obj/item/organ/external/wings/functional/get_global_feature_list()
-	if(wings_open)
-		return GLOB.wings_open_list
-	else
-		return GLOB.wings_list
-
 /obj/item/organ/external/wings/functional/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 
@@ -124,22 +118,32 @@
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
-	feature_key = wings_open_feature_key
+	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
+	overlay.wings_open = TRUE
 	wings_open = TRUE
 
-	cache_key = generate_icon_cache() //we've changed preference to open, so we only need to update the key and ask for an update to change our sprite
-	owner.update_body_parts()
+	simple_change_sprite(wings_open_feature_key)
 
 ///close our wings
 /obj/item/organ/external/wings/functional/proc/close_wings()
-	feature_key = wings_closed_feature_key
+	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
+	overlay.wings_open = FALSE
 	wings_open = FALSE
 
-	cache_key = generate_icon_cache()
-	owner.update_body_parts()
+	simple_change_sprite(wings_closed_feature_key)
+
 	if(isturf(owner?.loc))
 		var/turf/location = loc
 		location.Entered(src, NONE)
+
+/datum/bodypart_overlay/mutant/wings/functional
+	var/wings_open = FALSE
+
+/datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
+	if(wings_open)
+		return GLOB.wings_open_list
+	else
+		return GLOB.wings_list
 
 ///angel wings, which relate to humans. comes with holiness.
 /obj/item/organ/external/wings/functional/angel
