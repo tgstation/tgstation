@@ -96,10 +96,22 @@ SUBSYSTEM_DEF(research)
 		var/income_time_difference = world.time - last_income
 		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 		for(var/i in bitcoins)
-			bitcoins[i] *= (income_time_difference / 10) * income_modifier
+			bitcoins[i] *= (income_time_difference / 10) * income_modifier()
 		science_tech.add_point_list(bitcoins)
 
 	last_income = world.time
+
+/datum/controller/subsystem/research/proc/income_modifier()
+	if (SSpower_bars.enabled)
+		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SCIENCE))
+			if (0, 1)
+				return income_modifier
+			if (2)
+				return income_modifier * 1.2
+			if (3)
+				return income_modifier * 1.6
+	else
+		return income_modifier
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient() //Diminishing returns.
 	var/amt = servers.len

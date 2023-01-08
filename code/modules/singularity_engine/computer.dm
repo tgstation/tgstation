@@ -165,22 +165,22 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	else
 		say(message)
 
-/obj/machinery/computer/singularity/proc/connect_machine(parent)
-	connected_machines += parent
+/obj/machinery/computer/singularity/proc/connect_machine(machine)
+	connected_machines += machine
 
-	if (istype(parent, /obj/machinery/singularity_generator))
-		RegisterSignal(parent, COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY, PROC_REF(on_created_singularity))
+	if (istype(machine, /obj/machinery/singularity_generator))
+		RegisterSignal(machine, COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY, PROC_REF(on_created_singularity))
 
-/obj/machinery/computer/singularity/proc/disconnect_machine(parent)
+/obj/machinery/computer/singularity/proc/disconnect_machine(atom/machine)
 	// This is the most important part, we can't let you start it without the computer connected.
-	if (istype(parent, /obj/machinery/singularity_generator))
+	if (istype(machine, /obj/machinery/singularity_generator))
 		// This hard-dels but it's a protoype I don't care
-		if (QDELETED(parent))
-			connected_machines -= parent
+		if (QDELETED(machine))
+			connected_machines -= machine
 
 		return
 
-	connected_machines -= parent
+	connected_machines -= machine
 
 /obj/machinery/computer/singularity/proc/on_created_singularity(datum/source, obj/contained_singularity/singularity)
 	SIGNAL_HANDLER
