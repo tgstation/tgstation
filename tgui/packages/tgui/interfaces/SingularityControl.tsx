@@ -323,6 +323,53 @@ const EquipmentWindow = (props, context) => {
   );
 };
 
+const ContainmentBar = ({
+  containment_percent,
+}: {
+  containment_percent: number;
+}) => {
+  return (
+    <Tooltip
+      content={
+        <>
+          At 0%, the singularity will release.
+          <p>
+            Containment can be repaired by disabling the emitters, sacrificing
+            power output.
+          </p>
+          In an emergency, a massive amount of containment can be repaired with
+          the handheld gravity anchor, though it needs an anomaly core.
+        </>
+      }
+      position="right">
+      <ProgressBar
+        ranges={{
+          good: [1, 1],
+          average: [0.5, 1],
+          bad: [-Infinity, 0.5],
+        }}
+        value={containment_percent}>
+        <Stack fill align="center">
+          <Stack.Item grow>
+            <Box width="100%" textAlign="left" fontSize="18px" my={1}>
+              <b>{containment_percent * 100}%</b> contained
+            </Box>
+          </Stack.Item>
+
+          <Stack.Item>
+            <Icon
+              name="circle-question"
+              fontSize="18px"
+              color="rgba(255, 255, 255, 0.6)"
+              mt={0.6}
+            />
+          </Stack.Item>
+        </Stack>
+      </ProgressBar>
+    </Tooltip>
+  );
+};
+
 const ObserveScreen = (props, context) => {
   const { act, data } = useBackend<SingularityControlData>(context);
   const singularityData = data.singularity_data!;
@@ -346,18 +393,9 @@ const ObserveScreen = (props, context) => {
               </Stack.Item>
 
               <Stack.Item height="30px">
-                <ProgressBar
-                  ranges={{
-                    good: [1, 1],
-                    average: [0.5, 1],
-                    bad: [-Infinity, 0.5],
-                  }}
-                  value={singularityData.containment_percent}>
-                  <Box width="100%" textAlign="left" fontSize="18px" my={1}>
-                    <b>{singularityData.containment_percent * 100}%</b>{' '}
-                    contained
-                  </Box>
-                </ProgressBar>
+                <ContainmentBar
+                  containment_percent={singularityData.containment_percent}
+                />
               </Stack.Item>
             </Stack>
           </Stack.Item>
