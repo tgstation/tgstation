@@ -3,6 +3,7 @@
 	var/list/obj/machinery/camera/motioncameras = list()
 	var/list/datum/weakref/motionTargets = list()
 	sound_environment = SOUND_ENVIRONMENT_ROOM
+	protected_from_power_bars = TRUE
 
 /area/station/ai_monitored/Initialize(mapload)
 	. = ..()

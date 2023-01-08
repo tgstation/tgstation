@@ -23,6 +23,7 @@
 	var/list/turf/turfs_to_uncontain = list()
 
 	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	var/protected_from_power_bars = TRUE
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE

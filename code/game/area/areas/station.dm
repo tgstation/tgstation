@@ -4,6 +4,7 @@
 	name = "Station Areas"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "station"
+	protected_from_power_bars = FALSE
 
 //Maintenance
 
@@ -858,6 +859,7 @@
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
 	base_lighting_alpha = 255
+	protected_from_power_bars = TRUE
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"
@@ -1416,6 +1418,7 @@
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 	network_root_id = STATION_NETWORK_ROOT // They should of unpluged the router before they left
+	protected_from_power_bars = TRUE
 
 /area/station/tcommsat/computer
 	name = "\improper Telecomms Control Room"

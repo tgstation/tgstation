@@ -132,7 +132,18 @@ SUBSYSTEM_DEF(power_bars)
 	for (var/department in areas_for_department)
 		all_other_areas += areas_for_department[department]
 
-	areas_for_department[POWER_BAR_DEPARTMENT_COMMON] = typesof(/area/station) - all_other_areas
+	var/list/common_areas = list()
+
+	for (var/area/area_type as anything in typesof(/area))
+		if (initial(area_type.protected_from_power_bars))
+			continue
+
+		if (area_type in all_other_areas)
+			continue
+
+		common_areas += area_type
+
+	areas_for_department[POWER_BAR_DEPARTMENT_COMMON] = common_areas
 	ASSERT(!(/area/station/medical/storage in areas_for_department[POWER_BAR_DEPARTMENT_COMMON]))
 
 	return areas_for_department
@@ -225,7 +236,7 @@ SUBSYSTEM_DEF(power_bars)
 	ASSERT(SSpower_bars.enabled)
 
 	var/area/area = get_area(source)
-	if (!istype(area, /area/station))
+	if (area.protected_from_power_bars)
 		return clamp(source.powernet.avail - source.powernet.load, 0, source.powernet.avail)
 
 	if (available_power_bars <= department_allocations.len)
