@@ -27,7 +27,7 @@
 
 	RegisterSignal(SSpower_bars, COMSIG_POWER_BARS_UPDATED, PROC_REF(on_power_bars_updated))
 
-	on_changed.InvokeAsync(SSpower_bars.power_bars_of_department(department))
+	on_changed?.InvokeAsync(SSpower_bars.power_bars_of_department(department))
 
 /datum/component/power_bar_reactor/proc/on_power_bars_updated(datum/controller/subsystem/power_bars/power_bars_ss, list/departments)
 	SIGNAL_HANDLER
@@ -39,7 +39,7 @@
 		var/old_power_bars = departments[new_department]
 		var/new_power_bars = power_bars_ss.power_bars_of_department(new_department)
 
-		var/changed_flags = on_changed.InvokeAsync(new_power_bars, old_power_bars)
+		var/changed_flags = on_changed?.InvokeAsync(new_power_bars, old_power_bars)
 
 		if (!(changed_flags & POWER_BAR_DONT_REACT) && ismovable(parent))
 			var/atom/movable/movable_parent = parent

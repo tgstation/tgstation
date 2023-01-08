@@ -198,7 +198,7 @@
 
 	// We just want the alert message this gives
 	// MBTODO: Only station areas probably
-	AddComponent(/datum/component/power_bar_reactor, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pass)))
+	AddComponent(/datum/component/power_bar_reactor)
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src

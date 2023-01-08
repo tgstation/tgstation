@@ -577,7 +577,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else if(dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
 		set_path(null)
 		return FALSE
-	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
+	var/step_count = move_speed ? move_speed : (base_speed * speed_multiplier()) //If a value is passed into move_speed, use that instead of the default speed var.
 
 	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
 		for(var/step_number in 1 to step_count)
@@ -585,6 +585,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else
 		return FALSE
 	return TRUE
+
+/mob/living/simple_animal/bot/proc/speed_multiplier()
+	return 1
 
 /// Performs a step_towards and increments the path if successful. Returns TRUE if the bot moved and FALSE otherwise.
 /mob/living/simple_animal/bot/proc/bot_step()

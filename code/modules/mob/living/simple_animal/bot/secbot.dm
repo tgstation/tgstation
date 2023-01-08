@@ -120,6 +120,8 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+	AddComponent(/datum/component/power_bar_reactor, department = POWER_BAR_DEPARTMENT_SECURITY)
+
 /mob/living/simple_animal/bot/secbot/Destroy()
 	QDEL_NULL(weapon)
 	return ..()
@@ -148,6 +150,33 @@
 		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 60)
 		playsound(src, 'sound/machines/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
+
+/mob/living/simple_animal/bot/speed_multiplier()
+	if (!SSpower_bars.enabled)
+		return 1
+
+	switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SECURITY))
+		if (0, 1)
+			return 1
+		if (2)
+			return 1.5
+		if (3)
+			return 3
+
+/mob/living/simple_animal/bot/secbot/Move(atom/newloc, direct, glide_size_override)
+	. = ..()
+
+	if (SSpower_bars.enabled)
+		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SECURITY))
+			if (2)
+				if (prob(3))
+					track_oil()
+			if (3)
+				if (prob(15))
+					track_oil()
+
+/mob/living/simple_animal/bot/secbot/proc/track_oil()
+	new /obj/effect/decal/cleanable/oil(loc)
 
 /mob/living/simple_animal/bot/secbot/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == weapon)
