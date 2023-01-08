@@ -62,77 +62,77 @@
 	. = ..()
 	. += status_string()
 
-/obj/item/lightreplacer/attackby(obj/item/W, mob/user, params)
+/obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
 
-	if(istype(W, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = W
+	if(istype(insert, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/glass_to_insert = insert
 		if(uses >= max_uses)
 			to_chat(user, span_warning("[src.name] is full."))
 			return
-		else if(G.use(LIGHTBULB_COST))
+		else if(glass_to_insert.use(LIGHTBULB_COST))
 			add_uses(GLASS_SHEET_USES)
 			to_chat(user, span_notice("You insert a piece of glass into \the [src.name]. You have [uses] light\s remaining."))
 			return
 		else
 			to_chat(user, span_warning("You need one sheet of glass to replace lights!"))
 
-	if(istype(W, /obj/item/shard))
+	if(istype(insert, /obj/item/shard))
 		if(uses >= max_uses)
 			to_chat(user, span_warning("\The [src] is full."))
 			return
-		if(!user.temporarilyRemoveItemFromInventory(W))
+		if(!user.temporarilyRemoveItemFromInventory(insert))
 			return
 		add_uses(round(GLASS_SHEET_USES*0.75))
 		to_chat(user, span_notice("You insert a shard of glass into \the [src]. You have [uses] light\s remaining."))
-		qdel(W)
+		qdel(insert)
 		return
 
-	if(istype(W, /obj/item/light))
-		var/obj/item/light/L = W
-		if(L.status == 0) // LIGHT OKAY
+	if(istype(insert, /obj/item/light))
+		var/obj/item/light/light_to_insert = insert
+		if(light_to_insert.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
-				if(!user.temporarilyRemoveItemFromInventory(W))
+				if(!user.temporarilyRemoveItemFromInventory(insert))
 					return
 				add_uses(1)
-				qdel(L)
+				qdel(light_to_insert)
 		else
-			if(!user.temporarilyRemoveItemFromInventory(W))
+			if(!user.temporarilyRemoveItemFromInventory(insert))
 				return
-			to_chat(user, span_notice("You insert [L] into \the [src]."))
+			to_chat(user, span_notice("You insert [light_to_insert] into \the [src]."))
 			add_shards(1, user)
-			qdel(L)
+			qdel(light_to_insert)
 		return
 
-	if(istype(W, /obj/item/storage))
-		var/obj/item/storage/S = W
+	if(istype(insert, /obj/item/storage))
+		var/obj/item/storage/storage_to_empty = insert
 		var/found_lightbulbs = FALSE
 		var/replaced_something = TRUE
 
-		for(var/obj/item/I in S.contents)
-			if(istype(I, /obj/item/light))
-				var/obj/item/light/L = I
+		for(var/obj/item/item_to_check in storage_to_empty.contents)
+			if(istype(item_to_check, /obj/item/light))
+				var/obj/item/light/found_light = item_to_check
 				found_lightbulbs = TRUE
 				if(src.uses >= max_uses)
 					break
-				if(L.status == LIGHT_OK)
+				if(found_light.status == LIGHT_OK)
 					replaced_something = TRUE
 					add_uses(1)
-					qdel(L)
+					qdel(found_light)
 
-				else if(L.status == LIGHT_BROKEN || L.status == LIGHT_BURNED)
+				else if(found_light.status == LIGHT_BROKEN || found_light.status == LIGHT_BURNED)
 					replaced_something = TRUE
 					add_shards(1, user)
-					qdel(L)
+					qdel(found_light)
 
 		if(!found_lightbulbs)
-			to_chat(user, span_warning("\The [S] contains no bulbs."))
+			to_chat(user, span_warning("\The [storage_to_empty] contains no bulbs."))
 			return
 
 		if(!replaced_something && src.uses == max_uses)
 			to_chat(user, span_warning("\The [src] is full!"))
 			return
 
-		to_chat(user, span_notice("You fill \the [src] with lights from \the [S]. " + status_string() + ""))
+		to_chat(user, span_notice("You fill \the [src] with lights from \the [storage_to_empty]. " + status_string() + ""))
 
 /obj/item/lightreplacer/emag_act()
 	if(obj_flags & EMAGGED)
