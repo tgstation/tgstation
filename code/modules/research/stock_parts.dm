@@ -43,7 +43,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		return TRUE
 
 	var/obj/structure/frame/machine/attacked_frame = attacked_object
-	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component
+	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
 	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
 		return TRUE
 	attacked_frame.attackby(src, user)
@@ -70,7 +70,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		return
 
 	var/obj/structure/frame/machine/attacked_frame = attacked_object
-	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component
+	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
 	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
 		return
 	attacked_frame.attackby(src, user)
