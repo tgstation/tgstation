@@ -22,8 +22,6 @@
 	VAR_PRIVATE/datum/delayed_power_bar/delayed_power_bar_one
 	VAR_PRIVATE/datum/delayed_power_bar/delayed_power_bar_two
 
-	var/direction = 45
-
 /obj/contained_singularity/Initialize(mapload)
 	. = ..()
 
@@ -68,8 +66,7 @@
 
 	var/obj/projectile/singularity_particle/particle = new(get_turf(src))
 	particle.fired_from = src
-	// particle.fire(rand(0, 360))
-	particle.fire(direction)
+	particle.fire(rand(0, 360))
 	RegisterSignal(particle, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
 	addtimer(CALLBACK(src, PROC_REF(projectile_expired), particle), 3.5 SECONDS)
 
