@@ -3237,12 +3237,12 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "bgk" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "bgm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -12939,6 +12939,13 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
+"eNC" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "eNR" = (
 /turf/closed/wall,
 /area/station/ai_monitored/aisat/exterior)
@@ -30608,12 +30615,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kYo" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "kYv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"
@@ -32131,12 +32136,13 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "lzJ" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/obj/item/paper{
-	default_raw_text = "Your SMES have been taken in for repairs. APCs will charge themselves if your engine is distributing power."
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/turf/open/floor/iron,
 /area/station/engineering/main)
 "lzL" = (
 /obj/structure/cable,
@@ -33468,14 +33474,12 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "lZk" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/engineering/main)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "lZC" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -40028,11 +40032,6 @@
 	dir = 1
 	},
 /area/station/engineering/atmos/storage/gas)
-"opV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/obj/machinery/door/firedoor/border_only,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
 "opZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/nitrogen_output{
 	dir = 1
@@ -50543,6 +50542,14 @@
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"rZk" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/obj/item/paper{
+	default_raw_text = "Your SMES have been taken in for repairs. APCs will charge themselves if your engine is distributing power."
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "rZt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 8
@@ -59643,13 +59650,6 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/virology)
-"vir" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "vis" = (
 /obj/structure/filingcabinet,
 /obj/item/folder/documents,
@@ -107474,7 +107474,7 @@ uXd
 dHg
 gLK
 qul
-lzJ
+rZk
 uXd
 tKS
 nLz
@@ -109529,7 +109529,7 @@ qaA
 wgf
 lBN
 rao
-lZk
+lzJ
 haR
 gZG
 cnK
@@ -111058,11 +111058,11 @@ tCS
 eVi
 bwE
 syX
-opV
+kYo
 cKx
 qhD
 abi
-kYo
+bgk
 aaa
 aaa
 aaa
@@ -111319,7 +111319,7 @@ qZI
 baS
 lMJ
 abi
-kYo
+bgk
 aaa
 aaa
 lMJ
@@ -111833,7 +111833,7 @@ tmq
 baS
 lMJ
 abi
-kYo
+bgk
 aaa
 aaa
 lMJ
@@ -112086,11 +112086,11 @@ tCS
 xGr
 yli
 pmj
-bgk
+eNC
 bgs
 qhD
 abi
-kYo
+bgk
 aaa
 aaa
 aaa
@@ -112606,11 +112606,11 @@ lMJ
 abi
 rcM
 kjM
-vir
-vir
+lZk
+lZk
 lMJ
-vir
-vir
+lZk
+lZk
 fuE
 kIz
 abi

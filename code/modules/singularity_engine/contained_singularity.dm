@@ -27,6 +27,7 @@
 		datum/delayed_power_bar/delayed_power_bar_two
 
 		damage_per_discharge = 1
+		chance_of_extra_particle_at_zero_health_per_second = 0.4
 
 /obj/contained_singularity/Initialize(mapload)
 	. = ..()
@@ -38,6 +39,8 @@
 		consume_range = 1, \
 	)
 
+	START_PROCESSING(SSobj, src)
+
 	update_appearance(UPDATE_ICON)
 
 	delayed_power_bar_one = new("Singularity engine", initial_delay = 15 SECONDS, lifetime = 15 SECONDS, recharge_delay = 15 SECONDS)
@@ -47,6 +50,8 @@
 	QDEL_NULL(singularity)
 	QDEL_NULL(delayed_power_bar_one)
 	QDEL_NULL(delayed_power_bar_two)
+
+	STOP_PROCESSING(SSobj, src)
 
 	return ..()
 
@@ -67,17 +72,27 @@
 		delayed_power_bar_one.poke()
 		delayed_power_bar_two.poke()
 
-		addtimer(CALLBACK(src, PROC_REF(try_fire_particle)), 0.3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(fire_particle_reaction)), 0.3 SECONDS)
 		return
 
 	return ..()
 
-/obj/contained_singularity/proc/try_fire_particle()
+/obj/contained_singularity/process(delta_time)
+	var/health_percent = health / max_health
+	if (health_percent >= 1)
+		return
+
+	if (DT_PROB(100 * ((1 - health_percent) * chance_of_extra_particle_at_zero_health_per_second), delta_time))
+		try_fire_particle()
+
+/obj/contained_singularity/proc/fire_particle_reaction()
 	if (!COOLDOWN_FINISHED(src, hit_cooldown))
 		return
 
 	COOLDOWN_START(src, hit_cooldown, 0.2 SECONDS)
+	try_fire_particle()
 
+/obj/contained_singularity/proc/try_fire_particle()
 	var/obj/projectile/singularity_particle/particle = new(get_turf(src))
 	particle.fired_from = src
 	particle.fire(rand(0, 360))
