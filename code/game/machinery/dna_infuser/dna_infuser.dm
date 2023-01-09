@@ -189,7 +189,8 @@
 
 // mostly good for dead mobs like corpses (drag to add)
 /obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
+	// if the machine is closed, already has an occupant, or the target is not valid then no mouse drop
+	if(!state_open || occupant || !is_valid_infusion(target, user))
 		return
 
 	if(iscarbon(target))
@@ -197,13 +198,12 @@
 			close_machine(target)
 		return
 
-	if(!is_valid_infusion(target, user))
-		return
-
 	infusing_from = target
 	infusing_from.forceMove(src)
 
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
+	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
+		return FALSE
 	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
