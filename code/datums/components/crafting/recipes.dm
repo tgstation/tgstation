@@ -1764,11 +1764,10 @@
 	category = CAT_MISC
 
 /datum/crafting_recipe/toiletbong
-	name = "Toiletbong"
+	name = "Toiletbong (requires toilet)"
 	category = CAT_ENTERTAINMENT
 	tool_behaviors = list(TOOL_WRENCH)
 	reqs = list(/obj/item/flamethrower = 1)
-	machinery = list( /obj/structure/toilet)
 	result = /obj/structure/toiletbong
 	time = 5 SECONDS
 	additional_req_text = " plasma tank (on flamethrower), toilet"
