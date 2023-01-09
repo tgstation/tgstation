@@ -531,9 +531,9 @@
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"
 
-/datum/sprite_accessory/hair/hair_overeye_2
+/datum/sprite_accessory/hair/hair_overeyetwo
 	name = "Over Eye 2"
-	icon_state = "hair_overeye_2"
+	icon_state = "hair_overeyetwo"
 
 /datum/sprite_accessory/hair/oxton
 	name = "Oxton"
