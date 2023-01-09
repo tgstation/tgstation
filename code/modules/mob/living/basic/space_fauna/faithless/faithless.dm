@@ -71,13 +71,14 @@
 	var/atom/target = weak_target?.resolve()
 	var/mob/living/living_pawn = controller.pawn
 
-	if(isliving(target))
-		var/mob/living/living_target = target
-		if(living_target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(living_target.pulledby, /datum/ai_controller/basic_controller/faithless)) //Dont steal from my fellow faithless.
-			if(living_pawn.Adjacent(living_target) && isturf(living_target.loc) && living_target.stat == SOFT_CRIT)
-				living_target.grabbedby(living_pawn) //Drag their bodies around as a menace.
-		if(prob(paralyze_chance) && iscarbon(target))
-			var/mob/living/carbon/carbon_target = target
-			carbon_target.Paralyze(paralyze_duration)
-			carbon_target.visible_message(span_danger("\The [living_pawn] knocks down \the [carbon_target]!"), \
-					span_userdanger("\The [living_pawn] knocks you down!"))
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(living_target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(living_target.pulledby, /datum/ai_controller/basic_controller/faithless)) //Dont steal from my fellow faithless.
+		if(living_pawn.Adjacent(living_target) && isturf(living_target.loc) && living_target.stat == SOFT_CRIT)
+			living_target.grabbedby(living_pawn) //Drag their bodies around as a menace.
+	if(prob(paralyze_chance) && iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.Paralyze(paralyze_duration)
+		carbon_target.visible_message(span_danger("\The [living_pawn] knocks down \the [carbon_target]!"), \
+				span_userdanger("\The [living_pawn] knocks you down!"))
