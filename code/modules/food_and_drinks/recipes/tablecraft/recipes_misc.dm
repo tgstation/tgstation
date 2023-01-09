@@ -303,6 +303,12 @@
 	result = /obj/item/storage/fancy/pickles_jar
 	category = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/pickles_jar/on_craft_completion(mob/user, atom/result)
+	. = ..()
+	var/obj/item/storage/fancy/pickles_jar/jar = result
+	var/obj/item/reagent_containers/cup/beaker/large/B = locate() in jar.contents
+	qdel(B)
+
 /datum/crafting_recipe/food/springroll
 	name = "Spring roll"
 	reqs = list(
