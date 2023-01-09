@@ -133,7 +133,7 @@
 	..()
 	if(istype(item_target, /obj/item/wrench/tile_remover))
 		var/obj/item/wrench/tile_remover/tool_target = item_target
-		if(tool_target.use_tool(src, user, 20 SECONDS, volume=50))
+		if(tool_target.use_tool(src, user, tool_target.get_floor_time(src), volume=50))
 			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 			tool_target.replace_floor(src)
 
