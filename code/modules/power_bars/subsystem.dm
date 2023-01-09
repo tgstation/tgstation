@@ -284,7 +284,12 @@ SUBSYSTEM_DEF(power_bars)
 
 	for (var/datum/power_bar_detail/detail as anything in subtypesof(/datum/power_bar_detail))
 		var/tier = initial(detail.tier)
-		if (tier <= from_tier || tier > to_tier)
+		if (isnull(tier))
+			var/exclusive_tier = initial(detail.exclusive_tier)
+			ASSERT(!isnull(exclusive_tier))
+			if (tier != exclusive_tier)
+				continue
+		else if (tier <= from_tier || tier > to_tier)
 			continue
 
 		if (initial(detail.department) != department)

@@ -222,6 +222,12 @@
 		/datum/computer_file/program/radar/lifeline,
 	)
 
+/obj/item/modular_computer/pda/medical/paramedic/Initialize(mapload)
+	if (SSpower_bars.enabled)
+		starting_programs -= /datum/computer_file/program/radar/lifeline
+
+	return ..()
+
 /obj/item/modular_computer/pda/viro
 	name = "virology PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split

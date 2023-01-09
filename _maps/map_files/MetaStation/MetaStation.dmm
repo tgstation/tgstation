@@ -160,9 +160,6 @@
 "acs" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
-/obj/item/paper{
-	default_raw_text = "Your SMES have been taken in for repairs. APCs will charge themselves if your engine is distributing power."
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "acB" = (
@@ -3241,7 +3238,7 @@
 /area/station/command/heads_quarters/ce)
 "bgk" = (
 /obj/structure/railing{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -3270,7 +3267,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "bgs" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /obj/machinery/door/airlock/engineering/glass{
@@ -4294,6 +4290,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"bwF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "bwN" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
@@ -4967,6 +4968,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "bMC" = (
@@ -7333,7 +7337,6 @@
 /turf/open/space/basic,
 /area/station/solars/starboard/aft)
 "cKx" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room"
@@ -15258,15 +15261,12 @@
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "fKg" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
+/obj/structure/railing{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/structure/holosign/barrier/atmos/sturdy,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "fKi" = (
 /obj/structure/mop_bucket,
 /obj/machinery/light/small/directional/west,
@@ -15766,6 +15766,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "fTT" = (
@@ -30610,8 +30613,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kYo" = (
-/turf/open/floor/engine,
-/area/station/maintenance/disposal/incinerator)
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "kYv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"
@@ -33462,12 +33469,8 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "lZk" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
+/turf/open/floor/engine,
+/area/station/maintenance/disposal/incinerator)
 "lZC" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -42707,7 +42710,6 @@
 /turf/open/floor/iron,
 /area/station/security/detectives_office)
 "pqb" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room"
 	},
@@ -49044,6 +49046,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
+"rCu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "rCJ" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Departure Lounge - Starboard Aft"
@@ -54706,6 +54717,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
+"tuz" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "tuC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
@@ -56371,12 +56389,13 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "uaB" = (
-/obj/structure/railing{
-	dir = 1
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/obj/item/paper{
+	default_raw_text = "Your SMES have been taken in for repairs. APCs will charge themselves if your engine is distributing power."
 	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "uaN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -59325,11 +59344,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tcomms)
-"vcv" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/engineering/main)
 "vcE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -60428,7 +60442,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "vuJ" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room"
 	},
@@ -63575,7 +63588,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "wBM" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room"
@@ -107462,7 +107474,7 @@ uXd
 dHg
 gLK
 qul
-acs
+uaB
 uXd
 tKS
 nLz
@@ -107719,7 +107731,7 @@ uXd
 gMG
 dWG
 uGm
-vcv
+acs
 uXd
 qJd
 nLz
@@ -108022,7 +108034,7 @@ ydj
 aBW
 vQh
 pnH
-kYo
+lZk
 pnH
 pnH
 aaa
@@ -108279,7 +108291,7 @@ ldc
 xpB
 dli
 huZ
-kYo
+lZk
 xrr
 aaa
 aaa
@@ -108536,7 +108548,7 @@ lYM
 vzc
 gUY
 pnH
-kYo
+lZk
 pnH
 aaa
 aaa
@@ -109517,7 +109529,7 @@ qaA
 wgf
 lBN
 rao
-qaA
+rCu
 haR
 gZG
 cnK
@@ -110538,11 +110550,11 @@ lMJ
 abi
 btn
 fnC
-bgk
-bgk
+fKg
+fKg
 egh
-bgk
-bgk
+fKg
+fKg
 tEG
 pkc
 abi
@@ -111046,11 +111058,11 @@ tCS
 eVi
 bwE
 syX
-nTA
+bwF
 cKx
 qhD
 abi
-uaB
+kYo
 aaa
 aaa
 aaa
@@ -111307,7 +111319,7 @@ qZI
 baS
 lMJ
 abi
-uaB
+kYo
 aaa
 aaa
 lMJ
@@ -111575,7 +111587,7 @@ lMJ
 rXh
 abi
 lMJ
-fKg
+fJy
 uhu
 rOK
 wWN
@@ -111821,7 +111833,7 @@ tmq
 baS
 lMJ
 abi
-uaB
+kYo
 aaa
 aaa
 lMJ
@@ -112074,11 +112086,11 @@ tCS
 xGr
 yli
 pmj
-pmj
+tuz
 bgs
 qhD
 abi
-uaB
+kYo
 aaa
 aaa
 aaa
@@ -112594,11 +112606,11 @@ lMJ
 abi
 rcM
 kjM
-lZk
-lZk
+bgk
+bgk
 lMJ
-lZk
-lZk
+bgk
+bgk
 fuE
 kIz
 abi
