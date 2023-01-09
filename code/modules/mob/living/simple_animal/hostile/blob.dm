@@ -1,8 +1,3 @@
-
-////////////////
-// BASE TYPE //
-////////////////
-
 //Do not spawn
 /mob/living/simple_animal/hostile/blob
 	icon = 'icons/mob/nonhuman-player/blob.dmi'

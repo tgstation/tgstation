@@ -1,28 +1,3 @@
-/datum/antagonist/blobspore
-	name = "\improper Blob Spore"
-	antagpanel_category = "Biohazards"
-	show_name_in_check_antagonists = TRUE
-	show_to_ghosts = TRUE
-	show_in_antagpanel = FALSE
-
-/datum/antagonist/blobspore/on_gain()
-	forge_objectives()
-	. = ..()
-
-/datum/antagonist/blobspore/greet()
-	. = ..()
-	owner.announce_objectives()
-
-/datum/antagonist/blobspore/forge_objectives()
-	var/mob/living/simple_animal/hostile/blob/blobspore/spore = owner.current
-	if(!spore)
-		return
-	spore.create_objectives(src)
-
-////////////////
-// BLOB SPORE //
-////////////////
-
 /mob/living/simple_animal/hostile/blob/blobspore
 	name = "blob spore"
 	desc = "A floating, fragile spore."

@@ -7,7 +7,7 @@
 /datum/antagonist/abductee
 	name = "\improper Abductee"
 	roundend_category = "abductees"
-	antagpanel_category = "Abductors"
+	antagpanel_category = ANTAG_GROUP_ABDUCTORS
 	antag_hud_name = "abductee"
 
 /datum/antagonist/abductee/on_gain()

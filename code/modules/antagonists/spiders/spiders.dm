@@ -1,6 +1,6 @@
 /datum/antagonist/spider
 	name = "\improper Spider"
-	antagpanel_category = "Arachnid Infestation"
+	antagpanel_category = ANTAG_GROUP_ARACHNIDS
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
