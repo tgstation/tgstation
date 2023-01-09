@@ -59,6 +59,14 @@
 		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 			return TRUE
 
+	var/afterattack_result = afterattack(target, user, TRUE, params)
+
+	if (!(afterattack_result & AFTERATTACK_PROCESSED_ITEM) && isitem(target))
+		if (isnull(user.get_inactive_held_item()))
+			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
+		else
+			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
+
 	return afterattack(target, user, TRUE, params) == TRUE
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
