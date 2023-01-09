@@ -280,6 +280,7 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define ANTAG_GROUP_ABDUCTORS "Abductors"
 #define ANTAG_GROUP_ABOMINATIONS "Extradimensional Abominations"
 #define ANTAG_GROUP_ARACHNIDS "Arachnid Infestation"
+#define ANTAG_GROUP_ASHWALKERS "Ash Walkers"
 #define ANTAG_GROUP_BIOHAZARDS "Biohazards"
 #define ANTAG_GROUP_CLOWNOPS "Clown Operatives"
 #define ANTAG_GROUP_ERT "Emergency Response Team"
