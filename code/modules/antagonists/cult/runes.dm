@@ -89,6 +89,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		if(req_keyword && keyword)
 			. += "<b>Keyword:</b> [keyword]"
 
+/obj/effect/rune/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
 /obj/effect/rune/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
