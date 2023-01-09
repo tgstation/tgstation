@@ -536,7 +536,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		return FALSE
 	if(rcd_results["mode"] == RCD_MACHINE || rcd_results["mode"] == RCD_COMPUTER || rcd_results["mode"] == RCD_FURNISHING)
 		var/turf/target_turf = get_turf(A)
-
+		//ignore all directional windows on the turf
 		var/static/list/ignore_types = list(/obj/structure/window, /obj/structure/window/reinforced)
 		var/list/directional_windows = list()
 		for(var/atom/movable/movable_content in target_turf)
