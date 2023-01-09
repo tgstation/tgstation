@@ -179,7 +179,7 @@
 /datum/map_template/shuttle/emergency/venture
 	suffix = "venture"
 	name = "Venture Emergency Shuttle"
-	description = "A mid-sized capitalist venture! Contains three plots for crew to set up store in, and material to build more plots. All profits go to Nanotrasen."
+	description = "A mid-sized shuttle for those who like a lot of space for their legs."
 	credit_cost = CARGO_CRATE_VALUE * 10
 
 /datum/map_template/shuttle/emergency/bar
