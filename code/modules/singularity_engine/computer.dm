@@ -44,7 +44,6 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	internal_radio = new(src)
 	internal_radio.keyslot = new /obj/item/encryptionkey/headset_eng
-	internal_radio.set_listening(TRUE)
 	internal_radio.recalculateChannels()
 
 	camera_map_name = "singularity_camera_[REF(src)]"

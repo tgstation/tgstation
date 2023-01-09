@@ -150,6 +150,25 @@ SUBSYSTEM_DEF(power_bars)
 
 	return areas_for_department
 
+/datum/controller/subsystem/power_bars/proc/radio_channels_for_department(department)
+	RETURN_TYPE(/list)
+
+	ASSERT(department in department_allocations)
+
+	switch (department)
+		if (POWER_BAR_DEPARTMENT_CARGO)
+			return list(RADIO_CHANNEL_SUPPLY)
+		if (POWER_BAR_DEPARTMENT_ENGINEERING)
+			return list(RADIO_CHANNEL_ENGINEERING)
+		if (POWER_BAR_DEPARTMENT_MEDICAL)
+			return list(RADIO_CHANNEL_MEDICAL)
+		if (POWER_BAR_DEPARTMENT_SCIENCE)
+			return list(RADIO_CHANNEL_SCIENCE)
+		if (POWER_BAR_DEPARTMENT_SECURITY)
+			return list(RADIO_CHANNEL_SECURITY)
+		if (POWER_BAR_DEPARTMENT_COMMON)
+			return list(RADIO_CHANNEL_COMMAND, RADIO_CHANNEL_SERVICE)
+
 /datum/controller/subsystem/power_bars/proc/stock_part_tier(power_bars)
 	switch (power_bars)
 		if (0, 1)
@@ -189,12 +208,12 @@ SUBSYSTEM_DEF(power_bars)
 	var/list/departments_to_update = list()
 	var/list/areas_to_update = list()
 
-	var/list/department_locations_after_limit = allocations_after_limit(department_allocations)
+	var/list/department_allocations_after_limit = allocations_after_limit(department_allocations)
 	var/list/last_distributed_allocations_after_limit = allocations_after_limit(last_distributed_allocations)
 
-	for (var/department in department_locations_after_limit)
+	for (var/department in department_allocations_after_limit)
 		var/current = last_distributed_allocations_after_limit[department]
-		var/next = department_locations_after_limit[department]
+		var/next = department_allocations_after_limit[department]
 		if (current == next)
 			continue
 
@@ -210,6 +229,11 @@ SUBSYSTEM_DEF(power_bars)
 			continue
 
 		machine.update_for_power_bars()
+
+	// Do it here instead of signal so we don't do it more than once
+	for (var/obj/machinery/computer/power_distribution/power_distribution_console as anything in GLOB.power_distribution_consoles)
+		if (power_distribution_console.send_power_bar_update_message(department_allocations_after_limit, last_distributed_allocations_after_limit))
+			break
 
 	SEND_SIGNAL(src, COMSIG_POWER_BARS_UPDATED, departments_to_update)
 
@@ -250,6 +274,25 @@ SUBSYSTEM_DEF(power_bars)
 	for (var/datum/power_bar_allocation/power_bar_allocation as anything in available_power_bars)
 		sum += power_bar_allocation.amount
 	return sum
+
+/datum/controller/subsystem/power_bars/proc/details_of_upgrade(department, to_tier, from_tier)
+	RETURN_TYPE(/list)
+
+	ASSERT(department in department_allocations)
+
+	var/list/details = list()
+
+	for (var/datum/power_bar_detail/detail as anything in subtypesof(/datum/power_bar_detail))
+		var/tier = initial(detail.tier)
+		if (tier <= from_tier || tier > to_tier)
+			continue
+
+		if (initial(detail.department) != department)
+			continue
+
+		details += initial(detail.message)
+
+	return details
 
 /datum/power_bar_allocation
 	var/source
