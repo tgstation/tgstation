@@ -16,7 +16,7 @@
 /datum/antagonist/revenant/get_preview_icon()
 	return finish_preview_icon(icon('icons/mob/simple/mob.dmi', "revenant_idle"))
 
-/datum/antagonist/revenant/proc/forge_objectives()
+/datum/antagonist/revenant/forge_objectives()
 	var/datum/objective/revenant/objective = new
 	objective.owner = owner
 	objectives += objective

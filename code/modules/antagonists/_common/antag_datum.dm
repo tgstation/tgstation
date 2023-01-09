@@ -73,6 +73,88 @@ GLOBAL_LIST_EMPTY(antagonists)
 	owner = null
 	return ..()
 
+/datum/antagonist/Topic(href,href_list)
+	if(!check_rights(R_ADMIN))
+		return
+
+	//Some commands might delete/modify this datum clearing or changing owner
+	var/datum/mind/persistent_owner = owner
+
+	var/commands = get_admin_commands()
+	for(var/admin_command in commands)
+		if(href_list["command"] == admin_command)
+			var/datum/callback/C = commands[admin_command]
+			C.Invoke(usr)
+			persistent_owner.traitor_panel()
+			return
+
+//This one is created by admin tools for custom objectives
+/datum/antagonist/custom
+	antagpanel_category = "Custom"
+	show_name_in_check_antagonists = TRUE //They're all different
+	var/datum/team/custom_team
+
+/datum/antagonist/custom/create_team(datum/team/team)
+	custom_team = team
+
+/datum/antagonist/custom/get_team()
+	return custom_team
+
+/datum/antagonist/custom/admin_add(datum/mind/new_owner,mob/admin)
+	var/custom_name = stripped_input(admin, "Custom antagonist name:", "Custom antag", "Antagonist")
+	if(custom_name)
+		name = custom_name
+	else
+		return
+	..()
+
+///ANTAGONIST UI STUFF
+
+/datum/antagonist/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, ui_name, name)
+		ui.open()
+
+/datum/antagonist/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/antagonist/ui_static_data(mob/user)
+	var/list/data = list()
+	data["antag_name"] = name
+	data["objectives"] = get_objectives()
+	return data
+
+//button for antags to review their descriptions/info
+/datum/action/antag_info
+	name = "Open Antag Information:"
+	button_icon_state = "round_end"
+	show_to_observers = FALSE
+
+/datum/action/antag_info/New(Target)
+	. = ..()
+	name += " [target]"
+
+/datum/action/antag_info/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+
+	target.ui_interact(owner)
+
+/datum/action/antag_info/IsAvailable(feedback = FALSE)
+	if(!target)
+		stack_trace("[type] was used without a target antag datum!")
+		return FALSE
+	. = ..()
+	if(!.)
+		return
+	if(!owner.mind)
+		return FALSE
+	if(!(target in owner.mind.antag_datums))
+		return FALSE
+	return TRUE
+
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
 	. = TRUE
 	var/datum/mind/tested = new_owner || owner
@@ -379,21 +461,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	return finish_preview_icon(render_preview_outfit(preview_outfit))
 
-/datum/antagonist/Topic(href,href_list)
-	if(!check_rights(R_ADMIN))
-		return
-
-	//Some commands might delete/modify this datum clearing or changing owner
-	var/datum/mind/persistent_owner = owner
-
-	var/commands = get_admin_commands()
-	for(var/admin_command in commands)
-		if(href_list["command"] == admin_command)
-			var/datum/callback/C = commands[admin_command]
-			C.Invoke(usr)
-			persistent_owner.traitor_panel()
-			return
-
 /datum/antagonist/proc/edit_memory(mob/user)
 	var/new_memo = tgui_input_text(user, "Write a new memory", "Antag Memory", antag_memory, multiline = TRUE)
 	if (isnull(new_memo))
@@ -431,37 +498,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	SET_PLANE_EXPLICIT(hud, ABOVE_GAME_PLANE, hud_loc)
 	return hud
 
-//This one is created by admin tools for custom objectives
-/datum/antagonist/custom
-	antagpanel_category = "Custom"
-	show_name_in_check_antagonists = TRUE //They're all different
-	var/datum/team/custom_team
-
-/datum/antagonist/custom/create_team(datum/team/team)
-	custom_team = team
-
-/datum/antagonist/custom/get_team()
-	return custom_team
-
-/datum/antagonist/custom/admin_add(datum/mind/new_owner,mob/admin)
-	var/custom_name = stripped_input(admin, "Custom antagonist name:", "Custom antag", "Antagonist")
-	if(custom_name)
-		name = custom_name
-	else
-		return
-	..()
-
-///ANTAGONIST UI STUFF
-
-/datum/antagonist/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, ui_name, name)
-		ui.open()
-
-/datum/antagonist/ui_state(mob/user)
-	return GLOB.always_state
-
 ///generic helper to send objectives as data through tgui.
 /datum/antagonist/proc/get_objectives()
 	var/objective_count = 1
@@ -477,39 +513,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		objective_count++
 	return objective_data
 
-/datum/antagonist/ui_static_data(mob/user)
-	var/list/data = list()
-	data["antag_name"] = name
-	data["objectives"] = get_objectives()
-	return data
+/// Used to create objectives for the antag.
+/datum/antagonist/proc/forge_objectives()
+	return
 
-//button for antags to review their descriptions/info
-
-/datum/action/antag_info
-	name = "Open Antag Information:"
-	button_icon_state = "round_end"
-	show_to_observers = FALSE
-
-/datum/action/antag_info/New(Target)
-	. = ..()
-	name += " [target]"
-
-/datum/action/antag_info/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-
-	target.ui_interact(owner)
-
-/datum/action/antag_info/IsAvailable(feedback = FALSE)
-	if(!target)
-		stack_trace("[type] was used without a target antag datum!")
-		return FALSE
-	. = ..()
-	if(!.)
-		return
-	if(!owner.mind)
-		return FALSE
-	if(!(target in owner.mind.antag_datums))
-		return FALSE
-	return TRUE

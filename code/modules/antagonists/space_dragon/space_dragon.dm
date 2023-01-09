@@ -35,8 +35,8 @@
 	owner.announce_objectives()
 	SEND_SOUND(owner.current, sound('sound/magic/demon_attack1.ogg'))
 
-/datum/antagonist/space_dragon/proc/forge_objectives()
-	var/datum/objective/summon_carp/summon = new()
+/datum/antagonist/space_dragon/forge_objectives()
+	var/datum/objective/summon_carp/summon = new
 	summon.dragon = src
 	objectives += summon
 

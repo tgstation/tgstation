@@ -2320,7 +2320,7 @@
 #include "code\modules\antagonists\abductor\machinery\pad.dm"
 #include "code\modules\antagonists\ashwalker\ashwalker.dm"
 #include "code\modules\antagonists\blob\blob.dm"
-#include "code\modules\antagonists\blob\blob_mob.dm"
+#include "code\modules\antagonists\blob\blob_antag.dm"
 #include "code\modules\antagonists\blob\blobbernaut.dm"
 #include "code\modules\antagonists\blob\blobspore.dm"
 #include "code\modules\antagonists\blob\overmind.dm"

@@ -41,7 +41,7 @@
 	return TRUE
 
 /// Create new objectives
-/datum/antagonist/nightmare/proc/forge_objectives()
+/datum/antagonist/nightmare/forge_objectives()
 	var/datum/objective/nightmare_fluff/objective = new
 	objective.owner = owner
 	objectives += objective

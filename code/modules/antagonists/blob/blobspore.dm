@@ -13,7 +13,7 @@
 	. = ..()
 	owner.announce_objectives()
 
-/datum/antagonist/blobspore/proc/forge_objectives()
+/datum/antagonist/blobspore/forge_objectives()
 	var/mob/living/simple_animal/hostile/blob/blobspore/spore = owner.current
 	if(!spore)
 		return

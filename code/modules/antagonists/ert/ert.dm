@@ -223,7 +223,7 @@
 	role = "Synthetic Bounty Hunter"
 	outfit = /datum/outfit/bountysynth/ert
 
-/datum/antagonist/ert/proc/forge_objectives()
+/datum/antagonist/ert/forge_objectives()
 	if(ert_team)
 		objectives |= ert_team.objectives
 
