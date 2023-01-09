@@ -444,7 +444,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	AddElement(/datum/element/openspace_item_click_handler)
 	update_appearance()
 
-	if (type == /obj/item/construction/rcd)
+	if (type == /obj/item/construction/rcd || type == /obj/item/construction/rcd/loaded)
 		AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_ENGINEERING)
 
 /obj/item/construction/rcd/uninstall_upgrades()
@@ -579,7 +579,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
-	var/delay = rcd_results["delay"] * delay_mod
+	var/delay = rcd_results["delay"] * delay_mod()
 	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
 	if(!checkResource(rcd_results["cost"], user))
 		qdel(rcd_effect)
@@ -604,6 +604,18 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	activate()
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
+
+/obj/item/construction/rcd/proc/delay_mod()
+	var/delay = delay_mod
+
+	if (SSpower_bars.enabled)
+		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_ENGINEERING))
+			if (2)
+				delay *= 0.8
+			if (3)
+				delay *= 0.4
+
+	return delay
 
 /obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
