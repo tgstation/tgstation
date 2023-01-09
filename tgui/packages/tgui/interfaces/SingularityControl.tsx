@@ -301,8 +301,8 @@ const EquipmentWindow = (props, context) => {
           control={{
             enabled: data.turrets, // MBTODO
             disabled: 0, // MBTODO
-            handleEnableAll: () => act('enable_all_turrets'),
-            handleDisableAll: () => act('disable_all_turrets'),
+            handleEnableAll: () => act('enable_all_emitters'),
+            handleDisableAll: () => act('disable_all_emitters'),
           }}
         />
       </Stack.Item>

@@ -101,6 +101,14 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 				if ("fire_emitters")
 					fire_emitters(user)
 					return TRUE
+		if (STAGE_SINGULARITY_CONSOLE_FINISHED)
+			switch (action)
+				if ("enable_all_emitters")
+					enable_all_emitters(user)
+					return TRUE
+				if ("disable_all_emitters")
+					disable_all_emitters(user)
+					return TRUE
 
 	return TRUE
 
@@ -163,6 +171,18 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 			internal_radio.talk_into(src, message)
 	else
 		say(message)
+
+/obj/machinery/computer/singularity/proc/enable_all_emitters(mob/user)
+	user?.log_message("enabled all emitters.", LOG_GAME)
+
+	for (var/obj/machinery/singularity_turret/turret in connected_machines)
+		turret.begin_processing()
+
+/obj/machinery/computer/singularity/proc/disable_all_emitters(mob/user)
+	user?.log_message("disabled all emitters.", LOG_GAME)
+
+	for (var/obj/machinery/singularity_turret/turret in connected_machines)
+		turret.end_processing()
 
 /obj/machinery/computer/singularity/proc/connect_machine(machine)
 	connected_machines += machine
