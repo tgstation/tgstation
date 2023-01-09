@@ -3,6 +3,21 @@
 	antagpanel_category = "Biohazards"
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	show_in_antagpanel = FALSE
+
+/datum/antagonist/blobbernaut/on_gain()
+	forge_objectives()
+	. = ..()
+
+/datum/antagonist/blobbernaut/greet()
+	. = ..()
+	owner.announce_objectives()
+
+/datum/antagonist/blobbernaut/proc/forge_objectives()
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = owner.current
+	if(!naut)
+		return
+	naut.create_objectives(src)
 
 /////////////////
 // BLOBBERNAUT //
@@ -42,8 +57,7 @@
 		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/blobbernaut))
 		return FALSE
-	var/datum/antagonist/blobbernaut/blobbernaut = mind.add_antag_datum(/datum/antagonist/blobbernaut)
-	create_objectives(blobbernaut)
+	mind.add_antag_datum(/datum/antagonist/blobbernaut)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

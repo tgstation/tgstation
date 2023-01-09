@@ -3,6 +3,21 @@
 	antagpanel_category = "Biohazards"
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	show_in_antagpanel = FALSE
+
+/datum/antagonist/blobspore/on_gain()
+	forge_objectives()
+	. = ..()
+
+/datum/antagonist/blobspore/greet()
+	. = ..()
+	owner.announce_objectives()
+
+/datum/antagonist/blobspore/proc/forge_objectives()
+	var/mob/living/simple_animal/hostile/blob/blobspore/spore = owner.current
+	if(!spore)
+		return
+	spore.create_objectives(src)
 
 ////////////////
 // BLOB SPORE //
@@ -58,8 +73,7 @@
 		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/blobspore))
 		return FALSE
-	var/datum/antagonist/blobspore/blobspore = mind.add_antag_datum(/datum/antagonist/blobspore)
-	create_objectives(blobspore)
+	mind.add_antag_datum(/datum/antagonist/blobspore)
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!is_zombie && isturf(loc))

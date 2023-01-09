@@ -9,6 +9,7 @@
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
+	antagpanel_category = "Emergency Response Team"
 	suicide_cry = "FOR NANOTRASEN!!"
 	count_against_dynamic_roll_chance = FALSE
 	var/datum/team/ert/ert_team

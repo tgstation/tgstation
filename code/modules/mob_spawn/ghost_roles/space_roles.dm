@@ -152,6 +152,7 @@
 	roundend_category = "battlecruiser syndicate operatives"
 	suicide_cry = "FOR THE SYNDICATE!!!"
 	antag_hud_name = "battlecruiser_crew"
+	antagpanel_category = "Syndicate"
 	job_rank = ROLE_BATTLECRUISER_CREW
 	var/datum/team/battlecruiser/battlecruiser_team
 

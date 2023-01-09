@@ -1,7 +1,7 @@
 /datum/antagonist/nukeop
 	name = ROLE_NUCLEAR_OPERATIVE
 	roundend_category = "syndicate operatives" //just in case
-	antagpanel_category = "NukeOp"
+	antagpanel_category = "Syndicate"
 	job_rank = ROLE_OPERATIVE
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused

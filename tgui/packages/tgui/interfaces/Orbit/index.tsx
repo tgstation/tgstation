@@ -6,8 +6,8 @@ import { Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stac
 import { Window } from 'tgui/layouts';
 import { JobToIcon } from '../common/JobToIcon';
 import { ANTAG2COLOR } from './constants';
-import { collateAntagonists, getDisplayColor, getDisplayName, isJobOrNameMatch } from './helpers';
-import type { AntagGroup, Observable, OrbitData } from './types';
+import { getAntagCategories, getDisplayColor, getDisplayName, isJobOrNameMatch } from './helpers';
+import type { AntagGroup, Antagonist, Observable, OrbitData } from './types';
 
 export const Orbit = (props, context) => {
   return (
@@ -147,18 +147,18 @@ const ObservableContent = (props, context) => {
   let collatedAntagonists: AntagGroup[] = [];
 
   if (antagonists.length) {
-    collatedAntagonists = collateAntagonists(antagonists);
+    collatedAntagonists = getAntagCategories(antagonists);
   }
 
   return (
     <Stack vertical>
-      {collatedAntagonists?.map(([name, antag]) => {
+      {collatedAntagonists?.map(([title, antagonists]) => {
         return (
           <ObservableSection
-            color={ANTAG2COLOR[name] || 'bad'}
-            key={name}
-            section={antag}
-            title={name}
+            color={ANTAG2COLOR[title] || 'bad'}
+            key={title}
+            section={antagonists}
+            title={title}
           />
         );
       })}
@@ -253,10 +253,13 @@ const ObservableItem = (
 };
 
 /** Displays some info on the mob as a tooltip. */
-const ObservableTooltip = (props: { item: Observable }) => {
-  const {
-    item: { extra, full_name, job, health },
-  } = props;
+const ObservableTooltip = (props: { item: Observable | Antagonist }) => {
+  const { item } = props;
+  const { extra, full_name, health, job } = item;
+  let antag;
+  if ('antag' in item) {
+    antag = item.antag;
+  }
 
   const extraInfo = extra?.split(':');
   const displayHealth = !!health && health >= 0 ? `${health}%` : 'Critical';
@@ -274,9 +277,14 @@ const ObservableTooltip = (props: { item: Observable }) => {
         ) : (
           <>
             {!!full_name && (
-              <LabeledList.Item label="Name">{full_name}</LabeledList.Item>
+              <LabeledList.Item label="Real ID">{full_name}</LabeledList.Item>
             )}
-            {!!job && <LabeledList.Item label="Job">{job}</LabeledList.Item>}
+            {!!job && !antag && (
+              <LabeledList.Item label="Job">{job}</LabeledList.Item>
+            )}
+            {!!antag && (
+              <LabeledList.Item label="Threat">{antag}</LabeledList.Item>
+            )}
             {!!health && (
               <LabeledList.Item label="Health">
                 {displayHealth}
