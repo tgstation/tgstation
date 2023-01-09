@@ -156,7 +156,7 @@
 	/// Time it takes to deconstruct normal floor plating
 	var/tile_deconstruction_time = 1 MINUTES
 	/// Time it takes to deconstruct reinforced floor plating
-	var/tile_deconstruction_time_reinforced = 4 MINUTES
+	var/tile_deconstruction_time_reinforced = 5 MINUTES
 
 
 /datum/armor/tile_remover
