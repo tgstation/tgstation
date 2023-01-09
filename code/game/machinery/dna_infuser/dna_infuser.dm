@@ -58,8 +58,13 @@
 	toggle_open(user)
 
 /obj/machinery/dna_infuser/proc/start_infuse()
-	infusing = TRUE
 	var/mob/living/carbon/human/hoccupant = occupant
+	// Abort infusion if the occupant is not organic.
+	if(!(hoccupant.mob_biotypes & MOB_ORGANIC))
+		visible_message(span_notice("[src] displays a message on its status screen: ") + span_warning("Error: Patient DNA not found. Aborting infusion."))
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return
+	infusing = TRUE
 	visible_message(span_notice("[src] hums to life, beginning the infusion process!"))
 	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
 		if(is_type_in_list(infusing_from, entry.input_obj_or_mob))
@@ -85,7 +90,6 @@
 
 //in the future, this should have more logic:
 //- replace non-mutant organs before mutant ones
-//- don't replace empty organ slots
 /obj/machinery/dna_infuser/proc/infuse_organ(mob/living/carbon/human/target)
 	if(!ishuman(target) || !infusing_into)
 		//already filters humans from entering, but you know, just in case.
@@ -102,12 +106,14 @@
 			// brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
 			var/obj/item/organ/internal/brain/new_brain = new_organ
 			var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-			if(old_brain)
+			if(old_brain && (old_brain.status == ORGAN_ORGANIC))
 				old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
 				qdel(old_brain)
-			new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+				new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
 		else
-			new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
+			var/obj/item/organ/internal/old_organ = target.getorganslot(new_organ.slot)
+			if(old_organ && (old_organ.status == ORGAN_ORGANIC))
+				new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
 	infusing_into = null
 	QDEL_NULL(infusing_from)
 
