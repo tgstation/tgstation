@@ -390,6 +390,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	material_flags = NONE
 	sideslist = list("nanotrasen", "syndicate")
 
+/obj/item/coin/thunderdome/holographic
+	custom_materials = list() //Holographic coins are not legal tender.
+
 /obj/item/storage/card_binder
 	name = "card binder"
 	desc = "The perfect way to keep your collection of cards safe and valuable."
