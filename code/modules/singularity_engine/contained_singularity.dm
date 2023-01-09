@@ -34,7 +34,7 @@
 	singularity = AddComponent( \
 		/datum/component/singularity, \
 		roaming = FALSE, \
-		singularity_size = STAGE_THREE, \
+		singularity_size = STAGE_TWO, \
 		consume_range = 1, \
 	)
 

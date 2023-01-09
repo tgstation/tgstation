@@ -3239,6 +3239,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
+"bgk" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "bgm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4203,6 +4210,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
+"buF" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "buH" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -14339,8 +14353,9 @@
 /obj/structure/railing{
 	dir = 9
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "fnE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -14565,8 +14580,9 @@
 /obj/structure/railing{
 	dir = 6
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "fvE" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/medical/central)
@@ -19725,8 +19741,10 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
+/obj/structure/lattice,
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "hqj" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
@@ -28334,8 +28352,9 @@
 /obj/structure/railing{
 	dir = 5
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "kjO" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable/white,
@@ -30598,6 +30617,9 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"kYo" = (
+/turf/open/floor/engine,
+/area/station/maintenance/disposal/incinerator)
 "kYv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"
@@ -31465,8 +31487,9 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "loA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -33447,8 +33470,10 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "lZk" = (
-/turf/open/floor/engine,
-/area/station/maintenance/disposal/incinerator)
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "lZC" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -43763,6 +43788,11 @@
 /obj/machinery/research/anomaly_refinery,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
+"pIW" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "pJf" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -46704,8 +46734,9 @@
 /area/station/science/research)
 "qLJ" = (
 /obj/structure/railing/corner,
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "qLP" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/bureaucracy/folder{
@@ -55182,8 +55213,9 @@
 /obj/structure/railing{
 	dir = 10
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "tEP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -56350,10 +56382,12 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "uaB" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "uaN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -62654,8 +62688,9 @@
 /area/station/maintenance/solars/port/aft)
 "wjU" = (
 /obj/structure/railing,
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "wjW" = (
 /obj/structure/table/wood,
 /obj/item/cigbutt/cigarbutt{
@@ -67312,8 +67347,9 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "xUK" = (
 /obj/structure/sign/poster/contraband/missing_gloves,
 /turf/closed/wall,
@@ -107689,7 +107725,7 @@ uXd
 gMG
 dWG
 uGm
-uaB
+lZk
 uXd
 qJd
 nLz
@@ -107992,7 +108028,7 @@ ydj
 aBW
 vQh
 pnH
-lZk
+kYo
 pnH
 pnH
 aaa
@@ -108249,7 +108285,7 @@ ldc
 xpB
 dli
 huZ
-lZk
+kYo
 xrr
 aaa
 aaa
@@ -108506,7 +108542,7 @@ lYM
 vzc
 gUY
 pnH
-lZk
+kYo
 pnH
 aaa
 aaa
@@ -110508,11 +110544,11 @@ lMJ
 abi
 btn
 fnC
-nWF
-nWF
+uaB
+uaB
 egh
-nWF
-nWF
+uaB
+uaB
 tEG
 pkc
 abi
@@ -111020,7 +111056,7 @@ nTA
 cKx
 qhD
 abi
-gFb
+bgk
 aaa
 aaa
 aaa
@@ -111277,7 +111313,7 @@ qZI
 baS
 lMJ
 abi
-gFb
+bgk
 aaa
 aaa
 lMJ
@@ -111791,7 +111827,7 @@ tmq
 baS
 lMJ
 abi
-gFb
+bgk
 aaa
 aaa
 lMJ
@@ -112048,7 +112084,7 @@ pmj
 bgs
 qhD
 abi
-gFb
+bgk
 aaa
 aaa
 aaa
@@ -112564,11 +112600,11 @@ lMJ
 abi
 rcM
 kjM
-mWd
-mWd
-lMJ
-mWd
-mWd
+buF
+buF
+pIW
+buF
+buF
 fuE
 kIz
 abi
