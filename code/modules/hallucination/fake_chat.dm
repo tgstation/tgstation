@@ -28,11 +28,10 @@
 	var/is_radio = !speaker || force_radio
 	if(is_radio)
 		var/list/humans = list()
-		for(var/mob/living/carbon/human/existing_human in GLOB.alive_mob_list)
-			// these roles usually have special names that can reveal antags
-			if(IS_WIZARD(existing_human) || IS_NUKE_OP(existing_human) || IS_SPACE_NINJA(existing_human))
-				continue
-			humans += existing_human
+
+		for(var/datum/mind/crew_mind in get_crewmember_minds())
+			if(crew_mind.current)
+				humans += existing_human
 		speaker = pick(humans)
 
 	// Time to generate a message.
