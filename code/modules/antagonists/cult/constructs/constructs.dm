@@ -1,4 +1,3 @@
-
 /datum/antagonist/cult/construct
 	name = "\improper Cult Construct"
 	show_in_antagpanel = FALSE
