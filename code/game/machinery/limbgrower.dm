@@ -76,7 +76,7 @@
 	for(var/species in species_categories)
 		species_categories[species] = list()
 
-	var/list/available_nodes = stored_research.researched_designs
+	var/list/available_nodes = stored_research.researched_designs.Copy()
 	if(imported_designs.len)
 		available_nodes += imported_designs
 	if(obj_flags & EMAGGED)
