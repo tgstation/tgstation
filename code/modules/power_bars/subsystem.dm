@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(power_bars)
 	var/time_to_distribute = 10 SECONDS
 
 	// Without this, I would have to support every single map, which sucks ass
-	var/enabled
+	var/enabled = FALSE
 	var/list/datum/power_bar_allocation/available_power_bars
 
 	var/max_power_bars = 3
@@ -39,6 +39,21 @@ SUBSYSTEM_DEF(power_bars)
 
 /datum/controller/subsystem/power_bars/stat_entry(msg)
 	return "[enabled ? "ON": "OFF"] ([debug_power_bar_distributions()])"
+
+#define POWER_BAR_PR_LINK "https://github.com/tgstation/tgstation/pull/12345"
+
+/datum/controller/subsystem/power_bars/proc/motd()
+	if (!enabled)
+		return ""
+
+	return {"
+		<span style='color: purple; border: 1px solid dotted'>
+			<h1><a href="[POWER_BAR_PR_LINK]">Power Bars + Singularity Concept</a></h1>
+			<p>As part of an experiment on the future of power, all rounds on MetaStation will feature <b>the concept of power bars</b>, and <b>replace the supermatter</b> with an engine styled around <b>the singularity</b>.</p>
+			<p>Engineering can distribute power bars to other departments. More power bars = better equipment. Cargo will get faster shuttles, stasis beds will access surgeries, security gets x-ray cameras, etc.</p>
+			<p>Please give your feedback or learn more on the <a href="[POWER_BAR_PR_LINK]">pull request</a>.</p>
+		</span>
+	"}
 
 /datum/controller/subsystem/power_bars/proc/debug_power_bar_distributions()
 	var/list/entries = list()

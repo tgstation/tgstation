@@ -264,6 +264,9 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	to_chat(world, span_boldannounce("[msg]"))
 	log_world(msg)
 
+	if (SSpower_bars.enabled)
+		to_chat(world, SSpower_bars.motd())
+
 
 	// Set world options.
 	world.change_fps(CONFIG_GET(number/fps))
