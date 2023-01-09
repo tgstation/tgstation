@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"parent",
 	"parent_type",
 	"power_supply",
-	"quirks"
+	"quirks",
 	"reagents",
 	"signal_procs",
 	"status_traits",
