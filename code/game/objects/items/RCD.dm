@@ -536,7 +536,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		return FALSE
 	if(rcd_results["mode"] == RCD_MACHINE || rcd_results["mode"] == RCD_COMPUTER || rcd_results["mode"] == RCD_FURNISHING)
 		var/turf/target_turf = get_turf(A)
-		if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+
+		var/static/list/ignore_types = list(/obj/structure/window, /obj/structure/window/reinforced)
+		var/list/directional_windows = list()
+		for(var/atom/movable/movable_content in target_turf)
+			if(is_type_in_list(movable_content, ignore_types))
+				directional_windows += movable_content
+
+		if(target_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = null, ignore_atoms = directional_windows))
 			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 			qdel(rcd_effect)
 			return FALSE
