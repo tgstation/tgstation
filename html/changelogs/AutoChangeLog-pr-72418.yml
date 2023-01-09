@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "burn chambers will not get stuck on depressurizing while cycling to exterior airlocks"
-  - bugfix: "using an airlock sensor will properly cycle the air inside the chamber"
