@@ -1,7 +1,0 @@
-author: "kawoppi"
-delete-after: True
-changes:
-  - rscadd: "added reagent splashing animation for spilling reagents on things"
-  - rscadd: "added reagent splashing animation for spilling reagents onto floors"
-  - rscadd: "added reagent splashing animation for pouring reagents into hydroponics trays"
-  - soundadd: "slosh sound now plays when spilling reagents on things, both directly and by throwing"
