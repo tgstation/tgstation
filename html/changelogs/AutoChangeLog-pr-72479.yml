@@ -1,0 +1,5 @@
+author: "Comxy"
+delete-after: True
+changes:
+  - rscadd: "Faithless will now also break lights and drag victims around"
+  - refactor: "Faithless into basic mob"
