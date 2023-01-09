@@ -20,7 +20,6 @@
 /datum/objective/pyro_slime/check_completion()
 	return owner.current.stat == DEAD
 
-/// Create new objectives
 /datum/antagonist/pyro_slime/forge_objectives()
 	var/datum/objective/pyro_slime/objective = new
 	objective.owner = owner

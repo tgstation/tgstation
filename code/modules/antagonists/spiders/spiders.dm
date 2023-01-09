@@ -27,7 +27,6 @@
 /datum/objective/spider/check_completion()
 	return owner.current.stat == DEAD
 
-/// Create new objectives
 /datum/antagonist/spider/forge_objectives()
 	var/datum/objective/spider/objective = new(directive)
 	objective.owner = owner

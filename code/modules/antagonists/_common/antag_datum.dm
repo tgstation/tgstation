@@ -513,7 +513,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		objective_count++
 	return objective_data
 
-/// Used to create objectives for the antag.
+/// Used to create objectives for the antagonist.
 /datum/antagonist/proc/forge_objectives()
 	return
 

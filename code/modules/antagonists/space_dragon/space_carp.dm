@@ -25,7 +25,6 @@
 		return FALSE
 	return TRUE
 
-/// Create new objectives
 /datum/antagonist/space_carp/forge_objectives()
 	var/datum/objective/space_carp/objective = new
 	objective.owner = owner
