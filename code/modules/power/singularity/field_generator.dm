@@ -92,8 +92,33 @@ no power level overlay is currently in the overlays list.
 		return
 	if(get_dist(src, user) > 1)//Need to actually touch the thing to turn it on
 		return
+
 	if(active >= FG_CHARGING)
-		to_chat(user, span_warning("You are unable to turn off [src] once it is online!"))
+		if (DOING_INTERACTION_WITH_TARGET(user, src))
+			return TRUE
+
+		add_fingerprint(user)
+
+		var/extended_delay = FALSE
+
+		if (iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			var/obj/item/id_card = carbon_user.get_idcard(hand_first = TRUE)
+			extended_delay = (ACCESS_ENGINEERING in id_card?.GetAccess())
+
+		if (extended_delay)
+			balloon_alert(user, "no access, reaching for override switch...")
+		else
+			balloon_alert(user, "disabling...")
+
+		if (!do_after(user, extended_delay ? 8 SECONDS : 2 SECONDS, src))
+			return TRUE
+
+		balloon_alert(user, "turned off")
+		playsound(src, 'sound/machines/synth_no.ogg', 50, vary = TRUE, frequency = rand(5120, 8800), pressure_affected = FALSE)
+		turn_off()
+		investigate_log("deactivated by [key_name(user)].", INVESTIGATE_ENGINE)
+
 		return TRUE
 
 	balloon_alert(user, "turned on")
