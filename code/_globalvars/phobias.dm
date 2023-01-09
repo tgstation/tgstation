@@ -399,6 +399,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/toy/eldritch_book,
 		/obj/item/toy/reality_pierce,
 		/obj/structure/destructible/eldritch_crucible,
+		/obj/projectile/curse_hand,
 	)),
 
 	"aliens" = typecacheof(list(
