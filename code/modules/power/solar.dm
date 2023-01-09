@@ -250,6 +250,8 @@
 	add_avail(sgen)
 	if(control)
 		control.gen += sgen
+		if (sunfrac >= 0.9)
+			control.solar_panels_tracked += 1
 
 //Bit of a hack but this whole type is a hack
 /obj/machinery/power/solar/fake/Initialize(mapload, obj/item/solar_assembly/S)
@@ -386,6 +388,11 @@
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
+	var/solar_panels_tracked = 0
+	var/last_solar_panels_tracked = 0
+
+GLOBAL_LIST_EMPTY(solar_controls)
+
 /obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
 	azimuth_rate = SSsun.base_rotation
@@ -393,12 +400,14 @@
 	connect_to_network()
 	if(powernet)
 		set_panels(azimuth_target)
+	GLOB.solar_controls += src
 
 /obj/machinery/power/solar_control/Destroy()
 	for(var/obj/machinery/power/solar/M in connected_panels)
 		M.unset_control()
 	if(connected_tracker)
 		connected_tracker.unset_control()
+	GLOB.solar_controls -= src
 	return ..()
 
 //search for unconnected panels and trackers in the computer powernet and connect them
@@ -535,6 +544,9 @@
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
 	gen = 0
+
+	last_solar_panels_tracked = solar_panels_tracked
+	solar_panels_tracked = 0
 
 	if(connected_tracker && (!powernet || connected_tracker.powernet != powernet))
 		connected_tracker.unset_control()

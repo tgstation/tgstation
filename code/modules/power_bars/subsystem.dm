@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(power_bars)
 
 		entries += "[uppertext(copytext(department, 1, 4))]=[current == next ? current : "[current]->[next]"]"
 
-	return "+[available_power_bars] [entries.Join(" / ")]"
+	return "+[available_power_bars()] [entries.Join(" / ")]"
 
 /datum/controller/subsystem/power_bars/proc/delete_redundant_designs()
 	var/stock_part_designs = list()
@@ -239,6 +239,7 @@ SUBSYSTEM_DEF(power_bars)
 
 /datum/controller/subsystem/power_bars/proc/remove_power_bars(datum/power_bar_allocation/power_bar_allocation)
 	ASSERT(SSpower_bars.enabled)
+	ASSERT(power_bar_allocation in available_power_bars)
 
 	available_power_bars -= power_bar_allocation
 

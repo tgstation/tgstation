@@ -41,7 +41,7 @@
 	update_appearance(UPDATE_ICON)
 
 	delayed_power_bar_one = new("Singularity engine", initial_delay = 15 SECONDS, lifetime = 15 SECONDS, recharge_delay = 15 SECONDS)
-	delayed_power_bar_two = new("Singularity engine", initial_delay = 5 MINUTES, lifetime = 30 SECONDS, recharge_delay = 90 SECONDS)
+	delayed_power_bar_two = new("Singularity engine", initial_delay = 12 MINUTES, lifetime = 30 SECONDS, recharge_delay = 90 SECONDS)
 
 /obj/contained_singularity/Destroy()
 	QDEL_NULL(singularity)

@@ -4193,6 +4193,7 @@
 #include "code\modules\power_bars\delayed_power_bar.dm"
 #include "code\modules\power_bars\details.dm"
 #include "code\modules\power_bars\power_bar_reactor.dm"
+#include "code\modules\power_bars\solar_subsystem.dm"
 #include "code\modules\power_bars\stock_part_hack.dm"
 #include "code\modules\power_bars\stock_part_refill.dm"
 #include "code\modules\power_bars\subsystem.dm"

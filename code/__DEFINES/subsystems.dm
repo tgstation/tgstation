@@ -167,6 +167,7 @@
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
+#define INIT_ORDER_SOLAR_POWER_BARS -1
 #define INIT_ORDER_PERSISTENCE -2
 #define INIT_ORDER_PERSISTENT_PAINTINGS -3 // Assets relies on this
 #define INIT_ORDER_VOTE -4 // Needs to be after persistence so that recent maps are not loaded.

@@ -2,9 +2,8 @@
 #define POWER_BAR_STATE_WAITING_RECHARGE_DELAY 2
 
 /datum/delayed_power_bar
-	var/gave_power_bars = FALSE
-
 	VAR_PRIVATE
+		gave_power_bars = FALSE
 		state = POWER_BAR_STATE_WAITING_LIFETIME
 
 		creation_time
@@ -114,10 +113,9 @@
 		return
 
 	gave_power_bars = FALSE
-	SSpower_bars.remove_power_bars(power_bar_gain)
+	SSpower_bars.remove_power_bars(power_bar_allocation)
 
-#if DM_VERSION >= 515
-/datum/delayed_power_bar/proc/operator""()
+/datum/delayed_power_bar/proc/display_text()
 	if (world.time - creation_time < initial_delay)
 		return "Waiting for initial delay"
 
@@ -125,7 +123,11 @@
 		if (POWER_BAR_STATE_WAITING_LIFETIME)
 			return "Active: [DisplayTimeText(world.time - last_poke_time)]"
 		if (POWER_BAR_STATE_WAITING_RECHARGE_DELAY)
-			return "Inactive: [DisplayTimeText(world.time - last_inactive_time)]"
+			return "Inactive"
+
+#if DM_VERSION >= 515
+/datum/delayed_power_bar/proc/operator""()
+	return display_text()
 #endif
 
 #undef POWER_BAR_STATE_WAITING_LIFETIME
