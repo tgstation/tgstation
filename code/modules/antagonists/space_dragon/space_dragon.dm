@@ -1,7 +1,7 @@
 /datum/antagonist/space_dragon
 	name = "\improper Space Dragon"
 	roundend_category = "space dragons"
-	antagpanel_category = "Transdimensional Horrors"
+	antagpanel_category = "Spaceborne Leviathans"
 	job_rank = ROLE_SPACE_DRAGON
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE

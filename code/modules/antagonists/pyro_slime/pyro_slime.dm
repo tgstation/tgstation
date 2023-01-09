@@ -1,6 +1,6 @@
 /datum/antagonist/pyro_slime
 	name = "\improper Pyroclastic Anomaly"
-	antagpanel_category = "Transdimensional Horrors"
+	antagpanel_category = "Extradimensional Abominations"
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE

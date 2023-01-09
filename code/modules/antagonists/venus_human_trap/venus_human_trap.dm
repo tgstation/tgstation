@@ -1,6 +1,6 @@
 /datum/antagonist/venus_human_trap
 	name = "\improper Venus Human Trap"
-	antagpanel_category = "Infestation"
+	antagpanel_category = "Invasive Overgrowth"
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE

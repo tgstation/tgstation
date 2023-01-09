@@ -1,6 +1,6 @@
 /datum/antagonist/space_carp
 	name = "\improper Space Carp"
-	antagpanel_category = "Transdimensional Horrors"
+	antagpanel_category = "Spaceborne Leviathans"
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE

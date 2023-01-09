@@ -1,6 +1,6 @@
 /datum/antagonist/nightmare
 	name = "\improper Nightmare"
-	antagpanel_category = "Transdimensional Horrors"
+	antagpanel_category = "Extradimensional Abominations"
 	job_rank = ROLE_NIGHTMARE
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
