@@ -1799,6 +1799,7 @@
 #include "code\game\objects\items\devices\radio\headset.dm"
 #include "code\game\objects\items\devices\radio\intercom.dm"
 #include "code\game\objects\items\devices\radio\radio.dm"
+#include "code\game\objects\items\devices\radio\security_headset.dm"
 #include "code\game\objects\items\devices\scanners\gas_analyzer.dm"
 #include "code\game\objects\items\devices\scanners\health_analyzer.dm"
 #include "code\game\objects\items\devices\scanners\scanner_wand.dm"

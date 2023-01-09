@@ -15,6 +15,17 @@
 	tier = 2
 	message = "Shuttle speeds increased."
 
+// Engineering
+/datum/power_bar_detail/rcd
+	department = POWER_BAR_DEPARTMENT_ENGINEERING
+	tier = 2
+	message = "RCDs upgraded, and speed increased."
+
+/datum/power_bar_detail/rcd_silo_link
+	department = POWER_BAR_DEPARTMENT_ENGINEERING
+	tier = 3
+	message = "RCDs link to silo."
+
 // Medical
 /datum/power_bar_detail/pinpointer_proximity
 	department = POWER_BAR_DEPARTMENT_MEDICAL
@@ -26,13 +37,8 @@
 	exclusive_tier = 3
 	message = "Pinpointers show exact distance." // Not exact, but you won't try it if I don't say that
 
-// Engineering
-/datum/power_bar_detail/rcd
-	department = POWER_BAR_DEPARTMENT_ENGINEERING
-	tier = 2
-	message = "RCDs upgraded, and speed increased."
-
-/datum/power_bar_detail/rcd_silo_link
-	department = POWER_BAR_DEPARTMENT_ENGINEERING
-	tier = 3
-	message = "RCDs link to silo."
+// Security
+/datum/power_bar_detail/security_headset
+	department = POWER_BAR_DEPARTMENT_SECURITY
+	exclusive_tier = 2
+	message = "Security headsets now have access to all departments."

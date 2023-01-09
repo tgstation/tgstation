@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/Initialize(mapload)
 	. = ..()
 	if(ispath(keyslot2))
-		keyslot2 = new keyslot2()
+		keyslot2 = new keyslot2(src)
 	set_listening(TRUE)
 	recalculateChannels()
 	possibly_deactivate_in_loc()

@@ -53,6 +53,11 @@
 	greyscale_config = /datum/greyscale_config/encryptionkey_security
 	greyscale_colors = "#820a16#280b1a"
 
+/obj/item/encryptionkey/headset_sec/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/security_headset)
+
 /obj/item/encryptionkey/headset_eng
 	name = "engineering radio encryption key"
 	icon_state = "cypherkey_engineering"
@@ -129,6 +134,11 @@
 	channels = list(RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_COMMAND = 1)
 	greyscale_config = /datum/greyscale_config/encryptionkey_security
 	greyscale_colors = "#280b1a#820a16"
+
+/obj/item/encryptionkey/heads/hos/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/security_headset)
 
 /obj/item/encryptionkey/heads/ce
 	name = "\proper the chief engineer's encryption key"
