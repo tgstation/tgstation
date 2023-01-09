@@ -153,6 +153,11 @@
 	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	/// Time it takes to deconstruct normal floor plating
+	var/tile_deconstruction_time = 1 MINUTES
+	/// Time it takes to deconstruct reinforced floor plating
+	var/tile_deconstruction_time_reinforced = 4 MINUTES
+
 
 /datum/armor/tile_remover
 	acid = 30
@@ -168,7 +173,16 @@
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 	AddComponent(/datum/component/item_slowdown, /datum/movespeed_modifier/tile_remover, TRUE)
 
+/obj/item/wrench/tile_remover/proc/get_floor_time(turf/target_turf)
+	if(!istype(target_turf, /turf/open/floor/plating/reinforced))
+		return tile_deconstruction_time_reinforced
+	else
+		return tile_deconstruction_time
+
 /obj/item/wrench/tile_remover/proc/replace_floor(turf/target_turf)
 	if(!istype(target_turf, /turf/open/floor))
+		if(istype(target_turf, /turf/open/floor/plating/reinforced))
+			var/turf/open/floor/plating/reinforced/target_reinforced = target_turf
+			target_reinforced.drop_screws()
 		new /obj/structure/lattice(target_turf)
 		new /obj/item/stack/tile/iron(target_turf)
