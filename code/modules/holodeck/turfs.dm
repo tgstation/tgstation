@@ -182,3 +182,17 @@
 /turf/open/floor/holofloor/dark
 	icon_state = "darkfull"
 	desc = "The surrounding enviroment is so dark you can hardly see yourself."
+
+/turf/open/floor/holofloor/stairs
+	name = "stairs"
+	icon_state = "stairs"
+	tiled_dirt = FALSE
+
+/turf/open/floor/holofloor/stairs/left
+	icon_state = "stairs-l"
+
+/turf/open/floor/holofloor/stairs/medium
+	icon_state = "stairs-m"
+
+/turf/open/floor/holofloor/stairs/right
+	icon_state = "stairs-r"

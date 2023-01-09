@@ -337,11 +337,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
-"bc" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/mug/britcup,
-/turf/open/floor/carpet,
-/area/awaymission/cabin)
 "bd" = (
 /obj/structure/chair/office,
 /turf/open/floor/carpet,
@@ -2291,10 +2286,6 @@
 "hM" = (
 /turf/closed/wall/mineral/snow,
 /area/awaymission/cabin/caves/mountain)
-"hP" = (
-/obj/item/candle/infinite,
-/turf/open/floor/plating/snowed,
-/area/awaymission/cabin/caves)
 "hQ" = (
 /obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/floor/plating/snowed,
@@ -3888,6 +3879,11 @@
 /obj/item/food/fishmeat/carp,
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
+"xo" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/mug/britcup,
+/turf/open/floor/carpet,
+/area/awaymission/cabin)
 "xs" = (
 /mob/living/simple_animal/hostile/tree{
 	desc = "I am death. I will have my vengeance upon my enemies.";
@@ -4834,6 +4830,10 @@
 /obj/item/storage/medkit/fire,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
+"WF" = (
+/obj/item/flashlight/flare/candle/infinite,
+/turf/open/floor/plating/snowed,
+/area/awaymission/cabin/caves)
 "WH" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/glitter/blue{
@@ -35387,7 +35387,7 @@ ed
 hu
 an
 aY
-bc
+xo
 bg
 an
 nU
@@ -47869,9 +47869,9 @@ gx
 gx
 gx
 hM
-hP
+WF
 hQ
-hP
+WF
 wI
 PV
 Oe
@@ -48383,9 +48383,9 @@ gx
 gx
 gx
 hM
-hP
+WF
 hQ
-hP
+WF
 Rz
 PV
 PV

@@ -463,6 +463,9 @@
 	icon_state = "detflask"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 30)
 
+/obj/item/reagent_containers/cup/glass/flask/det/minor
+	list_reagents = list(/datum/reagent/consumable/applejuice = 30)
+
 /obj/item/reagent_containers/cup/glass/mug/britcup
 	name = "cup"
 	desc = "A cup with the british flag emblazoned on it."
