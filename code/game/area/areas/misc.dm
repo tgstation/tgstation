@@ -34,20 +34,3 @@
 	has_gravity = STANDARD_GRAVITY
 	name = "Test Room"
 	icon_state = "test_room"
-
-/area/misc/asteroid
-	name = "Asteroid"
-	icon = 'icons/area/areas_misc.dmi'
-	icon_state = "asteroid"
-	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
-	area_flags = VALID_TERRITORY | UNIQUE_AREA
-	sound_environment = SOUND_AREA_ASTEROID
-	ambient_buzz = 'sound/ambience/ambiatmos.ogg'
-	always_unpowered = TRUE
-	power_environ = FALSE
-	power_equip = FALSE
-	power_light = FALSE
-	requires_power = TRUE
-	ambience_index = AMBIENCE_MINING
-	area_flags = VALID_TERRITORY | UNIQUE_AREA
