@@ -26,7 +26,7 @@
 
 /datum/objective/nightmare_fluff/New()
 	var/list/explanation_texts = list(
-		"Consume last glimmer of light from the space station.", \
+		"Consume the last glimmer of light from the space station.", \
 		"Bring judgment upon the daywalkers.", \
 		"Extinguish the flame of this hellscape.", \
 		"Reveal the true nature of the shadows.", \

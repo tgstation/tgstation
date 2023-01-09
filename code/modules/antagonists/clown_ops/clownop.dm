@@ -44,9 +44,9 @@
 	name = "Clown Operative Leader"
 	roundend_category = "clown operatives"
 	antagpanel_category = "Rival Corporations"
-	suicide_cry = "HAPPY BIRTHDAY!!"
 	nukeop_outfit = /datum/outfit/syndicate/clownop/leader
 	challengeitem = /obj/item/nuclear_challenge/clownops
+	suicide_cry = "HAPPY BIRTHDAY!!"
 
 /datum/antagonist/nukeop/leader/clownop/apply_innate_effects(mob/living/mob_override)
 	. = ..()
