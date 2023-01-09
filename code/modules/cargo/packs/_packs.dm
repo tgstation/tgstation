@@ -65,6 +65,19 @@
 	. = cost
 	. *= SSeconomy.pack_price_modifier
 
+	if (SSpower_bars.enabled)
+		var/price_multiplier = 1
+
+		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_CARGO))
+			if (2)
+				price_multiplier *= 0.85
+			if (3)
+				price_multiplier *= 0.5
+
+		return max(. * price_multiplier, CARGO_CRATE_VALUE * 1.4)
+
+	return .
+
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	for(var/item in contains)
 		if(!contains[item])

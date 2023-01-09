@@ -3241,7 +3241,7 @@
 /area/station/command/heads_quarters/ce)
 "bgk" = (
 /obj/structure/railing{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -4210,13 +4210,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
-"buF" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "buH" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -19742,7 +19735,6 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
 "hqj" = (
@@ -33470,10 +33462,12 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "lZk" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "lZC" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -43788,11 +43782,6 @@
 /obj/machinery/research/anomaly_refinery,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
-"pIW" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "pJf" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -56383,7 +56372,7 @@
 /area/space/nearstation)
 "uaB" = (
 /obj/structure/railing{
-	dir = 8
+	dir = 1
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -59336,6 +59325,11 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tcomms)
+"vcv" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "vcE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -107725,7 +107719,7 @@ uXd
 gMG
 dWG
 uGm
-lZk
+vcv
 uXd
 qJd
 nLz
@@ -110544,11 +110538,11 @@ lMJ
 abi
 btn
 fnC
-uaB
-uaB
+bgk
+bgk
 egh
-uaB
-uaB
+bgk
+bgk
 tEG
 pkc
 abi
@@ -111056,7 +111050,7 @@ nTA
 cKx
 qhD
 abi
-bgk
+uaB
 aaa
 aaa
 aaa
@@ -111313,7 +111307,7 @@ qZI
 baS
 lMJ
 abi
-bgk
+uaB
 aaa
 aaa
 lMJ
@@ -111827,7 +111821,7 @@ tmq
 baS
 lMJ
 abi
-bgk
+uaB
 aaa
 aaa
 lMJ
@@ -112084,7 +112078,7 @@ pmj
 bgs
 qhD
 abi
-bgk
+uaB
 aaa
 aaa
 aaa
@@ -112600,11 +112594,11 @@ lMJ
 abi
 rcM
 kjM
-buF
-buF
-pIW
-buF
-buF
+lZk
+lZk
+lMJ
+lZk
+lZk
 fuE
 kIz
 abi
