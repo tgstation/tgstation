@@ -85,7 +85,7 @@
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/Initialize(mapload, vol)
 	. = ..()
-	update_appearance(UPDATE_ICON)
+	update_appearance()
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/soda
 	name = "Soda Water"
