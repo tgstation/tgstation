@@ -360,11 +360,33 @@ GLOBAL_VAR(restart_counter)
 	else
 		hub_password = "SORRYNOPASSWORD"
 
+// If this is called as a part of maploading you cannot call it on the newly loaded map zs, because those get handled later on in the pipeline
+/world/proc/increaseMaxX(new_maxx, max_zs_to_load = maxz)
+	if(new_maxx <= maxx)
+		return
+	var/old_max = world.maxx
+	maxx = new_maxx
+	if(!max_zs_to_load)
+		return
+	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
+	var/list/to_add = block(locate(old_max + 1, 1, 1), locate(maxx, maxy, max_zs_to_load))
+	global_area.contained_turfs += to_add
+
+/world/proc/increaseMaxY(new_maxy, max_zs_to_load = maxz)
+	if(new_maxy <= maxy)
+		return
+	var/old_maxy = maxy
+	maxy = new_maxy
+	if(!max_zs_to_load)
+		return
+	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
+	var/list/to_add = block(locate(1, old_maxy + 1, 1), locate(maxx, maxy, max_zs_to_load))
+	global_area.contained_turfs += to_add
+
 /world/proc/incrementMaxZ()
 	maxz++
 	SSmobs.MaxZChanged()
 	SSidlenpcpool.MaxZChanged()
-
 
 /world/proc/change_fps(new_value = 20)
 	if(new_value <= 0)
