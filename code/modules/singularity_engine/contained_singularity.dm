@@ -29,6 +29,12 @@
 		damage_per_discharge = 1
 		chance_of_extra_particle_at_zero_health_per_second = 0.4
 
+		last_heal = 0
+		time_since_last_hit = 0
+		time_to_wait_before_healing = 13 SECONDS
+		heal_per_interval = 1
+		heal_interval = 12 SECONDS
+
 /obj/contained_singularity/Initialize(mapload)
 	. = ..()
 
@@ -71,8 +77,10 @@
 	if (istype(projectile, /obj/projectile/beam/singularity_turret))
 		delayed_power_bar_one.poke()
 		delayed_power_bar_two.poke()
+		time_since_last_hit = world.time
 
 		addtimer(CALLBACK(src, PROC_REF(fire_particle_reaction)), 0.3 SECONDS)
+
 		return
 
 	return ..()
@@ -84,6 +92,10 @@
 
 	if (DT_PROB(100 * ((1 - health_percent) * chance_of_extra_particle_at_zero_health_per_second), delta_time))
 		try_fire_particle()
+
+	if (health > 0 && world.time - time_since_last_hit >= time_to_wait_before_healing && world.time - last_heal >= heal_interval)
+		health = min(health + heal_per_interval, max_health)
+		last_heal = world.time
 
 /obj/contained_singularity/proc/fire_particle_reaction()
 	if (!COOLDOWN_FINISHED(src, hit_cooldown))
