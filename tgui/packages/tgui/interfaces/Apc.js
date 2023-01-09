@@ -5,7 +5,7 @@ import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Apc = (props, context) => {
   return (
-    <Window width={450} height={445}>
+    <Window width={450} height={460}>
       <Window.Content scrollable>
         <ApcContent />
       </Window.Content>
@@ -89,6 +89,13 @@ const ApcContent = (props, context) => {
       />
       <Section title="Power Status">
         <LabeledList>
+          {data.powerBars !== null && (
+            <LabeledList.Item label="Power Distribution">
+              {data.powerBars
+                ? `Tier ${'I'.repeat(data.powerBars)}`
+                : 'Disconnected'}
+            </LabeledList.Item>
+          )}
           <LabeledList.Item
             label="Main Breaker"
             color={externalPowerStatus.color}

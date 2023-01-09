@@ -321,7 +321,9 @@
 					"off" = list("env" = 1),
 				)
 			)
-		)
+		),
+
+		"powerBars" = (SSpower_bars.enabled && area.protected_from_power_bars) ? SSpower_bars.power_bars_of_area(area) : null,
 	)
 	return data
 
