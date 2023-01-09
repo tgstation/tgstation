@@ -1,0 +1,5 @@
+author: "Tastyfish"
+delete-after: True
+changes:
+  - bugfix: "The small carton no longer randomly disappears."
+  - bugfix: "Pre-filled bottles of cola & nuka cola, and glasses of soda now have the correct sprite."
