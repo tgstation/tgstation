@@ -170,7 +170,7 @@
 
 /obj/item/organ/internal/heart/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "skin [owner.p_have()] visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 #undef GOLIATH_COLORS
