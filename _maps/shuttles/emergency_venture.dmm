@@ -139,13 +139,10 @@
 /turf/open/floor/iron/large,
 /area/shuttle/escape)
 "gu" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -358,9 +355,22 @@
 /area/shuttle/escape)
 "tY" = (
 /obj/structure/table,
-/obj/machinery/light/directional/north,
-/obj/effect/spawner/random/bureaucracy/pen,
-/turf/open/floor/iron,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/circular_saw,
+/obj/item/retractor{
+	pixel_x = 4
+	},
+/obj/item/hemostat{
+	pixel_x = -4
+	},
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/surgicaldrill,
+/obj/item/cautery,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uR" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -404,9 +414,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "xW" = (
-/obj/structure/table,
 /obj/machinery/light/directional/north,
-/obj/effect/spawner/random/bureaucracy/paper,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "xZ" = (
@@ -593,6 +602,20 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "LO" = (
+/obj/structure/table,
+/obj/machinery/light/directional/east,
+/obj/item/storage/medkit/regular{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin{
+	pixel_x = -3
+	},
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -618,48 +641,12 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "NO" = (
-/obj/structure/table,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
-/obj/item/circular_saw,
-/obj/item/retractor{
-	pixel_x = 4
-	},
-/obj/item/hemostat{
-	pixel_x = -4
-	},
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/surgicaldrill,
-/obj/item/cautery,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"OP" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/obj/item/storage/medkit/regular{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/toxin{
-	pixel_x = -3
-	},
-/obj/item/storage/medkit/o2{
-	pixel_x = 3;
-	pixel_y = -3
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "OS" = (
-/obj/structure/chair/comfy/shuttle,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -1023,8 +1010,8 @@ ZN
 ZN
 mD
 Fk
-uR
 gu
+MD
 of
 Ea
 Ea
@@ -1052,7 +1039,7 @@ ZN
 mD
 QU
 AC
-tY
+xW
 ye
 Ea
 Ea
@@ -1187,10 +1174,10 @@ TS
 sg
 YI
 NO
-Dx
-qo
-OP
 iJ
+qo
+Dx
+tY
 AC
 Za
 Ea
