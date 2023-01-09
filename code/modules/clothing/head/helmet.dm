@@ -1,6 +1,6 @@
 /obj/item/clothing/head/helmet
 	name = "helmet"
-	desc = "Standard Security gear. Protects the head from impacts."
+	desc = "Standard Security gear. Protects the head from impacts. Flashproof."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "helmet"
@@ -12,6 +12,7 @@
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	flash_protect = FLASH_PROTECTION_FLASH
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
 
@@ -63,9 +64,10 @@
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
-	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent. Flashproof."
 	icon_state = "helmetalt"
 	inhand_icon_state = "helmet"
+	flash_protect = FLASH_PROTECTION_FLASH
 	armor_type = /datum/armor/helmet_alt
 	dog_fashion = null
 
@@ -165,8 +167,9 @@
 
 /obj/item/clothing/head/helmet/toggleable/riot
 	name = "riot helmet"
-	desc = "It's a helmet specifically designed to protect against close range attacks."
+	desc = "It's a helmet specifically designed to protect against close range attacks. Flashproof."
 	icon_state = "riot"
+	flash_protect = FLASH_PROTECTION_FLASH
 	inhand_icon_state = "riot_helmet"
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
