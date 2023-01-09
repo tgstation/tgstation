@@ -2553,6 +2553,7 @@
 #include "code\modules\antagonists\traitor\objectives\final_objective\supermatter_cascade.dm"
 #include "code\modules\antagonists\valentines\heartbreaker.dm"
 #include "code\modules\antagonists\valentines\valentine.dm"
+#include "code\modules\antagonists\venus_human_trap\venus_human_trap.dm"
 #include "code\modules\antagonists\wishgranter\wishgranter.dm"
 #include "code\modules\antagonists\wizard\wizard.dm"
 #include "code\modules\antagonists\wizard\equipment\artefact.dm"
@@ -2565,7 +2566,7 @@
 #include "code\modules\antagonists\wizard\equipment\spellbook_entries\mobility.dm"
 #include "code\modules\antagonists\wizard\equipment\spellbook_entries\offensive.dm"
 #include "code\modules\antagonists\wizard\equipment\spellbook_entries\summons.dm"
-#include "code\modules\antagonists\wizard\slaughter_demon\imp_antag.dm"s
+#include "code\modules\antagonists\wizard\slaughter_demon\imp_antag.dm"
 #include "code\modules\antagonists\wizard\slaughter_demon\slaughter.dm"
 #include "code\modules\antagonists\wizard\slaughter_demon\slaughter_antag.dm"
 #include "code\modules\antagonists\xeno\xeno.dm"
