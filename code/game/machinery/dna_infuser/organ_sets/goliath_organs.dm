@@ -136,14 +136,11 @@
 	if(!("mining" in target.faction) && !("boss" in target.faction))
 		// Target is not a nemesis, so attack normally.
 		return ..()
-
 	// Apply nemesis-specific effects.
 	nemesis_effects(user, target)
-
 	// Can't apply bonus force if target isn't "solid", or is occupying the same turf as the user.
 	if(!target.density || get_turf(target) == get_turf(user))
 		return ..()
-
 	// Target is a nemesis, and we CAN apply bonus force.
 	force += mining_bonus_force
 	. = ..()
