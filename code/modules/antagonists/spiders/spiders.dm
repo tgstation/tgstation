@@ -8,6 +8,10 @@
 	/// Orders given to us by the queen
 	var/directive
 
+/datum/antagonist/spider/New(directive)
+	. = ..()
+	src.directive = directive
+
 /datum/antagonist/spider/on_gain()
 	forge_objectives(directive)
 	. = ..()

@@ -76,8 +76,8 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	var/datum/antagonist/spider/spider_antag = mind.add_antag_datum(/datum/antagonist/spider)
-	spider_antag.directive = directive
+	var/datum/antagonist/spider/spider_antag = new(directive)
+	mind.add_antag_datum(spider_antag)
 	GLOB.spidermobs[src] = TRUE
 
 /mob/living/simple_animal/hostile/giant_spider/Destroy()
