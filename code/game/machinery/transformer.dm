@@ -24,7 +24,7 @@
 	/// The visual countdown effect
 	var/obj/effect/countdown/transformer/countdown
 	/// Who the master AI is that created this factory
-	var/mob/living/silicon/ai/masterAI
+	var/mob/living/silicon/ai/master_ai
 
 /obj/machinery/transformer/Initialize(mapload)
 	. = ..()
@@ -105,11 +105,11 @@
 
 	// So he can't jump out the gate right away.
 	new_borg.SetLockdown()
-	if(masterAI && new_borg.connected_ai != masterAI)
-		new_borg.set_connected_ai(masterAI)
+	if(master_ai && new_borg.connected_ai != master_ai)
+		new_borg.set_connected_ai(master_ai)
 		new_borg.lawsync()
 		new_borg.lawupdate = TRUE
-		log_silicon("[key_name(new_borg)] resynced to [key_name(masterAI)]")
+		log_silicon("[key_name(new_borg)] resynced to [key_name(master_ai)]")
 	addtimer(CALLBACK(src, PROC_REF(unlock_new_robot), new_borg), 5 SECONDS)
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/new_borg)
