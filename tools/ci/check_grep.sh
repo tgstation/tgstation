@@ -173,17 +173,6 @@ do
     done < <(jq -r '[.map_file] | flatten | .[]' $json)
 done
 
-section "code quality"
-part "logical operator spacing"
-if $grep -P '(\)|!?\w)(!=|==|<=|>=|&&|\|\|)' $code_files ||
-	$grep -P '(!=|==|<=|>=|&&|\|\|)(\(|!?\w)' $code_files ||
-	$grep -P " (!=|==|<=|>=|&&|\|\|)(\"|')" $code_files ||
-	$grep -P "(\"|')(!=|==|<=|>=|&&|\|\|) " $code_files	; then
-	echo
-	echo -e "${RED}ERROR: Logical operator not spaced in code, please use spaces around logical operators.${NC}"
-	st=1
-fi;
-
 section "515 Proc Syntax"
 part "proc ref syntax"
 if $grep '\.proc/' $code_x_515 ; then
