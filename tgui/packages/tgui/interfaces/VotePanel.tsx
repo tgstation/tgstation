@@ -162,7 +162,11 @@ const ChoicesPanel = (props, context) => {
             {currentVote.choices.map((choice) => (
               <Box key={choice.name}>
                 <LabeledList.Item
-                  label={choice.name.replace(/^\w/, (c) => c.toUpperCase())}
+                  label={
+                    choice.name.toLowerCase() === 'metastation'
+                      ? 'MetaStation (SINGULARITY+POWER BARS)'
+                      : choice.name.replace(/^\w/, (c) => c.toUpperCase())
+                  }
                   textAlign="right"
                   buttons={
                     <Button
