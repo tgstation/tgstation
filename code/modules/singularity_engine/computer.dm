@@ -8,9 +8,6 @@
 
 GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singularity)
 
-// MBTODO: Make it have its own speaker for singularity operations.
-// Can be disabled with wirecutter.
-// MBTODO: When the singularity is gone, the console should give a new screen
 /obj/machinery/computer/singularity
 	name = "singularity control console"
 	desc = "Transforming the singularity from a terror-inducing class action lawsuit into a useful class action lawsuit, this console safely controls the equipment containing the singularity, as well as harnessing its energy output."
