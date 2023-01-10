@@ -77,7 +77,7 @@
 	return TRUE
 
 /obj/item/add_blood_DNA(list/blood_DNA_to_add)
-	if(item_flags & HIDE_BLOOD_OVERLAY)
+	if(item_flags & NO_BLOOD_ON_ITEM)
 		return FALSE
 	. = ..()
 

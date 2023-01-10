@@ -12,7 +12,7 @@
 	bare_wound_bonus = 20
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
-	item_flags = HIDE_BLOOD_OVERLAY
+	item_flags = NO_BLOOD_ON_ITEM
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon

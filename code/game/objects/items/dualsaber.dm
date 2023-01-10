@@ -29,7 +29,7 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
 	bare_wound_bonus = 20
-	item_flags = HIDE_BLOOD_OVERLAY
+	item_flags = NO_BLOOD_ON_ITEM
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/saber_color = "green"
 	var/two_hand_force = 34
