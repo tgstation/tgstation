@@ -49,10 +49,6 @@
 		qdel(src)
 		return
 
-	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
-		terror_buildup -= 50 //get over it you big baby, you're fine
-		return
-
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD) //The onset, minor effects of terror buildup
 		owner.adjust_dizzy_up_to(10 SECONDS * delta_time, 10 SECONDS)
 		owner.adjust_stutter_up_to(10 SECONDS * delta_time, 10 SECONDS)
@@ -110,7 +106,7 @@
 				)
 			return COMPONENT_BLOCK_MISC_HELP
 
-	terror_buildup -= HUG_TERROR_AMOUNT //maybe later I'll integrate some of the hug-related traits into this somehow
+	terror_buildup -= HUG_TERROR_AMOUNT
 	owner.visible_message(
 		span_notice("[owner] seems to relax as [hugger] gives [owner.p_them()] a comforting hug."),
 		span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
