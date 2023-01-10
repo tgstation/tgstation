@@ -9,7 +9,10 @@
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
+	///Our associated shadow jaunt spell, for all nightmares
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
+	///Our associated terrorize spell, for antagonist nightmares
+	var/datum/action/cooldown/spell/pointed/terrorize/terrorize_spell
 
 /obj/item/organ/internal/brain/shadow/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
 	. = ..()
@@ -20,8 +23,13 @@
 	our_jaunt = new(M)
 	our_jaunt.Grant(M)
 
+	if(M.mind?.has_antag_datum(/datum/antagonist/nightmare)) //Only a TRUE NIGHTMARE is worthy of using this ability
+		terrorize_spell = new(src)
+		terrorize_spell.Grant(M)
+
 /obj/item/organ/internal/brain/shadow/nightmare/Remove(mob/living/carbon/M, special = FALSE, no_id_transfer = FALSE)
 	QDEL_NULL(our_jaunt)
+	QDEL_NULL(terrorize_spell)
 	return ..()
 
 /obj/item/organ/internal/heart/nightmare
@@ -100,39 +108,6 @@
 /obj/item/organ/internal/heart/nightmare/get_availability(datum/species/S)
 	if(istype(S,/datum/species/shadow/nightmare))
 		return TRUE
-	return ..()
-
-/obj/item/organ/internal/eyes/night_vision/nightmare
-	name = "piercing red eyes"
-	desc = "Even without their nightmarish owner, looking at these eyes gives you a sense of dread."
-	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
-	///Our associated terrorize spell, for antagonist nightmares
-	var/datum/action/cooldown/spell/pointed/terrorize/terrorize_spell
-
-/obj/item/organ/internal/eyes/night_vision/nightmare/Initialize(mapload)
-	. = ..()
-
-	terrorize_spell = new(src)
-
-/obj/item/organ/internal/eyes/night_vision/nightmare/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-
-	if(!.)
-		return
-
-	if(reciever.mind?.has_antag_datum(/datum/antagonist/nightmare)) //Only a TRUE NIGHTMARE is worthy of using this ability
-		terrorize_spell.Grant(reciever)
-
-/obj/item/organ/internal/eyes/night_vision/nightmare/Remove(mob/living/carbon/eye_owner, special)
-	. = ..()
-
-	if(!.)
-		return
-
-	terrorize_spell.Remove(eye_owner)
-
-/obj/item/organ/internal/eyes/night_vision/nightmare/Destroy(mob/living/carbon/eye_owner, special)
-	QDEL_NULL(terrorize_spell)
 	return ..()
 
 #undef HEART_SPECIAL_SHADOWIFY
