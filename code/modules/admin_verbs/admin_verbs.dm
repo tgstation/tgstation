@@ -26,10 +26,11 @@ ADMIN_VERB_ADMIN(admin, announce, "Announce your desires to the world", message 
 	to_chat(world, "[span_adminnotice("<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>")]\n \t [message]")
 	log_admin("Announce: [key_name(usr)] : [message]")
 
+ADMIN_VERB(admin, known_alts_panel, "View all known alt accounts", NONE)
+	GLOB.known_alts.show_panel(usr.client)
+
 /**
 /datum/admins/proc/display_tags
-/datum/admins/proc/fishing_calculator
-/datum/admins/proc/known_alts_panel
 /datum/admins/proc/show_lag_switch_panel
 /datum/admins/proc/open_borgopanel
 /datum/admins/proc/open_shuttlepanel /* Opens shuttle manipulator UI */
