@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	req_access = list(ACCESS_ENGINEERING)
 
 	VAR_PRIVATE
+		talk_into_radio = TRUE
 		last_checked_available_power_bars
 
 		obj/item/radio/internal_radio
@@ -35,6 +36,16 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	QDEL_NULL(internal_radio)
 
 	return ..()
+
+/obj/machinery/computer/power_distribution/examine(mob/user)
+	. = ..()
+
+	if (talk_into_radio)
+		. += span_notice("[p_their(capitalized = TRUE)] communication wire is intact.")
+	else
+		. += span_warning("[p_their(capitalized = TRUE)] communication wire is cut!")
+
+	return .
 
 /obj/machinery/computer/power_distribution/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -66,7 +77,6 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 
 	return data
 
-// MBTODO: Check access in ui_status (through get_id and friends)
 /obj/machinery/computer/power_distribution/ui_act(action, list/params)
 	var/mob/user = usr
 
@@ -111,14 +121,45 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	balloon_alert(user, "overrode access")
 	req_access.Cut()
 
+// Prototype: This could be an element (this and the examine)
+/obj/machinery/computer/power_distribution/wirecutter_act(mob/living/user, obj/item/tool)
+	if (DOING_INTERACTION_WITH_TARGET(user, src))
+		return TRUE
+
+	if (talk_into_radio)
+		balloon_alert(user, "cutting communication wire...")
+		if (!do_after(user, 3 SECONDS))
+			return TRUE
+
+		talk_into_radio = FALSE
+		balloon_alert(user, "cut communication wire")
+		user.log_message("cut communication wire to singularity console at [AREACOORD(src)]", LOG_GAME)
+	else
+		balloon_alert(user, "mending communication wire...")
+		if (!do_after(user, 3 SECONDS))
+			return TRUE
+
+		talk_into_radio = TRUE
+		balloon_alert(user, "mended communication wire")
+		user.log_message("mended communication wire to singularity console at [AREACOORD(src)]", LOG_GAME)
+
+	user.playsound_local(get_turf(src), tool.usesound, 50, vary = TRUE)
+
+	return TRUE
+
 /obj/machinery/computer/power_distribution/proc/can_deplete(mob/user)
 	// MBTODO: Chief engineers can deplete (really anyone with a specific access that can be given by ID console)
 	return FALSE
 
 /obj/machinery/computer/power_distribution/proc/speak(message, channel)
 	PRIVATE_PROC(TRUE)
-	internal_radio.talk_into(src, message, channel)
-	return TRUE // MBTODO: return FALSE if wire is snipped
+
+	if (talk_into_radio)
+		internal_radio.talk_into(src, message, channel)
+	else
+		say(message)
+
+	return talk_into_radio
 
 /obj/machinery/computer/power_distribution/proc/send_power_bar_update_message(list/current_allocations, list/last_allocations)
 	var/any_passed = FALSE
