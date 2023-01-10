@@ -258,11 +258,23 @@ SUBSYSTEM_DEF(power_bars)
 
 	SEND_SIGNAL(src, COMSIG_POWER_BARS_UPDATED, departments_to_update)
 
+/datum/controller/subsystem/power_bars/proc/give_power_bars(datum/power_bar_allocation/power_bar_allocation)
+	ASSERT(SSpower_bars.enabled)
+	ASSERT(!(power_bar_allocation in available_power_bars))
+
+	var/previous_available_power_bars = available_power_bars()
+	var/previous_used_power_bars = used_power_bars()
+
+	update_available_power_bars(available_power_bars + power_bar_allocation)
+
+	if (previous_used_power_bars > previous_available_power_bars)
+		distribute_power_bars()
+
 /datum/controller/subsystem/power_bars/proc/remove_power_bars(datum/power_bar_allocation/power_bar_allocation)
 	ASSERT(SSpower_bars.enabled)
 	ASSERT(power_bar_allocation in available_power_bars)
 
-	available_power_bars -= power_bar_allocation
+	update_available_power_bars(available_power_bars - power_bar_allocation)
 
 	if (used_power_bars() > available_power_bars())
 		distribute_power_bars()
@@ -350,6 +362,16 @@ SUBSYSTEM_DEF(power_bars)
 		details += initial(detail.message)
 
 	return details
+
+/datum/controller/subsystem/power_bars/proc/update_available_power_bars(list/available_power_bars)
+	var/previous_available_power_bars = src.available_power_bars
+	src.available_power_bars = available_power_bars
+	ASSERT(previous_available_power_bars != available_power_bars) // Do not mutate
+
+	// Do it here instead of signal so we don't do it more than once
+	for (var/obj/machinery/computer/power_distribution/power_distribution_console as anything in GLOB.power_distribution_consoles)
+		if (power_distribution_console.send_power_bar_availability_changes(available_power_bars, previous_available_power_bars))
+			break
 
 /datum/power_bar_allocation
 	var/source

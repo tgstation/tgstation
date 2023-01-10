@@ -106,7 +106,7 @@
 		return
 
 	gave_power_bars = TRUE
-	SSpower_bars.available_power_bars += power_bar_allocation
+	SSpower_bars.give_power_bars(power_bar_allocation)
 
 /datum/delayed_power_bar/proc/remove_power_bars()
 	if (!gave_power_bars)

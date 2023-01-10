@@ -116,6 +116,33 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 
 	return any_passed
 
+/obj/machinery/computer/power_distribution/proc/send_power_bar_availability_changes(list/datum/power_bar_allocation/current_allocations, list/datum/power_bar_allocation/previous_allocations)
+	var/list/current_sources = list()
+	var/list/previous_sources = list()
+
+	for (var/datum/power_bar_allocation/current_allocation in current_allocations)
+		current_sources[current_allocation.source] += current_allocation.amount
+
+	for (var/datum/power_bar_allocation/previous_allocation in previous_allocations)
+		previous_sources[previous_allocation.source] += previous_allocation.amount
+
+	var/list/message = list()
+
+	for (var/source in (current_sources | previous_sources))
+		var/current_amount = current_sources[source] || 0
+		var/previous_amount = previous_sources[source] || 0
+
+		if (current_amount == previous_amount)
+			continue
+
+		// This doesn't say "The", so it's in quotes
+		message += "[abs(current_amount - previous_amount)] [current_amount > previous_amount ? "more" : "less"] power bar\s available from \"[source]\"."
+
+	if (message.len == 0)
+		return TRUE
+
+	return speak(message.Join(" "), RADIO_CHANNEL_ENGINEERING)
+
 /obj/item/circuitboard/computer/power_distribution
 	name = "Power Level Distribution Console"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
