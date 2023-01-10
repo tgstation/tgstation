@@ -10,6 +10,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	use_power = ACTIVE_POWER_USE
 	circuit = /obj/item/circuitboard/computer/power_distribution
 	tgui_id = "PowerLevelDistribution"
+
 	req_access = list(ACCESS_ENGINEERING)
 
 	VAR_PRIVATE
@@ -53,6 +54,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	data["available_power_bars"] = available_power_bars
 	data["time_to_next_distribution"] = timeleft(SSpower_bars.next_distribution_timer_id)
 	data["can_fully_deplete"] = can_deplete(user)
+	data["has_access"] = allowed(user)
 
 	return data
 
@@ -92,6 +94,22 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 				update_appearance(UPDATE_OVERLAYS)
 
 	return TRUE
+
+/obj/machinery/computer/power_distribution/ui_status(mob/user)
+	. = ..()
+
+	if (!allowed(user))
+		return min(., UI_UPDATE)
+
+	return .
+
+/obj/machinery/computer/power_distribution/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (obj_flags & EMAGGED)
+		return
+
+	obj_flags |= EMAGGED
+	balloon_alert(user, "overrode access")
+	req_access.Cut()
 
 /obj/machinery/computer/power_distribution/proc/can_deplete(mob/user)
 	// MBTODO: Chief engineers can deplete (really anyone with a specific access that can be given by ID console)

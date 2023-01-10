@@ -1,7 +1,8 @@
 import { range } from 'common/collections';
+import { BooleanLike } from 'common/react';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ProgressBar, Stack, Tooltip } from '../components';
+import { Box, Button, NoticeBox, ProgressBar, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 const UNUSED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.2)';
@@ -22,8 +23,9 @@ type PowerBarCounts = Record<DepartmentName, number>;
 
 type PowerLevelDistributionData = {
   available_power_bars: PowerBarAllocations;
-  can_fully_deplete: boolean;
+  can_fully_deplete: BooleanLike;
   department_allocations: DepartmentAllocations;
+  has_access: BooleanLike;
   max_power_bars: number;
   time_to_distribute: number;
   time_to_next_distribution: number;
@@ -99,7 +101,7 @@ const PowerBarTotal = ({
         </>
       }
       position="bottom-start">
-      <Stack.Item grow>
+      <Stack.Item>
         {range(0, usedPowerBars).map((_, i) => (
           <PowerBarDisplay color={USED_POWER_BAR_COLOR} key={i} />
         ))}
@@ -267,6 +269,12 @@ export const PowerLevelDistribution = (props, context) => {
                 availablePowerBars={data.available_power_bars}
                 usedPowerBars={usedPowerBars}
               />
+
+              <Stack.Item grow>
+                {!data.has_access && (
+                  <NoticeBox danger>You do not have access.</NoticeBox>
+                )}
+              </Stack.Item>
 
               <Stack.Item width="25%">
                 {data.time_to_next_distribution && (

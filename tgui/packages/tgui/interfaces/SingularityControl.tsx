@@ -21,7 +21,7 @@ type PowerBar = {
 type SingularityControlData = {
   enabled_field_generators: number;
   disabled_field_generators: number;
-  has_access: boolean;
+  has_access: BooleanLike;
   map_name: string;
   singularity_generator: BooleanLike;
   stage: Stage;
