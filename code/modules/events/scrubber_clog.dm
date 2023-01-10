@@ -129,6 +129,7 @@
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs)
 
+	announce_to_ghosts(scrubber)
 	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(scrubber)]."]", "Lifesign Notification")
 
 /datum/round_event_control/scrubber_clog/major
