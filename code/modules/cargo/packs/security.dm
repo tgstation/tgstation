@@ -322,7 +322,7 @@
 					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,
 					/obj/item/clothing/gloves/tackler/combat,
-//					/obj/item/clothing/under/syndicate/rus_army, // TODO-SYNDIE: FIX RUSKIE STUFF.
+					/obj/item/clothing/under/syndicate/rus_army,
 					/obj/item/clothing/under/costume/soviet,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,

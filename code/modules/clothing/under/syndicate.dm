@@ -15,19 +15,9 @@
 	fire = 50
 	acid = 40
 
-/obj/item/clothing/under/syndicate/skirt
-	name = "tactical skirtleneck"
-	desc = "A non-descript and slightly suspicious looking skirtleneck."
-	icon_state = "syndicate_skirt"
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
 /obj/item/clothing/under/syndicate/tacticool
 	name = "tacticool turtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
-	icon_state = "tactifool"
-	inhand_icon_state = "bl_suit"
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/syndicate_tacticool
 
@@ -35,15 +25,6 @@
 	bio = 10
 	fire = 50
 	acid = 40
-
-/obj/item/clothing/under/syndicate/tacticool/skirt
-	name = "tacticool skirtleneck"
-	icon_state = "tactifool_skirt"
-	inhand_icon_state = "bl_suit"
-	armor_type = /datum/armor/syndicate_tacticool
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /*
 
@@ -146,3 +127,10 @@
 	icon_state = "tactical_suit"
 	inhand_icon_state = "bl_suit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/rus_army
+	name = "advanced military tracksuit"
+	desc = "Military grade tracksuits for frontline squatting."
+	icon_state = "rus_under"
+	can_adjust = FALSE
+	resistance_flags = NONE

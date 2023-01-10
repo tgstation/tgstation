@@ -176,7 +176,6 @@
 	lethal = 1;
 	name = "Ship turret control panel";
 	pixel_y = 32;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -581,8 +580,8 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bP" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -686,7 +685,7 @@
 "cf" = (
 /obj/structure/displaycase{
 	req_access = list("syndicate");
-	start_showpiece_type = /obj/item/gun/ballistic/automatic/pistol/deagle/camo
+	start_showpiece_type = /obj/item/gun/ballistic/revolver/judge
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1099,7 +1098,6 @@
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/shoes/combat,
 /obj/item/clothing/mask/gas/syndicate,
-/obj/item/clothing/under/syndicate/skirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dg" = (
@@ -1116,7 +1114,6 @@
 /obj/item/clothing/suit/armor/vest/capcarapace/gorlex,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/under/syndicate,
-/obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/shoes/combat,
 /turf/open/floor/mineral/plastitanium/red,

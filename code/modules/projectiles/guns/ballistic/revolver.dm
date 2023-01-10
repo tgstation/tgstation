@@ -133,6 +133,7 @@
 /obj/item/gun/ballistic/revolver/syndicate
 	name = "tactical revolver"
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
+	icon = 'icons/obj/weapons/guns/syndicate/ballistic.dmi'
 	icon_state = "revolversyndie"
 
 /obj/item/gun/ballistic/revolver/mateba

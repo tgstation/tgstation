@@ -56,8 +56,7 @@
 	name = "syndie outfit spawner"
 	icon_state = "syndicate"
 	loot = list(
-		/obj/item/clothing/under/syndicate,
-		/obj/item/clothing/under/syndicate/skirt, // TODO-SYNDIE: ADD NEW OUTFITS
+		/obj/item/clothing/under/syndicate, // TODO-SYNDIE: ADD NEW OUTFITS
 	)
 
 /obj/effect/spawner/random/clothing/gloves

@@ -97,22 +97,6 @@
 	mask = /obj/item/clothing/mask/cigarette/cigar
 	faction = "Cybersun Industries"
 
-/datum/outfit/syndicate/reinforcement/donk
-	name = "Syndicate Operative - Donk Reinforcement"
-	suit = /obj/item/clothing/suit/hazardvest
-	head = /obj/item/clothing/head/utility/hardhat/orange
-	shoes = /obj/item/clothing/shoes/workboots
-	glasses = /obj/item/clothing/glasses/meson
-	faction = "the DONK! Corporation"
-
-/datum/outfit/syndicate/reinforcement/waffle
-	name = "Syndicate Operative - Waffle Reinforcement"
-	uniform = /obj/item/clothing/under/syndicate // TODO-SYNDIE: ADD ACTUAL OUTFIT
-	suit = /obj/item/clothing/suit/armor/vest
-	head = /obj/item/clothing/head/helmet/blueshirt
-	glasses = /obj/item/clothing/glasses/welding/up
-	faction = "WaffleCorp"
-
 /datum/outfit/syndicate/reinforcement/interdyne
 	name = "Syndicate Operative - Interdyne Trauma Team"
 	uniform = /obj/item/clothing/under/syndicate/interdyne/trauma_team
@@ -122,10 +106,3 @@
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	mask = /obj/item/clothing/mask/breath/medical
 	faction = "Interdyne Pharmaceutics"
-
-/datum/outfit/syndicate/reinforcement/mi13
-	name = "Syndicate Operative - MI13 Reinforcement"
-	uniform = /obj/item/clothing/under/syndicate/ // TODO-SYNDIE: GIVE STEALTH-OP SHIT
-	shoes = /obj/item/clothing/shoes/laceup
-	glasses = /obj/item/clothing/glasses/sunglasses/big
-	faction = "MI13"

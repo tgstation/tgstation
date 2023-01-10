@@ -15,7 +15,6 @@
 	new /obj/item/storage/belt/holster/nukie(src)
 	new /obj/item/radio/headset/syndicate(src)
 	new /obj/item/clothing/under/syndicate(src)
-	new /obj/item/clothing/under/syndicate/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 
 /obj/structure/closet/syndicate/nuclear
