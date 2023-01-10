@@ -11,6 +11,11 @@
 		ASSERT(!isnull(department))
 
 	src.department = department || SSpower_bars.department_from_area(get_area(parent))
+
+	// Valid, things like APCs in the AI SAT
+	if (isnull(department))
+		return
+
 	src.on_changed = on_changed
 
 	if (SSpower_bars.initialized)
