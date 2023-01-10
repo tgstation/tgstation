@@ -64,12 +64,20 @@
 		owner.adjust_eye_blur_up_to(10 SECONDS * delta_time, 10 SECONDS)
 		if(prob(5)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
 			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
-			owner.visible_message(span_warning("[owner] drops to the floor for a moment, clutching their chest."), span_alert("Your heart lurches in your chest. You can't take much more of this!"), span_hear("You hear a grunt."))
+			owner.visible_message(
+				span_warning("[owner] drops to the floor for a moment, clutching their chest."),
+				span_alert("Your heart lurches in your chest. You can't take much more of this!"),
+				span_hear("You hear a grunt."),
+			)
 	else
 		owner.remove_fov_trait(id, FOV_270_DEGREES)
 
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by actively terrorizing someone
-		owner.visible_message(span_warning("[owner] clutches [owner.p_their()] chest for a moment, then collapses to the floor."), span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."), span_hear("You hear something heavy collide with the ground."))
+		owner.visible_message(
+			span_warning("[owner] clutches [owner.p_their()] chest for a moment, then collapses to the floor."),
+			span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."),
+			span_hear("You hear something heavy collide with the ground."),
+		)
 		var/datum/disease/heart_failure/heart_attack = new(src)
 		heart_attack.stage_prob = 2 //Advances twice as fast
 		owner.ForceContractDisease(heart_attack)
@@ -95,14 +103,19 @@
 	if(is_species(hugger, /datum/species/shadow/nightmare)) //hey wait a minute, that's not a comforting, friendly hug!
 		if(check_surrounding_darkness())
 			addtimer(CALLBACK(src, PROC_REF(freak_out), HUG_TERROR_AMOUNT))
-			owner.visible_message(span_warning("[owner] recoils in fear as [hugger] waves [hugger.p_their()] arms and shrieks at [owner.p_them()]!"), span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"), span_hear("You hear someone shriek in fear. How embarassing!"))
+			owner.visible_message(
+				span_warning("[owner] recoils in fear as [hugger] waves [hugger.p_their()] arms and shrieks at [owner.p_them()]!"),
+				span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"),
+				span_hear("You hear someone shriek in fear. How embarassing!"),
+				)
 			return COMPONENT_BLOCK_MISC_HELP
-		else
-			owner.balloon_alert(hugger, "victim must be in the dark!")
-			return
 
 	terror_buildup -= HUG_TERROR_AMOUNT //maybe later I'll integrate some of the hug-related traits into this somehow
-	owner.visible_message(span_notice("[owner] seems to relax as [hugger] gives [owner.p_them()] a comforting hug."), span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."), span_hear("You hear shuffling and a sigh of relief."))
+	owner.visible_message(
+		span_notice("[owner] seems to relax as [hugger] gives [owner.p_them()] a comforting hug."),
+		span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
+		span_hear("You hear shuffling and a sigh of relief."),
+	)
 	return
 
 /**
