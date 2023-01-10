@@ -68,6 +68,16 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	return ..()
 
+/obj/machinery/computer/singularity/examine(mob/user)
+	. = ..()
+
+	if (talk_into_radio)
+		. += span_notice("[p_their(capitalized = TRUE)] communication wire is intact.")
+	else
+		. += span_warning("[p_their(capitalized = TRUE)] communication wire is cut!")
+
+	return .
+
 // not now, definitely later
 /obj/machinery/computer/singularity/screwdriver_act(mob/living/user, obj/item/I)
 	balloon_alert(user, "you can't find the panel!")
@@ -158,6 +168,31 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	obj_flags |= EMAGGED
 	balloon_alert(user, "overrode access")
 	req_access.Cut()
+
+/obj/machinery/computer/singularity/wirecutter_act(mob/living/user, obj/item/tool)
+	if (DOING_INTERACTION_WITH_TARGET(user, src))
+		return TRUE
+
+	if (talk_into_radio)
+		balloon_alert(user, "cutting communication wire...")
+		if (!do_after(user, 3 SECONDS))
+			return TRUE
+
+		talk_into_radio = FALSE
+		balloon_alert(user, "cut communication wire")
+		user.log_message("cut communication wire to singularity console at [AREACOORD(src)]", LOG_GAME)
+	else
+		balloon_alert(user, "mending communication wire...")
+		if (!do_after(user, 3 SECONDS))
+			return TRUE
+
+		talk_into_radio = TRUE
+		balloon_alert(user, "mended communication wire")
+		user.log_message("mended communication wire to singularity console at [AREACOORD(src)]", LOG_GAME)
+
+	user.playsound_local(get_turf(src), tool.usesound, 50, vary = TRUE)
+
+	return TRUE
 
 /obj/machinery/computer/singularity/proc/try_singularity_ui_data()
 	var/obj/contained_singularity/singularity = singularity_ref?.resolve()
