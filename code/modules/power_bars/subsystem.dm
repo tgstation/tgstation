@@ -116,6 +116,12 @@ SUBSYSTEM_DEF(power_bars)
 	for (var/list/entry in sorted_allocation_entries)
 		counts[entry[2]] += 1
 
+	for (var/department in department_allocations)
+		if (department in counts)
+			continue
+
+		counts[department] = 0
+
 	return counts
 
 /datum/controller/subsystem/power_bars/proc/department_from_area(area/area)
@@ -281,7 +287,10 @@ SUBSYSTEM_DEF(power_bars)
 		return clamp(source.powernet.avail - source.powernet.load, 0, source.powernet.avail)
 
 	if (available_power_bars() <= department_allocations.len)
-		return 0
+		return 0 WATTS
+
+	if (power_bars_of_area(area) == 0)
+		return 0 WATTS
 
 	return 1000000 WATTS
 
