@@ -503,7 +503,7 @@ Moving interrupts
 		var/list/carving_cost = statue_costs[statue_path]
 		var/enough_materials = TRUE
 		for(var/required_material in carving_cost)
-			if(!has_material_type(required_material, TRUE, carving_cost[required_material]))
+			if(!has_material_type(required_material, carving_cost[required_material]))
 				enough_materials = FALSE
 				break
 		if(enough_materials)
