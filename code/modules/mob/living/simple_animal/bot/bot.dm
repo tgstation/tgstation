@@ -213,6 +213,8 @@
 		return TRUE
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
+	if(isdead(user)) //These shouldn't be able to manipulate bots, and will runtime if passed down any further.
+		return FALSE
 
 	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
 
