@@ -65,6 +65,9 @@
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/food/onion_slice/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/onionrings, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
 /obj/item/food/onion_slice/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/onionrings)
 
