@@ -194,7 +194,7 @@
 		return
 
 	if(iscarbon(target) && ishuman(target))
-		close_machine(target)
+		infusing_from.forceMove(src)
 		infusing_from = target
 
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
