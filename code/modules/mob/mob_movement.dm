@@ -353,7 +353,8 @@
  */
 /mob/proc/mob_negates_gravity()
 	var/turf/turf = get_turf(src)
-	return !isgroundlessturf(turf) && HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY)
+	// This is fine to not put behind power bars guard
+	return (!isgroundlessturf(turf) || HAS_TRAIT(turf, TRAIT_CAN_BE_MAGNETIZED)) && HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY)
 
 /// Called when this mob slips over, override as needed
 /mob/proc/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)

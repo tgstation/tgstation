@@ -692,6 +692,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Echolocation has a higher range.
 #define TRAIT_ECHOLOCATION_EXTRA_RANGE "echolocation_extra_range"
 
+#define TRAIT_CAN_BE_MAGNETIZED "can_be_magnetized"
+
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define UNCONSCIOUS_TRAIT "unconscious"

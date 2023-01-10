@@ -38,6 +38,9 @@
 		stack_trace("multiple lattices found in ([loc.x], [loc.y], [loc.z])")
 		return INITIALIZE_HINT_QDEL
 
+	if (isturf(loc))
+		ADD_TRAIT(loc, TRAIT_CAN_BE_MAGNETIZED, "[type]")
+
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
@@ -73,6 +76,15 @@
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
+
+/obj/structure/lattice/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
+	if (isturf(old_loc))
+		REMOVE_TRAIT(old_loc, TRAIT_CAN_BE_MAGNETIZED, "[type]")
+
+	if (isturf(loc))
+		ADD_TRAIT(loc, TRAIT_CAN_BE_MAGNETIZED, "[type]")
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"

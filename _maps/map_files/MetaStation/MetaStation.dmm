@@ -160,6 +160,9 @@
 "acs" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
+/obj/item/paper{
+	default_raw_text = "Your SMES have been taken in for repairs. APCs will charge themselves if your engine is distributing power."
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "acB" = (
@@ -12939,13 +12942,6 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
-"eNC" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor/border_only,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
 "eNR" = (
 /turf/closed/wall,
 /area/station/ai_monitored/aisat/exterior)
@@ -15264,7 +15260,7 @@
 /area/station/tcommsat/server)
 "fKg" = (
 /obj/structure/railing{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -19408,6 +19404,11 @@
 "hkj" = (
 /turf/open/floor/plating,
 /area/station/cargo/drone_bay)
+"hkx" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "hkE" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -30615,10 +30616,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kYo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/obj/machinery/door/firedoor/border_only,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "kYv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"
@@ -32136,14 +32139,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "lzJ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/engineering/main)
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "lzL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33474,12 +33475,8 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "lZk" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
+/turf/open/floor/engine,
+/area/station/maintenance/disposal/incinerator)
 "lZC" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -50542,14 +50539,6 @@
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"rZk" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/cable,
-/obj/item/paper{
-	default_raw_text = "Your SMES have been taken in for repairs. APCs will charge themselves if your engine is distributing power."
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/main)
 "rZt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 8
@@ -56394,8 +56383,14 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "uaB" = (
-/turf/open/floor/engine,
-/area/station/maintenance/disposal/incinerator)
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "uaN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -65120,6 +65115,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"xfh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "xfm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -107474,7 +107474,7 @@ uXd
 dHg
 gLK
 qul
-rZk
+acs
 uXd
 tKS
 nLz
@@ -107731,7 +107731,7 @@ uXd
 gMG
 dWG
 uGm
-acs
+hkx
 uXd
 qJd
 nLz
@@ -108034,7 +108034,7 @@ ydj
 aBW
 vQh
 pnH
-uaB
+lZk
 pnH
 pnH
 aaa
@@ -108291,7 +108291,7 @@ ldc
 xpB
 dli
 huZ
-uaB
+lZk
 xrr
 aaa
 aaa
@@ -108548,7 +108548,7 @@ lYM
 vzc
 gUY
 pnH
-uaB
+lZk
 pnH
 aaa
 aaa
@@ -109529,7 +109529,7 @@ qaA
 wgf
 lBN
 rao
-lzJ
+uaB
 haR
 gZG
 cnK
@@ -110550,11 +110550,11 @@ lMJ
 abi
 btn
 fnC
-fKg
-fKg
+kYo
+kYo
 egh
-fKg
-fKg
+kYo
+kYo
 tEG
 pkc
 abi
@@ -110807,11 +110807,11 @@ lMJ
 abi
 fnC
 xUJ
-aaa
+lMJ
 aaa
 dJN
 aaa
-aaa
+lMJ
 lou
 tEG
 abi
@@ -111058,18 +111058,18 @@ tCS
 eVi
 bwE
 syX
-kYo
+xfh
 cKx
 qhD
 abi
 bgk
-aaa
-aaa
+lMJ
+lMJ
 aaa
 dJN
 aaa
-aaa
-aaa
+lMJ
+lMJ
 wjU
 abi
 lMJ
@@ -112086,18 +112086,18 @@ tCS
 xGr
 yli
 pmj
-eNC
+lzJ
 bgs
 qhD
 abi
 bgk
-aaa
-aaa
+lMJ
+lMJ
 aaa
 lMJ
 aaa
-aaa
-aaa
+lMJ
+lMJ
 wjU
 abi
 lMJ
@@ -112349,11 +112349,11 @@ lMJ
 abi
 kjM
 hqb
-aaa
+lMJ
 aaa
 lMJ
 aaa
-aaa
+lMJ
 qLJ
 fuE
 abi
@@ -112606,11 +112606,11 @@ lMJ
 abi
 rcM
 kjM
-lZk
-lZk
+fKg
+fKg
 lMJ
-lZk
-lZk
+fKg
+fKg
 fuE
 kIz
 abi
