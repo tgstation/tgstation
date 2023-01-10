@@ -4171,6 +4171,7 @@
 #include "code\modules\power\tracker.dm"
 #include "code\modules\power\apc\apc_appearance.dm"
 #include "code\modules\power\apc\apc_attack.dm"
+#include "code\modules\power\apc\apc_contextual_tips.dm"
 #include "code\modules\power\apc\apc_main.dm"
 #include "code\modules\power\apc\apc_malf.dm"
 #include "code\modules\power\apc\apc_mapping.dm"
