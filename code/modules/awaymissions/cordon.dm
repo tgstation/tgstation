@@ -1,3 +1,4 @@
+/// Turf type that appears to be a world border, completely impassable and non-interactable to all physical (alive) entities.
 /turf/cordon
 	name = "cordon"
 	icon = 'icons/turf/walls.dmi'
@@ -18,9 +19,6 @@
 /turf/cordon/AfterChange()
 	. = ..()
 	SSair.high_pressure_delta -= src
-
-/turf/cordon/attack_ghost(mob/dead/observer/user)
-	return FALSE
 
 /turf/cordon/rust_heretic_act()
 	return FALSE
@@ -44,6 +42,7 @@
 /turf/cordon/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
 	return FALSE
 
+/// Area used in conjuction with the cordon turf to create a fully functioning world border.
 /area/misc/cordon
 	name = "CORDON"
 	icon_state = "cordon"
@@ -57,3 +56,10 @@
 	for(var/mob/living/enterer as anything in arrived.get_all_contents_type(/mob/living))
 		to_chat(enterer, span_userdanger("This was a bad idea..."))
 		enterer.dust(TRUE, FALSE, TRUE)
+
+/// This type of cordon will block ghosts from passing through it. Useful for stuff like Away Missions, where you feasibly want to block ghosts from entering to keep a certain map section a secret.
+/turf/cordon/secret
+	name = "secret cordon (ghost blocking)"
+
+/turf/cordon/secret/attack_ghost(mob/dead/observer/user)
+	return FALSE

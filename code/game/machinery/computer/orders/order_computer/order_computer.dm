@@ -7,14 +7,17 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	icon_screen = "request"
 	icon_keyboard = "generic_key"
 	light_color = LIGHT_COLOR_ORANGE
+	///Tooltip for the express button in TGUI
+	var/express_tooltip = @{"Sends your purchases instantly,
+	but locks the console longer and increases the price!"}
+	///Tooltip for the purchase button in TGUI
+	var/purchase_tooltip = @{"Your purchases will arrive at cargo,
+	and hopefully get delivered by them."}
 
 	///Cooldown between order uses.
 	COOLDOWN_DECLARE(order_cooldown)
 	///Cooldown time between uses, express console will have extra time depending on express_cost_multiplier.
 	var/cooldown_time = 60 SECONDS
-	///Boolean on whether they can bluespace orders using a '/obj/machinery/mining_ltsrbt'
-	var/uses_ltsrbt = FALSE
-
 	///The radio the console can speak into
 	var/obj/item/radio/radio
 	///The channel we will attempt to speak into through our radio.
@@ -63,7 +66,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/ui_data(mob/user)
 	var/list/data = list()
-	data["total_cost"] = get_total_cost()
+	var/cost = get_total_cost()
+	data["total_cost"] = "[cost] (Express: [cost*express_cost_multiplier])"
 	data["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
 	if(!isliving(user))
@@ -77,7 +81,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/ui_static_data(mob/user)
 	var/list/data = list()
-	data["ltsrbt_available"] = (uses_ltsrbt && GLOB.mining_ltsrbt.len)
+	data["express_tooltip"] = express_tooltip
+	data["purchase_tooltip"] = purchase_tooltip
 	data["forced_express"] = forced_express
 	data["order_categories"] = order_categories
 	data["order_datums"] = list()
@@ -102,6 +107,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		return
 	var/mob/living/living_user = usr
 	switch(action)
+		if("add_one")
+			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
+			grocery_list[wanted_item] += 1
+			update_static_data(living_user)
 		if("cart_set")
 			//this is null if the action doesn't need it (purchase, quickpurchase)
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
@@ -124,7 +133,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				say("For the delivery order needs to cost more or equal to [CARGO_CRATE_VALUE] points!")
 				return
-			order_groceries(living_user, used_id_card, grocery_list, ltsrbt_delivered = (action == "ltsrbt_deliver"))
+			order_groceries(living_user, used_id_card, grocery_list)
 			grocery_list.Cut()
 			COOLDOWN_START(src, order_cooldown, cooldown_time)
 		if("express")
@@ -176,5 +185,5 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	say(failure_message)
 	return FALSE
 
-/obj/machinery/computer/order_console/proc/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries, ltsrbt_delivered = FALSE)
+/obj/machinery/computer/order_console/proc/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	return

@@ -17,42 +17,48 @@ GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/ef
 						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/cluster=8, /obj/effect/meteor/tunguska=1, \
 						  /obj/effect/meteor/carp=2, /obj/effect/meteor/bluespace=10, /obj/effect/meteor/emp = 8)) //for catastrophic meteor event
 
-GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
+GLOBAL_LIST_INIT(meateors, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
 
-GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust event
+GLOBAL_LIST_INIT(meteors_dust, list(/obj/effect/meteor/dust=1)) //for space dust event
 
-GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor/big=10, \
+GLOBAL_LIST_INIT(meteors_stray, list(/obj/effect/meteor/medium=15, /obj/effect/meteor/big=10, \
 						  /obj/effect/meteor/flaming=25, /obj/effect/meteor/irradiated=30, /obj/effect/meteor/carp=25, /obj/effect/meteor/bluespace=30, \
 						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
 						  /obj/effect/meteor/cluster=20, /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
+
+GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect/meteor/dust=5)) //for sandstorm event
 
 ///////////////////////////////
 //Meteor spawning global procs
 ///////////////////////////////
 
-/proc/spawn_meteors(number = 10, list/meteortypes)
+/proc/spawn_meteors(number = 10, list/meteor_types, direction)
 	for(var/i in 1 to number)
-		spawn_meteor(meteortypes)
+		spawn_meteor(meteor_types, direction)
 
-/proc/spawn_meteor(list/meteortypes)
-	var/turf/pickedstart
-	var/turf/pickedgoal
+/proc/spawn_meteor(list/meteor_types, direction)
+	var/turf/picked_start
+	var/turf/picked_goal
 	var/max_i = 10//number of tries to spawn meteor.
-	while(!isspaceturf(pickedstart))
-		var/startSide = pick(GLOB.cardinals)
-		var/startZ = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-		pickedstart = spaceDebrisStartLoc(startSide, startZ)
-		pickedgoal = spaceDebrisFinishLoc(startSide, startZ)
+	while(!isspaceturf(picked_start))
+		var/start_side
+		if(direction) //If a direction has been specified, we set start_side to it. Otherwise, pick randomly
+			start_side = direction
+		else
+			start_side = pick(GLOB.cardinals)
+		var/start_Z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
+		picked_start = spaceDebrisStartLoc(start_side, start_Z)
+		picked_goal = spaceDebrisFinishLoc(start_side, start_Z)
 		max_i--
 		if(max_i<=0)
 			return
-	var/Me = pick_weight(meteortypes)
-	new Me(pickedstart, pickedgoal)
+	var/new_meteor = pick_weight(meteor_types)
+	new new_meteor(picked_start, picked_goal)
 
-/proc/spaceDebrisStartLoc(startSide, Z)
+/proc/spaceDebrisStartLoc(start_side, Z)
 	var/starty
 	var/startx
-	switch(startSide)
+	switch(start_side)
 		if(NORTH)
 			starty = world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD)
 			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
@@ -202,8 +208,8 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
-	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
-		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
+	check_examine_award(user)
 
 /obj/effect/meteor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MINING)
@@ -232,9 +238,50 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
 			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, sound_to_use = meteor_sound)
 
+/**
+ * Used to check if someone who has examined a meteor will recieve an award.
+ *
+ * Checks the criteria to recieve the "examine a meteor" award.
+ * Admin spawned meteors will not grant the user an achievement.
+ *
+ * Arguments:
+ * * user - the person who will be recieving the examine award.
+ */
+
+/obj/effect/meteor/proc/check_examine_award(mob/user)
+	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
+		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
 ///////////////////////
 //Meteor types
 ///////////////////////
+
+//Sand
+/obj/effect/meteor/sand
+	name = "space sand"
+	icon_state = "dust"
+	hits = 2
+	hitpwr = EXPLODE_LIGHT
+	meteorsound = 'sound/items/dodgeball.ogg'
+	threat = 1
+
+/obj/effect/meteor/sand/make_debris()
+	return //We drop NOTHING
+
+/obj/effect/meteor/sand/ram_turf(turf/turf_to_ram)
+	if(istype(turf_to_ram, /turf/closed/wall)) //sand is too weak to affect rwalls or walls with similar durability.
+		var/turf/closed/wall/wall_to_ram = turf_to_ram
+		if(wall_to_ram.hardness <= 25)
+			return
+
+	var/area/area_to_check = get_area(turf_to_ram)
+	if(area_to_check.area_flags & EVENT_PROTECTED) //This event absolutely destroys arrivals, and putting latejoiners into firelock hell is cringe
+		return
+
+	return ..()
+
+/obj/effect/meteor/sand/check_examine_award(mob/user) //Too insignificant and predictable to warrant an award.
+	return
 
 //Dust
 /obj/effect/meteor/dust
@@ -340,14 +387,14 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 	desc = "Am I glad he's frozen in there, and that we're out here."
 	hits = 4
 	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
-	meteordrop = list(/mob/living/simple_animal/hostile/carp)
+	meteordrop = list(/mob/living/basic/carp)
 	dropamt = 1
 	threat = 5
 	signature = "fishing and trawling"
 
 /obj/effect/meteor/carp/Initialize(mapload)
 	if(prob(2))
-		meteordrop = list(/mob/living/simple_animal/hostile/carp/megacarp) //hehe
+		meteordrop = list(/mob/living/basic/carp/mega) //hehe
 	return ..()
 
 //bluespace meteor

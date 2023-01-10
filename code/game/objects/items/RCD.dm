@@ -24,7 +24,7 @@ RLD
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=100000)
 	req_access = list(ACCESS_ENGINE_EQUIP)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
+	armor_type = /datum/armor/item_construction
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
@@ -38,6 +38,10 @@ RLD
 	var/banned_upgrades = NONE
 	var/datum/component/remote_materials/silo_mats //remote connection to the silo
 	var/silo_link = FALSE //switch to use internal or remote storage
+
+/datum/armor/item_construction
+	fire = 100
+	acid = 50
 
 /obj/item/construction/Initialize(mapload)
 	. = ..()
@@ -146,6 +150,13 @@ RLD
 	if(prob(20))
 		spark_system.start()
 
+/obj/item/construction/update_overlays()
+	. = ..()
+	if(has_ammobar)
+		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
+		if(ratio > 0)
+			. += "[icon_state]_charge[ratio]"
+
 /obj/item/construction/proc/useResource(amount, mob/user)
 	if(!silo_mats || !silo_link)
 		if(matter < amount)
@@ -192,7 +203,10 @@ RLD
 
 ///shared action for toggling silo link rcd,rld & plumbing
 /obj/item/construction/ui_act(action, list/params)
-	..()
+	. = ..()
+	if(.)
+		return
+
 	if(action == "toggle_silo")
 		if(silo_mats)
 			if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link
@@ -203,7 +217,6 @@ RLD
 		else
 			to_chat(usr, span_warning("[src] doesn't have remote storage connection."))
 		return TRUE
-	return FALSE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	if(!silo_mats || !silo_mats.mat_container || !silo_link)
@@ -379,9 +392,8 @@ RLD
 	var/design_category = "Structures"
 	var/root_category = "Construction"
 	var/closed = FALSE
-	///used by construction_console
-	var/ui_always_active = FALSE
-
+	///owner of this rcd. It can either be an construction console or an player
+	var/owner
 	var/mode = RCD_FLOORWALL
 	var/construction_mode = RCD_FLOORWALL
 	var/ranged = FALSE
@@ -555,11 +567,13 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	GLOB.rcd_list -= src
 	. = ..()
 
-
 /obj/item/construction/rcd/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/rcd),
 	)
+
+/obj/item/construction/rcd/ui_host(mob/user)
+	return owner || ..()
 
 /obj/item/construction/rcd/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -567,18 +581,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		ui = new(user, src, "RapidConstructionDevice", name)
 		ui.open()
 
-/**
- * if ui_always_active = TRUE display & update window even if nothing changed, required for construction_console else window wont show up
- * else use parent method to decide the state for normal usage
- */
-/obj/item/construction/rcd/ui_state(mob/user)
-	return ui_always_active ? GLOB.always_state : ..()
-
 /obj/item/construction/rcd/ui_static_data(mob/user)
 	return airlock_electronics.ui_static_data(user)
 
 /obj/item/construction/rcd/ui_data(mob/user)
-	var/list/data = ..(user)
+	var/list/data = ..()
 
 	//main categories
 	data["selected_root"] = root_category
@@ -593,7 +600,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	var/category_icon_state
 	var/category_icon_suffix
-	for(var/list/sub_category as anything in root_categories[root_category])
+	for(var/sub_category as anything in root_categories[root_category])
 		var/list/target_category =  root_categories[root_category][sub_category]
 		if(target_category.len == 0)
 			continue
@@ -629,7 +636,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			//sanitize them so you dont go insane when icon names contain spaces in them
 			icon_state = sanitize_css_class_name(icon_state)
 
-			designs += list(list("design_id" = i, TITLE = design[TITLE], ICON = icon_state))
+			designs += list(list(TITLE = design[TITLE], ICON = icon_state))
 		data["categories"] += list(list("cat_name" = sub_category, "designs" = designs))
 
 	//merge airlock_electronics ui data with this
@@ -640,7 +647,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return data
 
 /obj/item/construction/rcd/ui_act(action, params)
-	..()
+	. = ..()
 	if(.)
 		return
 
@@ -732,13 +739,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/proc/detonate_pulse_explode()
 	explosion(src, light_impact_range = 3, flame_range = 1, flash_range = 1)
 	qdel(src)
-
-/obj/item/construction/rcd/update_overlays()
-	. = ..()
-	if(has_ammobar)
-		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
-		if(ratio > 0)
-			. += "[icon_state]_charge[ratio]"
 
 /obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
@@ -832,7 +832,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	custom_materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
 	ammoamt = 160
 
-
 /obj/item/construction/rcd/combat/admin
 	name = "admin RCD"
 	max_matter = INFINITY
@@ -856,6 +855,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	if(range_check(A,user))
 		pre_attack(A, user)
+		return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/construction/rcd/arcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if(range_check(target,user))
@@ -886,7 +886,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	matter = 200
 	max_matter = 200
 	slot_flags = ITEM_SLOT_BELT
-	desc = "It contains the design for chairs, stools, tables, and glass tables."
 	///it does not make sense why any of these should be installed
 	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
@@ -918,7 +917,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		display_options[option] = icon(original_options[option])
 
 /obj/item/construction/rld/attack_self(mob/user)
-	..()
+	. = ..()
 
 	if((upgrade & RCD_UPGRADE_SILO_LINK) && display_options["Silo Link"] == null) //silo upgrade instaled but option was not updated then update it just one
 		display_options["Silo Link"] = icon(icon = 'icons/obj/mining.dmi', icon_state = "silo")
@@ -1166,6 +1165,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return ..()
 
 /obj/item/construction/plumbing/attack_self(mob/user)
+	. = ..()
 	ui_interact(user)
 
 /obj/item/construction/plumbing/examine(mob/user)
@@ -1434,6 +1434,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/rcd_upgrade/silo_link
 	desc = "It contains direct silo connection RCD upgrade."
 	upgrade = RCD_UPGRADE_SILO_LINK
+
 /obj/item/rcd_upgrade/furnishing
 	desc = "It contains the design for chairs, stools, tables, and glass tables."
 	upgrade = RCD_UPGRADE_FURNISHING

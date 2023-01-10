@@ -37,7 +37,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	max_integrity = 160 //the turret's health
 	integrity_failure = 0.5
-	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/machinery_porta_turret
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
@@ -103,6 +103,15 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/datum/action/turret_toggle/toggle_action
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
+
+/datum/armor/machinery_porta_turret
+	melee = 50
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 30
+	fire = 90
+	acid = 90
 
 /obj/machinery/porta_turret/Initialize(mapload)
 	. = ..()
@@ -770,7 +779,16 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
 	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
-	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 80, BIO = 0, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/syndicate_shuttle
+
+/datum/armor/syndicate_shuttle
+	melee = 50
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 80
+	fire = 90
+	acid = 90
 
 /obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
 	if(target)

@@ -478,9 +478,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/analyzer/hilbertsanalyzer/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(istype(target, /obj/item/hilbertshotel))
+		. |= AFTERATTACK_PROCESSED_ITEM
 		if(!proximity)
 			to_chat(user, span_warning("It's to far away to scan!"))
-			return
+			return .
 		var/obj/item/hilbertshotel/sphere = target
 		if(sphere.activeRooms.len)
 			to_chat(user, "Currently Occupied Rooms:")
@@ -494,6 +495,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 				to_chat(user, roomnumber)
 		else
 			to_chat(user, "No vacated rooms.")
+		return .
 
 /obj/effect/landmark/lift_id/hilbert
 	specific_lift_id = HILBERT_TRAM

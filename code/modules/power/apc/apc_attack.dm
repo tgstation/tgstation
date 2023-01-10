@@ -50,7 +50,7 @@
 			balloon_alert(user, "remove the floor plating!")
 			return
 		if(terminal)
-			balloon_alert(user, "APC is already wired!")
+			balloon_alert(user, "already wired!")
 			return
 		if(!has_electronics)
 			balloon_alert(user, "no board to wire!")
@@ -154,7 +154,7 @@
 		user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
 		balloon_alert(user, "replacing damaged frame...")
 		if(do_after(user, 50, target = src))
-			balloon_alert(user, "APC frame replaced")
+			balloon_alert(user, "replaced frame")
 			qdel(attacking_object)
 			set_machine_stat(machine_stat & ~BROKEN)
 			atom_integrity = max_integrity
@@ -288,7 +288,7 @@
 	var/mob/living/silicon/robot/robot = user
 	if(aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai!=AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
 		if(!loud)
-			balloon_alert(user, "APC has been disabled!")
+			balloon_alert(user, "it's disabled!")
 		return FALSE
 	return TRUE
 

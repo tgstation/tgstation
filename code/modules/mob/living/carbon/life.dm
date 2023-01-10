@@ -28,9 +28,8 @@
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 	else
 
-		if(staminaloss > 0 && stam_regen_start_time <= world.time)
-			adjustStaminaLoss(-INFINITY, null, FALSE)
-			update_stamina()
+		if(getStaminaLoss() > 0 && stam_regen_start_time <= world.time)
+			adjustStaminaLoss(-INFINITY)
 		var/bprv = handle_bodyparts(delta_time, times_fired)
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
@@ -407,18 +406,6 @@
 		if(HM?.timeout)
 			dna.remove_mutation(HM.type)
 
-// This updates all special effects that really should be status effect datums: Druggy, Hallucinations, Drunkenness, Mute, etc..
-/mob/living/carbon/handle_status_effects(delta_time, times_fired)
-	..()
-
-	var/restingpwr = 0.5 + 2 * resting
-
-	if(drowsyness)
-		adjust_drowsyness(-1 * restingpwr * delta_time)
-		blur_eyes(1 * delta_time)
-		if(DT_PROB(2.5, delta_time))
-			AdjustSleeping(10 SECONDS)
-
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	var/areatemp = get_temperature(environment)
@@ -688,7 +675,7 @@
 /mob/living/carbon/proc/needs_heart()
 	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
 		return FALSE
-	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+	if(dna && dna.species && HAS_TRAIT(src, TRAIT_NOBLOOD)) //not all carbons have species!
 		return FALSE
 	return TRUE
 

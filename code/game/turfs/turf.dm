@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/overfloor_placed = FALSE
 	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
+	/// If there is a lattice underneat this turf. Used for the attempt_lattice_replacement proc to determine if it should place lattice.
+	var/lattice_underneath = TRUE
 
 	// baseturfs can be either a list or a single turf type.
 	// In class definition like here it should always be a single type.
@@ -171,11 +173,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if(uses_integrity)
 		atom_integrity = max_integrity
-
-		if (islist(armor))
-			armor = getArmor(arglist(armor))
-		else if (!armor)
-			armor = getArmor()
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -382,29 +379,32 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
-	var/atom/firstbump
-	var/canPassSelf = CanPass(mover, get_dir(src, mover))
-	if(canPassSelf || (mover.movement_type & PHASING))
+	var/atom/first_bump
+	var/can_pass_self = CanPass(mover, get_dir(src, mover))
+
+	if(can_pass_self)
+		var/atom/mover_loc = mover.loc
+		var/mover_is_phasing = mover.movement_type & PHASING
 		for(var/atom/movable/thing as anything in contents)
-			if(thing == mover || thing == mover.loc) // Multi tile objects and moving out of other objects
+			if(thing == mover || thing == mover_loc) // Multi tile objects and moving out of other objects
 				continue
 			if(!thing.Cross(mover))
 				if(QDELETED(mover)) //deleted from Cross() (CanPass is pure so it cant delete, Cross shouldnt be doing this either though, but it can happen)
 					return FALSE
-				if((mover.movement_type & PHASING))
+				if(mover_is_phasing)
 					mover.Bump(thing)
 					if(QDELETED(mover)) //deleted from Bump()
 						return FALSE
 					continue
 				else
-					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
-						firstbump = thing
+					if(!first_bump || ((thing.layer > first_bump.layer || thing.flags_1 & ON_BORDER_1) && !(first_bump.flags_1 & ON_BORDER_1)))
+						first_bump = thing
 	if(QDELETED(mover)) //Mover deleted from Cross/CanPass/Bump, do not proceed.
 		return FALSE
-	if(!canPassSelf) //Even if mover is unstoppable they need to bump us.
-		firstbump = src
-	if(firstbump)
-		mover.Bump(firstbump)
+	if(!can_pass_self) //Even if mover is unstoppable they need to bump us.
+		first_bump = src
+	if(first_bump)
+		mover.Bump(first_bump)
 		return (mover.movement_type & PHASING)
 	return TRUE
 

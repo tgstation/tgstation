@@ -111,6 +111,8 @@
 	return TRUE
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if((!bomb && bombcheck) || !target || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 

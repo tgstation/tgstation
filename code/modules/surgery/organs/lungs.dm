@@ -543,8 +543,8 @@
 		owner.visible_message(span_danger("[owner] grabs [owner.p_their()] throat, struggling for breath!"), span_userdanger("You suddenly feel like you can't breathe!"))
 		failed = TRUE
 
-/obj/item/organ/internal/lungs/get_availability(datum/species/owner_species)
-	return !(TRAIT_NOBREATH in owner_species.inherent_traits)
+/obj/item/organ/internal/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantlungs
 
 /obj/item/organ/internal/lungs/plasmaman
 	name = "plasma filter"
@@ -610,7 +610,7 @@
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
 
 
-/obj/item/organ/internal/lungs/ashwalker
+/obj/item/organ/internal/lungs/lavaland
 	name = "blackened frilled lungs" // blackened from necropolis exposure
 	desc = "Exposure to the necropolis has mutated these lungs to breathe the air of Indecipheres, the lava-covered moon."
 	icon_state = "lungs-ashwalker"
@@ -619,7 +619,7 @@
 // to 16 kPa. So it follows that ashwalkers, as humanoids, follow the same rules.
 #define GAS_TOLERANCE 5
 
-/obj/item/organ/internal/lungs/ashwalker/Initialize(mapload)
+/obj/item/organ/internal/lungs/lavaland/Initialize(mapload)
 	. = ..()
 
 	var/datum/gas_mixture/immutable/planetary/mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]

@@ -178,7 +178,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/clothing/under/dress/wedding_dress,
 					/obj/item/clothing/under/suit/tuxedo,
-					/obj/item/storage/belt/cummerbund,
+					/obj/item/storage/belt/fannypack/cummerbund,
 					/obj/item/clothing/head/costume/weddingveil,
 					/obj/item/bouquet,
 					/obj/item/bouquet/sunflower,
