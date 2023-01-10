@@ -28,11 +28,10 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/mind_initialize()
 	. = ..()
-	if(independent)
-		return FALSE
-	if(mind.has_antag_datum(/datum/antagonist/blobbernaut))
-		return FALSE
-	mind.add_antag_datum(/datum/antagonist/blobbernaut)
+	if(independent | !overmind)
+		return
+	var/datum/antagonist/blob_minion/blobbernaut/naut = new(overmind)
+	mind.add_antag_datum(naut)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

@@ -44,11 +44,10 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/mind_initialize()
 	. = ..()
-	if(independent)
+	if(independent || !overmind)
 		return FALSE
-	if(mind.has_antag_datum(/datum/antagonist/blobspore))
-		return FALSE
-	mind.add_antag_datum(/datum/antagonist/blobspore)
+	var/datum/antagonist/blob_minion/blob_zombie/zombie = new(overmind)
+	mind.add_antag_datum(zombie)
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!is_zombie && isturf(loc))

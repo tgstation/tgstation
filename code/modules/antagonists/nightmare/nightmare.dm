@@ -38,7 +38,7 @@
 	..()
 
 /datum/objective/nightmare_fluff/check_completion()
-	return TRUE
+	return owner.current.stat != DEAD
 
 /// Create new objectives
 /datum/antagonist/nightmare/forge_objectives()

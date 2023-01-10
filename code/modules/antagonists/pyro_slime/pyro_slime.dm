@@ -18,7 +18,7 @@
 	explanation_text = "All I know fire. I speak in tongues of flame. Why is everyone so cold?"
 
 /datum/objective/pyro_slime/check_completion()
-	return owner.current.stat == DEAD
+	return owner.current.stat != DEAD
 
 /datum/antagonist/pyro_slime/forge_objectives()
 	var/datum/objective/pyro_slime/objective = new
