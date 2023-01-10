@@ -1,6 +1,6 @@
 /obj/structure/blob/special/resource
 	name = "resource blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blob_resource"
 	desc = "A thin spire of slightly swaying tendrils."
 	max_integrity = BLOB_RESOURCE_MAX_HP

@@ -5,7 +5,7 @@
 /datum/game_mode/dynamic/proc/unfavorable_situation()
 	SHOULD_NOT_SLEEP(TRUE)
 
-	INVOKE_ASYNC(src, .proc/_unfavorable_situation)
+	INVOKE_ASYNC(src, PROC_REF(_unfavorable_situation))
 
 /datum/game_mode/dynamic/proc/_unfavorable_situation()
 	var/static/list/unfavorable_random_events = list(
@@ -38,6 +38,7 @@
 
 		ruleset.trim_candidates()
 
+		ruleset.load_templates()
 		if (!ruleset.ready())
 			continue
 
@@ -47,11 +48,11 @@
 		var/datum/round_event_control/round_event_control_type = pick(unfavorable_random_events)
 		var/delay = rand(20 SECONDS, 1 MINUTES)
 
-		dynamic_log("An unfavorable situation was requested, but no heavy rulesets could be drafted. Spawning [initial(round_event_control_type.name)] in [DisplayTimeText(delay)] instead.")
+		log_dynamic_and_announce("An unfavorable situation was requested, but no heavy rulesets could be drafted. Spawning [initial(round_event_control_type.name)] in [DisplayTimeText(delay)] instead.")
 
 		var/datum/round_event_control/round_event_control = new round_event_control_type
-		addtimer(CALLBACK(round_event_control, /datum/round_event_control.proc/runEvent), delay)
+		addtimer(CALLBACK(round_event_control, TYPE_PROC_REF(/datum/round_event_control, runEvent)), delay)
 	else
 		var/datum/dynamic_ruleset/midround/heavy_ruleset = pick_weight(possible_heavies)
-		dynamic_log("An unfavorable situation was requested, spawning [initial(heavy_ruleset.name)]")
+		log_dynamic_and_announce("An unfavorable situation was requested, spawning [initial(heavy_ruleset.name)]")
 		picking_specific_rule(heavy_ruleset, forced = TRUE, ignore_cost = TRUE)

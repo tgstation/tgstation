@@ -1066,7 +1066,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "gf" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gg" = (
@@ -1148,7 +1148,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gy" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gz" = (

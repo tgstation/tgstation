@@ -3,28 +3,31 @@
 	name = "design"
 
 /datum/asset/spritesheet/research_designs/create_spritesheets()
-	for (var/path in subtypesof(/datum/design))
-		var/datum/design/D = path
+	for (var/datum/design/path as anything in subtypesof(/datum/design))
+		if(initial(path.id) == DESIGN_ID_IGNORE)
+			continue
 
 		var/icon_file
 		var/icon_state
 		var/icon/I
 
-		if(initial(D.research_icon) && initial(D.research_icon_state)) //If the design has an icon replacement skip the rest
-			icon_file = initial(D.research_icon)
-			icon_state = initial(D.research_icon_state)
-			if(!(icon_state in icon_states(icon_file)))
-				warning("design [D] with icon '[icon_file]' missing state '[icon_state]'")
-				continue
+		if(initial(path.research_icon) && initial(path.research_icon_state)) //If the design has an icon replacement skip the rest
+			icon_file = initial(path.research_icon)
+			icon_state = initial(path.research_icon_state)
+			if (PERFORM_ALL_TESTS(focus_only/invalid_research_designs))
+				if(!(icon_state in icon_states(icon_file)))
+					stack_trace("design [path] with icon '[icon_file]' missing state '[icon_state]'")
+					continue
 			I = icon(icon_file, icon_state, SOUTH)
 
 		else
 			// construct the icon and slap it into the resource cache
-			var/atom/item = initial(D.build_path)
+			var/atom/item = initial(path.build_path)
 			if (!ispath(item, /atom))
-				// biogenerator outputs to beakers by default
-				if (initial(D.build_type) & BIOGENERATOR)
-					item = /obj/item/reagent_containers/glass/beaker/large
+				// biogenerator reagent designs display their default container
+				if(initial(path.make_reagent))
+					var/datum/reagent/reagent = initial(path.make_reagent)
+					item = initial(reagent.default_container)
 				else
 					continue  // shouldn't happen, but just in case
 
@@ -44,9 +47,10 @@
 				icon_file = initial(item.icon)
 
 			icon_state = initial(item.icon_state)
-			if(!(icon_state in icon_states(icon_file)))
-				warning("design [D] with icon '[icon_file]' missing state '[icon_state]'")
-				continue
+			if (PERFORM_ALL_TESTS(focus_only/invalid_research_designs))
+				if(!(icon_state in icon_states(icon_file)))
+					stack_trace("design [path] with icon '[icon_file]' missing state '[icon_state]'")
+					continue
 			I = icon(icon_file, icon_state, SOUTH)
 
 			// computers (and snowflakes) get their screen and keyboard sprites
@@ -60,4 +64,4 @@
 				if (keyboard && (keyboard in all_states))
 					I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
-		Insert(initial(D.id), I)
+		Insert(initial(path.id), I)

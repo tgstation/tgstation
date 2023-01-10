@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/carbon/human,
-	/mob/living/simple_animal/pet/dog/corgi,
+	/mob/living/basic/pet/dog/corgi,
 	/mob/living/silicon/ai)))
 
 /**
@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	SEND_SIGNAL(parent, COMSIG_MOB_CREAMED)
 
-	add_memory_in_range(parent, 7, MEMORY_CREAMPIED, list(DETAIL_PROTAGONIST = parent), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS, protagonist_memory_flags = NONE)
+	add_memory_in_range(parent, 7, /datum/memory/witnessed_creampie, protagonist = parent)
 
 	creamface = mutable_appearance('icons/effects/creampie.dmi')
 
@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 			creamface.icon_state = "creampie_monkey"
 		else
 			creamface.icon_state = "creampie_human"
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
+		H.add_mood_event("creampie", /datum/mood_event/creampie)
 	else if(iscorgi(parent))
 		creamface.icon_state = "creampie_corgi"
 	else if(isAI(parent))
@@ -45,14 +45,16 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	A.cut_overlay(creamface)
 	qdel(creamface)
 	if(ishuman(A))
-		SEND_SIGNAL(A, COMSIG_CLEAR_MOOD_EVENT, "creampie")
+		var/mob/living/carbon/human/human_parent = A
+		human_parent.clear_mood_event("creampie")
 	return ..()
 
 /datum/component/creamed/RegisterWithParent()
-	RegisterSignal(parent, list(
+	RegisterSignals(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT),
-		.proc/clean_up)
+		PROC_REF(clean_up)
+	)
 
 /datum/component/creamed/UnregisterFromParent()
 	UnregisterSignal(parent, list(

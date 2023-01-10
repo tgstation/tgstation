@@ -3,7 +3,7 @@
 /obj/machinery/smoke_machine
 	name = "smoke machine"
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "smoke0"
 	base_icon_state = "smoke"
 	density = TRUE
@@ -36,7 +36,7 @@
 
 /obj/machinery/smoke_machine/Initialize(mapload)
 	. = ..()
-	create_reagents(REAGENTS_BASE_VOLUME)
+	create_reagents(REAGENTS_BASE_VOLUME, INJECTABLE)
 	AddComponent(/datum/component/plumbing/simple_demand)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
@@ -57,7 +57,7 @@
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		new_volume += REAGENTS_BASE_VOLUME * B.rating
 	if(!reagents)
-		create_reagents(new_volume)
+		create_reagents(new_volume, INJECTABLE)
 	reagents.maximum_volume = new_volume
 	if(new_volume < reagents.total_volume)
 		reagents.expose(loc, TOUCH) // if someone manages to downgrade it without deconstructing
@@ -101,7 +101,7 @@
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
@@ -161,7 +161,7 @@
 			update_appearance()
 			if(on)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
-				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
+				usr.log_message("activated a smoke machine that contains [english_list(reagents.reagent_list)]", LOG_GAME)
 				log_combat(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
 		if("goScreen")
 			screen = params["screen"]

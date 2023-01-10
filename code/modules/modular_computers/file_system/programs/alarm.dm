@@ -19,14 +19,14 @@
 	//Or if we're on station. Otherwise, die.
 	var/list/allowed_areas = GLOB.the_station_areas + typesof(/area/mine)
 	alert_control = new(computer, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = allowed_areas)
-	RegisterSignal(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), .proc/update_alarm_display)
+	RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
 	return ..()
 
 /datum/computer_file/program/alarm_monitor/Destroy()
 	QDEL_NULL(alert_control)
 	return ..()
 
-/datum/computer_file/program/alarm_monitor/process_tick()
+/datum/computer_file/program/alarm_monitor/process_tick(delta_time)
 	..()
 
 	if(has_alert)

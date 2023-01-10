@@ -1,0 +1,7 @@
+# Updates areas for more clarity as to which shuttles are meant to be ruined and which ruins are meant to be in space.
+
+/area/shuttle/caravan/@SUBTYPES : /area/shuttle/ruin/caravan/@SUBTYPES
+
+/area/ruin/solars/@SUBTYPES : /area/ruin/space/solars/@SUBTYPES
+
+/area/ruin/tcommsat_oldaisat : /area/ruin/space/tcommsat_oldaisat

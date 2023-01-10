@@ -3,13 +3,10 @@
 //Can hear deadchat, but are NOT normal ghosts and do NOT have x-ray vision
 //Admin-spawn or random event
 
-#define INVISIBILITY_REVENANT 50
-#define REVENANT_NAME_FILE "revenant_names.json"
-
 /mob/living/simple_animal/revenant
 	name = "revenant"
 	desc = "A malevolent spirit."
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "revenant_idle"
 	var/icon_idle = "revenant_idle"
 	var/icon_reveal = "revenant_revealed"
@@ -74,7 +71,7 @@
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 
 	// Starting spells
 	var/datum/action/cooldown/spell/night_vision/revenant/vision = new(src)
@@ -96,10 +93,13 @@
 	var/datum/action/cooldown/spell/aoe/revenant/malfunction/shuttle_go_emag = new(src)
 	shuttle_go_emag.Grant(src)
 
-	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
+	var/datum/action/cooldown/spell/aoe/revenant/haunt_object/toolbox_go_bonk = new(src)
+	toolbox_go_bonk.Grant(src)
+
+	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	random_revenant_name()
 
-/mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, no_hands = FALSE, floor_okay=FALSE)
+/mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	return FALSE
 
 /mob/living/simple_animal/revenant/proc/random_revenant_name()
@@ -146,7 +146,7 @@
 		to_chat(src, span_revenboldnotice("You can move again!"))
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence + (essence_regen_amount * delta_time), essence_regen_cap)
-		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
+		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
 	..()
@@ -173,7 +173,7 @@
 /mob/living/simple_animal/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if(!message)
 		return
 	if(sanitize)
@@ -214,12 +214,12 @@
 	visible_message(span_warning("[src] violently flinches!"), \
 		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"))
 	inhibited = TRUE
-	update_action_buttons_icon()
-	addtimer(CALLBACK(src, .proc/reset_inhibit), 3 SECONDS)
+	update_mob_action_buttons()
+	addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 3 SECONDS)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
@@ -330,7 +330,7 @@
 	if(essence_excess < essence_cost)
 		return FALSE
 	essence_excess -= essence_cost
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	return TRUE
 
 /mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
@@ -343,7 +343,7 @@
 	if(essence_amt > 0)
 		essence_accumulated = max(0, essence_accumulated+essence_amt)
 		essence_excess = max(0, essence_excess+essence_amt)
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	if(!silent)
 		if(essence_amt > 0)
 			to_chat(src, span_revennotice("Gained [essence_amt]E[source ? " from [source]":""]."))
@@ -416,7 +416,7 @@
 
 /obj/item/ectoplasm/revenant/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/try_reform), 600)
+	addtimer(CALLBACK(src, PROC_REF(try_reform)), 600)
 
 /obj/item/ectoplasm/revenant/proc/scatter()
 	qdel(src)
@@ -482,7 +482,7 @@
 			return
 
 	message_admins("[key_of_revenant] has been [old_key == key_of_revenant ? "re":""]made into a revenant by reforming ectoplasm.")
-	log_game("[key_of_revenant] was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.")
+	revenant.log_message("was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.", LOG_GAME)
 	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
 
 	revenant.essence = essence
@@ -492,10 +492,10 @@
 	revenant = null
 	qdel(src)
 
-/obj/item/ectoplasm/revenant/suicide_act(mob/user)
+/obj/item/ectoplasm/revenant/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!"))
 	scatter()
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))

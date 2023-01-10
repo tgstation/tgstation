@@ -3,6 +3,9 @@
 	if(desc)
 		. += "[desc]"
 
+	var/model_name = model ? "\improper [model.name]" : "\improper Default"
+	. += "\nIt is currently \a \"[span_bold("[model_name]")]\"-type cyborg.\n"
+
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
 		. += "It is holding [icon2html(act_module, user)] \a [act_module]."

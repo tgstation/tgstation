@@ -59,7 +59,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dR" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "eb" = (
@@ -101,6 +101,19 @@
 "gQ" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"iO" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "iP" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -155,6 +168,16 @@
 "kd" = (
 /turf/template_noop,
 /area/template_noop)
+"kE" = (
+/obj/structure/table/wood/fancy,
+/obj/item/flashlight/flare/candle/infinite{
+	desc = "A synthetic candle that won't melt down.";
+	name = "crimson red candle";
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "kJ" = (
 /obj/structure/table/wood/fancy,
 /obj/item/food/burger/baconburger{
@@ -391,7 +414,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "sW" = (
-/obj/structure/shuttle/engine/huge,
+/obj/machinery/power/shuttle_engine/huge,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "tx" = (
@@ -408,19 +431,6 @@
 	anchored = 1;
 	name = "statue of an AI hologram"
 	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"tJ" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/britcup{
-	pixel_x = 8;
-	pixel_y = -1
-	},
-/obj/item/storage/medkit/regular{
-	pixel_x = -9;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uV" = (
@@ -640,9 +650,7 @@
 	dir = 4
 	},
 /obj/docking_port/mobile/emergency{
-	height = 22;
-	name = "The NTSS Independence";
-	width = 44
+	name = "The NTSS Independence"
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -802,16 +810,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"Hi" = (
-/obj/structure/table/wood/fancy,
-/obj/item/candle/infinite{
-	desc = "A synthetic candle that won't melt down.";
-	name = "crimson red candle";
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "Ho" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -912,11 +910,11 @@
 /area/shuttle/escape)
 "Lo" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 6;
 	pixel_y = 14
 	},
@@ -1066,7 +1064,7 @@
 /area/shuttle/escape)
 "UN" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/glass/rag{
+/obj/item/reagent_containers/cup/rag{
 	pixel_y = 7
 	},
 /obj/effect/fun_balloon/sentience/emergency_shuttle{
@@ -1239,7 +1237,7 @@ en
 jt
 jt
 EC
-Hi
+kE
 Me
 jt
 aY
@@ -1268,7 +1266,7 @@ kd
 kd
 en
 EC
-Hi
+kE
 WT
 WT
 WT
@@ -1292,7 +1290,7 @@ WT
 WT
 WT
 EC
-Hi
+kE
 Me
 jt
 jt
@@ -1657,7 +1655,7 @@ qw
 Nv
 VO
 Gv
-tJ
+iO
 SK
 cf
 tB
@@ -1958,7 +1956,7 @@ kd
 kd
 en
 EC
-Hi
+kE
 WT
 WT
 WT
@@ -1982,7 +1980,7 @@ WT
 WT
 WT
 EC
-Hi
+kE
 Me
 jt
 jt
@@ -2021,7 +2019,7 @@ en
 jt
 jt
 EC
-Hi
+kE
 Me
 jt
 qE

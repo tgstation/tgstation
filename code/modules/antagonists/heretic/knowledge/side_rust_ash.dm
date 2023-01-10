@@ -14,16 +14,15 @@
 		/obj/structure/reagent_dispensers/watertank = 1,
 		/obj/item/shard = 1,
 	)
-	result_atoms = list(/obj/item/reagent_containers/glass/beaker/eldritch)
+	result_atoms = list(/obj/item/reagent_containers/cup/beaker/eldritch)
 	cost = 1
 	route = PATH_SIDE
 
 /datum/heretic_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
-	desc = "Allows you to transmute wirecutters, a pool of vomit, a heart, \
-		and an item containing fingerprints to cast a curse of plague \
-		on one of the fingerprint's owners for two minutes. While cursed, \
-		the victim will repeatedly vomit while their organs will take constant damage."
+	desc = "Allows you to transmute wirecutters, a pool of vomit, and a heart to cast a curse of sickness on a crew member.\
+		While cursed, the victim will repeatedly vomit while their organs will take constant damage. You can additionally supply an item \
+		that a victim has touched or is covered in the victim's blood to empower the curse."
 	gain_text = "The body of humanity is temporary. Their weaknesses cannot be stopped, like iron falling to rust. Show them all."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mad_mask,
@@ -34,17 +33,24 @@
 		/obj/effect/decal/cleanable/vomit = 1,
 		/obj/item/organ/internal/heart = 1,
 	)
-	duration = 2 MINUTES
+	duration = 0.5 MINUTES
+	duration_modifier = 4
+	curse_color = "#c1ffc9"
 	cost = 1
 	route = PATH_SIDE
 
-/datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob)
-	to_chat(chosen_mob, span_danger("You feel very ill."))
+/datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
+	to_chat(chosen_mob, span_danger("You feel very ill..."))
 	chosen_mob.apply_status_effect(/datum/status_effect/corrosion_curse)
+	return ..()
 
-/datum/heretic_knowledge/curse/corrosion/uncurse(mob/living/carbon/human/chosen_mob)
+/datum/heretic_knowledge/curse/corrosion/uncurse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
+	if(QDELETED(chosen_mob))
+		return
+
 	chosen_mob.remove_status_effect(/datum/status_effect/corrosion_curse)
-	to_chat(chosen_mob, span_notice("You start to feel better."))
+	to_chat(chosen_mob, span_green("You start to feel better."))
+	return ..()
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"

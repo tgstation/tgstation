@@ -49,11 +49,11 @@
 	var/obj/item/organ/internal/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
 	user.Stun(200)
 	user.visible_message(span_suicide("[user] jams [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.adjust_blurriness(6)
+	user.adjust_eye_blur(12 SECONDS)
 	if(eyes)
 		eyes.applyOrganDamage(rand(6,8))
-	sleep(10)
-	return (BRUTELOSS)
+	sleep(1 SECONDS)
+	return BRUTELOSS
 
 /obj/item/paperplane/update_overlays()
 	. = ..()
@@ -103,7 +103,7 @@
 		if(H.is_eyes_covered())
 			return
 		visible_message(span_danger("\The [src] hits [H] in the eye[eyes ? "" : " socket"]!"))
-		H.adjust_blurriness(6)
+		H.adjust_eye_blur(12 SECONDS)
 		eyes?.applyOrganDamage(rand(6,8))
 		H.Paralyze(40)
 		H.emote("scream")
@@ -113,7 +113,7 @@
 	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 
 /obj/item/paper/AltClick(mob/living/user, obj/item/I)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		return
 	if(istype(src, /obj/item/paper/carbon))
 		var/obj/item/paper/carbon/Carbon = src

@@ -1,8 +1,9 @@
 /datum/ai_behavior/find_potential_targets
 	action_cooldown = 2 SECONDS
+	/// How far can we see stuff?
 	var/vision_range = 9
-	///List of potentially dangerous objs
-	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
+	/// Static typecache list of potentially dangerous objs
+	var/static/list/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
 
 /datum/ai_behavior/find_potential_targets/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -20,7 +21,7 @@
 			potential_targets += HM
 
 	if(!potential_targets.len)
-		finish_action(controller, FALSE)
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	var/list/filtered_targets = list()
@@ -31,15 +32,19 @@
 			continue
 
 	if(!filtered_targets.len)
-		finish_action(controller, FALSE)
+		finish_action(controller, succeeded = FALSE)
 		return
 
-	var/atom/target = pick(filtered_targets)
-	controller.blackboard[target_key] = target
+	var/atom/target = pick_final_target(controller, filtered_targets)
+	controller.blackboard[target_key] = WEAKREF(target)
 
 	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(living_mob, target)
 
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
-		controller.blackboard[hiding_location_key] = potential_hiding_location
+		controller.blackboard[hiding_location_key] = WEAKREF(potential_hiding_location)
 
-	finish_action(controller, TRUE)
+	finish_action(controller, succeeded = TRUE)
+
+/// Returns the desired final target from the filtered list of targets
+/datum/ai_behavior/find_potential_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	return pick(filtered_targets)

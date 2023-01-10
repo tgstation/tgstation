@@ -110,7 +110,7 @@
 
 /datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
 	if(banged_limb)
-		description = "My fucking [banged_limb.name], man that hurts..."
+		description = "My fucking [banged_limb.plaintext_zone], man that hurts..."
 
 /datum/mood_event/brain_damage
 	mood_change = -3
@@ -153,6 +153,10 @@
 /datum/mood_event/jittery
 	description = "I'm nervous and on edge and I can't stand still!!"
 	mood_change = -2
+
+/datum/mood_event/choke
+	description = "I CAN'T BREATHE!!!"
+	mood_change = -10
 
 /datum/mood_event/vomit
 	description = "I just threw up. Gross."
@@ -197,10 +201,10 @@
 	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
 	description = "THEY NEEEEEEED [unhinged]!!"
 
-/datum/mood_event/sapped
-	description = "Some unexplainable sadness is consuming me..."
-	mood_change = -15
-	timeout = 90 SECONDS
+/datum/mood_event/tower_of_babel
+	description = "My ability to communicate is an incoherent babel..."
+	mood_change = -1
+	timeout = 15 SECONDS
 
 /datum/mood_event/back_pain
 	description = "Bags never sit right on my back, this hurts like hell!"
@@ -384,3 +388,28 @@
 	description = "I gambled my life and lost! I guess this is the end..."
 	mood_change = -20
 	timeout = 10 MINUTES
+
+/datum/mood_event/bad_touch_bear_hug
+	description = "I just got squeezed way too hard."
+	mood_change = -1
+	timeout = 2 MINUTES
+
+/datum/mood_event/rippedtail
+	description = "I ripped their tail right off, what have I done!"
+	mood_change = -5
+	timeout = 30 SECONDS
+
+/datum/mood_event/sabrage_fail
+	description = "Blast it! That stunt didn't go as planned!"
+	mood_change = -2
+	timeout = 4 MINUTES
+
+/datum/mood_event/body_purist
+	description = "I feel cybernetics attached to me, and I HATE IT!"
+
+/datum/mood_event/body_purist/add_effects(power)
+	mood_change = power
+
+/datum/mood_event/unsatisfied_nomad
+	description = "I've been here too long! I want to go out and explore space!"
+	mood_change = -3

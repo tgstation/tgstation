@@ -10,6 +10,8 @@
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
 	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
@@ -60,7 +62,7 @@
 	if(user.combat_mode)
 		return
 	cell_cover_open = !cell_cover_open
-	balloon_alert(user, "You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].")
+	balloon_alert(user, "[cell_cover_open ? "opened" : "closed"] cell cover")
 	return TRUE
 
 /obj/item/inspector/attackby(obj/item/I, mob/user, params)
@@ -75,7 +77,7 @@
 	return ..()
 
 /obj/item/inspector/CtrlClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || !cell_cover_open || !cell)
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands= !iscyborg(user)) || !cell_cover_open || !cell)
 		return ..()
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))
@@ -223,13 +225,13 @@
 		time_mode = INSPECTOR_TIME_MODE_FAST
 		message = "LIGHTNING FAST."
 
-	balloon_alert(user, "You turn the screw-like dial, setting the device's scanning speed to [message]")
+	balloon_alert(user, "scanning speed set to [message]")
 
 /obj/item/inspector/clown/proc/cycle_sound(mob/user)
 	print_sound_mode++
 	if(print_sound_mode > max_mode)
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
-	balloon_alert(user, "You turn the dial with holes in it, setting the device's bleep setting to [mode_names[print_sound_mode]] mode.")
+	balloon_alert(user, "bleep setting set to [mode_names[print_sound_mode]]")
 
 /obj/item/inspector/clown/create_slip()
 	var/obj/item/paper/fake_report/slip = new(get_turf(src))
@@ -322,7 +324,7 @@
 			time_mode = INSPECTOR_TIME_MODE_HONK
 			power_per_print = INSPECTOR_POWER_USAGE_HONK
 			message = "HONK!"
-	balloon_alert(user, "You turn the screw-like dial, setting the device's scanning speed to [message]")
+	balloon_alert(user, "scanning speed set to [message]")
 
 /**
  * Reports printed by fake N-spect scanner
@@ -378,7 +380,7 @@
 	grind_results = list(/datum/reagent/water = 5)
 
 /obj/item/paper/fake_report/water/AltClick(mob/living/user, obj/item/I)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		return
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water

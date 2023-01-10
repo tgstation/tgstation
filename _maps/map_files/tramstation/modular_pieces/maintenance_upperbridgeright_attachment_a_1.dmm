@@ -1,0 +1,190 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/grimy,
+/area/station/maintenance/department/security)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Internal Affairs Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"e" = (
+/turf/template_noop,
+/area/template_noop)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/security)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/built/directional/south,
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/security)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/security)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/folder/yellow{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/folder/yellow,
+/obj/item/stamp/law,
+/turf/open/floor/iron/grimy,
+/area/station/maintenance/department/security)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/security)
+"x" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Internal Affairs Office"
+	},
+/obj/effect/mapping_helpers/airlock/unres,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/bureaucracy/briefcase,
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/security)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/filingcabinet/security,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/noticeboard/directional/north,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/security)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/security)
+"I" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/station/maintenance/department/security)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/paper{
+	name = "budget increase request";
+	default_raw_text = "The IA office recognizes that while our department is lower on the totem pole of priorities in the never-ending research into Plasma, we would like to see a 25% budget increase in the next quarter so that we may be able to afford to open a crew slot so that someone will actually be capable of filling the desk job currently on-station."
+	},
+/turf/open/floor/iron/grimy,
+/area/station/maintenance/department/security)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/clipboard,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = 3
+	},
+/obj/item/food/donut/berry{
+	name = "stale pink donut"
+	},
+/turf/open/floor/iron/grimy,
+/area/station/maintenance/department/security)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/decoration/ornament,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/grimy,
+/area/station/maintenance/department/security)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/security)
+
+(1,1,1) = {"
+x
+q
+w
+e
+e
+"}
+(2,1,1) = {"
+I
+G
+w
+e
+e
+"}
+(3,1,1) = {"
+I
+C
+i
+B
+I
+"}
+(4,1,1) = {"
+v
+K
+a
+o
+I
+"}
+(5,1,1) = {"
+W
+N
+R
+Z
+I
+"}
+(6,1,1) = {"
+I
+I
+I
+b
+I
+"}

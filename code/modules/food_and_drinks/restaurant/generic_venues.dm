@@ -83,20 +83,30 @@
 	)
 
 /datum/venue/bar/get_food_appearance(order)
-	var/glass_visual
 	var/datum/reagent/reagent_to_order = order
+	// Default the icon to the fallback icon
+	var/glass_visual_icon = initial(reagent_to_order.fallback_icon)
+	var/glass_visual_icon_state = initial(reagent_to_order.fallback_icon_state)
 
-	if(initial(reagent_to_order.glass_icon_state))
-		glass_visual = initial(reagent_to_order.glass_icon_state)
-	else if(initial(reagent_to_order.shot_glass_icon_state))
-		glass_visual = initial(reagent_to_order.shot_glass_icon_state)
-	else if(initial(reagent_to_order.fallback_icon_state))
-		glass_visual = initial(reagent_to_order.fallback_icon_state)
-	else
-		stack_trace("[reagent_to_order] has no icon sprite for restaurant code, please set a fallback_icon_state for this reagent.")
+	// Look for a glass style based on this reagent type
+	for(var/potential_container in GLOB.glass_style_singletons)
+		var/datum/glass_style/draw_as = GLOB.glass_style_singletons[potential_container][reagent_to_order]
+		if(isnull(draw_as))
+			continue
 
-	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
-	food_image.add_overlay(mutable_appearance('icons/obj/drinks.dmi', glass_visual))
+		// Override the crummy fallback icon if we find a glass style to use instead
+		glass_visual_icon = draw_as.icon
+		glass_visual_icon_state = draw_as.icon_state
+		break
+
+	// If we have no icon or fallback, well... Scream. Someone should fix it
+	if(!glass_visual_icon || !glass_visual_icon_state)
+		stack_trace("[reagent_to_order] has no icon sprite for restaurant code, please set a fallback icon for this reagent.")
+		glass_visual_icon = 'icons/obj/drinks/drinks.dmi'
+		glass_visual_icon_state = "glass_empty"
+
+	var/image/food_image = image(icon = 'icons/effects/effects.dmi', icon_state = "thought_bubble")
+	food_image.add_overlay(mutable_appearance(glass_visual_icon, glass_visual_icon_state))
 
 	return food_image
 
@@ -123,8 +133,8 @@
 	. = ..()
 	if(.)
 		return
-	if(istype(object_used, /obj/item/reagent_containers/food/drinks))
-		var/obj/item/reagent_containers/food/drinks/potential_drink = object_used
+	if(istype(object_used, /obj/item/reagent_containers/cup/glass))
+		var/obj/item/reagent_containers/cup/glass/potential_drink = object_used
 		return potential_drink.reagents.has_reagent(wanted_item, VENUE_BAR_MINIMUM_REAGENTS)
 
 /obj/machinery/restaurant_portal/bar

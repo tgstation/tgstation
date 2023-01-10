@@ -12,7 +12,7 @@
 /mob/living/simple_animal/hostile/asteroid/fugu
 	name = "wumborian fugu"
 	desc = "The wumborian fugu rapidly increases its body mass in order to ward off its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain its form forever."
-	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
 	icon_state = "Fugu0"
 	icon_living = "Fugu0"
 	icon_aggro = "Fugu0"
@@ -75,8 +75,9 @@
 	E.Activate()
 
 /datum/action/innate/fugu
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_fugu"
+	overlay_icon_state = "bg_fugu_border"
 
 /datum/action/innate/fugu/expand
 	name = "Inflate"
@@ -104,11 +105,12 @@
 	F.retreat_distance = null
 	F.minimum_distance = 1
 	F.move_to_delay = 6
-	F.environment_smash = ENVIRONMENT_SMASH_WALLS
+	F.AddElement(/datum/element/wall_smasher)
 	F.mob_size = MOB_SIZE_LARGE
 	F.speed = 1
-	addtimer(CALLBACK(F, /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate), 100)
+	addtimer(CALLBACK(F, TYPE_PROC_REF(/mob/living/simple_animal/hostile/asteroid/fugu, Deflate)), 100)
 
+// Why is half of this in an action and the other hand a proc on the mob?
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)
 		SSmove_manager.stop_looping(src)
@@ -123,7 +125,7 @@
 		minimum_distance = 9
 		move_to_delay = 2
 		inflate_cooldown = 4
-		environment_smash = ENVIRONMENT_SMASH_NONE
+		RemoveElement(/datum/element/wall_smasher)
 		mob_size = MOB_SIZE_SMALL
 		speed = 0
 
@@ -134,17 +136,25 @@
 /obj/item/fugu_gland
 	name = "wumborian fugu gland"
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "fugu_gland"
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
+	var/static/list/fugu_blacklist
+
+/obj/item/fugu_gland/Initialize(mapload)
+	. = ..()
+	if(!fugu_blacklist)
+		fugu_blacklist = typecacheof(list(
+			/mob/living/simple_animal/hostile/guardian,
+		))
 
 /obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(!proximity_flag)
 		return
-	if(!isanimal(target))
+	if(!isanimal(target) || fugu_blacklist[target.type])
 		return
 	var/mob/living/simple_animal/animal = target
 
@@ -162,6 +172,6 @@
 	animal.melee_damage_lower = max((animal.melee_damage_lower * 2), 10)
 	animal.melee_damage_upper = max((animal.melee_damage_upper * 2), 10)
 	animal.transform *= 2
-	animal.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES | ENVIRONMENT_SMASH_RWALLS
+	animal.AddElement(/datum/element/wall_smasher, strength_flag = ENVIRONMENT_SMASH_RWALLS)
 	to_chat(user, span_info("You increase the size of [animal], giving [animal.p_them()] a surge of strength!"))
 	qdel(src)

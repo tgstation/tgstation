@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/emp
 	name = "Emplosion"
-	desc = "This spell emplodes an area."
+	desc = "This spell causes an EMP in an area."
 	button_icon_state = "emp"
 	sound = 'sound/weapons/zapbang.ogg'
 

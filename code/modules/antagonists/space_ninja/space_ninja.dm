@@ -76,7 +76,7 @@
 	//Explosive plant, the bomb will register its completion on priming
 	var/datum/objective/plant_explosive/bombobjective = new /datum/objective/plant_explosive()
 	for(var/sanity in 1 to 100) // 100 checks at most.
-		var/area/selected_area = pick(GLOB.sortedAreas)
+		var/area/selected_area = pick(GLOB.areas)
 		if(!is_station_level(selected_area.z) || !(selected_area.area_flags & VALID_TERRITORY))
 			continue
 		bombobjective.detonation_location = selected_area
@@ -104,7 +104,6 @@
 	to_chat(owner.current, span_danger("I am an elite mercenary of the mighty Spider Clan!"))
 	to_chat(owner.current, span_warning("Surprise is my weapon. Shadows are my armor. Without them, I am nothing."))
 	to_chat(owner.current, span_notice("The station is located to your [dir2text(get_dir(owner.current, locate(world.maxx/2, world.maxy/2, owner.current.z)))]. A thrown ninja star will be a great way to get there."))
-	to_chat(owner.current, span_notice("<i>For easier ability access, you can pin your modules to your action bar in your suit's UI.</i>"))
 	owner.announce_objectives()
 
 /datum/antagonist/ninja/on_gain()

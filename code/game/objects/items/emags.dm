@@ -51,8 +51,11 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
-/obj/item/card/emagfake/afterattack()
+/obj/item/card/emagfake/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if (!proximity_flag)
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/card/emag/Initialize(mapload)
@@ -67,6 +70,7 @@
 	var/atom/A = target
 	if(!proximity && prox_check)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!can_emag(target, user))
 		return
 	log_combat(user, A, "attempted to emag")
@@ -100,7 +104,7 @@
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
 	to_chat(user, span_notice("You use [src]. It now has [charges] charge[charges == 1 ? "" : "s"] remaining."))
-	charge_timers.Add(addtimer(CALLBACK(src, .proc/recharge), charge_time, TIMER_STOPPABLE))
+	charge_timers.Add(addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time, TIMER_STOPPABLE))
 
 /obj/item/card/emag/doorjack/proc/recharge(mob/user)
 	charges = min(charges+1, max_charges)
@@ -115,7 +119,7 @@
 	for (var/i in 1 to length(charge_timers))
 		var/timeleft = timeleft(charge_timers[i])
 		var/loadingbar = num2loadingbar(timeleft/charge_time)
-		. += span_notice("<b>CHARGE #[i]: [loadingbar] ([timeleft*0.1]s)</b>")
+		. += span_notice("<b>CHARGE #[i]: [loadingbar] ([DisplayTimeText(timeleft)])</b>")
 
 /obj/item/card/emag/doorjack/can_emag(atom/target, mob/user)
 	if (charges <= 0)
@@ -135,7 +139,7 @@
 	desc = "An ominous card that contains the location of the station, and when applied to a communications console, \
 	the ability to long-distance contact the Syndicate fleet."
 	icon_state = "battlecruisercaller"
-	worn_icon_state = "battlecruisercaller"
+	worn_icon_state = "emag"
 	///whether we have called the battlecruiser
 	var/used = FALSE
 	/// The battlecruiser team that the battlecruiser will get added to

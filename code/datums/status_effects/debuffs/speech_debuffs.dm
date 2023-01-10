@@ -1,38 +1,29 @@
 /datum/status_effect/speech
 	id = null
 	alert_type = null
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/speech/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/speech/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, .proc/handle_message)
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_heal)
+	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(handle_message))
 	return TRUE
 
 /datum/status_effect/speech/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE)
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
-
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], removes all stutters and slurring on full heal
-/datum/status_effect/speech/proc/on_heal(datum/source, admin_revive)
-	SIGNAL_HANDLER
-
-	qdel(src)
 
 /**
  * Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
  *
- * Iterates over all of the characters in the past message
+ * Iterates over all of the characters in the passed message
  * and calls apply_speech() on each.
- *
- * message_args[1] is the original message passed into the signal.
  */
 /datum/status_effect/speech/proc/handle_message(datum/source, list/message_args)
 	SIGNAL_HANDLER
 
-	var/phrase = html_decode(message_args[1])
+	var/phrase = html_decode(message_args[TREAT_MESSAGE_MESSAGE])
 	if(!length(phrase))
 		return
 
@@ -44,7 +35,7 @@
 
 		final_phrase += apply_speech(original_char, original_char)
 
-	message_args[1] = sanitize(final_phrase)
+	message_args[TREAT_MESSAGE_MESSAGE] = sanitize(final_phrase)
 
 /**
  * Applies the speech effects on the past character, changing
@@ -92,7 +83,7 @@
 
 /datum/status_effect/speech/stutter/derpspeech/handle_message(datum/source, list/message_args)
 
-	var/message = html_decode(message_args[1])
+	var/message = html_decode(message_args[TREAT_MESSAGE_MESSAGE])
 
 	message = replacetext(message, " am ", " ")
 	message = replacetext(message, " is ", " ")

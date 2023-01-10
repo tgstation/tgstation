@@ -3,7 +3,7 @@
 /obj/item/debug/human_spawner
 	name = "human spawner"
 	desc = "Spawn a human by aiming at a turf and clicking. Use in hand to change type."
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -30,6 +30,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hypertool"
 	inhand_icon_state = "hypertool"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	toolspeed = 0.1
 	tool_behaviour = null
 
@@ -44,6 +46,7 @@
 		return FALSE
 	return TRUE
 
+
 /obj/item/debug/omnitool/attack_self(mob/user)
 	if(!user)
 		return
@@ -57,19 +60,19 @@
 		"Analyzer" = image(icon = 'icons/obj/device.dmi', icon_state = "analyzer"),
 		"Pickaxe" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
 		"Shovel" = image(icon = 'icons/obj/mining.dmi', icon_state = "spade"),
-		"Retractor" = image(icon = 'icons/obj/surgery.dmi', icon_state = "retractor"),
-		"Hemostat" = image(icon = 'icons/obj/surgery.dmi', icon_state = "hemostat"),
-		"Cautery" = image(icon = 'icons/obj/surgery.dmi', icon_state = "cautery"),
-		"Drill" = image(icon = 'icons/obj/surgery.dmi', icon_state = "drill"),
-		"Scalpel" = image(icon = 'icons/obj/surgery.dmi', icon_state = "scalpel"),
-		"Saw" = image(icon = 'icons/obj/surgery.dmi', icon_state = "saw"),
-		"Bonesetter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bone setter"),
+		"Retractor" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "retractor"),
+		"Hemostat" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "hemostat"),
+		"Cautery" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "cautery"),
+		"Drill" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "drill"),
+		"Scalpel" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "scalpel"),
+		"Saw" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "saw"),
+		"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
 		"Knife" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "knife"),
-		"Blood Filter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bloodfilter"),
+		"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter"),
 		"Rolling Pin" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "rolling_pin"),
 		"Wire Brush" = image(icon = 'icons/obj/tools.dmi', icon_state = "wirebrush"),
 		)
-	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(tool_result)
@@ -113,3 +116,34 @@
 			tool_behaviour = TOOL_ROLLINGPIN
 		if("Wire Brush")
 			tool_behaviour = TOOL_RUSTSCRAPER
+
+/obj/item/debug/omnitool/item_spawner/attack_self(mob/user)
+	if(!user || !user.client)
+		return
+	var/path = text2path(tgui_input_text(user, "Insert an item typepath to spawn", "ADMINS ONLY. FUCK AROUND AND FIND OUT."))
+	if(!path)
+		return
+	var/choice = tgui_alert(user, "Subtypes only?",, list("Yes", "No"))
+	if(!choice)
+		return
+	if(!user.client.holder)
+		if(!isliving(user))
+			return
+		var/mob/living/living_user = user
+		to_chat(user, span_warning("As you try to use [src], you hear strange tearing sounds, as if the coder gods were attempting to reach out and choke you themselves."))
+		playsound(src, 'sound/effects/dimensional_rend.ogg')
+		sleep(4 SECONDS)
+		var/confirmation = tgui_alert(user, "Are you certain you want to do that?", "Admins Only. Last Chance.", list("Yes", "No"))
+		if(!confirmation || confirmation == ("No"))
+			return
+		if(!user.client.holder) //safety if the admin readmined to save their ass lol.
+			to_chat(user, span_reallybig("You shouldn't have done that..."))
+			playsound(src, 'sound/voice/borg_deathsound.ogg')
+			sleep(3 SECONDS)
+			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
+			living_user.gib()
+			return
+	var/turf/loc_turf = get_turf(src)
+	for(var/spawn_atom in (choice == "No" ? typesof(path) : subtypesof(path)))
+		new spawn_atom(loc_turf)
+

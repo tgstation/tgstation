@@ -60,6 +60,8 @@
 		targets["[nametag] - [client]"] = client
 
 	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
+	if (isnull(target))
+		return
 	cmd_admin_pm(targets[target], null)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -450,6 +452,20 @@
 
 	// Ok by this point the recipient has to be an admin, and this is either an admin on admin event, or a player replying to an admin
 
+	// You're replying to a ticket that is closed. Bad move. You must have started replying before the close, and then got input()'d
+	// Lets be nice and pass this off to a new ticket, as we recomend above
+	if(!ticket)
+		to_chat(src,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_danger("Error: Admin-PM-Send: Attempted to send a reply to a closed ticket."),
+			confidential = TRUE)
+		to_chat(src,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_notice("Relaying message to a new admin help."),
+			confidential = TRUE)
+		GLOB.admin_help_ui_handler.perform_adminhelp(src, raw_message, FALSE)
+		return FALSE
+
 	// Let's play some music for the admin, only if they want it tho
 	if(sound_prefs & SOUND_ADMINHELP)
 		SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
@@ -533,9 +549,9 @@
 	if(ambiguious_recipient == EXTERNAL_PM_USER)
 		// Guard against the possibility of a null, since it'll runtime and spit out the contents of what should be a private ticket.
 		if(ticket)
-			log_admin_private("PM: Ticket #[ticket_id]: [our_name]->External: [raw_message]")
+			log_admin_private("PM: Ticket #[ticket_id]: [our_name]->External: [sanitize_text(trim(raw_message))]")
 		else
-			log_admin_private("PM: [our_name]->External: [raw_message]")
+			log_admin_private("PM: [our_name]->External: [sanitize_text(trim(raw_message))]")
 		for(var/client/lad in GLOB.admins)
 			to_chat(lad,
 				type = MESSAGE_TYPE_ADMINPM,
@@ -550,8 +566,8 @@
 		return
 
 	var/client/recipient = ambiguious_recipient
-	// The ckey of our recipient
-	var/recipient_key = recipient?.ckey
+	// The key of our recipient
+	var/recipient_key = recipient?.key
 	// Shows the recipient's ckey and the name of any mob it might be possessing
 	var/recipient_name = key_name(recipient)
 	// Shows the recipient's ckey/name embedded inside a clickable link to reply to this message
@@ -559,9 +575,9 @@
 
 	window_flash(recipient, ignorepref = TRUE)
 	if(ticket)
-		log_admin_private("PM: Ticket #[ticket_id]: [our_name]->[recipient_name]: [raw_message]")
+		log_admin_private("PM: Ticket #[ticket_id]: [our_name]->[recipient_name]: [sanitize_text(trim(raw_message))]")
 	else
-		log_admin_private("PM: [our_name]->[recipient_name]: [raw_message]")
+		log_admin_private("PM: [our_name]->[recipient_name]: [sanitize_text(trim(raw_message))]")
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/lad in GLOB.admins)
 		if(lad.key == key || lad.key == recipient_key) //check to make sure client/lad isn't the sender or recipient

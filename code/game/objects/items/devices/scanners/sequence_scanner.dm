@@ -80,7 +80,7 @@
 	var/answer = tgui_input_list(user, "Analyze Potential", "Sequence Analyzer", sort_list(options))
 	if(isnull(answer))
 		return
-	if(!ready || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !user.can_read(src))
+	if(!ready || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || !user.can_read(src))
 		return
 
 	var/sequence
@@ -100,7 +100,7 @@
 
 	ready = FALSE
 	icon_state = "[icon_state]_recharging"
-	addtimer(CALLBACK(src, .proc/recharge), cooldown, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(recharge)), cooldown, TIMER_UNIQUE)
 
 /obj/item/sequence_scanner/proc/recharge()
 	icon_state = initial(icon_state)

@@ -35,10 +35,10 @@ other types of metals and chemistry for reagents).
 	var/construction_time
 	/// The typepath of the object produced by this design
 	var/build_path = null
-	/// List of reagents produced by this design. Currently only supported by the biogenerator.
-	var/list/make_reagents = list()
-	/// What category this design falls under. Used for sorting in production machines, mostly the mechfab.
-	var/list/category = null
+	/// Reagent produced by this design. Currently only supported by the biogenerator.
+	var/make_reagent
+	/// What categories this design falls under. Used for sorting in production machines.
+	var/list/category = list()
 	/// List of reagents required to create one unit of the product.
 	var/list/reagents_list = list()
 	/// The maximum number of units of whatever is produced by this can be produced in one go.

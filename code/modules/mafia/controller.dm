@@ -177,10 +177,10 @@
 		if(turn == 1)
 			send_message(span_notice("<b>The selected map is [current_map.name]!</b></br>[current_map.description]"))
 			send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
-			next_phase_timer = addtimer(CALLBACK(src,.proc/check_trial, FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
+			next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
 		else
 			send_message("<b>Day [turn] started! Voting will start in 1 minute.</b>")
-			next_phase_timer = addtimer(CALLBACK(src,.proc/start_voting_phase),day_phase_period,TIMER_STOPPABLE)
+			next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_voting_phase)),day_phase_period,TIMER_STOPPABLE)
 
 	SStgui.update_uis(src)
 
@@ -193,7 +193,7 @@
  */
 /datum/mafia_controller/proc/start_voting_phase()
 	phase = MAFIA_PHASE_VOTING
-	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, TRUE),voting_phase_period,TIMER_STOPPABLE) //be verbose!
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), TRUE),voting_phase_period,TIMER_STOPPABLE) //be verbose!
 	send_message("<b>Voting started! Vote for who you want to see on trial today.</b>")
 	SStgui.update_uis(src)
 
@@ -225,7 +225,7 @@
 		on_trial = loser
 		on_trial.body.forceMove(get_turf(town_center_landmark))
 		phase = MAFIA_PHASE_JUDGEMENT
-		next_phase_timer = addtimer(CALLBACK(src, .proc/lynch),judgement_phase_period,TIMER_STOPPABLE)
+		next_phase_timer = addtimer(CALLBACK(src, PROC_REF(lynch)),judgement_phase_period,TIMER_STOPPABLE)
 		reset_votes("Day")
 	else
 		if(verbose)
@@ -254,13 +254,13 @@
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
 		send_message(span_red("<b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b>"))
 		on_trial.kill(src,lynch = TRUE)
-		addtimer(CALLBACK(src, .proc/send_home, on_trial),judgement_lynch_period)
+		addtimer(CALLBACK(src, PROC_REF(send_home), on_trial),judgement_lynch_period)
 	else
 		send_message(span_green("<b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b>"))
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
 	on_trial = null
 	//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
-	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, FALSE),judgement_lynch_period,TIMER_STOPPABLE)// small pause to see the guy dead, no verbosity since we already did this
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), FALSE),judgement_lynch_period,TIMER_STOPPABLE)// small pause to see the guy dead, no verbosity since we already did this
 
 /**
  * Teenie helper proc to move players back to their home.
@@ -375,7 +375,7 @@
 	for(var/datum/mafia_role/R in all_roles)
 		R.reveal_role(src)
 	phase = MAFIA_PHASE_VICTORY_LAP
-	next_phase_timer = addtimer(CALLBACK(src,.proc/end_game),victory_lap_period,TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(end_game)),victory_lap_period,TIMER_STOPPABLE)
 
 /**
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
@@ -412,13 +412,13 @@
  * * close: boolean, the state you want the curtains in.
  */
 /datum/mafia_controller/proc/toggle_night_curtains(close)
-	for(var/obj/machinery/door/poddoor/D in GLOB.machines) //I really dislike pathing of these
+	for(var/obj/machinery/door/poddoor/D in GLOB.airlocks) //I really dislike pathing of these
 		if(D.id != "mafia") //so as to not trigger shutters on station, lol
 			continue
 		if(close)
-			INVOKE_ASYNC(D, /obj/machinery/door/poddoor.proc/close)
+			INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 		else
-			INVOKE_ASYNC(D, /obj/machinery/door/poddoor.proc/open)
+			INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
 /**
  * The actual start of night for players. Mostly info is given at the start of the night as the end of the night is when votes and actions are submitted and tried.
@@ -431,7 +431,7 @@
 	phase = MAFIA_PHASE_NIGHT
 	send_message("<b>Night [turn] started! Lockdown will end in 45 seconds.</b>")
 	SEND_SIGNAL(src,COMSIG_MAFIA_SUNDOWN)
-	next_phase_timer = addtimer(CALLBACK(src, .proc/resolve_night),night_phase_period,TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(resolve_night)),night_phase_period,TIMER_STOPPABLE)
 	SStgui.update_uis(src)
 
 /**
@@ -531,7 +531,7 @@
 			tally[votes[vote_type][votee]] = 1
 		else
 			tally[votes[vote_type][votee]] += 1
-	sortTim(tally,/proc/cmp_numeric_dsc,associative=TRUE)
+	sortTim(tally, GLOBAL_PROC_REF(cmp_numeric_dsc),associative=TRUE)
 	return length(tally) ? tally[1] : null
 
 /**
@@ -575,7 +575,7 @@
 		ADD_TRAIT(H, TRAIT_CANNOT_CRYSTALIZE, MAFIA_TRAIT)
 		H.equipOutfit(player_outfit)
 		H.status_flags |= GODMODE
-		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/display_votes)
+		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(display_votes))
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)
 		var/client/player_client = GLOB.directory[role.player_key]
@@ -959,6 +959,7 @@
 		if(!C)//vice versa but in a variable we use later
 			GLOB.mafia_signup -= key
 			GLOB.mafia_bad_signup += key
+			continue
 		if(!isobserver(C.mob))
 			//they are back to playing the game, remove them from the signups
 			GLOB.mafia_signup -= key
@@ -966,7 +967,7 @@
 /datum/action/innate/mafia_panel
 	name = "Mafia Panel"
 	desc = "Use this to play."
-	icon_icon = 'icons/obj/mafia.dmi'
+	button_icon = 'icons/obj/mafia.dmi'
 	button_icon_state = "board"
 	var/datum/mafia_controller/parent
 

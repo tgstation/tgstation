@@ -23,7 +23,11 @@
 	speak_emote = list("chitters")
 
 	basic_mob_flags = DEL_ON_DEATH
-	faction = list("hostile")
+	faction = list("hostile", FACTION_MAINT_CREATURES)
+
+	unsuitable_atmos_damage = 0
+	minimum_survivable_temperature = 270
+	maximum_survivable_temperature = INFINITY
 
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
@@ -31,7 +35,8 @@
 
 /mob/living/basic/cockroach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/effect/decal/cleanable/insectguts))
+	var/static/list/roach_drops = list(/obj/effect/decal/cleanable/insectguts)
+	AddElement(/datum/element/death_drops, roach_drops)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
@@ -48,16 +53,17 @@
 
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
-		/datum/ai_planning_subtree/find_and_hunt_target
-)
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
+	)
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
@@ -77,7 +83,7 @@
 	melee_damage_upper = 10
 	obj_damage = 10
 	gold_core_spawnable = HOSTILE_SPAWN
-	faction = list("hostile")
+	faction = list("hostile", FACTION_MAINT_CREATURES)
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
 	cockroach_cell_line = CELL_LINE_TABLE_GLOCKROACH
 
@@ -87,10 +93,11 @@
 
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach, //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
@@ -111,7 +118,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	faction = list("hostile")
+	faction = list("hostile", FACTION_MAINT_CREATURES)
 	sharpness = SHARP_POINTY
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
 	cockroach_cell_line = CELL_LINE_TABLE_HAUBEROACH
@@ -119,7 +126,7 @@
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
-	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/basic/cockroach/hauberoach/.proc/on_squish)
+	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = TYPE_PROC_REF(/mob/living/basic/cockroach/hauberoach, on_squish))
 
 ///Proc used to override the squashing behavior of the normal cockroach.
 /mob/living/basic/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
@@ -132,10 +139,11 @@
 	return FALSE
 /datum/ai_controller/basic_controller/cockroach/hauberoach
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach,  //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach
@@ -143,3 +151,40 @@
 
 /datum/ai_behavior/basic_melee_attack/hauberoach //Slightly slower, as this is being made in feature freeze ;)
 	action_cooldown = 1 SECONDS
+
+/datum/ai_controller/basic_controller/cockroach/sewer
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/sewer,
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
+	)
+
+/datum/ai_planning_subtree/basic_melee_attack_subtree/sewer
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/sewer
+
+/datum/ai_behavior/basic_melee_attack/sewer
+	action_cooldown = 0.8 SECONDS
+
+/mob/living/basic/cockroach/glockroach/mobroach
+	name = "mobroach"
+	desc = "WE'RE FUCKED, THAT GLOCKROACH HAS A TOMMYGUN!"
+	icon_state = "mobroach"
+	ai_controller = /datum/ai_controller/basic_controller/cockroach/mobroach
+
+/datum/ai_controller/basic_controller/cockroach/mobroach
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/mobroach, //If we are attacking someone, this will prevent us from hunting
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
+	)
+
+/datum/ai_planning_subtree/basic_ranged_attack_subtree/mobroach
+	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/mobroach
+
+/datum/ai_behavior/basic_ranged_attack/mobroach
+	shots = 4
+	action_cooldown = 2 SECONDS

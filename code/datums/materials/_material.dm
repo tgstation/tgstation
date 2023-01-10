@@ -86,13 +86,11 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(beauty_modifier)
 		source.AddElement(/datum/element/beauty, beauty_modifier * amount)
 
-	if(istype(source, /obj)) //objs
+	if(isobj(source)) //objs
 		on_applied_obj(source, amount, material_flags)
 
 	else if(istype(source, /turf)) //turfs
 		on_applied_turf(source, amount, material_flags)
-
-	source.update_appearance()
 
 	source.mat_update_desc(src)
 
@@ -107,16 +105,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.modify_max_integrity(new_max_integrity)
 		o.force *= strength_modifier
 		o.throwforce *= strength_modifier
-
-		var/list/temp_armor_list = list() //Time to add armor modifiers!
-
-		if(!istype(o.armor))
-			return
-		var/list/current_armor = o.armor?.getList()
-
-		for(var/i in current_armor)
-			temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
-		o.armor = getArmor(arglist(temp_armor_list))
+		o.set_armor(o.get_armor().generate_new_with_multipliers(armor_modifiers))
 
 	if(!isitem(o))
 		return
@@ -180,7 +169,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(beauty_modifier)
 		source.RemoveElement(/datum/element/beauty, beauty_modifier * amount)
 
-	if(istype(source, /obj)) //objs
+	if(isobj(source)) //objs
 		on_removed_obj(source, amount, material_flags)
 
 	if(istype(source, /turf)) //turfs

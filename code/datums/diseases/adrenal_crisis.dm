@@ -12,6 +12,7 @@
 	severity = DISEASE_SEVERITY_MEDIUM
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+	spread_text = "Organ failure"
 	visibility_flags = HIDDEN_PANDEMIC
 	bypasses_immunity = TRUE
 
@@ -29,10 +30,10 @@
 				affected_mob.Unconscious(40)
 
 			if(DT_PROB(10, delta_time))
-				affected_mob.adjust_timed_status_effect(14 SECONDS, /datum/status_effect/speech/slurring/drunk)
+				affected_mob.adjust_slurring(14 SECONDS)
 
 			if(DT_PROB(7, delta_time))
-				affected_mob.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+				affected_mob.set_dizzy_if_lower(20 SECONDS)
 
 			if(DT_PROB(2.5, delta_time))
 				to_chat(affected_mob, span_warning(pick("You feel pain shoot down your legs!", "You feel like you are going to pass out at any moment.", "You feel really dizzy.")))

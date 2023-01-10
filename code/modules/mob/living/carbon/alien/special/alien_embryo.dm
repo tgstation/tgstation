@@ -2,7 +2,7 @@
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
 /obj/item/organ/internal/body_egg/alien_embryo
 	name = "alien embryo"
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "larva0_dead"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 	///What stage of growth the embryo is at. Developed embryos give the host symptoms suggesting that an embryo is inside them.
@@ -23,10 +23,13 @@
 	else
 		to_chat(finder, span_notice("It's grown quite large, and writhes slightly as you look at it."))
 		if(prob(10))
-			AttemptGrow(0)
+			attempt_grow(gib_on_success = FALSE)
 
 /obj/item/organ/internal/body_egg/alien_embryo/on_life(delta_time, times_fired)
 	. = ..()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
 	switch(stage)
 		if(3, 4)
 			if(DT_PROB(1, delta_time))
@@ -58,24 +61,31 @@
 /obj/item/organ/internal/body_egg/alien_embryo/proc/advance_embryo_stage()
 	if(stage >= 6)
 		return
-	if(++stage < 6)
-		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
+	stage++
+	if(stage < 6)
+		INVOKE_ASYNC(src, PROC_REF(RefreshInfectionImage))
 		var/slowdown = 1
 		if(ishuman(owner))
 			var/mob/living/carbon/human/baby_momma = owner
 			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
-		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time*slowdown)
+			if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
+				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
+
+		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
-		for(var/datum/surgery/S in owner.surgeries)
-			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
-				AttemptGrow(0)
-				return
-		AttemptGrow()
+		for(var/datum/surgery/operations as anything in owner.surgeries)
+			if(operations.location != BODY_ZONE_CHEST)
+				continue
+			if(!istype(operations.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
+				continue
+			attempt_grow(gib_on_success = FALSE)
+			return
+		attempt_grow()
 
-
-/obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=TRUE)
+///Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
+/obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)
 	if(!owner || bursting)
 		return
 
@@ -89,12 +99,12 @@
 	if(!candidates.len || !owner)
 		bursting = FALSE
 		stage = 5 // If no ghosts sign up for the Larva, let's regress our growth by one minute, we will try again!
-		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
+		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time)
 		return
 
 	var/mob/dead/observer/ghost = pick(candidates)
 
-	var/mutable_appearance/overlay = mutable_appearance('icons/mob/alien.dmi', "burst_lie")
+	var/mutable_appearance/overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "burst_lie")
 	owner.add_overlay(overlay)
 
 	var/atom/xeno_loc = get_turf(owner)
@@ -106,7 +116,7 @@
 	new_xeno.notransform = 1
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 
-	sleep(6)
+	sleep(0.6 SECONDS)
 
 	if(QDELETED(src) || QDELETED(owner))
 		qdel(new_xeno)
@@ -120,9 +130,11 @@
 
 	if(gib_on_success)
 		new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner] in a shower of gore!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))
+		owner.investigate_log("has been gibbed by an alien larva.", INVESTIGATE_DEATHS)
 		owner.gib(TRUE)
 	else
 		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
+		owner.log_message("had an alien larva within them escape (without being gibbed).", LOG_ATTACK, log_globally = FALSE)
 		owner.adjustBruteLoss(40)
 		owner.cut_overlay(overlay)
 	qdel(src)
@@ -134,7 +146,7 @@ Des: Adds the infection image to all aliens for this embryo
 ----------------------------------------*/
 /obj/item/organ/internal/body_egg/alien_embryo/AddInfectionImages()
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
-		var/I = image('icons/mob/alien.dmi', loc = owner, icon_state = "infected[stage]")
+		var/I = image('icons/mob/nonhuman-player/alien.dmi', loc = owner, icon_state = "infected[stage]")
 		alien.client?.images += I
 
 /*----------------------------------------

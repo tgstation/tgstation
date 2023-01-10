@@ -7,14 +7,16 @@
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = SUPERVISOR_QM
-	selection_color = "#dcba97"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "SHAFT_MINER"
 
 	outfit = /datum/outfit/job/miner
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
+
+	mind_traits = list(TRAIT_DETECT_STORM)
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 	bounty_types = CIV_JOB_MINE
@@ -38,8 +40,8 @@
 		/obj/item/knife/combat/survival = 1,
 		/obj/item/mining_voucher = 1,
 		/obj/item/stack/marker_beacon/ten = 1,
-		)
-	belt = /obj/item/modular_computer/tablet/pda/shaftminer
+	)
+	belt = /obj/item/modular_computer/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots/mining
@@ -65,21 +67,57 @@
 		/obj/item/mining_voucher = 1,
 		/obj/item/stack/marker_beacon/ten = 1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
-		)
+	)
 	glasses = /obj/item/clothing/glasses/meson
 	mask = /obj/item/clothing/mask/gas/explorer
 	internals_slot = ITEM_SLOT_SUITSTORE
 
-/datum/outfit/job/miner/equipped/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/miner/equipped/post_equip(mob/living/carbon/human/miner, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
 		return
-	if(istype(H.wear_suit, /obj/item/clothing/suit/hooded))
-		var/obj/item/clothing/suit/hooded/S = H.wear_suit
-		S.ToggleHood()
+	if(istype(miner.wear_suit, /obj/item/clothing/suit/hooded))
+		var/obj/item/clothing/suit/hooded/explorer_suit = miner.wear_suit
+		explorer_suit.ToggleHood()
 
 /datum/outfit/job/miner/equipped/mod
 	name = "Shaft Miner (Equipment + MODsuit)"
 	back = /obj/item/mod/control/pre_equipped/mining
 	suit = null
 	mask = /obj/item/clothing/mask/gas/explorer
+
+/datum/outfit/job/miner/equipped/combat
+	name = "Shaft Miner (Combat-Ready)"
+	glasses = /obj/item/clothing/glasses/hud/health/night/meson
+	gloves = /obj/item/clothing/gloves/bracer
+	accessory = /obj/item/clothing/accessory/talisman
+	backpack_contents = list(
+		/obj/item/storage/box/miner_modkits = 1,
+		/obj/item/gun/energy/recharge/kinetic_accelerator = 2,
+		/obj/item/kinetic_crusher/compact = 1,
+		/obj/item/resonator/upgraded = 1,
+	)
+	box = /obj/item/storage/box/survival/mining/bonus
+	l_pocket = /obj/item/modular_computer/pda/shaftminer
+	r_pocket = /obj/item/extinguisher/mini
+	belt = /obj/item/storage/belt/mining/healing
+
+/datum/outfit/job/miner/equipped/combat/post_equip(mob/living/carbon/human/miner, visualsOnly = FALSE)
+	. = ..()
+	if(visualsOnly)
+		return
+	var/list/miner_contents = miner.get_all_contents()
+	var/obj/item/clothing/suit/hooded/explorer/explorer_suit = locate() in miner_contents
+	if(explorer_suit)
+		for(var/i in 1 to 3)
+			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = new()
+			explorer_suit.attackby(plating)
+		for(var/i in 1 to 3)
+			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = new()
+			explorer_suit.hood.attackby(plating)
+	for(var/obj/item/gun/energy/recharge/kinetic_accelerator/accelerator in miner_contents)
+		var/obj/item/knife/combat/survival/knife = new(accelerator)
+		accelerator.bayonet = knife
+		var/obj/item/flashlight/seclite/flashlight = new()
+		var/datum/component/seclite_attachable/light_component = accelerator.GetComponent(/datum/component/seclite_attachable)
+		light_component.add_light(flashlight)

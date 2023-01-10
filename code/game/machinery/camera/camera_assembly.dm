@@ -176,7 +176,7 @@
 				update_appearance()
 				return
 
-			else if(istype(W, /obj/item/assembly/prox_sensor)) //motion sensing upgrade
+			else if(isprox(W)) //motion sensing upgrade
 				if(proxy_module)
 					to_chat(user, span_warning("[src] already contains a [proxy_module]!"))
 					return
@@ -203,7 +203,7 @@
 	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
 	if(isnull(choice))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
 	drop_upgrade(choice)
@@ -235,7 +235,7 @@
 
 	C.network = tempnetwork
 	var/area/A = get_area(src)
-	C.c_tag = "[A.name] ([rand(1, 999)])"
+	C.c_tag = "[format_text(A.name)] ([rand(1, 999)])"
 	return TRUE
 
 /obj/structure/camera_assembly/wirecutter_act(mob/user, obj/item/I)

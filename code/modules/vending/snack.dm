@@ -21,7 +21,7 @@
 		/obj/item/food/cnds = 6,
 		/obj/item/food/cnds/random = 3,
 		/obj/item/food/semki = 6,
-		/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
+		/obj/item/reagent_containers/cup/glass/dry_ramen = 3,
 		/obj/item/storage/box/gum = 3,
 		/obj/item/food/energybar = 6,
 	)
@@ -35,7 +35,7 @@
 		/obj/item/food/pistachios = 3,
 	)
 	refill_canister = /obj/item/vending_refill/snack
-	canload_access_list = list(ACCESS_KITCHEN)
+	req_access = list(ACCESS_KITCHEN)
 	default_price = PAYCHECK_CREW * 0.6
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
