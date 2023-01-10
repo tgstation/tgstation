@@ -86,7 +86,7 @@
 /// Kills the rat and changes its icon state to be splatted (bloody).
 /mob/living/basic/mouse/proc/splat()
 	icon_dead = "mouse_[body_color]_splat"
-	adjust_health(-maxHealth)
+	adjust_health(maxHealth)
 
 // On revival, re-add the mouse to the ratcap, or block it if we're at it
 /mob/living/basic/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)

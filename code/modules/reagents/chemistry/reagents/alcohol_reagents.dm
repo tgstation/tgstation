@@ -1497,6 +1497,13 @@
 	drinker.adjust_bodytemperature(50 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
 	return ..()
 
+/datum/glass_style/drinking_glass/sbiten
+	required_drink_type = /datum/reagent/consumable/ethanol/sbiten
+	name = "Sbiten"
+	desc = "A spicy mix of Vodka and Spice. Very hot."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "sbitenglass"
+
 /datum/reagent/consumable/ethanol/red_mead
 	name = "Red Mead"
 	description = "The true Viking drink! Even though it has a strange red color."

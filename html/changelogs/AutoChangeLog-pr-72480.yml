@@ -1,0 +1,7 @@
+author: "MiiyaBot"
+delete-after: True
+changes:
+  - rscadd: "Two new hairstyles! (\"All the Fuzz\" & \"Over Eye (Izutsumi)\")"
+  - spellcheck: "Renamed \"Marginally shorter yet long bedhead\" to \"Shorter Long Bedhead\""
+  - spellcheck: "Renamed \"BedHead 4X\" to \"Bedhead 4x\""
+  - bugfix: "Slight changes to \"Jade\", \"Shorter Bedhead\", \"Bedhead 4x\""
