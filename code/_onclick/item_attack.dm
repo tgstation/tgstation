@@ -66,8 +66,9 @@
 			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
 		else
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
+		return TRUE
 
-	return afterattack_result == TRUE
+	return afterattack_result
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)
