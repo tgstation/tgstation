@@ -135,6 +135,9 @@ DYNAMIC_CONFIG_ENABLED
 ## Comment this out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
 
+## Uncomment this to disable station traits.
+#FORBID_STATION_TRAITS
+
 ## Multiplier for earliest start time of dangerous events.
 ## Set to 0 to make dangerous events avaliable from round start.
 EVENTS_MIN_TIME_MUL 1
@@ -519,3 +522,8 @@ MAXFINE 2000
 ## Comment if you wish to enable title music playing at the lobby screen. This flag is disabled by default to facilitate better code testing on local machines.
 ## Do keep in mind that this flag will not affect individual player's preferences: if they opt-out on your server, it will never play for them.
 DISALLOW_TITLE_MUSIC
+
+## If enabled, then when the database is disabled, all players will get tutorials.
+## This is primarily useful for developing tutorials. If you have a proper DB setup, you
+## don't need (or want) this.
+#GIVE_TUTORIALS_WITHOUT_DB

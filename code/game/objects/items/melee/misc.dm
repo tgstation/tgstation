@@ -224,6 +224,7 @@
 		user.dropItemToGround(src)
 	if(proximity_flag)
 		consume_everything(target)
+		return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()

@@ -28,8 +28,10 @@
 	var/is_radio = !speaker || force_radio
 	if(is_radio)
 		var/list/humans = list()
-		for(var/mob/living/carbon/human/existing_human in GLOB.alive_mob_list)
-			humans += existing_human
+
+		for(var/datum/mind/crew_mind in get_crewmember_minds())
+			if(crew_mind.current)
+				humans += crew_mind.current
 		speaker = pick(humans)
 
 	// Time to generate a message.

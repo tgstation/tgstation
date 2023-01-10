@@ -51,14 +51,14 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 			playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
 
 	if(sm.damage < sm.damage_archived) // Healing
-		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [sm.get_integrity_percent()]%", sm.damage_archived >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel)
+		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.damage_archived >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel)
 		return FALSE
 
 	if(sm.damage >= sm.emergency_point) // Taking damage, in emergency
-		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT Integrity: [sm.get_integrity_percent()]%", sm.emergency_channel)
+		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
 		sm.lastwarning = REALTIMEOFDAY - (SUPERMATTER_WARNING_DELAY / 2) // Cut the time to next announcement in half.
 	else // Taking damage, in warning
-		sm.radio.talk_into(sm, "Danger! Crystal hyperstructure integrity faltering! Integrity: [sm.get_integrity_percent()]%", sm.warning_channel)
+		sm.radio.talk_into(sm, "Danger! Crystal hyperstructure integrity faltering! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
 
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
@@ -92,10 +92,10 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 	sm.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
-		size = clamp(sm.internal_energy / 30, 1, 125),
+		size = clamp(sm.internal_energy / 50, 1, 100),
 		color = (sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR),
-		factor = clamp(sm.damage/600, 1, 10),
-		density = clamp(sm.damage/10, 12, 100)
+		factor = clamp(sm.damage / 10, 1, 10),
+		density = clamp(sm.damage, 12, 100)
 	))
 
 	// Filter animation persists even if the filter itself is changed externally.
@@ -108,8 +108,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
 	sm.set_light(
-		l_range = 4 + sm.internal_energy/200,
-		l_power = 1 + sm.internal_energy/1000,
+		l_range = ROUND_UP(clamp(sm.internal_energy / 500, 4, 10)),
+		l_power = ROUND_UP(clamp(sm.internal_energy / 1000, 1, 5)),
 		l_color = sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
 		l_on = !!sm.internal_energy,
 	)

@@ -173,7 +173,7 @@
 							desc += "<br>The inscription reads: [input] - [user.real_name]"
 							M.log_message("was given the following commendation by <b>[key_name(user)]</b>: [input]", LOG_GAME, color = "green")
 							message_admins("<b>[key_name_admin(M)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
-							add_memory_in_range(M, 7, MEMORY_RECEIVED_MEDAL, list(DETAIL_PROTAGONIST = M, DETAIL_MEDAL_TYPE = src, DETAIL_DEUTERAGONIST = user, DETAIL_MEDAL_REASON = input), STORY_VALUE_AMAZING)
+							add_memory_in_range(M, 7, /datum/memory/received_medal, protagonist = M, deuteragonist =  user, medal_type = src, medal_text = input)
 
 		else
 			to_chat(user, span_warning("Medals can only be pinned on jumpsuits!"))
