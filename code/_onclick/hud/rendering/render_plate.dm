@@ -151,8 +151,11 @@
 	// Basically, we need something to brighten
 	// unlit is perhaps less needed rn, it exists to provide a fullbright for things that can't see the lighting plane
 	// but we don't actually use invisibility to hide the lighting plane anymore, so it's pointless
-	mymob.overlay_fullscreen("lighting_backdrop_lit", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
-	mymob.overlay_fullscreen("lighting_backdrop_unlit", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
+	var/atom/movable/screen/backdrop = mymob.overlay_fullscreen("lighting_backdrop_lit#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
+	// Need to make sure they're on our plane, ALL the time. We always need a backdrop
+	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
+	backdrop = mymob.overlay_fullscreen("lighting_backdrop_unlit#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
+	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
 
 	// Sorry, this is a bit annoying
 	// Basically, we only want the lighting plane we can actually see to attempt to render
