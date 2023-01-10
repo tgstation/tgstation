@@ -340,3 +340,24 @@
   san7890:
   - bugfix: New players connecting via an active Panic Bunker Interview System can
       now close out the window once they have their interview approved by an admin.
+2023-01-10:
+  Comxy:
+  - rscadd: Faithless will now also break lights and drag victims around
+  - refactor: Faithless into basic mob
+  Mothblocks:
+  - qol: New players will now get a contextual tutorial for how to switch hands and
+      drop items.
+  NamelessFairy:
+  - bugfix: Mice are no longer healed by mousetraps
+  Profakos:
+  - bugfix: adds missing sbiten glass style
+  Striders13:
+  - bugfix: fixed biosuits, nun robes, narsien hardened armor making your shoes invisible
+  Tastyfish:
+  - bugfix: The small carton no longer randomly disappears.
+  - bugfix: Pre-filled bottles of cola & nuka cola, and glasses of soda now have the
+      correct sprite.
+  Time-Green:
+  - bugfix: fixes wizard rod form infinitely travelling in hyperspace
+  timothymtorres:
+  - bugfix: Fix antags being revealed by hallucinations
