@@ -166,18 +166,9 @@ const DepartmentEntry = (
 
         <Stack vertical fill height="96%">
           {range(0, data.max_power_bars).map((_, index) => {
-            // Clicking on the top power bar will deplete it
-            let allocationsIfClicked =
-              totalPowerBars === data.max_power_bars - index
-                ? totalPowerBars - 1
-                : data.max_power_bars - index;
-
-            if (allocationsIfClicked === 0 && !data.can_fully_deplete) {
-              allocationsIfClicked = 1;
-            }
-
+            const tier = data.max_power_bars - index;
             const wouldBeExcess =
-              data.max_power_bars - index - usedPowerBars + totalUsedBars >
+              tier - usedPowerBars + totalUsedBars >
               sumAllocations(data.available_power_bars);
 
             return (
@@ -187,12 +178,11 @@ const DepartmentEntry = (
                   height="100%"
                   style={{
                     border:
-                      totalPowerBars >= data.max_power_bars - index &&
+                      totalPowerBars >= tier &&
                       `5px inset ${USED_POWER_BAR_COLOR}`,
                   }}
                   backgroundColor={
-                    data.max_power_bars - index >
-                    (hoveredAllocations ?? totalPowerBars)
+                    tier > (hoveredAllocations ?? totalPowerBars)
                       ? UNUSED_POWER_BAR_COLOR
                       : // Red if it is excess
                       wouldBeExcess
@@ -203,18 +193,41 @@ const DepartmentEntry = (
                     if (!wouldBeExcess) {
                       act('set_department_power', {
                         department: name,
-                        allocations: allocationsIfClicked,
+                        allocations: tier,
                       });
                     }
                   }}
                   onMouseEnter={() => {
-                    hover(allocationsIfClicked);
+                    hover(tier);
                   }}
                   onMouseLeave={() => unhover()}
                 />
               </Stack.Item>
             );
           })}
+
+          <Stack.Item>
+            <Button
+              align="center"
+              width="100%"
+              fontSize="15px"
+              disabled={!data.can_fully_deplete}
+              color="bad"
+              tooltip={
+                data.can_fully_deplete
+                  ? ''
+                  : 'The CE can fully drain a department'
+              }
+              tooltipPosition="top"
+              onClick={() => {
+                act('set_department_power', {
+                  department: name,
+                  allocations: 0,
+                });
+              }}>
+              Drain
+            </Button>
+          </Stack.Item>
         </Stack>
       </fieldset>
     </Stack.Item>
