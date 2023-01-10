@@ -526,3 +526,33 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/telescreen_bar
+	name = "Bar Telescreen"
+	id = "telescreen_bar"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = 10000,
+		/datum/material/glass = 5000,
+	)
+	build_path = /obj/item/wallframe/telescreen/bar
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/telescreen_entertainment
+	name = "Entertainment Telescreen"
+	id = "telescreen_entertainment"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = 10000,
+		/datum/material/glass = 5000,
+	)
+	build_path = /obj/item/wallframe/telescreen/entertainment
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

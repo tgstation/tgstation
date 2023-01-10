@@ -335,3 +335,48 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/telescreen_turbine
+	name = "Turbine Telescreen"
+	id = "telescreen_turbine"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = 10000,
+		/datum/material/glass = 5000,
+	)
+	build_path = /obj/item/wallframe/telescreen/turbine
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/telescreen_engine
+	name = "Engine Telescreen"
+	id = "telescreen_engine"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = 10000,
+		/datum/material/glass = 5000,
+	)
+	build_path = /obj/item/wallframe/telescreen/engine
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/telescreen_auxbase
+	name = "Auxiliary Base Telescreen"
+	id = "telescreen_auxbase"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = 10000,
+		/datum/material/glass = 5000,
+	)
+	build_path = /obj/item/wallframe/telescreen/auxbase
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
