@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 /datum/infuser_entry/mothroach
 	name = "Mothroach"
 	infuse_mob_name = "Mothroach"
-	desc = "So first they mixed moth and roach dna to make mothroaches, and now we mix mothroach dna with humanoids to make mothmen hybrid?"
+	desc = "So first they mixed moth and roach DNA to make mothroaches, and now we mix mothroach DNA with humanoids to make mothmen hybrids?"
 	threshold_desc = NO_THRESHOLD
 	qualities = list(
 		"eyes weak to bright lights",
