@@ -14,6 +14,8 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	icon_screen = "commsyndie" // idk
 	light_color = COLOR_SOFT_RED
 
+	req_access = list(ACCESS_ENGINEERING)
+
 	VAR_PRIVATE
 		list/connected_machines = list()
 
@@ -120,6 +122,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	data["disabled_field_generators"] = 0
 	data["singularity_generator"] = FALSE
 	data["turrets"] = 0
+	data["has_access"] = allowed(user)
 
 	for (var/obj/connected_machine as anything in connected_machines)
 		if (istype(connected_machine, /obj/machinery/field/generator/singularity))
@@ -139,6 +142,22 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	return list(
 		"map_name" = camera_map_name,
 	)
+
+/obj/machinery/computer/singularity/ui_status(mob/user)
+	. = ..()
+
+	if (!allowed(user))
+		return min(., UI_UPDATE)
+
+	return .
+
+/obj/machinery/computer/singularity/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (obj_flags & EMAGGED)
+		return
+
+	obj_flags |= EMAGGED
+	balloon_alert(user, "overrode access")
+	req_access.Cut()
 
 /obj/machinery/computer/singularity/proc/try_singularity_ui_data()
 	var/obj/contained_singularity/singularity = singularity_ref?.resolve()

@@ -2,7 +2,7 @@ import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
 import { Fragment, InfernoNode, SFC } from 'inferno';
 import { useBackend } from '../backend';
-import { Blink, Box, Button, ByondUi, Icon, ProgressBar, Stack, Tooltip } from '../components';
+import { Blink, Box, Button, ByondUi, Icon, NoticeBox, ProgressBar, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 // MBTODO: Remove this and just make it alpha, since overclock will be blue
@@ -21,6 +21,7 @@ type PowerBar = {
 type SingularityControlData = {
   enabled_field_generators: number;
   disabled_field_generators: number;
+  has_access: boolean;
   map_name: string;
   singularity_generator: BooleanLike;
   stage: Stage;
@@ -62,6 +63,19 @@ const CoolerSection: SFC<{
   );
 };
 
+const NoAccessWarning = () => {
+  return (
+    <NoticeBox
+      danger
+      style={{
+        position: 'absolute',
+        width: '100%',
+      }}>
+      You do not have access.
+    </NoticeBox>
+  );
+};
+
 const ConnectedMachine = (props: {
   icon: string;
   topText?: InfernoNode;
@@ -92,6 +106,8 @@ const SetupScreen = (props, context) => {
   return (
     <Window title="Singularity Control Console" width={700} height={300}>
       <Window.Content>
+        {!data.has_access && <NoAccessWarning />}
+
         <Stack vertical fill>
           <Stack.Item grow>
             <Stack fill>
@@ -403,6 +419,7 @@ const ObserveScreen = (props, context) => {
           <Stack.Item grow>
             <Stack vertical fill>
               <Stack.Item height="50%">
+                {!data.has_access && <NoAccessWarning />}
                 <CoolerSection title="OUTPUT">
                   <OutputWindow />
                 </CoolerSection>
