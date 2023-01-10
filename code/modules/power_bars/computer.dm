@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 
 /obj/machinery/computer/power_distribution
 	name = "power level distribution console"
-	desc = "Used to control the power level throughout the station. The more power a department has, the better their equipment will be."
+	desc = "Used to control the power level throughout the station. The more power a department has, the better their equipment will be. APCs must be connected on the same powernet as this computer in order to receive the benefits."
 	icon_screen = "ratvar2"
 	icon_state = "ratvarcomputer3"
 	icon_keyboard = "ratvar_key4"
