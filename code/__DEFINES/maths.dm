@@ -241,8 +241,5 @@
 //And lo and behold, it is, and it's more accurate to boot.
 #define CHEAP_HYPOTENUSE(Ax, Ay, Bx, By) (sqrt(abs(Ax - Bx) ** 2 + abs(Ay - By) ** 2)) //A squared + B squared = C squared
 
-// Takes two positions, moves 1 step from the first one towards the second
-#define GET_CLOSER(start, center) ((center) > (start) ? ((start) + 1) : ((center) == 0) ? (start) : ((start) - 1))
-
 /// The number of cells in a taxicab circle (rasterized diamond) of radius X.
 #define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))
