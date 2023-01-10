@@ -166,12 +166,12 @@ const ObservableContent = (props, context) => {
           />
         );
       })}
-      <ObservableSection color="blue" section={alive} title="Alive" />
       <ObservableSection
         color="purple"
         section={deadchat_controlled}
         title="Deadchat Controlled"
       />
+      <ObservableSection color="blue" section={alive} title="Alive" />
       <ObservableSection section={dead} title="Dead" />
       <ObservableSection section={ghosts} title="Ghosts" />
       <ObservableSection section={misc} title="Misc" />
