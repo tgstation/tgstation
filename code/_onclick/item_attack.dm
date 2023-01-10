@@ -66,7 +66,6 @@
 			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
 		else
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
-		return
 
 	return afterattack_result & TRUE //this is really stupid but its needed because afterattack can return TRUE | FLAGS.
 
