@@ -45,8 +45,9 @@
 		return
 	// Non 0 offset render plates will relay up to the transparent plane above them, assuming they're not on the same z level as their target of course
 	var/datum/hud/hud = home.our_hud
+	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
 	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
 	offset_change(hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/master/hide_from(mob/oldmob)
@@ -161,8 +162,9 @@
 	// Basically, we only want the lighting plane we can actually see to attempt to render
 	// If we don't our lower plane gets totally overriden by the black void of the upper plane
 	var/datum/hud/hud = home.our_hud
+	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
 	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
 	offset_change(hud?.current_plane_offset || 0)
 	set_alpha(mymob.lighting_alpha)
 
