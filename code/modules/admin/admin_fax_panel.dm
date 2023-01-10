@@ -113,11 +113,6 @@
 			if(params["fromWho"])
 				sending_fax_name = params["fromWho"]
 
-			if(params["advancedHTML"])
-				fax_paper.sanitize_text = FALSE
-			else
-				fax_paper.sanitize_text = TRUE
-
 			fax_paper.clear_paper()
 			var/stamp
 			var/stamp_class
@@ -129,7 +124,7 @@
 					break
 
 			fax_paper.name = "paper — [default_paper_name]"
-			fax_paper.add_raw_text(params["rawText"])
+			fax_paper.add_raw_text(params["rawText"], advanced_html = TRUE)
 
 			if(stamp)
 				fax_paper.add_stamp(stamp_class, params["stampX"], params["stampY"], params["stampAngle"], stamp)
@@ -139,13 +134,11 @@
 		if("send")
 			//copy
 			var/obj/item/paper/our_fax = fax_paper.copy(/obj/item/paper)
-			if(!fax_paper.sanitize_text)
-				our_fax.sanitize_text = FALSE
 			our_fax.name = fax_paper.name
 			//send
 			action_fax.receive(our_fax, sending_fax_name)
-			message_admins("[key_name_admin(usr)] has send custom fax message to [action_fax.name][ADMIN_FLW(action_fax)][ADMIN_SHOW_PAPER(fax_paper)].")
-			log_admin("[key_name(usr)] has send custom fax message to [action_fax.name]")
+			message_admins("[key_name_admin(usr)] has sent a custom fax message to [action_fax.name][ADMIN_FLW(action_fax)][ADMIN_SHOW_PAPER(fax_paper)].")
+			log_admin("[key_name(usr)] has sent a custom fax message to [action_fax.name]")
 
 		if("createPaper")
 			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, usr.loc)

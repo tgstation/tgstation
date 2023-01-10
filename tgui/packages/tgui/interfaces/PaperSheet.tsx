@@ -40,6 +40,7 @@ type PaperInput = {
   font?: string;
   color?: string;
   bold?: boolean;
+  advanced_html?: boolean;
 };
 
 type StampInput = {
@@ -512,6 +513,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       const fontColor = value.color || default_pen_color;
       const fontFace = value.font || default_pen_font;
       const fontBold = value.bold || false;
+      const advancedHtml = value.advanced_html || false;
 
       let processingOutput = this.formatAndProcessRawText(
         rawText,
@@ -520,7 +522,8 @@ export class PreviewView extends Component<PreviewViewProps> {
         paper_color,
         fontBold,
         fieldCount,
-        readOnly
+        readOnly,
+        advancedHtml
       );
 
       output += processingOutput.text;
@@ -647,7 +650,8 @@ export class PreviewView extends Component<PreviewViewProps> {
     paperColor: string,
     bold: boolean,
     fieldCounter: number = 0,
-    forceReadonlyFields: boolean = false
+    forceReadonlyFields: boolean = false,
+    advanced_html: boolean = false
   ): FieldCreationReturn => {
     // First lets make sure it ends in a new line
     const { data } = useBackend<PaperContext>(this.context);
@@ -656,13 +660,8 @@ export class PreviewView extends Component<PreviewViewProps> {
     // Second, parse the text using markup
     const parsedText = this.runMarkedDefault(rawText);
 
-    let sanitizedText = '';
     // Third, we sanitize the text of html
-    if (data.sanitize_text) {
-      sanitizedText = sanitizeText(parsedText);
-    } else {
-      sanitizedText = parsedText;
-    }
+    const sanitizedText = sanitizeText(parsedText, advanced_html);
 
     // Fourth we replace the [__] with fields
     const fieldedText = this.createFields(

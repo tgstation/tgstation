@@ -66,9 +66,6 @@
 	///If TRUE, staff can read paper everywhere, but usually from requests panel.
 	var/request_state = FALSE
 
-	/// If false, then some HTML will not be sanitized out (such as images), but non-staff players will no longer be able to write on it. Only accessable by VV and fax panel
-	var/sanitize_text = TRUE
-
 /obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
@@ -164,13 +161,15 @@
  * * font - The font to use.
  * * color - The font color to use.
  * * bold - Whether this text should be rendered completely bold.
+ * * advanced_html - Boolean that is true when the writer has R_FUN permission, which sanitizes less HTML (such as images) from the new paper_input
  */
-/obj/item/paper/proc/add_raw_text(text, font, color, bold)
+/obj/item/paper/proc/add_raw_text(text, font, color, bold, advanced_html)
 	var/new_input_datum = new /datum/paper_input(
 		text,
 		font,
 		color,
 		bold,
+		advanced_html,
 	)
 
 	input_field_count += get_input_field_count(text)
@@ -396,8 +395,6 @@
 	if(writing_stats["interaction_mode"] == MODE_WRITING)
 		if(!user.can_write(attacking_item))
 			return
-		if(!sanitize_text && !user?.client.holder)
-			return
 		if(get_total_length() >= MAX_PAPER_LENGTH)
 			to_chat(user, span_warning("This sheet of paper is full!"))
 			return
@@ -486,8 +483,6 @@
 	static_data["default_pen_color"] = COLOR_BLACK
 	static_data["signature_font"] = FOUNTAIN_PEN_FONT
 
-	static_data["sanitize_text"] = sanitize_text
-
 	return static_data;
 
 /obj/item/paper/ui_data(mob/user)
@@ -502,10 +497,7 @@
 		if(!istype(holding, /obj/item/stamp) && clipboard.pen)
 			holding = clipboard.pen
 
-	if(sanitize_text || user?.client.holder)
-		data["held_item_details"] = holding?.get_writing_implement_details()
-	else
-		data["held_item_details"] = null
+	data["held_item_details"] = holding?.get_writing_implement_details()
 
 	// If the paper is on an unwritable noticeboard, clear the held item details so it's read-only.
 	if(istype(loc, /obj/structure/noticeboard))
@@ -593,7 +585,7 @@
 			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
 			var/writing_implement_data = holding.get_writing_implement_details()
 
-			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"])
+			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], check_rights_for(user?.client, R_FUN))
 
 			log_paper("[key_name(user)] wrote to [name]: \"[paper_input]\"")
 			to_chat(user, "You have added to your paper masterpiece!");
@@ -680,15 +672,18 @@
 	var/colour = ""
 	/// Whether to render the font bold or not.
 	var/bold = FALSE
+	/// Whether the creator of this input field has the R_FUN permission, thus allowing less sanitization
+	var/advanced_html = FALSE
 
-/datum/paper_input/New(_raw_text, _font, _colour, _bold)
+/datum/paper_input/New(_raw_text, _font, _colour, _bold, _advanced_html)
 	raw_text = _raw_text
 	font = _font
 	colour = _colour
 	bold = _bold
+	advanced_html = _advanced_html
 
 /datum/paper_input/proc/make_copy()
-	return new /datum/paper_input(raw_text, font, colour, bold);
+	return new /datum/paper_input(raw_text, font, colour, bold, advanced_html)
 
 /datum/paper_input/proc/to_list()
 	return list(
@@ -696,6 +691,7 @@
 		font = font,
 		color = colour,
 		bold = bold,
+		advanced_html = advanced_html,
 	)
 
 /// A single instance of a saved stamp on paper.

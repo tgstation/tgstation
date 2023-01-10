@@ -17,7 +17,6 @@ export const FaxMainPanel = (props, context) => {
 
   const [fax, setFax] = useLocalState(context, 'fax', '');
   const [saved, setSaved] = useLocalState(context, 'saved', false);
-  const [advancedHTML, setHTML] = useLocalState(context, 'advancedHTML', false);
   const [paperName, setPaperName] = useLocalState(context, 'paperName', '');
   const [fromWho, setFromWho] = useLocalState(context, 'fromWho', '');
   const [rawText, setRawText] = useLocalState(context, 'rawText', '');
@@ -217,13 +216,11 @@ export const FaxMainPanel = (props, context) => {
                 stampY: stampCoordY,
                 stampAngle: stampAngle,
                 fromWho: fromWho,
-                advancedHTML: advancedHTML,
               });
             }}>
             Save
           </Button>
           <Button
-            mr="9px"
             disabled={!saved}
             icon="circle-plus"
             onClick={() =>
@@ -232,12 +229,6 @@ export const FaxMainPanel = (props, context) => {
               })
             }>
             Create paper
-          </Button>
-          <Button
-            color={advancedHTML ? 'green' : 'red'}
-            icon="code"
-            onClick={() => setHTML(!advancedHTML)}>
-            Advanced HTML
           </Button>
         </Box>
       </Section>
