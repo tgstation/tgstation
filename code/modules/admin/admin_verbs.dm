@@ -2,11 +2,6 @@
 /**
  * AVD TODO
 
-admin_verbs_ban
-/client/proc/unban_panel
-/client/proc/ban_panel
-/client/proc/stickybanpanel
-
 admin_verbs_sounds
 /client/proc/play_local_sound
 /client/proc/play_direct_mob_sound
@@ -146,9 +141,6 @@ admin_verbs_possess
 admin_verbs_permissions
 /client/proc/edit_admin_permissions
 
-admin_verbs_poll
-/client/proc/poll_panel
-
 R_BUILD
 /client/proc/togglebuildmodeself
 
@@ -242,36 +234,17 @@ ADMIN_VERB(game, list_dna, "", R_ADMIN)
 ADMIN_VERB(game, list_fingerprints, "", R_ADMIN)
 	usr.client.holder.list_fingerprints()
 
-/client/proc/ban_panel()
-	set name = "Banning Panel"
-	set category = "Admin"
-	if(!check_rights(R_BAN))
-		return
-	holder.ban_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Banning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(admin, banning_panel, "", R_BAN)
+	usr.client.holder.ban_panel()
 
-/client/proc/unban_panel()
-	set name = "Unbanning Panel"
-	set category = "Admin"
-	if(!check_rights(R_BAN))
-		return
-	holder.unban_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unbanning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(admin, unbanning_panel, "", R_BAN)
+	usr.client.holder.unban_panel()
 
-/client/proc/game_panel()
-	set name = "Game Panel"
-	set category = "Admin.Game"
-	if(holder)
-		holder.Game()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Game Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(game, game_panel, "", NONE)
+	usr.client.holder.Game()
 
-/client/proc/poll_panel()
-	set name = "Server Poll Management"
-	set category = "Admin"
-	if(!check_rights(R_POLL))
-		return
-	holder.poll_list_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Server Poll Management") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(admin, server_poll_management, "", R_POLL)
+	usr.client.holder.poll_list_panel()
 
 /// Returns this client's stealthed ckey
 /client/proc/getStealthKey()

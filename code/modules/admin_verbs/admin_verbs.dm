@@ -62,29 +62,20 @@ ADMIN_VERB(admin, known_alts_panel, "View all known alt accounts", NONE)
 /client/proc/cmd_change_command_name
 /client/proc/centcom_podlauncher/*Open a window to launch a Supplypod and configure it or it's contents*/
 /client/proc/check_ai_laws /*shows AI and borg laws*/
-/client/proc/check_antagonists /*shows all antags*/
 /client/proc/fax_panel /*send a paper to fax*/
 /client/proc/force_load_lazy_template
-/client/proc/game_panel /*game panel, allows to change game-mode etc*/
 /client/proc/Getmob /*teleports a mob to our location*/
 /client/proc/Getkey /*teleports a mob with a certain ckey to our location*/
 /client/proc/getserverlogs /*for accessing server logs*/
 /client/proc/getcurrentlogs /*for accessing server logs for the current round*/
 /client/proc/ghost_pool_protection /*opens a menu for toggling ghost roles*/
-/client/proc/invisimin /*allows our mob to go invisible/visible*/
 /client/proc/jumptoarea
 /client/proc/jumptokey /*allows us to jump to the location of a mob with a certain ckey*/
 /client/proc/jumptomob /*allows us to jump to a specific mob*/
 /client/proc/jumptoturf /*allows us to jump to a specific turf*/
 /client/proc/jumptocoord /*we ghost and jump to a coordinate*/
-/client/proc/list_bombers
-/client/proc/list_dna
-/client/proc/list_fingerprints
-/client/proc/list_law_changes
-/client/proc/list_signalers
 /client/proc/message_pda /*send a message to somebody on PDA*/
 /client/proc/respawn_character
-/client/proc/show_manifest
 /client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
 /client/proc/toggle_combo_hud /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 /client/proc/toggle_view_range /*changes how far we can see*/
