@@ -246,7 +246,7 @@
 
 					//infer available overlays on the floor to recreate them to the best extent
 					QDEL_LIST(design_overlays)
-					var/floor_designs = floor.managed_overlays
+					floor_designs = floor.managed_overlays
 					if(isnull(floor_designs))
 						floor_designs = list()
 					else if(!islist(floor_designs))
