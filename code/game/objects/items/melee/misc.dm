@@ -195,7 +195,7 @@
 	force = 0.001
 	armour_penetration = 1000
 	force_string = "INFINITE"
-	item_flags = NEEDS_PERMIT|NO_BLOOD_OVERLAY
+	item_flags = NEEDS_PERMIT|HIDE_BLOOD_OVERLAY
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
 

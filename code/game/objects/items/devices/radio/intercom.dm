@@ -7,7 +7,7 @@
 	canhear_range = 2
 	dog_fashion = null
 	unscrewed = FALSE
-	item_flags = NO_BLOOD_OVERLAY
+	item_flags = HIDE_BLOOD_OVERLAY
 
 	overlay_speaker_idle = "intercom_s"
 	overlay_speaker_active = "intercom_recieve"

@@ -39,7 +39,7 @@
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
 /// No blood overlay is allowed to appear on this item
-#define NO_BLOOD_OVERLAY (1 << 20)
+#define HIDE_BLOOD_OVERLAY (1 << 20)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
