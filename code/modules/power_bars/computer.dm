@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	req_access = list(ACCESS_ENGINEERING)
 
 	VAR_PRIVATE
+		last_checked_available_power_bars
+
 		obj/item/radio/internal_radio
 
 /obj/machinery/computer/power_distribution/Initialize(mapload)
@@ -23,6 +25,8 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	internal_radio = new(src)
 	internal_radio.keyslot = new /obj/item/encryptionkey/all_access
 	internal_radio.recalculateChannels()
+
+	RegisterSignal(SSpower_bars, COMSIG_POWER_BAR_AVAILABILITY_UPDATED, PROC_REF(on_power_bar_availability_updated))
 
 /obj/machinery/computer/power_distribution/Destroy()
 	GLOB.power_distribution_consoles -= src
@@ -81,6 +85,11 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 
 			SSpower_bars.reassign_power_bar(department, allocations)
 			user.log_message("updated power bar distribution, setting [department] to [allocations]. New distribution is [SSpower_bars.debug_power_bar_distributions()]", LOG_GAME)
+
+			if (!isnull(last_checked_available_power_bars))
+				last_checked_available_power_bars = null
+				icon_screen = initial(icon_screen)
+				update_appearance(UPDATE_OVERLAYS)
 
 	return TRUE
 
@@ -142,6 +151,21 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 		return TRUE
 
 	return speak(message.Join(" "), RADIO_CHANNEL_ENGINEERING)
+
+/obj/machinery/computer/power_distribution/proc/on_power_bar_availability_updated(datum/source, current_count, previous_count)
+	SIGNAL_HANDLER
+
+	if (!isnull(last_checked_available_power_bars))
+		if (current_count < last_checked_available_power_bars)
+			last_checked_available_power_bars = null
+			icon_screen = initial(icon_screen)
+			update_appearance(UPDATE_OVERLAYS)
+
+		return
+
+	last_checked_available_power_bars = current_count
+	icon_screen = "power_bar_alert"
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/circuitboard/computer/power_distribution
 	name = "Power Level Distribution Console"

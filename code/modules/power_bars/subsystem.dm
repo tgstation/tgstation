@@ -365,6 +365,7 @@ SUBSYSTEM_DEF(power_bars)
 
 /datum/controller/subsystem/power_bars/proc/update_available_power_bars(list/available_power_bars)
 	var/previous_available_power_bars = src.available_power_bars
+	var/previous_available_power_count = available_power_bars()
 	src.available_power_bars = available_power_bars
 	ASSERT(previous_available_power_bars != available_power_bars) // Do not mutate
 
@@ -372,6 +373,8 @@ SUBSYSTEM_DEF(power_bars)
 	for (var/obj/machinery/computer/power_distribution/power_distribution_console as anything in GLOB.power_distribution_consoles)
 		if (power_distribution_console.send_power_bar_availability_changes(available_power_bars, previous_available_power_bars))
 			break
+
+	SEND_SIGNAL(src, COMSIG_POWER_BAR_AVAILABILITY_UPDATED, available_power_bars(), previous_available_power_count)
 
 /datum/power_bar_allocation
 	var/source
