@@ -445,9 +445,9 @@
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	. = ..()
-	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
-		max_n_of_items = 20 * bin.rating
-		repair_rate = max(0, STANDARD_ORGAN_HEALING * (bin.rating - 1) * 0.5)
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		max_n_of_items = 20 * bin.tier
+		repair_rate = max(0, STANDARD_ORGAN_HEALING * (bin.tier - 1) * 0.5)
 
 /obj/machinery/smartfridge/organ/process(delta_time)
 	for(var/obj/item/organ/organ in contents)
