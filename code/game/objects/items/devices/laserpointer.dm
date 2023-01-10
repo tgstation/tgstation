@@ -37,9 +37,15 @@
 	if(!pointer_icon_state)
 		pointer_icon_state = pick("red_laser","green_laser","blue_laser","purple_laser")
 
+/obj/item/laser_pointer/Exited(atom/movable/gone, direction)
+	. = ..()
+
+	if (gone == diode)
+		diode = null
+
 /obj/item/laser_pointer/upgraded/Initialize(mapload)
 	. = ..()
-	diode = new /obj/item/stock_parts/micro_laser/ultra
+	diode = new /obj/item/stock_parts/micro_laser/ultra(src)
 
 /obj/item/laser_pointer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(diode)
