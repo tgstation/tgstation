@@ -3,20 +3,20 @@
 	desc = "A combined label printer, applicator, and remover, all in a single portable device. Designed to be easy to operate and use."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
-	inhand_icon_state = "flight"
+	inhand_icon_state = null
 	var/label = null
 	var/labels_left = 30
 	var/mode = 0
 
-/obj/item/hand_labeler/suicide_act(mob/user)
+/obj/item/hand_labeler/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is pointing [src] at [user.p_them()]self. [user.p_theyre(TRUE)] going to label [user.p_them()]self as a suicide!"))
 	labels_left = max(labels_left - 1, 0)
 
 	var/old_real_name = user.real_name
 	user.real_name += " (suicide)"
 	// no conflicts with their identification card
-	for(var/atom/A in user.GetAllContents())
-		if(istype(A, /obj/item/card/id))
+	for(var/atom/A in user.get_all_contents())
+		if(isidcard(A))
 			var/obj/item/card/id/their_card = A
 
 			// only renames their card, as opposed to tagging everyone's
@@ -40,6 +40,9 @@
 	. = ..()
 	if(!proximity)
 		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(!mode) //if it's off, give up.
 		return
 
@@ -72,8 +75,8 @@
 	if(mode)
 		to_chat(user, span_notice("You turn on [src]."))
 		//Now let them chose the text.
-		var/str = reject_bad_text(stripped_input(user, "Label text?", "Set label","", MAX_NAME_LEN))
-		if(!str || !length(str))
+		var/str = reject_bad_text(tgui_input_text(user, "Label text", "Set Label", label, MAX_NAME_LEN))
+		if(!str)
 			to_chat(user, span_warning("Invalid text!"))
 			return
 		label = str
@@ -88,6 +91,9 @@
 		qdel(I)
 		labels_left = initial(labels_left) //Yes, it's capped at its initial value
 
+/obj/item/hand_labeler/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !mode
+
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"
 
@@ -95,6 +101,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!iscyborg(user))
 		return
 
@@ -118,6 +125,6 @@
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
 	inhand_icon_state = "electropack"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

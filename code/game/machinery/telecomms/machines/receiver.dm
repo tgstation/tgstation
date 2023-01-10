@@ -10,9 +10,9 @@
 	name = "subspace receiver"
 	icon_state = "broadcast receiver"
 	desc = "This machine has a dish-like shape and green lights. It is designed to detect and process subspace radio activity."
+	telecomms_type = /obj/machinery/telecomms/receiver
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 30
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	circuit = /obj/item/circuitboard/machine/telecomms/receiver
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/subspace/signal)
@@ -26,6 +26,8 @@
 	// send the signal to the hub if possible, or a bus otherwise
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/bus)
+
+	use_power(idle_power_usage)
 
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/subspace/signal)
 	if (z in signal.levels)
@@ -58,7 +60,7 @@
 	freq_listening = list(FREQ_COMMAND, FREQ_ENGINEERING, FREQ_SECURITY)
 
 	//Common and other radio frequencies for people to freely use
-/obj/machinery/telecomms/receiver/preset_right/Initialize()
+/obj/machinery/telecomms/receiver/preset_right/Initialize(mapload)
 	. = ..()
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i

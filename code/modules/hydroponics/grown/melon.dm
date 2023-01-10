@@ -33,8 +33,8 @@
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
 	wine_power = 40
 
-/obj/item/food/grown/watermelon/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20)
+/obj/item/food/grown/watermelon/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20, screentip_verb = "Slice")
 
 /obj/item/food/grown/watermelon/make_dryable()
 	return //No drying
@@ -48,7 +48,7 @@
 	plantname = "Holy Melon Vines"
 	product = /obj/item/food/grown/holymelon
 	genes = list(/datum/plant_gene/trait/glow/yellow, /datum/plant_gene/trait/anti_magic)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/water/holywater = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 	graft_gene = /datum/plant_gene/trait/glow/yellow
@@ -59,28 +59,33 @@
 	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
 	icon_state = "holymelon"
 	bite_consumption_mod = 2
+	w_class = WEIGHT_CLASS_NORMAL
+	foodtypes = FRUIT
+	juice_results = list(/datum/reagent/water/holywater = 0)
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
 
 /obj/item/food/grown/holymelon/make_dryable()
 	return //No drying
 
+/obj/item/food/grown/holymelon/make_edible()
+	. = ..()
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_holyness)))
+
 /*
-/obj/item/food/grown/holymelon/checkLiked(fraction, mob/M)    //chaplains sure love holymelons
-	if(!ishuman(M))
+ * Callback to be used with the edible component.
+ * Checks whether or not the person eating the holymelon
+ * is a holy_role (chaplain), as chaplains love holymelons.
+ */
+/obj/item/food/grown/holymelon/proc/check_holyness(fraction, mob/mob_eating)
+	if(!ishuman(mob_eating))
 		return
-	if(last_check_time + 5 SECONDS >= world.time)
-		return
-	var/mob/living/carbon/human/holy_person = M
+	var/mob/living/carbon/human/holy_person = mob_eating
 	if(!holy_person.mind?.holy_role || HAS_TRAIT(holy_person, TRAIT_AGEUSIA))
 		return
-	to_chat(holy_person,span_notice("Truly, a piece of heaven!"))
-	M.adjust_disgust(-5 + -2.5 * fraction)
-	SEND_SIGNAL(holy_person, COMSIG_ADD_MOOD_EVENT, "Divine_chew", /datum/mood_event/holy_consumption)
-	last_check_time = world.time
-
-
-*/
+	to_chat(holy_person, span_notice("Truly, a piece of heaven!"))
+	holy_person.add_mood_event("Divine_chew", /datum/mood_event/holy_consumption)
+	return FOOD_LIKED
 
 /// Barrel melon Seeds
 /obj/item/seeds/watermelon/barrel
@@ -91,7 +96,7 @@
 	plantname = "Barrel Melon Vines"
 	product = /obj/item/food/grown/barrelmelon
 	genes = list(/datum/plant_gene/trait/brewing)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/ethanol/ale = 0.2, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 10
 	graft_gene = /datum/plant_gene/trait/brewing

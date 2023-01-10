@@ -8,13 +8,14 @@
 	anchored = TRUE
 	density = FALSE
 	layer = RIPPLE_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	alpha = 0
 
 /obj/effect/abstract/ripple/Initialize(mapload, time_left)
 	. = ..()
 	animate(src, alpha=255, time=time_left)
-	addtimer(CALLBACK(src, .proc/stop_animation), 8, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(src, PROC_REF(stop_animation)), 8, TIMER_CLIENT_TIME)
 
 /obj/effect/abstract/ripple/proc/stop_animation()
 	icon_state = "medi_holo_no_anim"

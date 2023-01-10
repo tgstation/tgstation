@@ -7,10 +7,10 @@
 	icon_state = "navbeacon0-f"
 	base_icon_state = "navbeacon"
 	name = "navigation beacon"
-	desc = "A radio beacon used for bot navigation and crew wayfinding."
+	desc = "A radio beacon used for bot navigation."
 	layer = LOW_OBJ_LAYER
 	max_integrity = 500
-	armor = list(MELEE = 70, BULLET = 70, LASER = 70, ENERGY = 70, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/machinery_navbeacon
 
 	var/open = FALSE // true if cover is open
 	var/locked = TRUE // true if controls are locked
@@ -18,21 +18,19 @@
 	var/location = "" // location response text
 	var/list/codes // assoc. list of transponder codes
 	var/codes_txt = "" // codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
-	var/wayfinding = FALSE
 
-	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ENGINEERING, ACCESS_ROBOTICS)
 
-/obj/machinery/navbeacon/Initialize()
+/datum/armor/machinery_navbeacon
+	melee = 70
+	bullet = 70
+	laser = 70
+	energy = 70
+	fire = 80
+	acid = 80
+
+/obj/machinery/navbeacon/Initialize(mapload)
 	. = ..()
-
-	if(wayfinding)
-		if(!location)
-			var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
-			if(A)
-				location = A.name
-			else
-				location = get_area(src)
-		codes_txt += "wayfinding=[location]"
 
 	set_codes()
 
@@ -44,12 +42,12 @@
 	glob_lists_deregister()
 	return ..()
 
-/obj/machinery/navbeacon/onTransitZ(old_z, new_z)
-	if (GLOB.navbeacons["[old_z]"])
-		GLOB.navbeacons["[old_z]"] -= src
-	if (GLOB.navbeacons["[new_z]"])
-		GLOB.navbeacons["[new_z]"] += src
-	..()
+/obj/machinery/navbeacon/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if (GLOB.navbeacons["[old_turf?.z]"])
+		GLOB.navbeacons["[old_turf?.z]"] -= src
+	if (GLOB.navbeacons["[new_turf?.z]"])
+		GLOB.navbeacons["[new_turf?.z]"] += src
+	return ..()
 
 // set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()
@@ -74,11 +72,12 @@
 		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
 	GLOB.deliverybeacons -= src
 	GLOB.deliverybeacontags -= location
-	GLOB.wayfindingbeacons -= src
 
 /obj/machinery/navbeacon/proc/glob_lists_register(init=FALSE)
 	if(!init)
 		glob_lists_deregister()
+	if(!codes)
+		return
 	if(codes["patrol"])
 		if(!GLOB.navbeacons["[z]"])
 			GLOB.navbeacons["[z]"] = list()
@@ -86,38 +85,38 @@
 	if(codes["delivery"])
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
-	if(codes["wayfinding"])
-		GLOB.wayfindingbeacons += src
 
 // update the icon_state
 /obj/machinery/navbeacon/update_icon_state()
 	icon_state = "[base_icon_state][open]"
 	return ..()
 
+/obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	open = !open
+	user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
+	update_appearance()
+	tool.play_tool_sound(src, 50)
+	return TRUE
+
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		open = !open
-
-		user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
-
-		update_appearance()
-
-	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/pda))
+	if (isidcard(I) || istype(I, /obj/item/modular_computer/pda))
 		if(open)
-			if (src.allowed(user))
-				src.locked = !src.locked
-				to_chat(user, span_notice("Controls are now [src.locked ? "locked" : "unlocked"]."))
+			if (allowed(user))
+				locked = !locked
+				to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
 			else
 				to_chat(user, span_danger("Access denied."))
 			updateDialog()
 		else
 			to_chat(user, span_warning("You must open the cover first!"))
-	else
-		return ..()
+		return
+
+	return ..()
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user, 1)
@@ -129,7 +128,7 @@
 	. = ..()
 	var/ai = isAI(user)
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
 	if(!open && !ai) // can't alter controls if not open, unless you're an AI

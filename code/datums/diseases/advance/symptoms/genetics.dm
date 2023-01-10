@@ -1,18 +1,10 @@
-/*
-//////////////////////////////////////
-
-DNA Saboteur
-
-	Very noticable.
-	Lowers resistance tremendously.
-	No changes to stage speed.
-	Decreases transmittablity tremendously.
-	Fatal Level.
-
-Bonus
-	Cleans the DNA of a person and then randomly gives them a trait.
-
-//////////////////////////////////////
+/*DNA Saboteur
+ * Lowers stealth
+ * Lowers resistance greatly
+ * No change to stage speed
+ * Decreases transmissibility greatly
+ * Fatal level
+ * Bonus: Cleans the DNA of a person and then randomly gives them a trait.
 */
 
 /datum/symptom/genetic_mutation
@@ -61,7 +53,7 @@ Bonus
 	switch(A.stage)
 		if(4, 5)
 			to_chat(C, span_warning("[pick("Your skin feels itchy.", "You feel light headed.")]"))
-			C.easy_randmut((NEGATIVE | MINOR_NEGATIVE | POSITIVE) - excludemuts, TRUE, TRUE, TRUE, mutadone_proof)
+			C.easy_random_mutate((NEGATIVE | MINOR_NEGATIVE | POSITIVE) - excludemuts, TRUE, TRUE, TRUE, mutadone_proof)
 
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	. = ..()

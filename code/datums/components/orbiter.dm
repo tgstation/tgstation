@@ -22,9 +22,9 @@
 
 	target.orbiters = src
 	if(ismovable(target))
-		tracker = new(target, CALLBACK(src, .proc/move_react))
+		tracker = new(target, CALLBACK(src, PROC_REF(move_react)))
 
-	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
+	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(orbiter_glide_size_update))
 
 /datum/component/orbiter/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
@@ -51,7 +51,7 @@
 		incoming_orbiter.orbiting = src
 		// It is important to transfer the signals so we don't get locked to the new orbiter component for all time
 		newcomp.UnregisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
-		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, PROC_REF(orbiter_move_react))
 
 	orbiter_list += newcomp.orbiter_list
 	newcomp.orbiter_list = null
@@ -69,7 +69,9 @@
 			orbiter.orbiting.end_orbit(orbiter)
 	orbiter_list[orbiter] = TRUE
 	orbiter.orbiting = src
-	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+
+	ADD_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
+	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, PROC_REF(orbiter_move_react))
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 
@@ -98,7 +100,7 @@
 		var/atom/movable/movable_parent = parent
 		orbiter.glide_size = movable_parent.glide_size
 
-	orbiter.forceMove(get_turf(parent))
+	orbiter.abstract_move(get_turf(parent))
 	to_chat(orbiter, span_notice("Now orbiting [parent]."))
 
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
@@ -118,6 +120,8 @@
 		orbiter_mob.updating_glide_size = TRUE
 		orbiter_mob.glide_size = 8
 
+	REMOVE_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
+
 	if(!refreshing && !length(orbiter_list) && !QDELING(src))
 		qdel(src)
 
@@ -133,11 +137,10 @@
 		qdel(src)
 
 	var/atom/curloc = master.loc
-	for(var/i in orbiter_list)
-		var/atom/movable/thing = i
-		if(QDELETED(thing) || thing.loc == newturf)
+	for(var/atom/movable/movable_orbiter as anything in orbiter_list)
+		if(QDELETED(movable_orbiter) || movable_orbiter.loc == newturf)
 			continue
-		thing.forceMove(newturf)
+		movable_orbiter.abstract_move(newturf)
 		if(CHECK_TICK && master.loc != curloc)
 			// We moved again during the checktick, cancel current operation
 			break
@@ -160,6 +163,10 @@
 
 /atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE)
 	if(!istype(A) || !get_turf(A) || A == src)
+		return
+	if (HAS_TRAIT(A, TRAIT_ORBITING_FORBIDDEN))
+		// Stealth-mins have an empty name, don't want "You cannot orbit   at this time."
+		to_chat(src, span_notice("You cannot orbit ["[A]" || "them"] at this time."))
 		return
 	orbit_target = A
 	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)

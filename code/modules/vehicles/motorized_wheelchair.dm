@@ -1,6 +1,8 @@
 /obj/vehicle/ridden/wheelchair/motorized
 	name = "motorized wheelchair"
 	desc = "A chair with big wheels. It seems to have a motor in it."
+	icon_state = "motorized_wheelchair"
+	overlay_icon = "motorized_wheelchair_overlay"
 	foldabletype = null
 	max_integrity = 150
 	///How "fast" the wheelchair goes only affects ramming
@@ -31,19 +33,21 @@
 	speed = 1 // Should never be under 1
 	for(var/obj/item/stock_parts/manipulator/M in contents)
 		speed += M.rating
+	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
+	if(icon_state != chair_icon)
+		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER) 
+
+	icon_state = chair_icon
+
 	for(var/obj/item/stock_parts/capacitor/C in contents)
 		power_efficiency = C.rating
 
 /obj/vehicle/ridden/wheelchair/motorized/get_cell()
 	return power_cell
 
-/obj/vehicle/ridden/wheelchair/motorized/obj_destruction(damage_flag)
+/obj/vehicle/ridden/wheelchair/motorized/atom_destruction(damage_flag)
 	var/turf/T = get_turf(src)
-#if MIN_COMPILER_VERSION >= 514
-	#warn Please replace the loop below this warning with an `as anything` loop.
-#endif
-	for(var/wheelchair_content in contents)
-		var/atom/movable/atom_content = wheelchair_content
+	for(var/atom/movable/atom_content as anything in contents)
 		atom_content.forceMove(T)
 	return ..()
 
@@ -59,14 +63,6 @@
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
 	return ..()
-
-/obj/vehicle/ridden/wheelchair/motorized/post_buckle_mob(mob/living/user)
-	. = ..()
-	set_density(TRUE)
-
-/obj/vehicle/ridden/wheelchair/motorized/post_unbuckle_mob()
-	. = ..()
-	set_density(FALSE)
 
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
@@ -100,9 +96,9 @@
 	var/obj/item/stock_parts/newstockpart = I
 	for(var/obj/item/stock_parts/oldstockpart in contents)
 		var/type_to_check
-		for(var/pathtypes in required_parts)
-			if(ispath(oldstockpart.type, pathtypes))
-				type_to_check = oldstockpart.type
+		for(var/pathtype in required_parts)
+			if(ispath(oldstockpart.type, pathtype))
+				type_to_check = pathtype
 				break
 		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
 			if(newstockpart.get_part_rating() > oldstockpart.get_part_rating())
@@ -120,11 +116,7 @@
 	new /obj/item/stack/rods(drop_location(), 8)
 	new /obj/item/stack/sheet/iron(drop_location(), 10)
 	var/turf/T = get_turf(src)
-#if MIN_COMPILER_VERSION >= 514
-	#warn Please replace the loop below this warning with an `as anything` loop.
-#endif
-	for(var/wheelchair_content in contents)
-		var/atom/movable/atom_content = wheelchair_content
+	for(var/atom/movable/atom_content as anything in contents)
 		atom_content.forceMove(T)
 	qdel(src)
 	return TRUE
@@ -140,10 +132,20 @@
 	. += "Energy efficiency: [power_efficiency]"
 	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
 
+/obj/vehicle/ridden/wheelchair/motorized/Move(newloc, direct)
+	. = ..()
+	if (.)
+		return
+	if (!has_buckled_mobs())
+		return
+	for (var/mob/living/guy in newloc)
+		if(!(guy in buckled_mobs))
+			Bump(guy)
+
 /obj/vehicle/ridden/wheelchair/motorized/Bump(atom/A)
 	. = ..()
 	// Here is the shitty emag functionality.
-	if(obj_flags & EMAGGED && (istype(A, /turf/closed) || isliving(A)))
+	if(obj_flags & EMAGGED && (isclosedturf(A) || isliving(A)))
 		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
 		visible_message(span_boldwarning("[src] explodes!!"))
 		return

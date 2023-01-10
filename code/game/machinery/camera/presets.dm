@@ -4,13 +4,13 @@
 /obj/machinery/camera/emp_proof
 	start_active = TRUE
 
-/obj/machinery/camera/emp_proof/Initialize()
+/obj/machinery/camera/emp_proof/Initialize(mapload)
 	. = ..()
 	upgradeEmpProof()
 
 // EMP + Motion
 
-/obj/machinery/camera/emp_proof/motion/Initialize()
+/obj/machinery/camera/emp_proof/motion/Initialize(mapload)
 	. = ..()
 	upgradeMotion()
 
@@ -20,7 +20,7 @@
 	start_active = TRUE
 	icon_state = "xraycamera" //mapping icon - Thanks to Krutchen for the icons.
 
-/obj/machinery/camera/xray/Initialize()
+/obj/machinery/camera/xray/Initialize(mapload)
 	. = ..()
 	upgradeXRay()
 
@@ -29,7 +29,7 @@
 	start_active = TRUE
 	name = "motion-sensitive security camera"
 
-/obj/machinery/camera/motion/Initialize()
+/obj/machinery/camera/motion/Initialize(mapload)
 	. = ..()
 	upgradeMotion()
 
@@ -38,7 +38,7 @@
 	start_active = TRUE
 	icon_state = "xraycamera" //mapping icon.
 
-/obj/machinery/camera/all/Initialize()
+/obj/machinery/camera/all/Initialize(mapload)
 	. = ..()
 	upgradeEmpProof()
 	upgradeXRay()
@@ -50,34 +50,67 @@
 	var/number = 0 //camera number in area
 
 //This camera type automatically sets it's name to whatever the area that it's in is called.
-/obj/machinery/camera/autoname/Initialize()
+/obj/machinery/camera/autoname/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/camera/autoname/LateInitialize()
 	. = ..()
-	number = 1
-	var/area/A = get_area(src)
-	if(A)
-		for(var/obj/machinery/camera/autoname/C in GLOB.machines)
-			if(C == src)
-				continue
-			var/area/CA = get_area(C)
-			if(CA.type == A.type)
-				if(C.number)
-					number = max(number, C.number+1)
-		c_tag = "[A.name] #[number]"
 
+	var/static/list/autonames_in_areas = list()
+
+	var/area/camera_area = get_area(src)
+
+	number = autonames_in_areas[camera_area] + 1
+	autonames_in_areas[camera_area] = number
+
+	c_tag = "[format_text(camera_area.name)] #[number]"
+
+///The internal camera object for exosuits, applied by the camera upgrade
+/obj/machinery/camera/exosuit
+	c_tag = "Exosuit: unspecified"
+	desc = "This camera belongs in a mecha. If you see this, tell a coder!"
+	network = list("ss13", "rd")
+	short_range = 1 //used when the camera gets EMPd
+	///Number of the camera and thus the name of the mech
+	var/number = 0
+	///Currently used name of the mech
+	var/current_name = null
+	///Whether the camera was recently affected by an EMP and is thus unfocused, shortening view_range
+	var/is_emp_scrambled = FALSE
+
+///Restore the camera's view default view range after an EMP
+/obj/machinery/camera/exosuit/proc/emp_refocus(obj/vehicle/sealed/mecha/our_chassis)
+	is_emp_scrambled = FALSE
+	setViewRange(initial(view_range))
+	our_chassis.diag_hud_set_camera()
+
+///Updates the c_tag of the mech camera while preventing duplicate c_tag usage due to having mechs with the same name
+/obj/machinery/camera/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
+	//List of all used mech names
+	var/static/list/existing_mech_names = list()
+	//Name of the mech passed with this proc. We use format_text to wipe away stuff like `\initial` to prevent c_tag from erroring out
+	var/mech_name = format_text(mech.name)
+
+	if(current_name && current_name != mech_name) //decrease by 1 to preserve correct naming numeration
+		existing_mech_names[current_name] -= 1
+	number = existing_mech_names[mech_name] + 1
+	existing_mech_names[mech_name] = number
+
+	c_tag = "Exosuit: [mech_name] #[number]"
+	current_name = mech_name
 
 // UPGRADE PROCS
 
 /obj/machinery/camera/proc/isEmpProof(ignore_malf_upgrades)
-	return (upgrades & CAMERA_UPGRADE_EMP_PROOF) && (!(ignore_malf_upgrades && assembly.malf_emp_firmware_active))
+	var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+	return (upgrades & CAMERA_UPGRADE_EMP_PROOF) && (!(ignore_malf_upgrades && assembly?.malf_emp_firmware_active))
 
 /obj/machinery/camera/proc/upgradeEmpProof(malf_upgrade, ignore_malf_upgrades)
 	if(isEmpProof(ignore_malf_upgrades)) //pass a malf upgrade to ignore_malf_upgrades so we can replace the malf module with the normal one
 		return //that way if someone tries to upgrade an already malf-upgraded camera, it'll just upgrade it to a normal version.
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
+	var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
 	if(malf_upgrade)
 		assembly.malf_emp_firmware_active = TRUE //don't add parts to drop, update icon, ect. reconstructing it will also retain the upgrade.
 		assembly.malf_emp_firmware_present = TRUE //so the upgrade is retained after incompatible parts are removed.
@@ -98,11 +131,13 @@
 
 
 /obj/machinery/camera/proc/isXRay(ignore_malf_upgrades)
+	var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
 	return (upgrades & CAMERA_UPGRADE_XRAY) && (!(ignore_malf_upgrades && assembly.malf_xray_firmware_active))
 
 /obj/machinery/camera/proc/upgradeXRay(malf_upgrade, ignore_malf_upgrades)
 	if(isXRay(ignore_malf_upgrades)) //pass a malf upgrade to ignore_malf_upgrades so we can replace the malf upgrade with the normal one
 		return //that way if someone tries to upgrade an already malf-upgraded camera, it'll just upgrade it to a normal version.
+	var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
 	if(malf_upgrade)
 		assembly.malf_xray_firmware_active = TRUE //don't add parts to drop, update icon, ect. reconstructing it will also retain the upgrade.
 		assembly.malf_xray_firmware_present = TRUE //so the upgrade is retained after incompatible parts are removed.
@@ -128,6 +163,8 @@
 /obj/machinery/camera/proc/upgradeMotion()
 	if(isMotion())
 		return
+	var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+
 	if(name == initial(name))
 		name = "motion-sensitive security camera"
 	if(!assembly.proxy_module)

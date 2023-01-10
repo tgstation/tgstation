@@ -5,6 +5,8 @@
  */
 /obj/item/circuit_component/health
 	display_name = "Get Health"
+	desc = "A component that returns the health of an organism."
+	category = "Entity"
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -24,8 +26,11 @@
 
 	var/max_range = 5
 
-/obj/item/circuit_component/health/Initialize()
+/obj/item/circuit_component/health/get_ui_notices()
 	. = ..()
+	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
+
+/obj/item/circuit_component/health/populate_ports()
 	input_port = add_input_port("Organism", PORT_TYPE_ATOM)
 
 	brute = add_output_port("Brute Damage", PORT_TYPE_NUMBER)
@@ -34,22 +39,10 @@
 	oxy = add_output_port("Suffocation Damage", PORT_TYPE_NUMBER)
 	health = add_output_port("Health", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/health/Destroy()
-	input_port = null
-	brute = null
-	burn = null
-	toxin = null
-	oxy = null
-	health = null
-	return ..()
-
 /obj/item/circuit_component/health/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
-	var/mob/living/organism = input_port.input_value
-	var/turf/current_turf = get_turf(src)
+	var/mob/living/organism = input_port.value
+	var/turf/current_turf = get_location()
 	if(!istype(organism) || get_dist(current_turf, organism) > max_range || current_turf.z != organism.z)
 		brute.set_output(null)
 		burn.set_output(null)

@@ -10,7 +10,7 @@ RPD
 #define BUILD_MODE (1<<0)
 #define WRENCH_MODE (1<<1)
 #define DESTROY_MODE (1<<2)
-
+#define REPROGRAM_MODE (1<<3)
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
@@ -44,6 +44,33 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("4-Way Manifold", /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w, FALSE),
 		new /datum/pipe_info/pipe("Junction", /obj/machinery/atmospherics/pipe/heat_exchanging/junction, FALSE),
 		new /datum/pipe_info/pipe("Heat Exchanger", /obj/machinery/atmospherics/components/unary/heat_exchanger, FALSE),
+	),
+	"Air Sensors" = list(
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/plasma_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/oxygen_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/nitrogen_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/mix_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/nitrous_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/air_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/carbon_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/bz_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/freon_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/halon_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/healium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/hydrogen_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/hypernoblium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/miasma_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/nitrium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/pluoxium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/proto_nitrate_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/tritium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/water_vapor_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/zauker_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/helium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/antinoblium_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/incinerator_tank),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_burn_chamber),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_freezer_chamber),
 	)
 ))
 
@@ -72,6 +99,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	"Station Equipment" = list(
 		new /datum/pipe_info/transit("Through Tube Station", /obj/structure/c_transit_tube/station, PIPE_STRAIGHT),
 		new /datum/pipe_info/transit("Terminus Tube Station", /obj/structure/c_transit_tube/station/reverse, PIPE_UNARY),
+		new /datum/pipe_info/transit("Through Tube Dispenser Station", /obj/structure/c_transit_tube/station/dispenser, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Terminus Tube Dispenser Station", /obj/structure/c_transit_tube/station/dispenser/reverse, PIPE_UNARY),
 		new /datum/pipe_info/transit("Transit Tube Pod", /obj/structure/c_transit_tube_pod, PIPE_ONEDIR),
 	)
 ))
@@ -82,17 +111,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/id = -1
 	var/dirtype = PIPE_BENDABLE
 	var/all_layers
-
-/datum/pipe_info/proc/Render(dispenser)
-	var/dat = "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
-
-	// Stationary pipe dispensers don't allow you to pre-select pipe directions.
-	// This makes it impossble to spawn bent versions of bendable pipes.
-	// We add a "Bent" pipe type with a preset diagonal direction to work around it.
-	if(istype(dispenser, /obj/machinery/pipedispenser) && (dirtype == PIPE_BENDABLE || dirtype == /obj/item/pipe/binary/bendable))
-		dat += "<li><a href='?src=[REF(dispenser)]&[Params()]&dir=[NORTHEAST]'>Bent [name]</a></li>"
-
-	return dat
 
 /datum/pipe_info/proc/Params()
 	return ""
@@ -135,6 +153,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			i = 0
 
 	return rows
+
+/datum/pipe_info/sensor
+	dirtype = PIPE_ONEDIR
+
+/datum/pipe_info/sensor/New(obj/machinery/air_sensor/sensor)
+	id = sensor
+	name = capitalize(replacetext(initial(sensor.name), "gas sensor", ""))
+	icon_state = "gsensor1"
 
 /datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path, use_five_layers)
 	name = label
@@ -194,7 +220,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor_type = /datum/armor/item_pipe_dispenser
 	resistance_flags = FIRE_PROOF
 	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
@@ -205,7 +231,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	///Is the device of the flipped type?
 	var/p_flipped = FALSE
 	///Color of the device we are going to spawn
-	var/paint_color = "grey"
+	var/paint_color = "green"
 	///Speed of building atmos devices
 	var/atmos_build_speed = 0.5 SECONDS
 	///Speed of building disposal devices
@@ -214,6 +240,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/transit_build_speed = 0.5 SECONDS
 	///Speed of removal of unwrenched devices
 	var/destroy_speed = 0.5 SECONDS
+	///Speed of reprogramming connectable directions of smart pipes
+	var/reprogram_speed = 0.5 SECONDS
 	///Category currently active (Atmos, disposal, transit)
 	var/category = ATMOS_CATEGORY
 	///Piping layer we are going to spawn the atmos device in
@@ -229,11 +257,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	///Stores the first transit device
 	var/static/datum/pipe_info/first_transit
 	///The modes that are allowed for the RPD
-	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
+	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE | REPROGRAM_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
 
-/obj/item/pipe_dispenser/Initialize()
+/datum/armor/item_pipe_dispenser
+	fire = 100
+	acid = 50
+
+/obj/item/pipe_dispenser/Initialize(mapload)
 	. = ..()
 	spark_system = new
 	spark_system.set_up(5, 0, src)
@@ -259,8 +291,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_HANDS)
-		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
+	if(slot & ITEM_SLOT_HANDS)
+		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, PROC_REF(mouse_wheeled))
 	else
 		UnregisterSignal(user,COMSIG_MOUSE_SCROLL_ON)
 
@@ -282,6 +314,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return ..()
 
 /obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
+	if(istype(target, /obj/machinery/air_sensor))
+		if(!do_after(user, destroy_speed, target))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+		qdel(target)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	if(!istype(target, /obj/machinery/atmospherics))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.pipe_color && target.piping_layer)
@@ -312,11 +351,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rpd_up)
 
-/obj/item/pipe_dispenser/suicide_act(mob/user)
+/obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, TRUE)
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/pipe_dispenser/ui_assets(mob/user)
 	return list(
@@ -341,7 +380,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_color" = paint_color,
-		"mode" = mode
+		"mode" = mode,
 	)
 
 	var/list/recipes
@@ -357,7 +396,19 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/list/r = list()
 		for(var/i in 1 to cat.len)
 			var/datum/pipe_info/info = cat[i]
+
+			//skip sensors which are already in the world so we dont create duplicate ones
+			if(info.type == /datum/pipe_info/sensor)
+				var/datum/pipe_info/sensor/sensor_info = info
+				var/obj/machinery/air_sensor/sensor = sensor_info.id
+				if(GLOB.objects_by_id_tag[initial(sensor.chamber_id) + "_sensor"] != null)
+					continue
+
 			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))
+			if(info == recipe)
+				data["selected_category"] = c
+		if(r.len == 0) //when all air sensors are installed this list will become empty
+			continue
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
 	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
@@ -372,8 +423,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(.)
 		return
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		return
 	var/playeffect = TRUE
 	switch(action)
 		if("color")
@@ -407,12 +456,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			playeffect = FALSE
 		if("mode")
 			var/n = text2num(params["mode"])
-			if(mode & n)
-				mode &= ~n
-			else
-				mode |= n
+			mode ^= n
 		if("init_dir_setting")
-			p_init_dir ^= text2dir(params["dir_flag"])
+			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
+			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
+			if (ISNOTSTUB(target_dir))
+				p_init_dir = target_dir
+			else
+				to_chat(usr, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				playeffect = FALSE
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
 	if(playeffect)
@@ -455,6 +507,77 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			qdel(attack_target)
 		return
 
+	if(mode & REPROGRAM_MODE)
+		// If this is a placed smart pipe, try to reprogram it
+		var/obj/machinery/atmospherics/pipe/smart/S = attack_target
+		if(istype(S))
+			if (S.dir == ALL_CARDINALS)
+				to_chat(user, span_warning("\The [S] has no unconnected directions!"))
+				return
+			var/old_init_dir = S.get_init_directions()
+			if (old_init_dir == p_init_dir)
+				to_chat(user, span_warning("\The [S] is already in this configuration!"))
+				return
+			// Check for differences in unconnected directions
+			var/target_differences = (p_init_dir ^ old_init_dir) & ~S.connections
+			if (!target_differences)
+				to_chat(user, span_warning("\The [S] is already in this configuration for its unconnected directions!"))
+				return
+
+			to_chat(user, span_notice("You start reprogramming \the [S]..."))
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+			if(!do_after(user, reprogram_speed, target = S))
+				return
+
+			// Something else could have changed the target's state while we were waiting in do_after
+			// Most of the edge cases don't matter, but atmos components being able to have live connections not described by initializable directions sounds like a headache at best and an exploit at worst
+
+			// Double check to make sure that nothing has changed. If anything we were about to change was connected during do_after, abort
+			if (target_differences & S.connections)
+				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe in a currently connected direction."))
+				return
+			// Grab the current initializable directions, which may differ from old_init_dir if someone else was working on the same pipe at the same time
+			var/current_init_dir = S.get_init_directions()
+			// Access p_init_dir directly. The RPD can change target layer and initializable directions (though not pipe type or dir) while working to dispense and connect a component,
+			// and have it reflected in the final result. Reprogramming should be similarly consistent.
+			var/new_init_dir = (current_init_dir & ~target_differences) | (p_init_dir & target_differences)
+			// Don't make a smart pipe with only one connection
+			if (ISSTUB(new_init_dir))
+				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				return
+			S.set_init_directions(new_init_dir)
+			// We're now reconfigured.
+			// We can never disconnect from existing connections, but we can connect to previously unconnected directions, and should immediately do so
+			var/newly_permitted_connections = new_init_dir & ~current_init_dir
+			if(newly_permitted_connections)
+				// We're allowed to connect in new directions. Recompute our nodes
+				// Disconnect from everything that is currently connected
+				for (var/i in 1 to S.device_type)
+					// This is basically pipe.nullifyNode, but using it here would create a pitfall for others attempting to
+					// copy and paste disconnection code for other components. Welcome to the atmospherics subsystem
+					var/obj/machinery/atmospherics/node = S.nodes[i]
+					if (!node)
+						continue
+					node.disconnect(S)
+					S.nodes[i] = null
+				// Get our new connections
+				S.atmos_init()
+				// Connect to our new connections
+				for (var/obj/machinery/atmospherics/O in S.nodes)
+					O.atmos_init()
+					O.add_member(src)
+				SSair.add_to_rebuild_queue(S)
+			// Finally, update our internal state - update_pipe_icon also updates dir and connections
+			S.update_pipe_icon()
+			user.visible_message(span_notice("[user] reprograms the \the [S]."),span_notice("You reprogram \the [S]."))
+			return
+		// If this is an unplaced smart pipe, try to reprogram it
+		var/obj/item/pipe/quaternary/I = attack_target
+		if(istype(I) && ispath(I.pipe_type, /obj/machinery/atmospherics/pipe/smart))
+			// An unplaced pipe never has any existing connections, so just directly assign the new configuration
+			I.p_init_dir = p_init_dir
+			I.update()
+
 	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
@@ -469,6 +592,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						PM.setAttachLayer(piping_layer)
 						if(mode & WRENCH_MODE)
 							PM.wrench_act(user, src)
+				else if(recipe.type == /datum/pipe_info/sensor)
+					balloon_alert(user, "building air sensor...")
+					if(do_after(user, atmos_build_speed, target = attack_target))
+						activate()
+						var/datum/pipe_info/sensor/sensor_recipe = recipe
+						var/obj/machinery/air_sensor/sensor_blueprint = sensor_recipe.id
+						new sensor_blueprint(get_turf(attack_target))
+						//change the recipe as the current one becomes unavailable
+						recipe = first_atmos
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
 						to_chat(user, span_notice("You can't build this object on the layer..."))
@@ -495,7 +627,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 						pipe_type.update()
 						pipe_type.add_fingerprint(usr)
-						pipe_type.setPipingLayer(piping_layer)
+						pipe_type.set_piping_layer(piping_layer)
 						if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
 							pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 						if(mode & WRENCH_MODE)
@@ -533,6 +665,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(isclosedturf(attack_target))
 					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
+
+				var/turf/target_turf = get_turf(attack_target)
+				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
+					return
+
 				to_chat(user, span_notice("You start building a transit tube..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))
@@ -548,8 +686,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						tube.setDir(queued_p_dir)
 
 						if(queued_p_flipped)
-							tube.setDir(turn(queued_p_dir, 45))
-							tube.simple_rotate_flip()
+							tube.setDir(turn(queued_p_dir, 45 + ROTATION_FLIP))
+							tube.AfterRotation(user, ROTATION_FLIP)
 
 						tube.add_fingerprint(usr)
 						if(mode & WRENCH_MODE)
@@ -563,7 +701,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
-	if(source.incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
 
 	if(delta_y < 0)
@@ -582,6 +720,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef BUILD_MODE
 #undef DESTROY_MODE
 #undef WRENCH_MODE
+#undef REPROGRAM_MODE
 
 /obj/item/rpd_upgrade
 	name = "RPD advanced design disk"

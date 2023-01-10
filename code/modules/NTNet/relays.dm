@@ -3,14 +3,12 @@
 	name = "NTNet Quantum Relay"
 	desc = "A very complex router and transmitter capable of connecting electronic devices together. Looks fragile."
 	use_power = ACTIVE_POWER_USE
-	active_power_usage = 10000 //10kW, apropriate for machine that keeps massive cross-Zlevel wireless network operational. Used to be 20 but that actually drained the smes one round
-	idle_power_usage = 100
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10 //10kW, apropriate for machine that keeps massive cross-Zlevel wireless network operational. Used to be 20 but that actually drained the smes one round
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ntnet_relay
 
-	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.
 	///On / off status for the relay machine, toggleable by the user.
 	var/relay_enabled = TRUE
 	///(D)DoS-attack-related failure causing it not to be operational any longer.
@@ -63,10 +61,7 @@
 	return ..()
 
 /obj/machinery/ntnet_relay/process(delta_time)
-	if(is_operational)
-		use_power = ACTIVE_POWER_USE
-	else
-		use_power = IDLE_POWER_USE
+	update_use_power(is_operational ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 
 	update_appearance()
 
@@ -116,21 +111,17 @@
 			update_appearance()
 			return TRUE
 
-/obj/machinery/ntnet_relay/Initialize()
+/obj/machinery/ntnet_relay/Initialize(mapload)
 	uid = gl_uid++
 	component_parts = list()
 
-	if(SSnetworks.station_network)
-		SSnetworks.relays.Add(src)
-		NTNet = SSnetworks.station_network
-		SSnetworks.add_log("New quantum relay activated. Current amount of linked relays: [SSnetworks.relays.len]")
-	. = ..()
+	SSmodular_computers.ntnet_relays.Add(src)
+	SSnetworks.add_log("New quantum relay activated. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
+	return ..()
 
 /obj/machinery/ntnet_relay/Destroy()
-	if(SSnetworks.station_network)
-		SSnetworks.relays.Remove(src)
-		SSnetworks.add_log("Quantum relay connection severed. Current amount of linked relays: [SSnetworks.relays.len]")
-		NTNet = null
+	SSmodular_computers.ntnet_relays.Remove(src)
+	SSnetworks.add_log("Quantum relay connection severed. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
 
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
 		D.target = null

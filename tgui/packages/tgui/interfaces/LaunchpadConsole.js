@@ -12,50 +12,68 @@ const LaunchpadButtonPad = (props, context) => {
           icon="arrow-left"
           iconRotation={45}
           mb={1}
-          onClick={() => act('move_pos', {
-            x: -1,
-            y: 1,
-          })} />
+          onClick={() =>
+            act('move_pos', {
+              x: -1,
+              y: 1,
+            })
+          }
+        />
         <Button
           fluid
           icon="arrow-left"
           mb={1}
-          onClick={() => act('move_pos', {
-            x: -1,
-          })} />
+          onClick={() =>
+            act('move_pos', {
+              x: -1,
+            })
+          }
+        />
         <Button
           fluid
           icon="arrow-down"
           iconRotation={45}
           mb={1}
-          onClick={() => act('move_pos', {
-            x: -1,
-            y: -1,
-          })} />
+          onClick={() =>
+            act('move_pos', {
+              x: -1,
+              y: -1,
+            })
+          }
+        />
       </Grid.Column>
       <Grid.Column>
         <Button
           fluid
           icon="arrow-up"
           mb={1}
-          onClick={() => act('move_pos', {
-            y: 1,
-          })} />
+          onClick={() =>
+            act('move_pos', {
+              y: 1,
+            })
+          }
+        />
         <Button
           fluid
           content="R"
           mb={1}
-          onClick={() => act('set_pos', {
-            x: 0,
-            y: 0,
-          })} />
+          onClick={() =>
+            act('set_pos', {
+              x: 0,
+              y: 0,
+            })
+          }
+        />
         <Button
           fluid
           icon="arrow-down"
           mb={1}
-          onClick={() => act('move_pos', {
-            y: -1,
-          })} />
+          onClick={() =>
+            act('move_pos', {
+              y: -1,
+            })
+          }
+        />
       </Grid.Column>
       <Grid.Column>
         <Button
@@ -63,26 +81,35 @@ const LaunchpadButtonPad = (props, context) => {
           icon="arrow-up"
           iconRotation={45}
           mb={1}
-          onClick={() => act('move_pos', {
-            x: 1,
-            y: 1,
-          })} />
+          onClick={() =>
+            act('move_pos', {
+              x: 1,
+              y: 1,
+            })
+          }
+        />
         <Button
           fluid
           icon="arrow-right"
           mb={1}
-          onClick={() => act('move_pos', {
-            x: 1,
-          })} />
+          onClick={() =>
+            act('move_pos', {
+              x: 1,
+            })
+          }
+        />
         <Button
           fluid
           icon="arrow-right"
           iconRotation={45}
           mb={1}
-          onClick={() => act('move_pos', {
-            x: 1,
-            y: -1,
-          })} />
+          onClick={() =>
+            act('move_pos', {
+              x: 1,
+              y: -1,
+            })
+          }
+        />
       </Grid.Column>
     </Grid>
   );
@@ -91,30 +118,29 @@ const LaunchpadButtonPad = (props, context) => {
 export const LaunchpadControl = (props, context) => {
   const { topLevel } = props;
   const { act, data } = useBackend(context);
-  const {
-    x,
-    y,
-    pad_name,
-    range,
-  } = data;
+  const { x, y, pad_name, range } = data;
   return (
     <Section
-      title={(
+      title={
         <Input
           value={pad_name}
           width="170px"
-          onChange={(e, value) => act('rename', {
-            name: value,
-          })} />
-      )}
+          onChange={(e, value) =>
+            act('rename', {
+              name: value,
+            })
+          }
+        />
+      }
       level={topLevel ? 1 : 2}
-      buttons={(
+      buttons={
         <Button
           icon="times"
           content="Remove"
           color="bad"
-          onClick={() => act('remove')} />
-      )}>
+          onClick={() => act('remove')}
+        />
+      }>
       <Grid>
         <Grid.Column>
           <Section title="Controls" level={2}>
@@ -125,10 +151,7 @@ export const LaunchpadControl = (props, context) => {
           <Section title="Target" level={2}>
             <Box fontSize="26px">
               <Box mb={1}>
-                <Box
-                  inline
-                  bold
-                  mr={1}>
+                <Box inline bold mr={1}>
                   X:
                 </Box>
                 <NumberInput
@@ -140,15 +163,15 @@ export const LaunchpadControl = (props, context) => {
                   width="90px"
                   height="30px"
                   stepPixelSize={10}
-                  onChange={(e, value) => act('set_pos', {
-                    x: value,
-                  })} />
+                  onChange={(e, value) =>
+                    act('set_pos', {
+                      x: value,
+                    })
+                  }
+                />
               </Box>
               <Box>
-                <Box
-                  inline
-                  bold
-                  mr={1}>
+                <Box inline bold mr={1}>
                   Y:
                 </Box>
                 <NumberInput
@@ -160,9 +183,12 @@ export const LaunchpadControl = (props, context) => {
                   fontSize="26px"
                   width="90px"
                   height="30px"
-                  onChange={(e, value) => act('set_pos', {
-                    y: value,
-                  })} />
+                  onChange={(e, value) =>
+                    act('set_pos', {
+                      y: value,
+                    })
+                  }
+                />
               </Box>
             </Box>
           </Section>
@@ -175,7 +201,8 @@ export const LaunchpadControl = (props, context) => {
             icon="upload"
             content="Launch"
             textAlign="center"
-            onClick={() => act('launch')} />
+            onClick={() => act('launch')}
+          />
         </Grid.Column>
         <Grid.Column>
           <Button
@@ -183,7 +210,8 @@ export const LaunchpadControl = (props, context) => {
             icon="download"
             content="Pull"
             textAlign="center"
-            onClick={() => act('pull')} />
+            onClick={() => act('pull')}
+          />
         </Grid.Column>
       </Grid>
     </Section>
@@ -192,24 +220,17 @@ export const LaunchpadControl = (props, context) => {
 
 export const LaunchpadConsole = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    launchpads = [],
-    selected_id,
-  } = data;
+  const { launchpads = [], selected_id } = data;
   return (
-    <Window
-      width={475}
-      height={260}>
+    <Window width={475} height={260}>
       <Window.Content scrollable>
-        {launchpads.length === 0 && (
-          <NoticeBox>
-            No Pads Connected
-          </NoticeBox>
-        ) || (
+        {(launchpads.length === 0 && (
+          <NoticeBox>No Pads Connected</NoticeBox>
+        )) || (
           <Section>
             <Flex minHeight="190px">
               <Flex.Item width="140px" minHeight="190px">
-                {launchpads.map(launchpad => (
+                {launchpads.map((launchpad) => (
                   <Button
                     fluid
                     ellipsis
@@ -217,21 +238,20 @@ export const LaunchpadConsole = (props, context) => {
                     content={launchpad.name}
                     selected={selected_id === launchpad.id}
                     color="transparent"
-                    onClick={() => act('select_pad', {
-                      id: launchpad.id,
-                    })} />
+                    onClick={() =>
+                      act('select_pad', {
+                        id: launchpad.id,
+                      })
+                    }
+                  />
                 ))}
               </Flex.Item>
               <Flex.Item minHeight="100%">
                 <Divider vertical />
               </Flex.Item>
               <Flex.Item grow={1} basis={0} minHeight="100%">
-                {selected_id && (
-                  <LaunchpadControl />
-                ) || (
-                  <Box>
-                    Please select a pad
-                  </Box>
+                {(selected_id && <LaunchpadControl />) || (
+                  <Box>Please select a pad</Box>
                 )}
               </Flex.Item>
             </Flex>

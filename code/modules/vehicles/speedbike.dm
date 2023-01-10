@@ -5,7 +5,7 @@
 	layer = LYING_MOB_LAYER
 	var/cover_iconstate = "cover_blue"
 
-/obj/vehicle/ridden/speedbike/Initialize()
+/obj/vehicle/ridden/speedbike/Initialize(mapload)
 	. = ..()
 	add_overlay(image(icon, cover_iconstate, ABOVE_MOB_LAYER))
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/speedbike)
@@ -33,7 +33,7 @@
 	///Determines whether we throw all things away when ramming them or just mobs, varedit only
 	var/crash_all = FALSE
 
-/obj/vehicle/ridden/speedwagon/Initialize()
+/obj/vehicle/ridden/speedwagon/Initialize(mapload)
 	. = ..()
 	add_overlay(image(icon, "speedwagon_cover", ABOVE_MOB_LAYER))
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/speedwagon)
@@ -60,7 +60,7 @@
 		visible_message(span_danger("[src] crashes into [rammed]!"))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
-/obj/vehicle/ridden/speedwagon/Moved()
+/obj/vehicle/ridden/speedwagon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!has_buckled_mobs())
 		return

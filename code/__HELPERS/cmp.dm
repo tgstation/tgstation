@@ -42,6 +42,12 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_ckey_dsc(client/a, client/b)
 	return sorttext(a.ckey, b.ckey)
 
+/proc/cmp_playtime_asc(client/a, client/b)
+	return cmp_numeric_asc(a.get_exp_living(TRUE), b.get_exp_living(TRUE))
+
+/proc/cmp_playtime_dsc(client/a, client/b)
+	return cmp_numeric_asc(a.get_exp_living(TRUE), b.get_exp_living(TRUE))
+
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return initial(b.init_order) - initial(a.init_order) //uses initial() so it can be used on types
 
@@ -113,23 +119,38 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_job_display_asc(datum/job/A, datum/job/B)
 	return A.display_order - B.display_order
 
+/proc/cmp_department_display_asc(datum/job_department/A, datum/job_department/B)
+	return A.display_order - B.display_order
+
 /proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
 	return sorttext(initial(b.name),initial(a.name))
 
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
 
-/proc/cmp_pdaname_asc(obj/item/pda/A, obj/item/pda/B)
-	return sorttext(B.owner, A.owner)
+/proc/cmp_pdaname_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
+	return sorttext(B?.saved_identification, A?.saved_identification)
 
-/proc/cmp_pdajob_asc(obj/item/pda/A, obj/item/pda/B)
-	return sorttext(B.ownjob, A.ownjob)
+/proc/cmp_pdajob_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
+	return sorttext(B?.saved_job, A?.saved_job)
 
 /proc/cmp_num_string_asc(A, B)
 	return text2num(A) - text2num(B)
 
 /proc/cmp_mob_realname_dsc(mob/A,mob/B)
 	return sorttext(A.real_name,B.real_name)
+
+/// Orders bodyparts by their body_part value, ascending.
+/proc/cmp_bodypart_by_body_part_asc(obj/item/bodypart/limb_one, obj/item/bodypart/limb_two)
+	return limb_one.body_part - limb_two.body_part
+
+/// Orders by integrated circuit weight
+/proc/cmp_port_order_asc(datum/port/compare1, datum/port/compare2)
+	return compare1.order - compare2.order
+
+/// Orders by uplink category weight
+/proc/cmp_uplink_category_desc(datum/uplink_category/compare1, datum/uplink_category/compare2)
+	return initial(compare2.weight) - initial(compare1.weight)
 
 /**
  * Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes
@@ -146,3 +167,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	rhs = ispath(B, /datum/reagent) ? 0 : 1
 
 	return lhs - rhs
+
+/// Orders heretic knowledge by priority
+/proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
+	return initial(knowledge_b.priority) - initial(knowledge_a.priority)

@@ -2,6 +2,8 @@
 	name = "Spontaneous Brain Trauma"
 	typepath = /datum/round_event/brain_trauma
 	weight = 25
+	category = EVENT_CATEGORY_HEALTH
+	description = "A crewmember gains a random trauma."
 
 /datum/round_event/brain_trauma
 	fakeable = FALSE
@@ -12,9 +14,9 @@
 			continue
 		if(H.stat == DEAD) // What are you doing in this list
 			continue
-		if(!H.getorgan(/obj/item/organ/brain)) // If only I had a brain
+		if(!H.getorgan(/obj/item/organ/internal/brain)) // If only I had a brain
 			continue
-		if(!SSjob.GetJob(H.mind.assigned_role) || (H.mind.assigned_role in GLOB.nonhuman_positions)) //please stop giving my centcom admin gimmicks full body paralysis
+		if(!(H.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //please stop giving my centcom admin gimmicks full body paralysis
 			continue
 		traumatize(H)
 		announce_to_ghosts(H)
@@ -27,7 +29,7 @@
 		15;TRAUMA_RESILIENCE_LOBOTOMY,
 		5;TRAUMA_RESILIENCE_MAGIC)
 
-	var/trauma_type = pickweight(list(
+	var/trauma_type = pick_weight(list(
 		BRAIN_TRAUMA_MILD = 60,
 		BRAIN_TRAUMA_SEVERE = 30,
 		BRAIN_TRAUMA_SPECIAL = 10

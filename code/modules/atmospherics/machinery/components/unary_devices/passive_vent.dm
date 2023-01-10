@@ -15,7 +15,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions, pipe_color)
+		var/image/cap = get_pipe_image(icon, "vent_cap", initialize_directions, pipe_color)
 		add_overlay(cap)
 	icon_state = "passive_vent"
 

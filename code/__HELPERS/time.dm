@@ -59,17 +59,38 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 		if (SUNDAY)
 			return 7
 
-///Returns the first day of the given year and month in number format, from 1 (monday) - 7 (sunday).
-/proc/first_day_of_month(year, month)
+///Returns an integer in ISO format 1 (Monday) - 7 (Sunday) as a string day
+/proc/iso_to_weekday(ddd)
+	switch (ddd)
+		if (1)
+			return MONDAY
+		if (2)
+			return TUESDAY
+		if (3)
+			return WEDNESDAY
+		if (4)
+			return THURSDAY
+		if (5)
+			return FRIDAY
+		if (6)
+			return SATURDAY
+		if (7)
+			return SUNDAY
+
+/// Returns the day (mon, tues, wen...) in number format, 1 (monday) - 7 (sunday) from the passed in date (year, month, day)
+/// All inputs are expected indexed at 1
+/proc/day_of_month(year, month, day)
 	// https://en.wikipedia.org/wiki/Zeller%27s_congruence
 	var/m = month < 3 ? month + 12 : month // month (march = 3, april = 4...february = 14)
 	var/K = year % 100 // year of century
 	var/J = round(year / 100) // zero-based century
-	// day 0-6 saturday to sunday:
-	var/h = (1 + round(13 * (m + 1) / 5) + K + round(K / 4) + round(J / 4) - 2 * J) % 7
+	// day 0-6 saturday to friday:
+	var/h = (day + round(13 * (m + 1) / 5) + K + round(K / 4) + round(J / 4) - 2 * J) % 7
 	//convert to ISO 1-7 monday first format
 	return ((h + 5) % 7) + 1
 
+/proc/first_day_of_month(year, month)
+	return day_of_month(year, month, 1)
 
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
@@ -103,3 +124,19 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 
 /proc/daysSince(realtimev)
 	return round((world.realtime - realtimev) / (24 HOURS))
+
+/**
+ * Converts a time expressed in deciseconds (like world.time) to the 12-hour time format.
+ * the format arg is the format passed down to time2text() (e.g. "hh:mm" is hours and minutes but not seconds).
+ * the timezone is the time value offset from the local time. It's to be applied outside time2text() to get the AM/PM right.
+ */
+/proc/time_to_twelve_hour(time, format = "hh:mm:ss", timezone = TIMEZONE_UTC)
+	time = MODULUS(time + (timezone - GLOB.timezoneOffset) HOURS, 24 HOURS)
+	var/am_pm = "AM"
+	if(time > 12 HOURS)
+		am_pm = "PM"
+		if(time > 13 HOURS)
+			time -= 12 HOURS // e.g. 4:16 PM but not 00:42 PM
+	else if (time < 1 HOURS)
+		time += 12 HOURS // e.g. 12.23 AM
+	return "[time2text(time, format)] [am_pm]"

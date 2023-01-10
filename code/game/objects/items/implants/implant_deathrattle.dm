@@ -20,9 +20,9 @@
 /datum/deathrattle_group/proc/register(obj/item/implant/deathrattle/implant)
 	if(implant in implants)
 		return
-	RegisterSignal(implant, COMSIG_IMPLANT_IMPLANTED, .proc/on_implant_implantation)
-	RegisterSignal(implant, COMSIG_IMPLANT_REMOVED, .proc/on_implant_removal)
-	RegisterSignal(implant, COMSIG_PARENT_QDELETING, .proc/on_implant_destruction)
+	RegisterSignal(implant, COMSIG_IMPLANT_IMPLANTED, PROC_REF(on_implant_implantation))
+	RegisterSignal(implant, COMSIG_IMPLANT_REMOVED, PROC_REF(on_implant_removal))
+	RegisterSignal(implant, COMSIG_PARENT_QDELETING, PROC_REF(on_implant_destruction))
 
 	implants += implant
 
@@ -32,7 +32,7 @@
 /datum/deathrattle_group/proc/on_implant_implantation(obj/item/implant/implant, mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
-	RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_user_statchange)
+	RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_user_statchange))
 
 /datum/deathrattle_group/proc/on_implant_removal(obj/item/implant/implant, mob/living/source, silent = FALSE, special = 0)
 	SIGNAL_HANDLER
@@ -68,7 +68,7 @@
 		if(implant.imp_in == owner || !implant.imp_in)
 			continue
 
-		// Deliberately the same message framing as nanite message + ghost deathrattle
+		// Deliberately the same message framing as ghost deathrattle
 		var/mob/living/recipient = implant.imp_in
 		to_chat(recipient, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died at <b>[area]</b>.")]\"")
 		recipient.playsound_local(get_turf(recipient), sound, vol = 75, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
@@ -77,7 +77,7 @@
 	name = "deathrattle implant"
 	desc = "Hope no one else dies, prepare for when they do."
 
-	activated = FALSE
+	actions_types = null
 
 /obj/item/implant/deathrattle/can_be_implanted_in(mob/living/target)
 	// Can be implanted in anything that's a mob. Syndicate cyborgs, talking fish, humans...

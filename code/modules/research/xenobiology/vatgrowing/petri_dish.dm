@@ -12,6 +12,11 @@
 	. = ..()
 	QDEL_NULL(sample)
 
+/obj/item/petri_dish/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, sample))
+		update_appearance()
+
 /obj/item/petri_dish/examine(mob/user)
 	. = ..()
 	if(!sample)
@@ -27,6 +32,7 @@
 		return FALSE
 	to_chat(user, span_notice("You wash the sample out of [src]."))
 	sample = null
+	update_appearance()
 
 /obj/item/petri_dish/update_overlays()
 	. = ..()
@@ -54,7 +60,7 @@
 		list(CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	)
 
-/obj/item/petri_dish/random/Initialize()
+/obj/item/petri_dish/random/Initialize(mapload)
 	. = ..()
 	var/list/chosen = pick(possible_samples)
 	sample = new

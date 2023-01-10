@@ -51,6 +51,7 @@
 	name = "of <mobtype> slaying (random species, carbon or simple animal)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
+	var/list/target_types_by_comp = list()
 
 /datum/fantasy_affix/bane/apply(datum/component/fantasy/comp, newName)
 	. = ..()
@@ -58,26 +59,32 @@
 	var/static/list/possible_mobtypes
 	if(!possible_mobtypes)
 		// The base list of allowed mob/species types
-		possible_mobtypes = typecacheof(list(
-			/mob/living/simple_animal,
-			/mob/living/carbon,
-			/datum/species,
-			))
+		possible_mobtypes = zebra_typecacheof(list(
+			/mob/living/simple_animal = TRUE,
+			/mob/living/carbon = TRUE,
+			/datum/species = TRUE,
+			// Some types to remove them and their subtypes
+			/mob/living/carbon/human/species = FALSE,
+		))
 		// Some particular types to disallow if they're too broad/abstract
+		// Not in the above typecache generator because it includes subtypes and this doesn't.
 		possible_mobtypes -= list(
 			/mob/living/simple_animal/hostile,
-			)
-		// Some types to remove them and their subtypes
-		possible_mobtypes -= typecacheof(list(
-			/mob/living/carbon/human/species,
-			))
+		)
 
 	var/mob/picked_mobtype = pick(possible_mobtypes)
 	// This works even with the species picks since we're only accessing the name
 
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/bane, picked_mobtype)
+	master.AddElement(/datum/element/bane, picked_mobtype)
+	target_types_by_comp[comp] = picked_mobtype
 	return "[newName] of [initial(picked_mobtype.name)] slaying"
+
+/datum/fantasy_affix/bane/remove(datum/component/fantasy/comp)
+	var/picked_mobtype = target_types_by_comp[comp]
+	var/obj/item/master = comp.parent
+	master.RemoveElement(/datum/element/bane, picked_mobtype)
+	target_types_by_comp -= comp
 
 /datum/fantasy_affix/summoning
 	name = "of <mobtype> summoning (dangerous, can pick all but megafauna tier stuff)"
@@ -91,22 +98,20 @@
 	var/static/list/possible_mobtypes
 	if(!possible_mobtypes)
 		// The base list of allowed mob/species types
-		possible_mobtypes = typecacheof(list(
-			/mob/living/simple_animal,
-			/mob/living/carbon,
-			/datum/species,
-			))
+		possible_mobtypes = zebra_typecacheof(list(
+			/mob/living/simple_animal = TRUE,
+			/mob/living/carbon = TRUE,
+			/datum/species = TRUE,
+			// Some types to remove them and their subtypes
+			/mob/living/carbon/human/species = FALSE,
+			/mob/living/simple_animal/hostile/asteroid/elite = FALSE,
+			/mob/living/simple_animal/hostile/megafauna = FALSE,
+		))
 		// Some particular types to disallow if they're too broad/abstract
+		// Not in the above typecache generator because it includes subtypes and this doesn't.
 		possible_mobtypes -= list(
 			/mob/living/simple_animal/hostile,
-			)
-		// Some types to remove them and their subtypes
-		possible_mobtypes -= typecacheof(list(
-			/mob/living/carbon/human/species,
-			/mob/living/simple_animal/hostile/syndicate/mecha_pilot,
-			/mob/living/simple_animal/hostile/asteroid/elite,
-			/mob/living/simple_animal/hostile/megafauna,
-			))
+		)
 
 	var/mob/picked_mobtype = pick(possible_mobtypes)
 	// This works even with the species picks since we're only accessing the name
@@ -146,7 +151,7 @@
 											  /obj/projectile/temp/hot = 15,
 											  /obj/projectile/beam/disabler = 15)
 
-	var/obj/projectile/picked_projectiletype = pickweight(weighted_projectile_types)
+	var/obj/projectile/picked_projectiletype = pick_weight(weighted_projectile_types)
 
 	var/obj/item/master = comp.parent
 	comp.appliedComponents += master.AddComponent(/datum/component/mirv, picked_projectiletype)
@@ -160,8 +165,12 @@
 /datum/fantasy_affix/strength/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
+	master.AddElement(/datum/element/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
 	return "[newName] of strength"
+
+/datum/fantasy_affix/strength/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.RemoveElement(/datum/element/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
 
 //////////// Bad suffixes
 
@@ -193,8 +202,7 @@
 	var/filter_color = "#8a0c0ca1" //clarified args
 	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", ", consumer of all", " of the feast")
 	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name, comp)
-	var/add_dropdel = FALSE //clarified boolean
-	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger, add_dropdel)
+	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger)
 	return newName //no spoilers!
 
 /datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)

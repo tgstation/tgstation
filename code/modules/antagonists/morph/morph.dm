@@ -4,16 +4,15 @@
 	desc = "A revolting, pulsating pile of flesh."
 	speak_emote = list("gurgles")
 	emote_hear = list("gurgles")
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "morph"
 	icon_living = "morph"
 	icon_dead = "morph_dead"
-	speed = 2
 	combat_mode = TRUE
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	pass_flags = PASSTABLE
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxHealth = 150
 	health = 150
@@ -21,7 +20,7 @@
 	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	vision_range = 1 // Only attack when target is close
 	wander = FALSE
@@ -36,16 +35,18 @@
 	var/eat_while_disguised = FALSE
 	var/atom/movable/form = null
 	var/static/list/blacklist_typecache = typecacheof(list(
-	/atom/movable/screen,
-	/obj/singularity,
-	/obj/energy_ball,
-	/obj/narsie,
-	/mob/living/simple_animal/hostile/morph,
-	/obj/effect))
+		/atom/movable/screen,
+		/obj/singularity,
+		/obj/energy_ball,
+		/obj/narsie,
+		/mob/living/simple_animal/hostile/morph,
+		/obj/effect,
+	))
 
-/mob/living/simple_animal/hostile/morph/Initialize()
+/mob/living/simple_animal/hostile/morph/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/content_barfer)
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)
@@ -109,7 +110,7 @@
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised
 	melee_damage_upper = melee_damage_disguised
-	set_varspeed(0)
+	add_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
 
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
@@ -137,7 +138,7 @@
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
 	melee_damage_upper = initial(melee_damage_upper)
-	set_varspeed(initial(speed))
+	remove_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
 
 	med_hud_set_health()
 	med_hud_set_status() //we are not an object
@@ -147,18 +148,7 @@
 		visible_message(span_warning("[src] twists and dissolves into a pile of green flesh!"), \
 						span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"))
 		restore()
-	barf_contents()
 	..()
-
-/mob/living/simple_animal/hostile/morph/proc/barf_contents()
-	for(var/atom/movable/AM in src)
-		AM.forceMove(loc)
-		if(prob(90))
-			step(AM, pick(GLOB.alldirs))
-
-/mob/living/simple_animal/hostile/morph/wabbajack_act(mob/living/new_mob)
-	barf_contents()
-	. = ..()
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()
@@ -201,37 +191,3 @@
 				eat(I)
 			return
 	return ..()
-
-//Spawn Event
-
-/datum/round_event_control/morph
-	name = "Spawn Morph"
-	typepath = /datum/round_event/ghost_role/morph
-	weight = 0 //Admin only
-	max_occurrences = 1
-
-/datum/round_event/ghost_role/morph
-	minimum_required = 1
-	role_name = "morphling"
-
-/datum/round_event/ghost_role/morph/spawn_role()
-	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
-	if(!candidates.len)
-		return NOT_ENOUGH_PLAYERS
-
-	var/mob/dead/selected = pick_n_take(candidates)
-
-	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = TRUE
-	if(!GLOB.xeno_spawn)
-		return MAP_ERROR
-	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
-	player_mind.transfer_to(S)
-	player_mind.assigned_role = "Morph"
-	player_mind.special_role = "Morph"
-	player_mind.add_antag_datum(/datum/antagonist/morph)
-	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a morph by an event.")
-	log_game("[key_name(S)] was spawned as a morph by an event.")
-	spawned_mobs += S
-	return SUCCESSFUL_SPAWN

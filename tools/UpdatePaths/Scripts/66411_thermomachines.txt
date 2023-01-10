@@ -1,0 +1,6 @@
+/obj/machinery/atmospherics/components/binary/thermomachine : /obj/machinery/atmospherics/components/unary/thermomachine{@OLD}
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer : /obj/machinery/atmospherics/components/unary/thermomachine/freezer{@OLD}
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on : /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{@OLD}
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom : /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{@OLD}
+/obj/machinery/atmospherics/components/binary/thermomachine/heater : /obj/machinery/atmospherics/components/unary/thermomachine/heater{@OLD}
+/obj/machinery/atmospherics/components/binary/thermomachine/heater/on : /obj/machinery/atmospherics/components/unary/thermomachine/heater/on{@OLD}

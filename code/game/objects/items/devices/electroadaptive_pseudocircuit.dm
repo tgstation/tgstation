@@ -8,10 +8,14 @@
 	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 300)
 	var/recharging = FALSE
 	var/circuits = 5 //How many circuits the pseudocircuit has left
-	var/static/recycleable_circuits = typecacheof(list(/obj/item/electronics/firelock, /obj/item/electronics/airalarm, /obj/item/electronics/firealarm, \
-	/obj/item/electronics/apc))//A typecache of circuits consumable for material
+	var/static/recycleable_circuits = typecacheof(list(
+		/obj/item/electronics/firelock,
+		/obj/item/electronics/airalarm,
+		/obj/item/electronics/firealarm,
+		/obj/item/electronics/apc,
+	))//A typecache of circuits consumable for material
 
-/obj/item/electroadaptive_pseudocircuit/Initialize()
+/obj/item/electroadaptive_pseudocircuit/Initialize(mapload)
 	. = ..()
 	maptext = MAPTEXT(circuits)
 
@@ -29,7 +33,7 @@
 		to_chat(R, span_warning("You need a power cell installed for that."))
 		return
 	if(!R.cell.use(circuit_cost))
-		to_chat(R, span_warning("You don't have the energy for that (you need [DisplayEnergy(circuit_cost)].)"))
+		to_chat(R, span_warning("You don't have the energy for that (you need [display_energy(circuit_cost)].)"))
 		return
 	if(recharging)
 		to_chat(R, span_warning("[src] needs some time to recharge first."))
@@ -43,13 +47,14 @@
 	maptext = MAPTEXT(circuits)
 	icon_state = "[initial(icon_state)]_recharging"
 	var/recharge_time = min(600, circuit_cost * 5)  //40W of cost for one fabrication = 20 seconds of recharge time; this is to prevent spamming
-	addtimer(CALLBACK(src, .proc/recharge), recharge_time)
+	addtimer(CALLBACK(src, PROC_REF(recharge)), recharge_time)
 	return TRUE //The actual circuit magic itself is done on a per-object basis
 
 /obj/item/electroadaptive_pseudocircuit/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!is_type_in_typecache(target, recycleable_circuits))
 		return
 	circuits++

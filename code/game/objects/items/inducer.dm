@@ -13,7 +13,7 @@
 	var/obj/item/stock_parts/cell/cell
 	var/recharging = FALSE
 
-/obj/item/inducer/Initialize()
+/obj/item/inducer/Initialize(mapload)
 	. = ..()
 	if(!cell && cell_type)
 		cell = new cell_type
@@ -33,7 +33,7 @@
 	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		cell.emp_act(severity)
 
-/obj/item/inducer/attack_obj(obj/O, mob/living/carbon/user, params)
+/obj/item/inducer/attack_atom(obj/O, mob/living/carbon/user, params)
 	if(user.combat_mode)
 		return ..()
 
@@ -51,28 +51,29 @@
 		return TRUE
 
 	if(!cell)
-		to_chat(user, span_warning("[src] doesn't have a power cell installed!"))
+		balloon_alert(user, "no cell installed!")
 		return TRUE
 
 	if(!cell.charge)
-		to_chat(user, span_warning("[src]'s battery is dead!"))
+		balloon_alert(user, "no charge!")
 		return TRUE
 	return FALSE
 
+/obj/item/inducer/screwdriver_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	tool.play_tool_sound(src)
+	if(!opened)
+		to_chat(user, span_notice("You unscrew the battery compartment."))
+		opened = TRUE
+		update_appearance()
+		return
+	else
+		to_chat(user, span_notice("You close the battery compartment."))
+		opened = FALSE
+		update_appearance()
+		return
 
 /obj/item/inducer/attackby(obj/item/W, mob/user)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		W.play_tool_sound(src)
-		if(!opened)
-			to_chat(user, span_notice("You unscrew the battery compartment."))
-			opened = TRUE
-			update_appearance()
-			return
-		else
-			to_chat(user, span_notice("You close the battery compartment."))
-			opened = FALSE
-			update_appearance()
-			return
 	if(istype(W, /obj/item/stock_parts/cell))
 		if(opened)
 			if(!cell)
@@ -110,12 +111,12 @@
 	if(istype(A, /obj/item/clothing/suit/space))
 		to_chat(user, span_alert("Error unable to interface with device."))
 		return FALSE
-	if(istype(A, /obj))
+	if(isobj(A))
 		O = A
 	if(C)
 		var/done_any = FALSE
 		if(C.charge >= C.maxcharge)
-			to_chat(user, span_notice("[A] is fully charged!"))
+			balloon_alert(user, "it's fully charged!")
 			recharging = FALSE
 			return TRUE
 		user.visible_message(span_notice("[user] starts recharging [A] with [src]."), span_notice("You start recharging [A] with [src]."))
@@ -159,7 +160,7 @@
 /obj/item/inducer/examine(mob/living/M)
 	. = ..()
 	if(cell)
-		. += span_notice("Its display shows: [DisplayEnergy(cell.charge)].")
+		. += span_notice("Its display shows: [display_energy(cell.charge)].")
 	else
 		. += span_notice("Its display is dark.")
 	if(opened)
@@ -179,7 +180,7 @@
 	powertransfer = 500
 	opened = TRUE
 
-/obj/item/inducer/sci/Initialize()
+/obj/item/inducer/sci/Initialize(mapload)
 	. = ..()
 	update_appearance()
 

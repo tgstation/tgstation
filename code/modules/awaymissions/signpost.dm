@@ -7,7 +7,7 @@
 	var/question = "Travel back?"
 	var/list/zlevels
 
-/obj/structure/signpost/Initialize()
+/obj/structure/signpost/Initialize(mapload)
 	. = ..()
 	set_light(2)
 	zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
@@ -39,14 +39,14 @@
 /obj/structure/signpost/attack_hulk(mob/user)
 	return
 
-/obj/structure/signpost/attack_larva(mob/user)
+/obj/structure/signpost/attack_larva(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/signpost/attack_robot(mob/user)
 	if (Adjacent(user))
 		return interact(user)
 
-/obj/structure/signpost/attack_slime(mob/user)
+/obj/structure/signpost/attack_slime(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/signpost/attack_animal(mob/user, list/modifiers)
@@ -63,7 +63,7 @@
 		exit the area."
 	question = "Leave? You might never come back."
 
-/obj/structure/signpost/exit/Initialize()
+/obj/structure/signpost/exit/Initialize(mapload)
 	. = ..()
 	zlevels = list()
 	for(var/i in 1 to world.maxz)

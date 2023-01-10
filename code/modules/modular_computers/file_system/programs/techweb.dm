@@ -1,16 +1,19 @@
 /datum/computer_file/program/science
 	filename = "experi_track"
 	filedesc = "Nanotrasen Science Hub"
+	category = PROGRAM_CATEGORY_SCI
 	program_icon_state = "research"
 	extended_desc = "Connect to the internal science server in order to assist in station research efforts."
 	requires_ntnet = TRUE
-	size = 16
+	size = 10
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	required_access = ACCESS_HEADS
-	transfer_access = ACCESS_RD
+	required_access = list(ACCESS_COMMAND, ACCESS_RESEARCH)
+	transfer_access = list(ACCESS_RESEARCH)
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
+	/// Access needed to lock/unlock the console
+	var/lock_access = ACCESS_RESEARCH
 	/// Determines if the console is locked, and consequently if actions can be performed with it
 	var/locked = FALSE
 	/// Used for compressing data sent to the UI via static_data as payload size is of concern
@@ -18,10 +21,18 @@
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
 
-/datum/computer_file/program/science/run_program(mob/living/user)
+/datum/computer_file/program/science/on_start(mob/living/user)
 	. = ..()
-	stored_research = SSresearch.science_tech
+	if(!CONFIG_GET(flag/no_default_techweb_link))
+		stored_research = SSresearch.science_tech
 
+/datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
+	if(!istype(attacking_item, /obj/item/multitool))
+		return FALSE
+	var/obj/item/multitool/attacking_tool = attacking_item
+	if(!QDELETED(attacking_tool.buffer) && istype(attacking_tool.buffer, /datum/techweb))
+		stored_research = attacking_tool.buffer
+	return TRUE
 
 /datum/computer_file/program/science/ui_assets(mob/user)
 	return list(
@@ -31,6 +42,9 @@
 // heavy data from this proc should be moved to static data when possible
 /datum/computer_file/program/science/ui_data(mob/user)
 	var/list/data = get_header_data()
+	data["stored_research"] = !!stored_research
+	if(!stored_research) //lack of a research node is all we care about.
+		return data
 	data += list(
 		"nodes" = list(),
 		"experiments" = list(),
@@ -41,7 +55,7 @@
 		"sec_protocols" = !(computer.obj_flags & EMAGGED),
 		"t_disk" = null, //Not doing disk operations on the app, use the console for that.
 		"d_disk" = null, //See above.
-		"locked" = locked
+		"locked" = locked,
 	)
 
 	// Serialize all nodes to display
@@ -78,10 +92,6 @@
 	. = ..()
 	if (.)
 		return
-	var/obj/item/computer_hardware/card_slot/card_slot
-	if(computer)
-		card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/user_id_card = card_slot.stored_card
 
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
@@ -93,14 +103,12 @@
 			if(computer.obj_flags & EMAGGED)
 				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
-			if(ACCESS_RND in user_id_card?.access)
+			if(lock_access in computer?.computer_id_slot?.access)
 				locked = !locked
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
 			return TRUE
 		if ("researchNode")
-			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
-				return TRUE
 			research_node(params["node_id"], usr)
 			return TRUE
 
@@ -180,8 +188,8 @@
 	return id_cache[id]
 
 /datum/computer_file/program/science/proc/research_node(id, mob/user)
-	if(!stored_research.available_nodes[id] || stored_research.researched_nodes[id])
-		computer.say("Node unlock failed: Either already researched or not available!")
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		computer.say("Node unlock failed: Either no techweb is found, node is already researched or is not available!")
 		return FALSE
 	var/datum/techweb_node/tech_node = SSresearch.techweb_node_by_id(id)
 	if(!istype(tech_node))
@@ -189,7 +197,7 @@
 		return FALSE
 	var/list/price = tech_node.get_price(stored_research)
 	if(stored_research.can_afford(price))
-		computer.investigate_log("[key_name(user)] researched [id]([json_encode(price)]) on techweb id [stored_research.id] via [computer].", INVESTIGATE_RESEARCH)
+		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id] via [computer].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = tech_node.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 		if(stored_research.research_node_id(id))
@@ -197,6 +205,8 @@
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
+			if(iscyborg(user))
+				logname = "Cyborg: [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))

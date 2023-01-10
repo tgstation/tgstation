@@ -3,7 +3,7 @@
 	desc = "Used for coloring pipes, unsurprisingly."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
-	inhand_icon_state = "flight"
+	inhand_icon_state = null
 	item_flags = NOBLUDGEON
 	var/paint_color = "grey"
 
@@ -24,7 +24,7 @@
 		user.visible_message(span_notice("[user] paints \the [P] [paint_color]."),span_notice("You paint \the [P] [paint_color]."))
 
 /obj/item/pipe_painter/attack_self(mob/user)
-	paint_color = tgui_input_list(usr, "Which colour do you want to use?","Pipe painter",GLOB.pipe_paint_colors)
+	paint_color = tgui_input_list(user, "Which colour do you want to use?", "Pipe painter", GLOB.pipe_paint_colors)
 
 /obj/item/pipe_painter/examine(mob/user)
 	. = ..()

@@ -12,12 +12,12 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "d" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "e" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_y = 4
 	},
 /obj/item/storage/toolbox/emergency,
@@ -49,7 +49,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "k" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -58,7 +58,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "l" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -66,9 +66,9 @@
 "m" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "arrivy";
-	name = "ship shutters"
+	name = "Ship Shutters"
 	},
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "n" = (
@@ -84,13 +84,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /obj/docking_port/mobile/arrivals{
-	height = 13;
-	name = "pubby arrivals shuttle";
-	width = 6
+	name = "pubby arrivals shuttle"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -99,14 +97,14 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "r" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "s" = (
 /obj/structure/closet/emcloset,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/mineral/titanium/blue,
@@ -122,7 +120,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "v" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

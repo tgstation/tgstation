@@ -33,7 +33,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
-	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
+	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
 	///How beautiful is this material per unit.
 	var/beauty_modifier = 0
 	///Can be used to override the sound items make, lets add some SLOSHing.
@@ -86,16 +86,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(beauty_modifier)
 		source.AddElement(/datum/element/beauty, beauty_modifier * amount)
 
-	if(istype(source, /obj)) //objs
+	if(isobj(source)) //objs
 		on_applied_obj(source, amount, material_flags)
 
-	if(istype(source, /turf)) //turfs
+	else if(istype(source, /turf)) //turfs
 		on_applied_turf(source, amount, material_flags)
 
 	source.mat_update_desc(src)
 
 ///This proc is called when a material updates an object's description
-/atom/proc/mat_update_desc(/datum/material/mat)
+/atom/proc/mat_update_desc(datum/material/mat)
 	return
 
 ///This proc is called when the material is added to an object specifically.
@@ -105,16 +105,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.modify_max_integrity(new_max_integrity)
 		o.force *= strength_modifier
 		o.throwforce *= strength_modifier
-
-		var/list/temp_armor_list = list() //Time to add armor modifiers!
-
-		if(!istype(o.armor))
-			return
-		var/list/current_armor = o.armor?.getList()
-
-		for(var/i in current_armor)
-			temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
-		o.armor = getArmor(arglist(temp_armor_list))
+		o.set_armor(o.get_armor().generate_new_with_multipliers(armor_modifiers))
 
 	if(!isitem(o))
 		return
@@ -148,7 +139,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 			O.clawfootstep = turf_sound_override
 			O.heavyfootstep = turf_sound_override
 	if(alpha < 255)
-		T.AddElement(/datum/element/turf_z_transparency, TRUE)
+		T.AddElement(/datum/element/turf_z_transparency)
 	return
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
@@ -178,7 +169,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(beauty_modifier)
 		source.RemoveElement(/datum/element/beauty, beauty_modifier * amount)
 
-	if(istype(source, /obj)) //objs
+	if(isobj(source)) //objs
 		on_removed_obj(source, amount, material_flags)
 
 	if(istype(source, /turf)) //turfs
@@ -202,7 +193,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
 	if(alpha < 255)
-		T.RemoveElement(/datum/element/turf_z_transparency, FALSE)
+		T.RemoveElement(/datum/element/turf_z_transparency)
 
 /**
  * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.

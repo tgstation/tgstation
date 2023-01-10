@@ -16,6 +16,10 @@
 	var/spawn_admin = FALSE
 	/// If TRUE, we try and pick one of the most experienced players who volunteered to fill the leader slot
 	var/leader_experience = TRUE
+	/// A custom map template to spawn the ERT at. If this is null or use_custom_shuttle is FALSE, the ERT will spawn at Centcom.
+	var/datum/map_template/ert_template
+	/// If we should actually _use_ the ert_template custom shuttle
+	var/use_custom_shuttle = TRUE
 
 /datum/ert/New()
 	if (!polldesc)
@@ -40,6 +44,13 @@
 	code = "Delta"
 	mission = "Leave no witnesses."
 	polldesc = "an elite Nanotrasen Strike Team"
+
+/datum/ert/marine
+	leader_role = /datum/antagonist/ert/marine
+	roles = list(/datum/antagonist/ert/marine/security, /datum/antagonist/ert/marine/engineer, /datum/antagonist/ert/marine/medic)
+	rename_team = "Marine Squad"
+	polldesc = "an 'elite' Nanotrasen Strike Team"
+	opendoors = FALSE
 
 /datum/ert/centcom_official
 	code = "Green"
@@ -94,3 +105,14 @@
 	mission = "Create entertainment for the crew."
 	polldesc = "a Code Rainbow Nanotrasen Emergency Response Party"
 	code = "Rainbow"
+
+/datum/ert/bounty_hunters
+	roles = list(/datum/antagonist/ert/bounty_armor, /datum/antagonist/ert/bounty_hook, /datum/antagonist/ert/bounty_synth)
+	leader_role = /datum/antagonist/ert/bounty_armor
+	teamsize = 3
+	opendoors = FALSE
+	rename_team = "Bounty Hunters"
+	mission = "Assist the station in catching perps, dead or alive."
+	polldesc = "a Centcom-hired bounty hunting gang"
+	random_names = FALSE
+	ert_template = /datum/map_template/shuttle/ert/bounty

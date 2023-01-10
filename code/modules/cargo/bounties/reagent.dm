@@ -7,7 +7,7 @@
 	return ..() && shipped_volume >= required_volume
 
 /datum/bounty/reagent/applies_to(obj/O)
-	if(!istype(O, /obj/item/reagent_containers))
+	if(!is_reagent_container(O))
 		return FALSE
 	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.type))
 		return FALSE
@@ -126,7 +126,7 @@
 		/datum/reagent/medicine/ephedrine,\
 		/datum/reagent/medicine/diphenhydramine,\
 		/datum/reagent/drug/space_drugs,\
-		/datum/reagent/drug/crank,\
+		/datum/reagent/drug/blastoff,\
 		/datum/reagent/gunpowder,\
 		/datum/reagent/napalm,\
 		/datum/reagent/firefighting_foam,\
@@ -223,7 +223,6 @@
 		/datum/reagent/medicine/c2/hercuri,\
 		/datum/reagent/medicine/c2/probital,\
 		/datum/reagent/drug/methamphetamine,\
-		/datum/reagent/drug/crank,\
 		/datum/reagent/nitrous_oxide,\
 		/datum/reagent/barbers_aid,\
 		/datum/reagent/pax,\

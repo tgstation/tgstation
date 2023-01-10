@@ -1,6 +1,6 @@
 /mob/living/silicon/ai/proc/get_camera_list()
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+	for (var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		L.Add(C)
 
 	camera_sort(L)
@@ -9,14 +9,18 @@
 
 	for (var/obj/machinery/camera/C in L)
 		var/list/tempnetwork = C.network&src.network
-		if (tempnetwork.len)
+		if (length(tempnetwork))
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
 	return T
 
 /mob/living/silicon/ai/proc/show_camera_list()
 	var/list/cameras = get_camera_list()
-	var/camera = input(src, "Choose which camera you want to view", "Cameras") as null|anything in cameras
+	var/camera = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
+	if(isnull(camera))
+		return
+	if(isnull(cameras[camera]))
+		return
 	switchCamera(cameras[camera])
 
 /datum/trackable
@@ -53,7 +57,7 @@
 		else
 			track.others[name] = WEAKREF(L)
 
-	var/list/targets = sortList(track.humans) + sortList(track.others)
+	var/list/targets = sort_list(track.humans) + sort_list(track.others)
 
 	return targets
 
@@ -69,7 +73,7 @@
 
 	var/datum/weakref/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 
-	ai_actual_track(target.resolve())
+	ai_actual_track(target?.resolve())
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if(!istype(target))
@@ -86,7 +90,7 @@
 
 	to_chat(U, span_notice("Now tracking [target.get_visible_name()] on camera."))
 
-	INVOKE_ASYNC(src, .proc/do_track, target, U)
+	INVOKE_ASYNC(src, PROC_REF(do_track), target, U)
 
 /mob/living/silicon/ai/proc/do_track(mob/living/target, mob/living/silicon/ai/U)
 	var/cameraticks = 0
@@ -106,7 +110,7 @@
 				tracking = FALSE
 				return
 			else
-				sleep(10)
+				sleep(1 SECONDS)
 				continue
 
 		else
@@ -121,7 +125,7 @@
 			U.cameraFollow = null
 			return
 
-		sleep(10)
+		sleep(1 SECONDS)
 
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
@@ -145,7 +149,7 @@
 	var/obj/machinery/camera/a
 	var/obj/machinery/camera/b
 
-	for (var/i = L.len, i > 0, i--)
+	for (var/i = length(L), i > 0, i--)
 		for (var/j = 1 to i - 1)
 			a = L[j]
 			b = L[j + 1]

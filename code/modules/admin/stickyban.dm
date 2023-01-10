@@ -403,7 +403,7 @@
 		if (SSstickyban.dbcacheexpire)
 			return SSstickyban.dbcache.Copy()
 
-	return sortList(world.GetConfig("ban"))
+	return sort_list(world.GetConfig("ban"))
 
 
 /proc/get_stickyban_from_ckey(ckey)

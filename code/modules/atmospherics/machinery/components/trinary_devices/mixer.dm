@@ -6,14 +6,15 @@
 	desc = "Very useful for mixing gasses."
 
 	can_unwrench = TRUE
-
-	var/target_pressure = ONE_ATMOSPHERE
-	var/node1_concentration = 0.5
-	var/node2_concentration = 0.5
-
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "mixer"
 
+	///Output pressure target
+	var/target_pressure = ONE_ATMOSPHERE
+	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	var/node1_concentration = 0.5
+	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	var/node2_concentration = 0.5
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
@@ -37,7 +38,7 @@
 		if(!(direction & initialize_directions))
 			continue
 
-		. += getpipeimage(icon, "cap", direction, pipe_color, piping_layer, TRUE)
+		. += get_pipe_image(icon, "cap", direction, pipe_color, piping_layer, TRUE)
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
@@ -154,12 +155,12 @@
 		if("node1")
 			var/value = text2num(params["concentration"])
 			adjust_node1_value(value)
-			investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("was set to [100 * node1_concentration] % on node 1 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("node2")
 			var/value = text2num(params["concentration"])
 			adjust_node1_value(100 - value)
-			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("was set to [100 * node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_appearance()
 

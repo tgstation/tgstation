@@ -16,7 +16,7 @@
 		I.alpha = 64
 		I.appearance_flags = RESET_ALPHA
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/blessed_aware, "blessing", I)
-	RegisterSignal(loc, COMSIG_ATOM_INTERCEPT_TELEPORT, .proc/block_cult_teleport)
+	RegisterSignal(loc, COMSIG_ATOM_INTERCEPT_TELEPORT, PROC_REF(block_cult_teleport))
 
 /obj/effect/blessing/Destroy() 
 	UnregisterSignal(loc, COMSIG_ATOM_INTERCEPT_TELEPORT)

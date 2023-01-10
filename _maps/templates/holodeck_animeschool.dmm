@@ -63,7 +63,7 @@
 "Y" = (
 /obj/structure/table/wood,
 /obj/item/folder,
-/obj/item/melee/classic_baton/telescopic,
+/obj/item/melee/baton/telescopic,
 /turf/open/floor/holofloor,
 /area/template_noop)
 

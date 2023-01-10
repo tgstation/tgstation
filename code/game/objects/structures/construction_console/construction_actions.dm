@@ -3,7 +3,7 @@
 
 ///Generic construction action for base [construction consoles][/obj/machinery/computer/camera_advanced/base_construction].
 /datum/action/innate/construction
-	icon_icon = 'icons/mob/actions/actions_construction.dmi'
+	button_icon = 'icons/mob/actions/actions_construction.dmi'
 	///Console's eye mob
 	var/mob/camera/ai_eye/remote/base_construction/remote_eye
 	///Console itself
@@ -59,38 +59,17 @@
 	base_console.internal_rcd.pre_attack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, TRUE)
 
-/datum/action/innate/construction/switch_mode
-	name = "Switch Mode"
-	button_icon_state = "builder_mode"
+/datum/action/innate/construction/configure_mode
+	name = "Configure RCD"
+	button_icon = 'icons/obj/tools.dmi'
+	button_icon_state = "rcd"
 
-/datum/action/innate/construction/switch_mode/Activate()
-	if(..())
-		return
-	var/list/buildlist = list("Walls and Floors" = RCD_FLOORWALL, "Airlocks" = RCD_AIRLOCK, "Deconstruction" = RCD_DECONSTRUCT, "Windows and Grilles" = RCD_WINDOWGRILLE)
-	var/buildmode = input(owner, "Set construction mode.", "Base Console", null) in buildlist
-	check_rcd()
-	base_console.internal_rcd.construction_mode = buildlist[buildmode]
-	to_chat(owner, "Build mode is now [buildmode].")
-
-/datum/action/innate/construction/airlock_type
-	name = "Select Airlock Type"
-	button_icon_state = "airlock_select"
-
-/datum/action/innate/construction/airlock_type/Activate()
+/datum/action/innate/construction/configure_mode/Activate()
 	if(..())
 		return
 	check_rcd()
-	base_console.internal_rcd.change_airlock_setting(owner, remote_eye)
-
-/datum/action/innate/construction/window_type
-	name = "Select Window Glass"
-	button_icon_state = "window_select"
-
-/datum/action/innate/construction/window_type/Activate()
-	if(..())
-		return
-	check_rcd()
-	base_console.internal_rcd.toggle_window_glass(owner)
+	base_console.internal_rcd.owner = base_console
+	base_console.internal_rcd.ui_interact(owner)
 
 ///Generic action used with base construction consoles to build anything that can't be built with an RCD
 /datum/action/innate/construction/place_structure
@@ -131,9 +110,9 @@
 	button_icon_state = "build_fan"
 	structure_name = "fans"
 	structure_path = /obj/structure/fans/tiny
-	place_sound =  'sound/machines/click.ogg'
+	place_sound = 'sound/machines/click.ogg'
 
-/datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure, remaining)
+/datum/action/innate/construction/place_structure/fan/after_place(obj/placed_structure, remaining)
 	to_chat(owner, span_notice("Tiny fan placed. [remaining] fans remaining."))
 
 /datum/action/innate/construction/place_structure/turret
@@ -148,5 +127,6 @@
 	if(!turret_controller)
 		to_chat(owner, span_notice("<b>Warning:</b> Aux base controller not found. Turrets might not work properly."))
 		return
-	turret_controller.turrets += placed_structure
+
+	LAZYADD(turret_controller.turrets, WEAKREF(placed_structure))
 	to_chat(owner, span_notice("You've constructed an additional turret. [remaining] turrets remaining."))

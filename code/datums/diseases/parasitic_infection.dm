@@ -6,12 +6,12 @@
 	agent = "Consuming Live Parasites"
 	spread_text = "Non-Biological"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 1
+	spreading_modifier = 1
 	desc = "If left untreated the subject will passively lose nutrients, and eventually lose their liver."
 	severity = DISEASE_SEVERITY_HARMFUL
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
-	required_organs = list(/obj/item/organ/liver)
+	required_organs = list(/obj/item/organ/internal/liver)
 	bypasses_immunity = TRUE
 
 
@@ -20,7 +20,7 @@
 	if(!.)
 		return
 
-	var/obj/item/organ/liver/affected_liver = affected_mob.getorgan(/obj/item/organ/liver)
+	var/obj/item/organ/internal/liver/affected_liver = affected_mob.getorgan(/obj/item/organ/internal/liver)
 	if(!affected_liver)
 		affected_mob.visible_message(span_notice("<B>[affected_mob]'s liver is covered in tiny larva! They quickly shrivel and die after being exposed to the open air.</B>"))
 		cure()

@@ -21,7 +21,7 @@
 /datum/ductnet/proc/remove_duct(obj/machinery/duct/ducting)
 	destroy_network(FALSE)
 	for(var/obj/machinery/duct/D in ducting.neighbours)
-		addtimer(CALLBACK(D, /obj/machinery/duct/proc/attempt_connect)) //needs to happen after qdel
+		addtimer(CALLBACK(D, TYPE_PROC_REF(/obj/machinery/duct,attempt_connect))) //needs to happen after qdel
 	qdel(src)
 
 ///add a plumbing object to either demanders or suppliers
@@ -46,7 +46,7 @@
 	if(!ducts.len) //there were no ducts, so it was a direct connection. we destroy ourselves since a ductnet with only one plumber and no ducts is worthless
 		destroy_network()
 
-///we combine ductnets. this occurs when someone connects to seperate sets of fluid ducts
+///we combine ductnets. this occurs when someone connects to separate sets of fluid ducts
 /datum/ductnet/proc/assimilate(datum/ductnet/D)
 	ducts.Add(D.ducts)
 	suppliers.Add(D.suppliers)

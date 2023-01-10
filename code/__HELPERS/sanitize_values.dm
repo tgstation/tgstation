@@ -51,7 +51,7 @@
 				return default
 	return default
 
-/proc/sanitize_hexcolor(color, desired_format = 3, include_crunch = FALSE, default)
+/proc/sanitize_hexcolor(color, desired_format = DEFAULT_HEX_COLOR_LEN, include_crunch = TRUE, default)
 	var/crunch = include_crunch ? "#" : ""
 	if(!istext(color))
 		color = ""
@@ -94,5 +94,5 @@
 			return default ? default : crunch + repeat_string(desired_format, "0")
 
 /// Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters. Examples: "#ff1234", "#A38321", COLOR_GREEN_GRAY
-/proc/sanitize_ooccolor(color)
+/proc/sanitize_color(color)
 	return findtext(color, GLOB.is_color) ? color : GLOB.normal_ooc_colour

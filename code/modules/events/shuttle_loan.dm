@@ -1,33 +1,80 @@
-#define HIJACK_SYNDIE 1
-#define RUSKY_PARTY 2
-#define SPIDER_GIFT 3
-#define DEPARTMENT_RESUPPLY 4
-#define ANTIDOTE_NEEDED 5
-#define PIZZA_DELIVERY 6
-#define ITS_HIP_TO 7
-#define MY_GOD_JC 8
-
+#define HIJACK_SYNDIE "syndies"
+#define RUSKY_PARTY "ruskies"
+#define SPIDER_GIFT "spiders"
+#define DEPARTMENT_RESUPPLY "resupplies"
+#define ANTIDOTE_NEEDED "disease"
+#define PIZZA_DELIVERY "pizza"
+#define ITS_HIP_TO "bees"
+#define MY_GOD_JC "bomb"
+#define PAPERS_PLEASE "paperwork"
 
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
-	max_occurrences = 1
+	max_occurrences = 3
 	earliest_start = 7 MINUTES
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
+	///The types of loan offers that the crew can recieve.
+	var/list/shuttle_loan_offers = list(
+		ANTIDOTE_NEEDED,
+		DEPARTMENT_RESUPPLY,
+		HIJACK_SYNDIE,
+		ITS_HIP_TO,
+		MY_GOD_JC,
+		PIZZA_DELIVERY,
+		RUSKY_PARTY,
+		SPIDER_GIFT,
+		PAPERS_PLEASE,
+	)
+	///The types of loan events already run (and to be excluded if the event triggers).
+	var/list/run_events = list()
+	///The admin-selected loan offer ID.
+	var/chosen_event
+
+/datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
+	. = ..()
+
+	for(var/datum/round_event/running_event in SSevents.running)
+		if(istype(running_event, /datum/round_event/shuttle_loan)) //Make sure two of these don't happen at once.
+			return FALSE
+
+/datum/round_event_control/shuttle_loan/admin_setup()
+	if(!check_rights(R_FUN))
+		return ADMIN_CANCEL_EVENT
+
+	if(tgui_alert(usr, "Select a loan offer?", "Trade Offer:", list("Yes", "No")) == "Yes")
+		chosen_event = tgui_input_list(usr, "What deal would you like to offer the crew?", "Throw them a bone.", shuttle_loan_offers)
+
+	for(var/datum/round_event/shuttle_loan/loan_event in SSevents.running)
+		loan_event.kill() //Force out the old event for a new one to take its place
 
 /datum/round_event/shuttle_loan
-	announceWhen = 1
-	endWhen = 500
+	announce_when = 1
+	end_when = 500
 	var/dispatched = FALSE
-	var/dispatch_type = 0
+	var/dispatch_type = "none"
 	var/bonus_points = 10000
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
+	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't call control, because it hasn't been set yet
+		if(loan_event_control.chosen_event) //Pass down the admin selection and clean it for future use.
+			dispatch_type = loan_event_control.chosen_event
+			loan_event_control.chosen_event = null
+		else //Otherwise, generate and pick from the list of offerable offers.
+			var/list/loan_list = list()
+			loan_list += loan_event_control.shuttle_loan_offers
+			var/list/run_events = loan_event_control.run_events //Ask the round_event_control which loans have already been offered
+			loan_list -= run_events //Remove the already offered loans from the candidate list
+			if(!length(loan_list)) //If we somehow run out of loans, they all become available again
+				loan_list += loan_event_control.shuttle_loan_offers
+				run_events.Cut()
+			dispatch_type = pick(loan_list) //Pick a loan to offer
+		loan_event_control.run_events += dispatch_type //Regardless of admin selection, we add the event being run to the run_events list
 
 /datum/round_event/shuttle_loan/announce(fake)
-	SSshuttle.shuttle_loan = src
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
 			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","CentCom Counterintelligence")
@@ -52,6 +99,15 @@
 			priority_announce("Cargo: We have discovered an active Syndicate bomb near our VIP shuttle's fuel lines. If you feel up to the task, we will pay you for defusing it.", "CentCom Security Division")
 			thanks_msg = "Live explosive ordnance incoming via supply shuttle. Evacuating cargo bay is recommended."
 			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
+		if(PAPERS_PLEASE)
+			priority_announce("Cargo: A neighboring station needs some help handling some paperwork. Could you help process it for us?", "CentCom Paperwork Division")
+			thanks_msg = "The cargo shuttle should return in five minutes. Payment will be rendered when the paperwork is processed and returned."
+			bonus_points = 0 //Payout is made when the stamped papers are returned
+		else
+			log_game("Shuttle Loan event could not find [dispatch_type] event to offer.")
+			kill()
+			return
+	SSshuttle.shuttle_loan = src
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
@@ -60,10 +116,10 @@
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		D.adjust_money(bonus_points)
-	endWhen = activeFor + 1
+	end_when = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
-	SSshuttle.supply.destination = SSshuttle.getDock("supply_home")
+	SSshuttle.supply.destination = SSshuttle.getDock("cargo_home")
 	SSshuttle.supply.setTimer(3000)
 
 	switch(dispatch_type)
@@ -91,15 +147,18 @@
 		if(MY_GOD_JC)
 			SSshuttle.centcom_message += "Live explosive ordnance incoming. Exercise extreme caution."
 			loan_type = "Shuttle with a ticking bomb"
+		if(PAPERS_PLEASE)
+			SSshuttle.centcom_message += "Paperwork incoming."
+			loan_type = "Paperwork shipment"
 
 	log_game("Shuttle loan event firing with type '[loan_type]'.")
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
 		if(SSshuttle.supply.mode != SHUTTLE_IDLE)
-			endWhen = activeFor
+			end_when = activeFor
 		else
-			endWhen = activeFor + 1
+			end_when = activeFor + 1
 
 /datum/round_event/shuttle_loan/end()
 	if(SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched)
@@ -123,12 +182,12 @@
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
+				shuttle_spawns.Add(/mob/living/basic/syndicate/ranged/infiltrator)
+				shuttle_spawns.Add(/mob/living/basic/syndicate/ranged/infiltrator)
 				if(prob(75))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
+					shuttle_spawns.Add(/mob/living/basic/syndicate/ranged/infiltrator)
 				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
+					shuttle_spawns.Add(/mob/living/basic/syndicate/ranged/infiltrator)
 
 			if(RUSKY_PARTY)
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/service/party]
@@ -155,7 +214,7 @@
 				var/turf/T = pick_n_take(empty_shuttle_turfs)
 
 				new /obj/effect/decal/remains/human(T)
-				new /obj/item/clothing/shoes/space_ninja(T)
+				new /obj/item/clothing/shoes/jackboots/fast(T)
 				new /obj/item/clothing/mask/balaclava(T)
 
 				for(var/i in 1 to 5)
@@ -163,11 +222,11 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
+				var/obj/effect/mob_spawn/corpse/human/assistant/infected_assistant = pick(/obj/effect/mob_spawn/corpse/human/assistant/beesease_infection, /obj/effect/mob_spawn/corpse/human/assistant/brainrot_infection, /obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection)
 				var/turf/T
-				for(var/i=0, i<10, i++)
+				for(var/i in 1 to 10)
 					if(prob(15))
-						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
+						shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle)
 					else if(prob(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/syringe)
 					else if(prob(25))
@@ -175,8 +234,8 @@
 					T = pick_n_take(empty_shuttle_turfs)
 					new infected_assistant(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
-				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/pierrot_throat)
-				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/magnitis)
+				shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle/pierrot_throat)
+				shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle/magnitis)
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(
@@ -206,10 +265,10 @@
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/hydroponics/beekeeping_fullkit]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/bee_terrorist)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/bee_terrorist)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
 				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/no_mag)
 				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag)
 				shuttle_spawns.Add(/obj/item/honey_frame)
@@ -237,6 +296,9 @@
 				else
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
 
+			if(PAPERS_PLEASE)
+				shuttle_spawns += subtypesof(/obj/item/paperwork) - typesof(/obj/item/paperwork/photocopy) - typesof(/obj/item/paperwork/ancient)
+
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
 			var/turf/T = pick_n_take(empty_shuttle_turfs)
@@ -256,9 +318,9 @@
 
 /obj/item/paper/fluff/bee_objectives
 	name = "Objectives of a Bee Liberation Front Operative"
-	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
+	default_raw_text = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
 
-/obj/machinery/syndicatebomb/shuttle_loan/Initialize()
+/obj/machinery/syndicatebomb/shuttle_loan/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
 	timer_set = rand(480, 600) //once the supply shuttle docks (after 5 minutes travel time), players have between 3-5 minutes to defuse the bomb
@@ -267,10 +329,10 @@
 
 /obj/item/paper/fluff/cargo/bomb
 	name = "hastly scribbled note"
-	info = "GOOD LUCK!"
+	default_raw_text = "GOOD LUCK!"
 
 /obj/item/paper/fluff/cargo/bomb/allyourbase
-	info = "Somebody set us up the bomb!"
+	default_raw_text = "Somebody set us up the bomb!"
 
 #undef HIJACK_SYNDIE
 #undef RUSKY_PARTY

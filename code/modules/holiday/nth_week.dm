@@ -31,10 +31,11 @@
 
 /datum/holiday/nth_week/thanksgiving
 	name = "Thanksgiving in the United States"
+	timezones = list(TIMEZONE_EST, TIMEZONE_CST, TIMEZONE_MST, TIMEZONE_PST, TIMEZONE_AKST, TIMEZONE_HST)
 	begin_week = 4
 	begin_month = NOVEMBER
 	begin_weekday = THURSDAY
-	drone_hat = /obj/item/clothing/head/that //This is the closest we can get to a pilgrim's hat
+	drone_hat = /obj/item/clothing/head/hats/tophat //This is the closest we can get to a pilgrim's hat
 
 /datum/holiday/nth_week/thanksgiving/canada
 	name = "Thanksgiving in Canada"
@@ -67,7 +68,7 @@
 	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
 
 /datum/holiday/nth_week/moth
-	name = "Moth Week"
+	name = MOTH_WEEK
 	begin_week = 3
 	end_week = 4
 	begin_month = JULY

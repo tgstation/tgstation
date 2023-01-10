@@ -2,7 +2,13 @@
 	if(!message || !subject)
 		return
 	var/F = file("[GLOB.log_directory]/[subject].html")
-	WRITE_FILE(F, "[time_stamp()] [REF(src)] ([x],[y],[z]) || [src] [message]<br>")
+	var/source = "[src]"
+
+	if(isliving(src))
+		var/mob/living/source_mob = src
+		source += " ([source_mob.ckey ? source_mob.ckey : "*no key*"])"
+
+	WRITE_FILE(F, "[time_stamp(format = "YYYY-MM-DD hh:mm:ss")] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
 
 /client/proc/investigate_show()
 	set name = "Investigate"
@@ -10,7 +16,25 @@
 	if(!holder)
 		return
 
-	var/list/investigates = list(INVESTIGATE_RESEARCH, INVESTIGATE_EXONET, INVESTIGATE_PORTAL, INVESTIGATE_SINGULO, INVESTIGATE_WIRES, INVESTIGATE_TELESCI, INVESTIGATE_GRAVITY, INVESTIGATE_RECORDS, INVESTIGATE_CARGO, INVESTIGATE_SUPERMATTER, INVESTIGATE_ATMOS, INVESTIGATE_EXPERIMENTOR, INVESTIGATE_BOTANY, INVESTIGATE_HALLUCINATIONS, INVESTIGATE_RADIATION, INVESTIGATE_NANITES, INVESTIGATE_PRESENTS, INVESTIGATE_HYPERTORUS, INVESTIGATE_ACCESSCHANGES)
+	var/list/investigates = list(
+		INVESTIGATE_ACCESSCHANGES,
+		INVESTIGATE_ATMOS,
+		INVESTIGATE_BOTANY,
+		INVESTIGATE_CARGO,
+		INVESTIGATE_CRAFTING,
+		INVESTIGATE_DEATHS,
+		INVESTIGATE_ENGINE,
+		INVESTIGATE_EXPERIMENTOR,
+		INVESTIGATE_GRAVITY,
+		INVESTIGATE_HALLUCINATIONS,
+		INVESTIGATE_HYPERTORUS,
+		INVESTIGATE_PORTAL,
+		INVESTIGATE_PRESENTS,
+		INVESTIGATE_RADIATION,
+		INVESTIGATE_RECORDS,
+		INVESTIGATE_RESEARCH,
+		INVESTIGATE_WIRES,
+	)
 
 	var/list/logs_present = list("notes, memos, watchlist")
 	var/list/logs_missing = list("---")
@@ -22,10 +46,11 @@
 		else
 			logs_missing += "[subject] (empty)"
 
-	var/list/combined = sortList(logs_present) + sortList(logs_missing)
+	var/list/combined = sort_list(logs_present) + sort_list(logs_missing)
 
-	var/selected = input("Investigate what?", "Investigate") as null|anything in combined
-
+	var/selected = tgui_input_list(src, "Investigate what?", "Investigation", combined)
+	if(isnull(selected))
+		return
 	if(!(selected in combined) || selected == "---")
 		return
 

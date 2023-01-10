@@ -47,7 +47,7 @@
 		new_name = ""
 		var/Y = rand(FLOOR(syllable_count/syllable_divisor, 1), syllable_count)
 		for(var/x in Y to 0)
-			new_name += pick(syllables)
+			new_name += pick_weight_recursive(syllables)
 		full_name += " [capitalize(lowertext(new_name))]"
 
 	return "[trim(full_name)]"
@@ -80,7 +80,7 @@
 	var/capitalize = TRUE
 
 	while(length_char(scrambled_text) < input_size)
-		var/next = pick(syllables)
+		var/next = pick_weight_recursive(syllables)
 		if(capitalize)
 			next = capitalize(next)
 			capitalize = FALSE

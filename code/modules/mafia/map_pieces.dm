@@ -26,10 +26,12 @@
 		MF = create_mafia_game()
 	MF.ui_interact(user)
 
-/area/mafia
+/area/centcom/mafia
 	name = "Mafia Minigame"
 	icon_state = "mafia"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+
+	base_lighting_alpha = 255
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE

@@ -1,15 +1,15 @@
 //Foxxy
 /mob/living/simple_animal/pet/fox
 	name = "fox"
-	desc = "It's a fox."
-	icon = 'icons/mob/pets.dmi'
+	desc = "They're a fox."
+	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "fox"
 	icon_living = "fox"
 	icon_dead = "fox_dead"
 	speak = list("Ack-Ack","Ack-Ack-Ack-Ackawoooo","Geckers","Awoo","Tchoff")
 	speak_emote = list("geckers", "barks")
 	emote_hear = list("howls.","barks.")
-	emote_see = list("shakes its head.", "shivers.")
+	emote_see = list("shakes their head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -31,7 +31,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/pet/fox/Initialize()
+/mob/living/simple_animal/pet/fox/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "pants and yaps happily!")
 

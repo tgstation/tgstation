@@ -4,7 +4,6 @@
  *Attaching this element to something will make it float, and get a special ai controller!
  */
 /datum/element/cursed
-	element_flags = ELEMENT_DETACH
 
 /datum/element/cursed/Attach(datum/target, slot)
 	. = ..()
@@ -15,11 +14,11 @@
 	ai.blackboard[BB_TARGET_SLOT] = slot
 	master.ai_controller = ai
 	master.AddElement(/datum/element/movetype_handler)
-	ADD_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT)
+	ADD_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
 
 /datum/element/cursed/Detach(datum/source)
 	. = ..()
 	var/obj/item/master = source
 	QDEL_NULL(master.ai_controller)
-	REMOVE_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT)
+	REMOVE_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
 	master.RemoveElement(/datum/element/movetype_handler)

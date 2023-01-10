@@ -7,7 +7,7 @@
 #define LANGUAGE_EXTENSION "language specific"
 
 //Message modes. Each one defines a radio channel, more or less.
-//if you use ! as a mode key for some ungodly reason, change the first character for ionnum() so get_message_mode() doesn't freak out with state law prompts - shiz.
+//if you use ! as a mode key for some ungodly reason, change the first character for ion_num() so get_message_mode() doesn't freak out with state law prompts - shiz.
 #define MODE_HEADSET "headset"
 #define MODE_ROBOT "robot"
 
@@ -39,17 +39,26 @@
 #define MODE_DEADMIN "deadmin"
 #define MODE_KEY_DEADMIN "d"
 
+#define MODE_PUPPET "puppet"
+#define MODE_KEY_PUPPET "j"
+
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
+
+#define MODE_CHANGELING "changeling"
+#define MODE_KEY_CHANGELING "g"
+#define MODE_TOKEN_CHANGELING ":g"
 
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 
-#define MODE_MONKEY "monkeyhive"
-
 #define MODE_MAFIA "mafia"
 
 #define MODE_SING "sing"
+
+#define MODE_CUSTOM_SAY_EMOTE "custom_say"
+
+#define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
@@ -62,6 +71,7 @@
 #define SPAN_CLOWN "clown"
 #define SPAN_SINGING "singing"
 #define SPAN_TAPE_RECORDER "tape_recorder"
+#define SPAN_HELIUM "small"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS (1<<0)
@@ -84,9 +94,7 @@
 #define MAX_NAME_LEN 42
 #define MAX_BROADCAST_LEN 512
 #define MAX_CHARTER_LEN 80
-
-// Is something in the IC chat filter? This is config dependent.
-#define CHAT_FILTER_CHECK(T) (config.ic_filter_regex && findtext(T, config.ic_filter_regex))
+#define MAX_PLAQUE_LEN 144
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)

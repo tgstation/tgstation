@@ -14,7 +14,7 @@
 	server_id = conn.hardware_id
 	server_network = conn.network.network_id
 	src.port = port
-	RegisterSignal(conn, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, .proc/_server_disconnected)
+	RegisterSignal(conn, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, PROC_REF(_server_disconnected))
 	..()
 
 /datum/netlink/proc/_server_disconnected(datum/component/com)
@@ -92,11 +92,11 @@
 	C.user = user
 	C.next = null
 	if(deep_copy)
-		C.data = deepCopyList(data)
+		C.data = deep_copy_list(data)
 	else
 		C.data = data
 	return C
-	
+
 
 /datum/netdata/proc/json_to_data(json)
 	data = json_decode(json)

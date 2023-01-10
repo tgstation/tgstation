@@ -69,13 +69,13 @@
 	if(bigZ % 2 == 0)
 		offByOneOffset = 0
 
-	for(var/i = lilZ, i <= bigZ+offByOneOffset, i++)
+	for(var/i in lilZ to bigZ+offByOneOffset)
 		var/theRadius = radius
 		if(i != sphereMagic)
 			theRadius = max(radius/max((2*abs(sphereMagic-i)),1),1)
 
 
-		map |= circlerange(locate(centerX,centerY,i),theRadius)
+		map |= circle_range(locate(centerX,centerY,i),theRadius)
 
 
 	return map
@@ -107,7 +107,7 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/map_generator_module/mod in modules)
-		INVOKE_ASYNC(mod, /datum/map_generator_module.proc/generate)
+		INVOKE_ASYNC(mod, TYPE_PROC_REF(/datum/map_generator_module, generate))
 
 
 //Requests the mapGeneratorModule(s) to (re)generate this one turf
@@ -118,7 +118,7 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/map_generator_module/mod in modules)
-		INVOKE_ASYNC(mod, /datum/map_generator_module.proc/place, T)
+		INVOKE_ASYNC(mod, TYPE_PROC_REF(/datum/map_generator_module, place), T)
 
 
 //Replaces all paths in the module list with actual module datums
@@ -191,7 +191,7 @@
 			return
 		theCluster = clusters[moduleClusters]
 	else
-		theCluster =  CLUSTER_CHECK_NONE
+		theCluster = CLUSTER_CHECK_NONE
 
 	if(theCluster)
 		for(var/datum/map_generator_module/M in N.modules)

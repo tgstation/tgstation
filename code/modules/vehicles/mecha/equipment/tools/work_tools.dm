@@ -22,13 +22,6 @@
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/vehicle/sealed/mecha/M)
-	. = ..()
-	if(!.)
-		return
-	if(!istype(M, /obj/vehicle/sealed/mecha/working/ripley))
-		return FALSE
-
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/M)
 	. = ..()
 	cargo_holder = M
@@ -37,7 +30,7 @@
 	. = ..()
 	cargo_holder = null
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/living/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/living/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
 	if(!cargo_holder)
@@ -92,8 +85,6 @@
 		if(M.stat == DEAD)
 			return
 
-		var/list/modifiers = params2list(params)
-
 		if(!source.combat_mode)
 			step_away(M,chassis)
 			if(killer_clamp)
@@ -123,7 +114,7 @@
 				return
 			playsound(src, get_dismember_sound(), 80, TRUE)
 			target.visible_message(span_danger("[chassis] rips [target]'s arms off!"), \
-						   span_userdanger("[chassis] rips your arms off!"))
+						span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
 
@@ -146,13 +137,11 @@
 	desc = "They won't know what clamped them! This time for real!"
 	killer_clamp = TRUE
 
-
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake//harmless fake for pranks
 	desc = "They won't know what clamped them!"
 	energy_drain = 0
 	clamp_damage = 0
 	killer_clamp = FALSE
-
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher
 	name = "exosuit extinguisher"
@@ -160,70 +149,72 @@
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
 	energy_drain = 0
+	equipment_slot = MECHA_UTILITY
 	range = MECHA_MELEE|MECHA_RANGED
 	mech_flags = EXOSUIT_MODULE_WORKING
+	///Minimum amount of reagent needed to activate.
+	var/required_amount = 80
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
+/obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize(mapload)
 	. = ..()
-	create_reagents(1000)
-	reagents.add_reagent(/datum/reagent/water, 1000)
+	create_reagents(400)
+	reagents.add_reagent(/datum/reagent/water, 400)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/action(mob/source, atom/target, params)
-	if(!action_checks(target) || get_dist(chassis, target)>3)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/spray_extinguisher(mob/user)
+	if(reagents.total_volume < required_amount)
 		return
 
-	if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
-		var/obj/structure/reagent_dispensers/watertank/WT = target
-		WT.reagents.trans_to(src, 1000)
-		to_chat(source, "[icon2html(src, source)][span_notice("Extinguisher refilled.")]")
-		playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
-		return
+	for(var/turf/targetturf in RANGE_TURFS(1, chassis))
+		var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher(targetturf)
+		var/datum/reagents/water_reagents = new /datum/reagents(required_amount/8) //required_amount/8, because the water usage is split between eight sprays. As of this comment, required_amount/8 = 10u each.
+		water.reagents = water_reagents
+		water_reagents.my_atom = water
+		reagents.trans_to(water, required_amount/8)
+		water.move_at(get_step(chassis, get_dir(targetturf, chassis)), 2, 4) //Target is the tile opposite of the mech as the starting turf.
 
-	if(reagents.total_volume <= 0)
-		return
 	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
-	var/direction = get_dir(chassis,target)
-	var/turf/T = get_turf(target)
-	var/turf/T1 = get_step(T,turn(direction, 90))
-	var/turf/T2 = get_step(T,turn(direction, -90))
 
-	var/list/the_targets = list(T,T1,T2)
-	INVOKE_ASYNC(src, .proc/do_extinguish, the_targets, source)
-	return ..()
 
-///Creates new water effects and moves them, takes a list of turfs as an argument
-/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/do_extinguish(list/targets, mob/user)//this could be made slighty better but extinguisher code sucks even more so...
-	for(var/a=0 to 5)//generate new water...
-		var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(chassis))
-		var/turf/my_target = pick(targets)
-		var/datum/reagents/R = new/datum/reagents(5)
-		W.reagents = R
-		R.my_atom = W
-		reagents.trans_to(W,1, transfered_by = user)
-		for(var/b=0 to 4)//...and move it 4 tiles
-			if(!W)
-				return
-			step_towards(W,my_target)
-			if(!W)
-				return
-			var/turf/W_turf = get_turf(W)
-			W.reagents.expose(W_turf)
-			for(var/atom/atm in W_turf)
-				W.reagents.expose(atm)
-			if(W.loc == my_target)
-				break
-			sleep(2)
-
-/obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
-	return "[..()] \[[src.reagents.total_volume]\]"
-
-/obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/vehicle/sealed/mecha/M)
-	. = ..()
-	if(!.)
+/**
+ * Handles attemted refills of the extinguisher.
+ *
+ * The mech can only refill an extinguisher that is in front of it.
+ * Only water tank objects can be used.
+ */
+/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/attempt_refill(mob/user)
+	if(reagents.maximum_volume == reagents.total_volume)
 		return
-	if(!istype(M, /obj/vehicle/sealed/mecha/working))
-		return FALSE
+	var/turf/in_front = get_step(chassis, chassis.dir)
+	var/obj/structure/reagent_dispensers/watertank/refill_source = locate(/obj/structure/reagent_dispensers/watertank) in in_front
+	if(!refill_source)
+		to_chat(user, span_notice("Refill failed. No compatible tank found."))
+		return
+	if(!refill_source.reagents?.total_volume)
+		to_chat(user, span_notice("Refill failed. Source tank empty."))
+		return
 
+	refill_source.reagents.trans_to(src, reagents.maximum_volume)
+	playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
+
+/obj/item/mecha_parts/mecha_equipment/extinguisher/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_EXTINGUISHER,
+		"reagents" = reagents.total_volume,
+		"total_reagents" = reagents.maximum_volume,
+		"minimum_requ" = required_amount,
+	)
+
+/obj/item/mecha_parts/mecha_equipment/extinguisher/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return TRUE
+	switch(action)
+		if("activate")
+			spray_extinguisher(usr)
+			return TRUE
+		if("refill")
+			attempt_refill(usr)
+			return TRUE
 
 #define MODE_DECONSTRUCT 0
 #define MODE_WALL 1
@@ -240,7 +231,7 @@
 	///determines what we'll so when clicking on a turf
 	var/mode = MODE_DECONSTRUCT
 
-/obj/item/mecha_parts/mecha_equipment/rcd/Initialize()
+/obj/item/mecha_parts/mecha_equipment/rcd/Initialize(mapload)
 	. = ..()
 	GLOB.rcd_list += src
 
@@ -248,7 +239,46 @@
 	GLOB.rcd_list -= src
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/rcd/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_MODE,
+		"name" = "RCD control",
+		"mode" = get_mode_name(),
+	)
+
+/// fetches the mode name to display in the UI
+/obj/item/mecha_parts/mecha_equipment/rcd/proc/get_mode_name()
+	switch(mode)
+		if(MODE_DECONSTRUCT)
+			return "Deconstruct"
+		if(MODE_WALL)
+			return "Build wall"
+		if(MODE_AIRLOCK)
+			return "Build Airlock"
+		else
+			return "Someone didnt set this"
+
+/obj/item/mecha_parts/mecha_equipment/rcd/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+	if(action == "change_mode")
+		mode++
+		if(mode > MODE_AIRLOCK)
+			mode = MODE_DECONSTRUCT
+		switch(mode)
+			if(MODE_DECONSTRUCT)
+				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Deconstruct.")]")
+				energy_drain = initial(energy_drain)
+			if(MODE_WALL)
+				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Walls and Flooring.")]")
+				energy_drain = 2*initial(energy_drain)
+			if(MODE_AIRLOCK)
+				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Airlock.")]")
+				energy_drain = 2*initial(energy_drain)
+		return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
 	if(!isturf(target) && !istype(target, /obj/machinery/door/airlock))
 		target = get_turf(target)
 	if(!action_checks(target) || get_dist(chassis, target)>3 || istype(target, /turf/open/space/transit))
@@ -297,24 +327,6 @@
 	playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/rcd/Topic(href,href_list)
-	..()
-	if(href_list["mode"])
-		mode = text2num(href_list["mode"])
-		switch(mode)
-			if(MODE_DECONSTRUCT)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Deconstruct.")]")
-				energy_drain = initial(energy_drain)
-			if(MODE_WALL)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Walls and Flooring.")]")
-				energy_drain = 2*initial(energy_drain)
-			if(MODE_AIRLOCK)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Airlock.")]")
-				energy_drain = 2*initial(energy_drain)
-
-/obj/item/mecha_parts/mecha_equipment/rcd/get_equip_info()
-	return "[..()] \[<a href='?src=[REF(src)];mode=0'>D</a>|<a href='?src=[REF(src)];mode=1'>C</a>|<a href='?src=[REF(src)];mode=2'>A</a>\]"
-
 #undef MODE_DECONSTRUCT
 #undef MODE_WALL
 #undef MODE_AIRLOCK
@@ -326,25 +338,25 @@
 	icon_state = "ripleyupgrade"
 	mech_flags = EXOSUIT_MODULE_RIPLEY
 
-/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/working/ripley/M)
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/working/ripley/M, attach_right = FALSE, mob/user)
 	if(M.type != /obj/vehicle/sealed/mecha/working/ripley)
-		to_chat(loc, span_warning("This conversion kit can only be applied to APLU MK-I models."))
+		to_chat(user, span_warning("This conversion kit can only be applied to APLU MK-I models."))
 		return FALSE
 	if(LAZYLEN(M.cargo))
-		to_chat(loc, span_warning("[M]'s cargo hold must be empty before this conversion kit can be applied."))
+		to_chat(user, span_warning("[M]'s cargo hold must be empty before this conversion kit can be applied."))
 		return FALSE
 	if(!(M.mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
-		to_chat(loc, span_warning("[M] must have maintenance protocols active in order to allow this conversion kit."))
+		to_chat(user, span_warning("[M] must have maintenance protocols active in order to allow this conversion kit."))
 		return FALSE
 	if(LAZYLEN(M.occupants)) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
-		to_chat(loc, span_warning("[M] must be unoccupied before this conversion kit can be applied."))
+		to_chat(user, span_warning("[M] must be unoccupied before this conversion kit can be applied."))
 		return FALSE
 	if(!M.cell) //Turns out things break if the cell is missing
-		to_chat(loc, span_warning("The conversion process requires a cell installed."))
+		to_chat(user, span_warning("The conversion process requires a cell installed."))
 		return FALSE
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/markone)
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/markone, attach_right = FALSE)
 	var/obj/vehicle/sealed/mecha/working/ripley/mk2/marktwo = new (get_turf(markone),1)
 	if(!marktwo)
 		return
@@ -364,12 +376,12 @@
 		markone.capacitor.forceMove(marktwo)
 		markone.capacitor = null
 	marktwo.update_part_values()
-	for(var/obj/item/mecha_parts/equipment in markone.contents)
-		if(istype(equipment, /obj/item/mecha_parts/concealed_weapon_bay)) //why is the bay not just a variable change who did this
-			equipment.forceMove(marktwo)
-	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.equipment) //Move the equipment over...
+	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
+		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))
+			continue //the MK2 already has one.
+		var/righthandgun = markone.equip_by_category[MECHA_R_ARM] == equipment
 		equipment.detach(marktwo)
-		equipment.attach(marktwo)
+		equipment.attach(marktwo, righthandgun)
 	marktwo.dna_lock = markone.dna_lock
 	marktwo.mecha_flags = markone.mecha_flags
 	marktwo.strafe = markone.strafe

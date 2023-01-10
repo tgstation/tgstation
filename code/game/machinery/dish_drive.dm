@@ -5,15 +5,14 @@
 	Or you can just drop your plates on the floor, like civilized folk."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"
-	idle_power_usage = 8 //5 with default parts
-	active_power_usage = 13 //10 with default parts
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.04
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
 	var/static/list/collectable_items = list(/obj/item/trash/waffles,
 		/obj/item/trash/tray,
-		/obj/item/reagent_containers/glass/bowl,
-		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/reagent_containers/cup/bowl,
+		/obj/item/reagent_containers/cup/glass/drinkingglass,
 		/obj/item/kitchen/fork,
 		/obj/item/shard,
 		/obj/item/broken_bottle)
@@ -26,7 +25,7 @@
 	var/transmit_enabled = TRUE
 	var/list/dish_drive_contents
 
-/obj/machinery/dish_drive/Initialize()
+/obj/machinery/dish_drive/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 
@@ -36,6 +35,7 @@
 		. += span_notice("Alt-click it to beam its contents to any nearby disposal bins.")
 
 /obj/machinery/dish_drive/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
 	if(!LAZYLEN(dish_drive_contents))
 		to_chat(user, span_warning("There's nothing in [src]!"))
 		return
@@ -45,6 +45,11 @@
 	to_chat(user, span_notice("You take out [I] from [src]."))
 	playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 	flick("synthesizer_beam", src)
+
+/obj/machinery/dish_drive/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/dish_drive/attackby(obj/item/I, mob/living/user, params)
 	if(is_type_in_list(I, collectable_items) && !user.combat_mode)
@@ -57,25 +62,20 @@
 		return
 	else if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		return
-	else if(default_unfasten_wrench(user, I))
-		return
 	else if(default_deconstruction_crowbar(I, FALSE))
 		return
 	..()
 
 /obj/machinery/dish_drive/RefreshParts()
-	idle_power_usage = initial(idle_power_usage)
-	active_power_usage = initial(active_power_usage)
-	use_power = initial(use_power)
+	. = ..()
 	var/total_rating = 0
 	for(var/obj/item/stock_parts/S in component_parts)
 		total_rating += S.rating
 	if(total_rating >= 9)
-		active_power_usage = 0
-		use_power = NO_POWER_USE
+		update_mode_power_usage(ACTIVE_POWER_USE, 0)
 	else
-		idle_power_usage = max(0, idle_power_usage - total_rating)
-		active_power_usage = max(0, active_power_usage - total_rating)
+		update_mode_power_usage(IDLE_POWER_USE, max(0, initial(idle_power_usage) - total_rating))
+		update_mode_power_usage(ACTIVE_POWER_USE, max(0, initial(active_power_usage) - total_rating))
 	var/obj/item/circuitboard/machine/dish_drive/board = locate() in component_parts
 	if(board)
 		suction_enabled = board.suction

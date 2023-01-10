@@ -14,7 +14,7 @@
 		src.tether_name = initial(tmp.name)
 	else
 		src.tether_name = tether_name
-	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/checkTether)
+	RegisterSignals(parent, list(COMSIG_MOVABLE_PRE_MOVE), PROC_REF(checkTether))
 
 /datum/component/tether/proc/checkTether(mob/mover, newloc)
 	SIGNAL_HANDLER
@@ -25,7 +25,7 @@
 
 	var/atom/blocker
 	out:
-		for(var/turf/T in getline(tether_target,newloc))
+		for(var/turf/T in get_line(tether_target,newloc))
 			if (T.density)
 				blocker = T
 				break out

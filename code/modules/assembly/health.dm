@@ -14,6 +14,13 @@
 	. += "Use it in hand to turn it off/on and Alt-click to swap between \"detect death\" mode and \"detect critical state\" mode."
 	. += "[src.scanning ? "The sensor is on and you can see [health_scan] displayed on the screen" : "The sensor is off"]."
 
+/obj/item/assembly/health/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(iscarbon(old_loc))
+		UnregisterSignal(old_loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+	if(iscarbon(loc))
+		RegisterSignal(loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+
 /obj/item/assembly/health/activate()
 	if(!..())
 		return FALSE//Cooldown check
@@ -71,5 +78,12 @@
 
 /obj/item/assembly/health/attack_self(mob/user)
 	. = ..()
-	to_chat(user, span_notice("You toggle [src] [src.scanning ? "off" : "on"]."))
+	if (secured)
+		balloon_alert(user, "scanning [scanning ? "disabled" : "enabled"]")
+	else
+		balloon_alert(user, "secure it first!")
 	toggle_scan()
+
+/obj/item/assembly/health/proc/get_status_tab_item(mob/living/carbon/source, list/items)
+	SIGNAL_HANDLER
+	items += "Health: [round((source.health / source.maxHealth) * 100)]%"

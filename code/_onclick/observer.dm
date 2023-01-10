@@ -13,7 +13,7 @@
 
 	// Otherwise jump
 	else if(A.loc)
-		forceMove(get_turf(A))
+		abstract_move(get_turf(A))
 		update_parallax_contents()
 
 /mob/dead/observer/ClickOn(atom/A, params)
@@ -31,7 +31,10 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		MiddleClickOn(A, params)
+		if(LAZYACCESS(modifiers, CTRL_CLICK))
+			CtrlMiddleClickOn(A)
+		else
+			MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
 		AltClickNoInteract(src, A)
@@ -51,11 +54,11 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_GHOST, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(user.client)
-		if(user.gas_scan && atmosanalyzer_scan(user, src))
+		if(user.gas_scan && atmos_scan(user=user, target=src, silent=TRUE))
 			return TRUE
 		else if(isAdminGhostAI(user))
 			attack_ai(user)
-		else if(user.client.prefs.inquisitive_ghost)
+		else if(user.client.prefs.read_preference(/datum/preference/toggle/inquisitive_ghost))
 			user.examinate(src)
 	return FALSE
 
@@ -76,6 +79,12 @@
 	return ..()
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)
-	if(power_station?.engaged && power_station.teleporter_console && power_station.teleporter_console.target)
-		user.forceMove(get_turf(power_station.teleporter_console.target))
-	return ..()
+	if(!power_station?.engaged || !power_station.teleporter_console || !power_station.teleporter_console.target_ref)
+		return ..()
+
+	var/atom/target = power_station.teleporter_console.target_ref.resolve()
+	if(!target)
+		power_station.teleporter_console.target_ref = null
+		return ..()
+
+	user.abstract_move(get_turf(target))

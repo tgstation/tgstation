@@ -13,7 +13,8 @@
 	return completed
 
 /datum/experiment/physical/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, atom/target)
-	unregister_events()
+	if(currently_scanned_atom)
+		unregister_events()
 	currently_scanned_atom = target
 	linked_experiment_handler = experiment_handler
 	if(register_events())

@@ -42,10 +42,10 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	var/list/gamers = list()
 	var/killed_crew = 0
 
-/obj/machinery/computer/arcade/orion_trail/Initialize()
+/obj/machinery/computer/arcade/orion_trail/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio(src)
-	radio.listening = 0
+	radio.set_listening(FALSE)
 	setup_events()
 
 /obj/machinery/computer/arcade/orion_trail/proc/setup_events()
@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
 	// Set names of settlers in crew
-	var/mob/living/carbon/player = usr
+	var/mob/living/player = usr
 	var/player_crew_name = player.first_name()
 	settlers = list()
 	for(var/i in 1 to ORION_STARTING_CREW_COUNT - 1) //one reserved to be YOU
@@ -132,6 +132,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		radio.set_frequency(FREQ_MEDICAL)
 		radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
 
+		remove_radio_all(radio)//so we dont keep transmitting sec and medical comms
+
 		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
@@ -175,14 +177,16 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	data["reason"] = reason
 
+	data["settlers"] = settlers
+	data["settlermoods"] = settlermoods
+
 	return data
 
 /obj/machinery/computer/arcade/orion_trail/ui_static_data(mob/user)
 	var/list/static_data = list()
 	static_data["gamename"] = name
 	static_data["emagged"] = obj_flags & EMAGGED
-	static_data["settlers"] = settlers
-	static_data["settlermoods"] = settlermoods
+
 	return static_data
 
 /obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
@@ -190,7 +194,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(.)
 		return
 
-	var/mob/living/carbon/gamer = usr
+	var/mob/living/gamer = usr
 	if(!istype(gamer))
 		return
 
@@ -209,13 +213,14 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	var/xp_gained = 0
 
+	gamer.played_game()
+
 	if(event)
 		event.response(src, action)
 		if(!settlers.len || food <= 0 || fuel <= 0)
 			set_game_over(gamer)
 			return
 		new_settler_mood() //events shake people up a bit and can also change food
-		update_static_data(usr)
 		return TRUE
 	switch(action)
 		if("start_game")
@@ -235,6 +240,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 				fuel = 60
 				settlers = list("Harry","Larry","Bob")
 		if("continue")
+			if (gameStatus == ORION_STATUS_START)
+				return
 			if(turns >= ORION_TRAIL_WINTURN)
 				win(gamer)
 				xp_gained += 34
@@ -328,7 +335,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
  */
 /obj/machinery/computer/arcade/orion_trail/proc/encounter_event(path, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 	if(!path)
-		event = pickweightAllowZero(events)
+		event = pick_weight(events)
 	else
 		for(var/datum/orion_event/instance as anything in events)
 			if(instance.type == path)
@@ -341,11 +348,13 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		event.emag_effect(src, gamer)
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
+	usr.lost_game()
+
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
 	reason = given_reason || death_reason(user)
 
-/obj/machinery/computer/arcade/orion_trail/proc/death_reason(mob/living/carbon/gamer)
+/obj/machinery/computer/arcade/orion_trail/proc/death_reason(mob/living/gamer)
 	var/reason
 	if(!settlers.len)
 		reason = "Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
@@ -359,13 +368,15 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			reason = "You ran out of fuel, and drift, slowly, into a star."
 			if(obj_flags & EMAGGED)
 				gamer.adjust_fire_stacks(5)
-				gamer.IgniteMob() //flew into a star, so you're on fire
+				gamer.ignite_mob() //flew into a star, so you're on fire
 				to_chat(gamer, span_userdanger("You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames."))
 
 	if(obj_flags & EMAGGED)
 		to_chat(gamer, span_userdanger("You're never going to make it to Orion..."))
+		gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 		gamer.death()
 		obj_flags &= ~EMAGGED //removes the emagged status after you lose
+		gamer.log_message("lost a Realism Mode Orion Trail game, changing the machine back to normal.", LOG_GAME)
 		gameStatus = ORION_STATUS_START
 		name = "The Orion Trail"
 		desc = "Learn how our ancestors got to Orion, and have fun in the process!"
@@ -388,7 +399,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		alive++
 	if(update)
 		new_settler_mood()//new faces!
-		update_static_data(usr)
 	return newcrew
 
 
@@ -409,7 +419,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		alive--
 	if(update)
 		new_settler_mood()//bro, i...
-		update_static_data(usr)
 	return removed
 
 /**
@@ -419,7 +428,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
  * Arguments:
  * * gamer: carbon that may need emag effects applied
  */
-/obj/machinery/computer/arcade/orion_trail/proc/execute_crewmember(mob/living/carbon/gamer, target)
+/obj/machinery/computer/arcade/orion_trail/proc/execute_crewmember(mob/living/gamer, target)
 	var/sheriff = remove_crewmember(target) //I shot the sheriff
 	if(target)
 		killed_crew += 1 //if there was no suspected lings, this is just plain murder
@@ -427,6 +436,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(!settlers.len || !alive)
 		say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 		if(obj_flags & EMAGGED)
+			gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 			gamer.death()
 		set_game_over(gamer, "Your last pioneer committed suicide.")
 		if(killed_crew >= ORION_STARTING_CREW_COUNT)
@@ -435,6 +445,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	else if(obj_flags & EMAGGED)
 		if(findtext(gamer.name, sheriff))
 			say("The crew of the ship chose to kill [gamer]!")
+			gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 			gamer.death()
 
 /**
@@ -467,14 +478,17 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 3)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
+	usr.won_game()
+
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)
 		new /obj/item/orion_ship(loc)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
-		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
+		usr.log_message("made it to Orion on an emagged machine and got an explosive toy ship.", LOG_GAME)
 	else
-		prizevend(user)
+		new /obj/item/stack/arcadeticket((get_turf(src)), 2)
+		to_chat(user, span_notice("[src] dispenses 2 tickets!"))
 	obj_flags &= ~EMAGGED
 	name = initial(name)
 	desc = initial(desc)
@@ -483,22 +497,22 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, span_notice("You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode."))
+	user.log_message("emagged [src], activating Realism Mode.", LOG_GAME)
 	name = "The Orion Trail: Realism Edition"
 	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
 	newgame()
 	obj_flags |= EMAGGED
 
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
+/mob/living/basic/syndicate/ranged/smg/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
 	loot = list()
-	del_on_death = TRUE
 
 /obj/item/orion_ship
 	name = "model settler ship"
 	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion! It even has a miniature FX-293 reactor, which was renowned for its instability and tendency to explode..."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "ship"
 	w_class = WEIGHT_CLASS_SMALL
 	var/active = 0 //if the ship is on
@@ -523,15 +537,28 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	visible_message(span_notice("[src] softly beeps and whirs to life!"))
 	playsound(loc, 'sound/machines/defib_SaftyOn.ogg', 25, TRUE)
 	say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
-	sleep(20)
+	sleep(2 SECONDS)
 	visible_message(span_warning("[src] begins to vibrate..."))
 	say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")
-	sleep(30)
+	sleep(3 SECONDS)
 	say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
 	playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
-	sleep(3.6)
+	sleep(0.36 SECONDS)
 	visible_message(span_userdanger("[src] explodes!"))
 	explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 8, flame_range = 16)
 	qdel(src)
+
+/obj/singularity/orion
+	move_self = FALSE
+
+/obj/singularity/orion/Initialize(mapload)
+	. = ..()
+
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/orion/process(delta_time)
+	if(DT_PROB(0.5, delta_time))
+		mezzer()
 
 #undef ORION_TRAIL_WINTURN

@@ -130,3 +130,17 @@
 		return
 	user.readmin()
 	return TRUE
+
+/datum/keybinding/admin/view_tags
+	hotkey_keys = list("F9")
+	name = "view_tags"
+	full_name = "View Tags"
+	description = "Open the View-Tags menu"
+	keybind_signal = COMSIG_KB_ADMIN_VIEWTAGS_DOWN
+
+/datum/keybinding/admin/view_tags/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.holder?.display_tags()
+	return TRUE

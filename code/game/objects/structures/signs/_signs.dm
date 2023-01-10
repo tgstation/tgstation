@@ -1,20 +1,24 @@
 /obj/structure/sign
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
 	custom_materials = list(/datum/material/plastic = 2000)
 	max_integrity = 100
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/structure_sign
 	///Determines if a sign is unwrenchable.
 	var/buildable_sign = TRUE
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	resistance_flags = FLAMMABLE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
 	var/sign_change_name
+
+/datum/armor/structure_sign
+	melee = 50
+	fire = 50
+	acid = 50
 
 /obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
 	icon_state = "backing"
@@ -26,14 +30,14 @@
 /obj/item/sign
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	icon_state = "backing"
 	inhand_icon_state = "backing"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/plastic = 2000)
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/item_sign
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
@@ -41,7 +45,12 @@
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
 
-/obj/item/sign/Initialize() //Signs not attached to walls are always rotated so they look like they're laying horizontal.
+/datum/armor/item_sign
+	melee = 50
+	fire = 50
+	acid = 50
+
+/obj/item/sign/Initialize(mapload) //Signs not attached to walls are always rotated so they look like they're laying horizontal.
 	. = ..()
 	var/matrix/M = matrix()
 	M.Turn(90)
@@ -65,7 +74,7 @@
 		if(!initial(potential_sign.is_editable))
 			continue
 		output[initial(potential_sign.sign_change_name)] = potential_sign
-	output = sortList(output) //Alphabetizes the results.
+	output = sort_list(output) //Alphabetizes the results.
 	return output
 
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
@@ -84,6 +93,7 @@
 	if(type != /obj/structure/sign/blank) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
 		unwrenched_sign.desc = "[desc] It can be placed on a wall."
+		unwrenched_sign.icon = icon
 		unwrenched_sign.icon_state = icon_state
 		unwrenched_sign.sign_path = type
 		unwrenched_sign.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
@@ -97,7 +107,7 @@
 	. = ..()
 	if(user.combat_mode)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -108,14 +118,14 @@
 		return TRUE
 	user.visible_message(span_notice("[user] finishes repairing [src]."), \
 		span_notice("You finish repairing [src]."))
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/item/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(user.combat_mode)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -126,15 +136,15 @@
 		return TRUE
 	user.visible_message(span_notice("[user] finishes repairing [src]."), \
 		span_notice("You finish repairing [src]."))
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
-		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
-		if(!choice)
+		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+		if(isnull(choice))
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
 			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
@@ -150,7 +160,7 @@
 		var/obj/structure/sign/changedsign = new sign_type(get_turf(src))
 		changedsign.pixel_x = pixel_x
 		changedsign.pixel_y = pixel_y
-		changedsign.obj_integrity = obj_integrity
+		changedsign.atom_integrity = atom_integrity
 		qdel(src)
 		user.visible_message(span_notice("[user] finishes changing the sign."), \
 			span_notice("You finish changing the sign."))
@@ -161,13 +171,11 @@
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
-		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
-		if(!choice)
+		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+		if(isnull(choice))
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
 			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
-			return
-		if(!choice)
 			return
 		user.visible_message(span_notice("You begin changing [src]."))
 		if(!do_after(user, 4 SECONDS, target = src))
@@ -210,7 +218,7 @@
 	placed_sign.setDir(dir)
 	qdel(src)
 
-/obj/item/sign/random/Initialize()
+/obj/item/sign/random/Initialize(mapload)
 	. = ..()
 	set_sign_type(GLOB.editable_sign_types[pick(GLOB.editable_sign_types)])
 

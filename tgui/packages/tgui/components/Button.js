@@ -8,13 +8,13 @@ import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { createLogger } from '../logging';
-import { Box } from './Box';
+import { Box, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 
 const logger = createLogger('Button');
 
-export const Button = props => {
+export const Button = (props) => {
   const {
     className,
     fluid,
@@ -35,21 +35,30 @@ export const Button = props => {
     children,
     onclick,
     onClick,
+    verticalAlignContent,
     ...rest
   } = props;
   const hasContent = !!(content || children);
   // A warning about the lowercase onclick
   if (onclick) {
     logger.warn(
-      `Lowercase 'onclick' is not supported on Button and lowercase`
-      + ` prop names are discouraged in general. Please use a camelCase`
-      + `'onClick' instead and read: `
-      + `https://infernojs.org/docs/guides/event-handling`);
+      `Lowercase 'onclick' is not supported on Button and lowercase` +
+        ` prop names are discouraged in general. Please use a camelCase` +
+        `'onClick' instead and read: ` +
+        `https://infernojs.org/docs/guides/event-handling`
+    );
   }
-  // IE8: Use a lowercase "onclick" because synthetic events are fucked.
-  // IE8: Use an "unselectable" prop because "user-select" doesn't work.
+  rest.onClick = (e) => {
+    if (!disabled && onClick) {
+      onClick(e);
+    }
+  };
+  // IE8: Use "unselectable" because "user-select" doesn't work.
+  if (Byond.IS_LTE_IE8) {
+    rest.unselectable = true;
+  }
   let buttonContent = (
-    <Box
+    <div
       className={classes([
         'Button',
         fluid && 'Button--fluid',
@@ -60,19 +69,21 @@ export const Button = props => {
         circular && 'Button--circular',
         compact && 'Button--compact',
         iconPosition && 'Button--iconPosition--' + iconPosition,
-        (color && typeof color === 'string')
+        verticalAlignContent && 'Button--flex',
+        verticalAlignContent && fluid && 'Button--flex--fluid',
+        verticalAlignContent &&
+          'Button--verticalAlignContent--' + verticalAlignContent,
+        color && typeof color === 'string'
           ? 'Button--color--' + color
           : 'Button--color--default',
         className,
+        computeBoxClassName(rest),
       ])}
       tabIndex={!disabled && '0'}
-      unselectable={Byond.IS_LTE_IE8}
-      onClick={e => {
-        if (!disabled && onClick) {
-          onClick(e);
+      onKeyDown={(e) => {
+        if (props.captureKeys === false) {
+          return;
         }
-      }}
-      onKeyDown={e => {
         const keyCode = window.event ? e.which : e.keyCode;
         // Simulate a click when pressing space or enter.
         if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
@@ -88,24 +99,28 @@ export const Button = props => {
           return;
         }
       }}
-      {...rest}>
-      {(icon && iconPosition !== 'right') && (
-        <Icon
-          name={icon}
-          color={iconColor}
-          rotation={iconRotation}
-          spin={iconSpin} />
-      )}
-      {content}
-      {children}
-      {(icon && iconPosition === 'right') && (
-        <Icon
-          name={icon}
-          color={iconColor}
-          rotation={iconRotation}
-          spin={iconSpin} />
-      )}
-    </Box>
+      {...computeBoxProps(rest)}>
+      <div className="Button__content">
+        {icon && iconPosition !== 'right' && (
+          <Icon
+            name={icon}
+            color={iconColor}
+            rotation={iconRotation}
+            spin={iconSpin}
+          />
+        )}
+        {content}
+        {children}
+        {icon && iconPosition === 'right' && (
+          <Icon
+            name={icon}
+            color={iconColor}
+            rotation={iconRotation}
+            spin={iconSpin}
+          />
+        )}
+      </div>
+    </div>
   );
 
   if (tooltip) {
@@ -121,14 +136,15 @@ export const Button = props => {
 
 Button.defaultHooks = pureComponentHooks;
 
-export const ButtonCheckbox = props => {
+export const ButtonCheckbox = (props) => {
   const { checked, ...rest } = props;
   return (
     <Button
       color="transparent"
       icon={checked ? 'check-square-o' : 'square-o'}
       selected={checked}
-      {...rest} />
+      {...rest}
+    />
   );
 };
 
@@ -153,16 +169,15 @@ export class ButtonConfirm extends Component {
     });
     if (clickedOnce) {
       setTimeout(() => window.addEventListener('click', this.handleClick));
-    }
-    else {
+    } else {
       window.removeEventListener('click', this.handleClick);
     }
   }
 
   render() {
     const {
-      confirmContent = "Confirm?",
-      confirmColor = "bad",
+      confirmContent = 'Confirm?',
+      confirmColor = 'bad',
       confirmIcon,
       icon,
       color,
@@ -175,9 +190,9 @@ export class ButtonConfirm extends Component {
         content={this.state.clickedOnce ? confirmContent : content}
         icon={this.state.clickedOnce ? confirmIcon : icon}
         color={this.state.clickedOnce ? confirmColor : color}
-        onClick={() => this.state.clickedOnce
-          ? onClick()
-          : this.setClickedOnce(true)}
+        onClick={() =>
+          this.state.clickedOnce ? onClick() : this.setClickedOnce(true)
+        }
         {...rest}
       />
     );
@@ -202,12 +217,11 @@ export class ButtonInput extends Component {
     if (this.inputRef) {
       const input = this.inputRef.current;
       if (inInput) {
-        input.value = this.props.currentValue || "";
+        input.value = this.props.currentValue || '';
         try {
           input.focus();
           input.select();
-        }
-        catch {}
+        } catch {}
       }
     }
   }
@@ -215,7 +229,7 @@ export class ButtonInput extends Component {
   commitResult(e) {
     if (this.inputRef) {
       const input = this.inputRef.current;
-      const hasValue = (input.value !== "");
+      const hasValue = input.value !== '';
       if (hasValue) {
         this.props.onCommit(e, input.value);
         return;
@@ -252,12 +266,8 @@ export class ButtonInput extends Component {
         ])}
         {...rest}
         onClick={() => this.setInInput(true)}>
-        {icon && (
-          <Icon name={icon} rotation={iconRotation} spin={iconSpin} />
-        )}
-        <div>
-          {content}
-        </div>
+        {icon && <Icon name={icon} rotation={iconRotation} spin={iconSpin} />}
+        <div>{content}</div>
         <input
           ref={this.inputRef}
           className="NumberInput__input"
@@ -265,14 +275,14 @@ export class ButtonInput extends Component {
             'display': !this.state.inInput ? 'none' : undefined,
             'text-align': 'left',
           }}
-          onBlur={e => {
+          onBlur={(e) => {
             if (!this.state.inInput) {
               return;
             }
             this.setInInput(false);
             this.commitResult(e);
           }}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             if (e.keyCode === KEY_ENTER) {
               this.setInInput(false);
               this.commitResult(e);
@@ -288,10 +298,7 @@ export class ButtonInput extends Component {
 
     if (tooltip) {
       buttonContent = (
-        <Tooltip
-          content={tooltip}
-          position={tooltipPosition}
-        >
+        <Tooltip content={tooltip} position={tooltipPosition}>
           {buttonContent}
         </Tooltip>
       );
@@ -302,3 +309,55 @@ export class ButtonInput extends Component {
 }
 
 Button.Input = ButtonInput;
+
+export class ButtonFile extends Component {
+  constructor() {
+    super();
+    this.inputRef = createRef();
+  }
+
+  async read(files) {
+    const promises = Array.from(files).map((file) => {
+      let reader = new FileReader();
+      return new Promise((resolve) => {
+        reader.onload = () => resolve(reader.result);
+        reader.readAsText(file);
+      });
+    });
+
+    return await Promise.all(promises);
+  }
+
+  render() {
+    const { onSelectFiles, accept, multiple, ...rest } = this.props;
+    const filePicker = (
+      <input
+        hidden
+        type="file"
+        ref={this.inputRef}
+        accept={accept}
+        multiple={multiple}
+        onChange={async () => {
+          const files = this.inputRef.current.files;
+          if (files.length) {
+            const readFiles = await this.read(files);
+            onSelectFiles(multiple ? readFiles : readFiles[0]);
+          }
+        }}
+      />
+    );
+    return (
+      <>
+        <Button
+          {...rest}
+          onClick={() => {
+            this.inputRef.current.click();
+          }}
+        />
+        {filePicker}
+      </>
+    );
+  }
+}
+
+Button.File = ButtonFile;

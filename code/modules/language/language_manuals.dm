@@ -17,7 +17,10 @@
 		return
 
 	to_chat(user, span_boldannounce("You start skimming through [src], and [flavour_text]."))
-	user.grant_language(language, TRUE, TRUE, LANGUAGE_MIND)
+
+	user.grant_language(language)
+	user.remove_blocked_language(language, source=LANGUAGE_ALL)
+	ADD_TRAIT(user, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
 
 	use_charge(user)
 
@@ -28,7 +31,7 @@
 		attack_self(user)
 		return
 
-	playsound(loc, "punch", 25, TRUE, -1)
+	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 
 	if(M.stat == DEAD)
 		M.visible_message(span_danger("[user] smacks [M]'s lifeless corpse with [src]."), span_userdanger("[user] smacks your lifeless corpse with [src]."), span_hear("You hear smacking."))
@@ -43,11 +46,10 @@
 	charges--
 	if(!charges)
 		var/turf/T = get_turf(src)
-		T.visible_message(span_warning("The cover and contents of [src] start shifting and changing!"))
+		T.visible_message(span_warning("The cover and contents of [src] start shifting and changing! It slips out of your hands!"))
 
+		new /obj/item/book/manual/random(T)
 		qdel(src)
-		var/obj/item/book/manual/random/book = new(T)
-		user.put_in_active_hand(book)
 
 /obj/item/language_manual/codespeak_manual
 	name = "codespeak manual"
@@ -61,7 +63,7 @@
 
 /obj/item/language_manual/roundstart_species
 
-/obj/item/language_manual/roundstart_species/Initialize()
+/obj/item/language_manual/roundstart_species/Initialize(mapload)
 	. = ..()
 	language = pick( \
 		/datum/language/voltaic, \
@@ -77,14 +79,14 @@
 /obj/item/language_manual/roundstart_species/unlimited
 	charges = INFINITY
 
-/obj/item/language_manual/roundstart_species/unlimited/Initialize()
+/obj/item/language_manual/roundstart_species/unlimited/Initialize(mapload)
 	. = ..()
 	name = "deluxe [initial(language.name)] manual"
 
 /obj/item/language_manual/roundstart_species/five
 	charges = 5
 
-/obj/item/language_manual/roundstart_species/five/Initialize()
+/obj/item/language_manual/roundstart_species/five/Initialize(mapload)
 	. = ..()
 	name = "extended [initial(language.name)] manual"
 
@@ -100,6 +102,13 @@
 	// If they are not drone or silicon, we don't want them to learn this language.
 	if(!(isdrone(M) || issilicon(M)))
 		M.visible_message(span_danger("[user] beats [M] over the head with [src]!"), span_userdanger("[user] beats you over the head with [src]!"), span_hear("You hear smacking."))
+		return
+
+	return ..()
+
+/obj/item/language_manual/dronespeak_manual/attack_self(mob/living/user)
+	if(!(isdrone(user) || issilicon(user)))
+		to_chat(user, span_danger("You beat yourself over the head with [src]!"))
 		return
 
 	return ..()

@@ -24,7 +24,41 @@
 	/// If the configuration is loaded
 	var/loaded = FALSE
 
+	/// A regex that matches words blocked IC
 	var/static/regex/ic_filter_regex
+
+	/// A regex that matches words blocked OOC
+	var/static/regex/ooc_filter_regex
+
+	/// A regex that matches words blocked IC, but not in PDAs
+	var/static/regex/ic_outside_pda_filter_regex
+
+	/// A regex that matches words soft blocked IC
+	var/static/regex/soft_ic_filter_regex
+
+	/// A regex that matches words soft blocked OOC
+	var/static/regex/soft_ooc_filter_regex
+
+	/// A regex that matches words soft blocked IC, but not in PDAs
+	var/static/regex/soft_ic_outside_pda_filter_regex
+
+	/// An assoc list of blocked IC words to their reasons
+	var/static/list/ic_filter_reasons
+
+	/// An assoc list of words that are blocked IC, but not in PDAs, to their reasons
+	var/static/list/ic_outside_pda_filter_reasons
+
+	/// An assoc list of words that are blocked both IC and OOC to their reasons
+	var/static/list/shared_filter_reasons
+
+	/// An assoc list of soft blocked IC words to their reasons
+	var/static/list/soft_ic_filter_reasons
+
+	/// An assoc list of words that are soft blocked IC, but not in PDAs, to their reasons
+	var/static/list/soft_ic_outside_pda_filter_reasons
+
+	/// An assoc list of words that are soft blocked both IC and OOC to their reasons
+	var/static/list/soft_shared_filter_reasons
 
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
@@ -50,10 +84,14 @@
 				for(var/J in legacy_configs)
 					LoadEntries(J)
 				break
+	if (fexists("[directory]/dev_overrides.txt"))
+		LoadEntries("dev_overrides.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 	LoadPolicy()
 	LoadChatFilter()
+	if(CONFIG_GET(flag/load_jobs_from_txt))
+		validate_job_config()
 
 	loaded = TRUE
 
@@ -147,6 +185,16 @@
 				++.
 			continue
 
+		// Reset directive, used for setting a config value back to defaults. Useful for string list config types
+		if (entry == "$reset")
+			var/datum/config_entry/resetee = _entries[lowertext(value)]
+			if (!value || !resetee)
+				log_config("Warning: invalid $reset directive: [value]")
+				continue
+			resetee.set_default()
+			log_config("Reset configured value for [value] to original defaults")
+			continue
+
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("Unknown setting in configuration: '[entry]'")
@@ -221,24 +269,39 @@
 	return E.ValidateAndSet("[new_val]")
 
 /datum/controller/configuration/proc/LoadMOTD()
-	motd = file2text("[directory]/motd.txt")
+	var/list/motd_contents = list()
+
+	var/list/motd_list = CONFIG_GET(str_list/motd)
+	if (motd_list.len == 0 && fexists("[directory]/motd.txt"))
+		motd_list = list("motd.txt")
+
+	for (var/motd_file in motd_list)
+		if (fexists("[directory]/[motd_file]"))
+			motd_contents += file2text("[directory]/[motd_file]")
+		else
+			log_config("MOTD file [motd_file] didn't exist")
+			DelayedMessageAdmins("MOTD file [motd_file] didn't exist")
+
+	motd = motd_contents.Join("\n")
+
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
 	if(motd || tm_info)
 		motd = motd ? "[motd]<br>[tm_info]" : tm_info
+
 /*
 Policy file should be a json file with a single object.
 Value is raw html.
 
 Possible keywords :
 Job titles / Assigned roles (ghost spawners for example) : Assistant , Captain , Ash Walker
-Mob types : /mob/living/simple_animal/hostile/carp
+Mob types : /mob/living/basic/carp
 Antagonist types : /datum/antagonist/highlander
 Species types : /datum/species/lizard
 special keywords defined in _DEFINES/admin.dm
 
 Example config:
 {
-	"Assistant" : "Don't kill everyone",
+	JOB_ASSISTANT : "Don't kill everyone",
 	"/datum/antagonist/highlander" : "<b>Kill everyone</b>",
 	"Ash Walker" : "Kill all spacemans"
 }
@@ -289,9 +352,11 @@ Example config:
 
 		switch (command)
 			if ("map")
-				currentmap = load_map_config("_maps/[data].json")
+				currentmap = load_map_config(data, MAP_DIRECTORY_MAPS)
 				if(currentmap.defaulted)
-					log_config("Failed to load map config for [data]!")
+					var/error_message = "Failed to load map config for [data]!"
+					log_config(error_message)
+					log_mapping(error_message, TRUE)
 					currentmap = null
 			if ("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)
@@ -313,18 +378,125 @@ Example config:
 				log_config("Unknown command in map vote config: '[command]'")
 
 /datum/controller/configuration/proc/LoadChatFilter()
-	var/list/in_character_filter = list()
-	if(!fexists("[directory]/in_character_filter.txt"))
+	if(!fexists("[directory]/word_filter.toml"))
+		load_legacy_chat_filter()
 		return
+
+	log_config("Loading config file word_filter.toml...")
+	var/list/result = rustg_raw_read_toml_file("[directory]/word_filter.toml")
+	if(!result["success"])
+		var/message = "The word filter is not configured correctly! [result["content"]]"
+		log_config(message)
+		DelayedMessageAdmins(message)
+		return
+	var/list/word_filter = json_decode(result["content"])
+
+	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
+	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")
+	shared_filter_reasons = try_extract_from_word_filter(word_filter, "shared")
+	soft_ic_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic")
+	soft_ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic_outside_pda")
+	soft_shared_filter_reasons = try_extract_from_word_filter(word_filter, "soft_shared")
+
+	update_chat_filter_regexes()
+
+/datum/controller/configuration/proc/load_legacy_chat_filter()
+	if (!fexists("[directory]/in_character_filter.txt"))
+		return
+
 	log_config("Loading config file in_character_filter.txt...")
-	for(var/line in world.file2list("[directory]/in_character_filter.txt"))
-		if(!line)
+
+	ic_filter_reasons = list()
+	ic_outside_pda_filter_reasons = list()
+	shared_filter_reasons = list()
+	soft_ic_filter_reasons = list()
+	soft_ic_outside_pda_filter_reasons = list()
+	soft_shared_filter_reasons = list()
+
+	for (var/line in world.file2list("[directory]/in_character_filter.txt"))
+		if (!line)
 			continue
-		if(findtextEx(line,"#",1,2))
+		if (findtextEx(line, "#", 1, 2))
 			continue
-		in_character_filter += REGEX_QUOTE(line)
-	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
+		// The older filter didn't apply to PDA
+		ic_outside_pda_filter_reasons[line] = "No reason available"
+
+	update_chat_filter_regexes()
+
+/// Will update the internal regexes of the chat filter based on the filter reasons
+/datum/controller/configuration/proc/update_chat_filter_regexes()
+	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_outside_pda_filter_reasons + shared_filter_reasons)
+	ic_outside_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons)
+	ooc_filter_regex = compile_filter_regex(shared_filter_reasons)
+	soft_ic_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_ic_outside_pda_filter_reasons + soft_shared_filter_reasons)
+	soft_ic_outside_pda_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_shared_filter_reasons)
+	soft_ooc_filter_regex = compile_filter_regex(soft_shared_filter_reasons)
+
+/datum/controller/configuration/proc/try_extract_from_word_filter(list/word_filter, key)
+	var/list/banned_words = word_filter[key]
+
+	if (isnull(banned_words))
+		return list()
+	else if (!islist(banned_words))
+		var/message = "The word filter configuration's '[key]' key was invalid, contact someone with configuration access to make sure it's setup properly."
+		log_config(message)
+		DelayedMessageAdmins(message)
+		return list()
+
+	var/list/formatted_banned_words = list()
+
+	for (var/banned_word in banned_words)
+		formatted_banned_words[lowertext(banned_word)] = banned_words[banned_word]
+	return formatted_banned_words
+
+/datum/controller/configuration/proc/compile_filter_regex(list/banned_words)
+	if (isnull(banned_words) || banned_words.len == 0)
+		return null
+
+	var/static/regex/should_join_on_word_bounds = regex(@"^\w+$")
+
+	// Stuff like emoticons needs another split, since there's no way to get ":)" on a word bound.
+	// Furthermore, normal words need to be on word bounds, so "(adminhelp)" gets filtered.
+	var/list/to_join_on_whitespace_splits = list()
+	var/list/to_join_on_word_bounds = list()
+
+	for (var/banned_word in banned_words)
+		if (findtext(banned_word, should_join_on_word_bounds))
+			to_join_on_word_bounds += REGEX_QUOTE(banned_word)
+		else
+			to_join_on_whitespace_splits += REGEX_QUOTE(banned_word)
+
+	// We don't want a whitespace_split part if there's no stuff that requires it
+	var/whitespace_split = to_join_on_whitespace_splits.len > 0 ? @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))" : ""
+	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + @")\b)"
+	var/regex_filter = whitespace_split != "" ? "([whitespace_split]|[word_bounds])" : word_bounds
+	return regex(regex_filter, "i")
+
+/// Check to ensure that the jobconfig is valid/in-date.
+/datum/controller/configuration/proc/validate_job_config()
+	var/config_toml = "[directory]/jobconfig.toml"
+	var/config_txt = "[directory]/jobs.txt"
+	var/message = "Notify Server Operators: "
+	log_config("Validating config file jobconfig.toml...")
+
+	if(!fexists(file(config_toml)))
+		SSjob.legacy_mode = TRUE
+		message += "jobconfig.toml not found, falling back to legacy mode (using jobs.txt). To surpress this warning, generate a jobconfig.toml by running the verb 'Generate Job Configuration' in the Server tab.\n\
+			From there, you can then add it to the /config folder of your server to have it take effect for future rounds."
+
+		if(!fexists(file(config_txt)))
+			message += "\n\nFailed to set up legacy mode, jobs.txt not found! Codebase defaults will be used. If you do not wish to use this system, please disable it by commenting out the LOAD_JOBS_FROM_TXT config flag."
+
+		log_config(message)
+		DelayedMessageAdmins(span_notice(message))
+		return
+
+	var/list/result = rustg_raw_read_toml_file(config_toml)
+	if(!result["success"])
+		message += "The job config (jobconfig.toml) is not configured correctly! [result["content"]]"
+		log_config(message)
+		DelayedMessageAdmins(span_notice(message))
 
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(message_admins), text), 0)

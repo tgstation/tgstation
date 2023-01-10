@@ -12,13 +12,13 @@
 	pass_flags = PASSTABLE
 
 
-/obj/item/papercutter/Initialize()
+/obj/item/papercutter/Initialize(mapload)
 	. = ..()
 	storedcutter = new /obj/item/hatchet/cutterblade(src)
 	update_appearance()
 
 
-/obj/item/papercutter/suicide_act(mob/user)
+/obj/item/papercutter/suicide_act(mob/living/user)
 	if(storedcutter)
 		user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		if(iscarbon(user))
@@ -26,12 +26,12 @@
 			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
-				playsound(loc, "desecration" ,50, TRUE, -1)
-		return (BRUTELOSS)
+				playsound(loc, SFX_DESECRATION ,50, TRUE, -1)
+		return BRUTELOSS
 	else
 		user.visible_message(span_suicide("[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
-		return (BRUTELOSS)
+		return BRUTELOSS
 
 
 /obj/item/papercutter/update_icon_state()
@@ -43,12 +43,20 @@
 	if(storedpaper)
 		. += "paper"
 
+/obj/item/papercutter/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!storedcutter)
+		return
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("[storedcutter] has been [cuttersecured ? "unsecured" : "secured"]."))
+	cuttersecured = !cuttersecured
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper) && !storedpaper)
 		if(!user.transferItemToLoc(P, src))
 			return
-		playsound(loc, "pageturn", 60, TRUE)
+		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
 		to_chat(user, span_notice("You place [P] in [src]."))
 		storedpaper = P
 		update_appearance()
@@ -60,11 +68,6 @@
 		P.forceMove(src)
 		storedcutter = P
 		update_appearance()
-		return
-	if(P.tool_behaviour == TOOL_SCREWDRIVER && storedcutter)
-		P.play_tool_sound(src)
-		to_chat(user, span_notice("[storedcutter] has been [cuttersecured ? "unsecured" : "secured"]."))
-		cuttersecured = !cuttersecured
 		return
 	..()
 
@@ -120,7 +123,7 @@
 	return ..()
 
 
-/obj/item/paperslip/Initialize()
+/obj/item/paperslip/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)

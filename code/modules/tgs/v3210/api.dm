@@ -28,6 +28,8 @@
 
 #define SERVICE_RETURN_SUCCESS "SUCCESS"
 
+#define TGS_FILE2LIST(filename) (splittext(trim_left(trim_right(file2text(filename))), "\n"))
+
 /datum/tgs_api/v3210
 	var/reboot_mode = REBOOT_MODE_NORMAL
 	var/comms_key
@@ -53,9 +55,6 @@
 			return copytext(text, 1, i + 1)
 	return ""
 
-/datum/tgs_api/v3210/proc/file2list(filename)
-	return splittext(trim_left(trim_right(file2text(filename))), "\n")
-
 /datum/tgs_api/v3210/OnWorldNew(minimum_required_security_level)
 	. = FALSE
 
@@ -64,13 +63,21 @@
 	if(!instance_name)
 		instance_name = "TG Station Server" //maybe just upgraded
 
-	var/list/logs = file2list(".git/logs/HEAD")
+	var/list/logs = TGS_FILE2LIST(".git/logs/HEAD")
 	if(logs.len)
-		logs = splittext(logs[logs.len - 1], " ")
-		commit = logs[2]
-	logs = file2list(".git/logs/refs/remotes/origin/master")
+		logs = splittext(logs[logs.len], " ")
+		if (logs.len >= 2)
+			commit = logs[2]
+		else
+			TGS_ERROR_LOG("Error parsing commit logs")
+
+	logs = TGS_FILE2LIST(".git/logs/refs/remotes/origin/master")
 	if(logs.len)
-		originmastercommit = splittext(logs[logs.len - 1], " ")[2]
+		logs = splittext(logs[logs.len], " ")
+		if (logs.len >= 2)
+			originmastercommit = logs[2]
+		else
+			TGS_ERROR_LOG("Error parsing origin commmit logs")
 
 	if(world.system_type != MS_WINDOWS)
 		TGS_ERROR_LOG("This API version is only supported on Windows. Not running on Windows. Aborting initialization!")
@@ -92,7 +99,11 @@
 	if(skip_compat_check && !fexists(SERVICE_INTERFACE_DLL))
 		TGS_ERROR_LOG("Service parameter present but no interface DLL detected. This is symptomatic of running a service less than version 3.1! Please upgrade.")
 		return
+	#if DM_VERSION >= 515
+	call_ext(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(instance_name, command) //trust no retval
+	#else
 	call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(instance_name, command) //trust no retval
+	#endif
 	return TRUE
 
 /datum/tgs_api/v3210/OnTopic(T)
@@ -226,3 +237,5 @@
 #undef SERVICE_REQUEST_API_VERSION
 
 #undef SERVICE_RETURN_SUCCESS
+
+#undef TGS_FILE2LIST

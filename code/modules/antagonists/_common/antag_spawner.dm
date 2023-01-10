@@ -18,61 +18,58 @@
 	desc = "A magic contract previously signed by an apprentice. In exchange for instruction in the magical arts, they are bound to answer your call for aid."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
+	var/polling = FALSE
 
-/obj/item/antag_spawner/contract/attack_self(mob/user)
-	user.set_machine(src)
-	var/dat
-	if(used)
-		dat = "<B>You have already summoned your apprentice.</B><BR>"
-	else
-		dat = "<B>Contract of Apprenticeship:</B><BR>"
-		dat += "<I>Using this contract, you may summon an apprentice to aid you on your mission.</I><BR>"
-		dat += "<I>If you are unable to establish contact with your apprentice, you can feed the contract back to the spellbook to refund your points.</I><BR>"
-		dat += "<B>Which school of magic is your apprentice studying?:</B><BR>"
-		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_DESTRUCTION]'>Destruction</A><BR>"
-		dat += "<I>Your apprentice is skilled in offensive magic. They know Magic Missile and Fireball.</I><BR>"
-		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_BLUESPACE]'>Bluespace Manipulation</A><BR>"
-		dat += "<I>Your apprentice is able to defy physics, melting through solid objects and travelling great distances in the blink of an eye. They know Teleport and Ethereal Jaunt.</I><BR>"
-		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_HEALING]'>Healing</A><BR>"
-		dat += "<I>Your apprentice is training to cast spells that will aid your survival. They know Forcewall and Charge and come with a Staff of Healing.</I><BR>"
-		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_ROBELESS]'>Robeless</A><BR>"
-		dat += "<I>Your apprentice is training to cast spells without their robes. They know Knock and Mindswap.</I><BR>"
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
-	return
-
-/obj/item/antag_spawner/contract/Topic(href, href_list)
+/obj/item/antag_spawner/contract/can_interact(mob/user)
 	. = ..()
+	if(!.)
+		return FALSE
+	if(polling)
+		balloon_alert(user, "already calling an apprentice!")
+		return FALSE
 
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+/obj/item/antag_spawner/contract/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ApprenticeContract", name)
+		ui.open()
+
+/obj/item/antag_spawner/contract/ui_state(mob/user)
+	if(used)
+		return GLOB.never_state
+	return GLOB.default_state
+
+/obj/item/antag_spawner/contract/ui_assets(mob/user)
+	. = ..()
+	return list(
+		get_asset_datum(/datum/asset/simple/contracts),
+	)
+
+/obj/item/antag_spawner/contract/ui_act(action, list/params)
+	. = ..()
+	if(used || polling || !ishuman(usr))
 		return
-	if(!ishuman(usr))
-		return TRUE
-	var/mob/living/carbon/human/H = usr
+	INVOKE_ASYNC(src, PROC_REF(poll_for_student), usr, params["school"])
+	SStgui.close_uis(src)
 
-	if(loc == H || (in_range(src, H) && isturf(loc)))
-		H.set_machine(src)
-		if(href_list["school"])
-			if(used)
-				to_chat(H, span_warning("You already used this contract!"))
-				return
-			var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, ROLE_WIZARD, 150, src)
-			if(LAZYLEN(candidates))
-				if(QDELETED(src))
-					return
-				if(used)
-					to_chat(H, span_warning("You already used this contract!"))
-					return
-				used = TRUE
-				var/mob/dead/observer/C = pick(candidates)
-				spawn_antag(C.client, get_turf(src), href_list["school"],H.mind)
-			else
-				to_chat(H, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
+/obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
+	balloon_alert(teacher, "contacting apprentice...")
+	polling = TRUE
+	var/list/candidates = poll_candidates_for_mob("Do you want to play as a wizard's [apprentice_school] apprentice?", ROLE_WIZARD, ROLE_WIZARD, 15 SECONDS, src)
+	polling = FALSE
+	if(!LAZYLEN(candidates))
+		to_chat(teacher, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
+		return
+	if(QDELETED(src) || used)
+		return
+	used = TRUE
+	var/mob/dead/observer/student = pick(candidates)
+	spawn_antag(student.client, get_turf(src), apprentice_school, teacher.mind)
 
-/obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind ,datum/mind/user)
-	new /obj/effect/particle_effect/smoke(T)
+/obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind, datum/mind/user)
+	new /obj/effect/particle_effect/fluid/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.copy_to(M)
+	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
 
@@ -87,10 +84,8 @@
 		app.wiz_team = master_wizard.wiz_team
 		master_wizard.wiz_team.add_member(app_mind)
 	app_mind.add_antag_datum(app)
-	//TODO Kill these if possible
-	app_mind.assigned_role = "Apprentice"
-	app_mind.special_role = "apprentice"
-	//
+	app_mind.set_assigned_role(SSjob.GetJobType(/datum/job/wizard_apprentice))
+	app_mind.special_role = ROLE_WIZARD_APPRENTICE
 	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
 
 ///////////BORGS AND OPERATIVES
@@ -105,11 +100,16 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
-	var/special_role_name = "Nuclear Operative" ///The name of the special role given to the recruit
-	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/no_crystals ///The applied outfit
-	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop ///The antag datam applied
+	/// The name of the special role given to the recruit
+	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
+	/// The applied outfit
+	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
+	/// The antag datam applied
+	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
+	/// Do we use a random subtype of the outfit?
+	var/use_subtypes = TRUE
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -132,7 +132,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/list/nuke_candidates = pollGhostCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
+	var/list/nuke_candidates = poll_ghost_candidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
 	if(LAZYLEN(nuke_candidates))
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -147,13 +147,17 @@
 /obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/nukie = new()
 	var/obj/structure/closet/supplypod/pod = setup_pod()
-	C.prefs.copy_to(nukie)
+	C.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
 	nukie.ckey = C.key
 	var/datum/mind/op_mind = nukie.mind
+	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
+		nukie.forceMove(pick(GLOB.newplayer_start))
+	else
+		nukie.forceMove(locate(1,1,1))
 
 	antag_datum = new()
 	antag_datum.send_to_spawnpoint = FALSE
-	antag_datum.nukeop_outfit = outfit
+	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
@@ -165,10 +169,11 @@
 /obj/item/antag_spawner/nuke_ops/clown
 	name = "clown operative beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement clown operatives into the field."
-	special_role_name = "Clown Operative"
+	special_role_name = ROLE_CLOWN_OPERATIVE
 	outfit = /datum/outfit/syndicate/clownop/no_crystals
 	antag_datum = /datum/antagonist/nukeop/clownop
 	pod_style = STYLE_HONK
+	use_subtypes = FALSE
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
@@ -234,8 +239,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
-	var/shatter_msg = "<span class='notice'>You shatter the bottle, no turning back now!</span>"
-	var/veil_msg = "<span class='warning'>You sense a dark presence lurking just beyond the veil...</span>"
+	var/shatter_msg = span_notice("You shatter the bottle, no turning back now!")
+	var/veil_msg = span_warning("You sense a dark presence lurking just beyond the veil...")
 	var/mob/living/demon_type = /mob/living/simple_animal/hostile/imp/slaughter
 	var/antag_type = /datum/antagonist/slaughter
 
@@ -246,13 +251,14 @@
 		return
 	if(used)
 		return
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, ROLE_ALIEN, 50, src)
+	var/list/candidates = poll_candidates_for_mob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, ROLE_ALIEN, 5 SECONDS, src)
 	if(LAZYLEN(candidates))
 		if(used || QDELETED(src))
 			return
 		used = TRUE
-		var/mob/dead/observer/C = pick(candidates)
-		spawn_antag(C.client, get_turf(src), initial(demon_type.name),user.mind)
+		var/mob/dead/observer/summoned = pick(candidates)
+		user.log_message("has summoned forth the [initial(demon_type.name)] (played by [key_name(summoned)]) using a [name].", LOG_GAME) // has to be here before we create antag otherwise we can't get the ckey of the demon
+		spawn_antag(summoned.client, get_turf(src), initial(demon_type.name), user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
@@ -262,15 +268,15 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
-	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
+	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(T)
+	new /obj/effect/dummy/phased_mob(T, S)
+
 	S.key = C.key
-	S.mind.assigned_role = S.name
-	S.mind.special_role = S.name
+	S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
+	S.mind.special_role = ROLE_SLAUGHTER_DEMON
 	S.mind.add_antag_datum(antag_type)
-	to_chat(S, S.playstyle_string)
-	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
-	Ctrl+Click a blood pool to manifest.</B>")
+	to_chat(S, span_bold("You are currently not currently in the same plane of existence as the station. \
+		Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
@@ -279,6 +285,6 @@
 	icon_state = "vial"
 	color = "#FF69B4" // HOT PINK
 
-	veil_msg = "<span class='warning'>You sense an adorable presence lurking just beyond the veil...</span>"
+	veil_msg = span_warning("You sense an adorable presence lurking just beyond the veil...")
 	demon_type = /mob/living/simple_animal/hostile/imp/slaughter/laughter
 	antag_type = /datum/antagonist/slaughter/laughter

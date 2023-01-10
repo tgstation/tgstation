@@ -18,15 +18,23 @@
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
 
-/obj/machinery/rnd/Initialize()
+/obj/machinery/rnd/Initialize(mapload)
 	. = ..()
-	stored_research = SSresearch.science_tech
+	if(!CONFIG_GET(flag/no_default_techweb_link))
+		connect_techweb(SSresearch.science_tech)
 	wires = new /datum/wires/rnd(src)
 
 /obj/machinery/rnd/Destroy()
-	stored_research = null
+	if(stored_research)
+		log_research("[src] disconnected from techweb [stored_research] (destroyed).")
+		stored_research = null
 	QDEL_NULL(wires)
 	return ..()
+
+/obj/machinery/rnd/proc/connect_techweb(datum/techweb/new_techweb)
+	if(stored_research)
+		log_research("[src] disconnected from techweb [stored_research] when connected to [new_techweb].")
+	stored_research = new_techweb
 
 /obj/machinery/rnd/proc/shock(mob/user, prb)
 	if(machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
@@ -40,19 +48,48 @@
 		return FALSE
 
 /obj/machinery/rnd/attackby(obj/item/O, mob/user, params)
-	if (default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), O))
-		return
-	if(default_deconstruction_crowbar(O))
-		return
-	if(panel_open && is_wire_tool(O))
-		wires.interact(user)
-		return TRUE
 	if(is_refillable() && O.is_drainable())
 		return FALSE //inserting reagents into the machine
 	if(Insert_Item(O, user))
 		return TRUE
-	else
-		return ..()
+
+	return ..()
+
+/obj/machinery/rnd/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/rnd/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/rnd/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+
+/obj/machinery/rnd/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+
+/obj/machinery/rnd/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		connect_techweb(tool.buffer)
+		return TRUE
+	return FALSE
+
+/obj/machinery/rnd/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
+
+/obj/machinery/rnd/wirecutter_act(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
+
+/obj/machinery/rnd/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
 
 //proc used to handle inserting items or reagents into rnd machines
 /obj/machinery/rnd/proc/Insert_Item(obj/item/I, mob/user)
@@ -94,6 +131,6 @@
 	else
 		var/obj/item/stack/S = item_inserted
 		stack_name = S.name
-		use_power(min(1000, (amount_inserted / 100)))
+		use_power(min(active_power_usage, (amount_inserted / 100)))
 	add_overlay("protolathe_[stack_name]")
-	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "protolathe_[stack_name]"), 10)

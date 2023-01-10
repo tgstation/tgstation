@@ -40,8 +40,8 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	heldname = sanitize_name(stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
-	log_game("[key_name(user)] have set \"[heldname]\" as a name in a cyborg reclassification board at [loc_name(user)]")
+	heldname = sanitize_name(tgui_input_text(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
+	user.log_message("set \"[heldname]\" as a name in a cyborg reclassification board at [loc_name(user)]", LOG_GAME)
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -51,27 +51,8 @@
 		R.custom_name = heldname
 		R.updatename()
 		if(oldname == R.real_name)
-			R.notify_ai(RENAME, oldname, R.real_name)
-		log_game("[key_name(user)] have used a cyborg reclassification board to rename [oldkeyname] to [key_name(R)] at [loc_name(user)]")
-
-/obj/item/borg/upgrade/restart
-	name = "cyborg emergency reboot module"
-	desc = "Used to force a reboot of a disabled-but-repaired cyborg, bringing it back online."
-	icon_state = "cyborg_upgrade1"
-	one_use = TRUE
-
-/obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R, user = usr)
-	if(R.health < 0)
-		to_chat(user, span_warning("You have to repair the cyborg before using this module!"))
-		return FALSE
-
-	if(R.mind)
-		R.mind.grab_ghost()
-		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
-
-	R.revive(full_heal = FALSE, admin_revive = FALSE)
-	R.logevent("WARN -- System recovered from unexpected shutdown.")
-	R.logevent("System brought online.")
+			R.notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, R.real_name)
+		usr.log_message("used a cyborg reclassification board to rename [oldkeyname] to [key_name(R)]", LOG_GAME)
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"
@@ -296,12 +277,12 @@
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		LAZYADD(R.weather_immunities, "lava")
+		ADD_TRAIT(R, TRAIT_LAVA_IMMUNE, type)
 
 /obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		LAZYREMOVE(R.weather_immunities, "lava")
+		REMOVE_TRAIT(R, TRAIT_LAVA_IMMUNE, type)
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
@@ -418,26 +399,19 @@
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
-			if(H.accepts_reagent_upgrades)
-				for(var/re in additional_reagents)
-					H.add_reagent(re)
+		for(var/obj/item/reagent_containers/borghypo/medical/H in R.model.modules)
+			H.upgrade_hypo()
 
 /obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
-			if(H.accepts_reagent_upgrades)
-				for(var/re in additional_reagents)
-					H.del_reagent(re)
+		for(var/obj/item/reagent_containers/borghypo/medical/H in R.model.modules)
+			H.remove_hypo_upgrade()
 
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"
 	desc = "An upgrade to the Medical model's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
-	additional_reagents = list(/datum/reagent/medicine/mannitol, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate,
-		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol, /datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
-		/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid)
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"
@@ -499,15 +473,16 @@
 	defib_instance = D
 	name = defib_instance.name
 	defib_instance.moveToNullspace()
-	RegisterSignal(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_defib_instance_qdel_or_moved)
+	RegisterSignals(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_defib_instance_qdel_or_moved))
 
 /obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
 	SIGNAL_HANDLER
 	defib_instance = null
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/borg/upgrade/defib/backpack/Destroy()
-	if(defib_instance)
+	if(!QDELETED(defib_instance))
 		QDEL_NULL(defib_instance)
 	return ..()
 
@@ -561,39 +536,39 @@
 	if (.)
 		if(R.shell)
 			R.undeploy()
-			R.notify_ai(DISCONNECT)
+			R.notify_ai(AI_NOTIFICATION_AI_SHELL)
 
 /obj/item/borg/upgrade/expand
 	name = "borg expander"
 	desc = "A cyborg resizer, it makes a cyborg huge."
 	icon_state = "cyborg_upgrade3"
 
-/obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/robot, user = usr)
 	. = ..()
 	if(.)
 
-		if(R.hasExpanded)
+		if(robot.hasExpanded)
 			to_chat(usr, span_warning("This unit already has an expand module installed!"))
 			return FALSE
 
-		R.notransform = TRUE
-		var/prev_lockcharge = R.lockcharge
-		R.SetLockdown(TRUE)
-		R.set_anchored(TRUE)
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(1, R.loc)
+		robot.notransform = TRUE
+		var/prev_lockcharge = robot.lockcharge
+		robot.SetLockdown(TRUE)
+		robot.set_anchored(TRUE)
+		var/datum/effect_system/fluid_spread/smoke/smoke = new
+		smoke.set_up(1, holder = robot, location = robot.loc)
 		smoke.start()
-		sleep(2)
+		sleep(0.2 SECONDS)
 		for(var/i in 1 to 4)
-			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-			sleep(12)
+			playsound(robot, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+			sleep(1.2 SECONDS)
 		if(!prev_lockcharge)
-			R.SetLockdown(0)
-		R.set_anchored(FALSE)
-		R.notransform = FALSE
-		R.resize = 2
-		R.hasExpanded = TRUE
-		R.update_transform()
+			robot.SetLockdown(FALSE)
+		robot.set_anchored(FALSE)
+		robot.notransform = FALSE
+		robot.resize = 2
+		robot.hasExpanded = TRUE
+		robot.update_transform()
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -606,7 +581,7 @@
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
 	desc = "A rapid part exchange device for the engineering cyborg."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "borgrped"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
@@ -674,6 +649,8 @@
 	var/mob/living/silicon/robot/Cyborg = usr
 	GLOB.crewmonitor.show(Cyborg,Cyborg)
 
+/datum/action/item_action/crew_monitor
+	name = "Interface With Crew Monitor"
 
 /obj/item/borg/upgrade/transform
 	name = "borg model picker (Standard)"
@@ -773,3 +750,36 @@
 	var/obj/item/pushbroom/cyborg/BR = locate() in R.model.modules
 	if (BR)
 		R.model.remove_module(BR, TRUE)
+
+///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
+//A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
+/obj/item/borg_restart_board
+	name = "cyborg emergency reboot module"
+	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."
+	w_class = WEIGHT_CLASS_SMALL
+	icon = 'icons/obj/module.dmi'
+	icon_state = "cyborg_upgrade1"
+
+/obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)
+	if(!istype(borgo))
+		return ..()
+	if(!borgo.opened)
+		to_chat(user, span_warning("You must access the cyborg's internals!"))
+		return ..()
+	if(borgo.health < 0)
+		to_chat(user, span_warning("You have to repair the cyborg before using this module!"))
+		return ..()
+	if(!(borgo.stat & DEAD))
+		to_chat(user, span_warning("This cyborg is already operational!"))
+		return ..()
+
+	if(borgo.mind)
+		borgo.mind.grab_ghost()
+		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+	else
+		playsound(loc, 'sound/machines/ping.ogg', 75, TRUE)
+
+	borgo.revive()
+	borgo.logevent("WARN -- System recovered from unexpected shutdown.")
+	borgo.logevent("System brought online.")
+	return ..()

@@ -12,36 +12,26 @@
 	program_icon = "magnet"
 	var/armed = 0
 
-/datum/computer_file/program/revelation/run_program(mob/living/user)
+/datum/computer_file/program/revelation/on_start(mob/living/user)
 	. = ..(user)
 	if(armed)
 		activate()
 
 /datum/computer_file/program/revelation/proc/activate()
 	if(computer)
-		if(istype(computer, /obj/item/modular_computer/tablet/integrated)) //If this is a borg's integrated tablet
-			var/obj/item/modular_computer/tablet/integrated/modularInterface = computer
-			to_chat(modularInterface.borgo,span_userdanger("SYSTEM PURGE DETECTED/"))
-			addtimer(CALLBACK(modularInterface.borgo, /mob/living/silicon/robot/.proc/death), 2 SECONDS, TIMER_UNIQUE)
+		if(istype(computer, /obj/item/modular_computer/pda/silicon)) //If this is a borg's integrated tablet
+			var/obj/item/modular_computer/pda/silicon/modularInterface = computer
+			to_chat(modularInterface.silicon_owner,span_userdanger("SYSTEM PURGE DETECTED/"))
+			addtimer(CALLBACK(modularInterface.silicon_owner, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
 			return
 
 		computer.visible_message(span_notice("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
 		computer.enabled = FALSE
 		computer.update_appearance()
-		var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
-		var/obj/item/computer_hardware/battery/battery_module = computer.all_components[MC_CELL]
-		var/obj/item/computer_hardware/recharger/recharger = computer.all_components[MC_CHARGE]
-		qdel(hard_drive)
 		computer.take_damage(25, BRUTE, 0, 0)
-		if(battery_module && prob(25))
-			qdel(battery_module)
+		if(computer.internal_cell && prob(25))
+			QDEL_NULL(computer.internal_cell)
 			computer.visible_message(span_notice("\The [computer]'s battery explodes in rain of sparks."))
-			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
-			spark_system.start()
-
-		if(recharger && prob(50))
-			qdel(recharger)
-			computer.visible_message(span_notice("\The [computer]'s recharger explodes in rain of sparks."))
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()
 

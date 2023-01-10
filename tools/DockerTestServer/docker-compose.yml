@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  # /tg/ DM server
+  dreammaker:
+    image: tgstation:latest
+    restart: unless-stopped
+    build:
+      context: ../../
+      dockerfile: Dockerfile
+    entrypoint: bash /entrypoint.sh
+    env_file:
+     - .env
+    ports: 
+      - "1337:1337"
+    depends_on:
+      - db
+    volumes:
+      - ./entrypoint.sh:/entrypoint.sh:ro #
+      - ../../config:/gamecfg_ro:ro # Contains the default configuration, as defined in config/ 
+      - ./gamecfg:/gamecfg:ro # Contains the override config files, entrypoint.sh overrides using these
+      - gamedata:/tgstation/data # Contains the game data, contained nicely in a volume
+
+  # MariaDB/MySQL database: game 
+  # (if you don't really need this, feel free to remove this section.)
+  db:
+    image: mariadb
+    restart: unless-stopped
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=tgstation
+      - MYSQL_USER=gamelord
+      - MYSQL_PASSWORD=gamelord
+    volumes: 
+        - ../../SQL/tgstation_schema.sql:/docker-entrypoint-initdb.d/tgstation_schema.sql:ro
+        - database:/var/lib/mysql
+
+  # Adminer, for managing the DB, has the 'donotstart' profile attached by default. Remove this line if this is needed
+  adminer:
+    image: wodby/adminer
+    depends_on:
+      - db
+    environment:
+      ADMINER_DEFAULT_DB_DRIVER: mysql
+      ADMINER_DEFAULT_DB_HOST: db
+      ADMINER_DEFAULT_DB_NAME: tgstation
+      ADMINER_DESIGN: nette
+      ADMINER_PLUGINS: tables-filter tinymce
+    ports:
+      - 9000:9000
+    profiles:
+      - donotstart # <--- Remove this line if this service is needed.
+
+volumes:
+  gamedata:
+  database:

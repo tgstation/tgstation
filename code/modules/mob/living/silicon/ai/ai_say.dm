@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		return parent.say(arglist(args))
 	return ..()
@@ -13,8 +13,14 @@
 	//Also includes the </a> for AI hrefs, for convenience.
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
-/mob/living/silicon/ai/IsVocal()
-	return !CONFIG_GET(flag/silent_ai)
+/mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
+	// AIs cannot speak if silent AI is on.
+	// Unless forced is set, as that's probably stating laws or something.
+	if(!forced && CONFIG_GET(flag/silent_ai))
+		to_chat(src, span_danger("The ability for AIs to speak is currently disabled via server config."))
+		return FALSE
+
+	return ..()
 
 /mob/living/silicon/ai/radio(message, list/message_mods = list(), list/spans, language)
 	if(incapacitated())
@@ -31,17 +37,17 @@
 	if (!message)
 		return
 
-	var/obj/machinery/holopad/T = current
-	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
-		var/turf/padturf = get_turf(T)
+	var/obj/machinery/holopad/active_pad = current
+	if(istype(active_pad) && active_pad.masters[src])//If there is a hologram and its master is the user.
+		var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
+		var/turf/padturf = get_turf(active_pad)
 		var/padloc
 		if(padturf)
 			padloc = AREACOORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
 		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		send_speech(message, 7, T, MODE_ROBOT, message_language = language)
-		to_chat(src, "<i><span class='game say'>Holopad transmitted, [span_name("[real_name]")] <span class='message robot'>\"[message]\"</span></span></i>")
+		ai_holo.say(message, language = language)
 	else
 		to_chat(src, span_alert("No holopad connected."))
 
@@ -87,7 +93,7 @@
 		to_chat(src, span_notice("Please wait [DisplayTimeText(announcing_vox - world.time)]."))
 		return
 
-	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text|null
+	var/message = tgui_input_text(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement)
 
 	if(!message || announcing_vox > world.time)
 		return
@@ -121,8 +127,9 @@
 
 	announcing_vox = world.time + VOX_DELAY
 
-	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
+	log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
 	log_talk(message, LOG_SAY, tag="VOX Announcement")
+	say(";[message]", forced = "VOX Announcement")
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
@@ -141,11 +148,15 @@
 	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
-			for(var/mob/M in GLOB.player_list)
-				if(M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
-					var/turf/T = get_turf(M)
+			for(var/mob/player_mob in GLOB.player_list)
+				if(player_mob.client && !player_mob.client?.prefs)
+					stack_trace("[player_mob] ([player_mob.ckey]) has null prefs, which shouldn't be possible!")
+					continue
+
+				if(player_mob.can_hear() && (player_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
+					var/turf/T = get_turf(player_mob)
 					if(T.z == z_level)
-						SEND_SOUND(M, voice)
+						SEND_SOUND(player_mob, voice)
 		else
 			SEND_SOUND(only_listener, voice)
 		return TRUE

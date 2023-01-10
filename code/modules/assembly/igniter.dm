@@ -11,14 +11,15 @@
 	var/datum/effect_system/spark_spread/sparks
 	heat = 1000
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
+	assembly_flags = ASSEMBLY_NO_DUPLICATES
 
 /obj/item/assembly/igniter/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is trying to ignite [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.IgniteMob()
+	user.ignite_mob()
 	return FIRELOSS
 
-/obj/item/assembly/igniter/Initialize()
+/obj/item/assembly/igniter/Initialize(mapload)
 	. = ..()
 	sparks = new
 	sparks.set_up(2, 0, src)
@@ -36,6 +37,10 @@
 	var/turf/location = get_turf(loc)
 	if(location)
 		location.hotspot_expose(heat, EXPOSED_VOLUME)
+	if(holder)
+		SEND_SIGNAL(holder.loc, COMSIG_IGNITER_ACTIVATE)
+	if(QDELETED(src))
+		return TRUE
 	sparks.start()
 	return TRUE
 

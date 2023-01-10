@@ -15,11 +15,11 @@
 		src.message = message
 
 /datum/component/shy_in_room/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/on_clickon)
-	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, .proc/on_try_pull)
-	RegisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), .proc/on_unarmed_attack)
-	RegisterSignal(parent, COMSIG_TRY_STRIP, .proc/on_try_strip)
-	RegisterSignal(parent, COMSIG_TRY_ALT_ACTION, .proc/on_try_alt_action)
+	RegisterSignal(parent, COMSIG_MOB_CLICKON, PROC_REF(on_clickon))
+	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, PROC_REF(on_try_pull))
+	RegisterSignals(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), PROC_REF(on_unarmed_attack))
+	RegisterSignal(parent, COMSIG_TRY_STRIP, PROC_REF(on_try_strip))
+	RegisterSignal(parent, COMSIG_TRY_ALT_ACTION, PROC_REF(on_try_alt_action))
 
 
 /datum/component/shy_in_room/UnregisterFromParent()
@@ -52,8 +52,10 @@
 		to_chat(owner, span_warning("[replacetext(message, "%ROOM", room)]"))
 		return TRUE
 
-/datum/component/shy_in_room/proc/on_clickon(datum/source, atom/target, params)
+/datum/component/shy_in_room/proc/on_clickon(datum/source, atom/target, list/modifiers)
 	SIGNAL_HANDLER
+	if(modifiers[SHIFT_CLICK]) //let them examine their surroundings.
+		return
 	return is_shy(target) && COMSIG_MOB_CANCEL_CLICKON
 
 /datum/component/shy_in_room/proc/on_try_pull(datum/source, atom/movable/target, force)

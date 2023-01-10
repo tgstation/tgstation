@@ -74,9 +74,12 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "drake_statue"
 	pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	density = TRUE
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
+	plane = GAME_PLANE_UPPER
 /**
  * A variety of statue in disrepair; parts are broken off and a gemstone is missing
  */
@@ -89,6 +92,7 @@
 	name = "bus"
 	desc = "GO TO SCHOOL. READ A BOOK."
 	icon = 'icons/obj/bus.dmi'
+	icon_state = null
 	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
@@ -102,6 +106,7 @@
 	icon_state = "frontwalltop"
 	density = FALSE
 	layer = ABOVE_ALL_MOB_LAYER //except for the stairs tile, which should be set to OBJ_LAYER aka 3.
+	plane = ABOVE_GAME_PLANE
 
 
 /obj/structure/fluff/bus/passable/seat
@@ -110,6 +115,7 @@
 	icon_state = "backseat"
 	pixel_y = 17
 	layer = OBJ_LAYER
+	plane = GAME_PLANE
 
 
 /obj/structure/fluff/bus/passable/seat/driver
@@ -140,6 +146,7 @@
 /obj/structure/fluff/divine
 	name = "Miracle"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon_state = "error"
 	anchored = TRUE
 	density = TRUE
 
@@ -187,15 +194,16 @@
 	desc = "A towering link of chains leading up to the ceiling."
 	icon = 'icons/effects/32x96.dmi'
 	icon_state = "chain"
-	layer = ABOVE_OBJ_LAYER
 	anchored = TRUE
 	density = TRUE
 	deconstructible = FALSE
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
 	desc = "A towel decorated in various beach-themed designs."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/railings.dmi'
 	icon_state = "railing"
 	density = FALSE
 	anchored = TRUE
@@ -227,7 +235,8 @@
 
 /obj/structure/fluff/clockwork
 	name = "Clockwork Fluff"
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "error"
 	deconstructible = FALSE
 
 /obj/structure/fluff/clockwork/alloy_shards
@@ -262,40 +271,12 @@
 	desc = "A pile of scrap metal. It seems damaged beyond repair."
 	icon_state = "clockgolem_dead"
 
-/obj/structure/fluff/hedge
-	name = "hedge"
-	desc = "A large bushy hedge."
-	icon = 'icons/obj/smooth_structures/hedge.dmi'
-	icon_state = "hedge-0"
-	base_icon_state = "hedge"
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_HEDGE_FLUFF)
-	canSmoothWith = list(SMOOTH_GROUP_HEDGE_FLUFF)
-	density = TRUE
-	anchored = TRUE
-	deconstructible = FALSE
-	max_integrity = 80
-
-/obj/structure/fluff/hedge/attacked_by(obj/item/I, mob/living/user)
-	if(opacity && HAS_TRAIT(user, TRAIT_BONSAI) && I.get_sharpness())
-		to_chat(user,span_notice("You start trimming \the [src]."))
-		if(do_after(user, 3 SECONDS,target=src))
-			to_chat(user,span_notice("You finish trimming \the [src]."))
-			opacity = FALSE
-	else
-		return ..()
-/**
- * useful for mazes and such
- */
-/obj/structure/fluff/hedge/opaque
-	opacity = TRUE
-
 /obj/structure/fluff/tram_rail
 	name = "tram rail"
 	desc = "Great for trams, not so great for skating."
 	icon = 'icons/obj/tram_rails.dmi'
 	icon_state = "rail"
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE
 	deconstructible = TRUE
 

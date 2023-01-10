@@ -1,10 +1,17 @@
+// Skillchip categories
+//Various skillchip categories. Use these when setting which categories a skillchip restricts being paired with
+//while using the SKILLCHIP_RESTRICTED_CATEGORIES flag
+/// General related skillchip category
+#define SKILLCHIP_CATEGORY_GENERAL "general"
+
+
 /obj/item/skillchip
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
 	icon = 'icons/obj/card.dmi'
 	icon_state = "data_3"
-	custom_price = PAYCHECK_MEDIUM * 3
+	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
 
 	/// Traits automatically granted by this chip, optional. Lazylist.
@@ -40,7 +47,7 @@
 	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
 	var/active = FALSE
 	/// Brain that holds this skillchip.
-	var/obj/item/organ/brain/holding_brain
+	var/obj/item/organ/internal/brain/holding_brain
 
 /obj/item/skillchip/Initialize(mapload, is_removable = TRUE)
 	. = ..()
@@ -125,7 +132,7 @@
  * Arguments:
  * * owner_brain - The brain that this skillchip was implanted in to.
  */
-/obj/item/skillchip/proc/on_implant(obj/item/organ/brain/owner_brain)
+/obj/item/skillchip/proc/on_implant(obj/item/organ/internal/brain/owner_brain)
 	if(holding_brain)
 		CRASH("Skillchip is trying to be implanted into [owner_brain], but it's already implanted in [holding_brain]")
 
@@ -191,7 +198,7 @@
  * Arguments:
  * * skillchip - The skillchip you're intending to activate. Does not activate the chip.
  */
-/obj/item/skillchip/proc/has_activate_incompatibility(obj/item/organ/brain/brain)
+/obj/item/skillchip/proc/has_activate_incompatibility(obj/item/organ/internal/brain/brain)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -241,7 +248,7 @@
 		return "Incompatible lifeform detected."
 
 	// No brain
-	var/obj/item/organ/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -260,7 +267,7 @@
  * Arguments:
  * * brain - The brain to check for implantability with.
  */
-/obj/item/skillchip/proc/has_brain_incompatibility(obj/item/organ/brain/brain)
+/obj/item/skillchip/proc/has_brain_incompatibility(obj/item/organ/internal/brain/brain)
 	if(!istype(brain))
 		stack_trace("Attempted to check incompatibility with invalid brain object [brain].")
 		return "Incompatible brain."
@@ -433,3 +440,51 @@
 	skill_icon = "lungs"
 	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
 	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
+
+/obj/item/skillchip/appraiser
+	name = "GENUINE ID Appraisal Now! skillchip"
+	auto_traits = list(TRAIT_ID_APPRAISER)
+	skill_name = "ID Appraisal"
+	skill_description = "Appraise an ID and see if it's issued from centcom, or just a cruddy station-printed one."
+	skill_icon = "magnifying-glass"
+	activate_message = span_notice("You feel that you can recognize special, minute details on ID cards.")
+	deactivate_message = span_notice("Was there something special about certain IDs?")
+
+/obj/item/skillchip/sabrage
+	name = "Le S48R4G3 skillchip"
+	auto_traits = list(TRAIT_SABRAGE_PRO)
+	skill_name = "Sabrage Proficiency"
+	skill_description = "Grants the user knowledge of the intricate structure of a champagne bottle's structural weakness at the neck, \
+	improving their proficiency at being a show-off at officer parties."
+	skill_icon = "bottle-droplet"
+	activate_message = span_notice("You feel a new understanding of champagne bottles and methods on how to remove their corks.")
+	deactivate_message = span_notice("The knowledge of the subtle physics residing inside champagne bottles fades from your mind.")
+
+/obj/item/skillchip/brainwashing
+	name = "suspicious skillchip"
+	auto_traits = list(TRAIT_BRAINWASHING)
+	skill_name = "Brainwashing"
+	skill_description = "WARNING: The integrity of this chip is compromised. Please discard this skillchip."
+	skill_icon = "soap"
+	activate_message = span_notice("...But all at once it comes to you... something involving putting a brain in a washing machine?")
+	deactivate_message = span_warning("All knowledge of the secret brainwashing technique is GONE.")
+
+/obj/item/skillchip/brainwashing/examine(mob/user)
+	. = ..()
+	. += span_warning("It seems to have been corroded over time, putting this in your head may not be the best idea...")
+
+/obj/item/skillchip/brainwashing/on_activate(mob/living/carbon/user, silent = FALSE)
+	to_chat(user, span_danger("You get a pounding headache as the chip sends corrupt memories into your head!"))
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	. = ..()
+
+/obj/item/skillchip/chefs_kiss
+	name = "K1SS skillchip"
+	auto_traits = list(TRAIT_CHEF_KISS)
+	skill_name = "Chef's Kiss"
+	skill_description = "Allows you to kiss food you've created to make them with love."
+	skill_icon = "cookie"
+	activate_message = span_notice("You recall learning from your grandmother how they baked their cookies with love.")
+	deactivate_message = span_notice("You forget all memories imparted upon you by your grandmother. Were they even your real grandma?")
+
+#undef SKILLCHIP_CATEGORY_GENERAL

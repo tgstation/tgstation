@@ -33,7 +33,7 @@
 	icon_state = "pipe-j2s"
 	initialize_dirs = DISP_DIR_LEFT | DISP_DIR_FLIP
 
-/obj/structure/disposalpipe/sorting/mail/Initialize()
+/obj/structure/disposalpipe/sorting/mail/Initialize(mapload)
 	. = ..()
 	// Generate a list of soring tags.
 	if(sortType)

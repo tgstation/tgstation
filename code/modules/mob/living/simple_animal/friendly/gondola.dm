@@ -17,12 +17,12 @@
 	response_harm_simple = "kick"
 	faction = list("gondola")
 	turns_per_move = 10
-	icon = 'icons/mob/gondolas.dmi'
+	icon = 'icons/mob/simple/gondolas.dmi'
 	icon_state = "gondola"
 	icon_living = "gondola"
 	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1, /obj/item/food/meat/slab/gondola = 1)
 	//Gondolas aren't affected by cold.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	maxHealth = 200
@@ -31,7 +31,7 @@
 
 	//Gondolas don't make footstep sounds
 
-/mob/living/simple_animal/pet/gondola/Initialize()
+/mob/living/simple_animal/pet/gondola/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "smiles!")
 	if (!(istype(src, /mob/living/simple_animal/pet/gondola/gondolapod)))
@@ -60,12 +60,8 @@
 	add_overlay(eyes_overlay)
 	add_overlay(moustache_overlay)
 
-/mob/living/simple_animal/pet/gondola/IsVocal() //Gondolas are the silent walker.
-	return FALSE
-
-/// Special handling for gondolas, as they don't use icon_states and instead rely on overlays. The parent of this proc deletes all our overlays, so we're overriding it.
-/mob/living/simple_animal/pet/gondola/regenerate_icons()
-	return
+/mob/living/simple_animal/pet/gondola/can_speak(allow_mimes = FALSE)
+	return FALSE // Gondolas are the silent walker.
 
 #undef GONDOLA_HEIGHT
 #undef GONDOLA_COLOR

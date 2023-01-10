@@ -68,6 +68,21 @@
 
 	return serialization
 
+/// Updates the log for the current snapshots.
+/datum/game_mode/dynamic/proc/update_log()
+	var/list/serialized = list()
+	serialized["threat_level"] = threat_level
+	serialized["round_start_budget"] = initial_round_start_budget
+	serialized["mid_round_budget"] = threat_level - initial_round_start_budget
+	serialized["shown_threat"] = shown_threat
+
+	var/list/serialized_snapshots = list()
+	for (var/datum/dynamic_snapshot/snapshot as anything in snapshots)
+		serialized_snapshots += list(snapshot.to_list())
+	serialized["snapshots"] = serialized_snapshots
+
+	rustg_file_write(json_encode(serialized), "[GLOB.log_directory]/dynamic.json")
+
 /// Creates a new snapshot with the given rulesets chosen, and writes to the JSON output.
 /datum/game_mode/dynamic/proc/new_snapshot(datum/dynamic_ruleset/ruleset_chosen)
 	var/datum/dynamic_snapshot/new_snapshot = new
@@ -83,16 +98,4 @@
 
 	LAZYADD(snapshots, new_snapshot)
 
-	var/list/serialized = list()
-	serialized["threat_level"] = threat_level
-	serialized["round_start_budget"] = initial_round_start_budget
-	serialized["mid_round_budget"] = threat_level - initial_round_start_budget
-	serialized["shown_threat"] = shown_threat
-
-	var/list/serialized_snapshots = list()
-	for (var/_snapshot in snapshots)
-		var/datum/dynamic_snapshot/snapshot = _snapshot
-		serialized_snapshots += list(snapshot.to_list())
-	serialized["snapshots"] = serialized_snapshots
-
-	rustg_file_write(json_encode(serialized), "[GLOB.log_directory]/dynamic.json")
+	update_log()

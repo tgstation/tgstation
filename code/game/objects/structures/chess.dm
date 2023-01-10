@@ -8,11 +8,15 @@
 	max_integrity = 100
 
 /obj/structure/chess/wrench_act(mob/user, obj/item/tool)
+	if(flags_1 & HOLOGRAM_1)
+		balloon_alert(user, "it goes right through!")
+		return TRUE
 	to_chat(user, span_notice("You start to take apart the chess piece."))
 	if(!do_after(user, 0.5 SECONDS, target = src))
 		return TRUE
 	var/obj/item/stack/sheet/iron/metal_sheets = new (drop_location(), 2)
-	metal_sheets.add_fingerprint(user)
+	if (!QDELETED(metal_sheets))
+		metal_sheets.add_fingerprint(user)
 	tool.play_tool_sound(src)
 	qdel(src)
 	return TRUE

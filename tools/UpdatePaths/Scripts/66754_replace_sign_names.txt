@@ -1,0 +1,17 @@
+/obj/structure/sign/warning/securearea : /obj/structure/sign/warning/secure_area {@OLD}
+/obj/structure/sign/warning/electricshock : /obj/structure/sign/warning/electric_shock {@OLD}
+/obj/structure/sign/warning/nosmoking : /obj/structure/sign/warning/no_smoking {@OLD}
+/obj/structure/sign/warning/nosmoking/circle : /obj/structure/sign/warning/no_smoking/circle {@OLD}
+/obj/structure/sign/warning/yessmoking/circle : /obj/structure/sign/warning/yes_smoking/circle {@OLD}
+/obj/structure/sign/warning/enginesafety : /obj/structure/sign/warning/engine_safety {@OLD}
+/obj/structure/sign/warning/testchamber : /obj/structure/sign/warning/test_chamber {@OLD}
+/obj/structure/sign/warning/firingrange : /obj/structure/sign/warning/firing_range {@OLD}
+/obj/structure/sign/warning/coldtemp : /obj/structure/sign/warning/cold_temp {@OLD}
+/obj/structure/sign/warning/hottemp : /obj/structure/sign/warning/hot_temp {@OLD}
+/obj/structure/sign/warning/gasmask : /obj/structure/sign/warning/gas_mask {@OLD}
+/obj/structure/sign/warning/chemdiamond : /obj/structure/sign/warning/chem_diamond {@OLD}
+/obj/structure/sign/warning/radshelter : /obj/structure/sign/warning/rad_shelter {@OLD}
+
+/obj/structure/sign/departments/examroom : /obj/structure/sign/departments/exam_room {@OLD}
+/obj/structure/sign/departments/mait : /obj/structure/sign/departments/maint {@OLD}
+/obj/structure/sign/departments/mait/alt : /obj/structure/sign/departments/maint/alt {@OLD}

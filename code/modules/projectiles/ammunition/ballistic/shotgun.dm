@@ -34,6 +34,11 @@
 	icon_state = "ishell"
 	projectile_type = /obj/projectile/bullet/incendiary/shotgun
 
+/obj/item/ammo_casing/shotgun/incendiary/no_trail
+	name = "precision incendiary slug"
+	desc = "An incendiary-coated shotgun slug, specially treated to only ignite on impact."
+	projectile_type = /obj/projectile/bullet/incendiary/shotgun/no_trail
+
 /obj/item/ammo_casing/shotgun/dragonsbreath
 	name = "dragonsbreath shell"
 	desc = "A shotgun shell which fires a spread of incendiary pellets."
@@ -53,7 +58,7 @@
 	name = "meteorslug shell"
 	desc = "A shotgun shell rigged with CMC technology, which launches a massive slug when fired."
 	icon_state = "mshell"
-	projectile_type = /obj/projectile/bullet/shotgun_meteorslug
+	projectile_type = /obj/projectile/bullet/cannonball/meteorslug
 
 /obj/item/ammo_casing/shotgun/pulseslug
 	name = "pulse slug"
@@ -80,10 +85,10 @@
 /obj/item/ammo_casing/shotgun/rubbershot
 	name = "rubber shot"
 	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
-	icon_state = "bshell"
+	icon_state = "rshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
 	pellets = 6
-	variance = 25
+	variance = 20
 	custom_materials = list(/datum/material/iron=4000)
 
 /obj/item/ammo_casing/shotgun/incapacitate
@@ -129,12 +134,12 @@
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun dart"
-	desc = "A dart for use in shotguns. Can be injected with up to 30 units of any chemical."
+	desc = "A dart for use in shotguns. Can be injected with up to 15 units of any chemical."
 	icon_state = "cshell"
 	projectile_type = /obj/projectile/bullet/dart
-	var/reagent_amount = 30
+	var/reagent_amount = 15
 
-/obj/item/ammo_casing/shotgun/dart/Initialize()
+/obj/item/ammo_casing/shotgun/dart/Initialize(mapload)
 	. = ..()
 	create_reagents(reagent_amount, OPENCONTAINER)
 
@@ -142,9 +147,10 @@
 	return
 
 /obj/item/ammo_casing/shotgun/dart/bioterror
-	desc = "A shotgun dart filled with deadly toxins."
+	desc = "An improved shotgun dart filled with deadly toxins. Can be injected with up to 30 units of any chemical."
+	reagent_amount = 30
 
-/obj/item/ammo_casing/shotgun/dart/bioterror/Initialize()
+/obj/item/ammo_casing/shotgun/dart/bioterror/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 6)
 	reagents.add_reagent(/datum/reagent/toxin/spore, 6)

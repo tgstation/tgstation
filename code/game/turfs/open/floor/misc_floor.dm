@@ -7,7 +7,7 @@
 	floor_tile = /obj/item/stack/tile/circuit
 	var/on = TRUE
 
-/turf/open/floor/circuit/Initialize()
+/turf/open/floor/circuit/Initialize(mapload)
 	SSmapping.nuke_tiles += src
 	update_appearance()
 	. = ..()
@@ -110,11 +110,35 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	slowdown = -0.3
 
-/turf/open/floor/noslip/setup_broken_states()
+/turf/open/floor/noslip/tram_plate
+	name = "linear induction plate"
+	desc = "The linear induction plate that powers the tram."
+	icon_state = "tram_plate"
+	base_icon_state = "tram_plate"
+
+/turf/open/floor/noslip/tram_platform
+	name = "tram platform"
+	desc = "A sturdy looking tram platform."
+	icon_state = "tram_platform"
+	base_icon_state = "tram_platform"
+
+/turf/open/floor/noslip/broken_states()
 	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 
-/turf/open/floor/noslip/setup_burnt_states()
+/turf/open/floor/noslip/burnt_states()
 	return list("noslip-scorched1","noslip-scorched2")
+
+/turf/open/floor/noslip/tram_plate/broken_states()
+	return list("tram_plate-damaged1","tram_plate-damaged2")
+
+/turf/open/floor/noslip/tram_plate/burnt_states()
+	return list("tram_plate-scorched1","tram_plate-scorched2")
+
+/turf/open/floor/noslip/tram_platform/broken_states()
+	return list("tram_platform-damaged1","tram_platform-damaged2")
+
+/turf/open/floor/noslip/tram_platform/burnt_states()
+	return list("tram_platform-scorched1","tram_platform-scorched2")
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -149,7 +173,7 @@
 	floor_tile = /obj/item/stack/tile/bronze/flat
 
 /turf/open/floor/bronze/filled
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "clockwork_floor_filled"
 	floor_tile = /obj/item/stack/tile/bronze/filled
 
 /turf/open/floor/bronze/filled/lavaland
@@ -178,7 +202,7 @@
 	custom_materials = list(/datum/material/plastic=500)
 	floor_tile = /obj/item/stack/tile/plastic
 
-/turf/open/floor/plastic/setup_broken_states()
+/turf/open/floor/plastic/broken_states()
 	return list("plastic-damaged1","plastic-damaged2")
 
 /turf/open/floor/eighties
@@ -187,7 +211,7 @@
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
 
-/turf/open/floor/eighties/setup_broken_states()
+/turf/open/floor/eighties/broken_states()
 	return list("eighties_damaged")
 
 /turf/open/floor/eighties/red
@@ -196,19 +220,27 @@
 	icon_state = "eightiesred"
 	floor_tile = /obj/item/stack/tile/eighties/red
 
-/turf/open/floor/eighties/red/setup_broken_states()
+/turf/open/floor/eighties/red/broken_states()
 	return list("eightiesred_damaged")
 
 /turf/open/floor/plating/rust
-	name = "rusted plating"
-	desc = "Corrupted steel."
-	icon_state = "plating_rust"
+	//SDMM supports colors, this is simply for easier mapping
+	//and should be removed on initialize
+	color = COLOR_BROWN
 
-/turf/open/floor/plating/rust/plasma
-	initial_gas_mix = "plasma=104;TEMP=293.15"
+/turf/open/floor/plating/rust/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/rust)
+	color = null
 
-/turf/open/floor/plating/rust/rust_heretic_act()
-	return
+/turf/open/floor/plating/plasma
+	initial_gas_mix = ATMOS_TANK_PLASMA
+
+/turf/open/floor/plating/plasma/rust/Initialize(mapload)
+	. = ..()
+	// Because this is a fluff turf explicitly for KiloStation it doesn't make sense to ChangeTurf like usual
+	// Especially since it looks like we don't even change the default icon/iconstate???
+	AddElement(/datum/element/rust)
 
 /turf/open/floor/stone
 	name = "stone brick floor"
@@ -245,7 +277,7 @@
 	base_icon_state = "cult"
 	floor_tile = /obj/item/stack/tile/cult
 
-/turf/open/floor/cult/setup_broken_states()
+/turf/open/floor/cult/broken_states()
 	return list("cultdamage","cultdamage2","cultdamage3","cultdamage4","cultdamage5","cultdamage6","cultdamage7")
 
 /turf/open/floor/cult/narsie_act()

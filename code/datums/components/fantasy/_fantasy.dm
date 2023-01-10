@@ -80,7 +80,7 @@
 
 	var/usedSlots = NONE
 	for(var/i in 1 to max(1, abs(quality))) // We want at least 1 affix applied
-		var/datum/fantasy_affix/affix = pickweight(affixListing)
+		var/datum/fantasy_affix/affix = pick_weight(affixListing)
 		if(affix.placement & usedSlots)
 			continue
 		if(!(affix.alignment & alignment))
@@ -104,7 +104,7 @@
 
 	master.force = max(0, master.force + quality)
 	master.throwforce = max(0, master.throwforce + quality)
-	master.armor = master.armor?.modifyAllRatings(quality)
+	master.set_armor(master.get_armor().generate_new_with_modifiers(list(ARMOR_ALL = quality)))
 	master.wound_bonus += quality
 	master.bare_wound_bonus += quality
 
@@ -136,7 +136,7 @@
 
 	master.force = max(0, master.force - quality)
 	master.throwforce = max(0, master.throwforce - quality)
-	master.armor = master.armor?.modifyAllRatings(-quality)
+	master.set_armor(master.get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -quality)))
 	master.wound_bonus -= quality
 	master.bare_wound_bonus -= quality
 

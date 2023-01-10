@@ -3,6 +3,7 @@
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/cleric_mace_worn",
+			"icon_state": "default",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},

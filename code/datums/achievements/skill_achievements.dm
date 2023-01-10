@@ -1,6 +1,5 @@
 /datum/award/achievement/skill
 	category = "Skills"
-	icon = "baseskill"
 
 /datum/award/achievement/skill/legendary_miner
 	name = "Legendary miner"

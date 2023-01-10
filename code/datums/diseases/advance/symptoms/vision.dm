@@ -1,22 +1,12 @@
-/*
-//////////////////////////////////////
-
-Hyphema (Eye bleeding)
-
-	Slightly noticable.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity.
-	Critical Level.
-
-Bonus
-	Causes blindness.
-
-//////////////////////////////////////
+/*Hyphema (Eye bleeding)
+ * Slightly reduces stealth
+ * Tremendously reduces resistance
+ * Tremendously reduces stage speed
+ * Greatly reduces transmissibility
+ * Critical level
+ * Bonus: Causes blindness.
 */
-
 /datum/symptom/visionloss
-
 	name = "Hyphema"
 	desc = "The virus causes inflammation of the retina, leading to eye damage and eventually blindness."
 	stealth = -1
@@ -48,18 +38,18 @@ Bonus
 	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
-	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
 		switch(A.stage)
 			if(1, 2)
 				if(prob(base_message_chance) && !suppress_warning)
 					to_chat(M, span_warning("Your eyes itch."))
 			if(3, 4)
-				to_chat(M, span_warning("<b>Your eyes burn!</b>"))
-				M.blur_eyes(10)
+				to_chat(M, span_boldwarning("Your eyes burn!"))
+				M.set_eye_blur_if_lower(20 SECONDS)
 				eyes.applyOrganDamage(1)
 			else
-				M.blur_eyes(20)
+				M.set_eye_blur_if_lower(40 SECONDS)
 				eyes.applyOrganDamage(5)
 				if(eyes.damage >= 10)
 					M.become_nearsighted(EYE_DAMAGE)

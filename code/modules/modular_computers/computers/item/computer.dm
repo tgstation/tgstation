@@ -1,80 +1,167 @@
-// This is the base type that does all the hardware stuff.
-// Other types expand it - tablets use a direct subtypes, and
-// consoles and laptops use "procssor" item that is held inside machinery piece
+GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
+
+// This is the base type of computer
+// Other types expand it - tablets and laptops are subtypes
+// consoles use "procssor" item that is held inside it.
 /obj/item/modular_computer
 	name = "modular microcomputer"
 	desc = "A small portable microcomputer."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "laptop-open"
+	icon_state = "laptop"
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/item_modular_computer
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
-	var/enabled = 0 // Whether the computer is turned on.
-	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
-	var/device_theme = "ntos" // Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
-	var/datum/computer_file/program/active_program = null // A currently active program running on the computer.
-	var/hardware_flag = 0 // A flag that describes this device type
-	var/last_power_usage = 0
-	var/last_battery_percent = 0 // Used for deciding if battery percentage has chandged
-	var/last_world_time = "00:00"
-	var/list/last_header_icons
-	///Looping sound for when the computer is on
+	///The ID currently stored in the computer.
+	var/obj/item/card/id/computer_id_slot
+	///The disk in this PDA. If set, this will be inserted on Initialize.
+	var/obj/item/computer_disk/inserted_disk
+	///The power cell the computer uses to run on.
+	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
+	///A pAI currently loaded into the modular computer.
+	var/obj/item/pai_card/inserted_pai
+
+	///The amount of storage space the computer starts with.
+	var/max_capacity = 128
+	///The amount of storage space we've got filled
+	var/used_capacity = 0
+	///List of stored files on this drive. Use `store_file` and `remove_file` instead of modifying directly!
+	var/list/datum/computer_file/stored_files = list()
+
+	///Non-static list of programs the computer should recieve on Initialize.
+	var/list/datum/computer_file/starting_programs = list()
+	///Static list of default programs that come with ALL computers, here so computers don't have to repeat this.
+	var/static/list/datum/computer_file/default_programs = list(
+		/datum/computer_file/program/computerconfig,
+		/datum/computer_file/program/ntnetdownload,
+		/datum/computer_file/program/filemanager,
+	)
+
+	///The program currently active on the tablet.
+	var/datum/computer_file/program/active_program
+	///Idle programs on background. They still receive process calls but can't be interacted with.
+	var/list/idle_threads = list()
+	/// Amount of programs that can be ran at once
+	var/max_idle_programs = 2
+
+	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
+	var/hardware_flag = NONE
+//	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
+
+	///The theme, used for the main menu and file browser apps.
+	var/device_theme = "ntos"
+
+	///Bool on whether the computer is currently active or not.
+	var/enabled = FALSE
+	///If the screen is open, only used by laptops.
+	var/screen_on = TRUE
+
+	///Looping sound for when the computer is on.
 	var/datum/looping_sound/computer/soundloop
 	///Whether or not this modular computer uses the looping sound
 	var/looping_sound = TRUE
 
-	var/base_active_power_usage = 50 // Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
-	var/base_idle_power_usage = 5 // Power usage when the computer is idle and screen is off (currently only applies to laptops)
+	///If the computer has a flashlight/LED light built-in.
+	var/has_light = FALSE
+	/// How far the computer's light can reach, is not editable by players.
+	var/comp_light_luminosity = 3
+	/// The built-in light's color, editable by players.
+	var/comp_light_color = "#FFFFFF"
 
-	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
+	///The last recorded amount of power used.
+	var/last_power_usage = 0
+	///Power usage when the computer is open (screen is active) and can be interacted with.
+	var/base_active_power_usage = 75
+	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
+	var/base_idle_power_usage = 5
+
+	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
-	var/icon_state_unpowered = null // Icon state when the computer is turned off.
-	var/icon_state_powered = null // Icon state when the computer is turned on.
-	var/icon_state_menu = "menu" // Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
-	var/display_overlays = TRUE // If FALSE, don't draw overlays on this device at all
-	var/max_hardware_size = 0 // Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
-	var/steel_sheet_cost = 5 // Amount of steel sheets refunded when disassembling an empty frame of this computer.
+	///If set, what the icon_state will be if the computer is unpowered.
+	var/icon_state_unpowered
+	///If set, what the icon_state will be if the computer is powered.
+	var/icon_state_powered
+	///Icon state overlay when the computer is turned on, but no program is loaded (programs override this).
+	var/icon_state_menu = "menu"
 
-	/// List of "connection ports" in this computer and the components with which they are plugged
-	var/list/all_components = list()
-	/// Lazy List of extra hardware slots that can be used modularly.
-	var/list/expansion_bays
-	/// Number of total expansion bays this computer has available.
-	var/max_bays = 0
+	///The full name of the stored ID card's identity. These vars should probably be on the PDA.
+	var/saved_identification
+	///The job title of the stored ID card
+	var/saved_job
 
-	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
-	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
-	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
-	var/comp_light_luminosity = 3 //The brightness of that light
-	var/comp_light_color //The color of that light
+	///The 'computer' itself, as an obj. Primarily used for Adjacent() and UI visibility checks, especially for computers.
+	var/obj/physical
+	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
+	var/steel_sheet_cost = 5
 
+	///If hit by a Clown virus, remaining honks left until it stops.
+	var/honkvirus_amount = 0
+	///Whether the PDA can still use NTNet while out of NTNet's reach.
+	var/long_ranged = FALSE
+	/// Allow people with chunky fingers to use?
+	var/allow_chunky = FALSE
 
-/obj/item/modular_computer/Initialize()
+	///The amount of paper currently stored in the PDA
+	var/stored_paper = 10
+	///The max amount of paper that can be held at once.
+	var/max_paper = 30
+
+/datum/armor/item_modular_computer
+	bullet = 20
+	laser = 20
+	energy = 100
+
+/obj/item/modular_computer/Initialize(mapload)
 	. = ..()
+
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
-	comp_light_color = "#FFFFFF"
-	idle_threads = list()
+	set_light_color(comp_light_color)
+	set_light_range(comp_light_luminosity)
 	if(looping_sound)
-		soundloop = new(list(src), enabled)
+		soundloop = new(src, enabled)
+	UpdateDisplay()
+	if(has_light)
+		add_item_action(/datum/action/item_action/toggle_computer_light)
+	if(inserted_disk)
+		inserted_disk = new inserted_disk(src)
+	if(internal_cell)
+		internal_cell = new internal_cell(src)
+
 	update_appearance()
+	register_context()
+	init_network_id(NETWORK_TABLETS)
+	Add_Messenger()
+	install_default_programs()
+
+/obj/item/modular_computer/proc/install_default_programs()
+	SHOULD_CALL_PARENT(FALSE)
+	for(var/programs in default_programs + starting_programs)
+		var/datum/computer_file/program/program_type = new programs
+		store_file(program_type)
 
 /obj/item/modular_computer/Destroy()
-	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
+	wipe_program(forced = TRUE)
+	for(var/datum/computer_file/program/idle as anything in idle_threads)
+		idle.kill_program(TRUE)
+	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
-	for(var/H in all_components)
-		var/obj/item/computer_hardware/CH = all_components[H]
-		if(CH.holder == src)
-			CH.on_remove(src)
-			CH.holder = null
-			all_components.Remove(CH.device_type)
-			qdel(CH)
+	QDEL_LIST(stored_files)
+	Remove_Messenger()
+
+	if(istype(inserted_disk))
+		QDEL_NULL(inserted_disk)
+	if(istype(inserted_pai))
+		QDEL_NULL(inserted_pai)
+	if(computer_id_slot)
+		QDEL_NULL(computer_id_slot)
+
 	physical = null
 	return ..()
 
@@ -82,10 +169,20 @@
 	if(active_program?.tap(A, user, params))
 		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
-		addtimer(CALLBACK(src, .proc/play_ping), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
+		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
+// shameless copy of newscaster photo saving
+
+/obj/item/modular_computer/proc/save_photo(icon/photo)
+	var/photo_file = copytext_char(md5("\icon[photo]"), 1, 6)
+	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
+		//Clean up repeated frames
+		var/icon/clean = new /icon()
+		clean.Insert(photo, "", SOUTH, 1, 0)
+		fcopy(clean, "[GLOB.log_directory]/photos/[photo_file].png")
+	return photo_file
 
 /**
  * Plays a ping sound.
@@ -95,107 +192,115 @@
 /obj/item/modular_computer/proc/play_ping()
 	playsound(loc, 'sound/machines/ping.ogg', get_clamped_volume(), FALSE, -1)
 
+/obj/item/modular_computer/get_cell()
+	return internal_cell
+
 /obj/item/modular_computer/AltClick(mob/user)
-	..()
+	. = ..()
 	if(issilicon(user))
-		return
+		return FALSE
+	if(!user.canUseTopic(src, be_close = TRUE))
+		return FALSE
 
-	if(user.canUseTopic(src, BE_CLOSE))
-		var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-		return (card_slot2?.try_eject(user) || card_slot?.try_eject(user)) //Try the secondary one first.
+	if(RemoveID(user))
+		return TRUE
 
-// Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
+	if(istype(inserted_pai)) // Remove pAI
+		user.put_in_hands(inserted_pai)
+		balloon_alert(user, "removed pAI")
+		inserted_pai = null
+		update_appearance(UPDATE_ICON)
+		return TRUE
+
+// Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(card_slot)
-		return card_slot.GetAccess()
+	if(computer_id_slot)
+		return computer_id_slot.GetAccess()
 	return ..()
 
 /obj/item/modular_computer/GetID()
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-
-	var/obj/item/card/id/first_id = card_slot?.GetID()
-	var/obj/item/card/id/second_id = card_slot2?.GetID()
-
-	// We have two IDs, pick the one with the most command accesses, preferring the primary slot.
-	if(first_id && second_id)
-		var/first_id_tally = SSid_access.tally_access(first_id, ACCESS_FLAG_COMMAND)
-		var/second_id_tally = SSid_access.tally_access(second_id, ACCESS_FLAG_COMMAND)
-
-		return (first_id_tally >= second_id_tally) ? first_id : second_id
-
-	// If we don't have both ID slots filled, pick the one that is filled.
-	if(first_id)
-		return first_id
-	if(second_id)
-		return second_id
-
-	// Otherwise, we have no ID at all.
+	if(computer_id_slot)
+		return computer_id_slot
 	return ..()
 
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
+	if(computer_id_slot)
+		. += "\The [src] is displaying [computer_id_slot]."
+		. += computer_id_slot.get_id_examine_strings(user)
 
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-
-	var/obj/item/card/id/id_card1 = card_slot?.GetID()
-	var/obj/item/card/id/id_card2 = card_slot2?.GetID()
-
-	if(id_card1 || id_card2)
-		if(id_card1 && id_card2)
-			. += "\The [src] is displaying [id_card1] and [id_card2]."
-			var/list/id_icons = list()
-			id_icons += id_card1.get_id_examine_strings(user)
-			id_icons += id_card2.get_id_examine_strings(user)
-			. += id_icons.Join(" ")
-		else if(id_card1)
-			. += "\The [src] is displaying [id_card1]."
-			. += id_card1.get_id_examine_strings(user)
-		else
-			. += "\The [src] is displaying [id_card2]."
-			. += id_card2.get_id_examine_strings(user)
-
-/obj/item/modular_computer/RemoveID()
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-
-	var/removed_id = (card_slot2?.try_eject() || card_slot?.try_eject())
-	if(removed_id)
-		if(ishuman(loc))
-			var/mob/living/carbon/human/human_wearer = loc
-			if(human_wearer.wear_id == src)
-				human_wearer.sec_hud_set_ID()
-		update_slot_icon()
-		return removed_id
-
-	return ..()
-
-/obj/item/modular_computer/InsertID(obj/item/inserting_item)
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	if(!(card_slot || card_slot2))
+/obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
+	if(!stored_paper)
 		return FALSE
 
-	var/obj/item/card/inserting_id = inserting_item.RemoveID()
-	if(!inserting_id)
+	var/obj/item/paper/printed_paper = new /obj/item/paper(drop_location())
+	printed_paper.add_raw_text(text_to_print)
+	if(paper_title)
+		printed_paper.name = paper_title
+	printed_paper.update_appearance()
+	stored_paper--
+	return TRUE
+
+/**
+ * InsertID
+ * Attempt to insert the ID in either card slot.
+ * Args:
+ * inserting_id - the ID being inserted
+ * user - The person inserting the ID
+ */
+/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
+	//all slots taken
+	if(computer_id_slot)
 		return FALSE
 
-	if((card_slot?.try_insert(inserting_id)) || (card_slot2?.try_insert(inserting_id)))
-		if(ishuman(loc))
-			var/mob/living/carbon/human/human_wearer = loc
-			if(human_wearer.wear_id == src)
-				human_wearer.sec_hud_set_ID()
-		update_slot_icon()
-		return TRUE
+	computer_id_slot = inserting_id
+	if(user)
+		if(!user.transferItemToLoc(inserting_id, src))
+			return FALSE
+		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
+	else
+		inserting_id.forceMove(src)
 
-	return FALSE
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
+	update_appearance()
+	update_slot_icon()
+	return TRUE
+
+/**
+ * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
+ * Args:
+ * user - The mob trying to remove the ID, if there is one
+ */
+/obj/item/modular_computer/RemoveID(mob/user)
+	if(!computer_id_slot)
+		return ..()
+
+	if(user)
+		if(!issilicon(user) && in_range(src, user))
+			user.put_in_hands(computer_id_slot)
+		balloon_alert(user, "removed ID")
+		to_chat(user, span_notice("You remove the card from the card slot."))
+	else
+		computer_id_slot.forceMove(drop_location())
+
+	computer_id_slot = null
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
+	update_slot_icon()
+	update_appearance()
+	return TRUE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /atom/movable/screen)) && usr.canUseTopic(src, BE_CLOSE))
+	if((!istype(over_object, /atom/movable/screen)) && usr.canUseTopic(src, be_close = TRUE))
 		return attack_self(M)
 	return ..()
 
@@ -219,8 +324,7 @@
 		return FALSE
 	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling
 	var/newemag = FALSE
-	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
-	for(var/datum/computer_file/program/app in drive.stored_files)
+	for(var/datum/computer_file/program/app in stored_files)
 		if(!istype(app))
 			continue
 		if(app.run_emag())
@@ -233,28 +337,91 @@
 
 /obj/item/modular_computer/examine(mob/user)
 	. = ..()
-	if(obj_integrity <= integrity_failure * max_integrity)
-		. += span_danger("It is heavily damaged!")
-	else if(obj_integrity < max_integrity)
-		. += span_warning("It is damaged.")
+	var/healthpercent = round((atom_integrity/max_integrity) * 100, 1)
+	switch(healthpercent)
+		if(50 to 99)
+			. += span_info("It looks slightly damaged.")
+		if(25 to 50)
+			. += span_info("It appears heavily damaged.")
+		if(0 to 25)
+			. += span_warning("It's falling apart!")
 
-	. += get_modular_computer_parts_examine(user)
+	if(long_ranged)
+		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
+	. += span_notice("It has [max_capacity] GQ of storage capacity.")
+
+	if(computer_id_slot)
+		if(Adjacent(user))
+			. += "It has \the [computer_id_slot] card installed in its card slot."
+		else
+			. += "Its identification card slot is currently occupied."
+		. += span_info("Alt-click [src] to eject the identification card.")
+
+/obj/item/modular_computer/examine_more(mob/user)
+	. = ..()
+	. += "Storage capacity: [used_capacity]/[max_capacity]GQ"
+
+	for(var/datum/computer_file/app_examine as anything in stored_files)
+		if(app_examine.on_examine(src, user))
+			. += app_examine.on_examine(src, user)
+
+	if(Adjacent(user))
+		. += span_notice("Paper level: [stored_paper] / [max_paper].")
+
+/obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(computer_id_slot) // ID get removed first before pAIs
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
+		. = CONTEXTUAL_SCREENTIP_SET
+	else if(inserted_pai)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove pAI"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(inserted_disk)
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
+		. = CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
 
 /obj/item/modular_computer/update_icon_state()
+	if(!icon_state_powered || !icon_state_unpowered) //no valid icon, don't update.
+		return ..()
 	icon_state = enabled ? icon_state_powered : icon_state_unpowered
 	return ..()
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	if(!display_overlays)
+	var/init_icon = initial(icon)
+	if(!init_icon)
 		return
 
 	if(enabled)
-		. += active_program?.program_icon_state || icon_state_menu
-	if(obj_integrity <= integrity_failure * max_integrity)
-		. += "bsod"
-		. += "broken"
+		. += active_program ? mutable_appearance(init_icon, active_program.program_icon_state) : mutable_appearance(init_icon, icon_state_menu)
+	if(atom_integrity <= integrity_failure * max_integrity)
+		. += mutable_appearance(init_icon, "bsod")
+		. += mutable_appearance(init_icon, "broken")
 
+/obj/item/modular_computer/Exited(atom/movable/gone, direction)
+	if(internal_cell == gone)
+		internal_cell = null
+		if(enabled && !use_power())
+			shutdown_computer()
+	if(computer_id_slot == gone)
+		computer_id_slot = null
+		update_slot_icon()
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			human_wearer.sec_hud_set_ID()
+	if(inserted_pai == gone)
+		inserted_pai = null
+	if(inserted_disk == gone)
+		inserted_disk = null
+		update_appearance(UPDATE_ICON)
+	return ..()
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /obj/item/modular_computer/interact(mob/user)
@@ -263,30 +430,36 @@
 	else
 		turn_on(user)
 
-/obj/item/modular_computer/proc/turn_on(mob/user)
+/obj/item/modular_computer/CtrlShiftClick(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(!inserted_disk)
+		return
+	user.put_in_hands(inserted_disk)
+	inserted_disk = null
+	playsound(src, 'sound/machines/card_slide.ogg', 50)
+
+/obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
-	if(obj_integrity <= integrity_failure * max_integrity)
+	if(atom_integrity <= integrity_failure * max_integrity)
 		if(issynth)
 			to_chat(user, span_warning("You send an activation signal to \the [src], but it responds with an error code. It must be damaged."))
 		else
 			to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
-	// If we have a recharger, enable it automatically. Lets computer without a battery work.
-	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
-	if(recharger)
-		recharger.enabled = 1
-
-	if(all_components[MC_CPU] && use_power()) // use_power() checks if the PC is powered
+	if(use_power()) // use_power() checks if the PC is powered
 		if(issynth)
 			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
 		else
 			to_chat(user, span_notice("You press the power button and start up \the [src]."))
 		if(looping_sound)
 			soundloop.start()
-		enabled = 1
+		enabled = TRUE
 		update_appearance()
-		ui_interact(user)
+		if(open_ui)
+			ui_interact(user)
 		return TRUE
 	else // Unpowered
 		if(issynth)
@@ -301,40 +474,35 @@
 		last_power_usage = 0
 		return
 
-	if(obj_integrity <= integrity_failure * max_integrity)
+	if(atom_integrity <= integrity_failure * max_integrity)
 		shutdown_computer()
 		return
 
 	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
-		active_program.event_networkfailure(0) // Active program requires NTNet to run but we've just lost connection. Crash.
+		active_program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
 
-	for(var/I in idle_threads)
-		var/datum/computer_file/program/P = I
-		if(P.requires_ntnet && !get_ntnet_status(P.requires_ntnet_feature))
-			P.event_networkfailure(1)
+	for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
+		if(idle_programs.program_state == PROGRAM_STATE_KILLED)
+			idle_threads.Remove(idle_programs)
+			continue
+		idle_programs.process_tick(delta_time)
+		idle_programs.ntnet_status = get_ntnet_status(idle_programs.requires_ntnet_feature)
+		if(idle_programs.requires_ntnet && !idle_programs.ntnet_status)
+			idle_programs.event_networkfailure(TRUE)
 
 	if(active_program)
-		if(active_program.program_state != PROGRAM_STATE_KILLED)
+		if(active_program.program_state == PROGRAM_STATE_KILLED)
+			active_program = null
+		else
 			active_program.process_tick(delta_time)
 			active_program.ntnet_status = get_ntnet_status()
-		else
-			active_program = null
-
-	for(var/I in idle_threads)
-		var/datum/computer_file/program/P = I
-		if(P.program_state != PROGRAM_STATE_KILLED)
-			P.process_tick(delta_time)
-			P.ntnet_status = get_ntnet_status()
-		else
-			idle_threads.Remove(P)
 
 	handle_power(delta_time) // Handles all computer power interaction
-	//check_update_ui_need()
 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
  *
- * After checking tha the requesting program is allowed to send an alert, creates
+ * After checking that the requesting program is allowed to send an alert, creates
  * a visible message of the requested text alongside a soundbeep. This proc adds
  * text to indicate that the message is coming from this device and the program
  * on it, so the supplied text should be the exact message and ending punctuation.
@@ -343,27 +511,31 @@
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
-		return
+		return FALSE
 	playsound(src, sound, 50, TRUE)
-	visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
-	var/mob/living/holder = loc
-	if(istype(holder))
-		to_chat(holder, "[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]")
+	loc.visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
+
+/obj/item/modular_computer/proc/ring(ringtone) // bring bring
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
+		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+	else
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+	audible_message("*[ringtone]*")
+
+/obj/item/modular_computer/proc/send_sound()
+	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
 	var/list/data = list()
 
 	data["PC_device_theme"] = device_theme
+	data["PC_showbatteryicon"] = !!internal_cell
 
-	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
-	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
-
-	if(battery_module && battery_module.battery)
-		switch(battery_module.battery.percent())
+	if(internal_cell)
+		switch(internal_cell.percent())
 			if(80 to 200) // 100 should be maximal but just in case..
 				data["PC_batteryicon"] = "batt_100.gif"
 			if(60 to 80)
@@ -376,101 +548,155 @@
 				data["PC_batteryicon"] = "batt_20.gif"
 			else
 				data["PC_batteryicon"] = "batt_5.gif"
-		data["PC_batterypercent"] = "[round(battery_module.battery.percent())]%"
-		data["PC_showbatteryicon"] = 1
+		data["PC_batterypercent"] = "[round(internal_cell.percent())]%"
 	else
 		data["PC_batteryicon"] = "batt_5.gif"
 		data["PC_batterypercent"] = "N/C"
-		data["PC_showbatteryicon"] = battery_module ? 1 : 0
-
-	if(recharger && recharger.enabled && recharger.check_functionality() && recharger.use_power(0))
-		data["PC_apclinkicon"] = "charging.gif"
 
 	switch(get_ntnet_status())
-		if(0)
+		if(NTNET_NO_SIGNAL)
 			data["PC_ntneticon"] = "sig_none.gif"
-		if(1)
+		if(NTNET_LOW_SIGNAL)
 			data["PC_ntneticon"] = "sig_low.gif"
-		if(2)
+		if(NTNET_GOOD_SIGNAL)
 			data["PC_ntneticon"] = "sig_high.gif"
-		if(3)
+		if(NTNET_ETHERNET_SIGNAL)
 			data["PC_ntneticon"] = "sig_lan.gif"
 
-	if(idle_threads.len)
+	if(length(idle_threads))
 		var/list/program_headers = list()
-		for(var/I in idle_threads)
-			var/datum/computer_file/program/P = I
-			if(!P.ui_header)
+		for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
+			if(!idle_programs.ui_header)
 				continue
-			program_headers.Add(list(list(
-				"icon" = P.ui_header
-			)))
+			program_headers.Add(list(list("icon" = idle_programs.ui_header)))
 
 		data["PC_programheaders"] = program_headers
 
 	data["PC_stationtime"] = station_time_timestamp()
-	data["PC_hasheader"] = 1
-	data["PC_showexitprogram"] = active_program ? 1 : 0 // Hides "Exit Program" button on mainscreen
+	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD")], [CURRENT_STATION_YEAR]"
+	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
 	return data
+
+///Wipes the computer's current program. Doesn't handle any of the niceties around doing this
+/obj/item/modular_computer/proc/wipe_program(forced)
+	if(!active_program)
+		return
+	active_program.kill_program(forced)
+	active_program = null
 
 // Relays kill program request to currently active program. Use this to quit current program.
 /obj/item/modular_computer/proc/kill_program(forced = FALSE)
-	if(active_program)
-		active_program.kill_program(forced)
-		active_program = null
+	wipe_program(forced)
 	var/mob/user = usr
 	if(user && istype(user))
-		ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
+		//Here to prevent programs sleeping in destroy
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) // Re-open the UI on this computer. It should show the main screen now.
 	update_appearance()
+
+/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program)
+	if(program.computer != src)
+		CRASH("tried to open program that does not belong to this computer")
+
+	if(!program || !istype(program)) // Program not found or it's not executable program.
+		to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
+		return FALSE
+
+	// The program is already running. Resume it.
+	if(program in idle_threads)
+		program.program_state = PROGRAM_STATE_ACTIVE
+		active_program = program
+		program.alert_pending = FALSE
+		idle_threads.Remove(program)
+		update_appearance()
+		updateUsrDialog()
+		return TRUE
+
+	if(!program.is_supported_by_hardware(hardware_flag, 1, user))
+		return FALSE
+
+	if(idle_threads.len > max_idle_programs)
+		to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
+		return FALSE
+
+	if(program.requires_ntnet && !get_ntnet_status(program.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
+		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
+		return FALSE
+
+	if(!program.on_start(user))
+		return FALSE
+
+	active_program = program
+	program.alert_pending = FALSE
+	update_appearance()
+	updateUsrDialog()
+	return TRUE
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
-	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
-	if(network_card)
-		return network_card.get_signal(specific_action)
-	else
-		return 0
+	// NTNet is down and we are not connected via wired connection. No signal.
+	if(!SSmodular_computers.check_function(specific_action))
+		return NTNET_NO_SIGNAL
+
+	// computers are connected through ethernet
+	if(hardware_flag & PROGRAM_CONSOLE)
+		return NTNET_ETHERNET_SIGNAL
+
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf || !istype(current_turf))
+		return NTNET_NO_SIGNAL
+	if(is_station_level(current_turf.z))
+		if(hardware_flag & PROGRAM_LAPTOP) //laptops can connect to ethernet but they have to be on station for that
+			return NTNET_ETHERNET_SIGNAL
+		return NTNET_GOOD_SIGNAL
+	else if(is_mining_level(current_turf.z))
+		return NTNET_LOW_SIGNAL
+	else if(long_ranged)
+		return NTNET_LOW_SIGNAL
+	return NTNET_NO_SIGNAL
 
 /obj/item/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
 		return FALSE
-	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
 
-	return SSnetworks.add_log(text, network_card.network_id, network_card.hardware_id)
+	return SSnetworks.add_log(text, network_id)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(forced = TRUE)
-		idle_threads.Remove(P)
 	if(looping_sound)
 		soundloop.stop()
-	if(loud)
+	if(physical && loud)
 		physical.visible_message(span_notice("\The [src] shuts down."))
-	enabled = 0
+	enabled = FALSE
 	update_appearance()
+
+/obj/item/modular_computer/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
+		toggle_flashlight()
+		return
+
+	return ..()
 
 /**
  * Toggles the computer's flashlight, if it has one.
  *
  * Called from ui_act(), does as the name implies.
- * It is seperated from ui_act() to be overwritten as needed.
+ * It is separated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight()
 	if(!has_light)
 		return FALSE
 	set_light_on(!light_on)
-	if(light_on)
-		set_light(comp_light_luminosity, 1, comp_light_color)
-	else
-		set_light(0)
+	update_appearance()
+	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	return TRUE
 
 /**
  * Sets the computer's light color, if it has a light.
  *
  * Called from ui_act(), this proc takes a color string and applies it.
- * It is seperated from ui_act() to be overwritten as needed.
+ * It is separated from ui_act() to be overwritten as needed.
  * Arguments:
  ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
 */
@@ -479,82 +705,129 @@
 		return FALSE
 	comp_light_color = color
 	set_light_color(color)
-	update_light()
 	return TRUE
 
-/obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
-	if(!all_components.len)
-		to_chat(user, span_warning("This device doesn't have any components installed."))
+/obj/item/modular_computer/proc/UpdateDisplay()
+	if(!saved_identification && !saved_job)
+		name = initial(name)
 		return
-	var/list/component_names = list()
-	for(var/h in all_components)
-		var/obj/item/computer_hardware/H = all_components[h]
-		component_names.Add(H.name)
+	name = "[saved_identification] ([saved_job])"
 
-	var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in sortList(component_names)
-
-	if(!choice)
-		return
-
-	if(!Adjacent(user))
-		return
-
-	var/obj/item/computer_hardware/H = find_hardware_by_name(choice)
-
-	if(!H)
-		return
-
-	uninstall_component(H, user)
-	return
-
-
-/obj/item/modular_computer/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
 	// Check for ID first
-	if(istype(W, /obj/item/card/id) && InsertID(W))
+	if(isidcard(attacking_item) && InsertID(attacking_item, user))
 		return
 
-	// Insert items into the components
-	for(var/h in all_components)
-		var/obj/item/computer_hardware/H = all_components[h]
-		if(H.try_insert(W, user))
+	// Check for cash next
+	if(computer_id_slot && iscash(attacking_item))
+		var/obj/item/card/id/inserted_id = computer_id_slot.GetID()
+		if(inserted_id)
+			inserted_id.attackby(attacking_item, user) // If we do, try and put that attacking object in
 			return
 
-	// Insert new hardware
-	if(istype(W, /obj/item/computer_hardware))
-		if(install_component(W, user))
+	// Inserting a pAI
+	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-
-	if(W.tool_behaviour == TOOL_WRENCH)
-		if(all_components.len)
-			to_chat(user, span_warning("Remove all components from \the [src] before disassembling it."))
-			return
-		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
-		physical.visible_message(span_notice("\The [src] is disassembled by [user]."))
-		relay_qdel()
-		qdel(src)
+		inserted_pai = attacking_item
+		balloon_alert(user, "inserted pai")
+		update_appearance(UPDATE_ICON)
 		return
 
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(obj_integrity == max_integrity)
-			to_chat(user, span_warning("\The [src] does not require repairs."))
+	if(istype(attacking_item, /obj/item/stock_parts/cell))
+		if(ismachinery(loc))
 			return
-
-		if(!W.tool_start_check(user, amount=1))
+		if(internal_cell)
+			to_chat(user, span_warning("You try to connect \the [attacking_item] to \the [src], but its connectors are occupied."))
 			return
-
-		to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
-		if(W.use_tool(src, user, 20, volume=50, amount=1))
-			obj_integrity = max_integrity
-			to_chat(user, span_notice("You repair \the [src]."))
+		if(user && !user.transferItemToLoc(attacking_item, src))
+			return
+		internal_cell = attacking_item
+		to_chat(user, span_notice("You plug \the [attacking_item] to \the [src]."))
 		return
 
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	// Check to see if we have an ID inside, and a valid input for money
-	if(card_slot?.GetID() && iscash(W))
-		var/obj/item/card/id/id = card_slot.GetID()
-		id.attackby(W, user) // If we do, try and put that attacking object in
+	// Check if any Applications need it
+	for(var/datum/computer_file/item_holding_app as anything in stored_files)
+		if(item_holding_app.application_attackby(attacking_item, user))
+			return
+
+	if(istype(attacking_item, /obj/item/paper))
+		if(stored_paper >= max_paper)
+			balloon_alert(user, "no more room!")
+			return
+		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
+			return FALSE
+		balloon_alert(user, "inserted paper")
+		qdel(attacking_item)
+		stored_paper++
 		return
-	..()
+	if(istype(attacking_item, /obj/item/paper_bin))
+		var/obj/item/paper_bin/bin = attacking_item
+		if(bin.total_paper <= 0)
+			balloon_alert(user, "empty bin!")
+			return
+		var/papers_added //just to keep track
+		while((bin.total_paper > 0) && (stored_paper < max_paper))
+			papers_added++
+			stored_paper++
+			bin.remove_paper()
+		if(!papers_added)
+			return
+		balloon_alert(user, "inserted paper")
+		to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
+		bin.update_appearance()
+		return
+
+	// Insert a data disk
+	if(istype(attacking_item, /obj/item/computer_disk))
+		if(!user.transferItemToLoc(attacking_item, src))
+			return
+		inserted_disk = attacking_item
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
+		return
+
+	return ..()
+
+/obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	tool.play_tool_sound(src, user, 20, volume=20)
+	internal_cell?.forceMove(drop_location())
+	computer_id_slot?.forceMove(drop_location())
+	inserted_disk?.forceMove(drop_location())
+	inserted_pai?.forceMove(drop_location())
+	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
+	user.balloon_alert(user, "disassembled")
+	relay_qdel()
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(atom_integrity == max_integrity)
+		to_chat(user, span_warning("\The [src] does not require repairs."))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	if(!tool.tool_start_check(user, amount=1))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
+	if(!tool.use_tool(src, user, 20, volume=50, amount=1))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair \the [src]."))
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/modular_computer/deconstruct(disassembled = TRUE)
+	break_apart()
+	return ..()
+
+/obj/item/modular_computer/proc/break_apart()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		physical.visible_message(span_notice("\The [src] breaks apart!"))
+		var/turf/newloc = get_turf(src)
+		new /obj/item/stack/sheet/iron(newloc, round(steel_sheet_cost / 2))
+	relay_qdel()
 
 // Used by processor to relay qdel() to machinery type.
 /obj/item/modular_computer/proc/relay_qdel()
@@ -565,3 +838,9 @@
 	if(physical && physical != src)
 		return physical.Adjacent(neighbor)
 	return ..()
+
+/obj/item/modular_computer/proc/Add_Messenger()
+	GLOB.TabletMessengers += src
+
+/obj/item/modular_computer/proc/Remove_Messenger()
+	GLOB.TabletMessengers -= src

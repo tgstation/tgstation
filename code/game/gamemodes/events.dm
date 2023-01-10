@@ -1,7 +1,8 @@
 /proc/power_failure()
-	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", ANNOUNCER_POWEROFF)
+	if(GLOB.power_failure_message_cooldown > world.time)
+		priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", ANNOUNCER_POWEROFF)
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
-		if(istype(get_area(S), /area/ai_monitored/turret_protected) || !is_station_level(S.z))
+		if(istype(get_area(S), /area/station/ai_monitored/turret_protected) || !is_station_level(S.z))
 			continue
 		S.charge = 0
 		S.output_level = 0
@@ -9,7 +10,7 @@
 		S.update_appearance()
 		S.power_change()
 
-	for(var/area/A in GLOB.the_station_areas)
+	for(var/area/A as anything in GLOB.the_station_areas)
 		if(!A.requires_power || A.always_unpowered )
 			continue
 		if(GLOB.typecache_powerfailure_safe_areas[A.type])
@@ -29,9 +30,8 @@
 			C.cell.charge = 0
 
 /proc/power_restore()
-
 	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWERON)
-	for(var/obj/machinery/power/apc/C in GLOB.machines)
+	for(var/obj/machinery/power/apc/C in GLOB.apcs_list)
 		if(C.cell && is_station_level(C.z))
 			C.cell.charge = C.cell.maxcharge
 			COOLDOWN_RESET(C, failure_timer)

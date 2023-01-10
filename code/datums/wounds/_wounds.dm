@@ -58,8 +58,12 @@
 	var/damage_mulitplier_penalty = 1
 	/// If set and this wound is applied to a leg, we take this many deciseconds extra per step on this leg
 	var/limp_slowdown
+	/// If this wound has a limp_slowdown and is applied to a leg, it has this chance to limp each step
+	var/limp_chance
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
+	/// Essentially, keeps track of whether or not this wound is capable of bleeding (in case the owner has the NOBLOOD species trait)
+	var/no_bleeding = FALSE
 
 	/// The minimum we need to roll on [/obj/item/bodypart/proc/check_wounding] to begin suffering this wound, see check_wounding_mods() for more
 	var/threshold_minimum
@@ -105,17 +109,17 @@
  * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
  * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
+ * * attack_direction: For bloodsplatters, if relevant
  */
-/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !L.is_organic_limb() || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
+/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null)
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !IS_ORGANIC_LIMB(L) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
 		qdel(src)
 		return
 
-	if(ishuman(L.owner))
-		var/mob/living/carbon/human/H = L.owner
-		if(((wound_flags & BONE_WOUND) && !(HAS_BONE in H.dna.species.species_traits)) || ((wound_flags & FLESH_WOUND) && !(HAS_FLESH in H.dna.species.species_traits)))
-			qdel(src)
-			return
+	// Checks for biological state, to ensure only valid wounds are applied on the limb
+	if(((wound_flags & BONE_WOUND) && !(L.biological_state & BIO_BONE)) || ((wound_flags & FLESH_WOUND) && !(L.biological_state & BIO_FLESH)))
+		qdel(src)
+		return
 
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
@@ -129,12 +133,16 @@
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
+	//it's ok to not typecheck, humans are the only ones that deal with wounds
+	var/mob/living/carbon/human/human_victim = victim
+	no_bleeding = HAS_TRAIT(human_victim, TRAIT_NOBLOOD)
+	update_descriptions()
 	limb.update_wounds()
 	if(status_effect_type)
 		victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
-	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
-		victim.throw_alert("wound", /atom/movable/screen/alert/status_effect/wound)
+	if(!victim.alerts[ALERT_WOUNDED]) // only one alert is shared between all of the wounds
+		victim.throw_alert(ALERT_WOUNDED, /atom/movable/screen/alert/status_effect/wound)
 
 	var/demoted
 	if(old_wound)
@@ -143,21 +151,25 @@
 	if(severity == WOUND_SEVERITY_TRIVIAL)
 		return
 
-	if(!(silent || demoted))
-		var/msg = span_danger("[victim]'s [limb.name] [occur_text]!")
+	if(!silent && !demoted)
+		var/msg = span_danger("[victim]'s [limb.plaintext_zone] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
 		if(severity != WOUND_SEVERITY_MODERATE)
 			msg = "<b>[msg]</b>"
 			vis_dist = DEFAULT_MESSAGE_RANGE
 
-		victim.visible_message(msg, span_userdanger("Your [limb.name] [occur_text]!"), vision_distance = vis_dist)
+		victim.visible_message(msg, span_userdanger("Your [limb.plaintext_zone] [occur_text]!"), vision_distance = vis_dist)
 		if(sound_effect)
 			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
 
+	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)
-		wound_injury(old_wound)
 		second_wind()
+
+// Updates descriptive texts for the wound, in case it can get altered for whatever reason
+/datum/wound/proc/update_descriptions()
+	return
 
 /datum/wound/proc/null_victim()
 	SIGNAL_HANDLER
@@ -169,7 +181,7 @@
 	remove_wound_from_victim()
 	victim = new_victim
 	if(victim)
-		RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/null_victim)
+		RegisterSignal(victim, COMSIG_PARENT_QDELETING, PROC_REF(null_victim))
 
 /datum/wound/proc/source_died()
 	SIGNAL_HANDLER
@@ -193,7 +205,7 @@
 		return
 	LAZYREMOVE(victim.all_wounds, src)
 	if(!victim.all_wounds)
-		victim.clear_alert("wound")
+		victim.clear_alert(ALERT_WOUNDED)
 	SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 
 /**
@@ -205,16 +217,16 @@
  * * new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/slash/severe
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
  */
-/datum/wound/proc/replace_wound(new_type, smited = FALSE)
+/datum/wound/proc/replace_wound(new_type, smited = FALSE, attack_direction = attack_direction)
 	var/datum/wound/new_wound = new new_type
 	already_scarred = TRUE
 	remove_wound(replaced=TRUE)
-	new_wound.apply_wound(limb, old_wound = src, smited = smited)
+	new_wound.apply_wound(limb, old_wound = src, smited = smited, attack_direction = attack_direction)
 	. = new_wound
 	qdel(src)
 
 /// The immediate negative effects faced as a result of the wound
-/datum/wound/proc/wound_injury(datum/wound/old_wound = null)
+/datum/wound/proc/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	return
 
 
@@ -226,15 +238,15 @@
 	if(limb)
 		UnregisterSignal(limb, COMSIG_PARENT_QDELETING)
 	limb = new_value
-	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, .proc/source_died)
+	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, PROC_REF(source_died))
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
-		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, src)
-		REMOVE_TRAIT(old_limb, TRAIT_DISABLED_BY_WOUND, src)
+		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, REF(src))
+		REMOVE_TRAIT(old_limb, TRAIT_DISABLED_BY_WOUND, REF(src))
 	if(limb)
 		if(disabling)
-			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
-			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
 
 
 /// Proc called to change the variable `disabling` and react to the event.
@@ -245,11 +257,11 @@
 	disabling = new_value
 	if(disabling)
 		if(!. && limb) //Gained disabling.
-			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
-			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
 	else if(. && limb) //Lost disabling.
-		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, src)
-		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
+		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
 	if(limb?.can_be_disabled)
 		limb.update_disabled()
 
@@ -344,7 +356,7 @@
 	return (!QDELETED(src) && limb)
 
 /// When our parent bodypart is hurt
-/datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+/datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction)
 	return
 
 /// Called from cryoxadone and pyroxadone when they're proc'ing. Wounds will slowly be fixed separately from other methods when these are in effect. crappy name but eh
@@ -360,6 +372,24 @@
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
 /datum/wound/proc/on_stasis(delta_time, times_fired)
 	return
+
+/// Sets our blood flow
+/datum/wound/proc/set_blood_flow(set_to)
+	adjust_blood_flow(set_to - blood_flow)
+
+/// Use this to modify blood flow. You must use this to change the variable
+/// Takes the amount to adjust by, and the lowest amount we're allowed to have post adjust
+/datum/wound/proc/adjust_blood_flow(adjust_by, minimum = 0)
+	if(!adjust_by)
+		return
+	var/old_flow = blood_flow
+	blood_flow = max(blood_flow + adjust_by, minimum)
+
+	if(old_flow == blood_flow)
+		return
+
+	/// Update our bleed rate
+	limb.refresh_bleed_rate()
 
 /// Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood
 /datum/wound/proc/drag_bleed_amount()
@@ -384,7 +414,7 @@
  * * mob/user: The user examining the wound's owner, if that matters
  */
 /datum/wound/proc/get_examine_description(mob/user)
-	. = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
+	. = "[victim.p_their(TRUE)] [limb.plaintext_zone] [examine_desc]"
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
 
 /datum/wound/proc/get_scanner_description(mob/user)

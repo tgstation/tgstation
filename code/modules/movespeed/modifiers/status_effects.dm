@@ -15,3 +15,16 @@
 /datum/movespeed_modifier/status_effect/sepia
 	variable = TRUE
 	blacklisted_movetypes = (FLYING|FLOATING)
+
+/datum/movespeed_modifier/status_effect/power_chord
+	multiplicative_slowdown = -0.2
+
+/datum/movespeed_modifier/status_effect/hazard_area
+	multiplicative_slowdown = 4
+
+/datum/movespeed_modifier/status_effect/lobster_rush
+	multiplicative_slowdown = -0.5
+	blacklisted_movetypes = (FLYING|FLOATING)
+
+/datum/movespeed_modifier/status_effect/brimdust_concussion
+	multiplicative_slowdown = 1.5

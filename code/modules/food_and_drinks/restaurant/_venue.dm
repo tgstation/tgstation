@@ -1,7 +1,12 @@
+#define VENUE_RESTAURANT "Restaurant Venue"
+#define VENUE_BAR "Bar Venue"
+
 ///Represents the abstract concept of a food venue in the code.
 /datum/venue
 	///Name of the venue, also used for the icon state of any radials it can be selected in
 	var/name = "unnamed venue"
+	///What kind of Venue are we
+	var/venue_type = VENUE_RESTAURANT
 	///Max amount of guests at any time
 	var/max_guests = 6
 	///Weighted list of customer types
@@ -43,7 +48,7 @@
 
 	// In practice, the list will never run out, but this is for sanity.
 	while (customer_types_to_choose.len)
-		customer_type = pickweight(customer_types_to_choose)
+		customer_type = pick_weight(customer_types_to_choose)
 
 		var/datum/customer_data/customer = SSrestaurant.all_customers[customer_type]
 		if (customer.can_use(src))
@@ -62,11 +67,41 @@
 	current_visitors += new_customer
 
 /datum/venue/proc/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
-	return
+	var/order = pick_weight(customer_data.orderable_objects[venue_type])
+	var/image/food_image
+	var/food_line
+
+	if(ispath(order, /datum/custom_order)) // generate the special order
+		var/datum/custom_order/custom_order = new order(src)
+		food_image = custom_order.get_order_appearance(src)
+		food_line = custom_order.get_order_line(src)
+		order = custom_order.dispense_order()
+	else
+		food_image = get_food_appearance(order)
+		food_line = order_food_line(order)
+	customer_pawn.say(food_line)
+
+	// common code for the food thoughts appearance
+	food_image.loc = customer_pawn
+	food_image.pixel_y = 32
+	food_image.pixel_x = 16
+	SET_PLANE_EXPLICIT(food_image, HUD_PLANE, customer_pawn)
+	food_image.plane = HUD_PLANE
+	food_image.appearance_flags = RESET_COLOR
+	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", food_image)
+
+	return order
 
 ///Checks if the object used is correct for the venue
 /datum/venue/proc/is_correct_order(atom/movable/object_used, wanted_item)
+	if(istype(wanted_item, /datum/custom_order))
+		var/datum/custom_order/custom_order = wanted_item
+		return custom_order.is_correct_order(object_used)
 	return FALSE
+
+///gets the appearance of the ordered object that shows up when hovering your cursor over the customer mob.
+/datum/venue/proc/get_food_appearance(order)
+	return
 
 ///The line the robot says when ordering
 /datum/venue/proc/order_food_line(order)
@@ -103,9 +138,6 @@
 	icon_state = "portal"
 	anchored = TRUE
 	density = FALSE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/restaurant_portal
 	layer = BELOW_OBJ_LAYER
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -115,7 +147,7 @@
 	/// A weak reference to the mob who turned on the portal
 	var/datum/weakref/turned_on_portal
 
-/obj/machinery/restaurant_portal/Initialize()
+/obj/machinery/restaurant_portal/Initialize(mapload)
 	. = ..()
 	if(linked_venue)
 		linked_venue = SSrestaurant.all_venues[linked_venue]
@@ -181,8 +213,8 @@
 	if(linked_venue && linked_venue.restaurant_portal) //We're already linked, unlink us.
 		if(linked_venue.open)
 			linked_venue.close()
-		linked_venue.restaurant_portal.linked_venue = null
 		linked_venue.restaurant_portal = null
+		linked_venue = null
 
 	linked_venue = chosen_venue
 	linked_venue.restaurant_portal = src
@@ -207,7 +239,7 @@
 	use_vis_overlay = FALSE
 	var/datum/venue/linked_venue = /datum/venue
 
-/obj/structure/holosign/robot_seat/Initialize(loc, source_projector)
+/obj/structure/holosign/robot_seat/Initialize(mapload, loc, source_projector)
 	. = ..()
 	linked_venue = SSrestaurant.all_venues[linked_venue]
 	linked_venue.linked_seats[src] += null

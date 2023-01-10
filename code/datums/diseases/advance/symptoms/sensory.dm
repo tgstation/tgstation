@@ -1,3 +1,10 @@
+/* Mind Restoration
+ * Slight stealth reduction
+ * Reduces resistance
+ * Slight increase to stage speed
+ * Greatly decreases transmissibility
+ * Critical level
+*/
 /datum/symptom/mind_restoration
 	name = "Mind Restoration"
 	desc = "The virus strengthens the bonds between neurons, reducing the duration of any ailments of the mind."
@@ -36,23 +43,22 @@
 
 
 	if(A.stage >= 3)
-		M.dizziness = max(0, M.dizziness - 2)
-		M.drowsyness = max(0, M.drowsyness - 2)
-		M.slurring = max(0, M.slurring - 2)
-		M.set_confusion(max(0, M.get_confusion() - 2))
+		M.adjust_dizzy(-4 SECONDS)
+		M.adjust_drowsiness(-4 SECONDS)
+		M.adjust_slurring(-1 SECONDS)
+		M.adjust_confusion(-2 SECONDS)
 		if(purge_alcohol)
 			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.drunkenness = max(H.drunkenness - 5, 0)
+			M.adjust_drunk_effect(-5)
 
 	if(A.stage >= 4)
-		M.drowsyness = max(0, M.drowsyness - 2)
+		M.adjust_drowsiness(-4 SECONDS)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
 			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
 			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
-		M.hallucination = max(0, M.hallucination - 10)
+
+		M.adjust_hallucinations(-20 SECONDS)
 
 	if(A.stage >= 5)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)
@@ -60,7 +66,7 @@
 			var/mob/living/carbon/C = M
 			if(prob(10))
 				if(trauma_heal_severe)
-					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY)
 				else
 					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 
@@ -85,12 +91,12 @@
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
 		if(4, 5)
-			var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+			var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 			if(ears)
 				ears.adjustEarDamage(-4, -4)
 			M.adjust_blindness(-2)
-			M.adjust_blurriness(-2)
-			var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+			M.adjust_eye_blur(-4 SECONDS)
+			var/obj/item/organ/internal/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 			if(!eyes) // only dealing with eye stuff from here on out
 				return
 			eyes.applyOrganDamage(-2)
@@ -99,11 +105,11 @@
 					to_chat(M, span_warning("Your vision slowly returns..."))
 					M.cure_blind(EYE_DAMAGE)
 					M.cure_nearsighted(EYE_DAMAGE)
-					M.blur_eyes(35)
+					M.set_eye_blur_if_lower(70 SECONDS)
 			else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 				to_chat(M, span_warning("The blackness in your peripheral vision fades."))
 				M.cure_nearsighted(EYE_DAMAGE)
-				M.blur_eyes(10)
+				M.set_eye_blur_if_lower(20 SECONDS)
 		else
 			if(prob(base_message_chance))
 				to_chat(M, span_notice("[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]"))

@@ -18,47 +18,51 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //FLAGS BITMASK
 // scroll down before changing the numbers on these
 
-/// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define HEAR_1 (1<<0)
 /// Is this object currently processing in the atmos object list?
-#define ATMOS_IS_PROCESSING_1 (1<<1)
+#define ATMOS_IS_PROCESSING_1 (1<<0)
 /// conducts electricity (metal etc.)
-#define CONDUCT_1 (1<<2)
+#define CONDUCT_1 (1<<1)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
-#define NODECONSTRUCT_1 (1<<3)
-/// atom queued to SSoverlay
-#define OVERLAY_QUEUED_1 (1<<4)
+#define NODECONSTRUCT_1 (1<<2)
 /// item has priority to check when entering or leaving
-#define ON_BORDER_1 (1<<5)
+#define ON_BORDER_1 (1<<3)
 ///Whether or not this atom shows screentips when hovered over
-#define NO_SCREENTIPS_1 (1 << 6)
+#define NO_SCREENTIPS_1 (1<<4)
 /// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define PREVENT_CLICK_UNDER_1 (1<<7)
-#define HOLOGRAM_1 (1<<8)
-/// Prevents mobs from getting chainshocked by teslas and the supermatter
-#define SHOCKED_1 (1<<9)
+#define PREVENT_CLICK_UNDER_1 (1<<5)
+///specifies that this atom is a hologram that isnt real
+#define HOLOGRAM_1 (1<<6)
 ///Whether /atom/Initialize() has already run for the object
-#define INITIALIZED_1 (1<<10)
+#define INITIALIZED_1 (1<<7)
 /// was this spawned by an admin? used for stat tracking stuff.
-#define ADMIN_SPAWNED_1     (1<<11)
+#define ADMIN_SPAWNED_1 (1<<8)
 /// should not get harmed if this gets caught by an explosion?
-#define PREVENT_CONTENTS_EXPLOSION_1 (1<<12)
-/// should the contents of this atom be acted upon
-#define RAD_PROTECT_CONTENTS_1 (1 << 13)
-/// should this object be allowed to be contaminated
-#define RAD_NO_CONTAMINATE_1 (1 << 14)
+#define PREVENT_CONTENTS_EXPLOSION_1 (1<<9)
 /// Should this object be paintable with very dark colors?
-#define ALLOW_DARK_PAINTS_1 (1 << 15)
+#define ALLOW_DARK_PAINTS_1 (1<<10)
 /// Should this object be unpaintable?
-#define UNPAINTABLE_1 (1 << 16)
+#define UNPAINTABLE_1 (1<<11)
 /// Is the thing currently spinning?
-#define IS_SPINNING_1 (1 << 17)
-#define IS_ONTOP_1 (1 << 18)
-#define SUPERMATTER_IGNORES_1 (1 << 19)
+#define IS_SPINNING_1 (1<<12)
+/// Is this atom on top of another atom, and as such has click priority?
+#define IS_ONTOP_1 (1<<13)
+/// Is this atom immune to being dusted by the supermatter?
+#define SUPERMATTER_IGNORES_1 (1<<14)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<20)
+#define CAN_BE_DIRTY_1 (1<<15)
 /// Should we use the initial icon for display? Mostly used by overlay only objects
-#define HTML_USE_INITAL_ICON_1 (1<<21)
+#define HTML_USE_INITAL_ICON_1 (1<<16)
+/// Can players recolor this in-game via vendors (and maybe more if support is added)?
+#define IS_PLAYER_COLORABLE_1 (1<<17)
+/// Whether or not this atom has contextual screentips when hovered OVER
+#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<18)
+/// Whether or not this atom is storing contents for a disassociated storage object
+#define HAS_DISASSOCIATED_STORAGE_1 (1<<19)
+/// If this atom has experienced a decal element "init finished" sourced appearance update
+/// We use this to ensure stacked decals don't double up appearance updates for no rasin
+/// Flag as an optimization, don't make this a trait without profiling
+/// Yes I know this is a stupid flag, no you can't take him from me
+#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -89,6 +93,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_LAVA_GEN (1<<3)
 /// Blocks ruins spawning on the turf.
 #define NO_RUINS (1<<4)
+/// Blocks this turf from being rusted
+#define NO_RUST (1<<5)
+/// Is this turf is "solid". Space and lava aren't for instance
+#define IS_SOLID (1<<6)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -115,10 +123,16 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define XENOBIOLOGY_COMPATIBLE (1<<10)
 /// If Abductors are unable to teleport in with their observation console
 #define ABDUCTOR_PROOF (1<<11)
-/// If an area should be hidden from power consoles, power/atmosphere alerts, etc.
-#define NO_ALERTS (1<<12)
 /// If blood cultists can draw runes or build structures on this AREA.
-#define CULT_PERMITTED (1<<13)
+#define CULT_PERMITTED (1<<12)
+///Whther this area is iluminated by starlight
+#define AREA_USES_STARLIGHT (1<<13)
+/// If engravings are persistent in this area
+#define PERSISTENT_ENGRAVINGS (1<<14)
+/// Mobs that die in this area don't produce a dead chat message
+#define NO_DEATH_MESSAGE (1<<15)
+/// This area should have extra shielding from certain event effects
+#define EVENT_PROTECTED (1<<16)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -137,6 +151,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSSTRUCTURE (1<<8)
 #define PASSFLAPS (1<<9)
 #define PASSDOORS (1<<10)
+#define PASSVEHICLE (1<<11)
+#define PASSITEM (1<<12)
 
 //Movement Types
 #define GROUND (1<<0)
@@ -168,6 +184,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_MOB_DAMAGE (1<<3)
 #define ZAP_MOB_STUN (1<<4)
 #define ZAP_GENERATES_POWER (1<<5)
+/// Zaps with this flag will generate less power through tesla coils
+#define ZAP_LOW_POWER_GEN (1<<6)
 
 #define ZAP_DEFAULT_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
@@ -194,11 +212,13 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// can pull things
 #define MOBILITY_PULL (1<<6)
 /// can rest
-#define MOBILITY_REST           (1<<7)
+#define MOBILITY_REST (1<<7)
+/// can lie down
+#define MOBILITY_LIEDOWN (1<<8)
 
 #define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
-#define MOBILITY_FLAGS_CARBON_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_REST)
-#define MOBILITY_FLAGS_REST_CAPABLE_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_REST)
+#define MOBILITY_FLAGS_CARBON_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_REST | MOBILITY_LIEDOWN)
+#define MOBILITY_FLAGS_REST_CAPABLE_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_REST | MOBILITY_LIEDOWN)
 
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
@@ -245,5 +265,39 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 ///Turns the dir by 180 degrees
 #define DIRFLIP(d)       turn(d, 180)
 
+#define MAX_BITFIELD_SIZE 24
+
 /// 33554431 (2^24 - 1) is the maximum value our bitflags can reach.
 #define MAX_BITFLAG_DIGITS 8
+
+// timed_action_flags parameter for `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
+/// Can do the action even if mob moves location
+#define IGNORE_USER_LOC_CHANGE (1<<0)
+/// Can do the action even if the target moves location
+#define IGNORE_TARGET_LOC_CHANGE (1<<1)
+/// Can do the action even if the item is no longer being held
+#define IGNORE_HELD_ITEM (1<<2)
+/// Can do the action even if the mob is incapacitated (ex. handcuffed)
+#define IGNORE_INCAPACITATED (1<<3)
+/// Used to prevent important slowdowns from being abused by drugs like kronkaine
+#define IGNORE_SLOWDOWNS (1<<4)
+
+
+// Spacevine-related flags
+/// Is the spacevine / flower bud heat resistant
+#define SPACEVINE_HEAT_RESISTANT (1 << 0)
+/// Is the spacevine / flower bud cold resistant
+#define SPACEVINE_COLD_RESISTANT (1 << 1)
+
+// Flags for flora structures
+#define FLORA_HERBAL (1 << 0)
+#define FLORA_WOODEN (1 << 1)
+#define FLORA_STONE (1 << 2)
+
+// Bitflags for emotes, used in var/emote_type of the emote datum
+/// Is the emote audible
+#define EMOTE_AUDIBLE (1<<0)
+/// Is the emote visible
+#define EMOTE_VISIBLE (1<<1)
+/// Is it an emote that should be shown regardless of blindness/deafness
+#define EMOTE_IMPORTANT (1<<2)

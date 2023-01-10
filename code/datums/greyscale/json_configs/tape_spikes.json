@@ -1,0 +1,22 @@
+{
+    "tape_spikes": [
+        {
+            "type": "icon_state",
+            "icon_state": "tape",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+		{
+            "type": "icon_state",
+            "icon_state": "roll",
+            "blend_mode": "overlay",
+            "color_ids": [ 2 ]
+        },
+        {
+            "type": "icon_state",
+            "icon_state": "spikes",
+            "blend_mode": "overlay",
+            "color_ids": [ 3 ]
+        }
+    ]
+}

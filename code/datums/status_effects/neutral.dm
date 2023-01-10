@@ -92,7 +92,7 @@
 		rewarded = caster
 
 /datum/status_effect/bounty/on_apply()
-	to_chat(owner, span_boldnotice("You hear something behind you talking...</span> <span class='notice'>You have been marked for death by [rewarded]. If you die, they will be rewarded."))
+	to_chat(owner, span_boldnotice("You hear something behind you talking... \"You have been marked for death by [rewarded]. If you die, they will be rewarded.\""))
 	playsound(owner, 'sound/weapons/gun/shotgun/rack.ogg', 75, FALSE)
 	return ..()
 
@@ -103,13 +103,12 @@
 
 /datum/status_effect/bounty/proc/rewards()
 	if(rewarded && rewarded.mind && rewarded.stat != DEAD)
-		to_chat(owner, span_boldnotice("You hear something behind you talking...</span> <span class='notice'>Bounty claimed."))
+		to_chat(owner, span_boldnotice("You hear something behind you talking... \"Bounty claimed.\""))
 		playsound(owner, 'sound/weapons/gun/shotgun/shot.ogg', 75, FALSE)
 		to_chat(rewarded, span_greentext("You feel a surge of mana flow into you!"))
-		for(var/obj/effect/proc_holder/spell/spell in rewarded.mind.spell_list)
-			spell.charge_counter = spell.charge_max
-			spell.recharging = FALSE
-			spell.update_appearance()
+		for(var/datum/action/cooldown/spell/spell in rewarded.actions)
+			spell.reset_spell_cooldown()
+
 		rewarded.adjustBruteLoss(-25)
 		rewarded.adjustFireLoss(-25)
 		rewarded.adjustToxLoss(-25)
@@ -130,11 +129,11 @@
 	icon_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
-	owner.apply_status_effect(STATUS_EFFECT_SURRENDER, src)
+	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
 	return ..()
 
 /datum/status_effect/grouped/heldup/on_remove()
-	owner.remove_status_effect(STATUS_EFFECT_SURRENDER, src)
+	owner.remove_status_effect(/datum/status_effect/grouped/surrender, REF(src))
 	return ..()
 
 // holdup is for the person aiming
@@ -151,162 +150,175 @@
 	icon_state = "aimed"
 
 // this status effect is used to negotiate the high-fiving capabilities of all concerned parties
-/datum/status_effect/high_fiving
-	id = "high_fiving"
+/datum/status_effect/offering
+	id = "offering"
 	duration = -1
 	tick_interval = -1
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
-	/// The carbons who were offered the ability to partake in the high-five
+	/// The people who were offered this item at the start
 	var/list/possible_takers
-	/// The actual slapper item
-	var/obj/item/slapper/slap_item
+	/// The actual item being offered
+	var/obj/item/offered_item
+	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
+	var/give_alert_type = /atom/movable/screen/alert/give
 
-/datum/status_effect/high_fiving/on_creation(mob/living/new_owner, obj/item/slap)
+/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
 	. = ..()
 	if(!.)
 		return
+	offered_item = offer
+	if(give_alert_override)
+		give_alert_type = give_alert_override
 
-	slap_item = slap
-	owner.visible_message(span_notice("[owner] raises [owner.p_their()] arm, looking for a high-five!"), \
-		span_notice("You post up, looking for a high-five!"), null, 2)
+	if(offered && is_taker_elligible(offered))
+		register_candidate(offered)
+	else
+		for(var/mob/living/carbon/possible_taker in orange(1, owner))
+			if(!is_taker_elligible(possible_taker))
+				continue
 
-	for(var/mob/living/carbon/possible_taker in orange(1, owner))
-		if(!owner.CanReach(possible_taker) || possible_taker.incapacitated())
-			continue
-		register_candidate(possible_taker)
+			register_candidate(possible_taker)
 
-	if(!possible_takers) // in case we tried high-fiving with only a dead body around or something
-		owner.visible_message(span_danger("[owner] realizes no one within range is actually capable of high-fiving, lowering [owner.p_their()] arm in shame..."), \
-			span_warning("You realize a moment too late that no one within range is actually capable of high-fiving you, oof..."), null, 2)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
+	if(!possible_takers) // no one around
 		qdel(src)
 		return
 
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
-	RegisterSignal(slap_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_slap)
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_owner_in_range))
+	RegisterSignals(offered_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(dropped_item))
+	//RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(check_fake_out))
 
-/datum/status_effect/high_fiving/Destroy()
-	QDEL_NULL(slap_item)
+/datum/status_effect/offering/Destroy()
 	for(var/i in possible_takers)
-		var/mob/living/carbon/lost_hope = i
-		remove_candidate(lost_hope)
+		var/mob/living/carbon/removed_taker = i
+		remove_candidate(removed_taker)
 	LAZYCLEARLIST(possible_takers)
 	return ..()
 
-/// Hook up the specified carbon mob for possible high-fiving, give them the alert and signals and all
-/datum/status_effect/high_fiving/proc/register_candidate(mob/living/carbon/possible_candidate)
-	var/atom/movable/screen/alert/highfive/G = possible_candidate.throw_alert("[owner]", /atom/movable/screen/alert/highfive)
+/// Hook up the specified carbon mob to be offered the item in question, give them the alert and signals and all
+/datum/status_effect/offering/proc/register_candidate(mob/living/carbon/possible_candidate)
+	var/atom/movable/screen/alert/give/G = possible_candidate.throw_alert("[owner]", give_alert_type)
 	if(!G)
 		return
 	LAZYADD(possible_takers, possible_candidate)
-	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, .proc/check_taker_in_range)
-	G.setup(possible_candidate, owner, slap_item)
+	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, PROC_REF(check_taker_in_range))
+	G.setup(possible_candidate, owner, offered_item)
 
-/// Remove the alert and signals for the specified carbon mob
-/datum/status_effect/high_fiving/proc/remove_candidate(mob/living/carbon/removed_candidate)
+/// Remove the alert and signals for the specified carbon mob. Automatically removes the status effect when we lost the last taker
+/datum/status_effect/offering/proc/remove_candidate(mob/living/carbon/removed_candidate)
 	removed_candidate.clear_alert("[owner]")
 	LAZYREMOVE(possible_takers, removed_candidate)
 	UnregisterSignal(removed_candidate, COMSIG_MOVABLE_MOVED)
-
-/// We failed to high-five broh, either because there's no one viable next to us anymore, or we lost the slapper, or what
-/datum/status_effect/high_fiving/proc/fail()
-	owner.visible_message(span_danger("[owner] slowly lowers [owner.p_their()] arm, realizing no one will high-five [owner.p_them()]! How embarassing..."), \
-		span_warning("You realize the futility of continuing to wait for a high-five, and lower your arm..."), null, 2)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/left_hanging)
-	qdel(src)
-
-/// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
-/datum/status_effect/high_fiving/proc/we_did_it(mob/living/carbon/successful_taker)
-	var/open_hands_taker
-	var/slappers_owner
-	for(var/i in successful_taker.held_items) // see how many hands the taker has open for high'ing
-		if(isnull(i))
-			open_hands_taker++
-
-	if(!open_hands_taker)
-		to_chat(successful_taker, span_warning("You can't high-five [owner] with no open hands!"))
-		SEND_SIGNAL(successful_taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
-		return
-
-	for(var/i in owner.held_items)
-		var/obj/item/slapper/slap_check = i
-		if(istype(slap_check))
-			slappers_owner++
-
-	if(!slappers_owner) // THE PRANKAGE
-		too_slow_p1(successful_taker)
-		return
-
-	if(slappers_owner >= 2) // we only check this if it's already established the taker has 2+ hands free
-		owner.visible_message(span_notice("[successful_taker] enthusiastically high-tens [owner]!"), span_nicegreen("Wow! You're high-tenned [successful_taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=successful_taker)
-		to_chat(successful_taker, span_nicegreen("You give high-tenning [owner] your all!"))
-		playsound(owner, 'sound/weapons/slap.ogg', 100, TRUE, 1)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
-		SEND_SIGNAL(successful_taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
-	else
-		owner.visible_message(span_notice("[successful_taker] high-fives [owner]!"), span_nicegreen("All right! You're high-fived by [successful_taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=successful_taker)
-		to_chat(successful_taker, span_nicegreen("You high-five [owner]!"))
-		playsound(owner, 'sound/weapons/slap.ogg', 50, TRUE, -1)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
-		SEND_SIGNAL(successful_taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
-	qdel(src)
-
-/// If we don't have any slappers in hand when someone goes to high-five us, we prank the hell out of them
-/datum/status_effect/high_fiving/proc/too_slow_p1(mob/living/carbon/rube)
-	owner.visible_message(span_notice("[rube] rushes in to high-five [owner], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
-	to_chat(rube, span_nicegreen("You go in for [owner]'s high-five, but-"))
-	addtimer(CALLBACK(src, .proc/too_slow_p2, rube), 0.5 SECONDS)
-
-/// Part two of the ultimate prank
-/datum/status_effect/high_fiving/proc/too_slow_p2(mob/living/carbon/rube)
-	if(!owner || !rube)
+	if(!possible_takers && !QDELING(src))
 		qdel(src)
-		return
-	owner.visible_message(span_danger("[owner] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
-	var/all_caps_for_emphasis = uppertext("NO! [owner] PULLS [owner.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")
-	to_chat(rube, span_userdanger("[all_caps_for_emphasis]"))
-	playsound(owner, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
-	rube.Knockdown(1 SECONDS)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
-	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
-	qdel(src)
-
-/// If someone examine_more's us while we don't have a slapper in hand, it'll tip them off to our trickster ways
-/datum/status_effect/high_fiving/proc/check_fake_out(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-
-	if(!slap_item)
-		examine_list += "[span_warning("[owner]'s arm appears tensed up, as if [owner.p_they()] plan on pulling it back suddenly...")]\n"
 
 /// One of our possible takers moved, see if they left us hanging
-/datum/status_effect/high_fiving/proc/check_taker_in_range(mob/living/carbon/taker)
+/datum/status_effect/offering/proc/check_taker_in_range(mob/living/carbon/taker)
 	SIGNAL_HANDLER
-	if(owner.CanReach(taker) && !taker.incapacitated())
+	if(owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker))
 		return
 
-	to_chat(taker, span_warning("You left [owner] hanging!"))
+	to_chat(taker, span_warning("You moved out of range of [owner]!"))
 	remove_candidate(taker)
-	if(!possible_takers)
-		fail()
 
-/// The propositioner moved, see if anyone is out of range now
-/datum/status_effect/high_fiving/proc/check_owner_in_range(mob/living/carbon/source)
+/// The offerer moved, see if anyone is out of range now
+/datum/status_effect/offering/proc/check_owner_in_range(mob/living/carbon/source)
 	SIGNAL_HANDLER
 
 	for(var/i in possible_takers)
 		var/mob/living/carbon/checking_taker = i
-		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || checking_taker.incapacitated())
+		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || IS_DEAD_OR_INCAP(checking_taker))
 			remove_candidate(checking_taker)
 
-	if(!possible_takers)
-		fail()
-
-/// Something fishy is going on here...
-/datum/status_effect/high_fiving/proc/dropped_slap(obj/item/source)
+/// We lost the item, give it up
+/datum/status_effect/offering/proc/dropped_item(obj/item/source)
 	SIGNAL_HANDLER
-	slap_item = null
+	qdel(src)
+
+/**
+ * Is our taker valid as a target for the offering? Meant to be used when registering
+ * takers in `on_creation()`. You should override `additional_taker_check()` instead of this.
+ *
+ * Returns `TRUE` if the taker is valid as a target for the offering.
+ */
+/datum/status_effect/offering/proc/is_taker_elligible(mob/living/carbon/taker)
+	return owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
+
+
+/**
+ * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
+ * Should be what you override instead of `is_taker_elligible()`. By default, checks if the
+ * taker can hold items.
+ *
+ * Returns `TRUE` if the taker is valid as a target for the offering based on these
+ * additional checks.
+ */
+/datum/status_effect/offering/proc/additional_taker_check(mob/living/carbon/taker)
+	return taker.can_hold_items()
+
+
+/**
+ * This status effect is meant only for items that you don't actually receive
+ * when offered, mostly useful for `/obj/item/hand_item` subtypes.
+ */
+/datum/status_effect/offering/no_item_received
+
+
+/datum/status_effect/offering/no_item_received/additional_taker_check(mob/living/carbon/taker)
+	return TRUE
+
+
+/**
+ * This status effect is meant only to be used for offerings that require the target to
+ * be resting (like when you're trying to give them a hand to help them up).
+ * Also doesn't require them to have their hands free (since you're not giving them
+ * anything).
+ */
+/datum/status_effect/offering/no_item_received/needs_resting
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/additional_taker_check(mob/living/carbon/taker)
+	return taker.body_position == LYING_DOWN
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
+	. = ..()
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_owner_standing))
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/register_candidate(mob/living/carbon/possible_candidate)
+	. = ..()
+	RegisterSignal(possible_candidate, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_candidate_resting))
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/remove_candidate(mob/living/carbon/removed_candidate)
+	UnregisterSignal(removed_candidate, COMSIG_LIVING_SET_BODY_POSITION)
+	return ..()
+
+
+/// Simple signal handler that ensures that, if the owner stops standing, the offer no longer stands either!
+/datum/status_effect/offering/no_item_received/needs_resting/proc/check_owner_standing(mob/living/carbon/owner)
+	if(src.owner.body_position == STANDING_UP)
+		return
+
+	// This doesn't work anymore if the owner is no longer standing up, sorry!
+	qdel(src)
+
+
+/// Simple signal handler that ensures that, should a candidate now be standing up, the offer won't be standing for them anymore!
+/datum/status_effect/offering/no_item_received/needs_resting/proc/check_candidate_resting(mob/living/carbon/candidate)
+	SIGNAL_HANDLER
+
+	if(candidate.body_position == LYING_DOWN)
+		return
+
+	// No longer lying down? You're no longer eligible to take the offer, sorry!
+	remove_candidate(candidate)
+
+
+/datum/status_effect/offering/secret_handshake
+	id = "secret_handshake"
+	give_alert_type = /atom/movable/screen/alert/give/secret_handshake
 
 //this effect gives the user an alert they can use to surrender quickly
 /datum/status_effect/grouped/surrender
@@ -412,16 +424,28 @@
 
 		//phase 1
 		if(1 to EIGENSTASIUM_PHASE_1_END)
-			owner.Jitter(2)
+			owner.set_jitter_if_lower(4 SECONDS)
 			owner.adjust_nutrition(-4)
 
 		//phase 2
 		if(EIGENSTASIUM_PHASE_1_END to EIGENSTASIUM_PHASE_2_END)
 			if(current_cycle == 51)
 				to_chat(owner, span_userdanger("You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!"))
-				owner.Jitter(200)
+				owner.set_jitter_if_lower(400 SECONDS)
 				owner.Knockdown(10)
-			var/items = owner.get_contents()
+
+			var/list/items = list()
+			var/max_loop
+			if (length(owner.get_contents()) >= 10)
+				max_loop = 10
+			else
+				max_loop = length(owner.get_contents())
+			for (var/i in 1 to max_loop)
+				var/obj/item/item = owner.get_contents()[i]
+				if ((item.item_flags & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
+					continue
+				items.Add(item)
+
 			if(!LAZYLEN(items))
 				return ..()
 			var/obj/item/item = pick(items)
@@ -435,55 +459,20 @@
 			//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 				if(0)
-					owner.Jitter(100)
+					owner.set_jitter_if_lower(200 SECONDS)
 					to_chat(owner, span_userdanger("Your eigenstate starts to rip apart, drawing in alternative reality versions of yourself!"))
 				if(1)
 					var/typepath = owner.type
 					alt_clone = new typepath(owner.loc)
 					alt_clone.appearance = owner.appearance
 					alt_clone.real_name = owner.real_name
-					RegisterSignal(alt_clone, COMSIG_PARENT_QDELETING, .proc/remove_clone_from_var)
+					RegisterSignal(alt_clone, COMSIG_PARENT_QDELETING, PROC_REF(remove_clone_from_var))
 					owner.visible_message("[owner] splits into seemingly two versions of themselves!")
 					do_teleport(alt_clone, get_turf(alt_clone), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 					do_sparks(5,FALSE,alt_clone)
 					alt_clone.emote("spin")
 					owner.emote("spin")
-					var/static/list/say_phrases = list(
-						"Bugger me, whats all this then?",
-						"Sacre bleu! Ou suis-je?!",
-						"I knew powering the station using a singularity engine would lead to something like this...",
-						"Wow, I can't believe in your universe Cencomm got rid of cloning.",
-						"WHAT IS HAPPENING?!",
-						"YOU'VE CREATED A TIME PARADOX!",
-						"You trying to steal my job?",
-						"So that's what I'd look like if I was ugly...",
-						"So, two alternate universe twins walk into a bar...",
-						"YOU'VE DOOMED THE TIMELINE!",
-						"Ruffle a cat once in a while!",
-						"I'm starting to get why no one wants to hang out with me.",
-						"Why haven't you gotten around to starting that band?!",
-						"No!! I was just about to greentext!",
-						"Kept you waiting huh?",
-						"Oh god I think I'm ODing I'm seeing a fake version of me.",
-						"Hey, I remember that phase, glad I grew out of it.",
-						"Keep going lets see if more of us show up.",
-						"I bet we can finally take the clown now.",
-						"LING DISGUISED AS ME!",
-						"El psy congroo.",
-						"At long last! My evil twin!",
-						"Keep going lets see if more of us show up.",
-						"No! Dark spirits, do not torment me with these visions of my future self! It's horrible!",
-						"Good. Now that the council is assembled the meeting can begin.",
-						"Listen! I only have so much time before I'm ripped away. The secret behind the gas giants are...",
-						"Das ist nicht deutschland. Das ist nicht akzeptabel!!!",
-						"I've come from the future to warn you about eigenstasium! Oh no! I'm too late!",
-						"You fool! You took too much eigenstasium! You've doomed us all!",
-						"Don't trust any bagels you see until next month!",
-						"What...what's with these teleports? It's like one of my Japanese animes...!",
-						"Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?",
-						"Wake the fuck up spaceman we have a gas giant to burn",
-						"This is one hell of a beepsky smash.",
-						"Now neither of us will be virgins!")
+					var/list/say_phrases = strings(EIGENSTASIUM_FILE, "lines")
 					alt_clone.say(pick(say_phrases))
 				if(2)
 					phase_3_cycle = 0 //counter
@@ -499,28 +488,27 @@
 			do_teleport(owner, get_turf(owner), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 			do_sparks(5, FALSE, owner)
 			owner.Sleeping(100)
-			owner.Jitter(50)
+			owner.set_jitter_if_lower(100 SECONDS)
 			to_chat(owner, span_userdanger("You feel your eigenstate settle, as \"you\" become an alternative version of yourself!"))
 			owner.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-			log_game("FERMICHEM: [owner] ckey: [owner.key] has become an alternative universe version of themselves.")
+			owner.log_message("has become an alternative universe version of themselves via EIGENSTASIUM.", LOG_GAME)
 			//new you new stuff
 			SSquirks.randomise_quirks(owner)
 			owner.reagents.remove_all(1000)
-			var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-			mood.remove_temp_moods() //New you, new moods.
+			owner.mob_mood.remove_temp_moods() //New you, new moods.
 			var/mob/living/carbon/human/human_mob = owner
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
+			owner.add_mood_event("Eigentrip", /datum/mood_event/eigentrip)
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
-				var/obj/item/organ/tail/monkey/monkey_tail = new ()
+				var/obj/item/organ/external/tail/monkey/monkey_tail = new ()
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
-				human_species.randomize_main_appearance_element(human_mob)
+				human_species.randomize_features(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
-			owner.remove_status_effect(STATUS_EFFECT_EIGEN)
+			owner.remove_status_effect(/datum/status_effect/eigenstasium)
 
 	//Finally increment cycle
 	current_cycle++

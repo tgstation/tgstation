@@ -1,8 +1,16 @@
+#define EMAG_LOCKED_SHUTTLE_COST (CARGO_CRATE_VALUE * 50)
+
 /datum/map_template/shuttle
 	name = "Base Shuttle Template"
 	var/prefix = "_maps/shuttles/"
 	var/suffix
+	/**
+	 * Port ID is the place this template should be docking at, set on '/obj/docking_port/stationary'
+	 * Because getShuttle() compares port_id to shuttle_id to find an already existing shuttle,
+	 * you should set shuttle_id to be the same as port_id if you want them to be replacable.
+	 */
 	var/port_id
+	///ID of the shuttle, make sure it matches port_id if necessary.
 	var/shuttle_id
 
 	var/description
@@ -12,6 +20,8 @@
 	var/credit_cost = INFINITY
 	/// What job accesses can buy this shuttle? If null, this shuttle cannot be bought.
 	var/list/who_can_purchase = list(ACCESS_CAPTAIN)
+	/// Whether or not this shuttle is locked to emags only.
+	var/emag_only = FALSE
 	/// If set, overrides default movement_force on shuttle
 	var/list/movement_force
 
@@ -32,30 +42,13 @@
 	if(!cached_map)
 		return
 
-	discover_port_offset()
+	var/offset = discover_offset(/obj/docking_port/mobile)
+
+	port_x_offset = offset[1]
+	port_y_offset = offset[2]
 
 	if(!cache)
 		cached_map = null
-
-/datum/map_template/shuttle/proc/discover_port_offset()
-	var/key
-	var/list/models = cached_map.grid_models
-	for(key in models)
-		if(findtext(models[key], "[/obj/docking_port/mobile]")) // Yay compile time checks
-			break // This works by assuming there will ever only be one mobile dock in a template at most
-
-	for(var/i in cached_map.gridSets)
-		var/datum/grid_set/gset = i
-		var/ycrd = gset.ycrd
-		for(var/line in gset.gridLines)
-			var/xcrd = gset.xcrd
-			for(var/j in 1 to length(line) step cached_map.key_len)
-				if(key == copytext(line, j, j + cached_map.key_len))
-					port_x_offset = xcrd
-					port_y_offset = ycrd
-					return
-				++xcrd
-			--ycrd
 
 /datum/map_template/shuttle/load(turf/T, centered, register=TRUE)
 	. = ..()
@@ -65,40 +58,21 @@
 							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
-		if(istype(place, /turf/open/space)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
+		if(isspaceturf(place)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
 			continue
-		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
+
+		if (place.count_baseturfs() < 2) // Some snowflake shuttle shit
 			continue
-		var/list/sanity = place.baseturfs.Copy()
-		sanity.Insert(3, /turf/baseturf_skipover/shuttle)
-		place.baseturfs = baseturfs_string_list(sanity, place)
+
+		place.insert_baseturf(3, /turf/baseturf_skipover/shuttle)
 
 		for(var/obj/docking_port/mobile/port in place)
+			port.calculate_docking_port_information(src)
+			// initTemplateBounds explicitly ignores the shuttle's docking port, to ensure that it calculates the bounds of the shuttle correctly
+			// so we need to manually initialize it here
+			SSatoms.InitializeAtoms(list(port))
 			if(register)
 				port.register()
-			if(isnull(port_x_offset))
-				continue
-			switch(port.dir) // Yeah this looks a little ugly but mappers had to do this in their head before
-				if(NORTH)
-					port.width = width
-					port.height = height
-					port.dwidth = port_x_offset - 1
-					port.dheight = port_y_offset - 1
-				if(EAST)
-					port.width = height
-					port.height = width
-					port.dwidth = height - port_y_offset
-					port.dheight = port_x_offset - 1
-				if(SOUTH)
-					port.width = width
-					port.height = height
-					port.dwidth = width - port_x_offset
-					port.dheight = height - port_y_offset
-				if(WEST)
-					port.width = height
-					port.height = width
-					port.dwidth = port_y_offset - 1
-					port.dheight = width - port_x_offset
 
 //Whatever special stuff you want
 /datum/map_template/shuttle/post_load(obj/docking_port/mobile/M)
@@ -170,6 +144,10 @@
 	port_id = "snowdin"
 	who_can_purchase = null
 
+/datum/map_template/shuttle/ert
+	port_id = "ert"
+	who_can_purchase = null
+
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/backup
@@ -180,12 +158,12 @@
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials. Unlocks the ability to buy shuttle engine crates from cargo."
-	admin_notes = "No brig, no medical facilities, no shuttle console."
+	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials. Unlocks the ability to buy shuttle engine crates from cargo, which allow you to speed up shuttle transit time."
+	admin_notes = "No brig, no medical facilities."
 	credit_cost = CARGO_CRATE_VALUE * 5
 	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
 
-/datum/map_template/shuttle/emergency/airless/post_load()
+/datum/map_template/shuttle/emergency/construction/post_load()
 	. = ..()
 	//enable buying engines from cargo
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
@@ -233,7 +211,8 @@
 	name = "Grand Corporate Monastery"
 	description = "Originally built for a public station, this grand edifice to religion, due to budget cuts, is now available as an escape shuttle for the right... donation. Due to its large size and callous owners, this shuttle may cause collateral damage."
 	admin_notes = "WARNING: This shuttle WILL destroy a fourth of the station, likely picking up a lot of objects with it."
-	credit_cost = CARGO_CRATE_VALUE * 250
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST * 1.8
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 5)
 
 /datum/map_template/shuttle/emergency/luxury
@@ -259,8 +238,8 @@
 	name = "Disco Inferno"
 	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
 	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
-	credit_cost = CARGO_CRATE_VALUE * 20
-	who_can_purchase = null
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
@@ -393,7 +372,8 @@
 	Outside of admin intervention, it cannot explode. \
 	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
-	credit_cost = CARGO_CRATE_VALUE * 200
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
@@ -402,7 +382,8 @@
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
 	admin_notes = "Tiny, with a single airlock and wooden walls. What could go wrong?"
-	who_can_purchase = null
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/goon
@@ -418,6 +399,15 @@
 	He says this shuttle is based off an old entertainment complex from the 1990s, though our database has no records on anything pertaining to that decade."
 	admin_notes = "ONLY NINETIES KIDS REMEMBER. Uses the fun balloon and drone from the Emergency Bar."
 	credit_cost = CARGO_CRATE_VALUE * 5
+
+/datum/map_template/shuttle/emergency/basketball
+	suffix = "bballhooper"
+	name = "Basketballer's Stadium"
+	description = "Hoop, man, hoop! Get your shooting game on with this sleek new basketball stadium! Do keep in mind that several other features \
+	that you may expect to find common-place on other shuttles aren't present to give you this sleek stadium at an affordable cost. \
+	It also wasn't manufactured to deal with the form-factor of some of your stations... good luck with that."
+	admin_notes = "A larger shuttle built around a basketball stadium: entirely impractical but just a complete blast!"
+	credit_cost = CARGO_CRATE_VALUE * 10
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
@@ -447,6 +437,27 @@
 	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
 	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
 	credit_cost = CARGO_CRATE_VALUE * 16
+
+/datum/map_template/shuttle/emergency/casino
+	suffix = "casino"
+	name = "Lucky Jackpot Casino Shuttle"
+	description = "A luxurious casino packed to the brim with everything you need to start new gambling addicitions!"
+	admin_notes = "The ship is a bit chunky, so watch where you park it."
+	credit_cost = 7777
+
+/datum/map_template/shuttle/emergency/shadow
+	suffix = "shadow"
+	name = "The NTSS Shadow"
+	description = "Guaranteed to get you somewhere FAST. With a custom-built plasma engine, this bad boy will put more distance between you and certain danger than any other!"
+	admin_notes = "The aft of the ship has a plasma tank that starts ignited. May get released by crew. The plasma windows next to the engine heaters will also erupt into flame, and also risk getting released by crew."
+	credit_cost = CARGO_CRATE_VALUE * 50
+
+/datum/map_template/shuttle/emergency/fish
+	suffix = "fish"
+	name = "Angler's Choice Emergency Shuttle"
+	description = "Trades such amenities as 'storage space' and 'sufficient seating' for an artifical environment ideal for fishing, plus ample supplies (also for fishing)."
+	admin_notes = "There's a chasm in it, it has railings but that won't stop determined players."
+	credit_cost = CARGO_CRATE_VALUE * 10
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
@@ -483,38 +494,58 @@
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
+	description = "Whiteship with medical supplies. Zombies do not currently spawn corpses, and are not infectious."
 
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
 	name = "Salvage Ship"
+	description = "Whiteship that focuses on a large cargo bay that players can build in. Spawns with Syndicate mobs who do not drop corpses and are highly aggressive."
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
-	name = "NT White UFO"
+	name = "NT Science Vessel"
+	description = "A small science vessel that uses just one area and is full of angry ants."
 
 /datum/map_template/shuttle/whiteship/cere
 	suffix = "cere"
 	name = "NT Construction Vessel"
+	description = "A small cargo vessel with open interiors. Starts with a 25% chance to spawn a functional RIPLEY, and has infinite power."
 
 /datum/map_template/shuttle/whiteship/kilo
 	suffix = "kilo"
 	name = "NT Mining Shuttle"
+	description = "A mining vessel with a curious shape starting with a few angry netherworld mobs."
 
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
+	description = "A ship hit with an engine blowout, leaving it as a depressurised husk. Has infinite power, although likely to bait people into removing that property. Also the most open out of all the whiteships, and starts with a 25% ripley chance."
 
 /datum/map_template/shuttle/whiteship/tram
 	suffix = "tram"
 	name = "NT Long-Distance Bluespace Freighter"
+	description = "A long shuttle that starts with Nanotrasen private security corpses. DOES NOT FIT IN THE BASE DOCKS! Does fit in Deep Space's dock though."
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
 	name = "NT Frigate"
+	description = "A standard whiteship with big spiders onboard. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
 
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
+	description = "There is no map for this vessel and it was supposed to be used with the Meta-class. Do not try to spawn it!"
+
+/datum/map_template/shuttle/whiteship/personalshuttle
+	suffix = "personalshuttle"
+	name = "Personal Travel Shuttle"
+	description = "A small vessel with a few zombies and an engineer's corpse that can be looted."
+
+/datum/map_template/shuttle/whiteship/obelisk
+	suffix = "obelisk"
+	name = "Obelisk"
+	description = "A large research vessel affected by the Cult of Nar'Sie. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
+	admin_notes = "Not actually an obelisk, has nonsentient cult constructs."
 
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
@@ -575,6 +606,10 @@
 	suffix = "box"
 	name = "labour shuttle (Box)"
 
+/datum/map_template/shuttle/labour/generic
+	suffix = "generic"
+	name = "labour shuttle (Generic)"
+
 /datum/map_template/shuttle/arrival/donut
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"
@@ -582,10 +617,12 @@
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
 	name = "basic syndicate infiltrator"
+	description = "Base Syndicate infiltrator, spawned by default for nukeops to use."
 
 /datum/map_template/shuttle/infiltrator/advanced
 	suffix = "advanced"
 	name = "advanced syndicate infiltrator"
+	description = "A much larger version of the standard Syndicate infiltrator that feels more like Kilostation. Has APCs, but power is not a concern for nuclear operatives. Also comes with atmos!"
 
 /datum/map_template/shuttle/cargo/delta
 	suffix = "delta"
@@ -646,10 +683,22 @@
 /datum/map_template/shuttle/escape_pod/default
 	suffix = "default"
 	name = "escape pod (Default)"
+	description = "Base escape pod with 2 tiles of interior space."
 
 /datum/map_template/shuttle/escape_pod/large
 	suffix = "large"
 	name = "escape pod (Large)"
+	description = "Actually the old Pubbystation monastery shuttle."
+
+/datum/map_template/shuttle/escape_pod/luxury
+	suffix = "luxury"
+	name = "escape pod (Luxury)"
+	description = "Upgraded escape pod with 3 tiles of interior space."
+
+/datum/map_template/shuttle/escape_pod/cramped
+	suffix = "cramped"
+	name = "escape pod (Cramped)"
+	description = "Downgraded escape pod that lacks a window and only has one seat, alongside lacking an emergency safe."
 
 /datum/map_template/shuttle/assault_pod/default
 	suffix = "default"
@@ -667,6 +716,10 @@
 	suffix = "dutchman"
 	name = "pirate ship (Flying Dutchman)"
 
+/datum/map_template/shuttle/pirate/psykers
+	suffix = "psyker"
+	name = "pirate ship (Psyker-gang)"
+
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
 	name = "Police Spacevan"
@@ -679,21 +732,50 @@
 	suffix = "bounty"
 	name = "Bounty Hunter Ship"
 
+/datum/map_template/shuttle/starfury
+	port_id = "starfury"
+	who_can_purchase = null
+
+/datum/map_template/shuttle/starfury/fighter_one
+	suffix = "fighter1"
+	name = "SBC Starfury Fighter (1)"
+
+/datum/map_template/shuttle/starfury/fighter_two
+	suffix = "fighter2"
+	name = "SBC Starfury Fighter (2)"
+
+/datum/map_template/shuttle/starfury/fighter_three
+	suffix = "fighter3"
+	name = "SBC Starfury Fighter (3)"
+
+/datum/map_template/shuttle/starfury/corvette
+	suffix = "corvette"
+	name = "SBC Starfury Corvette"
+
+/datum/map_template/shuttle/ruin/cyborg_mothership
+	suffix = "cyborg_mothership"
+	name = "Cyborg Mothership"
+	description = "A highly industrialised vessel designed for silicon operation infested with hivebots and space vines."
+
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"
 	name = "Small Freighter"
+	description = "Small freight vessel, starts near blacked-out with 3 Syndicate Commandos and 1 Syndicate Stormtrooper, alongside a large hull breach."
 
 /datum/map_template/shuttle/ruin/pirate_cutter
 	suffix = "pirate_cutter"
 	name = "Pirate Cutter"
+	description = "Small pirate vessel with ballistic turrets. Spawns with 3 pirate mobs, one of which drops an energy cutlass."
 
 /datum/map_template/shuttle/ruin/syndicate_dropship
 	suffix = "syndicate_dropship"
 	name = "Syndicate Dropship"
+	description = "Light Syndicate vessel with laser turrets. Spawns with a Syndicate mob in the bridge."
 
 /datum/map_template/shuttle/ruin/syndicate_fighter_shiv
 	suffix = "syndicate_fighter_shiv"
 	name = "Syndicate Fighter"
+	description = "A small Syndicate vessel with exactly one tile of useful interior space and 4 laser turrets. Starts with a Syndicate mob in the pilot's seat, and extremely cramped."
 
 /datum/map_template/shuttle/snowdin/mining
 	suffix = "mining"
@@ -702,3 +784,10 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+// Custom ERT shuttles
+/datum/map_template/shuttle/ert/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter ERT Shuttle"
+
+#undef EMAG_LOCKED_SHUTTLE_COST

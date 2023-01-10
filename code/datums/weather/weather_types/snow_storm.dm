@@ -19,7 +19,7 @@
 	protect_indoors = TRUE
 	target_trait = ZTRAIT_SNOWSTORM
 
-	immunity_type = "snow"
+	immunity_type = TRAIT_SNOWSTORM_IMMUNE
 
 	barometer_predictable = TRUE
 
@@ -27,3 +27,27 @@
 /datum/weather/snow_storm/weather_act(mob/living/L)
 	L.adjust_bodytemperature(-rand(5,15))
 
+
+// since snowstorm is on a station z level, add extra checks to not annoy everyone
+/datum/weather/snow_storm/can_get_alert(mob/player)
+	if(!..())
+		return FALSE
+
+	if(!is_station_level(player.z))
+		return TRUE  // bypass checks
+
+	if(isobserver(player))
+		return TRUE
+
+	if(HAS_TRAIT(player, TRAIT_DETECT_STORM))
+		return TRUE
+
+	if(istype(get_area(player), /area/mine))
+		return TRUE
+
+
+	for(var/area/snow_area in impacted_areas)
+		if(locate(snow_area) in view(player))
+			return TRUE
+
+	return FALSE

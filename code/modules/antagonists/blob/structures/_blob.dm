@@ -1,7 +1,7 @@
 //I will need to recode parts of this but I am way too tired atm //I don't know who left this comment but they never did come back
 /obj/structure/blob
 	name = "blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
 	density = TRUE
@@ -9,11 +9,12 @@
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	pass_flags_self = PASSBLOB
-	CanAtmosPass = ATMOS_PASS_PROC
+	can_atmos_pass = ATMOS_PASS_PROC
+	obj_flags = CAN_BE_HIT|BLOCK_Z_OUT_DOWN // stops blob mobs from falling on multiz.
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/point_return = 0
-	max_integrity = 30
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
+	max_integrity = BLOB_REGULAR_MAX_HP
+	armor_type = /datum/armor/structure_blob
 	/// how much health this blob regens when pulsed
 	var/health_regen = BLOB_REGULAR_HP_REGEN
 	/// We got pulsed when?
@@ -31,21 +32,40 @@
 	var/mob/camera/blob/overmind
 
 
+/datum/armor/structure_blob
+	fire = 80
+	acid = 70
+
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
+	register_context()
 	if(owner_overmind)
 		overmind = owner_overmind
 		overmind.all_blobs += src
-		var/area/Ablob = get_area(src)
-		if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
-			overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_appearance()
 	if(atmosblock)
 		air_update_turf(TRUE, TRUE)
 	ConsumeTile()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
+	if(!QDELETED(src)) //Consuming our tile can in rare cases cause us to del
+		AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
+
+/obj/structure/blob/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if (!isovermind(user))
+		return .
+
+	if(istype(src, /obj/structure/blob/normal))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create strong blob"
+	if(istype(src, /obj/structure/blob/shield) && !istype(src, /obj/structure/blob/shield/reflective))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create reflective blob"
+
+	if(point_return >= 0)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove blob"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -79,16 +99,19 @@
 						result++
 		. -= result - 1
 
-/obj/structure/blob/BlockSuperconductivity()
+/obj/structure/blob/block_superconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanAtmosPass(turf/T)
+/obj/structure/blob/can_atmos_pass(turf/T, vertical = FALSE)
 	return !atmosblock
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	. = ..()
 	if(overmind)
 		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
+		var/area/A = get_area(src)
+		if(!(A.area_flags & BLOBS_ALLOWED))
+			add_atom_colour(BlendRGB(overmind.blobstrain.color, COLOR_WHITE, 0.5), FIXED_COLOUR_PRIORITY) //lighten it to indicate an off-station blob
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
@@ -96,7 +119,7 @@
 	if(COOLDOWN_FINISHED(src, pulse_timestamp))
 		ConsumeTile()
 		if(COOLDOWN_FINISHED(src, heal_timestamp))
-			obj_integrity = min(max_integrity, obj_integrity+health_regen)
+			atom_integrity = min(max_integrity, atom_integrity+health_regen)
 			COOLDOWN_START(src, heal_timestamp, 20)
 		update_appearance()
 		COOLDOWN_START(src, pulse_timestamp, 10)
@@ -105,6 +128,8 @@
 
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
+		if(!A.can_blob_attack())
+			continue
 		if(isliving(A) && overmind && !isblobmonster(A)) // Make sure to inject strain-reagents with automatic attacks when needed.
 			overmind.blobstrain.attack_living(A)
 			continue // Don't smack them twice though
@@ -115,12 +140,17 @@
 /obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
 	var/obj/effect/temp_visual/blob/O = new /obj/effect/temp_visual/blob(src.loc)
 	O.setDir(dir)
+	var/area/my_area = get_area(src)
 	if(controller)
 		var/mob/camera/blob/BO = controller
 		O.color = BO.blobstrain.color
+		if(!(my_area.area_flags & BLOBS_ALLOWED))
+			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
 		O.alpha = 200
 	else if(overmind)
 		O.color = overmind.blobstrain.color
+		if(!(my_area.area_flags & BLOBS_ALLOWED))
+			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
 	if(A)
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
@@ -145,12 +175,14 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
-	if(!T.CanPass(src, T)) //is the target turf impassable
+	if(!T.CanPass(src, get_dir(T, src))) //is the target turf impassable
 		make_blob = FALSE
 		T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
-		if(!A.CanPass(src, T)) //is anything in the turf impassable
+		if(!A.CanPass(src, get_dir(T, src))) //is anything in the turf impassable
 			make_blob = FALSE
+		if(!A.can_blob_attack())
+			continue
 		if(isliving(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
 			overmind.blobstrain.attack_living(A)
 			continue // Don't smack them twice though
@@ -159,9 +191,14 @@
 	if(make_blob) //well, can we?
 		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
 		B.set_density(TRUE)
-		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
+		if(T.Enter(B)) //NOW we can attempt to move into the tile
 			B.set_density(initial(B.density))
 			B.forceMove(T)
+			var/area/Ablob = get_area(B)
+			if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
+				overmind.blobs_legit += B
+			else if(controller)
+				B.balloon_alert(overmind, "off-station, won't count!")
 			B.update_appearance()
 			if(B.overmind && expand_reaction)
 				B.overmind.blobstrain.expand_reaction(src, B, T, controller)
@@ -229,7 +266,7 @@
 /obj/structure/blob/proc/typereport(mob/user)
 	RETURN_TYPE(/list)
 	return list("<b>Blob Type:</b> [span_notice("[uppertext(initial(name))]")]",
-							"<b>Health:</b> [span_notice("[obj_integrity]/[max_integrity]")]",
+							"<b>Health:</b> [span_notice("[atom_integrity]/[max_integrity]")]",
 							"<b>Effects:</b> [span_notice("[scannerreport()]")]")
 
 
@@ -248,7 +285,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/blob/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
 		if(BRUTE)
 			damage_amount *= brute_resist
@@ -259,7 +296,7 @@
 			return 0
 	var/armor_protection = 0
 	if(damage_flag)
-		armor_protection = armor.getRating(damage_flag)
+		armor_protection = get_armor_rating(damage_flag)
 	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 	if(overmind && damage_flag)
 		damage_amount = overmind.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)
@@ -267,10 +304,10 @@
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && atom_integrity > 0)
 		update_appearance()
 
-/obj/structure/blob/obj_destruction(damage_flag)
+/obj/structure/blob/atom_destruction(damage_flag)
 	if(overmind)
 		overmind.blobstrain.death_reaction(src, damage_flag)
 	..()
@@ -288,7 +325,7 @@
 /obj/structure/blob/examine(mob/user)
 	. = ..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	if(user.research_scanner || hud_to_check.hudusers[user])
+	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || hud_to_check.hud_users[user])
 		. += "<b>Your HUD displays an extensive report...</b><br>"
 		if(overmind)
 			. += overmind.blobstrain.examine(user)
@@ -314,21 +351,26 @@
 	icon_state = "blob"
 	light_range = 0
 	max_integrity = BLOB_REGULAR_MAX_HP
+	var/initial_integrity = BLOB_REGULAR_HP_INIT
 	health_regen = BLOB_REGULAR_HP_REGEN
 	brute_resist = BLOB_BRUTE_RESIST * 0.5
 
+/obj/structure/blob/normal/Initialize(mapload, owner_overmind)
+	. = ..()
+	update_integrity(initial_integrity)
+
 /obj/structure/blob/normal/scannerreport()
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		return "Currently weak to brute damage."
 	return "N/A"
 
 /obj/structure/blob/normal/update_name()
 	. = ..()
-	name = "[(obj_integrity <= 15) ? "fragile " : (overmind ? null : "dead ")][initial(name)]"
+	name = "[(atom_integrity <= 15) ? "fragile " : (overmind ? null : "dead ")][initial(name)]"
 
 /obj/structure/blob/normal/update_desc()
 	. = ..()
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		desc = "A thin lattice of slightly twitching tendrils."
 	else if(overmind)
 		desc = "A thick wall of writhing tendrils."
@@ -336,10 +378,10 @@
 		desc = "A thick wall of lifeless tendrils."
 
 /obj/structure/blob/normal/update_icon_state()
-	icon_state = "blob[(obj_integrity <= 15) ? "_damaged" : null]"
+	icon_state = "blob[(atom_integrity <= 15) ? "_damaged" : null]"
 
 	/// - [] TODO: Move this elsewhere
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		brute_resist = BLOB_BRUTE_RESIST
 	else if (overmind)
 		brute_resist = BLOB_BRUTE_RESIST * 0.5

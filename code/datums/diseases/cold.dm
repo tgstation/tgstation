@@ -1,12 +1,13 @@
 /datum/disease/cold
 	name = "The Cold"
+	desc = "If left untreated the subject will contract the flu."
 	max_stages = 3
 	cure_text = "Rest & Spaceacillin"
 	cures = list(/datum/reagent/medicine/spaceacillin)
 	agent = "XY-rhinovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 0.5
-	desc = "If left untreated the subject will contract the flu."
+	spreading_modifier = 0.5
+	spread_text = "Airborne"
 	severity = DISEASE_SEVERITY_NONTHREAT
 
 

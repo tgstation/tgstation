@@ -4,9 +4,10 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
-#define MAJOR_THRESHOLD 6*CARGO_CRATE_VALUE
-#define MINOR_THRESHOLD 4*CARGO_CRATE_VALUE
-#define STANDARD_DEVIATION 2*CARGO_CRATE_VALUE
+#define MAJOR_THRESHOLD (6*CARGO_CRATE_VALUE)
+#define MINOR_THRESHOLD (4*CARGO_CRATE_VALUE)
+#define STANDARD_DEVIATION (2*CARGO_CRATE_VALUE)
+#define PART_CASH_OFFSET_AMOUNT (0.5*CARGO_CRATE_VALUE)
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
@@ -16,8 +17,7 @@
 	base_icon_state = "chamber"
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
-	use_power = IDLE_POWER_USE
-	active_power_usage = 1500
+	plane = GAME_PLANE_UPPER
 	circuit = /obj/item/circuitboard/machine/bepis
 
 	///How much cash the UI and machine are depositing at a time.
@@ -58,11 +58,6 @@
 	)
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
-		update_appearance()
-		return
-	if(default_deconstruction_crowbar(O))
-		return
 	if(!is_operational)
 		to_chat(user, span_notice("[src] can't accept money when it's not functioning."))
 		return
@@ -73,7 +68,7 @@
 		say("Deposited [deposit_value] credits into storage.")
 		update_appearance()
 		return
-	if(istype(O, /obj/item/card/id))
+	if(isidcard(O))
 		var/obj/item/card/id/Card = O
 		if(Card.registered_account)
 			account = Card.registered_account
@@ -84,7 +79,14 @@
 		return
 	return ..()
 
+/obj/machinery/rnd/bepis/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "chamber_open", "chamber", tool)
+
+/obj/machinery/rnd/bepis/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "chamber_open", "chamber", tool)
+
 /obj/machinery/rnd/bepis/RefreshParts()
+	. = ..()
 	var/C = 0
 	var/M = 0
 	var/L = 0
@@ -93,13 +95,13 @@
 		C += ((Cap.rating - 1) * 0.1)
 	power_saver = 1 - C
 	for(var/obj/item/stock_parts/manipulator/Manip in component_parts)
-		M += ((Manip.rating - 1) * 250)
+		M += ((Manip.rating - 1) * PART_CASH_OFFSET_AMOUNT)
 	positive_cash_offset = M
 	for(var/obj/item/stock_parts/micro_laser/Laser in component_parts)
-		L += ((Laser.rating - 1) * 250)
+		L += ((Laser.rating - 1) * PART_CASH_OFFSET_AMOUNT)
 	negative_cash_offset = L
-	for(var/obj/item/stock_parts/scanning_module/Scan in component_parts)
-		S += ((Scan.rating - 1) * 0.25)
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		S += ((scanning_module.tier - 1) * 0.25)
 	inaccuracy_percentage = (1.5 - S)
 
 /obj/machinery/rnd/bepis/update_icon_state()
@@ -187,7 +189,7 @@
 				return
 			calcsuccess()
 			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
-			use_power = IDLE_POWER_USE //Machine shuts off after use to prevent spam and look better visually.
+			update_use_power(IDLE_POWER_USE) //Machine shuts off after use to prevent spam and look better visually.
 			update_appearance()
 		if("amount")
 			var/input = text2num(params["amount"])
@@ -195,9 +197,9 @@
 				banking_amount = input
 		if("toggle_power")
 			if(use_power == ACTIVE_POWER_USE)
-				use_power = IDLE_POWER_USE
+				update_use_power(IDLE_POWER_USE)
 			else
-				use_power = ACTIVE_POWER_USE
+				update_use_power(ACTIVE_POWER_USE)
 			update_appearance()
 		if("account_reset")
 			if(use_power == IDLE_POWER_USE)
@@ -225,7 +227,7 @@
 	if(!account.has_money(deposit_value))
 		say("You do not possess enough credits.")
 		return
-	account.adjust_money(-deposit_value) //The money vanishes, not paid to any accounts.
+	account.adjust_money(-deposit_value, "Vending: B.E.P.I.S. Chamber") //The money vanishes, not paid to any accounts.
 	SSblackbox.record_feedback("amount", "BEPIS_credits_spent", deposit_value)
 	log_econ("[deposit_value] credits were inserted into [src] by [account.account_holder]")
 	banked_cash += deposit_value
@@ -260,12 +262,12 @@
 	flick("chamber_flash",src)
 	update_appearance()
 	banked_cash = 0
-	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > 0)) //Major Success.
-		say("Experiment concluded with major success. New technology node discovered on technology disc.")
-		new /obj/item/disk/tech_disk/major(dropturf,1)
-		if(SSresearch.techweb_nodes_experimental.len == 0)
-			say("Expended all available experimental technology nodes. Resorting to minor rewards.")
-		return
+	if((gauss_real >= gauss_major)) //Major Success.
+		if(SSresearch.techweb_nodes_experimental.len > 0)
+			say("Experiment concluded with major success. New technology node discovered on technology disc.")
+			new /obj/item/disk/tech_disk/major(dropturf,1)
+			return
+		say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 	if(gauss_real >= gauss_minor) //Minor Success.
 		var/reward = pick(minor_rewards)
 		new reward(dropturf)

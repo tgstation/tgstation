@@ -3,7 +3,7 @@
 /obj/item/evidencebag
 	name = "evidence bag"
 	desc = "An empty evidence bag."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "evidenceobj"
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_TINY
@@ -13,6 +13,7 @@
 	if(!proximity || loc == I)
 		return
 	evidencebagEquip(I, user)
+	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/evidencebag/attackby(obj/item/I, mob/user, params)
 	if(evidencebagEquip(I, user))
@@ -28,15 +29,19 @@
 	if(!istype(I) || I.anchored)
 		return
 
-	if(SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE) && SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE))
+	if(loc.atom_storage && I.atom_storage)
 		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
 		return TRUE //begone infinite storage ghosts, begone from me
+
+	if(HAS_TRAIT(I, TRAIT_NO_STORAGE_INSERT))
+		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
+		return TRUE
 
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, span_warning("You find putting an evidence bag in another evidence bag to be slightly absurd."))
 		return TRUE //now this is podracing
 
-	if(loc in I.GetAllContents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
+	if(loc in I.get_all_contents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
 		to_chat(user, span_warning("You find putting [I] in [src] while it's still inside it quite difficult!"))
 		return
 
@@ -49,8 +54,8 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(SEND_SIGNAL(I.loc, COMSIG_CONTAINS_STORAGE)) //in a container.
-			SEND_SIGNAL(I.loc, COMSIG_TRY_STORAGE_TAKE, I, src)
+		if(I.loc.atom_storage) //in a container.
+			I.loc.atom_storage.attempt_remove(I, src)
 		if(!user.dropItemToGround(I))
 			return
 

@@ -1,5 +1,8 @@
 // Keep the identifiers here below 32 characters, you can put the full display name in the actual achievement datum
 
+/// Achievements icon set
+#define ACHIEVEMENTS_SET 'icons/ui_icons/achievements/achievements.dmi'
+
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
@@ -30,11 +33,17 @@
 #define MEDAL_FLESH_ASCENSION "Flesh"
 #define MEDAL_RUST_ASCENSION "Rust"
 #define MEDAL_VOID_ASCENSION "Void"
+#define MEDAL_BLADE_ASCENSION "Blade"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
-#define MEDAL_CHEM_TUT          "Beginner Chemist"
+#define MEDAL_CHEM_TUT "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"
 #define MEDAL_CAYENNE_DISK "Very Important Piscis"
 #define MEDAL_TRAM_SURFER "Tram Surfer"
+#define MEDAL_CULT_SHUTTLE_OMFG "WHAT JUST HAPPENED"
+#define MEDAL_CLICKBAIT "Clickbait"
+#define MEDAL_NARSUPREME "Narsupreme"
+#define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
+#define MEDAL_HEALTHY "Heart Healthy"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
@@ -60,24 +69,23 @@
 
 //Mafia medal hub IDs (misc stuff)
 #define MAFIA_MEDAL_HATED "Universally Hated"
-#define MAFIA_MEDAL_CHARISMATIC "Charismatic"
-#define MAFIA_MEDAL_VIP "VIP"
 
 //Boss medals
 
 // Medal hub IDs for boss medals (Pre-fixes)
-#define BOSS_MEDAL_ANY   "Boss Killer"
-#define BOSS_MEDAL_MINER   "Blood-drunk Miner Killer"
+#define BOSS_MEDAL_ANY "Boss Killer"
+
+#define BOSS_MEDAL_MINER "Blood-drunk Miner Killer"
 #define BOSS_MEDAL_FROSTMINER "Demonic-frost Miner Killer"
-#define BOSS_MEDAL_BUBBLEGUM  "Bubblegum Killer"
-#define BOSS_MEDAL_COLOSSUS   "Colossus Killer"
-#define BOSS_MEDAL_DRAKE   "Drake Killer"
+#define BOSS_MEDAL_BUBBLEGUM "Bubblegum Killer"
+#define BOSS_MEDAL_COLOSSUS "Colossus Killer"
+#define BOSS_MEDAL_DRAKE "Drake Killer"
 #define BOSS_MEDAL_HIEROPHANT "Hierophant Killer"
-#define BOSS_MEDAL_LEGION   "Legion Killer"
-#define BOSS_MEDAL_TENDRIL   "Tendril Exterminator"
-#define BOSS_MEDAL_SWARMERS   "Swarmer Beacon Killer"
-#define BOSS_MEDAL_WENDIGO    "Wendigo Killer"
-#define BOSS_MEDAL_KINGGOAT   "King Goat Killer"
+#define BOSS_MEDAL_LEGION "Legion Killer"
+#define BOSS_MEDAL_TENDRIL "Tendril Exterminator"
+#define BOSS_MEDAL_SWARMERS "Swarmer Beacon Killer"
+#define BOSS_MEDAL_WENDIGO "Wendigo Killer"
+#define BOSS_MEDAL_KINGGOAT "King Goat Killer"
 
 #define BOSS_MEDAL_MINER_CRUSHER "Blood-drunk Miner Crusher"
 #define BOSS_MEDAL_FROSTMINER_CRUSHER "Demonic-frost Miner Crusher"
@@ -91,18 +99,18 @@
 #define BOSS_MEDAL_KINGGOAT_CRUSHER "King Goat Crusher"
 
 // Medal hub IDs for boss-kill scores
-#define BOSS_SCORE          "Bosses Killed"
-#define MINER_SCORE  "BDMs Killed"
-#define FROST_MINER_SCORE  "DFMs Killed"
-#define BUBBLEGUM_SCORE  "Bubblegum Killed"
-#define COLOSSUS_SCORE      "Colossus Killed"
-#define DRAKE_SCORE      "Drakes Killed"
-#define HIEROPHANT_SCORE  "Hierophants Killed"
-#define LEGION_SCORE      "Legion Killed"
+#define BOSS_SCORE "Bosses Killed"
+#define MINER_SCORE "BDMs Killed"
+#define FROST_MINER_SCORE "DFMs Killed"
+#define BUBBLEGUM_SCORE "Bubblegum Killed"
+#define COLOSSUS_SCORE "Colossus Killed"
+#define DRAKE_SCORE "Drakes Killed"
+#define HIEROPHANT_SCORE "Hierophants Killed"
+#define LEGION_SCORE "Legion Killed"
 #define SWARMER_BEACON_SCORE "Swarmer Beacs Killed"
-#define WENDIGO_SCORE  "Wendigos Killed"
-#define KINGGOAT_SCORE      "King Goat Killed"
-#define TENDRIL_CLEAR_SCORE  "Tendrils Killed"
+#define WENDIGO_SCORE "Wendigos Killed"
+#define KINGGOAT_SCORE "King Goat Killed"
+#define TENDRIL_CLEAR_SCORE "Tendrils Killed"
 
 // DB ID for hardcore random mode
 #define HARDCORE_RANDOM_SCORE "Hardcore Random Score"

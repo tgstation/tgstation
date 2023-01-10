@@ -4,7 +4,7 @@
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
 	// If you want to change this variable name, the force latejoin/midround rulesets
-	// to not use sortNames.
+	// to not use sort_names.
 	var/name = ""
 	/// For admin logging and round end screen, do not change this unless making a new rule type.
 	var/ruletype = ""
@@ -16,9 +16,9 @@
 	var/repeatable_weight_decrease = 2
 	/// List of players that are being drafted for this rule
 	var/list/mob/candidates = list()
-	/// List of players that were selected for this rule
-	var/list/datum/mind/assigned = list()
-	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
+	/// List of players that were selected for this rule. This can be minds, or mobs.
+	var/list/assigned = list()
+	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag.
 	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
 	var/datum/antagonist/antag_datum = null
@@ -31,7 +31,12 @@
 	/// If set, rule will only accept candidates from those roles. If on a roundstart ruleset, requires the player to have the correct antag pref enabled and any of the possible roles enabled.
 	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/list/enemy_roles = list()
+	var/list/enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	/// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)
 	/// The rule needs this many candidates (post-trimming) to be executed (example: Cult needs 4 players at round start)
@@ -57,6 +62,8 @@
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
 	var/antag_flag_override = null
+	/// If set, will check this preference instead of antag_flag.
+	var/antag_preference = null
 	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
 	var/list/blocking_rules = list()
 	/// The minimum amount of players required for the rule to be considered.
@@ -77,6 +84,9 @@
 	/// Written as a linear equation--ceil(x/denominator) + offset, or as a fixed constant.
 	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
 	var/antag_cap = 0
+
+	/// A list, or null, of templates that the ruleset depends on to function correctly
+	var/list/ruleset_lazy_templates
 
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks
@@ -102,10 +112,18 @@
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 
 	if(minimum_players > population)
+		log_dynamic("FAIL: [src] failed acceptable: minimum_players ([minimum_players]) > population ([population])")
 		return FALSE
+
 	if(maximum_players > 0 && population > maximum_players)
+		log_dynamic("FAIL: [src] failed acceptable: maximum_players ([maximum_players]) < population ([population])")
 		return FALSE
-	return (threat_level >= requirements[indice_pop])
+
+	if (threat_level < requirements[indice_pop])
+		log_dynamic("FAIL: [src] failed acceptable: threat_level ([threat_level]) < requirement ([requirements[indice_pop]])")
+		return FALSE
+
+	return TRUE
 
 /// When picking rulesets, if dynamic picks the same one multiple times, it will "scale up".
 /// However, doing this blindly would result in lowpop rounds (think under 10 people) where over 80% of the crew is antags!
@@ -156,9 +174,12 @@
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
 /datum/dynamic_ruleset/proc/ready(forced = 0)
-	if (required_candidates > candidates.len)
-		return FALSE
-	return TRUE
+	return check_candidates()
+
+/// This should always be called before ready is, to ensure that the ruleset can locate map/template based landmarks as needed
+/datum/dynamic_ruleset/proc/load_templates()
+	for(var/template in ruleset_lazy_templates)
+		SSmapping.lazy_load_template(template)
 
 /// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.
@@ -175,6 +196,14 @@
 			if(istype(DR, type))
 				weight = max(weight-repeatable_weight_decrease,1)
 	return weight
+
+/// Checks if there are enough candidates to run, and logs otherwise
+/datum/dynamic_ruleset/proc/check_candidates()
+	if (required_candidates <= candidates.len)
+		return TRUE
+
+	log_dynamic("FAIL: [src] does not have enough candidates ([required_candidates] needed, [candidates.len] found)")
+	return FALSE
 
 /// Here you can remove candidates that do not meet your requirements.
 /// This means if their job is not correct or they have disconnected you can remove them from candidates here.
@@ -208,21 +237,22 @@
 			candidates.Remove(candidate_player)
 			continue
 
-		if(antag_flag_override)
-			if(!(antag_flag_override in candidate_client.prefs.be_special) || is_banned_from(candidate_player.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				candidates.Remove(candidate_player)
-				continue
-		else
-			if(!(antag_flag in candidate_client.prefs.be_special) || is_banned_from(candidate_player.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				candidates.Remove(candidate_player)
-				continue
+		if (!((antag_preference || antag_flag) in candidate_client.prefs.be_special))
+			candidates.Remove(candidate_player)
+			continue
+
+		if (is_banned_from(candidate_player.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+			candidates.Remove(candidate_player)
+			continue
 
 		// If this ruleset has exclusive_roles set, we want to only consider players who have those
-		// job prefs enabled and aren't role banned from that job. Otherwise, continue as before.
+		// job prefs enabled and are eligible to play that job. Otherwise, continue as before.
 		if(length(exclusive_roles))
 			var/exclusive_candidate = FALSE
 			for(var/role in exclusive_roles)
-				if((role in candidate_client.prefs.job_preferences) && !is_banned_from(candidate_player.ckey, role))
+				var/datum/job/job = SSjob.GetJob(role)
+
+				if((role in candidate_client.prefs.job_preferences) && SSjob.check_job_eligibility(candidate_player, job, "Dynamic Roundstart TC", add_job_to_log = TRUE)==JOB_AVAILABLE)
 					exclusive_candidate = TRUE
 					break
 

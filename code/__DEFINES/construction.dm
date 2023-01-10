@@ -8,6 +8,7 @@
 #define GIRDER_REINF 2
 #define GIRDER_DISPLACED 3
 #define GIRDER_DISASSEMBLED 4
+#define GIRDER_TRAM 5
 
 //rwall construction states
 #define INTACT 0
@@ -36,6 +37,11 @@
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
 #define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
 
+//blast door (de)construction states
+#define BLASTDOOR_NEEDS_WIRES 0
+#define BLASTDOOR_NEEDS_ELECTRONICS 1
+#define BLASTDOOR_FINISHED 2
+
 //default_unfasten_wrench() return defines
 #define CANT_UNFASTEN 0
 #define FAILED_UNFASTEN 1
@@ -58,6 +64,10 @@
 #define FLOODLIGHT_NEEDS_LIGHTS 1
 #define FLOODLIGHT_NEEDS_SECURING 2
 
+// Stationary gas tanks
+#define TANK_FRAME 0
+#define TANK_PLATING_UNSECURED 1
+
 //other construction-related things
 
 //windows affected by Nar'Sie turn this color.
@@ -71,14 +81,6 @@
 #define MAXCOIL 30
 
 //tablecrafting defines
-#define CAT_NONE ""
-#define CAT_WEAPONRY "Weaponry"
-#define CAT_WEAPON "Weapons"
-#define CAT_AMMO "Ammunition"
-#define CAT_ROBOT "Robots"
-#define CAT_MISC "Misc"
-#define CAT_PRIMAL  "Tribal"
-#define CAT_CLOTHING "Clothing"
 #define CAT_FOOD "Foods"
 #define CAT_BREAD "Breads"
 #define CAT_BURGER "Burgers"
@@ -86,8 +88,10 @@
 #define CAT_EGG "Egg-Based Food"
 #define CAT_LIZARD "Lizard Food"
 #define CAT_MEAT "Meats"
+#define CAT_SEAFOOD "Seafood"
 #define CAT_MISCFOOD "Misc. Food"
 #define CAT_MEXICAN "Mexican Food"
+#define CAT_MOTH "Mothic Food"
 #define CAT_PASTRY "Pastries"
 #define CAT_PIE "Pies"
 #define CAT_PIZZA "Pizzas"
@@ -97,7 +101,26 @@
 #define CAT_SPAGHETTI "Spaghettis"
 #define CAT_ICE "Frozen"
 #define CAT_DRINK "Drinks"
+
+//crafting defines
+#define CAT_WEAPON_RANGED "Weapons Ranged"
+#define CAT_WEAPON_MELEE "Weapons Melee"
+#define CAT_WEAPON_AMMO "Weapon Ammo"
+#define CAT_ROBOT "Robotics"
+#define CAT_MISC "Misc"
+#define CAT_CLOTHING "Clothing"
 #define CAT_CHEMISTRY "Chemistry"
+#define CAT_ATMOSPHERIC "Atmospherics"
+#define CAT_STRUCTURE "Structures"
+#define CAT_TILES "Tiles"
+#define CAT_WINDOWS "Windows"
+#define CAT_DOORS "Doors"
+#define CAT_FURNITURE "Furniture"
+#define CAT_EQUIPMENT "Equipment"
+#define CAT_CONTAINERS "Containers"
+#define CAT_ENTERTAINMENT "Entertainment"
+#define CAT_TOOLS "Tools"
+#define CAT_CULT "Blood Cult"
 
 //rcd modes
 #define RCD_FLOORWALL 0

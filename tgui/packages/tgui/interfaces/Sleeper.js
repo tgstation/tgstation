@@ -23,11 +23,7 @@ const damageTypes = [
 
 export const Sleeper = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    open,
-    occupant = {},
-    occupied,
-  } = data;
+  const { open, occupant = {}, occupied } = data;
   const preSortChems = data.chems || [];
   const chems = preSortChems.sort((a, b) => {
     const descA = a.name.toLowerCase();
@@ -41,21 +37,18 @@ export const Sleeper = (props, context) => {
     return 0;
   });
   return (
-    <Window
-      width={310}
-      height={465}>
+    <Window width={310} height={465}>
       <Window.Content>
         <Section
           title={occupant.name ? occupant.name : 'No Occupant'}
           minHeight="210px"
-          buttons={!!occupant.stat && (
-            <Box
-              inline
-              bold
-              color={occupant.statstate}>
-              {occupant.stat}
-            </Box>
-          )}>
+          buttons={
+            !!occupant.stat && (
+              <Box inline bold color={occupant.statstate}>
+                {occupant.stat}
+              </Box>
+            )
+          }>
           {!!occupied && (
             <>
               <ProgressBar
@@ -66,18 +59,18 @@ export const Sleeper = (props, context) => {
                   good: [50, Infinity],
                   average: [0, 50],
                   bad: [-Infinity, 0],
-                }} />
+                }}
+              />
               <Box mt={1} />
               <LabeledList>
-                {damageTypes.map(type => (
-                  <LabeledList.Item
-                    key={type.type}
-                    label={type.label}>
+                {damageTypes.map((type) => (
+                  <LabeledList.Item key={type.type} label={type.label}>
                     <ProgressBar
                       value={occupant[type.type]}
                       minValue={0}
                       maxValue={occupant.maxHealth}
-                      color="bad" />
+                      color="bad"
+                    />
                   </LabeledList.Item>
                 ))}
                 <LabeledList.Item
@@ -97,22 +90,26 @@ export const Sleeper = (props, context) => {
         <Section
           title="Medicines"
           minHeight="205px"
-          buttons={(
+          buttons={
             <Button
               icon={open ? 'door-open' : 'door-closed'}
               content={open ? 'Open' : 'Closed'}
-              onClick={() => act('door')} />
-          )}>
-          {chems.map(chem => (
+              onClick={() => act('door')}
+            />
+          }>
+          {chems.map((chem) => (
             <Button
               key={chem.name}
               icon="flask"
               content={chem.name}
               disabled={!occupied || !chem.allowed}
               width="140px"
-              onClick={() => act('inject', {
-                chem: chem.id,
-              })} />
+              onClick={() =>
+                act('inject', {
+                  chem: chem.id,
+                })
+              }
+            />
           ))}
         </Section>
       </Window.Content>

@@ -7,12 +7,10 @@
 	icon_state_powered = "laptop"
 	icon_state_unpowered = "laptop-off"
 	icon_state_menu = "menu"
-	display_overlays = FALSE
 
 	hardware_flag = PROGRAM_LAPTOP
-	max_hardware_size = 2
+	max_idle_programs = 3
 	w_class = WEIGHT_CLASS_NORMAL
-	max_bays = 4
 
 	// No running around with open laptops in hands.
 	item_flags = SLOWS_WHILE_IN_HAND
@@ -28,7 +26,7 @@
 	if(screen_on)
 		. += span_notice("Alt-click to close it.")
 
-/obj/item/modular_computer/laptop/Initialize()
+/obj/item/modular_computer/laptop/Initialize(mapload)
 	. = ..()
 
 	if(start_open && !screen_on)
@@ -86,13 +84,16 @@
 		return
 	if(!isturf(loc) && !ismob(loc)) // No opening it in backpack.
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 
 	toggle_open(user)
 
 
 /obj/item/modular_computer/laptop/AltClick(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(screen_on) // Close it.
 		try_toggle_open(user)
 	else
@@ -109,7 +110,6 @@
 		w_class = w_class_open
 
 	screen_on = !screen_on
-	display_overlays = screen_on
 	update_appearance()
 
 

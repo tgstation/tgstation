@@ -47,7 +47,7 @@
 /**
  * Called on a normal destruction, so we have a cool explosion and toss whatever's attached
  */
-/obj/structure/training_machine/obj_destruction(damage_flag)
+/obj/structure/training_machine/atom_destruction(damage_flag)
 	remove_attached_item(throwing = TRUE)
 	explosion(src, light_impact_range = 1, flash_range = 2)
 	return ..()
@@ -117,7 +117,7 @@
 		return
 	attach_item(target)
 	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
-	playsound(src, "rustle", 50, TRUE)
+	playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /**
  * Attach an item to the machine
@@ -131,9 +131,9 @@
 	remove_attached_item()
 	attached_item = target
 	attached_item.forceMove(src)
-	attached_item.vis_flags |= VIS_INHERIT_ID
+	attached_item.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_PLANE
 	vis_contents += attached_item
-	RegisterSignal(attached_item, COMSIG_PARENT_QDELETING, .proc/on_attached_delete)
+	RegisterSignal(attached_item, COMSIG_PARENT_QDELETING, PROC_REF(on_attached_delete))
 	handle_density()
 
 /**
@@ -145,6 +145,7 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
 	vis_contents -= attached_item
+	attached_item.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE)
 	attached_item = null
 	handle_density()
 
@@ -164,7 +165,7 @@
 		UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
 		qdel(attached_item)
 	else if (user)
-		user.put_in_hands(attached_item)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), attached_item)
 	else
 		attached_item.forceMove(drop_location())
 	if (throwing && !QDELETED(attached_item)) //Fun little thing where we throw out the old attached item when emagged
@@ -175,7 +176,7 @@
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, FLOOR_OKAY))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, floor_okay = TRUE))
 		return
 	if(has_buckled_mobs())
 		user_unbuckle_mob(buckled_mobs[1], user)
@@ -187,7 +188,7 @@
 		return
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
-	playsound(src, "rustle", 50, TRUE)
+	playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /**
  * Toggle the machine's movement
@@ -342,8 +343,8 @@
  */
 /obj/item/training_toolbox
 	name = "Training Toolbox"
-	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
-	icon = 'icons/obj/storage.dmi'
+	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold separately!"
+	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
@@ -396,6 +397,8 @@
 
 /obj/item/training_toolbox/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
 

@@ -16,17 +16,17 @@
 	if(findtext(streak,TORNADO_COMBO))
 		if(A == D)//helps using apotheosis
 			return FALSE
-		streak = ""
+		reset_streak()
 		Tornado(A,D)
 		return TRUE
 	if(findtext(streak,THROWBACK_COMBO))
 		if(A == D)//helps using apotheosis
 			return FALSE
-		streak = ""
+		reset_streak()
 		Throwback(A,D)
 		return TRUE
 	if(findtext(streak,PLASMA_COMBO))
-		streak = ""
+		reset_streak()
 		if(A == D && !nobomb)
 			Apotheosis(A,D)
 		else
@@ -36,9 +36,12 @@
 
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/A, mob/living/D)
 	A.say("TORNADO SWEEP!", forced="plasma fist")
-	dance_rotate(A, CALLBACK(GLOBAL_PROC, .proc/playsound, A.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1))
-	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
-	R.cast(RANGE_TURFS(1,A))
+	dance_rotate(A, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), A.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1))
+
+	var/datum/action/cooldown/spell/aoe/repulse/tornado_spell = new(src)
+	tornado_spell.cast(A)
+	qdel(tornado_spell)
+
 	log_combat(A, D, "tornado sweeped(Plasma Fist)")
 	return
 
@@ -64,6 +67,7 @@
 	to_chat(A, span_danger("You hit [D] with THE PLASMA FIST TECHNIQUE!"))
 	log_combat(A, D, "gibbed (Plasma Fist)")
 	var/turf/Dturf = get_turf(D)
+	D.investigate_log("has been gibbed by plasma fist.", INVESTIGATE_DEATHS)
 	D.gib()
 	if(nobomb)
 		return
@@ -89,7 +93,8 @@
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
-		human_attacker.dna.species.species_traits += TRAIT_BOMBIMMUNE
+		ADD_TRAIT(human_attacker, TRAIT_FORCED_STANDING, type)
+		ADD_TRAIT(human_attacker, TRAIT_BOMBIMMUNE, type)
 		human_attacker.unequip_everything()
 		human_attacker.underwear = "Nude"
 		human_attacker.undershirt = "Nude"
@@ -106,17 +111,17 @@
 
 	user.apply_damage(rand(50,70), BRUTE)
 
-	addtimer(CALLBACK(src,.proc/Apotheosis_end, user), 6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(Apotheosis_end), user), 6 SECONDS)
 	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
-	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE)
+	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE, explosion_cause = src)
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
-	var/datum/dna/dna = dying.has_dna()
-	if (dna?.species)
-		dna.species.species_traits -= TRAIT_BOMBIMMUNE
+	REMOVE_TRAIT(dying, TRAIT_FORCED_STANDING, type)
+	REMOVE_TRAIT(dying, TRAIT_BOMBIMMUNE, type)
 	if(dying.stat == DEAD)
 		return
+	dying.investigate_log("has been killed by plasma fist apotheosis.", INVESTIGATE_DEATHS)
 	dying.death()
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/A, mob/living/D)
@@ -146,9 +151,9 @@
 
 	var/datum/martial_art/plasma_fist/martial = usr.mind.martial_art
 	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")
-	to_chat(usr, "[span_notice("Tornado Sweep")]: Harm Harm Disarm. Repulses opponent and everyone back.")
-	to_chat(usr, "[span_notice("Throwback")]: Disarm Harm Disarm. Throws the opponent and an item at them.")
-	to_chat(usr, "[span_notice("The Plasma Fist")]: Harm Disarm Disarm Disarm Harm. Instantly gibs an opponent.[martial.nobomb ? "" : " Each kill with this grows your [span_notice("Apotheosis")] explosion size."]")
+	to_chat(usr, "[span_notice("Tornado Sweep")]: Punch Punch Shove. Repulses opponent and everyone back.")
+	to_chat(usr, "[span_notice("Throwback")]: Shove Punch Shove. Throws the opponent and an item at them.")
+	to_chat(usr, "[span_notice("The Plasma Fist")]: Punch Shove Shove Shove Punch. Instantly gibs an opponent.[martial.nobomb ? "" : " Each kill with this grows your [span_notice("Apotheosis")] explosion size."]")
 	if(!martial.nobomb)
 		to_chat(usr, "[span_notice("Apotheosis")]: Use [span_notice("The Plasma Fist")] on yourself. Sends you away in a glorious explosion.")
 

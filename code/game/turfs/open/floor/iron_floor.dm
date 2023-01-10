@@ -2,10 +2,10 @@
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/iron/base
 
-/turf/open/floor/iron/setup_broken_states()
+/turf/open/floor/iron/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/iron/setup_burnt_states()
+/turf/open/floor/iron/burnt_states()
 	return list("floorscorched1", "floorscorched2")
 
 
@@ -18,7 +18,6 @@
 	if(prob(70))
 		new /obj/effect/temp_visual/glowing_rune(src)
 	ChangeTurf(/turf/open/floor/plating/rust)
-
 
 /turf/open/floor/iron/update_icon_state()
 	if(broken || burnt)
@@ -80,6 +79,21 @@
 	icon_state = "textured_large"
 	base_icon_state = "textured_large"
 	floor_tile = /obj/item/stack/tile/iron/textured_large
+
+/turf/open/floor/iron/small
+	icon_state = "small"
+	base_icon_state = "small"
+	floor_tile = /obj/item/stack/tile/iron/small
+
+/turf/open/floor/iron/diagonal
+	icon_state = "diagonal"
+	base_icon_state = "diagonal"
+	floor_tile = /obj/item/stack/tile/iron/diagonal
+
+/turf/open/floor/iron/herringbone
+	icon_state = "herringbone"
+	base_icon_state = "herringbone"
+	floor_tile = /obj/item/stack/tile/iron/herringbone
 
 /turf/open/floor/iron/dark
 	icon_state = "darkfull"
@@ -145,6 +159,21 @@
 	icon_state = "textured_dark_large"
 	base_icon_state = "textured_dark_large"
 	floor_tile = /obj/item/stack/tile/iron/dark/textured_large
+
+/turf/open/floor/iron/dark/small
+	icon_state = "dark_small"
+	base_icon_state = "dark_small"
+	floor_tile = /obj/item/stack/tile/iron/dark/small
+
+/turf/open/floor/iron/dark/diagonal
+	icon_state = "dark_diagonal"
+	base_icon_state = "dark_diagonal"
+	floor_tile = /obj/item/stack/tile/iron/dark/diagonal
+
+/turf/open/floor/iron/dark/herringbone
+	icon_state = "dark_herringbone"
+	base_icon_state = "dark_herringbone"
+	floor_tile = /obj/item/stack/tile/iron/dark/herringbone
 
 /turf/open/floor/iron/dark/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -226,6 +255,21 @@
 	base_icon_state = "textured_white_large"
 	floor_tile = /obj/item/stack/tile/iron/white/textured_large
 
+/turf/open/floor/iron/white/small
+	icon_state = "white_small"
+	base_icon_state = "white_small"
+	floor_tile = /obj/item/stack/tile/iron/white/small
+
+/turf/open/floor/iron/white/diagonal
+	icon_state = "white_diagonal"
+	base_icon_state = "white_diagonal"
+	floor_tile = /obj/item/stack/tile/iron/white/diagonal
+
+/turf/open/floor/iron/white/herringbone
+	icon_state = "white_herringbone"
+	base_icon_state = "white_herringbone"
+	floor_tile = /obj/item/stack/tile/iron/white/herringbone
+
 /turf/open/floor/iron/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -274,6 +318,46 @@
 	icon_state = "smooth_large"
 	base_icon_state = "smooth_large"
 	floor_tile = /obj/item/stack/tile/iron/smooth_large
+
+/turf/open/floor/iron/terracotta
+	icon_state = "terracotta"
+	base_icon_state = "terracotta"
+	floor_tile = /obj/item/stack/tile/iron/terracotta
+
+/turf/open/floor/iron/terracotta/small
+	icon_state = "terracotta_small"
+	base_icon_state = "terracotta_small"
+	floor_tile = /obj/item/stack/tile/iron/terracotta/small
+
+/turf/open/floor/iron/terracotta/diagonal
+	icon_state = "terracotta_diagonal"
+	base_icon_state = "terracotta_diagonal"
+	floor_tile = /obj/item/stack/tile/iron/terracotta/diagonal
+
+/turf/open/floor/iron/terracotta/herringbone
+	icon_state = "terracotta_herringbone"
+	base_icon_state = "terracotta_herringbone"
+	floor_tile = /obj/item/stack/tile/iron/terracotta/herringbone
+
+/turf/open/floor/iron/kitchen
+	icon_state = "kitchen"
+	base_icon_state = "kitchen"
+	floor_tile = /obj/item/stack/tile/iron/kitchen
+
+/turf/open/floor/iron/kitchen/small
+	icon_state = "kitchen_small"
+	base_icon_state = "kitchen_small"
+	floor_tile = /obj/item/stack/tile/iron/kitchen/small
+
+/turf/open/floor/iron/kitchen/diagonal
+	icon_state = "kitchen_diagonal"
+	base_icon_state = "kitchen_diagonal"
+	floor_tile = /obj/item/stack/tile/iron/kitchen/diagonal
+
+/turf/open/floor/iron/kitchen/herringbone
+	icon_state = "kitchen_herringbone"
+	base_icon_state = "kitchen_herringbone"
+	floor_tile = /obj/item/stack/tile/iron/kitchen/herringbone
 
 /turf/open/floor/iron/chapel
 	icon_state = "chapel"
@@ -368,11 +452,3 @@
 	base_icon_state = "sepia"
 	desc = "Well, the flow of time is normal on these tiles, weird."
 	floor_tile = /obj/item/stack/tile/iron/sepia
-
-/turf/open/floor/iron/yellowsiding
-	icon_state = "yellowsiding"
-	base_icon_state = "yellowsiding"
-
-/turf/open/floor/iron/yellowsiding/corner
-	icon_state = "yellowcornersiding"
-	base_icon_state = "yellowcornersiding"

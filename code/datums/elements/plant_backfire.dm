@@ -3,18 +3,16 @@
 /// If a user is protected with something like leather gloves, they can handle them normally.
 /// If they're not protected properly, we invoke a callback on the user, harming or inconveniencing them.
 /datum/element/plant_backfire
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	/// Whether we stop the current action if backfire is triggered (EX: returning CANCEL_ATTACK_CHAIN)
 	var/cancel_action = FALSE
-	/// The callback of the backfire effect of the plant.
-	var/datum/callback/backfire_callback
 	/// Any extra traits we want to check in addition to TRAIT_PLANT_SAFE. Mobs with a trait in this list will be considered safe. List of traits.
 	var/extra_traits
 	/// Any plant genes we want to check that are required for our plant to be dangerous. Plants without a gene in this list will be considered safe. List of typepaths.
 	var/extra_genes
 
-/datum/element/plant_backfire/Attach(datum/target, backfire_callback, cancel_action = FALSE, extra_traits, extra_genes)
+/datum/element/plant_backfire/Attach(datum/target, cancel_action = FALSE, extra_traits, extra_genes)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
@@ -22,61 +20,76 @@
 	src.cancel_action = cancel_action
 	src.extra_traits = extra_traits
 	src.extra_genes = extra_genes
-	src.backfire_callback = backfire_callback
 
-	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, .proc/attack_safety_check)
-	RegisterSignal(target, COMSIG_ITEM_PICKUP, .proc/pickup_safety_check)
-	RegisterSignal(target, COMSIG_MOVABLE_PRE_THROW, .proc/throw_safety_check)
+	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, PROC_REF(attack_safety_check))
+	RegisterSignal(target, COMSIG_ITEM_PICKUP, PROC_REF(pickup_safety_check))
+	RegisterSignal(target, COMSIG_MOVABLE_PRE_THROW, PROC_REF(throw_safety_check))
 
 /datum/element/plant_backfire/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_PRE_THROW))
 
-/*
+/**
  * Checks before we attack if we're okay to continue.
  *
  * source - our plant
  * user - the mob wielding our [source]
  */
-/datum/element/plant_backfire/proc/attack_safety_check(datum/source, atom/target, mob/user)
+/datum/element/plant_backfire/proc/attack_safety_check(obj/item/source, atom/target, mob/user)
 	SIGNAL_HANDLER
 
-	if(plant_safety_check(source, user))
+	// Covers stuff like tk, since we aren't actually touching the plant.
+	if(!user.is_holding(source))
 		return
-	backfire_callback.Invoke(source, user)
-	if(cancel_action)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(!backfire(source, user))
+		return
 
-/*
+	return cancel_action ? COMPONENT_CANCEL_ATTACK_CHAIN : NONE
+
+/**
  * Checks before we pick up the plant if we're okay to continue.
  *
  * source - our plant
  * user - the mob picking our [source]
  */
-/datum/element/plant_backfire/proc/pickup_safety_check(datum/source, mob/user)
+/datum/element/plant_backfire/proc/pickup_safety_check(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(plant_safety_check(source, user))
-		return
-	backfire_callback.Invoke(source, user)
+	backfire(source, user)
 
-/*
+/**
  * Checks before we throw the plant if we're okay to continue.
  *
  * source - our plant
  * thrower - the mob throwing our [source]
  */
-/datum/element/plant_backfire/proc/throw_safety_check(datum/source, list/arguments)
+/datum/element/plant_backfire/proc/throw_safety_check(obj/item/source, list/arguments)
 	SIGNAL_HANDLER
 
-	var/mob/living/thrower = arguments[4] // 4th arg = mob/thrower
-	if(plant_safety_check(source, thrower))
+	var/mob/living/thrower = arguments[4] // the 4th arg = the mob throwing our item
+	if(!istype(thrower) || !thrower.is_holding(source))
 		return
-	backfire_callback.Invoke(source, thrower)
-	if(cancel_action)
-		return COMPONENT_CANCEL_THROW
+	if(!backfire(source, thrower))
+		return
 
-/*
+	return cancel_action ? COMPONENT_CANCEL_ATTACK_CHAIN : NONE
+
+/**
+ * The actual backfire occurs here.
+ * Checks if the user is able to safely handle the plant.
+ * If not, sends the backfire signal (meaning backfire will occur and be handled by one or multiple genes).
+ *
+ * Returns FALSE if the user was safe and no backfire occured.
+ * Returns TRUE if the user was not safe and a backfire actually happened.
+ */
+/datum/element/plant_backfire/proc/backfire(obj/item/plant, mob/user)
+	if(plant_safety_check(plant, user))
+		return FALSE
+
+	SEND_SIGNAL(plant, COMSIG_PLANT_ON_BACKFIRE, user)
+	return TRUE
+
+/**
  * Actually checks if our user is safely handling our plant.
  *
  * Checks for TRAIT_PLANT_SAFE, and returns TRUE if we have it.
@@ -88,7 +101,7 @@
  *
  * returns FALSE if none of the checks are successful.
  */
-/datum/element/plant_backfire/proc/plant_safety_check(datum/source, mob/living/carbon/user)
+/datum/element/plant_backfire/proc/plant_safety_check(obj/item/plant, mob/living/carbon/user)
 	if(!istype(user))
 		return TRUE
 
@@ -99,8 +112,7 @@
 		if(HAS_TRAIT(user, checked_trait))
 			return TRUE
 
-	var/obj/item/parent_item = source
-	var/obj/item/seeds/our_seed = parent_item.get_plant_seed()
+	var/obj/item/seeds/our_seed = plant.get_plant_seed()
 	if(our_seed)
 		for(var/checked_gene in extra_genes)
 			if(!our_seed.get_gene(checked_gene))

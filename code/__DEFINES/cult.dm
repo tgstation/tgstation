@@ -26,8 +26,20 @@
 #define DEFAULT_TOOLTIP "6:-29,5:-2"
 //misc
 #define SOULS_TO_REVIVE 3
-#define BLOODCULT_EYE "f00"
+#define BLOODCULT_EYE "#FF0000"
 //soulstone & construct themes
-#define THEME_WIZARD "wizard"
 #define THEME_CULT "cult"
+#define THEME_WIZARD "wizard"
 #define THEME_HOLY "holy"
+
+/// Defines for cult item_dispensers.
+#define PREVIEW_IMAGE "preview"
+#define OUTPUT_ITEMS "output"
+
+/// The global Nar'sie that the cult's summoned
+GLOBAL_DATUM(cult_narsie, /obj/narsie)
+
+// Used in determining which cinematic to play when cult ends
+#define CULT_VICTORY_MASS_CONVERSION 2
+#define CULT_FAILURE_NARSIE_KILLED 1
+#define CULT_VICTORY_NUKE 0

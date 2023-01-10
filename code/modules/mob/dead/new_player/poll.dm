@@ -1,3 +1,12 @@
+
+///All currently running polls held as datums
+GLOBAL_LIST_EMPTY(polls)
+GLOBAL_PROTECT(polls)
+
+///All poll option datums of running polls
+GLOBAL_LIST_EMPTY(poll_options)
+GLOBAL_PROTECT(poll_options)
+
 /**
  * Shows a list of currently running polls a player can vote/has voted on
  *
@@ -316,14 +325,14 @@
 	if(!poll || !href_list)
 		return
 	if(IsAdminAdvancedProcCall())
-		log_game("[key_name(usr)] attempted to rig the vote by voting as [key]")
-		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [key]")
+		usr.log_message("attempted to rig the vote by voting as [key].", LOG_ADMIN)
+		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [key].")
 		to_chat(usr, span_danger("You don't seem to be [key]."))
-		to_chat(src, span_danger("Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this"))
+		to_chat(src, span_danger("Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this."))
 		return
 	var/admin_rank
 	if(client.holder)
-		admin_rank = client.holder.rank.name
+		admin_rank = client.holder.rank_names()
 	else
 		if(poll.admin_only)
 			return

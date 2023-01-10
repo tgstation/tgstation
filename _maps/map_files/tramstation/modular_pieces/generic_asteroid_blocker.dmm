@@ -1,0 +1,9 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/modular_map_connector,
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+"}

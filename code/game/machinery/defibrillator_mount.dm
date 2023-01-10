@@ -9,7 +9,7 @@
 	density = FALSE
 	use_power = NO_POWER_USE
 	power_channel = AREA_USAGE_EQUIP
-	req_one_access = list(ACCESS_MEDICAL, ACCESS_HEADS, ACCESS_SECURITY) //used to control clamps
+	req_one_access = list(ACCESS_MEDICAL, ACCESS_COMMAND, ACCESS_SECURITY) //used to control clamps
 	processing_flags = NONE
 /// The mount's defib
 	var/obj/item/defibrillator/defib
@@ -18,41 +18,13 @@
 /// the type of wallframe it 'disassembles' into
 	var/wallframe_type = /obj/item/wallframe/defib_mount
 
-/obj/machinery/defibrillator_mount/directional/north
-	dir = SOUTH
-	pixel_y = 32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
-/obj/machinery/defibrillator_mount/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/defibrillator_mount/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/defibrillator_mount/directional/west
-	dir = EAST
-	pixel_x = -32
-
-/obj/machinery/defibrillator_mount/loaded/Initialize() //loaded subtype for mapping use
+/obj/machinery/defibrillator_mount/loaded/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
 
-/obj/machinery/defibrillator_mount/loaded/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/defibrillator_mount/loaded/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/defibrillator_mount/loaded/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/defibrillator_mount/loaded/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/Destroy()
 	if(defib)
@@ -69,7 +41,7 @@
 	. = ..()
 	if(defib)
 		. += span_notice("There is a defib unit hooked up. Alt-click to remove it.")
-		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
+		if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 			. += span_notice("Due to a security situation, its locking clamps can be toggled by swiping any ID.")
 		else
 			. += span_notice("Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.")
@@ -98,6 +70,7 @@
 
 //defib interaction
 /obj/machinery/defibrillator_mount/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
 	if(!defib)
 		to_chat(user, span_warning("There's no defibrillator unit loaded!"))
 		return
@@ -134,7 +107,7 @@
 		return
 	var/obj/item/card/id = I.GetID()
 	if(id)
-		if(check_access(id) || SSsecurity_level.current_level >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
+		if(check_access(id) || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
 			if(!defib)
 				to_chat(user, span_warning("You can't engage the clamps on a defibrillator that isn't there."))
 				return
@@ -166,7 +139,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/defibrillator_mount/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/machinery/defibrillator_mount/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!wallframe_type)
 		return ..()
 	if(user.combat_mode)
@@ -177,12 +150,12 @@
 		return TRUE
 	new wallframe_type(get_turf(src))
 	qdel(src)
-	W.play_tool_sound(user)
+	tool.play_tool_sound(user)
 	to_chat(user, span_notice("You remove [src] from the wall."))
-
+	return TRUE
 
 /obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
 		return
 	if(!defib)
 		to_chat(user, span_warning("It'd be hard to remove a defib unit from a mount that has none."))
@@ -208,11 +181,10 @@
 	desc = "Holds defibrillators. You can grab the paddles if one is mounted. This PENLITE variant also allows for slow, passive recharging of the defibrillator."
 	icon_state = "penlite_mount"
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 1
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
 
-/obj/machinery/defibrillator_mount/charging/Initialize()
+/obj/machinery/defibrillator_mount/charging/Initialize(mapload)
 	. = ..()
 	if(is_operational)
 		begin_processing()
@@ -230,7 +202,7 @@
 	if(!C || !is_operational)
 		return PROCESS_KILL
 	if(C.charge < C.maxcharge)
-		use_power(50 * delta_time)
+		use_power(active_power_usage * delta_time)
 		C.give(40 * delta_time)
 		defib.update_power()
 
@@ -243,7 +215,7 @@
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
-	pixel_shift = -28
+	pixel_shift = 28
 
 /obj/item/wallframe/defib_mount/charging
 	name = "unhooked PENLITE defibrillator mount"

@@ -15,9 +15,7 @@ The console is located at computer/gulag_teleporter.dm
 	state_open = FALSE
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 200
-	active_power_usage = 5000
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	circuit = /obj/item/circuitboard/machine/gulag_teleporter
 	var/locked = FALSE
 	var/message_cooldown
@@ -35,9 +33,10 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/gloves/color/plasmaman,
 		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/gas))
+		/obj/item/clothing/mask/gas,
+	))
 
-/obj/machinery/gulag_teleporter/Initialize()
+/obj/machinery/gulag_teleporter/Initialize(mapload)
 	. = ..()
 	locate_reclaimer()
 
@@ -52,9 +51,6 @@ The console is located at computer/gulag_teleporter.dm
 		to_chat(user, span_warning("[src] is locked!"))
 		return
 	toggle_open()
-
-/obj/machinery/gulag_teleporter/updateUsrDialog()
-	return
 
 /obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
 	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
@@ -144,7 +140,6 @@ The console is located at computer/gulag_teleporter.dm
 					continue
 				if(linked_reclaimer)
 					linked_reclaimer.stored_items[mob_occupant] += W
-					linked_reclaimer.contents += W
 					W.forceMove(linked_reclaimer)
 				else
 					W.forceMove(src)
@@ -166,13 +161,16 @@ The console is located at computer/gulag_teleporter.dm
 	if(R)
 		R.fields["criminal"] = "Incarcerated"
 
+	use_power(active_power_usage)
+
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
 	req_components = list(
-							/obj/item/stack/ore/bluespace_crystal = 2,
-							/obj/item/stock_parts/scanning_module,
-							/obj/item/stock_parts/manipulator)
+		/obj/item/stack/ore/bluespace_crystal = 2,
+		/datum/stock_part/scanning_module = 1,
+		/obj/item/stock_parts/manipulator = 1,
+	)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /*  beacon that receives the teleported prisoner */

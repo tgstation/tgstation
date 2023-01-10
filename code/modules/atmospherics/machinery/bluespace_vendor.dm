@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
+	pixel_shift = 30
 
 ///Defines for the mode of the vendor
 #define BS_MODE_OFF 1
@@ -14,11 +15,12 @@
 /obj/machinery/bluespace_vendor
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_off"
+	base_icon_state = "bluespace_vendor"
 	name = "Bluespace Gas Vendor"
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/machinery_bluespace_vendor
 	layer = OBJ_LAYER
 
 	///The bluespace sender that this vendor is connected to
@@ -26,7 +28,7 @@
 	///Amount of usable tanks inside the machine
 	var/empty_tanks = 10
 	///Reference to the current in use tank to be filled
-	var/obj/item/tank/internal_tank
+	var/obj/item/tank/internals/generic/internal_tank
 	///Path of the gas selected from the UI to be pumped inside the tanks
 	var/selected_gas
 	///Is the vendor trying to move gases from the network to the tanks?
@@ -41,8 +43,6 @@
 	var/gas_price = 0
 	///Helper for mappers, will automatically connect to the sender (ensure to only place one sender per map)
 	var/map_spawned = TRUE
-	///Base icon name for updating the appearance
-	var/base_icon = "bluespace_vendor"
 	///Current operating mode of the vendor
 	var/mode = BS_MODE_OFF
 
@@ -51,35 +51,22 @@
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
 
-/obj/machinery/bluespace_vendor/north //Pixel offsets get overwritten on New()
-	dir = SOUTH
-	pixel_y = 30
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
-/obj/machinery/bluespace_vendor/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/machinery/bluespace_vendor/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/machinery/bluespace_vendor/west
-	dir = EAST
-	pixel_x = -30
+/datum/armor/machinery_bluespace_vendor
+	energy = 100
+	fire = 80
+	acid = 30
 
 /obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
 	. = ..()
-	if(ndir)
-		setDir(ndir)
 
 	if(nbuild)
-		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
-		pixel_y = (dir & 3)? (dir == 1 ? -30 : 30) : 0
+		set_panel_open(TRUE)
 
 	update_appearance()
 
-/obj/machinery/bluespace_vendor/Initialize()
+/obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 
@@ -87,7 +74,7 @@
 	. = ..()
 	if(!map_spawned)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender as anything in GLOB.bluespace_senders)
 		register_machine(sender)
 
 /obj/machinery/bluespace_vendor/Destroy()
@@ -97,13 +84,18 @@
 /obj/machinery/bluespace_vendor/update_icon_state()
 	switch(mode)
 		if(BS_MODE_OFF)
-			icon_state = "[base_icon]_off"
+			icon_state = "[base_icon_state]_off"
 		if(BS_MODE_IDLE)
-			icon_state = "[base_icon]_idle"
+			icon_state = "[base_icon_state]_idle"
 		if(BS_MODE_PUMPING)
-			icon_state = "[base_icon]_pumping"
+			icon_state = "[base_icon_state]_pumping"
 		if(BS_MODE_OPEN)
-			icon_state = "[base_icon]_open"
+			icon_state = "[base_icon_state]_open"
+	return ..()
+
+/obj/machinery/bluespace_vendor/Exited(atom/movable/gone, direction)
+	if(gone == internal_tank)
+		internal_tank = null
 	return ..()
 
 /obj/machinery/bluespace_vendor/process()
@@ -138,7 +130,7 @@
 	return TRUE
 
 /obj/machinery/bluespace_vendor/attackby(obj/item/item, mob/living/user)
-	if(!pumping && default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]_off", item))
+	if(!pumping && default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", item))
 		check_mode()
 		return
 	if(default_deconstruction_crowbar(item, FALSE, custom_deconstruct = TRUE))
@@ -176,16 +168,17 @@
 /obj/machinery/bluespace_vendor/proc/register_machine(machine)
 	connected_machine = machine
 	LAZYADD(connected_machine.vendors, src)
-	RegisterSignal(connected_machine, COMSIG_PARENT_QDELETING, .proc/unregister_machine)
+	RegisterSignal(connected_machine, COMSIG_PARENT_QDELETING, PROC_REF(unregister_machine))
 	mode = BS_MODE_IDLE
 	update_appearance()
 
 ///Unregister the connected_machine (either when qdel this or the sender)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
 	SIGNAL_HANDLER
-	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
-	LAZYREMOVE(connected_machine.vendors, src)
-	connected_machine = null
+	if(connected_machine)
+		UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
+		LAZYREMOVE(connected_machine.vendors, src)
+		connected_machine = null
 	mode = BS_MODE_OFF
 	update_appearance()
 
@@ -260,27 +253,31 @@
 
 	switch(action)
 		if("start_pumping")
-			pumping = TRUE
-			selected_gas = params["gas_id"]
-			mode = BS_MODE_PUMPING
-			update_appearance()
+			if(inserted_tank && !pumping)
+				pumping = TRUE
+				selected_gas = params["gas_id"]
+				mode = BS_MODE_PUMPING
+				update_appearance()
 			. = TRUE
 		if("stop_pumping")
-			pumping = FALSE
-			selected_gas = null
-			mode = BS_MODE_IDLE
-			update_appearance()
+			if(inserted_tank && pumping)
+				pumping = FALSE
+				selected_gas = null
+				mode = BS_MODE_IDLE
+				update_appearance()
 			. = TRUE
 		if("pumping_rate")
 			tank_filling_amount = clamp(params["rate"], 0, 100)
 			. = TRUE
 		if("tank_prepare")
-			inserted_tank = TRUE
-			internal_tank = new(src)
-			empty_tanks = max(empty_tanks - 1, 0)
+			if(empty_tanks && !inserted_tank)
+				inserted_tank = TRUE
+				internal_tank = new(src)
+				empty_tanks = max(empty_tanks - 1, 0)
 			. = TRUE
 		if("tank_expel")
-			check_price(usr)
+			if(inserted_tank && !pumping)
+				check_price(usr)
 			. = TRUE
 
 #undef BS_MODE_OFF

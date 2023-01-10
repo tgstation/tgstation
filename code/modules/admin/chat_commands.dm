@@ -20,6 +20,32 @@
 	var/server = CONFIG_GET(string/server)
 	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]"
 
+/datum/tgs_chat_command/gameversion
+	name = "gameversion"
+	help_text = "Gets the version details from the show-server-revision verb, basically"
+
+/datum/tgs_chat_command/gameversion/Run(datum/tgs_chat_user/sender, params)
+	var/list/msg = list("")
+	msg += "BYOND Server Version: [world.byond_version].[world.byond_build] (Compiled with: [DM_VERSION].[DM_BUILD])\n"
+
+	if (!GLOB.revdata)
+		msg += "No revision information found."
+	else
+		msg += "Revision [copytext_char(GLOB.revdata.commit, 1, 9)]"
+		if (GLOB.revdata.date)
+			msg += " compiled on '[GLOB.revdata.date]'"
+		
+		if(GLOB.revdata.originmastercommit)
+			msg += ", from origin commit: <[CONFIG_GET(string/githuburl)]/commit/[GLOB.revdata.originmastercommit]>"
+
+		if(GLOB.revdata.testmerge.len)
+			msg += "\n"
+			for(var/datum/tgs_revision_information/test_merge/PR as anything in GLOB.revdata.testmerge)
+				msg += "PR #[PR.number] at [copytext_char(PR.head_commit, 1, 9)] [PR.title].\n"
+				if (PR.url)
+					msg += "<[PR.url]>\n"
+	return msg.Join("")
+
 /datum/tgs_chat_command/ahelp
 	name = "ahelp"
 	help_text = "<ckey|ticket #> <message|ticket <close|resolve|icissue|reject|reopen <ticket #>|list>>"
@@ -81,11 +107,7 @@ GLOBAL_LIST(round_end_notifiees)
 	admin_only = TRUE
 
 /datum/tgs_chat_command/sdql/Run(datum/tgs_chat_user/sender, params)
-	if(GLOB.AdminProcCaller)
-		return "Unable to run query, another admin proc call is in progress. Try again later."
-	GLOB.AdminProcCaller = "CHAT_[sender.friendly_name]" //_ won't show up in ckeys so it'll never match with a real admin
-	var/list/results = world.SDQL2_query(params, GLOB.AdminProcCaller, GLOB.AdminProcCaller)
-	GLOB.AdminProcCaller = null
+	var/list/results = HandleUserlessSDQL(sender.friendly_name, params)
 	if(!results)
 		return "Query produced no output"
 	var/list/text_res = results.Copy(1, 3)

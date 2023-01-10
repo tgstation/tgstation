@@ -7,69 +7,54 @@
 // Items
 //
 
-/obj/item/holo
-	damtype = STAMINA
-
-/obj/item/holo/esword
+/obj/item/melee/energy/sword/holographic
 	name = "holographic energy sword"
 	desc = "May the force be with you. Sorta."
-	icon = 'icons/obj/transforming_energy.dmi'
-	icon_state = "sword0"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 3.0
+	damtype = STAMINA
 	throw_speed = 2
-	throw_range = 5
+	block_chance = 0
 	throwforce = 0
-	w_class = WEIGHT_CLASS_SMALL
-	hitsound = "swing_hit"
-	armour_penetration = 50
-	var/active = 0
-	var/saber_color
+	embedding = null
+	sword_color_icon = null
 
-/obj/item/holo/esword/green/Initialize()
+	active_throwforce = 0
+	active_sharpness = NONE
+	active_heat = 0
+
+/obj/item/melee/energy/sword/holographic/Initialize(mapload)
 	. = ..()
-	saber_color = "green"
+	if(!sword_color_icon)
+		sword_color_icon = pick("red", "blue", "green", "purple")
 
-/obj/item/holo/esword/red/Initialize()
+/obj/item/melee/energy/sword/holographic/green
+	sword_color_icon = "green"
+
+/obj/item/melee/energy/sword/holographic/red
+	sword_color_icon = "red"
+
+/obj/item/toy/cards/deck/syndicate/holographic
+	desc = "A deck of holographic playing cards."
+
+/obj/item/toy/cards/deck/syndicate/holographic/Initialize(mapload, obj/machinery/computer/holodeck/holodeck)
+	src.holodeck = holodeck
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(handle_card_delete))
 	. = ..()
-	saber_color = "red"
 
-/obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(active)
-		return ..()
-	return 0
+/obj/item/toy/cards/deck/syndicate/holographic/proc/handle_card_delete(datum/source)
+	SIGNAL_HANDLER
 
-/obj/item/holo/esword/attack(target, mob/user)
-	..()
-
-/obj/item/holo/esword/Initialize()
-	. = ..()
-	saber_color = pick("red","blue","green","purple")
-
-/obj/item/holo/esword/attack_self(mob/living/user)
-	active = !active
-	if (active)
-		force = 30
-		icon_state = "sword[saber_color]"
-		w_class = WEIGHT_CLASS_BULKY
-		hitsound = 'sound/weapons/blade1.ogg'
-		playsound(user, 'sound/weapons/saberon.ogg', 20, TRUE)
-		to_chat(user, span_notice("[src] is now active."))
-	else
-		force = 3
-		icon_state = "sword0"
-		w_class = WEIGHT_CLASS_SMALL
-		hitsound = "swing_hit"
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, TRUE)
-		to_chat(user, span_notice("[src] can now be concealed."))
-	return
+	//if any REAL cards have been inserted into the deck they are moved outside before destroying it
+	for(var/obj/item/toy/singlecard/card in card_atoms)
+		if(card.flags_1 & HOLOGRAM_1)
+			continue
+		card_atoms -= card
+		card.forceMove(drop_location())
 
 //BASKETBALL OBJECTS
 
 /obj/item/toy/beach_ball/holoball
 	name = "basketball"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "basketball"
 	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
@@ -151,9 +136,8 @@
 	var/area/currentarea = null
 	var/eventstarted = FALSE
 
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 6
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.006
 	power_channel = AREA_USAGE_ENVIRON
 
 /obj/machinery/readybutton/attack_ai(mob/user)
@@ -220,11 +204,11 @@
 
 /obj/item/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"
-	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
+	default_raw_text = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
 
 /obj/item/paper/fluff/holodeck/disclaimer
 	name = "Holodeck Disclaimer"
-	info = "Bruises sustained in the holodeck can be healed simply by sleeping."
+	default_raw_text = "Bruises sustained in the holodeck can be healed simply by sleeping."
 
 /obj/vehicle/ridden/scooter/skateboard/pro/holodeck
 	name = "holographic skateboard"

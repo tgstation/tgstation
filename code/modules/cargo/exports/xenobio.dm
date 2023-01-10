@@ -20,6 +20,11 @@
 	unit_name = "rare slime core"
 	export_types = list(/obj/item/slime_extract/silver,/obj/item/slime_extract/darkblue,/obj/item/slime_extract/darkpurple,/obj/item/slime_extract/yellow)
 
+/datum/export/slime/charged
+	cost = CARGO_CRATE_VALUE
+	unit_name = "\improper EMP-proof slime core"
+	export_types = list(/obj/item/stock_parts/cell/emproof/slime)
+
 /datum/export/slime/hypercharged
 	cost = CARGO_CRATE_VALUE * 1.2
 	unit_name = "hypercharged slime core"
