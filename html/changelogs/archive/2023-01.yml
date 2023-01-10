@@ -314,3 +314,50 @@
   - balance: Moved the account console board to the service lathe
   timothymtorres:
   - bugfix: Fix inconsistent runtime spam from baseturf on startup
+2023-01-09:
+  Iamgoofball:
+  - bugfix: Fixes boring changeling gameplay by making shrieks not work while ventcrawling.
+  Jacquerel:
+  - imageadd: New look and animations for the Heretic's transmutation rune
+  LT3:
+  - bugfix: Disposal pipes and cable wires now co-exist with the tram bridge
+  Profakos:
+  - bugfix: burn chambers will not get stuck on depressurizing while cycling to exterior
+      airlocks
+  - bugfix: using an airlock sensor will properly cycle the air inside the chamber
+  ShizCalev:
+  - bugfix: Fixed indestructible glass sometimes having the grill ontop of it instead
+      of underneath it.
+  SyncIt21:
+  - rscadd: UI for ordering bulk amount of stuff from ccargo
+  - qol: order bulk stuff from cargo more efficiently
+  - bugfix: clear cart button which now properly clears cart & refunds coupons
+  Thunder12345:
+  - rscadd: Added new fishnet style socks, in a choice of three lengths
+  Zonespace27:
+  - admin: Logbuddy should no longer fail to parse logs with multi-line adminhelp
+      replies
+  san7890:
+  - bugfix: New players connecting via an active Panic Bunker Interview System can
+      now close out the window once they have their interview approved by an admin.
+2023-01-10:
+  Comxy:
+  - rscadd: Faithless will now also break lights and drag victims around
+  - refactor: Faithless into basic mob
+  Mothblocks:
+  - qol: New players will now get a contextual tutorial for how to switch hands and
+      drop items.
+  NamelessFairy:
+  - bugfix: Mice are no longer healed by mousetraps
+  Profakos:
+  - bugfix: adds missing sbiten glass style
+  Striders13:
+  - bugfix: fixed biosuits, nun robes, narsien hardened armor making your shoes invisible
+  Tastyfish:
+  - bugfix: The small carton no longer randomly disappears.
+  - bugfix: Pre-filled bottles of cola & nuka cola, and glasses of soda now have the
+      correct sprite.
+  Time-Green:
+  - bugfix: fixes wizard rod form infinitely travelling in hyperspace
+  timothymtorres:
+  - bugfix: Fix antags being revealed by hallucinations
