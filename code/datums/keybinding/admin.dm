@@ -30,7 +30,7 @@
 	. = ..()
 	if(.)
 		return
-	user.admin_ghost()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/aghost)
 	return TRUE
 
 /datum/keybinding/admin/player_panel_new
@@ -86,7 +86,7 @@
 	. = ..()
 	if(.)
 		return
-	user.invisimin()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/invisimin)
 	return TRUE
 
 /datum/keybinding/admin/deadsay

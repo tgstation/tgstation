@@ -757,7 +757,7 @@
 
 		var/client/C = usr.client
 		if(!isobserver(usr))
-			C.admin_ghost()
+			SSadmin_verbs.dynamic_invoke_admin_verb(C, /mob/admin_module_holder/game/aghost)
 		sleep(0.2 SECONDS)
 		C.jumptocoord(x,y,z)
 
@@ -1274,9 +1274,7 @@
 		return
 
 	else if(href_list["check_antagonist"])
-		if(!check_rights(R_ADMIN))
-			return
-		usr.client.check_antagonists()
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/game/check_antagonists)
 
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))

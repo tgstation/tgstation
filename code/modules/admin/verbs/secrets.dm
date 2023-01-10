@@ -98,25 +98,25 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					D.cure(0)
 
 		if("list_bombers")
-			holder.list_bombers()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_bombers)
 
 		if("list_signalers")
-			holder.list_signalers()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_signalers)
 
 		if("list_lawchanges")
-			holder.list_law_changes()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_law_changes)
 
 		if("showailaws")
 			holder.check_ai_laws()
 
 		if("manifest")
-			holder.show_manifest()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/show_manifest)
 
 		if("dna")
-			holder.list_dna()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_dna)
 
 		if("fingerprints")
-			holder.list_fingerprints()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_fingerprints)
 
 		if("ctfbutton")
 			toggle_id_ctf(holder, "centcom")

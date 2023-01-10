@@ -184,109 +184,63 @@ ADMIN_VERB(admin, hide_all_verbs, "Hide all of your Admin Verbs", NONE)
 	to_chat(src, span_interface("All of your adminverbs are now visible."), confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/admin_ghost()
-	set category = "Admin.Game"
-	set name = "Aghost"
-	if(!holder)
+ADMIN_VERB(game, aghost, "Observe without leaving the game", R_ADMIN)
+	if(isnewplayer(usr))
+		to_chat(usr, span_red("Error: AGhost: Cannot admin-ghost wile in the lobby. Join or Observe first."))
 		return
-	. = TRUE
-	if(isobserver(mob))
-		//re-enter
-		var/mob/dead/observer/ghost = mob
-		if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
-			return FALSE
-		if(!ghost.can_reenter_corpse)
+
+	if(isobserver(usr))
+		var/mob/dead/observer/admin_ghost = usr
+		if(!admin_ghost.mind?.current)
+			to_chat(usr, span_red("Error: AGhost: You do not have a body to return to!"))
+			return
+		if(!admin_ghost.can_reenter_corpse)
 			log_admin("[key_name(usr)] re-entered corpse")
 			message_admins("[key_name_admin(usr)] re-entered corpse")
-		ghost.can_reenter_corpse = 1 //force re-entering even when otherwise not possible
-		ghost.reenter_corpse()
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Reenter") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	else if(isnewplayer(mob))
-		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>", confidential = TRUE)
-		return FALSE
+			admin_ghost.can_reenter_corpse = TRUE
+		admin_ghost.reenter_corpse()
+		return
+
+	log_admin("[key_name(usr)] admin ghosted.")
+	message_admins("[key_name_admin(usr)] admin ghosted.")
+	usr.ghostize(TRUE)
+	if(usr && !usr.key)
+		usr.key = "@[key]" // If the key starts with '@' it designates an admin ghost
+
+ADMIN_VERB(game, invisimin, "Toggles ghost-like invisibility", R_ADMIN)
+	if(initial(usr.invisibility) == INVISIBILITY_OBSERVER)
+		to_chat(usr, span_boldannounce("Invisimin toggle failed. You are already an invisible mob like a ghost."), confidential = TRUE)
+		return
+	if(usr.invisibility == INVISIBILITY_OBSERVER)
+		usr.invisibility = initial(usr.invisibility)
+		to_chat(usr, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
 	else
-		//ghostize
-		log_admin("[key_name(usr)] admin ghosted.")
-		message_admins("[key_name_admin(usr)] admin ghosted.")
-		var/mob/body = mob
-		body.ghostize(TRUE)
-		init_verbs()
-		if(body && !body.key)
-			body.key = "@[key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Ghost") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		usr.invisibility = INVISIBILITY_OBSERVER
+		to_chat(usr, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
 
-/client/proc/invisimin()
-	set name = "Invisimin"
-	set category = "Admin.Game"
-	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
-	if(holder && mob)
-		if(initial(mob.invisibility) == INVISIBILITY_OBSERVER)
-			to_chat(mob, span_boldannounce("Invisimin toggle failed. You are already an invisible mob like a ghost."), confidential = TRUE)
-			return
-		if(mob.invisibility == INVISIBILITY_OBSERVER)
-			mob.invisibility = initial(mob.invisibility)
-			to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
-		else
-			mob.invisibility = INVISIBILITY_OBSERVER
-			to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
+ADMIN_VERB(game, check_antagonists, "", R_ADMIN)
+	usr.client.holder.check_antagonists()
+	log_admin("[key_name(usr)] checked antagonists.") //for tsar~ get a room you two
+	if(!isobserver(usr) && SSticker.HasRoundStarted())
+		message_admins("[key_name_admin(usr)] checked antagonists.")
 
-/client/proc/check_antagonists()
-	set name = "Check Antagonists"
-	set category = "Admin.Game"
-	if(holder)
-		holder.check_antagonists()
-		log_admin("[key_name(usr)] checked antagonists.") //for tsar~
-		if(!isobserver(usr) && SSticker.HasRoundStarted())
-			message_admins("[key_name_admin(usr)] checked antagonists.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Antagonists") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(game, list_bombers, "", R_ADMIN)
+	usr.client.holder.list_bombers()
 
-/client/proc/list_bombers()
-	set name = "List Bombers"
-	set category = "Admin.Game"
-	if(!holder)
-		return
-	holder.list_bombers()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Bombers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(game, list_signalers, "", R_ADMIN)
+	usr.client.holder.list_signalers()
 
-/client/proc/list_signalers()
-	set name = "List Signalers"
-	set category = "Admin.Game"
-	if(!holder)
-		return
-	holder.list_signalers()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Signalers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(game, list_law_changes, "", R_ADMIN)
+	usr.client.holder.list_law_changes()
 
-/client/proc/list_law_changes()
-	set name = "List Law Changes"
-	set category = "Debug"
-	if(!holder)
-		return
-	holder.list_law_changes()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Law Changes") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(game, show_manifest, "", R_ADMIN)
+	usr.client.holder.show_manifest()
 
-/client/proc/show_manifest()
-	set name = "Show Manifest"
-	set category = "Debug"
-	if(!holder)
-		return
-	holder.show_manifest()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Manifest") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(game, list_dna, "", R_ADMIN)
+	usr.client.holder.list_dna()
 
-/client/proc/list_dna()
-	set name = "List DNA"
-	set category = "Debug"
-	if(!holder)
-		return
-	holder.list_dna()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List DNA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/list_fingerprints()
-	set name = "List Fingerprints"
-	set category = "Debug"
-	if(!holder)
-		return
-	holder.list_fingerprints()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Fingerprints") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(game, list_fingerprints, "", R_ADMIN)
+	usr.client.holder.list_fingerprints()
 
 /client/proc/ban_panel()
 	set name = "Banning Panel"
@@ -883,7 +837,7 @@ ADMIN_VERB(admin, hide_all_verbs, "Hide all of your Admin Verbs", NONE)
 		return
 
 	if(!isobserver(usr))
-		admin_ghost()
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/game/aghost)
 	usr.forceMove(coords2turf(reservation.bottom_left_coords))
 
 	message_admins("[key_name_admin(usr)] has loaded lazy template '[choice]'")
