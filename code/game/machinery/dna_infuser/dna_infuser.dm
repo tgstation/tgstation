@@ -189,8 +189,8 @@
 
 // mostly good for dead mobs like corpses (drag to add)
 /obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
-	// if the machine is closed, already has an occupant, or the target is not valid then no mouse drop
-	if(!state_open || infusing_from || !is_valid_infusion(target, user))
+	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop
+	if(!state_open || !is_valid_infusion(target, user))
 		return
 
 	if(iscarbon(target))
