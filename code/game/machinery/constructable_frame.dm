@@ -203,7 +203,6 @@
 						return
 				//install board
 				if(install_board(target_board, user, FALSE))
-					user.Beam(src, icon_state = "rped_upgrade", time = 5)
 					replacer.play_rped_sound()
 					//attack this frame again with the rped so it can install stock parts since its now in state 3
 					attackby(replacer, user, params)
