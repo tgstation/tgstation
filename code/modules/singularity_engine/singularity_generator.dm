@@ -1,7 +1,4 @@
-// MBTODO: Destroying these by players (?) should leave them in place, requiring repair, rather than destroying them to machinery.
-// Or make them invincible until singulo releases.
-
-// MBTODO: Spawning the singularity should summon a huge flash of light
+// MBTODO: Make these invincible until the singulo releases for prototyping purposes
 /obj/machinery/singularity_generator
 	name = "singularity generator"
 	desc = "A deceptively small machine that, when fired with void emitters, produces enough compressed energy to create a singularity in space. It's worth more in scrap parts than the combined net worth of the entire station."
