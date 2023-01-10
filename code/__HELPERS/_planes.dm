@@ -16,7 +16,8 @@
 
 /// Takes a z reference that we are unsure of, sanity checks it
 /// Returns either its offset, or 0 if it's not a valid ref
-#define GET_TURF_PLANE_OFFSET(z_reference) ((SSmapping.max_plane_offset && isatom(z_reference) && z_reference.z) ? GET_Z_PLANE_OFFSET(z_reference.z) : 0)
+/// Will return the reference's PLANE'S offset if we can't get anything out of the z level. We do our best
+#define GET_TURF_PLANE_OFFSET(z_reference) ((SSmapping.max_plane_offset && isatom(z_reference)) ? (z_reference.z ? GET_Z_PLANE_OFFSET(z_reference.z) : PLANE_TO_OFFSET(z_reference.plane)) : 0)
 /// Essentially just an unsafe version of GET_TURF_PLANE_OFFSET()
 /// Takes a z value we returns its offset with a list lookup
 /// Will runtime during parts of init. Be careful :)
@@ -38,6 +39,7 @@
 #define SET_PLANE_IMPLICIT(thing, new_value) SET_PLANE_EXPLICIT(thing, new_value, thing)
 
 // This is an unrolled and optimized version of SET_PLANE, for use anywhere where you are unsure of a source's "turfness"
+// We do also try and guess at what the thing's z level is, even if it's not a z
 // The plane is cached to allow for fancy stuff to be eval'd once, rather then often
 #define SET_PLANE_EXPLICIT(thing, new_value, source) \
 	do {\
@@ -47,8 +49,11 @@
 			if(_our_turf){\
 				thing.plane = GET_NEW_PLANE(_cached_plane, GET_Z_PLANE_OFFSET(_our_turf.z));\
 			}\
+			else if(source) {\
+				thing.plane = GET_NEW_PLANE(_cached_plane, PLANE_TO_OFFSET(source.plane));\
+			}\
 			else {\
-				thing.plane = new_value;\
+				thing.plane = _cached_plane;\
 			}\
 		}\
 		else {\
