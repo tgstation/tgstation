@@ -107,7 +107,7 @@
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * delta_time)
 	affected_mob.adjustPlasma(20 * REM * delta_time)
 	var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
-	if(toxpwr && !liver && HAS_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM)) // Some livers can metabolize plasma
+	if(toxpwr && liver && HAS_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM)) // Some livers can metabolize plasma
 		toxpwr = 0
 	return ..()
 
