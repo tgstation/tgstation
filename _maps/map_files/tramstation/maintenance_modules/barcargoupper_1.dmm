@@ -250,6 +250,12 @@
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/asteroid)
+"Ja" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/cargo)
 "JM" = (
 /obj/modular_map_root/tramstation{
 	key = "barcargoupper_attachment_b"
@@ -1816,7 +1822,7 @@ gb
 gb
 gb
 Mc
-Qq
+Ja
 MM
 Mc
 qF

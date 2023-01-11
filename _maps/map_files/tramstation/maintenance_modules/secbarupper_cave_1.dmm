@@ -1,10 +1,48 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"f" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"h" = (
+/turf/closed/wall/rock/porous,
+/area/station/asteroid)
+"i" = (
+/obj/structure/rack,
+/obj/item/pickaxe{
+	pixel_x = 5
+	},
+/obj/item/shovel{
+	pixel_x = -5
+	},
+/obj/item/storage/bag/ore{
+	pixel_x = 6
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"s" = (
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"v" = (
+/obj/item/relic,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
 "w" = (
 /turf/template_noop,
 /area/template_noop)
+"y" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/department/security)
+"A" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
 "E" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/maintenance/department/security)
+"F" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "G" = (
 /turf/closed/wall,
 /area/station/maintenance/department/security)
@@ -12,6 +50,9 @@
 /obj/modular_map_connector,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
+"T" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "U" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
@@ -19,7 +60,7 @@
 (1,1,1) = {"
 E
 J
-G
+y
 G
 E
 E
@@ -37,8 +78,8 @@ w
 "}
 (2,1,1) = {"
 U
-U
-U
+T
+T
 U
 U
 U
@@ -55,10 +96,10 @@ w
 w
 "}
 (3,1,1) = {"
-U
-U
-U
-U
+T
+T
+T
+T
 U
 U
 U
@@ -74,12 +115,12 @@ w
 w
 "}
 (4,1,1) = {"
-U
-U
-U
-U
-U
-U
+T
+s
+s
+T
+T
+T
 U
 U
 U
@@ -93,12 +134,12 @@ w
 w
 "}
 (5,1,1) = {"
-U
-U
-U
-U
-U
-U
+F
+v
+A
+T
+T
+T
 U
 U
 U
@@ -112,11 +153,11 @@ w
 w
 "}
 (6,1,1) = {"
-U
-U
-U
-U
-U
+T
+A
+T
+T
+T
 U
 U
 U
@@ -131,12 +172,12 @@ w
 w
 "}
 (7,1,1) = {"
-U
-U
-U
-U
-U
-U
+h
+T
+T
+T
+T
+h
 U
 U
 U
@@ -151,9 +192,9 @@ w
 "}
 (8,1,1) = {"
 U
-U
-U
-U
+f
+f
+i
 U
 U
 U

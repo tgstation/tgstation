@@ -12,8 +12,41 @@ modules = ["medsciupper_attachment_b_1.dmm", "medsciupper_attachment_b_2.dmm", "
 [rooms.barcargoupper]
 modules = ["barcargoupper_1.dmm", "barcargoupper_2.dmm", "barcargoupper_3.dmm"]
 
+[rooms.barcargoupper_cave]
+modules = ["barcargoupper_cave_1.dmm", "barcargoupper_cave_2.dmm", "barcargoupper_cave_3.dmm"]
+
 [rooms.barcargoupper_attachment_a]
 modules = ["barcargoupper_attachment_a_1.dmm", "barcargoupper_attachment_a_2.dmm", "barcargoupper_attachment_a_3.dmm"]
 
 [rooms.barcargoupper_attachment_b]
 modules = ["barcargoupper_attachment_b_1.dmm", "barcargoupper_attachment_b_2.dmm", "barcargoupper_attachment_b_3.dmm"]
+
+[rooms.secbarupper]
+modules = ["secbarupper_1.dmm", "secbarupper_2.dmm", "secbarupper_3.dmm"]
+
+[rooms.secbarupper_attachment_a]
+modules = ["secbarupper_attachment_a_1.dmm", "secbarupper_attachment_a_2.dmm", "secbarupper_attachment_a_3.dmm"]
+
+[rooms.secbarupper_attachment_b]
+modules = ["secbarupper_attachment_b_1.dmm", "secbarupper_attachment_b_2.dmm", "secbarupper_attachment_b_3.dmm"]
+
+[rooms.secbarupper_cave]
+modules = ["secbarupper_cave_1.dmm", "secbarupper_cave_2.dmm", "secbarupper_cave_3.dmm"]
+
+[rooms.dormmedupper]
+modules = ["dormmedupper_1.dmm", "dormmedupper_2.dmm", "dormmedupper_3.dmm"]
+
+[rooms.dormmedupper_attachment_a]
+modules = ["dormmedupper_attachment_a_1.dmm", "dormmedupper_attachment_a_2.dmm", "dormmedupper_attachment_a_3.dmm"]
+
+[rooms.dormmedupper_attachment_b]
+modules = ["dormmedupper_attachment_b_1.dmm", "dormmedupper_attachment_b_2.dmm", "dormmedupper_attachment_b_3.dmm"]
+
+[rooms.secservicelower]
+modules = ["secservicelower_1.dmm", "secservicelower_2.dmm", "secservicelower_3.dmm"]
+
+[rooms.secservicelower_attachment_a]
+modules = ["secservicelower_attachment_a_1.dmm", "secservicelower_attachment_a_2.dmm", "secservicelower_attachment_a_3.dmm"]
+
+[rooms.secservicelower_attachment_b]
+modules = ["secservicelower_attachment_b_1.dmm", "secservicelower_attachment_b_2.dmm", "secservicelower_attachment_b_3.dmm"]

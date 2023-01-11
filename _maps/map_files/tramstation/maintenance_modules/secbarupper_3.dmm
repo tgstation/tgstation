@@ -7,6 +7,16 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/grass,
 /area/station/asteroid)
+"cj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"cN" = (
+/obj/effect/landmark/blobstart,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
 "df" = (
 /obj/structure/railing{
 	dir = 8
@@ -113,6 +123,7 @@
 "rQ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/trash/moisture_trap,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "st" = (
@@ -164,6 +175,11 @@
 "vO" = (
 /obj/structure/lattice,
 /turf/open/openspace,
+/area/station/maintenance/department/security)
+"wR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "xw" = (
 /obj/structure/plasticflaps/opaque{
@@ -265,6 +281,11 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
+"Cj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
 "CW" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -297,7 +318,6 @@
 /obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
 	name = "MULE CROSSING - LOOK BOTH WAYS";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/duct,
@@ -463,9 +483,8 @@
 "Vn" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random{
-	loot = list(/obj/effect/decal/cleanable/oil/slippery = 10, /obj/effect/decal/cleanable/oil = 90);
-	name = "funny slipper :)";
-	spawn_loot_chance = 100
+	loot = list(/obj/effect/decal/cleanable/oil/slippery=10,/obj/effect/decal/cleanable/oil=90);
+	name = "funny slipper :)"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
@@ -1239,7 +1258,7 @@ Sc
 Sc
 Sc
 Wo
-Yg
+cN
 Py
 Py
 Py
@@ -1447,8 +1466,8 @@ Py
 Py
 Py
 Py
-kL
-Du
+cj
+wR
 ip
 RO
 Sc
@@ -1626,7 +1645,7 @@ RO
 ZK
 ZK
 ZK
-ZK
+vO
 RO
 Sc
 "}
@@ -1693,11 +1712,11 @@ RO
 RO
 RO
 RO
-Du
+Cj
 Du
 WI
 Cd
-Du
+kL
 Du
 Du
 ip

@@ -1,0 +1,188 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"k" = (
+/obj/effect/spawner/random/engineering/tank,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner/north,
+/obj/structure/closet/wardrobe/mixed,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/relic,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"r" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/entertainment/deck,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"v" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"y" = (
+/obj/structure/falsewall,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner/north,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"F" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"H" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"L" = (
+/obj/effect/spawner/random/entertainment/lighter,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"S" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Closet Access Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"U" = (
+/obj/structure/chair/stool/directional/east,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+
+(1,1,1) = {"
+v
+v
+a
+a
+a
+S
+a
+a
+"}
+(2,1,1) = {"
+v
+v
+a
+P
+P
+P
+E
+p
+"}
+(3,1,1) = {"
+v
+v
+a
+I
+V
+a
+a
+a
+"}
+(4,1,1) = {"
+v
+F
+y
+k
+P
+P
+P
+P
+"}
+(5,1,1) = {"
+F
+F
+a
+z
+P
+P
+P
+P
+"}
+(6,1,1) = {"
+F
+F
+a
+a
+g
+j
+m
+a
+"}
+(7,1,1) = {"
+v
+U
+L
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+v
+r
+H
+F
+F
+v
+v
+v
+"}

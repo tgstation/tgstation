@@ -322,6 +322,12 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
+"AS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/cargo)
 "Bl" = (
 /obj/structure/railing{
 	dir = 6
@@ -1975,7 +1981,7 @@ se
 se
 Fz
 nK
-CW
+AS
 oi
 CC
 CW

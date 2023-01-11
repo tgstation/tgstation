@@ -51,10 +51,14 @@
 /obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
 	name = "MULE CROSSING - LOOK BOTH WAYS";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"dX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "fK" = (
@@ -113,6 +117,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"mz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "nP" = (
 /obj/structure/railing/corner{
@@ -256,6 +266,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/cardboard,
 /obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "DL" = (
@@ -359,9 +370,8 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/effect/spawner/random{
-	loot = list(/obj/effect/decal/cleanable/oil/slippery = 10, /obj/effect/decal/cleanable/oil = 90);
-	name = "funny slipper :)";
-	spawn_loot_chance = 100
+	loot = list(/obj/effect/decal/cleanable/oil/slippery=10,/obj/effect/decal/cleanable/oil=90);
+	name = "funny slipper :)"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
@@ -403,6 +413,15 @@
 	},
 /turf/open/openspace,
 /area/station/maintenance/department/security)
+"Qx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
 "QZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/plasticflaps/opaque{
@@ -429,7 +448,6 @@
 /obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
 	name = "MULE CROSSING - LOOK BOTH WAYS";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/duct,
@@ -1036,7 +1054,7 @@ DA
 DA
 DA
 sK
-hY
+Qx
 sV
 sV
 sV
@@ -1404,8 +1422,8 @@ sV
 sV
 sV
 sV
-xX
-xX
+mz
+dX
 HD
 sK
 DA
