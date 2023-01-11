@@ -98,10 +98,10 @@
 	. = ..()
 	max_ammo()
 
-/obj/vehicle/sealed/mecha/gygax/dark/add_cell(obj/item/stock_parts/cell/C)
-	if(C)
-		C.forceMove(src)
-		cell = C
+/obj/vehicle/sealed/mecha/gygax/dark/add_cell(obj/item/stock_parts/cell/power_cell)
+	if(power_cell)
+		power_cell.forceMove(src)
+		cell = power_cell
 		return
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
 
@@ -116,5 +116,6 @@
 	if(cap)
 		cap.forceMove(src)
 		capacitor = cap
+		return
 	else
 		capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
