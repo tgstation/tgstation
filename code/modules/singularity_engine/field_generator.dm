@@ -1,5 +1,3 @@
-// MBTODO: It must be coiled to the computer.
-// You still need to go outside and interface with them, but it has to be attached to the computer to function.
 /obj/machinery/field/generator/singularity
 	name = "specialized field generator"
 	desc = "A field generator specialized in containing the extremely dangerous emissions of the singularity. Due to the sheer force of these particles, contact will weaken the field temporarily."

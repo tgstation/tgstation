@@ -1,4 +1,3 @@
-// MBTODO: It must be coiled to the computer
 /obj/machinery/singularity_turret
 	name = "experimental void emitter"
 	desc = "A robust, dramatic emitter that is uniquely capable of powering the singularity. Firing into an active singularity will generate power."
