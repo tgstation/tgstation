@@ -10,7 +10,7 @@
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
 
-	if(QDELETED(target))
+	if(isnull(target))
 		return
 
 	var/turf/next_step = get_step_towards(controller.pawn, target)
@@ -25,6 +25,8 @@
 	action_cooldown = 1 SECONDS
 	/// If we should attack walls, be prepared for complaints about breaches
 	var/can_attack_turfs = FALSE
+	/// Tries to bump open airlocks with an attack
+	var/bump_open_airlock = FALSE
 
 /datum/ai_behavior/attack_obstructions/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -50,6 +52,7 @@
 	for (var/direction in dirs_to_move)
 		if (attack_in_direction(controller, basic_mob, direction))
 			return
+	finish_action(controller, succeeded = TRUE)
 
 /datum/ai_behavior/attack_obstructions/proc/attack_in_direction(datum/ai_controller/controller, mob/living/basic/basic_mob, direction)
 	var/turf/next_step = get_step(basic_mob, direction)
@@ -75,3 +78,6 @@
 	if (basic_mob.see_invisible < object.invisibility)
 		return FALSE
 	return TRUE // It's in our way, let's get it out of our way
+
+/datum/ai_planning_subtree/attack_obstacle_in_path/low_priority_target
+	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
