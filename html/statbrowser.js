@@ -69,6 +69,17 @@ function createStatusTab(name) {
 	B.className = "button";
 	//ORDERING ALPHABETICALLY
 	B.style.order = name.charCodeAt(0);
+	switch (name) {
+		case "Status":
+			B.style.order = 1;
+			break;
+		case "MC":
+			B.style.order = 2;
+			break;
+		case "Admin Verbs":
+			B.style.order = 3;
+			break;
+	}
 	if (name == "Status" || name == "MC") {
 		B.style.order = name == "Status" ? 1 : 2;
 	}
