@@ -163,8 +163,8 @@ R_SOUND & CONFIG_GET(string/invoke_youtubedl)
 
 ADMIN_VERB(admin, hide_all_verbs, "Hide all of your Admin Verbs", NONE)
 	usr.client.remove_admin_verbs()
-	add_verb(src, /client/proc/show_verbs)
-	to_chat(src, span_admin("Almost all of your adminverbs have been hidden."))
+	add_verb(usr.client, /client/proc/show_verbs)
+	to_chat(usr, span_admin("Almost all of your adminverbs have been hidden."))
 
 /client/proc/show_verbs() // This is not an ADMIN_VERB for a reason
 	set name = "Adminverbs - Show"

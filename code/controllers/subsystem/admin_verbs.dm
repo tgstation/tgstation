@@ -91,6 +91,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	holder:invoke(arglist(arguments))
 
 /datum/controller/subsystem/admin_verbs/proc/link_admin(mob/admin)
+	assosciations_by_ckey[admin.ckey] = list()
 	for(var/mob/admin_module_holder/holder as anything in holder_map)
 		holder = holder_map[holder]
 		if(check_rights_for(admin.client, admin_verb_map[holder.type][VERB_MAP_PERMISSIONS]))
