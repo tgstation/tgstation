@@ -388,7 +388,7 @@ const OverclockWindow = (props, context) => {
             <b>
               {minutes > 0
                 ? `${minutes} minute${minutes === 1 ? '' : 's'}`
-                : `${seconds}second${seconds === 1 ? '' : 's'}`}
+                : `${seconds} second${seconds === 1 ? '' : 's'}`}
               .
             </b>
           </>

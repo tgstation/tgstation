@@ -167,7 +167,6 @@
 /obj/contained_singularity/proc/console_ui_data()
 	return list(
 		"containment_percent" = health / max_health,
-		"delay_to_overclock" = 0,
 		"power_bars" = list(
 			delayed_power_bar_one.bar_ui_data(),
 			delayed_power_bar_two.bar_ui_data(),

@@ -16,6 +16,8 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	req_access = list(ACCESS_ENGINEERING)
 
+	COOLDOWN_DECLARE(overclock_cooldown)
+
 	VAR_PRIVATE
 		list/connected_machines = list()
 
@@ -203,7 +205,9 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		stage = STAGE_SINGULARITY_CONSOLE_NOT_STARTED
 		return null
 
-	return singularity.console_ui_data()
+	var/list/ui_data = singularity.console_ui_data()
+	ui_data["delay_to_overclock"] = COOLDOWN_TIMELEFT(src, overclock_cooldown)
+	return ui_data
 
 /obj/machinery/computer/singularity/proc/fire_emitters(mob/user)
 	if (stage != STAGE_SINGULARITY_CONSOLE_NOT_STARTED)
@@ -260,6 +264,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	stage = STAGE_SINGULARITY_CONSOLE_FINISHED
 	last_reported_health = singularity.health
+	COOLDOWN_START(src, overclock_cooldown, POWER_BAR_FLAG(FFLAG_INITIAL_OVERCLOCK_DELAY))
 
 	singularity_ref = WEAKREF(singularity)
 
@@ -279,6 +284,9 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	if (issilicon(user))
 		return OVERCLOCK_ACCESS_NOT_ALLOWED_SILICON
+
+	if (!COOLDOWN_FINISHED(src, overclock_cooldown))
+		return OVERCLOCK_ACCESS_NOT_ALLOWED
 
 	var/obj/contained_singularity/singularity = singularity_ref?.resolve()
 	if (isnull(singularity))
@@ -302,6 +310,8 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	user.log_message("started an overclock on the singularity", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] started an overclock on the singularity.")
+
+	COOLDOWN_START(src, overclock_cooldown, POWER_BAR_FLAG(FFLAG_ADDED_OVERCLOCK_DELAY))
 
 	INVOKE_ASYNC(src, PROC_REF(perform_overclock))
 
