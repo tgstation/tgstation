@@ -44,7 +44,7 @@
 /obj/item/clothing/under/misc/adminsuit
 	name = "administrative cybernetic jumpsuit"
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
-	icon_state = "syndicate"
+	icon_state = "tac_turtleneck"
 	inhand_icon_state = "bl_suit"
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
 	desc = "A cybernetically enhanced jumpsuit used for administrative duties."

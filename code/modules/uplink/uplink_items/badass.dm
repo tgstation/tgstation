@@ -53,16 +53,6 @@
 	purchasable_from = ALL
 	progression_minimum = 70 MINUTES
 
-/datum/uplink_item/badass/costumes/tactical_naptime
-	name = "Sleepy Time Pajama Bundle"
-	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."
-	item = /obj/item/storage/box/syndie_kit/sleepytime
-	purchasable_from = ALL
-	progression_minimum = 90 MINUTES
-	cost = 4
-	limited_stock = 1
-	cant_discount = TRUE
-
 /datum/uplink_item/badass/costumes/obvious_chameleon
 	name = "Broken Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \

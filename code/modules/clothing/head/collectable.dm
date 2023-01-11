@@ -169,7 +169,7 @@
 	desc = "That's not real blood. That's red paint." //Reference to the actual description
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	icon_state = "maruader_helm"
+	icon_state = "marauder_helm"
 	inhand_icon_state = "swatsyndie_helmet"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
