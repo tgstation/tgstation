@@ -5,6 +5,7 @@
 	base_icon_state = "tram_"
 	icon_screen = "tram_Central Wing_idle"
 	icon_keyboard = null
+	layer = SIGN_LAYER
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -197,3 +198,5 @@
 /obj/item/circuit_component/tram_controls/proc/on_tram_travel(datum/source, obj/effect/landmark/tram/from_where, obj/effect/landmark/tram/to_where)
 	SIGNAL_HANDLER
 	location.set_output(to_where.name)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 0)

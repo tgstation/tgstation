@@ -1,0 +1,8 @@
+author: "LT3"
+delete-after: True
+changes:
+  - imageadd: "Tram controls are now side mounted, freeing up space. Even better, you now have two of them!"
+  - imageadd: "Added a new accessible space on the tram for wheelchairs"
+  - bugfix: "Removed duplicate tram plate/platforms"
+  - code_imp: "Tram has its own floor subtype for the walls and windows"
+  - rscadd: "Emergency exit feature added for people who are silly enough to not carry a crowbar"
