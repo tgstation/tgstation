@@ -2,7 +2,7 @@
 /obj/vehicle/sealed/mecha/proc/add_cell(obj/item/stock_parts/cell/power_cell=null)
 	QDEL_NULL(cell)
 	if(power_cell)
-		powercell.forceMove(src)
+		power_cell.forceMove(src)
 		cell = power_cell
 		return
 	cell = new /obj/item/stock_parts/cell/high(src)
