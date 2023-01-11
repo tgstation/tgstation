@@ -116,6 +116,8 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 			log_shuttle(log_text)
 		if(LOG_SPEECH_INDICATORS)
 			log_speech_indicators(log_text)
+		if(LOG_VICTIM)
+			stack_trace("Attempted to send a LOG_VICTIM into a global log! Please pass log_globally as FALSE in the associated log message. Message is as follows: [message].")
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)

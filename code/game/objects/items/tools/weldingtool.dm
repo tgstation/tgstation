@@ -191,7 +191,7 @@
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
-		user.log_message("activated a rigged welder", LOG_VICTIM)
+		user.log_message("activated a rigged welder", LOG_VICTIM, log_globally = FALSE)
 		explode()
 	switched_on(user)
 
