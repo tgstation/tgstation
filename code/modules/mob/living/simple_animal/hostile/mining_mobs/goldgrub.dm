@@ -133,7 +133,7 @@
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/projectile/P)
-	if(istype(P, /obj/projectile/colossus))
+	if(stat == DEAD)
 		return BULLET_ACT_FORCE_PIERCE
 	else
 		visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
