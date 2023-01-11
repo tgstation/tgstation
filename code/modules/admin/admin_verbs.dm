@@ -19,8 +19,6 @@ admin_verbs_fun
 /client/proc/cmd_select_equipment
 /client/proc/command_report_footnote
 /client/proc/delay_command_report
-/client/proc/drop_bomb
-/client/proc/drop_dynex_bomb
 /client/proc/forceEvent
 /client/proc/mass_zombie_cure
 /client/proc/mass_zombie_infection
@@ -143,9 +141,6 @@ admin_verbs_permissions
 
 R_BUILD
 /client/proc/togglebuildmodeself
-
-R_STEALTH
-/client/proc/stealth
 
 R_SOUND & CONFIG_GET(string/invoke_youtubedl)
 	add_verb(src, /client/proc/play_web_sound)
@@ -280,18 +275,11 @@ ADMIN_VERB(admin, server_poll_management, "", R_POLL)
 /client/proc/createStealthKey()
 	GLOB.stealthminID["[ckey]"] = generateStealthCkey()
 
-/client/proc/stealth()
-	set category = "Admin"
-	set name = "Stealth Mode"
-	if(!holder)
-		return
-
-	if(holder.fakekey)
-		disable_stealth_mode()
+ADMIN_VERB(admin, stealth_mode, "Makes you unable to be seen through most means", R_STEALTH)
+	if(usr.client.holder.fakekey)
+		usr.client.disable_stealth_mode()
 	else
-		enable_stealth_mode()
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		usr.client.enable_stealth_mode()
 
 #define STEALTH_MODE_TRAIT "stealth_mode"
 
@@ -334,26 +322,22 @@ ADMIN_VERB(admin, server_poll_management, "", R_POLL)
 
 #undef STEALTH_MODE_TRAIT
 
-/client/proc/drop_bomb()
-	set category = "Admin.Fun"
-	set name = "Drop Bomb"
-	set desc = "Cause an explosion of varying strength at your location."
-
+ADMIN_VERB(fun, drop_bomb, "Cause an explosion of varying strength at your location", R_FUN)
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
-	var/choice = tgui_input_list(src, "What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap", "Drop Bomb", choices)
+	var/choice = tgui_input_list(usr, "What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap", "Drop Bomb", choices)
 	if(isnull(choice))
 		return
-	var/turf/epicenter = mob.loc
+	var/turf/epicenter = get_turf(usr)
 
 	switch(choice)
 		if("Small Bomb (1, 2, 3, 3)")
-			explosion(epicenter, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3, flash_range = 3, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
+			explosion(epicenter, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3, flash_range = 3, adminlog = TRUE, ignorecap = TRUE, explosion_cause = usr)
 		if("Medium Bomb (2, 3, 4, 4)")
-			explosion(epicenter, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, flash_range = 4, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
+			explosion(epicenter, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, flash_range = 4, adminlog = TRUE, ignorecap = TRUE, explosion_cause = usr)
 		if("Big Bomb (3, 5, 7, 5)")
-			explosion(epicenter, devastation_range = 3, heavy_impact_range = 5, light_impact_range = 7, flash_range = 5, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
+			explosion(epicenter, devastation_range = 3, heavy_impact_range = 5, light_impact_range = 7, flash_range = 5, adminlog = TRUE, ignorecap = TRUE, explosion_cause = usr)
 		if("Maxcap")
-			explosion(epicenter, devastation_range = GLOB.MAX_EX_DEVESTATION_RANGE, heavy_impact_range = GLOB.MAX_EX_HEAVY_RANGE, light_impact_range = GLOB.MAX_EX_LIGHT_RANGE, flash_range = GLOB.MAX_EX_FLASH_RANGE, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
+			explosion(epicenter, devastation_range = GLOB.MAX_EX_DEVESTATION_RANGE, heavy_impact_range = GLOB.MAX_EX_HEAVY_RANGE, light_impact_range = GLOB.MAX_EX_LIGHT_RANGE, flash_range = GLOB.MAX_EX_FLASH_RANGE, adminlog = TRUE, ignorecap = TRUE, explosion_cause = usr)
 		if("Custom Bomb")
 			var/range_devastation = input("Devastation range (in tiles):") as null|num
 			if(range_devastation == null)
@@ -370,24 +354,18 @@ ADMIN_VERB(admin, server_poll_management, "", R_POLL)
 			if(range_devastation > GLOB.MAX_EX_DEVESTATION_RANGE || range_heavy > GLOB.MAX_EX_HEAVY_RANGE || range_light > GLOB.MAX_EX_LIGHT_RANGE || range_flash > GLOB.MAX_EX_FLASH_RANGE)
 				if(tgui_alert(usr, "Bomb is bigger than the maxcap. Continue?",,list("Yes","No")) != "Yes")
 					return
-			epicenter = mob.loc //We need to reupdate as they may have moved again
-			explosion(epicenter, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
+			epicenter = get_turf(usr) //We need to reupdate as they may have moved again
+			explosion(epicenter, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash, adminlog = TRUE, ignorecap = TRUE, explosion_cause = usr)
 	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/drop_dynex_bomb()
-	set category = "Admin.Fun"
-	set name = "Drop DynEx Bomb"
-	set desc = "Cause an explosion of varying strength at your location."
-
-	var/ex_power = input("Explosive Power:") as null|num
-	var/turf/epicenter = mob.loc
+ADMIN_VERB(fun, drop_dynex_bomb, "Cause an explosion of varting strength at your location", R_FUN)
+	var/ex_power = input(usr, "Explosive Power:") as null|num
+	var/turf/epicenter = get_turf(usr)
 	if(ex_power && epicenter)
 		dyn_explosion(epicenter, ex_power)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Dynamic Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/get_dynex_range()
 	set category = "Debug"

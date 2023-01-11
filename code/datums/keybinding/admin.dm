@@ -72,7 +72,7 @@
 	. = ..()
 	if(.)
 		return
-	user.stealth()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/admin/stealth_mode)
 	return TRUE
 
 /datum/keybinding/admin/invisimin
