@@ -147,7 +147,11 @@ SUBSYSTEM_DEF(statpanels)
 	target.stat_panel.send_message("update_interviews", data)
 
 /datum/controller/subsystem/statpanels/proc/set_admin_verb_tab(client/target)
-	target.stat_panel.send_message("update_admin_verbs", SSadmin_verbs.generate_stat_data(target))
+	var/list/admin_verb_stat_data = SSadmin_verbs.generate_stat_data(target)
+	if(length(admin_verb_stat_data))
+		target.stat_panel.send_message("update_admin_verbs", admin_verb_stat_data)
+	else
+		target.stat_panel.send_message("remove_admin_verbs")
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()

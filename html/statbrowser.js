@@ -956,6 +956,10 @@ Byond.subscribeTo('update_admin_verbs', function(payload) {
 	}
 })
 
+Byond.subscribeTo('remove_admin_verbs', function() {
+	remove_admin_verbs();
+})
+
 Byond.subscribeTo('remove_spells', function () {
 	for (var s = 0; s < spell_tabs.length; s++) {
 		removeStatusTab(spell_tabs[s]);
