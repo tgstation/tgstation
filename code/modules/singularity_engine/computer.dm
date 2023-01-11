@@ -269,15 +269,23 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 #define OVERCLOCK_ACCESS_NOT_ALLOWED "not_allowed"
 #define OVERCLOCK_ACCESS_NOT_ALLOWED_SILICON "not_allowed_silicon"
+#define OVERCLOCK_ACCESS_NOT_ALLOWED_TOO_DAMAGED "not_allowed_too_damaged"
 #define OVERCLOCK_ACCESS_ALLOWED "allowed"
 
-// MBTODO: No access if below enough health (feature flag)
+// MBTODO: Overclock delay
 /obj/machinery/computer/singularity/proc/overclock_access(mob/living/user)
 	if (!istype(user))
 		return OVERCLOCK_ACCESS_NOT_ALLOWED
 
 	if (issilicon(user))
 		return OVERCLOCK_ACCESS_NOT_ALLOWED_SILICON
+
+	var/obj/contained_singularity/singularity = singularity_ref?.resolve()
+	if (isnull(singularity))
+		return OVERCLOCK_ACCESS_NOT_ALLOWED
+
+	if (singularity.health / singularity.max_health < POWER_BAR_FLAG(FFLAG_OVERCLOCK_NECESSARY_HEALTH))
+		return OVERCLOCK_ACCESS_NOT_ALLOWED_TOO_DAMAGED
 
 	if (obj_flags & EMAGGED)
 		return OVERCLOCK_ACCESS_ALLOWED
@@ -288,8 +296,6 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	return OVERCLOCK_ACCESS_ALLOWED
 
-// MBTODO: Overclock delay
-// MBTODO: Minimum health
 /obj/machinery/computer/singularity/proc/try_overclock(mob/user)
 	if (overclock_access(user) != OVERCLOCK_ACCESS_ALLOWED)
 		return

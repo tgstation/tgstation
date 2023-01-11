@@ -46,6 +46,7 @@ enum Stage {
 enum OverclockAccess {
   NotAllowed = 'not_allowed',
   NotAllowedSilicon = 'not_allowed_silicon',
+  NotAllowedTooDamaged = 'not_allowed_too_damaged',
   Allowed = 'allowed',
 }
 
@@ -351,6 +352,8 @@ const OVERCLOCK_TOOLTIPS = {
   [OverclockAccess.NotAllowed]: null,
   [OverclockAccess.NotAllowedSilicon]:
     'Overclocking is too dangerous for silicons to be trusted with it.',
+  [OverclockAccess.NotAllowedTooDamaged]:
+    'The singularity is too damaged to be overclocked.',
 } as const;
 
 const OverclockWindow = (props, context) => {
