@@ -107,16 +107,22 @@
 
 	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
-			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
-			if(belly)
-				amount += belly.reagents.get_reagent_amount(toxin.type)
+			// Plasmamen don't take liver damage from plasma, but instead heal wounds
+			if(isplasmaman(liver_owner) && istype(toxin, /datum/reagent/toxin/plasma))
+				for(var/i in owner.all_wounds)
+					var/datum/wound/iter_wound = i
+					iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
+			else
+				var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
+				if(belly)
+					amount += belly.reagents.get_reagent_amount(toxin.type)
 
-			// a 15u syringe is a nice baseline to scale lethality by
-			liver_damage += ((amount/15) * toxin.toxpwr) / liver_resistance
+				// a 15u syringe is a nice baseline to scale lethality by
+				liver_damage += ((amount/15) * toxin.toxpwr) / liver_resistance
 
-			if(provide_pain_message != HAS_PAINFUL_TOXIN)
-				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
-
+				if(provide_pain_message != HAS_PAINFUL_TOXIN)
+					provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
+	
 	liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
 
 	if(liver_damage)

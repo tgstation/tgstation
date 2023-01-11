@@ -106,6 +106,8 @@
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * delta_time)
 	affected_mob.adjustPlasma(20 * REM * delta_time)
+	if(toxpwr && isplasmaman(affected_mob)) // plasma is not toxic to them
+		toxpwr = 0
 	return ..()
 
 /// Handles plasma boiling.
