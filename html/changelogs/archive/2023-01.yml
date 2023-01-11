@@ -252,3 +252,112 @@
   - refactor: Refactor lighting items that use fuel to be more robust
   tralezab:
   - bugfix: Fixes Honorbound Sect not granting the right spell
+2023-01-08:
+  Hatterhat:
+  - qol: Rapid Part Exchange Devices and their bluespace variants now automatically
+      drop their current lowest tier of parts, instead of all of their parts.
+  Iamgoofball:
+  - bugfix: Fixes being able to instantly create dense grilles
+  Jacquerel:
+  - rscadd: Space Carp seem to have begun associating the station with food and attempting
+      to enter from the outside, rather than simply congregating around solar panels.
+      Employees are advised that these are wild animals, and should not be fed.
+  - rscadd: Space Carp can intermittently teleport short distances, leaving a short
+      lived rift which other nearby carp will be attracted to follow them through.
+  JohnFulpWillard:
+  - bugfix: You can right-click microwaves again.
+  - qol: Medipen refillers now use balloon alerts and progress bars instead of to
+      chat messages and invisible timers
+  - code_imp: Medipen refillers now refill your pen instead of delete it and create
+      a new one. This also means that refilling them will leave the medipen in your
+      hand instead of drop it at the refiller's tile.
+  LT3:
+  - bugfix: Hilbert's tram call button is now linked to the correct tram
+  - imageadd: Hazard lights added to the tram collision counter
+  Melbert:
+  - bugfix: People should be stuck in infinite stamcrit less often.
+  - admin: Adds a warning to "View Runtimes" informing you (yes, you) that it can
+      (and will) crash the server if you attempt to render 100,000 runtimes into the
+      UI at once
+  NamelessFairy:
+  - bugfix: Beer nukes no longer runtime on detonation.
+  - admin: Admins can now modify what reagent beer nukes produce, now your parties
+      can be alcohol free!
+  - admin: Admins can now creature custom reagent scrubber overflows, TC trade 20TC
+      for superlube flood?
+  - bugfix: Autosurgeon overlays now correctly update when removing organs.
+  - bugfix: Autosurgeons now say what organ is removed from them when screwdrivered.
+  - bugfix: Single use auto-surgeons cannot be reloaded again.
+  - rscadd: Introducing a new holodeck map, the TGC Arena, featuring hologram projectors
+      for your trading cards.
+  - bugfix: Janitor and Intern TGC cards are now considered creatures rather than
+      just humans.
+  - balance: The price of card packs has been reduced from double a paycheck to 3
+      quarters of one.
+  - balance: The number of cards available in the good clean fun vendor has been doubled.
+  - rscadd: Minor detectives now spawn with a candy cigarette and a flask full of
+      apple juice.
+  - balance: Candy Cigarettes added to the detective vendor.
+  - bugfix: Minor detectives no longer spawn with real cigarettes or real alcohol,
+      you'll need to ask you colleagues to buy you some, hopefully they wont arrest
+      you for trying.
+  Paxilmaniac:
+  - qol: A few recipes that were microwave only (like boiling rice, heating ready
+      donk, so on) can now also be made in an oven
+  ShizCalev:
+  - bugfix: Non-magic inclined mobs will no longer fire staffs while duel wielding.
+  flowercuco:
+  - qol: agent id now has screentips when you can attempt to steal access for it
+  khevy:
+  - rscadd: adds new type of glockroach, the mobroach
+  softcerv:
+  - balance: Moved the account console board to the service lathe
+  timothymtorres:
+  - bugfix: Fix inconsistent runtime spam from baseturf on startup
+2023-01-09:
+  Iamgoofball:
+  - bugfix: Fixes boring changeling gameplay by making shrieks not work while ventcrawling.
+  Jacquerel:
+  - imageadd: New look and animations for the Heretic's transmutation rune
+  LT3:
+  - bugfix: Disposal pipes and cable wires now co-exist with the tram bridge
+  Profakos:
+  - bugfix: burn chambers will not get stuck on depressurizing while cycling to exterior
+      airlocks
+  - bugfix: using an airlock sensor will properly cycle the air inside the chamber
+  ShizCalev:
+  - bugfix: Fixed indestructible glass sometimes having the grill ontop of it instead
+      of underneath it.
+  SyncIt21:
+  - rscadd: UI for ordering bulk amount of stuff from ccargo
+  - qol: order bulk stuff from cargo more efficiently
+  - bugfix: clear cart button which now properly clears cart & refunds coupons
+  Thunder12345:
+  - rscadd: Added new fishnet style socks, in a choice of three lengths
+  Zonespace27:
+  - admin: Logbuddy should no longer fail to parse logs with multi-line adminhelp
+      replies
+  san7890:
+  - bugfix: New players connecting via an active Panic Bunker Interview System can
+      now close out the window once they have their interview approved by an admin.
+2023-01-10:
+  Comxy:
+  - rscadd: Faithless will now also break lights and drag victims around
+  - refactor: Faithless into basic mob
+  Mothblocks:
+  - qol: New players will now get a contextual tutorial for how to switch hands and
+      drop items.
+  NamelessFairy:
+  - bugfix: Mice are no longer healed by mousetraps
+  Profakos:
+  - bugfix: adds missing sbiten glass style
+  Striders13:
+  - bugfix: fixed biosuits, nun robes, narsien hardened armor making your shoes invisible
+  Tastyfish:
+  - bugfix: The small carton no longer randomly disappears.
+  - bugfix: Pre-filled bottles of cola & nuka cola, and glasses of soda now have the
+      correct sprite.
+  Time-Green:
+  - bugfix: fixes wizard rod form infinitely travelling in hyperspace
+  timothymtorres:
+  - bugfix: Fix antags being revealed by hallucinations

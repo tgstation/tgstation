@@ -816,6 +816,26 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/tram/white
 	icon_state = "titanium_white"
 
+/obj/structure/industrial_lift/tram/subfloor
+	name = "tram subfloor"
+	desc = "A sturdy looking thermoplastic subfloor the tram is built on."
+	icon_state = "tram_subfloor"
+
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
+
+/obj/structure/industrial_lift/tram/accessible
+	icon_state = "titanium_accessible_north"
+
+/obj/structure/industrial_lift/tram/accessible/north
+	icon_state = "titanium_accessible_north"
+
+/obj/structure/industrial_lift/tram/accessible/south
+	icon_state = "titanium_accessible_south"
+
+
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()
 	if(travelling)

@@ -1,0 +1,4 @@
+author: "Zytolg"
+delete-after: True
+changes:
+  - bugfix: "Chemists can now properly open and close their desk windoor on Deltastation"
