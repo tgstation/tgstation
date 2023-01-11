@@ -145,8 +145,8 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	SSstatpanels.set_admin_verb_tab(admin)
 
 /datum/controller/subsystem/admin_verbs/proc/deassosciate_admin(client/adwas)
+	unlink_admin(adwas.mob) // we unlink before clearing the linkup map because unlink checks the map for context entries to remove
 	admin_linkup_map -= list(adwas.ckey)
-	unlink_admin(adwas.mob)
 	SSstatpanels.set_admin_verb_tab(adwas)
 
 /datum/controller/subsystem/admin_verbs/proc/assosciate_with_waiting()
