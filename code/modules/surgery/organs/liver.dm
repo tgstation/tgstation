@@ -108,7 +108,7 @@
 	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
 			// Plasmamen don't take liver damage from plasma, but instead heal wounds
-			if(istype(src, /obj/item/organ/internal/liver/plasmaman) && istype(toxin, /datum/reagent/toxin/plasma))
+			if(HAS_TRAIT(src, TRAIT_PLASMA_LOVER_METABOLISM) && istype(toxin, /datum/reagent/toxin/plasma))
 				for(var/i in owner.all_wounds)
 					var/datum/wound/iter_wound = i
 					iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
@@ -224,6 +224,10 @@
 	name = "reagent processing crystal"
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
+
+/obj/item/organ/internal/liver/plasmaman/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_PLASMA_LOVER_METABOLISM, INNATE_TRAIT)
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/internal/liver/alien
