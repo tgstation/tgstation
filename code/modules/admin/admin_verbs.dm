@@ -159,10 +159,10 @@ R_SOUND & CONFIG_GET(string/invoke_youtubedl)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 /client/proc/remove_admin_verbs()
-	SSadmin_verbs.deassosciate_admin(src)
+	SSadmin_verbs.unlink_admin(src.mob)
 
 ADMIN_VERB(admin, hide_all_verbs, "Hide all of your Admin Verbs", NONE)
-	SSadmin_verbs.deassosciate_admin(usr.client)
+	usr.client.remove_admin_verbs()
 	add_verb(src, /client/proc/show_verbs)
 	to_chat(src, span_admin("Almost all of your adminverbs have been hidden."))
 

@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	VAR_PRIVATE/list/admin_linkup_map
 
 	var/list/waiting_to_assosciate = list()
+	var/list/assosciations_by_ckey
 
 GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 
@@ -28,6 +29,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	holder_map = SSadmin_verbs.holder_map
 	context_map = SSadmin_verbs.context_map
 	admin_linkup_map = SSadmin_verbs.admin_linkup_map
+	assosciations_by_ckey = SSadmin_verbs.assosciations_by_ckey
 
 /datum/controller/subsystem/admin_verbs/Initialize()
 	RegisterSignal(src, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(assosciate_with_waiting))
@@ -38,6 +40,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	generate_holder_map()
 	context_map = list()
 	populate_context_map(context_map)
+	assosciations_by_ckey = list()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/admin_verbs/proc/generate_stat_data(client/target)
@@ -45,7 +48,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 		return list()
 
 	var/list/stat_data = list()
-	for(var/verb_type in admin_verb_map)
+	for(var/verb_type in assosciations_by_ckey[target.ckey])
 		var/list/verb_information = admin_verb_map[verb_type]
 		var/verb_permissions = verb_information[VERB_MAP_PERMISSIONS]
 		if(!check_rights_for(target, verb_permissions))
@@ -92,6 +95,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 		holder = holder_map[holder]
 		if(check_rights_for(admin.client, admin_verb_map[holder.type][VERB_MAP_PERMISSIONS]))
 			admin.group |= holder
+			assosciations_by_ckey[admin.ckey] |= list(holder.type)
 
 	var/list/client_context_verbs = admin_linkup_map[admin.ckey][LINKUPMAP_CONTEXT_MAP]
 	for(var/context_entry in context_map)
@@ -109,11 +113,12 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	for(var/mob/admin_module_holder/holder as anything in holder_map)
 		holder = holder_map[holder]
 		adwas.group -= holder
+	assosciations_by_ckey -= adwas.canon_client.ckey
 
 	// we use canon_client here because ckey will already have moved when this is called
 	var/list/client_context_verbs = admin_linkup_map[adwas.canon_client.ckey][LINKUPMAP_CONTEXT_MAP]
-	for(var/entry in client_context_verbs)
-		adwas.canon_client.verbs -= entry
+	for(var/context_entry in context_map)
+		adwas.canon_client.verbs -= client_context_verbs[context_entry]
 
 /datum/controller/subsystem/admin_verbs/proc/assosciate_admin(client/admin)
 	if(!initialized)
@@ -136,17 +141,12 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	admin.player_details.post_login_callbacks += list(on_login)
 	admin.player_details.post_logout_callbacks += list(on_logout)
 	link_admin(admin.mob)
+	SSstatpanels.set_admin_verb_tab(admin)
 
 /datum/controller/subsystem/admin_verbs/proc/deassosciate_admin(client/adwas)
-	var/list/existing_map = admin_linkup_map[adwas.ckey]
-	if(existing_map)
-		adwas.player_details.post_login_callbacks -= existing_map[LINKUPMAP_LOGIN]
-
-		var/datum/callback/old_logout = existing_map[LINKUPMAP_LOGOUT]
-		adwas.player_details.post_logout_callbacks -= old_logout
-		old_logout.Invoke(adwas.mob)
-
+	admin_linkup_map -= list(adwas.ckey)
 	unlink_admin(adwas.mob)
+	SSstatpanels.set_admin_verb_tab(adwas)
 
 /datum/controller/subsystem/admin_verbs/proc/assosciate_with_waiting()
 	for(var/waiting in waiting_to_assosciate)
