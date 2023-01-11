@@ -50840,7 +50840,7 @@
 	req_access = list("command")
 	},
 /obj/machinery/suit_storage_unit/standard_unit{
-	desc = "An industrial suit storage device carrying retro space suits. This one is blue.";
+	desc = "An industrial suit storage device carrying retro space suits. This one is orange.";
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/orange;
 	suit_type = /obj/item/clothing/suit/space/syndicate/orange
 	},
