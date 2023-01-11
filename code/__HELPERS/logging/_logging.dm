@@ -76,7 +76,8 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 	var/log_text = "[key_name(src)] [message] [loc_name(src)]"
 	switch(message_type)
-		if(LOG_ATTACK)
+		/// ship both attack logs and victim logs to the end of round attack.log just to ensure we don't lose information
+		if(LOG_ATTACK, LOG_VICTIM)
 			log_attack(log_text)
 		if(LOG_SAY)
 			log_say(log_text)
@@ -116,14 +117,6 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 			log_shuttle(log_text)
 		if(LOG_SPEECH_INDICATORS)
 			log_speech_indicators(log_text)
-		if(LOG_VICTIM)
-			// Graceful handling of edge case where a victim log is passed in without the coder specifically removing it from being added as a global log.
-			// Although the patter at-large is that when a LOG_VICTIM log_type is passed in, it's a secondary log added for clarity in addition to a more "traditional" type of log.
-			// This is simply to ensure that during a live round, an admin is easily able to reconstruct a potential player's actions without having to cross-reference two different types of logs.
-			// Anyways, just in case someone relies on LOG_VICTIM as being a "load bearing" type of log and allows it to be logged globally
-			// ensure that it gets placed in attack log (for post-round storage) just to ensure we don't lose out on information.
-			var/transcribed_victim_log = "(VICTIM) [log_text]"
-			log_attack(transcribed_victim_log)
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)
