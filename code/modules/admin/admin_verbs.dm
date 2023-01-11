@@ -154,12 +154,13 @@ R_SOUND & CONFIG_GET(string/invoke_youtubedl)
  */
 
 /client/proc/add_admin_verbs()
-	if(holder)
-		SSadmin_verbs.assosciate_admin(src)
-		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
+	if(!holder)
+		CRASH("called add_admin_verbs on a client without a holder?")
+	control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
+	SSadmin_verbs.assosciate_admin(src)
 
 /client/proc/remove_admin_verbs()
-	SSadmin_verbs.unlink_admin(src.mob)
+	SSadmin_verbs.deassosciate_admin(src)
 
 ADMIN_VERB(admin, hide_all_verbs, "Hide all of your Admin Verbs", NONE)
 	usr.client.remove_admin_verbs()
