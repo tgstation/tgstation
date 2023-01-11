@@ -658,6 +658,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/proc/pickup(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
+	SEND_SIGNAL(user, COMSIG_LIVING_PICKED_UP_ITEM, src)
 	item_flags |= IN_INVENTORY
 
 /// called when "found" in pockets and storage items. Returns 1 if the search should end.
@@ -879,18 +880,20 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	else
 		. = SFX_DESECRATION
 
+/// Creates an ignition hotspot if item is lit and located on turf, in mask, or in hand
 /obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
 	if(ismob(location))
-		var/mob/M = location
+		var/mob/pyromanic = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(ITEM_SLOT_MASK))
+		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || (src in pyromanic.held_items))
 			success = TRUE
 		if(success)
-			location = get_turf(M)
+			location = get_turf(pyromanic)
 	if(isturf(location))
 		location.hotspot_expose(flame_heat, 5)
 
+/// If an object can successfully be used as a fire starter it will return a message
 /obj/item/proc/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
 		. = span_notice("[user] lights [A] with [src].")

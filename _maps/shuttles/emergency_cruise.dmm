@@ -102,6 +102,19 @@
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"iO" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "iP" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -155,6 +168,16 @@
 "kd" = (
 /turf/template_noop,
 /area/template_noop)
+"kE" = (
+/obj/structure/table/wood/fancy,
+/obj/item/flashlight/flare/candle/infinite{
+	desc = "A synthetic candle that won't melt down.";
+	name = "crimson red candle";
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "kJ" = (
 /obj/structure/table/wood/fancy,
 /obj/item/food/burger/baconburger{
@@ -408,19 +431,6 @@
 	anchored = 1;
 	name = "statue of an AI hologram"
 	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"tJ" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/cup/glass/mug/britcup{
-	pixel_x = 8;
-	pixel_y = -1
-	},
-/obj/item/storage/medkit/regular{
-	pixel_x = -9;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uV" = (
@@ -799,16 +809,6 @@
 	pixel_y = 27
 	},
 /turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Hi" = (
-/obj/structure/table/wood/fancy,
-/obj/item/candle/infinite{
-	desc = "A synthetic candle that won't melt down.";
-	name = "crimson red candle";
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "Ho" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1237,7 +1237,7 @@ en
 jt
 jt
 EC
-Hi
+kE
 Me
 jt
 aY
@@ -1266,7 +1266,7 @@ kd
 kd
 en
 EC
-Hi
+kE
 WT
 WT
 WT
@@ -1290,7 +1290,7 @@ WT
 WT
 WT
 EC
-Hi
+kE
 Me
 jt
 jt
@@ -1655,7 +1655,7 @@ qw
 Nv
 VO
 Gv
-tJ
+iO
 SK
 cf
 tB
@@ -1956,7 +1956,7 @@ kd
 kd
 en
 EC
-Hi
+kE
 WT
 WT
 WT
@@ -1980,7 +1980,7 @@ WT
 WT
 WT
 EC
-Hi
+kE
 Me
 jt
 jt
@@ -2019,7 +2019,7 @@ en
 jt
 jt
 EC
-Hi
+kE
 Me
 jt
 qE

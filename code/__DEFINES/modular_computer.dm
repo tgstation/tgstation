@@ -25,7 +25,7 @@
 #define PROGRAM_CATEGORY_CREW "Crew"
 #define PROGRAM_CATEGORY_ENGI "Engineering"
 #define PROGRAM_CATEGORY_SUPL "Supply"
-#define PROGRAM_CATEGORY_SCI  "Science"
+#define PROGRAM_CATEGORY_SCI "Science"
 #define PROGRAM_CATEGORY_MISC "Other"
 
 #define DETOMATIX_RESIST_MINOR 1
