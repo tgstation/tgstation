@@ -70,7 +70,7 @@
 		return
 
 	var/mob/living/carbon/human/carbon_target = quirk_holder
-	if(NOBLOOD in carbon_target.dna.species.species_traits) //can't lose blood if your species doesn't have any
+	if(HAS_TRAIT(carbon_target, TRAIT_NOBLOOD)) //can't lose blood if your species doesn't have any
 		return
 
 	if (carbon_target.blood_volume <= min_blood)
@@ -1131,3 +1131,16 @@
 	if(!IS_ORGANIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
+/datum/quirk/cursed
+	name = "Cursed"
+	desc = "You are cursed with bad luck. You are much more likely to suffer from accidents and mishaps. When it rains, it pours."
+	icon = "cloud-showers-heavy"
+	value = -8
+	mob_trait = TRAIT_CURSED
+	gain_text = span_danger("You feel like you're going to have a bad day.")
+	lose_text = span_notice("You feel like you're going to have a good day.")
+	medical_record_text = "Patient is cursed with bad luck."
+	hardcore_value = 8
+
+/datum/quirk/cursed/add(client/client_source)
+	quirk_holder.AddComponent(/datum/component/omen/quirk)

@@ -12,6 +12,8 @@
  * An example usage is bartender mixed drinks - each reagent gets its own fancy drink sprite
  */
 /datum/component/takes_reagent_appearance
+	/// The type to compare against the glass_style's required_container_type. The parent's type by default.
+	var/base_container_type
 	/// Icon file when attached to the item
 	var/icon_pre_change
 	/// Icon state when attached to the item
@@ -24,6 +26,7 @@
 /datum/component/takes_reagent_appearance/Initialize(
 	datum/callback/on_icon_changed,
 	datum/callback/on_icon_reset,
+	base_container_type,
 )
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -37,6 +40,8 @@
 
 	src.on_icon_changed = on_icon_changed
 	src.on_icon_reset = on_icon_reset
+
+	src.base_container_type = base_container_type || parent.type
 
 /datum/component/takes_reagent_appearance/Destroy()
 	QDEL_NULL(on_icon_changed)
@@ -154,4 +159,4 @@
 	if(isnull(main_reagent))
 		return null
 
-	return GLOB.glass_style_singletons[parent.type][main_reagent.type]
+	return GLOB.glass_style_singletons[base_container_type][main_reagent.type]

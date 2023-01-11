@@ -66,8 +66,10 @@
 			organs.forceMove(Tsec)
 			organs.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
-/mob/living/carbon/spread_bodyparts()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		BP.drop_limb()
-		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+/// Launches all bodyparts away from the mob. skip_head will keep the head attached.
+/mob/living/carbon/spread_bodyparts(skip_head = FALSE)
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		if(skip_head && part.body_zone == BODY_ZONE_HEAD)
+			continue
+		part.drop_limb()
+		part.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
