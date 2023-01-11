@@ -1,4 +1,3 @@
-// MBTODO: Make these invincible until the singulo releases for prototyping purposes
 /obj/machinery/singularity_generator
 	name = "singularity generator"
 	desc = "A deceptively small machine that, when fired with void emitters, produces enough compressed energy to create a singularity in space. It's worth more in scrap parts than the combined net worth of the entire station."
@@ -11,6 +10,9 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
+
+	// Prototype only
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 	var/starting = FALSE
 
@@ -43,3 +45,7 @@
 	SEND_SIGNAL(src, COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY, singularity)
 
 	qdel(src)
+
+/obj/machinery/singularity_generator/singularity_pull(S, current_size)
+	. = ..()
+	resistance_flags = NONE

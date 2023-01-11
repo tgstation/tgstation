@@ -1,6 +1,3 @@
-// MBTODO: Destroying these by players (?) should leave them in place, requiring repair, rather than destroying them to machinery.
-// Or make them invincible until singulo releases.
-
 // MBTODO: It must be coiled to the computer.
 // You still need to go outside and interface with them, but it has to be attached to the computer to function.
 /obj/machinery/field/generator/singularity
@@ -9,6 +6,9 @@
 
 	anchored = TRUE
 	state = 2 // FG_WELDED...:-(
+
+	// Prototype only
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
 	// In the future this should use power better.
 	use_power = NO_POWER_USE
@@ -30,11 +30,15 @@
 /obj/machinery/field/generator/singularity/draw_power(draw, failsafe, obj/machinery/field/generator/other_generator, obj/machinery/field/generator/last)
 	return TRUE
 
-/obj/machinery/field/generator/block_singularity_if_active(singularity)
+/obj/machinery/field/generator/singularity/block_singularity_if_active(singularity)
 	if (istype(singularity, /obj/contained_singularity))
 		return ..()
 
 	return NONE
+
+/obj/machinery/field/generator/singularity/singularity_pull(S, current_size)
+	. = ..()
+	resistance_flags = NONE
 
 /obj/machinery/field/containment/singularity
 	name = "singularity containment field"
