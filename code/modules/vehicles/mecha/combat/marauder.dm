@@ -53,14 +53,14 @@
 		return
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
 
-/obj/vehicle/sealed/mecha/marauder/add_scanmod(obj/item/stock_parts/scanning_module/sm=null)
+/obj/vehicle/sealed/mecha/marauder/add_scanmod(obj/item/stock_parts/scanning_module/sm)
 	if(sm)
 		sm.forceMove(src)
 		scanmod = sm
 		return
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 
-/obj/vehicle/sealed/mecha/marauder/add_capacitor(obj/item/stock_parts/capacitor/cap=null)
+/obj/vehicle/sealed/mecha/marauder/add_capacitor(obj/item/stock_parts/capacitor/cap)
 	if(cap)
 		cap.forceMove(src)
 		capacitor = cap
