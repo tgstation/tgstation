@@ -271,6 +271,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 #define OVERCLOCK_ACCESS_NOT_ALLOWED_SILICON "not_allowed_silicon"
 #define OVERCLOCK_ACCESS_ALLOWED "allowed"
 
+// MBTODO: No access if below enough health (feature flag)
 /obj/machinery/computer/singularity/proc/overclock_access(mob/living/user)
 	if (!istype(user))
 		return OVERCLOCK_ACCESS_NOT_ALLOWED
@@ -313,7 +314,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	var/time_spent = 0
 
-	while (time_spent < 8 SECONDS)
+	while (time_spent < POWER_BAR_FLAG(FFLAG_OVERCLOCK_TIME_SPENT))
 		for (var/obj/machinery/singularity_turret/emitter as anything in emitters)
 			if (QDELETED(emitter))
 				emitters -= emitter
@@ -321,7 +322,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 			emitter.fire_beam(overclocked = TRUE)
 
-		if (POWER_BAR_FLAG(POWER_BAR_FEATURE_FLAG_OVERCLOCK_USES_SLEEP, TRUE))
+		if (POWER_BAR_FLAG(FFLAG_OVERCLOCK_USES_SLEEP))
 			sleep(0.2 SECONDS)
 			time_spent += 0.2 SECONDS
 		else
@@ -393,15 +394,18 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	stage = STAGE_SINGULARITY_CONSOLE_SELF_DESTRUCTING
 
 	// talk_into directly so that we can't get snipped
-	internal_radio.talk_into("<b>Singularity containment FAILED, containment breach IMMINENT, repair IMPOSSIBLE. Emergency casualty destabilization field has been activated. [SINGULARITY_BREACH_TIME] seconds until containment breach.</b>")
+	internal_radio.talk_into(src, "<b>Singularity containment FAILED, containment breach IMMINENT, repair IMPOSSIBLE. Emergency casualty destabilization field has been activated. [SINGULARITY_BREACH_TIME] seconds until containment breach.</b>")
 
 /obj/machinery/computer/singularity/proc/on_advance_self_destruct_stage(datum/source, time_left)
 	SIGNAL_HANDLER
 
 	if (time_left > 5)
-		internal_radio.talk_into("<b>[time_left] seconds until containment breach.</b>")
+		internal_radio.talk_into(src, "<b>[time_left] seconds until containment breach.</b>")
 	else
-		internal_radio.talk_into("[time_left]...")
+		internal_radio.talk_into(src, "[time_left]...")
+
+	if (time_left <= 1)
+		stage = STAGE_SINGULARITY_CONSOLE_DESTROYED
 
 /obj/machinery/computer/singularity/proc/assign_camera(obj/machinery/camera/camera)
 	active_camera = camera

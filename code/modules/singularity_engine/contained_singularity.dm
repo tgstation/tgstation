@@ -17,6 +17,8 @@
 	pixel_y = -28
 
 	COOLDOWN_DECLARE(hit_cooldown)
+	COOLDOWN_DECLARE(overclocked_hit_cooldown)
+	COOLDOWN_DECLARE(treat_as_overclocked_cooldown)
 
 	var/health = 100
 	var/max_health = 100
@@ -82,8 +84,7 @@
 		time_since_last_hit = world.time
 
 		if (turret_beam.overclocked)
-			for (var/_ in 1 to 5)
-				fire_particle_reaction()
+			overclocked_fire_particle_reaction()
 		else
 			addtimer(CALLBACK(src, PROC_REF(fire_particle_reaction)), 0.3 SECONDS)
 
@@ -109,10 +110,24 @@
 	if (!COOLDOWN_FINISHED(src, hit_cooldown))
 		return
 
-	COOLDOWN_START(src, hit_cooldown, 0.1 SECONDS)
+	COOLDOWN_START(src, hit_cooldown, 0.2 SECONDS)
 	try_fire_particle()
 
+/obj/contained_singularity/proc/overclocked_fire_particle_reaction()
+	set waitfor = FALSE
+
+	if (!COOLDOWN_FINISHED(src, overclocked_hit_cooldown))
+		return
+
+	COOLDOWN_START(src, overclocked_hit_cooldown, 0.1 SECONDS)
+	COOLDOWN_START(src, treat_as_overclocked_cooldown, 8 SECONDS)
+
+	for (var/_ in 1 to 3)
+		try_fire_particle()
+
 /obj/contained_singularity/proc/try_fire_particle()
+	set waitfor = FALSE
+
 	var/obj/projectile/singularity_particle/particle = new(get_turf(src))
 	particle.fired_from = src
 	particle.fire(rand(0, 360))
@@ -136,14 +151,16 @@
 
 	discharge_from(projectile)
 
-/obj/contained_singularity/proc/discharge_from(obj/projectile/projectile)
+/obj/contained_singularity/proc/discharge_from(obj/projectile/singularity_particle/projectile)
+	ASSERT(istype(projectile))
+
 	var/turf/projectile_turf = get_turf(projectile)
 	playsound(projectile_turf, 'sound/effects/singulo_particle_missed.ogg', vol = 50, pressure_affected = FALSE)
 	Beam(projectile_turf, icon_state = "sm_arc_supercharged", time = 0.8 SECONDS)
 	projectile_turf.balloon_alert_to_viewers("it discharges back!")
 
-	// Logarithmic?
-	take_singularity_damage(damage_per_discharge)
+	if (COOLDOWN_FINISHED(src, treat_as_overclocked_cooldown) || (health / max_health) > POWER_BAR_FLAG(FFLAG_OVERCLOCK_MAX_OVERCLOCK_DAMAGE))
+		take_singularity_damage(damage_per_discharge)
 
 	qdel(projectile)
 
@@ -188,7 +205,7 @@
 /obj/contained_singularity/proc/breach()
 	// Make sure we don't try to suck up any singularities
 	qdel(singularity)
-	new /obj/singularity(get_turf(src), /* starting_energy = */ 800)
+	new /obj/singularity(get_turf(src), /* starting_energy = */ POWER_BAR_FLAG(FFLAG_DEFAULT_SINGULO_ENERGY))
 	qdel(src)
 
 /obj/projectile/singularity_particle
