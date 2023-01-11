@@ -1,7 +1,7 @@
 // MBTODO: It must be coiled to the computer
 /obj/machinery/singularity_turret
 	name = "experimental void emitter"
-	desc = "A robust, dramatic emitter that is uniquely capable of powering the singularity. Firing into an active singularity will generate power. Its blasts are so powerful that ear protection is a necessity if you plan to be around them for any period of time, oddly enough, even in space."
+	desc = "A robust, dramatic emitter that is uniquely capable of powering the singularity. Firing into an active singularity will generate power."
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "protoemitter"
 	base_icon_state = "protoemitter"
@@ -51,7 +51,6 @@
 	icon_state = icon_state_on
 	begin_processing()
 
-// MBTODO: Make you deaf for a bit if you're near it when it fires.
 /obj/machinery/singularity_turret/proc/fire_beam()
 	playsound(src, 'sound/magic/lightningshock.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = FALSE)
 
