@@ -1038,7 +1038,6 @@ Byond.subscribeTo('update_split_admin_tabs', function (status) {
 Byond.subscribeTo('add_admin_tabs', function (ht) {
 	href_token = ht;
 	addPermanentTab("MC");
-	addPermanentTab("Admin Verbs");
 	addPermanentTab("Tickets");
 });
 
