@@ -148,6 +148,8 @@
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
 		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_updated)), POWER_BAR_DEPARTMENT_MEDICAL)
+
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
 	patient = null
@@ -178,7 +180,8 @@
 		data["custom_controls"]["speaker"] = medical_mode_flags & MEDBOT_SPEAK_MODE
 		data["custom_controls"]["crit_alerts"] = medical_mode_flags & MEDBOT_DECLARE_CRIT
 		data["custom_controls"]["stationary_mode"] = medical_mode_flags & MEDBOT_STATIONARY_MODE
-		data["custom_controls"]["sync_tech"] = TRUE
+		if (!SSpower_bars.enabled)
+			data["custom_controls"]["sync_tech"] = TRUE
 	return data
 
 // Actions received from TGUI
@@ -203,6 +206,7 @@
 			medical_mode_flags ^= MEDBOT_STATIONARY_MODE
 			path = list()
 		if("sync_tech")
+			ASSERT(!SSpower_bars.enabled)
 			if(!linked_techweb)
 				to_chat(usr, span_notice("No research techweb connected."))
 				return
@@ -474,6 +478,15 @@
 		return TRUE
 	if(damagetype_healer == "all" && treat_me_for.len)
 		return TRUE
+
+/mob/living/simple_animal/bot/medbot/proc/on_power_bar_updated(power_bars)
+	switch (power_bars)
+		if (0, 1)
+			heal_amount = initial(heal_amount)
+		if (2)
+			heal_amount = initial(heal_amount) * 2
+		if (3)
+			heal_amount = initial(heal_amount) * 3
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))

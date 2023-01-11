@@ -15,7 +15,10 @@
 
 /obj/item/stock_parts/Destroy(force)
 	initial_parent_ref = null
-	return ..()
+	. = ..()
+#ifdef REFERENCE_TRACKING
+	return QDEL_HINT_IFFAIL_FINDREFERENCE
+#endif
 
 /obj/item/stock_parts/proc/should_hack()
 	return SSpower_bars.enabled && !istype(src, /obj/item/stock_parts/cell)
