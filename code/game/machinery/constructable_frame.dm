@@ -269,7 +269,6 @@
 							new_machine.circuit.moveToNullspace()
 							QDEL_NULL(new_machine.circuit)
 						for(var/obj/old_part in new_machine.component_parts)
-							// Move to nullspace and delete.
 							old_part.moveToNullspace()
 							qdel(old_part)
 
