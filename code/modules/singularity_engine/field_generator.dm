@@ -59,6 +59,9 @@
 
 /obj/machinery/field/containment/singularity/bullet_act(obj/projectile/projectile)
 	if (istype(projectile, /obj/projectile/singularity_particle))
+		if (!COOLDOWN_FINISHED(src, reset_cooldown))
+			return BULLET_ACT_FORCE_PIERCE
+
 		capture_particle(projectile)
 		return
 
@@ -85,4 +88,4 @@
 	COOLDOWN_START(src, reset_cooldown, delay)
 
 	animate(src, time = 0, alpha = 40, flags = ANIMATION_END_NOW)
-	animate(time = delay, alpha = 255, easing = SINE_EASING)
+	animate(time = delay * 1.05, alpha = 255, easing = SINE_EASING)

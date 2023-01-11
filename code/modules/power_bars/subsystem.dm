@@ -47,12 +47,12 @@ SUBSYSTEM_DEF(power_bars)
 		return ""
 
 	return {"
-		<span style='color: purple; border: 1px solid dotted'>
+		<div style='color: purple; border: 1px dotted'>
 			<h1><a href="[POWER_BAR_PR_LINK]">Power Bars + Singularity Concept</a></h1>
 			<p>As part of an experiment on the future of power, all rounds on MetaStation will feature <b>the concept of power bars</b>, and <b>replace the supermatter</b> with an engine styled around <b>the singularity</b>.</p>
 			<p>Engineering can distribute power bars to other departments. More power bars = better equipment. Cargo will get faster shuttles, stasis beds will access surgeries, security gets x-ray cameras, etc.</p>
 			<p>Please give your feedback or learn more on the <a href="[POWER_BAR_PR_LINK]">pull request</a>.</p>
-		</span>
+		</div>
 	"}
 
 /datum/controller/subsystem/power_bars/proc/debug_power_bar_distributions()

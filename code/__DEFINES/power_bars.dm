@@ -7,4 +7,9 @@
 
 #define POWER_BAR_DONT_REACT (1 << 0)
 
-#define POWER_BAR_FLAG_FLIPPED(flag, default...) (max(-1, ##flag) == -1 ? default : ##flag)
+// Feature flags to be flipped in TGS for live configuration
+#define POWER_BAR_FLAG(flag, default) (max(-1, ##flag) == -1 ? default : ##flag)
+
+#ifndef POWER_BAR_FEATURE_FLAG_OVERCLOCK_USES_SLEEP
+#define POWER_BAR_FEATURE_FLAG_OVERCLOCK_USES_SLEEP
+#endif

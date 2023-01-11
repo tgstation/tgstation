@@ -1,7 +1,7 @@
 import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
 import { Fragment, InfernoNode, SFC } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Blink, Box, Button, ByondUi, Icon, NoticeBox, ProgressBar, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
@@ -23,6 +23,7 @@ type SingularityControlData = {
   disabled_field_generators: number;
   has_access: BooleanLike;
   map_name: string;
+  overclock_access: OverclockAccess;
   singularity_generator: BooleanLike;
   stage: Stage;
   turrets: number;
@@ -42,8 +43,14 @@ enum Stage {
   Destroyed = 'destroyed',
 }
 
+enum OverclockAccess {
+  NotAllowed = 'not_allowed',
+  NotAllowedSilicon = 'not_allowed_silicon',
+  Allowed = 'allowed',
+}
+
 const CoolerSection: SFC<{
-  title: string;
+  title: InfernoNode;
 }> = (props) => {
   return (
     <fieldset
@@ -339,6 +346,98 @@ const EquipmentWindow = (props, context) => {
   );
 };
 
+const OVERCLOCK_TOOLTIPS = {
+  [OverclockAccess.Allowed]: null,
+  [OverclockAccess.NotAllowed]: null,
+  [OverclockAccess.NotAllowedSilicon]:
+    'Overclocking is too dangerous for silicons to be trusted with it.',
+} as const;
+
+const OverclockWindow = (props, context) => {
+  const { act, data } = useBackend<SingularityControlData>(context);
+  const overclockDelay = data.singularity_data!.delay_to_overclock;
+
+  const timeLeft = overclockDelay / 10;
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = Math.floor(timeLeft % 60);
+
+  return (
+    <Stack vertical fill fontSize="18px" height="95%" pt={1}>
+      <Stack.Item grow>
+        <Button
+          color="bad"
+          width="100%"
+          height="100%"
+          disabled={
+            data.overclock_access.startsWith('not_allowed_') ||
+            overclockDelay > 0
+          }
+          tooltip={OVERCLOCK_TOOLTIPS[data.overclock_access]}
+          onClick={props.handleBeginOverclock}>
+          BEGIN OVERCLOCK
+        </Button>
+      </Stack.Item>
+
+      <Stack.Item grow>
+        {overclockDelay ? (
+          <>
+            Overclock ready in{' '}
+            <b>
+              {minutes > 0
+                ? `${minutes} minute${minutes === 1 ? '' : 's'}`
+                : `${seconds}second${seconds === 1 ? '' : 's'}`}
+              .
+            </b>
+          </>
+        ) : (
+          <>
+            Overclock <b>ready.</b>
+          </>
+        )}
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const OverclockWarning = (props: {
+  handleClose: () => void;
+  handleOverclock: () => void;
+}) => {
+  return (
+    <Stack
+      position="absolute"
+      backgroundColor="rgba(0, 0, 0, 0.7)"
+      width="100%"
+      vertical
+      fill
+      top="0"
+      align="center"
+      justify="center"
+      fontSize="24px">
+      <Stack.Item maxWidth="100%">
+        <Box textAlign="center">
+          <b>WARNING: </b> Overclocking is very dangerous, but very profitable.{' '}
+          <br />
+          After overclocking, you should focus on repairing the singularity with
+          the handheld gravity anchor nearby.
+        </Box>
+      </Stack.Item>
+
+      <Stack.Item>
+        <Button
+          color="bad"
+          onClick={() => {
+            props.handleOverclock();
+            props.handleClose();
+          }}>
+          Overclock
+        </Button>{' '}
+        <Button onClick={props.handleClose}>Cancel</Button>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 const ContainmentBar = ({
   containment_percent,
 }: {
@@ -390,6 +489,12 @@ const ObserveScreen = (props, context) => {
   const { act, data } = useBackend<SingularityControlData>(context);
   const singularityData = data.singularity_data!;
 
+  const [overclocking, setOverclocking] = useLocalState(
+    context,
+    'overclocking',
+    false
+  );
+
   return (
     <Window title="Singularity Control Console" width={800} height={480}>
       <Window.Content>
@@ -397,15 +502,17 @@ const ObserveScreen = (props, context) => {
           <Stack.Item grow>
             <Stack fill vertical>
               <Stack.Item grow>
-                <ByondUi
-                  params={{
-                    id: data.map_name,
-                    type: 'map',
-                  }}
-                  style={{
-                    height: '100%',
-                  }}
-                />
+                {!overclocking && (
+                  <ByondUi
+                    params={{
+                      id: data.map_name,
+                      type: 'map',
+                    }}
+                    style={{
+                      height: '100%',
+                    }}
+                  />
+                )}
               </Stack.Item>
 
               <Stack.Item height="30px">
@@ -432,11 +539,46 @@ const ObserveScreen = (props, context) => {
               </Stack.Item>
 
               <Stack.Item grow>
-                <CoolerSection title="OVERCLOCK" />
+                <CoolerSection
+                  title={
+                    <Tooltip
+                      content="Massively increase power output at the cost of massively damaging the singularity, when needed urgently."
+                      position="right-end">
+                      <span
+                        style={{
+                          'border-bottom': '2px dotted',
+                        }}>
+                        OVERCLOCK
+                      </span>{' '}
+                      <Icon
+                        name="circle-question"
+                        fontSize="18px"
+                        color="rgba(255, 255, 255, 0.6)"
+                        mt={0.6}
+                      />
+                    </Tooltip>
+                  }>
+                  <OverclockWindow
+                    handleBeginOverclock={() => {
+                      setOverclocking(true);
+                    }}
+                  />
+                </CoolerSection>
               </Stack.Item>
             </Stack>
           </Stack.Item>
         </Stack>
+
+        {overclocking && (
+          <OverclockWarning
+            handleClose={() => {
+              setOverclocking(false);
+            }}
+            handleOverclock={() => {
+              act('overclock');
+            }}
+          />
+        )}
       </Window.Content>
     </Window>
   );

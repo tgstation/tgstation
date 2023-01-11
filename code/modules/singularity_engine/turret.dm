@@ -15,9 +15,12 @@
 	use_power = NO_POWER_USE
 	active_power_usage = 0
 
-	var/icon_state_on = "protoemitter_+a"
+	var/pause_counter = 0
 	var/sparks_left = 2
-	var/datum/effect_system/spark_spread/sparks
+
+	VAR_PRIVATE
+		icon_state_on = "protoemitter_+a"
+		datum/effect_system/spark_spread/sparks
 
 /obj/machinery/singularity_turret/Initialize(mapload)
 	. = ..()
@@ -26,6 +29,9 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /obj/machinery/singularity_turret/process()
+	if (pause_counter > 0)
+		return
+
 	if (sparks_left > 0)
 		sparks_left -= 1
 
@@ -50,12 +56,13 @@
 	icon_state = icon_state_on
 	begin_processing()
 
-/obj/machinery/singularity_turret/proc/fire_beam()
+/obj/machinery/singularity_turret/proc/fire_beam(overclocked = FALSE)
 	playsound(src, 'sound/magic/lightningshock.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = FALSE)
 
 	sparks.start()
 
-	var/obj/projectile/projectile = new /obj/projectile/beam/singularity_turret(get_turf(src))
+	var/obj/projectile/beam/singularity_turret/projectile = new (get_turf(src))
+	projectile.overclocked = overclocked
 	projectile.fired_from = src
 	projectile.fire(dir2angle(dir))
 
@@ -71,6 +78,8 @@
 	tracer_type = /obj/effect/projectile/tracer/laser/blue
 	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
 	impact_type = /obj/effect/projectile/impact/laser/blue
+
+	var/overclocked = FALSE
 
 /obj/projectile/beam/singularity_turret/singularity_pull()
 	return

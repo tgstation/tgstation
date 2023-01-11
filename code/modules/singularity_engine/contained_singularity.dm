@@ -75,11 +75,17 @@
 
 /obj/contained_singularity/bullet_act(obj/projectile/projectile)
 	if (istype(projectile, /obj/projectile/beam/singularity_turret))
+		var/obj/projectile/beam/singularity_turret/turret_beam = projectile
+
 		delayed_power_bar_one.poke()
 		delayed_power_bar_two.poke()
 		time_since_last_hit = world.time
 
-		addtimer(CALLBACK(src, PROC_REF(fire_particle_reaction)), 0.3 SECONDS)
+		if (turret_beam.overclocked)
+			for (var/_ in 1 to 5)
+				fire_particle_reaction()
+		else
+			addtimer(CALLBACK(src, PROC_REF(fire_particle_reaction)), 0.3 SECONDS)
 
 		return
 
@@ -98,10 +104,12 @@
 		last_heal = world.time
 
 /obj/contained_singularity/proc/fire_particle_reaction()
+	set waitfor = FALSE
+
 	if (!COOLDOWN_FINISHED(src, hit_cooldown))
 		return
 
-	COOLDOWN_START(src, hit_cooldown, 0.2 SECONDS)
+	COOLDOWN_START(src, hit_cooldown, 0.1 SECONDS)
 	try_fire_particle()
 
 /obj/contained_singularity/proc/try_fire_particle()

@@ -103,7 +103,6 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	if (.)
 		return .
 
-	// MBTODO: Access? Whatever
 	switch (stage)
 		if (STAGE_SINGULARITY_CONSOLE_NOT_STARTED)
 			switch (action)
@@ -117,6 +116,9 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 					return TRUE
 				if ("disable_all_emitters")
 					disable_all_emitters(user)
+					return TRUE
+				if ("overclock")
+					try_overclock(user)
 					return TRUE
 
 	return TRUE
@@ -133,6 +135,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	data["singularity_generator"] = FALSE
 	data["turrets"] = 0
 	data["has_access"] = allowed(user)
+	data["overclock_access"] = overclock_access(user)
 
 	for (var/obj/connected_machine as anything in connected_machines)
 		if (istype(connected_machine, /obj/machinery/field/generator/singularity))
@@ -263,6 +266,81 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	RegisterSignal(singularity, COMSIG_SINGULARITY_TAKE_DAMAGE, PROC_REF(on_singularity_take_damage))
 	RegisterSignal(singularity, COMSIG_SINGULARITY_SELF_DESTRUCTING, PROC_REF(on_self_destructing))
 	RegisterSignal(singularity, COMSIG_SINGULARITY_ADVANCE_SELF_DESTRUCT_STAGE, PROC_REF(on_advance_self_destruct_stage))
+
+#define OVERCLOCK_ACCESS_NOT_ALLOWED "not_allowed"
+#define OVERCLOCK_ACCESS_NOT_ALLOWED_SILICON "not_allowed_silicon"
+#define OVERCLOCK_ACCESS_ALLOWED "allowed"
+
+/obj/machinery/computer/singularity/proc/overclock_access(mob/living/user)
+	if (!istype(user))
+		return OVERCLOCK_ACCESS_NOT_ALLOWED
+
+	if (issilicon(user))
+		return OVERCLOCK_ACCESS_NOT_ALLOWED_SILICON
+
+	if (obj_flags & EMAGGED)
+		return OVERCLOCK_ACCESS_ALLOWED
+
+	var/obj/item/id = user.get_idcard(hand_first = TRUE)
+	if (isnull(id))
+		return OVERCLOCK_ACCESS_NOT_ALLOWED
+
+	return OVERCLOCK_ACCESS_ALLOWED
+
+// MBTODO: Overclock delay
+// MBTODO: Minimum health
+/obj/machinery/computer/singularity/proc/try_overclock(mob/user)
+	if (overclock_access(user) != OVERCLOCK_ACCESS_ALLOWED)
+		return
+
+	user.log_message("started an overclock on the singularity", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(user)] started an overclock on the singularity.")
+
+	INVOKE_ASYNC(src, PROC_REF(perform_overclock))
+
+/obj/machinery/computer/singularity/proc/perform_overclock()
+	speak("Commencing overclocking sequence.")
+
+	playsound(src, 'sound/effects/seedling_chargeup.ogg', vol = 60, vary = TRUE, frequency = 44100 / 2)
+
+	var/list/emitters = list()
+
+	for (var/obj/machinery/singularity_turret/emitter in connected_machines)
+		emitters += emitter
+		emitter.pause_counter += 1
+
+	stoplag(6 SECONDS)
+
+	var/time_spent = 0
+
+	while (time_spent < 8 SECONDS)
+		for (var/obj/machinery/singularity_turret/emitter as anything in emitters)
+			if (QDELETED(emitter))
+				emitters -= emitter
+				continue
+
+			emitter.fire_beam(overclocked = TRUE)
+
+		if (POWER_BAR_FLAG(POWER_BAR_FEATURE_FLAG_OVERCLOCK_USES_SLEEP, TRUE))
+			sleep(0.2 SECONDS)
+			time_spent += 0.2 SECONDS
+		else
+			time_spent += TICKS2DS(stoplag(0.2 SECONDS))
+
+	for (var/obj/machinery/singularity_turret/emitter as anything in emitters)
+		emitter.pause_counter -= 1
+
+	var/obj/contained_singularity/singularity = singularity_ref?.resolve()
+
+	if (emitters.len == 0 || isnull(singularity))
+		speak("Overclocking was not successful, something critical was missing.")
+		return
+
+	speak("Overclocking successful, extracted temporary power bars. Singularity is currently at [round(100 * (singularity.health / singularity.max_health))]% containment.")
+
+#undef OVERCLOCK_ACCESS_NOT_ALLOWED
+#undef OVERCLOCK_ACCESS_NOT_ALLOWED_SILICON
+#undef OVERCLOCK_ACCESS_ALLOWED
 
 /obj/machinery/computer/singularity/proc/on_singularity_take_damage(obj/contained_singularity/singularity)
 	SIGNAL_HANDLER
