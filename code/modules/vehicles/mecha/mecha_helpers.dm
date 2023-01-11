@@ -1,9 +1,9 @@
 ///Adds a cell, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
-/obj/vehicle/sealed/mecha/proc/add_cell(obj/item/stock_parts/cell/C=null)
+/obj/vehicle/sealed/mecha/proc/add_cell(obj/item/stock_parts/cell/power_cell=null)
 	QDEL_NULL(cell)
-	if(C)
-		C.forceMove(src)
-		cell = C
+	if(power_cell)
+		powercell.forceMove(src)
+		cell = power_cell
 		return
 	cell = new /obj/item/stock_parts/cell/high(src)
 

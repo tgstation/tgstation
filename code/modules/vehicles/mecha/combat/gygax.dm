@@ -98,9 +98,24 @@
 	. = ..()
 	max_ammo()
 
-/obj/vehicle/sealed/mecha/gygax/dark/add_cell(obj/item/stock_parts/cell/C=null)
-	if(C)
-		C.forceMove(src)
-		cell = C
+/obj/vehicle/sealed/mecha/gygax/dark/add_cell(obj/item/stock_parts/cell/power_cell)
+	if(power_cell)
+		power_cell.forceMove(src)
+		cell = power_cell
 		return
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
+
+/obj/vehicle/sealed/mecha/gygax/dark/add_scanmod(obj/item/stock_parts/scanning_module/sm)
+	if(sm)
+		sm.forceMove(src)
+		scanmod = sm
+		return
+	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
+
+/obj/vehicle/sealed/mecha/gygax/dark/add_capacitor(obj/item/stock_parts/capacitor/cap)
+	if(cap)
+		cap.forceMove(src)
+		capacitor = cap
+		return
+	else
+		capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)

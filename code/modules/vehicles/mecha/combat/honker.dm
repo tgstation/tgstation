@@ -69,12 +69,27 @@
 	fire = 100
 	acid = 100
 
-/obj/vehicle/sealed/mecha/honker/dark/add_cell(obj/item/stock_parts/cell/C)
-	if(C)
-		C.forceMove(src)
-		cell = C
+/obj/vehicle/sealed/mecha/honker/dark/add_cell(obj/item/stock_parts/cell/power_cell)
+	if(power_cell)
+		power_cell.forceMove(src)
+		cell = power_cell
 		return
 	cell = new /obj/item/stock_parts/cell/hyper(src)
+
+/obj/vehicle/sealed/mecha/honker/dark/add_scanmod(obj/item/stock_parts/scanning_module/sm)
+	if(sm)
+		sm.forceMove(src)
+		scanmod = sm
+		return
+	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
+
+/obj/vehicle/sealed/mecha/honker/dark/add_capacitor(obj/item/stock_parts/capacitor/cap)
+	if(cap)
+		cap.forceMove(src)
+		capacitor = cap
+		return
+	else
+		capacitor = new /obj/item/stock_parts/capacitor/super(src)
 
 /obj/structure/mecha_wreckage/honker/dark
 	name = "\improper Dark H.O.N.K wreckage"
