@@ -310,14 +310,14 @@ Moving interrupts
 /obj/item/chisel/pre_attack(atom/target, mob/living/user, params)
 	. = ..()
 	if(sculpting)
-		return
+		return TRUE
 	if(istype(target, /obj/structure/carving_block))
 		var/obj/structure/carving_block/sculpt_block = target
 
 		if(sculpt_block.completion) // someone already started sculpting this so just finish
 			set_block(sculpt_block, user, silent=TRUE)
 			start_sculpting(user)
-		if(sculpt_block == prepared_block && (prepared_block.current_target || prepared_block.current_preset_type))
+		else if(sculpt_block == prepared_block && (prepared_block.current_target || prepared_block.current_preset_type))
 			start_sculpting(user)
 		else if(!prepared_block)
 			set_block(sculpt_block, user)
