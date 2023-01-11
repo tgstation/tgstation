@@ -123,7 +123,7 @@
 
 			if(provide_pain_message != HAS_PAINFUL_TOXIN)
 				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
-	
+
 	liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
 
 	if(liver_damage)
