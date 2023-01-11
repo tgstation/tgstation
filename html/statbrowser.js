@@ -948,6 +948,7 @@ Byond.subscribeTo('update_admin_verbs', function(payload) {
 
 	if(!verb_tabs.includes("Admin Verbs")) {
 		verb_tabs.push("Admin Verbs");
+		addPermanentTab("Admin Verbs")
 	}
 
 	createStatusTab("Admin Verbs");
