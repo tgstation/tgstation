@@ -52,7 +52,7 @@
 			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
 			var/amount = max(0,round(custom_materials[mat]/MINERAL_MATERIAL_AMOUNT) + amount_mod)
 			if(amount > 0)
-				new custom_material.sheet_type(drop_location(),amount)
+				new custom_material.sheet_type(drop_location(), amount)
 	qdel(src)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
@@ -312,11 +312,16 @@ Moving interrupts
 	if(sculpting)
 		return
 	if(istype(target, /obj/structure/carving_block))
-		if(target == prepared_block && (prepared_block.current_target || prepared_block.current_preset_type))
+		var/obj/structure/carving_block/sculpt_block = target
+
+		if(sculpt_block.completion) // someone already started sculpting this so just finish
+			set_block(sculpt_block, user, silent=TRUE)
+			start_sculpting(user)
+		if(sculpt_block == prepared_block && (prepared_block.current_target || prepared_block.current_preset_type))
 			start_sculpting(user)
 		else if(!prepared_block)
-			set_block(target, user)
-		else if(target == prepared_block)
+			set_block(sculpt_block, user)
+		else if(sculpt_block == prepared_block)
 			show_generic_statues_prompt(user)
 		return TRUE
 	else if(prepared_block) //We're aiming at something next to us with block prepared
@@ -333,7 +338,7 @@ Moving interrupts
 	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/chisel/proc/start_sculpting(mob/living/user)
-	user.balloon_alert(user, "sculpting [prepared_block]...")
+	user.balloon_alert(user, "sculpting block...")
 	sculpting = TRUE
 	//How long whole process takes
 	var/sculpting_time = 30 SECONDS
@@ -349,49 +354,55 @@ Moving interrupts
 			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time)
 			total_progress_bar.update(sculpting_time - remaining_time)
 		else
-			user.balloon_alert(user, "sculpting cancelled!")
 			interrupted = TRUE
 	total_progress_bar.end_progress()
 	if(!interrupted && !QDELETED(prepared_block))
 		prepared_block.create_statue()
 		user.balloon_alert(user, "statue finished")
-	break_sculpting()
+	stop_sculpting(silent = !interrupted)
 
-/obj/item/chisel/proc/set_block(obj/structure/carving_block/B, mob/living/user)
+/obj/item/chisel/proc/set_block(obj/structure/carving_block/B, mob/living/user, silent=FALSE)
 	prepared_block = B
 	tracked_user = user
-	RegisterSignal(tracked_user, COMSIG_MOVABLE_MOVED, PROC_REF(break_sculpting))
-	user.balloon_alert(user, "select a target to sculpt")
+	RegisterSignal(tracked_user, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	if(!silent)
+		user.balloon_alert(user, "select sculpt target")
 
 /obj/item/chisel/dropped(mob/user, silent)
 	. = ..()
-	break_sculpting()
+	stop_sculpting()
 
-/obj/item/chisel/proc/break_sculpting()
-	SIGNAL_HANDLER
+/obj/item/chisel/proc/stop_sculpting(silent = FALSE)
 	sculpting = FALSE
 	if(prepared_block && prepared_block.completion == 0)
 		prepared_block.reset_target()
 	prepared_block = null
-	if(tracked_user)
+
+	if(!silent && tracked_user)
 		tracked_user.balloon_alert(tracked_user, "sculpting cancelled!")
+
+	if(tracked_user)
 		UnregisterSignal(tracked_user, COMSIG_MOVABLE_MOVED)
 		tracked_user = null
+
+/obj/item/chisel/proc/on_moved()
+	SIGNAL_HANDLER
+
+	stop_sculpting()
 
 /obj/item/chisel/proc/show_generic_statues_prompt(mob/living/user)
 	var/list/choices = list()
 	for(var/statue_path in prepared_block.get_possible_statues())
-		var/obj/structure/statue/S = statue_path
-		choices[statue_path] = image(icon=initial(S.icon),icon_state=initial(S.icon_state))
+		var/obj/structure/statue/abstract_statue = statue_path
+		choices[statue_path] = image(icon=initial(abstract_statue.icon), icon_state=initial(abstract_statue.icon_state))
 	if(!choices.len)
 		user.balloon_alert(user, "no abstract statues for material!")
 
-	var/choice = show_radial_menu(user, prepared_block , choices, require_near = TRUE)
+	var/choice = show_radial_menu(user, prepared_block, choices, require_near = TRUE)
 	if(choice)
 		prepared_block.current_preset_type = choice
 		var/image/chosen_looks = choices[choice]
 		prepared_block.current_target = chosen_looks.appearance
-		var/obj/structure/statue/S = choice
 		user.balloon_alert(user, "abstract statue selected")
 
 /obj/structure/carving_block
