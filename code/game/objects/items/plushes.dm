@@ -118,7 +118,7 @@
 	if(stuffed || grenade)
 		to_chat(user, span_notice("You pet [src]. D'awww."))
 		if(grenade && !grenade.active)
-			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM, log_globally = FALSE)
+			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
