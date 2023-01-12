@@ -106,13 +106,18 @@
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * delta_time)
 	affected_mob.adjustPlasma(20 * REM * delta_time)
+	if(isplasmaman(affected_mob)) // having wounds repaired still requires plasmaman biology, in case of transplanted plasma livers
+		for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
+			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
+	return ..()
+
+/datum/reagent/toxin/plasma/on_mob_metabolize(mob/living/carbon/affected_mob)
 	var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM)) // Some livers can metabolize plasma
 		toxpwr = 0
-		if(isplasmaman(affected_mob)) // having wounds repaired still requires plasmaman biology, in case of transplanted plasma livers
-			for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-				iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
-	return ..()
+
+/datum/reagent/toxin/plasma/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	toxpwr = initial(toxpwr)
 
 /// Handles plasma boiling.
 /datum/reagent/toxin/plasma/proc/on_temp_change(datum/reagents/_holder, old_temp)
