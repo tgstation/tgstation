@@ -272,6 +272,7 @@
 	name = "Crusader's Hood"
 	desc = "A brownish hood."
 	icon = 'icons/obj/clothing/head/chaplain.dmi'
+	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
 	icon_state = "crusader"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
@@ -300,6 +301,7 @@
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
 	icon_state = null
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	inhand_icon_state = null
 	flags_1 = 0
 	armor_type = /datum/armor/crusader_prophet
@@ -339,6 +341,7 @@
 	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	user.visible_message(span_notice("[user] chants deeply and waves [user.p_their()] staff!"))
 	if(do_after(user, 2 SECONDS, src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo

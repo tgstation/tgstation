@@ -155,14 +155,15 @@
 	. = ..()
 	if(!proximity || !HAS_TRAIT(src, TRAIT_WIELDED) || !istype(AM))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(AM.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
-		return
+		return .
 	if(ismob(AM))
 		var/mob/mob_target = AM
 		if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
-			return
+			return .
 	if(iseffect(AM)) //and no accidentally wasting your moment of glory on graffiti
-		return
+		return .
 	user.say("[war_cry]", forced="spear warcry")
 	if(isliving(user))
 		var/mob/living/living_user = user
@@ -173,6 +174,7 @@
 		if(!QDELETED(living_user))
 			living_user.set_resting(new_resting = FALSE, silent = TRUE, instant = TRUE)
 	qdel(src)
+	return .
 
 //GREY TIDE
 /obj/item/spear/grey_tide

@@ -137,7 +137,7 @@
 		/obj/item/organ/internal/liver = 1,
 		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
 		/obj/item/clothing/mask = 1,
-		/obj/item/candle = 4,
+		/obj/item/flashlight/flare/candle = 4,
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1

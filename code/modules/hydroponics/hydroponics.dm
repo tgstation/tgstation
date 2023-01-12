@@ -162,10 +162,10 @@
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	. = ..()
 	var/tmp_capacity = 0
-	for (var/obj/item/stock_parts/matter_bin/M in component_parts)
-		tmp_capacity += M.rating
-	for (var/obj/item/stock_parts/manipulator/M in component_parts)
-		rating = M.rating
+	for (var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		tmp_capacity += matter_bin.tier
+	for (var/datum/stock_part/manipulator/manipulator in component_parts)
+		rating = manipulator.tier
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
 	reagents.maximum_volume = maxnutri
@@ -844,6 +844,9 @@
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+				var/image/splash_animation = image('icons/effects/effects.dmi', src, "splash_hydroponics")
+				splash_animation.color = mix_color_from_reagents(reagent_source.reagents.reagent_list)
+				flick_overlay_global(splash_animation, GLOB.clients, 1.1 SECONDS)
 
 		if(visi_msg)
 			visible_message(span_notice("[visi_msg]."))
