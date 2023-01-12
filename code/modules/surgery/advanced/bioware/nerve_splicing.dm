@@ -54,4 +54,4 @@
 /datum/bioware/spliced_nerves/on_lose()
 	..()
 	owner.physiology.stun_mod *= 2
-	owner.physiology.stamina_mod /= 1.25
+	owner.physiology.stamina_mod *= 1.25
