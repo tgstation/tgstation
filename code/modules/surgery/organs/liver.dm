@@ -107,13 +107,6 @@
 
 	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
-			// Plasmamen don't take liver damage from plasma, but instead heal wounds
-			if(HAS_TRAIT(src, TRAIT_PLASMA_LOVER_METABOLISM) && istype(toxin, /datum/reagent/toxin/plasma))
-				for(var/i in owner.all_wounds)
-					var/datum/wound/iter_wound = i
-					iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
-				continue
-
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
