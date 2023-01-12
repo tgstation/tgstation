@@ -4,7 +4,7 @@
 		Engineering can stop the leak by using certain tools on it."
 	typepath = /datum/round_event/radiation_leak
 	weight = 15
-	max_occurrences = 2
+	max_occurrences = 3
 	category = EVENT_CATEGORY_ENGINEERING
 
 /datum/round_event/radiation_leak
@@ -45,17 +45,17 @@
 
 /datum/round_event/radiation_leak/announce(fake)
 	var/obj/machinery/the_source_of_our_problems = picked_machine_ref?.resolve()
-	var/location_descriptor
+	var/area/station/location_descriptor
 
 	if(fake)
-		location_descriptor = get_area_name(pick(GLOB.the_station_areas))
+		location_descriptor = pick(GLOB.the_station_areas)
 
 	else if(the_source_of_our_problems)
-		location_descriptor = get_area_name(the_source_of_our_problems)
+		location_descriptor = get_area(the_source_of_our_problems)
 
-	priority_announce("Radiation leak has been detected in: [location_descriptor || "An unknown area"]. \
-		All crew are to evacuate the affected area. Our mechanics report that a machine within is causing it - \
-		repair it quickly to stop the leak.")
+	priority_announce("A radiation leak has been detected in [location_descriptor || "an unknown area"]. \
+		All crew are to evacuate the affected area. Our [pick("mechanics", "engineers", "scientists", "interns", "sensors", "readings")] \
+		report that a machine within is causing it - repair it quickly to stop the leak.")
 
 /datum/round_event/radiation_leak/start()
 	var/obj/machinery/the_source_of_our_problems = picked_machine_ref?.resolve()
@@ -75,7 +75,7 @@
 		"analyzing its readings" = TOOL_ANALYZER,
 		"cutting some excess wires" = TOOL_WIRECUTTER,
 	)
-	var/list/fix_it_keys = assoc_to_keys(how_do_we_fix_it) // Returns a copy that we can pick and take, fortunately
+	var/list/fix_it_keys = assoc_to_keys(how_do_we_fix_it) // Returns a copy that we can pick and take from, fortunately
 
 	// Select a few methods of how to fix it
 	var/list/methods_to_fix = list()
@@ -137,6 +137,7 @@
 	gross_smoke.attach(below_where)
 	gross_smoke.set_up(2, holder = where, location = below_where, silent = TRUE)
 	gross_smoke.start()
+	playsound(below_where, 'sound/effects/smoke.ogg', 50, vary = TRUE)
 
 /**
  * Signal proc for [COMSIG_ATOM_TOOL_ACT], from a variety of signals, registered on the machine spitting radiation
@@ -159,7 +160,7 @@
 		source.balloon_alert(user, "interrupted!")
 		return
 
-	source.balloon_alert(user, "leak fixed")
+	source.balloon_alert(user, "leak repaired")
 	tool.play_tool_sound(source)
 	// Force end the event
 	processing = FALSE
