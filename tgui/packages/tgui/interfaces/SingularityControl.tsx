@@ -255,7 +255,12 @@ const PowerBarDisplay = ({
       tooltipContent = `${timeText} until decay`;
       break;
     case PowerBarState.WaitingRechargeDelay:
-      tooltipContent = `${timeText} until full`;
+      if (timeLeft === 0) {
+        tooltipContent = waitForPokeTooltip || 'Inactive';
+      } else {
+        tooltipContent = `${timeText} until full`;
+      }
+
       break;
   }
 
