@@ -50,9 +50,8 @@
 	setup_device()
 
 /obj/machinery/button/Destroy()
-	// Let them dump on the ground.
-	device = null
-	board = null
+	QDEL_NULL(device)
+	QDEL_NULL(board)
 	return ..()
 
 /obj/machinery/button/update_icon_state()
