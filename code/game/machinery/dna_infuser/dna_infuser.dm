@@ -52,18 +52,19 @@
 		balloon_alert(user, "not while it's on!")
 		return
 	if(occupant && infusing_from)
-		balloon_alert(user, "starting DNA infusion...")
-		start_infuse()
+		// Abort infusion if the occupant lacks valid DNA.
+		if(is_valid_occupant(occupant))
+			balloon_alert(user, "starting DNA infusion...")
+			start_infuse()
+		else
+			balloon_alert(user, "error, aborting infusion...")
+			visible_message(span_notice("[src] displays a message on its status screen: ") + span_warning("Patient DNA is missing, corrupted, or incompatible."))
+			playsound(src, 'sound/machines/scanbuzz.ogg', 35, TRUE)
 		return
 	toggle_open(user)
 
 /obj/machinery/dna_infuser/proc/start_infuse()
-	var/mob/living/carbon/human/hoccupant = occupant
-	// Abort infusion if the occupant is not organic.
-	if(!(hoccupant.mob_biotypes & MOB_ORGANIC))
-		visible_message(span_notice("[src] displays a message on its status screen: ") + span_warning("Error: Patient DNA not found. Aborting infusion."))
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-		return
+	var/mob/living/carbon/human/human_occupant = occupant
 	infusing = TRUE
 	visible_message(span_notice("[src] hums to life, beginning the infusion process!"))
 	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
@@ -74,10 +75,10 @@
 		//no valid recipe, so you get a fly mutation
 		infusing_into = GLOB.infuser_entries[1]
 	playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
-	to_chat(hoccupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
-	hoccupant.take_overall_damage(10)
+	to_chat(human_occupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
+	human_occupant.take_overall_damage(10)
 	Shake(15, 15, INFUSING_TIME)
-	addtimer(CALLBACK(occupant, TYPE_PROC_REF(/mob, emote), "scream"), INFUSING_TIME - 1 SECONDS)
+	addtimer(CALLBACK(human_occupant, TYPE_PROC_REF(/mob, emote), "scream"), INFUSING_TIME - 1 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(end_infuse)), INFUSING_TIME)
 	update_appearance()
 
@@ -209,6 +210,15 @@
 	infusing_from = target
 	infusing_from.forceMove(src)
 
+/// Verify that the occupant/target is organic, and has mutable DNA.
+/obj/machinery/dna_infuser/proc/is_valid_occupant(mob/living/carbon/human/human_target)
+	if(!ishuman(human_target) || !(human_target.mob_biotypes & MOB_ORGANIC))
+		return
+	if(!human_target.has_dna() || HAS_TRAIT(human_target, TRAIT_GENELESS) || HAS_TRAIT(human_target, TRAIT_BADDNA))
+		return
+	return TRUE
+
+/// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
 	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
