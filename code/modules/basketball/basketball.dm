@@ -304,7 +304,7 @@
 /obj/structure/hoop/proc/reset_appearance()
 	update_appearance()
 
-/obj/structure/hoop/proc/score(points)
+/obj/structure/hoop/proc/score(obj/item/ball, mob/living/baller, points)
 	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 	total_score += points
 	update_appearance()
@@ -369,7 +369,7 @@
 			visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 
 			if(istype(ball, /obj/item/toy/basketball))
-				score(2)
+				score(ball, baller, 2)
 				baller.adjustStaminaLoss(10) // dunking is more strenous than shooting
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
@@ -427,9 +427,9 @@
 			AM.forceMove(get_turf(src))
 
 			if(distance > 2) // 3 pointer shot
-				score(3)
+				score(AM, thrower, 3)
 			else
-				score(2)
+				score(AM, thrower, 2)
 
 			if(click_on_hoop)
 				visible_message(span_warning("Swish! [AM] lands in [src]."))
@@ -444,6 +444,35 @@
 			return ..()
 	else
 		return ..()
+
+// Special hoops for the minigame
+/obj/structure/hoop/minigame
+	var/list/team = list()
+
+/obj/structure/hoop/minigame/score(obj/item/ball, mob/living/baller, points)
+	var/is_opponent_hoop = !(baller in team)
+	if(is_opponent_hoop)
+		. = ..()
+	
+	RegisterSignal(ball, COMSIG_ITEM_PICKUP, PROC_REF(ball_pickup_restriction), team)
+	
+	// add a timer on this
+	UnregisterSignal(ball, list(COMSIG_ITEM_PICKUP))
+
+/**
+ * Checks if a team can pickup the ball after scoring
+ *
+ * source - our ball
+ * user - the mob picking our [source]
+ */
+/obj/item/toy/basketball/proc/ball_pickup_restriction(obj/item/source, mob/grabber)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+
+// No resetting the score
+/obj/structure/hoop/minigame/CtrlClick(mob/living/user)
+	return
 
 #undef FACE_TO_BACK
 #undef FACE_TO_SIDE
