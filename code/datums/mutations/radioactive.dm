@@ -6,6 +6,8 @@
 	instability = 5
 	difficulty = 8
 	power_coeff = 1
+	/// Weakref to our radiation emitter component
+	var/datum/weakref/radioactivity_source_ref
 
 /datum/mutation/human/radioactive/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	. = ..()
@@ -17,7 +19,8 @@
 
 /datum/mutation/human/radioactive/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	make_radioactive(acquirer)
+	var/datum/component/radioactive_emitter/radioactivity_source = make_radioactive(acquirer)
+	radioactivity_source_ref = WEAKREF(radioactivity_source)
 
 /datum/mutation/human/radioactive/modify()
 	. = ..()
@@ -28,7 +31,7 @@
  * update their radioactivity to the newly set values
  */
 /datum/mutation/human/radioactive/proc/make_radioactive(mob/living/carbon/human/who)
-	who.AddComponent(
+	return who.AddComponent(
 		/datum/component/radioactive_emitter, \
 		cooldown_time = 5 SECONDS, \
 		range = 1 * (GET_MUTATION_POWER(src) * 2), \
@@ -36,5 +39,5 @@
 	)
 
 /datum/mutation/human/radioactive/on_losing(mob/living/carbon/human/owner)
-	qdel(owner.GetComponent(/datum/component/radioactive_emitter))
+	QDEL_NULL(radioactivity_source_ref)
 	return ..()
