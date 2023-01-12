@@ -153,16 +153,14 @@
 /// Attempts a do_after, and if successful, stops the event
 /datum/round_event/radiation_leak/proc/try_remove_radiation(obj/machinery/source, mob/living/user, obj/item/tool)
 	source.balloon_alert(user, "fixing leak...")
-	tool.play_tool_sound(source)
 	// Fairly long do after. It shouldn't be SUPER easy to just run in and stop it.
-	// A tider can stop it if they want to soak a bunch of rads and inhale noxious fumes,
-	// but an equipped engineer should be able to handle it painlessly.
-	if(!do_after(user, 30 SECONDS, source))
+	// A tider can fix it if they want to soak a bunch of rads and inhale noxious fumes,
+	// but only an equipped engineer should be able to handle it painlessly.
+	if(!tool.use_tool(source, user, 30 SECONDS, amount = (tool.tool_behaviour == TOOL_WELDER ? 2 : 0), volume = 50))
 		source.balloon_alert(user, "interrupted!")
 		return
 
 	source.balloon_alert(user, "leak repaired")
-	tool.play_tool_sound(source)
 	// Force end the event
 	processing = FALSE
 	end()
