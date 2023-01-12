@@ -108,7 +108,7 @@
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
-/obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/reciever, special, drop_if_replaced, no_id_transfer)
 	AddElement(/datum/element/noticable_organ, "seem[reciever.p_s()] unable to stay still.")
 	return ..()
 

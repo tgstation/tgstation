@@ -105,12 +105,13 @@
 		new_organ = new new_organ()
 		if(istype(new_organ, /obj/item/organ/internal/brain))
 			// brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
-			var/obj/item/organ/internal/brain/new_brain = new_organ
 			var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-			if(old_brain && (old_brain.status == ORGAN_ORGANIC))
-				old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
-				qdel(old_brain)
-				new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+			if(!old_brain || (old_brain.status != ORGAN_ORGANIC))
+				return
+			old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
+			qdel(old_brain)
+			var/obj/item/organ/internal/brain/new_brain = new_organ
+			new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
 		else
 			var/obj/item/organ/internal/old_organ = target.getorganslot(new_organ.slot)
 			if(old_organ && (old_organ.status == ORGAN_ORGANIC))
