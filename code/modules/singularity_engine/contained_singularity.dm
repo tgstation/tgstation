@@ -299,7 +299,7 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 	var/projectile_storm_current_angle = 0
 	COOLDOWN_DECLARE(projectile_storm_cooldown)
 
-	var/x_beam_preview_time = 0.3 SECONDS
+	var/x_beam_preview_time = 0.4 SECONDS
 	var/x_beam_preview_angle = 0
 	var/x_beam_half_range = 7
 	var/list/turf/x_beam_peak_turfs = list()
