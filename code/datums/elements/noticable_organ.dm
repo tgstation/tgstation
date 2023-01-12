@@ -43,7 +43,6 @@
 /datum/element/noticable_organ/proc/on_receiver_examine(mob/living/carbon/examined, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	var/list/covered = examined.get_covered_body_zones()
-	if(body_zone && (body_zone in covered))
+	if(body_zone && (body_zone in examined.get_covered_body_zones()))
 		return
 	examine_list += span_notice("[body_zone ? examined.p_their(TRUE) : examined.p_they(TRUE)] [infused_desc]")
