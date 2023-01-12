@@ -142,7 +142,7 @@
 	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
 
 /obj/item/reagent_containers/spray/mister/Destroy(force)
-	if(!QDELETED(noz))
+	if(!QDELETED(tank))
 		QDEL_NULL(tank)
 	return ..()
 
