@@ -166,7 +166,7 @@
 	living_target.apply_damage(damage_dealt, BRUTE, wound_bonus = CANT_WOUND)
 	playsound(get_turf(living_target), 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	shake_camera(living_target, 4, 3)
-	if(ismob(source))
+	if(isliving(source))
 		shake_camera(source, 2, 3)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge
