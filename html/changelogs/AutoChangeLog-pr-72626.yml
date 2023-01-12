@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - spellcheck: "Head-spears are now named properly when using alternate spear types."
