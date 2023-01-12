@@ -20,8 +20,8 @@
 	var/true_owner_ckey
 
 /obj/item/mod/module/eradication_lock/on_install()
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
-	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_mod_activation))
+	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, PROC_REF(on_mod_removal))
 
 /obj/item/mod/module/eradication_lock/on_uninstall(deleting = FALSE)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
@@ -74,10 +74,10 @@
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	//stops all mods from triggering during rewinding
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
+		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
 	mod.wearer.AddComponent(/datum/component/dejavu/timeline, 1, 10 SECONDS)
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
-	addtimer(CALLBACK(src, .proc/unblock_suit_activation), 10 SECONDS)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
+	addtimer(CALLBACK(src, PROC_REF(unblock_suit_activation)), 10 SECONDS)
 
 ///Unregisters the modsuit deactivation blocking signal, after dejavu functionality finishes.
 /obj/item/mod/module/rewinder/proc/unblock_suit_activation()
@@ -121,9 +121,9 @@
 		return
 	//stops all mods from triggering during timestop- including timestop itself
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
+		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
 	timestop = new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
-	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, .proc/unblock_suit_activation)
+	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, PROC_REF(unblock_suit_activation))
 
 ///Unregisters the modsuit deactivation blocking signal, after timestop functionality finishes.
 /obj/item/mod/module/timestopper/proc/unblock_suit_activation(datum/source)
@@ -175,7 +175,7 @@
 		mod.wearer.SetAllImmobility(0)
 		mod.wearer.setStaminaLoss(0, 0)
 		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
-		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
+		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
 	else
 		//phasing in
 		phased_mob.eject_jaunter()
@@ -228,7 +228,7 @@
 	chrono_beam.preparePixelProjectile(target, mod.wearer)
 	chrono_beam.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
-	INVOKE_ASYNC(chrono_beam, /obj/projectile.proc/fire)
+	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))
 
 /obj/item/mod/module/tem/on_uninstall(deleting = FALSE)
 	if(!field)

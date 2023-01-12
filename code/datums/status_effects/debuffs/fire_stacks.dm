@@ -126,6 +126,7 @@
 
 /datum/status_effect/fire_handler/fire_stacks
 	id = "fire_stacks" //fire_stacks and wet_stacks should have different IDs or else has_status_effect won't work
+	remove_on_fullheal = TRUE
 
 	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks)
 	stack_modifier = 1
@@ -205,7 +206,7 @@
 
 	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * delta_time)
 	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
-	victim.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = victim), story_value = STORY_VALUE_OKAY)
+	victim.add_mob_memory(/datum/memory/was_burning)
 
 /**
  * Handles mob ignition, should be the only way to set on_fire to TRUE

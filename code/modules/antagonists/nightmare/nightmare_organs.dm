@@ -7,10 +7,11 @@
 /obj/item/organ/internal/brain/shadow/nightmare
 	name = "tumorous mass"
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
 
-/obj/item/organ/internal/brain/shadow/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/brain/shadow/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
 	. = ..()
 	if(M.dna.species.id != SPECIES_NIGHTMARE)
 		M.set_species(/datum/species/shadow/nightmare)
@@ -19,7 +20,7 @@
 	our_jaunt = new(M)
 	our_jaunt.Grant(M)
 
-/obj/item/organ/internal/brain/shadow/nightmare/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/brain/shadow/nightmare/Remove(mob/living/carbon/M, special = FALSE, no_id_transfer = FALSE)
 	QDEL_NULL(our_jaunt)
 	return ..()
 
@@ -84,7 +85,7 @@
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
-	owner.revive(full_heal = TRUE, admin_revive = FALSE)
+	owner.revive(HEAL_ALL)
 	if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 		var/mob/living/carbon/old_owner = owner
 		Remove(owner, HEART_SPECIAL_SHADOWIFY)
@@ -96,8 +97,8 @@
 	playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	respawn_progress = 0
 
-/obj/item/organ/internal/heart/nightmare/get_availability(datum/species/S)
-	if(istype(S,/datum/species/shadow/nightmare))
+/obj/item/organ/internal/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	if(isnightmare(owner_mob))
 		return TRUE
 	return ..()
 

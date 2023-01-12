@@ -16,9 +16,11 @@
 	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
-	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS) && !allow_chunky)
-		to_chat(user, span_warning("Your fingers are too big to use this right now!"))
-		return
+	if(ishuman(user) && !allow_chunky)
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.check_chunky_fingers())
+			balloon_alert(human_user, "fingers are too big!")
+			return
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
@@ -33,15 +35,8 @@
 		active_program.ui_interact(user)
 		return
 
-	// We are still here, that means there is no program loaded. Load the BIOS/ROM/OS/whatever you want to call it.
-	// This screen simply lists available programs and user may select them.
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
-		to_chat(user, span_danger("\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning."))
-		return // No HDD, No HDD files list or no stored files. Something is very broken.
-
-	if(honkamnt > 0) // EXTRA annoying, huh!
-		honkamnt--
+	if(honkvirus_amount > 0) // EXTRA annoying, huh!
+		honkvirus_amount--
 		playsound(src, 'sound/items/bikehorn.ogg', 30, TRUE)
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -55,59 +50,45 @@
 	. = ..()
 	var/list/data = list()
 
-	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet/)
+	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
 
 	return data
-
-
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["device_theme"] = device_theme
-	data["login"] = list()
 
-	data["disk"] = null
+	data["login"] = list(
+		IDName = saved_identification || "Unknown",
+		IDJob = saved_job || "Unknown",
+	)
 
-	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-	data["cardholder"] = FALSE
+	data["proposed_login"] = list(
+		IDName = computer_id_slot?.registered_name,
+		IDJob = computer_id_slot?.assignment,
+	)
 
-	if(cardholder)
-		data["cardholder"] = TRUE
-
-		var/stored_name = saved_identification
-		var/stored_title = saved_job
-		if(!stored_name)
-			stored_name = "Unknown"
-		if(!stored_title)
-			stored_title = "Unknown"
-		data["login"] = list(
-			IDName = saved_identification,
-			IDJob = saved_job,
-		)
-		data["proposed_login"] = list(
-			IDName = cardholder.current_identification,
-			IDJob = cardholder.current_job,
-		)
-
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 
 	data["removable_media"] = list()
-	if(all_components[MC_SDD])
+	if(inserted_disk)
 		data["removable_media"] += "Eject Disk"
-	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hard_drive.stored_files
+	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 	if(airestore_app?.stored_card)
 		data["removable_media"] += "intelliCard"
-	var/obj/item/computer_hardware/card_slot/secondarycardholder = all_components[MC_CARD2]
-	if(secondarycardholder?.stored_card)
-		data["removable_media"] += "secondary RFID card"
 
 	data["programs"] = list()
-	for(var/datum/computer_file/program/P in hard_drive.stored_files)
+	for(var/datum/computer_file/program/P in stored_files)
 		var/running = FALSE
 		if(P in idle_threads)
 			running = TRUE
 
-		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running, "icon" = P.program_icon, "alert" = P.alert_pending))
+		data["programs"] += list(list(
+			"name" = P.filename,
+			"desc" = P.filedesc,
+			"running" = running,
+			"icon" = P.program_icon,
+			"alert" = P.alert_pending,
+		))
 
 	data["has_light"] = has_light
 	data["light_on"] = light_on
@@ -122,7 +103,6 @@
 	if(.)
 		return
 
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	switch(action)
 		if("PC_exit")
 			kill_program()
@@ -147,8 +127,7 @@
 			var/prog = params["name"]
 			var/datum/computer_file/program/P = null
 			var/mob/user = usr
-			if(hard_drive)
-				P = hard_drive.find_file_by_name(prog)
+			P = find_file_by_name(prog)
 
 			if(!istype(P) || P.program_state == PROGRAM_STATE_KILLED)
 				return
@@ -157,11 +136,7 @@
 			to_chat(user, span_notice("Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed."))
 
 		if("PC_runprogram")
-			// only function of the last implementation (?)
-			if(params["is_disk"])
-				return
-
-			open_program(usr, hard_drive.find_file_by_name(params["name"]))
+			open_program(usr, find_file_by_name(params["name"]))
 
 		if("PC_toggle_light")
 			return toggle_flashlight()
@@ -183,47 +158,41 @@
 			var/mob/user = usr
 			switch(param)
 				if("Eject Disk")
-					var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
-					if(!portable_drive)
+					if(!inserted_disk)
 						return
-					if(uninstall_component(portable_drive, usr))
-						user.put_in_hands(portable_drive)
-						playsound(src, 'sound/machines/card_slide.ogg', 50)
+
+					user.put_in_hands(inserted_disk)
+					inserted_disk = null
+					playsound(src, 'sound/machines/card_slide.ogg', 50)
+					return TRUE
+
 				if("intelliCard")
-					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hard_drive.stored_files
+					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 					if(!airestore_app)
 						return
+
 					if(airestore_app.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
+						return TRUE
+
 				if("ID")
-					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-					if(!cardholder)
-						return
-					if(cardholder.try_eject(user))
+					if(RemoveID())
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
-				if("secondary RFID card")
-					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD2]
-					if(!cardholder)
-						return
-					if(cardholder.try_eject(user))
-						playsound(src, 'sound/machines/card_slide.ogg', 50)
+						return TRUE
+
 		if("PC_Imprint_ID")
-			var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-			if(!cardholder)
-				return
-
-			saved_identification = cardholder.current_identification
-			saved_job = cardholder.current_job
-
+			saved_identification = computer_id_slot.registered_name
+			saved_job = computer_id_slot.assignment
 			UpdateDisplay()
-
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
+
 		if("PC_Pai_Interact")
 			switch(params["option"])
 				if("eject")
 					usr.put_in_hands(inserted_pai)
 					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
 					inserted_pai = null
+					update_appearance(UPDATE_ICON)
 				if("interact")
 					inserted_pai.attack_self(usr)
 			return UI_UPDATE

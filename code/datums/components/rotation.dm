@@ -37,33 +37,18 @@
 	source.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 	src.rotation_flags = rotation_flags
-	src.AfterRotation = AfterRotation || CALLBACK(src, .proc/DefaultAfterRotation)
+	src.AfterRotation = AfterRotation || CALLBACK(src, PROC_REF(DefaultAfterRotation))
 
 /datum/component/simple_rotation/proc/AddSignals()
-	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
-	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
-	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
-
-/datum/component/simple_rotation/proc/AddVerbs()
-	var/obj/rotated_obj = parent
-	rotated_obj.verbs += /atom/movable/proc/SimpleRotateClockwise
-	rotated_obj.verbs += /atom/movable/proc/SimpleRotateCounterclockwise
-	if(!(rotation_flags & ROTATION_NO_FLIPPING))
-		rotated_obj.verbs += /atom/movable/proc/SimpleRotateFlip
-
-/datum/component/simple_rotation/proc/RemoveVerbs()
-	if(parent)
-		var/obj/rotated_obj = parent
-		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateFlip
-		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateClockwise
-		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateCounterclockwise
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(RotateLeft))
+	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, PROC_REF(RotateRight))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(ExamineMessage))
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/component/simple_rotation/proc/RemoveSignals()
 	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 /datum/component/simple_rotation/RegisterWithParent()
-	AddVerbs()
 	AddSignals()
 	. = ..()
 
@@ -74,7 +59,6 @@
 	return COMPONENT_NOTRANSFER
 
 /datum/component/simple_rotation/UnregisterFromParent()
-	RemoveVerbs()
 	RemoveSignals()
 	. = ..()
 
@@ -84,7 +68,6 @@
 	. = ..()
 
 /datum/component/simple_rotation/ClearFromParent()
-	RemoveVerbs()
 	return ..()
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
@@ -127,6 +110,8 @@
 
 /datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees, silent=FALSE)
 	var/obj/rotated_obj = parent
+	if(!rotated_obj.Adjacent(user))
+		silent = TRUE
 
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		if(!isliving(user))
@@ -155,30 +140,6 @@
 
 /datum/component/simple_rotation/proc/DefaultAfterRotation(mob/user, degrees)
 	return
-
-/atom/movable/proc/SimpleRotateClockwise()
-	set name = "Rotate Clockwise"
-	set category = "Object"
-	set src in oview(1)
-	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-	if(rotcomp)
-		rotcomp.Rotate(usr, ROTATION_CLOCKWISE)
-
-/atom/movable/proc/SimpleRotateCounterclockwise()
-	set name = "Rotate Counter-Clockwise"
-	set category = "Object"
-	set src in oview(1)
-	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-	if(rotcomp)
-		rotcomp.Rotate(usr, ROTATION_COUNTERCLOCKWISE)
-
-/atom/movable/proc/SimpleRotateFlip()
-	set name = "Flip"
-	set category = "Object"
-	set src in oview(1)
-	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-	if(rotcomp)
-		rotcomp.Rotate(usr, ROTATION_FLIP)
 
 // maybe we don't need the item context proc but instead the hand one? since we don't need to check held_item
 /datum/component/simple_rotation/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)

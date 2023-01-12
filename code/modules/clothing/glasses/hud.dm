@@ -41,9 +41,9 @@
 	to_chat(user, span_warning("PZZTTPFFFT"))
 	desc = "[desc] The display is flickering slightly."
 
-/obj/item/clothing/glasses/hud/suicide_act(mob/user)
-	if(user.is_blind() || !isliving(user))
-		return ..()
+/obj/item/clothing/glasses/hud/suicide_act(mob/living/user)
+	if(user.is_blind())
+		return SHAME
 	var/mob/living/living_user = user
 	user.visible_message(span_suicide("[user] looks through [src] and looks overwhelmed with the information! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(living_user.getOrganLoss(ORGAN_SLOT_BRAIN) >= BRAIN_DAMAGE_SEVERE)
@@ -65,13 +65,24 @@
 
 /obj/item/clothing/glasses/hud/health/night
 	name = "night vision health scanner HUD"
-	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
+	desc = "An advanced medical heads-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
 	inhand_icon_state = "glasses"
 	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/hud/health/night/meson
+	name = "night vision meson health scanner HUD"
+	desc = "Truly combat ready."
+	vision_flags = SEE_TURFS
+
+/obj/item/clothing/glasses/hud/health/night/science
+	name = "night vision medical science scanner HUD"
+	desc = "An clandestine medical science heads-up display that allows operatives to find \
+		dying captains and the perfect poison to finish them off in complete darkness."
+	clothing_traits = list(TRAIT_REAGENT_SCANNER)
 
 /obj/item/clothing/glasses/hud/health/sunglasses
 	name = "medical HUDSunglasses"
@@ -145,6 +156,13 @@
 	name = "eyepatch HUD"
 	desc = "The cooler looking cousin of HUDSunglasses."
 	icon_state = "hudpatch"
+	base_icon_state = "hudpatch"
+	actions_types = list(/datum/action/item_action/flip)
+
+/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch/attack_self(mob/user, modifiers)
+	. = ..()
+	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
+	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/security/sunglasses
 	name = "security HUDSunglasses"

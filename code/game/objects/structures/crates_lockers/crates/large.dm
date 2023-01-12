@@ -17,6 +17,10 @@
 	// Stops people from "diving into" a crate you can't open normally
 	divable = FALSE
 
+/obj/structure/closet/crate/large/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
+
 /obj/structure/closet/crate/large/attack_hand(mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(manifest)

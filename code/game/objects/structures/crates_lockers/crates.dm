@@ -119,7 +119,7 @@
 	var/crate_path = pick_weight(possible_crates)
 
 	var/obj/structure/closet/crate = new crate_path(loc)
-	crate.RegisterSignal(crate, COMSIG_CLOSET_POPULATE_CONTENTS, /obj/structure/closet/.proc/populate_with_random_maint_loot)
+	crate.RegisterSignal(crate, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
 	if (prob(50))
 		crate.opened = TRUE
 		crate.update_appearance()
@@ -181,22 +181,20 @@
 //Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
 
 /obj/structure/closet/crate/freezer/open(mob/living/user, force = FALSE)
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 	..()
 
 /obj/structure/closet/crate/freezer/close()
 	..()
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 
 /obj/structure/closet/crate/freezer/Destroy()
-	recursive_organ_check(src)
+	toggle_organ_decay(src)
 	return ..()
 
 /obj/structure/closet/crate/freezer/Initialize(mapload)
 	. = ..()
-	recursive_organ_check(src)
-
-
+	toggle_organ_decay(src)
 
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
@@ -222,14 +220,14 @@
 
 /obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
 	. = ..()
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
+	new /obj/item/bodypart/arm/left/robot/surplus(src)
+	new /obj/item/bodypart/arm/left/robot/surplus(src)
+	new /obj/item/bodypart/arm/right/robot/surplus(src)
+	new /obj/item/bodypart/arm/right/robot/surplus(src)
+	new /obj/item/bodypart/leg/left/robot/surplus(src)
+	new /obj/item/bodypart/leg/left/robot/surplus(src)
+	new /obj/item/bodypart/leg/right/robot/surplus(src)
+	new /obj/item/bodypart/leg/right/robot/surplus(src)
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."

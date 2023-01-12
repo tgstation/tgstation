@@ -21,13 +21,21 @@
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_crowbar
 	var/force_opens = FALSE
 
-/obj/item/crowbar/suicide_act(mob/user)
+/datum/armor/item_crowbar
+	fire = 50
+	acid = 30
+
+/obj/item/crowbar/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+
+/obj/item/crowbar/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/crowbar/red
 	icon_state = "crowbar_red"
@@ -54,7 +62,6 @@
 	throw_range = 3
 	custom_materials = list(/datum/material/iron=70)
 	icon_state = "crowbar_large"
-	inhand_icon_state = "crowbar"
 	worn_icon_state = "crowbar"
 	toolspeed = 0.7
 
@@ -68,6 +75,7 @@
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
 	force = 20
 	icon_state = "crowbar_powergame"
+	inhand_icon_state = "crowbar_red"
 
 /obj/item/crowbar/large/old
 	name = "old crowbar"
@@ -103,7 +111,7 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -130,7 +138,7 @@
 	. = ..()
 	. += " It's fitted with a [tool_behaviour == TOOL_CROWBAR ? "prying" : "cutting"] head."
 
-/obj/item/crowbar/power/suicide_act(mob/user)
+/obj/item/crowbar/power/suicide_act(mob/living/user)
 	if(tool_behaviour == TOOL_CROWBAR)
 		user.visible_message(span_suicide("[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(loc, 'sound/items/jaws_pry.ogg', 50, TRUE, -1)
@@ -143,7 +151,7 @@
 			if(target_bodypart)
 				target_bodypart.drop_limb()
 				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/crowbar/power/attack(mob/living/carbon/attacked_carbon, mob/user)
 	if(istype(attacked_carbon) && attacked_carbon.handcuffed && tool_behaviour == TOOL_WIRECUTTER)
@@ -162,3 +170,55 @@
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5
+
+/obj/item/crowbar/mechremoval
+	name = "mech removal tool"
+	desc = "A... really big crowbar. You're pretty sure it could pry open a mech, but it seems unwieldy otherwise."
+	icon_state = "mechremoval0"
+	base_icon_state = "mechremoval"
+	inhand_icon_state = null
+	icon = 'icons/obj/mechremoval.dmi'
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
+	toolspeed = 1.25
+	armor_type = /datum/armor/crowbar_mechremoval
+	resistance_flags = FIRE_PROOF
+	bare_wound_bonus = 15
+	wound_bonus = 10
+
+/datum/armor/crowbar_mechremoval
+	bomb = 100
+	fire = 100
+
+/obj/item/crowbar/mechremoval/Initialize(mapload)
+	. = ..()
+	transform = transform.Translate(0, -8)
+	AddComponent(/datum/component/two_handed, force_unwielded = 5, force_wielded = 19, icon_wielded = "[base_icon_state]1")
+
+/obj/item/crowbar/mechremoval/update_icon_state()
+	icon_state = "[base_icon_state]0"
+	return ..()
+
+/obj/item/crowbar/mechremoval/proc/empty_mech(obj/vehicle/sealed/mecha/mech, mob/user)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		mech.balloon_alert(user, "not wielded!")
+		return
+	if(!LAZYLEN(mech.occupants) || (LAZYLEN(mech.occupants) == 1 && mech.mecha_flags & SILICON_PILOT)) //if no occupants, or only an ai
+		mech.balloon_alert(user, "it's empty!")
+		return
+	user.log_message("tried to pry open [mech], located at [loc_name(mech)], which is currently occupied by [mech.occupants.Join(", ")].", LOG_ATTACK)
+	var/mech_dir = mech.dir
+	mech.balloon_alert(user, "prying open...")
+	playsound(mech, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir)))
+		mech.balloon_alert(user, "interrupted!")
+		return
+	user.log_message("pried open [mech], located at [loc_name(mech)], which is currently occupied by [mech.occupants.Join(", ")].", LOG_ATTACK)
+	for(var/mob/living/occupant as anything in mech.occupants)
+		if(isAI(occupant))
+			continue
+		mech.mob_exit(occupant, randomstep = TRUE)
+	playsound(mech, 'sound/machines/airlockforced.ogg', 75, TRUE)
+
+/obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
+	return HAS_TRAIT(src, TRAIT_WIELDED) && LAZYLEN(mech.occupants) && mech.dir == mech_dir

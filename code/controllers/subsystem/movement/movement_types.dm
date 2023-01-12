@@ -25,13 +25,15 @@
 	var/timer = 0
 	///Is this loop running or not
 	var/running = FALSE
+	///Track if we're currently paused
+	var/paused = FALSE
 
 /datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	src.owner = owner
 	src.controller = controller
 	src.extra_info = extra_info
 	if(extra_info)
-		RegisterSignal(extra_info, COMSIG_PARENT_QDELETING, .proc/info_deleted)
+		RegisterSignal(extra_info, COMSIG_PARENT_QDELETING, PROC_REF(info_deleted))
 	src.moving = moving
 	src.priority = priority
 	src.flags = flags
@@ -51,7 +53,8 @@
 		return TRUE
 	return FALSE
 
-/datum/move_loop/proc/start_loop()
+///Called when a loop is starting by a movement subsystem
+/datum/move_loop/proc/loop_started()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_START)
 	running = TRUE
@@ -62,7 +65,8 @@
 		return
 	timer = world.time + delay
 
-/datum/move_loop/proc/stop_loop()
+///Called when a loop is stopped, doesn't stop the loop itself
+/datum/move_loop/proc/loop_stopped()
 	SHOULD_CALL_PARENT(TRUE)
 	running = FALSE
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
@@ -126,6 +130,25 @@
 /datum/move_loop/proc/move()
 	return FALSE
 
+
+///Pause our loop untill restarted with resume_loop()
+/datum/move_loop/proc/pause_loop()
+	if(!controller || !running || paused) //we dead
+		return
+
+	//Dequeue us from our current bucket
+	controller.dequeue_loop(src)
+	paused = TRUE
+
+///Resume our loop after being paused by pause_loop()
+/datum/move_loop/proc/resume_loop()
+	if(!controller || !running || !paused)
+		return
+
+	controller.queue_loop(src)
+	timer = world.time
+	paused = FALSE
+
 ///Removes the atom from some movement subsystem. Defaults to SSmovement
 /datum/controller/subsystem/move_manager/proc/stop_looping(atom/movable/moving, datum/controller/subsystem/movement/subsystem = SSmovement)
 	var/datum/movement_packet/our_info = moving.move_packet
@@ -168,7 +191,7 @@
 
 /datum/move_loop/move/move()
 	var/atom/old_loc = moving.loc
-	moving.Move(get_step(moving, direction), direction)
+	moving.Move(get_step(moving, direction), direction, FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	// We cannot rely on the return value of Move(), we care about teleports and it doesn't
 	// Moving also can be null on occasion, if the move deleted it and therefor us
 	return old_loc != moving?.loc
@@ -240,7 +263,7 @@
 	target = chasing
 
 	if(!isturf(target))
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because we don't care
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(handle_no_target)) //Don't do this for turfs, because we don't care
 
 /datum/move_loop/has_target/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing)
 	if(..() && chasing == target)
@@ -369,16 +392,16 @@
 	src.avoid = avoid
 	src.skip_first = skip_first
 	if(isidcard(id))
-		RegisterSignal(id, COMSIG_PARENT_QDELETING, .proc/handle_no_id) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
+		RegisterSignal(id, COMSIG_PARENT_QDELETING, PROC_REF(handle_no_id)) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
 
 /datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first)
 	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && id == src.id && simulated_only == src.simulated_only && avoid == src.avoid)
 		return TRUE
 	return FALSE
 
-/datum/move_loop/has_target/jps/start_loop()
+/datum/move_loop/has_target/jps/loop_started()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/recalculate_path)
+	INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 
 /datum/move_loop/has_target/jps/Destroy()
 	id = null //Kill me
@@ -399,7 +422,7 @@
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))
-		INVOKE_ASYNC(src, .proc/recalculate_path)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		if(!length(movement_path))
 			return FALSE
 
@@ -413,7 +436,7 @@
 	if(get_turf(moving) == next_step)
 		movement_path.Cut(1,2)
 	else
-		INVOKE_ASYNC(src, .proc/recalculate_path)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return FALSE
 
 
@@ -572,8 +595,8 @@
 
 	if(home)
 		if(ismovable(target))
-			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/update_slope) //If it can move, update your slope when it does
-		RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(update_slope)) //If it can move, update your slope when it does
+		RegisterSignal(moving, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 	update_slope()
 
 /datum/move_loop/has_target/move_towards/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, home = FALSE)

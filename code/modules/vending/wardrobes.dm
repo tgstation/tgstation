@@ -206,7 +206,6 @@
 		/obj/item/storage/backpack/satchel/science = 3,
 		/obj/item/storage/backpack/duffelbag/science = 3,
 		/obj/item/clothing/head/beret/science = 3,
-		/obj/item/clothing/head/beret/science/fancy = 3,
 		/obj/item/clothing/mask/bandana/striped/science = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/science = 3,
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
@@ -435,6 +434,7 @@
 		/obj/item/clothing/head/chaplain/taqiyah/red = 3,
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
+		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
 		)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
@@ -555,7 +555,8 @@
 		/obj/item/clothing/glasses/regular/kim = 1,
 		/obj/item/reagent_containers/cup/glass/flask/det = 2,
 		/obj/item/storage/fancy/cigarettes = 5,
-		)
+		/obj/item/storage/fancy/cigarettes/cigpack_candy = 5,
+	)
 	premium = list(
 		/obj/item/clothing/head/flatcap = 1,
 		)

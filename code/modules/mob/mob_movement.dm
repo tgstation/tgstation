@@ -357,8 +357,7 @@
 
 /// Called when this mob slips over, override as needed
 /mob/proc/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
-	mind?.add_memory(MEMORY_SLIPPED, list(DETAIL_WHAT_BY = O, DETAIL_PROTAGONIST = src), story_value = STORY_VALUE_OKAY)
-	return
+	add_mob_memory(/datum/memory/was_slipped, antagonist = O)
 
 /// Update the gravity status of this mob
 /mob/proc/update_gravity(has_gravity, override=FALSE)
@@ -548,6 +547,12 @@
 	set name = "Move Down"
 	set category = "IC"
 
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = SSmapping.get_turf_below(current_turf)
+	if(!below_turf)
+		to_chat(src, span_warning("There's nowhere to go in that direction!"))
+		return
+
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, DOWN)
@@ -559,6 +564,6 @@
 
 /mob/abstract_move(atom/destination)
 	var/turf/new_turf = get_turf(destination)
-	if(new_turf && (istype(new_turf, /turf/cordon) || is_secret_level(new_turf.z)) && !client?.holder)
+	if(new_turf && (istype(new_turf, /turf/cordon/secret) || is_secret_level(new_turf.z)) && !client?.holder)
 		return
 	return ..()

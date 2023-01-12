@@ -14,11 +14,15 @@
 	turf_type = /turf/open/space/transit
 
 /datum/turf_reservation/proc/Release()
-	var/v = reserved_turfs.Copy()
-	for(var/i in reserved_turfs)
-		reserved_turfs -= i
-		SSmapping.used_turfs -= i
-	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/proc/reserve_turfs, v)
+	var/list/reserved_copy = reserved_turfs.Copy()
+	SSmapping.used_turfs -= reserved_turfs
+	reserved_turfs = list()
+
+	for(var/turf/reserved_turf as anything in reserved_copy)
+		SEND_SIGNAL(reserved_turf, COMSIG_TURF_RESERVATION_RELEASED, src)
+
+	// Makes the linter happy, even tho we don't await this
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, reserve_turfs), reserved_copy)
 
 /datum/turf_reservation/proc/Reserve(width, height, zlevel)
 	if(width > world.maxx || height > world.maxy || width < 1 || height < 1)

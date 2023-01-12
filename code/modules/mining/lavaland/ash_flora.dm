@@ -5,7 +5,8 @@
 	name = "large mushrooms"
 	desc = "A number of large mushrooms, covered in a faint layer of ash and what can only be spores."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
-	icon_state = "l_mushroom"
+	icon_state = "l_mushroom1"
+	base_icon_state = "l_mushroom"
 	gender = PLURAL
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
 	product_types = list(/obj/item/food/grown/ash_flora/shavings = 1)
@@ -18,23 +19,22 @@
 	harvest_message_true_thresholds = TRUE
 	harvest_verb = "pluck"
 	flora_flags = FLORA_HERBAL //not really accurate but what sound do hit mushrooms make anyway
-	var/base_icon
 	var/number_of_variants = 4
 
 /obj/structure/flora/ash/Initialize(mapload)
 	. = ..()
-	base_icon = "[icon_state][rand(1, number_of_variants)]"
-	icon_state = base_icon
+	base_icon_state = "[base_icon_state][rand(1, number_of_variants)]"
+	icon_state = base_icon_state
 
 /obj/structure/flora/ash/harvest(user)
 	if(!..())
 		return FALSE
-	icon_state = "[base_icon]p"
+	icon_state = "[base_icon_state]p"
 	return TRUE
 
 /obj/structure/flora/ash/regrow()
 	..()
-	icon_state = base_icon
+	icon_state = base_icon_state
 
 /obj/structure/flora/ash/tall_shroom //exists only so that the spawning check doesn't allow these spawning near other things
 	regrowth_time_low = 4200
@@ -42,7 +42,8 @@
 /obj/structure/flora/ash/leaf_shroom
 	name = "leafy mushrooms"
 	desc = "A number of mushrooms, each of which surrounds a greenish sporangium with a number of leaf-like structures."
-	icon_state = "s_mushroom"
+	icon_state = "s_mushroom1"
+	base_icon_state = "s_mushroom"
 	product_types = list(/obj/item/food/grown/ash_flora/mushroom_leaf = 1)
 	harvested_name = "leafless mushrooms"
 	harvested_desc = "A bunch of formerly-leafed mushrooms, with their sporangiums exposed. Scandalous?"
@@ -57,7 +58,8 @@
 /obj/structure/flora/ash/cap_shroom
 	name = "tall mushrooms"
 	desc = "Several mushrooms, the larger of which have a ring of conks at the midpoint of their stems."
-	icon_state = "r_mushroom"
+	icon_state = "r_mushroom1"
+	base_icon_state = "r_mushroom"
 	product_types = list(/obj/item/food/grown/ash_flora/mushroom_cap = 1)
 	harvested_name = "small mushrooms"
 	harvested_desc = "Several small mushrooms near the stumps of what likely were larger mushrooms."
@@ -72,7 +74,8 @@
 /obj/structure/flora/ash/stem_shroom
 	name = "numerous mushrooms"
 	desc = "A large number of mushrooms, some of which have long, fleshy stems. They're radiating light!"
-	icon_state = "t_mushroom"
+	icon_state = "t_mushroom1"
+	base_icon_state = "t_mushroom"
 	light_range = 1.5
 	light_power = 2.1
 	product_types = list(/obj/item/food/grown/ash_flora/mushroom_stem = 1)
@@ -89,7 +92,8 @@
 /obj/structure/flora/ash/cacti
 	name = "fruiting cacti"
 	desc = "Several prickly cacti, brimming with ripe fruit and covered in a thin layer of ash."
-	icon_state = "cactus"
+	icon_state = "cactus1"
+	base_icon_state = "cactus"
 	product_types = list(/obj/item/food/grown/ash_flora/cactus_fruit = 20, /obj/item/seeds/lavaland/cactus = 1)
 	harvested_name = "cacti"
 	harvested_desc = "A bunch of prickly cacti. You can see fruits slowly growing beneath the covering of ash."
@@ -109,7 +113,8 @@
 /obj/structure/flora/ash/seraka
 	name = "seraka mushrooms"
 	desc = "A small cluster of seraka mushrooms. These must have come with the ashlizards."
-	icon_state = "seraka_mushroom"
+	icon_state = "seraka_mushroom1"
+	base_icon_state = "seraka_mushroom"
 	product_types = list(/obj/item/food/grown/ash_flora/seraka = 1)
 	harvested_name = "harvested seraka mushrooms"
 	harvested_desc = "A couple of small seraka mushrooms, with the larger ones clearly having been recently removed. They'll grow back... eventually."
@@ -123,11 +128,28 @@
 	number_of_variants = 2
 	harvest_message_true_thresholds = FALSE
 
+/obj/structure/flora/ash/fireblossom
+	name = "fire blossom"
+	desc = "An odd flower that grows commonly near bodies of lava."
+	icon_state = "fireblossom1"
+	base_icon_state = "fireblossom"
+	product_types = list(/obj/item/food/grown/ash_flora/fireblossom = 1)
+	harvested_name = "fire blossom stems"
+	harvested_desc = "A few fire blossom stems, missing their flowers."
+	harvest_amount_high = 3
+	harvest_message_low = "You pluck a single, suitable flower."
+	harvest_message_med = "You pluck a number of flowers, leaving a few unsuitable ones."
+	harvest_message_high = "You pluck quite a lot of suitable flowers."
+	regrowth_time_low = 2500
+	regrowth_time_high = 4000
+	number_of_variants = 2
+
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly
 	name = "springy grassy fruit"
 	desc = "A number of bright, springy blue fruiting plants. They seem to be unconcerned with the hardy, cold environment."
-	icon_state = "chilly_pepper"
+	icon_state = "chilly_pepper1"
+	base_icon_state = "chilly_pepper"
 	product_types = list(/obj/item/food/grown/icepepper = 1)
 	harvested_name = "springy grass"
 	harvested_desc = "A bunch of springy, bouncy fruiting grass, all picked. Or maybe they were never fruiting at all?"
@@ -194,6 +216,14 @@
 	desc = "Small, deeply flavourful mushrooms originally native to Tizira."
 	icon_state = "seraka_cap"
 	seed = /obj/item/seeds/lavaland/seraka
+	wine_power = 40
+
+/obj/item/food/grown/ash_flora/fireblossom
+	name = "fire blossom"
+	desc = "A flower from a fire blossom."
+	icon_state = "fireblossom"
+	slot_flags = ITEM_SLOT_HEAD
+	seed = /obj/item/seeds/lavaland/fireblossom
 	wine_power = 40
 
 //SEEDS
@@ -278,7 +308,6 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.06, /datum/reagent/consumable/vitfro = 0.04, /datum/reagent/drug/nicotine = 0.04)
 
-
 /obj/item/seeds/lavaland/inocybe
 	name = "pack of inocybe mycelium"
 	desc = "This mycelium grows into an inocybe mushroom, a species of Lavaland origin with hallucinatory and toxic effects."
@@ -312,6 +341,18 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/toxin/mushroom_powder = 0.1, /datum/reagent/medicine/coagulant/seraka_extract = 0.02)
 
+/obj/item/seeds/lavaland/fireblossom
+	name = "pack of fire blossom seeds"
+	desc = "These seeds grow into fire blossoms."
+	plantname = "Fire Blossom"
+	icon_state = "seed-fireblossom"
+	species = "fireblossom"
+	growthstages = 3
+	product = /obj/item/food/grown/ash_flora/fireblossom
+	genes = list(/datum/plant_gene/trait/fire_resistance, /datum/plant_gene/trait/glow/yellow)
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment = 0.03, /datum/reagent/carbon = 0.05)
+
 //CRAFTING
 
 /datum/crafting_recipe/mushroom_bowl
@@ -319,7 +360,8 @@
 	result = /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	reqs = list(/obj/item/food/grown/ash_flora/shavings = 5)
 	time = 30
-	category = CAT_PRIMAL
+	category = CAT_CONTAINERS
+
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	name = "mushroom bowl"
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."

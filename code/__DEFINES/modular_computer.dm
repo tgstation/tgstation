@@ -1,18 +1,7 @@
-//Modular computer/NTNet defines
-
-//Modular computer part defines
-#define MC_HDD "HDD"
-#define MC_SDD "SDD"
-#define MC_CARD "CARD"
-#define MC_CARD2 "CARD2"
-#define MC_CELL "CELL"
-
 //NTNet stuff, for modular computers
-									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
+// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
 #define NTNET_SOFTWAREDOWNLOAD 1 // Downloads of software from NTNet
-#define NTNET_PEERTOPEER 2 // P2P transfers of files between devices
-#define NTNET_COMMUNICATION 3 // Communication (messaging)
-#define NTNET_SYSTEMCONTROL 4 // Control of various systems, RCon, air alarm control, etc.
+#define NTNET_COMMUNICATION 2 // Communication (messaging)
 
 //NTNet transfer speeds, used when downloading/uploading a file/program.
 #define NTNETSPEED_LOWSIGNAL 0.5 // GQ/s transfer speed when the device is wirelessly connected and on Low signal
@@ -51,3 +40,9 @@
 #define NTNET_GOOD_SIGNAL 2
 ///Using a Computer, ethernet-connected.
 #define NTNET_ETHERNET_SIGNAL 3
+
+/// The default ringtone of the Messenger app.
+#define MESSENGER_RINGTONE_DEFAULT "beep"
+
+/// The maximum length of the ringtone of the Messenger app.
+#define MESSENGER_RINGTONE_MAX_LENGTH 20

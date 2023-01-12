@@ -49,7 +49,7 @@
 
 /datum/lift_master/tram/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
 	. = ..()
-	RegisterSignal(new_lift_platform, COMSIG_MOVABLE_BUMP, .proc/gracefully_break)
+	RegisterSignal(new_lift_platform, COMSIG_MOVABLE_BUMP, PROC_REF(gracefully_break))
 
 /datum/lift_master/tram/check_for_landmarks(obj/structure/industrial_lift/tram/new_lift_platform)
 	. = ..()
@@ -99,12 +99,17 @@
 	if(to_where == from_where)
 		return
 
+	update_tram_doors(CLOSE_DOORS)
 	travel_direction = get_dir(from_where, to_where)
 	travel_distance = get_dist(from_where, to_where)
 	from_where = to_where
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
+	addtimer(CALLBACK(src, PROC_REF(dispatch_tram), to_where), 3 SECONDS)
+
+/datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/to_where)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
+	update_tram_doors(UNLOCK_DOORS)
 
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
 		if(tram_part.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
@@ -119,7 +124,9 @@
 
 /datum/lift_master/tram/process(delta_time)
 	if(!travel_distance)
-		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
+		update_tram_doors(LOCK_DOORS)
+		update_tram_doors(OPEN_DOORS)
+		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= next_move)
 		var/start_time = TICK_USAGE
@@ -172,3 +179,30 @@
 
 	travelling = new_travelling
 	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
+
+/**
+ * Controls the doors of the tram when it departs and arrives at stations.
+ * The tram doors are in a list of airlocks and we apply the proc on that list.
+ */
+/datum/lift_master/tram/proc/update_tram_doors(action)
+	for(var/obj/machinery/door/window/tram/tram_door in GLOB.airlocks)
+		if(tram_door.associated_lift != specific_lift_id)
+			continue
+		set_door_state(tram_door, action)
+
+/datum/lift_master/tram/proc/set_door_state(tram_door, action)
+	switch(action)
+		if(LOCK_DOORS)
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, lock))
+
+		if(UNLOCK_DOORS)
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, unlock))
+
+		if(OPEN_DOORS)
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, open))
+
+		if(CLOSE_DOORS)
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, close))
+
+		else
+			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")

@@ -56,6 +56,10 @@
 		message = "Rocking the vote is disabled because an admin has forcibly set the map!"
 		return FALSE
 
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED && SSmapping.map_voted)
+		message = "The emergency shuttle has already left the station and the next map has already been chosen!"
+		return FALSE
+
 	message = initial(message)
 	return TRUE
 

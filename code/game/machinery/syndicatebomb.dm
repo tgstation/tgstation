@@ -204,7 +204,7 @@
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
 	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
-	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
+	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	if(!user.canUseTopic(src, !issilicon(user)) || !user.can_interact_with(src))
@@ -222,13 +222,16 @@
 		return
 	visible_message(span_danger("[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area."))
 	activate()
-	user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_AMAZING)
-	update_appearance()
 	add_fingerprint(user)
-	if(payload && !istype(payload, /obj/item/bombcore/training))
-		log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
-		payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
-		user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)
+	// We don't really concern ourselves with duds or fakes after this
+	if(isnull(payload) || istype(payload, /obj/machinery/syndicatebomb/training))
+		return
+
+	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
+	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
+	log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
+	payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
+	user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)
 
 ///Bomb Subtypes///
 
@@ -347,7 +350,7 @@
 		attempts++
 		defusals++
 		holder.loc.visible_message(span_notice("[icon2html(holder, viewers(holder))] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds..."))
-		sleep(50) //Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
+		sleep(5 SECONDS) //Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
 		if(istype(holder))
 			reset()
 
@@ -435,7 +438,7 @@
 		chem_splash(get_turf(src), reagents, spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
-		addtimer(CALLBACK(src, .proc/detonate), 10)
+		addtimer(CALLBACK(src, PROC_REF(detonate)), 10)
 
 	// If it's not a time release bomb, do normal explosion
 

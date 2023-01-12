@@ -20,7 +20,7 @@
 		src.typepath = parent.type
 
 /datum/component/traitor_objective_limit_per_time/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE, .proc/handle_generate)
+	RegisterSignal(parent, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE, PROC_REF(handle_generate))
 
 /datum/component/traitor_objective_limit_per_time/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE)

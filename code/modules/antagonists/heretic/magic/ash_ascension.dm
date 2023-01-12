@@ -2,8 +2,9 @@
 /datum/action/cooldown/spell/fire_sworn
 	name = "Oath of Flame"
 	desc = "For a minute, you will passively create a ring of fire around you."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "fire_ring"
 
 	school = SCHOOL_FORBIDDEN
@@ -61,8 +62,9 @@
 /datum/action/cooldown/spell/fire_cascade
 	name = "Lesser Fire Cascade"
 	desc = "Heats the air around you."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "fire_ring"
 	sound = 'sound/items/welder.ogg'
 
@@ -78,7 +80,7 @@
 
 /datum/action/cooldown/spell/fire_cascade/cast(atom/cast_on)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/fire_cascade, get_turf(cast_on), flame_radius)
+	INVOKE_ASYNC(src, PROC_REF(fire_cascade), get_turf(cast_on), flame_radius)
 
 /// Spreads a huge wave of fire in a radius around us, staggered between levels
 /datum/action/cooldown/spell/fire_cascade/proc/fire_cascade(atom/centre, flame_radius = 1)
@@ -99,8 +101,9 @@
 /datum/action/cooldown/spell/pointed/ash_beams
 	name = "Nightwatcher's Rite"
 	desc = "A powerful spell that releases five streams of eldritch fire towards the target."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "flames"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 
@@ -121,7 +124,7 @@
 	. = ..()
 	var/static/list/offsets = list(-25, -10, 0, 10, 25)
 	for(var/offset in offsets)
-		INVOKE_ASYNC(src, .proc/fire_line, owner, line_target(offset, flame_line_length, target, owner))
+		INVOKE_ASYNC(src, PROC_REF(fire_line), owner, line_target(offset, flame_line_length, target, owner))
 
 /datum/action/cooldown/spell/pointed/ash_beams/proc/line_target(offset, range, atom/at, atom/user)
 	if(!at)
@@ -159,4 +162,4 @@
 				continue
 			hit_list += M
 			M.take_damage(45, BURN, MELEE, 1)
-		sleep(1.5)
+		sleep(0.15 SECONDS)

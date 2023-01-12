@@ -14,6 +14,7 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	internal_magazine = TRUE
+	cartridge_wording = "arrow"
 	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
 
@@ -38,11 +39,12 @@
 
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
 	if(chambered)
-		to_chat(user, span_notice("You [drawn ? "release the tension on" : "draw the string on"] [src]."))
+		balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
 		drawn = !drawn
 	update_appearance()
 
 /obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!chambered)
 		return
 	if(!drawn)
@@ -78,7 +80,7 @@
 
 /obj/item/ammo_casing/caseless/arrow/despawning/dropped()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(floor_vanish)), 5 SECONDS)
 
 /obj/item/ammo_casing/caseless/arrow/despawning/proc/floor_vanish()
 	if(isturf(loc))

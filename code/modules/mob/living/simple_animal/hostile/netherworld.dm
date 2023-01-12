@@ -34,6 +34,7 @@
 
 /datum/action/innate/creature
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/creature/teleport
 	name = "Teleport"
@@ -143,7 +144,7 @@
 	desc = null //see examine()
 	icon_state = "nether"
 	max_integrity = 50
-	spawn_time = 600 //1 minute
+	spawn_time = 60 SECONDS
 	max_mobs = 15
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls through"

@@ -6,7 +6,7 @@
 /area/station/maintenance/department/science)
 "b" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /obj/item/mop,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)

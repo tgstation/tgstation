@@ -275,7 +275,7 @@
 
 /obj/machinery/reagentgrinder/proc/shake_for(duration)
 	start_shaking() //start shaking
-	addtimer(CALLBACK(src, .proc/stop_shaking), duration)
+	addtimer(CALLBACK(src, PROC_REF(stop_shaking)), duration)
 
 /obj/machinery/reagentgrinder/proc/stop_shaking()
 	update_appearance()
@@ -290,7 +290,7 @@
 		else
 			playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
-	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
+	addtimer(CALLBACK(src, PROC_REF(stop_operating)), time / speed)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()
 	operating = FALSE
@@ -342,7 +342,7 @@
 	if(!beaker || machine_stat & (NOPOWER|BROKEN))
 		return
 	operate_for(50, juicing = TRUE)
-	addtimer(CALLBACK(src, /obj/machinery/reagentgrinder/proc/mix_complete), 50)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/reagentgrinder, mix_complete)), 50)
 
 /obj/machinery/reagentgrinder/proc/mix_complete()
 	if(beaker?.reagents.total_volume)

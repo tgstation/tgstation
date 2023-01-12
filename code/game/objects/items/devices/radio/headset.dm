@@ -32,6 +32,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	/// A list of all languages that this headset allows the user to understand. Populated by language encryption keys.
 	var/list/language_list
 
+	// headset is too small to display overlays
+	overlay_speaker_idle = null
+	overlay_speaker_active = null
+	overlay_mic_idle = null
+	overlay_mic_active = null
+
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
 	return TOXLOSS
@@ -125,6 +131,20 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
 	command = TRUE
+
+/obj/item/radio/headset/syndicate/alt/psyker
+	name = "psychic headset"
+	desc = "A headset designed to boost psychic waves. Protects ears from flashbangs."
+	icon_state = "psyker_headset"
+
+/obj/item/radio/headset/syndicate/alt/psyker/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		ADD_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
+
+/obj/item/radio/headset/syndicate/alt/psyker/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
 
 /obj/item/radio/headset/binary
 	keyslot = /obj/item/encryptionkey/binary
@@ -265,6 +285,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "mining radio headset"
 	desc = "Headset used by shaft miners."
 	icon_state = "mine_headset"
+	// "puts the antenna down" while the headset is off
+	overlay_speaker_idle = "headset_up"
+	overlay_mic_idle = "headset_up"
 	keyslot = /obj/item/encryptionkey/headset_mining
 
 /obj/item/radio/headset/headset_srv

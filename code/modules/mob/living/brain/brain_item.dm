@@ -42,7 +42,7 @@
 /obj/item/organ/internal/brain/Insert(mob/living/carbon/C, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
 	. = ..()
 
-	name = "brain"
+	name = initial(name)
 
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
@@ -67,10 +67,20 @@
 	else
 		C.set_suicide(suicided)
 
-	for(var/X in traumas)
-		var/datum/brain_trauma/BT = X
-		BT.owner = owner
-		BT.on_gain()
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		if(trauma.owner)
+			if(trauma.owner == owner)
+				// if we're being special replaced, the trauma is already applied, so this is expected
+				// but if we're not... this is likely a bug, and should be reported
+				if(!special)
+					stack_trace("A brain trauma ([trauma]) is being re-applied to its owning mob ([owner])!")
+				continue
+
+			stack_trace("A brain trauma ([trauma]) is being applied to a new mob ([owner]) when it's owned by someone else ([trauma.owner])!")
+			continue
+
+		trauma.owner = owner
+		trauma.on_gain()
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_body_parts()
@@ -78,11 +88,12 @@
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
 	if(!QDELETED(C) && length(skillchips))
-		to_chat(C, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
+		if(!special)
+			to_chat(C, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
 		for(var/chip in skillchips)
 			var/obj/item/skillchip/skillchip = chip
 			// Run the try_ proc with force = TRUE.
-			skillchip.try_deactivate_skillchip(FALSE, TRUE)
+			skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
 
 	. = ..()
 
@@ -96,7 +107,7 @@
 	C.update_body_parts()
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
-	name = "[L.name]'s brain"
+	name = "[L.name]'s [initial(name)]"
 	if(brainmob || decoy_override)
 		return
 	if(!L.mind)
@@ -241,6 +252,7 @@
 /obj/item/organ/internal/brain/on_life(delta_time, times_fired)
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, span_userdanger("The last spark of life in your brain fizzles out..."))
+		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
 		owner.death()
 
 /obj/item/organ/internal/brain/check_damage_thresholds(mob/M)
@@ -282,9 +294,11 @@
 	if(!istype(replacement_brain))
 		return
 
+	// Transfer over skillcips to the new brain
+
 	// If we have some sort of brain type or subtype change and have skillchips, engage the failsafe procedure!
 	if(owner && length(skillchips) && (replacement_brain.type != type))
-		activate_skillchip_failsafe(FALSE)
+		activate_skillchip_failsafe(silent = TRUE)
 
 	// Check through all our skillchips, remove them from this brain, add them to the replacement brain.
 	for(var/chip in skillchips)
@@ -308,6 +322,11 @@
 	// Any skillchips has been transferred over, time to empty the list.
 	LAZYCLEARLIST(skillchips)
 
+	// Transfer over traumas as well
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		remove_trauma_from_traumas(trauma)
+		replacement_brain.add_trauma_to_traumas(trauma)
+
 /obj/item/organ/internal/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
 	. = ..()
 	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
@@ -329,7 +348,7 @@
 	organ_traits = list(TRAIT_CAN_STRIP)
 
 /obj/item/organ/internal/brain/primitive //No like books and stompy metal men
-	name = "Primative Brain"
+	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
 
@@ -408,8 +427,7 @@
 		WARNING("gain_trauma was given an already active trauma.")
 		return FALSE
 
-	traumas += actual_trauma
-	actual_trauma.brain = src
+	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
 		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
@@ -418,6 +436,18 @@
 		actual_trauma.resilience = resilience
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
 	return actual_trauma
+
+/// Adds the passed trauma instance to our list of traumas and links it to our brain.
+/// DOES NOT handle setting up the trauma, that's done by [proc/brain_gain_trauma]!
+/obj/item/organ/internal/brain/proc/add_trauma_to_traumas(datum/brain_trauma/trauma)
+	trauma.brain = src
+	traumas += trauma
+
+/// Removes the passed trauma instance to our list of traumas and links it to our brain
+/// DOES NOT handle removing the trauma's effects, that's done by [/datum/brain_trauma/Destroy()]!
+/obj/item/organ/internal/brain/proc/remove_trauma_from_traumas(datum/brain_trauma/trauma)
+	trauma.brain = null
+	traumas -= trauma
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/internal/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience, natural_gain = FALSE)
@@ -446,3 +476,11 @@
 		qdel(X)
 		amount_cured++
 	return amount_cured
+
+/// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
+/obj/item/organ/internal/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
+	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
+	if(target.body_position == LYING_DOWN && owner.usable_legs)
+		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
+		return found_bodypart || active_hand
+	return active_hand

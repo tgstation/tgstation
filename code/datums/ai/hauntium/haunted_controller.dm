@@ -13,7 +13,7 @@
 /datum/ai_controller/haunted/TryPossessPawn(atom/new_pawn)
 	if(!isitem(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
-	RegisterSignal(new_pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	RegisterSignal(new_pawn, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	return ..() //Run parent at end
 
 /datum/ai_controller/haunted/UnpossessPawn()
@@ -36,12 +36,12 @@
 	else
 		blackboard[BB_LIKES_EQUIPPER] = TRUE
 
-	RegisterSignal(pawn, COMSIG_ITEM_DROPPED, .proc/on_dropped)
+	RegisterSignal(pawn, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
 ///Flip it so we listen for equip again but not for drop.
 /datum/ai_controller/haunted/proc/on_dropped(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	RegisterSignal(pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	RegisterSignal(pawn, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	blackboard[BB_LIKES_EQUIPPER] = FALSE
 	UnregisterSignal(pawn, COMSIG_ITEM_DROPPED)

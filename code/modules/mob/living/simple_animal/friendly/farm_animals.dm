@@ -19,7 +19,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	attack_same = 1
 	attack_verb_continuous = "kicks"
@@ -206,7 +206,7 @@
 		eggs_left = 0,\
 		eggs_added_from_eating = rand(1, 4),\
 		max_eggs_held = 8,\
-		egg_laid_callback = CALLBACK(src, .proc/egg_laid)\
+		egg_laid_callback = CALLBACK(src, PROC_REF(egg_laid))\
 	)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

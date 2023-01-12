@@ -76,6 +76,7 @@
 
 	var/mob/living/living_victim = victim
 	if (istype(living_victim))
+		living_victim.investigate_log("has been gibbed by an admin.", INVESTIGATE_DEATHS)
 		if(confirm == "Yes")
 			living_victim.gib()
 		else

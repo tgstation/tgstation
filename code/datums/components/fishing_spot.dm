@@ -17,8 +17,8 @@
 			stack_trace("Invalid fishing spot configuration \"[configuration]\" passed down to fishing spot component.")
 			return COMPONENT_INCOMPATIBLE
 		fish_source = preset_configuration
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/handle_attackby)
-	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, .proc/handle_cast)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(handle_attackby))
+	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)
@@ -41,7 +41,7 @@
 	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked_item)
 		user.balloon_alert(user, "already fishing")
 		return COMPONENT_NO_AFTERATTACK
-	var/denial_reason = fish_source.can_fish(rod, user)
+	var/denial_reason = fish_source.reason_we_cant_fish(rod, user)
 	if(denial_reason)
 		to_chat(user, span_warning(denial_reason))
 		return COMPONENT_NO_AFTERATTACK
@@ -54,7 +54,7 @@
 	var/datum/fishing_challenge/challenge = new(parent, result, rod, user)
 	challenge.background = fish_source.background
 	challenge.difficulty = fish_source.calculate_difficulty(result, rod, user)
-	RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_COMPLETED, .proc/fishing_completed)
+	RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_COMPLETED, PROC_REF(fishing_completed))
 	challenge.start(user)
 
 /datum/component/fishing_spot/proc/fishing_completed(datum/fishing_challenge/source, mob/user, success, perfect)

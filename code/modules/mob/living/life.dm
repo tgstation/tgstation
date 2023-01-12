@@ -69,7 +69,6 @@
 
 		if(stat != DEAD)
 			handle_traits(delta_time, times_fired) // eye, ear, brain damages
-			handle_status_effects(delta_time, times_fired) //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	if(machine)
 		machine.check_eye(src)
@@ -137,18 +136,6 @@
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	return reagents.has_reagent(reagent, amount, needs_metabolizing)
 
-/*
- * this updates some effects: mostly old stuff such as drunkness, druggy, etc.
- * that should be converted to status effect datums one day.
- * ^ March 4th, 2021
- * Stuttering and slurring has been removed,
- * but carbons still have a ton of effects that need to be moved over
- * Good luck reader
- * ^ April 6th, 2022
- */
-/mob/living/proc/handle_status_effects(delta_time, times_fired)
-	return
-
 /mob/living/proc/handle_traits(delta_time, times_fired)
 	//Eyes
 	if(eye_blind) //blindness, heals slowly over time
@@ -156,8 +143,6 @@
 			adjust_blindness(-1.5 * delta_time)
 		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
 			adjust_blindness(-0.5 * delta_time)
-	else if(eye_blurry) //blurry eyes heal slowly
-		adjust_blurriness(-0.5 * delta_time)
 
 /mob/living/proc/update_damage_hud()
 	return
@@ -175,11 +160,11 @@
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
 		add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=0))
-	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
+	INVOKE_ASYNC(src, PROC_REF(gravity_pulse_animation))
 
 /mob/living/proc/gravity_pulse_animation()
 	animate(get_filter("gravity"), y = 1, time = 10)
-	sleep(10)
+	sleep(1 SECONDS)
 	animate(get_filter("gravity"), y = 0, time = 10)
 
 /mob/living/proc/handle_high_gravity(gravity, delta_time, times_fired)

@@ -187,7 +187,7 @@
 
 /obj/machinery/shieldgen/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 100)
-	panel_open = !panel_open
+	toggle_panel_open()
 	if(panel_open)
 		to_chat(user, span_notice("You open the panel and expose the wiring."))
 	else
@@ -201,11 +201,11 @@
 		return
 	if(!anchored && !isinspace())
 		tool.play_tool_sound(src, 100)
-		to_chat(user, span_notice("You secure \the [src] to the floor!"))
+		balloon_alert(user, "secured")
 		set_anchored(TRUE)
 	else if(anchored)
 		tool.play_tool_sound(src, 100)
-		to_chat(user, span_notice("You unsecure \the [src] from the floor!"))
+		balloon_alert(user, "unsecured")
 		if(active)
 			to_chat(user, span_notice("\The [src] shuts off!"))
 			shields_down()
@@ -290,7 +290,7 @@
 	. = ..()
 	if(anchored)
 		connect_to_network()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)
@@ -473,8 +473,9 @@
 		setDir(get_dir(gen_primary, gen_secondary))
 	for(var/mob/living/L in get_turf(src))
 		visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
+		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		L.gib()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
 
 /obj/machinery/shieldwall/Destroy()
 	gen_primary = null

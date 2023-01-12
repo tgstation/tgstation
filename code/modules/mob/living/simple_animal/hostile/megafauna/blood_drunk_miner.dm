@@ -142,6 +142,7 @@ Difficulty: Medium
 					adjustHealth(-L.maxHealth)
 				else
 					adjustHealth(-(L.maxHealth * 0.5))
+			L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			L.gib()
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
@@ -167,7 +168,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/dir_setting/miner_death/Initialize(mapload, set_dir)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/fade_out)
+	INVOKE_ASYNC(src, PROC_REF(fade_out))
 
 /obj/effect/temp_visual/dir_setting/miner_death/proc/fade_out()
 	var/matrix/M = new
@@ -177,9 +178,9 @@ Difficulty: Medium
 		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
 	animate(src, transform = M, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
-	sleep(5)
+	sleep(0.5 SECONDS)
 	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
-	sleep(4)
+	sleep(0.4 SECONDS)
 	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
@@ -188,7 +189,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget()
 	. = ..()
 	if(. && prob(12))
-		INVOKE_ASYNC(dash, /datum/action/proc/Trigger, target)
+		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), target)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
 	name = "hostile-environment miner"

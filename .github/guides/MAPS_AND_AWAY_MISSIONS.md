@@ -29,6 +29,23 @@ Instead, /tg/station map maintainers will always recommend using one of two mode
 
 Both of the above programs have native TGM support, which is mandatory for all maps being submitted to this repository. Anytime you want to make changes to a map, it is imperative you use the [Map Merging tools](https://tgstation13.org/wiki/Map_Merger). When you clone your repository onto your machine for mapping, it's always a great idea to run `tools/hooks/Install.bat` at the very start of your mapping endeavors, as this will install Git hooks that help you automatically resolve any merge conflicts that come up while mapping.
 
+## UPDATEPATHS
+
+#### Using UpdatePaths is mandatory for all mass-path changes in this repository.
+
+UpdatePaths is a scripting tool that will automatically update all instances of a path to a new path in map files (.DMM). This is extremely helpful if you want to be nice to people who have to resolve merge conflicts from the PRs, or downstreams who have several maps that need to be updated with your path change. It's also a great way to make sure you don't miss any instances of a path update in a DMM file, when your Search&Replace Tooling of choice might otherwise fail to recognize the specific syntax and layout of the [TGM Format](https://hackmd.io/@tgstation/ry4-gbKH5#TGM-Format).
+
+As a fast example, let's say you refactor some code, and you've changed the path of `/obj/item/weapon/gun/energy/laser` to `/obj/item/weapon/gun/energy/laser/pistol`. First, you would have to make a new file in the `tools/UpdatePaths/Scripts` [directory](https://github.com/tgstation/tgstation/tree/master/tools/UpdatePaths/Scripts), and name it `PRNUMBER_laser_pistol_split.txt` (with PRNUMBER being the number that your PR is assigned to, for book-keeping purposes). Then, you would have to add the following code to the file:
+
+
+```txt
+/obj/item/weapon/gun/energy/laser : /obj/item/weapon/gun/energy/laser/pistol{@OLD}
+```
+
+Doing it this way allows for the same framework that the MapMerger is built on to run after the script has been ran to combine now-repetitive map keys. It also allows for you to retain any properties that the old path had, and apply them to the new path.
+
+For a much more comprehensive guide on UpdatePaths, please see the documentation [here](https://github.com/tgstation/tgstation/blob/master/tools/UpdatePaths/readme.md).
+
 ## AWAY MISSIONS
 
 /tg/station supports loading away missions however they are disabled by default.

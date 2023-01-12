@@ -24,7 +24,7 @@
 /obj/machinery/mineral/proc/register_input_turf()
 	input_turf = get_step(src, input_dir)
 	if(input_turf) // make sure there is actually a turf
-		RegisterSignal(input_turf, list(COMSIG_ATOM_INITIALIZED_ON, COMSIG_ATOM_ENTERED), .proc/pickup_item)
+		RegisterSignals(input_turf, list(COMSIG_ATOM_INITIALIZED_ON, COMSIG_ATOM_ENTERED), PROC_REF(pickup_item))
 
 /// Unregisters signals that are registered the machine's input turf, if it has one.
 /obj/machinery/mineral/proc/unregister_input_turf()
@@ -259,7 +259,7 @@
 	generate_mineral(alloy.build_path)
 
 /obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D, delta_time = 2)
-	if(D.make_reagents.len)
+	if(D.make_reagent)
 		return FALSE
 
 	var/build_amount = SMELT_AMOUNT * delta_time

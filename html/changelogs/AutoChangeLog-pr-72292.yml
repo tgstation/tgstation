@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - qol: "New players will now get a contextual tutorial for how to switch hands and drop items."

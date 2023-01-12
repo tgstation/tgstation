@@ -33,7 +33,7 @@
 ///Queues another lollipop to be fabricated if there is enough room for one
 /obj/item/borg/lollipop/proc/check_amount()
 	if(!charging && candy < candymax)
-		addtimer(CALLBACK(src, .proc/charge_lollipops), charge_delay)
+		addtimer(CALLBACK(src, PROC_REF(charge_lollipops)), charge_delay)
 		charging = TRUE
 
 ///Increases the amount of lollipops
@@ -123,17 +123,17 @@
 		var/mob/living/silicon/robot/robot_user = user
 		if(!robot_user.cell.use(12))
 			to_chat(user, span_warning("Not enough power."))
-			return FALSE
+			return AFTERATTACK_PROCESSED_ITEM
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE, DISPENSE_ICECREAM_MODE)
 			if(!proximity)
-				return FALSE
+				return AFTERATTACK_PROCESSED_ITEM
 			dispense(target, user)
 		if(THROW_LOLLIPOP_MODE)
 			shootL(target, user, click_params)
 		if(THROW_GUMBALL_MODE)
 			shootG(target, user, click_params)
-	return ..()
+	return ..() | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/borg/lollipop/attack_self(mob/living/user)
 	switch(mode)

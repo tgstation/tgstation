@@ -541,7 +541,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/spear,
-/obj/item/storage/belt,
+/obj/item/storage/belt/utility,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "cL" = (

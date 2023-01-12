@@ -16,7 +16,7 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(owner_resist))
 	if(!owner.stat)
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
@@ -29,7 +29,7 @@
 
 /datum/status_effect/freon/proc/owner_resist()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/do_resist)
+	INVOKE_ASYNC(src, PROC_REF(do_resist))
 
 /datum/status_effect/freon/proc/do_resist()
 	to_chat(owner, span_notice("You start breaking out of the ice cube..."))
@@ -51,6 +51,10 @@
 /datum/status_effect/freon/watcher
 	duration = 8
 	can_melt = FALSE
+
+/datum/status_effect/freon/lasting
+	id = "lasting_frozen"
+	duration = -1
 
 /datum/status_effect/hypernob_protection
 	id = "hypernob_protection"
@@ -80,4 +84,3 @@
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium)
 	REMOVE_TRAIT(human_owner, TRAIT_NOFIRE, type)
-

@@ -125,6 +125,10 @@
 	name = "statue of the research director"
 	icon_state = "rd"
 
+/obj/structure/statue/gold/qm
+	name = "statue of the quartermaster"
+	icon_state = "qm"
+
 //////////////////////////silver///////////////////////////////////////
 
 /obj/structure/statue/silver
@@ -326,8 +330,13 @@ Moving interrupts
 // We aim at something distant.
 /obj/item/chisel/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!proximity_flag && !sculpting && prepared_block && ismovable(target) && prepared_block.completion == 0)
+	if(!proximity_flag)
+		return .
+
+	if (!sculpting && prepared_block && ismovable(target) && prepared_block.completion == 0)
 		prepared_block.set_target(target,user)
+
+	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/chisel/proc/start_sculpting(mob/living/user)
 	to_chat(user,span_notice("You start sculpting [prepared_block]."),type=MESSAGE_TYPE_INFO)
@@ -356,7 +365,7 @@ Moving interrupts
 /obj/item/chisel/proc/set_block(obj/structure/carving_block/B,mob/living/user)
 	prepared_block = B
 	tracked_user = user
-	RegisterSignal(tracked_user,COMSIG_MOVABLE_MOVED,.proc/break_sculpting)
+	RegisterSignal(tracked_user,COMSIG_MOVABLE_MOVED, PROC_REF(break_sculpting))
 	to_chat(user,span_notice("You prepare to work on [B]."),type=MESSAGE_TYPE_INFO)
 
 /obj/item/chisel/dropped(mob/user, silent)
@@ -389,7 +398,7 @@ Moving interrupts
 
 /obj/structure/carving_block
 	name = "block"
-	desc = "ready for sculpting."
+	desc = "Ready for sculpting."
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "block"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
@@ -460,7 +469,7 @@ Moving interrupts
 		new_statue.set_custom_materials(custom_materials)
 		var/mutable_appearance/ma = current_target
 		new_statue.name = "statue of [ma.name]"
-		new_statue.desc = "statue depicting [ma.name]"
+		new_statue.desc = "A carved statue depicting [ma.name]."
 		qdel(src)
 
 /obj/structure/carving_block/proc/set_completion(value)

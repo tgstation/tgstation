@@ -25,10 +25,7 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	dwidth = 5;
-	height = 14;
-	name = "Meta emergency shuttle";
-	width = 25
+	name = "Meta emergency shuttle"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)

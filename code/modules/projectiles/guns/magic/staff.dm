@@ -18,6 +18,11 @@
 		return FALSE
 	return TRUE
 
+/obj/item/gun/magic/staff/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage && !is_wizard_or_friend(user))
+		return FALSE
+	return ..()
+
 /obj/item/gun/magic/staff/check_botched(mob/living/user, atom/target)
 	if(!is_wizard_or_friend(user))
 		return !on_intruder_use(user, target)
@@ -84,6 +89,11 @@
 	if(!is_wizard_or_friend(user))
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
 		user.balloon_alert(user, "the staff feels weaker as you touch it")
+		
+/obj/item/gun/magic/staff/healing/examine(mob/user)
+	. = ..()
+	if(!is_wizard_or_friend(user))
+		. += span_notice("On the handle you notice a beautiful engraving in High Spaceman, \"Thou shalt not crosseth thy beams.\"")
 
 /obj/item/gun/magic/staff/healing/Initialize(mapload)
 	. = ..()
@@ -138,7 +148,7 @@
 		/obj/projectile/magic/locker,
 		/obj/projectile/magic/necropotence,
 		/obj/projectile/magic/resurrection,
-		/obj/projectile/magic/sapping,
+		/obj/projectile/magic/babel,
 		/obj/projectile/magic/spellblade,
 		/obj/projectile/magic/teleport,
 		/obj/projectile/magic/wipe,
@@ -242,14 +252,14 @@
 	worn_icon_state = "flightstaff"
 	school = SCHOOL_EVOCATION
 
-/obj/item/gun/magic/staff/sapping
-	name = "staff of sapping"
-	desc = "An artefact that spits bolts of sapping magic that can make something sad."
+/obj/item/gun/magic/staff/babel
+	name = "staff of babel"
+	desc = "An artefact that spits bolts of confusion magic that can make something depressed and incoherent."
 	fire_sound = 'sound/magic/staff_change.ogg'
-	ammo_type = /obj/item/ammo_casing/magic/sapping
-	icon_state = "staffofsapping"
+	ammo_type = /obj/item/ammo_casing/magic/babel
+	icon_state = "staffofbabel"
 	inhand_icon_state = "staffofdoor"
-	worn_icon_state = "sapstaff"
+	worn_icon_state = "babelstaff"
 	school = SCHOOL_FORBIDDEN //evil
 
 /obj/item/gun/magic/staff/necropotence
