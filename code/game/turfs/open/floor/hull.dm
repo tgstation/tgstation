@@ -6,6 +6,11 @@
 	initial_gas_mix = AIRLESS_ATMOS
 	temperature = TCMB
 
+/turf/open/floor/engine/hull/icemoon
+	name = "weatherproof external cladding"
+	desc = "A heavy-duty external plating that keeps warmth in and snow out."
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/engine/hull/ceiling
 	name = "shuttle ceiling plating"
 	var/old_turf_type
@@ -19,3 +24,8 @@
 	desc = "Extremely sturdy exterior hull plating that separates you from the uncaring vacuum of space."
 	icon_state = "reinforced_hull"
 	heat_capacity = INFINITY
+
+/turf/open/floor/engine/hull/reinforced/icemoon
+	name = "reinforced weatherproof external cladding"
+	desc = "An extremely heavy-duty external plating that keeps warmth in and snow out."
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

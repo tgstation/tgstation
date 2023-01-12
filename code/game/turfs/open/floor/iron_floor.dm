@@ -460,6 +460,25 @@
 	icon_state = "stairs-old"
 	base_icon_state = "stairs-old"
 
+/turf/open/floor/iron/stairs/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
+/turf/open/floor/iron/stairs/icemoon/left
+	icon_state = "stairs-l"
+	base_icon_state = "stairs-l"
+
+/turf/open/floor/iron/stairs/icemoon/medium
+	icon_state = "stairs-m"
+	base_icon_state = "stairs-m"
+
+/turf/open/floor/iron/stairs/icemoon/right
+	icon_state = "stairs-r"
+	base_icon_state = "stairs-r"
+
+/turf/open/floor/iron/stairs/icemoon/old
+	icon_state = "stairs-old"
+	base_icon_state = "stairs-old"
+
 /turf/open/floor/iron/bluespace
 	icon_state = "bluespace"
 	base_icon_state = "bluespace"

@@ -138,6 +138,16 @@
 	icon_state = "podfloor_dark"
 	floor_tile = /obj/item/stack/tile/pod/dark
 
+/turf/open/floor/pod/icemoon
+	name = "\improper HI-TRAX exterior flooring"
+	desc = "A proprietary blend of rubber and metal dusts keep your feet on the ground and your neck unbroken."
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
+/turf/open/floor/pod/icemoon/light
+	icon_state = "podfloor_light"
+
+/turf/open/floor/pod/icemoon/dark
+	icon_state = "podfloor_dark"
 
 /turf/open/floor/noslip
 	name = "high-traction floor"
@@ -297,6 +307,13 @@
 
 /turf/open/floor/vault/rock
 	name = "rocky floor"
+
+/turf/open/floor/vault/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
+/turf/open/floor/vault/icemoon/road
+	name = "anti-skid road plating"
+	desc = "A simple, anti-slip road plating that fits together like tiling. Makes road-building a breeze."
 
 /turf/open/floor/vault/alien
 	name = "alien floor"
