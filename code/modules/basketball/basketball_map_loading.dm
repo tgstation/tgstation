@@ -12,9 +12,15 @@
 /obj/effect/landmark/basketball/team_spawn/home
 	name = "Home Team Spawn"
 
+/obj/effect/landmark/basketball/team_spawn/home_hoop
+	name = "Basketball Home Hoop Spawner"
+
 // locations where players for the away team will spawn
 /obj/effect/landmark/basketball/team_spawn/away
 	name = "Away Team Spawn"
+
+/obj/effect/landmark/basketball/team_spawn/away_hoop
+	name = "Basketball Away Hoop Spawner"
 
 /area/centcom/basketball
 	name = "Basketball Minigame"
