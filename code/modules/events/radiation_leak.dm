@@ -34,6 +34,10 @@
 			// Skip undertiles
 			if(sick_device.IsObscured())
 				continue
+			// Very basic check for atmos passability here
+			// We don't want to put our smoke inside something that can't spread it out, like airlocks
+			if(sick_device.can_atmos_pass() != ATMOS_PASS_YES)
+				continue
 
 			// We found something, we can just return now
 			picked_machine_ref = WEAKREF(sick_device)
@@ -134,16 +138,24 @@
 	gross_smoke.set_up(2, holder = where, location = below_where, silent = TRUE)
 	gross_smoke.start()
 
+/**
+ * Signal proc for [COMSIG_ATOM_TOOL_ACT], from a variety of signals, registered on the machine spitting radiation
+ *
+ * We allow for someone to stop the event early by using the proper tools, hinted at in examine, on the machine
+ */
 /datum/round_event/radiation_leak/proc/on_machine_tooled(obj/machinery/source, mob/living/user, obj/item/tool)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(try_remove_radiation), source, user, tool)
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
+/// Attempts a do_after, and if successful, stops the event
 /datum/round_event/radiation_leak/proc/try_remove_radiation(obj/machinery/source, mob/living/user, obj/item/tool)
 	source.balloon_alert(user, "fixing leak...")
 	tool.play_tool_sound(source)
-	if(!do_after(user, 6 SECONDS, source))
+	// Fairly long, it shouldn't be SUPER easy to just run in and stop it.
+	// Radsuits and gas mask up to stop the fumes from messing you up.
+	if(!do_after(user, 30 SECONDS, source))
 		source.balloon_alert(user, "interrupted!")
 		return
 
