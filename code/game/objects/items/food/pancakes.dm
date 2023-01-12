@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
+	///Used as a base name while generating the icon states when stacked
 	var/stack_name = "pancakes"
 
 /obj/item/food/pancakes/raw
