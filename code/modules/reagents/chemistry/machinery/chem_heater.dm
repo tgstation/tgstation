@@ -91,8 +91,8 @@
 /obj/machinery/chem_heater/RefreshParts()
 	. = ..()
 	heater_coefficient = 0.1
-	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		heater_coefficient *= M.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		heater_coefficient *= micro_laser.tier
 
 /obj/machinery/chem_heater/examine(mob/user)
 	. = ..()
