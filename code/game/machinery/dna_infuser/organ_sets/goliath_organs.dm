@@ -34,7 +34,7 @@
 
 /obj/item/organ/internal/eyes/night_vision/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "eyes are blood red and stone like.", BODY_ZONE_HEAD)
+	AddElement(/datum/element/noticable_organ, "eyes are blood red and stone-like.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 /obj/item/organ/internal/eyes/night_vision/goliath/Insert(mob/living/carbon/eyes_owner, special, drop_if_replaced)
@@ -167,7 +167,10 @@
 
 /obj/item/organ/internal/heart/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "skin [owner.p_have()] visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
+
+/obj/item/organ/internal/heart/goliath/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+	AddElement(/datum/element/noticable_organ, "skin [reciever.p_have()] visible hard plates growing from within.", BODY_ZONE_CHEST)
+	return ..()
 
 #undef GOLIATH_COLORS

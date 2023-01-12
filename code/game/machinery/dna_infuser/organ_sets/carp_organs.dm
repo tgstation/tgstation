@@ -106,8 +106,11 @@
 
 /obj/item/organ/internal/brain/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "seem[owner.p_s()] unable to stay still.")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+
+/obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+	AddElement(/datum/element/noticable_organ, "seem[reciever.p_s()] unable to stay still.")
+	return ..()
 
 /obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/brain_owner, special, drop_if_replaced, no_id_transfer)
 	. = ..()
@@ -145,8 +148,11 @@
 
 /obj/item/organ/internal/heart/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "[owner.p_have()] small patches of scales growing on [owner.p_their()] skin...")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+
+/obj/item/organ/internal/heart/carp/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+	AddElement(/datum/element/noticable_organ, "[reciever.p_have()] small patches of scales growing on [reciever.p_their()] skin...")
+	return ..()
 
 #undef CARP_ORGAN_COLOR
 #undef CARP_SCLERA_COLOR
