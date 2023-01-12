@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "pancakes no longer show an error sprite when added to a stack"
