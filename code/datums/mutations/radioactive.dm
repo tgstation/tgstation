@@ -28,7 +28,8 @@
  * update their radioactivity to the newly set values
  */
 /datum/mutation/human/radioactive/proc/make_radioactive(mob/living/carbon/human/who)
-	who.AddComponent(/datum/component/radioactive_emitter, \
+	who.AddComponent(
+		/datum/component/radioactive_emitter, \
 		cooldown_time = 5 SECONDS, \
 		range = 1 * (GET_MUTATION_POWER(src) * 2), \
 		threshold = RAD_MEDIUM_INSULATION, \
