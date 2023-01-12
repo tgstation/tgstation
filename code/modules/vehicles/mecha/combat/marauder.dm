@@ -46,17 +46,17 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
 
-/obj/vehicle/sealed/mecha/marauder/add_cell(obj/item/stock_parts/cell/power_cell)
-	if(power_cell)
-		power_cell.forceMove(src)
-		cell = power_cell
+/obj/vehicle/sealed/mecha/marauder/add_cell(obj/item/stock_parts/cell/C)
+	if(C)
+		C.forceMove(src)
+		cell = C
 		return
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
 
-/obj/vehicle/sealed/mecha/marauder/add_scanmod(obj/item/stock_parts/scanning_module/scan_mod)
-	if(scan_mod)
-		scan_mod.forceMove(src)
-		scanmod = scan_mod
+/obj/vehicle/sealed/mecha/marauder/add_scanmod(obj/item/stock_parts/scanning_module/sm)
+	if(sm)
+		sm.forceMove(src)
+		scanmod = sm
 		return
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 
