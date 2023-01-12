@@ -361,3 +361,48 @@
   - bugfix: fixes wizard rod form infinitely travelling in hyperspace
   timothymtorres:
   - bugfix: Fix antags being revealed by hallucinations
+2023-01-12:
+  Fikou:
+  - bugfix: fixes twohanded items not letting you switch hands
+  GoldenAlpharex:
+  - code_imp: Made the worn_icons unit test check the worn GAGS config rather than
+      the normal one.
+  LT3:
+  - imageadd: Tram controls are now side mounted, freeing up space. Even better, you
+      now have two of them!
+  - imageadd: Added a new accessible space on the tram for wheelchairs
+  - bugfix: Removed duplicate tram plate/platforms
+  - code_imp: Tram has its own floor subtype for the walls and windows
+  - rscadd: Emergency exit feature added for people who are silly enough to not carry
+      a crowbar
+  LemonInTheDark:
+  - bugfix: You can now properly start drifting after moving out of a drift
+  MiiyaBot:
+  - rscadd: Two new hairstyles! ("All the Fuzz" & "Over Eye (Izutsumi)")
+  - spellcheck: Renamed "Marginally shorter yet long bedhead" to "Shorter Long Bedhead"
+  - spellcheck: Renamed "BedHead 4X" to "Bedhead 4x"
+  - bugfix: Slight changes to "Jade", "Shorter Bedhead", "Bedhead 4x"
+  Rhials:
+  - spellcheck: Head-spears are now named properly when using alternate spear types.
+  SyncIt21:
+  - rscadd: RPED  can now pick up & install machine circuit boards in machine frames
+  - rscadd: RPED can pick up computer circuit boards for storage convenience but doesn't
+      install them
+  - bugfix: don't call after attack twice
+  - bugfix: normal RPED from behaving like an BRPED when installing stock parts in
+      an incomplete machine frame
+  - code_imp: datum stock part for every obj stock part
+  - refactor: all machines & dependent experiments to use datum stock parts
+  Zytolg:
+  - bugfix: Chemists can now properly open and close their desk windoor on Deltastation
+  san7890:
+  - balance: Due to materials costing a lot more than ever, Nanotrasen's Spare ID
+      Safe Supplier have cut down on the space inside of the ID Safe, meaning you
+      can only cram in things as thin as an ID Card.
+  stanalbatross, thedonkified:
+  - rscadd: added the ability to make up to 10 individual highlights in tgchat, customise
+      their colours, and toggle if they highlight the whole message or not. Ported
+      from CM.
+  - rscadd: you can now use regex for text highlighting. The syntax is /[regex expression]/,
+      eg /dog[0-9]/. There are no quantifiers, but you can use capture groups. The
+      regex must read a minimum of two characters.
