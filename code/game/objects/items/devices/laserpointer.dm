@@ -34,6 +34,11 @@
 /obj/item/laser_pointer/Initialize(mapload)
 	. = ..()
 	diode = new(src)
+
+	// Prototype hack
+	if (QDELETED(diode))
+		diode = null
+
 	if(!pointer_icon_state)
 		pointer_icon_state = pick("red_laser","green_laser","blue_laser","purple_laser")
 

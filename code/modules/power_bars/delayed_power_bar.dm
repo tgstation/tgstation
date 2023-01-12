@@ -1,5 +1,6 @@
-#define POWER_BAR_STATE_WAITING_LIFETIME 1
-#define POWER_BAR_STATE_WAITING_RECHARGE_DELAY 2
+#define POWER_BAR_STATE_WAITING_FOR_POKE "waiting_for_poke"
+#define POWER_BAR_STATE_WAITING_LIFETIME "waiting_lifetime"
+#define POWER_BAR_STATE_WAITING_RECHARGE_DELAY "waiting_recharge_delay"
 
 /datum/delayed_power_bar
 	VAR_PRIVATE
@@ -16,14 +17,19 @@
 		lifetime
 		recharge_delay
 		power_bar_gain
+		show_decay
 
-/datum/delayed_power_bar/New(source, initial_delay, lifetime, recharge_delay, power_bar_gain = 1)
+/datum/delayed_power_bar/New(source, initial_delay, lifetime, recharge_delay, power_bar_gain = 1, wait_for_poke = FALSE, show_decay = FALSE)
 	creation_time = world.time
 
-	src.initial_delay = initial_delay
+	src.initial_delay = (initial_delay || 0)
 	src.lifetime = lifetime
-	src.recharge_delay = recharge_delay
+	src.recharge_delay = (recharge_delay || 0)
 	src.power_bar_gain = power_bar_gain
+	src.show_decay = show_decay
+
+	if (wait_for_poke)
+		state = POWER_BAR_STATE_WAITING_FOR_POKE
 
 	power_bar_allocation = new(source, power_bar_gain)
 
@@ -38,6 +44,11 @@
 	return ..()
 
 /datum/delayed_power_bar/process(delta_time)
+	if (state == POWER_BAR_STATE_WAITING_FOR_POKE)
+		if (last_poke_time == 0)
+			return
+		state = POWER_BAR_STATE_WAITING_LIFETIME
+
 	if (world.time - creation_time < initial_delay)
 		return
 
@@ -69,6 +80,9 @@
 	var/time_to_fill
 
 	switch (state)
+		if (POWER_BAR_STATE_WAITING_FOR_POKE)
+			fill = 0
+			time_to_fill = 0
 		if (POWER_BAR_STATE_WAITING_RECHARGE_DELAY)
 			var/delay_since_last_poke = world.time - last_poke_time
 			var/delay_since_last_inactive = world.time - last_inactive_time
@@ -84,18 +98,21 @@
 				time_to_fill = (initial_delay - (world.time - creation_time))
 				fill = 1 - (time_to_fill / initial_delay)
 			else
-				fill = 1
 				time_to_fill = lifetime - (world.time - last_poke_time)
+				fill = show_decay ? (time_to_fill / lifetime) : 1
 
 	return list(
 		"fill" = CLAMP01(fill),
 		"time_to_fill" = max(0, time_to_fill),
 		"power_bar_gain" = power_bar_gain,
+		"state" = state,
 	)
 
 /datum/delayed_power_bar/proc/poke()
 	if (state == POWER_BAR_STATE_WAITING_RECHARGE_DELAY)
 		last_inactive_time = min(last_inactive_time, world.time)
+	else if (state == POWER_BAR_STATE_WAITING_FOR_POKE)
+		creation_time = world.time
 
 	last_poke_time = world.time
 
@@ -130,5 +147,6 @@
 	return display_text()
 #endif
 
+#undef POWER_BAR_STATE_WAITING_FOR_POKE
 #undef POWER_BAR_STATE_WAITING_LIFETIME
 #undef POWER_BAR_STATE_WAITING_RECHARGE_DELAY

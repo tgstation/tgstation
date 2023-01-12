@@ -25,8 +25,13 @@
 
 	VAR_PRIVATE
 		datum/component/singularity/singularity
+
 		datum/delayed_power_bar/delayed_power_bar_one
 		datum/delayed_power_bar/delayed_power_bar_two
+
+		datum/delayed_power_bar/overclocked_power_bar_one
+		datum/delayed_power_bar/overclocked_power_bar_two
+		datum/delayed_power_bar/overclocked_power_bar_three
 
 		damage_per_discharge = 1
 		chance_of_extra_particle_at_zero_health_per_second = 0.4
@@ -53,6 +58,10 @@
 
 	delayed_power_bar_one = new("Singularity engine", initial_delay = 15 SECONDS, lifetime = 15 SECONDS, recharge_delay = 15 SECONDS)
 	delayed_power_bar_two = new("Singularity engine", initial_delay = 12 MINUTES, lifetime = 30 SECONDS, recharge_delay = 90 SECONDS)
+
+	overclocked_power_bar_one = new("Singularity engine (overclock)", lifetime = 7 MINUTES, wait_for_poke = TRUE, show_decay = TRUE)
+	overclocked_power_bar_two = new("Singularity engine (overclock)", lifetime = 11 MINUTES, wait_for_poke = TRUE, show_decay = TRUE)
+	overclocked_power_bar_three = new("Singularity engine (overclock)", lifetime = 14 MINUTES, wait_for_poke = TRUE, show_decay = TRUE)
 
 /obj/contained_singularity/Destroy()
 	QDEL_NULL(singularity)
@@ -122,6 +131,10 @@
 	COOLDOWN_START(src, overclocked_hit_cooldown, 0.1 SECONDS)
 	COOLDOWN_START(src, treat_as_overclocked_cooldown, 8 SECONDS)
 
+	overclocked_power_bar_one.poke()
+	overclocked_power_bar_two.poke()
+	overclocked_power_bar_three.poke()
+
 	for (var/_ in 1 to 3)
 		try_fire_particle()
 
@@ -170,6 +183,11 @@
 		"power_bars" = list(
 			delayed_power_bar_one.bar_ui_data(),
 			delayed_power_bar_two.bar_ui_data(),
+		),
+		"overclocked_power_bars" = list(
+			overclocked_power_bar_one.bar_ui_data(),
+			overclocked_power_bar_two.bar_ui_data(),
+			overclocked_power_bar_three.bar_ui_data(),
 		),
 	)
 

@@ -1,22 +1,36 @@
-import { range } from 'common/collections';
+import { range, sortBy } from 'common/collections';
 import { BooleanLike } from 'common/react';
 import { Fragment, InfernoNode, SFC } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Blink, Box, Button, ByondUi, Icon, NoticeBox, ProgressBar, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
-// MBTODO: Remove this and just make it alpha, since overclock will be blue
-const UNUSED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.2)';
-const USED_POWER_BAR_COLOR = 'rgba(255, 184, 0, 0.7)';
+const UNUSED_POWER_BAR_ALPHA = 0.2;
+const USED_POWER_BAR_ALPHA = 0.7;
+
+const POWER_BAR_COLOR = [255, 184, 0] as const;
+const OVERCLOCKED_BAR_COLOR = [0, 255, 255] as const;
+
+const withAlpha = (color: readonly [number, number, number], alpha: number) =>
+  `rgba(${color.join(',')},${alpha})`;
 
 const ICON_EMITTER = 'wand-sparkles';
 const ICON_SHIELD = 'shield';
+
+enum PowerBarState {
+  WaitingForPoke = 'waiting_for_poke',
+  WaitingLifetime = 'waiting_lifetime',
+  WaitingRechargeDelay = 'waiting_recharge_delay',
+}
 
 type PowerBar = {
   fill: number;
   time_to_fill: number;
   power_bar_gain: number;
+  state: PowerBarState;
 };
+
+const sortPowerBarsByTimeToFill = sortBy<PowerBar>((bar) => -bar.time_to_fill);
 
 type SingularityControlData = {
   enabled_field_generators: number;
@@ -32,6 +46,7 @@ type SingularityControlData = {
     containment_percent: number;
     delay_to_overclock: number;
     power_bars: PowerBar[];
+    overclocked_power_bars: PowerBar[];
   };
 };
 
@@ -217,34 +232,51 @@ const SetupScreen = (props, context) => {
   );
 };
 
-const PowerBarDisplay = ({ powerBar }: { powerBar: PowerBar }) => {
+const PowerBarDisplay = ({
+  color,
+  powerBar,
+  waitForPokeTooltip,
+}: {
+  color: readonly [number, number, number];
+  powerBar: PowerBar;
+  waitForPokeTooltip?: string;
+}) => {
   const timeLeft = powerBar.time_to_fill / 10;
   const minutes = Math.floor(timeLeft / 60);
   const seconds = Math.floor(timeLeft % 60);
   const timeText = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
 
+  let tooltipContent;
+  switch (powerBar.state) {
+    case PowerBarState.WaitingForPoke:
+      tooltipContent = waitForPokeTooltip || 'Inactive';
+      break;
+    case PowerBarState.WaitingLifetime:
+      tooltipContent = `${timeText} until decay`;
+      break;
+    case PowerBarState.WaitingRechargeDelay:
+      tooltipContent = `${timeText} until full`;
+      break;
+  }
+
   return (
-    <Tooltip
-      content={
-        powerBar.fill === 1
-          ? `${timeText} until decay`
-          : `${timeText} until full`
-      }
-      position="bottom">
-      <Box
-        backgroundColor={UNUSED_POWER_BAR_COLOR}
-        height="100%"
-        width="100%"
-        position="relative">
+    <Stack.Item height="100%" width="20%" mr={1}>
+      <Tooltip content={tooltipContent} position="bottom">
         <Box
-          backgroundColor={USED_POWER_BAR_COLOR}
-          height={`${powerBar.fill * 100}%`}
+          backgroundColor={withAlpha(color, UNUSED_POWER_BAR_ALPHA)}
+          height="100%"
           width="100%"
-          position="absolute"
-          bottom={0}
-        />
-      </Box>
-    </Tooltip>
+          position="relative">
+          <Box
+            backgroundColor={withAlpha(color, USED_POWER_BAR_ALPHA)}
+            height={`${powerBar.fill * 100}%`}
+            width="100%"
+            position="absolute"
+            bottom={0}
+          />
+        </Box>
+      </Tooltip>
+    </Stack.Item>
   );
 };
 
@@ -257,16 +289,29 @@ const OutputWindow = (props, context) => {
       {singularityData.power_bars.map((bar) => (
         <Fragment key={`power_bars_${bar}`}>
           {range(0, bar.power_bar_gain).map((index) => (
-            <Stack.Item
-              key={`power_bar_${bar}_${index}`}
-              height="100%"
-              width="20%"
-              mr={1}>
-              <PowerBarDisplay powerBar={bar} />
-            </Stack.Item>
+            <PowerBarDisplay
+              key={`power_bar_${index}`}
+              powerBar={bar}
+              color={POWER_BAR_COLOR}
+            />
           ))}
         </Fragment>
       ))}
+
+      {sortPowerBarsByTimeToFill(singularityData.overclocked_power_bars).map(
+        (bar) => (
+          <Fragment key={`power_bars_${bar}`}>
+            {range(0, bar.power_bar_gain).map((index) => (
+              <PowerBarDisplay
+                key={`overclocked_power_bar_${index}`}
+                powerBar={bar}
+                waitForPokeTooltip="Overclock necessary to fill"
+                color={OVERCLOCKED_BAR_COLOR}
+              />
+            ))}
+          </Fragment>
+        )
+      )}
     </Stack>
   );
 };
