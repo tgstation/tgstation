@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - rscadd: "RPED  can now pick up & install machine circuit boards in machine frames"
-  - rscadd: "RPED can pick up computer circuit boards for storage convenience but doesn't install them"

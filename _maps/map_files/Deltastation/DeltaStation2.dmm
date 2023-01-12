@@ -37164,7 +37164,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/west{
 	name = "Chemistry Desk";
-	req_access = list("chemistry")
+	req_access = list("plumbing")
 	},
 /obj/item/paper{
 	pixel_x = -1;

@@ -1,0 +1,4 @@
+author: "1393F"
+delete-after: True
+changes:
+  - bugfix: "you can nolonger use a goldgrub as a shield to kill colossus"
