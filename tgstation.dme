@@ -4527,6 +4527,7 @@
 #include "code\modules\singularity_engine\connects_to_singularity_console.dm"
 #include "code\modules\singularity_engine\contained_singularity.dm"
 #include "code\modules\singularity_engine\field_generator.dm"
+#include "code\modules\singularity_engine\gravity_anchor.dm"
 #include "code\modules\singularity_engine\singularity_generator.dm"
 #include "code\modules\singularity_engine\turret.dm"
 #include "code\modules\spatial_grid\cell_tracker.dm"

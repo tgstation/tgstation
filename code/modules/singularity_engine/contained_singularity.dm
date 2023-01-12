@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(contained_singularities)
+
 // MBTODO: Play the NarSie tearing effect when it's about to release (lol)
 // MBTODO: Insta-red alert for the sake of the prototype...
 /obj/contained_singularity
@@ -23,15 +25,18 @@
 	var/health = 100
 	var/max_health = 100
 
+	var/datum/singularity_anchor_loop/anchor_loop
+	var/obj/item/gravity_anchor/gravity_anchor
+
 	VAR_PRIVATE
 		datum/component/singularity/singularity
 
-		datum/delayed_power_bar/delayed_power_bar_one
-		datum/delayed_power_bar/delayed_power_bar_two
+		static/datum/delayed_power_bar/delayed_power_bar_one
+		static/datum/delayed_power_bar/delayed_power_bar_two
 
-		datum/delayed_power_bar/overclocked_power_bar_one
-		datum/delayed_power_bar/overclocked_power_bar_two
-		datum/delayed_power_bar/overclocked_power_bar_three
+		static/datum/delayed_power_bar/overclocked_power_bar_one
+		static/datum/delayed_power_bar/overclocked_power_bar_two
+		static/datum/delayed_power_bar/overclocked_power_bar_three
 
 		damage_per_discharge = 1
 		chance_of_extra_particle_at_zero_health_per_second = 0.4
@@ -44,6 +49,8 @@
 
 /obj/contained_singularity/Initialize(mapload)
 	. = ..()
+
+	GLOB.contained_singularities += src
 
 	singularity = AddComponent( \
 		/datum/component/singularity, \
@@ -64,9 +71,18 @@
 	overclocked_power_bar_three = new("Singularity engine (overclock)", lifetime = 14 MINUTES, wait_for_poke = TRUE, show_decay = TRUE)
 
 /obj/contained_singularity/Destroy()
+	GLOB.contained_singularities -= src
+
+	gravity_anchor = null
+
+	QDEL_NULL(anchor_loop)
 	QDEL_NULL(singularity)
+
 	QDEL_NULL(delayed_power_bar_one)
 	QDEL_NULL(delayed_power_bar_two)
+	QDEL_NULL(overclocked_power_bar_one)
+	QDEL_NULL(overclocked_power_bar_two)
+	QDEL_NULL(overclocked_power_bar_three)
 
 	STOP_PROCESSING(SSobj, src)
 
@@ -75,7 +91,7 @@
 /obj/contained_singularity/update_overlays()
 	. = ..()
 
-	var/mutable_appearance/mask = mutable_appearance('icons/effects/96x96.dmi', "singularity_s3")
+	var/mutable_appearance/mask = mutable_appearance('icons/effects/96x96.dmi', isnull(gravity_anchor) ? "singularity_s3" : "clockwork_gateway_active")
 	mask.blend_mode = BLEND_INSET_OVERLAY
 	. += mask
 
@@ -110,7 +126,7 @@
 		try_fire_particle()
 
 	if (health > 0 && world.time - time_since_last_hit >= time_to_wait_before_healing && world.time - last_heal >= heal_interval)
-		health = min(health + heal_per_interval, max_health)
+		health = min(round(health + heal_per_interval, 0.1), max_health)
 		last_heal = world.time
 
 /obj/contained_singularity/proc/fire_particle_reaction()
@@ -138,12 +154,12 @@
 	for (var/_ in 1 to 3)
 		try_fire_particle()
 
-/obj/contained_singularity/proc/try_fire_particle()
+/obj/contained_singularity/proc/try_fire_particle(angle)
 	set waitfor = FALSE
 
 	var/obj/projectile/singularity_particle/particle = new(get_turf(src))
 	particle.fired_from = src
-	particle.fire(rand(0, 360))
+	particle.fire(isnull(angle) ? rand(0, 360) : angle)
 	RegisterSignal(particle, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
 	addtimer(CALLBACK(src, PROC_REF(projectile_expired), particle), 3.5 SECONDS)
 
@@ -195,6 +211,9 @@
 	if (health == 0)
 		return
 
+	if (!isnull(gravity_anchor))
+		return
+
 	health = clamp(health - damage, 0, max_health)
 	SEND_SIGNAL(src, COMSIG_SINGULARITY_TAKE_DAMAGE, damage)
 
@@ -225,6 +244,21 @@
 	new /obj/singularity(get_turf(src), /* starting_energy = */ POWER_BAR_FLAG(FFLAG_DEFAULT_SINGULO_ENERGY))
 	qdel(src)
 
+/obj/contained_singularity/proc/set_anchor(obj/item/gravity_anchor/gravity_anchor)
+	if (!isnull(src.gravity_anchor))
+		return FALSE
+
+	src.gravity_anchor = gravity_anchor
+	update_appearance(UPDATE_ICON)
+	anchor_loop = new(src)
+
+	return TRUE
+
+/obj/contained_singularity/proc/remove_anchor()
+	QDEL_NULL(anchor_loop)
+	gravity_anchor = null
+	update_appearance(UPDATE_ICON)
+
 /obj/projectile/singularity_particle
 	name = "singularity particle"
 	icon_state = "pulse1"
@@ -246,3 +280,137 @@
 		return FALSE
 
 	return ..()
+
+#define STAGE_DELAY (2.5 SECONDS)
+
+#define STAGE_PROJECTILE_STORM 1
+#define STAGE_X_BEAM 2
+#define STAGE_MAX STAGE_X_BEAM
+
+// Separated for processing reasons
+/datum/singularity_anchor_loop
+	var/obj/contained_singularity/singularity
+
+	var/time_to_next_stage
+	var/stage = STAGE_PROJECTILE_STORM
+
+	var/projectile_storm_revolution = 2 SECONDS
+	var/projectile_storm_per_projectile_interval = 0.2 SECONDS
+	var/projectile_storm_current_angle = 0
+	COOLDOWN_DECLARE(projectile_storm_cooldown)
+
+	var/x_beam_preview_time = 0.3 SECONDS
+	var/x_beam_preview_angle = 0
+	var/x_beam_half_range = 7
+	var/list/turf/x_beam_peak_turfs = list()
+	var/list/turf/x_beam_target_turfs = list()
+	var/list/obj/effect/x_beam_preview/x_beam_previews = list()
+	COOLDOWN_DECLARE(x_beam_cooldown)
+
+/datum/singularity_anchor_loop/New(obj/contained_singularity/singularity)
+	src.singularity = singularity
+
+	time_to_next_stage = world.time + STAGE_DELAY
+
+	START_PROCESSING(SSsingularity_anchor_loop, src)
+
+/datum/singularity_anchor_loop/Destroy(force, ...)
+	if (singularity.anchor_loop == src)
+		singularity.anchor_loop = null
+
+	singularity = null
+	STOP_PROCESSING(SSsingularity_anchor_loop, src)
+
+	QDEL_LIST(x_beam_previews)
+
+	x_beam_peak_turfs = null
+	x_beam_target_turfs = null
+
+	return ..()
+
+/datum/singularity_anchor_loop/process(delta_time)
+	if (QDELETED(singularity.gravity_anchor))
+		qdel(src)
+		return
+
+	if (world.time >= time_to_next_stage)
+		time_to_next_stage = world.time + STAGE_DELAY
+
+		if (stage == STAGE_X_BEAM)
+			addtimer(CALLBACK(src, PROC_REF(fire_existing_x_beam)), COOLDOWN_TIMELEFT(src, x_beam_cooldown), TIMER_STOPPABLE | TIMER_DELETE_ME)
+
+		stage = (stage % STAGE_MAX) + 1
+
+	switch (stage)
+		if (STAGE_PROJECTILE_STORM)
+			projectile_storm()
+		if (STAGE_X_BEAM)
+			x_beam()
+
+/datum/singularity_anchor_loop/proc/projectile_storm()
+	if (!COOLDOWN_FINISHED(src, projectile_storm_cooldown))
+		return
+
+	COOLDOWN_START(src, projectile_storm_cooldown, projectile_storm_per_projectile_interval)
+
+	projectile_storm_current_angle += 360 * (projectile_storm_per_projectile_interval / projectile_storm_revolution)
+	singularity.try_fire_particle(projectile_storm_current_angle)
+
+/datum/singularity_anchor_loop/proc/x_beam()
+	if (!COOLDOWN_FINISHED(src, x_beam_cooldown))
+		return
+
+	fire_existing_x_beam()
+
+	COOLDOWN_START(src, x_beam_cooldown, x_beam_preview_time)
+
+	x_beam_preview_angle += rand(25, 75)
+
+	var/turf/singularity_turf = get_turf(singularity)
+
+	for (var/offset in 0 to 270 step 90)
+		var/turf/target_turf = get_turf_in_angle(
+			SIMPLIFY_DEGREES(x_beam_preview_angle + offset),
+			singularity_turf,
+			x_beam_half_range,
+		)
+
+		x_beam_peak_turfs += target_turf
+		x_beam_target_turfs += get_line(singularity_turf, target_turf)
+
+	for (var/turf/target_turf in x_beam_target_turfs)
+		var/obj/effect/x_beam_preview/preview = new(target_turf)
+		x_beam_previews += preview
+
+/datum/singularity_anchor_loop/proc/fire_existing_x_beam()
+	if (x_beam_target_turfs.len == 0)
+		return
+
+	playsound(singularity, 'sound/magic/lightningbolt.ogg', 70, vary = TRUE, pressure_affected = FALSE)
+
+	for (var/turf/peak_turf as anything in x_beam_peak_turfs)
+		singularity.Beam(peak_turf, "sm_arc_dbz_referance", time = 0.4 SECONDS)
+
+	for (var/turf/target_turf as anything in x_beam_target_turfs)
+		for (var/mob/living/victim in target_turf)
+			victim.apply_damage(60, BURN)
+
+	x_beam_peak_turfs.Cut()
+	x_beam_target_turfs.Cut()
+	QDEL_LIST(x_beam_previews) // MBTODO: Reuse previews
+
+/obj/effect/x_beam_preview
+	icon_state = "shield-red"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	layer = BELOW_MOB_LAYER
+
+PROCESSING_SUBSYSTEM_DEF(singularity_anchor_loop)
+	name = "Singularity Anchor Loop"
+	flags = SS_NO_INIT
+	wait = 0.1 SECONDS
+
+#undef STAGE_DELAY
+#undef STAGE_PROJECTILE_STORM
+#undef STAGE_X_BEAM
+#undef STAGE_MAX

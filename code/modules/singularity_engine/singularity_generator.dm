@@ -36,7 +36,8 @@
 	starting = TRUE
 
 	playsound(src, 'sound/magic/lightning_chargeup.ogg', vol = 80, extrarange = 4, falloff_exponent = 2, vary = FALSE, pressure_affected = FALSE, ignore_walls = TRUE)
-	stoplag(9 SECONDS)
+	// stoplag(9 SECONDS)
+	stoplag(0.1)
 
 	for (var/mob/living/carbon/viewer in viewers(10, src))
 		viewer.flash_act(intensity = FLASH_PROTECTION_WELDER + 1, visual = TRUE)

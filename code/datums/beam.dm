@@ -98,6 +98,10 @@
 	origin = null
 	return ..()
 
+/datum/beam/proc/set_icon_state(icon_state)
+	src.icon_state = icon_state
+	visuals?.icon_state = icon_state
+
 /**
  * Creates the beam effects and places them in a line from the origin to the target. Sets their rotation to make the beams face the target, too.
  */

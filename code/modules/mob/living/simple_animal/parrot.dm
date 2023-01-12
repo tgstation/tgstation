@@ -897,7 +897,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list(
 		"Poly wanna cracker!",
-		":e Check the crystal, you chucklefucks!",
 		":e Wire the solars, you lazy bums!",
 		":e WHO TOOK THE DAMN MODSUITS?",
 	)
@@ -911,8 +910,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /mob/living/simple_animal/parrot/poly/Initialize(mapload)
 	if (SSpower_bars.enabled)
 		speak += ":e OH GOD ITS LOOSE CALL THE SHUTTLE"
+		speak += ":e Overclock her, chef needs more meat!"
 	else
 		speak += ":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE"
+		speak += ":e Check the crystal, you chucklefucks!"
 
 	ears = new /obj/item/radio/headset/headset_eng(src)
 	available_channels = list(":e")
