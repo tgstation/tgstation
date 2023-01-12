@@ -562,3 +562,24 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /datum/preference/text/compile_constant_data()
 	return list("maximum_length" = maximum_value_length)
+
+/// A dummy preference to hold the text to speech test button.
+/datum/preference/tts_test
+	abstract_type = /datum/preference/tts_test
+
+/datum/preference/tts_test/is_accessible(datum/preferences/preferences)
+	if(!SStts.tts_enabled)
+		return FALSE
+	return ..()
+
+/datum/preference/tts_test/deserialize(input, datum/preferences/preferences)
+	return TRUE
+
+/datum/preference/tts_test/create_default_value()
+	return TRUE
+
+/datum/preference/tts_test/is_valid(value)
+	return TRUE
+
+/datum/preference/tts_test/compile_constant_data()
+	return TRUE

@@ -365,3 +365,15 @@ export const FeatureShortTextInput = (
     />
   );
 };
+
+export const FeatureTTSTestInput = (props: FeatureValueProps<string>) => {
+  return (
+    <Button
+      width="100%"
+      onClick={() => {
+        props.act('test_tts');
+      }}>
+      Test TTS 3 Second Cooldown
+    </Button>
+  );
+};

@@ -82,6 +82,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// If set to TRUE, will update character_profiles on the next ui_data tick.
 	var/tainted_character_profiles = FALSE
 
+	/// Cooldown on requesting a TTS preview.
+	COOLDOWN_DECLARE(tts_test_cooldown)
+
 /datum/preferences/Destroy(force, ...)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
@@ -269,6 +272,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				return FALSE
 
 			return TRUE
+
+		if ("test_tts")
+			if(!COOLDOWN_FINISHED(src, tts_test_cooldown))
+				to_chat(usr, "TTS preview on cooldown.")
+				return
+			COOLDOWN_START(src, tts_test_cooldown, 3 SECONDS)
+			// TODO: TEST TTS HERE, SEND TO USR
+			var/test_string = "This is a test of the Text to Speech system."
+			usr.playsound_local(usr, 'sound/effects/gong.ogg', 100, TRUE)
+			return FALSE
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		var/delegation = preference_middleware.action_delegations[action]
