@@ -165,7 +165,18 @@
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
 		humi.adjust_coretemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, affected_mob.get_body_temp_normal())
+	if(isplasmaman(affected_mob)) // hot ice is frozen plasma
+		for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
+			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
 	return ..()
+
+/datum/reagent/toxin/hot_ice/on_mob_metabolize(mob/living/carbon/affected_mob)
+	var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM)) // Some livers can metabolize plasma
+		toxpwr = 0
+
+/datum/reagent/toxin/hot_ice/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	toxpwr = initial(toxpwr)
 
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
