@@ -9,6 +9,7 @@
 	speed = 1
 	maxHealth = 40
 	health = 40
+	basic_mob_flags = DEL_ON_DEATH
 
 	obj_damage = 20
 	melee_damage_lower = 5
@@ -101,7 +102,7 @@
 	. = ..()
 	chosen_hat_colour = pick_weight(gnome_hat_colours)
 	apply_colour()
-	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/generic)
+	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/generic))
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/ai_retaliate, /mob/living/basic/garden_gnome)
 	AddComponent(/datum/component/swarming)
