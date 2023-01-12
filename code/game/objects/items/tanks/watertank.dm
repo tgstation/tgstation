@@ -29,7 +29,8 @@
 	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
 
 /obj/item/watertank/Destroy()
-	QDEL_NULL(noz)
+	if(!QDELETED(noz))
+		QDEL_NULL(noz)
 	return ..()
 
 
@@ -141,7 +142,8 @@
 	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
 
 /obj/item/reagent_containers/spray/mister/Destroy(force)
-	tank = null
+	if(!QDELETED(noz))
+		QDEL_NULL(tank)
 	return ..()
 
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
