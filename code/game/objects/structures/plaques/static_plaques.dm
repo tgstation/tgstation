@@ -141,3 +141,9 @@
 /obj/structure/sign/plaques/kiddie/gameoflife
 	name = "\improper Conway's The Game Of Life plaque"
 	desc = "A plaque detailing the historical significance of The Game Of Life in the field of computer science, and that the mural underfoot is a representation of the game in action."
+
+/obj/structure/sign/plaques/tram
+	name = "\improper tram information plate"
+	desc = "A plate showing details from the manufacturer about this Nakamura Engineering SkyyTram Mk IV, serial number LT301TG2563. We are not responsible for any injuries or fatalites caused by usage of the tram. For technical assistance in the event of malfunction please contact: (the info seems to be scratched up to the point of being unreadable.)"
+	icon_state = "commission_tram"
+	custom_materials = list(/datum/material/titanium = 2000)
