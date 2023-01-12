@@ -106,7 +106,7 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			set_light(2)
+			set_light(2, 1.25, COLOR_BLUE_WHITE)
 			return
 		set_light(0)
 
@@ -212,7 +212,7 @@
 /turf/open/space/rust_heretic_act()
 	return FALSE
 
-/turf/open/space/ReplaceWithLattice()
+/turf/open/space/attempt_lattice_replacement()
 	var/dest_x = destination_x
 	var/dest_y = destination_y
 	var/dest_z = destination_z

@@ -1,0 +1,6 @@
+author: "dawsonkeyes"
+delete-after: True
+changes:
+  - bugfix: "metal hydrogen golems no longer die to low pressures and cold temperatures"
+  - bugfix: "metal hydrogen golems are no longer solid white, and are now the actual color of metal hydrogen"
+  - balance: "metal hydrogen golems are also now immune to most environmental threats, and get more armor"

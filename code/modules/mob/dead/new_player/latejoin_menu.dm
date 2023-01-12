@@ -26,8 +26,10 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		// In case they reopen the GUI
-		user.jobs_menu_mounted = FALSE
-		addtimer(CALLBACK(src, PROC_REF(scream_at_player), user), 5 SECONDS)
+		// FIXME: this can cause a runtime since user can be a living mob
+		if(istype(user))
+			user.jobs_menu_mounted = FALSE
+			addtimer(CALLBACK(src, PROC_REF(scream_at_player), user), 5 SECONDS)
 
 		ui = new(user, src, "JobSelection", "Latejoin Menu")
 		ui.open()
@@ -80,7 +82,8 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 				department_data["open_slots"] = "∞"
 
 			if(department_data["open_slots"] != "∞")
-				department_data["open_slots"] += job_datum.total_positions - job_datum.current_positions
+				if(job_datum.total_positions - job_datum.current_positions > 0)
+					department_data["open_slots"] += job_datum.total_positions - job_datum.current_positions
 
 			department_jobs[job_datum.title] = job_data
 
@@ -111,9 +114,8 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 	return list("departments_static" = departments)
 
-// we can't use GLOB.new_player_state here since it also allows any admin to see the ui, which will cause runtimes
-/datum/latejoin_menu/ui_status(mob/user)
-	return isnewplayer(user) ? UI_INTERACTIVE : UI_CLOSE
+/datum/latejoin_menu/ui_state(mob/user)
+	return GLOB.new_player_state
 
 /datum/latejoin_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -158,9 +160,6 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.
 			owner.AttemptLateSpawn(params["job"])
-
-			return TRUE
-
 		if("viewpoll")
 			var/datum/poll_question/poll = locate(params["viewpoll"]) in GLOB.polls
 			if(!poll)

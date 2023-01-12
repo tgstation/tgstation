@@ -6,7 +6,7 @@
 	movedelay = 4
 	max_integrity = 400
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
-	armor = list(MELEE = 40, BULLET = 35, LASER = 15, ENERGY = 10, BOMB = 20, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/mecha_durand
 	max_temperature = 30000
 	force = 40
 	destruction_sleep_duration = 40
@@ -20,6 +20,15 @@
 	)
 	var/obj/durand_shield/shield
 
+
+/datum/armor/mecha_durand
+	melee = 40
+	bullet = 35
+	laser = 15
+	energy = 10
+	bomb = 20
+	fire = 100
+	acid = 100
 
 /obj/vehicle/sealed/mecha/durand/Initialize(mapload)
 	. = ..()
@@ -104,9 +113,8 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 /obj/vehicle/sealed/mecha/durand/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0)
 	if(defense_check(user.loc))
 		log_message("Attack absorbed by defense field. Attacker - [user].", LOG_MECHA, color="orange")
-		shield.attack_generic(user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
-	else
-		. = ..()
+		return shield.attack_generic(user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
+	return ..()
 
 /obj/vehicle/sealed/mecha/durand/blob_act(obj/structure/blob/B)
 	if(defense_check(B.loc))

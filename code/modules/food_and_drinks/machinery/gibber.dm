@@ -27,19 +27,19 @@
 	. = ..()
 	gibtime = 40
 	meat_produced = initial(meat_produced)
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		meat_produced += B.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gibtime -= 5 * M.rating
-		if(M.rating >= 2)
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		meat_produced += matter_bin.tier
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		gibtime -= 5 * manipulator.tier
+		if(manipulator.tier >= 2)
 			ignore_clothing = TRUE
 
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
-		for(var/obj/item/stock_parts/manipulator/M in component_parts)
-			if(M.rating >= 2)
+		for(var/datum/stock_part/manipulator/manipulator in component_parts)
+			if(manipulator.tier >= 2)
 				. += span_notice("[src] has been upgraded to process inorganic materials.")
 
 /obj/machinery/gibber/update_overlays()

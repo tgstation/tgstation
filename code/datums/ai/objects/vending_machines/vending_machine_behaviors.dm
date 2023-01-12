@@ -7,7 +7,7 @@
 
 /datum/ai_behavior/vendor_crush/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	controller.set_movement_target(controller.blackboard[target_key])
+	set_movement_target(controller, controller.blackboard[target_key])
 
 
 /datum/ai_behavior/vendor_crush/perform(delta_time, datum/ai_controller/controller)

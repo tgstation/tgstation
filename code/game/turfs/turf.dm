@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/overfloor_placed = FALSE
 	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
+	/// If there is a lattice underneat this turf. Used for the attempt_lattice_replacement proc to determine if it should place lattice.
+	var/lattice_underneath = TRUE
 
 	// baseturfs can be either a list or a single turf type.
 	// In class definition like here it should always be a single type.
@@ -90,6 +92,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// Sorry for the mess
 	var/area/in_contents_of
 #endif
+	/// How much explosive resistance this turf is providing to itself
+	/// Defaults to -1, interpreted as initial(explosive_resistance)
+	/// This is an optimization to prevent turfs from needing to set these on init
+	/// This would either be expensive, or impossible to manage. Let's just avoid it yes?
+	/// Never directly access this, use get_explosive_block() instead
+	var/inherent_explosive_resistance = -1
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
@@ -133,18 +141,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	levelupdate()
 
-	if (length(smoothing_groups))
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
-			assert_sorted(smoothing_groups, "[type].smoothing_groups")
+	SETUP_SMOOTHING()
 
-		SET_BITFLAG_LIST(smoothing_groups)
-	if (length(canSmoothWith))
-		if (PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups))
-			assert_sorted(canSmoothWith, "[type].canSmoothWith")
-
-		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
-			smoothing_flags |= SMOOTH_OBJ
-		SET_BITFLAG_LIST(canSmoothWith)
 	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
@@ -175,11 +173,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if(uses_integrity)
 		atom_integrity = max_integrity
-
-		if (islist(armor))
-			armor = getArmor(arglist(armor))
-		else if (!armor)
-			armor = getArmor()
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -386,29 +379,32 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
-	var/atom/firstbump
-	var/canPassSelf = CanPass(mover, get_dir(src, mover))
-	if(canPassSelf || (mover.movement_type & PHASING))
+	var/atom/first_bump
+	var/can_pass_self = CanPass(mover, get_dir(src, mover))
+
+	if(can_pass_self)
+		var/atom/mover_loc = mover.loc
+		var/mover_is_phasing = mover.movement_type & PHASING
 		for(var/atom/movable/thing as anything in contents)
-			if(thing == mover || thing == mover.loc) // Multi tile objects and moving out of other objects
+			if(thing == mover || thing == mover_loc) // Multi tile objects and moving out of other objects
 				continue
 			if(!thing.Cross(mover))
 				if(QDELETED(mover)) //deleted from Cross() (CanPass is pure so it cant delete, Cross shouldnt be doing this either though, but it can happen)
 					return FALSE
-				if((mover.movement_type & PHASING))
+				if(mover_is_phasing)
 					mover.Bump(thing)
 					if(QDELETED(mover)) //deleted from Bump()
 						return FALSE
 					continue
 				else
-					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
-						firstbump = thing
+					if(!first_bump || ((thing.layer > first_bump.layer || thing.flags_1 & ON_BORDER_1) && !(first_bump.flags_1 & ON_BORDER_1)))
+						first_bump = thing
 	if(QDELETED(mover)) //Mover deleted from Cross/CanPass/Bump, do not proceed.
 		return FALSE
-	if(!canPassSelf) //Even if mover is unstoppable they need to bump us.
-		firstbump = src
-	if(firstbump)
-		mover.Bump(firstbump)
+	if(!can_pass_self) //Even if mover is unstoppable they need to bump us.
+		first_bump = src
+	if(first_bump)
+		mover.Bump(first_bump)
 		return (mover.movement_type & PHASING)
 	return TRUE
 
@@ -683,6 +679,26 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			continue
 		movable_content.wash(clean_types)
 
+/turf/set_density(new_value)
+	var/old_density = density
+	. = ..()
+	if(old_density == density)
+		return
+
+	if(old_density)
+		explosive_resistance -= get_explosive_block()
+	if(density)
+		explosive_resistance += get_explosive_block()
+
+/// Wrapper around inherent_explosive_resistance
+/// We assume this proc is cold, so we can move the "what is our block" into it
+/turf/proc/get_explosive_block()
+	if(inherent_explosive_resistance != -1)
+		return inherent_explosive_resistance
+	if(explosive_resistance)
+		return initial(explosive_resistance)
+	return 0
+
 /**
  * Returns adjacent turfs to this turf that are reachable, in all cardinal directions
  *
@@ -712,3 +728,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/TakeTemperature(temp)
 	temperature += temp
+
+// I'm sorry, this is the only way that both makes sense and is cheap
+/turf/set_explosion_block(explosion_block)
+	explosive_resistance -= get_explosive_block()
+	inherent_explosive_resistance = explosion_block
+	explosive_resistance += get_explosive_block()

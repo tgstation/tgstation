@@ -5,8 +5,6 @@
 
 	update_gravity(has_gravity())
 
-	handle_status_effects(delta_time, times_fired)
-
 	handle_traits(delta_time, times_fired)
 
 	if(malfhack?.aidisabled)
@@ -62,6 +60,7 @@
 	update_stat()
 	diag_hud_set_health()
 	disconnect_shell()
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/silicon/ai/update_stat()
 	if(status_flags & GODMODE)

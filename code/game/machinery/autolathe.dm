@@ -338,14 +338,14 @@
 /obj/machinery/autolathe/RefreshParts()
 	. = ..()
 	var/mat_capacity = 0
-	for(var/obj/item/stock_parts/matter_bin/new_matter_bin in component_parts)
-		mat_capacity += new_matter_bin.rating*75000
+	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
+		mat_capacity += new_matter_bin.tier * 75000
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_capacity
 
 	var/efficiency=1.8
-	for(var/obj/item/stock_parts/manipulator/new_manipulator in component_parts)
-		efficiency -= new_manipulator.rating*0.2
+	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
+		efficiency -= new_manipulator.tier * 0.2
 	creation_efficiency = max(1,efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of manipulator efficiency
 
 /obj/machinery/autolathe/examine(mob/user)
@@ -355,7 +355,7 @@
 		. += span_notice("The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[creation_efficiency*100]%</b>.")
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D, amount = 1)
-	if(length(D.make_reagents))
+	if(D.make_reagent)
 		return FALSE
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : creation_efficiency)

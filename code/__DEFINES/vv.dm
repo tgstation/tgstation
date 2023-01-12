@@ -97,6 +97,7 @@
 #define VV_HK_EDIT_PARTICLES "edit_particles"
 #define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
 #define VV_HK_ADD_AI "add_ai"
+#define VV_HK_ARMOR_MOD "mod_obj_armor"
 
 // /atom/movable
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
@@ -104,7 +105,6 @@
 // /obj
 #define VV_HK_OSAY "osay"
 #define VV_HK_MASS_DEL_TYPE "mass_delete_type"
-#define VV_HK_ARMOR_MOD "mod_obj_armor"
 
 // /obj/item
 #define VV_HK_ADD_FANTASY_AFFIX "add_fantasy_affix"
@@ -130,6 +130,7 @@
 #define VV_HK_REMOVE_MOOD "removemood"
 #define VV_HK_GIVE_HALLUCINATION "give_hallucination"
 #define VV_HK_GIVE_DELUSION_HALLUCINATION "give_hallucination_delusion"
+#define VV_HK_GIVE_GUARDIAN_SPIRIT "give_guardian_spirit"
 
 // /mob/living/carbon
 #define VV_HK_MAKE_AI "aiify"

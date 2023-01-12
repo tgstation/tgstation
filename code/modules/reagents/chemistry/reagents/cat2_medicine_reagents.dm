@@ -132,7 +132,7 @@
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/affected_mob, delta_time, times_fired)
 	affected_mob.adjustStaminaLoss(3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
 	if(affected_mob.getStaminaLoss() >= 80)
-		affected_mob.adjust_drowsyness(1 * REM * delta_time)
+		affected_mob.adjust_drowsiness(2 SECONDS * REM * delta_time)
 	if(affected_mob.getStaminaLoss() >= 100)
 		to_chat(affected_mob,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
 		affected_mob.adjustStaminaLoss(-100, TRUE, required_biotype = affected_biotype)
@@ -267,16 +267,16 @@
 	ph = 5.6
 	inverse_chem = /datum/reagent/inverse/healing/tirimol
 	inverse_chem_val = 0.4
-	/// A cooldown for spacing bursts of stamina damage
-	COOLDOWN_DECLARE(drowsycd)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+	/// A cooldown for spacing bursts of stamina damage
+	COOLDOWN_DECLARE(drowsycd)
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/affected_mob, delta_time, times_fired)
 	affected_mob.adjustOxyLoss(-3 * REM * delta_time * normalise_creation_purity(), required_biotype = affected_biotype)
 	affected_mob.adjustStaminaLoss(2 * REM * delta_time, required_biotype = affected_biotype)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
-		affected_mob.adjust_drowsyness(10)
+		affected_mob.adjust_drowsiness(20 SECONDS)
 		COOLDOWN_START(src, drowsycd, 45 SECONDS)
 	else if(!drowsycd)
 		COOLDOWN_START(src, drowsycd, 15 SECONDS)
@@ -364,7 +364,9 @@
 
 // Antitoxin binds plants pretty well. So the tox goes significantly down
 /datum/reagent/medicine/c2/multiver/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_toxic(-(round(chems.get_reagent_amount(type) * 2)*normalise_creation_purity())) //0-2.66, 2 by default (0.75 purity).
 
 #define issyrinormusc(A) (istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either

@@ -30,7 +30,7 @@
 	response_help_continuous = "pats"
 	response_help_simple = "pat"
 
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 
 	ai_controller = /datum/ai_controller/basic_controller/mothroach
 
@@ -67,7 +67,7 @@
 /datum/ai_controller/basic_controller/mothroach
 	blackboard = list()
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
