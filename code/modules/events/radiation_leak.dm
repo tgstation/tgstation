@@ -82,14 +82,15 @@
 
 	the_source_of_our_problems.visible_message(span_danger("[the_source_of_our_problems] starts to emanate a horrible green gas!"))
 	// Add the component that makes the thing radioactive
-	the_source_of_our_problems.AddComponent(/datum/component/radioactive_emitter, \
+	the_source_of_our_problems.AddComponent(
+		/datum/component/radioactive_emitter, \
 		cooldown_time = 2 SECONDS, \
 		range = 5, \
 		threshold = RAD_MEDIUM_INSULATION, \
 		examine_text = span_green("<i>It's emanating a green gas... You could probably stop it by [english_list(methods_to_fix, and_text = " or ")].</i>"), \
 		signals_which_delete_us = signals_to_add, \
 		sigreturn = COMPONENT_BLOCK_TOOL_ATTACK, \
-		on_signal_callback = CALLBACK(src, .proc/on_tool), \
+		on_signal_callback = CALLBACK(src, PROC_REF(on_tool)), \
 	)
 
 	// And yknow puffs some nasty reagents into the air, just to seal the deal

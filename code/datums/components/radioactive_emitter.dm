@@ -57,10 +57,10 @@
 
 /datum/component/radioactive_emitter/RegisterWithParent()
 	if(length(signals_which_delete_us))
-		RegisterSignal(parent, signals_which_delete_us, .proc/delete_us)
+		RegisterSignals(parent, signals_which_delete_us, PROC_REF(delete_us))
 
 	if(examine_text)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/radioactive_emitter/UnregisterFromParent()
 	if(length(signals_which_delete_us))
@@ -101,7 +101,7 @@
 	SIGNAL_HANDLER
 
 	if(on_signal_callback)
-		INVOKE_ASYNC(src, .proc/aync_delete_us, args)
+		INVOKE_ASYNC(src, PROC_REF(aync_delete_us), args)
 	else
 		qdel(src)
 
