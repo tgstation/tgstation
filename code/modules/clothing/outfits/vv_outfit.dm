@@ -46,7 +46,7 @@
 
 /proc/collect_vv(obj/item/I)
 	//Temporary/Internal stuff, do not copy these.
-	var/static/list/ignored_vars = list("vars","x","y","z","plane","layer","override","animate_movement","pixel_step_size","screen_loc","fingerprintslast","tip_timer")
+	var/static/list/ignored_vars = list("vars","x","y","z","plane","layer","override","animate_movement","pixel_step_size","screen_loc","fingerprintslast","tip_timer","cached_ref")
 
 	if(istype(I) && I.datum_flags & DF_VAR_EDITED)
 		var/list/vedits = list()
