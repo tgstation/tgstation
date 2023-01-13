@@ -36,33 +36,35 @@
 	access_card.add_access(engi_trim.access + engi_trim.wildcard_access)
 	base_access = access_card.access.Copy()
 
-	if(toolbox_color == "s")
+	var/obj/toolbox/syndicate = /obj/toolbox/syndicate
+	if (toolbox_color == initial(syndicate.icon_state))
 		health = 100
 		maxHealth = 100
 
 /mob/living/basic/bot/floorbot/Exited(atom/movable/gone, direction)
-	if(tilestack == gone)
-		if(tilestack && tilestack.max_amount < tilestack.amount) //split the stack if it exceeds its normal max_amount
-			var/iterations = round(tilestack.amount/tilestack.max_amount) //round() without second arg floors the value
-			for(var/a in 1 to iterations)
-				if(a == iterations)
-					tilestack.split_stack(null, tilestack.amount - tilestack.max_amount)
-				else
-					tilestack.split_stack(null, tilestack.max_amount)
-		tilestack = null
+	if(tilestack != gone)
+		return
+	if(tilestack && tilestack.max_amount < tilestack.amount) //split the stack if it exceeds its normal max_amount
+		var/iterations = round(tilestack.amount/tilestack.max_amount) //round() without second arg floors the value
+		for(var/tile_stack_index in 1 to iterations)
+			if(tile_stack_index == iterations)
+				tilestack.split_stack(null, tilestack.amount - tilestack.max_amount)
+			else
+				tilestack.split_stack(null, tilestack.max_amount)
+	tilestack = null
 
 
 /mob/living/basic/bot/floorbot/reset_bot(caller, turf/waypoint, message)
 	. = ..()
 	toggle_magnet(FALSE)
 
-/mob/living/basic/bot/floorbot/attackby(obj/item/W , mob/user, params)
-	if(istype(W, /obj/item/stack/tile/iron))
+/mob/living/basic/bot/floorbot/attackby(obj/item/attacking_weapon , mob/user, params)
+	if(istype(attacking_weapon, /obj/item/stack/tile/iron))
 		to_chat(user, span_notice("The floorbot can produce normal tiles itself."))
 		return
-	if(istype(W, /obj/item/stack/tile))
+	if(istype(attacking_weapon, /obj/item/stack/tile))
 		var/old_amount = tilestack ? tilestack.amount : 0
-		var/obj/item/stack/tile/tiles = W
+		var/obj/item/stack/tile/tiles = attacking_weapon
 		if(tilestack)
 			if(!tiles.can_merge(tilestack))
 				to_chat(user, span_warning("Different custom tiles are already inside the floorbot."))
@@ -75,12 +77,12 @@
 			if(tiles.amount > maxtiles)
 				tilestack = tilestack.split_stack(null, maxtiles)
 			else
-				tilestack = W
+				tilestack = attacking_weapon
 			tilestack.forceMove(src)
 		to_chat(user, span_notice("You load [tilestack.amount - old_amount] tiles into the floorbot. It now contains [tilestack.amount] tiles."))
 		return
 	else
-		..()
+		return ..()
 
 /mob/living/basic/bot/floorbot/emag_act(mob/user)
 	. = ..()
@@ -102,7 +104,6 @@
 		if(change_icon)
 			update_icon()
 
-// Variables sent to TGUI
 /mob/living/basic/bot/floorbot/ui_data(mob/user)
 	var/list/data = ..()
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
@@ -119,7 +120,6 @@
 			data["custom_controls"]["line_mode"] = dir2text(targetdirection)
 	return data
 
-// Actions received from TGUI
 /mob/living/basic/bot/floorbot/ui_act(action, params)
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
@@ -128,17 +128,23 @@
 	switch(action)
 		if("place_custom")
 			floorbot_mode_flags ^=  FLOORBOT_REPLACE_TILES
+			return TRUE
 		if("place_tiles")
 			floorbot_mode_flags ^=  FLOORBOT_PLACE_TILES
+			return TRUE
 		if("repair_damage")
 			floorbot_mode_flags ^=  FLOORBOT_FIX_FLOORS
+			return TRUE
 		if("tile_hull")
 			floorbot_mode_flags ^=  FLOORBOT_AUTO_TILE
+			return TRUE
 		if("traction_magnets")
 			toggle_magnet(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT), FALSE)
+			return TRUE
 		if("eject_tiles")
 			if(tilestack)
 				tilestack.forceMove(drop_location())
+				return TRUE
 		if("line_mode")
 			var/setdir = tgui_input_list(usr, "Select construction direction", "Direction", list("north", "east", "south", "west", "disable"))
 			if(isnull(setdir))
@@ -154,6 +160,7 @@
 					targetdirection = WEST
 				if("disable")
 					targetdirection = NONE
+			return TRUE
 
 /mob/living/basic/bot/floorbot/update_icon_state()
 	. = ..()

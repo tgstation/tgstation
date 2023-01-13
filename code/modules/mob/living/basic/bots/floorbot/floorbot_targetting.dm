@@ -1,6 +1,6 @@
 /datum/targetting_datum/floorbot
 
-/datum/targetting_datum/floorbot/can_attack(mob/living/living_mob, atom/the_target, check_path)
+/datum/targetting_datum/floorbot/can_attack(mob/living/living_mob, atom/the_target)
 	var/mob/living/basic/bot/floorbot/floorbot = living_mob
 
 	if(IS_DATUM_RESERVED_BY(the_target, TRAIT_AI_FLOOR_WORK_RESERVATION, floorbot)) //Check if someone is already cleaning it!
@@ -15,36 +15,24 @@
 	if(!isopenturf(the_target))
 		return FALSE
 
-	var/turf/open/open_turf = the_target
-
 	if(floorbot.bot_cover_flags & BOT_COVER_EMAGGED && target_is_floor && !target_is_plating)
-		return confirm_path(living_mob, open_turf, check_path)
+		return TRUE
 
 	if(isspaceturf(the_target))
 		var/area/target_area = get_area(the_target)
 		if(target_area.area_flags & FLOORBOT_IGNORE) //The area is space or a shuttle.
 			return FALSE
-		return confirm_path(living_mob, open_turf, check_path)
+		return TRUE
 
 	if(floorbot.floorbot_mode_flags & FLOORBOT_FIX_FLOORS && target_is_floor)
 		var/turf/open/floor/target_floor = the_target
 		if(target_floor.broken || target_floor.burnt)
-			return confirm_path(living_mob, open_turf, check_path)
+			return TRUE
 
 	if(floorbot.floorbot_mode_flags & FLOORBOT_PLACE_TILES && target_is_plating)
-		return confirm_path(living_mob, open_turf, check_path)
+		return TRUE
 
 	if(floorbot.floorbot_mode_flags & FLOORBOT_REPLACE_TILES && floorbot.tilestack && target_is_floor)
 		var/turf/open/floor/target_floor = the_target
 		if((target_floor.type != floorbot.tilestack.turf_type)) //Don't replace if same type
-			return confirm_path(living_mob, open_turf, check_path)
-
-///checks if the path is valid, but only if we need to
-/datum/targetting_datum/floorbot/proc/confirm_path(mob/living/living_mob, turf/open/the_target, check_path)
-	if(!check_path)
-		return TRUE
-	var/list/found_path = get_path_to(living_mob, the_target, living_mob.ai_controller.max_target_distance, 0, living_mob.ai_controller.get_access(), simulated_only = FALSE)
-	if(found_path)
-		living_mob.ai_controller.blackboard[BB_PATH_TO_USE] = found_path
-		return TRUE
-	return FALSE
+			return TRUE

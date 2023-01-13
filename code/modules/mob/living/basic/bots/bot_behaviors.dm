@@ -104,17 +104,17 @@
 	if(controller.blackboard["testing_key"])
 		return
 
+	message_admins("Looking for valid targets")
+
 	if(!current_turf)
 		return
 
 	var/list/adjacent = current_turf.get_atmos_adjacent_turfs(1)
 
-	controller.blackboard["testing_key"] = TRUE
-
 	var/found_target
 
 	for(var/turf/scanned_turf as anything in adjacent) //Let's see if there's something right next to us first!
-		found_target = targetting_datum.can_attack(living_pawn, scanned_turf, TRUE)
+		found_target = targetting_datum.can_attack(living_pawn, scanned_turf)
 
 		if(found_target)
 			on_find_target(controller, target_key, scanned_turf)
@@ -124,34 +124,27 @@
 			continue
 
 		for(var/atom/scan in scanned_turf)
-			found_target = targetting_datum.can_attack(living_pawn, scan, TRUE)
+			found_target = targetting_datum.can_attack(living_pawn, scan)
 			if(found_target)
 				on_find_target(controller, target_key, scan)
 				return
 
 	if(turfs_only)
 		for(var/turf/scanned_turf in view(scan_range, living_pawn) - adjacent)
-			found_target = targetting_datum.can_attack(living_pawn, scanned_turf, TRUE)
+			found_target = targetting_datum.can_attack(living_pawn, scanned_turf)
 			if(found_target)
 				on_find_target(controller, target_key, scanned_turf)
 				return
-		controller.blackboard["testing_key"] = FALSE
-		return
-
-	for(var/atom/scanned_atom as anything in view(scan_range, living_pawn) - adjacent) //Search for something in range, minus what we already checked.
-		found_target = targetting_datum.can_attack(living_pawn, scanned_atom)
-		if(found_target)
-			on_find_target(controller, target_key, scanned_atom)
-			return
-
-	controller.blackboard["testing_key"] = FALSE
-
-
+	else
+		for(var/atom/scanned_atom as anything in view(scan_range, living_pawn) - adjacent) //Search for something in range, minus what we already checked.
+			found_target = targetting_datum.can_attack(living_pawn, scanned_atom)
+			if(found_target)
+				on_find_target(controller, target_key, scanned_atom)
+				return
 
 ///Ran once bot has found a target during scanning
 /datum/ai_behavior/scan/proc/on_find_target(datum/ai_controller/controller, target_key, target)
 	controller.blackboard[target_key] = target
-	controller.blackboard["testing_key"] = FALSE
 	controller.CancelActions() //Found a target, time to replan!
 
 /datum/ai_behavior/scan/turfs_only
