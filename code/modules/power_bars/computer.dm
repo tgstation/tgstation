@@ -170,8 +170,16 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	return all_details
 
 /obj/machinery/computer/power_distribution/proc/can_deplete(mob/user)
-	// MBTODO: Chief engineers can deplete (really anyone with a specific access that can be given by ID console)
-	return FALSE
+	if (isAdminGhostAI(user))
+		return TRUE
+
+	if (!iscarbon(user))
+		return FALSE
+
+	var/mob/living/carbon/carbon_user = user
+	var/obj/item/id = carbon_user.get_idcard(hand_first = TRUE)
+
+	return (ACCESS_CE in id?.GetAccess()) || (obj_flags & EMAGGED)
 
 /obj/machinery/computer/power_distribution/proc/speak(message, channel)
 	PRIVATE_PROC(TRUE)

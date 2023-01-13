@@ -355,9 +355,6 @@ SUBSYSTEM_DEF(power_bars)
 			if (to_tier != exclusive_tier)
 				continue
 		else if (tier <= from_tier || tier > to_tier)
-			var/message_further = initial(detail.message_further)
-			if (!isnull(message_further))
-				details += message_further
 			continue
 
 		details += initial(detail.message)

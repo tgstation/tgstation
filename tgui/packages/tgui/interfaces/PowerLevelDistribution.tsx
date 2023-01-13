@@ -182,7 +182,8 @@ const DepartmentEntry = (
   );
 
   const totalUsedBars = Object.values(usedAllocations).reduce(
-    (sum, value) => sum + value
+    (sum, value) => sum + value,
+    0
   );
 
   const [usedPowerBars, excessPowerBars] = [
