@@ -1,5 +1,6 @@
 ///List of all items that can be found in the different types of order consoles, to purchase.
 GLOBAL_LIST_EMPTY(order_console_products)
+#define CREDIT_TYPE_CREDIT "credit"
 
 /obj/machinery/computer/order_console
 	name = "Orders Console"
@@ -23,6 +24,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	///The channel we will attempt to speak into through our radio.
 	var/radio_channel = RADIO_CHANNEL_SUPPLY
 
+	///The kind of cash does the console use.
+	var/credit_type = CREDIT_TYPE_CREDIT
 	///Whether the console can only use express mode ONLY
 	var/forced_express = FALSE
 	///Multiplied cost to use express mode
@@ -67,7 +70,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 /obj/machinery/computer/order_console/ui_data(mob/user)
 	var/list/data = list()
 	var/cost = get_total_cost()
-	data["total_cost"] = "[cost] (Express: [cost*express_cost_multiplier])"
+	data["total_cost"] = "[cost] (Express: [cost * express_cost_multiplier])"
 	data["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
 	if(!isliving(user))
@@ -81,6 +84,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/ui_static_data(mob/user)
 	var/list/data = list()
+	data["credit_type"] = credit_type
 	data["express_tooltip"] = express_tooltip
 	data["purchase_tooltip"] = purchase_tooltip
 	data["forced_express"] = forced_express

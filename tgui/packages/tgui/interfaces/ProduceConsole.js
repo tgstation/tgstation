@@ -16,7 +16,7 @@ const TAB2NAME = [
 
 const ShoppingTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const { order_categories, order_datums } = data;
+  const { credit_type, order_categories, order_datums } = data;
   const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
   const mapped_food = order_datums.filter(
     (food) => food && food.cat === shopIndex
@@ -55,7 +55,12 @@ const ShoppingTab = (props, context) => {
                     {'"' + item.desc + '"'}
                     <br />
                     <Box textAlign="right">
-                      {item.name + ' costs ' + item.cost + ' per order.'}
+                      {item.name +
+                        ' costs ' +
+                        item.cost +
+                        ' ' +
+                        credit_type +
+                        ' per item.'}
                     </Box>
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
@@ -95,6 +100,7 @@ const ShoppingTab = (props, context) => {
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
   const {
+    credit_type,
     purchase_tooltip,
     express_tooltip,
     forced_express,
@@ -129,7 +135,12 @@ const CheckoutTab = (props, context) => {
                       {'"' + item.desc + '"'}
                       <br />
                       <Box textAlign="right">
-                        {item.name + ' costs ' + item.cost + ' per order.'}
+                        {item.name +
+                          ' costs ' +
+                          item.cost +
+                          ' ' +
+                          credit_type +
+                          ' per item.'}
                       </Box>
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
