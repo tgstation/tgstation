@@ -51,8 +51,6 @@
 	var/helium_speech = FALSE
 	///Whether these lungs react negatively to miasma
 	var/suffers_miasma = TRUE
-	///Set to TRUE if Mob always breathes normally when in vacuum/space
-	var/can_breathe_vacuum = FALSE
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -126,8 +124,10 @@
 
 	var/has_moles = breath.total_moles() != 0
 
+	var/can_breathe_vacuum = HAS_TRAIT(src, TRAIT_SPACEBREATHING)
+
 	if(!has_moles)
-		if(can_breathe_vacuum)
+		if(can_breathe_vacuum))
 			// Breath has 0 moles, but the lungs can breathe anyways.
 			// What are you? Some bottom-feeding, scum-sucking algae eater?
 			breather.failed_last_breath = FALSE
