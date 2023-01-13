@@ -54,11 +54,8 @@
 	greyscale_colors = "#820a16#280b1a"
 
 /obj/item/encryptionkey/headset_sec/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/encryptionkey/headset_sec/LateInitialize()
 	. = ..()
+
 	AddComponent(/datum/component/security_headset)
 
 /obj/item/encryptionkey/headset_eng
@@ -139,11 +136,8 @@
 	greyscale_colors = "#280b1a#820a16"
 
 /obj/item/encryptionkey/heads/hos/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/encryptionkey/heads/hos/LateInitialize()
 	. = ..()
+
 	AddComponent(/datum/component/security_headset)
 
 /obj/item/encryptionkey/heads/ce

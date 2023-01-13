@@ -30,7 +30,7 @@
 
 	key_parent.AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_update)), POWER_BAR_DEPARTMENT_SECURITY)
 
-	recalculate_radio()
+	addtimer(CALLBACK(src, PROC_REF(recalculate_radio)), 0)
 
 /datum/component/security_headset/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
