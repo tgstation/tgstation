@@ -4,6 +4,7 @@
  */
 /datum/element/ai_retaliate
 	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	/// What mob type the parent calls
 	var/mob/living/mob_type
 	/// In what range the parent calls the same mobs to retaliate
