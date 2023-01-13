@@ -105,7 +105,7 @@
 /datum/component/connects_to_singularity_console/proc/disconnect_cable()
 	var/obj/structure/cable/last_cable = last_cable_ref?.resolve()
 	if (!isnull(last_cable))
-		UnregisterSignal(last_cable, PROC_REF(check_connection))
+		UnregisterSignal(last_cable, COMSIG_CABLE_POWERNET_CHANGED)
 
 	var/datum/powernet/last_powernet = last_powernet_ref?.resolve()
 	if (!isnull(last_powernet))
