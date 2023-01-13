@@ -209,7 +209,7 @@ RLD
 
 	if(action == "toggle_silo" && (upgrade & RCD_UPGRADE_SILO_LINK))
 		if(silo_mats)
-			if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link
+			if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link.
 				to_chat(usr, span_alert("No silo link detected. Connect to silo via multitool."))
 				return FALSE
 			silo_link = !silo_link
