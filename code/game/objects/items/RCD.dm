@@ -674,10 +674,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			 */
 			//You can't select designs from the Machines category if you dont have the frames upgrade installed.
 			if(category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
-				return
+				return TRUE
 			//You can't select designs from the Furniture category if you dont have the furnishing upgrade installed.
 			if(category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
-				return
+				return TRUE
 
 			var/list/design = category[index]
 			if(design == null) //not a valid design
