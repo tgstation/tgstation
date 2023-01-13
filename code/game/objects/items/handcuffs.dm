@@ -110,7 +110,7 @@
 
 	target.equip_to_slot(cuffs, ITEM_SLOT_HANDCUFFED)
 
-	SEND_SIGNAL(src, COMSIG_CARBON_CUFF_SUCCEED, src)
+	SEND_SIGNAL(target, COMSIG_CARBON_CUFF_SUCCEED, target)
 
 	if(trashtype && !dispense)
 		qdel(src)
