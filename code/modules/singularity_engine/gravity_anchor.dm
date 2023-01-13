@@ -1,7 +1,6 @@
 /obj/item/gravity_anchor
 	name = "handheld gravity anchor"
 	desc = "A bulky monstrosity to be used in emergencies when the singularity needs its containment repaired, fast. Requires you to be up close and personal to the singularity, so it's not for the faint of heart."
-	// MBTODO: Custom icon, different depending on if charged or not
 	icon = 'icons/obj/singularity_content.dmi'
 	icon_state = "gravity_anchor"
 	inhand_icon_state = "rcl-0"
@@ -78,7 +77,6 @@
 
 	return .
 
-// MBTODO: Attack chargers
 /obj/item/gravity_anchor/pre_attack(atom/attacked_atom, mob/living/user, params)
 	if (!istype(attacked_atom, /obj/machinery/gravity_anchor_charger))
 		return ..()
@@ -309,7 +307,6 @@
 
 	update_appearance(UPDATE_ICON)
 
-// MBTODO: Make this balloon alert if you aren't charged
 /obj/item/gravity_anchor/proc/on_wield()
 	wielded = TRUE
 	return
