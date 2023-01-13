@@ -214,7 +214,6 @@
 		return
 
 	if (targeting_singularity.health / targeting_singularity.max_health >= 1)
-		// MBTODO: tau_single from singularity
 		balloon_alert(current_user, "singularity has reached max containment")
 		playsound(targeting_singularity, 'sound/effects/singulo_fully_healed.ogg', 70, vary = FALSE, pressure_affected = FALSE)
 		halt_with_side_effects()

@@ -1,6 +1,5 @@
 GLOBAL_LIST_EMPTY(contained_singularities)
 
-// MBTODO: Insta-red alert for the sake of the prototype...
 /obj/contained_singularity
 	name = "contained singularity"
 	desc = "A gravitational singularity. Through a battle-tested, though heavily confidential technique, it is contained in the folds of space, making it reasonably safe to extract energy from by firing lasers into it. Looking at it gives you a headache."
