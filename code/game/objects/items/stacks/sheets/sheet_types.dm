@@ -308,6 +308,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/buckler, 20, time = 4 SECONDS, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 5 SECONDS, category = CAT_TOOLS),\
 	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("smoking pipe", /obj/item/clothing/mask/cigarette/pipe, 2, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 1 SECONDS, category = CAT_TOOLS),\
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/cup/bucket/wooden, 3, time = 1 SECONDS, category = CAT_CONTAINERS),\
 	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 1 SECONDS, category = CAT_TOOLS),\
