@@ -20,7 +20,7 @@
 		out_of_range_time = null
 		wielded = FALSE
 
-		datum/weakref/charger_ref
+		obj/machinery/gravity_anchor_charger/charger
 
 		datum/beam/captured_beam
 		mob/living/current_user
@@ -60,6 +60,8 @@
 /obj/item/gravity_anchor/Destroy(force)
 	halt()
 
+	charger = null
+
 	QDEL_NULL(out_of_range_loop)
 	QDEL_NULL(standard_loop)
 
@@ -68,7 +70,7 @@
 /obj/item/gravity_anchor/examine(mob/user)
 	. = ..()
 
-	if (isnull(charger_ref?.resolve()))
+	if (isnull(charger?.resolve()))
 		. += span_warning("[p_they(capitalized = TRUE)] need to be connected to a <b>gravity anchor charger</b>!")
 	else if (charged())
 		. += span_notice("[p_they(capitalized = TRUE)] [p_are()] infused with power, use [p_them()] while you can!")
@@ -83,7 +85,7 @@
 
 	var/obj/machinery/gravity_anchor_charger/charger = attacked_atom
 
-	if (IS_WEAKREF_OF(charger, charger_ref))
+	if (src.charger == charger)
 		balloon_alert(user, "already linked to this!")
 		return TRUE
 
@@ -125,7 +127,6 @@
 		balloon_alert(user, "someone else is already anchoring the singularity, step back!")
 		return
 
-	var/obj/machinery/gravity_anchor_charger/charger = charger_ref?.resolve()
 	if (isnull(charger))
 		balloon_alert(user, "link to a charger!")
 		return
@@ -276,12 +277,13 @@
 	halt()
 
 /obj/item/gravity_anchor/proc/link_to_charger(obj/machinery/gravity_anchor_charger/charger)
-	charger_ref = WEAKREF(charger)
+	src.charger = charger
+
 	update_appearance()
 
-	// MBTODO: Hook qdeling and replace wekaref with hard ref
 	RegisterSignal(charger, COMSIG_GRAVITY_ANCHOR_CHARGER_CHARGED, PROC_REF(on_charger_charged))
 	RegisterSignal(charger, COMSIG_GRAVITY_ANCHOR_CHARGER_LOST_CHARGE, PROC_REF(on_charger_lost_charge))
+	RegisterSignal(charger, COMSIG_PARENT_QDELETING, PROC_REF(on_charger_qdel))
 
 /obj/item/gravity_anchor/update_icon_state()
 	. = ..()
@@ -289,7 +291,6 @@
 	icon_state = (charged() || !isnull(targeting_singularity)) ? "gravity_anchor_charged" : "gravity_anchor"
 
 /obj/item/gravity_anchor/proc/charged()
-	var/obj/machinery/gravity_anchor_charger/charger = charger_ref?.resolve()
 	return charger?.charging
 
 /obj/item/gravity_anchor/proc/on_charger_charged()
@@ -306,6 +307,12 @@
 	if (!isnull(current_user) && isnull(targeting_singularity))
 		balloon_alert(current_user, "lost charge!")
 
+	update_appearance(UPDATE_ICON)
+
+/obj/item/gravity_anchor/proc/on_charger_qdel()
+	SIGNAL_HANDLER
+
+	charger = null
 	update_appearance(UPDATE_ICON)
 
 /obj/item/gravity_anchor/proc/on_wield()

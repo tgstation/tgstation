@@ -197,7 +197,6 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
 	// We just want the alert message this gives
-	// MBTODO: Only station areas probably
 	AddComponent(/datum/component/power_bar_reactor)
 
 /obj/machinery/power/apc/Destroy()
