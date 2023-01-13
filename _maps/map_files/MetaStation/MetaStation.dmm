@@ -41510,9 +41510,6 @@
 /area/station/engineering/gravity_generator)
 "oUh" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "oUu" = (
@@ -50353,10 +50350,6 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
-"rXh" = (
-/obj/machinery/suit_storage_unit/engine,
-/turf/open/floor/plating,
-/area/station/maintenance/department/engine)
 "rXB" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
@@ -56700,9 +56693,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "uhu" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "uhx" = (
@@ -111515,7 +111506,7 @@ lMJ
 abi
 lMJ
 fJy
-uhu
+kTK
 kTK
 wWN
 wLw
@@ -112804,7 +112795,7 @@ fJy
 fJy
 azd
 kTK
-rXh
+uhu
 fJy
 bUC
 bQj

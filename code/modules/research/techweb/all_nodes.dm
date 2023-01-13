@@ -618,6 +618,13 @@
 		/datum/experiment/ordnance/gaseous/bz = 10000,
 	)
 
+/datum/techweb_node/adv_engi/New()
+	if (SSpower_bars.enabled)
+		design_ids += "handheld_gravity_anchor"
+		design_ids += "gravity_anchor_charger"
+
+	return ..()
+
 /datum/techweb_node/anomaly
 	id = "anomaly_research"
 	display_name = "Anomaly Research"

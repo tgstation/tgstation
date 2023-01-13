@@ -2,8 +2,8 @@
 	name = "handheld gravity anchor"
 	desc = "A bulky monstrosity to be used in emergencies when the singularity needs its containment repaired, fast. Requires you to be up close and personal to the singularity, so it's not for the faint of heart."
 	// MBTODO: Custom icon, different depending on if charged or not
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcl-0"
+	icon = 'icons/obj/singularity_content.dmi'
+	icon_state = "gravity_anchor"
 	inhand_icon_state = "rcl-0"
 	force = 8
 	throwforce = 6
@@ -66,9 +66,40 @@
 
 	return ..()
 
+/obj/item/gravity_anchor/examine(mob/user)
+	. = ..()
+
+	if (isnull(charger_ref?.resolve()))
+		. += span_warning("[p_they(capitalized = TRUE)] need to be connected to a <b>gravity anchor charger</b>!")
+	else if (charged())
+		. += span_notice("[p_they(capitalized = TRUE)] [p_are()] infused with power, use [p_them()] while you can!")
+	else
+		. += span_warning("[p_they(capitalized = TRUE)] [p_are()] not ready to use, [p_their()] <b>gravity anchor charger</b> needs to be fitted with an <b>anomaly core</b>.")
+
+	return .
+
 // MBTODO: Attack chargers
-/obj/item/gravity_anchor/attack(mob/living/target_mob, mob/living/user, params)
-	return ..()
+/obj/item/gravity_anchor/pre_attack(atom/attacked_atom, mob/living/user, params)
+	if (!istype(attacked_atom, /obj/machinery/gravity_anchor_charger))
+		return ..()
+
+	var/obj/machinery/gravity_anchor_charger/charger = attacked_atom
+
+	if (IS_WEAKREF_OF(charger, charger_ref))
+		balloon_alert(user, "already linked to this!")
+		return TRUE
+
+	balloon_alert(user, "linking to charger...")
+
+	if (!do_after(user, 2.2 SECONDS, target = charger))
+		return TRUE
+
+	link_to_charger(charger)
+
+	balloon_alert(user, "linked to charger[charged() ? "" : ",\nbut the charger needs an anomaly core"]")
+	playsound(src, 'sound/machines/ping.ogg', 50, vary = TRUE)
+
+	return TRUE
 
 /obj/item/gravity_anchor/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -118,6 +149,12 @@
 		return
 
 	target_singularity(user, singularity)
+
+/obj/item/gravity_anchor/pickup(mob/user)
+	. = ..()
+
+	if (!charged())
+		user.balloon_alert(user, "charge before using!")
 
 /obj/item/gravity_anchor/proc/target_singularity(mob/user, obj/contained_singularity/singularity)
 	playsound(src, 'sound/items/gravity_anchor_charge.ogg', 70, vary = TRUE)
@@ -174,27 +211,26 @@
 
 /obj/item/gravity_anchor/process(delta_time)
 	if (QDELETED(targeting_singularity) || QDELETED(current_user))
-		halt()
+		halt_with_side_effects()
 		return
 
 	if (targeting_singularity.health / targeting_singularity.max_health >= 1)
 		// MBTODO: tau_single from singularity
 		balloon_alert(current_user, "singularity has reached max containment")
-		halt()
+		halt_with_side_effects()
 		return
 
 	if (targeting_singularity.health <= 0)
 		balloon_alert(current_user, "it's too late, run!")
-		halt()
+		halt_with_side_effects()
 		return
 
 	var/proceed_result = should_keep_going(current_user, targeting_singularity, require_los = FALSE)
 
 	switch (proceed_result)
 		if (FALSE)
-			play_break_sound()
 			balloon_alert(current_user, "couldn't keep contact!")
-			halt()
+			halt_with_side_effects()
 			return
 		if (TRUE)
 			if (!isnull(out_of_range_time))
@@ -207,8 +243,7 @@
 			if (!isnull(out_of_range_time))
 				if (world.time - out_of_range_time >= out_of_range_forgiveness)
 					balloon_alert(current_user, "disconnected!")
-					play_break_sound()
-					halt()
+					halt_with_side_effects()
 				return
 
 			out_of_range_time = world.time
@@ -222,9 +257,6 @@
 
 #undef LOS_CHECK_FAILED
 
-/obj/item/gravity_anchor/proc/play_break_sound()
-	playsound(src, 'sound/items/gravity_anchor_break.ogg', 70, vary = TRUE)
-
 /obj/item/gravity_anchor/proc/halt()
 	targeting_singularity?.remove_anchor()
 	targeting_singularity = null
@@ -236,9 +268,46 @@
 	out_of_range_loop.stop()
 	standard_loop.stop()
 
+/obj/item/gravity_anchor/proc/halt_with_side_effects()
+	playsound(src, 'sound/items/gravity_anchor_break.ogg', 70, vary = TRUE)
+
+	if (!charged())
+		balloon_alert(current_user, "the last of the power putters out!")
+
+	halt()
+
 /obj/item/gravity_anchor/proc/link_to_charger(obj/machinery/gravity_anchor_charger/charger)
 	charger_ref = WEAKREF(charger)
 	update_appearance()
+
+	// MBTODO: Hook qdeling and replace wekaref with hard ref
+	RegisterSignal(charger, COMSIG_GRAVITY_ANCHOR_CHARGER_CHARGED, PROC_REF(on_charger_charged))
+	RegisterSignal(charger, COMSIG_GRAVITY_ANCHOR_CHARGER_LOST_CHARGE, PROC_REF(on_charger_lost_charge))
+
+/obj/item/gravity_anchor/update_icon_state()
+	. = ..()
+
+	icon_state = (charged() || !isnull(targeting_singularity)) ? "gravity_anchor_charged" : "gravity_anchor"
+
+/obj/item/gravity_anchor/proc/charged()
+	var/obj/machinery/gravity_anchor_charger/charger = charger_ref?.resolve()
+	return charger?.charging
+
+/obj/item/gravity_anchor/proc/on_charger_charged()
+	SIGNAL_HANDLER
+
+	if (!isnull(current_user))
+		balloon_alert(current_user, "charged")
+
+	update_appearance(UPDATE_ICON)
+
+/obj/item/gravity_anchor/proc/on_charger_lost_charge()
+	SIGNAL_HANDLER
+
+	if (!isnull(current_user) && isnull(targeting_singularity))
+		balloon_alert(current_user, "lost charge!")
+
+	update_appearance(UPDATE_ICON)
 
 // MBTODO: Make this balloon alert if you aren't charged
 /obj/item/gravity_anchor/proc/on_wield()
@@ -264,9 +333,12 @@ GLOBAL_LIST_EMPTY(mapload_gravity_anchor_chargers)
 	icon = 'icons/obj/engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
 	density = TRUE
+	circuit = /obj/item/circuitboard/machine/gravity_anchor_charger
 
 	idle_power_usage = 0
+	processing_flags = START_PROCESSING_MANUALLY
 
+	var/stop_timer_id
 	var/charging = FALSE
 	var/max_range = 8
 
@@ -279,12 +351,39 @@ GLOBAL_LIST_EMPTY(mapload_gravity_anchor_chargers)
 	transform = transform.Scale(1, 2)
 	transform = transform.Translate(0, 16)
 
-	begin_charging()
-
 /obj/machinery/gravity_anchor_charger/Destroy()
 	GLOB.mapload_gravity_anchor_chargers -= src
 
 	return ..()
+
+/obj/machinery/gravity_anchor_charger/attackby(obj/item/weapon, mob/user, params)
+	if (istype(weapon, /obj/item/raw_anomaly_core))
+		balloon_alert(user, "needs to be refined, ask science!")
+		return TRUE
+
+	if (!istype(weapon, /obj/item/assembly/signaler/anomaly))
+		return ..()
+
+	balloon_alert(user, "slotting in anomaly core...")
+
+	if (!do_after(user, 3 SECONDS))
+		return TRUE
+
+	if (QDELETED(weapon))
+		return TRUE
+
+	if (charging)
+		return TRUE
+
+	begin_charging()
+
+	balloon_alert_to_viewers("it charges up,\nuse it while you can")
+	begin_processing()
+
+	stop_timer_id = addtimer(CALLBACK(src, .proc/stop_charging), 3 MINUTES, TIMER_DELETE_ME | TIMER_STOPPABLE)
+
+	qdel(weapon)
+	return TRUE
 
 /obj/machinery/gravity_anchor_charger/examine(mob/user)
 	. = ..()
@@ -294,14 +393,41 @@ GLOBAL_LIST_EMPTY(mapload_gravity_anchor_chargers)
 	else
 		. += span_notice("[p_they(capitalized = TRUE)] need[p_s()] <b>an anomaly core</b> in order to begin charging.")
 
+/obj/machinery/gravity_anchor_charger/update_appearance(updates)
+	. = ..()
+	update_maptext()
+
 /obj/machinery/gravity_anchor_charger/update_icon_state()
 	. = ..()
 
 	icon_state = charging ? "grounding_rodhit" : "grounding_rod0"
 
+/obj/machinery/gravity_anchor_charger/process()
+	update_maptext()
+
+/obj/machinery/gravity_anchor_charger/proc/update_maptext()
+	if (isnull(stop_timer_id))
+		maptext = ""
+	else
+		var/total_time = timeleft(stop_timer_id) / (1 SECONDS)
+		var/minutes = round(total_time / 60)
+		var/seconds = round(total_time % 60)
+
+		maptext = MAPTEXT("[minutes > 0 ? "[minutes]m" : ""][seconds]s")
+
 /obj/machinery/gravity_anchor_charger/proc/begin_charging()
 	charging = TRUE
 	use_power = ACTIVE_POWER_USE
+	update_appearance(UPDATE_ICON)
+	SEND_SIGNAL(src, COMSIG_GRAVITY_ANCHOR_CHARGER_CHARGED)
+
+/obj/machinery/gravity_anchor_charger/proc/stop_charging()
+	charging = FALSE
+	use_power = IDLE_POWER_USE
+	update_appearance(UPDATE_ICON)
+	balloon_alert_to_viewers("it's out of charge!")
+	end_processing()
+	SEND_SIGNAL(src, COMSIG_GRAVITY_ANCHOR_CHARGER_LOST_CHARGE)
 
 /obj/item/paper/fluff/gravity_anchor_instructions
 	name = "gravity anchor instructions"
@@ -332,3 +458,32 @@ Gravity anchors are too complex to work on their own, and need to be charged fro
 	mid_length = 1.1 SECONDS
 	volume = 50
 	pressure_affected = FALSE
+
+/datum/design/gravity_anchor
+	name = "Handheld Gravity Anchor"
+	id = "handheld_gravity_anchor"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
+	build_path = /obj/item/gravity_anchor
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MACHINERY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/gravity_anchor_charger
+	name = "Gravity Anchor Power Source"
+	id = "gravity_anchor_charger"
+	build_path = /obj/item/circuitboard/machine/gravity_anchor_charger
+	category = list(
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_MACHINE_ENGINEERING,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/obj/item/circuitboard/machine/gravity_anchor_charger
+	name = "Gravity Anchor Power Source"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/gravity_anchor_charger
+	req_components = list(
+		/obj/item/stack/cable_coil = 2,
+		/obj/item/stack/sheet/glass = 2,
+	)

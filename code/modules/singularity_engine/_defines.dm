@@ -7,3 +7,6 @@
 #define COMSIG_SINGULARITY_TAKE_DAMAGE "singularity_take_damage"
 
 #define SINGULARITY_BREACH_TIME 30
+
+#define COMSIG_GRAVITY_ANCHOR_CHARGER_CHARGED "gravity_anchor_charger_charged"
+#define COMSIG_GRAVITY_ANCHOR_CHARGER_LOST_CHARGE "gravity_anchor_charger_lost_charge"
