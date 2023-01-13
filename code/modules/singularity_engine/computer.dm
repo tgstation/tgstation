@@ -156,6 +156,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 /obj/machinery/computer/singularity/ui_static_data(mob/user)
 	return list(
 		"map_name" = camera_map_name,
+		"emitters_require_shields" = POWER_BAR_FLAG(FFLAG_EMITTERS_REQUIRE_SHIELDS),
 	)
 
 /obj/machinery/computer/singularity/ui_status(mob/user)
@@ -216,8 +217,14 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	stage = STAGE_SINGULARITY_CONSOLE_PREPARING
 	speak("Preparing to fire emitters.")
 
-	// MBTODO: Message to admins when starting without shield generators
-	user?.log_message("started the emitters for the singularity.", LOG_GAME)
+	var/enabled_field_generators = 0
+	for (var/obj/machinery/field/generator/singularity/field_generator in connected_machines)
+		if (field_generator.active == 2) // FG_ONLINE :(((((
+			enabled_field_generators += 1
+
+	var/enough_field_generators = enabled_field_generators >= 4
+
+	user?.log_message("started the emitters for the singularity[enough_field_generators ? "" : " with only [enabled_field_generators]\s"].", LOG_GAME)
 
 	for (var/obj/machinery/singularity_turret/emitter in connected_machines)
 		emitter.prepare_fire()

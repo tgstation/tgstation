@@ -27234,8 +27234,15 @@
 /area/station/command/corporate_showroom)
 "jPe" = (
 /obj/structure/table,
-/obj/item/airlock_painter,
+/obj/item/airlock_painter{
+	pixel_y = 6;
+	pixel_x = 1
+	},
 /obj/effect/turf_decal/delivery,
+/obj/item/inducer{
+	pixel_y = -2;
+	pixel_x = 5
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "jPi" = (

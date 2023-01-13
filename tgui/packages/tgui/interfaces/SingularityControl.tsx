@@ -35,6 +35,7 @@ const sortPowerBarsByTimeToFill = sortBy<PowerBar>((bar) => -bar.time_to_fill);
 type SingularityControlData = {
   enabled_field_generators: number;
   disabled_field_generators: number;
+  emitters_require_shields: BooleanLike;
   has_access: BooleanLike;
   map_name: string;
   overclock_access: OverclockAccess;
@@ -122,12 +123,19 @@ const ConnectedMachine = (props: {
 
 const SetupScreen = (props, context) => {
   const { act, data } = useBackend<SingularityControlData>(context);
+  const [showWarning, setShowWarning] = useLocalState(
+    context,
+    'showWarning',
+    false
+  );
 
   const generatorCount =
     data.enabled_field_generators + data.disabled_field_generators;
 
+  const enoughGenerators = data.enabled_field_generators >= 4;
+
   return (
-    <Window title="Singularity Control Console" width={700} height={300}>
+    <Window title="Singularity Control Console" width={700} height={320}>
       <Window.Content>
         {!data.has_access && <NoAccessWarning />}
 
@@ -199,15 +207,57 @@ const SetupScreen = (props, context) => {
             <Stack fill align="center" justify="center">
               {data.stage === Stage.NotStarted && (
                 <Stack.Item>
-                  {/* MBTOOD: Warning if you aren't ready */}
-                  {/* MBTODO: Define flag that determines if you are ALLOWED to click this, or if it's a warning. Useful for very early test merge. */}
-                  <Button
-                    fontSize="18px"
-                    onClick={() => {
-                      act('fire_emitters');
-                    }}>
-                    Fire emitters
-                  </Button>
+                  {data.emitters_require_shields ? (
+                    <Button
+                      fontSize="18px"
+                      onClick={() => {
+                        act('fire_emitters');
+                      }}
+                      disabled={!enoughGenerators}
+                      tooltip={
+                        enoughGenerators
+                          ? ''
+                          : 'You must set up all the field generators first.'
+                      }>
+                      Fire emitters
+                    </Button>
+                  ) : showWarning ? (
+                    <Stack vertical fill>
+                      <Stack.Item>
+                        Shields aren&apos;t setup, are you sure?
+                      </Stack.Item>
+
+                      <Stack.Item grow textAlign="center">
+                        <Button
+                          fontSize="14px"
+                          color="bad"
+                          onClick={() => {
+                            act('fire_emitters');
+                          }}>
+                          Fire anyway
+                        </Button>{' '}
+                        <Button
+                          fontSize="14px"
+                          onClick={() => {
+                            setShowWarning(false);
+                          }}>
+                          Cancel
+                        </Button>
+                      </Stack.Item>
+                    </Stack>
+                  ) : (
+                    <Button
+                      fontSize="18px"
+                      onClick={() => {
+                        if (enoughGenerators) {
+                          act('fire_emitters');
+                        } else {
+                          setShowWarning(true);
+                        }
+                      }}>
+                      Fire emitters
+                    </Button>
+                  )}
                 </Stack.Item>
               )}
 
