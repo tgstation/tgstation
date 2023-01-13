@@ -110,19 +110,15 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	switch(action)
 		if("add_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
-			var/list/datum/orderable_item/shite0 = grocery_list
 			grocery_list[wanted_item] += 1
-			var/list/datum/orderable_item/shite = grocery_list
 			update_static_data(living_user)
 		if("remove_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
-			var/list/datum/orderable_item/shite1 = grocery_list
 			if(!grocery_list[wanted_item])
 				return
 			grocery_list[wanted_item] -= 1
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
-				var/list/datum/orderable_item/shite2 = grocery_list
 			update_static_data(living_user)
 		if("cart_set")
 			//this is null if the action doesn't need it (purchase, quickpurchase)
