@@ -23,14 +23,10 @@
 	if (!istype(parent, /obj/item/encryptionkey))
 		return COMPONENT_INCOMPATIBLE
 
-	var/obj/item/encryptionkey/key_parent = parent
-
 	filtered_channels = assoc_to_keys(key_parent.channels)
 	channels_to_give -= filtered_channels
 
-	key_parent.AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_update)), POWER_BAR_DEPARTMENT_SECURITY)
-
-	addtimer(CALLBACK(src, PROC_REF(recalculate_radio)), 0)
+	addtimer(CALLBACK(src, PROC_REF(deferred_init)), 0)
 
 /datum/component/security_headset/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
@@ -42,6 +38,11 @@
 
 /datum/component/security_headset/proc/on_move()
 	SIGNAL_HANDLER
+	recalculate_radio()
+
+/datum/component/security_headset/proc/deferred_init()
+	var/obj/item/encryptionkey/key_parent = parent
+	key_parent.AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_update)), POWER_BAR_DEPARTMENT_SECURITY)
 	recalculate_radio()
 
 /datum/component/security_headset/proc/recalculate_radio()
