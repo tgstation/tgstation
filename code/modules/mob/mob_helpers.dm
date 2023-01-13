@@ -143,7 +143,8 @@
 ///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!istype(M))
-		stack_trace("Called shake_camera on a non-mob: [M.type].")
+		if(!isnull(M)) // No real need to spam the logs with nulls when we can help it
+			stack_trace("Called shake_camera on a non-mob: [M.type].")
 		return
 	if(!M.client || duration < 1)
 		return
