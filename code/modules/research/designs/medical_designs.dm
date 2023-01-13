@@ -747,8 +747,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/cybernetic_ears
-	name = "Cybernetic Ears"
-	desc = "A pair of cybernetic ears."
+	name = "Basic Cybernetic Ears"
+	desc = "A Basic pair of cybernetic ears."
 	id = "cybernetic_ears"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 30
@@ -760,8 +760,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/cybernetic_ears_u
-	name = "Upgraded Cybernetic Ears"
-	desc = "A pair of upgraded cybernetic ears."
+	name = "Cybernetic Ears"
+	desc = "A pair of cybernetic ears."
 	id = "cybernetic_ears_u"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 40
