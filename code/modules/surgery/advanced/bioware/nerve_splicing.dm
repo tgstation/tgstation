@@ -39,6 +39,8 @@
 	)
 	display_pain(target, "You regain feeling in your body; It feels like everything's happening around you in slow motion!")
 	new /datum/bioware/spliced_nerves(target)
+	if(target.ckey)
+		SSblackbox.record_feedback("nested tally", "nerve_splicing", 1, list("[target.ckey]", "got"))
 	return ..()
 
 /datum/bioware/spliced_nerves
