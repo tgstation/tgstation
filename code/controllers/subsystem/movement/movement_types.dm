@@ -390,7 +390,7 @@
 
 /datum/move_loop/has_target/jps/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	. = ..()
-	on_finish_callback = CALLBACK(src, PROC_REF(OnFinishPathing))''
+	on_finish_callback = CALLBACK(src, PROC_REF(OnFinishPathing))
 
 /datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first, initial_path)
 	. = ..()
