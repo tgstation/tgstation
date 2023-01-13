@@ -199,7 +199,6 @@ SUBSYSTEM_DEF(power_bars)
 		if (3)
 			return 4
 
-// MBTODO: Make the computer UI care about excess bars
 /datum/controller/subsystem/power_bars/proc/reassign_power_bar(department, power_bars)
 	ASSERT(SSpower_bars.enabled)
 
