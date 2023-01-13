@@ -582,7 +582,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	)))
 
 ///Handles all the logic of sawing off guns,
-/obj/item/gun/ballistic/proc/sawoff(mob/user, obj/item/saw)
+/obj/item/gun/ballistic/proc/sawoff(mob/user, obj/item/saw, handle_modifications = TRUE)
 	if(!saw.get_sharpness() || (!is_type_in_typecache(saw, GLOB.gun_saw_types) && saw.tool_behaviour != TOOL_SAW)) //needs to be sharp. Otherwise turned off eswords can cut this.
 		return
 	if(sawn_off)
@@ -603,21 +603,22 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		if(sawn_off)
 			return
 		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
-		name = "sawn-off [src.name]"
-		desc = sawn_desc
-		w_class = WEIGHT_CLASS_NORMAL
-		//The file might not have a "gun" icon, let's prepare for this
-		lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-		righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-		inhand_x_dimension = 32
-		inhand_y_dimension = 32
-		inhand_icon_state = "gun"
-		worn_icon_state = "gun"
-		slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
-		slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-		recoil = SAWN_OFF_RECOIL
 		sawn_off = TRUE
-		update_appearance()
+		if(handle_modifications)
+			name = "sawn-off [src.name]"
+			desc = sawn_desc
+			w_class = WEIGHT_CLASS_NORMAL
+			//The file might not have a "gun" icon, let's prepare for this
+			lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+			righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+			inhand_x_dimension = 32
+			inhand_y_dimension = 32
+			inhand_icon_state = "gun"
+			worn_icon_state = "gun"
+			slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
+			slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+			recoil = SAWN_OFF_RECOIL
+			update_appearance()
 		return TRUE
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
