@@ -106,6 +106,15 @@
 		return
 
 	if(!breath || (breath.total_moles() == 0))
+		if(HAS_TRAIT(src, TRAIT_SPACEBREATHING)) //we're in a vacuum with no air.
+			breather.failed_last_breath = FALSE
+			breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+			breather.clear_alert(ALERT_TOO_MUCH_N2O)
+			breather.clear_alert(ALERT_TOO_MUCH_PLASMA)
+			breather.clear_mood_event("smell")
+			breather.clear_mood_event("chemical_euphoria")
+			return TRUE
+
 		if(breather.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
 			return
 		if(breather.health >= breather.crit_threshold)

@@ -24,6 +24,7 @@
 	name = "mutated carp-lungs"
 	desc = "Carp DNA infused into what was once some normal lungs."
 	safe_oxygen_min = 0 //we don't breathe this!
+	safe_oxygen_max = 15
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "lungs"
@@ -34,6 +35,7 @@
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "has odd neck gills.", BODY_ZONE_HEAD)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+	ADD_TRAIT(src, TRAIT_SPACEBREATHING, REF(src))
 
 ///occasionally sheds carp teeth, stronger melee (bite) attacks, but you can't cover your mouth anymore.
 /obj/item/organ/internal/tongue/carp

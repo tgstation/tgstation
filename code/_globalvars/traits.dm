@@ -184,6 +184,9 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS,
 		),
+	/obj/item/organ/internal/lungs = list(
+		"TRAIT_SPACEBREATHING" = TRAIT_SPACEBREATHING,
+		),
 	/obj/item = list(
 		"TRAIT_NODROP" = TRAIT_NODROP,
 		"TRAIT_NO_STORAGE_INSERT" = TRAIT_NO_STORAGE_INSERT,

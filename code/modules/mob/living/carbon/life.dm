@@ -146,6 +146,15 @@
 
 	//CRIT
 	if(!breath || (breath.total_moles() == 0) || !lungs)
+		if(lungs && HAS_TRAIT(lungs, TRAIT_SPACEBREATHING))
+			failed_last_breath = FALSE
+			clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+			clear_alert(ALERT_TOO_MUCH_N2O)
+			clear_alert(ALERT_TOO_MUCH_PLASMA)
+			clear_mood_event("smell")
+			clear_mood_event("chemical_euphoria")
+			return TRUE
+
 		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE) && lungs)
 			return FALSE
 		adjustOxyLoss(1)
