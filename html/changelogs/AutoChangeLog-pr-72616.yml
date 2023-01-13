@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "normal RPED from behaving like an BRPED when installing stock parts in an incomplete machine frame"
