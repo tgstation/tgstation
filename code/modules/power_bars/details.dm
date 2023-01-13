@@ -34,11 +34,38 @@
 
 /datum/power_bar_detail/pinpointer_distance
 	department = POWER_BAR_DEPARTMENT_MEDICAL
-	exclusive_tier = 3
+	tier = 3
 	message = "Pinpointers show exact distance." // Not exact, but you won't try it if I don't say that
+
+/datum/power_bar_detail/stasis_power_creep
+	department = POWER_BAR_DEPARTMENT_MEDICAL
+	tier = 3
+	message = "Stasis beds have access to any researched surgery."
+
+/datum/power_bar_detail/more_chems
+	department = POWER_BAR_DEPARTMENT_MEDICAL
+	tier = 3
+	message = "Chemistry dispensers make more types of chemicals."
+
+// Science
+/datum/power_bar_detail/faster_points
+	department = POWER_BAR_DEPARTMENT_SCIENCE
+	tier = 2
+	message = "Points generate faster."
 
 // Security
 /datum/power_bar_detail/security_headset
 	department = POWER_BAR_DEPARTMENT_SECURITY
-	exclusive_tier = 2
-	message = "Security headsets now have access to all departments."
+	tier = 2
+	message = "Security headsets have access to all departments."
+
+/datum/power_bar_detail/beepsky
+	department = POWER_BAR_DEPARTMENT_SECURITY
+	tier = 2
+	message = "Beepsky gets faster."
+
+// Common
+/datum/power_bar_detail/botany
+	department = POWER_BAR_DEPARTMENT_COMMON
+	tier = 2
+	message = "Botany trays will auto grow plants."

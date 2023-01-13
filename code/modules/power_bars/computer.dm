@@ -75,6 +75,8 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	data["max_power_bars"] = SSpower_bars.max_power_bars
 	data["time_to_distribute"] = SSpower_bars.time_to_distribute
 
+	data["all_details"] = all_details()
+
 	return data
 
 /obj/machinery/computer/power_distribution/ui_act(action, list/params)
@@ -146,6 +148,26 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	user.playsound_local(get_turf(src), tool.usesound, 50, vary = TRUE)
 
 	return TRUE
+
+/obj/machinery/computer/power_distribution/proc/all_details()
+	var/static/list/all_details
+	if (isnull(all_details))
+		all_details = list()
+
+		for (var/department in SSpower_bars.department_allocations)
+			var/list/department_tiers[3]
+
+			for (var/tier in 2 to 3)
+				var/direct_upgrades = SSpower_bars.details_of_upgrade(department, tier, tier - 1)
+
+				department_tiers[tier] = list(
+					"direct_upgrades" = direct_upgrades,
+					"additional_upgrades" = SSpower_bars.details_of_upgrade(department, tier, 1) - direct_upgrades,
+				)
+
+			all_details[department] = department_tiers
+
+	return all_details
 
 /obj/machinery/computer/power_distribution/proc/can_deplete(mob/user)
 	// MBTODO: Chief engineers can deplete (really anyone with a specific access that can be given by ID console)

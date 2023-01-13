@@ -345,16 +345,19 @@ SUBSYSTEM_DEF(power_bars)
 	var/list/details = list()
 
 	for (var/datum/power_bar_detail/detail as anything in subtypesof(/datum/power_bar_detail))
+		if (initial(detail.department) != department)
+			continue
+
 		var/tier = initial(detail.tier)
 		if (isnull(tier))
 			var/exclusive_tier = initial(detail.exclusive_tier)
 			ASSERT(!isnull(exclusive_tier))
-			if (tier != exclusive_tier)
+			if (to_tier != exclusive_tier)
 				continue
 		else if (tier <= from_tier || tier > to_tier)
-			continue
-
-		if (initial(detail.department) != department)
+			var/message_further = initial(detail.message_further)
+			if (!isnull(message_further))
+				details += message_further
 			continue
 
 		details += initial(detail.message)

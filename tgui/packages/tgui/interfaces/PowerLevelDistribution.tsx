@@ -22,6 +22,7 @@ type PowerBarAllocations = Record<string, number>;
 type PowerBarCounts = Record<DepartmentName, number>;
 
 type PowerLevelDistributionData = {
+  all_details: Record<DepartmentName, null | UpgradesForTier>;
   available_power_bars: PowerBarAllocations;
   can_fully_deplete: BooleanLike;
   department_allocations: DepartmentAllocations;
@@ -29,6 +30,11 @@ type PowerLevelDistributionData = {
   max_power_bars: number;
   time_to_distribute: number;
   time_to_next_distribution: number;
+};
+
+type UpgradesForTier = {
+  direct_upgrades: string[];
+  additional_upgrades: string[];
 };
 
 const sumAllocations = (allocations: PowerBarAllocations): number =>
@@ -122,6 +128,38 @@ const PowerBarTotal = ({
   );
 };
 
+const UpgradeDetails = ({
+  details: { direct_upgrades, additional_upgrades },
+}: {
+  details: UpgradesForTier;
+}) => {
+  const additionalUpgradeText = additional_upgrades.map((upgrade, index) => (
+    <li key={index}>{upgrade}</li>
+  ));
+
+  return (
+    <Box>
+      Upgrading gets you better machinery in the department, as well as...
+      {direct_upgrades.length > 0 && (
+        <ul>
+          {direct_upgrades.map((upgrade, index) => (
+            <li key={index}>{upgrade}</li>
+          ))}
+        </ul>
+      )}
+      {additional_upgrades.length > 0 &&
+        (direct_upgrades.length > 0 ? (
+          <Box fontSize="9px">
+            <b>plus, from the previous tier...</b>
+            <ul>{additionalUpgradeText}</ul>
+          </Box>
+        ) : (
+          <ul>{additionalUpgradeText}</ul>
+        ))}
+    </Box>
+  );
+};
+
 const DepartmentEntry = (
   {
     name,
@@ -175,6 +213,8 @@ const DepartmentEntry = (
               tier - usedPowerBars + totalUsedBars >
               sumAllocations(data.available_power_bars);
 
+            const details = data.all_details[name]?.[tier - 1];
+
             return (
               <Stack.Item key={index} grow width="100%">
                 <Button
@@ -205,6 +245,9 @@ const DepartmentEntry = (
                     hover(tier);
                   }}
                   onMouseLeave={() => unhover()}
+                  tooltip={
+                    details ? <UpgradeDetails details={details} /> : null
+                  }
                 />
               </Stack.Item>
             );
