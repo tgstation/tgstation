@@ -1,7 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - rscadd: "Introducing a new holodeck map, the TGC Arena, featuring hologram projectors for your trading cards."
-  - bugfix: "Janitor and Intern TGC cards are now considered creatures rather than just humans."
-  - balance: "The price of card packs has been reduced from double a paycheck to 3 quarters of one."
-  - balance: "The number of cards available in the good clean fun vendor has been doubled."
