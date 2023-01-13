@@ -135,7 +135,8 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	data["enabled_field_generators"] = 0
 	data["disabled_field_generators"] = 0
 	data["singularity_generator"] = FALSE
-	data["turrets"] = 0
+	data["enabled_emitters"] = 0
+	data["disabled_emitters"] = 0
 	data["has_access"] = allowed(user)
 	data["overclock_access"] = overclock_access(user)
 
@@ -149,7 +150,11 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		else if (istype(connected_machine, /obj/machinery/singularity_generator))
 			data["singularity_generator"] = TRUE
 		else if (istype(connected_machine, /obj/machinery/singularity_turret))
-			data["turrets"] += 1
+			var/obj/machinery/singularity_turret/turret = connected_machine
+			if (turret.datum_flags & DF_ISPROCESSING)
+				data["enabled_emitters"] += 1
+			else
+				data["disabled_emitters"] += 1
 
 	return data
 
@@ -224,7 +229,9 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	var/enough_field_generators = enabled_field_generators >= 4
 
-	user?.log_message("started the emitters for the singularity[enough_field_generators ? "" : " with only [enabled_field_generators]\s"].", LOG_GAME)
+	user?.log_message("started the emitters for the singularity[enough_field_generators ? "" : " with only [enabled_field_generators] field generator\s"].", LOG_GAME)
+	if (!enough_field_generators)
+		message_admins("[user ? ADMIN_LOOKUPFLW(user) : "Something"] started the emitters for the singularity with only [enabled_field_generators] field generator\s.")
 
 	for (var/obj/machinery/singularity_turret/emitter in connected_machines)
 		emitter.prepare_fire()

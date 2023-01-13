@@ -35,13 +35,14 @@ const sortPowerBarsByTimeToFill = sortBy<PowerBar>((bar) => -bar.time_to_fill);
 type SingularityControlData = {
   enabled_field_generators: number;
   disabled_field_generators: number;
+  enabled_emitters: number;
+  disabled_emitters: number;
   emitters_require_shields: BooleanLike;
   has_access: BooleanLike;
   map_name: string;
   overclock_access: OverclockAccess;
   singularity_generator: BooleanLike;
   stage: Stage;
-  turrets: number;
 
   singularity_data?: {
     containment_percent: number;
@@ -129,6 +130,7 @@ const SetupScreen = (props, context) => {
     false
   );
 
+  const emitterCount = data.enabled_emitters + data.disabled_emitters;
   const generatorCount =
     data.enabled_field_generators + data.disabled_field_generators;
 
@@ -195,7 +197,7 @@ const SetupScreen = (props, context) => {
               <ConnectedMachine
                 bottomText={
                   <Box fontSize="14px">
-                    <b>{data.turrets}</b> emitter{data.turrets === 1 ? '' : 's'}
+                    <b>{emitterCount}</b> emitter{emitterCount === 1 ? '' : 's'}
                   </Box>
                 }
                 icon={ICON_EMITTER}
@@ -421,10 +423,10 @@ const EquipmentWindow = (props, context) => {
         <EquipmentItem
           icon={ICON_EMITTER}
           name="emitter"
-          count={data.turrets}
+          count={data.enabled_emitters + data.disabled_emitters}
           control={{
-            enabled: data.turrets, // MBTODO
-            disabled: 0, // MBTODO
+            enabled: data.enabled_emitters,
+            disabled: data.disabled_emitters,
             handleEnableAll: () => act('enable_all_emitters'),
             handleDisableAll: () => act('disable_all_emitters'),
           }}

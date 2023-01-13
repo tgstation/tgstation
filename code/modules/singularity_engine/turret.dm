@@ -16,8 +16,7 @@
 	active_power_usage = 0
 
 	var/pause_counter = 0
-	// var/sparks_left = 2
-	var/sparks_left = 1
+	var/sparks_left = 2
 
 	VAR_PRIVATE
 		icon_state_on = "protoemitter_+a"
