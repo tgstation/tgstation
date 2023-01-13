@@ -106,7 +106,7 @@ no power level overlay is currently in the overlays list.
 		if (iscarbon(user))
 			var/mob/living/carbon/carbon_user = user
 			var/obj/item/id_card = carbon_user.get_idcard(hand_first = TRUE)
-			extended_delay = (ACCESS_ENGINEERING in id_card?.GetAccess())
+			extended_delay = !(ACCESS_ENGINEERING in id_card?.GetAccess())
 
 		if (extended_delay)
 			balloon_alert(user, "no access, reaching for override switch...")
