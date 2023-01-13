@@ -431,6 +431,8 @@
 		parts_rating += manipulator.tier
 	powerefficiency = round(newpowereff, 0.01)
 
+	ASSERT(locate(/datum/stock_part/matter_bin) in component_parts)
+
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
 		return FALSE
