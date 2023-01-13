@@ -34,25 +34,26 @@
 		prev_stat = living_target.stat
 
 	. = ..()
+	if(!. || !isnum(prev_stat))
+		return
 
-	if(. && isnum(prev_stat))
-		var/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/jaunt = locate() in actions
-		if(!jaunt)
-			return
+	var/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/jaunt = locate() in actions
+	if(!jaunt)
+		return
 
-		var/total_refund = 0 SECONDS
-		// they're dead, and you killed them - full refund
-		if(QDELETED(living_target) || (living_target.stat == DEAD && prev_stat != DEAD))
-			total_refund += jaunt.cooldown_time
-		// you knocked them into critical
-		else if(HAS_TRAIT(living_target, TRAIT_CRITICAL_CONDITION) && prev_stat == CONSCIOUS)
-			total_refund += crit_refund
+	var/total_refund = 0 SECONDS
+	// they're dead, and you killed them - full refund
+	if(QDELETED(living_target) || (living_target.stat == DEAD && prev_stat != DEAD))
+		total_refund += jaunt.cooldown_time
+	// you knocked them into critical
+	else if(HAS_TRAIT(living_target, TRAIT_CRITICAL_CONDITION) && prev_stat == CONSCIOUS)
+		total_refund += crit_refund
 
-		if(living_target.stat != DEAD && prev_stat != DEAD)
-			total_refund += attack_refund
+	if(living_target.stat != DEAD && prev_stat != DEAD)
+		total_refund += attack_refund
 
-		jaunt.next_use_time -= total_refund
-		jaunt.build_all_button_icons()
+	jaunt.next_use_time -= total_refund
+	jaunt.build_all_button_icons()
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON

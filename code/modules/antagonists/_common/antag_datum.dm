@@ -83,8 +83,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/commands = get_admin_commands()
 	for(var/admin_command in commands)
 		if(href_list["command"] == admin_command)
-			var/datum/callback/C = commands[admin_command]
-			C.Invoke(usr)
+			var/datum/callback/call_async = commands[admin_command]
+			call_async.Invoke(usr)
 			persistent_owner.traitor_panel()
 			return
 
@@ -160,9 +160,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/mind/tested = new_owner || owner
 	if(tested.has_antag_datum(type))
 		return FALSE
-	for(var/i in tested.antag_datums)
-		var/datum/antagonist/A = i
-		if(is_type_in_typecache(src, A.typecache_datum_blacklist))
+	for(var/datum/antagonist/badguy as anything in tested.antag_datums)
+		if(is_type_in_typecache(src, badguy.typecache_datum_blacklist))
 			return FALSE
 
 //This will be called in add_antag_datum before owner assignment.
@@ -253,12 +252,12 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Proc that checks the sent mob aganst the banlistfor this antagonist.
  * Returns FALSE if no mob is sent, or the mob is not found to be banned.
  *
- *  * mob/M: The mob that you are looking for on the banlist.
+ *  * mob/player: The mob that you are looking for on the banlist.
  */
-/datum/antagonist/proc/is_banned(mob/M)
-	if(!M)
+/datum/antagonist/proc/is_banned(mob/player)
+	if(!player)
 		return FALSE
-	. = (is_banned_from(M.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(M))
+	. = (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
 
 /**
  * Proc that replaces a player who cannot play a specific antagonist due to being banned via a poll, and alerts the player of their being on the banlist.
@@ -414,9 +413,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/antag_panel_data()
 	return ""
 
-/datum/antagonist/proc/enabled_in_preferences(datum/mind/M)
+/datum/antagonist/proc/enabled_in_preferences(datum/mind/noggin)
 	if(job_rank)
-		if(M.current && M.current.client && (job_rank in M.current.client.prefs.be_special))
+		if(noggin.current && noggin.current.client && (job_rank in noggin.current.client.prefs.be_special))
 			return TRUE
 		else
 			return FALSE

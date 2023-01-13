@@ -22,43 +22,51 @@
 	can_repair = TRUE
 
 
-/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
+/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/thing)
 	. = ..()
-	if(istype(AM, /turf/closed/wall/mineral/cult) && AM != loc) //we can go through cult walls
-		var/atom/movable/stored_pulling = pulling
-		if(stored_pulling)
-			stored_pulling.setDir(get_dir(stored_pulling.loc, loc))
-			stored_pulling.forceMove(loc)
-		forceMove(AM)
-		if(stored_pulling)
-			start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
+	if(!(istype(thing, /turf/closed/wall/mineral/cult) && thing != loc))
+		return // we can go through cult walls
+	var/atom/movable/stored_pulling = pulling
+
+	if(stored_pulling)
+		stored_pulling.setDir(get_dir(stored_pulling.loc, loc))
+		stored_pulling.forceMove(loc)
+	forceMove(thing)
+
+	if(stored_pulling)
+		start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
-			return ..() //ATTACK!
-		var/list/parts = list()
-		var/undismembermerable_limbs = 0
-		for(var/X in C.bodyparts)
-			var/obj/item/bodypart/BP = X
-			if(BP.body_part != HEAD && BP.body_part != CHEST)
-				if(BP.dismemberable)
-					parts += BP
-				else
-					undismembermerable_limbs++
-		if(!LAZYLEN(parts))
-			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
-				return ..()
-			C.Paralyze(60)
-			visible_message(span_danger("[src] knocks [C] down!"))
-			to_chat(src, span_cultlarge("\"Bring [C.p_them()] to me.\""))
-			return FALSE
-		do_attack_animation(C)
-		var/obj/item/bodypart/BP = pick(parts)
-		BP.dismember()
+	if(!iscarbon(target))
+		return ..()
+
+	var/mob/living/carbon/victim = target
+	if(HAS_TRAIT(victim, TRAIT_NODISMEMBER))
+		return ..() //ATTACK!
+
+	var/list/parts = list()
+	var/strong_limbs = 0
+
+	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
+		if(limb.body_part == HEAD || limb.body_part == CHEST)
+			continue
+		if(limb.dismemberable)
+			parts += limb
+		else
+			strong_limbs++
+
+	if(!LAZYLEN(parts))
+		if(strong_limbs) // they have limbs we can't remove, and no parts we can, attack!
+			return ..()
+		victim.Paralyze(60)
+		visible_message(span_danger("[src] knocks [victim] down!"))
+		to_chat(src, span_cultlarge("\"Bring [victim.p_them()] to me.\""))
 		return FALSE
-	. = ..()
+
+	do_attack_animation(victim)
+	var/obj/item/bodypart/limb = pick(parts)
+	limb.dismember()
+	return FALSE
 
 /mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
 	. = ..()
@@ -74,36 +82,37 @@
 
 	buttontooltipstyle = "cult"
 	button_icon_state = "cult_mark"
+	/// Where is nar nar? Are we even looking?
 	var/tracking = FALSE
+	/// The construct we're attached to
 	var/mob/living/simple_animal/hostile/construct/the_construct
 
-
-/datum/action/innate/seek_master/Grant(mob/living/C)
-	the_construct = C
+/datum/action/innate/seek_master/Grant(mob/living/player)
+	the_construct = player
 	..()
 
 /datum/action/innate/seek_master/Activate()
-	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult)
-	if(!C)
+	var/datum/antagonist/cult/cult_status = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	if(!cult_status)
 		return
-	var/datum/objective/eldergod/summon_objective = locate() in C.cult_team.objectives
+	var/datum/objective/eldergod/summon_objective = locate() in cult_status.cult_team.objectives
 
 	if(summon_objective.check_completion())
-		the_construct.master = C.cult_team.blood_target
+		the_construct.master = cult_status.cult_team.blood_target
 
 	if(!the_construct.master)
-		to_chat(the_construct, "<span class='cult italic'>You have no master to seek!</span>")
+		to_chat(the_construct, span_cultitalic("You have no master to seek!"))
 		the_construct.seeking = FALSE
 		return
 	if(tracking)
 		tracking = FALSE
 		the_construct.seeking = FALSE
-		to_chat(the_construct, "<span class='cult italic'>You are no longer tracking your master.</span>")
+		to_chat(the_construct, span_cultitalic("You are no longer tracking your master."))
 		return
 	else
 		tracking = TRUE
 		the_construct.seeking = TRUE
-		to_chat(the_construct, "<span class='cult italic'>You are now tracking your master.</span>")
+		to_chat(the_construct, span_cultitalic("You are now tracking your master."))
 
 
 /datum/action/innate/seek_prey
@@ -124,15 +133,15 @@
 		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 		button_icon_state = "cult_mark"
 		the_construct.seeking = FALSE
-		to_chat(the_construct, "<span class='cult italic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
+		to_chat(the_construct, span_cultitalic("You are now tracking Nar'Sie, return to reap the harvest!"))
 		return
 	else
 		if(LAZYLEN(GLOB.cult_narsie.souls_needed))
 			the_construct.master = pick(GLOB.cult_narsie.souls_needed)
 			var/mob/living/real_target = the_construct.master //We can typecast this way because Narsie only allows /mob/living into the souls list
-			to_chat(the_construct, "<span class='cult italic'>You are now tracking your prey, [real_target.real_name] - harvest [real_target.p_them()]!</span>")
+			to_chat(the_construct, span_cultitalic("You are now tracking your prey, [real_target.real_name] - harvest [real_target.p_them()]!"))
 		else
-			to_chat(the_construct, "<span class='cult italic'>Nar'Sie has completed her harvest!</span>")
+			to_chat(the_construct, span_cultitalic("Nar'Sie has completed her harvest!"))
 			return
 		desc = "Activate to track Nar'Sie!"
 		button_icon_state = "sintouch"

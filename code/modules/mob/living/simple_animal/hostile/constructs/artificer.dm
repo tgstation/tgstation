@@ -41,10 +41,10 @@
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
 
-/mob/living/simple_animal/hostile/construct/artificer/Found(atom/A) //what have we found here?
-	if(isconstruct(A)) //is it a construct?
-		var/mob/living/simple_animal/hostile/construct/C = A
-		if(C.health < C.maxHealth) //is it hurt? let's go heal it if it is
+/mob/living/simple_animal/hostile/construct/artificer/Found(atom/thing) //what have we found here?
+	if(isconstruct(thing)) //is it a construct?
+		var/mob/living/simple_animal/hostile/construct/cultie = thing
+		if(cultie.health < cultie.maxHealth) //is it hurt? let's go heal it if it is
 			return TRUE
 	return FALSE
 
@@ -57,14 +57,16 @@
 
 /mob/living/simple_animal/hostile/construct/artificer/MoveToTarget(list/possible_targets)
 	..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(isconstruct(L) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
-			LoseTarget()
-			return
-		if(L.health <= melee_damage_lower+melee_damage_upper) //ey bucko you're hurt as fuck let's go hit you
-			retreat_distance = null
-			minimum_distance = 1
+	if(!isliving(target))
+		return
+
+	var/mob/living/victim = target
+	if(isconstruct(victim) && victim.health >= victim.maxHealth) //is this target an unhurt construct? stop trying to heal it
+		LoseTarget()
+		return
+	if(victim.health <= melee_damage_lower+melee_damage_upper) //ey bucko you're hurt as fuck let's go hit you
+		retreat_distance = null
+		minimum_distance = 1
 
 /mob/living/simple_animal/hostile/construct/artificer/Aggro()
 	..()

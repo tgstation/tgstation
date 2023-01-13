@@ -33,9 +33,13 @@
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 	death_message = "collapses in a shattered heap."
+	/// List of spells that this construct can cast
 	var/list/construct_spells = list()
+	/// Flavor text shown to players when they spawn as this construct
 	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
+	/// The construct's master
 	var/master = null
+	/// Whether this construct is currently seeking nar nar
 	var/seeking = FALSE
 	/// Whether this construct can repair other constructs or cult buildings.
 	var/can_repair = FALSE
@@ -53,16 +57,16 @@
 		var/datum/action/new_spell = new spell(src)
 		new_spell.Grant(src)
 
-	var/spellnum = 1
+	var/spell_count = 1
 	for(var/datum/action/spell as anything in actions)
 		if(!(spell.type in construct_spells))
 			continue
 
-		var/pos = 2 + spellnum * 31
+		var/pos = 2 + spell_count * 31
 		if(construct_spells.len >= 4)
 			pos -= 31 * (construct_spells.len - 4)
 		spell.default_button_position = "6:[pos],4:-2" // Set the default position to this random position
-		spellnum++
+		spell_count++
 		update_action_buttons()
 
 	if(icon_state)
@@ -75,8 +79,8 @@
 	to_chat(src, playstyle_string)
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
-	var/t_He = p_they(TRUE)
-	var/t_s = p_s()
+	var/pronoun = p_they(TRUE)
+	var/plural = p_s()
 	var/text_span
 	switch(theme)
 		if(THEME_CULT)
@@ -88,34 +92,36 @@
 	. = list("<span class='[text_span]'>This is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
 	if(health < maxHealth)
 		if(health >= maxHealth/2)
-			. += span_warning("[t_He] look[t_s] slightly dented.")
+			. += span_warning("[pronoun] look[plural] slightly dented.")
 		else
-			. += span_warning("<b>[t_He] look[t_s] severely dented!</b>")
+			. += span_warning("<b>[pronoun] look[plural] severely dented!</b>")
 	. += "</span>"
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(isconstruct(user)) //is it a construct?
-		var/mob/living/simple_animal/hostile/construct/doll = user
-		if(!doll.can_repair || (doll == src && !doll.can_repair_self))
+	if(!isconstruct(user))
+		if(src != user)
 			return ..()
-		if(theme != doll.theme)
-			return ..()
-		if(health < maxHealth)
-			adjustHealth(-5)
-			if(src != user)
-				Beam(user, icon_state="sendbeam", time = 4)
-				user.visible_message(span_danger("[user] repairs some of \the <b>[src]'s</b> dents."), \
-						   span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."))
-			else
-				user.visible_message(span_danger("[user] repairs some of [p_their()] own dents."), \
-						   span_cult("You repair some of your own dents, leaving you at <b>[user.health]/[user.maxHealth]</b> health."))
-		else
-			if(src != user)
-				to_chat(user, span_cult("You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!"))
-			else
-				to_chat(user, span_cult("You cannot repair your own dents, as you have none!"))
-	else if(src != user)
+		return
+
+	var/mob/living/simple_animal/hostile/construct/doll = user
+	if(!doll.can_repair || (doll == src && !doll.can_repair_self))
 		return ..()
+	if(theme != doll.theme)
+		return ..()
+	if(health < maxHealth)
+		adjustHealth(-5)
+		if(src != user)
+			Beam(user, icon_state="sendbeam", time = 4)
+			user.visible_message(span_danger("[user] repairs some of \the <b>[src]'s</b> dents."), \
+						span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."))
+		else
+			user.visible_message(span_danger("[user] repairs some of [p_their()] own dents."), \
+						span_cult("You repair some of your own dents, leaving you at <b>[user.health]/[user.maxHealth]</b> health."))
+	else
+		if(src != user)
+			to_chat(user, span_cult("You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!"))
+		else
+			to_chat(user, span_cult("You cannot repair your own dents, as you have none!"))
 
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return

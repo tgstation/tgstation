@@ -32,34 +32,36 @@
 	AIStatus = AI_ON
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
 
-/mob/living/simple_animal/hostile/construct/juggernaut/bullet_act(obj/projectile/P)
-	if(istype(P, /obj/projectile/energy) || istype(P, /obj/projectile/beam))
-		var/reflectchance = 40 - round(P.damage/3)
-		if(prob(reflectchance))
-			apply_damage(P.damage * 0.5, P.damage_type)
-			visible_message(span_danger("The [P.name] is reflected by [src]'s armored shell!"), \
-							span_userdanger("The [P.name] is reflected by your armored shell!"))
+/mob/living/simple_animal/hostile/construct/juggernaut/bullet_act(obj/projectile/bullet)
+	if(!istype(bullet, /obj/projectile/energy) && !istype(bullet, /obj/projectile/beam))
+		return ..()
+	if(!prob(40 - round(bullet.damage / 3))) // reflect chance
+		return ..()
 
-			// Find a turf near or on the original location to bounce to
-			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
-				var/new_y = P.starting.y + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
-				var/turf/curloc = get_turf(src)
+	apply_damage(bullet.damage * 0.5, bullet.damage_type)
+	visible_message(span_danger("The [bullet.name] is reflected by [src]'s armored shell!"), \
+					span_userdanger("The [bullet.name] is reflected by your armored shell!"))
 
-				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.firer = src
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
-				var/new_angle_s = P.Angle + rand(120,240)
-				while(new_angle_s > 180) // Translate to regular projectile degrees
-					new_angle_s -= 360
-				P.set_angle(new_angle_s)
+	if(!bullet.starting)
+		return BULLET_ACT_FORCE_PIERCE
+	// Find a turf near or on the original location to bounce to
+	var/new_x = bullet.starting.x + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
+	var/new_y = bullet.starting.y + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
+	var/turf/current_tile = get_turf(src)
 
-			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
+	// redirect the projectile
+	bullet.original = locate(new_x, new_y, bullet.z)
+	bullet.starting = current_tile
+	bullet.firer = src
+	bullet.yo = new_y - current_tile.y
+	bullet.xo = new_x - current_tile.x
+	var/new_angle_s = bullet.Angle + rand(120,240)
+	while(new_angle_s > 180) // Translate to regular projectile degrees
+		new_angle_s -= 360
+	bullet.set_angle(new_angle_s)
 
-	return ..()
+	return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
+
 
 //////////////////////////Juggernaut-alts////////////////////////////
 /mob/living/simple_animal/hostile/construct/juggernaut/angelic
