@@ -97,6 +97,18 @@
 	receiver.clear_alert(ALERT_NOT_ENOUGH_N2O)
 	return ..()
 
+///Special handling for breathing inside a vacuum.
+/obj/item/organ/internal/lungs/proc/handle_vacuum_breathing(mob/living/carbon/breather)
+	if(HAS_TRAIT(src, TRAIT_SPACEBREATHING))
+		breather.failed_last_breath = FALSE
+		breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+		breather.clear_alert(ALERT_TOO_MUCH_N2O)
+		breather.clear_alert(ALERT_TOO_MUCH_PLASMA)
+		breather.clear_mood_event("smell")
+		breather.clear_mood_event("chemical_euphoria")
+		return TRUE
+	return FALSE
+
 /obj/item/organ/internal/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	if(breather.status_flags & GODMODE)
 		breather.failed_last_breath = FALSE //clear oxy issues
@@ -106,13 +118,7 @@
 		return
 
 	if(!breath || (breath.total_moles() == 0))
-		if(HAS_TRAIT(src, TRAIT_SPACEBREATHING)) //we're in a vacuum with no air.
-			breather.failed_last_breath = FALSE
-			breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
-			breather.clear_alert(ALERT_TOO_MUCH_N2O)
-			breather.clear_alert(ALERT_TOO_MUCH_PLASMA)
-			breather.clear_mood_event("smell")
-			breather.clear_mood_event("chemical_euphoria")
+		if(handle_vacuum_breathing(breather))
 			return TRUE
 
 		if(breather.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
