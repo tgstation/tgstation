@@ -133,7 +133,7 @@
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
-	if(bolt_type == BOLT_TYPE_STANDARD)
+	if(bolt_type == BOLT_TYPE_STANDARD || internal_magazine) //Internal magazines shouldn't get magazine + 1.
 		chamber_round()
 	else
 		chamber_round(replace_new_round = TRUE)
