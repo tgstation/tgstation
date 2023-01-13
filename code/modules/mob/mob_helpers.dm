@@ -142,7 +142,10 @@
 ///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
 ///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!istype(M) || !M.client || duration < 1)
+	if(!istype(M))
+		stack_trace("Called shake_camera on a non-mob: [M.type].")
+		return
+	if(!M.client || duration < 1)
 		return
 	var/client/C = M.client
 	var/oldx = C.pixel_x
