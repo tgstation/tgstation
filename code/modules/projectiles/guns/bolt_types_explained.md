@@ -22,7 +22,7 @@ The complicated one.  This is what most pistols and bolt action rifles are.  Whe
 Now, for the sprites, your base sprite should be the gun without a slide or bolt.  Take a look at the APS, deagle, or Mosin sprites.  If your icon state is `handcannon` you need to have a sprite for the slide as `handcannon_bolt`, and then a sprite for the bolt being locked back as `handcannon_bolt_locked`.
 
 ## Sawing off
-For guns that have `can_be_sawn_off = TRUE`, you'll need to make an entire second set of sprites.  For `BOLT_TYPE_LOCKING`, this will look like the Mosin.  If your making a sawn off version of `handcannon`, you'll need `hancannon_sawn` for the base, and then `hancannon_sawn_bolt` and `hancannon_sawn_bolt_locked`.
+For guns that have `can_be_sawn_off = TRUE`, you'll need to make an entire second set of sprites.  For `BOLT_TYPE_LOCKING`, this will look like the Mosin.  If you're making a sawn off version of `handcannon`, you'll need `hancannon_sawn` for the base, and then `hancannon_sawn_bolt` and `hancannon_sawn_bolt_locked`.
 
 ## Ammo display
 You'll need `mag_display = TRUE` and a sprite called `handcannon_mag` to show the gun as having a magazine inserted into it.  It's set to true by default, though.
