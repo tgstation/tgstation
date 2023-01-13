@@ -361,6 +361,9 @@ GLOBAL_LIST_EMPTY(mapload_gravity_anchor_chargers)
 	if (!istype(weapon, /obj/item/assembly/signaler/anomaly))
 		return ..()
 
+	if (DOING_INTERACTION_WITH_TARGET(user, src))
+		return TRUE
+
 	balloon_alert(user, "slotting in anomaly core...")
 
 	if (!do_after(user, 3 SECONDS))
