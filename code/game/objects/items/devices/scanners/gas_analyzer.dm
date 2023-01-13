@@ -213,4 +213,5 @@
 	. = ..()
 	if(!can_see(user, target, 15))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))

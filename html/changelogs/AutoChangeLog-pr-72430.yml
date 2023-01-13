@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Crew AIs can no longer interact with ANY syndicate machinery (ie shuttle computers, buttons, ect.)"
-  - bugfix: "Crew AIs can no longer attempt to track mobs on the syndicate base to determine the gamemode."

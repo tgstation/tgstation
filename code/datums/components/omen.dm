@@ -120,16 +120,13 @@
 	SIGNAL_HANDLER
 
 	qdel(src)
-	return
 
 /// Creates a localized explosion that shakes the camera
 /datum/component/omen/proc/death_explode(mob/living/our_guy)
 	explosion(our_guy, explosion_cause = src)
 
-	for(var/mob/witness as anything in view(2, our_guy))
+	for(var/mob/witness in view(2, our_guy))
 		shake_camera(witness, 1 SECONDS, 2)
-
-	return
 
 /**
  * The smite omen. Permanent.
@@ -152,8 +149,6 @@
 
 	death_explode(our_guy)
 	our_guy.gib()
-
-	return
 
 /**
  * The quirk omen. Permanent.
