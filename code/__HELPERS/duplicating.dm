@@ -90,7 +90,4 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 		for(var/datum/quirk/original_quirks as anything in original_living.quirks)
 			original_living.add_quirk(original_quirks.type)
 
-	else
-		made_copy.update_appearance()
-
 	return made_copy
