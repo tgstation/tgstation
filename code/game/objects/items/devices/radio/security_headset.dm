@@ -23,6 +23,7 @@
 	if (!istype(parent, /obj/item/encryptionkey))
 		return COMPONENT_INCOMPATIBLE
 
+	var/obj/item/encryptionkey/key_parent = parent
 	filtered_channels = assoc_to_keys(key_parent.channels)
 	channels_to_give -= filtered_channels
 
