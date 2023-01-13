@@ -253,6 +253,9 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 		else
 			to_chat(living_player, span_userdanger("You feel a strong tug at your shoulder, almost as if from a ghost. Something is wrong..."))
 
+	if (POWER_BAR_FLAG(FFLAG_RED_ALERT))
+		addtimer(CALLBACK(SSsecurity_level, TYPE_PROC_REF(/datum/controller/subsystem/security_level, set_level), SEC_LEVEL_RED), 15 SECONDS)
+
 /obj/contained_singularity/proc/set_anchor(obj/item/gravity_anchor/gravity_anchor)
 	if (!isnull(src.gravity_anchor))
 		return FALSE
