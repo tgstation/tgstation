@@ -32,7 +32,7 @@ type PowerLevelDistributionData = {
 };
 
 const sumAllocations = (allocations: PowerBarAllocations): number =>
-  Object.values(allocations).reduce((sum, value) => sum + value);
+  Object.values(allocations).reduce((sum, value) => sum + value, 0);
 
 const limitAllocations = (
   departmentAllocations: DepartmentAllocations,
@@ -84,9 +84,11 @@ const PowerBarDisplay = (props: { color: string }) => {
 const PowerBarTotal = ({
   availablePowerBars,
   usedPowerBars,
+  excess,
 }: {
   availablePowerBars: PowerBarAllocations;
   usedPowerBars: number;
+  excess: number;
 }) => {
   return (
     <Tooltip
@@ -112,7 +114,9 @@ const PowerBarTotal = ({
           )
         )}
 
-        {/* MBTODO: Show excess (like if you have too many bars allocated, show them as red) */}
+        {range(0, excess).map((_, i) => (
+          <PowerBarDisplay color={'red'} key={i} />
+        ))}
       </Stack.Item>
     </Tooltip>
   );
@@ -281,6 +285,7 @@ export const PowerLevelDistribution = (props, context) => {
               <PowerBarTotal
                 availablePowerBars={data.available_power_bars}
                 usedPowerBars={usedPowerBars}
+                excess={sumAllocations(excessAllocations)}
               />
 
               <Stack.Item grow>

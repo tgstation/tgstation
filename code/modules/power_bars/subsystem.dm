@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(power_bars)
 	areas_per_department = areas_for_department()
 
 	available_power_bars = list(
-		new /datum/power_bar_allocation("Base charge", department_allocations.len + 3), // MBTODO: Remove +3
+		new /datum/power_bar_allocation("Base charge", department_allocations.len),
 	)
 
 	if (enabled)
@@ -290,7 +290,6 @@ SUBSYSTEM_DEF(power_bars)
 	return sum
 
 // APCs charge themselves
-// MBTODO: Has to be connected to the computer
 /datum/controller/subsystem/power_bars/proc/surplus_power(obj/machinery/power/source)
 	ASSERT(SSpower_bars.enabled)
 
