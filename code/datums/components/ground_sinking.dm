@@ -30,7 +30,14 @@
 	/// When this timer completes we start sinking
 	var/ground_sinking_start_timer
 
-/datum/component/ground_sinking/Initialize(target_icon_state, ground_sinking_delay = 8 SECONDS, sink_speed = 1 SECONDS, heal_when_sinked = TRUE, health_per_second = 1, outline_colour = COLOR_PALE_GREEN, damage_res_sinked = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1))
+/datum/component/ground_sinking/Initialize(target_icon_state,
+			ground_sinking_delay = 8 SECONDS,
+			sink_speed = 1 SECONDS,
+			heal_when_sinked = TRUE,
+			health_per_second = 1,
+			outline_colour = COLOR_PALE_GREEN,
+			damage_res_sinked = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1))
+
 	if (!isbasicmob(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -43,11 +50,9 @@
 	src.damage_res_sinked = damage_res_sinked
 
 /datum/component/ground_sinking/RegisterWithParent()
-	. = ..()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /datum/component/ground_sinking/UnregisterFromParent()
-	. = ..()
 	if(sinked || is_sinking)
 		unsink()
 	if(ground_sinking_start_timer)

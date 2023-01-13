@@ -3,6 +3,7 @@
  * The AI controller is responsible for doing anything with that information.
  */
 /datum/element/ai_retaliate
+	element_flags = ELEMENT_BESPOKE
 	/// What mob type the parent calls
 	var/mob/living/mob_type
 	/// In what range the parent calls the same mobs to retaliate
