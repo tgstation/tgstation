@@ -696,7 +696,7 @@ const SelfDestructScreen = () => {
         <Stack fill vertical align="center" justify="center">
           <Stack.Item>
             <Box color="white" fontSize="35px" bold>
-              SELF DESTRUCTION IMMINENT
+              CONTAINMENT BREACH IMMINENT
             </Box>
           </Stack.Item>
 

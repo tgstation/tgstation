@@ -1,6 +1,5 @@
 GLOBAL_LIST_EMPTY(contained_singularities)
 
-// MBTODO: Play the NarSie tearing effect when it's about to release (lol)
 // MBTODO: Insta-red alert for the sake of the prototype...
 /obj/contained_singularity
 	name = "contained singularity"
@@ -228,6 +227,7 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 	// Prototype: Would be dynamic to SINGULARITY_BREACH_TIME
 	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 20), 10 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 10), 20 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sound_to_playing_players), 'sound/effects/dimensional_rend.ogg'), 25 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 5), 25 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 4), 26 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(step_self_destruct), 3), 27 SECONDS)
@@ -243,6 +243,15 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 	qdel(singularity)
 	new /obj/singularity(get_turf(src), /* starting_energy = */ POWER_BAR_FLAG(FFLAG_DEFAULT_SINGULO_ENERGY))
 	qdel(src)
+
+	sound_to_playing_players('sound/magic/charge.ogg')
+
+	for (var/mob/living/living_player as anything in GLOB.alive_player_list)
+		if (is_station_level(living_player.z))
+			living_player.Knockdown(4 SECONDS)
+			to_chat(living_player, span_userdanger("You suddenly drop to your knees after feeling a strong push, almost as if from a ghost."))
+		else
+			to_chat(living_player, span_userdanger("You feel a strong tug at your shoulder, almost as if from a ghost. Something is wrong..."))
 
 /obj/contained_singularity/proc/set_anchor(obj/item/gravity_anchor/gravity_anchor)
 	if (!isnull(src.gravity_anchor))
