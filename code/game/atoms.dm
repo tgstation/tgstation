@@ -39,8 +39,8 @@
 	///HUD images that this atom can provide.
 	var/list/hud_possible
 
-	///Value used to increment ex_act() if reactionary_explosions is on
-	var/explosion_block = 0
+	///How much this atom resists explosions by, in the end
+	var/explosive_resistance = 0
 
 	/**
 	 * used to store the different colors on an atom
@@ -121,6 +121,7 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	// Use SET_BASE_PIXEL(x, y) to set these in typepath definitions, it'll handle pixel_x and y for you
 	///Default pixel x shifting for the atom's icon.
 	var/base_pixel_x = 0
 	///Default pixel y shifting for the atom's icon.
@@ -264,6 +265,7 @@
 
 	if(uses_integrity)
 		atom_integrity = max_integrity
+	TEST_ONLY_ASSERT((!armor || istype(armor)), "[type] has an armor that contains an invalid value at intialize")
 
 	// apply materials properly from the default custom_materials value
 	// This MUST come after atom_integrity is set above, as if old materials get removed,
@@ -323,8 +325,10 @@
 
 	LAZYNULL(managed_overlays)
 
-	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
+	QDEL_NULL(light)
+	if (length(light_sources))
+		light_sources.Cut()
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
@@ -444,9 +448,9 @@
 					return TRUE
 
 /**
- * Is the atom in any of the centcom syndicate areas
+ * Is the atom in any of the syndicate areas
  *
- * Either in the syndie base on centcom, or any of their shuttles
+ * Either in the syndie base, or any of their shuttles
  *
  * Also used in gamemode code for win conditions
  */
@@ -455,7 +459,7 @@
 	if(!current_turf)
 		return FALSE
 
-	if(!is_centcom_level(current_turf.z))//if not, don't bother
+	if(!is_reserved_level(current_turf.z))//if not, don't bother
 		return FALSE
 
 	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/centcom/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))
@@ -1597,7 +1601,15 @@
 /atom/proc/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
-/atom/proc/add_filter(name,priority,list/params)
+/** Add a filter to the atom.
+ * Can also be used to assert a filter's existence. I.E. update a filter regardless if it exists or not.
+ *
+ * Arguments:
+ * * name - Filter name
+ * * priority - Priority used when sorting the filter.
+ * * params - Parameters of the filter.
+ */
+/atom/proc/add_filter(name, priority, list/params)
 	LAZYINITLIST(filter_data)
 	var/list/copied_parameters = params.Copy()
 	copied_parameters["priority"] = priority
@@ -1614,20 +1626,40 @@
 		filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
 
-/atom/proc/transition_filter(name, time, list/new_params, easing, loop)
+/** Update a filter's parameter and animate this change. If the filter doesnt exist we won't do anything.
+ * Basically a [atom/proc/modify_filter] call but with animations. Unmodified filter parameters are kept.
+ *
+ * Arguments:
+ * * name - Filter name
+ * * new_params - New parameters of the filter
+ * * time - time arg of the BYOND animate() proc.
+ * * easing - easing arg of the BYOND animate() proc.
+ * * loop - loop arg of the BYOND animate() proc.
+ */
+/atom/proc/transition_filter(name, list/new_params, time, easing, loop)
 	var/filter = get_filter(name)
 	if(!filter)
 		return
-
-	var/list/old_filter_data = filter_data[name]
-
-	var/list/params = old_filter_data.Copy()
-	for(var/thing in new_params)
-		params[thing] = new_params[thing]
-
 	animate(filter, new_params, time = time, easing = easing, loop = loop)
-	for(var/param in params)
-		filter_data[name][param] = params[param]
+	modify_filter(name, new_params)
+
+/** Update a filter's parameter to the new one. If the filter doesnt exist we won't do anything.
+ *
+ * Arguments:
+ * * name - Filter name
+ * * new_params - New parameters of the filter
+ * * overwrite - TRUE means we replace the parameter list completely. FALSE means we only replace the things on new_params.
+ */
+/atom/proc/modify_filter(name, list/new_params, overwrite = FALSE)
+	var/filter = get_filter(name)
+	if(!filter)
+		return
+	if(overwrite)
+		filter_data[name] = new_params
+	else
+		for(var/thing in new_params)
+			filter_data[name][thing] = new_params[thing]
+	update_filters()
 
 /atom/proc/change_filter_priority(name, new_priority)
 	if(!filter_data || !filter_data[name])
@@ -1818,6 +1850,10 @@
 
 	pixel_y = pixel_y + base_pixel_y - .
 
+// Not a valid operation, turfs and movables handle block differently
+/atom/proc/set_explosion_block(explosion_block)
+	return
+
 /**
  * Returns true if this atom has gravity for the passed in turf
  *
@@ -1842,18 +1878,15 @@
 			return 0
 
 	var/list/forced_gravity = list()
-	if(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity))
-		if(!length(forced_gravity))
-			SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity)
+	SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	if(length(forced_gravity))
+		var/positive_grav = max(forced_gravity)
+		var/negative_grav = min(min(forced_gravity), 0) //negative grav needs to be below or equal to 0
 
-		var/positive_grav = 0
-		var/negative_grav = 0
 		//our gravity is sum of the most massive positive and negative numbers returned by the signal
 		//so that adding two forced_gravity elements with an effect size of 1 each doesnt add to 2 gravity
 		//but negative force gravity effects can cancel out positive ones
-		for(var/gravity_influence in forced_gravity)
-			positive_grav = max(positive_grav, gravity_influence)
-			negative_grav = min(negative_grav, gravity_influence)
 
 		return (positive_grav + negative_grav)
 

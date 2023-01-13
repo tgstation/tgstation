@@ -187,9 +187,6 @@
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
-/datum/armor/structure_bookcase
-	fire = 50
-
 /obj/structure/bookcase/manuals/engineering/Initialize(mapload)
 	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
@@ -200,9 +197,6 @@
 
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
-
-/datum/armor/structure_bookcase
-	fire = 50
 
 /obj/structure/bookcase/manuals/research_and_development/Initialize(mapload)
 	. = ..()

@@ -217,16 +217,18 @@
 	if(flag)
 		return
 	if(!ScientistCheck(user))
-		return
+		return .
 	if(!console)
 		to_chat(user, span_warning("The device is not linked to console!"))
-		return
+		return .
 
 	switch(mode)
 		if(GIZMO_SCAN)
 			scan(target, user)
 		if(GIZMO_MARK)
 			mark(target, user)
+
+	return .
 
 /obj/item/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
@@ -275,9 +277,11 @@
 	. = ..()
 	if(flag)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!AbductorCheck(user))
-		return
+		return .
 	radio_off(target, user)
+	return .
 
 /obj/item/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
 	if( !(user in (viewers(7,target))) )
@@ -322,6 +326,7 @@
 
 /obj/item/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!ScientistCheck(user))
 		return
 
@@ -556,7 +561,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
 			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but is unsuccessful!"), \
 			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
-			L.adjust_drowsyness(2)
+			L.adjust_drowsiness(4 SECONDS)
 			return
 		L.visible_message(span_danger("[user] induces sleep in [L] with [src]!"), \
 		span_userdanger("You suddenly feel very drowsy!"))
@@ -568,7 +573,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src], but is unsuccessful!"), \
 			span_userdanger("Any sense of drowsiness is quickly diminished!"))
 			return
-		L.adjust_drowsyness(1)
+		L.adjust_drowsiness(2 SECONDS)
 		to_chat(user, span_warning("Sleep inducement works fully only on stunned specimens! "))
 		L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src]!"), \
 							span_userdanger("You suddenly feel drowsy!"))

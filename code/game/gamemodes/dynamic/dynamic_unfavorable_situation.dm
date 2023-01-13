@@ -38,6 +38,7 @@
 
 		ruleset.trim_candidates()
 
+		ruleset.load_templates()
 		if (!ruleset.ready())
 			continue
 

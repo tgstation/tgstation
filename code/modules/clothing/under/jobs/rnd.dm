@@ -20,11 +20,6 @@
 	has_sensor = NO_SENSORS
 	random_sensor = FALSE
 
-/datum/armor/rnd_research_director
-	bomb = 10
-	bio = 10
-	acid = 35
-
 /obj/item/clothing/under/rank/rnd/research_director/skirt
 	name = "research director's vest suitskirt"
 	desc = "It's a suitskirt worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
@@ -35,11 +30,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/datum/armor/rnd_research_director
-	bomb = 10
-	bio = 10
-	acid = 35
-
 /obj/item/clothing/under/rank/rnd/research_director/alt
 	desc = "Maybe you'll engineer your own half-man, half-pig creature some day. Its fabric provides minor protection from biological contaminants."
 	name = "research director's tan suit"
@@ -47,11 +37,6 @@
 	inhand_icon_state = "rdwhimsy"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
-
-/datum/armor/rnd_research_director
-	bomb = 10
-	bio = 10
-	acid = 35
 
 /obj/item/clothing/under/rank/rnd/research_director/alt/skirt
 	name = "research director's tan suitskirt"
@@ -63,11 +48,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/datum/armor/rnd_research_director
-	bomb = 10
-	bio = 10
-	acid = 35
-
 /obj/item/clothing/under/rank/rnd/research_director/turtleneck
 	desc = "A Nanotrasen-purple turtleneck and black jeans, for a director with a superior sense of style."
 	name = "research director's turtleneck"
@@ -75,11 +55,6 @@
 	inhand_icon_state = "p_suit"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
-
-/datum/armor/rnd_research_director
-	bomb = 10
-	bio = 10
-	acid = 35
 
 /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt
 	name = "research director's turtleneck skirt"
@@ -90,11 +65,6 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/datum/armor/rnd_research_director
-	bomb = 10
-	bio = 10
-	acid = 35
 
 /obj/item/clothing/under/rank/rnd/scientist
 	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
@@ -116,18 +86,12 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/datum/armor/rnd_scientist
-	bio = 50
-
 /obj/item/clothing/under/rank/rnd/roboticist
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
 	name = "roboticist's jumpsuit"
 	icon_state = "robotics"
 	inhand_icon_state = null
 	resistance_flags = NONE
-
-/datum/armor/rnd_scientist
-	bio = 50
 
 /obj/item/clothing/under/rank/rnd/roboticist/skirt
 	name = "roboticist's jumpskirt"
@@ -138,9 +102,6 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/datum/armor/rnd_scientist
-	bio = 50
 
 /obj/item/clothing/under/rank/rnd/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
