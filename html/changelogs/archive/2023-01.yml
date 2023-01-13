@@ -406,3 +406,22 @@
   - rscadd: you can now use regex for text highlighting. The syntax is /[regex expression]/,
       eg /dog[0-9]/. There are no quantifiers, but you can use capture groups. The
       regex must read a minimum of two characters.
+2023-01-13:
+  1393F:
+  - bugfix: you can nolonger use a goldgrub as a shield to kill colossus
+  Fikou:
+  - qol: fixes chisels
+  Higgin:
+  - rscadd: Adds ear surgery to repair damaged ears/deafness.
+  PestoVerde, Imaginos, Wallem:
+  - imageadd: New material and ore sprites by PestoVerde & Imaginos
+  Profakos:
+  - bugfix: pancakes no longer show an error sprite when added to a stack
+  dawsonkeyes:
+  - bugfix: metal hydrogen golems no longer die to low pressures and cold temperatures
+  - bugfix: metal hydrogen golems are no longer solid white, and are now the actual
+      color of metal hydrogen
+  - balance: metal hydrogen golems are also now immune to most environmental threats,
+      and get more armor
+  san7890:
+  - bugfix: There is no longer a button on a window at the CentCom Thunderdome.
