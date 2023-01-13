@@ -18,10 +18,10 @@
 
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	// Chek if this is the exact same type
-	if(chems.has_reagent(src, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(toxpwr && affected_mob.health > health_required)
@@ -69,8 +69,11 @@
 	return ..()
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.mutation_roll(user)
+	
 	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
@@ -350,7 +353,9 @@
 
 	// Plant-B-Gone is just as bad
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 10))
 	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 6))
 	mytray.adjust_weedlevel(-rand(4,8))
@@ -386,7 +391,9 @@
 
 	//Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.5))
 	mytray.adjust_weedlevel(-rand(1,2))
 
@@ -400,11 +407,11 @@
 
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	// Chek if this is the exact same type
-	if(chems.has_reagent(src, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
-		mytray.adjust_pestlevel(-rand(1,2))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
+	mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -421,7 +428,9 @@
 
 //Pest Spray
 /datum/reagent/toxin/pestkiller/organic/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.1))
 	mytray.adjust_pestlevel(-rand(1,2))
 
@@ -1046,7 +1055,9 @@
 
 // ...Why? I mean, clearly someone had to have done this and thought, well, acid doesn't hurt plants, but what brought us here, to this point?
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
 	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
 	mytray.adjust_weedlevel(-rand(1,2))
@@ -1091,7 +1102,9 @@
 
 // SERIOUSLY
 /datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 2))
 	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 3))
 	mytray.adjust_weedlevel(-rand(1,4))

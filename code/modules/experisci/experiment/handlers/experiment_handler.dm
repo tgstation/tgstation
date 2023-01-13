@@ -98,10 +98,14 @@
  */
 /datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, proximity_flag, params)
 	SIGNAL_HANDLER
-	if (!proximity_flag || (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)))
+	if (!proximity_flag)
 		return
+	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
+	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
+		return .
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
+	return .
 
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately

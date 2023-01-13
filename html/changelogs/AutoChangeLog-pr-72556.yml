@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "The Scrubber Clog event now gives an orbit popup to ghosts!"

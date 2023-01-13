@@ -63,9 +63,9 @@
 		switch (air_alarm.danger_level)
 			if (AIR_ALARM_ALERT_NONE)
 				continue
-			if (AIR_ALARM_ALERT_MINOR)
+			if (AIR_ALARM_ALERT_WARNING)
 				minor_alarms += get_area_name(air_alarm, format_text = TRUE)
-			if (AIR_ALARM_ALERT_SEVERE)
+			if (AIR_ALARM_ALERT_HAZARD)
 				priority_alarms += get_area_name(air_alarm, format_text = TRUE)
 
 	// Either we got new alarms, or we have no alarms anymore

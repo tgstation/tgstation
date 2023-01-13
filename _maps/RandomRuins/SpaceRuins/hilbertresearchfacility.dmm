@@ -1448,7 +1448,8 @@
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/button/tram{
 	id = "right_part_hilbert";
-	pixel_y = 4
+	pixel_y = 4;
+	lift_id = "tram_hilbert"
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)

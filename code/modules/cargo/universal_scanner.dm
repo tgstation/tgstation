@@ -61,11 +61,13 @@
 	. = ..()
 	if(!istype(object) || !proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(scanning_mode == SCAN_EXPORTS)
 		export_scan(object, user)
-		return
+		return .
 	if(scanning_mode == SCAN_PRICE_TAG)
 		price_tag(target = object, user = user)
+	return .
 
 /obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()

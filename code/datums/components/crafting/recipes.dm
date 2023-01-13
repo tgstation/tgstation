@@ -785,7 +785,8 @@
 
 /datum/crafting_recipe/paperframes
 	name = "Paper Frames"
-	result = /obj/item/stack/sheet/paperframes/five
+	result = /obj/item/stack/sheet/paperframes
+	result_amount = 5
 	time = 1 SECONDS
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 5, /obj/item/paper = 20)
 	category = CAT_STRUCTURE
@@ -814,7 +815,8 @@
 /datum/crafting_recipe/blackcarpet
 	name = "Black Carpet"
 	reqs = list(/obj/item/stack/tile/carpet = 50, /obj/item/toy/crayon/black = 1)
-	result = /obj/item/stack/tile/carpet/black/fifty
+	result = /obj/item/stack/tile/carpet/black
+	result_amount = 50
 	category = CAT_TILES
 
 /datum/crafting_recipe/curtain

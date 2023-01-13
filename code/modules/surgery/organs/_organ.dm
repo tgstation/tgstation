@@ -291,9 +291,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * For example, lungs won't be given if you have NO_BREATH, stomachs check for NO_HUNGER, and livers check for NO_METABOLISM.
  * If you want a carbon to have a trait that normally blocks an organ but still want the organ. Attach the trait to the organ using the organ_traits var
  * Arguments:
- * owner_species - species, needed to return whether the species has an organ specific trait
+ * owner_species - species, needed to return the mutant slot as true or false. stomach set to null means it shouldn't have one.
+ * owner_mob - for more specific checks, like nightmares.
  */
-/obj/item/organ/proc/get_availability(datum/species/owner_species)
+/obj/item/organ/proc/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return TRUE
 
 /// Called before organs are replaced in regenerate_organs with new ones

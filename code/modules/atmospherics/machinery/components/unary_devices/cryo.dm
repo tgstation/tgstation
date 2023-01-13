@@ -153,8 +153,8 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
 	. = ..()
 	var/C
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		C += M.rating
+	for(var/datum/stock_part/matter_bin/M in component_parts)
+		C += M.tier
 
 	efficiency = initial(efficiency) * C
 	sleep_factor = initial(sleep_factor) * C

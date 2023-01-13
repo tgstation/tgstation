@@ -567,8 +567,6 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "fZ" = (
-/obj/structure/table/wood,
-/obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 7;
 	pixel_y = 9
@@ -577,12 +575,13 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "gc" = (
@@ -2895,8 +2894,6 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/hotel)
 "EC" = (
-/obj/structure/table/wood,
-/obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 7;
 	pixel_y = 9
@@ -2905,6 +2902,7 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
 "ED" = (
@@ -3655,8 +3653,6 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "OJ" = (
-/obj/structure/table/wood,
-/obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 7;
 	pixel_y = 9
@@ -3665,9 +3661,10 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel/bar)
 "OM" = (
@@ -4376,11 +4373,10 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "WZ" = (
-/obj/structure/table/wood,
-/obj/structure/table/wood/fancy,
-/obj/item/candle/infinite{
+/obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 6
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
 "Xd" = (

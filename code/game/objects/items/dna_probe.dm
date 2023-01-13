@@ -31,18 +31,21 @@
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag || !target)
-		return
+		return .
+
+	if (isitem(target))
+		. |= AFTERATTACK_PROCESSED_ITEM
 
 	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro_tray = target
 		if(!hydro_tray.myseed)
-			return
+			return .
 		if(stored_dna_plants[hydro_tray.myseed.type])
 			to_chat(user, span_notice("Plant data already present in local storage."))
-			return
+			return .
 		if(hydro_tray.plant_status != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
-			return
+			return .
 		stored_dna_plants[hydro_tray.myseed.type] = TRUE
 		to_chat(user, span_notice("Plant data added to local storage."))
 
@@ -54,10 +57,10 @@
 			var/mob/living/living_target = target
 			if(stored_dna_animal[living_target.type])
 				to_chat(user, span_alert("Animal data already present in local storage."))
-				return
+				return .
 			if(!(living_target.mob_biotypes & MOB_ORGANIC))
 				to_chat(user, span_alert("No compatible DNA detected."))
-				return
+				return .
 			stored_dna_animal[living_target.type] = TRUE
 			to_chat(user, span_notice("Animal data added to local storage."))
 
@@ -65,10 +68,10 @@
 		var/mob/living/carbon/human/human_target = target
 		if(stored_dna_human[human_target.dna.unique_identity])
 			to_chat(user, span_notice("Humanoid data already present in local storage."))
-			return
+			return .
 		if(!(human_target.mob_biotypes & MOB_ORGANIC))
 			to_chat(user, span_alert("No compatible DNA detected."))
-			return
+			return .
 		stored_dna_human[human_target.dna.unique_identity] = TRUE
 		to_chat(user, span_notice("Humanoid data added to local storage."))
 

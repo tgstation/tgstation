@@ -28,8 +28,8 @@
 ///AI flags
 /// Don't move if being pulled
 #define STOP_MOVING_WHEN_PULLED (1<<0)
-/// Don't act if you're dead
-#define STOP_ACTING_WHILE_DEAD	(1<<1)
+/// Continue processing even if dead
+#define CAN_ACT_WHILE_DEAD	(1<<1)
 
 //Base Subtree defines
 

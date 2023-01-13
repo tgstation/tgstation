@@ -115,7 +115,9 @@
 
 	// Beer is a chemical composition of alcohol and various other things. It's a garbage nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 /datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.05))
 	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.7))
 
@@ -1494,6 +1496,13 @@
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.adjust_bodytemperature(50 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
 	return ..()
+
+/datum/glass_style/drinking_glass/sbiten
+	required_drink_type = /datum/reagent/consumable/ethanol/sbiten
+	name = "Sbiten"
+	desc = "A spicy mix of Vodka and Spice. Very hot."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "sbitenglass"
 
 /datum/reagent/consumable/ethanol/red_mead
 	name = "Red Mead"

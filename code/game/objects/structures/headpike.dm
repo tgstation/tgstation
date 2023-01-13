@@ -40,7 +40,7 @@
 	return ..()
 
 /obj/structure/headpike/update_name()
-	name = "[victim.real_name] on a [spear]"
+	name = "[victim.real_name] on a [spear.name]"
 	return ..()
 
 /obj/structure/headpike/update_overlays()

@@ -39,8 +39,8 @@
 	///HUD images that this atom can provide.
 	var/list/hud_possible
 
-	///Value used to increment ex_act() if reactionary_explosions is on
-	var/explosion_block = 0
+	///How much this atom resists explosions by, in the end
+	var/explosive_resistance = 0
 
 	/**
 	 * used to store the different colors on an atom
@@ -121,6 +121,7 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	// Use SET_BASE_PIXEL(x, y) to set these in typepath definitions, it'll handle pixel_x and y for you
 	///Default pixel x shifting for the atom's icon.
 	var/base_pixel_x = 0
 	///Default pixel y shifting for the atom's icon.
@@ -264,6 +265,7 @@
 
 	if(uses_integrity)
 		atom_integrity = max_integrity
+	TEST_ONLY_ASSERT((!armor || istype(armor)), "[type] has an armor that contains an invalid value at intialize")
 
 	// apply materials properly from the default custom_materials value
 	// This MUST come after atom_integrity is set above, as if old materials get removed,
@@ -1847,6 +1849,10 @@
 	base_pixel_y = new_value
 
 	pixel_y = pixel_y + base_pixel_y - .
+
+// Not a valid operation, turfs and movables handle block differently
+/atom/proc/set_explosion_block(explosion_block)
+	return
 
 /**
  * Returns true if this atom has gravity for the passed in turf

@@ -2,10 +2,8 @@
 	name = "Android"
 	id = SPECIES_ANDROID
 	species_traits = list(
-		NOBLOOD,
 		NO_DNA_COPY,
 		NOTRANSSTING,
-		NOSTOMACH,
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -23,11 +21,16 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_TOXIMMUNE,
+		TRAIT_NOBLOOD,
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
 	mutanttongue = /obj/item/organ/internal/tongue/robot
+	mutantstomach = null
+	mutantheart = null
+	mutantliver = null
+	mutantlungs = null
 	species_language_holder = /datum/language_holder/synthetic
 	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT

@@ -89,15 +89,18 @@
 		return
 	if(!flag)
 		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return
+		return .
 
 	to_chat(user, span_notice("You start planting [src]. The timer is set to [det_time]..."))
 
 	if(do_after(user, 30, target = bomb_target))
 		if(!user.temporarilyRemoveItemFromInventory(src))
-			return
+			return .
 		target = bomb_target
 		active = TRUE
 
@@ -120,6 +123,8 @@
 		target.add_overlay(plastic_overlay)
 		to_chat(user, span_notice("You plant the bomb. Timer counting down from [det_time]."))
 		addtimer(CALLBACK(src, PROC_REF(detonate)), det_time*10)
+
+	return .
 
 /obj/item/grenade/c4/proc/shout_syndicate_crap(mob/player)
 	if(!player)

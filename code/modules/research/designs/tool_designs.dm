@@ -75,6 +75,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/rtd_loaded
+	name = "Rapid Tiling Device"
+	desc = "A tool that can lay & destory floor tiles on the fly."
+	id = "rtd_loaded"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 30000, /datum/material/glass = 2500)
+	build_path = /obj/item/construction/rtd/loaded
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/rcd_ammo
 	name = "RCD Matter Cartridge"
 	id = "rcd_ammo"

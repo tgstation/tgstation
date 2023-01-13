@@ -110,8 +110,8 @@
 /obj/item/organ/internal/tongue/could_speak_language(datum/language/language_path)
 	return (language_path in languages_possible)
 
-/obj/item/organ/internal/tongue/get_availability(datum/species/owner_species)
-	return !(NO_TONGUE in owner_species.species_traits)
+/obj/item/organ/internal/tongue/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutanttongue
 
 /obj/item/organ/internal/tongue/lizard
 	name = "forked tongue"

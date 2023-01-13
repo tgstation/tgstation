@@ -157,6 +157,7 @@
 		new_implant.implant(traitor_mob, null, silent = TRUE)
 		if(!silent)
 			to_chat(traitor_mob, span_boldnotice("Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."))
+		add_memory(/datum/memory/key/traitor_uplink/implant, uplink_loc = "implant")
 		return new_implant
 
 	. = uplink_loc
@@ -170,10 +171,15 @@
 	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
 	if(uplink_loc == R)
 		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply speak \"[new_uplink.unlock_code]\" into frequency [RADIO_TOKEN_UPLINK] to unlock its hidden features."
+		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = R.name, uplink_code = new_uplink.unlock_code)
 	else if(uplink_loc == PDA)
 		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
+		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = "PDA", uplink_code = new_uplink.unlock_code)
 	else if(uplink_loc == P)
-		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
+		var/instructions = english_list(new_uplink.unlock_code)
+		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [instructions] from its starting position to unlock its hidden features."
+		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = "PDA pen", uplink_code = instructions)
+
 	new_uplink.unlock_text = unlock_text
 	if(!silent)
 		to_chat(traitor_mob, span_boldnotice(unlock_text))

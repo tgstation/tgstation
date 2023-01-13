@@ -1,5 +1,6 @@
 /datum/antagonist/blobspore
 	name = "\improper Blob Spore"
+	antagpanel_category = "Biohazards"
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 

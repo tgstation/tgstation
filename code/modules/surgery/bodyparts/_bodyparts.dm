@@ -619,8 +619,8 @@
 			UnregisterSignal(old_owner, list(
 				SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE),
 				SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
-				SIGNAL_REMOVETRAIT(TRAIT_NOBLEED),
-				SIGNAL_ADDTRAIT(TRAIT_NOBLEED),
+				SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD),
+				SIGNAL_ADDTRAIT(TRAIT_NOBLOOD),
 				))
 	if(owner)
 		if(initial(can_be_disabled))
@@ -630,8 +630,8 @@
 			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE), PROC_REF(on_owner_nolimbdisable_trait_loss))
 			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE), PROC_REF(on_owner_nolimbdisable_trait_gain))
 			// Bleeding stuff
-			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOBLEED), PROC_REF(on_owner_nobleed_loss))
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBLEED), PROC_REF(on_owner_nobleed_gain))
+			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD), PROC_REF(on_owner_nobleed_loss))
+			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), PROC_REF(on_owner_nobleed_gain))
 
 		if(needs_update_disabled)
 			update_disabled()
@@ -956,7 +956,7 @@
 	if(!owner)
 		return
 
-	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || !IS_ORGANIC_LIMB(src))
+	if(HAS_TRAIT(owner, TRAIT_NOBLOOD) || !IS_ORGANIC_LIMB(src))
 		if(cached_bleed_rate != old_bleed_rate)
 			update_part_wound_overlay()
 		return
@@ -997,7 +997,7 @@
 /obj/item/bodypart/proc/update_part_wound_overlay()
 	if(!owner)
 		return FALSE
-	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || !IS_ORGANIC_LIMB(src) || (NOBLOOD in species_flags_list))
+	if(HAS_TRAIT(owner, TRAIT_NOBLOOD) || !IS_ORGANIC_LIMB(src))
 		if(bleed_overlay_icon)
 			bleed_overlay_icon = null
 			owner.update_wound_overlays()

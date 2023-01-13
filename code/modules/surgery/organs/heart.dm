@@ -95,8 +95,8 @@
 		owner.set_heartattack(TRUE)
 		failed = TRUE
 
-/obj/item/organ/internal/heart/get_availability(datum/species/owner_species)
-	return !(NOBLOOD in owner_species.species_traits)
+/obj/item/organ/internal/heart/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantheart
 
 /obj/item/organ/internal/heart/cursed
 	name = "cursed heart"
@@ -128,7 +128,7 @@
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/accursed_human = owner
-			if(accursed_human.dna && !(NOBLOOD in accursed_human.dna.species.species_traits))
+			if(accursed_human.dna && !HAS_TRAIT(accursed_human, TRAIT_NOBLOOD))
 				accursed_human.blood_volume = max(accursed_human.blood_volume - blood_loss, 0)
 				to_chat(accursed_human, span_userdanger("You have to keep pumping your blood!"))
 				if(add_colour)
@@ -166,7 +166,7 @@
 
 		var/mob/living/carbon/human/accursed = owner
 		if(istype(accursed))
-			if(accursed.dna && !(NOBLOOD in accursed.dna.species.species_traits))
+			if(accursed.dna && !HAS_TRAIT(accursed, TRAIT_NOBLOOD))
 				accursed.blood_volume = min(accursed.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
 				accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE

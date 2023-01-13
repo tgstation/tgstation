@@ -287,6 +287,8 @@
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/waterbottle/afterattack(obj/target, mob/living/user, proximity)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
 		to_chat(user, span_warning("You must remove the cap before you can do that!"))
 		return
@@ -297,7 +299,7 @@
 			to_chat(user, span_warning("[other_bottle] has a cap firmly twisted on!"))
 			return
 
-	return ..()
+	return . | ..()
 
 // heehoo bottle flipping
 /obj/item/reagent_containers/cup/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -364,27 +366,28 @@
 	icon_state = reagents.total_volume ? "water_cup" : "water_cup_e"
 	return ..()
 
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton
 	name = "small carton"
 	desc = "A small carton, intended for holding drinks."
 	icon = 'icons/obj/drinks/boxes.dmi'
 	icon_state = "juicebox"
-	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
+	volume = 15
+	drink_type = NONE
 
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/Initialize(mapload, vol)
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/Initialize(mapload, vol)
 	. = ..()
 	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_box_change)), CALLBACK(src, PROC_REF(on_box_reset)))
 
 /// Having our icon state change changes our food type
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_box_change(datum/glass_style/juicebox/style)
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/proc/on_box_change(datum/glass_style/juicebox/style)
 	if(!istype(style))
 		return
 	drink_type = style.drink_type
 
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_box_reset()
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/proc/on_box_reset()
 	drink_type = NONE
 
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
@@ -460,6 +463,9 @@
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 30)
+
+/obj/item/reagent_containers/cup/glass/flask/det/minor
+	list_reagents = list(/datum/reagent/consumable/applejuice = 30)
 
 /obj/item/reagent_containers/cup/glass/mug/britcup
 	name = "cup"

@@ -311,7 +311,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "error"
 	w_class = WEIGHT_CLASS_TINY
-	custom_price = PAYCHECK_CREW * 2 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
+	custom_price = PAYCHECK_CREW * 0.75 //Price reduced from * 2 to * 0.75, this is planned as a temporary measure until card persistance is added.
 	///The card series to look in
 	var/series = "MEME"
 	///Chance of the pack having a coin in it out of 10
@@ -469,6 +469,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/series = "hunter2"
 	///The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
 	var/rarity = "uber rare to the extreme"
+
+	///Icon file that summons are pulled from
+	var/summon_icon_file = "icons/obj/toys/tcgmisc.dmi"
+	///Icon state for summons to use
+	var/summon_icon_state = "template"
 
 /datum/card/New(list/data = list(), list/templates = list())
 	applyTemplates(data, templates)

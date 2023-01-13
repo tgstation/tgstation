@@ -68,7 +68,7 @@
 
 /mob/living/basic/pet/death(gibbed)
 	. = ..()
-	add_memory_in_range(src, 7, MEMORY_PET_DEAD, list(DETAIL_DEUTERAGONIST = src), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF) //Protagonist is the person memorizing it
+	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src) //Protagonist is the person memorizing it
 
 /mob/living/basic/pet/handle_atom_del(atom/deleting_atom)
 	. = ..()

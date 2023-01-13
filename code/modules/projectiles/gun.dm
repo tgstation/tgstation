@@ -210,8 +210,8 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	return fire_gun(target, user, flag, params)
+	..()
+	return fire_gun(target, user, flag, params) | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))
@@ -260,13 +260,13 @@
 	var/loop_counter = 0
 	if(ishuman(user) && user.combat_mode)
 		var/mob/living/carbon/human/H = user
-		for(var/obj/item/gun/G in H.held_items)
-			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
+		for(var/obj/item/gun/gun in H.held_items)
+			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
 				continue
-			else if(G.can_trigger_gun(user))
+			else if(gun.can_trigger_gun(user, akimbo_usage = TRUE))
 				bonus_spread += dual_wield_spread
 				loop_counter++
-				addtimer(CALLBACK(G, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), loop_counter)
+				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), loop_counter)
 
 	return process_fire(target, user, TRUE, params, null, bonus_spread)
 
@@ -284,7 +284,7 @@
 					user.dropItemToGround(src, TRUE)
 				return TRUE
 
-/obj/item/gun/can_trigger_gun(mob/living/user)
+/obj/item/gun/can_trigger_gun(mob/living/user, akimbo_usage)
 	. = ..()
 	if(!handle_pins(user))
 		return FALSE

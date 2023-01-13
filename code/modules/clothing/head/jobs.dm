@@ -118,6 +118,8 @@
 	inhand_icon_state = "det_hat"
 	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
+	///Path for the flask that spawns inside their hat roundstart
+	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
 
 /datum/armor/fedora_det_hat
 	melee = 25
@@ -133,7 +135,7 @@
 
 	create_storage(type = /datum/storage/pockets/small/fedora/detective)
 
-	new /obj/item/reagent_containers/cup/glass/flask/det(src)
+	new flask_path(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
@@ -150,6 +152,9 @@
 		candy_cooldown = world.time+1200
 	else
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+
+/obj/item/clothing/head/fedora/det_hat/minor
+	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor
 
 //Mime
 /obj/item/clothing/head/beret

@@ -26,8 +26,8 @@
 /obj/machinery/launchpad/RefreshParts()
 	. = ..()
 	var/max_range_multiplier = 0
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		max_range_multiplier += M.rating
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		max_range_multiplier += manipulator.tier
 	range = initial(range)
 	range *= max_range_multiplier
 

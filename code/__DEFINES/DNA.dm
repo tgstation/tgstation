@@ -68,30 +68,25 @@
 #define FACEHAIR 3
 #define EYECOLOR 4
 #define LIPS 5
-#define NOBLOOD 6
 #define NOTRANSSTING 7
 #define NOZOMBIE 8
 #define NO_UNDERWEAR 9
-#define NOSTOMACH 10
-#define NO_DNA_COPY 11
-#define DRINKSBLOOD 12
+#define NO_DNA_COPY 10
+#define DRINKSBLOOD 11
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 13
-#define AGENDER 14
+#define DYNCOLORS 12
+#define AGENDER 13
 /// Do not draw eyes or eyeless overlay
-#define NOEYESPRITES 15
+#define NOEYESPRITES 14
 ///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 16
+#define HAS_MARKINGS 15
 /// Do not draw blood overlay
-#define NOBLOODOVERLAY 17
+#define NOBLOODOVERLAY 16
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 18
+#define NOAUGMENTS 17
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
-#define BLOOD_CLANS 19
-/// Stops species from spawning with tongue. Doesn't actually make the species able to talk with no tongue
-#define NO_TONGUE 20
-#define NOAPPENDIX 21
+#define BLOOD_CLANS 18
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"

@@ -53,8 +53,10 @@ Slimecrossing Items
 	return ret
 
 /obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(!on || !pictures_left || !isturf(target.loc))
-		return
+		return .
 
 	if(user == target)
 		to_chat(user, span_notice("You take a selfie!"))
@@ -64,7 +66,7 @@ Slimecrossing Items
 	to_chat(target, span_boldnotice("You'll remember this moment forever!"))
 
 	target.AddComponent(/datum/component/dejavu, 2)
-	.=..()
+	return . | ..()
 
 
 
@@ -76,10 +78,12 @@ Slimecrossing Items
 	pictures_max = 1
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(!on || !pictures_left || !isturf(target.loc))
-		return
+		return .
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	. = ..()
+	return . | ..()
 
 //Hypercharged slime cell - Charged Yellow
 /obj/item/stock_parts/cell/high/slime_hypercharged

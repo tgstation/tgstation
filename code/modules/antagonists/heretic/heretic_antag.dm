@@ -59,6 +59,14 @@
 		PATH_VOID = "blue",
 		PATH_BLADE = "label", // my favorite color is label
 	)
+	var/static/list/path_to_rune_color = list(
+		PATH_START = COLOR_LIME,
+		PATH_RUST = COLOR_CARGO_BROWN,
+		PATH_FLESH = COLOR_SOFT_RED,
+		PATH_ASH = COLOR_VIVID_RED,
+		PATH_VOID = COLOR_CYAN,
+		PATH_BLADE = COLOR_SILVER
+	)
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
@@ -308,14 +316,24 @@
 /datum/antagonist/heretic/proc/draw_rune(mob/living/user, turf/target_turf, drawing_time = 30 SECONDS, additional_checks)
 	drawing_rune = TRUE
 
+	var/rune_colour = path_to_rune_color[heretic_path]
 	target_turf.balloon_alert(user, "drawing rune...")
+	var/obj/effect/temp_visual/drawing_heretic_rune/drawing_effect
+	if (drawing_time >= (30 SECONDS))
+		drawing_effect = new(target_turf, rune_colour)
+	else
+		drawing_effect = new /obj/effect/temp_visual/drawing_heretic_rune/fast(target_turf, rune_colour)
+
 	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks))
 		target_turf.balloon_alert(user, "interrupted!")
+		new /obj/effect/temp_visual/drawing_heretic_rune/fail(target_turf, rune_colour)
+		qdel(drawing_effect)
 		drawing_rune = FALSE
 		return
 
+	qdel(drawing_effect)
 	target_turf.balloon_alert(user, "rune created")
-	new /obj/effect/heretic_rune/big(target_turf)
+	new /obj/effect/heretic_rune/big(target_turf, rune_colour)
 	drawing_rune = FALSE
 
 /**

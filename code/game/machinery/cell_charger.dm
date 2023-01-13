@@ -127,8 +127,8 @@
 /obj/machinery/cell_charger/RefreshParts()
 	. = ..()
 	charge_rate = 250
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		charge_rate *= C.rating
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		charge_rate *= capacitor.tier
 
 /obj/machinery/cell_charger/process(delta_time)
 	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))

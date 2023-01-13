@@ -162,7 +162,7 @@
 	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
-	spawn_type = /obj/item/candle
+	spawn_type = /obj/item/flashlight/flare/candle
 	spawn_count = 5
 	is_open = TRUE
 	contents_tag = "candle"

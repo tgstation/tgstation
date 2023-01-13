@@ -348,6 +348,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/datum/export_report/ex = export_item_and_contents(I, delete_unsold = selling, dry_run = !selling)
 	var/price = 0
 	for(var/x in ex.total_amount)
@@ -360,6 +361,8 @@
 			new /obj/item/holochip(get_turf(user),true_price)
 	else
 		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
+
+	return .
 
 /obj/item/clothing/neck/beads
 	name = "plastic bead necklace"

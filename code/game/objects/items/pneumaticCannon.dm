@@ -161,6 +161,7 @@
 	if(!istype(user))
 		return
 	Fire(user, target)
+	return AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, atom/target)
 	if(!istype(user) && !target)

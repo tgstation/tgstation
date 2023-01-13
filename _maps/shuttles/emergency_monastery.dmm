@@ -3334,12 +3334,12 @@
 /area/shuttle/escape)
 "Sq" = (
 /obj/structure/table/wood/fancy,
-/obj/item/candle,
-/obj/item/candle{
+/obj/item/flashlight/flare/candle,
+/obj/item/flashlight/flare/candle{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_x = -8;
 	pixel_y = 6
 	},

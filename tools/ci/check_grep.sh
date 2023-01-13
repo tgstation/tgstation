@@ -58,41 +58,10 @@ if $grep '//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER C
 	echo -e "${RED}ERROR: Unexpected commented out line detected in this map file. Please remove it.${NC}"
 	st=1
 fi;
-part "conflict markers"
-if $grep 'Merge Conflict Marker' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Merge conflict markers detected in map, please resolve all merge failures!${NC}"
-    st=1
-fi;
-# We check for this as well to ensure people aren't actually using this mapping effect in their maps.
-part "conflict marker object"
-if $grep '/obj/merge_conflict_marker' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Merge conflict markers detected in map, please resolve all merge failures!${NC}"
-    st=1
-fi;
 part "iconstate tags"
 if $grep '^\ttag = "icon' $map_files;	then
 	echo
     echo -e "${RED}ERROR: Tag vars from icon state generation detected in maps, please remove them.${NC}"
-    st=1
-fi;
-part "step varedits"
-if $grep 'step_[xy]' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: step_x/step_y variables detected in maps, please remove them.${NC}"
-    st=1
-fi;
-part "pixel varedits"
-if $grep 'pixel_[^xy]' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: incorrect pixel offset variables detected in maps, please remove them.${NC}"
-    st=1
-fi;
-part "varedited cables"
-if $grep '/obj/structure/cable(/\w+)+[{]' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Variable editted cables detected, please remove them.${NC}"
     st=1
 fi;
 part "invalid map procs"
@@ -100,130 +69,6 @@ if $grep '(new|newlist|icon|matrix|sound)\(.+\)' $map_files;	then
 	echo
 	echo -e "${RED}ERROR: Using unsupported procs in variables in a map file! Please remove all instances of this.${NC}"
 	st=1
-fi;
-part "invalid cables"
-if $grep '\td[1-2] =' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: d1/d2 cable variables detected in maps, please remove them.${NC}"
-    st=1
-fi;
-part "multiple cables"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/cable,\n[^)]*?/obj/structure/cable,\n[^)]*?/area/.+?\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found multiple cables on the same tile, please remove them.${NC}"
-    st=1
-fi;
-part "multiple lattices"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/area/.+?\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found multiple lattices on the same tile, please remove them.${NC}"
-    st=1
-fi;
-part "multiple airlocks"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/machinery/door/airlock[/\w]*?,\n[^)]*?/obj/machinery/door/airlock[/\w]*?,\n[^)]*?/area/.+\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found multiple airlocks on the same tile, please remove them.${NC}"
-    st=1
-fi;
-part "multiple firelocks"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/machinery/door/firedoor[/\w]*?,\n[^)]*?/obj/machinery/door/firedoor[/\w]*?,\n[^)]*?/area/.+\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found multiple firelocks on the same tile, please remove them.${NC}"
-    st=1
-fi;
-part "apc pixel shifts"
-if $grep -U '/obj/machinery/power/apc[/\w]*?[{]\n[^}]*?pixel_[xy] = -?[013-9]\d*?[^\d]*?\s*?[}],?\n' $map_files ||
-	$grep -U '/obj/machinery/power/apc[/\w]*?[{]\n[^}]*?pixel_[xy] = -?\d+?[0-46-9][^\d]*?\s*?[}],?\n' $map_files ||
-	$grep -U '/obj/machinery/power/apc[/\w]*?[{]\n[^}]*?pixel_[xy] = -?\d{3,1000}[^\d]*?\s*?[}],?\n' $map_files ;	then
-	echo
-    echo -e "${RED}ERROR: Found an APC with a manually set pixel_x or pixel_y that is not +-25. Use the directional variants when possible.${NC}"
-    st=1
-fi;
-part "lattice and wall stacking"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/turf/closed/wall[/\w]*?,\n[^)]*?/area/.+?\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found a lattice stacked with a wall, please remove them.${NC}"
-    st=1
-fi;
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/turf/closed[/\w]*?,\n[^)]*?/area/.+?\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found a lattice stacked within a wall, please remove them.${NC}"
-    st=1
-fi;
-part "window and wall stacking"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/window[/\w]*?,\n[^)]*?/turf/closed[/\w]*?,\n[^)]*?/area/.+?\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found a window stacked within a wall, please remove it.${NC}"
-    st=1
-fi;
-part "airlock and wall stacking"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/machinery/door/airlock[/\w]*?,\n[^)]*?/turf/closed[/\w]*?,\n[^)]*?/area/.+?\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found an airlock stacked within a wall, please remove it.${NC}"
-    st=1
-fi;
-part "genturf with staircases"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/stairs[/\w]*?,\n[^)]*?/turf/open/genturf[/\w]*?,\n[^)]*?/area/.+?\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found a staircase on top of a gen_turf. Please replace the gen_turf with a proper turf.${NC}"
-    st=1
-fi;
-part "grilles on cables"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/grille,\n[^)]*?/obj/structure/cable,\n[^)]*?/area/.+\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found a grille above a cable. Please replace with the proper structure spawner.${NC}"
-    st=1
-fi;
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/cable,\n[^)]*?/obj/structure/grille,\n[^)]*?/area/.+\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found a grille above a cable. Please replace with the proper structure spawner.${NC}"
-    st=1
-fi;
-part "grille and window stacking"
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/grille,\n[^)]*?/obj/structure/window/reinforced/fulltile/ice,\n[^)]*?/area/.+\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found grille above a fulltile ice window. Please replace it with the proper structure spawner.${NC}"
-    st=1
-fi;
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/grille,\n[^)]*?/obj/structure/window[/\w]*?fulltile,\n[^)]*?/area/.+\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found grille above a fulltile window. Please replace it with the proper structure spawner.${NC}"
-    st=1
-fi;
-if $grep -U '"\w+" = \(\n[^)]*?/obj/structure/grille,\n[^)]*?/obj/structure/window/reinforced/plasma/plastitanium,\n[^)]*?/area/.+\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found grille above a fulltile plastitanium window. Please replace it with the proper structure spawner.${NC}"
-    st=1
-fi;
-part "converyor cardinals inversion"
-if $grep -U '/obj/machinery/conveyor/inverted[/\w]*?[{]\n[^}]*?dir = [1248];[^}]*?[}],?\n' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Found an inverted conveyor belt with a cardinal dir. Please replace it with a normal conveyor belt.${NC}"
-    st=1
-fi;
-part "area varedits"
-if $grep '^/area/.+[{]' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Variable editted /area path use detected in a map, please replace with a proper area path.${NC}"
-    st=1
-fi;
-part "base turf type"
-if $grep '/turf\s*[,\){]' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Base /turf path use detected in maps, please replace it with a proper turf path.${NC}"
-    st=1
-fi;
-part "multiple turfs"
-if $grep -U '"\w+" = \(\n[^)]*?/turf/[/\w]*?,\n[^)]*?/turf/[/\w]*?,\n[^)]*?/area/.+?\)' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Multiple turfs detected on the same tile! Please choose only one turf!${NC}"
-    st=1
-fi;
-part "multiple areas"
-if $grep -U '"\w+" = \(\n[^)]*?/area/.+?,\n[^)]*?/area/.+?\)' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Multiple areas detected on the same tile! Please choose only one area!${NC}"
-    st=1
 fi;
 part "common spelling mistakes"
 if $grep -i 'nanotransen' $map_files; then
@@ -252,10 +97,11 @@ if $grep '^\t+ [^ *]' $code_files; then
 fi;
 
 section "unit tests"
+unit_test_files="code/modules/unit_tests/**/**.dm"
 part "mob/living/carbon/human usage"
-if $grep 'allocate\(/mob/living/carbon/human[,\)]' code/modules/unit_tests/**/**.dm ||
-	$grep 'new /mob/living/carbon/human\s?\(' ||
-	$grep 'var/mob/living/carbon/human/\w+\s?=\s?new' ; then
+if $grep 'allocate\(/mob/living/carbon/human[,\)]' $unit_test_files ||
+	$grep 'new /mob/living/carbon/human\s?\(' $unit_test_files ||
+	$grep 'var/mob/living/carbon/human/\w+\s?=\s?new' $unit_test_files ; then
 	echo
 	echo -e "${RED}ERROR: Usage of mob/living/carbon/human detected in a unit test, please use mob/living/carbon/human/consistent.${NC}"
 	st=1
@@ -312,12 +158,6 @@ if ls _maps/*.json | $grep "[A-Z]"; then
     echo -e "${RED}ERROR: Uppercase in a map .JSON file detected, these must be all lowercase.${NC}"
     st=1
 fi;
-part "custom icon helpers"
-if $grep -i '/obj/effect/mapping_helpers/custom_icon' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Custom icon helper found. Please include DMI files as standard assets instead for repository maps.${NC}"
-    st=1
-fi;
 part "map json sanity"
 for json in _maps/*.json
 do
@@ -343,60 +183,6 @@ fi;
 
 if [ "$pcre2_support" -eq 1 ]; then
 	section "regexes requiring PCRE2"
-	part "multiple pipes"
-	if $grep -PU '"\w+" = \(\n[^)]*?/obj/machinery/atmospherics/pipe/(?<type>[/\w]*),\n[^)]*?/obj/machinery/atmospherics/pipe/\g{type},\n[^)]*?/area/.+\)' $map_files;	then
-		echo
-		echo -e "${RED}ERROR: Found multiple identical pipes on the same tile, please remove them.${NC}"
-		st=1
-	fi;
-	part "multiple barricades"
-	if $grep -PU '"\w+" = \(\n[^)]*?/obj/structure/barricade(?<type>[/\w]*),\n[^)]*?/obj/structure/barricade\g{type},\n[^)]*?/area/.+\)' $map_files;	then
-		echo
-		echo -e "${RED}ERROR: Found multiple identical barricades on the same tile, please remove them.${NC}"
-		st=1
-	fi;
-	part "multiple tables"
-	if $grep -PU '"\w+" = \(\n[^)]*?/obj/structure/table(?<type>[/\w]*),\n[^)]*?/obj/structure/table\g{type},\n[^)]*?/area/.+\)' $map_files;	then
-		echo
-		echo -e "${RED}ERROR: Found multiple identical tables on the same tile, please remove them.${NC}"
-		st=1
-	fi;
-	part "multiple closets"
-	if $grep -PU '"\w+" = \(\n[^)]*?/obj/structure/closet(?<type>[/\w]*),\n[^)]*?/obj/structure/closet\g{type},\n[^)]*?/area/.+\)' $map_files;	then
-		echo
-		echo -e "${RED}ERROR: Found multiple identical closets on the same tile, please remove them.${NC}"
-		st=1
-	fi;
-	part "multiple grilles"
-	if $grep -PU '"\w+" = \(\n[^)]*?/obj/structure/grille(?<type>[/\w]*),\n[^)]*?/obj/structure/grille/\g{type},\n[^)]*?/area/.+\)' $map_files;	then
-		echo
-		echo -e "${RED}ERROR: Found multiple identical grilles on the same tile, please remove them.${NC}"
-		st=1
-	fi;
-	part "multiple girders"
-	if $grep -PU '"\w+" = \(\n[^)]*?/obj/structure/girder(?<type>[/\w]*),\n[^)]*?/obj/structure/girder\g{type},\n[^)]*?/area/.+\)' $map_files;	then
-		echo
-		echo -e "${RED}ERROR: Found multiple identical girders on the same tile, please remove them.${NC}"
-		st=1
-	fi;
-	part "multiple stairs"
-	if $grep -PU '"\w+" = \(\n[^)]*?/obj/structure/stairs/(?<type>[/\w]*),\n[^)]*?/obj/structure/stairs/\g{type},\n[^)]*?/area/.+\)' $map_files;	then
-		echo
-		echo -e "${RED}ERROR: Found multiple identical stairs on the same tile, please remove them.${NC}"
-		st=1
-	fi;
-	part "door names"
-	if $grep -PU '/obj/machinery/door.*{([^}]|\n)*name = .*("|\s)(?!of|and|to)[a-z].*\n' $map_files;	then
-		echo
-		echo -e "${RED}ERROR: Found door names without proper upper-casing. Please upper-case your door names.${NC}"
-		st=1
-	fi;
-	part "multiple chairs"
-	if $grep -PU '"\w+" = \(\n[^)]*?/obj/structure/chair(?<type>[/\w]*),\n[^)]*?/obj/structure/chair\g{type},\n[^)]*?/area/.+\)' $map_files;	then
-		echo
-		echo -e "${RED}ERROR: Found multiple identical chairs on the same tile, please remove them.${NC}"
-		st=1
-	fi;
 	part "to_chat sanity"
 	if $grep -P 'to_chat\((?!.*,).*\)' $code_files; then
 		echo
@@ -415,11 +201,10 @@ if [ "$pcre2_support" -eq 1 ]; then
 		echo -e "${RED}ERROR: File(s) with no trailing newline detected, please add one.${NC}"
 		st=1
 	fi
-	part "docking_port varedits"
-	if $grep -PU '^/obj/docking_port/mobile.*\{\n[^}]*(width|height|dwidth|dheight)[^}]*[}]' $map_files; then
+	part "datum stockpart sanity"
+	if $grep -P 'for\b.*/obj/item/stock_parts/(?!cell)(?![\w_]+ in )' $code_files; then
 		echo
-		echo -e "${RED}ERROR: Custom mobile docking_port sizes detected. This is done automatically and should not be varedits."
-		echo -e "\t\tPlease remove the width, height, dwidth, and dheight varedits from the docking_port.${NC}"
+		echo -e "${RED}ERROR: Should be using datum/stock_part instead"
 		st=1
 	fi;
 else

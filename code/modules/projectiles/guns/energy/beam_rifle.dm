@@ -302,6 +302,7 @@
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return

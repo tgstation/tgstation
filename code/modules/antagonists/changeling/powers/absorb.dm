@@ -70,7 +70,7 @@
 
 	for(var/memory_type in suckedbrain.memories)
 		var/datum/memory/stolen_memory = suckedbrain.memories[memory_type]
-		changeling.stolen_memories[stolen_memory.name] = stolen_memory.generate_story(STORY_CHANGELING_ABSORB)
+		changeling.stolen_memories[stolen_memory.name] = stolen_memory.generate_story(STORY_CHANGELING_ABSORB, STORY_FLAG_NO_STYLE)
 	suckedbrain.wipe_memory()
 
 	for(var/datum/antagonist/antagonist_datum as anything in suckedbrain.antag_datums)

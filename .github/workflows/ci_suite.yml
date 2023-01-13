@@ -12,7 +12,7 @@ jobs:
   run_linters:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Run Linters
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     concurrency:
       group: run_linters-${{ github.ref }}
       cancel-in-progress: true
@@ -53,6 +53,7 @@ jobs:
           bash tools/ci/check_grep.sh
           bash tools/ci/check_misc.sh
           tools/bootstrap/python tools/validate_dme.py <tgstation.dme
+          tools/bootstrap/python -m tools.maplint.source
           tools/build/build --ci lint tgui-test
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test

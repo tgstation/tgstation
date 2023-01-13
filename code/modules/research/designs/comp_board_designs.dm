@@ -382,6 +382,6 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/accounting
 	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RECORDS
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

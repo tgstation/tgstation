@@ -156,6 +156,9 @@
 	/// What type of ready-donk are we warmed into?
 	var/warm_type = /obj/item/food/ready_donk/warm
 
+/obj/item/food/ready_donk/make_bakeable()
+	AddComponent(/datum/component/bakeable, warm_type, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
 /obj/item/food/ready_donk/make_microwaveable()
 	AddElement(/datum/element/microwavable, warm_type)
 

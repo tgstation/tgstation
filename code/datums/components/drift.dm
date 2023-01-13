@@ -127,6 +127,7 @@
 /datum/component/drift/proc/loop_death(datum/source)
 	SIGNAL_HANDLER
 	drifting_loop = null
+	UnregisterSignal(parent, COMSIG_MOVABLE_NEWTONIAN_MOVE) // We won't block a component from replacing us anymore
 
 /datum/component/drift/proc/handle_move(datum/source, old_loc)
 	SIGNAL_HANDLER

@@ -1,6 +1,7 @@
 /**
  * A savefile implementation that handles all data using json.
  * Also saves it using JSON too, fancy.
+ * If you pass in a null path, it simply acts as a memory tree instead, and cannot be saved.
  */
 /datum/json_savefile
 	var/path = ""
@@ -13,7 +14,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 /datum/json_savefile/New(path)
 	src.path = path
 	tree = list()
-	if(fexists(path))
+	if(path && fexists(path))
 		load()
 
 /**
@@ -43,7 +44,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	tree?.Cut()
 
 /datum/json_savefile/proc/load()
-	if(!fexists(path))
+	if(!path || !fexists(path))
 		return FALSE
 	try
 		tree = json_decode(rustg_file_read(path))
@@ -53,7 +54,8 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 		return FALSE
 
 /datum/json_savefile/proc/save()
-	rustg_file_write(json_encode(tree), path)
+	if(path)
+		rustg_file_write(json_encode(tree), path)
 
 /// Traverses the entire dir tree of the given savefile and dynamically assembles the tree from it
 /datum/json_savefile/proc/import_byond_savefile(savefile/savefile)

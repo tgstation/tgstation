@@ -337,11 +337,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
-"bc" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/mug/britcup,
-/turf/open/floor/carpet,
-/area/awaymission/cabin)
 "bd" = (
 /obj/structure/chair/office,
 /turf/open/floor/carpet,
@@ -785,7 +780,7 @@
 /area/awaymission/cabin)
 "cK" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton{
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
@@ -1819,11 +1814,7 @@
 	},
 /area/awaymission/cabin/caves/mountain)
 "fT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile{
-	desc = "Enjoy the view.";
-	name = "window"
-	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/cabin/caves/mountain)
 "fU" = (
@@ -2295,10 +2286,6 @@
 "hM" = (
 /turf/closed/wall/mineral/snow,
 /area/awaymission/cabin/caves/mountain)
-"hP" = (
-/obj/item/candle/infinite,
-/turf/open/floor/plating/snowed,
-/area/awaymission/cabin/caves)
 "hQ" = (
 /obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/floor/plating/snowed,
@@ -3710,7 +3697,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/head/hats/warden/police{
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 15, "bio" = 0, "fire" = 20, "acid" = 20);
+	armor = list("melee"=5,"bullet"=5,"laser"=5,"energy"=2,"bomb"=15,"bio"=0,"fire"=20,"acid"=20);
 	desc = "I am the law!"
 	},
 /obj/structure/closet{
@@ -3718,7 +3705,7 @@
 	name = "uniform closet"
 	},
 /obj/item/clothing/under/rank/security/officer/spacepol{
-	armor = list("melee" = 2, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "fire" = 10, "acid" = 10);
+	armor = list("melee"=2,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0,"fire"=10,"acid"=10);
 	desc = "Anyone enjoying their time while working in a megacorporation, planetary government, or band of pirates is under the jurisdiction of the fun police."
 	},
 /turf/open/floor/iron/dark,
@@ -3892,6 +3879,11 @@
 /obj/item/food/fishmeat/carp,
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
+"xo" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/mug/britcup,
+/turf/open/floor/carpet,
+/area/awaymission/cabin)
 "xs" = (
 /mob/living/simple_animal/hostile/tree{
 	desc = "I am death. I will have my vengeance upon my enemies.";
@@ -4017,7 +4009,7 @@
 	name = "Who"
 	},
 /obj/item/clothing/head/helmet/knight/yellow{
-	armor = list("melee" = 11, "bullet" = 2, "laser" = 1, "energy" = 1, "bomb" = 5, "bio" = 2, "fire" = 0, "acid" = 10);
+	armor = list("melee"=11,"bullet"=2,"laser"=1,"energy"=1,"bomb"=5,"bio"=2,"fire"=0,"acid"=10);
 	desc = "A classic metal helmet. The cold has made it unreliable though.";
 	name = "old medieval helmet";
 	pixel_y = 7
@@ -4838,6 +4830,10 @@
 /obj/item/storage/medkit/fire,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
+"WF" = (
+/obj/item/flashlight/flare/candle/infinite,
+/turf/open/floor/plating/snowed,
+/area/awaymission/cabin/caves)
 "WH" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/glitter/blue{
@@ -4845,7 +4841,7 @@
 	name = "icy wind"
 	},
 /obj/item/clothing/head/helmet/skull{
-	armor = list("melee" = 15, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 10, "bio" = 5, "fire" = 20, "acid" = 20);
+	armor = list("melee"=15,"bullet"=5,"laser"=5,"energy"=2,"bomb"=10,"bio"=5,"fire"=20,"acid"=20);
 	desc = "It's not bloody for some reason. Dear god.";
 	name = "human skull"
 	},
@@ -35391,7 +35387,7 @@ ed
 hu
 an
 aY
-bc
+xo
 bg
 an
 nU
@@ -47873,9 +47869,9 @@ gx
 gx
 gx
 hM
-hP
+WF
 hQ
-hP
+WF
 wI
 PV
 Oe
@@ -48387,9 +48383,9 @@ gx
 gx
 gx
 hM
-hP
+WF
 hQ
-hP
+WF
 Rz
 PV
 PV

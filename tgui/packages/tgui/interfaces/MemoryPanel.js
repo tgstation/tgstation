@@ -3,22 +3,37 @@ import { Button, Dimmer, Section, Stack } from '../components';
 import { multiline } from 'common/string';
 import { Window } from '../layouts';
 
+const STORY_VALUE_KEY = -1;
 const STORY_VALUE_SHIT = 0;
 const STORY_VALUE_NONE = 1;
 const STORY_VALUE_MEH = 2;
 const STORY_VALUE_OKAY = 3;
 const STORY_VALUE_AMAZING = 4;
-// STORY_VALUE_LEGENDARY = 5; (not actually used)
+const STORY_VALUE_LEGENDARY = 5;
 
 const MemoryQuality = (props, context) => {
   const { act } = useBackend(context);
   const { quality } = props;
 
+  if (quality === STORY_VALUE_KEY) {
+    return (
+      <Button
+        icon="key"
+        color="transparent"
+        tooltipPosition="right"
+        tooltip={multiline`
+          This is a key memory. It contains important information
+          you may want to double-check in the future.
+        `}
+      />
+    );
+  }
   if (quality === STORY_VALUE_SHIT) {
     return (
       <Button
         icon="poop"
         color="transparent"
+        tooltipPosition="right"
         tooltip={multiline`
           This memory is not interesting at all! It does not make for
           good art and is unlikely to pass to future generations.
@@ -87,17 +102,30 @@ const MemoryQuality = (props, context) => {
       />
     );
   }
+  if (quality === STORY_VALUE_LEGENDARY) {
+    return (
+      <Button
+        icon="crown"
+        style={{
+          'background':
+            'linear-gradient(to right, #56A5B3, #75D4E2, #56A5B3, #75D4E2, #56A5B3)',
+        }}
+        tooltipPosition="right"
+        tooltip={multiline`
+          This memory is the stuff of legends! It would make for
+          legendary art and is likely to pass to future generations.
+        `}
+      />
+    );
+  }
+  // Default return / error
   return (
     <Button
-      icon="crown"
-      style={{
-        'background':
-          'linear-gradient(to right, #56A5B3, #75D4E2, #56A5B3, #75D4E2, #56A5B3)',
-      }}
+      icon="question"
       tooltipPosition="right"
       tooltip={multiline`
-        This memory is the stuff of legends! It would make for
-        legendary art and is likely to pass to future generations.
+        This memory has no valid quality assigned. We have no idea how good
+        or bad it may be. This is a bug, and should be reported!
       `}
     />
   );

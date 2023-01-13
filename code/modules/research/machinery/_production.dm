@@ -200,15 +200,15 @@
 	if(materials)
 		var/total_storage = 0
 
-		for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
-			total_storage += bin.rating * 75000
+		for(var/datum/stock_part/matter_bin/bin in component_parts)
+			total_storage += bin.tier * 75000
 
 		materials.set_local_size(total_storage)
 
 	var/total_rating = 1.2
 
-	for(var/obj/item/stock_parts/manipulator/manipulator in component_parts)
-		total_rating -= manipulator.rating * 0.1
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		total_rating -= manipulator.tier * 0.1
 
 	efficiency_coeff = max(total_rating, 0)
 

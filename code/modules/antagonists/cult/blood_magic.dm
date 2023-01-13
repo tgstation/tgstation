@@ -553,6 +553,7 @@
 		if(channeling)
 			to_chat(user, span_cultitalic("You are already invoking twisted construction!"))
 			return
+		. |= AFTERATTACK_PROCESSED_ITEM
 		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/iron))
 			var/obj/item/stack/sheet/candidate = target
@@ -631,7 +632,7 @@
 		else
 			to_chat(user, span_warning("The spell will not work on [target]!"))
 			return
-		..()
+		return . | ..()
 
 /obj/item/melee/blood_magic/construction/proc/check_menu(mob/user)
 	if(!istype(user))
@@ -676,8 +677,8 @@
 	if(proximity)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			if(NOBLOOD in H.dna.species.species_traits)
-				to_chat(user,span_warning("Blood rites do not work on species with no blood!"))
+			if(HAS_TRAIT(H, TRAIT_NOBLOOD))
+				to_chat(user,span_warning("Blood rites do not work on people with no blood!"))
 				return
 			if(IS_CULTIST(H))
 				if(H.stat == DEAD)

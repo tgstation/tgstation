@@ -68,6 +68,7 @@
 	name = "advanced mop"
 	max_reagent_volume = 10
 	icon_state = "advmop"
+	inhand_icon_state = "advmop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 12

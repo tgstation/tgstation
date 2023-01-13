@@ -18,6 +18,12 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	. = ..()
 	create_storage(type = /datum/storage/rped)
 
+// check to see if this rped have atleast one circuitboard
+/obj/item/storage/part_replacer/proc/has_an_circuitboard()
+	for(var/obj/item/circuitboard/machine/board in contents)
+		return TRUE
+	return FALSE
+
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
 	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
 		return ..()
@@ -37,20 +43,16 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		return TRUE
 
 	var/obj/structure/frame/machine/attacked_frame = attacked_object
-
-	if(!attacked_frame.components)
-		return ..()
-
+	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
+	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
+		return TRUE
+	attacked_frame.attackby(src, user)
 	if(works_from_distance)
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
-	attacked_frame.attackby(src, user)
 	return TRUE
 
 /obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
 	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
-		return ..()
-
-	if(adjacent)
 		return ..()
 
 	if(ismachinery(attacked_object))
@@ -65,13 +67,14 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		return
 
 	var/obj/structure/frame/machine/attacked_frame = attacked_object
-
-	if(!attacked_frame.components)
-		return ..()
-
+	if(!adjacent && !works_from_distance)
+		return
+	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
+	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
+		return
+	attacked_frame.attackby(src, user)
 	if(works_from_distance)
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
-	attacked_frame.attackby(src, user)
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
@@ -220,19 +223,19 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	var/list/part_list = list()
 	//Assemble a list of current parts, then sort them by their rating!
 	for(var/obj/item/component_part in contents)
+		//No need to put circuit boards in this list
+		if(istype(component_part, /obj/item/circuitboard))
+			continue
 		part_list += component_part
 		//Sort the parts. This ensures that higher tier items are applied first.
 	part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 	return part_list
 
-/proc/cmp_rped_sort(obj/item/A, obj/item/B)
+/proc/cmp_rped_sort(obj/item/first_item, obj/item/second_item)
 	/**
-	 * stacks components like cable,glass,plasteel are not component parts hence their get_part_rating() method is undefined and would return undefined values causing errors
-	 * so we assign them an default rating of 1 when the RPED sorts these components
+	 * even though stacks aren't stock parts, get_part_rating() is defined on the item level (see /obj/item/proc/get_part_rating()) and defaults to returning 0.
 	 */
-	var/a_rating = isstack(A) ? 1 : A.get_part_rating()
-	var/b_rating = isstack(B) ? 1 : B.get_part_rating()
-	return b_rating - a_rating
+	return second_item.get_part_rating() - first_item.get_part_rating()
 
 /obj/item/stock_parts
 	name = "stock part"

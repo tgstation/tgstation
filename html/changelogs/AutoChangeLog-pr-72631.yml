@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "viewing the botkeeper app as an observer will no longer runtime."

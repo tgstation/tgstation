@@ -18,6 +18,8 @@
 	mutanteyes = /obj/item/organ/internal/eyes/dullahan
 	mutanttongue = /obj/item/organ/internal/tongue/dullahan
 	mutantears = /obj/item/organ/internal/ears/dullahan
+	mutantstomach = null
+	mutantlungs = null
 	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN

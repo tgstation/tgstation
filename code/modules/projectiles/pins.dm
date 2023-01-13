@@ -24,6 +24,7 @@
 	. = ..()
 	if(proximity_flag)
 		if(isgun(target))
+			. |= AFTERATTACK_PROCESSED_ITEM
 			var/obj/item/gun/G = target
 			var/obj/item/firing_pin/old_pin = G.pin
 			if(old_pin && (force_replace || old_pin.pin_removeable))
@@ -36,11 +37,13 @@
 
 			if(!G.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
-					return
+					return .
 				gun_insert(user, G)
 				to_chat(user, span_notice("You insert [src] into [G]."))
 			else
 				to_chat(user, span_notice("This firearm already has a firing pin installed."))
+
+			return .
 
 /obj/item/firing_pin/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

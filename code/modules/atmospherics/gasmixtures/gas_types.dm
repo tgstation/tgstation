@@ -124,7 +124,6 @@
 	name = "Hyper-noblium"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
 	fusion_power = 10
 	rarity = 50
 	base_value = 2.5

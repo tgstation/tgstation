@@ -117,7 +117,7 @@
 			owner.set_jitter_if_lower(10 SECONDS)
 			owner.say("AAAAH!!", forced = "phobia")
 			if(reason)
-				owner.pointed(reason)
+				owner._pointed(reason)
 		if(3)
 			to_chat(owner, span_warning("You shut your eyes in terror!"))
 			owner.set_jitter_if_lower(10 SECONDS)

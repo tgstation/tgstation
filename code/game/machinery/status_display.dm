@@ -126,17 +126,18 @@
  * Arguments:
  * * overlay - the current /obj/effect/overlay/status_display_text instance
  * * line_y - The Y offset to render the text.
+ * * x_offset - Used to offset the text on the X coordinates, not usually needed.
  * * message - the new message text.
  * Returns new /obj/effect/overlay/status_display_text or null if unchanged.
  */
-/obj/machinery/status_display/proc/update_message(obj/effect/overlay/status_display_text/overlay, line_y, message)
+/obj/machinery/status_display/proc/update_message(obj/effect/overlay/status_display_text/overlay, line_y, message, x_offset)
 	if(overlay && message == overlay.message)
 		return null
 
 	if(overlay)
 		qdel(overlay)
 
-	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message, text_color, header_text_color)
+	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message, text_color, header_text_color, x_offset)
 	// Draw our object visually "in front" of this display, taking advantage of sidemap
 	new_status_display_text.pixel_y = -32
 	new_status_display_text.pixel_z = 32
@@ -265,7 +266,7 @@
 		5, 5, 5, 5, 4, 5, 4, 6, 4, 4, 4, 3, 2, 3, 4,
 	)
 
-/obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color)
+/obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color, xoffset = 0)
 	. = ..()
 
 	maptext_y = yoffset
@@ -284,7 +285,7 @@
 
 		maptext = generate_text(marquee_message, center = FALSE, text_color = text_color)
 		maptext_width = full_marquee_width
-		maptext_x = 0
+		maptext_x = 0 
 
 		// Mask off to fit in screen.
 		add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "outline")))
@@ -297,7 +298,7 @@
 		// Centered text
 		var/color = header_regex.Find(line) ? header_text_color : text_color
 		maptext = generate_text(line, center = TRUE, text_color = color)
-		maptext_x = 0
+		maptext_x = xoffset //Defaults to 0, this would be centered unless overided
 
 /**
  * A hyper-streamlined version of MeasureText that doesn't support different fonts, rich formatting, or multiline.

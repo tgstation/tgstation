@@ -104,7 +104,6 @@
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype)
 	. = ..()
 	if(amount > 0)
-		update_stamina()
 		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
 
 /**

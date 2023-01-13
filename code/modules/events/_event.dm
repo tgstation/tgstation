@@ -132,10 +132,14 @@ Runs the event
 		log_game("Random Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+		announce_deadchat(random)
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
+
+///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
+/datum/round_event_control/proc/announce_deadchat(random)
+	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 //Returns the component for the listener
 /datum/round_event_control/proc/stop_random_event()

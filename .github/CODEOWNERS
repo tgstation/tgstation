@@ -57,6 +57,7 @@
 /code/modules/client/preferences/ @Mothblocks
 /code/modules/client/preferences_menu.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+/tools/maplint/source/ @Mothblocks
 /tools/pull_request_hooks/ @Mothblocks
 /tools/screenshot-test-comparison/ @Mothblocks
 /tools/test_merge_bot/ @Mothblocks

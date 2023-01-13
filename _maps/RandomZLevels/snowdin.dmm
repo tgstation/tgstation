@@ -6169,7 +6169,7 @@
 /area/awaymission/snowdin/post/engineering)
 "qX" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("snowdinmix" = "Mix Chamber");
+	atmos_chambers = list("snowdinmix"="Mix Chamber");
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -6196,7 +6196,7 @@
 	dir = 8
 	},
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("snowdino2" = "Oxygen Supply");
+	atmos_chambers = list("snowdino2"="Oxygen Supply");
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -6207,7 +6207,7 @@
 	dir = 8
 	},
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("snowdinn2" = "Nitrogen Supply");
+	atmos_chambers = list("snowdinn2"="Nitrogen Supply");
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -9056,8 +9056,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "DH" = (
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/cave)
 "DI" = (
@@ -12311,7 +12310,7 @@
 	name = "Turbine Gas Release"
 	},
 /obj/machinery/computer/atmos_control/fixed{
-	atmos_chambers = list("snowdinincin" = "Incinerator Chamber");
+	atmos_chambers = list("snowdinincin"="Incinerator Chamber");
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,

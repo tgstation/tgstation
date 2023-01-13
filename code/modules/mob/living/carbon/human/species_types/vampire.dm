@@ -26,6 +26,8 @@
 	use_skintones = TRUE
 	mutantheart = /obj/item/organ/internal/heart/vampire
 	mutanttongue = /obj/item/organ/internal/tongue/vampire
+	mutantstomach = null
+	mutantlungs = null
 	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
@@ -165,7 +167,7 @@
 			if(victim.stat == DEAD)
 				to_chat(H, span_warning("You need a living victim!"))
 				return
-			if(!victim.blood_volume || (victim.dna && ((NOBLOOD in victim.dna.species.species_traits) || victim.dna.species.exotic_blood)))
+			if(!victim.blood_volume || (victim.dna && (HAS_TRAIT(victim, TRAIT_NOBLOOD) || victim.dna.species.exotic_blood)))
 				to_chat(H, span_warning("[victim] doesn't have blood!"))
 				return
 			COOLDOWN_START(V, drain_cooldown, 3 SECONDS)

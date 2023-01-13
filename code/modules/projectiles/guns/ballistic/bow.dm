@@ -44,6 +44,7 @@
 	update_appearance()
 
 /obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!chambered)
 		return
 	if(!drawn)

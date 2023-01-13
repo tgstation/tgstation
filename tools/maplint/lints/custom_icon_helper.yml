@@ -1,0 +1,3 @@
+help: "Please include DMI files as standard assets instead for repository maps."
+/obj/effect/mapping_helpers/custom_icon:
+  banned: true

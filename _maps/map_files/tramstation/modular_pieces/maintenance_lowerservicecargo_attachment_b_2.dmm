@@ -119,7 +119,7 @@
 /obj/item/trash/candle,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/food_or_drink/booze,
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_y = 4;
 	pixel_x = -7
 	},

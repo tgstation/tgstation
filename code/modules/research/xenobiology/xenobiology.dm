@@ -889,6 +889,7 @@
 	if(!istype(C))
 		to_chat(user, span_warning("The potion can only be used on objects!"))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(SEND_SIGNAL(C, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_STOP)
 		return
 	if(isitem(C))
@@ -927,6 +928,7 @@
 	if(!uses)
 		qdel(src)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!istype(C))
 		to_chat(user, span_warning("The potion can only be used on clothing!"))
 		return

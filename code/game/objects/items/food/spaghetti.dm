@@ -13,7 +13,7 @@
 	var/list/display_message = list(
 		span_notice("Something wet falls out of their pocket and hits the ground. Is that... [name]?"),
 		span_warning("Oh shit! All your pocket [name] fell out!"))
-	AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg', MEMORY_SPAGHETTI_SPILL)
+	AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg', /datum/memory/lost_spaghetti)
 
 	return ..()
 
@@ -22,6 +22,9 @@
 	desc = "Now that's a nic'e pasta!"
 	icon_state = "spaghetti"
 	tastes = list("pasta" = 1)
+
+/obj/item/food/spaghetti/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/spaghetti/boiledspaghetti, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/food/spaghetti/raw/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/spaghetti/boiledspaghetti)
@@ -51,6 +54,21 @@
 	)
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
+
+/obj/item/food/spaghetti/pastatomato/soulful
+	name = "soul food"
+	desc = "Just how mom used to make it."
+	food_reagents = list(
+		// same as normal pasghetti
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/tomatojuice = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		// where the soul comes from
+		/datum/reagent/pax = 5,
+		/datum/reagent/medicine/psicodine = 10,
+		/datum/reagent/medicine/morphine = 5,
+	)
+	tastes = list("nostalgia" = 1, "happiness" = 1)
 
 /obj/item/food/spaghetti/copypasta
 	name = "copypasta"

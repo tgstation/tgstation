@@ -39,6 +39,7 @@
 	if(!proximity_flag)
 		return
 	do_spawn_mob(get_turf(target), user)
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /datum/component/summoning/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER

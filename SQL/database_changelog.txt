@@ -2,14 +2,28 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.21; The query to update the schema revision table is:
+The latest database version is 5.23; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 22);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 23);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 22);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 23);
 
 In any query remember to add a prefix to the table names if you use one.
 
+-----------------------------------------------------
+Version 5.23, 28 December 2022, by Mothblocks
+Added `tutorial_completions` to mark what ckeys have completed contextual tutorials.
+
+```
+CREATE TABLE `tutorial_completions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ckey` VARCHAR(32) NOT NULL,
+  `tutorial_key` VARCHAR(64) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `ckey_tutorial_unique` (`ckey`, `tutorial_key`));
+```
+
+-----------------------------------------------------
 Version 5.22, 22 December 2021, by Mothblocks
 Fixes a bug in `telemetry_connections` that limited the range of IPs.
 

@@ -173,7 +173,7 @@
 		return // blocked wield from item
 	wielded = TRUE
 	ADD_TRAIT(parent, TRAIT_WIELDED, REF(src))
-	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
+	RegisterSignal(user, COMSIG_MOB_SWAPPING_HANDS, PROC_REF(on_swapping_hands))
 	wield_callback?.Invoke(parent, user)
 
 	// update item stats and name
@@ -219,7 +219,7 @@
 
 	// wield update status
 	wielded = FALSE
-	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
+	UnregisterSignal(user, COMSIG_MOB_SWAPPING_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 	REMOVE_TRAIT(parent, TRAIT_WIELDED, REF(src))
 	unwield_callback?.Invoke(parent, user)
@@ -307,7 +307,7 @@
 /**
  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
  */
-/datum/component/two_handed/proc/on_swap_hands(mob/user, obj/item/held_item)
+/datum/component/two_handed/proc/on_swapping_hands(mob/user, obj/item/held_item)
 	SIGNAL_HANDLER
 
 	if(!held_item)

@@ -1,0 +1,4 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - qol: "Pinpointers now tell what they are tracking when examined"

@@ -111,7 +111,9 @@
 #define HIGH_TURF_LAYER 2.03
 #define TURF_PLATING_DECAL_LAYER 2.031
 #define TURF_DECAL_LAYER 2.039 //Makes turf decals appear in DM how they will look inworld.
-#define ABOVE_OPEN_TURF_LAYER 2.04
+#define DISPOSAL_PIPE_LAYER 2.04
+#define WIRE_LAYER 2.041
+#define ABOVE_OPEN_TURF_LAYER 2.042
 
 //WALL_PLANE layers
 #define CLOSED_TURF_LAYER 2.05
@@ -120,9 +122,7 @@
 #define BULLET_HOLE_LAYER 2.06
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define LATTICE_LAYER 2.2
-#define DISPOSAL_PIPE_LAYER 2.3
 #define GAS_PIPE_HIDDEN_LAYER 2.35 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
-#define WIRE_LAYER 2.4
 #define TRAM_XING_LAYER 2.41
 #define TRAM_RAIL_LAYER 2.42
 #define TRAM_FLOOR_LAYER 2.43
@@ -239,6 +239,9 @@
 
 ///Layer for screentips
 #define SCREENTIP_LAYER 4
+
+/// Layer for tutorial instructions
+#define TUTORIAL_INSTRUCTIONS_LAYER 5
 
 
 #define LOBBY_BACKGROUND_LAYER 3

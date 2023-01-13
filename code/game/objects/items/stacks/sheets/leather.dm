@@ -300,6 +300,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/wethide/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/microwavable, /obj/item/stack/sheet/leather)
+	AddComponent(/datum/component/bakeable, /obj/item/stack/sheet/leather, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > drying_threshold_temperature)

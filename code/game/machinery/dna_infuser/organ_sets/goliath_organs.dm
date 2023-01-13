@@ -13,11 +13,11 @@
 
 /datum/status_effect/organ_set_bonus/goliath/enable_bonus()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, REF(src))
+	ADD_TRAIT(owner, TRAIT_LAVA_IMMUNE, REF(src))
 
 /datum/status_effect/organ_set_bonus/goliath/disable_bonus()
 	. = ..()
-	REMOVE_TRAIT(src, TRAIT_LAVA_IMMUNE, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_LAVA_IMMUNE, REF(src))
 
 ///goliath eyes, simple night vision
 /obj/item/organ/internal/eyes/night_vision/goliath

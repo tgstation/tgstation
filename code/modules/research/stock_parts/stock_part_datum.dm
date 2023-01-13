@@ -72,14 +72,129 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 	physical_object_type = /obj/item/stock_parts/scanning_module
 	physical_object_base_type = /obj/item/stock_parts/scanning_module
 
-/datum/stock_part/scanning_module/tier2
+/datum/stock_part/scanning_module/adv
 	tier = 2
 	physical_object_type = /obj/item/stock_parts/scanning_module/adv
 
-/datum/stock_part/scanning_module/tier3
+/datum/stock_part/scanning_module/phasic
 	tier = 3
 	physical_object_type = /obj/item/stock_parts/scanning_module/phasic
 
-/datum/stock_part/scanning_module/tier4
+/datum/stock_part/scanning_module/triphasic
 	tier = 4
 	physical_object_type = /obj/item/stock_parts/scanning_module/triphasic
+
+/datum/stock_part/capacitor
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/capacitor
+	physical_object_base_type = /obj/item/stock_parts/capacitor
+
+/datum/stock_part/capacitor/adv
+	tier = 2
+	physical_object_type = /obj/item/stock_parts/capacitor/adv
+
+/datum/stock_part/capacitor/super
+	tier = 3
+	physical_object_type = /obj/item/stock_parts/capacitor/super
+
+/datum/stock_part/capacitor/quadratic
+	tier = 4
+	physical_object_type = /obj/item/stock_parts/capacitor/quadratic
+
+/datum/stock_part/manipulator
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/manipulator
+	physical_object_base_type = /obj/item/stock_parts/manipulator
+
+/datum/stock_part/manipulator/nano
+	tier = 2
+	physical_object_type = /obj/item/stock_parts/manipulator/nano
+
+/datum/stock_part/manipulator/pico
+	tier = 3
+	physical_object_type = /obj/item/stock_parts/manipulator/pico
+
+/datum/stock_part/manipulator/femto
+	tier = 4
+	physical_object_type = /obj/item/stock_parts/manipulator/femto
+
+/datum/stock_part/micro_laser
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/micro_laser
+	physical_object_base_type = /obj/item/stock_parts/micro_laser
+
+/datum/stock_part/micro_laser/high
+	tier = 2
+	physical_object_type = /obj/item/stock_parts/micro_laser/high
+
+/datum/stock_part/micro_laser/ultra
+	tier = 3
+	physical_object_type = /obj/item/stock_parts/micro_laser/ultra
+
+/datum/stock_part/micro_laser/quadultra
+	tier = 4
+	physical_object_type = /obj/item/stock_parts/micro_laser/quadultra
+
+/datum/stock_part/matter_bin
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/matter_bin
+	physical_object_base_type = /obj/item/stock_parts/matter_bin
+
+/datum/stock_part/matter_bin/adv
+	tier = 2
+	physical_object_type = /obj/item/stock_parts/matter_bin/adv
+
+/datum/stock_part/matter_bin/super
+	tier = 3
+	physical_object_type = /obj/item/stock_parts/matter_bin/super
+
+/datum/stock_part/matter_bin/bluespace
+	tier = 4
+	physical_object_type = /obj/item/stock_parts/matter_bin/bluespace
+
+/// Subspace stock parts
+
+/datum/stock_part/ansible
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/subspace/ansible
+	physical_object_base_type = /obj/item/stock_parts/subspace/ansible
+
+/datum/stock_part/filter
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/subspace/filter
+	physical_object_base_type = /obj/item/stock_parts/subspace/filter
+
+/datum/stock_part/amplifier
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/subspace/amplifier
+	physical_object_base_type = /obj/item/stock_parts/subspace/amplifier
+
+/datum/stock_part/treatment
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/subspace/treatment
+	physical_object_base_type = /obj/item/stock_parts/subspace/treatment
+
+/datum/stock_part/analyzer
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/subspace/analyzer
+	physical_object_base_type = /obj/item/stock_parts/subspace/analyzer
+
+/datum/stock_part/crystal
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/subspace/crystal
+	physical_object_base_type = /obj/item/stock_parts/subspace/crystal
+
+/datum/stock_part/transmitter
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/subspace/transmitter
+	physical_object_base_type = /obj/item/stock_parts/subspace/transmitter
+
+/datum/stock_part/card_reader
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/card_reader
+	physical_object_base_type = /obj/item/stock_parts/card_reader
+
+/datum/stock_part/water_recycler
+	tier = 1
+	physical_object_type = /obj/item/stock_parts/water_recycler
+	physical_object_base_type = /obj/item/stock_parts/water_recycler

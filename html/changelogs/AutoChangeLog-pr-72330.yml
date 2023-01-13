@@ -1,8 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - balance: "adds more ammunition, and also signing on the psyker ship"
-  - qol: "you can see other echolocation receivers as fully purple now, rather than just their outline"
-  - bugfix: "echolocating people have night vision, to prevent bugs with them not being able to see echolocated tiles"
-  - rscadd: "psyker pirates have headsets that increase their echolocation range"
-  - bugfix: "partially fixes the psyker ship shuttle docker"
