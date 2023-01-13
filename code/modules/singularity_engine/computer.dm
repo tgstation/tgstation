@@ -291,7 +291,6 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 #define OVERCLOCK_ACCESS_NOT_ALLOWED_TOO_DAMAGED "not_allowed_too_damaged"
 #define OVERCLOCK_ACCESS_ALLOWED "allowed"
 
-// MBTODO: Overclock delay
 /obj/machinery/computer/singularity/proc/overclock_access(mob/living/user)
 	if (!istype(user))
 		return OVERCLOCK_ACCESS_NOT_ALLOWED
