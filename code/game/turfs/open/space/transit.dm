@@ -5,7 +5,7 @@
 	dir = SOUTH
 	baseturfs = /turf/open/space/transit
 	flags_1 = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
-	explosive_resistance = INFINITY
+	explosion_block = INFINITY
 
 /turf/open/space/transit/Initialize(mapload)
 	. = ..()

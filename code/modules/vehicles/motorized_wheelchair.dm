@@ -15,49 +15,40 @@
 	var/panel_open = FALSE
 	///Parts used in building the wheelchair
 	var/list/required_parts = list(
-		/datum/stock_part/manipulator,
-		/datum/stock_part/manipulator,
-		/datum/stock_part/capacitor,
+		/obj/item/stock_parts/manipulator,
+		/obj/item/stock_parts/manipulator,
+		/obj/item/stock_parts/capacitor,
 	)
 	///power cell we draw power from
 	var/obj/item/stock_parts/cell/power_cell
-	///stock parts for this chair
-	var/list/component_parts = list()
 
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
 /obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
-	for(var/obj/item/stock_parts/part in parts_list)
-		// find macthing datum/stock_part for this part and add to component list
-		var/datum/stock_part/newstockpart = GLOB.stock_part_datums_per_object[part.type]
-		if(isnull(newstockpart))
-			CRASH("No corresponding datum/stock_part for [part.type]")
-		component_parts += newstockpart
-		// delete this part
-		part.moveToNullspace()
-		qdel(part)
+	. = ..()
 	refresh_parts()
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	speed = 1 // Should never be under 1
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		speed += manipulator.tier
+	for(var/obj/item/stock_parts/manipulator/M in contents)
+		speed += M.rating
 	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
 	if(icon_state != chair_icon)
-		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER)
+		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER) 
 
 	icon_state = chair_icon
 
-	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		power_efficiency = capacitor.tier
+	for(var/obj/item/stock_parts/capacitor/C in contents)
+		power_efficiency = C.rating
 
 /obj/vehicle/ridden/wheelchair/motorized/get_cell()
 	return power_cell
 
 /obj/vehicle/ridden/wheelchair/motorized/atom_destruction(damage_flag)
-	for(var/datum/stock_part/part in component_parts)
-		new part.physical_object_type(drop_location())
+	var/turf/T = get_turf(src)
+	for(var/atom/movable/atom_content as anything in contents)
+		atom_content.forceMove(T)
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/motorized/relaymove(mob/living/user, direction)
@@ -102,27 +93,18 @@
 	if(!istype(I, /obj/item/stock_parts))
 		return ..()
 
-	var/datum/stock_part/newstockpart = GLOB.stock_part_datums_per_object[I.type]
-	if(isnull(newstockpart))
-		CRASH("No corresponding datum/stock_part for [newstockpart.type]")
-	for(var/datum/stock_part/oldstockpart in component_parts)
+	var/obj/item/stock_parts/newstockpart = I
+	for(var/obj/item/stock_parts/oldstockpart in contents)
 		var/type_to_check
 		for(var/pathtype in required_parts)
 			if(ispath(oldstockpart.type, pathtype))
 				type_to_check = pathtype
 				break
 		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
-			if(newstockpart.tier > oldstockpart.tier)
-				// delete the part in the users hand and add the datum part to the component_list
-				I.moveToNullspace()
-				qdel(I)
-				component_parts += newstockpart
-				// create an new instance of the old datum stock part physical type & put it in the users hand
-				var/obj/item/stock_parts/part = new oldstockpart.physical_object_type
-				user.put_in_hands(part)
-				component_parts -= oldstockpart
-				// user message
-				user.visible_message(span_notice("[user] replaces [oldstockpart.name()] with [newstockpart.name()] in [src]."), span_notice("You replace [oldstockpart.name()] with [newstockpart.name()]."))
+			if(newstockpart.get_part_rating() > oldstockpart.get_part_rating())
+				newstockpart.forceMove(src)
+				user.put_in_hands(oldstockpart)
+				user.visible_message(span_notice("[user] replaces [oldstockpart] with [newstockpart] in [src]."), span_notice("You replace [oldstockpart] with [newstockpart]."))
 				break
 	refresh_parts()
 
@@ -133,8 +115,9 @@
 	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
 	new /obj/item/stack/rods(drop_location(), 8)
 	new /obj/item/stack/sheet/iron(drop_location(), 10)
-	for(var/datum/stock_part/part in component_parts)
-		new part.physical_object_type(drop_location())
+	var/turf/T = get_turf(src)
+	for(var/atom/movable/atom_content as anything in contents)
+		atom_content.forceMove(T)
 	qdel(src)
 	return TRUE
 

@@ -5,7 +5,7 @@
 	icon_state = "cordon"
 	invisibility = INVISIBILITY_ABSTRACT
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	explosive_resistance = INFINITY
+	explosion_block = INFINITY
 	rad_insulation = RAD_FULL_INSULATION
 	opacity = TRUE
 	density = TRUE

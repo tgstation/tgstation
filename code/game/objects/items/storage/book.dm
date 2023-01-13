@@ -264,7 +264,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	name = "Syndicate Tome"
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches")
 	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch")
-	item_flags = NO_BLOOD_ON_ITEM
 	var/uses = 1
 	var/ownername
 
@@ -288,3 +287,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		return ..()
 	else
 		return ..(M,user,heal_mode = FALSE)
+
+/obj/item/storage/book/bible/syndicate/add_blood_DNA(list/blood_dna)
+	return FALSE

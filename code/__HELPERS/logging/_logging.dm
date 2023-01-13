@@ -76,8 +76,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 	var/log_text = "[key_name(src)] [message] [loc_name(src)]"
 	switch(message_type)
-		/// ship both attack logs and victim logs to the end of round attack.log just to ensure we don't lose information
-		if(LOG_ATTACK, LOG_VICTIM)
+		if(LOG_ATTACK)
 			log_attack(log_text)
 		if(LOG_SAY)
 			log_say(log_text)

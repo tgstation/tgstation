@@ -69,8 +69,8 @@
 /obj/machinery/dish_drive/RefreshParts()
 	. = ..()
 	var/total_rating = 0
-	for(var/datum/stock_part/stock_part in component_parts)
-		total_rating += stock_part.tier
+	for(var/obj/item/stock_parts/S in component_parts)
+		total_rating += S.rating
 	if(total_rating >= 9)
 		update_mode_power_usage(ACTIVE_POWER_USE, 0)
 	else

@@ -210,7 +210,6 @@
 	acid = 100
 
 /obj/structure/light_puzzle/Initialize(mapload)
-	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	var/generated_board = -1
 	while(generated_board in banned_combinations)

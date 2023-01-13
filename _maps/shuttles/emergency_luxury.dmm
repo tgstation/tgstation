@@ -888,9 +888,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
-"xz" = (
-/turf/closed/indestructible/riveted/plastinum/nodiagonal,
-/area/shuttle/escape/luxury)
 "zh" = (
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
@@ -1057,7 +1054,7 @@ ag
 ag
 af
 ag
-xz
+ag
 ay
 av
 av
@@ -1121,7 +1118,7 @@ ag
 Lt
 ag
 ag
-xz
+ag
 bV
 aC
 aE
@@ -1206,7 +1203,7 @@ bW
 bY
 ao
 ci
-xz
+ag
 ag
 ag
 bb
@@ -1314,7 +1311,7 @@ bc
 bc
 bc
 bc
-xz
+ag
 ag
 ag
 ag
