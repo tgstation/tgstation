@@ -362,7 +362,11 @@
 /obj/singularity/proc/can_move(turf/considered_turf)
 	if(!considered_turf)
 		return FALSE
-	// MBTODO: Remove?
+
+	// We cannot be contained!!!
+	if (SSpower_bars.enabled)
+		return TRUE
+
 	if((locate(/obj/machinery/field/containment) in considered_turf)||(locate(/obj/machinery/shieldwall) in considered_turf))
 		return FALSE
 	else if(locate(/obj/machinery/field/generator) in considered_turf)
