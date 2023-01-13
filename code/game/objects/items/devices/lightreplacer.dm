@@ -109,20 +109,21 @@
 		var/replaced_something = TRUE
 
 		for(var/obj/item/item_to_check in storage_to_empty.contents)
-			if(istype(item_to_check, /obj/item/light))
-				var/obj/item/light/found_light = item_to_check
-				found_lightbulbs = TRUE
-				if(src.uses >= max_uses)
-					break
-				if(found_light.status == LIGHT_OK)
-					replaced_something = TRUE
-					add_uses(1)
-					qdel(found_light)
+			if(!istype(item_to_check, /obj/item/light))
+				continue
+			var/obj/item/light/found_light = item_to_check
+			found_lightbulbs = TRUE
+			if(src.uses >= max_uses)
+				break
+			if(found_light.status == LIGHT_OK)
+				replaced_something = TRUE
+				add_uses(1)
+				qdel(found_light)
 
-				else if(found_light.status == LIGHT_BROKEN || found_light.status == LIGHT_BURNED)
-					replaced_something = TRUE
-					add_shards(1, user)
-					qdel(found_light)
+			else if(found_light.status == LIGHT_BROKEN || found_light.status == LIGHT_BURNED)
+				replaced_something = TRUE
+				add_shards(1, user)
+				qdel(found_light)
 
 		if(!found_lightbulbs)
 			to_chat(user, span_warning("\The [storage_to_empty] contains no bulbs."))
