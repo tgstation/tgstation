@@ -69,6 +69,10 @@
 #define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
+///Called when a carbon is sucessfully cuffed
+#define COMSIG_CARBON_CUFF_SUCCEED "carbon_successful_cuff"
+///Called when a carbon is uncuffed
+#define COMSIG_CARBON_CUFF_ESCAPE "carbon_escape_cuff"
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
 #define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
 ///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)

@@ -9,6 +9,7 @@
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 	undyeable = TRUE
 	var/datum/weakref/pull_component_weakref
+	var/datum/component/pull_component_type = /datum/component/strong_pull
 
 /obj/item/clothing/gloves/cargo_gauntlet/Initialize(mapload)
 	. = ..()
@@ -29,7 +30,7 @@
 
 	to_chat(equipper, span_notice("You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!"))
 
-	pull_component_weakref = WEAKREF(equipper.AddComponent(/datum/component/strong_pull))
+	pull_component_weakref = WEAKREF(equipper.AddComponent(pull_component_type))
 
 /*
  * Called when the glove is unequipped. Deletes the component if one exists.
@@ -48,6 +49,11 @@
 	to_chat(pull_component.parent, span_warning("You have lost the grip power of [src]!"))
 
 	QDEL_NULL(pull_component_weakref)
+
+/obj/item/clothing/gloves/cargo_gauntlet/security
+	name = "\improper SEC gauntlets"
+	clothing_traits = list(TRAIT_POOR_AIM)
+	pull_component_type = /datum/component/strong_pull/security
 
 /obj/item/clothing/gloves/rapid
 	name = "Gloves of the North Star"

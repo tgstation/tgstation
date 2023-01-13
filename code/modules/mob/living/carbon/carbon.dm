@@ -360,6 +360,7 @@
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
+		SEND_SIGNAL(src, COMSIG_CARBON_CUFF_ESCAPE, src)
 		return TRUE
 
 	else
@@ -370,6 +371,7 @@
 			if(buckled?.buckle_requires_restraints)
 				buckled.unbuckle_mob(src)
 			update_handcuffed()
+			SEND_SIGNAL(src, COMSIG_CARBON_CUFF_ESCAPE, src)
 			return TRUE
 		if(I == legcuffed)
 			legcuffed.forceMove(drop_location())

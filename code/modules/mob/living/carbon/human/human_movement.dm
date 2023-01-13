@@ -38,3 +38,9 @@
 	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
 		return TRUE
 	return ..()
+
+/mob/living/carbon/human/set_resting(new_resting, silent, instant)
+	if (HAS_TRAIT(src, TRAIT_RESTRICTIVE_GRAB) && !resting)
+		src.balloon_alert(src, "Grip too strong")
+		return
+	. = ..()
