@@ -166,7 +166,7 @@
  * Outputs type-specific weapon stats for ballistic weaponry based on its magazine and its caliber.
  * It contains extra breaks for the sake of presentation
  *
- */
+ **/
 /obj/item/gun/ballistic/proc/add_notes_ballistic()
 	if(magazine) // Make sure you have a magazine, to get the notes from
 		return "\n[magazine.add_notes_box()]"
@@ -528,12 +528,12 @@
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
-	var/boolets = 0 //mature var names for mature people
+	var/bullets = 0 //No silly variable names on my watch.
 	if (chambered && countchambered)
-		boolets++
+		bullets++
 	if (magazine)
-		boolets += magazine.ammo_count()
-	return boolets
+		bullets += magazine.ammo_count()
+	return bullets
 
 ///gets a list of every bullet in the gun
 /obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE, drop_all = FALSE)
