@@ -114,8 +114,9 @@
 			new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
 		else
 			var/obj/item/organ/internal/old_organ = target.getorganslot(new_organ.slot)
-			if(old_organ && (old_organ.status == ORGAN_ORGANIC))
-				new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
+			if(!istype(new_organ, /obj/item/organ/external) && !old_organ || (old_organ.status != ORGAN_ORGANIC))
+				return
+			new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
 	infusing_into = null
 	QDEL_NULL(infusing_from)
 
