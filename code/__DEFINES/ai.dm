@@ -51,6 +51,8 @@
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
+///Path we should use next time we use the JPS movement datum
+#define BB_PATH_TO_USE "BB_path_to_use"
 
 //for songs
 

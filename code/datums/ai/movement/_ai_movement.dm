@@ -58,7 +58,7 @@
 //Anything to do post movement
 /datum/ai_movement/proc/post_move(datum/move_loop/source, succeeded)
 	SIGNAL_HANDLER
-	if(succeeded)
+	if(succeeded != FALSE)
 		return
 	var/datum/ai_controller/controller = source.extra_info
 	increment_pathing_failures(controller)

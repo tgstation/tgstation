@@ -113,11 +113,11 @@
 		return
 
 	var/visual_delay = controller.visual_delay
-	var/success = move()
+	var/result = move() //Is not necesarily a bool, can also return MOVELOOP_NOT_READ
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, success, delay * visual_delay)
 
-	if(QDELETED(src) || !success) //Can happen
+	if(QDELETED(src) || result != TRUE) //Can happen
 		return
 
 	if(flags & MOVEMENT_LOOP_IGNORE_GLIDE)
@@ -342,7 +342,8 @@
 	subsystem,
 	priority,
 	flags,
-	datum/extra_info)
+	datum/extra_info,
+	initial_path)
 	return add_to_loop(moving,
 		subsystem,
 		/datum/move_loop/has_target/jps,
@@ -358,7 +359,8 @@
 		id,
 		simulated_only,
 		avoid,
-		skip_first)
+		skip_first,
+		initial_path)
 
 /datum/move_loop/has_target/jps
 	///How often we're allowed to recalculate our path
@@ -379,8 +381,18 @@
 	var/list/movement_path
 	///Cooldown for repathing, prevents spam
 	COOLDOWN_DECLARE(repath_cooldown)
+	///Bool used to determine if we're already making a path in JPS. this prevents us from re-pathing while we're already busy.
+	var/is_pathing = FALSE
+	///The initial path we received from an outside source. Can be used to save CPU if you had already calculated a path initially outside of the moveloop.
+	var/list/initial_pat
+	///Callback to invoke once we make a path
+	var/datum/callback/on_finish_callback
 
-/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first)
+/datum/move_loop/has_target/jps/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
+	. = ..()
+	on_finish_callback = CALLBACK(src, PROC_REF(OnFinishPathing))''
+
+/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first, initial_path)
 	. = ..()
 	if(!.)
 		return
@@ -391,17 +403,25 @@
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.skip_first = skip_first
+	src.initial_path = initial_path
 	if(isidcard(id))
 		RegisterSignal(id, COMSIG_PARENT_QDELETING, PROC_REF(handle_no_id)) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
 
-/datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first)
-	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && id == src.id && simulated_only == src.simulated_only && avoid == src.avoid)
+/datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first, initial_path)
+	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && id == src.id && simulated_only == src.simulated_only && avoid == src.avoid && initial_path == src.initial_path)
 		return TRUE
 	return FALSE
 
 /datum/move_loop/has_target/jps/loop_started()
 	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+	if(initial_path)
+		movement_path = initial_path
+	else
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+
+/datum/move_loop/has_target/jps/stop_loop()
+	. = ..()
+	initial_path = null
 
 /datum/move_loop/has_target/jps/Destroy()
 	id = null //Kill me
@@ -412,18 +432,26 @@
 	SIGNAL_HANDLER
 	id = null
 
-//Returns FALSE if the recalculation failed, TRUE otherwise
+///Tries to calculate a new path for this moveloop.
 /datum/move_loop/has_target/jps/proc/recalculate_path()
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
-	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
-	movement_path = get_path_to(moving, target, max_path_length, minimum_distance, id, simulated_only, avoid, skip_first)
+	if(SSpathfinder.pathfind(moving, target, max_path_length, minimum_distance, id, simulated_only, avoid, skip_first, on_finish = on_finish_callback))
+			is_pathing = TRUE
+			SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
+
+///Called when a path has finished being created
+/datum/move_loop/has_target/jps/proc/OnFinishPathing(list/path)
+	movement_path = path
+	is_pathing = FALSE
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))
-		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
-		if(!length(movement_path))
+		if(is_pathing)
+			return MOVELOOP_NOT_READY
+		else
+			INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 			return FALSE
 
 	var/turf/next_step = movement_path[1]
