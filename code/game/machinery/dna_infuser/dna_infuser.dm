@@ -71,6 +71,7 @@
 	playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
 	to_chat(hoccupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	hoccupant.take_overall_damage(10)
+	hoccupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = hoccupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
 	Shake(15, 15, INFUSING_TIME)
 	addtimer(CALLBACK(occupant, TYPE_PROC_REF(/mob, emote), "scream"), INFUSING_TIME - 1 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(end_infuse)), INFUSING_TIME)
