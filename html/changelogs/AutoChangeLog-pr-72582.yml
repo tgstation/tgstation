@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed a runtime from neck slices on headless mobs."
+  - qol: "Neck sliced folk now have an examine message saying as much."
