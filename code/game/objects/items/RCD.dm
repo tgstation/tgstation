@@ -670,12 +670,12 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 			/**
 			 * The advantage of organizing designs into categories is that
-			 * You can ignore an complete category if the design disk upgrade for that category isnt installed
+			 * You can ignore an complete category if the design disk upgrade for that category isnt installed.
 			 */
-			//You can't select designs from the Machines category if you dont have the frames upgrade installed
+			//You can't select designs from the Machines category if you dont have the frames upgrade installed.
 			if(category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
 				return
-			//You can't select designs from the Furniture category if you dont have the furnishing upgrade installed
+			//You can't select designs from the Furniture category if you dont have the furnishing upgrade installed.
 			if(category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
 				return
 
