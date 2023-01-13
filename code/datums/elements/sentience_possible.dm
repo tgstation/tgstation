@@ -16,9 +16,6 @@
 	var/mob/living/living_target = target
 	biotypes = living_target.mob_biotypes
 	RegisterSignal(target, COMSIG_LIVING_SENTIENCEPOTION, PROC_REF(on_sentiencepotion))
-	#ifdef UNIT_TESTS
-	ADD_TRAIT(target, TRAIT_UNIT_TESTS(/datum/element/sentience_possible), TRAIT_SOURCE_UNIT_TESTS)
-	#endif
 
 /datum/element/sentience_possible/Detach(datum/target)
 	if(target)

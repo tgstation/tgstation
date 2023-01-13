@@ -52,8 +52,10 @@
 	AddElement(/datum/element/befriend_petting, tamed_reaction = "%SOURCE% licks at %TARGET% in a friendly manner!", untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
-/mob/living/basic/pet/dog/add_environment_elements()
+/mob/living/basic/pet/dog/add_atmos_element()
 	AddElement(/datum/element/atmos_requirements, GLOB.basic_atmos_requirements, 1)
+
+/mob/living/basic/pet/dog/add_temp_sensitivity_element()
 	AddElement(/datum/element/basic_body_temp_sensitive, 250, 350, 1, 1)
 
 /mob/living/basic/pet/dog/proc/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -749,8 +751,12 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	. = ..()
 	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
 
-/mob/living/basic/pet/dog/corgi/puppy/void/add_environment_elements()
-	//no atmos sensitivity, very cold temp range
+/mob/living/basic/pet/dog/corgi/puppy/void/add_atmos_element()
+	//no atmos sensitivity
+	return
+
+/mob/living/basic/pet/dog/corgi/puppy/void/add_temp_sensitivity_element()
+	//very cold temp range
 	AddElement(/datum/element/basic_body_temp_sensitive, TCMB, T0C + 40, 1, 1)
 
 /mob/living/basic/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)

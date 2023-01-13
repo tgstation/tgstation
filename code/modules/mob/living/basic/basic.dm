@@ -97,11 +97,18 @@
 
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
-	add_environment_elements()
+	add_atmos_element()
+	add_temp_sensitivity_element()
+	if(!(status_flags & GODMODE)) //don't let people possess godmode stuff like ghost of poly
+		AddElement(/datum/element/sentience_possible)
 
-/// Proc for adding/overriding temperature and atmos elements, as a lot of mobs have spaceworthy subtypes. **Do not call parent!**
-/mob/living/basic/proc/add_environment_elements()
-	SHOULD_CALL_PARENT(FALSE)
+/// Wrapper for adding/overriding atmos requirements element. **Do not call parent!**
+/mob/living/basic/proc/add_atmos_element()
+	MUST_INHERIT_OR_FLAG("atmos requirements", NO_ATMOS_REQUIREMENTS)
+
+/// Wrapper for adding/overriding temperature element. **Do not call parent!**
+/mob/living/basic/proc/add_temp_sensitivity_element()
+	MUST_INHERIT_OR_FLAG("temp sensitivity", NO_TEMP_SENSITIVITY)
 
 /mob/living/basic/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()

@@ -20,9 +20,6 @@
 	src.atmos_requirements = atmos_requirements
 	src.unsuitable_atmos_damage = unsuitable_atmos_damage
 	RegisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING, PROC_REF(on_non_stasis_life))
-	#ifdef UNIT_TESTS
-	ADD_TRAIT(target, TRAIT_UNIT_TESTS(/datum/element/atmos_requirements), TRAIT_SOURCE_UNIT_TESTS)
-	#endif
 
 /datum/element/atmos_requirements/Detach(datum/target)
 	. = ..()

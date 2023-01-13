@@ -997,7 +997,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/simple_animal/parrot/poly/ghost/Initialize(mapload)
 	memory_saved = TRUE //At this point nothing is saved
-	// very specific comment here to tell you /datum/element/sentience_possible is not here ON PURPOSE. this is a godmode creature
 	. = ..()
 
 /mob/living/simple_animal/parrot/poly/ghost/handle_automated_speech()

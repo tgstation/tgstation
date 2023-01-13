@@ -32,9 +32,6 @@
 		src.heat_damage = heat_damage
 
 	RegisterSignal(target, COMSIG_LIVING_LIFE, PROC_REF(on_life))
-	#ifdef UNIT_TESTS
-	ADD_TRAIT(target, TRAIT_UNIT_TESTS(/datum/element/basic_body_temp_sensitive), TRAIT_SOURCE_UNIT_TESTS)
-	#endif
 
 /datum/element/basic_body_temp_sensitive/Detach(datum/source)
 	if(source)
