@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Dead basic mobs are no longer \"dense\" objects and can be stepped on."
