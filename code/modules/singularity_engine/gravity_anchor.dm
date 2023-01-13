@@ -367,7 +367,7 @@ GLOBAL_LIST_EMPTY(mapload_gravity_anchor_chargers)
 
 	balloon_alert(user, "slotting in anomaly core...")
 
-	if (!do_after(user, 3 SECONDS))
+	if (!do_after(user, 3 SECONDS, src))
 		return TRUE
 
 	if (QDELETED(weapon))

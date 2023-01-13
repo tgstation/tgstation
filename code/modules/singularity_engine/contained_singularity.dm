@@ -337,7 +337,7 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 		time_to_next_stage = world.time + STAGE_DELAY
 
 		if (stage == STAGE_X_BEAM)
-			addtimer(CALLBACK(src, PROC_REF(fire_existing_x_beam)), COOLDOWN_TIMELEFT(src, x_beam_cooldown), TIMER_STOPPABLE | TIMER_DELETE_ME)
+			addtimer(CALLBACK(src, PROC_REF(fire_final_x_beam)), COOLDOWN_TIMELEFT(src, x_beam_cooldown), TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 		stage = (stage % STAGE_MAX) + 1
 
@@ -378,9 +378,22 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 		x_beam_peak_turfs += target_turf
 		x_beam_target_turfs += get_line(singularity_turf, target_turf)
 
+	var/list/existing_x_beam_previews = x_beam_previews
+	var/index = 0
+
 	for (var/turf/target_turf in x_beam_target_turfs)
-		var/obj/effect/x_beam_preview/preview = new(target_turf)
-		x_beam_previews += preview
+		index += 1
+		var/obj/effect/x_beam_preview/preview = existing_x_beam_previews.len < index ? null : existing_x_beam_previews[index]
+		if (isnull(preview))
+			preview = new(target_turf)
+			x_beam_previews += preview
+		else
+			preview.forceMove(target_turf)
+
+	for (var/beam_index in index to existing_x_beam_previews.len)
+		qdel(existing_x_beam_previews[beam_index])
+
+	x_beam_previews.len = index
 
 /datum/singularity_anchor_loop/proc/fire_existing_x_beam()
 	if (x_beam_target_turfs.len == 0)
@@ -397,13 +410,20 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 
 	x_beam_peak_turfs.Cut()
 	x_beam_target_turfs.Cut()
-	QDEL_LIST(x_beam_previews) // MBTODO: Reuse previews
+
+/datum/singularity_anchor_loop/proc/fire_final_x_beam()
+	fire_existing_x_beam()
+	QDEL_LIST(x_beam_previews)
 
 /obj/effect/x_beam_preview
 	icon_state = "shield-red"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
+
+// Something something drift?
+/obj/effect/x_beam_preview/newtonian_move(direction, instant, start_delay)
+	return TRUE
 
 PROCESSING_SUBSYSTEM_DEF(singularity_anchor_loop)
 	name = "Singularity Anchor Loop"
