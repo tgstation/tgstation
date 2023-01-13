@@ -70,7 +70,7 @@
 /obj/item/gravity_anchor/examine(mob/user)
 	. = ..()
 
-	if (isnull(charger?.resolve()))
+	if (isnull(charger))
 		. += span_warning("[p_they(capitalized = TRUE)] need to be connected to a <b>gravity anchor charger</b>!")
 	else if (charged())
 		. += span_notice("[p_they(capitalized = TRUE)] [p_are()] infused with power, use [p_them()] while you can!")
