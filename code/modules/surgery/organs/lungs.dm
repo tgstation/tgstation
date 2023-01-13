@@ -127,7 +127,7 @@
 	var/can_breathe_vacuum = HAS_TRAIT(src, TRAIT_SPACEBREATHING)
 
 	if(!has_moles)
-		if(can_breathe_vacuum))
+		if(can_breathe_vacuum)
 			// Breath has 0 moles, but the lungs can breathe anyways.
 			// What are you? Some bottom-feeding, scum-sucking algae eater?
 			breather.failed_last_breath = FALSE
