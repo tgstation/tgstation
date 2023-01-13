@@ -55,9 +55,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
 		return ..()
 
-	if(adjacent)
-		return ..()
-
 	if(ismachinery(attacked_object))
 		var/obj/machinery/attacked_machinery = attacked_object
 
@@ -70,6 +67,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		return
 
 	var/obj/structure/frame/machine/attacked_frame = attacked_object
+	if(!adjacent && !works_from_distance)
+		return
 	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
 	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
 		return

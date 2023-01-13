@@ -464,7 +464,7 @@
 	json_config = 'code/datums/greyscale/json_configs/bench_right.json'
 
 /datum/greyscale_config/bench_solo
-	name = "Bench Right"
+	name = "Bench Solo"
 	icon_file = 'icons/obj/sofa.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_solo.json'
 

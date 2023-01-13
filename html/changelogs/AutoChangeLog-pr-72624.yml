@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix blood overlays on energy daggers"
+  - code_imp: "Add `NO_BLOOD_ON_ITEM` bitfield for items"
