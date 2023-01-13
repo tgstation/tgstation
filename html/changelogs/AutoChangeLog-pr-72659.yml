@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "The walls of the luxury shuttle no longer bend in strange directions."
