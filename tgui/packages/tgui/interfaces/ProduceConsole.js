@@ -18,6 +18,7 @@ const ShoppingTab = (props, context) => {
   const { data, act } = useBackend(context);
   const { order_categories, order_datums } = data;
   const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
+  const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const mapped_food = order_datums.filter(
     (food) => food && food.cat === shopIndex
   );
@@ -35,6 +36,13 @@ const ShoppingTab = (props, context) => {
               </Tabs.Tab>
             ))}
           </Tabs>
+          <Button
+            ml={65}
+            mt={-2}
+            color={condensed ? 'green' : 'red'}
+            content={condensed ? 'Uncondense' : 'Condense'}
+            onClick={() => setCondensed(!condensed)}
+          />
         </Stack.Item>
       </Section>
       <Stack.Item grow>
@@ -49,19 +57,21 @@ const ShoppingTab = (props, context) => {
                       'vertical-align': 'middle',
                     }}
                   />{' '}
-                  <Stack.Item>
-                    <Box
-                      as="img"
-                      m={1}
-                      src={`data:image/jpeg;base64,${item.product_icon}`}
-                      height="48px"
-                      width="48px"
-                      style={{
-                        '-ms-interpolation-mode': 'nearest-neighbor',
-                        'vertical-align': 'middle',
-                      }}
-                    />
-                  </Stack.Item>
+                  {!condensed && (
+                    <Stack.Item>
+                      <Box
+                        as="img"
+                        m={1}
+                        src={`data:image/jpeg;base64,${item.product_icon}`}
+                        height="36px"
+                        width="36px"
+                        style={{
+                          '-ms-interpolation-mode': 'nearest-neighbor',
+                          'vertical-align': 'middle',
+                        }}
+                      />
+                    </Stack.Item>
+                  )}
                   <Stack.Item>{capitalize(item.name)}</Stack.Item>
                   <Stack.Item grow mt={-1} color="label" fontSize="10px">
                     <Button
