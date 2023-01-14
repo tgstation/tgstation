@@ -1,0 +1,4 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - bugfix: "Fixes monkey heretics being unable to invoke their runes"

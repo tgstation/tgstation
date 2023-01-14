@@ -1,0 +1,6 @@
+author: "FernandoJ8"
+delete-after: True
+changes:
+  - bugfix: "the examine text for damage now properly uses the most common examine text out of all the mob's limbs"
+  - bugfix: "all robotic limbs now have the robotic damage descriptions (charring, denting)"
+  - code_imp: "improved the get_majority_bodypart_damage_desc() proc to reduce redundancies and add support for limb-based cellular damage"
