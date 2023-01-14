@@ -22,6 +22,9 @@
 /obj/effect/anomaly/ectoplasm/examine_more(mob/user)
 	. = ..()
 
+	if(isobserver(user))
+		. += span_info("Orbiting this anomaly will increase its effect power. It will also accept directional commands!")
+
 	switch(effect_power)
 		if(0 to 25)
 			. += span_notice("The space around the anomaly faintly resonates. It doesn't seem very powerful at the moment.")
@@ -60,11 +63,11 @@
 /obj/effect/anomaly/ectoplasm/detonate()
 	. = ..()
 
-	if(effect_power < 10)//Under 10% participation, we do nothing more than a small visual *poof*.
+	if(effect_power < 10) //Under 10% participation, we do nothing more than a small visual *poof*.
 		new /obj/effect/temp_visual/revenant/cracks(get_turf(src))
 		return
 
-	if(effect_power >= 10) //Do a sorta-revenant defile
+	if(effect_power >= 10) //Performs something akin to a revenant defile spell.
 		var/effect_range = ghosts_orbiting + 5
 		var/effect_area = spiral_range(effect_range, src)
 
@@ -73,8 +76,8 @@
 				var/turf/open/floor/floor_to_break = impacted_thing
 				if(floor_to_break.overfloor_placed && floor_to_break.floor_tile)
 					new floor_to_break.floor_tile(floor_to_break)
-				floor_to_break.broken = FALSE
-				floor_to_break.burnt = FALSE
+				floor_to_break.broken = TRUE
+				floor_to_break.burnt = TRUE
 				floor_to_break.make_plating(TRUE)
 
 			if(ishuman(impacted_thing))
@@ -102,6 +105,17 @@
 
 	priority_announce("Ectoplasmic outburst detected.", "Anomaly Alert")
 
+/**
+ * Takes a given area and chance, applying the haunted_item component to objects in the area.
+ *
+ * Takes an epicenter, and within the range around it, runs a haunt_chance percent chance of
+ * applying the haunted_item component to nearby objects.
+ *
+ * * epicenter - The center of the outburst area.
+ * * range - The range of the outburst, centered around the epicenter.
+ * * haunt_chance - The percent chance that an object caught in the epicenter will be haunted.
+ */
+
 /proc/haunt_outburst(epicenter, range, haunt_chance)
 	var/effect_area = range(range, epicenter)
 	for(var/obj/item/object_to_possess in effect_area)
@@ -114,8 +128,6 @@
 			spawn_message = span_revenwarning("[object_to_possess] slowly rises upward, hanging menacingly in the air..."), \
 			despawn_message = span_revenwarning("[object_to_possess] settles to the floor, lifeless and unmoving."), \
 		)
-
-
 
 //TODO -- MOVE THE FOLLOWING PROCS TO A SPOOKY GHOST PORTAL STRUCTURE INSTEAD
 
