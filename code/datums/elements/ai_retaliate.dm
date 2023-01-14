@@ -5,18 +5,15 @@
 /datum/element/ai_retaliate
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	/// What mob type the parent calls
-	var/mob/living/mob_type
-	/// In what range the parent calls the same mobs to retaliate
-	var/call_range
+	/// Callback to a mob
+	var/datum/callback/post_retaliate_callback
 
-/datum/element/ai_retaliate/Attach(datum/target, input_mob_type = null, input_call_range = 7)
+/datum/element/ai_retaliate/Attach(datum/target, post_retaliate_callback_input = null)
 	. = ..()
 	if(!ismob(target))
 		return ELEMENT_INCOMPATIBLE
 
-	mob_type = input_mob_type
-	call_range = input_call_range
+	src.post_retaliate_callback = post_retaliate_callback_input
 	target.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(target, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
@@ -35,7 +32,4 @@
 		enemy_refs = list()
 	enemy_refs |= WEAKREF(attacker)
 	victim.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST] = enemy_refs
-	if(mob_type)
-		for (var/mob/living/potential_victim in oview(victim, call_range))
-			if (istype(potential_victim, mob_type) || !potential_victim.stat == DEAD)
-				potential_victim.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST] = enemy_refs
+	post_retaliate_callback?.InvokeAsync(attacker)

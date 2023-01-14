@@ -100,11 +100,12 @@
 
 /mob/living/basic/garden_gnome/Initialize(mapload)
 	. = ..()
+	var/datum/callback/retaliate_callback = CALLBACK(src, PROC_REF(ai_retaliate_behaviour))
 	chosen_hat_colour = pick_weight(gnome_hat_colours)
 	apply_colour()
 	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/generic))
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
-	AddElement(/datum/element/ai_retaliate, /mob/living/basic/garden_gnome)
+	AddElement(/datum/element/ai_retaliate, retaliate_callback)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/ground_sinking, target_icon_state = icon_state, outline_colour = chosen_hat_colour, damage_res_sinked = resistance_when_sinked)
 	AddComponent(/datum/component/caltrop, min_damage = 5, max_damage = 10, paralyze_duration = 1 SECONDS, flags = CALTROP_BYPASS_SHOES)
@@ -115,6 +116,17 @@
 	if(!greyscale_config)
 		return
 	set_greyscale(colors = list(chosen_hat_colour, pick_weight(gnome_body_colours), pick_weight(gnome_pants_colours), pick_weight(gnome_beard_colours)))
+
+/mob/living/basic/garden_gnome/proc/ai_retaliate_behaviour(mob/living/attacker)
+	if (!istype(attacker))
+		return
+	var/list/enemy_refs
+	for (var/mob/living/basic/garden_gnome/potential_gnome in oview(src, 7))
+		enemy_refs = potential_gnome.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
+		if (!enemy_refs)
+			enemy_refs = list()
+		enemy_refs |= WEAKREF(attacker)
+		potential_gnome.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST] = enemy_refs
 
 /datum/ai_controller/basic_controller/garden_gnome
 	blackboard = list(
