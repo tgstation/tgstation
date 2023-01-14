@@ -91,7 +91,7 @@
 		//already filters humans from entering, but you know, just in case.
 		return
 	var/list/potential_new_organs = infusing_into.output_organs.Copy()
-	for(var/obj/item/organ/organ as anything in (target.internal_organs.Copy() + target.external_organs.Copy()))
+	for(var/obj/item/organ/organ as anything in target.internal_organs.Copy())
 		if(organ.type in potential_new_organs)
 			//we already have this
 			potential_new_organs -= organ.type

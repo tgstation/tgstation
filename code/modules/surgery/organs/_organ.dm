@@ -78,6 +78,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		else
 			qdel(replaced)
 
+	reciever.internal_organs |= src
+	reciever.internal_organs_slot[slot] = src
+
 	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, reciever)
 	SEND_SIGNAL(reciever, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
@@ -89,7 +92,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		action.Grant(reciever)
 	return TRUE
 
-
 /*
  * Remove the organ from the select mob.
  *
@@ -99,6 +101,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 
 	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+
+	organ_owner.internal_organs -= src
+	if(organ_owner.internal_organs_slot[slot] == src)
+		organ_owner.internal_organs_slot.Remove(slot)
 
 	owner = null
 	for(var/datum/action/action as anything in actions)

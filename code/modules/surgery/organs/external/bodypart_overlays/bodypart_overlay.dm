@@ -8,8 +8,6 @@
 	var/cache_key = ""
 
 /datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb)
-	SHOULD_BE_PURE(TRUE)
-
 	layer = bitflag_to_layer(layer)
 	. = get_image(layer, limb)
 	color_image(., layer, limb)
@@ -60,5 +58,4 @@
 	CRASH("External organ color set to override with no override proc.")
 
 /datum/bodypart_overlay/proc/generate_icon_cache()
-	return render_key
-
+	return list()

@@ -51,24 +51,32 @@
 		return
 
 	if(start)
-		render_key = "wagging[initial(render_key)]"
-		wag_flags |= WAG_WAGGING
+		start_wag()
 		if(stop_after)
 			addtimer(CALLBACK(src, PROC_REF(wag), FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	else
-		render_key = initial(render_key)
-		wag_flags &= ~WAG_WAGGING
+		stop_wag()
 	owner.update_body_parts()
+
+///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
+/obj/item/organ/external/tail/proc/start_wag()
+	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
+	wag_flags |= WAG_WAGGING
+	accessory.wagging = TRUE
+
+///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
+/obj/item/organ/external/tail/proc/stop_wag()
+	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
+	wag_flags &= ~WAG_WAGGING
+	accessory.wagging = FALSE
 
 /datum/bodypart_overlay/mutant/tail
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
-	feature_key = "tail"
+	feature_key = "tail_monkey"
+	var/wagging = FALSE
 
-/datum/bodypart_overlay/mutant/tail/generate_icon_cache()
-	. = ..()
-	if(wag_flags & WAG_WAGGING)
-		. += "wagging"
-	return .
+/datum/bodypart_overlay/mutant/tail/get_base_icon_state()
+	return (wagging ? "wagging_" : "") + sprite_datum.icon_state //add the wagging tag if we be wagging
 
 /datum/bodypart_overlay/mutant/tail/get_global_feature_list()
 	return GLOB.tails_list
@@ -84,27 +92,28 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cat
 
-	color_source = ORGAN_COLOR_HAIR
 	wag_flags = WAG_ABLE
 
 /datum/bodypart_overlay/mutant/tail/cat
 	feature_key = "tail_cat"
+	color_source = ORGAN_COLOR_HAIR
 
 /datum/bodypart_overlay/mutant/tail/cat/get_global_feature_list()
 	return GLOB.tails_list_human
 
 /obj/item/organ/external/tail/monkey
-	bodypart_overlay = /datum/bodypart_overlay/mutant/monkey
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey
 
-/datum/bodypart_overlay/mutant/monkey
+/datum/bodypart_overlay/mutant/tail/monkey
 	color_source = NONE
+	feature_key = "tail_monkey"
 
 /obj/item/organ/external/tail/lizard
 	name = "lizard tail"
 	desc = "A severed lizard tail. Somewhere, no doubt, a lizard hater is very pleased with themselves."
 	preference = "feature_lizard_tail"
 
-	bodypart_overlay = /datum/bodypart_overlay/mutant/lizard
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/lizard
 
 	wag_flags = WAG_ABLE
 	dna_block = DNA_LIZARD_TAIL_BLOCK
@@ -115,44 +124,32 @@
 	. = ..()
 	if(.)
 		paired_spines = ownerlimb.owner.getorganslot(ORGAN_SLOT_EXTERNAL_SPINES)
+		paired_spines?.paired_tail = src
 
 /obj/item/organ/external/tail/lizard/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 	if(paired_spines)
-		paired_spines.render_key = initial(paired_spines.render_key) //Clears wagging
 		paired_spines.paired_tail = null
 		paired_spines = null
 
-/obj/item/organ/external/tail/lizard/inherit_color(force)
+/obj/item/organ/external/tail/lizard/start_wag()
 	. = ..()
-	if(.)
-		paired_spines = ownerlimb.owner.getorganslot(ORGAN_SLOT_EXTERNAL_SPINES) //I hate this so much.
-		if(paired_spines)
-			paired_spines.paired_tail = src
 
-/obj/item/organ/external/tail/lizard/wag(mob/user, start = TRUE, stop_after = 0)
-	if(!(wag_flags & WAG_ABLE))
-		return
+	if(paired_spines)
+		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
+		accessory.wagging = TRUE
 
-	if(start)
-		render_key = "wagging[initial(render_key)]"
-		wag_flags |= WAG_WAGGING
-		if(stop_after)
-			addtimer(CALLBACK(src, PROC_REF(wag), FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
-		if(paired_spines)
-			paired_spines.render_key = "wagging[initial(paired_spines.render_key)]"
-	else
-		render_key = initial(render_key)
-		wag_flags &= ~WAG_WAGGING
-		if(paired_spines)
-			paired_spines.render_key = initial(paired_spines.render_key)
+/obj/item/organ/external/tail/lizard/stop_wag()
+	. = ..()
 
-	owner.update_body_parts()
+	if(paired_spines)
+		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
+		accessory.wagging = FALSE
 
-/datum/bodypart_overlay/mutant/lizard
+/datum/bodypart_overlay/mutant/tail/lizard
 	feature_key = "tail_lizard"
 
-/datum/bodypart_overlay/mutant/lizard/get_global_feature_list()
+/datum/bodypart_overlay/mutant/tail/lizard/get_global_feature_list()
 	return GLOB.tails_list_lizard
 
 /obj/item/organ/external/tail/lizard/fake

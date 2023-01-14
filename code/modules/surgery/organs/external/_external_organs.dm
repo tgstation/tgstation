@@ -41,8 +41,9 @@
 /obj/item/organ/external/Initialize(mapload, accessory_type)
 	. = ..()
 
-	bodypart_overlay = new()
-	bodypart_overlay.set_appearance(accessory_type)
+	bodypart_overlay = new bodypart_overlay()
+	if(accessory_type)
+		bodypart_overlay.set_appearance(accessory_type)
 
 	if(!(organ_flags & ORGAN_UNREMOVABLE))
 		color = "#[random_color()]" //A temporary random color that gets overwritten on insertion.
@@ -69,8 +70,10 @@
 	if(!.)
 		return
 
-	if(!stored_feature_id) //We only want this set *once*
-		stored_feature_id = reciever.dna.features[bodypart_overlay.feature_key]
+	if(bodypart_overlay.imprint_on_next_insertion) //We only want this set *once*
+
+		bodypart_overlay.set_appearance_from_name(reciever.dna.features[bodypart_overlay.feature_key])
+		bodypart_overlay.imprint_on_next_insertion = FALSE
 
 	ownerlimb = limb
 	add_to_limb(ownerlimb)
@@ -118,9 +121,9 @@
 	if(!dna_block)
 		return
 
-	var/list/feature_list = get_global_feature_list()
+	var/list/feature_list = bodypart_overlay.get_global_feature_list()
 
-	set_sprite(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
+	bodypart_overlay.set_appearance(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
 
 ///If you need to change an external_organ for simple one-offs, use this. Pass the accessory type : /datum/accessory/something
 /obj/item/organ/external/proc/simple_change_sprite(accessory_type)
@@ -133,6 +136,9 @@
 	else if(ownerlimb) //are we in a limb?
 		ownerlimb.update_icon_dropped()
 	//else if(use_mob_sprite_as_obj_sprite) //are we out in the world, unprotected by flesh?
+
+/obj/item/organ/external/on_life(delta_time, times_fired)
+	return
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
@@ -259,9 +265,9 @@
 		human.update_body_parts()
 
 /obj/item/organ/external/antennae/proc/burn_antennae()
+	var/datum/bodypart_overlay/mutant/antennae/antennae = bodypart_overlay
+	antennae.burnt = TRUE
 	burnt = TRUE
-	original_sprite_datum = bodypart_accessory.sprite_datum
-	simple_change_sprite(/datum/sprite_accessory/moth_antennae/burnt_off)
 
 ///heal our antennae back up!!
 /obj/item/organ/external/antennae/proc/heal_antennae(datum/source, heal_flags)
@@ -271,15 +277,28 @@
 		return
 
 	if(heal_flags & (HEAL_LIMBS|HEAL_ORGANS))
+		var/datum/bodypart_overlay/mutant/antennae/antennae = bodypart_overlay
+		antennae.burnt = FALSE
 		burnt = FALSE
-		simple_change_sprite(original_sprite_datum)
 
 /datum/bodypart_overlay/mutant/antennae
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "moth_antennae"
+	///Accessory datum of the burn sprite
+	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
+	///Are we burned? If so we draw differently
+	var/burnt = FALSE
+
+/datum/bodypart_overlay/mutant/antennae/New()
+	. = ..()
+
+	burn_datum = fetch_sprite_datum(burn_datum) //turn the path into the singleton instance
 
 /datum/bodypart_overlay/mutant/antennae/get_global_feature_list()
 	return GLOB.moth_antennae_list
+
+/datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
+	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
 ///The leafy hair of a podperson
 /obj/item/organ/external/pod_hair
