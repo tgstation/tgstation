@@ -25,9 +25,9 @@ Basically, the items they pull cannot be pulled (except by the puller)
 /datum/component/strong_pull/proc/on_pull(datum/source, atom/movable/pulled, state, force)
 	SIGNAL_HANDLER
 	strongpulling = pulled
-	after_pull()
+	pull_effects()
 
-/datum/component/strong_pull/proc/after_pull()
+/datum/component/strong_pull/proc/pull_effects()
 	RegisterSignal(strongpulling, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(reject_further_pulls))
 	RegisterSignal(strongpulling, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_no_longer_pulled))
 	if(istype(strongpulling, /obj/structure/closet) && !istype(strongpulling, /obj/structure/closet/body_bag))
@@ -64,7 +64,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 /**
 * Security variant of the component used for restraining people rather than crates
 */
-/datum/component/strong_pull/security/after_pull()
+/datum/component/strong_pull/security/pull_effects()
 	if(istype(strongpulling, /mob/living/carbon/human))
 		RegisterSignal(strongpulling, COMSIG_CARBON_CUFF_SUCCEED, PROC_REF(apply_trait))
 		RegisterSignal(strongpulling, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_no_longer_pulled))
