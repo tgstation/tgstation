@@ -134,6 +134,15 @@
 
 //TODO -- MOVE THE FOLLOWING PROCS TO A SPOOKY GHOST PORTAL STRUCTURE INSTEAD
 
+/obj/structure/ghost_portal
+	name = "Spooky Portal"
+	desc = "A portal between our dimension and who-knows-where? It's emitting an absolutely ungodly wailing sound."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "safe"
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
 /**
  * Generates a poll for observers, spawning anyone who signs up in a large group of ghost simplemobs
