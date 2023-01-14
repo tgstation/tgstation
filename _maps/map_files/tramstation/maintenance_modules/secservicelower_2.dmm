@@ -1,7 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner/north,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "ad" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/wrench,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "az" = (
@@ -70,6 +78,10 @@
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "fn" = (
+/obj/modular_map_root/tramstation{
+	key = "secservicelower_attachment_a";
+	name = "secservicelower_attachment_a"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "fw" = (
@@ -159,6 +171,7 @@
 	},
 /obj/structure/railing,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/stairs/old{
 	dir = 8
 	},
@@ -213,8 +226,13 @@
 	name = "External Access"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/plating,
 /area/station/maintenance/central/greater)
+"mi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
 "ne" = (
 /turf/closed/wall,
 /area/station/maintenance/central/greater)
@@ -223,7 +241,7 @@
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "oD" = (
 /obj/structure/cable,
@@ -232,6 +250,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/greater)
+"qk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"qH" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "rb" = (
 /obj/structure/disposalpipe/segment{
@@ -247,6 +274,13 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
+"rw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "ss" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -275,6 +309,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/template_noop,
 /area/template_noop)
+"tZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "uG" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -307,7 +347,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth,
+/turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "vZ" = (
 /obj/machinery/light/small/directional/north,
@@ -392,8 +432,16 @@
 "AJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/smooth,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"Be" = (
+/obj/modular_map_root/tramstation{
+	key = "secservicelower_attachment_b";
+	name = "secservicelower_attachment_b"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
 "Bn" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -409,6 +457,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "DH" = (
+/obj/modular_map_root/tramstation{
+	key = "secservicelower_attachment_c";
+	name = "secservicelower_attachment_c"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "DM" = (
@@ -453,6 +505,7 @@
 	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "Io" = (
@@ -501,7 +554,7 @@
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "NU" = (
 /obj/structure/disposalpipe/segment{
@@ -529,8 +582,19 @@
 /area/station/maintenance/port/central)
 "Pj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
 /obj/structure/table,
+/obj/item/reagent_containers/cup/glass/waterbottle/large/empty{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_y = 11;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = -3;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "PN" = (
@@ -576,7 +640,7 @@
 "Tt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "Tx" = (
 /obj/structure/disposalpipe/segment{
@@ -609,7 +673,8 @@
 "Wz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/smooth,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "Xl" = (
 /obj/effect/turf_decal/sand/plating,
@@ -619,6 +684,17 @@
 	},
 /turf/open/floor/plating,
 /area/station/asteroid)
+"YI" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
 "YU" = (
 /obj/structure/railing{
 	dir = 4
@@ -1729,7 +1805,7 @@ zz
 zz
 zz
 zz
-GP
+mi
 ss
 zz
 zz
@@ -1930,7 +2006,7 @@ az
 az
 az
 js
-yK
+YI
 GP
 js
 zz
@@ -2805,8 +2881,8 @@ az
 ne
 cA
 lO
-Mk
-Mk
+qk
+qH
 vT
 kE
 kE
@@ -3166,7 +3242,7 @@ ne
 ne
 ne
 ne
-fn
+Be
 ne
 Mk
 yR
@@ -3425,8 +3501,8 @@ ne
 ne
 ne
 xm
-Mk
-Mk
+ab
+rw
 MS
 zz
 zz
@@ -3571,7 +3647,7 @@ zz
 zz
 zz
 ne
-Mk
+tZ
 yr
 ne
 xm

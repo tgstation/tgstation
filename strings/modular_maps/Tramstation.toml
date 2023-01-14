@@ -43,10 +43,13 @@ modules = ["dormmedupper_attachment_a_1.dmm", "dormmedupper_attachment_a_2.dmm",
 modules = ["dormmedupper_attachment_b_1.dmm", "dormmedupper_attachment_b_2.dmm", "dormmedupper_attachment_b_3.dmm"]
 
 [rooms.secservicelower]
-modules = ["secservicelower_1.dmm", "secservicelower_2.dmm", "secservicelower_3.dmm"]
+modules = ["secservicelower_1.dmm", "secservicelower_1.dmm", "secservicelower_1.dmm"]
 
 [rooms.secservicelower_attachment_a]
 modules = ["secservicelower_attachment_a_1.dmm", "secservicelower_attachment_a_2.dmm", "secservicelower_attachment_a_3.dmm"]
 
 [rooms.secservicelower_attachment_b]
 modules = ["secservicelower_attachment_b_1.dmm", "secservicelower_attachment_b_2.dmm", "secservicelower_attachment_b_3.dmm"]
+
+[rooms.secservicelower_attachment_c]
+modules = ["secservicelower_attachment_c_1.dmm", "secservicelower_attachment_c_2.dmm", "secservicelower_attachment_c_3.dmm"]

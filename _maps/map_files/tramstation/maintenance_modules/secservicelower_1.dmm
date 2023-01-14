@@ -57,6 +57,18 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
+"gi" = (
+/obj/modular_map_root/tramstation{
+	key = "secservicelower_attachment_b";
+	name = "secservicelower_attachment_b"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"gH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "hv" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/north,
@@ -87,6 +99,7 @@
 	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "is" = (
@@ -169,6 +182,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"mM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "nk" = (
 /turf/template_noop,
 /area/template_noop)
@@ -181,10 +199,22 @@
 	},
 /obj/structure/railing,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/stairs/old{
 	dir = 8
 	},
 /area/station/maintenance/central/greater)
+"og" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
 "oh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -214,6 +244,7 @@
 "os" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "pc" = (
@@ -295,6 +326,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
+"vK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
 "vR" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -307,6 +346,7 @@
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "wx" = (
@@ -322,6 +362,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
+"yd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "yg" = (
 /obj/structure/cable,
@@ -339,12 +384,21 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"yZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "zL" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "zN" = (
+/obj/modular_map_root/tramstation{
+	key = "secservicelower_attachment_a";
+	name = "secservicelower_attachment_a"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "zW" = (
@@ -426,10 +480,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/public,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "GU" = (
@@ -472,10 +526,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/public,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "JQ" = (
@@ -497,6 +551,10 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "Li" = (
+/obj/modular_map_root/tramstation{
+	key = "secservicelower_attachment_c";
+	name = "secservicelower_attachment_c"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "LY" = (
@@ -538,6 +596,7 @@
 "No" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/effect/landmark/blobstart,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "NI" = (
@@ -565,11 +624,17 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/public,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
+"PB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "PM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -582,10 +647,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/public,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "SO" = (
@@ -616,8 +681,14 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"Tj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
 "Tm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
@@ -630,6 +701,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
+"Ud" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "Ul" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/junction/flip{
@@ -640,6 +716,13 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
+"UG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "Ve" = (
 /turf/closed/wall,
 /area/station/maintenance/port/central)
@@ -657,6 +740,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"WI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"WY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "Xt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door_buttons/airlock_controller{
@@ -666,6 +761,7 @@
 	name = "External Access Console";
 	pixel_y = 24
 	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "YH" = (
@@ -691,6 +787,11 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
+"Zs" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "ZO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1242,7 +1343,7 @@ Ve
 re
 pc
 LY
-Ex
+yd
 Ex
 Ex
 Ex
@@ -1388,7 +1489,7 @@ nk
 nk
 nk
 nk
-Ex
+PB
 rz
 nk
 nk
@@ -1438,7 +1539,7 @@ nk
 nk
 nk
 nk
-Ex
+Tj
 rz
 nk
 nk
@@ -1738,7 +1839,7 @@ nk
 nk
 nk
 nk
-Ex
+vK
 rz
 nk
 nk
@@ -1788,7 +1889,7 @@ nk
 nk
 nk
 nk
-Ex
+WI
 rz
 nk
 nk
@@ -1989,7 +2090,7 @@ Ve
 Xt
 TS
 Ve
-rz
+og
 Ex
 Ve
 nk
@@ -2465,7 +2566,7 @@ vR
 vR
 TQ
 zW
-PM
+WY
 nk
 nk
 nk
@@ -3069,7 +3170,7 @@ EK
 EK
 EK
 EK
-EK
+TQ
 EK
 aN
 aN
@@ -3225,9 +3326,9 @@ TQ
 TQ
 TQ
 TQ
-zN
+gi
 TQ
-PM
+mM
 CW
 hK
 cc
@@ -3387,9 +3488,9 @@ TQ
 TQ
 TQ
 vg
-PM
-PM
-PM
+yZ
+UG
+gH
 PM
 TQ
 EK
@@ -3484,7 +3585,7 @@ TQ
 TQ
 TQ
 yg
-PM
+Zs
 PM
 kA
 nk
@@ -3534,9 +3635,9 @@ uH
 Tm
 TQ
 yg
-nk
-nk
-nk
+TQ
+TQ
+TQ
 nk
 nk
 nk
@@ -3584,7 +3685,7 @@ do
 Tm
 TQ
 yg
-nk
+TQ
 nk
 nk
 nk
@@ -3630,11 +3731,11 @@ nk
 nk
 nk
 TQ
-PM
+Ud
 Tm
 TQ
 yg
-nk
+TQ
 nk
 nk
 nk
@@ -3684,7 +3785,7 @@ zL
 Tm
 BG
 JQ
-nk
+TQ
 nk
 nk
 nk
@@ -3734,7 +3835,7 @@ nk
 nk
 nk
 JQ
-nk
+TQ
 nk
 nk
 nk
@@ -3784,7 +3885,7 @@ nk
 nk
 nk
 JQ
-nk
+TQ
 nk
 nk
 nk
@@ -3834,7 +3935,7 @@ nk
 nk
 nk
 pV
-nk
+TQ
 nk
 nk
 nk
