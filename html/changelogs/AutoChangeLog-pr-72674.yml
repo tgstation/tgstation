@@ -1,0 +1,4 @@
+author: "Comxy"
+delete-after: True
+changes:
+  - bugfix: "Fixes being able to place things on space tiles with a z-layer destination."
