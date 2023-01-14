@@ -72,13 +72,21 @@
 		var/effect_area = spiral_range(effect_range, src)
 
 		for(var/impacted_thing in effect_area)
-			if(!isplatingturf(impacted_thing) && isfloorturf(impacted_thing) && prob(20))
-				var/turf/open/floor/floor_to_break = impacted_thing
-				if(floor_to_break.overfloor_placed && floor_to_break.floor_tile)
-					new floor_to_break.floor_tile(floor_to_break)
-				floor_to_break.broken = TRUE
-				floor_to_break.burnt = TRUE
-				floor_to_break.make_plating(TRUE)
+			if(isfloorturf(impacted_thing))
+				if(prob(10))
+					new /obj/effect/decal/cleanable/blood(get_turf(impacted_thing))
+				else if(prob(15))
+					new /obj/effect/decal/cleanable/greenglow/ecto(get_turf(impacted_thing))
+				else if(prob(15))
+					new /obj/effect/decal/cleanable/dirt/dust(get_turf(impacted_thing))
+
+				if(!isplatingturf(impacted_thing))
+					var/turf/open/floor/floor_to_break = impacted_thing
+					if(floor_to_break.overfloor_placed && floor_to_break.floor_tile && prob(20))
+						new floor_to_break.floor_tile(floor_to_break)
+						floor_to_break.make_plating(TRUE)
+						floor_to_break.broken = TRUE
+						floor_to_break.burnt = TRUE
 
 			if(ishuman(impacted_thing))
 				var/mob/living/carbon/human/mob_to_infect
