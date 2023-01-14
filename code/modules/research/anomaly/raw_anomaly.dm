@@ -68,6 +68,12 @@
 	anomaly_type = /obj/item/assembly/signaler/anomaly/dimensional
 	icon_state = "rawcore_dimensional"
 
+/obj/item/assembly/signaler/anomaly/ectoplasm //Anomaly armor gives possessed floaty thing effect to objects nearby
+	name = "\improper ectoplasm anomaly core"
+	desc = "The neutralized core of an ectoplasmic anomaly. When you hold it close, you can hear faint murmuring from inside."
+	icon_state = "dimensional_core" //change
+	anomaly_type = /obj/effect/anomaly/ectoplasm
+
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()
 	var/path = pick(subtypesof(/obj/item/raw_anomaly_core))
