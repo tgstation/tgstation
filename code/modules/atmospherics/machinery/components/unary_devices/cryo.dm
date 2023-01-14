@@ -73,7 +73,7 @@
 	icon_state = "pod-off"
 	density = TRUE
 	max_integrity = 350
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/unary_cryo_cell
 	layer = MOB_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
@@ -115,6 +115,11 @@
 	payment_department = ACCOUNT_MED
 
 
+/datum/armor/unary_cryo_cell
+	energy = 100
+	fire = 30
+	acid = 30
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
@@ -148,8 +153,8 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
 	. = ..()
 	var/C
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		C += M.rating
+	for(var/datum/stock_part/matter_bin/M in component_parts)
+		C += M.tier
 
 	efficiency = initial(efficiency) * C
 	sleep_factor = initial(sleep_factor) * C

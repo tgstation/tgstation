@@ -50,7 +50,7 @@
 	. = ..()
 	var/list/data = list()
 
-	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet)
+	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
 
 	return data
 
@@ -192,6 +192,7 @@
 					usr.put_in_hands(inserted_pai)
 					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
 					inserted_pai = null
+					update_appearance(UPDATE_ICON)
 				if("interact")
 					inserted_pai.attack_self(usr)
 			return UI_UPDATE

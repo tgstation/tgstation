@@ -3,7 +3,10 @@
 	name = "\improper Podperson"
 	plural_form = "Podpeople"
 	id = SPECIES_PODPERSON
-	species_traits = list(MUTCOLORS, EYECOLOR, HAS_FLESH, HAS_BONE)
+	species_traits = list(
+		MUTCOLORS,
+		EYECOLOR,
+	)
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
 	)
@@ -44,7 +47,7 @@
 		light_amount = min(1, T.get_lumcount()) - 0.5
 		H.adjust_nutrition(5 * light_amount * delta_time)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
+			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, BODYTYPE_ORGANIC)
 			H.adjustToxLoss(-0.5 * delta_time)
 			H.adjustOxyLoss(-0.5 * delta_time)
 
@@ -64,8 +67,3 @@
 
 /datum/species/pod/randomize_features(mob/living/carbon/human_mob)
 	randomize_external_organs(human_mob)
-
-/datum/species/pod/proc/change_hairstyle(mob/living/carbon/human/human_mob, new_style)
-	var/obj/item/organ/external/organ = human_mob.getorganslot(ORGAN_SLOT_EXTERNAL_POD_HAIR)
-	organ.set_sprite(new_style)
-	human_mob.update_body_parts()

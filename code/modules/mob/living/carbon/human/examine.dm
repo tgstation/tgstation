@@ -150,7 +150,7 @@
 		var/damage_text
 		if(HAS_TRAIT(body_part, TRAIT_DISABLED_BY_WOUND))
 			continue // skip if it's disabled by a wound (cuz we'll be able to see the bone sticking out!)
-		if(!(body_part.get_damage(include_stamina = FALSE) >= body_part.max_damage)) //we don't care if it's stamcritted
+		if(!(body_part.get_damage() >= body_part.max_damage)) //we don't care if it's stamcritted
 			damage_text = "limp and lifeless"
 		else
 			damage_text = (body_part.brute_dam >= body_part.burn_dam) ? body_part.heavy_brute_msg : body_part.heavy_burn_msg
@@ -183,31 +183,32 @@
 			temp = 50
 		else
 			temp = getBruteLoss()
+		var/list/damage_desc = get_majority_bodypart_damage_desc()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor [dna.species.brute_damage_desc].\n"
+				msg += "[t_He] [t_has] minor [damage_desc[BRUTE]].\n"
 			else if(temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.brute_damage_desc]!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [damage_desc[BRUTE]]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe [dna.species.brute_damage_desc]!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [damage_desc[BRUTE]]!</B>\n"
 
 		temp = getFireLoss()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor [dna.species.burn_damage_desc].\n"
+				msg += "[t_He] [t_has] minor [damage_desc[BURN]].\n"
 			else if (temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.burn_damage_desc]!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [damage_desc[BURN]]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe [dna.species.burn_damage_desc]!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [damage_desc[BURN]]!</B>\n"
 
 		temp = getCloneLoss()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor [dna.species.cellular_damage_desc].\n"
+				msg += "[t_He] [t_has] minor [damage_desc[CLONE]].\n"
 			else if(temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.cellular_damage_desc]!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [damage_desc[CLONE]]!\n"
 			else
-				msg += "<b>[t_He] [t_has] severe [dna.species.cellular_damage_desc]!</b>\n"
+				msg += "<b>[t_He] [t_has] severe [damage_desc[CLONE]]!</b>\n"
 
 
 	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
@@ -235,7 +236,7 @@
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
 	var/apparent_blood_volume = blood_volume
-	if(skin_tone == "albino")
+	if(dna.species.use_skintones && skin_tone == "albino")
 		apparent_blood_volume -= 150 // enough to knock you down one tier
 	switch(apparent_blood_volume)
 		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)

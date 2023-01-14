@@ -24,6 +24,8 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/popcorn = 1,
 		/obj/item/trash/raisins = 1,
 		/obj/item/trash/sosjerky = 1,
+		/obj/item/trash/flare = 1,
+		/obj/item/trash/candle = 1,
 
 		/obj/item/c_tube = 1,
 		/obj/item/disk/data = 1,
@@ -336,6 +338,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/skillchip/brainwashing = 1,
 		/obj/item/tattoo_kit = 1,
+		/obj/item/folder/ancient_paperwork = 1,
 		) = 1,
 
 ))

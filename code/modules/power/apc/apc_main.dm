@@ -109,12 +109,20 @@
 	var/datum/alarm_handler/alarm_manager
 	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
 	var/offset_old
+	armor_type = /datum/armor/power_apc
+
+/datum/armor/power_apc
+	melee = 20
+	bullet = 20
+	laser = 10
+	energy = 100
+	bomb = 30
+	fire = 90
+	acid = 50
 
 /obj/machinery/power/apc/New(turf/loc, ndir, building=0)
 	if(!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
-	if(!armor)
-		armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 100, BOMB = 30, BIO = 0, FIRE = 90, ACID = 50)
 	..()
 	GLOB.apcs_list += src
 
@@ -186,6 +194,8 @@
 	if(abs(offset_old) != APC_PIXEL_OFFSET)
 		log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 
+	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
+
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
 
@@ -206,6 +216,7 @@
 		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
+
 	. = ..()
 
 /obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
@@ -614,6 +625,19 @@
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_total]) : [cell? cell.percent() : "N/C"] ([charging])"
+
+/obj/machinery/power/apc/proc/grey_tide(datum/source, list/grey_tide_areas)
+	SIGNAL_HANDLER
+
+	if(!is_station_level(z))
+		return
+
+	for(var/area_type in grey_tide_areas)
+		if(!istype(get_area(src), area_type))
+			continue
+		lighting = APC_CHANNEL_OFF //Escape (or sneak in) under the cover of darkness
+		update_appearance(UPDATE_ICON)
+		update()
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

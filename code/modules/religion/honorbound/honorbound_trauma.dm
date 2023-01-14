@@ -24,8 +24,8 @@
 
 	//signal that checks for dishonorable attacks
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(attack_honor))
-	var/datum/action/cooldown/spell/pointed/declare_evil = new(src)
-	declare_evil.Grant(owner)
+	var/datum/action/cooldown/spell/pointed/declare_evil/declare = new(src)
+	declare.Grant(owner)
 	return ..()
 
 /datum/brain_trauma/special/honorbound/on_lose(silent)
@@ -183,7 +183,7 @@
  */
 /datum/brain_trauma/special/honorbound/proc/punishment(mob/living/carbon/human/user, school)
 	switch(school)
-		if(SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION)
+		if(SCHOOL_UNSET, SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION, SCHOOL_PSYCHIC)
 			return
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN, SCHOOL_SANGUINE)
 			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))

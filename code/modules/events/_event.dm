@@ -112,9 +112,8 @@ Runs the event
 	* * In the worst case scenario we can still recall a event which we cancelled by accident, which is much better then to have a unwanted event
 	*/
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
-	var/datum/round_event/E = new typepath()
+	var/datum/round_event/E = new typepath(TRUE, src)
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
-	E.control = src
 	occurrences++
 
 	if(announce_chance_override != null)
@@ -133,10 +132,14 @@ Runs the event
 		log_game("Random Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+		announce_deadchat(random)
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
+
+///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
+/datum/round_event_control/proc/announce_deadchat(random)
+	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 //Returns the component for the listener
 /datum/round_event_control/proc/stop_random_event()
@@ -146,6 +149,7 @@ Runs the event
 /// Any special things admins can do while triggering this event to "improve" it.
 /// Return [ADMIN_CANCEL_EVENT] to stop the event from actually happening after all
 /datum/round_event_control/proc/admin_setup(mob/admin)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /datum/round_event //NOTE: Times are measured in master controller ticks!
@@ -267,7 +271,8 @@ Runs the event
 
 
 //Sets up the event then adds the event to the the list of running events
-/datum/round_event/New(my_processing = TRUE)
+/datum/round_event/New(my_processing = TRUE, datum/round_event_control/event_controller)
+	control = event_controller
 	setup()
 	processing = my_processing
 	SSevents.running += src

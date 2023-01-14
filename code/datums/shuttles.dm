@@ -60,35 +60,14 @@
 		var/turf/place = turfs[i]
 		if(isspaceturf(place)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
 			continue
-		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
+
+		if (place.count_baseturfs() < 2) // Some snowflake shuttle shit
 			continue
-		var/list/sanity = place.baseturfs.Copy()
-		sanity.Insert(3, /turf/baseturf_skipover/shuttle)
-		place.baseturfs = baseturfs_string_list(sanity, place)
+
+		place.insert_baseturf(3, /turf/baseturf_skipover/shuttle)
 
 		for(var/obj/docking_port/mobile/port in place)
-			if(!isnull(port_x_offset))
-				switch(port.dir) // Yeah this looks a little ugly but mappers had to do this in their head before
-					if(NORTH)
-						port.width = width
-						port.height = height
-						port.dwidth = port_x_offset - 1
-						port.dheight = port_y_offset - 1
-					if(EAST)
-						port.width = height
-						port.height = width
-						port.dwidth = height - port_y_offset
-						port.dheight = port_x_offset - 1
-					if(SOUTH)
-						port.width = width
-						port.height = height
-						port.dwidth = width - port_x_offset
-						port.dheight = height - port_y_offset
-					if(WEST)
-						port.width = height
-						port.height = width
-						port.dwidth = port_y_offset - 1
-						port.dheight = width - port_x_offset
+			port.calculate_docking_port_information(src)
 			// initTemplateBounds explicitly ignores the shuttle's docking port, to ensure that it calculates the bounds of the shuttle correctly
 			// so we need to manually initialize it here
 			SSatoms.InitializeAtoms(list(port))
@@ -470,7 +449,15 @@
 	suffix = "shadow"
 	name = "The NTSS Shadow"
 	description = "Guaranteed to get you somewhere FAST. With a custom-built plasma engine, this bad boy will put more distance between you and certain danger than any other!"
+	admin_notes = "The aft of the ship has a plasma tank that starts ignited. May get released by crew. The plasma windows next to the engine heaters will also erupt into flame, and also risk getting released by crew."
 	credit_cost = CARGO_CRATE_VALUE * 50
+
+/datum/map_template/shuttle/emergency/fish
+	suffix = "fish"
+	name = "Angler's Choice Emergency Shuttle"
+	description = "Trades such amenities as 'storage space' and 'sufficient seating' for an artifical environment ideal for fishing, plus ample supplies (also for fishing)."
+	admin_notes = "There's a chasm in it, it has railings but that won't stop determined players."
+	credit_cost = CARGO_CRATE_VALUE * 10
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
@@ -507,46 +494,57 @@
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
+	description = "Whiteship with medical supplies. Zombies do not currently spawn corpses, and are not infectious."
 
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
 	name = "Salvage Ship"
+	description = "Whiteship that focuses on a large cargo bay that players can build in. Spawns with Syndicate mobs who do not drop corpses and are highly aggressive."
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
 	name = "NT Science Vessel"
+	description = "A small science vessel that uses just one area and is full of angry ants."
 
 /datum/map_template/shuttle/whiteship/cere
 	suffix = "cere"
 	name = "NT Construction Vessel"
+	description = "A small cargo vessel with open interiors. Starts with a 25% chance to spawn a functional RIPLEY, and has infinite power."
 
 /datum/map_template/shuttle/whiteship/kilo
 	suffix = "kilo"
 	name = "NT Mining Shuttle"
+	description = "A mining vessel with a curious shape starting with a few angry netherworld mobs."
 
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
+	description = "A ship hit with an engine blowout, leaving it as a depressurised husk. Has infinite power, although likely to bait people into removing that property. Also the most open out of all the whiteships, and starts with a 25% ripley chance."
 
 /datum/map_template/shuttle/whiteship/tram
 	suffix = "tram"
 	name = "NT Long-Distance Bluespace Freighter"
+	description = "A long shuttle that starts with Nanotrasen private security corpses. DOES NOT FIT IN THE BASE DOCKS! Does fit in Deep Space's dock though."
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
 	name = "NT Frigate"
+	description = "A standard whiteship with big spiders onboard. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
 
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
+	description = "There is no map for this vessel and it was supposed to be used with the Meta-class. Do not try to spawn it!"
 
 /datum/map_template/shuttle/whiteship/personalshuttle
 	suffix = "personalshuttle"
 	name = "Personal Travel Shuttle"
+	description = "A small vessel with a few zombies and an engineer's corpse that can be looted."
 
 /datum/map_template/shuttle/whiteship/obelisk
 	suffix = "obelisk"
 	name = "Obelisk"
+	description = "A large research vessel affected by the Cult of Nar'Sie. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
 	admin_notes = "Not actually an obelisk, has nonsentient cult constructs."
 
 /datum/map_template/shuttle/cargo/kilo
@@ -619,10 +617,12 @@
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
 	name = "basic syndicate infiltrator"
+	description = "Base Syndicate infiltrator, spawned by default for nukeops to use."
 
 /datum/map_template/shuttle/infiltrator/advanced
 	suffix = "advanced"
 	name = "advanced syndicate infiltrator"
+	description = "A much larger version of the standard Syndicate infiltrator that feels more like Kilostation. Has APCs, but power is not a concern for nuclear operatives. Also comes with atmos!"
 
 /datum/map_template/shuttle/cargo/delta
 	suffix = "delta"
@@ -683,10 +683,22 @@
 /datum/map_template/shuttle/escape_pod/default
 	suffix = "default"
 	name = "escape pod (Default)"
+	description = "Base escape pod with 2 tiles of interior space."
 
 /datum/map_template/shuttle/escape_pod/large
 	suffix = "large"
 	name = "escape pod (Large)"
+	description = "Actually the old Pubbystation monastery shuttle."
+
+/datum/map_template/shuttle/escape_pod/luxury
+	suffix = "luxury"
+	name = "escape pod (Luxury)"
+	description = "Upgraded escape pod with 3 tiles of interior space."
+
+/datum/map_template/shuttle/escape_pod/cramped
+	suffix = "cramped"
+	name = "escape pod (Cramped)"
+	description = "Downgraded escape pod that lacks a window and only has one seat, alongside lacking an emergency safe."
 
 /datum/map_template/shuttle/assault_pod/default
 	suffix = "default"
@@ -703,6 +715,10 @@
 /datum/map_template/shuttle/pirate/dutchman
 	suffix = "dutchman"
 	name = "pirate ship (Flying Dutchman)"
+
+/datum/map_template/shuttle/pirate/psykers
+	suffix = "psyker"
+	name = "pirate ship (Psyker-gang)"
 
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
@@ -736,21 +752,30 @@
 	suffix = "corvette"
 	name = "SBC Starfury Corvette"
 
+/datum/map_template/shuttle/ruin/cyborg_mothership
+	suffix = "cyborg_mothership"
+	name = "Cyborg Mothership"
+	description = "A highly industrialised vessel designed for silicon operation infested with hivebots and space vines."
+
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"
 	name = "Small Freighter"
+	description = "Small freight vessel, starts near blacked-out with 3 Syndicate Commandos and 1 Syndicate Stormtrooper, alongside a large hull breach."
 
 /datum/map_template/shuttle/ruin/pirate_cutter
 	suffix = "pirate_cutter"
 	name = "Pirate Cutter"
+	description = "Small pirate vessel with ballistic turrets. Spawns with 3 pirate mobs, one of which drops an energy cutlass."
 
 /datum/map_template/shuttle/ruin/syndicate_dropship
 	suffix = "syndicate_dropship"
 	name = "Syndicate Dropship"
+	description = "Light Syndicate vessel with laser turrets. Spawns with a Syndicate mob in the bridge."
 
 /datum/map_template/shuttle/ruin/syndicate_fighter_shiv
 	suffix = "syndicate_fighter_shiv"
 	name = "Syndicate Fighter"
+	description = "A small Syndicate vessel with exactly one tile of useful interior space and 4 laser turrets. Starts with a Syndicate mob in the pilot's seat, and extremely cramped."
 
 /datum/map_template/shuttle/snowdin/mining
 	suffix = "mining"

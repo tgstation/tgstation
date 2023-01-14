@@ -54,7 +54,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/place_ruin,
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
-	/client/proc/check_atmos_controls,
 	/client/proc/check_for_obstructed_atmospherics,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
@@ -422,101 +421,6 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/datum/browser/popup = new(mob, "stackdebug", "Station Stack Count", 600, 400)
 	popup.set_content(page_contents)
 	popup.open()
-
-/// Checks the atmos monitor, sensors, meters, vents, and injectors, and makes sure they dont overlap or do nothing.
-/client/proc/check_atmos_controls()
-	set name = "Check Atmos Chamber Devices"
-	set category = "Mapping"
-
-	if(SSticker.current_state == GAME_STATE_STARTUP)
-		to_chat(usr, "Game still loading, please run this again later!", confidential = TRUE)
-		return
-
-	message_admins(span_adminnotice("[key_name_admin(usr)] used the Test Atmos Controls debug command."))
-	log_admin("[key_name(usr)] used the Test Atmos Controls debug command.")
-
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_ATMOS_STORAGE)
-
-	/// broadcaster[id_tag] = machine
-	var/list/broadcasters = list()
-	/// listened_to[atmos_chamber_entry] = bool
-	/// TRUE means we have the corresponding id_tag being listened to by an atmos control computer.
-	var/list/listened_to = list()
-	/// broadcasted_to[id_tag[1]] = bool
-	/// TRUE means we have the corresponding id_tag being broadcasted to by a device, be it meter, sensors, etc.
-	var/list/broadcasted_to = list()
-
-	/// How many things dont fit the recognized subtypes.
-	var/invalid_machine = 0
-	/// How many things have invalid (messes with our delimiter) tags.
-	var/invalid_tag = 0
-	/// How many things have empty tags, invalids but much worse.
-	var/tagless = 0
-	/// How many things have duped id_tag.
-	var/duplicate_tag = 0
-	/// How many things are broadcasting without an atmos computer listening
-	var/not_heard = 0
-	/// How many atmos computers are listening to an empty tag.
-	var/not_told = 0
-
-	var/list/valid_device_types = typecacheof(list(
-		/obj/machinery/computer/atmos_control,
-		/obj/machinery/air_sensor,
-		/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
-		/obj/machinery/meter/monitored,
-		/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
-		/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored
-	))
-	var/list/valid_tag_endings = list("sensor", "in", "out")
-
-	for (var/datum/weakref/device_ref as anything in frequency.devices[RADIO_ATMOSIA])
-		var/obj/machinery/machine = device_ref.resolve()
-		if(!machine)
-			continue
-		if(!valid_device_types[machine.type])
-			to_chat(usr, "Unrecognized machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type] in FREQ_ATMOS_STORAGE ([FREQ_ATMOS_STORAGE]) frequency.", confidential=TRUE)
-			invalid_machine += 1
-			continue
-		if(istype(machine,/obj/machinery/computer/atmos_control))
-			var/obj/machinery/computer/atmos_control/atmos_comp = machine
-			for(var/listened_tags in atmos_comp.atmos_chambers)
-				LAZYINITLIST(listened_to[listened_tags])
-				listened_to[listened_tags] += atmos_comp
-			continue
-		// Code below is for valid machineries that are not atmos control.
-		var/list/tags = splittext(machine.id_tag, "_")
-		if(tags.len == 0 || length(tags[1]) == 0)
-			to_chat(usr, "Machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type] does not have a tag or have an empty identifier tag: [machine.id_tag]", confidential=TRUE)
-			tagless += 1
-			continue
-		if(tags.len != 2 || !(tags[2] in valid_tag_endings))
-			to_chat(usr, "Invalid tag for machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type]. Tag = [machine.id_tag]", confidential=TRUE)
-			invalid_tag += 1
-			continue
-		if(broadcasters[machine.id_tag])
-			var/obj/original_machine = broadcasters[machine.id_tag]
-			to_chat(usr, "Duplicate machine id_tag ([machine.id_tag]) detected. Implicated machineries: [ADMIN_VERBOSEJMP(machine)] under [machine.type] and [ADMIN_VERBOSEJMP(original_machine)] under [original_machine.type]", confidential=TRUE)
-			duplicate_tag += 1
-			continue
-		broadcasters[machine.id_tag] = machine
-		LAZYINITLIST(broadcasted_to[tags[1]])
-		broadcasted_to[tags[1]] += machine
-
-	for (var/tag in listened_to)
-		if(!broadcasted_to[tag])
-			for (var/obj/computer in listened_to[tag])
-				to_chat(usr, "A computer [ADMIN_VERBOSEJMP(computer)] is listening to tag: [tag] yet it no devices is broadcasting there.", confidential=TRUE)
-			not_told += 1
-	for (var/tag in broadcasted_to)
-		if(!listened_to[tag])
-			for (var/obj/machine in broadcasted_to[tag])
-				to_chat(usr, "A machinery [ADMIN_VERBOSEJMP(machine)] is broadcasting in tag: [tag] yet there are no listeners. Are you sure you want to use a monitored atmos device?", confidential=TRUE)
-			not_heard += 1
-
-	if(!(invalid_machine || invalid_tag || tagless || duplicate_tag || not_heard || not_told))
-		to_chat(usr, "Atmos control frequency check passed without encountering problems.", confidential=TRUE)
-	else
-		to_chat(usr, "Total errors: [invalid_machine + invalid_tag + tagless + duplicate_tag + not_heard + not_told]", confidential=TRUE)
 
 /// Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up.
 /client/proc/check_for_obstructed_atmospherics()

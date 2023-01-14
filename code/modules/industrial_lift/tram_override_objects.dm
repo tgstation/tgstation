@@ -15,6 +15,10 @@
 	//atmos_sensitive applies connect_loc which 1. reacts to movement in order to 2. unregister and register signals to
 	//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
 
+/obj/structure/window/reinforced/shuttle/tram
+	name = "tram window"
+	icon = 'icons/obj/smooth_structures/tram_window.dmi'
+
 /obj/structure/window/reinforced/shuttle/tram/Initialize(mapload, direct)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
@@ -23,16 +27,41 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
+/obj/structure/chair/sofa/bench/tram
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/left
+	name = "tram seating"
+	desc = "Not the most comfortable, but easy to keep clean!"
+	icon_state = "bench_left"
+	greyscale_config = /datum/greyscale_config/bench_left
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/right
+	name = "tram seating"
+	desc = "Not the most comfortable, but easy to keep clean!"
+	icon_state = "bench_right"
+	greyscale_config = /datum/greyscale_config/bench_right
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/solo
+	name = "tram seating"
+	desc = "Not the most comfortable, but easy to keep clean!"
+	icon_state = "bench_solo"
+	greyscale_config = /datum/greyscale_config/bench_solo
+	greyscale_colors = "#00CCFF"
+
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
-	plane = GAME_PLANE
 	layer = TRAM_XING_LAYER
 
 /obj/machinery/door/window/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	var/associated_lift = MAIN_STATION_TRAM
 	var/datum/weakref/tram_ref
+	/// Directions the tram door can be forced open in an emergency
+	var/space_dir = null
 	name = "tram door"
 	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 
@@ -56,12 +85,22 @@
 	INVOKE_ASYNC(src, PROC_REF(open))
 	find_tram()
 
+/obj/machinery/door/window/tram/examine(mob/user)
+	. = ..()
+	. += span_notice("It has labels indicating that it has an emergency mechanism to open from the inside using <b>just your hands</b> in the event of an emergency.")
+
+/obj/machinery/door/window/tram/try_safety_unlock(mob/user)
+	if(!hasPower())
+		to_chat(user, span_notice("You begin pulling the tram emergency exit handle..."))
+		if(do_after(user, 15 SECONDS, target = src))
+			try_to_crowbar(null, user, TRUE)
+			return TRUE
+
 /obj/machinery/door/window/tram/open_and_close()
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(!open())
 		return
 	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
-		say("Emergency exit activated!")
 		return PROCESS_KILL
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)

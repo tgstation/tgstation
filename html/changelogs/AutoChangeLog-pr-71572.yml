@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - imageadd: "Unique inhands for the ion carbines"
-  - bugfix: "Makes sure that the ion carbine has a defined worn sprite. No longer pink!"

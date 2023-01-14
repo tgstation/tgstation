@@ -34,7 +34,7 @@ All ShuttleMove procs go here
 				M.visible_message(span_warning("[shuttle] slams into [M]!"))
 				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
 				log_shuttle("[key_name(M)] was shuttle gibbed by [shuttle].")
-				investigate_log("has been gibbed by [shuttle].", INVESTIGATE_DEATHS)
+				M.investigate_log("has been gibbed by [shuttle].", INVESTIGATE_DEATHS)
 				M.gib()
 
 
@@ -52,12 +52,11 @@ All ShuttleMove procs go here
 		return
 	// Destination turf changes.
 	// Baseturfs is definitely a list or this proc wouldnt be called.
-	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	var/shuttle_depth = depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
 
-	if(!shuttle_boundary)
+	if(!shuttle_depth)
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
-	var/depth = baseturfs.len - shuttle_boundary + 1
-	newT.CopyOnTop(src, 1, depth, TRUE)
+	newT.CopyOnTop(src, 1, shuttle_depth, TRUE)
 	newT.blocks_air = TRUE
 	newT.air_update_turf(TRUE, FALSE)
 	blocks_air = TRUE
@@ -75,10 +74,10 @@ All ShuttleMove procs go here
 	oldT.TransferComponents(src)
 
 	SSexplosions.wipe_turf(src)
-	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	var/shuttle_depth = depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
 
-	if(shuttle_boundary)
-		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
+	if(shuttle_depth)
+		oldT.ScrapeAway(shuttle_depth)
 
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
@@ -279,6 +278,7 @@ All ShuttleMove procs go here
 	// the station as it is loaded in.
 	if (oldT && !is_reserved_level(oldT.z))
 		unlocked = TRUE
+		update_appearance()
 
 /************************************Mob move procs************************************/
 

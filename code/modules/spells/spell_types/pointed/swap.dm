@@ -5,6 +5,7 @@
 		or else you can click yourself with the RMB to discard your secondary target."
 	button_icon_state = "swap"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/swap_target.dmi'
+	active_overlay_icon_state = "bg_spell_border_active_blue"
 
 	school = SCHOOL_TRANSLOCATION
 	cooldown_time = 30 SECONDS
@@ -17,8 +18,13 @@
 
 	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 0
+
 	/// A variable for holding the second selected target with right click.
 	var/mob/living/second_target
+
+/datum/action/cooldown/spell/pointed/swap/Destroy()
+	second_target = null
+	return ..()
 
 /datum/action/cooldown/spell/pointed/swap/is_valid_target(atom/cast_on)
 	. = ..()

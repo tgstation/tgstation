@@ -7,7 +7,6 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = SUPERVISOR_HOP
-	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "LAWYER"
 
@@ -38,7 +37,7 @@
 	id_trim = /datum/id_trim/job/lawyer
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
-	belt = /obj/item/modular_computer/tablet/pda/lawyer
+	belt = /obj/item/modular_computer/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
 	shoes = /obj/item/clothing/shoes/laceup
 	neck = /obj/item/clothing/neck/tie/red/tied

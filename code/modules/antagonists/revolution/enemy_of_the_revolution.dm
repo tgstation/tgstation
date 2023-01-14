@@ -15,6 +15,7 @@
 	objectives += survive
 
 /datum/antagonist/enemy_of_the_revolution/on_gain()
+	owner.add_memory(/datum/memory/revolution_heads_defeated)
 	//the state version of this antag has to sleep a tick, this doesn't because it's not replacing an old antag datum.
 	owner.special_role = "revolution enemy"
 	forge_objectives()

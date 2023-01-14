@@ -8,13 +8,13 @@ GLOBAL_LIST_EMPTY(lifts)
 	base_icon_state = "catwalk"
 	density = FALSE
 	anchored = TRUE
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 50)
+	armor_type = /datum/armor/structure_industrial_lift
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
-	canSmoothWith = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
+	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
+	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered
@@ -27,16 +27,16 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/pass_through_floors = FALSE
 
 	///what movables on our platform that we are moving
-	var/list/atom/movable/lift_load
-	///lazylist of weakrefs to the contents we have when we're first created. stored so that admins can clear the tram to its initial state
+	var/list/atom/movable/lift_load = list()
+	///weakrefs to the contents we have when we're first created. stored so that admins can clear the tram to its initial state
 	///if someone put a bunch of stuff onto it.
-	var/list/datum/weakref/initial_contents
+	var/list/datum/weakref/initial_contents = list()
 
 	///what glide_size we set our moving contents to.
 	var/glide_size_override = 8
-	///lazy list of movables inside lift_load who had their glide_size changed since our last movement.
+	///movables inside lift_load who had their glide_size changed since our last movement.
 	///used so that we dont have to change the glide_size of every object every movement, which scales to cost more than you'd think
-	var/list/atom/movable/changed_gliders
+	var/list/atom/movable/changed_gliders = list()
 
 	///master datum that controls our movement. in general /industrial_lift subtypes control moving themselves, and
 	/// /datum/lift_master instances control moving the entire tram and any behavior associated with that.
@@ -66,6 +66,11 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/radial_travel = TRUE
 	/// A lazylist of REFs to all mobs which have a radial open currently
 	var/list/current_operators
+
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
 
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
@@ -117,8 +122,10 @@ GLOBAL_LIST_EMPTY(lifts)
 		return
 	if(isliving(potential_rider) && HAS_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED))
 		REMOVE_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
-	LAZYREMOVE(lift_load, potential_rider)
-	LAZYREMOVE(changed_gliders, potential_rider)
+
+	lift_load -= potential_rider
+	changed_gliders -= potential_rider
+
 	UnregisterSignal(potential_rider, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/new_lift_contents)
@@ -131,7 +138,8 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	if(isliving(new_lift_contents) && !HAS_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED))
 		ADD_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
-	LAZYADD(lift_load, new_lift_contents)
+
+	lift_load += new_lift_contents
 	RegisterSignal(new_lift_contents, COMSIG_PARENT_QDELETING, PROC_REF(RemoveItemFromLift))
 
 	return TRUE
@@ -149,14 +157,14 @@ GLOBAL_LIST_EMPTY(lifts)
 				if(!new_initial_contents)
 					continue
 
-				LAZYADD(initial_contents, new_initial_contents)
+				initial_contents += new_initial_contents
 
 ///signal handler for COMSIG_MOVABLE_UPDATE_GLIDE_SIZE: when a movable in lift_load changes its glide_size independently.
 ///adds that movable to a lazy list, movables in that list have their glide_size updated when the tram next moves
 /obj/structure/industrial_lift/proc/on_changed_glide_size(atom/movable/moving_contents, new_glide_size)
 	SIGNAL_HANDLER
 	if(new_glide_size != glide_size_override)
-		LAZYADD(changed_gliders, moving_contents)
+		changed_gliders += moving_contents
 
 
 ///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them. makes movement more efficient.
@@ -238,9 +246,9 @@ GLOBAL_LIST_EMPTY(lifts)
 
 		lift_master_datum.lift_platforms -= other_lift
 		if(other_lift.lift_load)
-			LAZYOR(lift_load, other_lift.lift_load)
+			lift_load |= other_lift.lift_load
 		if(other_lift.initial_contents)
-			LAZYOR(initial_contents, other_lift.initial_contents)
+			initial_contents |= other_lift.initial_contents
 
 		qdel(other_lift)
 
@@ -389,7 +397,7 @@ GLOBAL_LIST_EMPTY(lifts)
 					continue
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-				var/damage = rand(5, 10) * collision_lethality
+				var/damage = rand(9, 28) * collision_lethality
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
@@ -429,10 +437,12 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	var/turf/our_dest = get_step(src, movement_direction)
 
-	var/area/our_area = get_area(src)
-	var/area/their_area = get_area(our_dest)
-	var/different_areas = our_area != their_area
+	//vars updated per mover
 	var/turf/mover_old_loc
+	var/turf/mover_old_area
+
+	var/turf/mover_new_loc
+	var/turf/mover_new_area
 
 	if(glide_size != glide_size_override)
 		set_glide_size(glide_size_override)
@@ -442,43 +452,44 @@ GLOBAL_LIST_EMPTY(lifts)
 		return FALSE
 
 	for(var/atom/movable/mover as anything in changed_gliders)
+		if(QDELETED(mover))
+			movers -= mover
+			continue
+
 		if(mover.glide_size != glide_size_override)
 			mover.set_glide_size(glide_size_override)
 
-		LAZYREMOVE(changed_gliders, mover)
+	changed_gliders.Cut()
 
-	if(different_areas)
-		for(var/atom/movable/mover as anything in movers)
-			if(QDELETED(mover))
-				movers -= mover
-				continue
+	for(var/atom/movable/mover as anything in movers)
+		if(QDELETED(mover))
+			movers -= mover
+			continue
 
-			//we dont need to call Entered() and Exited() for origin and destination here for each mover because
-			//all of them are considered to be on top of us, so the turfs and anything on them can only perceive us,
-			//which is why the platform itself uses forceMove()
-			mover_old_loc = mover.loc
+		//another O(n) set of read operations, not ideal given datum var read times.
+		//ideally we would only need to do this check once per tile with contents (which is constant per tram, while contents can scale infinitely)
+		//and then the only O(n) process is calling these procs for each contents that actually changes areas
+		//but that approach is probably a lot buggier. itd be nice to have it figured out though
+		mover_old_loc = mover.loc
+		mover_old_area = mover_old_loc.loc
 
-			our_area.Exited(mover, movement_direction)
-			mover.loc = get_step(mover, movement_direction)
-			their_area.Entered(mover, our_area)
+		mover.loc = (mover_new_loc = get_step(mover, movement_direction))
+		mover_new_area = mover_new_loc.loc
 
-			mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
 
-	else
-		for(var/atom/movable/mover as anything in movers)
-			if(QDELETED(mover))
-				movers -= mover
-				continue
+		if(mover_old_area != mover_new_area)
+			mover_old_area.Exited(mover, movement_direction)
+			mover_new_area.Entered(mover, mover_new_area)
 
-			mover_old_loc = mover.loc
-			mover.loc = get_step(mover, movement_direction)
+		mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
 
-			mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
 
 	return TRUE
 
 /**
  * reset the contents of this lift platform to its original state in case someone put too much shit on it.
+ * everything that is considered foreign is deleted, you can configure what is considered foreign.
+ *
  * used by an admin via calling reset_lift_contents() on our lift_master_datum.
  *
  * Arguments:
@@ -779,9 +790,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	name = "tram"
 	desc = "A tram for tramversing the station."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "titanium_yellow"
+	icon_state = "titanium"
 	layer = TRAM_FLOOR_LAYER
-	plane = GAME_PLANE
 	base_icon_state = null
 	smoothing_flags = NONE
 	smoothing_groups = null
@@ -803,6 +813,29 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	create_multitile_platform = TRUE
 
+/obj/structure/industrial_lift/tram/white
+	icon_state = "titanium_white"
+
+/obj/structure/industrial_lift/tram/subfloor
+	name = "tram"
+	desc = "A tram for tramversing the station."
+	icon_state = "tram_subfloor"
+
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
+
+/obj/structure/industrial_lift/tram/accessible
+	icon_state = "titanium_accessible_north"
+
+/obj/structure/industrial_lift/tram/accessible/north
+	icon_state = "titanium_accessible_north"
+
+/obj/structure/industrial_lift/tram/accessible/south
+	icon_state = "titanium_accessible_south"
+
+
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()
 	if(travelling)
@@ -817,7 +850,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			glider.set_glide_size(glide_size_override)
 			RegisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(on_changed_glide_size))
 		else
-			LAZYREMOVE(changed_gliders, glider)
+			changed_gliders -= glider
 			UnregisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 
 	src.travelling = travelling

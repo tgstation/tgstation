@@ -9,7 +9,6 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "Nanotrasen officials and Space Law"
-	selection_color = "#ccccff"
 	req_admin_notify = 1
 	minimal_player_age = 14
 	exp_requirements = 180
@@ -65,7 +64,7 @@
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/station_charter = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/heads/captain
+	belt = /obj/item/modular_computer/pda/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/captain

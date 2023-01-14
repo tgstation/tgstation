@@ -387,42 +387,42 @@
 
 /datum/greyscale_config/giftdeliverybox
 	name = "Gift Box"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverybox.json'
 
 /datum/greyscale_config/giftdeliverycloset
 	name = "Gift Closet"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverycloset.json'
 
 /datum/greyscale_config/giftdeliverycrate
 	name = "Gift Crate"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverycrate.json'
 
 /datum/greyscale_config/giftdeliverypackage5
 	name = "Gift Package 5 (Biggest)"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage5.json'
 
 /datum/greyscale_config/giftdeliverypackage4
 	name = "Gift Package 4"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage4.json'
 
 /datum/greyscale_config/giftdeliverypackage3
 	name = "Gift Package 3"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage3.json'
 
 /datum/greyscale_config/giftdeliverypackage2
 	name = "Gift Package 2"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage2.json'
 
 /datum/greyscale_config/giftdeliverypackage1
 	name = "Gift Package 1 (Smallest)"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage1.json'
 
 /datum/greyscale_config/wrap_paper
@@ -462,6 +462,11 @@
 	name = "Bench Right"
 	icon_file = 'icons/obj/sofa.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_right.json'
+
+/datum/greyscale_config/bench_solo
+	name = "Bench Solo"
+	icon_file = 'icons/obj/sofa.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bench_solo.json'
 
 /datum/greyscale_config/bench_corner
 	name = "Bench Corner"
@@ -985,3 +990,8 @@
 	name = "Quantum Keycard"
 	icon_file = 'icons/obj/device.dmi'
 	json_config = 'code/datums/greyscale/json_configs/quantum_keycard.json'
+
+/datum/greyscale_config/heretic_rune
+	name = "Transmutation Rune"
+	icon_file = 'icons/effects/96x96.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heretic_rune.json'

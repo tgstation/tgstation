@@ -18,14 +18,12 @@ Slimecrossing Items
 	var/bodypart_type
 	var/brute_dam
 	var/burn_dam
-	var/stamina_dam
 
 /datum/saved_bodypart/New(obj/item/bodypart/part)
 	old_part = part
 	bodypart_type = part.type
 	brute_dam = part.brute_dam
 	burn_dam = part.burn_dam
-	stamina_dam = part.stamina_dam
 
 /mob/living/carbon/proc/apply_saved_bodyparts(list/datum/saved_bodypart/parts)
 	var/list/dont_chop = list()
@@ -36,8 +34,8 @@ Slimecrossing Items
 			saved_part.old_part = new saved_part.bodypart_type
 		if(!already || already != saved_part.old_part)
 			saved_part.old_part.replace_limb(src, TRUE)
-		saved_part.old_part.heal_damage(INFINITY, INFINITY, INFINITY, null, FALSE)
-		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam, wound_bonus=CANT_WOUND)
+		saved_part.old_part.heal_damage(INFINITY, INFINITY, null, FALSE)
+		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, wound_bonus=CANT_WOUND)
 		dont_chop[zone] = TRUE
 	for(var/_part in bodyparts)
 		var/obj/item/bodypart/part = _part
@@ -55,8 +53,10 @@ Slimecrossing Items
 	return ret
 
 /obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(!on || !pictures_left || !isturf(target.loc))
-		return
+		return .
 
 	if(user == target)
 		to_chat(user, span_notice("You take a selfie!"))
@@ -66,7 +66,7 @@ Slimecrossing Items
 	to_chat(target, span_boldnotice("You'll remember this moment forever!"))
 
 	target.AddComponent(/datum/component/dejavu, 2)
-	.=..()
+	return . | ..()
 
 
 
@@ -78,10 +78,12 @@ Slimecrossing Items
 	pictures_max = 1
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(!on || !pictures_left || !isturf(target.loc))
-		return
+		return .
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	. = ..()
+	return . | ..()
 
 //Hypercharged slime cell - Charged Yellow
 /obj/item/stock_parts/cell/high/slime_hypercharged
@@ -146,7 +148,15 @@ Slimecrossing Items
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
-	armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, BOMB = 0, BIO = 0, FIRE = -80, ACID = 30)
+	armor_type = /datum/armor/structure_ice_stasis
+
+/datum/armor/structure_ice_stasis
+	melee = 30
+	bullet = 50
+	laser = -50
+	energy = -50
+	fire = -80
+	acid = 30
 
 /obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
@@ -187,7 +197,7 @@ Slimecrossing Items
 			to_chat(user, span_warning("[M] refused to enter the device."))
 			return
 	else
-		if(ishostile(M) && !("neutral" in M.faction))
+		if(ishostile(M) && !(FACTION_NEUTRAL in M.faction))
 			to_chat(user, span_warning("This creature is too aggressive to capture."))
 			return
 	to_chat(user, span_notice("You store [M] in the capture device."))

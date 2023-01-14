@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/reagent_containers/condiment,
 	/obj/item/delivery,
 	/obj/item/his_grace,
-	/obj/item/transfer_valve,
+	/obj/item/bodybag/bluespace,
 )))
 
 /obj/machinery/deepfryer
@@ -68,8 +68,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/RefreshParts()
 	. = ..()
 	var/oil_efficiency = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		oil_efficiency += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		oil_efficiency += laser.tier
 	oil_use = initial(oil_use) - (oil_efficiency * 0.00475)
 	fry_speed = oil_efficiency
 

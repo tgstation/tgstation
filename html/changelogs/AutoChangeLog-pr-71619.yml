@@ -1,4 +1,0 @@
-author: "YakumoChen"
-delete-after: True
-changes:
-  - bugfix: "Fixes a missing tram rail along the tram line"

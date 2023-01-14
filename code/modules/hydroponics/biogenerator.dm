@@ -88,13 +88,13 @@
 	var/new_max_items = 10
 	var/new_processed_items_per_cycle = 0
 
-	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
-		new_max_items += MAX_ITEMS_PER_RATING * bin.rating
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		new_max_items += MAX_ITEMS_PER_RATING * bin.tier
 
-	for(var/obj/item/stock_parts/manipulator/manipulator in component_parts)
-		new_productivity += manipulator.rating
-		new_efficiency += manipulator.rating
-		new_processed_items_per_cycle += PROCESSED_ITEMS_PER_RATING * manipulator.rating
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		new_productivity += manipulator.tier
+		new_efficiency += manipulator.tier
+		new_processed_items_per_cycle += PROCESSED_ITEMS_PER_RATING * manipulator.tier
 
 	max_items = new_max_items
 	efficiency = new_efficiency
@@ -132,7 +132,10 @@
 		. += mutable_appearance(icon, "[icon_state]_o_container")
 
 	if(biomass > 0)
-		var/biomass_level = min(ROUND_UP(7 * biomass / max_visual_biomass), 7)
+		// Get current biomass volume adjusted with sine function (more biomass = less frequent icon changes)
+		var/biomass_volume_sin = sin(min(biomass/max_visual_biomass, 1) * 90)
+		// Round up to get the corresponding overlay icon
+		var/biomass_level = ROUND_UP(biomass_volume_sin * 7)
 		. += mutable_appearance(icon, "[icon_state]_o_biomass_[biomass_level]")
 		. += emissive_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", src)
 
@@ -341,7 +344,7 @@
 
 
 /obj/machinery/biogenerator/proc/create_product(datum/design/design, amount)
-	if(design.make_reagents.len > 0)
+	if(design.make_reagent)
 		if(!beaker)
 			return FALSE
 
@@ -352,7 +355,7 @@
 		if(!use_biomass(design.materials, amount))
 			return FALSE
 
-		beaker.reagents.add_reagent(design.make_reagents[1], amount)
+		beaker.reagents.add_reagent(design.make_reagent, amount)
 
 	if(design.build_path)
 		if(!use_biomass(design.materials, amount))
@@ -482,7 +485,7 @@
 			cat["items"] += list(list(
 				"id" = design.id,
 				"name" = design.name,
-				"is_reagent" = design.make_reagents.len > 0,
+				"is_reagent" = design.make_reagent != null,
 				"cost" = design.materials[GET_MATERIAL_REF(/datum/material/biomass)] / efficiency,
 			))
 		data["categories"] += list(cat)
@@ -515,7 +518,7 @@
 				return
 
 			var/datum/design/design = SSresearch.techweb_design_by_id(id)
-			amount = clamp(amount, 1, (design.make_reagents.len > 0 && beaker ? beaker.reagents.maximum_volume - beaker.reagents.total_volume : max_output))
+			amount = clamp(amount, 1, (design.make_reagent && beaker ? beaker.reagents.maximum_volume - beaker.reagents.total_volume : max_output))
 
 			if(design && !istype(design, /datum/design/error_design))
 				create_product(design, amount)

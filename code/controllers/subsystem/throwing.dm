@@ -147,7 +147,7 @@ SUBSYSTEM_DEF(throwing)
 				continue
 			if(obstacle.pass_flags_self & LETPASSTHROW)
 				continue
-			if (obstacle == actual_target || (obstacle.density && !(obstacle.flags_1 & ON_BORDER_1)))
+			if (obstacle == actual_target || (obstacle.density && !(obstacle.flags_1 & ON_BORDER_1) && !(obstacle in AM.buckled_mobs)))
 				finalize(TRUE, obstacle)
 				return
 

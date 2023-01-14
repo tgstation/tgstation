@@ -4,8 +4,9 @@ import { capitalizeFirst, multiline } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
+import { JobToIcon } from '../common/JobToIcon';
+import { ANTAG2COLOR } from './constants';
 import { collateAntagonists, getDisplayColor, getDisplayName, isJobOrNameMatch } from './helpers';
-import { ANTAG2COLOR, JOB2ICON } from './constants';
 import type { AntagGroup, Observable, OrbitData } from './types';
 
 export const Orbit = (props, context) => {
@@ -33,11 +34,13 @@ const ObservableSearch = (props, context) => {
   const {
     alive = [],
     antagonists = [],
+    deadchat_controlled = [],
     dead = [],
     ghosts = [],
     misc = [],
     npcs = [],
   } = data;
+
   const [autoObserve, setAutoObserve] = useLocalState<boolean>(
     context,
     'autoObserve',
@@ -53,6 +56,7 @@ const ObservableSearch = (props, context) => {
     'searchQuery',
     ''
   );
+
   /** Gets a list of Observables, then filters the most relevant to orbit */
   const orbitMostRelevant = (searchQuery: string) => {
     /** Returns the most orbited observable that matches the search. */
@@ -64,7 +68,10 @@ const ObservableSearch = (props, context) => {
       // Sorts descending by orbiters
       sortBy<Observable>((observable) => -(observable.orbiters || 0)),
       // Makes a single Observables list for an easy search
-    ])([alive, antagonists, dead, ghosts, misc, npcs].flat())[0];
+    ])(
+      [alive, antagonists, deadchat_controlled, dead, ghosts, misc, npcs].flat()
+    )[0];
+
     if (mostRelevant !== undefined) {
       act('orbit', {
         ref: mostRelevant.ref,
@@ -134,12 +141,15 @@ const ObservableContent = (props, context) => {
   const {
     alive = [],
     antagonists = [],
+    deadchat_controlled = [],
     dead = [],
     ghosts = [],
     misc = [],
     npcs = [],
   } = data;
-  let collatedAntagonists: Array<AntagGroup> = [];
+
+  let collatedAntagonists: AntagGroup[] = [];
+
   if (antagonists.length) {
     collatedAntagonists = collateAntagonists(antagonists);
   }
@@ -156,6 +166,11 @@ const ObservableContent = (props, context) => {
           />
         );
       })}
+      <ObservableSection
+        color="purple"
+        section={deadchat_controlled}
+        title="Deadchat Controlled"
+      />
       <ObservableSection color="blue" section={alive} title="Alive" />
       <ObservableSection section={dead} title="Dead" />
       <ObservableSection section={ghosts} title="Ghosts" />
@@ -172,17 +187,20 @@ const ObservableContent = (props, context) => {
 const ObservableSection = (
   props: {
     color?: string;
-    section: Array<Observable>;
+    section: Observable[];
     title: string;
   },
   context
 ) => {
   const { color, section = [], title } = props;
+
   if (!section.length) {
     return null;
   }
+
   const [searchQuery] = useLocalState<string>(context, 'searchQuery', '');
-  const filteredSection: Array<Observable> = flow([
+
+  const filteredSection: Observable[] = flow([
     filter<Observable>((observable) =>
       isJobOrNameMatch(observable, searchQuery)
     ),
@@ -192,6 +210,7 @@ const ObservableSection = (
         .toLowerCase()
     ),
   ])(section);
+
   if (!filteredSection.length) {
     return null;
   }
@@ -219,13 +238,14 @@ const ObservableItem = (
   const { act } = useBackend<OrbitData>(context);
   const { color, item } = props;
   const { extra, full_name, job, job_icon, health, name, orbiters, ref } = item;
+
   const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
   const [heatMap] = useLocalState<boolean>(context, 'heatMap', false);
 
   return (
     <Button
       color={getDisplayColor(item, heatMap, color)}
-      icon={job_icon || (job && JOB2ICON[job]) || null}
+      icon={job_icon || (job && JobToIcon[job]) || null}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
       tooltip={(!!health || !!extra) && <ObservableTooltip item={item} />}
       tooltipPosition="bottom-start">
@@ -246,6 +266,7 @@ const ObservableTooltip = (props: { item: Observable }) => {
   const {
     item: { extra, full_name, job, health },
   } = props;
+
   const extraInfo = extra?.split(':');
   const displayHealth = !!health && health >= 0 ? `${health}%` : 'Critical';
 

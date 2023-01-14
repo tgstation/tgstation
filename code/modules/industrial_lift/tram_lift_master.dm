@@ -99,17 +99,17 @@
 	if(to_where == from_where)
 		return
 
+	update_tram_doors(CLOSE_DOORS)
 	travel_direction = get_dir(from_where, to_where)
 	travel_distance = get_dist(from_where, to_where)
 	from_where = to_where
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
-	update_tram_doors(CLOSE_DOORS)
-	update_tram_doors(UNLOCK_DOORS)
-	addtimer(CALLBACK(src, PROC_REF(dispatch_tram), to_where), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(dispatch_tram), to_where), 3 SECONDS)
 
 /datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/to_where)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
+	update_tram_doors(UNLOCK_DOORS)
 
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
 		if(tram_part.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
@@ -126,7 +126,7 @@
 	if(!travel_distance)
 		update_tram_doors(LOCK_DOORS)
 		update_tram_doors(OPEN_DOORS)
-		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= next_move)
 		var/start_time = TICK_USAGE
