@@ -5,8 +5,7 @@
 	icon_state = "glass-0"
 	base_icon_state = "glass"
 	baseturfs = /turf/baseturf_bottom
-	layer = GLASS_FLOOR_LAYER
-	underfloor_accessibility = UNDERFLOOR_VISIBLE
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS
 	canSmoothWith = SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS
