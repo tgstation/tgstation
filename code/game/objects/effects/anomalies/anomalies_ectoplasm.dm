@@ -30,7 +30,7 @@
 			. += span_notice("The space around the anomaly faintly resonates. It doesn't seem very powerful at the moment.")
 		if(26 to 64)
 			. += span_notice("The space around the anomaly seems to vibrate, letting out a noise that sounds like ghastly moaning. Someone should probably do something about that.")
-		if(65 to 100)
+		if(50 to 100)
 			. += span_alert("The anomaly pulsates heavily, about to burst with unearthly energy. This can't be good.")
 
 /obj/effect/anomaly/ectoplasm/anomalyEffect(delta_time) //Updates ghost count
@@ -49,13 +49,8 @@
 
 		//The actual event severity is determined by what % the current ghosts are circling the anomaly.
 		var/severity = ghosts_orbiting / total_dead * 100
-		//Max severity is gated by what % of the player count are dead players, double for leniency's sake. Used to cap severity unless a certain amount of the server is dead.
-		var/max_severity = total_dead / player_count * 200
-		//This is done to prevent anomalies from being too powerful on lowpop, where 3 orbiters out of 6 would be enough for a catastrophic severity.
 
-		effect_power = clamp(severity, 0, max_severity)
-
-		if(effect_power >= 60)
+		if(effect_power >= 50)
 			icon_state = "ectoplasm_heavy"
 			update_appearance(UPDATE_ICON_STATE)
 
@@ -73,11 +68,11 @@
 
 		for(var/impacted_thing in effect_area)
 			if(isfloorturf(impacted_thing))
-				if(prob(10))
+				if(prob(5))
 					new /obj/effect/decal/cleanable/blood(get_turf(impacted_thing))
-				else if(prob(15))
+				else if(prob(10))
 					new /obj/effect/decal/cleanable/greenglow/ecto(get_turf(impacted_thing))
-				else if(prob(15))
+				else if(prob(10))
 					new /obj/effect/decal/cleanable/dirt/dust(get_turf(impacted_thing))
 
 				if(!isplatingturf(impacted_thing))
@@ -104,7 +99,7 @@
 		var/effect_range = ghosts_orbiting + 3
 		haunt_outburst(get_turf(src), effect_range, 45)
 
-	if(effect_power >= 60) //Summon a ghost swarm!
+	if(effect_power >= 50) //Summon a ghost swarm!
 		var/list/candidate_list = list()
 		for(var/mob/dead/observer/orbiter in orbiters?.orbiter_list)
 			candidate_list += orbiter
