@@ -425,3 +425,26 @@
       and get more armor
   san7890:
   - bugfix: There is no longer a button on a window at the CentCom Thunderdome.
+2023-01-14:
+  Jacquerel:
+  - bugfix: Dead basic mobs are no longer "dense" objects and can be stepped on.
+  Melbert:
+  - bugfix: Fixed a runtime from neck slices on headless mobs.
+  - qol: Neck sliced folk now have an examine message saying as much.
+  Rhials:
+  - qol: The Scrubber Clog event now gives an orbit popup to ghosts!
+  - bugfix: Bald/Shaved ghosts will no longer cause a runtime and spawn without a
+      name.
+  - bugfix: viewing the botkeeper app as an observer will no longer runtime.
+  - bugfix: The walls of the luxury shuttle no longer bend in strange directions.
+  ShizCalev:
+  - qol: Airlock interfaces will now open up automatically if access is restored early
+      while an AI is hacking it.
+  SuperSlayer0:
+  - qol: Pinpointers now tell what they are tracking when examined
+  timothymtorres:
+  - bugfix: Fix blood overlays on energy daggers
+  - code_imp: Add `NO_BLOOD_ON_ITEM` bitfield for items
+  tralezab:
+  - rscadd: Some prisoner backgrounds have more or less tattoos.
+  - rscadd: More Memories to collect involving fishing and getting converted
