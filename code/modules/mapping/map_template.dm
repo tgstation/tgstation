@@ -162,7 +162,7 @@
 	var/turf/top_right = locate(min(T.x + width + 1, world.maxx), min(T.y + height + 1, world.maxy), T.z)
 	var/list/border = block(bottom_left, top_right)
 
-	// iterate over turfs in the border and clear them from active atmos processing and assign MAPLOADING_1
+	// iterate over turfs in the border and clear them from active atmos processing and assign TURF_MAPLOADING
 	for(var/turf/border_turf as anything in border)
 		SSair.remove_from_active(border_turf)
 		for(var/turf/sub_turf as anything in border_turf.atmos_adjacent_turfs)
