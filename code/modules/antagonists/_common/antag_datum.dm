@@ -102,10 +102,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/custom/admin_add(datum/mind/new_owner,mob/admin)
 	var/custom_name = stripped_input(admin, "Custom antagonist name:", "Custom antag", "Antagonist")
-	if(custom_name)
-		name = custom_name
-	else
+	if(!custom_name)
 		return
+	name = custom_name
 	..()
 
 ///ANTAGONIST UI STUFF
