@@ -81,12 +81,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/mind/persistent_owner = owner
 
 	var/commands = get_admin_commands()
-	for(var/admin_command in commands)
-		if(href_list["command"] == admin_command)
-			var/datum/callback/call_async = commands[admin_command]
-			call_async.Invoke(usr)
-			persistent_owner.traitor_panel()
-			return
+	var/admin_command = href_list["command"]
+	if(!(admin_command in commands))
+		return
+	var/datum/callback/call_async = commands[admin_command]
+	call_async.Invoke(usr)
+	persistent_owner.traitor_panel()
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
