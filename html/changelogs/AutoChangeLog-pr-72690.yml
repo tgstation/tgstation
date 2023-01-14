@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes:
+  - admin: "Force Event no longer filters by tab when searching."
