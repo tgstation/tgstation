@@ -157,8 +157,9 @@
 	if((T.y+height) - 1 > world.maxy)
 		return
 
-	var/list/border = block(T.x,		 T.y,		  T.z,
-							T.x + width, T.y + width, T.z + width)
+	var/turf/bottom_left = locate(T.x, T.y, T.z)
+	var/turf/top_right = locate(T.x + width, T.y + height, T.z)
+	var/list/border = block(bottom_left, top_right)
 
 	// iterate over turfs in the border and clear them from active atmos processing and assign MAPLOADING_1
 	for(var/turf/border_turf as anything in border)
