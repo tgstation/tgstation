@@ -37,6 +37,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 /datum/component/strong_pull/proc/reject_further_pulls(datum/source, mob/living/puller)
 	SIGNAL_HANDLER
 	if(puller != parent) //for increasing grabs, you need to have a valid pull. thus, parent should be able to pull the same object again
+		strongpulling.balloon_alert(puller, "Grip too strong")
 		return COMSIG_ATOM_CANT_PULL
 
 /*
@@ -63,20 +64,26 @@ Basically, the items they pull cannot be pulled (except by the puller)
 /datum/component/strong_pull/security/on_pull(datum/source, atom/movable/pulled, state, force)
 	SIGNAL_HANDLER
 	strongpulling = pulled
-	RegisterSignal(strongpulling, COMSIG_CARBON_CUFF_SUCCEED, PROC_REF(apply_trait))
-	RegisterSignal(strongpulling, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_no_longer_pulled))
-	RegisterSignal(strongpulling, COMSIG_CARBON_CUFF_ESCAPE, PROC_REF(on_no_longer_pulled))
 	if(istype(strongpulling, /mob/living/carbon/human))
+		RegisterSignal(strongpulling, COMSIG_CARBON_CUFF_SUCCEED, PROC_REF(apply_trait))
+		RegisterSignal(strongpulling, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_no_longer_pulled))
 		apply_trait(victim = strongpulling)
 
 /datum/component/strong_pull/security/proc/apply_trait(datum/source, mob/living/carbon/human/victim)
 	SIGNAL_HANDLER
 	if(victim.handcuffed)
+		RegisterSignal(strongpulling, COMSIG_CARBON_CUFF_ESCAPE, PROC_REF(target_uncuffed))
 		RegisterSignal(strongpulling, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(reject_further_pulls))
 		ADD_TRAIT(victim, TRAIT_RESTRICTIVE_GRAB, "security gauntlet")
 
 /datum/component/strong_pull/security/lose_strong_grip()
-	UnregisterSignal(strongpulling, list(COMSIG_ATOM_CAN_BE_PULLED, COMSIG_CARBON_CUFF_SUCCEED, COMSIG_ATOM_NO_LONGER_PULLED, COMSIG_CARBON_CUFF_ESCAPE))
+	UnregisterSignal(strongpulling, list(COMSIG_CARBON_CUFF_SUCCEED, COMSIG_ATOM_NO_LONGER_PULLED))
+	target_uncuffed()
+	strongpulling = null
+
+//If someone is uncuffed we want the restriction from the guantlent remove but we do not want all signals unregistered just incase they get recuffed without breaking grab.
+/datum/component/strong_pull/security/proc/target_uncuffed(datum/source, mob/living/uncuffer)
+	SIGNAL_HANDLER
+	UnregisterSignal(strongpulling, list(COMSIG_ATOM_CAN_BE_PULLED, COMSIG_CARBON_CUFF_ESCAPE))
 	if(istype(strongpulling, /mob/living/carbon/human))
 		REMOVE_TRAIT(strongpulling, TRAIT_RESTRICTIVE_GRAB, "security gauntlet")
-	strongpulling = null

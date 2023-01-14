@@ -37,6 +37,10 @@
 /datum/strippable_item/mob_item_slot/handcuffs/try_equip(atom/source, obj/item/equipping, mob/user)
 	return FALSE
 
+/datum/strippable_item/mob_item_slot/handcuffs/finish_unequip(atom/source, mob/user)
+	SEND_SIGNAL(source, COMSIG_CARBON_CUFF_ESCAPE, user)
+	return ..()
+
 /datum/strippable_item/mob_item_slot/legcuffs
 	key = STRIPPABLE_ITEM_LEGCUFFS
 	item_slot = ITEM_SLOT_LEGCUFFED

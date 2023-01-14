@@ -51,7 +51,12 @@
 	QDEL_NULL(pull_component_weakref)
 
 /obj/item/clothing/gloves/cargo_gauntlet/security
-	name = "\improper SEC gauntlets"
+	name = "\improper B.R.I. gauntlets"
+	desc = "These heavy duty gauntlets can latch on to handcuffs making them very challenging to escape. Their bulky design might make firing guns a bit harder though."
+	icon_state = "bri_gauntlet"
+	greyscale_colors = "#751818"
+	equip_delay_self = 6 SECONDS
+	equip_delay_other = 8 SECONDS
 	clothing_traits = list(TRAIT_POOR_AIM)
 	pull_component_type = /datum/component/strong_pull/security
 
