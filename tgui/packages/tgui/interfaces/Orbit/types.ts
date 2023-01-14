@@ -6,6 +6,7 @@ export type OrbitData = {
   alive: Observable[];
   antagonists: Antagonist[];
   dead: Observable[];
+  deadchat_controlled: Observable[];
   ghosts: Observable[];
   misc: Observable[];
   npcs: Observable[];

@@ -4,9 +4,9 @@ import { capitalizeFirst, multiline } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
-import { JobToIcon } from '../common/JobToIcon';
+import { JOB2ICON } from '../common/JobToIcon';
 import { ANTAG2COLOR } from './constants';
-import { getAntagCategories, getDisplayColor, getDisplayName, isJobOrNameMatch } from './helpers';
+import { getAntagCategories, getDisplayColor, getDisplayName, getMostRelevant, isJobOrNameMatch } from './helpers';
 import type { AntagGroup, Antagonist, Observable, OrbitData } from './types';
 
 export const Orbit = (props, context) => {
@@ -59,18 +59,15 @@ const ObservableSearch = (props, context) => {
 
   /** Gets a list of Observables, then filters the most relevant to orbit */
   const orbitMostRelevant = (searchQuery: string) => {
-    /** Returns the most orbited observable that matches the search. */
-    const mostRelevant: Observable = flow([
-      // Filters out anything that doesn't match search
-      filter<Observable>((observable) =>
-        isJobOrNameMatch(observable, searchQuery)
-      ),
-      // Sorts descending by orbiters
-      sortBy<Observable>((observable) => -(observable.orbiters || 0)),
-      // Makes a single Observables list for an easy search
-    ])(
-      [alive, antagonists, deadchat_controlled, dead, ghosts, misc, npcs].flat()
-    )[0];
+    const mostRelevant = getMostRelevant(searchQuery, [
+      alive,
+      antagonists,
+      deadchat_controlled,
+      dead,
+      ghosts,
+      misc,
+      npcs,
+    ]);
 
     if (mostRelevant !== undefined) {
       act('orbit', {
@@ -245,7 +242,7 @@ const ObservableItem = (
   return (
     <Button
       color={getDisplayColor(item, heatMap, color)}
-      icon={job_icon || (job && JobToIcon[job]) || null}
+      icon={job_icon || (job && JOB2ICON[job]) || null}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
       tooltip={(!!health || !!extra) && <ObservableTooltip item={item} />}
       tooltipPosition="bottom-start">
