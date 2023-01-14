@@ -9,6 +9,7 @@
 	var/datum/weakref/rift
 
 /datum/antagonist/space_carp/New(rift)
+	. = ..()
 	src.rift = WEAKREF(rift)
 
 /datum/antagonist/space_carp/on_gain()
