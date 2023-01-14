@@ -58,10 +58,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	/// If applicable, the time in deciseconds we have to wait before using any more modules
 	var/cooldown_period
 
-/datum/action/innate/ai/Grant(mob/living/L)
+/datum/action/innate/ai/Grant(mob/living/player)
 	. = ..()
 	if(!isAI(owner))
-		WARNING("AI action [name] attempted to grant itself to non-AI mob [key_name(L)]!")
+		WARNING("AI action [name] attempted to grant itself to non-AI mob [key_name(player)]!")
 		qdel(src)
 	else
 		owner_AI = owner
@@ -790,21 +790,23 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/upgraded_cameras = 0
 	for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
 		var/obj/structure/camera_assembly/assembly = camera.assembly_ref?.resolve()
-		if(assembly)
-			var/upgraded = FALSE
+		if(!assembly)
+			continue
 
-			if(!camera.isXRay())
-				camera.upgradeXRay(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_xray_firmware_active and clean up isxray()
-				//Update what it can see.
-				GLOB.cameranet.updateVisibility(camera, 0)
-				upgraded = TRUE
+		var/upgraded = FALSE
 
-			if(!camera.isEmpProof())
-				camera.upgradeEmpProof(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_emp_firmware_active and clean up isemp()
-				upgraded = TRUE
+		if(!camera.isXRay())
+			camera.upgradeXRay(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_xray_firmware_active and clean up isxray()
+			//Update what it can see.
+			GLOB.cameranet.updateVisibility(camera, 0)
+			upgraded = TRUE
 
-			if(upgraded)
-				upgraded_cameras++
+		if(!camera.isEmpProof())
+			camera.upgradeEmpProof(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_emp_firmware_active and clean up isemp()
+			upgraded = TRUE
+
+		if(upgraded)
+			upgraded_cameras++
 	unlock_text = replacetext(unlock_text, "CAMSUPGRADED", "<b>[upgraded_cameras]</b>") //This works, since unlock text is called after upgrade()
 
 /// AI Turret Upgrade: Increases the health and damage of all turrets.
