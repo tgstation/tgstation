@@ -148,9 +148,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	. = ..()
 	if(!.)
 		return
-	if(!owner.mind)
-		return FALSE
-	if(!(target in owner.mind.antag_datums))
+	if(!owner.mind || !(target in owner.mind.antag_datums))
 		return FALSE
 	return TRUE
 

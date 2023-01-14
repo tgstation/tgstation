@@ -17,14 +17,16 @@
 		/datum/action/cooldown/spell/aoe/area_conversion,
 		/datum/action/cooldown/spell/forcewall/cult,
 	)
-	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
-						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</B>"
+	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, \
+		but your attacks will remove their limbs: Bring those who still cling to this world \
+		of illusion back to the Geometer so they may know Truth. Your form and any you are \
+		pulling can pass through runed walls effortlessly.</B>"
 	can_repair = TRUE
 
 
 /mob/living/simple_animal/hostile/construct/harvester/Bump(atom/thing)
 	. = ..()
-	if(!(istype(thing, /turf/closed/wall/mineral/cult) && thing != loc))
+	if(!istype(thing, /turf/closed/wall/mineral/cult) || thing == loc)
 		return // we can go through cult walls
 	var/atom/movable/stored_pulling = pulling
 
@@ -129,20 +131,21 @@
 	if(GLOB.cult_narsie == null)
 		return
 	var/mob/living/simple_animal/hostile/construct/harvester/the_construct = owner
+
 	if(the_construct.seeking)
 		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 		button_icon_state = "cult_mark"
 		the_construct.seeking = FALSE
 		to_chat(the_construct, span_cultitalic("You are now tracking Nar'Sie, return to reap the harvest!"))
 		return
-	else
-		if(LAZYLEN(GLOB.cult_narsie.souls_needed))
-			the_construct.master = pick(GLOB.cult_narsie.souls_needed)
-			var/mob/living/real_target = the_construct.master //We can typecast this way because Narsie only allows /mob/living into the souls list
-			to_chat(the_construct, span_cultitalic("You are now tracking your prey, [real_target.real_name] - harvest [real_target.p_them()]!"))
-		else
-			to_chat(the_construct, span_cultitalic("Nar'Sie has completed her harvest!"))
-			return
-		desc = "Activate to track Nar'Sie!"
-		button_icon_state = "sintouch"
-		the_construct.seeking = TRUE
+
+	if(!LAZYLEN(GLOB.cult_narsie.souls_needed))
+		to_chat(the_construct, span_cultitalic("Nar'Sie has completed her harvest!"))
+		return
+
+	the_construct.master = pick(GLOB.cult_narsie.souls_needed)
+	var/mob/living/real_target = the_construct.master //We can typecast this way because Narsie only allows /mob/living into the souls list
+	to_chat(the_construct, span_cultitalic("You are now tracking your prey, [real_target.real_name] - harvest [real_target.p_them()]!"))
+	desc = "Activate to track Nar'Sie!"
+	button_icon_state = "sintouch"
+	the_construct.seeking = TRUE

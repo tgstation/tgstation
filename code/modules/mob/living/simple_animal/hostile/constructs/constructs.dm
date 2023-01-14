@@ -108,24 +108,28 @@
 		return ..()
 	if(theme != doll.theme)
 		return ..()
-	if(health < maxHealth)
-		adjustHealth(-5)
-		if(src != user)
-			Beam(user, icon_state="sendbeam", time = 4)
-			user.visible_message(span_danger("[user] repairs some of \the <b>[src]'s</b> dents."), \
-						span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."))
-		else
-			user.visible_message(span_danger("[user] repairs some of [p_their()] own dents."), \
-						span_cult("You repair some of your own dents, leaving you at <b>[user.health]/[user.maxHealth]</b> health."))
-	else
+
+	if(health >= maxHealth)
 		if(src != user)
 			to_chat(user, span_cult("You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!"))
 		else
 			to_chat(user, span_cult("You cannot repair your own dents, as you have none!"))
+		return
+
+	adjustHealth(-5)
+	if(src == user)
+		user.visible_message(span_danger("[user] repairs some of [p_their()] own dents."), \
+					span_cult("You repair some of your own dents, leaving you at <b>[user.health]/[user.maxHealth]</b> health."))
+		return
+
+	Beam(user, icon_state="sendbeam", time = 4)
+	user.visible_message(span_danger("[user] repairs some of \the <b>[src]'s</b> dents."), \
+				span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."))
+
 
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	return 0
+	return FALSE
 

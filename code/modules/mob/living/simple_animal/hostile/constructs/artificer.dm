@@ -42,11 +42,11 @@
 	datahud.show_to(src)
 
 /mob/living/simple_animal/hostile/construct/artificer/Found(atom/thing) //what have we found here?
-	if(isconstruct(thing)) //is it a construct?
-		var/mob/living/simple_animal/hostile/construct/cultie = thing
-		if(cultie.health < cultie.maxHealth) //is it hurt? let's go heal it if it is
-			return TRUE
-	return FALSE
+	if(!isconstruct(thing)) //is it a construct?
+		return FALSE
+	var/mob/living/simple_animal/hostile/construct/cultie = thing
+	if(cultie.health < cultie.maxHealth) //is it hurt? let's go heal it if it is
+		return TRUE
 
 /mob/living/simple_animal/hostile/construct/artificer/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
