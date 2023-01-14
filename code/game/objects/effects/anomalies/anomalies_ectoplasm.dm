@@ -46,7 +46,7 @@
 
 		//The actual event severity is determined by what % the current ghosts are circling the anomaly.
 		var/severity = ghosts_orbiting / total_dead * 100
-		//Max severity is gated by what % of the player count are dead players, double for leniency's sake.
+		//Max severity is gated by what % of the player count are dead players, double for leniency's sake. Used to cap severity unless a certain amount of the server is dead.
 		var/max_severity = total_dead / player_count * 200
 		//This is done to prevent anomalies from being too powerful on lowpop, where 3 orbiters out of 6 would be enough for a catastrophic severity.
 
@@ -69,7 +69,7 @@
 		var/effect_area = spiral_range(effect_range, src)
 
 		for(var/impacted_thing in effect_area)
-			if(!isplatingturf(impacted_thing) && !istype(impacted_thing, /turf/open/floor/engine/cult) && isfloorturf(impacted_thing) && prob(15))
+			if(!isplatingturf(impacted_thing) && isfloorturf(impacted_thing) && prob(20))
 				var/turf/open/floor/floor_to_break = impacted_thing
 				if(floor_to_break.overfloor_placed && floor_to_break.floor_tile)
 					new floor_to_break.floor_tile(floor_to_break)
@@ -115,6 +115,11 @@
 			despawn_message = span_revenwarning("[object_to_possess] settles to the floor, lifeless and unmoving."), \
 		)
 
+
+
+//TODO -- MOVE THE FOLLOWING PROCS TO A SPOOKY GHOST PORTAL STRUCTURE INSTEAD
+
+
 /**
  * Generates a poll for observers, spawning anyone who signs up in a large group of ghost simplemobs
  *
@@ -129,11 +134,11 @@
 		if(!isobserver(candidate))
 			continue
 		var/mob/dead/observer/candidate_ghost = candidate //typecast so we can pull their key
-		var/mob/living/simple_animal/hostile/retaliate/ghost/new_ghost = new /mob/living/simple_animal/hostile/retaliate/ghost(spawn_location)
+		var/mob/living/basic/ghost/new_ghost = new /mob/living/basic/ghost(spawn_location)
 		new_ghost.ghostize(FALSE)
 		new_ghost.key = candidate_ghost.key
 		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
-		to_chat(new_ghost, span_revenboldnotice("You are a vengeful spirit, brought back from beyond the grave. Your time on this plane is limited, so vent your supernatural anger on anything or anyone nearby while you can!"))
+		to_chat(new_ghost, span_revenboldnotice("You are a vengeful spirit, brought back from beyond the grave. Your time on this plane is limited, and you have but one purpose: Smash everything you see!"))
 		ghost_list += new_ghost
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cleanup_ghosts), ghost_list), 2 MINUTES)
 
