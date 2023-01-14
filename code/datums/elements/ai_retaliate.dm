@@ -3,7 +3,7 @@
  * The AI controller is responsible for doing anything with that information.
  */
 /datum/element/ai_retaliate
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
 	argument_hash_start_idx = 2
 	/// Callback to a mob
 	var/datum/callback/post_retaliate_callback
