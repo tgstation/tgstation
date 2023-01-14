@@ -3,7 +3,7 @@
 /obj/item/gun/ballistic
 	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason."
 	name = "projectile gun"
-	icon_state = "pistol"
+	icon_state = "debug"
 	w_class = WEIGHT_CLASS_NORMAL
 
 	///sound when inserting magazine
@@ -59,7 +59,14 @@
 	var/empty_alarm = FALSE
 	///Whether the gun supports multiple special mag types
 	var/special_mags = FALSE
-	///The bolt type of the gun, affects quite a bit of functionality, see combat.dm defines for bolt types: BOLT_TYPE_STANDARD; BOLT_TYPE_LOCKING; BOLT_TYPE_OPEN; BOLT_TYPE_NO_BOLT
+	/**
+	* The bolt type controls how the gun functions, and what iconstates you'll need to represent those functions.
+	* BOLT_TYPE_STANDARD - The Slide doesn't lock back.  Clicking on it will only cycle the bolt.  Only 1 sprite.
+	* BOLT_TYPE_OPEN - Same as standard, but it fires directly from the magazine - No need to rack.  Doesn't hold the bullet when you drop the mag.
+	* BOLT_TYPE_LOCKING - This is most handguns and bolt action rifles.  The bolt will lock back when it's empty.  You need yourgun_bolt and yourgun_bolt_locked icon states.
+	* BOLT_TYPE_NO_BOLT - This is shotguns and revolvers.  clicking will dump out all the bullets in the gun, spent or not.
+	* see combat.dm defines for bolt types: BOLT_TYPE_STANDARD; BOLT_TYPE_LOCKING; BOLT_TYPE_OPEN; BOLT_TYPE_NO_BOLT
+	**/
 	var/bolt_type = BOLT_TYPE_STANDARD
 	///Used for locking bolt and open bolt guns. Set a bit differently for the two but prevents firing when true for both.
 	var/bolt_locked = FALSE
@@ -92,7 +99,7 @@
 	/// Check if you are able to see if a weapon has a bullet loaded in or not.
 	var/hidden_chambered = FALSE
 
-	///Gun internal magazine modification and misfiring
+	// Gun internal magazine modification and misfiring
 
 	///Can we modify our ammo type in this gun's internal magazine?
 	var/can_modify_ammo = FALSE
@@ -126,7 +133,7 @@
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
-	if(bolt_type == BOLT_TYPE_STANDARD)
+	if(bolt_type == BOLT_TYPE_STANDARD || internal_magazine) //Internal magazines shouldn't get magazine + 1.
 		chamber_round()
 	else
 		chamber_round(replace_new_round = TRUE)
@@ -159,7 +166,7 @@
  * Outputs type-specific weapon stats for ballistic weaponry based on its magazine and its caliber.
  * It contains extra breaks for the sake of presentation
  *
- */
+ **/
 /obj/item/gun/ballistic/proc/add_notes_ballistic()
 	if(magazine) // Make sure you have a magazine, to get the notes from
 		return "\n[magazine.add_notes_box()]"
@@ -521,12 +528,12 @@
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
-	var/boolets = 0 //mature var names for mature people
+	var/bullets = 0 //No silly variable names on my watch.
 	if (chambered && countchambered)
-		boolets++
+		bullets++
 	if (magazine)
-		boolets += magazine.ammo_count()
-	return boolets
+		bullets += magazine.ammo_count()
+	return bullets
 
 ///gets a list of every bullet in the gun
 /obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE, drop_all = FALSE)
@@ -575,7 +582,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	)))
 
 ///Handles all the logic of sawing off guns,
-/obj/item/gun/ballistic/proc/sawoff(mob/user, obj/item/saw)
+/obj/item/gun/ballistic/proc/sawoff(mob/user, obj/item/saw, handle_modifications = TRUE)
 	if(!saw.get_sharpness() || (!is_type_in_typecache(saw, GLOB.gun_saw_types) && saw.tool_behaviour != TOOL_SAW)) //needs to be sharp. Otherwise turned off eswords can cut this.
 		return
 	if(sawn_off)
@@ -596,21 +603,22 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		if(sawn_off)
 			return
 		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
-		name = "sawn-off [src.name]"
-		desc = sawn_desc
-		w_class = WEIGHT_CLASS_NORMAL
-		//The file might not have a "gun" icon, let's prepare for this
-		lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-		righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-		inhand_x_dimension = 32
-		inhand_y_dimension = 32
-		inhand_icon_state = "gun"
-		worn_icon_state = "gun"
-		slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
-		slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-		recoil = SAWN_OFF_RECOIL
 		sawn_off = TRUE
-		update_appearance()
+		if(handle_modifications)
+			name = "sawn-off [src.name]"
+			desc = sawn_desc
+			w_class = WEIGHT_CLASS_NORMAL
+			//The file might not have a "gun" icon, let's prepare for this
+			lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+			righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+			inhand_x_dimension = 32
+			inhand_y_dimension = 32
+			inhand_icon_state = "gun"
+			worn_icon_state = "gun"
+			slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
+			slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+			recoil = SAWN_OFF_RECOIL
+			update_appearance()
 		return TRUE
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)

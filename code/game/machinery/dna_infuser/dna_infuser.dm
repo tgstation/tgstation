@@ -177,9 +177,10 @@
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
 
-// mostly good for dead mobs that turn into items like dead mice (smack to add)
+// mostly good for dead mobs that turn into items like dead mice (smack to add).
 /obj/machinery/dna_infuser/proc/add_infusion_item(obj/item/target, mob/user)
-	if(!is_valid_infusion(target, user))
+	// if the machine is closed, already has a infusion target, or the target is not valid then no adding.
+	if(!state_open || !is_valid_infusion(target, user))
 		return
 
 	if(!user.transferItemToLoc(target, src))
@@ -188,23 +189,19 @@
 
 	infusing_from = target
 
-// mostly good for dead mobs like corpses (drag to add)
+// mostly good for dead mobs like corpses (drag to add).
 /obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
+	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
+	if(!state_open || !is_valid_infusion(target, user))
 		return
 
-	if(iscarbon(target))
-		if(ishuman(target))
-			close_machine(target)
-		return
-
-	if(!is_valid_infusion(target, user))
-		return
-
-	infusing_from = target
-	infusing_from.forceMove(src)
+	if(iscarbon(target) && ishuman(target))
+		infusing_from = target
+		infusing_from.forceMove(src)
 
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
+	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
+		return FALSE
 	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
