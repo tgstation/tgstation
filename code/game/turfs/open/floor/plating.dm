@@ -307,6 +307,12 @@
 		new /obj/effect/decal/cleanable/glass/plastitanium/screws(below_turf)
 		playsound(src, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
 
+/turf/open/floor/plating/glass
+	name= "glass plating"
+	base_icon_state = "plating_glass"
+	icon_state = "plating_glass"
+	upgradable = FALSE
+
 #undef PLATE_INTACT
 #undef PLATE_BOLTS_LOOSENED
 #undef PLATE_CUT
