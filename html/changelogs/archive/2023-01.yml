@@ -361,3 +361,90 @@
   - bugfix: fixes wizard rod form infinitely travelling in hyperspace
   timothymtorres:
   - bugfix: Fix antags being revealed by hallucinations
+2023-01-12:
+  Fikou:
+  - bugfix: fixes twohanded items not letting you switch hands
+  GoldenAlpharex:
+  - code_imp: Made the worn_icons unit test check the worn GAGS config rather than
+      the normal one.
+  LT3:
+  - imageadd: Tram controls are now side mounted, freeing up space. Even better, you
+      now have two of them!
+  - imageadd: Added a new accessible space on the tram for wheelchairs
+  - bugfix: Removed duplicate tram plate/platforms
+  - code_imp: Tram has its own floor subtype for the walls and windows
+  - rscadd: Emergency exit feature added for people who are silly enough to not carry
+      a crowbar
+  LemonInTheDark:
+  - bugfix: You can now properly start drifting after moving out of a drift
+  MiiyaBot:
+  - rscadd: Two new hairstyles! ("All the Fuzz" & "Over Eye (Izutsumi)")
+  - spellcheck: Renamed "Marginally shorter yet long bedhead" to "Shorter Long Bedhead"
+  - spellcheck: Renamed "BedHead 4X" to "Bedhead 4x"
+  - bugfix: Slight changes to "Jade", "Shorter Bedhead", "Bedhead 4x"
+  Rhials:
+  - spellcheck: Head-spears are now named properly when using alternate spear types.
+  SyncIt21:
+  - rscadd: RPED  can now pick up & install machine circuit boards in machine frames
+  - rscadd: RPED can pick up computer circuit boards for storage convenience but doesn't
+      install them
+  - bugfix: don't call after attack twice
+  - bugfix: normal RPED from behaving like an BRPED when installing stock parts in
+      an incomplete machine frame
+  - code_imp: datum stock part for every obj stock part
+  - refactor: all machines & dependent experiments to use datum stock parts
+  Zytolg:
+  - bugfix: Chemists can now properly open and close their desk windoor on Deltastation
+  san7890:
+  - balance: Due to materials costing a lot more than ever, Nanotrasen's Spare ID
+      Safe Supplier have cut down on the space inside of the ID Safe, meaning you
+      can only cram in things as thin as an ID Card.
+  stanalbatross, thedonkified:
+  - rscadd: added the ability to make up to 10 individual highlights in tgchat, customise
+      their colours, and toggle if they highlight the whole message or not. Ported
+      from CM.
+  - rscadd: you can now use regex for text highlighting. The syntax is /[regex expression]/,
+      eg /dog[0-9]/. There are no quantifiers, but you can use capture groups. The
+      regex must read a minimum of two characters.
+2023-01-13:
+  1393F:
+  - bugfix: you can nolonger use a goldgrub as a shield to kill colossus
+  Fikou:
+  - qol: fixes chisels
+  Higgin:
+  - rscadd: Adds ear surgery to repair damaged ears/deafness.
+  PestoVerde, Imaginos, Wallem:
+  - imageadd: New material and ore sprites by PestoVerde & Imaginos
+  Profakos:
+  - bugfix: pancakes no longer show an error sprite when added to a stack
+  dawsonkeyes:
+  - bugfix: metal hydrogen golems no longer die to low pressures and cold temperatures
+  - bugfix: metal hydrogen golems are no longer solid white, and are now the actual
+      color of metal hydrogen
+  - balance: metal hydrogen golems are also now immune to most environmental threats,
+      and get more armor
+  san7890:
+  - bugfix: There is no longer a button on a window at the CentCom Thunderdome.
+2023-01-14:
+  Jacquerel:
+  - bugfix: Dead basic mobs are no longer "dense" objects and can be stepped on.
+  Melbert:
+  - bugfix: Fixed a runtime from neck slices on headless mobs.
+  - qol: Neck sliced folk now have an examine message saying as much.
+  Rhials:
+  - qol: The Scrubber Clog event now gives an orbit popup to ghosts!
+  - bugfix: Bald/Shaved ghosts will no longer cause a runtime and spawn without a
+      name.
+  - bugfix: viewing the botkeeper app as an observer will no longer runtime.
+  - bugfix: The walls of the luxury shuttle no longer bend in strange directions.
+  ShizCalev:
+  - qol: Airlock interfaces will now open up automatically if access is restored early
+      while an AI is hacking it.
+  SuperSlayer0:
+  - qol: Pinpointers now tell what they are tracking when examined
+  timothymtorres:
+  - bugfix: Fix blood overlays on energy daggers
+  - code_imp: Add `NO_BLOOD_ON_ITEM` bitfield for items
+  tralezab:
+  - rscadd: Some prisoner backgrounds have more or less tattoos.
+  - rscadd: More Memories to collect involving fishing and getting converted
