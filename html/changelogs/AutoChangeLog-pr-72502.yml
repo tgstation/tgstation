@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - code_imp: "Anomaly effects now have their own files, rather than being crammed into a single, probably-too-large file."
