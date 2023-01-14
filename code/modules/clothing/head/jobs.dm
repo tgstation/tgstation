@@ -406,12 +406,6 @@
 	greyscale_colors = "#FFBC30"
 	flags_1 = NONE
 
-/obj/item/clothing/head/beret/atmos
-	name = "atmospheric beret"
-	desc = "While \"pipes\" and \"style\" might not rhyme, this beret sure makes you feel like they should!"
-	greyscale_colors = "#FFDE15"
-	flags_1 = NONE
-
 //Cargo
 /obj/item/clothing/head/beret/cargo
 	name = "cargo beret"
