@@ -419,15 +419,6 @@
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
 
-//Miscellaneous
-/obj/item/clothing/head/beret/black
-	name = "black beret"
-	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
-	icon_state = "beret"
-	greyscale_config = /datum/greyscale_config/beret
-	greyscale_config_worn = /datum/greyscale_config/beret/worn
-	greyscale_colors = "#3f3c40"
-
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"
 	desc = "A beret made from durathread, its resilient fibers provide some protection to the wearer."
