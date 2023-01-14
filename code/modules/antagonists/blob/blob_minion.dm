@@ -5,11 +5,11 @@
 	show_to_ghosts = TRUE
 	show_in_antagpanel = FALSE
 	/// The blob core that this minion is attached to
-	var/mob/camera/blob/overmind
+	var/datum/weakref/overmind
 
 /datum/antagonist/blob_minion/New(mob/camera/blob/overmind)
 	. = ..()
-	src.overmind = overmind
+	src.overmind = WEAKREF(overmind)
 
 /datum/antagonist/blob_minion/on_gain()
 	forge_objectives()

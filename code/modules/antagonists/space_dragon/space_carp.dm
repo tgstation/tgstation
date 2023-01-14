@@ -8,7 +8,7 @@
 	/// The rift to protect
 	var/datum/weakref/rift
 
-/datum/antagonist/space_carp/New(rift)
+/datum/antagonist/space_carp/New(obj/structure/carp_rift/rift)
 	. = ..()
 	src.rift = WEAKREF(rift)
 
