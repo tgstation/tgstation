@@ -1155,6 +1155,7 @@
 #include "code\datums\elements\squish.dm"
 #include "code\datums\elements\strippable.dm"
 #include "code\datums\elements\swabbable.dm"
+#include "code\datums\elements\temporary_atom.dm"
 #include "code\datums\elements\tenacious.dm"
 #include "code\datums\elements\tool_flash.dm"
 #include "code\datums\elements\trait_loc.dm"
