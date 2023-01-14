@@ -78,7 +78,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 		return
 	RegisterSignal(strongpulling, COMSIG_CARBON_CUFF_ESCAPE, PROC_REF(target_uncuffed))
 	RegisterSignal(strongpulling, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(reject_further_pulls))
-	ADD_TRAIT(victim, TRAIT_RESTRICTIVE_GRAB, "security gauntlet")
+	ADD_TRAIT(victim, TRAIT_RESTRICTIVE_GRAB, "[type]")
 
 /datum/component/strong_pull/security/lose_strong_grip()
 	UnregisterSignal(strongpulling, list(COMSIG_CARBON_CUFF_SUCCEED, COMSIG_ATOM_NO_LONGER_PULLED))
@@ -90,4 +90,4 @@ Basically, the items they pull cannot be pulled (except by the puller)
 	SIGNAL_HANDLER
 	UnregisterSignal(strongpulling, list(COMSIG_ATOM_CAN_BE_PULLED, COMSIG_CARBON_CUFF_ESCAPE))
 	if(ishuman(strongpulling))
-		REMOVE_TRAIT(strongpulling, TRAIT_RESTRICTIVE_GRAB, "security gauntlet")
+		REMOVE_TRAIT(strongpulling, TRAIT_RESTRICTIVE_GRAB, "[type]")
