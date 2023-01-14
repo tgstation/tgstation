@@ -58,7 +58,7 @@
 	. = ..()
 	if(.)
 		return
-	user.togglebuildmodeself()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/build_mode/toggle_build_mode_self)
 	return TRUE
 
 /datum/keybinding/admin/stealthmode
@@ -114,7 +114,7 @@
 	. = ..()
 	if(.)
 		return
-	user.deadmin()
+	SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/admin/deadmin)
 	return TRUE
 
 /datum/keybinding/admin/readmin

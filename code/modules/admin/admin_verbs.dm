@@ -367,99 +367,72 @@ ADMIN_VERB(fun, drop_dynex_bomb, "Cause an explosion of varting strength at your
 		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 
-/client/proc/get_dynex_range()
-	set category = "Debug"
-	set name = "Get DynEx Range"
-	set desc = "Get the estimated range of a bomb, using explosive power."
-
-	var/ex_power = input("Explosive Power:") as null|num
+ADMIN_VERB(debug, get_dynex_range, "Get the estimated range of a bomb, using explosive power", R_FUN)
+	var/ex_power = input(usr, "Explosive Power:") as null|num
 	if (isnull(ex_power))
 		return
 	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
-	to_chat(usr, "Estimated Explosive Range: (Devastation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])", confidential = TRUE)
+	to_chat(usr, "Estimated Explosive Range: (Devastation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
 
-/client/proc/get_dynex_power()
-	set category = "Debug"
-	set name = "Get DynEx Power"
-	set desc = "Get the estimated required power of a bomb, to reach a specific range."
-
-	var/ex_range = input("Light Explosion Range:") as null|num
+ADMIN_VERB(debug, get_dynex_power, "Get the estimated power of a bomb, to reach the specific range", R_FUN)
+	var/ex_range = input(usr, "Light Explosion Range:") as null|num
 	if (isnull(ex_range))
 		return
 	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
-	to_chat(usr, "Estimated Explosive Power: [power]", confidential = TRUE)
+	to_chat(usr, "Estimated Explosive Power: [power]")
 
-/client/proc/set_dynex_scale()
-	set category = "Debug"
-	set name = "Set DynEx Scale"
-	set desc = "Set the scale multiplier of dynex explosions. The default is 0.5."
-
+ADMIN_VERB(debug, set_dynex_scale, "Set the scale multiplier on dynex explosions. Default of 0.5", R_FUN)
 	var/ex_scale = input("New DynEx Scale:") as null|num
-	if(!ex_scale)
+	if(isnull(ex_scale))
 		return
 	GLOB.DYN_EX_SCALE = ex_scale
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
-/client/proc/atmos_control()
-	set name = "Atmos Control Panel"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
-	SSair.ui_interact(mob)
+ADMIN_VERB(debug, atmos_control_panel, "", R_DEBUG)
+	SSair.ui_interact(usr)
 
-/client/proc/reload_cards()
-	set name = "Reload Cards"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(trading_card_game, reload_cards, "", R_DEBUG)
 	if(!SStrading_card_game.loaded)
-		message_admins("The card subsystem is not currently loaded")
+		to_chat(usr, span_admin("The card subsystem is not currently loaded!"))
 		return
+	message_admins("[key_name_admin(usr)] manually reloaded SStrading_card_game.")
 	SStrading_card_game.reloadAllCardFiles()
 
-/client/proc/validate_cards()
-	set name = "Validate Cards"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(trading_card_game, validate_cards, "", R_DEBUG)
 	if(!SStrading_card_game.loaded)
-		message_admins("The card subsystem is not currently loaded")
+		to_chat(usr, span_admin("The card subsystem is not currently loaded!"))
 		return
+
 	var/message = SStrading_card_game.check_cardpacks(SStrading_card_game.card_packs)
 	message += SStrading_card_game.check_card_datums()
 	if(message)
-		message_admins(message)
+		to_chat(usr, span_admin(message))
 	else
-		message_admins("No errors found in card rarities or overrides.")
+		to_chat(usr, span_admin("No errors found in card rarities or overrides."))
 
-/client/proc/test_cardpack_distribution()
-	set name = "Test Cardpack Distribution"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(trading_card_game, test_cardpack_distribution, "", R_DEBUG)
 	if(!SStrading_card_game.loaded)
-		message_admins("The card subsystem is not currently loaded")
+		to_chat(usr, span_admin("The card subsystem is not currently loaded!"))
 		return
+
 	var/pack = tgui_input_list(usr, "Which pack should we test?", "You fucked it didn't you", sort_list(SStrading_card_game.card_packs))
 	if(!pack)
 		return
+
 	var/batch_count = tgui_input_number(usr, "How many times should we open it?", "Don't worry, I understand")
 	var/batch_size = tgui_input_number(usr, "How many cards per batch?", "I hope you remember to check the validation")
 	var/guar = tgui_input_number(usr, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
-
 	SStrading_card_game.check_card_distribution(pack, batch_size, batch_count, guar)
 
-/client/proc/print_cards()
-	set name = "Print Cards"
-	set category = "Debug"
+ADMIN_VERB(trading_card_game, print_cards, "", R_DEBUG)
+	if(!SStrading_card_game.loaded)
+		to_chat(usr, span_admin("The card subsystem is not currently loaded!"))
+		return
+
 	SStrading_card_game.printAllCards()
 
-/client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Give Spell"
-	set desc = "Gives a spell to a mob."
-
+ADMIN_CONTEXT_ENTRY(context_give_spell, "Give Spell", R_FUN, mob/spell_recipient in GLOB.mob_list)
 	var/which = tgui_alert(usr, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
 	if(!which)
 		return
@@ -506,11 +479,7 @@ ADMIN_VERB(fun, drop_dynex_bomb, "Cause an explosion of varting strength at your
 		to_chat(usr, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
 			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
 
-/client/proc/remove_spell(mob/removal_target in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Remove Spell"
-	set desc = "Remove a spell from the selected mob."
-
+ADMIN_CONTEXT_ENTRY(context_remove_spell, "Remove Spell", R_FUN, mob/removal_target in GLOB.mob_list)
 	var/list/target_spell_list = list()
 	for(var/datum/action/cooldown/spell/spell in removal_target.actions)
 		target_spell_list[spell.name] = spell
@@ -530,61 +499,54 @@ ADMIN_VERB(fun, drop_dynex_bomb, "Cause an explosion of varting strength at your
 	message_admins("[key_name_admin(usr)] removed the spell [chosen_spell] from [key_name_admin(removal_target)].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/give_disease(mob/living/T in GLOB.mob_living_list)
-	set category = "Admin.Fun"
-	set name = "Give Disease"
-	set desc = "Gives a Disease to a mob."
-	if(!istype(T))
-		to_chat(src, span_notice("You can only give a disease to a mob of type /mob/living."), confidential = TRUE)
+ADMIN_CONTEXT_ENTRY(context_give_disease, "Give Disease", R_FUN, mob/living/victim in GLOB.mob_living_list)
+	var/datum/disease/disease_type = input(usr, "Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
+	if(!disease_type)
 		return
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	if(!D)
-		return
-	T.ForceContractDisease(new D, FALSE, TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Disease") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins(span_adminnotice("[key_name_admin(usr)] gave [key_name_admin(T)] the disease [D]."))
+	victim.ForceContractDisease(new disease_type, FALSE, TRUE)
 
-/client/proc/object_say(obj/O in world)
-	set category = "Admin.Events"
-	set name = "OSay"
-	set desc = "Makes an object say something."
+	log_admin("[key_name(usr)] gave [key_name(victim)] the disease [disease_type].")
+	message_admins(span_adminnotice("[key_name_admin(usr)] gave [key_name_admin(victim)] the disease [disease_type]."))
+
+ADMIN_CONTEXT_ENTRY(context_object_say, "Object Say", R_FUN, obj/target in world)
 	var/message = tgui_input_text(usr, "What do you want the message to be?", "Make Sound", encode = FALSE)
 	if(!message)
 		return
-	O.say(message, sanitize = FALSE)
-	log_admin("[key_name(usr)] made [O] at [AREACOORD(O)] say \"[message]\"")
-	message_admins(span_adminnotice("[key_name_admin(usr)] made [O] at [AREACOORD(O)]. say \"[message]\""))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Object Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/client/proc/togglebuildmodeself()
-	set name = "Toggle Build Mode Self"
-	set category = "Admin.Events"
-	if (!(holder.rank_flags() & R_BUILD))
-		return
-	if(src.mob)
-		togglebuildmode(src.mob)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	target.say(message, sanitize = FALSE)
+	log_admin("[key_name(usr)] made [target] at [AREACOORD(target)] say \"[message]\"")
+	message_admins(span_adminnotice("[key_name_admin(usr)] made [target] at [AREACOORD(target)]. say \"[message]\""))
 
-/client/proc/check_ai_laws()
-	set name = "Check AI Laws"
-	set category = "Admin.Game"
-	if(holder)
-		src.holder.output_ai_laws()
+ADMIN_VERB(build_mode, toggle_build_mode_self, "", R_BUILD)
+	togglebuildmode(usr)
 
-/client/proc/deadmin()
-	set name = "Deadmin"
-	set category = "Admin"
-	set desc = "Shed your admin powers."
+ADMIN_VERB(game, check_ai_laws, "", R_ADMIN)
+	var/law_bound_entities = 0
+	for(var/mob/living/silicon/subject as anything in GLOB.silicon_mobs)
+		law_bound_entities++
 
-	if(!holder)
-		return
+		var/message = ""
 
-	holder.deactivate()
+		if(isAI(subject))
+			message += "<b>AI [key_name(subject, usr)]'s laws:</b>"
+		else if(iscyborg(subject))
+			var/mob/living/silicon/robot/borg = subject
+			message += "<b>CYBORG [key_name(subject, usr)] [borg.connected_ai?"(Slaved to: [key_name(borg.connected_ai)])":"(Independent)"]: laws:</b>"
+		else if (ispAI(subject))
+			message += "<b>pAI [key_name(subject, usr)]'s laws:</b>"
+		else
+			message += "<b>SOMETHING SILICON [key_name(subject, usr)]'s laws:</b>"
 
-	to_chat(src, span_interface("You are now a normal player."))
-	log_admin("[src] deadminned themselves.")
-	message_admins("[src] deadminned themselves.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Deadmin")
+		message += "<br>"
+
+		if (!subject.laws)
+			message += "[key_name(subject, usr)]'s laws are null?? Contact a coder."
+		else
+			message += jointext(subject.laws.get_law_list(include_zeroth = TRUE), "<br>")
+
+		to_chat(usr, message, confidential = TRUE)
+
+	if(!law_bound_entities)
+		to_chat(usr, "<b>No law bound entities located</b>", confidential = TRUE)
 
 /client/proc/readmin()
 	set name = "Readmin"

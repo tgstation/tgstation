@@ -1264,18 +1264,16 @@
 		if(!check_rights(R_ADMIN))
 			return
 		usr.client.cmd_admin_godmode(src)
+
 	if(href_list[VV_HK_GIVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_spell(src)
+		usr.client.admin_context_wrapper_context_give_spell(src)
+
 	if(href_list[VV_HK_REMOVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_spell(src)
+		usr.client.admin_context_wrapper_context_remove_spell(src)
+
 	if(href_list[VV_HK_GIVE_DISEASE])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_disease(src)
+		usr.client.admin_context_wrapper_context_give_disease(src)
+
 	if(href_list[VV_HK_GIB])
 		if(!check_rights(R_FUN))
 			return

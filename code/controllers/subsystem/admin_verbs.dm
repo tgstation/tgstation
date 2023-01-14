@@ -54,9 +54,14 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 		if(!check_rights_for(target, verb_permissions))
 			continue
 
-		var/verb_module = capitalize(lowertext(verb_information[VERB_MAP_MODULE]))
-		if(!verb_module || verb_module == "Null")
+		var/verb_module = lowertext(verb_information[VERB_MAP_MODULE])
+		if(!verb_module || verb_module == "null")
 			continue
+
+		var/verb_module_formatted = ""
+		for(var/verb_module_part in splittext(verb_module, "_"))
+			verb_module_formatted += "[capitalize(verb_module_part)] "
+		verb_module_formatted = copytext(verb_module_formatted, 1, -1)
 
 		var/formatted_name = ""
 		var/original_name = verb_information[VERB_MAP_NAME]
@@ -65,7 +70,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 		formatted_name = copytext(formatted_name, 1, -1)
 
 		var/verb_desc = verb_information[VERB_MAP_DESCRIPTION]
-		stat_data[verb_module] += list(list(formatted_name, verb_desc, original_name))
+		stat_data[verb_module_formatted] += list(list(formatted_name, verb_desc, original_name))
 	return stat_data
 
 /datum/controller/subsystem/admin_verbs/proc/populate_verb_map(list/verb_map)
@@ -154,3 +159,10 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 		if(waiting in GLOB.directory)
 			assosciate_admin(GLOB.directory[waiting])
 	waiting_to_assosciate.Cut()
+
+/datum/controller/subsystem/admin_verbs/proc/handle_admin_holder_topic(client/user, href, href_list)
+	if(href_list["adminchecklaws"])
+		dynamic_invoke_admin_verb(user, /mob/admin_module_holder/game/check_ai_laws)
+		return TRUE
+
+	return FALSE

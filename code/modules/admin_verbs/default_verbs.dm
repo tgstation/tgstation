@@ -61,6 +61,7 @@ ADMIN_VERB_DEFAULT(game, dead_say, "Speak a message to observers", message as te
 
 ADMIN_VERB_DEFAULT(admin, deadmin, "Become a normal player")
 	usr.client.holder.deactivate()
+	log_admin("[key_name(usr)] deadmined")
 
 ADMIN_VERB_DEFAULT(debug, reload_admins, "Reloads all admins from the data store")
 	var/confirm = tgui_alert(usr, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))

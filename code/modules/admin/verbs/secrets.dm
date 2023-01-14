@@ -107,7 +107,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/list_law_changes)
 
 		if("showailaws")
-			holder.check_ai_laws()
+			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/check_ai_laws)
 
 		if("manifest")
 			SSadmin_verbs.dynamic_invoke_admin_verb(holder, /mob/admin_module_holder/game/show_manifest)

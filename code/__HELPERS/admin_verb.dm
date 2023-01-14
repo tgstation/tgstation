@@ -30,7 +30,7 @@
 #define ADMIN_CONTEXT_ENTRY(context_id, context_name, permissions, params...) \
 /client/proc/admin_context_wrapper_##context_id(##params){ \
 	if(check_rights_for(src, permissions)) { \
-		admin_context_verb_##context_id(arglist(args)); \
+		__admin_context_verb_##context_id(arglist(args)); \
 	} else { \
 		to_chat(usr, span_warning("You lack the permissions ([rights2text(permissions, " ")]) for this context menu action!")); \
 	} \
@@ -39,4 +39,4 @@
 	..(); \
 	context_map[/client/proc/admin_context_wrapper_##context_id] = list(context_name, permissions); \
 } \
-/client/proc/admin_context_verb_##context_id(##params)
+/client/proc/__admin_context_verb_##context_id(##params)

@@ -13,13 +13,15 @@
 
 /datum/admins/Topic(href, href_list)
 	..()
-
 	if(usr.client != src.owner || !check_rights(0))
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
 
 	if(!CheckAdminHref(href, href_list))
+		return
+
+	if(SSadmin_verbs.handle_admin_holder_topic(usr.client, href, href_list))
 		return
 
 	if(href_list["ahelp"])
@@ -760,11 +762,6 @@
 			SSadmin_verbs.dynamic_invoke_admin_verb(C, /mob/admin_module_holder/game/aghost)
 		sleep(0.2 SECONDS)
 		C.jumptocoord(x,y,z)
-
-	else if(href_list["adminchecklaws"])
-		if(!check_rights(R_ADMIN))
-			return
-		output_ai_laws()
 
 	else if(href_list["adminmoreinfo"])
 		var/mob/subject = locate(href_list["adminmoreinfo"]) in GLOB.mob_list
@@ -1746,3 +1743,5 @@
 		if(!paper_to_show)
 			return
 		paper_to_show.ui_interact(usr)
+
+	stack_trace("Unknown admin topic [href]-'[list2params(href_list)]'")
