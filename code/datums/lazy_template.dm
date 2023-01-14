@@ -50,11 +50,22 @@
 	if(!loading.cached_map)
 		CRASH("Failed to cache lazy template for loading: '[key]'")
 
-	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(loading.width, loading.height)
+	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(loading.width + 2, loading.height + 2)
 	if(!reservation)
 		CRASH("Failed to reserve a block for lazy template: '[key]'")
 
-	var/turf/reservation_bottom_left = coords2turf(reservation.bottom_left_coords)
+	var/list/cordon_x = list(reservation.bottom_left_coords[1], reservation.top_right_coords[1])
+	var/list/cordon_y = list(reservation.bottom_left_coords[2], reservation.top_right_coords[2])
+	for(var/turf/cordon_turf as anything in block(coords2turf(reservation.bottom_left_coords), coords2turf(reservation.top_right_coords)))
+		if(!(cordon_turf.x in cordon_x) && !(cordon_turf.y in cordon_y))
+			continue
+		var/area/misc/cordon/cordon_area = GLOB.areas_by_type[/area/misc/cordon] || new
+		cordon_turf.ChangeTurf(/turf/cordon, /turf/cordon)
+		var/area/current = cordon_turf.loc
+		current.turfs_to_uncontain += cordon_turf
+		cordon_area.contents += cordon_turf
+
+	var/turf/reservation_bottom_left = locate(cordon_x[1] + 1, cordon_y[1] + 1, reservation.bottom_left_coords[3])
 	if(!loading.load(reservation_bottom_left))
 		CRASH("Failed to load lazy template: '[key]'")
 	reservations += reservation

@@ -157,15 +157,16 @@
 	if((T.y+height) - 1 > world.maxy)
 		return
 
-	var/list/border = block(locate(max(T.x-1, 1), max(T.y-1, 1),  T.z),
-							locate(min(T.x+width+1, world.maxx), min(T.y+height+1, world.maxy), T.z))
+	var/list/border = block(T.x,		 T.y,		  T.z,
+							T.x + width, T.y + width, T.z + width)
 
-	// iterate over turfs in the border and clear them from active atmos processing
+	// iterate over turfs in the border and clear them from active atmos processing and assign MAPLOADING_1
 	for(var/turf/border_turf as anything in border)
 		SSair.remove_from_active(border_turf)
 		for(var/turf/sub_turf as anything in border_turf.atmos_adjacent_turfs)
 			sub_turf.atmos_adjacent_turfs?.Remove(border_turf)
 		border_turf.atmos_adjacent_turfs?.Cut()
+		border_turf.turf_flags |= TURF_MAPLOADING
 
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
@@ -178,7 +179,13 @@
 	UNSETEMPTY(turf_blacklist)
 	parsed.turf_blacklist = turf_blacklist
 	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
+		for(var/turf/border_turf as anything in border)
+			border_turf.turf_flags &= ~TURF_MAPLOADING
 		return
+
+	for(var/turf/border_turf as anything in border)
+		border_turf.turf_flags &= ~TURF_MAPLOADING
+
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return
