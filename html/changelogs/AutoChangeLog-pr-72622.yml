@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Bald/Shaved ghosts will no longer cause a runtime and spawn without a name."
