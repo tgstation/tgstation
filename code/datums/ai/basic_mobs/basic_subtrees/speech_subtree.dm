@@ -106,3 +106,7 @@
 	dog_pawn.update_dog_speech(src)
 
 	return ..()
+
+/datum/ai_planning_subtree/random_speech/faithless
+	speech_chance = 1
+	emote_see = list("wails.")

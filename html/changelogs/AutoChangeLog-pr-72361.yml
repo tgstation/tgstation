@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "backing out of the Test Card Packs debug menu will no longer cause a runtime"
-  - bugfix: "Validate Cards debug verb now gives feedback if no errors are detected."

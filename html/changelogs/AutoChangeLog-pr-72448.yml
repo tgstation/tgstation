@@ -1,0 +1,4 @@
+author: "Stonetear"
+delete-after: True
+changes:
+  - bugfix: "Mosin Nagant bolt sprites are now visible.  It's like 5 pixels so not a surprise nobody noticed for years."
