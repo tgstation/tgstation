@@ -7,7 +7,6 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 
-	render_key = "tail"
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail
 
 	dna_block = DNA_TAIL_BLOCK
@@ -70,6 +69,7 @@
 	wag_flags &= ~WAG_WAGGING
 	accessory.wagging = FALSE
 
+///Tail parent type (which is MONKEEEEEEEEEEE by default), with wagging functionality
 /datum/bodypart_overlay/mutant/tail
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
 	feature_key = "tail_monkey"
@@ -94,6 +94,7 @@
 
 	wag_flags = WAG_ABLE
 
+///Cat tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/cat
 	feature_key = "tail_cat"
 	color_source = ORGAN_COLOR_HAIR
@@ -104,6 +105,7 @@
 /obj/item/organ/external/tail/monkey
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey
 
+///Monkey tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/monkey
 	color_source = NONE
 	feature_key = "tail_monkey"
@@ -146,6 +148,7 @@
 		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
 		accessory.wagging = FALSE
 
+///Lizard tail bodypart overlay datum
 /datum/bodypart_overlay/mutant/tail/lizard
 	feature_key = "tail_lizard"
 

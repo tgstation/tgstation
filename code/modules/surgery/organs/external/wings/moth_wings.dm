@@ -71,6 +71,7 @@
 		wings.burnt = FALSE
 		burnt = FALSE
 
+///Moth wing bodypart overlay, including burn functionality!
 /datum/bodypart_overlay/mutant/wings/moth
 	feature_key = "moth_wings"
 	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT

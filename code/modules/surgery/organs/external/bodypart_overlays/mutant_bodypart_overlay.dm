@@ -1,3 +1,4 @@
+///Variant of bodypart_overlay meant to work synchronously with external organs. Gets imprinted upon Insert in on_species_gain
 /datum/bodypart_overlay/mutant
 	///Sprite datum we use to draw on the bodypart
 	var/datum/sprite_accessory/sprite_datum
@@ -12,12 +13,13 @@
 	///Take on the dna/preference from whoever we're gonna be inserted in
 	var/imprint_on_next_insertion = TRUE
 
-///random_appearance TRUE means it picks a random appearance, FALSE if you want to set it yourself ()
-/datum/bodypart_overlay/mutant/New(random_appearance = TRUE)
-	. = ..()
-
+///Completely random image and color generation (obeys what a player can choose from)
+/datum/bodypart_overlay/mutant/proc/randomize_appearance()
 	randomize_sprite()
+	draw_color = random_color()
+	imprint_on_next_insertion = FALSE
 
+///Grab a random sprite
 /datum/bodypart_overlay/mutant/proc/randomize_sprite()
 	sprite_datum = get_random_appearance()
 
@@ -36,12 +38,12 @@
 /datum/bodypart_overlay/mutant/proc/get_base_icon_state()
 	return sprite_datum.icon_state
 
-///Add the overlays we need to draw on a person. Called from _bodyparts.dm
+///Add the overlays we need to draw on a person. Called from _bodyparts.dm. Limb can be null
 /datum/bodypart_overlay/mutant/get_image(image_layer, obj/item/bodypart/limb)
 	if(!sprite_datum)
 		return
 
-	var/gender = (limb.limb_gender == FEMALE) ? "f" : "m"
+	var/gender = (limb?.limb_gender == FEMALE) ? "f" : "m"
 	var/list/icon_state_builder = list()
 	icon_state_builder += sprite_datum.gender_specific ? gender : "m" //Male is default because sprite accessories are so ancient they predate the concept of not hardcoding gender
 	icon_state_builder += feature_key
@@ -69,6 +71,7 @@
 	sprite_datum = fetch_sprite_datum(accessory_type)
 	cache_key = jointext(generate_icon_cache(), "_")
 
+///In a lot of cases, appearances are stored in DNA as the Name, instead of the path. Use set_appearance instead of possible
 /datum/bodypart_overlay/mutant/proc/set_appearance_from_name(accessory_name)
 	sprite_datum = fetch_sprite_datum_from_name(accessory_name)
 	cache_key = jointext(generate_icon_cache(), "_")
@@ -112,5 +115,3 @@
 	var/list/feature_list = get_global_feature_list()
 
 	return feature_list[accessory_name]
-
-

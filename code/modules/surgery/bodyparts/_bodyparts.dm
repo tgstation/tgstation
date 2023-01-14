@@ -887,6 +887,7 @@
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
 					. += overlay.get_overlay(external_layer, src)
+
 	return .
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)

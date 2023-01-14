@@ -1,29 +1,37 @@
+///Bodypart ovarlay datum. These can be added to any limb to give them a proper overlay, that'll even stay if the limb gets removed
+///This is the abstract parent, don't use it
 /datum/bodypart_overlay
 	///Sometimes we need multiple layers, for like the back, middle and front of the person
 	var/layers
-	///Convert the bitflag define into the actual layer define
+	///List of all possible layers. Used for looping through in drawing
 	var/static/list/all_layers = list(EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
 
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
 
+///Wrapper for getting the proper image, colored and everything
 /datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb)
 	layer = bitflag_to_layer(layer)
 	. = get_image(layer, limb)
 	color_image(., layer, limb)
 
+///Generate the image. Needs to be overriden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)
 	CRASH("Get image needs to be overridden")
 
+///Color the image
 /datum/bodypart_overlay/proc/color_image(image/overlay, layer)
 	return
 
+///Called on being added to a limb
 /datum/bodypart_overlay/proc/add_to_limb(obj/item/bodypart/limb)
 	limb.bodypart_overlays += src
 
+///Called on being removed from a limb
 /datum/bodypart_overlay/proc/remove_from_limb(obj/item/bodypart/limb)
 	limb.bodypart_overlays -= src
 
+///Use this to change the appearance (and yes you must overwrite hahahahahah) (or dont use this, I just dont want people directly changing the image)
 /datum/bodypart_overlay/proc/set_appearance()
 	CRASH("Update appearance needs to be overridden")
 
@@ -57,5 +65,6 @@
 /datum/bodypart_overlay/proc/override_color(rgb_value)
 	CRASH("External organ color set to override with no override proc.")
 
+///Generate a unique identifier to cache with. If you change something about the image, but the icon cache stays the same, it'll simply pull the unchanged image out of the cache
 /datum/bodypart_overlay/proc/generate_icon_cache()
 	return list()

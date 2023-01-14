@@ -13,6 +13,7 @@
 /obj/item/organ/external/wings/proc/can_soften_fall()
 	return TRUE
 
+///Bodypart overlay of default wings. Does not have any wing functionality
 /datum/bodypart_overlay/mutant/wings
 	layers = ALL_EXTERNAL_OVERLAYS
 	feature_key = "wings"

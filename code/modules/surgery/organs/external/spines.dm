@@ -1,3 +1,4 @@
+///A lizards spines (those things on their back), but also including tail spines (gasp)
 /obj/item/organ/external/spines
 	name = "lizard spines"
 	desc = "Not an actual spine, obviously."
@@ -27,6 +28,7 @@
 		paired_tail.paired_spines = null
 		paired_tail = null
 
+///Bodypart overlay for spines (wagging gets updated by tail)
 /datum/bodypart_overlay/mutant/spines
 	layers = EXTERNAL_ADJACENT|EXTERNAL_BEHIND
 	feature_key = "spines"

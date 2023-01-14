@@ -12,23 +12,19 @@
 
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
+	///Reference to the limb we're inside of
+	var/obj/item/bodypart/ownerlimb
+	///If not null, overrides the appearance with this sprite accessory datum
+	var/sprite_accessory_override
 
-	///Similar to feature key, but overrides it in the case you need more fine control over the iconstate, like with Tails.
-	var/render_key = ""
-	///Stores the dna.features[feature_key], used for external organs that can be surgically removed or inserted.
-	var/stored_feature_id = ""
 	/// The savefile_key of the preference this relates to. Used for the preferences UI.
 	var/preference
-
-	///Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
-	var/use_mob_sprite_as_obj_sprite = FALSE
-
 	///With what DNA block do we mutate in mutate_feature() ? For genetics
 	var/dna_block
 
-	///Reference to the limb we're inside of
-	var/obj/item/bodypart/ownerlimb
-
+	///Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
+	///This will not work if it doesn't have a limb to generate it's icon with
+	var/use_mob_sprite_as_obj_sprite = FALSE
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
 	///Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)
@@ -42,11 +38,19 @@
 	. = ..()
 
 	bodypart_overlay = new bodypart_overlay()
+
+	accessory_type = accessory_type ? accessory_type : sprite_accessory_override
+	var/update_overlays = TRUE
 	if(accessory_type)
 		bodypart_overlay.set_appearance(accessory_type)
+		bodypart_overlay.imprint_on_next_insertion = FALSE
+	else if(loc) //we've been spawned into the world, and not in nullspace to be added to a limb (yes its fucking scuffed)
+		bodypart_overlay.randomize_appearance()
+	else
+		update_overlays = FALSE
 
-	if(!(organ_flags & ORGAN_UNREMOVABLE))
-		color = "#[random_color()]" //A temporary random color that gets overwritten on insertion.
+	if(use_mob_sprite_as_obj_sprite && update_overlays)
+		update_appearance(UPDATE_OVERLAYS)
 
 	if(restyle_flags)
 		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
@@ -92,6 +96,9 @@
 	if(organ_owner)
 		organ_owner.update_body_parts()
 
+	if(use_mob_sprite_as_obj_sprite && !special)
+		update_appearance(UPDATE_OVERLAYS)
+
 ///Transfers the organ to the limb, and to the limb's owner, if it has one.
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
 	if(owner)
@@ -123,7 +130,7 @@
 
 	var/list/feature_list = bodypart_overlay.get_global_feature_list()
 
-	bodypart_overlay.set_appearance(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
+	bodypart_overlay.set_appearance_from_name(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
 
 ///If you need to change an external_organ for simple one-offs, use this. Pass the accessory type : /datum/accessory/something
 /obj/item/organ/external/proc/simple_change_sprite(accessory_type)
@@ -139,6 +146,17 @@
 
 /obj/item/organ/external/on_life(delta_time, times_fired)
 	return
+
+/obj/item/organ/external/update_overlays()
+	. = ..()
+
+	if(!use_mob_sprite_as_obj_sprite)
+		return
+
+	//Build the mob sprite and use it as our overlay
+	for(var/external_layer in bodypart_overlay.all_layers)
+		if(bodypart_overlay.layers & external_layer)
+			. += bodypart_overlay.get_overlay(external_layer, limb = null)
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
@@ -316,6 +334,7 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/pod_hair
 
+///Podperson bodypart overlay, with special coloring functionality to render the flowers in the inverse color
 /datum/bodypart_overlay/mutant/pod_hair
 	layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT
 	feature_key = "pod_hair"
@@ -333,7 +352,7 @@
 		return ..()
 
 	var/list/rgb_list = rgb2num(draw_color)
-	overlay.color = rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3])
+	overlay.color = rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3]) //inversa da color
 
 /datum/bodypart_overlay/mutant/pod_hair/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
