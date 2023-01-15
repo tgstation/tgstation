@@ -195,11 +195,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 	switch(contents.len)
 		if(1 to 10)
-			icon_state = "[icon_state]_tcg_low"
+			icon_state = "[base_icon_state]_tcg_low"
 		if(11 to 20)
-			icon_state = "[icon_state]_tcg_half"
+			icon_state = "[base_icon_state]_tcg_half"
 		if(21 to INFINITY)
-			icon_state = "[icon_state]_tcg_full"
+			icon_state = "[base_icon_state]_tcg_full"
 		else
 			icon_state = "[base_icon_state]_tcg"
 	return ..()
