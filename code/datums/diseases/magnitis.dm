@@ -28,7 +28,6 @@
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
 					var/move_dir = get_dir(nearby_object, affected_mob)
-					nearby_object.throw_at(get_step(nearby_object, move_dir), move_dir)
 				for(var/mob/living/silicon/nearby_silicon in orange(2, affected_mob))
 					if(isAI(nearby_silicon))
 						continue
@@ -38,21 +37,19 @@
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, span_danger("You feel a strong shock course through your body."))
 			if(DT_PROB(1, delta_time))
-				to_chat(affected_mob, span_danger("You feel like clowning around."))
+				to_chat(affected_mob, span_danger("Your hair stands on end."))
 			if(DT_PROB(2, delta_time))
 				for(var/obj/nearby_object in orange(4, affected_mob))
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
 					for(var/i in 1 to rand(1, 2))
-						var/move_dir = get_dir(nearby_object, affected_mob)
-						if(!nearby_object.Move(get_step(nearby_object, move_dir), move_dir))
+						if(!nearby_object.throw_at(affected_mob, 4, 4))
 							break
 				for(var/mob/living/silicon/nearby_silicon in orange(4, affected_mob))
 					if(isAI(nearby_silicon))
 						continue
 					for(var/i in 1 to rand(1, 2))
-						var/move_dir = get_dir(nearby_silicon, affected_mob)
-						if(!nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir))
+						if(!nearby_silicon.throw_at(affected_mob, 4, 4))
 							break
 		if(4)
 			if(DT_PROB(1, delta_time))
@@ -64,13 +61,12 @@
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
 					for(var/i in 1 to rand(1, 3))
-						var/move_dir = get_dir(nearby_object, affected_mob)
-						if(!nearby_object.Move(get_step(nearby_object, move_dir), move_dir))
+						if(!nearby_object.throw_at(nearby_object, 6, 5))
 							break
 				for(var/mob/living/silicon/nearby_silicon in orange(6, affected_mob))
 					if(isAI(nearby_silicon))
 						continue
 					for(var/i in 1 to rand(1, 3))
 						var/move_dir = get_dir(nearby_silicon, affected_mob)
-						if(!nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir))
+						if(!nearby_silicon.throw_at(affected_mob, 6, 3))
 							break
