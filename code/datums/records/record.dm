@@ -106,7 +106,7 @@
 	character_appearance,
 	blood_type = "?",
 	dna = "Unknown",
-	fingerprint = "?????"
+	fingerprint = "?????",
 	mi_dis = "None",
 	mi_dis_d = "No disabilities have been diagnosed at the moment.",
 	ma_dis = "None",
