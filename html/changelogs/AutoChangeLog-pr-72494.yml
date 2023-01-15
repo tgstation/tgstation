@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Syndicate mobs will no longer attempt to shoot you through walls, building up massive piles of empty bullet casings in the process."
-  - qol: "Bullet casings from \"weapons\" fired by certain mobs will clean themselves up after 30 seconds."

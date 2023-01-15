@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes:
-  - bugfix: "Fixed chem dispensers keeping their upgrade chemicals even after stock parts were downgraded."
