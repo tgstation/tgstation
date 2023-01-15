@@ -11,6 +11,7 @@
 		var/datum/objective/objective = new core_objective()
 		objective.team = src
 		objectives += objective
+
 /datum/antagonist/battlecruiser
 	name = "Battlecruiser Crewmember"
 	show_to_ghosts = TRUE
@@ -19,7 +20,7 @@
 	antag_hud_name = "battlecruiser_crew"
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
 	job_rank = ROLE_BATTLECRUISER_CREW
-	// Team to place the crewmember on.
+	/// Team to place the crewmember on.
 	var/datum/team/battlecruiser/battlecruiser_team
 
 /datum/antagonist/battlecruiser/get_team()
