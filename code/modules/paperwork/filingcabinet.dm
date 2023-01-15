@@ -127,7 +127,7 @@
 	if(!virgin)
 		return
 	for(var/datum/record/crew/record in GLOB.data_core.general)
-		print_security_record(record, src)
+		GLOB.data_core.print_security_record(record, src)
 		virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 					//before the records have been generated, so we do this inside the loop.
 

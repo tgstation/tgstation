@@ -156,16 +156,16 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 //Todo: Add citations to the prinout - you get them from sec record's "citation" field, same as "crim" (which is frankly a terrible fucking field name)
 ///Standardized printed records. SPRs. Like SATs but for bad guys who probably didn't actually finish school. Input the records and out comes a paper.
-/proc/print_security_record(datum/record/crew/crew_record, atom/location)
+/datum/datacore/proc/print_security_record(datum/record/crew/crew_record, atom/location)
 	if(!istype(crew_record))
 		stack_trace("called without any datacores! this may or may not be intentional!")
 	if(!isatom(location)) //can't drop the paper if we didn't get passed an atom.
 		CRASH("NO VALID LOCATION PASSED.")
 
-	GLOB.data_core.print_count++ //just alters the name of the paper.
+	print_count++ //just alters the name of the paper.
 	var/obj/item/paper/printed_paper = new(location)
-	var/final_paper_text = "<CENTER><B>Security Record - (SR-[GLOB.data_core.print_count])</B></CENTER><BR>"
-	if(!istype(crew_record, /datum/record/crew) && GLOB.data_core.general.Find(crew_record))
+	var/final_paper_text = "<CENTER><B>Security Record - (SR-[print_count])</B></CENTER><BR>"
+	if(!istype(crew_record, /datum/record/crew) && general.Find(crew_record))
 		final_paper_text += "<B>General Record Lost!</B><BR>"
 		return
 
@@ -190,7 +190,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	final_paper_text += "</table>"
 
 	final_paper_text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", crew_record.security_notes)
-	printed_paper.name = text("CR-[] '[]'", GLOB.data_core.print_count, crew_record.name)
+	printed_paper.name = text("CR-[] '[]'", print_count, crew_record.name)
 	final_paper_text += "</TT>"
 	printed_paper.add_raw_text(final_paper_text)
 	printed_paper.update_appearance() //make sure we make the paper look like it has writing on it.
