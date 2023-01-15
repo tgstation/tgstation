@@ -569,6 +569,7 @@
 		"pacman",
 		"plasma_tank",
 		"plasmaman_tank_belt",
+		"generic_tank",
 		"pneumatic_seal",
 		"power_control",
 		"powermonitor",
