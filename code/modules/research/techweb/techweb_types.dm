@@ -4,6 +4,7 @@
 /datum/techweb/science
 	id = "SCIENCE"
 	organization = "Nanotrasen"
+	should_generate_points = TRUE
 
 //When something is researched, triggers the proc for this techweb only
 /datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
