@@ -120,7 +120,7 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/clothing/gloves/chief_engineer(src)
 	new /obj/item/clothing/head/utility/hardhat/white(src)
-	new /obj/item/clothing/head/utility/hardhat/weldhat/white(src)
+	new /obj/item/clothing/head/utility/hardhat/welding/white(src)
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 
