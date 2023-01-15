@@ -24,6 +24,8 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/popcorn = 1,
 		/obj/item/trash/raisins = 1,
 		/obj/item/trash/sosjerky = 1,
+		/obj/item/trash/flare = 1,
+		/obj/item/trash/candle = 1,
 
 		/obj/item/c_tube = 1,
 		/obj/item/disk/data = 1,
