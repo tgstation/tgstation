@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - bugfix: "Uranium, Diamonds, and Bananium now update visually in the techfab UI"
