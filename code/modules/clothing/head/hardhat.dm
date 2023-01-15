@@ -126,12 +126,9 @@
 	. = ..()
 	update_appearance()
 
-/obj/item/clothing/head/utility/hardhat/welding/attack_self(mob/living/user)
-	toggle_helmet_light(user)
-
-/obj/item/clothing/head/utility/hardhat/welding/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close = TRUE))
-		toggle_welding_screen(user)
+/obj/item/clothing/head/utility/hardhat/welding/attack_self_secondary(mob/user, modifiers)
+	toggle_welding_screen(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/head/utility/hardhat/welding/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_welding_screen))
