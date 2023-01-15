@@ -7,6 +7,7 @@
 	..()
 
 	new /obj/item/storage/bag/garment/engineering_chief(src)
+	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/toolbox/chief_engineer(src)
 
 /obj/structure/closet/secure_closet/engineering_chief/populate_contents_immediate()
