@@ -74,6 +74,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 /*
  * Bomb protection
