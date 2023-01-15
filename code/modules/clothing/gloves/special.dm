@@ -50,7 +50,7 @@
 
 	QDEL_NULL(pull_component_weakref)
 
-/obj/item/clothing/gloves/cargo_gauntlet/security
+/obj/item/clothing/gloves/cargo_gauntlet/brig
 	name = "\improper B.R.I. gauntlets"
 	desc = "These heavy duty gauntlets can latch on to handcuffs making them very challenging to escape. Their bulky design might make firing guns a bit harder though."
 	icon_state = "bri_gauntlet"
