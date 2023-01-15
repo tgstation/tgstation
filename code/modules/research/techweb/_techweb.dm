@@ -69,30 +69,6 @@
 	initialize_published_papers()
 	return ..()
 
-/datum/techweb/admin
-	id = "ADMIN"
-	organization = "CentCom"
-
-/datum/techweb/admin/New() //All unlocked.
-	. = ..()
-	for(var/i in SSresearch.techweb_nodes)
-		var/datum/techweb_node/TN = SSresearch.techweb_nodes[i]
-		research_node(TN, TRUE, TRUE, FALSE)
-	for(var/i in SSresearch.point_types)
-		research_points[i] = INFINITY
-	hidden_nodes = list()
-
-/datum/techweb/bepis/New(remove_tech = TRUE)
-	. = ..()
-	var/bepis_id = pick(SSresearch.techweb_nodes_experimental) //To add a new tech to the BEPIS, add the ID to this pick list.
-	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
-	hidden_nodes -= BN.id //Has to be removed from hidden nodes
-	research_node(BN, TRUE, FALSE, FALSE)
-	update_node_status(BN)
-	if(remove_tech)
-		SSresearch.techweb_nodes_experimental -= bepis_id
-		log_research("[BN.display_name] has been removed from experimental nodes through the BEPIS techweb's \"remove tech\" feature.")
-
 /datum/techweb/Destroy()
 	researched_nodes = null
 	researched_designs = null
@@ -201,16 +177,30 @@
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
 
-/datum/techweb/proc/add_design_by_id(id, custom = FALSE)
-	return add_design(SSresearch.techweb_design_by_id(id), custom)
+/**
+ * add_design_by_id
+ * The main way to add add designs to techweb
+ * Uses the techweb node's ID
+ * Args:
+ * id - the ID of the techweb node to research
+ * custom - Boolean on whether the node should also be added to custom_designs
+ * add_to - A custom list to add the node to, overwriting research_designs.
+ */
+/datum/techweb/proc/add_design_by_id(id, custom = FALSE, list/add_to)
+	return add_design(SSresearch.techweb_design_by_id(id), custom, add_to)
 
-/datum/techweb/proc/add_design(datum/design/design, custom = FALSE)
+/datum/techweb/proc/add_design(datum/design/design, custom = FALSE, list/add_to)
 	if(!istype(design))
 		return FALSE
 	SEND_SIGNAL(src, COMSIG_TECHWEB_ADD_DESIGN, design, custom)
-	researched_designs[design.id] = TRUE
 	if(custom)
 		custom_designs[design.id] = TRUE
+
+	if(add_to)
+		add_to[design.id] = TRUE
+	else
+		researched_designs[design.id] = TRUE
+
 	return TRUE
 
 /datum/techweb/proc/remove_design_by_id(id, custom = FALSE)
@@ -449,46 +439,6 @@
 /datum/techweb/proc/isNodeAvailableID(id)
 	return available_nodes[id]? SSresearch.techweb_node_by_id(id) : FALSE
 
-/datum/techweb/specialized
-	var/allowed_buildtypes = ALL
-
-/datum/techweb/specialized/add_design(datum/design/D)
-	if(!(D.build_type & allowed_buildtypes))
-		return FALSE
-	return ..()
-
-/datum/techweb/specialized/autounlocking
-	var/design_autounlock_buildtypes = NONE
-
-/datum/techweb/specialized/autounlocking/New()
-	..()
-	autounlock()
-
-/datum/techweb/specialized/autounlocking/proc/autounlock()
-	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/design = SSresearch.techweb_designs[id]
-		if((design.build_type & design_autounlock_buildtypes) && (RND_CATEGORY_INITIAL in design.category))
-			add_design_by_id(id)
-
-/datum/techweb/specialized/autounlocking/autolathe
-	design_autounlock_buildtypes = AUTOLATHE
-	allowed_buildtypes = AUTOLATHE
-
-/datum/techweb/specialized/autounlocking/limbgrower
-	design_autounlock_buildtypes = LIMBGROWER
-	allowed_buildtypes = LIMBGROWER
-
-/datum/techweb/specialized/autounlocking/biogenerator
-	design_autounlock_buildtypes = BIOGENERATOR
-	allowed_buildtypes = BIOGENERATOR
-
-/datum/techweb/specialized/autounlocking/smelter
-	design_autounlock_buildtypes = SMELTER
-	allowed_buildtypes = SMELTER
-
-/datum/techweb/specialized/autounlocking/exofab
-	allowed_buildtypes = MECHFAB
-
 /// Fill published_papers with nulls.
 /datum/techweb/proc/initialize_published_papers()
 	published_papers = list()
@@ -526,16 +476,3 @@
 			handler.announce_message_to_all("The [experiment.name] has been completed!")
 
 	return TRUE
-
-/datum/techweb/science //Global science techweb for RND consoles.
-	id = "SCIENCE"
-	organization = "Nanotrasen"
-
-/datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only
-	. = ..()
-	if(.)
-		node.on_research()
-
-/datum/techweb/bepis //Should contain only 1 BEPIS tech selected at random.
-	id = "EXPERIMENTAL"
-	organization = "Nanotrasen R&D"
