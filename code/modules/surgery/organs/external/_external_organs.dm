@@ -282,6 +282,7 @@
 		burn_antennae()
 		human.update_body_parts()
 
+///Burn our antennae off ;_;
 /obj/item/organ/external/antennae/proc/burn_antennae()
 	var/datum/bodypart_overlay/mutant/antennae/antennae = bodypart_overlay
 	antennae.burnt = TRUE
@@ -299,6 +300,7 @@
 		antennae.burnt = FALSE
 		burnt = FALSE
 
+///Moth antennae datum, with full burning functionality
 /datum/bodypart_overlay/mutant/antennae
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "moth_antennae"
