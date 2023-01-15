@@ -91,8 +91,6 @@ const ShoppingTab = (props, context) => {
                         credit_type +
                         ' per item.'}
                     </Box>
-                      {' costs ' + item.cost + ' per order.'}
-                    </Box>
                     <Button
                       icon="minus"
                       onClick={() =>
