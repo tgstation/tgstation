@@ -73,7 +73,7 @@
 	if(!infusing_into)
 		//no valid recipe, so you get a fly mutation
 		infusing_into = GLOB.infuser_entries[1]
-	playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/blender.ogg', 50, vary = TRUE)
 	to_chat(human_occupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	human_occupant.take_overall_damage(10)
 	human_occupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = human_occupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
@@ -87,7 +87,7 @@
 	infusing = FALSE
 	infusing_into = null
 	QDEL_NULL(infusing_from)
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, vary = FALSE)
 	toggle_open()
 	update_appearance()
 
@@ -144,8 +144,6 @@
 	new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
 	return TRUE
 
-
-
 /obj/machinery/dna_infuser/update_icon_state()
 	//out of order
 	if(machine_stat & (NOPOWER | BROKEN))
@@ -168,16 +166,13 @@
 		if(user)
 			balloon_alert(user, "close panel first!")
 		return
-
 	if(state_open)
 		close_machine()
 		return
-
 	else if(infusing)
 		if(user)
 			balloon_alert(user, "not while it's on!")
 		return
-
 	open_machine(drop = FALSE)
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
@@ -216,11 +211,9 @@
 	// if the machine is closed, already has a infusion target, or the target is not valid then no adding.
 	if(!state_open || !is_valid_infusion(target, user))
 		return
-
 	if(!user.transferItemToLoc(target, src))
 		to_chat(user, span_warning("[target] is stuck to your hand!"))
 		return
-
 	infusing_from = target
 
 // mostly good for dead mobs like corpses (drag to add).
@@ -228,7 +221,6 @@
 	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
 	if(!state_open || !is_valid_infusion(target, user))
 		return
-
 	infusing_from = target
 	infusing_from.forceMove(src)
 
