@@ -42,7 +42,7 @@
 	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
 	var/limb_id = SPECIES_HUMAN
 	//Defines what sprite the limb should use if it is also sexually dimorphic.
-	VAR_PROTECTED/limb_gender = "m"
+	var/limb_gender = "m"
 	///Is there a sprite difference between male and female?
 	var/is_dimorphic = FALSE
 	///The actual color a limb is drawn as, set by /proc/update_limb()
