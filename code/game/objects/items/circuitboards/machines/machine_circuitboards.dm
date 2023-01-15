@@ -1389,6 +1389,6 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/reagent_containers/cup/beaker = 2,
 		/datum/stock_part/water_recycler = 1,
-		/datum/stock_part/capacitor/tier4 = 1,
-		/datum/stock_part/micro_laser/tier4 = 2,
+		/datum/stock_part/capacitor/tier2 = 1,
+		/datum/stock_part/micro_laser/tier2 = 2,
 	)
