@@ -66,11 +66,13 @@
 	slowdown = 1.5
 
 /obj/item/clothing/suit/utility/fire/atmos
-	name = "firesuit"
+	name = "atmospheric firesuit"
 	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
 	icon_state = "atmos_firesuit"
 	inhand_icon_state = null
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 
 /*
  * Bomb protection

@@ -111,7 +111,7 @@
 	inhand_icon_state = null
 	hat_type = "atmos"
 	dog_fashion = null
-	name = "atmospheric technician's firefighting helmet"
+	name = "atmospheric firefighter helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
