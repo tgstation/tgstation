@@ -43,7 +43,7 @@
 	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
 	var/datum/record/crew/target_record = find_record("name", crewmember.real_name, GLOB.data_core.general)
 	var/datum/crime/past_crime = new(crime.name, crime.desc, "Central Command", "Indefinite.")
-	target_record.crim += past_crime
+	target_record.crimes += past_crime
 	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
 
 /datum/outfit/job/prisoner

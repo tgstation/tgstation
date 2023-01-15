@@ -380,11 +380,6 @@
 			if(cyberimp_detect)
 				. += "<span class='notice ml-1'>Detected cybernetic modifications:</span>"
 				. += "<span class='notice ml-2'>[cyberimp_detect]</span>"
-			if(target_record)
-				var/health_r = target_record.p_stat
-				. += "<a href='?src=[REF(src)];hud=m;p_stat=1;examine_time=[world.time]'>\[[health_r]\]</a>"
-				health_r = target_record.m_stat
-				. += "<a href='?src=[REF(src)];hud=m;m_stat=1;examine_time=[world.time]'>\[[health_r]\]</a>"
 			target_record = find_record("name", perpname, GLOB.data_core.general)
 			if(target_record)
 				. += "<a href='?src=[REF(src)];hud=m;evaluation=1;examine_time=[world.time]'>\[Medical evaluation\]</a><br>"
@@ -393,13 +388,13 @@
 		if(HAS_TRAIT(user, TRAIT_SECURITY_HUD))
 			if(!user.stat && user != src)
 			//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
-				var/criminal = "None"
+				var/wanted_status = "None"
 
 				target_record = find_record("name", perpname, GLOB.data_core.general)
 				if(target_record)
-					criminal = target_record.criminal
+					wanted_status = target_record.wanted_status
 
-				. += "<span class='deptradio'>Criminal status:</span> <a href='?src=[REF(src)];hud=s;status=1;examine_time=[world.time]'>\[[criminal]\]</a>"
+				. += "<span class='deptradio'>Criminal status:</span> <a href='?src=[REF(src)];hud=s;status=1;examine_time=[world.time]'>\[[wanted_status]\]</a>"
 				. += jointext(list("<span class='deptradio'>Security record:</span> <a href='?src=[REF(src)];hud=s;view=1;examine_time=[world.time]'>\[View\]</a>",
 					"<a href='?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>",
 					"<a href='?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>",

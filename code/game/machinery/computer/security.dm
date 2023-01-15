@@ -87,9 +87,9 @@
 	for(var/datum/record/crew/player_record as anything in GLOB.data_core.general)
 		var/list/entry = list()
 		entry["record"] = REF(player_record)
-		entry["arrest_status"] = player_record.criminal
+		entry["arrest_status"] = player_record.wanted_status
 		entry["name"] = player_record.name
-		entry["id"] = player_record.id
+		entry["id"] = player_record.id_number
 		entry["rank"] = player_record.rank
 		entry["gender"] = player_record.gender
 		entry["age"] = player_record.age
@@ -164,10 +164,10 @@
 		if(!sec_record)
 			continue
 
-		if(sec_record.criminal != status_to_set)
+		if(sec_record.wanted_status != status_to_set)
 			successful_set++
 			names_of_entries += target["name"]
-		sec_record.criminal = status_to_set
+		sec_record.wanted_status = status_to_set
 
 
 	if(successful_set > 0)
@@ -232,7 +232,7 @@
 
 	for(var/datum/record/crew/record in GLOB.data_core.general)
 		if(prob(10/severity))
-			switch(rand(1,7))
+			switch(rand(1,5))
 				if(1)
 					if(prob(10))
 						record.name = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
@@ -243,12 +243,8 @@
 				if(3)
 					record.age = rand(5, 85)
 				if(4)
-					record.criminal = pick("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged")
+					record.wanted_status = pick("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged")
 				if(5)
-					record.p_stat = pick("*Unconscious*", "Active", "Physically Unfit")
-				if(6)
-					record.m_stat = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
-				if(7)
 					record.species = pick(get_selectable_species())
 			continue
 

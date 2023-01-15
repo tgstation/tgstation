@@ -2,145 +2,107 @@
  * Record datum. Used for crew records and admin locked records.
  */
 /datum/record
-	var/name = "Unknown"
-	/// Account number
-	var/id
-	/// Rank of the crew member
-	var/rank
-	/// Job of the crew member
-	var/trim
-	/// Initial rank of the crew member
-	var/initial_rank
-	/// Age
+	/// Age of the character
 	var/age
-	/// Crew species
-	var/species
-	/// Male/Female/Other gender
-	var/gender
-	/// Crew member's face
-	var/mutable_appearance/character_appearance
-	/// Crew member's blood type
+	/// Their blood type
 	var/blood_type
+	/// Character appearance
+	var/mutable_appearance/character_appearance
 	/// DNA string
 	var/dna
-	/// Fingerprint is md5 of DNA
+	/// Fingerprint string (md5)
 	var/fingerprint
+	/// The character's gender
+	var/gender
+	/// The character's ID number
+	var/id_number
+	/// The character's initial rank at roundstart
+	var/initial_rank
+	/// The character's name
+	var/name = "Unknown"
+	/// The character's rank
+	var/rank
+	/// The character's species
+	var/species
+	/// The character's ID trim
+	var/trim
 
 /datum/record/New(
-	id = "000000",
+	age = 18,
+	blood_type = "?",
+	character_appearance,
+	dna = "Unknown",
+	fingerprint = "?????",
+	gender = "Other",
+	id_number = "000000",
+	initial_rank = "Unassigned",
 	name = "Unknown",
 	rank = "Unassigned",
-	trim = "Unassigned",
-	initial_rank = "Unassigned",
-	age = 18,
 	species = "Human",
-	gender = "Other",
-	character_appearance,
-	blood_type = "?",
-	dna = "Unknown",
-	fingerprint = "?????"
+	trim = "Unassigned",
 	)
-	src.id = id
-	src.name = name
-	src.rank = rank
-	src.trim = trim
-	src.initial_rank = rank
 	src.age = age
-	src.species = species
-	src.gender = gender
-	src.character_appearance = character_appearance
 	src.blood_type = blood_type
+	src.character_appearance = character_appearance
 	src.dna = dna
 	src.fingerprint = fingerprint
+	src.gender = gender
+	src.id_number = id_number
+	src.initial_rank = rank
+	src.name = name
+	src.rank = rank
+	src.species = species
+	src.trim = trim
 
 /**
  * Crew record datum
  */
 /datum/record/crew
-	// Medical
-	/// Minor disabilities
-	var/mi_dis
-	/// Minor disabilities description
-	var/mi_dis_d
-	/// Major disabilities
-	var/ma_dis
-	/// Major disabilities description
-	var/ma_dis_d
-	/// Diseases
-	var/cdi
-	/// Diseases description
-	var/cdi_d
-	/// Allergies
-	var/alg
-	/// Allergies description
-	var/alg_d
-	/// Other notes written by doctors
-	var/medical_notes
-	/// Notes description
-	var/medical_notes_d
-	/// Health status in medical records
-	var/p_stat
-	/// Mental status in medical records
-	var/m_stat
-
-	// Security
-	/// Security status
-	var/criminal
-	/// Citations list
-	var/citation = list()
-	/// Crimes list
-	var/crim = list()
-	/// Security notes
-	var/security_notes
+	/// List of citations
+	var/list/citations = list()
+	/// List of crimes
+	var/list/crimes = list()
+	/// Names of major disabilities
+	var/major_disabilities
+	/// Fancy description of major disabilities
+	var/major_disabilities_desc
+	/// List of medical notes
+	var/list/medical_notes
+	/// Names of minor disabilities
+	var/minor_disabilities
+	/// Fancy description of minor disabilities
+	var/minor_disabilities_desc
+	/// List of security notes
+	var/list/security_notes = list()
+	/// Current arrest status
+	var/wanted_status = "None"
 
 /datum/record/crew/New(
-	id = "000000",
-	name = "Unknown",
-	rank = "Unassigned",
-	trim = "Unassigned",
-	initial_rank = "Unassigned",
 	age = 18,
-	species = "Human",
-	gender = "Other",
-	character_appearance,
 	blood_type = "?",
+	character_appearance,
 	dna = "Unknown",
 	fingerprint = "?????",
-	mi_dis = "None",
-	mi_dis_d = "No disabilities have been diagnosed at the moment.",
-	ma_dis = "None",
-	ma_dis_d = "No disabilities have been diagnosed at the moment.",
-	cdi = "None",
-	cdi_d = "No diseases",
-	alg = "None",
-	alg_d = "No allergies",
-	medical_notes = "No notes.",
-	medical_notes_d = "No notes.",
-	p_stat = "Active",
-	m_stat = "Stable",
-	criminal = "None",
-	citation = list(),
-	crim = list(),
-	security_notes = "No notes."
+	gender = "Other",
+	id_number = "000000",
+	initial_rank = "Unassigned",
+	name = "Unknown",
+	rank = "Unassigned",
+	species = "Human",
+	trim = "Unassigned",
+	/// Crew specific
+	major_disabilities = "None",
+	major_disabilities_desc = "No disabilities have been diagnosed at the moment.",
+	medical_notes = list(),
+	minor_disabilities = "None",
+	minor_disabilities_desc = "No disabilities have been diagnosed at the moment.",
 	)
 	. = ..()
-	src.mi_dis = mi_dis
-	src.mi_dis_d = mi_dis_d
-	src.ma_dis = ma_dis
-	src.ma_dis_d = ma_dis_d
-	src.cdi = cdi
-	src.cdi_d = cdi_d
-	src.alg = alg
-	src.alg_d = alg_d
+	src.major_disabilities = major_disabilities
+	src.major_disabilities_desc = major_disabilities_desc
 	src.medical_notes = medical_notes
-	src.medical_notes_d = medical_notes_d
-	src.p_stat = p_stat
-	src.m_stat = m_stat
-	src.criminal = criminal
-	src.citation = citation
-	src.crim = crim
-	src.security_notes = security_notes
-
+	src.minor_disabilities = minor_disabilities
+	src.minor_disabilities_desc = minor_disabilities_desc
 	GLOB.data_core.general += src
 
 /datum/record/crew/Destroy()
@@ -151,34 +113,35 @@
  * Admin locked record
  */
 /datum/record/locked
-	/// Mind datum
-	var/datum/mind/mindref
 	/// List of features
 	var/features = list()
-	/// Mobs unique identity from dna
+	/// Mob's dna.unique_identity
 	var/identity
+	/// Mind datum
+	var/datum/mind/mindref
 
 /datum/record/locked/New(
-	id = "000000",
-	name = "Unknown",
-	rank = "Unassigned",
-	trim = "Unassigned",
-	initial_rank = "Unassigned",
 	age = 18,
-	species = "Human",
-	gender = "Other",
-	character_appearance,
 	blood_type = "?",
+	character_appearance,
 	dna = "Unknown",
 	fingerprint = "?????",
-	mindref,
+	gender = "Other",
+	id_number = "000000",
+	initial_rank = "Unassigned",
+	name = "Unknown",
+	rank = "Unassigned",
+	species = "Human",
+	trim = "Unassigned",
+	/// Locked specific
 	features = list(),
-	identity = "Unknown"
+	identity = "Unknown",
+	mindref,
 	)
 	. = ..()
-	src.mindref = mindref
 	src.features = features
 	src.identity = identity
+	src.mindref = mindref
 
 	GLOB.data_core.locked += src
 

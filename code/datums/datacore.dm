@@ -2,6 +2,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 //TODO: someone please get rid of this shit
 /datum/datacore
+	/// All of the crew records.
 	var/list/general = list()
 	var/print_count = 0
 	var/crime_counter = 0
@@ -106,7 +107,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 	var/assignment = person.mind.assigned_role.title
 	var/static/record_id_num = 1001
-	var/id = num2hex(record_id_num++, 6)
+	var/id_number = num2hex(record_id_num++, 6)
 	var/mutable_appearance/character_appearance = new(person.appearance)
 	var/gender = "Other"
 	if(person.gender == "male")
@@ -115,40 +116,41 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		gender = "Female"
 
 	new /datum/record/crew(
-		id = id,
-		name = person.real_name,
-		rank = assignment,
-		trim = assignment,
-		initial_rank = assignment,
 		age = person.age,
-		species = person.dna.species.name,
-		gender = gender,
+		blood_type = person.dna.blood_type,
 		character_appearance = character_appearance,
 		dna = person.dna.unique_enzymes,
 		fingerprint = md5(person.dna.unique_identity),
-		blood_type = person.dna.blood_type,
-		mi_dis = person.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY),
-		mi_dis_d = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
-		ma_dis = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY),
-		ma_dis_d = person.get_quirk_string(TRUE, CAT_QUIRK_MAJOR_DISABILITY),
-		medical_notes = person.get_quirk_string(FALSE, CAT_QUIRK_NOTES),
-		medical_notes_d = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
+		gender = gender,
+		id_number = id_number,
+		initial_rank = assignment,
+		name = person.real_name,
+		rank = assignment,
+		species = person.dna.species.name,
+		trim = assignment,
+		// Crew specific
+		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY),
+		major_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MAJOR_DISABILITY),
+		medical_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
+		minor_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY),
+		minor_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
 	)
 
 	new /datum/record/locked(
-		id = id,
-		name = person.real_name,
-		rank = assignment,
-		trim = assignment,
-		initial_rank = assignment,
 		age = person.age,
-		species = person.dna.species.name,
-		gender = gender,
+		blood_type = person.dna.blood_type,
 		dna = person.dna.unique_enzymes,
 		fingerprint = md5(person.dna.unique_identity),
-		blood_type = person.dna.blood_type,
-		identity = person.dna.unique_identity,
+		gender = gender,
+		id_number = id_number,
+		initial_rank = assignment,
+		name = person.real_name,
+		rank = assignment,
+		species = person.dna.species.name,
+		trim = assignment,
+		// Locked specific
 		features = person.dna.features,
+		identity = person.dna.unique_identity,
 		mindref = person.mind,
 	)
 
@@ -169,10 +171,10 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		final_paper_text += "<B>General Record Lost!</B><BR>"
 		return
 
-	final_paper_text += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", crew_record.name, crew_record.id, crew_record.gender, crew_record.age)
+	final_paper_text += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", crew_record.name, crew_record.id_number, crew_record.gender, crew_record.age)
 	final_paper_text += "\nSpecies: [crew_record.species]<BR>"
-	final_paper_text += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", crew_record.fingerprint, crew_record.p_stat, crew_record.m_stat)
-	final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", crew_record.criminal)
+	final_paper_text += text("\nFingerprint: []<BR>", crew_record.fingerprint)
+	final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", crew_record.wanted_status)
 	final_paper_text += "<BR>\n<BR>\nCrimes:<BR>\n"
 	final_paper_text += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
@@ -181,7 +183,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 						<th>Author</th>
 						<th>Time Added</th>
 						</tr>"}
-	for(var/datum/crime/crime in crew_record.crim)
+	for(var/datum/crime/crime in crew_record.crimes)
 		final_paper_text += "<tr><td>[crime.name]</td>"
 		final_paper_text += "<td>[crime.details]</td>"
 		final_paper_text += "<td>[crime.author]</td>"

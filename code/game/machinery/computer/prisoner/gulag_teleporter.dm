@@ -41,7 +41,7 @@
 			for(var/datum/record/crew/record as anything in GLOB.data_core.general)
 				if(record.name == prisoner_list["name"])
 					temporary_record = record
-					prisoner_list["crimstat"] = temporary_record.criminal
+					prisoner_list["crimstat"] = temporary_record.wanted_status
 
 	data["prisoner"] = prisoner_list
 

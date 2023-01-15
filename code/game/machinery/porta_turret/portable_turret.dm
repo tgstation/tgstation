@@ -570,7 +570,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(turret_flags & TURRET_FLAG_SHOOT_CRIMINALS) //if the turret can check the records, check if they are set to *Arrest* on records
 		var/perpname = perp.get_face_name(perp.get_id_name())
 		var/datum/record/crew/record = find_record("name", perpname, GLOB.data_core.general)
-		if(!record || (record.criminal == "*Arrest*"))
+		if(!record || (record.wanted_status == "*Arrest*"))
 			threatcount += 4
 
 	if((turret_flags & TURRET_FLAG_SHOOT_UNSHIELDED) && (!HAS_TRAIT(perp, TRAIT_MINDSHIELD)))

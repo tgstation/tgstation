@@ -170,28 +170,6 @@
 			if(!(ACCESS_MEDICAL in access))
 				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
-			if(href_list["p_stat"])
-				var/health_status = input(human_user, "Specify a new physical status for this person.", "Medical HUD", target_record.p_stat) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
-				if(!target_record)
-					return
-				if(!human_user.canUseHUD())
-					return
-				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
-					return
-				if(health_status && health_status != "Cancel")
-					target_record.p_stat = health_status
-				return
-			if(href_list["m_stat"])
-				var/health_status = input(human_user, "Specify a new mental status for this person.", "Medical HUD", target_record.m_stat) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
-				if(!target_record)
-					return
-				if(!human_user.canUseHUD())
-					return
-				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
-					return
-				if(health_status && health_status != "Cancel")
-					target_record.m_stat = health_status
-				return
 			if(href_list["quirk"])
 				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
 				if(quirkstring)
@@ -228,7 +206,7 @@
 				to_chat(human_user, span_warning("ERROR: Unable to locate data core entry for target."))
 				return
 			if(href_list["status"])
-				var/setcriminal = input(human_user, "Specify a new criminal status for this person.", "Security HUD", target_record.criminal) in list("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged", "Cancel")
+				var/setcriminal = input(human_user, "Specify a new criminal status for this person.", "Security HUD", target_record.wanted_status) in list("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged", "Cancel")
 				if(setcriminal != "Cancel")
 					if(!target_record)
 						return
@@ -236,8 +214,8 @@
 						return
 					if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
-					investigate_log("has been set from [target_record.criminal] to [setcriminal] by [key_name(human_user)].", INVESTIGATE_RECORDS)
-					target_record.criminal = setcriminal
+					investigate_log("has been set from [target_record.wanted_status] to [setcriminal] by [key_name(human_user)].", INVESTIGATE_RECORDS)
+					target_record.wanted_status = setcriminal
 					sec_hud_set_security_status()
 				return
 
@@ -246,8 +224,8 @@
 					return
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				to_chat(human_user, "<b>Name:</b> [target_record.name] <b>Criminal Status:</b> [target_record.criminal]")
-				for(var/datum/crime/crime in target_record.crim)
+				to_chat(human_user, "<b>Name:</b> [target_record.name] <b>Criminal Status:</b> [target_record.wanted_status]")
+				for(var/datum/crime/crime in target_record.crimes)
 					to_chat(human_user, "<b>Crime:</b> [crime.name]")
 					if (crime.details)
 						to_chat(human_user, "<b>Details:</b> [crime.details]")
@@ -284,7 +262,7 @@
 						))
 						signal.send_to_receivers()
 						human_user.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-				target_record.citation += citation
+				target_record.citations += citation
 				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 				SSblackbox.ReportCitation(citation.crime_id, human_user.ckey, human_user.real_name, target_record.name, t1, fine)
 				return
@@ -298,7 +276,7 @@
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				var/datum/crime/crime = new(name = t1, author = allowed_access, time = station_time_timestamp())
-				target_record.crim += crime
+				target_record.crimes += crime
 				investigate_log("New Crime: <strong>[t1]</strong> | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 				to_chat(human_user, span_notice("Successfully added a crime."))
 				return
@@ -397,9 +375,9 @@
 	//Check for arrest warrant
 	if(judgement_criteria & JUDGE_RECORDCHECK)
 		var/perpname = get_face_name(get_id_name())
-		var/datum/record/crew/R = find_record("name", perpname, GLOB.data_core.general)
-		if(R?.criminal)
-			switch(R.criminal)
+		var/datum/record/crew/record = find_record("name", perpname, GLOB.data_core.general)
+		if(record?.wanted_status)
+			switch(record.wanted_status)
 				if("*Arrest*")
 					threatcount += 5
 				if("Incarcerated")

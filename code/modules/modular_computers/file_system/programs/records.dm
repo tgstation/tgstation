@@ -38,8 +38,8 @@
 			for(var/datum/record/crew/person in GLOB.data_core.general)
 				var/list/current_record = list()
 
-				current_record["wanted"] = person.criminal
-				current_record["id"] = person.id
+				current_record["wanted"] = person.wanted_status
+				current_record["id"] = person.id_number
 				current_record["name"] = person.name
 				current_record["rank"] = person.rank
 				current_record["gender"] = person.gender
@@ -54,10 +54,9 @@
 
 				current_record["name"] = person.name
 				current_record["bloodtype"] = person.blood_type
-				current_record["mi_dis"] = person.mi_dis
-				current_record["ma_dis"] = person.ma_dis
+				current_record["minor_disabilities"] = person.minor_disabilities_desc
+				current_record["ma_dis"] = person.major_disabilities_desc
 				current_record["notes"] = person.medical_notes
-				current_record["cnotes"] = person.medical_notes_d
 
 				all_records += list(current_record)
 
