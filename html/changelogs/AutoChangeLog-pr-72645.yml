@@ -1,4 +1,0 @@
-author: "SuperSlayer0"
-delete-after: True
-changes:
-  - bugfix: "Fixes security stunbatons knockdowning you even if you have baton resistance trait"
