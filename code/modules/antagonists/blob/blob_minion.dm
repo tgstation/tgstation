@@ -18,11 +18,19 @@
 /datum/antagonist/blob_minion/greet()
 	. = ..()
 	owner.announce_objectives()
+/datum/objective/blob_minion
+	name = "protect the blob core"
+	explanation_text = "Protect the blob core at all costs."
+	var/datum/weakref/overmind
+
+/datum/objective/blob_minion/check_completion()
+	var/mob/camera/blob/overmind = overmind.resolve()
+	return overmind?.stat != DEAD
 
 /datum/antagonist/blob_minion/forge_objectives()
-	var/datum/objective/protect/objective = new
+	var/datum/objective/blob_minion/objective = new
 	objective.owner = owner
-	objective.target = overmind
+	objective.overmind = overmind
 	objectives += objective
 
 /datum/antagonist/blob_minion/blobbernaut
