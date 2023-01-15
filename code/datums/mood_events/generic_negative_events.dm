@@ -335,11 +335,6 @@
 	mood_change = -2
 	timeout = 5 MINUTES
 
-/datum/mood_event/tail_regained_wrong
-	description = "Is this some kind of sick joke?! This is NOT the right tail."
-	mood_change = -12 // -8 for tail still missing + -4 bonus for being frakenstein's monster
-	timeout = 5 MINUTES
-
 /datum/mood_event/burnt_wings
 	description = "MY PRECIOUS WINGS!!"
 	mood_change = -10
