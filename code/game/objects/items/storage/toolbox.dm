@@ -302,7 +302,7 @@
 
 /obj/item/storage/toolbox/captain
 	name = "captain's toolbox"
-	desc = "A toolbox painted blue and gold. It sparkles brightly and belongs to the Captain."
+	desc = "A toolbox painted blue and gold. It sparkles brightly and clearly belongs to the Captain."
 	icon_state = "captain_toolbox"
 	inhand_icon_state = "toolbox_captain"
 	has_latches = FALSE
@@ -337,7 +337,7 @@
 
 /obj/item/storage/toolbox/chief_medical_officer
 	name = "chief medical officer's toolbox"
-	desc = "A custom made medical toolbox with it's internal racks made to hold surgical tools."
+	desc = "A custom made medical toolbox with its internal racks made to hold surgical tools."
 	icon_state = "cmo_toolbox"
 	inhand_icon_state = "toolbox_default"
 	has_latches = FALSE
@@ -357,7 +357,7 @@
 
 /obj/item/storage/toolbox/head_of_personnel
 	name = "head of personnel's toolbox"
-	desc = "A simple toolbox with some red and gold duct tape on it's side. Someone glued many corgi stickers on it."
+	desc = "A simple toolbox with some red and gold duct tape on its side. Someone glued many corgi stickers on it."
 	icon_state = "hop_toolbox"
 	inhand_icon_state = "toolbox_blue"
 	has_latches = FALSE
@@ -375,7 +375,7 @@
 
 /obj/item/storage/toolbox/head_of_security
 	name = "head of security's toolbox"
-	desc = "A tactical toolbox with many internal attachments. Whoever owes this is clearly a gun nut."
+	desc = "A tactical toolbox with many internal attachments. Whoever owns this is clearly a gun nut."
 	icon_state = "hos_toolbox"
 	inhand_icon_state = "toolbox_red"
 	has_latches = FALSE
@@ -392,7 +392,7 @@
 
 /obj/item/storage/toolbox/research_director
 	name = "research director's toolbox"
-	desc = "A purple toolbox. For whatever reasons it looks very sciency."
+	desc = "A purple toolbox. For whatever reason it looks very scientific."
 	icon_state = "rd_toolbox"
 	inhand_icon_state = "toolbox_default"
 	has_latches = FALSE
@@ -409,7 +409,7 @@
 
 /obj/item/storage/toolbox/quartermaster
 	name = "quartermaster's toolbox"
-	desc = "A white toolbox that was just recently had some brown paint slapped on it."
+	desc = "A white toolbox that just recently had some brown paint slapped on it."
 	icon_state = "qm_toolbox"
 	inhand_icon_state = "artistic_toolbox"
 	has_latches = FALSE
