@@ -86,10 +86,8 @@
 	var/list/new_table = list()
 	for(var/datum/record/crew/player_record as anything in GLOB.data_core.general)
 		var/list/entry = list()
-		var/datum/record/crew/player_security_record = find_record("id", player_record.id, GLOB.data_core.general)
-		if(player_security_record)
-			entry["arrest_status"] = player_security_record.criminal
-			entry["security_record"] = player_security_record
+		entry["record"] = REF(player_record)
+		entry["arrest_status"] = player_security_record.criminal
 		entry["name"] = player_record.name
 		entry["id"] = player_record.id
 		entry["rank"] = player_record.rank
