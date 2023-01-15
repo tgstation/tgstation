@@ -54,7 +54,6 @@
 				to_chat(affected_mob, span_danger("You query upon the nature of miracles."))
 			if(DT_PROB(4, delta_time))
 				to_chat(affected_mob, span_danger("You feel a powerful shock course through your body."))
-				do_sparks(5, FALSE, src)
 				for(var/obj/nearby_object in orange(6, affected_mob))
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
