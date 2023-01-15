@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "datum stock part for every obj stock part"
-  - refactor: "all machines & dependent experiments to use datum stock parts"

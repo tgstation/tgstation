@@ -7,28 +7,24 @@
 ///returns a list of "damtype" => damage description based off of which bodypart description is most common
 ///used in human examines
 /mob/living/carbon/human/proc/get_majority_bodypart_damage_desc()
-	var/most_seen_brute = 0
-	var/most_seen_burn = 0
-	var/brute_desc = ""
-	var/burn_desc = ""
-	var/list/seen_brute = list()
-	var/list/seen_burn = list()
+	var/list/seen_damage = list() // This looks like: ({Damage type} = list({Damage description for that damage type} = {number of times it has appeared}, ...), ...)
+	var/list/most_seen_damage = list() // This looks like: ({Damage type} = {Frequency of the most common description}, ...)
+	var/list/final_descriptions = list() // This looks like: ({Damage type} = {Most common damage description for that type}, ...)
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		//brute
-		if(!seen_brute[part.brute_damage_desc])
-			seen_brute[part.brute_damage_desc] = 1
-		else
-			seen_brute[part.brute_damage_desc] += 1
-		if(seen_brute[part.brute_damage_desc] > most_seen_brute)
-			brute_desc = part.brute_damage_desc
-		//burn
-		if(!seen_burn[part.burn_damage_desc])
-			seen_burn[part.burn_damage_desc] = 1
-		else
-			seen_burn[part.burn_damage_desc] += 1
-		if(seen_burn[part.burn_damage_desc] > most_seen_burn)
-			burn_desc = part.burn_damage_desc
-	return list(BRUTE = brute_desc, BURN = burn_desc)
+		for(var/damage_type in part.damage_examines)
+			var/damage_desc = part.damage_examines[damage_type]
+			if(!seen_damage[damage_type])
+				seen_damage[damage_type] = list()
+
+			if(!seen_damage[damage_type][damage_desc])
+				seen_damage[damage_type][damage_desc] = 1
+			else
+				seen_damage[damage_type][damage_desc] += 1
+
+			if(seen_damage[damage_type][damage_desc] > most_seen_damage[damage_type])
+				most_seen_damage[damage_type] = seen_damage[damage_type][damage_desc]
+				final_descriptions[damage_type] = damage_desc
+	return final_descriptions
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
