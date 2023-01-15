@@ -92,6 +92,8 @@
 	update_appearance()
 
 /// Attempt to replace/add-to the occupant's organs with "mutated" equivalents.
+/// Returns TRUE on success, FALSE on failure.
+/// Requires the target mob to have an existing organic organ to "mutate".
 // TODO: In the future, this should have more logic:
 // - Replace non-mutant organs before mutant ones.
 /obj/machinery/dna_infuser/proc/infuse_organ(mob/living/carbon/human/target)
@@ -100,26 +102,39 @@
 		return
 	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
 	// Filter incompatible or identical organs from being inserted.
-	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
-		var/obj/item/organ/old_organ = target.getorganslot(new_organ.slot)
-		if(!old_organ && !istype(new_organ, /obj/item/organ/external))
-			// Occupant doesn't have the organ and isn't growing an external appendage.
-			potential_new_organs -= new_organ.type
-		else if(old_organ.type == new_organ.type)
+	for(var/obj/item/organ/old_organ as anything in (target.internal_organs.Copy() + target.external_organs.Copy()))
+		if(old_organ.type in potential_new_organs)
 			// Occupant already has the same mutated organ.
-			potential_new_organs -= new_organ.type
-		else if(old_organ.status != ORGAN_ORGANIC)
-			// Occupant's organ isn't organic and can't mutate.
-			potential_new_organs -= new_organ.type
+			potential_new_organs -= old_organ.type
+
 	// Nothing to mutate.
 	if(!length(potential_new_organs))
-		return
-	var/obj/item/organ/new_organ = pick(potential_new_organs)
-	new_organ = new new_organ()
+		return FALSE
+
+	var/obj/item/organ/new_organ
+	// To validate further additions, each remaining organ must be instantiated.
+	do
+		new_organ = pick(potential_new_organs)
+		new_organ = new new_organ()
+		var/obj/item/organ/old_organ = target.getorganslot(new_organ.slot)
+		if(old_organ)
+			// Existing organ is organic / can be mutated.
+			if(old_organ.status == ORGAN_ORGANIC)
+				break
+		// Occupant lacks the organ, but can grow an appendage.
+		else if(istype(new_organ, /obj/item/organ/external))
+			break
+		// Organ is either missing or non-organic.
+		potential_new_organs -= new_organ.type
+		new_organ = null
+		if(!length(potential_new_organs))
+			return FALSE
+	while(!new_organ)
+
 	if(!istype(new_organ, /obj/item/organ/internal/brain))
 		// Organ ISN'T brain, insert normally.
 		new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
-		return
+		return TRUE
 	// Organ IS brain, insert via special logic:
 	var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
@@ -127,6 +142,9 @@
 	qdel(old_brain)
 	var/obj/item/organ/internal/brain/new_brain = new_organ
 	new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+	return TRUE
+
+
 
 /obj/machinery/dna_infuser/update_icon_state()
 	//out of order
