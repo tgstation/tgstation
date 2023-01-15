@@ -299,3 +299,129 @@
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
 	custom_materials = list(/datum/material/hauntium = 500)
+
+/obj/item/storage/toolbox/captain
+	name = "\proper captain's toolbox"
+	desc = "A toolbox painted blue and gold. It sparkles brightly and belongs to the Captain."
+	icon_state = "captain_toolbox"
+	inhand_icon_state = "toolbox_captain"
+	has_latches = FALSE
+	material_flags = NONE
+
+/obj/item/storage/toolbox/captain/PopulateContents()
+	new /obj/item/computer_disk/command/captain(src)
+	new /obj/item/storage/box/silver_ids(src)
+	new /obj/item/radio/headset/heads/captain/alt(src)
+	new /obj/item/radio/headset/heads/captain(src)
+	new /obj/item/door_remote/captain(src)
+	new /obj/item/storage/photo_album/captain(src)
+
+/obj/item/storage/toolbox/chief_engineer
+	name = "\proper chief engineer's toolbox"
+	desc = "A pristine white toolbox. It is pretty clear that whoever owns this cleans their tools properly, or never uses them..."
+	icon_state = "ce_toolbox"
+	inhand_icon_state = "toolbox_default"
+	has_latches = FALSE
+	material_flags = NONE
+
+/obj/item/storage/toolbox/chief_engineer/PopulateContents()
+	new /obj/item/computer_disk/command/ce(src)
+	new /obj/item/radio/headset/heads/ce(src)
+	new /obj/item/megaphone/command(src)
+	new /obj/item/holosign_creator/atmos(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/door_remote/chief_engineer(src)
+	new /obj/item/pipe_dispenser(src)
+	new /obj/item/circuitboard/machine/techfab/department/engineering(src)
+	new /obj/item/extinguisher/advanced(src)
+	new /obj/item/storage/box/skillchips/engineering(src)
+
+/obj/item/storage/toolbox/chief_medical_officer
+	name = "\proper chief medical officer's toolbox"
+	desc = "A custom made medical toolbox with it's internal racks made to hold surgical tools."
+	icon_state = "cmo_toolbox"
+	inhand_icon_state = "toolbox_default"
+	has_latches = FALSE
+	material_flags = NONE
+
+/obj/item/storage/toolbox/chief_medical_officer/PopulateContents()
+	new /obj/item/computer_disk/command/cmo(src)
+	new /obj/item/radio/headset/heads/cmo(src)
+	new /obj/item/megaphone/command(src)
+	new /obj/item/defibrillator/compact/loaded(src)
+	new /obj/item/healthanalyzer/advanced(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/autosurgeon/medical_hud(src)
+	new /obj/item/door_remote/chief_medical_officer(src)
+	new /obj/item/wallframe/defib_mount(src)
+	new /obj/item/circuitboard/machine/techfab/department/medical(src)
+
+/obj/item/storage/toolbox/head_of_personnel
+	name = "\proper head of personnel's toolbox"
+	desc = "A simple toolbox with some red and gold duct tape on it's side. Someone glued many corgi stickers on it."
+	icon_state = "hop_toolbox"
+	inhand_icon_state = "toolbox_blue"
+	has_latches = FALSE
+	material_flags = NONE
+
+/obj/item/storage/toolbox/head_of_personnel/PopulateContents()
+	new /obj/item/computer_disk/command/hop(src)
+	new /obj/item/radio/headset/heads/hop(src)
+	new /obj/item/storage/box/ids(src)
+	new /obj/item/storage/box/ids(src)
+	new /obj/item/megaphone/command(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/door_remote/civilian(src)
+	new /obj/item/circuitboard/machine/techfab/department/service(src)
+
+/obj/item/storage/toolbox/head_of_security
+	name = "\proper head of security's toolbox"
+	desc = "A tactical toolbox with many internal attachments. Whoever owes this is clearly a gun nut."
+	icon_state = "hos_toolbox"
+	inhand_icon_state = "toolbox_red"
+	has_latches = FALSE
+	material_flags = NONE
+
+/obj/item/storage/toolbox/head_of_security/PopulateContents()
+	new /obj/item/computer_disk/command/hos(src)
+	new /obj/item/radio/headset/heads/hos(src)
+	new /obj/item/megaphone/sec(src)
+	new /obj/item/holosign_creator/security(src)
+	new /obj/item/storage/lockbox/loyalty(src)
+	new /obj/item/storage/box/flashbangs(src)
+	new /obj/item/shield/riot/tele(src)
+	new /obj/item/circuitboard/machine/techfab/department/security(src)
+
+/obj/item/storage/toolbox/research_director
+	name = "\proper research director's toolbox"
+	desc = "A purple toolbox. For whatever reasons it looks very sciency."
+	icon_state = "rd_toolbox"
+	inhand_icon_state = "toolbox_default"
+	has_latches = FALSE
+	material_flags = NONE
+
+/obj/item/storage/toolbox/research_director/PopulateContents()
+	new /obj/item/computer_disk/command/rd(src)
+	new /obj/item/radio/headset/heads/rd(src)
+	new /obj/item/megaphone/command(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/door_remote/research_director(src)
+	new /obj/item/circuitboard/machine/techfab/department/science(src)
+	new /obj/item/storage/box/skillchips/science(src)
+
+/obj/item/storage/toolbox/quartermaster
+	name = "\proper quartermaster's toolbox"
+	desc = "A white toolbox that was just recently had some brown paint slapped on it."
+	icon_state = "qm_toolbox"
+	inhand_icon_state = "artistic_toolbox"
+	has_latches = FALSE
+	material_flags = NONE
+
+/obj/item/storage/toolbox/quartermaster/PopulateContents()
+	new /obj/item/radio/headset/heads/qm(src)
+	new /obj/item/megaphone/cargo(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
+	new /obj/item/universal_scanner(src)
+	new /obj/item/door_remote/quartermaster(src)
+	new /obj/item/circuitboard/machine/techfab/department/cargo(src)
+	new /obj/item/circuitboard/machine/ore_silo(src)
