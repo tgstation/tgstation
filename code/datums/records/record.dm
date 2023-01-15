@@ -2,10 +2,9 @@
  * Record datum. Used for crew records and admin locked records.
  */
 /datum/record
+	var/name = "Unknown"
 	/// Account number
 	var/id
-	/// Name of the crew member
-	var/name
 	/// Rank of the crew member
 	var/rank
 	/// Job of the crew member

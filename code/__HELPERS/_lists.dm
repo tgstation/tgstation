@@ -639,7 +639,7 @@
 			i++
 	return i
 
-/// Returns datum/data/record
+/// Returns datum/record
 /proc/find_record(field, value, list/inserted_list)
 	for(var/datum/record/crew/record_to_check in inserted_list)
 		if(record_to_check[field] == value)

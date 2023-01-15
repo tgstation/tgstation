@@ -247,13 +247,13 @@
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				to_chat(human_user, "<b>Name:</b> [target_record.name] <b>Criminal Status:</b> [target_record.criminal]")
-				for(var/datum/data/crime/c in target_record.crim)
-					to_chat(human_user, "<b>Crime:</b> [c.crimeName]")
-					if (c.crimeDetails)
-						to_chat(human_user, "<b>Details:</b> [c.crimeDetails]")
+				for(var/datum/crime/crime in target_record.crim)
+					to_chat(human_user, "<b>Crime:</b> [crime.name]")
+					if (crime.details)
+						to_chat(human_user, "<b>Details:</b> [crime.details]")
 					else
-						to_chat(human_user, "<b>Details:</b> <A href='?src=[REF(src)];hud=s;add_details=1;cdataid=[c.dataId]'>\[Add details]</A>")
-					to_chat(human_user, "Added by [c.author] at [c.time]")
+						to_chat(human_user, "<b>Details:</b> <A href='?src=[REF(src)];hud=s;add_details=1;crime=[crime]'>\[Add details]</A>")
+					to_chat(human_user, "Added by [crime.author] at [crime.time]")
 					to_chat(human_user, "----------")
 				to_chat(human_user, "<b>Notes:</b> [target_record.security_notes]")
 				return
@@ -271,7 +271,7 @@
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
-				var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
+				var/datum/crime/citation = new(name = t1, author = allowed_access, time = station_time_timestamp(), fine = fine)
 				for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
 					if(tablet.saved_identification == target_record.name)
 						var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
@@ -284,9 +284,9 @@
 						))
 						signal.send_to_receivers()
 						human_user.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-				GLOB.data_core.addCitation(target_record.id, crime)
+				target_record.citation += citation
 				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
-				SSblackbox.ReportCitation(crime.dataId, human_user.ckey, human_user.real_name, target_record.name, t1, fine)
+				SSblackbox.ReportCitation(citation.crime_id, human_user.ckey, human_user.real_name, target_record.name, t1, fine)
 				return
 
 			if(href_list["add_crime"])
@@ -297,8 +297,8 @@
 					return
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				var/crime = GLOB.data_core.createCrimeEntry(t1, null, allowed_access, station_time_timestamp())
-				GLOB.data_core.addCrime(target_record.id, crime)
+				var/datum/crime/crime = new(name = t1, author = allowed_access, time = station_time_timestamp())
+				target_record.crim += crime
 				investigate_log("New Crime: <strong>[t1]</strong> | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 				to_chat(human_user, span_notice("Successfully added a crime."))
 				return
@@ -311,8 +311,9 @@
 					return
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				if(href_list["cdataid"])
-					GLOB.data_core.addCrimeDetails(target_record.id, href_list["cdataid"], t1)
+				if(href_list["crime_id"])
+					var/datum/crime/crime = href_list["crime_id"]
+					crime.details = t1
 					investigate_log("New Crime details: [t1] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 					to_chat(human_user, span_notice("Successfully added details."))
 				return

@@ -9,105 +9,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	var/list/locked = list()
 
 /datum/data
-	var/name = "data"
-
-/datum/data/crime
-	name = "crime"
-	var/crimeName = ""
-	var/crimeDetails = ""
-	var/author = ""
-	var/time = ""
-	var/fine = 0
-	var/paid = 0
-	var/dataId = 0
-
-/datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "", fine = 0)
-	var/datum/data/crime/new_crime = new
-	new_crime.crimeName = cname
-	new_crime.crimeDetails = cdetails
-	new_crime.author = author
-	new_crime.time = time
-	new_crime.fine = fine
-	new_crime.paid = 0
-	new_crime.dataId = ++crime_counter
-	return new_crime
-
-/datum/datacore/proc/addCitation(id = "", datum/data/crime/crime)
-	for(var/datum/record/crew/record in general)
-		if(record.id == id)
-			var/list/crimes = record.citation
-			crimes |= crime
-			return
-
-/datum/datacore/proc/removeCitation(id, cDataId)
-	for(var/datum/record/crew/record in general)
-		if(record.id == id)
-			var/list/crimes = record.citation
-			for(var/datum/data/crime/crime in crimes)
-				if(crime.dataId == text2num(cDataId))
-					crimes -= crime
-					return
-
-/datum/datacore/proc/payCitation(id, cDataId, amount)
-	for(var/datum/record/crew/record in general)
-		if(record.id == id)
-			var/list/crimes = record.citation
-			for(var/datum/data/crime/crime in crimes)
-				if(crime.dataId == text2num(cDataId))
-					crime.paid = crime.paid + amount
-					var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
-					D.adjust_money(amount)
-					return
-
-/**
- * Adds crime to security record.
- *
- * Is used to add single crime to someone's security record.
- * Arguments:
- * * id - record id.
- * * datum/data/crime/crime - premade array containing every variable, usually created by createCrimeEntry.
- */
-/datum/datacore/proc/addCrime(id = "", datum/data/crime/crime)
-	for(var/datum/record/crew/record in general)
-		if(record.id == id)
-			var/list/crimes = record.crim
-			crimes |= crime
-			return
-
-/**
- * Deletes crime from security record.
- *
- * Is used to delete single crime to someone's security record.
- * Arguments:
- * * id - record id.
- * * cDataId - id of already existing crime.
- */
-/datum/datacore/proc/removeCrime(id, cDataId)
-	for(var/datum/record/crew/record in general)
-		if(record.id == id)
-			var/list/crimes = record.crim
-			for(var/datum/data/crime/crime in crimes)
-				if(crime.dataId == text2num(cDataId))
-					crimes -= crime
-					return
-
-/**
- * Adds details to a crime.
- *
- * Is used to add or replace details to already existing crime.
- * Arguments:
- * * id - record id.
- * * cDataId - id of already existing crime.
- * * details - data you want to add.
- */
-/datum/datacore/proc/addCrimeDetails(id, cDataId, details)
-	for(var/datum/record/crew/record in general)
-		if(record.id == id)
-			var/list/crimes = record.crim
-			for(var/datum/data/crime/crime in crimes)
-				if(crime.dataId == text2num(cDataId))
-					crime.crimeDetails = details
-					return
+	var/name
 
 /datum/datacore/proc/manifest()
 	for(var/i in GLOB.new_player_list)
@@ -225,12 +127,12 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		dna = person.dna.unique_enzymes,
 		fingerprint = md5(person.dna.unique_identity),
 		blood_type = person.dna.blood_type,
-		mi_dis = person.get_quirk_string(!medical, CAT_QUIRK_MINOR_DISABILITY),
-		mi_dis_d = person.get_quirk_string(medical, CAT_QUIRK_MINOR_DISABILITY),
-		ma_dis = person.get_quirk_string(!medical, CAT_QUIRK_MAJOR_DISABILITY),
-		ma_dis_d = person.get_quirk_string(medical, CAT_QUIRK_MAJOR_DISABILITY),
-		medical_notes = person.get_quirk_string(!medical, CAT_QUIRK_NOTES),
-		medical_notes_d = person.get_quirk_string(medical, CAT_QUIRK_NOTES),
+		mi_dis = person.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY),
+		mi_dis_d = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
+		ma_dis = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY),
+		ma_dis_d = person.get_quirk_string(TRUE, CAT_QUIRK_MAJOR_DISABILITY),
+		medical_notes = person.get_quirk_string(FALSE, CAT_QUIRK_NOTES),
+		medical_notes_d = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
 	)
 
 	new /datum/record/locked(
@@ -279,11 +181,11 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 						<th>Author</th>
 						<th>Time Added</th>
 						</tr>"}
-	for(var/datum/data/crime/c in crew_record.crim)
-		final_paper_text += "<tr><td>[c.crimeName]</td>"
-		final_paper_text += "<td>[c.crimeDetails]</td>"
-		final_paper_text += "<td>[c.author]</td>"
-		final_paper_text += "<td>[c.time]</td>"
+	for(var/datum/crime/crime in crew_record.crim)
+		final_paper_text += "<tr><td>[crime.name]</td>"
+		final_paper_text += "<td>[crime.details]</td>"
+		final_paper_text += "<td>[crime.author]</td>"
+		final_paper_text += "<td>[crime.time]</td>"
 		final_paper_text += "</tr>"
 	final_paper_text += "</table>"
 
