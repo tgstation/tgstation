@@ -228,29 +228,60 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
 	var/gems = 10
 	var/max_gems = 20
-	var/gem_bar_offset_x = 128
-	var/gem_bar_offset_y = 128
-	var/individual_gem_offset = 8
+	var/gem_bar_offset_x = 22
+	var/gem_bar_offset_y = -18
+	var/individual_gem_offset = 5
+
+GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 
 /obj/machinery/trading_card_button/attack_hand(mob/user)
-	setup_radial()
+	var/list/choices = GLOB.tcgcard_mana_bar_radial_choices
+	if(!length(choices))
+		choices = GLOB.tcgcard_mana_bar_radial_choices = list(
+		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+		"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
+		"Modify" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_modify"),
+		)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(choice)
+		if("Pickup")
+			gems += 1
+		if("Tap")
+			gems -= 1
+		if("Modify")
+			gems = initial(gems)
 	update_icon(UPDATE_OVERLAYS)
 	add_fingerprint(user)
 	return ..()
 
 /obj/machinery/trading_card_button/proc/setup_radial()
-	var/list/choices = list(
-		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
-		"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
-		"Modify" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_modify"),
-	)
 
 /obj/machinery/trading_card_button/update_overlays()
 	. = ..()
 	if(!gems)
 		return
-    for(var/gem in 1 to gems)
-		var/mutable_appearance/gem_overlay = mutable_appearance('icons/hud/radial.dmi', "radial_pickup")
-		gem_overlay.pixel_x = gem * individual_gem_offset + gem_bar_offset
-		gem_overlay.pixel y = gem_bar_offset_y
+	for(var/gem in 1 to gems)
+		var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', "gem")
+		gem_overlay.pixel_x = gem_bar_offset_x
+		gem_overlay.pixel_y = gem * individual_gem_offset + gem_bar_offset_y
+		gem_overlay.mouse_opacity = FALSE
 		. += gem_overlay
+
+/obj/machinery/trading_card_button/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+/obj/effect/decal/trading_card_panel
+	name = "trading card point panel north"
+	icon = 'icons/obj/toys/tcgmisc.dmi'
+	icon_state = "point_panel_north"
+	mouse_opacity = FALSE
+
+/obj/effect/decal/trading_card_panel/south
+	name = "trading card point panel south"
+	icon_state = "point_panel_south"

@@ -6,6 +6,14 @@
 /obj/effect/turf_decal/trimline/dark_red/corner,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
+"dm" = (
+/obj/effect/turf_decal/trimline/dark_red,
+/obj/effect/decal/trading_card_panel{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
 "dS" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -25,6 +33,19 @@
 	},
 /obj/structure/table/reinforced/titaniumglass,
 /turf/open/floor/holofloor/plating,
+/area/template_noop)
+"fU" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 6
+	},
+/obj/effect/decal/trading_card_panel/south{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "hk" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -228,6 +249,22 @@
 /obj/effect/turf_decal/trimline/dark_red/line,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
+"tu" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/decal/trading_card_panel{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
 "tE" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -237,6 +274,22 @@
 /area/template_noop)
 "tT" = (
 /turf/open/floor/holofloor/stairs/right,
+/area/template_noop)
+"ud" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/decal/trading_card_panel{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "vu" = (
 /obj/structure/window/reinforced{
@@ -280,6 +333,19 @@
 	dir = 1
 	},
 /area/template_noop)
+"Af" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 10
+	},
+/obj/effect/decal/trading_card_panel/south{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
 "Aj" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/structure/window/reinforced,
@@ -297,6 +363,17 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
+/area/template_noop)
+"Ar" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner,
+/obj/effect/decal/trading_card_panel{
+	pixel_x = -10;
+	pixel_y = 4
+	},
+/turf/open/floor/holofloor/dark,
 /area/template_noop)
 "Dt" = (
 /turf/open/floor/holofloor/stairs/left{
@@ -358,6 +435,10 @@
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 5
 	},
+/obj/effect/decal/trading_card_panel/south{
+	pixel_x = 9;
+	pixel_y = 4
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "OG" = (
@@ -417,6 +498,10 @@
 "Wa" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/trimline/dark_red/end,
+/obj/effect/decal/trading_card_panel/south{
+	pixel_x = -10;
+	pixel_y = 4
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "Wk" = (
@@ -512,12 +597,12 @@ So
 (3,1,1) = {"
 jv
 EY
-Jr
+dm
 Op
 wc
 wc
-IK
-qx
+tu
+Af
 YN
 mA
 "}
@@ -560,12 +645,12 @@ mA
 (7,1,1) = {"
 nR
 IB
-Zz
+Ar
 Wa
 wc
 wc
-IK
-WI
+ud
+fU
 YN
 mA
 "}
