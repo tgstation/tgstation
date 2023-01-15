@@ -101,7 +101,7 @@
 		if((text2num(href_list["examine_time"]) + 1 MINUTES) < world.time)
 			to_chat(human_user, "[span_notice("It's too late to use this now!")]")
 			return
-		var/datum/data/record/target_record = find_record("name", perpname, GLOB.data_core.general)
+		var/datum/record/crew/target_record = find_record("name", perpname, GLOB.data_core.general)
 		if(href_list["photo_front"] || href_list["photo_side"])
 			if(!target_record)
 				return
@@ -171,7 +171,7 @@
 				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
 			if(href_list["p_stat"])
-				var/health_status = input(human_user, "Specify a new physical status for this person.", "Medical HUD", target_record.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
+				var/health_status = input(human_user, "Specify a new physical status for this person.", "Medical HUD", target_record.p_stat) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
 				if(!target_record)
 					return
 				if(!human_user.canUseHUD())
@@ -179,10 +179,10 @@
 				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 				if(health_status && health_status != "Cancel")
-					target_record.fields["p_stat"] = health_status
+					target_record.p_stat = health_status
 				return
 			if(href_list["m_stat"])
-				var/health_status = input(human_user, "Specify a new mental status for this person.", "Medical HUD", target_record.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
+				var/health_status = input(human_user, "Specify a new mental status for this person.", "Medical HUD", target_record.m_stat) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
 				if(!target_record)
 					return
 				if(!human_user.canUseHUD())
@@ -190,7 +190,7 @@
 				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 				if(health_status && health_status != "Cancel")
-					target_record.fields["m_stat"] = health_status
+					target_record.m_stat = health_status
 				return
 			if(href_list["quirk"])
 				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
@@ -223,12 +223,12 @@
 			if(!perpname)
 				to_chat(human_user, span_warning("ERROR: Can not identify target."))
 				return
-			target_record = find_record("name", perpname, GLOB.data_core.security)
+			target_record = find_record("name", perpname, GLOB.data_core.general)
 			if(!target_record)
 				to_chat(human_user, span_warning("ERROR: Unable to locate data core entry for target."))
 				return
 			if(href_list["status"])
-				var/setcriminal = input(human_user, "Specify a new criminal status for this person.", "Security HUD", target_record.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged", "Cancel")
+				var/setcriminal = input(human_user, "Specify a new criminal status for this person.", "Security HUD", target_record.criminal) in list("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged", "Cancel")
 				if(setcriminal != "Cancel")
 					if(!target_record)
 						return
@@ -236,8 +236,8 @@
 						return
 					if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
-					investigate_log("has been set from [target_record.fields["criminal"]] to [setcriminal] by [key_name(human_user)].", INVESTIGATE_RECORDS)
-					target_record.fields["criminal"] = setcriminal
+					investigate_log("has been set from [target_record.criminal] to [setcriminal] by [key_name(human_user)].", INVESTIGATE_RECORDS)
+					target_record.criminal = setcriminal
 					sec_hud_set_security_status()
 				return
 
@@ -246,8 +246,8 @@
 					return
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				to_chat(human_user, "<b>Name:</b> [target_record.fields["name"]] <b>Criminal Status:</b> [target_record.fields["criminal"]]")
-				for(var/datum/data/crime/c in target_record.fields["crim"])
+				to_chat(human_user, "<b>Name:</b> [target_record.name] <b>Criminal Status:</b> [target_record.criminal]")
+				for(var/datum/data/crime/c in target_record.crim)
 					to_chat(human_user, "<b>Crime:</b> [c.crimeName]")
 					if (c.crimeDetails)
 						to_chat(human_user, "<b>Details:</b> [c.crimeDetails]")
@@ -255,7 +255,7 @@
 						to_chat(human_user, "<b>Details:</b> <A href='?src=[REF(src)];hud=s;add_details=1;cdataid=[c.dataId]'>\[Add details]</A>")
 					to_chat(human_user, "Added by [c.author] at [c.time]")
 					to_chat(human_user, "----------")
-				to_chat(human_user, "<b>Notes:</b> [target_record.fields["notes"]]")
+				to_chat(human_user, "<b>Notes:</b> [target_record.security_notes]")
 				return
 
 			if(href_list["add_citation"])
@@ -273,7 +273,7 @@
 
 				var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
 				for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
-					if(tablet.saved_identification == target_record.fields["name"])
+					if(tablet.saved_identification == target_record.name)
 						var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
 						var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
 							"name" = "Security Citation",
@@ -284,9 +284,9 @@
 						))
 						signal.send_to_receivers()
 						human_user.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-				GLOB.data_core.addCitation(target_record.fields["id"], crime)
-				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [target_record.fields["name"]] by [key_name(human_user)]", INVESTIGATE_RECORDS)
-				SSblackbox.ReportCitation(crime.dataId, human_user.ckey, human_user.real_name, target_record.fields["name"], t1, fine)
+				GLOB.data_core.addCitation(target_record.id, crime)
+				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+				SSblackbox.ReportCitation(crime.dataId, human_user.ckey, human_user.real_name, target_record.name, t1, fine)
 				return
 
 			if(href_list["add_crime"])
@@ -298,8 +298,8 @@
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				var/crime = GLOB.data_core.createCrimeEntry(t1, null, allowed_access, station_time_timestamp())
-				GLOB.data_core.addCrime(target_record.fields["id"], crime)
-				investigate_log("New Crime: <strong>[t1]</strong> | Added to [target_record.fields["name"]] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+				GLOB.data_core.addCrime(target_record.id, crime)
+				investigate_log("New Crime: <strong>[t1]</strong> | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 				to_chat(human_user, span_notice("Successfully added a crime."))
 				return
 
@@ -312,37 +312,9 @@
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				if(href_list["cdataid"])
-					GLOB.data_core.addCrimeDetails(target_record.fields["id"], href_list["cdataid"], t1)
-					investigate_log("New Crime details: [t1] | Added to [target_record.fields["name"]] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+					GLOB.data_core.addCrimeDetails(target_record.id, href_list["cdataid"], t1)
+					investigate_log("New Crime details: [t1] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 					to_chat(human_user, span_notice("Successfully added details."))
-				return
-
-			if(href_list["view_comment"])
-				if(!human_user.canUseHUD())
-					return
-				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
-					return
-				to_chat(human_user, "<b>Comments/Log:</b>")
-				var/counter = 1
-				while(target_record.fields[text("com_[]", counter)])
-					to_chat(human_user, target_record.fields[text("com_[]", counter)])
-					to_chat(human_user, "----------")
-					counter++
-				return
-
-			if(href_list["add_comment"])
-				var/t1 = tgui_input_text(human_user, "Add a comment", "Security Records", multiline = TRUE)
-				if (!target_record || !t1 || !allowed_access)
-					return
-				if(!human_user.canUseHUD())
-					return
-				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
-					return
-				var/counter = 1
-				while(target_record.fields[text("com_[]", counter)])
-					counter++
-				target_record.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), CURRENT_STATION_YEAR, t1)
-				to_chat(human_user, span_notice("Successfully added comment."))
 				return
 
 	..() //end of this massive fucking chain. TODO: make the hud chain not spooky. - Yeah, great job doing that.
@@ -424,9 +396,9 @@
 	//Check for arrest warrant
 	if(judgement_criteria & JUDGE_RECORDCHECK)
 		var/perpname = get_face_name(get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
-		if(R?.fields["criminal"])
-			switch(R.fields["criminal"])
+		var/datum/record/crew/R = find_record("name", perpname, GLOB.data_core.general)
+		if(R?.criminal)
+			switch(R.criminal)
 				if("*Arrest*")
 					threatcount += 5
 				if("Incarcerated")
@@ -677,10 +649,10 @@
 		return TRUE
 
 /mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
-	for(var/list/L in list(GLOB.data_core.general,GLOB.data_core.medical,GLOB.data_core.security,GLOB.data_core.locked))
-		var/datum/data/record/R = find_record("name", oldname, L)
+	for(var/list/L in list(GLOB.data_core.general,GLOB.data_core.general,GLOB.data_core.general,GLOB.data_core.locked))
+		var/datum/record/crew/R = find_record("name", oldname, L)
 		if(R)
-			R.fields["name"] = newname
+			R.name = newname
 
 /mob/living/carbon/human/get_total_tint()
 	. = ..()

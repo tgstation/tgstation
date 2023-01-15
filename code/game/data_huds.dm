@@ -305,10 +305,10 @@ Security HUDs! Basic mode shows only the job.
 	holder.pixel_y = I.Height() - world.icon_size
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && GLOB.data_core)
-		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
+		var/datum/record/crew/R = find_record("name", perpname, GLOB.data_core.general)
 		if(R)
 			var/has_criminal_entry = TRUE
-			switch(R.fields["criminal"])
+			switch(R.criminal)
 				if("*Arrest*")
 					holder.icon_state = "hudwanted"
 				if("Incarcerated")

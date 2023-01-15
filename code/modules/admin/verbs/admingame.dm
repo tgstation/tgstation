@@ -206,7 +206,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
 
-	var/datum/data/record/record_found //Referenced to later to either randomize or not randomize the character.
+	var/datum/record/locked/record_found //Referenced to later to either randomize or not randomize the character.
 	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
 		/*Try and locate a record for the person being respawned through GLOB.data_core.
 		This isn't an exact science but it does the trick more often than not.*/
@@ -215,10 +215,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		record_found = find_record("id", id, GLOB.data_core.locked)
 
 	if(record_found)//If they have a record we can determine a few things.
-		new_character.real_name = record_found.fields["name"]
-		new_character.gender = record_found.fields["gender"]
-		new_character.age = record_found.fields["age"]
-		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], null, record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
+		new_character.real_name = record_found.name
+		new_character.gender = record_found.gender
+		new_character.age = record_found.age
+		new_character.hardset_dna(record_found.identity, record_found.dna, null, record_found.name, record_found.blood_type, new record_found.species, record_found.features)
 	else
 		new_character.randomize_human_appearance()
 		new_character.dna.update_dna_identity()

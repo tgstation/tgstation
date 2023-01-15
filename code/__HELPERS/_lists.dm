@@ -641,8 +641,8 @@
 
 /// Returns datum/data/record
 /proc/find_record(field, value, list/inserted_list)
-	for(var/datum/data/record/record_to_check in inserted_list)
-		if(record_to_check.fields[field] == value)
+	for(var/datum/record/crew/record_to_check in inserted_list)
+		if(record_to_check[field] == value)
 			return record_to_check
 	return null
 
