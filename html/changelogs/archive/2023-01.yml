@@ -448,3 +448,76 @@
   tralezab:
   - rscadd: Some prisoner backgrounds have more or less tattoos.
   - rscadd: More Memories to collect involving fishing and getting converted
+2023-01-15:
+  Comxy:
+  - bugfix: Fixes being able to place things on space tiles with a z-layer destination.
+  FernandoJ8:
+  - bugfix: the examine text for damage now properly uses the most common examine
+      text out of all the mob's limbs
+  - bugfix: all robotic limbs now have the robotic damage descriptions (charring,
+      denting)
+  - code_imp: improved the get_majority_bodypart_damage_desc() proc to reduce redundancies
+      and add support for limb-based cellular damage
+  Guillaume Prata:
+  - rscadd: Mothroach DNA infusion. For better or worse, anyone can get closer to
+      being a Moth person now!
+  Inari-Whitebear:
+  - spellcheck: fixed grammar/typo in Nanotrasen Pay System add
+  Jacquerel:
+  - bugfix: Mice won't try to path through walls to escape from sight and constantly
+      squeak.
+  - bugfix: Mice will stop running away from you if they can't see you any more.
+  - bugfix: Rats won't bite racks and tables while passing over them.
+  - bugfix: Syndicate mobs will no longer attempt to shoot you through walls, building
+      up massive piles of empty bullet casings in the process.
+  - qol: Bullet casings from "weapons" fired by certain mobs will clean themselves
+      up after 30 seconds.
+  JohnFulpWillard:
+  - refactor: Duplicating mobs now should now give properly functioning mobs, as duplications
+      in general have been reworked. Admins can feel free to use the pod feature on
+      people.
+  LemonInTheDark:
+  - bugfix: Fixes clientside lavaland lag on long rounds
+  Melbert:
+  - bugfix: Fixed not getting moodlet from freshly laundered clothing
+  - bugfix: Fixed durability tags not showing their ratings
+  Mothblocks:
+  - bugfix: Fixed chem dispensers keeping their upgrade chemicals even after stock
+      parts were downgraded.
+  NamelessFairy:
+  - bugfix: AI eyes, megafauna and robots will appear in the orbit menu NPC section
+      again.
+  - qol: Everything deadchat controlled will now be highlighted in the orbit menu.
+  Reco201:
+  - bugfix: Cyborgs turning their lights on and off can now be seen doing so.
+  Rhials:
+  - code_imp: Anomaly effects now have their own files, rather than being crammed
+      into a single, probably-too-large file.
+  ShizCalev:
+  - bugfix: Drunk scientists & the RDs rejoice! You can now reach the Ballmer peak!
+  - admin: Fixed a bunch of liver traits not being assignable.
+  SovietWomble, dessysalta, dopamiin:
+  - soundadd: the hygienebots speak now
+  Stonetear:
+  - bugfix: Mosin Nagant bolt sprites are now visible.  It's like 5 pixels so not
+      a surprise nobody noticed for years.
+  SuperSlayer0:
+  - code_imp: Removes double CAN_BE_INTERN flag in chaplain and cargo tech job flags
+  - code_imp: Replaces a string in chemist departamental head variable with a job
+      define.
+  - bugfix: Fixes monkey heretics being unable to invoke their runes
+  - bugfix: Fixes security stunbatons knockdowning you even if you have baton resistance
+      trait
+  SyncIt21:
+  - bugfix: Getting stuck or trapping someone else in the DNA infuser
+  Tattle:
+  - admin: cyborg creation details (synced AI and default laws) are now logged
+  TheWolfbringer:
+  - rscadd: Added atmos holofans to metastation's ordnance lab.
+  san7890:
+  - qol: Spirits of possessed blades (Chaplain's Null Rod Option) will be able re-try
+      selecting their name if it ends up to be filtered for any reason.
+  tralezab:
+  - admin: Force Event no longer filters by tab when searching.
+  vinylspiders:
+  - bugfix: fixed mob biotypes being ignored when applying toxin damage and oxyloss

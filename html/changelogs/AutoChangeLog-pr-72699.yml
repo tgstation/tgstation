@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Trading cards are no longer invisible when stacked."

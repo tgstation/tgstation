@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Getting stuck or trapping someone else in the DNA infuser"
