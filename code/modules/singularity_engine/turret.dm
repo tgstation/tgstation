@@ -29,6 +29,9 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /obj/machinery/singularity_turret/process()
+	if (!powered())
+		return
+
 	if (pause_counter > 0)
 		return
 
