@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "You'll no longer constantly be spammed with messages if your fingers are too big to interact with a computer's keyboard."
+  - bugfix: "You can no longer interact with programs that were previously opened on a computer if your fingers are too big to use the keyboard."
+  - bugfix: "You can now look at computer screens even if your fingers are too big to use the keyboard."
