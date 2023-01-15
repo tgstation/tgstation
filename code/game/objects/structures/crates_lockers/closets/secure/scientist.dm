@@ -9,6 +9,7 @@
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
 	new /obj/item/storage/bag/garment/research_director(src)
+	new /obj/item/storage/lockbox/medal/sci(src)
 	new /obj/item/storage/photo_album/rd(src)
 	new /obj/item/storage/toolbox/research_director(src)
 
