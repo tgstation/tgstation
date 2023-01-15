@@ -101,6 +101,13 @@
 
 	return TRUE
 
+/obj/item/gravity_anchor/attackby(obj/item/attacking_item, mob/user, params)
+	if (istype(attacking_item, /obj/item/raw_anomaly_core) || istype(attacking_item, /obj/item/assembly/signaler/anomaly))
+		balloon_alert(user, "give this to the charger!")
+		return TRUE
+
+	return ..()
+
 /obj/item/gravity_anchor/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 
