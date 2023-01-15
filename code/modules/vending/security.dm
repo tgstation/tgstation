@@ -26,7 +26,7 @@
 		/obj/item/coin/antagtoken = 1,
 		/obj/item/clothing/head/helmet/blueshirt = 1,
 		/obj/item/clothing/suit/armor/vest/blueshirt = 1,
-		/obj/item/clothing/gloves/cargo_gauntlet/security = 3,
+		/obj/item/clothing/gloves/cargo_gauntlet/brig = 3,
 		/obj/item/clothing/gloves/tackler = 5,
 		/obj/item/grenade/stingbang = 1,
 		/obj/item/watertank/pepperspray = 2,

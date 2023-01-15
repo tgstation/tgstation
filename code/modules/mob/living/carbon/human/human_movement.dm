@@ -41,6 +41,6 @@
 
 /mob/living/carbon/human/set_resting(new_resting, silent, instant)
 	if (HAS_TRAIT(src, TRAIT_RESTRICTIVE_GRAB) && !resting)
-		balloon_alert(src, "gripped too strong")
+		balloon_alert(src, "gripped too strong!")
 		return
 	return ..()
