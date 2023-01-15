@@ -218,3 +218,39 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
 /obj/effect/overlay/card_summon
 	mouse_opacity = 0
+
+/obj/machinery/trading_card_button
+	name = "THING"
+	desc = "IT DOES STUFF"
+	icon = 'icons/obj/toys/tcgmisc.dmi'
+	icon_state = "card_holder_inactive"
+	use_power = NO_POWER_USE
+
+	var/gems = 10
+	var/max_gems = 20
+	var/gem_bar_offset_x = 128
+	var/gem_bar_offset_y = 128
+	var/individual_gem_offset = 8
+
+/obj/machinery/trading_card_button/attack_hand(mob/user)
+	setup_radial()
+	update_icon(UPDATE_OVERLAYS)
+	add_fingerprint(user)
+	return ..()
+
+/obj/machinery/trading_card_button/proc/setup_radial()
+	var/list/choices = list(
+		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+		"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
+		"Modify" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_modify"),
+	)
+
+/obj/machinery/trading_card_button/update_overlays()
+	. = ..()
+	if(!gems)
+		return
+    for(var/gem in 1 to gems)
+		var/mutable_appearance/gem_overlay = mutable_appearance('icons/hud/radial.dmi', "radial_pickup")
+		gem_overlay.pixel_x = gem * individual_gem_offset + gem_bar_offset
+		gem_overlay.pixel y = gem_bar_offset_y
+		. += gem_overlay
