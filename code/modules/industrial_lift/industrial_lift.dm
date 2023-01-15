@@ -817,8 +817,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	icon_state = "titanium_white"
 
 /obj/structure/industrial_lift/tram/subfloor
-	name = "tram subfloor"
-	desc = "A sturdy looking thermoplastic subfloor the tram is built on."
+	name = "tram"
+	desc = "A tram for tramversing the station."
 	icon_state = "tram_subfloor"
 
 /datum/armor/structure_industrial_lift
