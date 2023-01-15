@@ -28,7 +28,7 @@
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
 					var/move_dir = get_dir(nearby_object, affected_mob)
-					nearby_object.Move(get_step(nearby_object, move_dir), move_dir)
+					nearby_object.throw_at(get_step(nearby_object, move_dir), move_dir)
 				for(var/mob/living/silicon/nearby_silicon in orange(2, affected_mob))
 					if(isAI(nearby_silicon))
 						continue
