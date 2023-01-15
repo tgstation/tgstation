@@ -85,6 +85,7 @@
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/watertank/atmos(src)
 	new /obj/item/clothing/suit/utility/fire/atmos(src)
+	new /obj/item/clothing/gloves/atmos(src)
 	new /obj/item/clothing/mask/gas/atmos(src)
 	new /obj/item/clothing/head/utility/hardhat/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)

@@ -73,6 +73,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
 /*
  * Bomb protection
