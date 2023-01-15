@@ -87,7 +87,7 @@
 	for(var/datum/record/crew/player_record as anything in GLOB.data_core.general)
 		var/list/entry = list()
 		entry["record"] = REF(player_record)
-		entry["arrest_status"] = player_security_record.criminal
+		entry["arrest_status"] = player_record.criminal
 		entry["name"] = player_record.name
 		entry["id"] = player_record.id
 		entry["rank"] = player_record.rank
