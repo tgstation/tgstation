@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/captains
-	name = "\proper captain's locker"
+	name = "captain's locker"
 	req_access = list(ACCESS_CAPTAIN)
 	icon_state = "cap"
 
@@ -18,7 +18,7 @@
 	new /obj/item/storage/toolbox/captain(src)
 
 /obj/structure/closet/secure_closet/hop
-	name = "\proper head of personnel's locker"
+	name = "head of personnel's locker"
 	req_access = list(ACCESS_HOP)
 	icon_state = "hop"
 
@@ -35,7 +35,7 @@
 	new /obj/item/storage/toolbox/head_of_personnel(src)
 
 /obj/structure/closet/secure_closet/hos
-	name = "\proper head of security's locker"
+	name = "head of security's locker"
 	req_access = list(ACCESS_HOS)
 	icon_state = "hos"
 
