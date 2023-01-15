@@ -1329,7 +1329,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "azd" = (
-/obj/machinery/suit_storage_unit/engine,
+/obj/machinery/gravity_anchor_charger,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "azg" = (
@@ -13926,9 +13926,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "fiu" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
@@ -41574,9 +41571,6 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "oVd" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -50357,6 +50351,13 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
+"rXh" = (
+/obj/item/inducer{
+	pixel_y = -2;
+	pixel_x = 5
+	},
+/turf/open/space/basic,
+/area/space)
 "rXB" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
@@ -56700,7 +56701,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "uhu" = (
-/obj/machinery/gravity_anchor_charger,
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "uhx" = (
@@ -112800,9 +112801,9 @@ qhD
 lCd
 fJy
 fJy
-uhu
-kTK
 azd
+kTK
+uhu
 fJy
 bUC
 bQj
@@ -113288,7 +113289,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+rXh
 qXB
 hjp
 gnk
