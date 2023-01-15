@@ -3,17 +3,12 @@
  * The AI controller is responsible for doing anything with that information.
  */
 /datum/element/ai_retaliate
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
-	argument_hash_start_idx = 2
-	/// Callback to a mob
-	var/datum/callback/post_retaliate_callback
 
-/datum/element/ai_retaliate/Attach(datum/target, post_retaliate_callback_input = null)
+/datum/element/ai_retaliate/Attach(datum/target)
 	. = ..()
 	if(!ismob(target))
 		return ELEMENT_INCOMPATIBLE
 
-	src.post_retaliate_callback = post_retaliate_callback_input
 	target.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(target, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
@@ -32,4 +27,3 @@
 		enemy_refs = list()
 	enemy_refs |= WEAKREF(attacker)
 	victim.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST] = enemy_refs
-	post_retaliate_callback?.InvokeAsync(attacker)

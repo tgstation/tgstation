@@ -105,7 +105,7 @@
 	apply_colour()
 	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/generic))
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
-	AddElement(/datum/element/ai_retaliate, retaliate_callback)
+	AddComponent(/datum/component/ai_retaliate_advanced, retaliate_callback)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/ground_sinking, target_icon_state = icon_state, outline_colour = chosen_hat_colour, damage_res_sinked = resistance_when_sinked)
 	AddComponent(/datum/component/caltrop, min_damage = 5, max_damage = 10, paralyze_duration = 1 SECONDS, flags = CALTROP_BYPASS_SHOES)
