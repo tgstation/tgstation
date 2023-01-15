@@ -195,9 +195,8 @@
 	if(!state_open || !is_valid_infusion(target, user))
 		return
 
-	if(iscarbon(target) && ishuman(target))
-		infusing_from = target
-		infusing_from.forceMove(src)
+	infusing_from = target
+	infusing_from.forceMove(src)
 
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
 	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
