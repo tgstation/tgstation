@@ -57,7 +57,7 @@
 			balloon_alert(user, "starting DNA infusion...")
 			start_infuse()
 		else
-			balloon_alert(user, "error, aborting infusion...")
+			balloon_alert(user, "error!")
 			visible_message(span_notice("[src] displays a message on its status screen: ") + span_warning("Patient DNA is missing, corrupted, or incompatible."))
 			playsound(src, 'sound/machines/scanbuzz.ogg', 35, TRUE)
 		return
