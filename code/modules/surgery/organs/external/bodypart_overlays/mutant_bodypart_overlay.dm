@@ -16,7 +16,7 @@
 ///Completely random image and color generation (obeys what a player can choose from)
 /datum/bodypart_overlay/mutant/proc/randomize_appearance()
 	randomize_sprite()
-	draw_color = random_color()
+	draw_color = "#[random_color()]"
 	imprint_on_next_insertion = FALSE
 
 ///Grab a random sprite

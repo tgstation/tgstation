@@ -96,7 +96,7 @@
 	if(organ_owner)
 		organ_owner.update_body_parts()
 
-	if(use_mob_sprite_as_obj_sprite && !special)
+	if(use_mob_sprite_as_obj_sprite)
 		update_appearance(UPDATE_OVERLAYS)
 
 ///Transfers the organ to the limb, and to the limb's owner, if it has one.
@@ -327,7 +327,7 @@
 	slot = ORGAN_SLOT_EXTERNAL_POD_HAIR
 
 	preference = "feature_pod_hair"
-	use_mob_sprite_as_obj_sprite = BODY_ADJ_LAYER
+	use_mob_sprite_as_obj_sprite = TRUE
 
 	dna_block = DNA_POD_HAIR_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_PLANT

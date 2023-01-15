@@ -23,11 +23,6 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/functional
 
-	///The preference type for opened wings
-	var/wings_open_feature_key = "wingsopen"
-	///The preference type for closed wings
-	var/wings_closed_feature_key = "wings"
-
 	///Are our wings open or closed?
 	var/wings_open = FALSE
 
@@ -117,22 +112,19 @@
 		REMOVE_TRAIT(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_off(human, SPECIES_TRAIT)
 		close_wings()
+	human.update_body_parts()
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
-	overlay.wings_open = TRUE
+	overlay.open_wings()
 	wings_open = TRUE
-
-	simple_change_sprite(wings_open_feature_key)
 
 ///close our wings
 /obj/item/organ/external/wings/functional/proc/close_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
-	overlay.wings_open = FALSE
 	wings_open = FALSE
-
-	simple_change_sprite(wings_closed_feature_key)
+	overlay.close_wings()
 
 	if(isturf(owner?.loc))
 		var/turf/location = loc
@@ -140,13 +132,32 @@
 
 ///Bodypart overlay of function wings, including open and close functionality!
 /datum/bodypart_overlay/mutant/wings/functional
-	var/wings_open = FALSE
+	///Are our wings currently open? Change through open_wings or close_wings()
+	VAR_PRIVATE/wings_open = FALSE
+	///Feature render key for opened wings
+	var/open_feature_key = "wingsopen"
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)
 		return GLOB.wings_open_list
 	else
 		return GLOB.wings_list
+
+///Update our wingsprite to the open wings variant
+/datum/bodypart_overlay/mutant/wings/functional/proc/open_wings()
+	wings_open = TRUE
+	feature_key = open_feature_key
+	set_appearance_from_name(sprite_datum.name) //It'll look for the same name again, but this time from the open wings list
+
+///Update our wingsprite to the closed wings variant
+/datum/bodypart_overlay/mutant/wings/functional/proc/close_wings()
+	wings_open = FALSE
+	feature_key = initial(feature_key)
+	set_appearance_from_name(sprite_datum.name)
+
+/datum/bodypart_overlay/mutant/wings/functional/generate_icon_cache()
+	. = ..()
+	. += wings_open ? "open" : "closed"
 
 ///angel wings, which relate to humans. comes with holiness.
 /obj/item/organ/external/wings/functional/angel
