@@ -27,20 +27,32 @@
 	/// Fingerprint is md5 of DNA
 	var/fingerprint
 
-/datum/record/New(id, name, rank, trim, initial_rank, age, species, gender,
-	character_appearance, blood_type, dna, fingerprint)
-	src.id = id || "000000"
-	src.name = name || "Unknown"
-	src.rank = rank || "Unassigned"
-	src.trim = trim || "Unassigned"
-	src.initial_rank = rank || "Unassigned"
-	src.age = age || 18
-	src.species = species || "Human"
-	src.gender = gender || "Other"
+/datum/record/New(
+	id = "000000",
+	name = "Unknown",
+	rank = "Unassigned",
+	trim = "Unassigned",
+	initial_rank = "Unassigned",
+	age = 18,
+	species = "Human",
+	gender = "Other",
+	character_appearance,
+	blood_type = "?",
+	dna = "Unknown",
+	fingerprint = "?????"
+	)
+	src.id = id
+	src.name = name
+	src.rank = rank
+	src.trim = trim
+	src.initial_rank = rank
+	src.age = age
+	src.species = species
+	src.gender = gender
 	src.character_appearance = character_appearance
-	src.blood_type = blood_type || "?"
-	src.dna = dna || "Unknown"
-	src.fingerprint = fingerprint || "?????"
+	src.blood_type = blood_type
+	src.dna = dna
+	src.fingerprint = fingerprint
 
 /**
  * Crew record datum
@@ -82,27 +94,53 @@
 	/// Security notes
 	var/security_notes
 
-/datum/record/crew/New(id, name, rank, trim, initial_rank, age, species, gender,
-	character_appearance, blood_type, dna, fingerprint, mi_dis, mi_dis_d, ma_dis,
-	ma_dis_d, cdi, cdi_d, alg, alg_d, medical_notes, medical_notes_d, p_stat,
-	m_stat, criminal, citation, crim, security_notes)
+/datum/record/crew/New(
+	id = "000000",
+	name = "Unknown",
+	rank = "Unassigned",
+	trim = "Unassigned",
+	initial_rank = "Unassigned",
+	age = 18,
+	species = "Human",
+	gender = "Other",
+	character_appearance,
+	blood_type = "?",
+	dna = "Unknown",
+	fingerprint = "?????"
+	mi_dis = "None",
+	mi_dis_d = "No disabilities have been diagnosed at the moment.",
+	ma_dis = "None",
+	ma_dis_d = "No disabilities have been diagnosed at the moment.",
+	cdi = "None",
+	cdi_d = "No diseases",
+	alg = "None",
+	alg_d = "No allergies",
+	medical_notes = "No notes.",
+	medical_notes_d = "No notes.",
+	p_stat = "Active",
+	m_stat = "Stable",
+	criminal = "None",
+	citation = list(),
+	crim = list(),
+	security_notes = "No notes."
+	)
 	. = ..()
-	src.mi_dis = mi_dis || "None"
-	src.mi_dis_d = mi_dis_d || "No disabilities have been diagnosed at the moment."
-	src.ma_dis = ma_dis || "None"
-	src.ma_dis_d = ma_dis_d || "No disabilities have been diagnosed at the moment."
-	src.cdi = cdi || "None"
-	src.cdi_d = cdi_d || "No diseases"
-	src.alg = alg || "None"
-	src.alg_d = alg_d || "No allergies"
-	src.medical_notes = medical_notes || "No notes."
-	src.medical_notes_d = medical_notes_d || "No notes."
-	src.p_stat = p_stat || "Active"
-	src.m_stat = m_stat || "Stable"
-	src.criminal = criminal || "None"
-	src.citation = citation || list()
-	src.crim = crim || list()
-	src.security_notes = security_notes || "No notes."
+	src.mi_dis = mi_dis
+	src.mi_dis_d = mi_dis_d
+	src.ma_dis = ma_dis
+	src.ma_dis_d = ma_dis_d
+	src.cdi = cdi
+	src.cdi_d = cdi_d
+	src.alg = alg
+	src.alg_d = alg_d
+	src.medical_notes = medical_notes
+	src.medical_notes_d = medical_notes_d
+	src.p_stat = p_stat
+	src.m_stat = m_stat
+	src.criminal = criminal
+	src.citation = citation
+	src.crim = crim
+	src.security_notes = security_notes
 
 	GLOB.data_core.general += src
 
@@ -121,13 +159,27 @@
 	/// Mobs unique identity from dna
 	var/identity
 
-/datum/record/locked/New(id, name, rank, trim, initial_rank, age, species,
-	gender,	character_appearance, blood_type, dna, fingerprint, mindref, features,
-	identity)
+/datum/record/locked/New(
+	id = "000000",
+	name = "Unknown",
+	rank = "Unassigned",
+	trim = "Unassigned",
+	initial_rank = "Unassigned",
+	age = 18,
+	species = "Human",
+	gender = "Other",
+	character_appearance,
+	blood_type = "?",
+	dna = "Unknown",
+	fingerprint = "?????",
+	mindref,
+	features = list(),
+	identity = "Unknown"
+	)
 	. = ..()
 	src.mindref = mindref
-	src.features = features || list()
-	src.identity = identity || "Unknown"
+	src.features = features
+	src.identity = identity
 
 	GLOB.data_core.locked += src
 
