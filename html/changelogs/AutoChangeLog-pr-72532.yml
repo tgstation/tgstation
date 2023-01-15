@@ -1,4 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - admin: "cyborg creation details (synced AI and default laws) are now logged"

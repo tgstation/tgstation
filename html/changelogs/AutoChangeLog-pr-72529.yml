@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Mice won't try to path through walls to escape from sight and constantly squeak."
-  - bugfix: "Mice will stop running away from you if they can't see you any more."
-  - bugfix: "Rats won't bite racks and tables while passing over them."

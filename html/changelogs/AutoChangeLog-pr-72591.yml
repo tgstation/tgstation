@@ -1,5 +1,0 @@
-author: "SuperSlayer0"
-delete-after: True
-changes:
-  - code_imp: "Removes double CAN_BE_INTERN flag in chaplain and cargo tech job flags"
-  - code_imp: "Replaces a string in chemist departamental head variable with a job define."
