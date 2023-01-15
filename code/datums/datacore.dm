@@ -4,26 +4,12 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 /datum/datacore
 	var/list/general = list()
 	var/print_count = 0
-	var/list/medical = list()
-	var/list/security = list()
-	var/securityPrintCount = 0
-	var/securityCrimeCounter = 0
+	var/crime_counter = 0
 	/// This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/list/locked = list()
 
 /datum/data
 	var/name = "data"
-
-/datum/data/record
-	name = "record"
-	var/list/fields = list()
-
-/datum/data/record/Destroy()
-	GLOB.data_core.general -= src
-	GLOB.data_core.general -= src
-	GLOB.data_core.general -= src
-	GLOB.data_core.locked -= src
-	. = ..()
 
 /datum/data/crime
 	name = "crime"
@@ -36,15 +22,15 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	var/dataId = 0
 
 /datum/datacore/proc/createCrimeEntry(cname = "", cdetails = "", author = "", time = "", fine = 0)
-	var/datum/data/crime/c = new /datum/data/crime
-	c.crimeName = cname
-	c.crimeDetails = cdetails
-	c.author = author
-	c.time = time
-	c.fine = fine
-	c.paid = 0
-	c.dataId = ++securityCrimeCounter
-	return c
+	var/datum/data/crime/new_crime = new
+	new_crime.crimeName = cname
+	new_crime.crimeDetails = cdetails
+	new_crime.author = author
+	new_crime.time = time
+	new_crime.fine = fine
+	new_crime.paid = 0
+	new_crime.dataId = ++crime_counter
+	return new_crime
 
 /datum/datacore/proc/addCitation(id = "", datum/data/crime/crime)
 	for(var/datum/record/crew/record in general)
