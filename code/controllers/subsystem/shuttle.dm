@@ -156,13 +156,13 @@ SUBSYSTEM_DEF(shuttle)
 
 		if(pack.access && pack.access_view)
 			if(pack.access == pack.access_view)
-				pack.desc += " Requires [pack.access] to to open and purchase."
+				pack.desc += " Requires [pack.access] access to open and purchase."
 			else
-				pack.desc += " Requires [pack.access] to open and [pack.access_view] to purchase."
+				pack.desc += " Requires [pack.access] access to open, or [pack.access_view] access to purchase."
 		else if(pack.access)
-			pack.desc += " Requires [pack.access]] to to open."
+			pack.desc += " Requires [pack.access]] access to open."
 		else if(pack.access_view)
-			pack.desc += " Requires [pack.access_view] to to purchase."
+			pack.desc += " Requires [pack.access_view] access to purchase."
 
 		supply_packs[pack.id] = pack
 
