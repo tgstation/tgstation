@@ -81,12 +81,10 @@ const ShoppingTab = (props, context) => {
                       tooltip={item.desc}
                     />
                     <br />
-                    <Box textAlign="right">
-                      {' costs ' +
-                        item.cost +
-                        ' ' +
-                        credit_type +
-                        ' per item.'}
+                  </Stack.Item>
+                  <Stack.Item mt={-0.5}>
+                    <Box fontSize="10px" color="label" textAlign="right">
+                      {' costs ' + item.cost + item.credit_type + ' per order.'}
                     </Box>
                     <Button
                       icon="minus"
@@ -167,11 +165,7 @@ const CheckoutTab = (props, context) => {
                       {'"' + item.desc + '"'}
                       <br />
                       <Box textAlign="right">
-                        {' costs ' +
-                          item.cost +
-                          ' ' +
-                          credit_type +
-                          ' per item.'}
+                        {item.name + ' costs ' + item.cost + item.credit_type + ' per order.'}
                       </Box>
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
