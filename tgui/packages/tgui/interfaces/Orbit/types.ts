@@ -5,6 +5,7 @@ export type AntagGroup = [string, Antags];
 export type OrbitData = {
   alive: Observable[];
   antagonists: Antags;
+  deadchat_controlled: Observable[];
   dead: Observable[];
   ghosts: Observable[];
   misc: Observable[];

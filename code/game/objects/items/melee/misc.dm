@@ -195,6 +195,7 @@
 	force = 0.001
 	armour_penetration = 1000
 	force_string = "INFINITE"
+	item_flags = NEEDS_PERMIT|NO_BLOOD_ON_ITEM
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
 
@@ -281,9 +282,6 @@
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 	shard.Bump(turf)
-
-/obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
-	return FALSE
 
 /obj/item/melee/curator_whip
 	name = "curator's whip"

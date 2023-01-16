@@ -206,7 +206,7 @@
 			points += amount
 			to_chat(user, span_notice("You transfer [amount] mining points from [attacking_id] to [src]."))
 
-#undef CREDIT_MERIT_POINTS
+#undef CREDIT_TYPE_MINING
 #undef TO_POINT_CARD
 #undef TO_USER_ID
 #undef MINING_SHIPPING_MULTIPLIER
