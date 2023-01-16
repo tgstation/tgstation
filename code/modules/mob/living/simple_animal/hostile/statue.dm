@@ -195,4 +195,4 @@
 	return things
 
 /datum/action/cooldown/spell/aoe/blindness/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
-	victim.adjust_blindness(4)
+	victim.adjust_temp_blindness(8 SECONDS)
