@@ -24,8 +24,10 @@
 	var/datum/weakref/overmind
 
 /datum/objective/blob_minion/check_completion()
-	var/mob/camera/blob/overmind = overmind.resolve()
-	return overmind?.stat != DEAD
+	var/mob/camera/blob/resolved_overmind = overmind.resolve()
+	if(!resolved_overmind)
+		return FALSE
+	return resolved_overmind.stat != DEAD
 
 /datum/antagonist/blob_minion/forge_objectives()
 	var/datum/objective/blob_minion/objective = new
