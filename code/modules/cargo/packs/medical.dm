@@ -5,7 +5,7 @@
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
-	desc = "Contains ten different blood packs for reintroducing blood to patients. Requires Medbay access to purchase."
+	desc = "Contains ten different blood packs for reintroducing blood to patients."
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/reagent_containers/blood = 2,
 					/obj/item/reagent_containers/blood/a_plus,
@@ -23,7 +23,7 @@
 /datum/supply_pack/medical/medipen_variety
 	name = "Medipen Variety-Pak"
 	desc = "Contains eight different medipens in three different varieties, \
-		to assist in quickly treating seriously injured patients. Requires Medbay access to purchase."
+		to assist in quickly treating seriously injured patients."
 	cost = CARGO_CRATE_VALUE * 3.5
 	contains = list(/obj/item/reagent_containers/hypospray/medipen = 2,
 					/obj/item/reagent_containers/hypospray/medipen/ekit = 3,
@@ -32,8 +32,7 @@
 
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
-	desc = "Contains thirteen different chemicals, for all the fun experiments you can make. \
-		Requires Medbay access to purchase."
+	desc = "Contains thirteen different chemicals, for all the fun experiments you can make."
 	cost = CARGO_CRATE_VALUE * 2.6
 	contains = list(/obj/item/reagent_containers/cup/bottle/hydrogen,
 					/obj/item/reagent_containers/cup/bottle/carbon,
@@ -56,24 +55,21 @@
 
 /datum/supply_pack/medical/defibs
 	name = "Defibrillator Crate"
-	desc = "Contains two defibrillators for bringing the recently deceased back to life. \
-	Requires Medbay access to purchase."
+	desc = "Contains two defibrillators for bringing the recently deceased back to life."
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/defibrillator/loaded = 2)
 	crate_name = "defibrillator crate"
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
-	desc = "Contains a single IV drip for administering blood to patients. \
-		Requires Medbay access to purchase."
+	desc = "Contains a single IV drip for administering blood to patients."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
 
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
-	desc = "Contains a random assortment of medical supplies. German doctor not included. \
-		Requires Medbay access to purchase."
+	desc = "Contains a random assortment of medical supplies. German doctor not included."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/reagent_containers/cup/bottle/multiver,
 					/obj/item/reagent_containers/cup/bottle/epinephrine,
@@ -110,7 +106,7 @@
 	name = "Surgical Supplies Crate"
 	desc = "Do you want to perform surgery, but don't have one of those fancy \
 		shmancy degrees? Just get started with this crate containing a medical duffelbag, \
-		Sterilizine spray and collapsible roller bed. Requires Medbay access to purchase."
+		Sterilizine spray and collapsible roller bed."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/storage/backpack/duffelbag/med/surgery,
 					/obj/item/reagent_containers/medigel/sterilizine,
@@ -123,7 +119,7 @@
 	desc = "Contains a bulk supply of saline-glucose condensed into a single canister that \
 		should last several days, with a large pump to fill containers with. Direct injection \
 		of saline should be left to medical professionals as the pump is capable of overdosing \
-		patients. Requires Medbay access to open or purchase."
+		patients."
 	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_MEDICAL
 	contains = list(/obj/machinery/iv_drip/saline)
@@ -131,8 +127,7 @@
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
 	desc = "Contains twelve different bottles of several viral samples for virology \
-		research. Also includes seven beakers and syringes. Balled-up jeans not included. \
-		Requires CMO access to open, or Virology access to purchase."
+		research. Also includes seven beakers and syringes. Balled-up jeans not included."
 	cost = CARGO_CRATE_VALUE * 5
 	access = ACCESS_CMO
 	access_view = ACCESS_VIROLOGY
@@ -155,8 +150,7 @@
 
 /datum/supply_pack/medical/cmoturtlenecks
 	name = "Chief Medical Officer Turtlenecks"
-	desc = "Contains the CMO's turtleneck and turtleneck skirt. \
-		Requires CMO access to open, or Medbay access to purchase."
+	desc = "Contains the CMO's turtleneck and turtleneck skirt."
 	cost = CARGO_CRATE_VALUE * 2
 	access = ACCESS_CMO
 	contains = list(/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck,
