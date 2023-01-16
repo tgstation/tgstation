@@ -9,7 +9,7 @@
 	/// Character appearance
 	var/mutable_appearance/character_appearance
 	/// DNA string
-	var/dna
+	var/dna_string
 	/// Fingerprint string (md5)
 	var/fingerprint
 	/// The character's gender
@@ -31,7 +31,7 @@
 	age = 18,
 	blood_type = "?",
 	character_appearance,
-	dna = "Unknown",
+	dna_string = "Unknown",
 	fingerprint = "?????",
 	gender = "Other",
 	id_number = "000000",
@@ -44,7 +44,7 @@
 	src.age = age
 	src.blood_type = blood_type
 	src.character_appearance = character_appearance
-	src.dna = dna
+	src.dna_string = dna_string
 	src.fingerprint = fingerprint
 	src.gender = gender
 	src.id_number = id_number
@@ -66,7 +66,7 @@
 	var/major_disabilities
 	/// Fancy description of major disabilities
 	var/major_disabilities_desc
-	/// List of medical notes
+	/// List of medical notes (roundstart populated with quirk strings)
 	var/list/medical_notes
 	/// Names of minor disabilities
 	var/minor_disabilities
@@ -81,7 +81,7 @@
 	age = 18,
 	blood_type = "?",
 	character_appearance,
-	dna = "Unknown",
+	dna_string = "Unknown",
 	fingerprint = "?????",
 	gender = "Other",
 	id_number = "000000",
@@ -100,9 +100,10 @@
 	. = ..()
 	src.major_disabilities = major_disabilities
 	src.major_disabilities_desc = major_disabilities_desc
-	src.medical_notes = medical_notes
+	src.medical_notes += medical_notes
 	src.minor_disabilities = minor_disabilities
 	src.minor_disabilities_desc = minor_disabilities_desc
+
 	GLOB.data_core.general += src
 
 /datum/record/crew/Destroy()
@@ -113,10 +114,8 @@
  * Admin locked record
  */
 /datum/record/locked
-	/// List of features
-	var/features = list()
-	/// Mob's dna.unique_identity
-	var/identity
+	/// Mob's dna
+	var/datum/dna/dna_ref
 	/// Mind datum
 	var/datum/mind/mindref
 
@@ -124,7 +123,7 @@
 	age = 18,
 	blood_type = "?",
 	character_appearance,
-	dna = "Unknown",
+	dna_string = "Unknown",
 	fingerprint = "?????",
 	gender = "Other",
 	id_number = "000000",
@@ -134,13 +133,11 @@
 	species = "Human",
 	trim = "Unassigned",
 	/// Locked specific
-	features = list(),
-	identity = "Unknown",
+	dna_ref,
 	mindref,
 	)
 	. = ..()
-	src.features = features
-	src.identity = identity
+	src.dna_ref = dna_ref
 	src.mindref = mindref
 
 	GLOB.data_core.locked += src

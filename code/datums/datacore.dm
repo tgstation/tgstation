@@ -22,11 +22,10 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		CHECK_TICK
 
 /datum/datacore/proc/manifest_modify(name, assignment, trim)
-	var/datum/record/crew/foundrecord = find_record("name", name, GLOB.data_core.general)
-	if(foundrecord)
-		foundrecord.rank = assignment
-		foundrecord.trim = trim
-
+	var/datum/record/crew/found_record = find_record(name)
+	if(found_record)
+		found_record.rank = assignment
+		found_record.trim = trim
 
 /datum/datacore/proc/get_manifest()
 	// First we build up the order in which we want the departments to appear in.
@@ -109,19 +108,19 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	var/static/record_id_num = 1001
 	var/id_number = num2hex(record_id_num++, 6)
 	var/mutable_appearance/character_appearance = new(person.appearance)
-	var/gender = "Other"
+	var/person_gender = "Other"
 	if(person.gender == "male")
-		gender = "Male"
+		person_gender = "Male"
 	if(person.gender == "female")
-		gender = "Female"
+		person_gender = "Female"
 
 	new /datum/record/crew(
 		age = person.age,
 		blood_type = person.dna.blood_type,
 		character_appearance = character_appearance,
-		dna = person.dna.unique_enzymes,
+		dna_string = person.dna.unique_enzymes,
 		fingerprint = md5(person.dna.unique_identity),
-		gender = gender,
+		gender = person_gender,
 		id_number = id_number,
 		initial_rank = assignment,
 		name = person.real_name,
@@ -131,7 +130,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		// Crew specific
 		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY),
 		major_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MAJOR_DISABILITY),
-		medical_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
+		medical_notes = list(person.get_quirk_string(TRUE, CAT_QUIRK_NOTES)),
 		minor_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY),
 		minor_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
 	)
@@ -139,9 +138,9 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	new /datum/record/locked(
 		age = person.age,
 		blood_type = person.dna.blood_type,
-		dna = person.dna.unique_enzymes,
+		dna_string = person.dna.unique_enzymes,
 		fingerprint = md5(person.dna.unique_identity),
-		gender = gender,
+		gender = person_gender,
 		id_number = id_number,
 		initial_rank = assignment,
 		name = person.real_name,
@@ -149,8 +148,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		species = person.dna.species.name,
 		trim = assignment,
 		// Locked specific
-		features = person.dna.features,
-		identity = person.dna.unique_identity,
+		dna_ref = person.dna,
 		mindref = person.mind,
 	)
 

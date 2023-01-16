@@ -123,7 +123,7 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/perpname = H.get_face_name(H.get_id_name())
-				var/datum/record/crew/record = find_record("name", perpname, GLOB.data_core.general)
+				var/datum/record/crew/record = find_record(perpname)
 				if(!record || (record.wanted_status == "*Arrest*"))
 					beep = TRUE
 		if(SCANGATE_MINDSHIELD)

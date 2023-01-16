@@ -639,11 +639,27 @@
 			i++
 	return i
 
-/// Returns datum/record
-/proc/find_record(field, value, list/inserted_list)
-	for(var/datum/record/crew/record_to_check in inserted_list)
-		if(record_to_check[field] == value)
+/**
+ * Returns the first record in the list that matches the name
+ *
+ * If locked_only is TRUE, locked records will be checked
+ *
+ * If locked_only is FALSE, crew records will be checked
+ *
+ * If no record is found, returns null
+ */
+/proc/find_record(value, locked_only = FALSE)
+	if(locked_only)
+		for(var/datum/record/locked/record_to_check in GLOB.data_core.locked)
+			if(record_to_check.name != value)
+				continue
 			return record_to_check
+		return null
+
+	for(var/datum/record/crew/record_to_check in GLOB.data_core.general)
+		if(record_to_check.name != value)
+			continue
+		return record_to_check
 	return null
 
 

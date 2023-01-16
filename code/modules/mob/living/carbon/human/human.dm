@@ -101,7 +101,7 @@
 		if((text2num(href_list["examine_time"]) + 1 MINUTES) < world.time)
 			to_chat(human_user, "[span_notice("It's too late to use this now!")]")
 			return
-		var/datum/record/crew/target_record = find_record("name", perpname, GLOB.data_core.general)
+		var/datum/record/crew/target_record = find_record(perpname)
 		if(href_list["photo_front"] || href_list["photo_side"])
 			if(!target_record)
 				return
@@ -201,7 +201,7 @@
 			if(!perpname)
 				to_chat(human_user, span_warning("ERROR: Can not identify target."))
 				return
-			target_record = find_record("name", perpname, GLOB.data_core.general)
+			target_record = find_record(perpname)
 			if(!target_record)
 				to_chat(human_user, span_warning("ERROR: Unable to locate data core entry for target."))
 				return
@@ -375,7 +375,7 @@
 	//Check for arrest warrant
 	if(judgement_criteria & JUDGE_RECORDCHECK)
 		var/perpname = get_face_name(get_id_name())
-		var/datum/record/crew/record = find_record("name", perpname, GLOB.data_core.general)
+		var/datum/record/crew/record = find_record(perpname)
 		if(record?.wanted_status)
 			switch(record.wanted_status)
 				if("*Arrest*")
@@ -627,11 +627,14 @@
 		to_chat(src, span_notice("You successfully [cuff_break ? "break" : "remove"] [I]."))
 		return TRUE
 
-/mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
-	for(var/list/L in list(GLOB.data_core.general,GLOB.data_core.general,GLOB.data_core.general,GLOB.data_core.locked))
-		var/datum/record/crew/R = find_record("name", oldname, L)
-		if(R)
-			R.name = newname
+/mob/living/carbon/human/replace_records_name(oldname, newname) // Only humans have records right now, move this up if changed.
+	var/datum/record/crew/crew_record = find_record(oldname)
+	var/datum/record/locked/locked_record = find_record(oldname, locked_only = TRUE)
+
+	if(crew_record)
+		crew_record.name = newname
+	if(locked_record)
+		locked_record.name = newname
 
 /mob/living/carbon/human/get_total_tint()
 	. = ..()

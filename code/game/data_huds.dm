@@ -305,7 +305,7 @@ Security HUDs! Basic mode shows only the job.
 	holder.pixel_y = I.Height() - world.icon_size
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && GLOB.data_core)
-		var/datum/record/crew/record = find_record("name", perpname, GLOB.data_core.general)
+		var/datum/record/crew/record = find_record(perpname)
 		if(!record || record.wanted_status == "None")
 			return
 		switch(record.wanted_status)

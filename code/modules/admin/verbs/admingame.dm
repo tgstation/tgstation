@@ -208,17 +208,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/datum/record/locked/record_found //Referenced to later to either randomize or not randomize the character.
 	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
-		/*Try and locate a record for the person being respawned through GLOB.data_core.
-		This isn't an exact science but it does the trick more often than not.*/
-		var/id = md5("[G_found.real_name][G_found.mind.assigned_role.title]")
-
-		record_found = find_record("id", id, GLOB.data_core.locked)
+		record_found = find_record(G_found.name, locked_only = TRUE)
 
 	if(record_found)//If they have a record we can determine a few things.
 		new_character.real_name = record_found.name
 		new_character.gender = record_found.gender
 		new_character.age = record_found.age
-		new_character.hardset_dna(record_found.identity, record_found.dna, null, record_found.name, record_found.blood_type, new record_found.species, record_found.features)
+		var/datum/dna/found_dna = record_found.dna_ref
+		new_character.hardset_dna(found_dna.unique_identity, record_found.dna_string, null, record_found.name, record_found.blood_type, new record_found.species, found_dna.features)
 	else
 		new_character.randomize_human_appearance()
 		new_character.dna.update_dna_identity()
