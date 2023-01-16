@@ -721,6 +721,11 @@
 /obj/machinery/attack_ai(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
 		return FALSE
+	if(!(ROLE_SYNDICATE in user.faction))
+		if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
+			return FALSE
+		if((onSyndieBase() && loc != user))
+			return FALSE
 	if(iscyborg(user))// For some reason attack_robot doesn't work
 		return attack_robot(user)
 	return _try_interact(user)
@@ -1016,11 +1021,12 @@
 							if (isnull(stock_part_datum))
 								CRASH("[secondary_part] ([secondary_part.type]) did not have a stock part datum (was trying to find [primary_part_base])")
 							component_parts += stock_part_datum
+							part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents
 							qdel(secondary_part)
 						else
 							component_parts += secondary_part
 							secondary_part.forceMove(src)
-							part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents & forceMove wont remove it from th list
+							part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents
 
 				component_parts -= primary_part_base
 

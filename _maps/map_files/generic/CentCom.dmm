@@ -5,6 +5,16 @@
 "ad" = (
 /turf/open/space,
 /area/space)
+"ai" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_3_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "ar" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -94,6 +104,17 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
+"aL" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_2_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "aM" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/food/meat/rawbacon,
@@ -459,10 +480,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
-"cQ" = (
-/obj/effect/landmark/basketball/game_area,
-/turf/open/space/basic,
-/area/space)
 "cS" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -2236,16 +2253,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
-"lE" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 5;
-	name = "recovery ship";
-	shuttle_id = "pod_4_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "lJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office"
@@ -5009,10 +5016,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
-"xG" = (
-/obj/machinery/button/showtime,
-/turf/closed/indestructible/fakeglass,
-/area/centcom/tdome/administration)
 "xN" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
@@ -6584,6 +6587,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"Iv" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_4_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "Iz" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
@@ -6876,16 +6889,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
-"JR" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 5;
-	name = "recovery ship";
-	shuttle_id = "pod_3_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "JV" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -8764,17 +8767,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
-"Ug" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 5;
-	name = "recovery ship";
-	shuttle_id = "pod_2_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "Uh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -35065,7 +35057,7 @@ aa
 aa
 aa
 aa
-cQ
+aa
 aa
 aa
 aa
@@ -36197,7 +36189,7 @@ aa
 aa
 aa
 aa
-lE
+Iv
 KO
 KV
 KV
@@ -37225,7 +37217,7 @@ aa
 aa
 aa
 aa
-JR
+ai
 KO
 KV
 KV
@@ -38261,7 +38253,7 @@ KQ
 KH
 aa
 aa
-Ug
+aL
 aa
 aa
 aa
@@ -52369,7 +52361,7 @@ IG
 IG
 IG
 It
-xG
+Pj
 Xn
 Sz
 Sz

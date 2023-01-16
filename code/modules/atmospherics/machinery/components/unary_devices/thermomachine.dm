@@ -63,13 +63,13 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
 	var/calculated_bin_rating = 0
-	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
-		calculated_bin_rating += bin.rating
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		calculated_bin_rating += bin.tier
 	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
 
 	var/calculated_laser_rating = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		calculated_laser_rating += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		calculated_laser_rating += laser.tier
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
 	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
 

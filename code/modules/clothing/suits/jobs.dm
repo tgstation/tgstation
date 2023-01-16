@@ -165,7 +165,6 @@
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
 
-// Lemom todo: and here
 /obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)

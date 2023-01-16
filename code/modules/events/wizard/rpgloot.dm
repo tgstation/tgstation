@@ -26,12 +26,16 @@
 	if(!proximity || !istype(target))
 		return
 
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
 
 	uses -= 1
 	if(!uses)
 		visible_message(span_warning("[src] vanishes, its magic completely consumed from the fortification."))
 		qdel(src)
+
+	return .
 
 /obj/item/upgradescroll/unlimited
 	name = "unlimited foolproof item fortification scroll"

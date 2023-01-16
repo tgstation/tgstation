@@ -52,15 +52,20 @@
 		balloon_alert(user, "not while it's on!")
 		return
 	if(occupant && infusing_from)
+		// Abort infusion if the occupant is invalid.
+		if(!is_valid_occupant(occupant, user))
+			playsound(src, 'sound/machines/scanbuzz.ogg', 35, vary = TRUE)
+			return
 		balloon_alert(user, "starting DNA infusion...")
 		start_infuse()
 		return
 	toggle_open(user)
 
 /obj/machinery/dna_infuser/proc/start_infuse()
+	var/mob/living/carbon/human/human_occupant = occupant
 	infusing = TRUE
-	var/mob/living/carbon/human/hoccupant = occupant
 	visible_message(span_notice("[src] hums to life, beginning the infusion process!"))
+	// Replace infusing_into with a [/datum/infuser_entry]
 	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
 		if(is_type_in_list(infusing_from, entry.input_obj_or_mob))
 			infusing_into = entry
@@ -69,47 +74,59 @@
 		//no valid recipe, so you get a fly mutation
 		infusing_into = GLOB.infuser_entries[1]
 	playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
-	to_chat(hoccupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
-	hoccupant.take_overall_damage(10)
+	to_chat(human_occupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
+	human_occupant.take_overall_damage(10)
+	human_occupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = human_occupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
 	Shake(15, 15, INFUSING_TIME)
-	addtimer(CALLBACK(occupant, TYPE_PROC_REF(/mob, emote), "scream"), INFUSING_TIME - 1 SECONDS)
+	addtimer(CALLBACK(human_occupant, TYPE_PROC_REF(/mob, emote), "scream"), INFUSING_TIME - 1 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(end_infuse)), INFUSING_TIME)
 	update_appearance()
 
 /obj/machinery/dna_infuser/proc/end_infuse()
-	infusing = FALSE
 	infuse_organ(occupant)
+	infusing = FALSE
+	infusing_into = null
+	QDEL_NULL(infusing_from)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	toggle_open()
 	update_appearance()
 
-//in the future, this should have more logic:
-//- replace non-mutant organs before mutant ones
-//- don't replace empty organ slots
+/// Attempt to replace/add-to the occupant's organs with "mutated" equivalents.
+// TODO: In the future, this should have more logic:
+// - Replace non-mutant organs before mutant ones.
 /obj/machinery/dna_infuser/proc/infuse_organ(mob/living/carbon/human/target)
 	if(!ishuman(target) || !infusing_into)
-		//already filters humans from entering, but you know, just in case.
+		// Already filters humans from entering, but you know, just in case.
 		return
-	var/list/potential_new_organs = infusing_into.output_organs.Copy()
-	for(var/obj/item/organ/organ as anything in (target.internal_organs.Copy() + target.external_organs.Copy()))
-		if(organ.type in potential_new_organs)
-			//we already have this
-			potential_new_organs -= organ.type
-	if(potential_new_organs.len)
-		var/obj/item/organ/new_organ = pick(potential_new_organs)
-		new_organ = new new_organ()
-		if(istype(new_organ, /obj/item/organ/internal/brain))
-			// brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
-			var/obj/item/organ/internal/brain/new_brain = new_organ
-			var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-			if(old_brain)
-				old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
-				qdel(old_brain)
-			new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
-		else
-			new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
-	infusing_into = null
-	QDEL_NULL(infusing_from)
+	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
+	// Filter incompatible or identical organs from being inserted.
+	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
+		var/obj/item/organ/old_organ = target.getorganslot(new_organ.slot)
+		if(!old_organ && !istype(new_organ, /obj/item/organ/external))
+			// Occupant doesn't have the organ and isn't growing an external appendage.
+			potential_new_organs -= new_organ.type
+		else if(old_organ.type == new_organ.type)
+			// Occupant already has the same mutated organ.
+			potential_new_organs -= new_organ.type
+		else if(old_organ.status != ORGAN_ORGANIC)
+			// Occupant's organ isn't organic and can't mutate.
+			potential_new_organs -= new_organ.type
+	// Nothing to mutate.
+	if(!length(potential_new_organs))
+		return
+	var/obj/item/organ/new_organ = pick(potential_new_organs)
+	new_organ = new new_organ()
+	if(!istype(new_organ, /obj/item/organ/internal/brain))
+		// Organ ISN'T brain, insert normally.
+		new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
+		return
+	// Organ IS brain, insert via special logic:
+	var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
+	old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
+	qdel(old_brain)
+	var/obj/item/organ/internal/brain/new_brain = new_organ
+	new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
 
 /obj/machinery/dna_infuser/update_icon_state()
 	//out of order
@@ -176,9 +193,10 @@
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
 
-// mostly good for dead mobs that turn into items like dead mice (smack to add)
+// mostly good for dead mobs that turn into items like dead mice (smack to add).
 /obj/machinery/dna_infuser/proc/add_infusion_item(obj/item/target, mob/user)
-	if(!is_valid_infusion(target, user))
+	// if the machine is closed, already has a infusion target, or the target is not valid then no adding.
+	if(!state_open || !is_valid_infusion(target, user))
 		return
 
 	if(!user.transferItemToLoc(target, src))
@@ -187,23 +205,32 @@
 
 	infusing_from = target
 
-// mostly good for dead mobs like corpses (drag to add)
+// mostly good for dead mobs like corpses (drag to add).
 /obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
-		return
-
-	if(iscarbon(target))
-		if(ishuman(target))
-			close_machine(target)
-		return
-
-	if(!is_valid_infusion(target, user))
+	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
+	if(!state_open || !is_valid_infusion(target, user))
 		return
 
 	infusing_from = target
 	infusing_from.forceMove(src)
 
+/// Verify that the occupant/target is organic, and has mutable DNA.
+/obj/machinery/dna_infuser/proc/is_valid_occupant(mob/living/carbon/human/human_target, mob/user)
+	// Invalid: Occupant isn't Human, isn't organic, lacks DNA / has TRAIT_GENELESS.
+	if(!ishuman(human_target) || !(human_target.mob_biotypes & MOB_ORGANIC) || !human_target.has_dna() || HAS_TRAIT(human_target, TRAIT_GENELESS))
+		balloon_alert(user, "dna is missing!")
+		return FALSE
+	// Invalid: DNA is too damaged to mutate anymore / has TRAIT_BADDNA.
+	if(HAS_TRAIT(human_target, TRAIT_BADDNA))
+		balloon_alert(user, "dna is corrupted!")
+		return FALSE
+	// Valid: Occupant is an organic Human who has undamaged and mutable DNA.
+	return TRUE
+
+/// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
+	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
+		return FALSE
 	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
