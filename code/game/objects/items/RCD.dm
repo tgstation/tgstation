@@ -207,9 +207,9 @@ RLD
 	if(.)
 		return
 
-	if(action == "toggle_silo")
+	if(action == "toggle_silo" && (upgrade & RCD_UPGRADE_SILO_LINK))
 		if(silo_mats)
-			if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link
+			if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link.
 				to_chat(usr, span_alert("No silo link detected. Connect to silo via multitool."))
 				return FALSE
 			silo_link = !silo_link
@@ -346,7 +346,7 @@ RLD
 			),
 
 			//Glass Airlocks[airlock_glass = TRUE is implied,do fill_closed overlay]
-			"Glass AirLocks" = list(
+			"Glass Airlocks" = list(
 				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/glass, TITLE = "Standard", CATEGORY_ICON_STATE = TITLE_ICON, CATEGORY_ICON_SUFFIX = "Glass"),
 				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/public/glass, TITLE = "Public"),
 				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/engineering/glass, TITLE = "Engineering"),
@@ -363,7 +363,7 @@ RLD
 			),
 
 			//Solid Airlocks[airlock_glass = FALSE is implied,no fill_closed overlay]
-			"Solid AirLocks" = list(
+			"Solid Airlocks" = list(
 				list(AIRLOCK_TYPE = /obj/machinery/door/airlock, TITLE = "Standard", CATEGORY_ICON_STATE = TITLE_ICON),
 				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/public, TITLE = "Public"),
 				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/engineering, TITLE = "Engineering"),
@@ -674,6 +674,18 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			var/list/category = root[category_name]
 			if(category == null) //not a valid category
 				return TRUE
+
+			/**
+			 * The advantage of organizing designs into categories is that
+			 * You can ignore an complete category if the design disk upgrade for that category isn't installed.
+			 */
+			//You can't select designs from the Machines category if you dont have the frames upgrade installed.
+			if(category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
+				return TRUE
+			//You can't select designs from the Furniture category if you dont have the furnishing upgrade installed.
+			if(category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
+				return TRUE
+
 			var/list/design = category[index]
 			if(design == null) //not a valid design
 				return TRUE
@@ -701,7 +713,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 			if(root_category == "Airlocks")
 				construction_mode = RCD_AIRLOCK
-				airlock_glass = (category_name != "Solid AirLocks")
+				airlock_glass = (category_name != "Solid Airlocks")
 				airlock_type = design[AIRLOCK_TYPE]
 
 		else
