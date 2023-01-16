@@ -14,6 +14,7 @@
 		/obj/effect/anomaly/bioscrambler = /obj/item/clothing/suit/armor/reactive/bioscrambling,
 		/obj/effect/anomaly/hallucination = /obj/item/clothing/suit/armor/reactive/hallucinating,
 		/obj/effect/anomaly/dimensional = /obj/item/clothing/suit/armor/reactive/barricade,
+		/obj/effect/anomaly/ectoplasm = /obj/item/clothing/suit/armor/reactive/ectoplasm,
 		)
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
@@ -491,3 +492,22 @@
 	qdel(theme)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return FALSE
+
+/obj/item/clothing/suit/armor/reactive/ectoplasm
+	name = "reactive posession armor"
+	desc = "An experimental suit of armor that calls upon the power of the dead when struck."
+	emp_message = span_warning("Your suit vibrates, letting out a gentle hum. For a moment, it almost sounds like it's trying to communicate with you.")
+	cooldown_message = span_danger("Ectoplasmic Matrix out of balance. Please wait for calibration to complete!")
+	reactivearmor_cooldown_duration = 8 SECONDS
+
+/obj/item/clothing/suit/armor/reactive/ectoplasm/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	playsound(get_turf(owner),'sound/hallucinations/veryfar_noise.ogg', 100, TRUE)
+	owner.visible_message(span_danger("The [src] lets loose a burst of otherworldly energy!"))
+
+	haunt_outburst(get_turf(owner), 6, 35)
+
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/barricade/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("The reactive armor shunts matter from an unstable dimension!"))

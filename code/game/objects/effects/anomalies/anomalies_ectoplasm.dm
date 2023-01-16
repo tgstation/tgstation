@@ -49,10 +49,12 @@
 		//The actual event severity is determined by what % the current ghosts are circling the anomaly.
 		effect_power = ghosts_orbiting / total_dead * 100
 
-		if(effect_power >= 50)
+		if(effect_power >= 50) //If we're at the threshold for the highest tier effect, we change sprites in preparation for the spooks.
 			icon_state = "ectoplasm_heavy"
 			update_appearance(UPDATE_ICON_STATE)
-
+		else
+			icon_state = "ectoplasm"
+			update_appearance(UPDATE_ICON_STATE)
 
 /obj/effect/anomaly/ectoplasm/detonate()
 	. = ..()
