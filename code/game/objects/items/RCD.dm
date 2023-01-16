@@ -558,6 +558,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(!do_after(user, delay, target = A))
 		qdel(rcd_effect)
 		return FALSE
+	if(!checkResource(rcd_results["cost"], user))
+		qdel(rcd_effect)
+		return FALSE
 	if(!A.rcd_act(user, src, rcd_results["mode"]))
 		qdel(rcd_effect)
 		return FALSE
