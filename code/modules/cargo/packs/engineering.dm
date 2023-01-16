@@ -121,7 +121,7 @@
 /datum/supply_pack/engineering/portapump
 	name = "Portable Air Pump Crate"
 	desc = "Did someone let the air out of the shuttle again? We've got you covered. \
-		Contains two portable air pumps. Requires Atmospherics access to open."
+		Contains two portable air pumps. Requires Atmospherics access to purchase."
 	cost = CARGO_CRATE_VALUE * 4.5
 	access_view = ACCESS_ATMOSPHERICS
 	contains = list(/obj/machinery/portable_atmospherics/pump = 2)
