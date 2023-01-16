@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Directional windows won't block construction of machine & compute frames by the RCD"

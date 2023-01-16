@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "Removed the tech disk part of the ORM's UI as it was entirely unused, now it's a little more compact with less scrolling needed."
-  - refactor: "Autolathes, Limb growers, Biogenerators, ORMs and Smelters now share techwebs with other machines of their types, rather than all make new techwebs each time. This means they only build their nodes once, including hacked ones. Instead of researching nodes on hacking the machine, they now show hacked ones depending on if it's hacked."
