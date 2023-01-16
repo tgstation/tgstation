@@ -28,9 +28,8 @@
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 	else
 
-		if(staminaloss > 0 && stam_regen_start_time <= world.time)
-			adjustStaminaLoss(-INFINITY, null, FALSE)
-			update_stamina()
+		if(getStaminaLoss() > 0 && stam_regen_start_time <= world.time)
+			adjustStaminaLoss(-INFINITY)
 		var/bprv = handle_bodyparts(delta_time, times_fired)
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
@@ -340,7 +339,7 @@
 			return
 		for(var/obj/item/organ/internal/organ in internal_organs)
 			// On-death is where organ decay is handled
-			organ.on_death(delta_time, times_fired)
+			organ?.on_death(delta_time, times_fired) // organ can be null due to reagent metabolization causing organ shuffling
 			// We need to re-check the stat every organ, as one of our others may have revived us
 			if(stat != DEAD)
 				break

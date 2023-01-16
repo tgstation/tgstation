@@ -233,6 +233,7 @@
 		rev_mind.current.flash_act(1, 1)
 		rev_mind.current.Stun(10 SECONDS)
 
+	rev_mind.add_memory(/datum/memory/recruited_by_headrev, protagonist = rev_mind.current, antagonist = owner.current)
 	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)
 	rev_mind.special_role = ROLE_REV
 	return TRUE

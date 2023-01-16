@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - qol: "Extinguisher cabiners are now opened and closed with right click instead of alt+click."

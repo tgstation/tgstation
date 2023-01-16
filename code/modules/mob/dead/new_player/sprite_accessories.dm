@@ -103,6 +103,10 @@
 	name = "Afro (Large)"
 	icon_state = "hair_bigafro"
 
+/datum/sprite_accessory/hair/allthefuzz
+	name = "All The Fuzz"
+	icon_state = "hair_allthefuzz"
+
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
@@ -128,7 +132,7 @@
 	icon_state = "hair_bedheadv3"
 
 /datum/sprite_accessory/hair/bedheadv4
-	name = "BedHead 4X"
+	name = "Bedhead 4x"
 	icon_state = "hair_bedheadv4"
 
 /datum/sprite_accessory/hair/bedheadlong
@@ -139,8 +143,8 @@
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
 
-/datum/sprite_accessory/hair/BadlyCut
-	name = "Marginally shorter yet Long Bedhead"
+/datum/sprite_accessory/hair/badlycut
+	name = "Shorter Long Bedhead"
 	icon_state = "hair_verybadlycut"
 
 /datum/sprite_accessory/hair/beehive
@@ -526,6 +530,10 @@
 /datum/sprite_accessory/hair/over_eye
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"
+
+/datum/sprite_accessory/hair/hair_overeyetwo
+	name = "Over Eye 2"
+	icon_state = "hair_overeyetwo"
 
 /datum/sprite_accessory/hair/oxton
 	name = "Oxton"
@@ -1587,6 +1595,10 @@
 	name = "Knee-high (White)"
 	icon_state = "white_knee"
 
+/datum/sprite_accessory/socks/fishnet_knee
+	name = "Knee-high (Fishnet)"
+	icon_state = "fishnet_knee"
+
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal (Black)"
 	icon_state = "black_norm"
@@ -1639,6 +1651,10 @@
 	name = "Stockings (Yellow)"
 	icon_state = "stockings_yellow"
 
+/datum/sprite_accessory/socks/stockings_fishnet
+	name = "Stockings (Fishnet)"
+	icon_state = "fishnet_full"
+
 /datum/sprite_accessory/socks/ace_thigh
 	name = "Thigh-high (Ace)"
 	icon_state = "ace_thigh"
@@ -1682,6 +1698,10 @@
 /datum/sprite_accessory/socks/white_thigh
 	name = "Thigh-high (White)"
 	icon_state = "white_thigh"
+
+/datum/sprite_accessory/socks/fishnet_thigh
+	name = "Thigh-high (Fishnet)"
+	icon_state = "fishnet_thigh"
 
 /datum/sprite_accessory/socks/thocks
 	name = "Thocks"

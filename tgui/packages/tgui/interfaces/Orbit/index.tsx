@@ -34,6 +34,7 @@ const ObservableSearch = (props, context) => {
   const {
     alive = [],
     antagonists = [],
+    deadchat_controlled = [],
     dead = [],
     ghosts = [],
     misc = [],
@@ -67,7 +68,9 @@ const ObservableSearch = (props, context) => {
       // Sorts descending by orbiters
       sortBy<Observable>((observable) => -(observable.orbiters || 0)),
       // Makes a single Observables list for an easy search
-    ])([alive, antagonists, dead, ghosts, misc, npcs].flat())[0];
+    ])(
+      [alive, antagonists, deadchat_controlled, dead, ghosts, misc, npcs].flat()
+    )[0];
 
     if (mostRelevant !== undefined) {
       act('orbit', {
@@ -138,6 +141,7 @@ const ObservableContent = (props, context) => {
   const {
     alive = [],
     antagonists = [],
+    deadchat_controlled = [],
     dead = [],
     ghosts = [],
     misc = [],
@@ -162,6 +166,11 @@ const ObservableContent = (props, context) => {
           />
         );
       })}
+      <ObservableSection
+        color="purple"
+        section={deadchat_controlled}
+        title="Deadchat Controlled"
+      />
       <ObservableSection color="blue" section={alive} title="Alive" />
       <ObservableSection section={dead} title="Dead" />
       <ObservableSection section={ghosts} title="Ghosts" />

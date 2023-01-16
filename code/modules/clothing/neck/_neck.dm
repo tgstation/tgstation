@@ -83,6 +83,8 @@
 
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
+	if(clip_on)
+		return
 	// Normal strip & equip delay, along with 2 second self equip since you need to squeeze your head through the hole.
 	if(is_tied)
 		icon_state = "tie_greyscale_tied"
