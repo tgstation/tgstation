@@ -6,35 +6,35 @@
 
 /datum/supply_pack/goody/dumdum38
 	name = ".38 DumDum Speedloader"
-	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets."
+	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets. Requires Brig access to purchase."
 	cost = PAYCHECK_CREW * 2
 	access_view = ACCESS_BRIG
 	contains = list(/obj/item/ammo_box/c38/dumdum)
 
 /datum/supply_pack/goody/match38
 	name = ".38 Match Grade Speedloader"
-	desc = "Contains one speedloader of match grade .38 ammunition, perfect for showing off trickshots."
+	desc = "Contains one speedloader of match grade .38 ammunition, perfect for showing off trickshots. Requires Brig access to purchase."
 	cost = PAYCHECK_CREW * 2
 	access_view = ACCESS_BRIG
 	contains = list(/obj/item/ammo_box/c38/match)
 
 /datum/supply_pack/goody/rubber
 	name = ".38 Rubber Speedloader"
-	desc = "Contains one speedloader of bouncy rubber .38 ammunition, for when you want to bounce your shots off anything and everything."
+	desc = "Contains one speedloader of bouncy rubber .38 ammunition, for when you want to bounce your shots off anything and everything. Requires Brig access to purchase."
 	cost = PAYCHECK_CREW * 1.5
 	access_view = ACCESS_BRIG
 	contains = list(/obj/item/ammo_box/c38/match/bouncy)
 
 /datum/supply_pack/goody/mars_single
 	name = "Colt Detective Special Single-Pack"
-	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38!"
+	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38! Requires Detective access to purchase."
 	cost = PAYCHECK_CREW * 40 //they really mean a premium here
 	access_view = ACCESS_DETECTIVE
 	contains = list(/obj/item/gun/ballistic/revolver/c38/detective)
 
 /datum/supply_pack/goody/stingbang
 	name = "Stingbang Single-Pack"
-	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks."
+	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks. Requires Brig access to purchase."
 	cost = PAYCHECK_COMMAND * 2.5
 	access_view = ACCESS_BRIG
 	contains = list(/obj/item/grenade/stingbang)
@@ -47,28 +47,28 @@
 
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"
-	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
+	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier. Requires Armory access to purchase."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/storage/belt/bandolier)
 
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"
-	desc = "Contains one energy gun, capable of firing both nonlethal and lethal blasts of light."
+	desc = "Contains one energy gun, capable of firing both nonlethal and lethal blasts of light. Requires Armory access to purchase."
 	cost = PAYCHECK_COMMAND * 12
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/goody/hell_single
 	name = "Hellgun Kit Single-Pack"
-	desc = "Contains one hellgun degradation kit, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
+	desc = "Contains one hellgun degradation kit, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids. Requires Armory access to purchase."
 	cost = PAYCHECK_CREW * 2
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/weaponcrafting/gunkit/hellgun)
 
 /datum/supply_pack/goody/thermal_single
 	name = "Thermal Pistol Holster Single-Pack"
-	desc = "Contains twinned thermal pistols in a holster, ready for use in the field."
+	desc = "Contains twinned thermal pistols in a holster, ready for use in the field. Requires Armory access to purchase."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/belt/holster/thermal)

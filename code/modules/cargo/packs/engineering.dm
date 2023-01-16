@@ -5,7 +5,8 @@
 /datum/supply_pack/engineering/shieldgen
 	name = "Anti-breach Shield Projector Crate"
 	desc = "Hull breaches again? Say no more with the Nanotrasen Anti-Breach Shield Projector! \
-		Uses forcefield technology to keep the air in, and the space out. Contains two shield projectors."
+		Uses forcefield technology to keep the air in, and the space out. Contains two shield projectors. \
+		Requires Engineering Equipment access to purchase."
 	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/machinery/shieldgen = 2)
@@ -14,7 +15,7 @@
 /datum/supply_pack/engineering/ripley
 	name = "APLU MK-I Crate"
 	desc = "A do-it-yourself kit for building an ALPU MK-I \"Ripley\", designed for lifting, \
-		carrying heavy equipment, and other station tasks. Batteries not included."
+		carrying heavy equipment, and other station tasks. Batteries not included. Requires Robotics access to purchase."
 	cost = CARGO_CRATE_VALUE * 10
 	access_view = ACCESS_ROBOTICS
 	contains = list(/obj/item/mecha_parts/chassis/ripley,
@@ -46,7 +47,7 @@
 /datum/supply_pack/engineering/engiequipment
 	name = "Engineering Gear Crate"
 	desc = "Gear up with three toolbelts, high-visibility vests, welding helmets, hardhats, \
-		and two pairs of meson goggles!"
+		and two pairs of meson goggles! Requires Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/item/storage/belt/utility = 3,
@@ -60,7 +61,7 @@
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. \
-		Contains three insulated gloves."
+		Contains three insulated gloves. Requires Engineering Equipment access to purchase."
 	cost = CARGO_CRATE_VALUE * 8 //Made of pure-grade bullshittinium
 	access_view = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/item/clothing/gloves/color/yellow = 3)
@@ -79,7 +80,7 @@
 /datum/supply_pack/engineering/pacman
 	name = "P.A.C.M.A.N Generator Crate"
 	desc = "Engineers can't set up the engine? Not an issue for you, once you get your hands \
-		on this P.A.C.M.A.N. Generator! Takes in plasma and spits out sweet sweet energy."
+		on this P.A.C.M.A.N. Generator! Takes in plasma and spits out sweet sweet energy. Requires Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 5
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/machinery/power/port_gen/pacman)
@@ -97,7 +98,7 @@
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
 	desc = "Through advanced bluespace-shenanigans, our engineers have managed to fit an entire \
-		shuttle engine into one tiny little crate. Requires CE access to open."
+		shuttle engine into one tiny little crate. Requires CE access to open or purchase."
 	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_CE
 	access_view = ACCESS_CE
@@ -109,7 +110,7 @@
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"
 	desc = "Any robust spaceman is never far from their trusty toolbox. Contains three electrical \
-		toolboxes and three mechanical toolboxes."
+		toolboxes and three mechanical toolboxes. Require Engineering Equipment access to purchase."
 	access_view = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/item/storage/toolbox/electrical = 3,
 					/obj/item/storage/toolbox/mechanical = 3,
@@ -120,7 +121,7 @@
 /datum/supply_pack/engineering/portapump
 	name = "Portable Air Pump Crate"
 	desc = "Did someone let the air out of the shuttle again? We've got you covered. \
-		Contains two portable air pumps."
+		Contains two portable air pumps. Requires Atmospherics access to open."
 	cost = CARGO_CRATE_VALUE * 4.5
 	access_view = ACCESS_ATMOSPHERICS
 	contains = list(/obj/machinery/portable_atmospherics/pump = 2)
@@ -128,7 +129,8 @@
 
 /datum/supply_pack/engineering/portascrubber
 	name = "Portable Scrubber Crate"
-	desc = "Clean up that pesky plasma leak with your very own set of two portable scrubbers."
+	desc = "Clean up that pesky plasma leak with your very own set of two portable scrubbers. \
+		Requires Atmospherics access to purchase."
 	cost = CARGO_CRATE_VALUE * 4.5
 	access_view = ACCESS_ATMOSPHERICS
 	contains = list(/obj/machinery/portable_atmospherics/scrubber = 2)
@@ -136,7 +138,7 @@
 
 /datum/supply_pack/engineering/hugescrubber
 	name = "Huge Portable Scrubber Crate"
-	desc = "A huge portable scrubber for huge atmospherics mistakes."
+	desc = "A huge portable scrubber for huge atmospherics mistakes. Requires Atmospherics access to purchase."
 	cost = CARGO_CRATE_VALUE * 7.5
 	access_view = ACCESS_ATMOSPHERICS
 	contains = list(/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo)
@@ -155,7 +157,8 @@
 	name = "Bluespace Artillery Parts"
 	desc = "The pride of Nanotrasen Naval Command. The legendary Bluespace Artillery Cannon is a \
 		devastating feat of human engineering and testament to wartime determination. \
-		Highly advanced research is required for proper construction. "
+		Highly advanced research is required for proper construction. \
+		Requires Command access to purchase."
 	cost = CARGO_CRATE_VALUE * 30
 	special = TRUE
 	access_view = ACCESS_COMMAND
@@ -170,7 +173,8 @@
 	name = "DNA Vault Parts"
 	desc = "Secure the longevity of the current state of humanity within this massive \
 		library of scientific knowledge, capable of granting superhuman powers and abilities. \
-		Highly advanced research is required for proper construction. Also contains five DNA probes."
+		Highly advanced research is required for proper construction. Also contains five DNA probes. \
+		Requires Command access to purchase."
 	cost = CARGO_CRATE_VALUE * 24
 	special = TRUE
 	access_view = ACCESS_COMMAND
@@ -181,7 +185,7 @@
 
 /datum/supply_pack/engineering/dna_probes
 	name = "DNA Vault Samplers"
-	desc = "Contains five DNA probes for use in the DNA vault."
+	desc = "Contains five DNA probes for use in the DNA vault. Requires Command access to purchase."
 	cost = CARGO_CRATE_VALUE * 6
 	special = TRUE
 	access_view = ACCESS_COMMAND
@@ -192,7 +196,7 @@
 /datum/supply_pack/engineering/shield_sat
 	name = "Shield Generator Satellite"
 	desc = "Protect the very existence of this station with these Anti-Meteor defenses. \
-		Contains three Shield Generator Satellites."
+		Contains three Shield Generator Satellites. Requires Command access to purchase."
 	cost = CARGO_CRATE_VALUE * 6
 	special = TRUE
 	access_view = ACCESS_COMMAND
@@ -202,7 +206,7 @@
 
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Shield System Control Board"
-	desc = "A control system for the Shield Generator Satellite system."
+	desc = "A control system for the Shield Generator Satellite system. Requires Command access to purchase."
 	cost = CARGO_CRATE_VALUE * 10
 	special = TRUE
 	access_view = ACCESS_COMMAND
@@ -220,7 +224,8 @@
 /datum/supply_pack/engine/emitter
 	name = "Emitter Crate"
 	desc = "Useful for powering forcefield generators while destroying locked crates \
-		and intruders alike. Contains two high-powered energy emitters. Requires CE access to open."
+		and intruders alike. Contains two high-powered energy emitters. \
+		Requires CE access to open, or Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 7
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/emitter = 2)
@@ -231,14 +236,16 @@
 /datum/supply_pack/engine/field_gen
 	name = "Field Generator Crate"
 	desc = "Typically the only thing standing between the station and a messy death. \
-		Powered by emitters. Contains two field generators."
+		Powered by emitters. Contains two field generators. \
+		Requires Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/machinery/field/generator = 2)
 	crate_name = "field generator crate"
 
 /datum/supply_pack/engine/grounding_rods
 	name = "Grounding Rod Crate"
-	desc = "Four grounding rods guaranteed to keep any uppity tesla coil's lightning under control."
+	desc = "Four grounding rods guaranteed to keep any uppity tesla coil's lightning under control. \
+		Requires Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/obj/machinery/power/energy_accumulator/grounding_rod = 4)
 	crate_name = "grounding rod crate"
@@ -248,7 +255,8 @@
 	name = "Solar Panel Crate"
 	desc = "Go green with this DIY advanced solar array. Contains twenty one solar assemblies, \
 		a solar-control circuit board, and tracker. If you have any questions, \
-		please check out the enclosed instruction book."
+		please check out the enclosed instruction book. \
+		Requires Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/obj/item/solar_assembly = 21,
 					/obj/item/circuitboard/computer/solar_control,
@@ -260,7 +268,8 @@
 
 /datum/supply_pack/engine/supermatter_shard
 	name = "Supermatter Shard Crate"
-	desc = "The power of the heavens condensed into a single crystal. Requires CE access to open."
+	desc = "The power of the heavens condensed into a single crystal. \
+	Requires CE access to open, or Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 20
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/supermatter_crystal/shard)
@@ -271,7 +280,8 @@
 /datum/supply_pack/engine/tesla_coils
 	name = "Tesla Coil Crate"
 	desc = "Whether it's high-voltage executions, creating research points, or just plain old \
-		assistant electrofrying: this pack of four Tesla coils can do it all!"
+		assistant electrofrying: this pack of four Tesla coils can do it all! \
+		Requires Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/machinery/power/energy_accumulator/tesla_coil = 4)
 	crate_name = "tesla coil crate"
@@ -279,7 +289,8 @@
 
 /datum/supply_pack/engine/hypertorus_fusion_reactor
 	name = "HFR Crate"
-	desc = "The new and improved fusion reactor. Requires CE access to open."
+	desc = "The new and improved fusion reactor. \
+		Requires CE access to open, or Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 23
 	access = ACCESS_CE
 	contains = list(/obj/item/hfr_box/corner = 4,

@@ -10,7 +10,7 @@
 
 /datum/supply_pack/materials/license50
 	name = "50 Empty License Plates"
-	desc = "Create a bunch of license plates."
+	desc = "Create a bunch of license plates. Requires Brig Entrance access to purchase."
 	cost = CARGO_CRATE_VALUE * 2  // 50 * 25 + 700 - 1000 = 950 credits profit
 	access_view = ACCESS_BRIG_ENTRANCE
 	contains = list(/obj/item/stack/license_plates/empty/fifty)
@@ -92,7 +92,8 @@
 
 /datum/supply_pack/materials/hightankfuel
 	name = "Large Fuel Tank Crate"
-	desc = "Contains a high-capacity fuel tank. Keep contents away from open flame."
+	desc = "Contains a high-capacity fuel tank. Keep contents away from open flame. \
+		Requires Engineering access to purchase."
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/structure/reagent_dispensers/fueltank/large)
@@ -128,7 +129,7 @@
 		pack.name = "[name] Canister"
 		pack.desc = "Contains a canister of [name]."
 		if(initial(gas.dangerous))
-			pack.desc = "[pack.desc] Requires Atmospherics access to open."
+			pack.desc = "[pack.desc] Requires Atmospherics access to open or purchase."
 			pack.access = ACCESS_ATMOSPHERICS
 			pack.access_view = ACCESS_ATMOSPHERICS
 		pack.crate_name = "[name] canister crate"

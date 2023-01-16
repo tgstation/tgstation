@@ -18,7 +18,8 @@
 
 /datum/supply_pack/service/noslipfloor
 	name = "High-traction Floor Tiles"
-	desc = "Make slipping a thing of the past with thirty industrial-grade anti-slip floor tiles!"
+	desc = "Make slipping a thing of the past with thirty industrial-grade anti-slip floor tiles! \
+	Requires Janitor access to purchase."
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_JANITOR
 	contains = list(/obj/item/stack/tile/noslip/thirty)
@@ -28,7 +29,8 @@
 	name = "Janitorial Supplies Crate"
 	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials™! \
 		Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, \
-		broom, spray cleaner, rag, and trash bag."
+		broom, spray cleaner, rag, and trash bag. \
+		Requires Janitor access to purchase."
 	cost = CARGO_CRATE_VALUE * 2
 	access_view = ACCESS_JANITOR
 	contains = list(/obj/item/reagent_containers/cup/bucket = 3,
@@ -154,7 +156,8 @@
 	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? \
 		Either way, this kit is the best way to turn a regular crewman into an ore-producing, \
 		monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, \
-		cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade. Requires QM access to open."
+		cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade. \
+		Requires QM access to open, or Mining Station access to purchase."
 	cost = CARGO_CRATE_VALUE * 4
 	access = ACCESS_QM
 	access_view = ACCESS_MINING_STATION

@@ -4,7 +4,7 @@
 
 /datum/supply_pack/critter/parrot
 	name = "Bird Crate"
-	desc = "Contains five expert telecommunication birds."
+	desc = "Contains five expert telecommunication birds. Requires CE access to purchase."
 	cost = CARGO_CRATE_VALUE * 8
 	access_view = ACCESS_CE
 	contains = list(/mob/living/simple_animal/parrot)
@@ -17,7 +17,8 @@
 
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"
-	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches."//is that a motherfucking worm reference
+	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches. \
+	 	Requires Theatre access to purchase."//is that a motherfucking worm reference
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 5
 	access_view = ACCESS_THEATRE
@@ -31,7 +32,8 @@
 
 /datum/supply_pack/critter/cat
 	name = "Cat Crate"
-	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
+	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included. \
+		Requires Medical access to purchase."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 10 //Cats are worth as much as corgis.
 	access_view = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/pet/cat,
@@ -49,7 +51,7 @@
 
 /datum/supply_pack/critter/chick
 	name = "Chicken Crate"
-	desc = "The chicken goes bwaak!"
+	desc = "The chicken goes bwaak! Requires Kitchen access to purchase."
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_KITCHEN
 	contains = list( /mob/living/simple_animal/chick)
@@ -58,7 +60,8 @@
 /datum/supply_pack/critter/corgi
 	name = "Corgi Crate"
 	desc = "Considered the optimal dog breed by thousands of research scientists, this Corgi is but \
-		one dog from the millions of Ian's noble bloodline. Comes with a cute collar!"
+		one dog from the millions of Ian's noble bloodline. Comes with a cute collar! \
+		Requires HOP access to purchase."
 	cost = CARGO_CRATE_VALUE * 10
 	access_view = ACCESS_HOP
 	contains = list(/mob/living/basic/pet/dog/corgi,
@@ -76,7 +79,7 @@
 
 /datum/supply_pack/critter/cow
 	name = "Cow Crate"
-	desc = "The cow goes moo! Contains one cow."
+	desc = "The cow goes moo! Contains one cow. Requires Botany access to purchase."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_HYDROPONICS
 	contains = list(/mob/living/basic/cow)
@@ -84,7 +87,7 @@
 
 /datum/supply_pack/critter/sheep
 	name = "Sheep Crate"
-	desc = "The sheep goes BAAAA! Contains one sheep."
+	desc = "The sheep goes BAAAA! Contains one sheep. Requires Botany access to purchase."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_HYDROPONICS
 	contains = list(/mob/living/basic/sheep)
@@ -92,7 +95,7 @@
 
 /datum/supply_pack/critter/pig
 	name = "Pig Crate"
-	desc = "The pig goes oink! Contains one pig."
+	desc = "The pig goes oink! Contains one pig. Requires Kitchen access to purchase."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_KITCHEN
 	contains = list(/mob/living/basic/pig)
@@ -106,7 +109,8 @@
 		CRAB CRAB CRAB CRAB CRAB CRAB ROCKET. CRAFT. ROCKET. BUY. CRAFT ROCKET. CRAB ROOOCKET. \
 		CRAB ROOOOCKET. CRAB CRAB CRAB CRAB CRAB CRAB CRAB CRAB ROOOOOOOOOOOOOOOOOOOOOOCK \
 		EEEEEEEEEEEEEEEEEEEEEEEEE EEEETTTTTTTTTTTTAAAAAAAAA AAAHHHHHHHHHHHHH. CRAB ROCKET. CRAAAB \
-		ROCKEEEEEEEEEGGGGHHHHTT CRAB CRAB CRAABROCKET CRAB ROCKEEEET."//fun fact: i actually spent like 10 minutes and transcribed the entire video.
+		ROCKEEEEEEEEEGGGGHHHHTT CRAB CRAB CRAABROCKET CRAB ROCKEEEET. \
+		Requires HOS access to purchase."//fun fact: i actually spent like 10 minutes and transcribed the entire video.
 	cost = CARGO_CRATE_VALUE * 8
 	access_view = ACCESS_HOS
 	contains = list(/mob/living/simple_animal/crab)
@@ -130,7 +134,8 @@
 
 /datum/supply_pack/critter/fox
 	name = "Fox Crate"
-	desc = "The fox goes...? Contains one fox. Comes with a collar!"//what does the fox say
+	desc = "The fox goes...? Contains one fox. Comes with a collar! \
+		Requires Captain access to purchase."//what does the fox say
 	cost = CARGO_CRATE_VALUE * 10
 	access_view = ACCESS_CAPTAIN
 	contains = list(/mob/living/simple_animal/pet/fox,
@@ -140,7 +145,8 @@
 
 /datum/supply_pack/critter/goat
 	name = "Goat Crate"
-	desc = "The goat goes baa! Contains one goat. Warranty void if used as a replacement for Pete."
+	desc = "The goat goes baa! Contains one goat. Warranty void if used as a replacement for Pete. \
+		Requires Kitchen access to purchase."
 	cost = CARGO_CRATE_VALUE * 5
 	access_view = ACCESS_KITCHEN
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
@@ -184,7 +190,8 @@
 /datum/supply_pack/critter/snake
 	name = "Snake Crate"
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? \
-		Then this isn't the crate for you. Contains three poisonous snakes."
+		Then this isn't the crate for you. Contains three poisonous snakes. \
+		Requires Security access to purchase."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_SECURITY
 	contains = list(/mob/living/simple_animal/hostile/retaliate/snake = 3)
@@ -192,7 +199,8 @@
 
 /datum/supply_pack/critter/lizard
 	name = "Lizard Crate"
-	desc = "Hisss! Containssss a friendly lizard. Not to be confusssed with a lizardperssson."
+	desc = "Hisss! Containssss a friendly lizard. Not to be confusssed with a lizardperssson. \
+		Requires Janitor access to purchase."
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_JANITOR
 	contains = list(/mob/living/simple_animal/hostile/lizard)

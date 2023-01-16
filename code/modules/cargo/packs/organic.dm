@@ -8,7 +8,8 @@
 /datum/supply_pack/organic/hydroponics/beekeeping_suits
 	name = "Beekeeper Suit Crate"
 	desc = "Bee business booming? Better be benevolent and boost botany by \
-		bestowing bi-Beekeeper-suits! Contains two beekeeper suits and matching headwear."
+		bestowing bi-Beekeeper-suits! Contains two beekeeper suits and matching headwear. \
+		Requires Botany access to purchase."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/clothing/head/utility/beekeeper_head,
 					/obj/item/clothing/suit/utility/beekeeper_suit,
@@ -21,7 +22,8 @@
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit
 	name = "Beekeeping Starter Crate"
 	desc = "BEES BEES BEES. Contains three honey frames, a beekeeper suit and helmet, \
-		flyswatter, bee house, and, of course, a pure-bred Nanotrasen-Standardized Queen Bee!"
+		flyswatter, bee house, and, of course, a pure-bred Nanotrasen-Standardized Queen Bee! \
+		Requires Botany access to purchase."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/structure/beebox/unwrenched,
 					/obj/item/honey_frame = 3,
@@ -58,7 +60,8 @@
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
 	desc = "Any entrepreneuring botanist's dream. Contains fourteen different seeds, \
-		including one replica-pod seed and two mystery seeds!"
+		including one replica-pod seed and two mystery seeds! \
+		Requires Botany access to purchase."
 	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_HYDROPONICS
 	contains = list(/obj/item/seeds/nettle,
@@ -114,7 +117,8 @@
 	name = "High-yield Clown-grade Cream Pie Crate"
 	desc = "Designed by Aussec's Advanced Warfare Research Division, \
 		these high-yield, Clown-grade cream pies are powered by a synergy \
-		of performance and efficiency. Guaranteed to provide maximum results."
+		of performance and efficiency. Guaranteed to provide maximum results. \
+		Requires Theatre access to open or purchase."
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(/obj/item/storage/backpack/duffelbag/clown/cream_pie)
 	crate_name = "party equipment crate"
@@ -127,7 +131,8 @@
 	name = "Hydroponics Crate"
 	desc = "Supplies for growing a great garden! Contains two bottles of ammonia, \
 		two Plant-B-Gone spray bottles, a hatchet, cultivator, plant analyzer, \
-		as well as a pair of leather gloves and a botanist's apron."
+		as well as a pair of leather gloves and a botanist's apron. \
+		Requires Botany access to purchase."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/reagent_containers/spray/plantbgone = 2,
 					/obj/item/reagent_containers/cup/bottle/ammonia = 2,
@@ -143,7 +148,7 @@
 /datum/supply_pack/organic/hydroponics/hydrotank
 	name = "Hydroponics Backpack Crate"
 	desc = "Bring on the flood with this high-capacity backpack crate. \
-		Contains 500 units of life-giving H2O. Requires hydroponics access to open."
+		Contains 500 units of life-giving H2O. Requires Botany access to open or purchase."
 	cost = CARGO_CRATE_VALUE * 2
 	access = ACCESS_HYDROPONICS
 	contains = list(/obj/item/watertank)
