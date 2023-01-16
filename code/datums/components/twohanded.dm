@@ -219,7 +219,7 @@
 
 	// wield update status
 	wielded = FALSE
-	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
+	UnregisterSignal(user, COMSIG_MOB_SWAPPING_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 	REMOVE_TRAIT(parent, TRAIT_WIELDED, REF(src))
 	unwield_callback?.Invoke(parent, user)
