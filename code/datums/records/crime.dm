@@ -30,4 +30,3 @@
 	paid += amount
 	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_SEC)
 	account.adjust_money(amount)
-	return
