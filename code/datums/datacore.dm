@@ -130,9 +130,9 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		// Crew specific
 		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY),
 		major_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MAJOR_DISABILITY),
-		medical_notes = list(person.get_quirk_string(TRUE, CAT_QUIRK_NOTES)),
 		minor_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY),
 		minor_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
+		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
 	)
 
 	new /datum/record/locked(

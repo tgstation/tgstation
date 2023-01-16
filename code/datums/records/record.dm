@@ -66,12 +66,14 @@
 	var/major_disabilities
 	/// Fancy description of major disabilities
 	var/major_disabilities_desc
-	/// List of medical notes (roundstart populated with quirk strings)
-	var/list/medical_notes
+	/// List of medical notes
+	var/list/medical_notes = list()
 	/// Names of minor disabilities
 	var/minor_disabilities
 	/// Fancy description of minor disabilities
 	var/minor_disabilities_desc
+	/// Positive and neutral quirk strings
+	var/quirk_notes
 	/// List of security notes
 	var/list/security_notes = list()
 	/// Current arrest status
@@ -93,16 +95,16 @@
 	/// Crew specific
 	major_disabilities = "None",
 	major_disabilities_desc = "No disabilities have been diagnosed at the moment.",
-	medical_notes = list(),
 	minor_disabilities = "None",
 	minor_disabilities_desc = "No disabilities have been diagnosed at the moment.",
+	quirk_notes,
 )
 	. = ..()
 	src.major_disabilities = major_disabilities
 	src.major_disabilities_desc = major_disabilities_desc
-	src.medical_notes += medical_notes
 	src.minor_disabilities = minor_disabilities
 	src.minor_disabilities_desc = minor_disabilities_desc
+	src.quirk_notes = quirk_notes
 
 	GLOB.data_core.general += src
 

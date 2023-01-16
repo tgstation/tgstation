@@ -17,6 +17,7 @@ type MedicalRecord = {
   minor_disabilities: string;
   name: string;
   notes: string[];
+  quirk_notes: string;
   rank: string;
   ref: string;
   species: string;
@@ -92,12 +93,14 @@ const RecordView = (props, context) => {
     major_disabilities,
     minor_disabilities,
     name,
+    quirk_notes,
     rank,
     species,
   } = selectedRecord;
 
   const minor_disabilities_array = getStringArray(minor_disabilities);
   const major_disabilities_array = getStringArray(major_disabilities);
+  const quirk_notes_array = getStringArray(quirk_notes);
 
   return (
     <Stack fill vertical>
@@ -125,12 +128,17 @@ const RecordView = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Minor Disabilities">
               {minor_disabilities_array.map((disability, index) => (
-                <Box key={index}>- {disability}</Box>
+                <Box key={index}>&#8226; {disability}</Box>
               ))}
             </LabeledList.Item>
             <LabeledList.Item label="Major Disabilities">
               {major_disabilities_array.map((disability, index) => (
-                <Box key={index}>- {disability}</Box>
+                <Box key={index}>&#8226; {disability}</Box>
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Quirks">
+              {quirk_notes_array.map((quirk, index) => (
+                <Box key={index}>&#8226; {quirk}</Box>
               ))}
             </LabeledList.Item>
           </LabeledList>
@@ -142,21 +150,28 @@ const RecordView = (props, context) => {
 
 /** Small section for adding notes. Passes a ref and note to Byond. */
 const NoteKeeper = (props, context) => {
-  const { act } = useBackend<Data>(context);
+  const { act, data } = useBackend<Data>(context);
+
   const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
     context,
     'selectedRecord',
     undefined
   );
-
   if (!selectedRecord) return <> </>;
-  const { notes, ref } = selectedRecord;
-  const [selectedNote] = useLocalState<number | undefined>(
+
+  // We have to find the record because the selectedRecord is a copy of the
+  // record in the data.
+  const locatedRecord = data.records.find(
+    (record) => record.ref === selectedRecord.ref
+  );
+  if (!locatedRecord) return <> </>;
+  const { notes, ref } = locatedRecord;
+
+  const [selectedNote, setSelectedNote] = useLocalState<number | undefined>(
     context,
     'selectedNote',
     undefined
   );
-
   const [writing, setWriting] = useLocalState(context, 'note', false);
 
   const addNote = (event, value: string) => {
@@ -192,7 +207,11 @@ const NoteTabs = (props, context) => {
     undefined
   );
   if (!selectedRecord) return <> </>;
-  const { notes } = selectedRecord;
+
+  const { data } = useBackend<Data>(context);
+  const { records } = data;
+  const notes =
+    records.find((record) => record.ref === selectedRecord.ref)?.notes || [];
 
   const [selectedNote, setSelectedNote] = useLocalState<number | undefined>(
     context,

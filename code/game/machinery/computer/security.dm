@@ -1,3 +1,12 @@
+#define COMP_STATE_ARREST "*Arrest*"
+#define COMP_STATE_PRISONER "Incarcerated"
+#define COMP_STATE_SUSPECTED "Suspected"
+#define COMP_STATE_PAROL "Paroled"
+#define COMP_STATE_DISCHARGED "Discharged"
+#define COMP_STATE_NONE "None"
+#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
+#define AVAILABLE_STATUSES list(COMP_STATE_ARREST, COMP_STATE_PRISONER, COMP_STATE_SUSPECTED, COMP_STATE_PAROL, COMP_STATE_DISCHARGED, COMP_STATE_NONE)
+
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "security records console"
 	desc = "Used to view and edit personnel's security records."
@@ -6,18 +15,22 @@
 	req_one_access = list(ACCESS_SECURITY, ACCESS_HOP)
 	circuit = /obj/item/circuitboard/computer/secure_data
 	light_color = COLOR_SOFT_RED
-	var/rank = null
-	var/screen = null
-	var/datum/record/crew/active1 = null
-	var/datum/record/crew/active2 = null
-	var/temp = null
 	var/printing = null
-	var/can_change_id = 0
-	var/list/Perp
-	var/tempname = null
-	//Sorting Variables
-	var/sortBy = "name"
-	var/order = 1 // -1 = Descending - 1 = Ascending
+/obj/machinery/computer/secure_data/syndie
+	icon_keyboard = "syndie_key"
+	req_one_access = list(ACCESS_SYNDICATE)
+
+/obj/machinery/computer/secure_data/laptop
+	name = "security laptop"
+	desc = "A cheap Nanotrasen security laptop, it functions as a security records console. It's bolted to the table."
+	icon_state = "laptop"
+	icon_screen = "seclaptop"
+	icon_keyboard = "laptop_key"
+	pass_flags = PASSTABLE
+
+/obj/machinery/computer/secure_data/laptop/syndie
+	desc = "A cheap, jailbroken security laptop. It functions as a security records console. It's bolted to the table."
+	req_one_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/secure_data/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -26,14 +39,130 @@
 		/obj/item/circuit_component/arrest_console_arrest,
 	))
 
-#define COMP_STATE_ARREST "*Arrest*"
-#define COMP_STATE_PRISONER "Incarcerated"
-#define COMP_STATE_SUSPECTED "Suspected"
-#define COMP_STATE_PAROL "Paroled"
-#define COMP_STATE_DISCHARGED "Discharged"
-#define COMP_STATE_NONE "None"
-#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
+/obj/machinery/computer/secure_data/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		character_preview_view = create_character_preview_view(user)
+		ui = new(user, src, "SecurityRecords")
+		ui.set_autoupdate(FALSE)
+		ui.open()
 
+/obj/machinery/computer/secure_data/ui_data(mob/user)
+	var/list/data = list()
+
+	data["available_statuses"] = AVAILABLE_STATUSES
+
+	var/list/records = list()
+	for(var/data/records/crew/target in GLOB.datacore.general)
+		var/list/record = list(list(
+			citations = target.citations,
+			crimes = target.crimes,
+			fingerprint = target.fingerprint,
+			id_number = target.id_number,
+			name = target.name,
+			notes = target.security_notes,
+			rank = target.rank,
+			ref = REF(target),
+			wanted_status = target.wanted_status,
+		))
+		records += record
+	data["records"] = records
+
+	return data
+
+/obj/machinery/computer/secure_data/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("set_wanted")
+			var/datum/record/crew/record = locate(params["ref"]) in GLOB.datacore.general
+			if(!record)
+				return FALSE
+
+			var/wanted_status = params["wanted_status"]
+			if(!wanted_status || !wanted_status in AVAILABLE_STATUSES)
+				return FALSE
+			record.wanted_status = wanted_status
+			return TRUE
+		if("add_notes")
+			var/datum/record/crew/record = locate(params["ref"]) in GLOB.datacore.general
+			if(!record)
+				return FALSE
+
+			var/notes = params["notes"]
+			if(!notes)
+				return FALSE
+			record.security_notes = notes
+			return TRUE
+		if("print_record")
+			var/datum/record/crew/record = locate(params["ref"]) in GLOB.datacore.general
+			if(!record)
+				return FALSE
+
+			var/photo = record.character_appearance
+			print_photo(photo, record.name)
+
+			return TRUE
+
+/obj/machinery/computer/secure_data/emp_act(severity)
+	. = ..()
+
+	if(machine_stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
+		return
+
+	for(var/datum/record/crew/record in GLOB.data_core.general)
+		if(prob(10/severity))
+			switch(rand(1,5))
+				if(1)
+					if(prob(10))
+						record.name = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
+					else
+						record.name = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
+				if(2)
+					record.gender = pick("Male", "Female", "Other")
+				if(3)
+					record.age = rand(5, 85)
+				if(4)
+					record.wanted_status = pick("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged")
+				if(5)
+					record.species = pick(get_selectable_species())
+			continue
+
+		else if(prob(1))
+			qdel(record)
+			continue
+
+/obj/machinery/computer/secure_data/proc/get_photo(mob/user)
+	var/obj/item/photo/P = null
+	if(issilicon(user))
+		var/mob/living/silicon/tempAI = user
+		var/datum/picture/selection = tempAI.GetPhoto(user)
+		if(selection)
+			P = new(null, selection)
+	else if(istype(user.get_active_held_item(), /obj/item/photo))
+		P = user.get_active_held_item()
+	return P
+
+/obj/machinery/computer/secure_data/proc/print_photo(icon/temp, person_name)
+	if (printing)
+		return
+	printing = TRUE
+	sleep(2 SECONDS)
+	var/obj/item/photo/P = new/obj/item/photo(drop_location())
+	var/datum/picture/toEmbed = new(name = person_name, desc = "The photo on file for [person_name].", image = temp)
+	P.set_picture(toEmbed, TRUE, TRUE)
+	P.pixel_x = rand(-10, 10)
+	P.pixel_y = rand(-10, 10)
+	printing = FALSE
+
+/**
+ * Security circuit component
+ */
 /obj/item/circuit_component/arrest_console_data
 	display_name = "Security Records Data"
 	desc = "Outputs the security records data, where it can then be filtered with a Select Query component"
@@ -99,7 +228,6 @@
 		new_table += list(entry)
 
 	records.set_output(new_table)
-
 /obj/item/circuit_component/arrest_console_arrest
 	display_name = "Security Records Set Status"
 	desc = "Receives a table to use to set people's arrest status. Table should be from the security records data component. If New Status port isn't set, the status will be decided by the options."
@@ -129,15 +257,8 @@
 	return ..()
 
 /obj/item/circuit_component/arrest_console_arrest/populate_options()
-	var/static/list/component_options = list(
-		COMP_STATE_ARREST,
-		COMP_STATE_PRISONER,
-		COMP_STATE_SUSPECTED,
-		COMP_STATE_PAROL,
-		COMP_STATE_DISCHARGED,
-		COMP_STATE_NONE,
-	)
-	new_status = add_option_port("Arrest Options", component_options)
+
+	new_status = add_option_port("Arrest Options", AVAILABLE_STATUSES)
 
 /obj/item/circuit_component/arrest_console_arrest/populate_ports()
 	targets = add_input_port("Targets", PORT_TYPE_TABLE)
@@ -184,70 +305,3 @@
 #undef COMP_STATE_DISCHARGED
 #undef COMP_STATE_NONE
 #undef COMP_SECURITY_ARREST_AMOUNT_TO_FLAG
-
-/obj/machinery/computer/secure_data/syndie
-	icon_keyboard = "syndie_key"
-	req_one_access = list(ACCESS_SYNDICATE)
-
-/obj/machinery/computer/secure_data/laptop
-	name = "security laptop"
-	desc = "A cheap Nanotrasen security laptop, it functions as a security records console. It's bolted to the table."
-	icon_state = "laptop"
-	icon_screen = "seclaptop"
-	icon_keyboard = "laptop_key"
-	pass_flags = PASSTABLE
-
-/obj/machinery/computer/secure_data/laptop/syndie
-	desc = "A cheap, jailbroken security laptop. It functions as a security records console. It's bolted to the table."
-	req_one_access = list(ACCESS_SYNDICATE)
-
-/obj/machinery/computer/secure_data/proc/get_photo(mob/user)
-	var/obj/item/photo/P = null
-	if(issilicon(user))
-		var/mob/living/silicon/tempAI = user
-		var/datum/picture/selection = tempAI.GetPhoto(user)
-		if(selection)
-			P = new(null, selection)
-	else if(istype(user.get_active_held_item(), /obj/item/photo))
-		P = user.get_active_held_item()
-	return P
-
-/obj/machinery/computer/secure_data/proc/print_photo(icon/temp, person_name)
-	if (printing)
-		return
-	printing = TRUE
-	sleep(2 SECONDS)
-	var/obj/item/photo/P = new/obj/item/photo(drop_location())
-	var/datum/picture/toEmbed = new(name = person_name, desc = "The photo on file for [person_name].", image = temp)
-	P.set_picture(toEmbed, TRUE, TRUE)
-	P.pixel_x = rand(-10, 10)
-	P.pixel_y = rand(-10, 10)
-	printing = FALSE
-
-/obj/machinery/computer/secure_data/emp_act(severity)
-	. = ..()
-
-	if(machine_stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
-		return
-
-	for(var/datum/record/crew/record in GLOB.data_core.general)
-		if(prob(10/severity))
-			switch(rand(1,5))
-				if(1)
-					if(prob(10))
-						record.name = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
-					else
-						record.name = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
-				if(2)
-					record.gender = pick("Male", "Female", "Other")
-				if(3)
-					record.age = rand(5, 85)
-				if(4)
-					record.wanted_status = pick("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged")
-				if(5)
-					record.species = pick(get_selectable_species())
-			continue
-
-		else if(prob(1))
-			qdel(record)
-			continue
