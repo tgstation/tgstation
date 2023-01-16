@@ -301,12 +301,13 @@
 	if (!turf_source)
 		turf_source = get_turf(parent)
 	var/list/local_servers = list()
-	for (var/obj/machinery/rnd/server/server as anything in SSresearch.servers)
-		var/turf/turf_server = get_turf(server)
-		if (!turf_source || !turf_server)
-			break
-		if(is_valid_z_level(turf_source, turf_server))
-			local_servers += server
+	for (var/datum/techweb/techwebs as anything in SSresearch.techwebs)
+		for (var/obj/machinery/rnd/server/server as anything in techwebs.techweb_servers)
+			var/turf/turf_server = get_turf(server)
+			if (!turf_source || !turf_server)
+				break
+			if(is_valid_z_level(turf_source, turf_server))
+				local_servers += server
 	return local_servers
 
 /**
