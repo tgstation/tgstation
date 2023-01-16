@@ -231,8 +231,13 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	var/gem_bar_offset_x = 22
 	var/gem_bar_offset_y = -18
 	var/individual_gem_offset = 5
+	var/obj/effect/decal/trading_card_panel/display_panel_ref
 
 GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
+
+/obj/machinery/trading_card_button/Initialize(mapload)
+	. = ..()
+	display_panel_ref = new(locate(x + 1, y, z))
 
 /obj/machinery/trading_card_button/attack_hand(mob/user)
 	var/list/choices = GLOB.tcgcard_mana_bar_radial_choices
@@ -253,22 +258,11 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 		if("Modify")
 			gems = initial(gems)
 	gems = clamp(gems, 0, max_gems)
-	update_icon(UPDATE_OVERLAYS)
+	display_panel_ref.update_icon(UPDATE_OVERLAYS)
 	add_fingerprint(user)
 	return ..()
 
 /obj/machinery/trading_card_button/proc/setup_radial()
-
-/obj/machinery/trading_card_button/update_overlays()
-	. = ..()
-	if(!gems)
-		return
-	for(var/gem in 1 to gems)
-		var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', "gem")
-		gem_overlay.pixel_x = gem_bar_offset_x
-		gem_overlay.pixel_y = gem * individual_gem_offset + gem_bar_offset_y
-		gem_overlay.mouse_opacity = FALSE
-		. += gem_overlay
 
 /obj/machinery/trading_card_button/proc/check_menu(mob/living/user)
 	if(!istype(user))
@@ -281,7 +275,23 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	name = "trading card point panel north"
 	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "point_panel_north"
-	mouse_opacity = FALSE
+
+	var/gems = 5
+	var/max_gems = 10
+	var/gem_bar_offset_x = 22
+	var/gem_bar_offset_y = -18
+	var/individual_gem_offset = 5
+
+/obj/effect/decal/trading_card_panel/update_overlays()
+	. = ..()
+	if(!gems)
+		return
+	for(var/gem in 1 to gems)
+		var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', "gem")
+		gem_overlay.pixel_x = gem_bar_offset_x
+		gem_overlay.pixel_y = gem * individual_gem_offset + gem_bar_offset_y
+		gem_overlay.mouse_opacity = FALSE
+		. += gem_overlay
 
 /obj/effect/decal/trading_card_panel/south
 	name = "trading card point panel south"
