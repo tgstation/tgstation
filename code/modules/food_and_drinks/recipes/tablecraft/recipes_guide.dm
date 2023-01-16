@@ -296,11 +296,6 @@
 	result = /obj/item/food/salami
 	category = CAT_MEAT
 
-/datum/crafting_recipe/food/knife/american_sausage
-	reqs = list(/obj/item/food/sausage = 1)
-	result = /obj/item/food/sausage/american
-	category = CAT_MEAT
-
 /datum/crafting_recipe/food/knife/tempehslice
 	reqs = list(/obj/item/food/tempeh = 1)
 	result = /obj/item/food/tempehslice

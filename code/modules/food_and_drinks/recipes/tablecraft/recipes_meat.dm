@@ -112,6 +112,15 @@
 	result = /obj/item/food/raw_sausage
 	category = CAT_MEAT
 
+/datum/crafting_recipe/food/american_sausage
+	name = "American sausage"
+	reqs = list(
+		/obj/item/food/raw_meatball = 1,
+		/obj/item/food/meat/rawcutlet = 2
+	)
+	result = /obj/item/food/sausage/american
+	category = CAT_MEAT
+
 /datum/crafting_recipe/food/nugget
 	name = "Chicken nugget"
 	reqs = list(
