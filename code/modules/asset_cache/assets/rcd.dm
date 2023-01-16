@@ -9,6 +9,10 @@
 		'icons/hud/radial.dmi' = list("wallfloor", "windowsize", "windowtype", "cnorth", "csouth", "ceast", "cwest", "chair", "stool", "windoor", "secure_windoor"),
 		'icons/obj/structures.dmi' = list("window0", "rwindow0", "table", "glass_table"),
 		'icons/obj/stock_parts.dmi' = list("box_1"),
+		'icons/obj/smooth_structures/catwalk.dmi' = list("catwalk-0"),
+		'icons/obj/wallframe.dmi' = list("apc"),
+		'icons/obj/monitors.dmi' = list("alarm_bitem", "fire_bitem"),
+		'icons/obj/objects.dmi' = list("rack", "bed")
 	)
 
 	var/icon/icon

@@ -278,6 +278,7 @@ RLD
 #define WINDOW_GLASS "window_glass"
 #define WINDOW_SIZE "window_size"
 #define COMPUTER_DIR "computer_dir"
+#define WALLFRAME_TYPE "wallframe_type"
 #define FURNISH_TYPE "furnish_type"
 #define FURNISH_COST "furnish_cost"
 #define FURNISH_DELAY "furnish_delay"
@@ -317,6 +318,7 @@ RLD
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced, WINDOW_GLASS = RCD_WINDOW_REINFORCED, WINDOW_SIZE =  RCD_WINDOW_DIRECTIONAL, ICON = "windowtype", TITLE = "Directional Reinforced Window"),
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/fulltile, WINDOW_GLASS = RCD_WINDOW_NORMAL, WINDOW_SIZE =  RCD_WINDOW_FULLTILE, ICON = "window0", TITLE = "Full Tile Window"),
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced/fulltile, WINDOW_GLASS = RCD_WINDOW_REINFORCED, WINDOW_SIZE =  RCD_WINDOW_FULLTILE, ICON = "rwindow0", TITLE = "Full Tile Reinforced Window"),
+				list(CONSTRUCTION_MODE = RCD_CATWALK, ICON = "catwalk-0", TITLE = "Catwalk"),
 			),
 
 			//Computers & Machine Frames
@@ -326,6 +328,9 @@ RLD
 				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 2, ICON = "csouth", TITLE = "Computer South"),
 				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 4, ICON = "ceast", TITLE = "Computer East"),
 				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 8, ICON = "cwest", TITLE = "Computer West"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/apc, ICON = "apc", TITLE = "APC WallFrame"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/airalarm, ICON = "alarm_bitem", TITLE = "AirAlarm WallFrame"),
+				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/firealarm, ICON = "fire_bitem", TITLE = "FireAlarm WallFrame"),
 			),
 
 			//Interior Design[construction_mode = RCD_FURNISHING is implied]
@@ -334,6 +339,8 @@ RLD
 				list(FURNISH_TYPE = /obj/structure/chair/stool, FURNISH_COST = 8, FURNISH_DELAY = 10, ICON = "stool", TITLE = "Stool"),
 				list(FURNISH_TYPE = /obj/structure/table, FURNISH_COST = 16, FURNISH_DELAY = 20, ICON = "table",TITLE = "Table"),
 				list(FURNISH_TYPE = /obj/structure/table/glass, FURNISH_COST = 16, FURNISH_DELAY = 20, ICON = "glass_table", TITLE = "Glass Table"),
+				list(FURNISH_TYPE = /obj/structure/rack, FURNISH_COST = 20, FURNISH_DELAY = 25, ICON = "rack", TITLE = "Rack"),
+				list(FURNISH_TYPE = /obj/structure/bed, FURNISH_COST = 10, FURNISH_DELAY = 15, ICON = "bed", TITLE = "Bed"),
 			),
 		),
 
@@ -403,6 +410,7 @@ RLD
 	var/window_type = /obj/structure/window/fulltile
 	var/window_glass = RCD_WINDOW_NORMAL
 	var/window_size = RCD_WINDOW_FULLTILE
+	var/obj/item/wallframe/wallframe_type = /obj/item/wallframe/apc
 	var/furnish_type = /obj/structure/chair
 	var/furnish_cost = 8
 	var/furnish_delay = 10
@@ -548,9 +556,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			qdel(rcd_effect)
 			return FALSE
 	if(!do_after(user, delay, target = A))
-		qdel(rcd_effect)
-		return FALSE
-	if(!checkResource(rcd_results["cost"], user))
 		qdel(rcd_effect)
 		return FALSE
 	if(!A.rcd_act(user, src, rcd_results["mode"]))
@@ -705,6 +710,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				construction_mode = design[CONSTRUCTION_MODE]
 				if(design[COMPUTER_DIR] != null)
 					computer_dir = design[COMPUTER_DIR]
+				if(design[WALLFRAME_TYPE] != null)
+					wallframe_type = design[WALLFRAME_TYPE]
 			else if(category_name == "Furniture")
 				construction_mode = RCD_FURNISHING
 				furnish_type = design[FURNISH_TYPE]
@@ -824,6 +831,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 #undef WINDOW_GLASS
 #undef WINDOW_SIZE
 #undef COMPUTER_DIR
+#undef WALLFRAME_TYPE
 #undef FURNISH_TYPE
 #undef FURNISH_COST
 #undef FURNISH_DELAY

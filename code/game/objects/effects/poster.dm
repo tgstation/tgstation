@@ -268,6 +268,7 @@
 		return
 
 	placed_poster.on_placed_poster(user)
+	return TRUE
 
 /obj/structure/sign/poster/proc/snowflake_wall_turf_check(atom/hopefully_still_a_wall_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
 	return iswallturf(hopefully_still_a_wall_turf)

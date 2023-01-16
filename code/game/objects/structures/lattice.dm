@@ -59,6 +59,8 @@
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_FLOORWALL)
 		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)
+	if(the_rcd.mode == RCD_CATWALK)
+		return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 1)
 
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	if(passed_mode == RCD_FLOORWALL)
@@ -68,6 +70,12 @@
 			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			qdel(src)
 			return TRUE
+	if(passed_mode == RCD_CATWALK)
+		to_chat(user, span_notice("You build a catwalk."))
+		var/turf/T = src.loc
+		qdel(src)
+		new /obj/structure/lattice/catwalk(T)
+		return TRUE
 	return FALSE
 
 /obj/structure/lattice/singularity_pull(S, current_size)
@@ -100,6 +108,20 @@
 	for(var/obj/structure/cable/C in T)
 		C.deconstruct()
 	..()
+
+/obj/structure/lattice/catwalk/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_DECONSTRUCT)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 10, "cost" = 5)
+	return FALSE
+
+/obj/structure/lattice/catwalk/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	if(passed_mode == RCD_DECONSTRUCT)
+		to_chat(user, "You deconstruct a catwalk")
+		var/turf/T = loc
+		for(var/obj/structure/cable/C in T)
+			qdel(C)
+		qdel(src)
+		return TRUE
 
 /obj/structure/lattice/catwalk/mining
 	name = "reinforced catwalk"

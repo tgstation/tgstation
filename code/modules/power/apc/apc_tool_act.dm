@@ -142,7 +142,7 @@
 	return FALSE
 
 /obj/machinery/power/apc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	if(!(passed_mode & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if(!(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return FALSE
 	if(!has_electronics)
 		if(machine_stat & BROKEN)
