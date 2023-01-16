@@ -220,7 +220,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
-	var/applied_species = /datum/species/skeleton  ///Which species the resurected humanoid will be
+	///Which species the resurected humanoid will be
+	var/applied_species = /datum/species/skeleton
 
 /obj/item/necromantic_stone/unlimited
 	unlimited = 1
