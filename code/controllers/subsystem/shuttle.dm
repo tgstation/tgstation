@@ -157,7 +157,7 @@ SUBSYSTEM_DEF(shuttle)
 		//Adds access requirements to the end of each description.
 		if(pack.access && pack.access_view)
 			if(pack.access == pack.access_view)
-				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open and purchase."
+				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open or purchase."
 			else
 				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open, or [SSid_access.get_access_desc(pack.access_view)] access to purchase."
 		else if(pack.access)
