@@ -226,8 +226,8 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	icon_state = "card_holder_inactive"
 	use_power = NO_POWER_USE
 
-	var/gems = 10
-	var/max_gems = 20
+	var/gems = 5
+	var/max_gems = 10
 	var/gem_bar_offset_x = 22
 	var/gem_bar_offset_y = -18
 	var/individual_gem_offset = 5
@@ -252,6 +252,7 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 			gems -= 1
 		if("Modify")
 			gems = initial(gems)
+	gems = clamp(gems, 0, max_gems)
 	update_icon(UPDATE_OVERLAYS)
 	add_fingerprint(user)
 	return ..()
