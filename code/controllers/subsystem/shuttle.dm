@@ -154,6 +154,16 @@ SUBSYSTEM_DEF(shuttle)
 		if(!pack.contains)
 			continue
 
+		if(pack.access && pack.access_view)
+			if(pack.access == pack.access_view)
+				pack.desc += " Requires [pack.access] to to open and purchase."
+			else
+				pack.desc += " Requires [pack.access] to open and [pack.access_view] to purchase."
+		else if(pack.access)
+			pack.desc += " Requires [pack.access]] to to open."
+		else if(pack.access_view)
+			pack.desc += " Requires [pack.access_view] to to purchase."
+
 		supply_packs[pack.id] = pack
 
 	setup_shuttles(stationary_docking_ports)
