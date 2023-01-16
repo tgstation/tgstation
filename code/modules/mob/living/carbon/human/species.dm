@@ -888,8 +888,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_EYES)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
-			var/obj/item/organ/internal/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-			if(E?.no_glasses)
+			var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+			if(eyes?.no_glasses)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_HEAD)
@@ -1116,7 +1116,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 		if(atk_effect == ATTACK_EFFECT_BITE)
-			if(user.is_mouth_covered(mask_only = TRUE))
+			if(user.is_mouth_covered(ITEM_SLOT_MASK))
 				to_chat(user, span_warning("You can't [atk_verb] with your mouth covered!"))
 				return FALSE
 		user.do_attack_animation(target, atk_effect)

@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "If there are several techwebs, sabotaging the master server of one of them will no longer cut research point generation of the rest."
