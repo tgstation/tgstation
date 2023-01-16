@@ -134,7 +134,7 @@
 	trim = "Unassigned",
 	/// Locked specific
 	dna_ref,
-	mindref,
+	datum/mind/mindref,
 	)
 	. = ..()
 	src.dna_ref = dna_ref
