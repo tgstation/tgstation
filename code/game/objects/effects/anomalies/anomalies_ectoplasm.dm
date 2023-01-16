@@ -28,7 +28,7 @@
 	switch(effect_power)
 		if(0 to 25)
 			. += span_notice("The space around the anomaly faintly resonates. It doesn't seem very powerful at the moment.")
-		if(26 to 64)
+		if(26 to 49)
 			. += span_notice("The space around the anomaly seems to vibrate, letting out a noise that sounds like ghastly moaning. Someone should probably do something about that.")
 		if(50 to 100)
 			. += span_alert("The anomaly pulsates heavily, about to burst with unearthly energy. This can't be good.")
@@ -44,11 +44,10 @@
 			effect_power = 0
 			return
 
-		var/player_count = length(GLOB.player_list)
 		var/total_dead = length(GLOB.dead_player_list + GLOB.current_observers_list)
 
 		//The actual event severity is determined by what % the current ghosts are circling the anomaly.
-		var/severity = ghosts_orbiting / total_dead * 100
+		effect_power = ghosts_orbiting / total_dead * 100
 
 		if(effect_power >= 50)
 			icon_state = "ectoplasm_heavy"
@@ -104,7 +103,7 @@
 		for(var/mob/dead/observer/orbiter in orbiters?.orbiter_list)
 			candidate_list += orbiter
 
-		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(make_ghost_swarm), get_turf(src), candidate_list)
+		new /obj/structure/ghost_portal(get_turf(src), candidate_list)
 
 	priority_announce("Ectoplasmic outburst detected.", "Anomaly Alert")
 
@@ -137,12 +136,27 @@
 /obj/structure/ghost_portal
 	name = "Spooky Portal"
 	desc = "A portal between our dimension and who-knows-where? It's emitting an absolutely ungodly wailing sound."
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "safe"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
 	anchored = TRUE
 	density = TRUE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
+	var/static/list/spooky_noises = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
+	var/list/ghosts_spawned = list()
+
+/obj/structure/ghost_portal/Initialize(mapload, candidate_list)
+	. = ..()
+
+	INVOKE_ASYNC(src, PROC_REF(make_ghost_swarm), candidate_list)
+	playsound(src, pick(spooky_noises), 50, TRUE)
+	QDEL_IN(src, 2 MINUTES)
+
+/obj/structure/ghost_portal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	playsound(src, pick(spooky_noises), 50, TRUE)
+
+/obj/structure/ghost_portal/Destroy()
+	. = ..()
+
+	cleanup_ghosts()
 
 /**
  * Generates a poll for observers, spawning anyone who signs up in a large group of ghost simplemobs
@@ -151,31 +165,29 @@
  * Ghosts are deleted two minutes after being made, and exist to wreck anything in their immediate view.
  */
 
-/proc/make_ghost_swarm(turf/spawn_location, list/candidate_list)
+/obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list)
 	var/list/candidates = poll_candidates("Would you like to participate in a spooky ghost swarm?", ROLE_SENTIENCE, FALSE, 10 SECONDS, group = candidate_list)
 	var/list/ghost_list = list()
 	for(var/candidate in candidates)
 		if(!isobserver(candidate))
 			continue
 		var/mob/dead/observer/candidate_ghost = candidate //typecast so we can pull their key
-		var/mob/living/basic/ghost/new_ghost = new /mob/living/basic/ghost(spawn_location)
+		var/mob/living/basic/ghost/new_ghost = new /mob/living/basic/ghost(get_turf(src))
 		new_ghost.ghostize(FALSE)
 		new_ghost.key = candidate_ghost.key
 		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
 		to_chat(new_ghost, span_revenboldnotice("You are a vengeful spirit, brought back from beyond the grave. Your time on this plane is limited, and you have but one purpose: Smash everything you see!"))
-		ghost_list += new_ghost
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cleanup_ghosts), ghost_list), 2 MINUTES)
+		ghosts_spawned += new_ghost
 
 /**
  * Gives a farewell message and deletes the ghosts the anomaly produced.
  *
  * Handles cleanup of all ghost mobs spawned by the anomaly. Iterates through the list
  * and calls qdel on its contents.
- *
- * * ghost_list - a list of the mobs to be messaged and deleted.
  */
 
-/proc/cleanup_ghosts(list/ghost_list)
-	for(var/mob/living/mob_to_delete in ghost_list)
+/obj/structure/ghost_portal/proc/cleanup_ghosts()
+	for(var/mob/living/mob_to_delete in ghosts_spawned)
 		mob_to_delete.visible_message(span_alert("The [mob_to_delete] wails as it is torn back into the void!"), span_alert("You let out one last wail as you are sucked back into the realm of the dead. Then suddenly, you're back in the comforting embrace of the afterlife."), span_hear("You hear ethereal wailing."))
+		playsound(src, pick(spooky_noises), 50, TRUE)
 		qdel(mob_to_delete)
