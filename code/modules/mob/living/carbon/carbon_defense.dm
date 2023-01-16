@@ -29,7 +29,7 @@
 /mob/living/carbon/is_mouth_covered(check_flags = ALL)
 	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
 		return head
-	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & HEADCOVERSMOUTH))
+	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
 		return wear_mask
 
 	return null
