@@ -499,15 +499,7 @@
 		breather.clear_alert(ALERT_TOO_MUCH_N2O)
 	// N2O side-effects. "Too much N2O!"
 	// Small amount of N2O, small side-effects. Causes random euphoria and giggling.
-	else if (n2o_pp < n2o_para_min)
-		// No alert for small amounts, but the mob randomly feels euphoric.
-		breather.clear_alert(ALERT_TOO_MUCH_N2O)
-		if(prob(20))
-			n2o_euphoria = EUPHORIA_ACTIVE
-			breather.emote(pick("giggle", "laugh"))
-		else
-			n2o_euphoria = EUPHORIA_INACTIVE
-	else
+	else if (n2o_pp > n2o_para_min)
 		// More N2O, more severe side-effects. Causes stun/sleep.
 		n2o_euphoria = EUPHORIA_ACTIVE
 		breather.throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
@@ -516,6 +508,14 @@
 		// Enough to make the mob sleep.
 		if(n2o_pp > n2o_sleep_min)
 			breather.Sleeping(min(breather.AmountSleeping() + 100, 200))
+	else
+		// No alert for small amounts, but the mob randomly feels euphoric.
+		breather.clear_alert(ALERT_TOO_MUCH_N2O)
+		if(prob(20))
+			n2o_euphoria = EUPHORIA_ACTIVE
+			breather.emote(pick("giggle", "laugh"))
+		else
+			n2o_euphoria = EUPHORIA_INACTIVE
 
 	//-- NITRIUM --//
 	if (nitrium_pp)
