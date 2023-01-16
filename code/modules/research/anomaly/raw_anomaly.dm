@@ -70,7 +70,7 @@
 
 /obj/item/raw_anomaly_core/ectoplasm
 	name = "\improper ectoplasm anomaly core"
-	desc = "The neutralized core of an ectoplasmic anomaly. When you hold it close, you can hear faint murmuring from inside."
+	desc = "The raw core of an ectoplasmic anomaly. It contains secrets it wishes to share with you."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/ectoplasm
 	icon_state = "dimensional_core"
 

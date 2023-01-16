@@ -177,7 +177,6 @@
 
 /obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list)
 	var/list/candidates = poll_candidates("Would you like to participate in a spooky ghost swarm?", ROLE_SENTIENCE, FALSE, 10 SECONDS, group = candidate_list)
-	var/list/ghost_list = list()
 	for(var/candidate in candidates)
 		if(!isobserver(candidate))
 			continue
