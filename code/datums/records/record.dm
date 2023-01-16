@@ -96,7 +96,7 @@
 	medical_notes = list(),
 	minor_disabilities = "None",
 	minor_disabilities_desc = "No disabilities have been diagnosed at the moment.",
-	)
+)
 	. = ..()
 	src.major_disabilities = major_disabilities
 	src.major_disabilities_desc = major_disabilities_desc
