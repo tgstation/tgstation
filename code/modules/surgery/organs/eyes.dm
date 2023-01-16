@@ -563,7 +563,7 @@
 	ADD_TRAIT(adapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
-	if(!HAS_TRAIT(owner, TRAIT_BLIND) && isturf(owner.loc) && owner.has_light_nearby(light_amount=0.5)) //we allow a little more than usual so we can produce light from the adapted eyes
+	if(!owner.is_blind() && isturf(owner.loc) && owner.has_light_nearby(light_amount=0.5)) //we allow a little more than usual so we can produce light from the adapted eyes
 		to_chat(owner, span_danger("Your eyes! They burn in the light!"))
 		applyOrganDamage(10) //blind quickly
 		playsound(owner, 'sound/machines/grill/grillsizzle.ogg', 50)
