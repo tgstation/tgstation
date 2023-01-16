@@ -1,6 +1,6 @@
-import { capitalize, multiline } from 'common/string';
+import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -18,6 +18,7 @@ const ShoppingTab = (props, context) => {
   const { data, act } = useBackend(context);
   const { order_categories, order_datums } = data;
   const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
+  const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const mapped_food = order_datums.filter(
     (food) => food && food.cat === shopIndex
   );
@@ -25,17 +26,23 @@ const ShoppingTab = (props, context) => {
     <Stack fill vertical>
       <Section mb={-0.9}>
         <Stack.Item>
-          <Stack textAlign="center">
+          <Tabs>
             {order_categories.map((item, key) => (
-              <Stack.Item key={item}>
-                <Button
-                  fluid
-                  content={item}
-                  onClick={() => setShopIndex(item)}
-                />
-              </Stack.Item>
+              <Tabs.Tab
+                key={item.id}
+                selected={item === shopIndex}
+                onClick={() => setShopIndex(item)}>
+                {item}
+              </Tabs.Tab>
             ))}
-          </Stack>
+          </Tabs>
+          <Button
+            ml={65}
+            mt={-2}
+            color={condensed ? 'green' : 'red'}
+            content={condensed ? 'Uncondense' : 'Condense'}
+            onClick={() => setCondensed(!condensed)}
+          />
         </Stack.Item>
       </Section>
       <Stack.Item grow>
@@ -50,18 +57,54 @@ const ShoppingTab = (props, context) => {
                       'vertical-align': 'middle',
                     }}
                   />{' '}
+                  {!condensed && (
+                    <Stack.Item>
+                      <Box
+                        as="img"
+                        m={1}
+                        src={`data:image/jpeg;base64,${item.product_icon}`}
+                        height="36px"
+                        width="36px"
+                        style={{
+                          '-ms-interpolation-mode': 'nearest-neighbor',
+                          'vertical-align': 'middle',
+                        }}
+                      />
+                    </Stack.Item>
+                  )}
                   <Stack.Item>{capitalize(item.name)}</Stack.Item>
                   <Stack.Item grow mt={-1} color="label" fontSize="10px">
-                    {'"' + item.desc + '"'}
+                    <Button
+                      color="transparent"
+                      icon="info"
+                      tooltipPosition="right"
+                      tooltip={item.desc}
+                    />
                     <br />
-                    <Box textAlign="right">
-                      {item.name + ' costs ' + item.cost + ' per order.'}
-                    </Box>
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
+                    <Box fontSize="10px" color="label" textAlign="right">
+                      {' costs ' + item.cost + ' per order.'}
+                    </Box>
+                    <Button
+                      icon="minus"
+                      onClick={() =>
+                        act('remove_one', {
+                          target: item.ref,
+                        })
+                      }
+                    />
+                    <Button
+                      icon="plus"
+                      onClick={() =>
+                        act('add_one', {
+                          target: item.ref,
+                        })
+                      }
+                    />
                     <NumberInput
                       animated
-                      value={(item.amt && item.amt) || 0}
+                      value={item.amt || 0}
                       width="41px"
                       minValue={0}
                       maxValue={20}
@@ -86,8 +129,14 @@ const ShoppingTab = (props, context) => {
 
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const { ltsrbt_available, forced_express, order_datums, total_cost } = data;
-  const checkout_list = order_datums.filter((food) => food && food.amt);
+  const {
+    purchase_tooltip,
+    express_tooltip,
+    forced_express,
+    order_datums,
+    total_cost,
+  } = data;
+  const checkout_list = order_datums.filter((food) => food && (food.amt || 0));
   return (
     <Stack vertical fill>
       <Stack.Item grow>
@@ -120,7 +169,7 @@ const CheckoutTab = (props, context) => {
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
-                        value={(item.amt && item.amt) || 0}
+                        value={item.amt || 0}
                         width="41px"
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}
@@ -152,27 +201,9 @@ const CheckoutTab = (props, context) => {
                   fluid
                   icon="plane-departure"
                   content="Purchase"
-                  tooltip={multiline`
-                  Your groceries will arrive at cargo,
-                  and hopefully get delivered by them.
-                  `}
+                  tooltip={purchase_tooltip}
                   tooltipPosition="top"
                   onClick={() => act('purchase')}
-                />
-              </Stack.Item>
-            )}
-            {!!ltsrbt_available && (
-              <Stack.Item grow textAlign="center">
-                <Button
-                  fluid
-                  icon="shuttle-van"
-                  content="Deliver"
-                  tooltip={multiline`
-                  Your groceries will arrive to one of
-                  the on-station built LTSRBT devices.
-                  `}
-                  tooltipPosition="top"
-                  onClick={() => act('ltsrbt_deliver')}
                 />
               </Stack.Item>
             )}
@@ -182,10 +213,7 @@ const CheckoutTab = (props, context) => {
                 icon="parachute-box"
                 color="yellow"
                 content="Express"
-                tooltip={multiline`
-                Sends the ingredients instantly,
-                but locks the console longer and increases the price!
-                `}
+                tooltip={express_tooltip}
                 tooltipPosition="top-start"
                 onClick={() => act('express')}
               />
@@ -219,7 +247,7 @@ export const ProduceConsole = (props, context) => {
   const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
-    <Window title="Produce Orders" width={500} height={400}>
+    <Window width={500} height={400}>
       <Window.Content>
         {!off_cooldown && <OrderSent />}
         <Stack vertical fill>
@@ -251,7 +279,9 @@ export const ProduceConsole = (props, context) => {
           </Stack.Item>
           <Section>
             <Stack grow>
-              <Stack.Item>Currently available balance: {points}</Stack.Item>
+              <Stack.Item>
+                Currently available balance: {points || 0}
+              </Stack.Item>
             </Stack>
           </Section>
           <Stack.Item grow>

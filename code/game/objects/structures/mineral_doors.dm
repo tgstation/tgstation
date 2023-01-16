@@ -248,13 +248,6 @@
 	opacity = FALSE
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
-/datum/armor/structure_mineral_door
-	melee = 10
-	energy = 100
-	bomb = 10
-	fire = 50
-	acid = 50
-
 /obj/structure/mineral_door/transparent/Close()
 	..()
 	set_opacity(FALSE)
@@ -281,13 +274,6 @@
 	max_integrity = 200
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
-/datum/armor/structure_mineral_door
-	melee = 10
-	energy = 100
-	bomb = 10
-	fire = 50
-	acid = 50
-
 /obj/structure/mineral_door/wood/pickaxe_door(mob/living/user, obj/item/I)
 	return
 
@@ -313,13 +299,6 @@
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
-
-/datum/armor/structure_mineral_door
-	melee = 10
-	energy = 100
-	bomb = 10
-	fire = 50
-	acid = 50
 
 /obj/structure/mineral_door/paperframe/Initialize(mapload)
 	. = ..()

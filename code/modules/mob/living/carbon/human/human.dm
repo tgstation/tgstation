@@ -6,6 +6,9 @@
 
 	setup_mood()
 
+	// All start without eyes, and get them via set species
+	become_blind(NO_EYES)
+
 	create_dna()
 	dna.species.create_fresh_body(src)
 	setup_human_dna()
@@ -597,7 +600,7 @@
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
-	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
+	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		update_worn_glasses()
 		. = TRUE
 
@@ -682,11 +685,6 @@
 		if(R)
 			R.fields["name"] = newname
 
-/mob/living/carbon/human/get_total_tint()
-	. = ..()
-	if(glasses)
-		. += glasses.tint
-
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
 		return
@@ -743,14 +741,8 @@
 
 	return ..()
 
-/mob/living/carbon/human/is_nearsighted()
-	var/obj/item/clothing/glasses/eyewear = glasses
-	if(istype(eyewear) && eyewear.vision_correction)
-		return FALSE
-	return ..()
-
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
-	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
+	if(blood && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		if(message)
 			visible_message(span_warning("[src] dry heaves!"), \
 							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
@@ -954,12 +946,12 @@
 	return ..()
 
 /mob/living/carbon/human/is_bleeding()
-	if(NOBLOOD in dna.species.species_traits)
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return FALSE
 	return ..()
 
 /mob/living/carbon/human/get_total_bleed_rate()
-	if(NOBLOOD in dna.species.species_traits)
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return FALSE
 	return ..()
 

@@ -44,10 +44,6 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
 
-/datum/armor/sheet_glass
-	fire = 50
-	acid = 100
-
 /obj/item/stack/sheet/glass/get_main_recipes()
 	. = ..()
 	. += GLOB.glass_recipes
@@ -180,10 +176,6 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	var/datum/robot_energy_storage/glasource = /datum/robot_energy_storage/glass
 	/// The amount of energy this draws from the glass source per stack unit.
 	var/glacost = 500
-
-/datum/armor/sheet_rglass
-	fire = 70
-	acid = 100
 
 /obj/item/stack/sheet/rglass/cyborg/get_amount()
 	return min(round(source.energy / cost), round(glasource.energy / glacost))

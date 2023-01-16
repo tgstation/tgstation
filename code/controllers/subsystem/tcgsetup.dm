@@ -124,9 +124,9 @@ SUBSYSTEM_DEF(trading_card_game)
 			message_admins(toPrint.name)
 
 ///Checks the passed type list for missing raritys, or raritys out of bounds
-/datum/controller/subsystem/trading_card_game/proc/checkCardpacks(cardPackList)
+/datum/controller/subsystem/trading_card_game/proc/check_cardpacks(card_pack_list)
 	var/toReturn = ""
-	for(var/cardPack in cardPackList)
+	for(var/cardPack in card_pack_list)
 		var/obj/item/cardpack/pack = new cardPack()
 		//Lets see if someone made a type yeah?
 		if(!cached_cards[pack.series])
@@ -145,10 +145,11 @@ SUBSYSTEM_DEF(trading_card_game)
 			if(!cached_cards[pack.series][pack_rarity])
 				toReturn += "[pack.type] does not have the required rarity [pack_rarity]\n"
 		qdel(pack)
+
 	return toReturn
 
 ///Checks the global card list for cards that don't override all the default values of the card datum
-/datum/controller/subsystem/trading_card_game/proc/checkCardDatums()
+/datum/controller/subsystem/trading_card_game/proc/check_card_datums()
 	var/toReturn = ""
 	var/datum/thing = new()
 	for(var/series in cached_cards)
@@ -166,10 +167,11 @@ SUBSYSTEM_DEF(trading_card_game)
 			if(shouldAdd)
 				toReturn += toAdd
 	qdel(thing)
+
 	return toReturn
 
 ///Used to test open a large amount of cardpacks
-/datum/controller/subsystem/trading_card_game/proc/checkCardDistribution(cardPack, batchSize, batchCount, guaranteed)
+/datum/controller/subsystem/trading_card_game/proc/check_card_distribution(cardPack, batchSize, batchCount, guaranteed)
 	var/totalCards = 0
 	//Gotta make this look like an associated list so the implicit "does this exist" checks work proper later
 	var/list/cardsByCount = list("" = 0)

@@ -62,6 +62,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		if(charged)
 			charged = FALSE
@@ -72,6 +73,7 @@
 			var/turf/target = get_turf(A)
 			vortex(target,user)
 			addtimer(CALLBACK(src, PROC_REF(recharge)), 100)
+	return .
 
 /obj/item/mjollnir
 	name = "Mjolnir"
@@ -87,14 +89,6 @@
 	throwforce = 30
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
-
-/datum/armor/item_singularityhammer
-	melee = 50
-	bullet = 50
-	laser = 50
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/item/mjollnir/Initialize(mapload)
 	. = ..()

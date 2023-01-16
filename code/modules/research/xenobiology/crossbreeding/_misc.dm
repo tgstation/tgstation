@@ -53,8 +53,10 @@ Slimecrossing Items
 	return ret
 
 /obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(!on || !pictures_left || !isturf(target.loc))
-		return
+		return .
 
 	if(user == target)
 		to_chat(user, span_notice("You take a selfie!"))
@@ -64,7 +66,7 @@ Slimecrossing Items
 	to_chat(target, span_boldnotice("You'll remember this moment forever!"))
 
 	target.AddComponent(/datum/component/dejavu, 2)
-	.=..()
+	return . | ..()
 
 
 
@@ -76,10 +78,12 @@ Slimecrossing Items
 	pictures_max = 1
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(!on || !pictures_left || !isturf(target.loc))
-		return
+		return .
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	. = ..()
+	return . | ..()
 
 //Hypercharged slime cell - Charged Yellow
 /obj/item/stock_parts/cell/high/slime_hypercharged
@@ -171,14 +175,6 @@ Slimecrossing Items
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "capturedevice"
-
-/datum/armor/structure_ice_stasis
-	melee = 30
-	bullet = 50
-	laser = -50
-	energy = -50
-	fire = -80
-	acid = 30
 
 /obj/item/capturedevice/attack(mob/living/M, mob/user)
 	if(length(contents))

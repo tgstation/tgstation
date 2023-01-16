@@ -630,52 +630,61 @@
 
 	ui_interact(user)
 
+///Performs basic checks to make sure we are still able to hack an airlock. If control is restored early through outside means, opens the airlock's control interface.
+/obj/machinery/door/airlock/proc/check_hacking(mob/user, success_message)
+	if(QDELETED(src))
+		to_chat(user, span_warning("Connection lost! Unable to locate airlock on network."))
+		aiHacking = FALSE
+		return FALSE
+	if(canAIControl(user))
+		to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
+		aiHacking = FALSE
+		if(user)
+			attack_ai(user) //bring up airlock dialog
+		return
+	else if(!canAIHack())
+		to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
+		aiHacking = FALSE
+		return
+	if(success_message)
+		to_chat(user, span_notice(success_message))
+	return TRUE
+
+///Attemps to override airlocks that have the AI control wire disabled.
 /obj/machinery/door/airlock/proc/hack(mob/user)
 	set waitfor = 0
 	if(!aiHacking)
 		aiHacking = TRUE
 		to_chat(user, span_warning("Airlock AI control has been blocked. Beginning fault-detection."))
 		sleep(5 SECONDS)
-		if(canAIControl(user))
-			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
-			aiHacking = FALSE
+
+		if(!check_hacking(user, "Fault confirmed: airlock control wire disabled or cut."))
 			return
-		else if(!canAIHack())
-			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
-			aiHacking = FALSE
-			return
-		to_chat(user, span_notice("Fault confirmed: airlock control wire disabled or cut."))
 		sleep(2 SECONDS)
-		to_chat(user, span_notice("Attempting to hack into airlock. This may take some time."))
+
+		if(!check_hacking(user, "Attempting to hack into airlock. This may take some time."))
+			return
 		sleep(20 SECONDS)
-		if(canAIControl(user))
-			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
-			aiHacking = FALSE
+
+		if(!check_hacking(user, "Upload access confirmed. Loading control program into airlock software."))
 			return
-		else if(!canAIHack())
-			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
-			aiHacking = FALSE
-			return
-		to_chat(user, span_notice("Upload access confirmed. Loading control program into airlock software."))
 		sleep(17 SECONDS)
-		if(canAIControl(user))
-			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
-			aiHacking = FALSE
+
+		if(!check_hacking(user,"Transfer complete. Forcing airlock to execute program."))
 			return
-		else if(!canAIHack())
-			to_chat(user, span_warning("Connection lost! Unable to hack airlock."))
-			aiHacking = FALSE
-			return
-		to_chat(user, span_notice("Transfer complete. Forcing airlock to execute program."))
 		sleep(5 SECONDS)
-		//disable blocked control
-		aiControlDisabled = AI_WIRE_HACKED
-		to_chat(user, span_notice("Receiving control information from airlock."))
+
+		if(!check_hacking(user, "Receiving control information from airlock."))
+			return
+		aiControlDisabled = AI_WIRE_HACKED //disable blocked control
 		sleep(1 SECONDS)
-		//bring up airlock dialog
+
 		aiHacking = FALSE
+		if(QDELETED(src))
+			to_chat(user, span_warning("Connection lost! Unable to locate airlock on network."))
+			return
 		if(user)
-			attack_ai(user)
+			attack_ai(user) //bring up airlock dialog
 
 /obj/machinery/door/airlock/attack_animal(mob/user, list/modifiers)
 	if(isElectrified() && shock(user, 100))
@@ -1364,7 +1373,6 @@
 			var/obj/item/electronics/airlock/ae
 			if(!electronics)
 				ae = new/obj/item/electronics/airlock(loc)
-				gen_access()
 				if(length(req_one_access))
 					ae.one_access = 1
 					ae.accesses = req_one_access

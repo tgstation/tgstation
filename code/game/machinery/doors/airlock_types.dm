@@ -335,7 +335,7 @@
 
 /obj/machinery/door/airlock/external/Initialize(mapload, ...)
 	// default setting is for mapping only, let overrides work
-	if(!mapload || req_access_txt || req_one_access_txt)
+	if(!mapload)
 		req_access = null
 
 	return ..()
@@ -628,3 +628,22 @@
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
 	return
+
+/// Subtype used in unit tests to ensure instant airlock opening/closing. Pretty much just excises everything that would delay the process or is un-needed for the sake of the test (sleeps, icon animations).
+/obj/machinery/door/airlock/instant
+
+// set_density on both open and close procs has a check and return builtin.
+
+/obj/machinery/door/airlock/instant/open(forced = FALSE)
+	operating = TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
+	set_density(FALSE)
+	operating = FALSE
+	return TRUE
+
+/obj/machinery/door/airlock/instant/close(forced = FALSE, force_crush = FALSE)
+	operating = TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
+	set_density(TRUE)
+	operating = FALSE
+	return TRUE

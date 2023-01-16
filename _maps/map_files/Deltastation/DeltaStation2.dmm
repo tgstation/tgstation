@@ -4177,13 +4177,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "aXU" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/space/basic,
 /area/space)
 "aXV" = (
@@ -20758,7 +20752,6 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "eXw" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
@@ -37171,7 +37164,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/west{
 	name = "Chemistry Desk";
-	req_access = list("chemistry")
+	req_access = list("plumbing")
 	},
 /obj/item/paper{
 	pixel_x = -1;
@@ -55489,6 +55482,8 @@
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/contraband/armory,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "nyC" = (
@@ -98618,13 +98613,8 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "xZM" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space)
