@@ -74,7 +74,7 @@
 		//no valid recipe, so you get a fly mutation
 		infusing_into = GLOB.infuser_entries[1]
 	playsound(src, 'sound/machines/blender.ogg', 50, vary = TRUE)
-	to_chat(human_occupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
+	to_chat(human_occupant, span_danger("Little needles repeatedly prick you!"))
 	human_occupant.take_overall_damage(10)
 	human_occupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = human_occupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
 	Shake(15, 15, INFUSING_TIME)
@@ -83,7 +83,8 @@
 	update_appearance()
 
 /obj/machinery/dna_infuser/proc/end_infuse()
-	infuse_organ(occupant)
+	if(infuse_organ(occupant))
+		to_chat(occupant, span_danger("You feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	infusing = FALSE
 	infusing_into = null
 	QDEL_NULL(infusing_from)
