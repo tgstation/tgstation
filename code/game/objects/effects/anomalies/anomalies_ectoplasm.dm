@@ -88,7 +88,7 @@
 				var/mob/living/carbon/human/mob_to_infect
 				mob_to_infect.ForceContractDisease(new /datum/disease/revblight(), FALSE, TRUE)
 				new /obj/effect/temp_visual/revenant(get_turf(mob_to_infect))
-				to_chat(mob_to_infect, span_revenminor("A cacophony of ghostly wailing floods your ears for a moment. The noise subsides, but a distant whispering continues to echo inside of your head..."))
+				to_chat(mob_to_infect, span_revenminor("A cacophony of ghostly wailing floods your ears for a moment. The noise subsides, but a distant whispering continues echoing inside of your head..."))
 
 			if(istype(impacted_thing, /obj/structure/window))
 				var/obj/structure/window/window_to_damage = impacted_thing
@@ -150,17 +150,17 @@
 
 	START_PROCESSING(SSobj, src)
 	INVOKE_ASYNC(src, PROC_REF(make_ghost_swarm), candidate_list)
-	playsound(src, pick(spooky_noises), 50, TRUE)
-	QDEL_IN(src, 1 MINUTES)
+	playsound(src, pick(spooky_noises), 100, TRUE)
+	QDEL_IN(src, 2 MINUTES)
 
 /obj/structure/ghost_portal/process(delta_time)
 	. = ..()
 
 	if(prob(5))
-		playsound(src, pick(spooky_noises), 50, TRUE)
+		playsound(src, pick(spooky_noises), 100)
 
 /obj/structure/ghost_portal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, pick(spooky_noises), 50, TRUE)
+	playsound(src, pick(spooky_noises), 50)
 
 /obj/structure/ghost_portal/Destroy()
 	. = ..()
@@ -202,6 +202,6 @@
 /obj/structure/ghost_portal/proc/cleanup_ghosts()
 	for(var/mob/living/mob_to_delete in ghosts_spawned)
 		mob_to_delete.visible_message(span_alert("The [mob_to_delete] wails as it is torn back into the void!"), span_alert("You let out one last wail as you are sucked back into the realm of the dead. Then suddenly, you're back in the comforting embrace of the afterlife."), span_hear("You hear ethereal wailing."))
-		playsound(src, pick(spooky_noises), 50, TRUE)
+		playsound(src, pick(spooky_noises), 50)
 		new /obj/effect/temp_visual/revenant/cracks(get_turf(src))
 		qdel(mob_to_delete)
