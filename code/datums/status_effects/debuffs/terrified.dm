@@ -96,7 +96,7 @@
 /datum/status_effect/terrified/proc/comfort_owner(datum/source, mob/living/hugger)
 	SIGNAL_HANDLER
 
-	if(is_species(hugger, /datum/species/shadow/nightmare)) //hey wait a minute, that's not a comforting, friendly hug!
+	if(isnightmare(hugger)) //hey wait a minute, that's not a comforting, friendly hug!
 		if(check_surrounding_darkness())
 			addtimer(CALLBACK(src, PROC_REF(freak_out), HUG_TERROR_AMOUNT))
 			owner.visible_message(
@@ -112,7 +112,6 @@
 		span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
 		span_hear("You hear shuffling and a sigh of relief."),
 	)
-	return
 
 /**
  * Checks the surroundings of our victim and returns TRUE if the user is surrounded by enough darkness
