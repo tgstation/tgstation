@@ -148,9 +148,16 @@
 /obj/structure/ghost_portal/Initialize(mapload, candidate_list)
 	. = ..()
 
+	START_PROCESSING(SSobj, src)
 	INVOKE_ASYNC(src, PROC_REF(make_ghost_swarm), candidate_list)
 	playsound(src, pick(spooky_noises), 50, TRUE)
-	QDEL_IN(src, 2 MINUTES)
+	QDEL_IN(src, 1 MINUTES)
+
+/obj/structure/ghost_portal/process(delta_time)
+	. = ..()
+
+	if(prob(5))
+		playsound(src, pick(spooky_noises), 50, TRUE)
 
 /obj/structure/ghost_portal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, pick(spooky_noises), 50, TRUE)
@@ -158,6 +165,7 @@
 /obj/structure/ghost_portal/Destroy()
 	. = ..()
 
+	STOP_PROCESSING(SSobj, src)
 	cleanup_ghosts()
 
 /**
@@ -178,7 +186,11 @@
 		new_ghost.ghostize(FALSE)
 		new_ghost.key = candidate_ghost.key
 		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
-		to_chat(new_ghost, span_revenboldnotice("You are a vengeful spirit, brought back from beyond the grave. Your time on this plane is limited, and you have but one purpose: Smash everything you see!"))
+		var/policy = get_policy(ROLE_PYROCLASTIC_SLIME)
+		if (policy)
+			to_chat(new_ghost, policy)
+		else
+			to_chat(new_ghost, span_revenboldnotice("You are a lost soul, brought back to the realm of the living. Your time on this plane is limited, and you will soon be dragged back into the void!"))
 		ghosts_spawned += new_ghost
 
 /**
@@ -192,4 +204,5 @@
 	for(var/mob/living/mob_to_delete in ghosts_spawned)
 		mob_to_delete.visible_message(span_alert("The [mob_to_delete] wails as it is torn back into the void!"), span_alert("You let out one last wail as you are sucked back into the realm of the dead. Then suddenly, you're back in the comforting embrace of the afterlife."), span_hear("You hear ethereal wailing."))
 		playsound(src, pick(spooky_noises), 50, TRUE)
+		new /obj/effect/temp_visual/revenant/cracks(get_turf(src))
 		qdel(mob_to_delete)
