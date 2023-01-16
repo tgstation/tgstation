@@ -14,14 +14,22 @@
 
 	///Does this tail have a wagging sprite, and is it currently wagging?
 	var/wag_flags = NONE
+	///The original owner of this tail
+	var/original_owner //Yay, snowflake code!
 
 /obj/item/organ/external/tail/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 	if(.)
 		RegisterSignal(reciever, COMSIG_ORGAN_WAG_TAIL, PROC_REF(wag))
+		original_owner ||= WEAKREF(reciever)
 
 		reciever.clear_mood_event("tail_lost")
 		reciever.clear_mood_event("tail_balance_lost")
+
+		if(IS_WEAKREF_OF(reciever, original_owner))
+			reciever.clear_mood_event("wrong_tail_regained")
+		else if(type in reciever.dna.species.external_organs)
+			reciever.add_mood_event("wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
 	if(wag_flags & WAG_WAGGING)
