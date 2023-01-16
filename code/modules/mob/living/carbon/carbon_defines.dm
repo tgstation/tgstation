@@ -58,7 +58,7 @@
 
 	///This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 	var/failed_last_breath = FALSE
-	///Empty breath - Used in the event that `check_breath` gets a null breath.
+	///Empty breath - Used in the event that [carbon/proc/check_breath()] gets a null breath.
 	var/datum/gas_mixture/empty_breath = new
 
 	var/co2overloadtime = null

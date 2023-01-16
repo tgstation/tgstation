@@ -47,7 +47,7 @@
 // BREATHING //
 ///////////////
 
-//Start of a breath chain, calls breathe()
+// Start of a breath chain, calls [carbon/proc/breathe()]
 /mob/living/carbon/handle_breathing(delta_time, times_fired)
 	var/next_breath = 4
 	var/obj/item/organ/internal/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
@@ -70,7 +70,7 @@
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src,0)
 
-//Second link in a breath chain, calls check_breath()
+// Second link in a breath chain, calls [carbon/proc/check_breath()]
 /mob/living/carbon/proc/breathe(delta_time, times_fired)
 	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE) & COMSIG_CARBON_BLOCK_BREATH)
@@ -131,7 +131,7 @@
 	return FALSE
 
 /**
- * This proc tests if the lungs can breathe, if they can breathe a given gas mixture, and throws/clears gas alerts.
+ * This proc tests if the lungs can breathe, if the mob can breathe a given gas mixture, and throws/clears gas alerts.
  * If there are moles of gas in the given gas mixture, side-effects may be applied/removed on the mob.
  * This proc expects a lungs organ in order to breathe successfully, but does not defer any work to it.
  *
@@ -253,10 +253,10 @@
 	else
 		// Enough oxygen to breathe.
 		failed_last_breath = FALSE
+		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		if(o2_pp)
 			// Inhale O2.
 			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
-			clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 			// Heal mob if not in crit.
 			if(health >= crit_threshold)
 				adjustOxyLoss(-5)
@@ -268,7 +268,6 @@
 	//-- CARBON DIOXIDE --//
 	// Maximum CO2 effects. "Too much CO2!"
 	if(co2_pp > safe_co2_max)
-		// Reset side-effects.
 		// CO2 side-effects.
 		if(!co2overloadtime)
 			co2overloadtime = world.time
@@ -318,9 +317,9 @@
 	else
 		// Miasma sickness
 		if(prob(1 * miasma_pp))
-			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
+			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = 2, max_level = 3)
 			miasma_disease.name = "Unknown"
-			ForceContractDisease(miasma_disease, TRUE, TRUE)
+			ForceContractDisease(miasma_disease, make_copy = TRUE, del_on_fail = TRUE)
 		// Miasma side-effects.
 		switch(miasma_pp)
 			if(0.25 to 5)

@@ -22,7 +22,7 @@
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
-	///Empty breath - Used in the event that `check_breath` gets a null breath.
+	/// Empty breath - Used in the event that [lungs/proc/check_breath()] gets a null breath.
 	var/datum/gas_mixture/empty_breath = new
 
 	//Breath damage
@@ -202,7 +202,7 @@
 		zauker_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/zauker][MOLES])
 
 	// Handle subtypes' breath processing
-	handle_gas_override(breather, breath_gases, gas_breathed)
+	handle_gas_override(breather, breath_gases, 0)
 
 	//-- MAIN GASES --//
 
@@ -283,7 +283,7 @@
 				if(breather.health >= breather.crit_threshold)
 					breather.adjustOxyLoss(-5)
 
-	//-- CO2 --//
+	//-- CARBON DIOXIDE --//
 	// Maximum CO2 effects. "Too much CO2!"
 	if(safe_co2_max)
 		if(co2_pp && (co2_pp > safe_co2_max))
@@ -457,7 +457,7 @@
 		breathe_gas_volume(breath_gases, /datum/gas/miasma)
 		// Miasma sickness
 		if(prob(0.5 * miasma_pp))
-			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(min(round(max(miasma_pp/2, 1), 1), 6), min(round(max(miasma_pp, 1), 1), 8))
+			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = min(round(max(miasma_pp / 2, 1), 1), 6), max_level = min(round(max(miasma_pp, 1), 1), 8))
 			// tl;dr the first argument chooses the smaller of miasma_pp/2 or 6(typical max virus symptoms), the second chooses the smaller of miasma_pp or 8(max virus symptom level)
 			// Each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
 			miasma_disease.name = "Unknown"
@@ -541,7 +541,7 @@
 	//-- TRITIUM --//
 	if (trit_pp)
 		// Inhale Tritium. Exhale nothing.
-		breathe_gas_volume(breath_gases, /datum/gas/tritium)
+		gas_breathed = breathe_gas_volume(breath_gases, /datum/gas/tritium)
 		// Tritium side-effects.
 		var/ratio = gas_breathed * 15
 		breather.adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
