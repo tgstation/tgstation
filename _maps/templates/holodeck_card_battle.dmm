@@ -61,7 +61,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced/titaniumglass,
-/obj/item/coin/thunderdome/holographic,
+/obj/item/coin/thunderdome,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "iB" = (
@@ -352,7 +352,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/coin/thunderdome/holographic,
+/obj/item/coin/thunderdome,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "Op" = (
