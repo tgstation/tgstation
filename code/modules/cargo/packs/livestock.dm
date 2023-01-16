@@ -18,7 +18,7 @@
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"
 	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches. \
-	 	Requires Theatre access to purchase."//is that a motherfucking worm reference
+		Requires Theatre access to purchase."//is that a motherfucking worm reference
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 5
 	access_view = ACCESS_THEATRE
