@@ -55,8 +55,7 @@ const ShoppingTab = (props, context) => {
                     {'"' + item.desc + '"'}
                     <br />
                     <Box textAlign="right">
-                      {item.name +
-                        ' costs ' +
+                      {' costs ' +
                         item.cost +
                         ' ' +
                         credit_type +
@@ -135,8 +134,7 @@ const CheckoutTab = (props, context) => {
                       {'"' + item.desc + '"'}
                       <br />
                       <Box textAlign="right">
-                        {item.name +
-                          ' costs ' +
+                        {' costs ' +
                           item.cost +
                           ' ' +
                           credit_type +
