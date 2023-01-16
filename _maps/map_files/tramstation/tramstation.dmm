@@ -14272,7 +14272,7 @@
 /turf/closed/wall,
 /area/station/cargo/lobby)
 "fgB" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 4
 	},
 /turf/open/misc/asteroid,
@@ -47066,7 +47066,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "qSM" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 8
 	},
 /turf/open/misc/asteroid,
@@ -66479,7 +66479,7 @@
 /area/lavaland/surface)
 "xTZ" = (
 /obj/item/stack/ore/glass,
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/misc/asteroid,
 /area/station/security/prison/workout)
 "xUc" = (
