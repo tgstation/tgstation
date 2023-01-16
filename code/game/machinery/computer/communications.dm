@@ -769,12 +769,12 @@
 		if("message")
 			status_signal.data["top_text"] = data1
 			status_signal.data["bottom_text"] = data2
-			message_admins("[key_name(usr)] [ADMIN_LOOKUPFLW(usr)][ADMIN_SMITE(usr)] has changed the station status display message to \"[data1] [data2]\" [loc_name(usr)]")
+			message_admins("[key_name(usr)][ADMIN_LOOKUPFLW(usr)][ADMIN_SMITE(usr)] has changed the station status display message to \"[data1] [data2]\" [loc_name(usr)]")
 			log_game("[key_name(usr)] has changed the station status display message to \"[data1] [data2]\" [loc_name(usr)]")
 
 		if("alert")
 			status_signal.data["picture_state"] = data1
-			message_admins("[key_name(usr)] [ADMIN_LOOKUPFLW(usr)][ADMIN_SMITE(usr)] has changed the station status display message to \"[data1]\" [loc_name(usr)]")
+			message_admins("[key_name(usr)][ADMIN_LOOKUPFLW(usr)][ADMIN_SMITE(usr)] has changed the station status display message to \"[data1]\" [loc_name(usr)]")
 			log_game("[key_name(usr)] has changed the station status display message to \"[data1]\" [loc_name(usr)]")
 
 

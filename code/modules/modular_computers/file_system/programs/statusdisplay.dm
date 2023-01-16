@@ -45,7 +45,7 @@
  */
 /datum/computer_file/program/status/proc/post_message(upper, lower)
 	post_status("message", upper, lower)
-	message_admins("[key_name(usr)] [ADMIN_LOOKUPFLW(usr)][ADMIN_SMITE(usr)] has changed the station status display message to \"[upper] [lower]\" [loc_name(usr)]")
+	message_admins("[key_name(usr)][ADMIN_LOOKUPFLW(usr)][ADMIN_SMITE(usr)] has changed the station status display message to \"[upper] [lower]\" [loc_name(usr)]")
 	log_game("[key_name(usr)] has changed the station status display message to \"[upper] [lower]\" [loc_name(usr)]")
 
 /**
@@ -61,7 +61,7 @@
 	else
 		post_status("alert", picture)
 
-	message_admins("[key_name(usr)] [ADMIN_LOOKUPFLW(usr)][ADMIN_SMITE(usr)] has changed the station status display message to \"[picture]\" [loc_name(usr)]")
+	message_admins("[key_name(usr)][ADMIN_LOOKUPFLW(usr)][ADMIN_SMITE(usr)] has changed the station status display message to \"[picture]\" [loc_name(usr)]")
 	log_game("[key_name(usr)] has changed the station status display message to \"[picture]\" [loc_name(usr)]")
 
 /datum/computer_file/program/status/ui_act(action, list/params, datum/tgui/ui)
