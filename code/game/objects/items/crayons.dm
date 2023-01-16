@@ -437,9 +437,9 @@
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			var/covered = ""
-			if(C.is_mouth_covered(head_only = 1))
+			if(C.is_mouth_covered(ITEM_SLOT_HEAD))
 				covered = "headgear"
-			else if(C.is_mouth_covered(mask_only = 1))
+			else if(C.is_mouth_covered(ITEM_SLOT_MASK))
 				covered = "mask"
 			if(covered)
 				to_chat(C, span_warning("You have to remove your [covered] first!"))
@@ -696,7 +696,7 @@
 
 		if(C.client)
 			C.set_eye_blur_if_lower(6 SECONDS)
-			C.adjust_blindness(1)
+			C.adjust_temp_blindness(2 SECONDS)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
 			C.apply_effects(eyeblur = 5, jitter = 10)
 			flash_color(C, flash_color=paint_color, flash_time=40)

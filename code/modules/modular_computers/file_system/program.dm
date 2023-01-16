@@ -218,6 +218,12 @@
 	if(.)
 		return
 
+	if(ishuman(usr) && !computer.allow_chunky) //in /obj/item/modular_computer/ui_act() too
+		var/mob/living/carbon/human/human_user = usr
+		if(human_user.check_chunky_fingers())
+			computer.balloon_alert(human_user, "fingers are too big!")
+			return TRUE
+
 	if(computer)
 		switch(action)
 			if("PC_exit")
