@@ -1,8 +1,0 @@
-author: "A.C.M.O."
-delete-after: True
-changes:
-  - bugfix: "Fixed the DNA Infuser's Goliath Infusion and its organ set bonus. The Goliath hammer will now apply bonus attack damage as expected."
-  - bugfix: "Fixed incorrect grammar and pronoun usage in the DNA Infuser's noticeable organs examine-text."
-  - bugfix: "Fixed the DNA Infuser giving mutated organs to androids and other non-organic/DNA-less species."
-  - bugfix: "Fixed the DNA Infuser mutating organs which the occupant doesn't have."
-  - bugfix: "Fixed the DNA Infuser not allowing addition of dead creatures."

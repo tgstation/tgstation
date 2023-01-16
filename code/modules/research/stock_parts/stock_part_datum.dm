@@ -72,15 +72,15 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 	physical_object_type = /obj/item/stock_parts/scanning_module
 	physical_object_base_type = /obj/item/stock_parts/scanning_module
 
-/datum/stock_part/scanning_module/adv
+/datum/stock_part/scanning_module/tier2
 	tier = 2
 	physical_object_type = /obj/item/stock_parts/scanning_module/adv
 
-/datum/stock_part/scanning_module/phasic
+/datum/stock_part/scanning_module/tier3
 	tier = 3
 	physical_object_type = /obj/item/stock_parts/scanning_module/phasic
 
-/datum/stock_part/scanning_module/triphasic
+/datum/stock_part/scanning_module/tier4
 	tier = 4
 	physical_object_type = /obj/item/stock_parts/scanning_module/triphasic
 
@@ -89,15 +89,15 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 	physical_object_type = /obj/item/stock_parts/capacitor
 	physical_object_base_type = /obj/item/stock_parts/capacitor
 
-/datum/stock_part/capacitor/adv
+/datum/stock_part/capacitor/tier2
 	tier = 2
 	physical_object_type = /obj/item/stock_parts/capacitor/adv
 
-/datum/stock_part/capacitor/super
+/datum/stock_part/capacitor/tier3
 	tier = 3
 	physical_object_type = /obj/item/stock_parts/capacitor/super
 
-/datum/stock_part/capacitor/quadratic
+/datum/stock_part/capacitor/tier4
 	tier = 4
 	physical_object_type = /obj/item/stock_parts/capacitor/quadratic
 
@@ -106,15 +106,15 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 	physical_object_type = /obj/item/stock_parts/manipulator
 	physical_object_base_type = /obj/item/stock_parts/manipulator
 
-/datum/stock_part/manipulator/nano
+/datum/stock_part/manipulator/tier2
 	tier = 2
 	physical_object_type = /obj/item/stock_parts/manipulator/nano
 
-/datum/stock_part/manipulator/pico
+/datum/stock_part/manipulator/tier3
 	tier = 3
 	physical_object_type = /obj/item/stock_parts/manipulator/pico
 
-/datum/stock_part/manipulator/femto
+/datum/stock_part/manipulator/tier4
 	tier = 4
 	physical_object_type = /obj/item/stock_parts/manipulator/femto
 
@@ -123,15 +123,15 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 	physical_object_type = /obj/item/stock_parts/micro_laser
 	physical_object_base_type = /obj/item/stock_parts/micro_laser
 
-/datum/stock_part/micro_laser/high
+/datum/stock_part/micro_laser/tier2
 	tier = 2
 	physical_object_type = /obj/item/stock_parts/micro_laser/high
 
-/datum/stock_part/micro_laser/ultra
+/datum/stock_part/micro_laser/tier3
 	tier = 3
 	physical_object_type = /obj/item/stock_parts/micro_laser/ultra
 
-/datum/stock_part/micro_laser/quadultra
+/datum/stock_part/micro_laser/tier4
 	tier = 4
 	physical_object_type = /obj/item/stock_parts/micro_laser/quadultra
 
@@ -140,15 +140,15 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 	physical_object_type = /obj/item/stock_parts/matter_bin
 	physical_object_base_type = /obj/item/stock_parts/matter_bin
 
-/datum/stock_part/matter_bin/adv
+/datum/stock_part/matter_bin/tier2
 	tier = 2
 	physical_object_type = /obj/item/stock_parts/matter_bin/adv
 
-/datum/stock_part/matter_bin/super
+/datum/stock_part/matter_bin/tier3
 	tier = 3
 	physical_object_type = /obj/item/stock_parts/matter_bin/super
 
-/datum/stock_part/matter_bin/bluespace
+/datum/stock_part/matter_bin/tier4
 	tier = 4
 	physical_object_type = /obj/item/stock_parts/matter_bin/bluespace
 
