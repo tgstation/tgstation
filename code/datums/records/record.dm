@@ -40,7 +40,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
-	)
+)
 	src.age = age
 	src.blood_type = blood_type
 	src.character_appearance = character_appearance
