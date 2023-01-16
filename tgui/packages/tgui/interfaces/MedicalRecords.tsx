@@ -1,5 +1,6 @@
+import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Icon, Input, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
+import { Box, Icon, LabeledList, NoticeBox, Section, Stack, Tabs, TextArea, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { CharacterPreview } from './PreferencesMenu/CharacterPreview';
 
@@ -38,6 +39,7 @@ export const MedicalRecords = (props, context) => {
   );
 };
 
+/** Displays all found records. */
 const RecordTabs = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { records } = data;
@@ -72,6 +74,7 @@ const RecordTabs = (props, context) => {
   );
 };
 
+/** Views a selected record. */
 const RecordView = (props, context) => {
   const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
     context,
@@ -137,6 +140,7 @@ const RecordView = (props, context) => {
   );
 };
 
+/** Small section for adding notes. Passes a ref and note to Byond. */
 const NoteKeeper = (props, context) => {
   const { act } = useBackend<Data>(context);
   const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
@@ -163,20 +167,24 @@ const NoteKeeper = (props, context) => {
   return (
     <Section buttons={<NoteTabs />} fill scrollable title="Notes">
       {writing && (
-        <Input
-          fluid
-          maxLength={200}
-          mb={1}
+        <TextArea
+          height="100%"
+          maxLength={1024}
           onEnter={addNote}
           onEscape={() => setWriting(false)}
         />
       )}
 
-      {selectedNote !== undefined && <Box wrap>{notes[selectedNote]}</Box>}
+      {selectedNote !== undefined && (
+        <Box color="label" wrap>
+          {notes[selectedNote]}
+        </Box>
+      )}
     </Section>
   );
 };
 
+/** Displays the notes with an add tab next to. */
 const NoteTabs = (props, context) => {
   const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
     context,
@@ -193,6 +201,7 @@ const NoteTabs = (props, context) => {
   );
   const [writing, setWriting] = useLocalState(context, 'note', false);
 
+  /** Selects or deselects a note. */
   const setNote = (index: number) => {
     if (selectedNote === index) {
       setSelectedNote(undefined);
@@ -201,6 +210,7 @@ const NoteTabs = (props, context) => {
     }
   };
 
+  /** Sets the note to writing mode. */
   const composeNew = () => {
     setWriting(true);
     setSelectedNote(undefined);
@@ -217,13 +227,18 @@ const NoteTabs = (props, context) => {
           {index + 1}
         </Tabs.Tab>
       ))}
-      <Tabs.Tab onClick={composeNew} selected={writing}>
-        <Icon name="plus" /> New
-      </Tabs.Tab>
+      <Tooltip
+        content={multiline`Add a new note. Press enter or escape to exit view.`}
+        position="bottom">
+        <Tabs.Tab onClick={composeNew} selected={writing}>
+          <Icon name="plus" /> New
+        </Tabs.Tab>
+      </Tooltip>
     </Tabs>
   );
 };
 
+/** Splits a medical string on <br> into a string array */
 const getStringArray = (string: string) => {
   return string.split('<br>');
 };

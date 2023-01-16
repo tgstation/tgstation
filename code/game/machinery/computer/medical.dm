@@ -109,10 +109,11 @@
 			if(!notes)
 				return FALSE
 
+			note = trim(notes, MAX_MESSAGE_LEN)
 			if(length(record.medical_notes) > 2)
 				record.medical_notes.Cut(1, 2)
 			record.medical_notes += notes
-			ui.send_update()
+			ui.send_full_update()
 			return TRUE
 
 	return FALSE
