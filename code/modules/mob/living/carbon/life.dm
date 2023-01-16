@@ -267,11 +267,8 @@
 
 	//-- CARBON DIOXIDE --//
 	// Maximum CO2 effects. "Too much CO2!"
-	if(co2_pp < safe_co2_max)
+	if(co2_pp > safe_co2_max)
 		// Reset side-effects.
-		co2overloadtime = 0
-		clear_alert(ALERT_TOO_MUCH_CO2)
-	else
 		// CO2 side-effects.
 		if(!co2overloadtime)
 			co2overloadtime = world.time
@@ -283,17 +280,21 @@
 			throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
 		if(prob(20))
 			emote("cough")
+	else
+		// Reset side-effects.
+		co2overloadtime = 0
+		clear_alert(ALERT_TOO_MUCH_CO2)
 
 	//-- PLASMA --//
 	// Maximum Plasma effects. "Too much Plasma!"
-	if(plasma_pp < safe_plas_max)
-		// Reset side-effects.
-		clear_alert(ALERT_TOO_MUCH_PLASMA)
-	else
+	if(plasma_pp > safe_plas_max)
 		// Plasma side-effects.
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES] / safe_plas_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
+	else
+		// Reset side-effects.
+		clear_alert(ALERT_TOO_MUCH_PLASMA)
 
 	//-- TRACES --//
 	// If there's some other funk in the air lets deal with it here.
@@ -354,14 +355,7 @@
 		clear_alert(ALERT_TOO_MUCH_N2O)
 	// N2O side-effects. "Too much N2O!"
 	// Small amount of N2O, small side-effects. Causes random euphoria and giggling.
-	else if(n2o_pp < n2o_para_min)
-		// No alert for small amounts, but the mob randomly feels euphoric.
-		if(prob(20))
-			n2o_euphoria = EUPHORIA_ACTIVE
-			emote(pick("giggle","laugh"))
-		else
-			n2o_euphoria = EUPHORIA_INACTIVE
-	else
+	else if(n2o_pp > n2o_para_min)
 		// More N2O, more severe side-effects. Causes stun/sleep.
 		n2o_euphoria = EUPHORIA_ACTIVE
 		throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
@@ -370,6 +364,13 @@
 		// Enough to make the mob sleep.
 		if(n2o_pp > n2o_sleep_min)
 			Sleeping(max(AmountSleeping() + 40, 200))
+	else
+		// No alert for small amounts, but the mob randomly feels euphoric.
+		if(prob(20))
+			n2o_euphoria = EUPHORIA_ACTIVE
+			emote(pick("giggle","laugh"))
+		else
+			n2o_euphoria = EUPHORIA_INACTIVE
 
 	//-- NITRIUM --//
 	if(nitrium_pp)

@@ -125,12 +125,12 @@
 	if(!breath)
 		breath = empty_breath
 
-	/// Indicates if there are moles of gas in the breath.
-	var/has_moles = breath.total_moles() != 0
-
 	// Ensure gas volumes are present.
 	for(var/gas_id in GLOB.meta_gas_info)
 		breath.assert_gas(gas_id)
+
+	/// Indicates if there are moles of gas in the breath.
+	var/has_moles = breath.total_moles() != 0
 
 	/// The list of gases in the breath.
 	var/list/breath_gases = breath.gases
@@ -220,14 +220,14 @@
 	// Maximum Oxygen effects. "Too much O2!"
 	// If too much Oxygen is poisonous.
 	if(safe_oxygen_max)
-		if(!o2_pp|| (o2_pp < safe_oxygen_max))
-			// Reset side-effects.
-			breather.clear_alert(ALERT_TOO_MUCH_OXYGEN)
-		else
+		if(o2_pp && (o2_pp > safe_oxygen_max))
 			// O2 side-effects.
 			var/ratio = (breath_gases[/datum/gas/oxygen][MOLES] / safe_oxygen_max) * 10
 			breather.apply_damage_type(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type)
 			breather.throw_alert(ALERT_TOO_MUCH_OXYGEN, /atom/movable/screen/alert/too_much_oxy)
+		else
+			// Reset side-effects.
+			breather.clear_alert(ALERT_TOO_MUCH_OXYGEN)
 
 	// Minimum Oxygen effects.
 	// If the lungs need Oxygen to breathe properly, O2 is exchanged with CO2.
@@ -253,14 +253,14 @@
 	//-- NITROGEN --//
 	// Maximum Nitrogen effects. "Too much N2!"
 	if(safe_nitro_max)
-		if(!n2_pp || (n2_pp < safe_nitro_max))
-			// Reset side-effects.
-			breather.clear_alert(ALERT_TOO_MUCH_NITRO)
-		else
+		if(n2_pp && (n2_pp > safe_nitro_max))
 			// N2 side-effects.
 			var/ratio = (breath_gases[/datum/gas/nitrogen][MOLES]/safe_nitro_max) * 10
 			breather.apply_damage_type(clamp(ratio, nitro_breath_dam_min, nitro_breath_dam_max), nitro_damage_type)
 			breather.throw_alert(ALERT_TOO_MUCH_NITRO, /atom/movable/screen/alert/too_much_nitro)
+		else
+			// Reset side-effects.
+			breather.clear_alert(ALERT_TOO_MUCH_NITRO)
 
 	// Minimum Nitrogen effects.
 	// If the lungs need Nitrogen to breathe properly, N2 is exchanged with CO2.
@@ -286,11 +286,7 @@
 	//-- CO2 --//
 	// Maximum CO2 effects. "Too much CO2!"
 	if(safe_co2_max)
-		if(!co2_pp || (co2_pp < safe_co2_max))
-			// Reset side-effects.
-			breather.co2overloadtime = 0
-			breather.clear_alert(ALERT_TOO_MUCH_CO2)
-		else
+		if(co2_pp && (co2_pp > safe_co2_max))
 			// CO2 side-effects.
 			// If there was enough O2 in the air but too much CO2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 			// Give the mob a chance to notice.
@@ -307,6 +303,10 @@
 				// They've been in here 30s now, start to kill them for their own good!
 				if(world.time - breather.co2overloadtime > 300)
 					breather.apply_damage_type(8, co2_damage_type)
+		else
+			// Reset side-effects.
+			breather.co2overloadtime = 0
+			breather.clear_alert(ALERT_TOO_MUCH_CO2)
 
 	// Minimum CO2 effects.
 	// If the lungs need CO2 to breathe properly, CO2 is exchanged with O2.
@@ -331,15 +331,15 @@
 
 	//-- PLASMA --//
 	// Maximum Plasma effects. "Too much Plasma!"
-	if(plasma_pp < safe_plasma_max)
-		// Reset side-effects.
-		breather.clear_alert(ALERT_TOO_MUCH_PLASMA)
-	else
-		// Plasma side-effects.
-		if(plasma_pp > safe_plasma_max)
-			var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_plasma_max) * 10
+	if(safe_plasma_max)
+		if(plasma_pp && (plasma_pp > safe_plasma_max))
+			// Plasma side-effects.
+			var/ratio = (breath_gases[/datum/gas/plasma][MOLES] / safe_plasma_max) * 10
 			breather.apply_damage_type(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type)
 			breather.throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
+	else
+		// Reset side-effects.
+		breather.clear_alert(ALERT_TOO_MUCH_PLASMA)
 
 	// Minimum Plasma effects.
 	// If the lungs need Plasma to breathe properly, Plasma is exchanged with CO2.
@@ -582,7 +582,8 @@
 /// Remove a volume of gas from the breath. Used to simulate absorbtion and interchange of gas in the lungs.
 /// Removes all of the given gas type unless given a volume argument.
 /// Returns the amount of gas theoretically removed.
-/obj/item/organ/internal/lungs/proc/breathe_gas_volume(list/breath_gases, datum/gas/remove_gas, datum/gas/exchange_gas = null, volume = null)
+/obj/item/organ/internal/lungs/proc/breathe_gas_volume(datum/gas_mixture/breath, datum/gas/remove_gas, datum/gas/exchange_gas = null, volume = null)
+	var/breath_gases = breath.gases
 	if(volume == null)
 		volume = breath_gases[remove_gas][MOLES]
 	breath_gases[remove_gas][MOLES] -= volume
