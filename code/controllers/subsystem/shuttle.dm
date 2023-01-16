@@ -158,9 +158,9 @@ SUBSYSTEM_DEF(shuttle)
 			if(pack.access == pack.access_view)
 				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open and purchase."
 			else
-				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open, or [SSid_access.get_access_desc(pack.access_view)]] access to purchase."
+				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open, or [SSid_access.get_access_desc(pack.access_view)] access to purchase."
 		else if(pack.access)
-			pack.desc += " Requires [SSid_access.get_access_desc(pack.access)]] access to open."
+			pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open."
 		else if(pack.access_view)
 			pack.desc += " Requires [SSid_access.get_access_desc(pack.access_view)] access to purchase."
 
