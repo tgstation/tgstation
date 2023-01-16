@@ -135,7 +135,7 @@
 	/// Locked specific
 	dna_ref,
 	datum/mind/mindref,
-	)
+)
 	. = ..()
 	src.dna_ref = dna_ref
 	src.mindref = mindref
