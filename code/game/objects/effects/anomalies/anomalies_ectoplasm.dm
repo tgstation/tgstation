@@ -3,8 +3,8 @@
 	desc = "It looks like the souls of the damned are trying to break into the realm of the living again. How upsetting."
 	icon_state = "ectoplasm"
 	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
-	lifespan = 10 SECONDS //debug value pls change
-	///Blocks the anomaly from updating ghost count. Used in case an admin wants to manually trigger the event.
+	lifespan = 90 SECONDS
+	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
 	var/override_ghosts = FALSE
 	///The numerical power of the anomaly. Calculated in anomalyEffect. Also used in determining the category of detonation effects.
 	var/effect_power = 0
@@ -85,7 +85,7 @@
 						floor_to_break.burnt = TRUE
 
 			if(ishuman(impacted_thing))
-				var/mob/living/carbon/human/mob_to_infect
+				var/mob/living/carbon/human/mob_to_infect = impacted_thing
 				mob_to_infect.ForceContractDisease(new /datum/disease/revblight(), FALSE, TRUE)
 				new /obj/effect/temp_visual/revenant(get_turf(mob_to_infect))
 				to_chat(mob_to_infect, span_revenminor("A cacophony of ghostly wailing floods your ears for a moment. The noise subsides, but a distant whispering continues echoing inside of your head..."))
@@ -109,31 +109,8 @@
 
 	priority_announce("Ectoplasmic outburst detected.", "Anomaly Alert")
 
-/**
- * Takes a given area and chance, applying the haunted_item component to objects in the area.
- *
- * Takes an epicenter, and within the range around it, runs a haunt_chance percent chance of
- * applying the haunted_item component to nearby objects.
- *
- * * epicenter - The center of the outburst area.
- * * range - The range of the outburst, centered around the epicenter.
- * * haunt_chance - The percent chance that an object caught in the epicenter will be haunted.
- */
-
-/proc/haunt_outburst(epicenter, range, haunt_chance)
-	var/effect_area = range(range, epicenter)
-	for(var/obj/item/object_to_possess in effect_area)
-		if(!prob(haunt_chance))
-			continue
-		object_to_possess.AddComponent(/datum/component/haunted_item, \
-			haunt_color = "#52336e", \
-			haunt_duration = rand(1 MINUTES, 3 MINUTES), \
-			aggro_radius = range, \
-			spawn_message = span_revenwarning("[object_to_possess] slowly rises upward, hanging menacingly in the air..."), \
-			despawn_message = span_revenwarning("[object_to_possess] settles to the floor, lifeless and unmoving."), \
-		)
-
-//TODO -- MOVE THE FOLLOWING PROCS TO A SPOOKY GHOST PORTAL STRUCTURE INSTEAD
+// Ghost Portal. Used to bring anomaly orbiters into the playing field as ghosts. Destroys itself and all of its associated ghosts after two minutes.
+// Can be destroyed early to the same effect.
 
 /obj/structure/ghost_portal
 	name = "Spooky Portal"
@@ -141,7 +118,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	anchored = TRUE
-	density = TRUE
 	var/static/list/spooky_noises = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	var/list/ghosts_spawned = list()
 
@@ -205,3 +181,30 @@
 		playsound(src, pick(spooky_noises), 50)
 		new /obj/effect/temp_visual/revenant/cracks(get_turf(src))
 		qdel(mob_to_delete)
+
+
+// Global procs, for consistency with the anomaly armor effect and flexibility in the future.
+
+/**
+ * Takes a given area and chance, applying the haunted_item component to objects in the area.
+ *
+ * Takes an epicenter, and within the range around it, runs a haunt_chance percent chance of
+ * applying the haunted_item component to nearby objects.
+ *
+ * * epicenter - The center of the outburst area.
+ * * range - The range of the outburst, centered around the epicenter.
+ * * haunt_chance - The percent chance that an object caught in the epicenter will be haunted.
+ */
+
+/proc/haunt_outburst(epicenter, range, haunt_chance)
+	var/effect_area = range(range, epicenter)
+	for(var/obj/item/object_to_possess in effect_area)
+		if(!prob(haunt_chance))
+			continue
+		object_to_possess.AddComponent(/datum/component/haunted_item, \
+			haunt_color = "#52336e", \
+			haunt_duration = rand(1 MINUTES, 3 MINUTES), \
+			aggro_radius = range, \
+			spawn_message = span_revenwarning("[object_to_possess] slowly rises upward, hanging menacingly in the air..."), \
+			despawn_message = span_revenwarning("[object_to_possess] settles to the floor, lifeless and unmoving."), \
+		)
