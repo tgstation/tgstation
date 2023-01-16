@@ -138,7 +138,7 @@
 	name = "Shield Generator Crate"
 	desc = "These high powered Shield Wall Generators are guaranteed to keep any unwanted \
 		lifeforms on the outside, where they belong! Contains four shield wall generators. \
-		Requires Teleporter access to open or purchase"
+		Requires Teleporter access to open or purchase."
 	cost = CARGO_CRATE_VALUE * 4
 	access = ACCESS_TELEPORTER
 	access_view = ACCESS_TELEPORTER
