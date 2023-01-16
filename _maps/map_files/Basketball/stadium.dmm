@@ -371,6 +371,7 @@
 /obj/structure/hoop{
 	dir = 4
 	},
+/obj/effect/landmark/basketball/team_spawn/home_hoop,
 /turf/open/floor/noslip,
 /area/centcom/basketball)
 "Cw" = (
@@ -404,6 +405,7 @@
 /obj/structure/hoop{
 	dir = 8
 	},
+/obj/effect/landmark/basketball/team_spawn/away_hoop,
 /turf/open/floor/noslip,
 /area/centcom/basketball)
 "Ev" = (

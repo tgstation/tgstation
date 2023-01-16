@@ -107,6 +107,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
+/obj/effect/landmark/basketball/team_spawn/home_hoop,
 /turf/open/floor/fakespace,
 /area/centcom/basketball)
 "Cw" = (
@@ -124,6 +125,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
+/obj/effect/landmark/basketball/team_spawn/away_hoop,
 /turf/open/floor/fakespace,
 /area/centcom/basketball)
 "Gh" = (
