@@ -521,3 +521,44 @@
   - admin: Force Event no longer filters by tab when searching.
   vinylspiders:
   - bugfix: fixed mob biotypes being ignored when applying toxin damage and oxyloss
+2023-01-16:
+  A.C.M.O.:
+  - bugfix: Fixed the DNA Infuser's Goliath Infusion and its organ set bonus. The
+      Goliath hammer will now apply bonus attack damage as expected.
+  - bugfix: Fixed incorrect grammar and pronoun usage in the DNA Infuser's noticeable
+      organs examine-text.
+  - bugfix: Fixed the DNA Infuser giving mutated organs to androids and other non-organic/DNA-less
+      species.
+  - bugfix: Fixed the DNA Infuser mutating organs which the occupant doesn't have.
+  - bugfix: Fixed the DNA Infuser not allowing addition of dead creatures.
+  JohnFulpWillard:
+  - bugfix: If there are several techwebs, sabotaging the master server of one of
+      them will no longer cut research point generation of the rest.
+  - qol: Removed the tech disk part of the ORM's UI as it was entirely unused, now
+      it's a little more compact with less scrolling needed.
+  - refactor: Autolathes, Limb growers, Biogenerators, ORMs and Smelters now share
+      techwebs with other machines of their types, rather than all make new techwebs
+      each time. This means they only build their nodes once, including hacked ones.
+      Instead of researching nodes on hacking the machine, they now show hacked ones
+      depending on if it's hacked.
+  Sealed101:
+  - bugfix: pinpoint machine scanning experiments work again (again)
+  ShizCalev:
+  - bugfix: gorillas can now fuck people up again
+  - bugfix: You'll no longer constantly be spammed with messages if your fingers are
+      too big to interact with a computer's keyboard.
+  - bugfix: You can no longer interact with programs that were previously opened on
+      a computer if your fingers are too big to use the keyboard.
+  - bugfix: You can now look at computer screens even if your fingers are too big
+      to use the keyboard.
+  - bugfix: Trading cards are no longer invisible when stacked.
+  SmoSmoSmoSmok:
+  - qol: miner console now displays the item's icons and has a minus button feature
+      to remove 1 item
+  SyncIt21:
+  - bugfix: Directional windows won't block construction of machine & compute frames
+      by the RCD
+  Wallem:
+  - bugfix: Uranium, Diamonds, and Bananium now update visually in the techfab UI
+  tralezab:
+  - rscdel: Atmospherics beret and black beret
