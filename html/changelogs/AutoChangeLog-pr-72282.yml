@@ -1,7 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "Adds the Terrify spell and Terrified status effect. Terrified victims will suffer increasingly detrimental effects until they're calmed down."
-  - balance: "Nightmares can now cast the Terrify spell on victims to plague their prey with. Attacking a Terrified human with your open hand will trip them up."
-  - imageadd: "Adds status effect and spell icons for Terrify/Terrified."
-  - spellcheck: "fixes a typo in the message for consuming a nightmare heart."

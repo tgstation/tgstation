@@ -1,5 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - qol: "Rulebook for TGC has been added to the TGC arena."
-  - bugfix: "Holographic TGC coins are no longer legal tender and cannot be inserted into your ID."

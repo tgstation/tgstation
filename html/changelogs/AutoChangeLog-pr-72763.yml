@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "fixes being able to eat, use pills etc through gas masks and such"
