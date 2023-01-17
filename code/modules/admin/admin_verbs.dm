@@ -573,7 +573,7 @@ ADMIN_VERB(game, check_ai_laws, "", R_ADMIN)
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")
 
-ADMIN_VERB(debug, populate_world, "Populate the world with the given number of test mobs", R_DEBUG, amount = 50)
+ADMIN_VERB(debug, populate_world, "Populate the world with the given number of test mobs", R_DEBUG, amount = 50 as num)
 	for (var/i in 1 to amount)
 		var/turf/tile = get_safe_random_station_turf()
 		var/mob/living/carbon/human/hooman = new(tile)
