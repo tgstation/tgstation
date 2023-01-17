@@ -1664,12 +1664,12 @@
 
 /datum/reagent/consumable/mississippi_queen/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	switch(current_cycle)
-		if(10 to 20) // That's called beginner's luck
+		if(10 to 20) 
 			drinker.adjust_dizzy(4 SECONDS * REM * delta_time)
 		if(20 to 30)
 			if(DT_PROB(15, delta_time))
 				drinker.adjust_confusion(4 SECONDS * REM * delta_time)
 		if(30 to 200)
-			drinker.adjust_hallucinations(1 MINUTE * REM * delta_time)
+			drinker.adjust_hallucinations(60 SECONDS * REM * delta_time)
 
 	..()
