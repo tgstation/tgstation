@@ -227,12 +227,14 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	use_power = NO_POWER_USE
 
 	var/obj/effect/decal/trading_card_panel/display_panel_ref
+	var/display_panel_type = /obj/effect/decal/trading_card_panel
+	var/panel_offset = 1
 
 GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 
 /obj/machinery/trading_card_button/Initialize(mapload)
 	. = ..()
-	display_panel_ref = new(locate(x + 1, y, z))
+	display_panel_ref = new display_panel_type(locate(x + panel_offset, y, z))
 
 /obj/machinery/trading_card_button/Destroy()
 	qdel(display_panel_ref)
@@ -270,6 +272,10 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 		return FALSE
 	return TRUE
 
+/obj/machinery/trading_card_button/health
+	display_panel_type = /obj/effect/decal/trading_card_panel/health
+	panel_offset = -1	
+
 /obj/effect/decal/trading_card_panel
 	name = "mana panel"
 	icon = 'icons/obj/toys/tcgmisc.dmi'
@@ -280,9 +286,9 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	var/max_gems = 10
 	var/gem_bar_offset_z = -18
 	var/individual_gem_offset = 5
-	var/number_of_columns = 2
-	var/column_tracker = 1
-	var/column_offset = 5
+	var/number_of_rows = 10
+	var/number_of_columns = 1
+	var/column_offset = -10
 
 /obj/effect/decal/trading_card_panel/Initialize(mapload)
 	. = ..()
@@ -293,10 +299,13 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	if(!gems)
 		return
 	gems = clamp(gems, 0, max_gems)
-	for(var/gem in 1 to gems)
-		var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', "gem")
-		gem_overlay.pixel_z = gem * individual_gem_offset + gem_bar_offset_z
-		. += gem_overlay
+	for(var/gem_row in 1 to number_of_rows)
+		for(var/gem in 1 to number_of_columns)
+			if(gems >= (gem_row - 1) * number_of_columns + gem)
+				var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', "gem")
+				gem_overlay.pixel_z = gem_row * individual_gem_offset + gem_bar_offset_z
+				gem_overlay.pixel_w = (gem - 1) * column_offset
+				. += gem_overlay
 
 /obj/effect/decal/trading_card_panel/health
 	name = "health panel"
@@ -304,6 +313,7 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 
 	gems = 20
 	max_gems = 20
+	number_of_columns = 2
 
 /obj/effect/decal/trading_card_panel/south
 	name = "trading card point panel south"
