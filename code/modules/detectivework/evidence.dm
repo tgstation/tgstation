@@ -13,6 +13,7 @@
 	if(!proximity || loc == I)
 		return
 	evidencebagEquip(I, user)
+	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/evidencebag/attackby(obj/item/I, mob/user, params)
 	if(evidencebagEquip(I, user))

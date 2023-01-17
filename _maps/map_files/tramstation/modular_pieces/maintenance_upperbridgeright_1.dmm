@@ -44,7 +44,7 @@
 /obj/effect/turf_decal/delivery/red,
 /obj/item/key/security,
 /obj/machinery/door/window/left/directional/north{
-	req_access_txt = "security";
+	req_access = list("security");
 	name = "Secway Storage"
 	},
 /turf/open/floor/iron/smooth,

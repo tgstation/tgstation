@@ -72,7 +72,7 @@
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
 	scan(A, user)
-	return FALSE
+	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/detective_scanner/proc/scan(atom/A, mob/user)
 	set waitfor = FALSE
@@ -96,7 +96,7 @@
 		// The keys are the headers used for it, and the value is a list of each line printed
 		var/list/det_data = list()
 		var/list/blood = GET_ATOM_BLOOD_DNA(A)
-		det_data[DETSCAN_CATEGORY_FIBER] = GET_ATOM_BLOOD_DNA(A)
+		det_data[DETSCAN_CATEGORY_FIBER] = GET_ATOM_FIBRES(A)
 
 		var/target_name = A.name
 

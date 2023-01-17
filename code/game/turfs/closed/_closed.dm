@@ -215,8 +215,8 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakeglass/Initialize(mapload)
 	. = ..()
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille", layer - 0.01) //add a grille underlay
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", layer - 0.02) //add the plating underlay, below the grille
 
 /turf/closed/indestructible/opsglass
 	name = "window"
@@ -231,8 +231,8 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/opsglass/Initialize(mapload)
 	. = ..()
 	icon_state = null
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille")
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille", layer - 0.01)
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", layer - 0.02)
 
 /turf/closed/indestructible/fakedoor
 	name = "CentCom Access"

@@ -698,8 +698,8 @@
 		return
 	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
 
-/obj/machinery/hydroponics/proc/hardmutate()
-	mutate(4, 10, 2, 4, 50, 4, 10, 0, 4)
+/obj/machinery/hydroponics/proc/hardmutate(lifemut = 4, endmut = 10, productmut = 2, yieldmut = 4, potmut = 50, wrmut = 4, wcmut = 10, traitmut = 0, stabmut = 4)
+	mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
 
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD || !LAZYLEN(myseed.mutatelist))
@@ -844,6 +844,9 @@
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+				var/image/splash_animation = image('icons/effects/effects.dmi', src, "splash_hydroponics")
+				splash_animation.color = mix_color_from_reagents(reagent_source.reagents.reagent_list)
+				flick_overlay_global(splash_animation, GLOB.clients, 1.1 SECONDS)
 
 		if(visi_msg)
 			visible_message(span_notice("[visi_msg]."))

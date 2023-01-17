@@ -248,6 +248,31 @@
 		var/plush_path = /obj/effect/spawner/random/entertainment/plushie
 		new plush_path(src)
 
+/obj/item/storage/box/survival/mining/bonus
+	mask_type = null
+	internal_type = /obj/item/tank/internals/emergency_oxygen/double
+
+/obj/item/storage/box/survival/mining/bonus/PopulateContents()
+	..()
+	new /obj/item/gps/mining(src)
+	new /obj/item/t_scanner/adv_mining_scanner(src)
+
+/obj/item/storage/box/miner_modkits
+	name = "miner modkit/trophy box"
+	desc = "Contains every modkit and trophy in the game."
+
+/obj/item/storage/box/miner_modkits/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/borg/upgrade/modkit, /obj/item/crusher_trophy))
+	atom_storage.numerical_stacking = TRUE
+
+/obj/item/storage/box/miner_modkits/PopulateContents()
+	for(var/trophy in subtypesof(/obj/item/crusher_trophy))
+		new trophy(src)
+	for(var/modkit in subtypesof(/obj/item/borg/upgrade/modkit))
+		for(var/i in 1 to 10) //minimum cost ucrrently is 20, and 2 pkas, so lets go with that
+			new modkit(src)
+
 /obj/item/storage/box/skillchips
 	name = "box of skillchips"
 	desc = "Contains one copy of every skillchip"

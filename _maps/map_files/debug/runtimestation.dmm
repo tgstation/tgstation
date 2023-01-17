@@ -1442,12 +1442,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "fi" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "fj" = (
@@ -1859,7 +1854,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "gD" = (
-/obj/machinery/camera/autoname/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -2628,6 +2622,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science)
+"YL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "ZD" = (
 /obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/iron,
@@ -4130,7 +4131,7 @@ Qu
 qQ
 qQ
 qQ
-ME
+YL
 em
 eh
 eh

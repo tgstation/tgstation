@@ -59,10 +59,6 @@
 	///var to hold the name of the person who suicided
 	var/suicider
 
-/datum/armor/item_wrench
-	fire = 50
-	acid = 30
-
 /obj/item/wrench/medical/examine(mob/user)
 	. = ..()
 	if(suicider)
@@ -103,10 +99,6 @@
 	attack_verb_continuous = list("devastates", "brutalizes", "commits a war crime against", "obliterates", "humiliates")
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
-
-/datum/armor/item_wrench
-	fire = 50
-	acid = 30
 
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()

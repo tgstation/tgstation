@@ -63,6 +63,9 @@
 	set_light_on(TRUE)
 
 
+/obj/item/dualsaber/add_blood_DNA(list/blood_DNA_to_add)
+	return FALSE
+
 /// Triggered on unwield of two handed item
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
@@ -191,10 +194,6 @@
 
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
-
-/datum/armor/item_dualsaber
-	fire = 100
-	acid = 70
 
 /obj/item/dualsaber/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_MULTITOOL)
