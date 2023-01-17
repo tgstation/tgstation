@@ -165,7 +165,11 @@ const CheckoutTab = (props, context) => {
                       {'"' + item.desc + '"'}
                       <br />
                       <Box textAlign="right">
-                        {item.name + ' costs ' + item.cost + item.credit_type + ' per order.'}
+                        {item.name +
+                          ' costs ' +
+                          item.cost +
+                          item.credit_type +
+                          ' per order.'}
                       </Box>
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
