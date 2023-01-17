@@ -328,11 +328,11 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Cv" = (
-/obj/structure/hoop{
-	dir = 4
-	},
 /obj/structure/alien/weeds/node,
 /obj/effect/landmark/basketball/team_spawn/home_hoop,
+/obj/structure/hoop/minigame{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Cw" = (
@@ -360,11 +360,11 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "DP" = (
-/obj/structure/hoop{
-	dir = 8
-	},
 /obj/structure/alien/weeds/node,
 /obj/effect/landmark/basketball/team_spawn/away_hoop,
+/obj/structure/hoop/minigame{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Gh" = (

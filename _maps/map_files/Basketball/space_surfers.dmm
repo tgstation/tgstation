@@ -103,11 +103,11 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Cv" = (
-/obj/structure/hoop{
-	dir = 4
-	},
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/basketball/team_spawn/home_hoop,
+/obj/structure/hoop/minigame{
+	dir = 4
+	},
 /turf/open/floor/fakespace,
 /area/centcom/basketball)
 "Cw" = (
@@ -121,11 +121,11 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "DP" = (
-/obj/structure/hoop{
-	dir = 8
-	},
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/basketball/team_spawn/away_hoop,
+/obj/structure/hoop/minigame{
+	dir = 8
+	},
 /turf/open/floor/fakespace,
 /area/centcom/basketball)
 "Gh" = (

@@ -134,7 +134,7 @@
 /turf/open/floor/noslip,
 /area/centcom/basketball)
 "hf" = (
-/obj/effect/spawner/random/structure/billboard/roadsigns,
+/obj/effect/spawner/random/structure/billboard/nanotrasen,
 /turf/open/floor/wood,
 /area/centcom/basketball)
 "hB" = (
@@ -368,10 +368,10 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
 	},
-/obj/structure/hoop{
+/obj/effect/landmark/basketball/team_spawn/home_hoop,
+/obj/structure/hoop/minigame{
 	dir = 4
 	},
-/obj/effect/landmark/basketball/team_spawn/home_hoop,
 /turf/open/floor/noslip,
 /area/centcom/basketball)
 "Cw" = (
@@ -402,10 +402,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
-/obj/structure/hoop{
+/obj/effect/landmark/basketball/team_spawn/away_hoop,
+/obj/structure/hoop/minigame{
 	dir = 8
 	},
-/obj/effect/landmark/basketball/team_spawn/away_hoop,
 /turf/open/floor/noslip,
 /area/centcom/basketball)
 "Ev" = (

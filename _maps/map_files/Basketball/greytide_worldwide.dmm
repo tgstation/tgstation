@@ -243,8 +243,7 @@
 /obj/machinery/door/window/right/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/turf/open/floor/iron/dark/textured_half,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "qQ" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -311,6 +310,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
+"zo" = (
+/obj/structure/grille/indestructible,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/basketball)
 "zy" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -362,11 +366,11 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Cv" = (
-/obj/structure/hoop{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/landmark/basketball/team_spawn/home_hoop,
+/obj/structure/hoop/minigame{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Cw" = (
@@ -390,12 +394,12 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "DP" = (
-/obj/structure/hoop{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/basketball/team_spawn/away_hoop,
+/obj/structure/hoop/minigame{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Ev" = (
@@ -801,13 +805,13 @@ CV
 CV
 eS
 uH
-AI
-AI
-AI
-AI
-AI
-AI
-AI
+zo
+zo
+zo
+zo
+zo
+zo
+zo
 Nt
 kT
 CV
@@ -826,13 +830,13 @@ PU
 lh
 Qh
 Qh
-AI
+zo
 Oj
 Om
 Cv
 Om
 Qh
-AI
+zo
 lh
 wJ
 SF
@@ -851,13 +855,13 @@ AI
 pu
 Gi
 eU
-AI
+zo
 hG
 Qi
 Qi
 IA
 gn
-AI
+zo
 Qh
 Qh
 oh
@@ -876,13 +880,13 @@ AI
 AI
 lh
 Ev
-AI
+zo
 Qh
 qQ
 hG
 gn
 Qh
-AI
+zo
 kp
 Qh
 lh
@@ -901,13 +905,13 @@ jK
 dM
 Qh
 YH
-AI
+zo
 dC
 Uv
 dC
 Uv
 gq
-AI
+zo
 oh
 Qh
 te
@@ -926,13 +930,13 @@ lh
 lh
 SF
 QC
-AI
+zo
 Qh
 Qh
 Gi
 Qh
 lh
-AI
+zo
 lh
 CD
 PW
@@ -951,13 +955,13 @@ Cw
 Qh
 Qh
 Uy
-AI
+zo
 lh
 mp
 mp
 LS
 Qh
-AI
+zo
 ku
 pw
 NS
@@ -976,13 +980,13 @@ OB
 VW
 Qh
 Rl
-AI
+zo
 Qh
 LS
 YX
 mp
 lh
-AI
+zo
 tX
 Ic
 pE
@@ -1001,13 +1005,13 @@ Cw
 kc
 lh
 MS
-AI
+zo
 Qh
 mp
 LS
 mp
 uW
-AI
+zo
 ZM
 lh
 PW
@@ -1026,13 +1030,13 @@ Gi
 Qh
 lh
 eN
-AI
+zo
 be
 lh
 lh
 lh
 Qh
-AI
+zo
 Qh
 LU
 PW
@@ -1051,13 +1055,13 @@ Cw
 AI
 lh
 CD
-AI
+zo
 Qa
 Qa
 Xm
 Qa
 dS
-AI
+zo
 uH
 oh
 lD
@@ -1076,13 +1080,13 @@ Sv
 Vr
 lh
 Ev
-AI
+zo
 HH
 eF
 nV
 nV
 lh
-AI
+zo
 kp
 Qh
 TV
@@ -1101,13 +1105,13 @@ Cw
 Cw
 uW
 eU
-AI
+zo
 ci
 zy
 zy
 Bd
 ci
-AI
+zo
 YH
 zZ
 YH
@@ -1126,13 +1130,13 @@ TV
 lh
 lh
 lh
-AI
+zo
 kp
 vo
 DP
 vo
 lh
-AI
+zo
 Qh
 Qh
 Qh
@@ -1151,13 +1155,13 @@ CV
 CV
 at
 AI
-AI
-AI
-AI
-AI
-AI
-AI
-AI
+zo
+zo
+zo
+zo
+zo
+zo
+zo
 lh
 aw
 CV
