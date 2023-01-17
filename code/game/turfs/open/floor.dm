@@ -260,6 +260,8 @@
 				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 16),
 				src, RCD_MEMORY_WALL,
 			)
+		if(RCD_REFLECTOR)
+			return list("mode" = RCD_REFLECTOR, "delay" = 20, "cost" = 30)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
@@ -289,6 +291,12 @@
 
 			to_chat(user, span_notice("You build a wall."))
 			PlaceOnTop(/turf/closed/wall)
+			return TRUE
+		if(RCD_REFLECTOR)
+			if(locate(/obj/structure/reflector) in src)
+				return FALSE
+			var/obj/structure/reflector/reflector_base = new(src)
+			reflector_base.set_anchored(TRUE)
 			return TRUE
 		if(RCD_AIRLOCK)
 			for(var/obj/machinery/door/door in src)

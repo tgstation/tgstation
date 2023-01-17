@@ -12,7 +12,7 @@
 		'icons/obj/objects.dmi' = list("bed", "rack"),
 		'icons/obj/smooth_structures/catwalk.dmi' = list("catwalk-0"),
 		'icons/hud/radial.dmi' = list("cnorth", "csouth", "ceast", "cwest", "chair", "secure_windoor", "stool", "wallfloor", "windowsize", "windowtype", "windoor"),
-		'icons/obj/structures.dmi' = list("window0", "rwindow0", "table", "glass_table"),
+		'icons/obj/structures.dmi' = list("glass_table", "rwindow0", "reflector_base", "table", "window0"),
 	)
 
 	var/icon/icon

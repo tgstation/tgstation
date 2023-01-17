@@ -132,6 +132,7 @@
 #define RCD_FURNISHING 6
 #define RCD_CATWALK 7
 #define RCD_WALLFRAME 8
+#define RCD_REFLECTOR 9
 
 
 #define RCD_UPGRADE_FRAMES (1<<0)
