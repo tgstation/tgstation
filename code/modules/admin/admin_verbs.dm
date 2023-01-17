@@ -2,12 +2,6 @@
 /**
  * AVD TODO
 
-admin_verbs_sounds
-/client/proc/play_local_sound
-/client/proc/play_direct_mob_sound
-/client/proc/play_sound
-/client/proc/set_round_end_sound
-
 admin_verbs_fun
 /datum/admins/proc/station_traits_panel
 /client/proc/admin_away

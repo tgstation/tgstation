@@ -1036,9 +1036,13 @@
 			return
 
 		var/mob/M = locate(href_list["playsoundto"])
+		if(QDELETED(M))
+			to_chat(usr, span_warning("target mob no longer exists!"))
+			return
+
 		var/S = input("", "Select a sound file",) as null|sound
 		if(S)
-			usr.client.play_direct_mob_sound(S, M)
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/fun/play_direct_mob_sound, list(S, M))
 
 	else if(href_list["individuallog"])
 		if(!check_rights(R_ADMIN))
