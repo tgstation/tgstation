@@ -34,6 +34,11 @@
 		/obj/item/stack/sheet/bluespace_crystal,
 	)
 
+/datum/storage/rped/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
+	. = ..()
+	var/atom/resolve_parent = src.parent?.resolve()
+	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(rped_mass_empty), TRUE)
+
 /datum/storage/rped/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
 	. = ..()
 
@@ -71,10 +76,55 @@
 		if(available - the_stack.amount < 0)
 			return FALSE
 
+	else if(istype(to_insert, /obj/item/circuitboard/machine) || istype(to_insert, /obj/item/circuitboard/computer))
+		return TRUE
+
 	//check normal insertion of other stock parts
 	else if(!to_insert.get_part_rating())
 		return FALSE
 
 	return .
+
+/// overridden mass_empty, so as to dump only the lowest tier of parts currently in the RPED
+/datum/storage/rped/proc/rped_mass_empty(datum/source, atom/location, force)
+	SIGNAL_HANDLER
+
+	if(!allow_quick_empty && !force)
+		return
+
+	remove_lowest_tier(get_turf(location))
+
+/**
+ * Searches through everything currently in storage, calculates the lowest tier of parts inside of it,
+ * and then dumps out every part that has the equal tier of parts. Likely a worse implementation of remove_all.
+ *
+ * @param atom/target where we're placing the item
+ */
+/datum/storage/rped/proc/remove_lowest_tier(atom/target) // look whatever happens here i'm not proud of this. at all.
+	var/obj/item/resolve_parent = parent?.resolve()
+	var/obj/item/resolve_location = real_location?.resolve()
+	var/list/obj/item/parts_list = list()
+	var/current_lowest_tier = INFINITY
+	if(!resolve_parent || !resolve_location)
+		return
+
+	if(!target)
+		target = get_turf(resolve_parent)
+
+	for(var/obj/item/thing in resolve_location)
+		if(thing.loc != resolve_location)
+			continue
+		parts_list.Add(thing)
+	if(parts_list.len > 0)
+		parts_list = reverse_range(sortTim(parts_list, GLOBAL_PROC_REF(cmp_rped_sort)))
+		current_lowest_tier = parts_list[1].get_part_rating()
+		resolve_parent.balloon_alert(resolve_parent.loc, "dropping lowest rated parts...")
+		for(var/obj/item/part in parts_list)
+			if(part.get_part_rating() != current_lowest_tier)
+				break
+			if(!attempt_remove(part, target, silent = TRUE))
+				continue
+			part.pixel_x = part.base_pixel_x + rand(-8, 8)
+			part.pixel_y = part.base_pixel_y + rand(-8, 8)
 
 #undef MAX_STACK_PICKUP

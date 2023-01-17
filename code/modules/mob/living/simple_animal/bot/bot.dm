@@ -213,6 +213,8 @@
 		return TRUE
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
+	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
+		return FALSE
 
 	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
 

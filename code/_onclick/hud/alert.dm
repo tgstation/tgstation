@@ -220,12 +220,6 @@
 	desc = "The air around you is hazardously thick. A fire suit would protect you."
 	icon_state = "highpressure"
 
-/atom/movable/screen/alert/blind
-	name = "Blind"
-	desc = "You can't see! This may be caused by a genetic defect, eye trauma, being unconscious, \
-		or something covering your eyes."
-	icon_state = ALERT_BLIND
-
 /atom/movable/screen/alert/hypnosis
 	name = "Hypnosis"
 	desc = "Something's hypnotizing you, but you're not really sure about what."

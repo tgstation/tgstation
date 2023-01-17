@@ -149,7 +149,6 @@
 		/mob/living/simple_animal/hostile/construct/wraith/noncult,
 		/mob/living/simple_animal/hostile/dark_wizard,
 		/mob/living/simple_animal/hostile/eyeball,
-		/mob/living/simple_animal/hostile/faithless,
 		/mob/living/simple_animal/hostile/giant_spider,
 		/mob/living/simple_animal/hostile/giant_spider/hunter,
 		/mob/living/simple_animal/hostile/giant_spider/hunter/flesh,

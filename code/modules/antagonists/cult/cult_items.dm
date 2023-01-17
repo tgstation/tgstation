@@ -295,7 +295,7 @@ Striking a noncultist, however, will tear their flesh."}
 	armor_type = /datum/armor/cultrobes_hardened
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/hardened
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
-	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES | HIDEJUMPSUIT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = NONE
@@ -452,7 +452,7 @@ Striking a noncultist, however, will tear their flesh."}
 		user.dropItemToGround(src, TRUE)
 		user.set_dizzy_if_lower(1 MINUTES)
 		user.Paralyze(100)
-		user.adjust_blindness(30)
+		user.adjust_temp_blindness(60 SECONDS)
 
 /obj/item/reagent_containers/cup/beaker/unholywater
 	name = "flask of unholy water"
@@ -780,7 +780,9 @@ Striking a noncultist, however, will tear their flesh."}
 	mag_type = /obj/item/ammo_box/magazine/internal/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
 
-/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user)
+/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage)
+		return FALSE //no akimbo wielding magic lol.
 	. = ..()
 	if(!IS_CULTIST(user))
 		to_chat(user, span_cultlarge("\"Did you truly think that you could channel MY blood without my approval? Amusing, but futile.\""))

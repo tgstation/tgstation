@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - code_imp: "Ghosts are now basic mobs! You might not notice any difference, but..."
-  - code_imp: "Ghost mobs now spawn with hair and sometimes facial hair."

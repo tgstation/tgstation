@@ -127,7 +127,6 @@
 		/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
-		/obj/item/clothing/head/beret/atmos = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
@@ -555,7 +554,8 @@
 		/obj/item/clothing/glasses/regular/kim = 1,
 		/obj/item/reagent_containers/cup/glass/flask/det = 2,
 		/obj/item/storage/fancy/cigarettes = 5,
-		)
+		/obj/item/storage/fancy/cigarettes/cigpack_candy = 5,
+	)
 	premium = list(
 		/obj/item/clothing/head/flatcap = 1,
 		)
