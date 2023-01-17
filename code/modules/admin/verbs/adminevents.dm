@@ -327,14 +327,8 @@
 	log_admin("[key_name(usr)] started weather of type [weather_type] on the z-level [z_level].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Run Weather")
 
-/client/proc/add_mob_ability()
-	set category = "Admin.Events"
-	set name = "Add Mob Ability"
-	set desc = "Adds an ability to a marked mob."
-
-	if(!holder)
-		return
-
+ADMIN_VERB(events, add_mob_ability, "Adds an ability to a marked mob", R_FUN)
+	var/datum/admins/holder = usr.client.holder
 	if(!isliving(holder.marked_datum))
 		to_chat(usr, span_warning("Error: Please mark a mob to add actions to it."))
 		return
@@ -379,16 +373,9 @@
 
 	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [marked_mob].")
 	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [marked_mob].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/remove_mob_ability()
-	set category = "Admin.Events"
-	set name = "Remove Mob Ability"
-	set desc = "Removes an ability from marked mob."
-
-	if(!holder)
-		return
-
+ADMIN_VERB(events, remove_mob_ability, "Removes an ability from the marked mob", R_FUN)
+	var/datum/admins/holder = usr.client.holder
 	if(!isliving(holder.marked_datum))
 		to_chat(usr, span_warning("Error: Please mark a mob to remove actions from it."))
 		return
@@ -409,7 +396,6 @@
 
 	message_admins("[key_name_admin(usr)] removed ability [ability_name] from mob [marked_mob].")
 	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/command_report_footnote()
 	set category = "Admin.Events"

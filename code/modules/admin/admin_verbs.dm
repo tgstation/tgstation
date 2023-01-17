@@ -4,8 +4,6 @@
 
 admin_verbs_fun
 /datum/admins/proc/station_traits_panel
-/client/proc/admin_away
-/client/proc/add_mob_ability
 /client/proc/admin_change_sec_level
 /client/proc/cinematic
 /client/proc/cmd_admin_add_freeform_ai_law
@@ -18,7 +16,6 @@ admin_verbs_fun
 /client/proc/mass_zombie_infection
 /client/proc/object_say
 /client/proc/polymorph_all
-/client/proc/remove_mob_ability
 /client/proc/reset_ooc
 /client/proc/run_weather
 /client/proc/set_dynex_scale
