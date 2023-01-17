@@ -226,11 +226,6 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	icon_state = "card_holder_inactive"
 	use_power = NO_POWER_USE
 
-	var/gems = 5
-	var/max_gems = 10
-	var/gem_bar_offset_x = 22
-	var/gem_bar_offset_y = -18
-	var/individual_gem_offset = 5
 	var/obj/effect/decal/trading_card_panel/display_panel_ref
 
 GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
@@ -238,6 +233,11 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 /obj/machinery/trading_card_button/Initialize(mapload)
 	. = ..()
 	display_panel_ref = new(locate(x + 1, y, z))
+
+/obj/machinery/trading_card_button/Destroy()
+	qdel(display_panel_ref)
+	. = ..()
+	
 
 /obj/machinery/trading_card_button/attack_hand(mob/user)
 	var/list/choices = GLOB.tcgcard_mana_bar_radial_choices
@@ -252,12 +252,11 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 		return
 	switch(choice)
 		if("Pickup")
-			gems += 1
+			display_panel_ref.gems += 1
 		if("Tap")
-			gems -= 1
+			display_panel_ref.gems -= 1
 		if("Modify")
-			gems = initial(gems)
-	gems = clamp(gems, 0, max_gems)
+			display_panel_ref.gems = initial(display_panel_ref.gems)
 	display_panel_ref.update_icon(UPDATE_OVERLAYS)
 	add_fingerprint(user)
 	return ..()
@@ -272,26 +271,39 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	return TRUE
 
 /obj/effect/decal/trading_card_panel
-	name = "trading card point panel north"
+	name = "mana panel"
 	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "point_panel_north"
+	pixel_x = -10
 
-	var/gems = 5
+	var/gems = 1
 	var/max_gems = 10
-	var/gem_bar_offset_x = 22
-	var/gem_bar_offset_y = -18
+	var/gem_bar_offset_z = -18
 	var/individual_gem_offset = 5
+	var/number_of_columns = 2
+	var/column_tracker = 1
+	var/column_offset = 5
+
+/obj/effect/decal/trading_card_panel/Initialize(mapload)
+	. = ..()
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/effect/decal/trading_card_panel/update_overlays()
 	. = ..()
 	if(!gems)
 		return
+	gems = clamp(gems, 0, max_gems)
 	for(var/gem in 1 to gems)
 		var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', "gem")
-		gem_overlay.pixel_x = gem_bar_offset_x
-		gem_overlay.pixel_y = gem * individual_gem_offset + gem_bar_offset_y
-		gem_overlay.mouse_opacity = FALSE
+		gem_overlay.pixel_z = gem * individual_gem_offset + gem_bar_offset_z
 		. += gem_overlay
+
+/obj/effect/decal/trading_card_panel/health
+	name = "health panel"
+	pixel_x = 9
+
+	gems = 20
+	max_gems = 20
 
 /obj/effect/decal/trading_card_panel/south
 	name = "trading card point panel south"

@@ -34,18 +34,6 @@
 /obj/structure/table/reinforced/titaniumglass,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
-"fU" = (
-/obj/effect/turf_decal/trimline/blue/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/blue/line{
-	dir = 6
-	},
-/obj/effect/decal/trading_card_panel{
-	pixel_x = -10
-	},
-/turf/open/floor/holofloor/white,
-/area/template_noop)
 "hk" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/structure/window/reinforced,
@@ -254,6 +242,7 @@
 	},
 /obj/structure/table/reinforced/titaniumglass,
 /obj/item/book/manual/wiki/tgc,
+/obj/machinery/trading_card_button,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "tT" = (
@@ -606,7 +595,7 @@ Wa
 wc
 wc
 IK
-fU
+WI
 YN
 mA
 "}
