@@ -548,7 +548,7 @@ ADMIN_VERB(game, check_ai_laws, "", R_ADMIN)
 	if(!law_bound_entities)
 		to_chat(usr, "<b>No law bound entities located</b>", confidential = TRUE)
 
-/client/proc/readmin()
+/client/proc/readmin() // not an ADMIN_VERB for a reason
 	set name = "Readmin"
 	set category = "Admin"
 	set desc = "Regain your admin powers."
@@ -573,28 +573,20 @@ ADMIN_VERB(game, check_ai_laws, "", R_ADMIN)
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")
 
-/client/proc/populate_world(amount = 50)
-	set name = "Populate World"
-	set category = "Debug"
-	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
-
+ADMIN_VERB(debug, populate_world, "Populate the world with the given number of test mobs", R_DEBUG, amount = 50)
 	for (var/i in 1 to amount)
 		var/turf/tile = get_safe_random_station_turf()
 		var/mob/living/carbon/human/hooman = new(tile)
 		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
-/client/proc/toggle_AI_interact()
-	set name = "Toggle Admin AI Interact"
-	set category = "Admin.Game"
-	set desc = "Allows you to interact with most machines as an AI would as a ghost"
+ADMIN_VERB(game, toggle_admin_ai_interaction, "Allows you to interact with most machines as an AI would as a ghost", R_ADMIN)
+	usr.client.AI_Interact = !usr.client.AI_Interact
+	if(usr && isAdminGhostAI(usr))
+		usr.has_unlimited_silicon_privilege = usr.client.AI_Interact
 
-	AI_Interact = !AI_Interact
-	if(mob && isAdminGhostAI(mob))
-		mob.has_unlimited_silicon_privilege = AI_Interact
-
-	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
-	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+	log_admin("[key_name(usr)] has [usr.client.AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
+	message_admins("[key_name_admin(usr)] has [usr.client.AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
 /client/proc/admin_2fa_verify()
 	set name = "Verify Admin"
@@ -603,11 +595,8 @@ ADMIN_VERB(game, check_ai_laws, "", R_ADMIN)
 	var/datum/admins/admin = GLOB.admin_datums[ckey]
 	admin?.associate(src)
 
-/client/proc/display_sendmaps()
-	set name = "Send Maps Profile"
-	set category = "Debug"
-
-	src << link("?debug=profile&type=sendmaps&window=test")
+ADMIN_VERB(debug, send_maps_profile, "", R_DEBUG)
+	usr.client << link("?debug=profile&type=sendmaps&window=test")
 
 /**
  * Debug verb that spawns human crewmembers
@@ -617,32 +606,24 @@ ADMIN_VERB(game, check_ai_laws, "", R_ADMIN)
  * This spawns humans with minds and jobs, but does NOT make them 'players'.
  * They're all clientles mobs with minds / jobs.
  */
-/client/proc/spawn_debug_full_crew()
-	set name = "Spawn Debug Full Crew"
-	set desc = "Creates a full crew for the station, filling the datacore and assigning them all minds / jobs. Don't do this on live"
-	set category = "Debug"
 
-	if(!check_rights(R_DEBUG))
-		return
-
-	var/mob/admin = usr
-
+ADMIN_VERB(debug, spawn_debug_full_crew, "Creates a full crew for the station, filling the datacore and assigning them all minds/jobs. Don't do this on live", R_DEBUG)
 	if(SSticker.current_state != GAME_STATE_PLAYING)
-		to_chat(admin, "You should only be using this after a round has setup and started.")
+		to_chat(usr, "You should only be using this after a round has setup and started.")
 		return
 
 	// Two input checks here to make sure people are certain when they're using this.
-	if(tgui_alert(admin, "This command will create a bunch of dummy crewmembers with minds, job, and datacore entries, which will take a while and fill the manifest.", "Spawn Crew", list("Yes", "Cancel")) != "Yes")
+	if(tgui_alert(usr, "This command will create a bunch of dummy crewmembers with minds, job, and datacore entries, which will take a while and fill the manifest.", "Spawn Crew", list("Yes", "Cancel")) != "Yes")
 		return
 
-	if(tgui_alert(admin, "I sure hope you aren't doing this on live. Are you sure?", "Spawn Crew (Be certain)", list("Yes", "Cancel")) != "Yes")
+	if(tgui_alert(usr, "I sure hope you aren't doing this on live. Are you sure?", "Spawn Crew (Be certain)", list("Yes", "Cancel")) != "Yes")
 		return
 
 	// Find the observer spawn, so we have a place to dump the dummies.
 	var/obj/effect/landmark/observer_start/observer_point = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	var/turf/destination = get_turf(observer_point)
 	if(!destination)
-		to_chat(admin, "Failed to find the observer spawn to send the dummies.")
+		to_chat(usr, "Failed to find the observer spawn to send the dummies.")
 		return
 
 	// Okay, now go through all nameable occupations.
@@ -664,7 +645,7 @@ ADMIN_VERB(game, check_ai_laws, "", R_ADMIN)
 		// Assign the rank to the new player dummy.
 		if(!SSjob.AssignRole(new_guy, job))
 			qdel(new_guy)
-			to_chat(admin, "[rank] wasn't able to be spawned.")
+			to_chat(usr, "[rank] wasn't able to be spawned.")
 			continue
 
 		// It's got a job, spawn in a human and shove it in the human.
@@ -685,13 +666,11 @@ ADMIN_VERB(game, check_ai_laws, "", R_ADMIN)
 		number_made++
 		CHECK_TICK
 
-	to_chat(admin, "[number_made] crewmembers have been created.")
+	to_chat(usr, "[number_made] crewmembers have been created.")
 
 /// Debug verb for seeing at a glance what all spells have as set requirements
-/client/proc/debug_spell_requirements()
-	set name = "Show Spell Requirements"
-	set category = "Debug"
 
+ADMIN_VERB(debug, show_spell_requirements, "seeing at a glance what all spells have as set requirements", R_DEBUG)
 	var/header = "<tr><th>Name</th> <th>Requirements</th>"
 	var/all_requirements = list()
 	for(var/datum/action/cooldown/spell/spell as anything in typesof(/datum/action/cooldown/spell))
@@ -721,16 +700,11 @@ ADMIN_VERB(game, check_ai_laws, "", R_ADMIN)
 
 	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
 	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(all_requirements, "")]</table>"
-	var/datum/browser/popup = new(mob, "spellreqs", "Spell Requirements", 600, 400)
+	var/datum/browser/popup = new(usr, "spellreqs", "Spell Requirements", 600, 400)
 	popup.set_content(page_contents)
 	popup.open()
 
-/client/proc/force_load_lazy_template()
-	set name = "Load/Jump Lazy Template"
-	set category = "Admin.Events"
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(events, load_jump_lazy_template, "", R_ADMIN)
 	if(SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, span_warning("The game hasnt started yet!"))
 		return
