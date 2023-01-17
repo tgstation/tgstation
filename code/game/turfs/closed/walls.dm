@@ -284,7 +284,6 @@
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_WALLFRAME)
-			to_chat(user, span_notice("You construct a [initial(the_rcd.wallframe_type)]"))
 			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
 			if(!try_wallmount(new_wallmount, user, src))
 				qdel(new_wallmount)

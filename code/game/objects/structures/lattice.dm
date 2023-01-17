@@ -72,9 +72,9 @@
 			return TRUE
 	if(passed_mode == RCD_CATWALK)
 		to_chat(user, span_notice("You build a catwalk."))
-		var/turf/T = src.loc
+		var/turf/turf = loc
 		qdel(src)
-		new /obj/structure/lattice/catwalk(T)
+		new /obj/structure/lattice/catwalk(turf)
 		return TRUE
 	return FALSE
 
@@ -116,10 +116,9 @@
 
 /obj/structure/lattice/catwalk/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	if(passed_mode == RCD_DECONSTRUCT)
-		to_chat(user, "You deconstruct a catwalk")
-		var/turf/T = loc
-		for(var/obj/structure/cable/C in T)
-			qdel(C)
+		var/turf/turf = loc
+		for(var/obj/structure/cable/cable_coil in turf)
+			cable_coil.deconstruct()
 		qdel(src)
 		return TRUE
 
