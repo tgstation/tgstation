@@ -118,27 +118,24 @@
 
 /// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
 /// Tries to return a valid mutant organ if all of the following criteria are true:
-/// - Target must have a pre-existing organ in the same organ slot as the new organ.
-/// - Target's pre-existing organ must be organic / not robotic.
-/// - Target must not have the same/identical organ.
+/// 1. Target must have a pre-existing organ in the same organ slot as the new organ;
+///   - or the new organ must be external.
+/// 2. Target's pre-existing organ must be organic / not robotic.
+/// 3. Target must not have the same/identical organ.
 /obj/machinery/dna_infuser/proc/pick_organ(mob/living/carbon/human/target)
 	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
-	var/obj/item/organ/new_organ
-	do
-		// Nothing to mutate.
-		new_organ = pick(potential_new_organs)
+	for(var/obj/item/organ/new_organ in infusing_into.output_organs)
 		var/obj/item/organ/old_organ = target.getorganslot(initial(new_organ.slot))
 		if(old_organ)
-			// Check for equivalent organ, it's not the same organ, and it's organic.
-			if((old_organ.type == new_organ) && (old_organ.status == ORGAN_ORGANIC))
-				return new_organ
-		// Occupant lacks the organ, but can grow an appendage.
+			if((old_organ.type != new_organ) && (old_organ.status == ORGAN_ORGANIC))
+				continue // Old organ can be mutated!
 		else if(isexternalorgan(new_organ))
-			return new_organ
-		// Organ is either missing or non-organic.
+			continue // External organ can be grown!
+		// Internal organ is either missing, or is non-organic.
 		potential_new_organs -= new_organ
-		new_organ = null
-	while(length(potential_new_organs))
+	// Pick a random organ from the filtered list.
+	if(length(potential_new_organs))
+		return pick(potential_new_organs)
 	return FALSE
 
 /obj/machinery/dna_infuser/update_icon_state()
