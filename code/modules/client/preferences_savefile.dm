@@ -11,7 +11,7 @@
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
 	It is to be used by the load_character and load_preferences procs.
-	(S.cd=="/" is preferences, S.cd=="/character[integer]" is a character slot, etc)
+	(S.cd == "/" is preferences, S.cd == "/character[integer]" is a character slot, etc)
 
 	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
 	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
