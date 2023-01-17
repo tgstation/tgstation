@@ -485,7 +485,7 @@
 		. += shine
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
-	ethereal_heart.owner.revive(HEAL_ALL)
+	ethereal_heart.owner.heal_and_revive(0)
 	to_chat(ethereal_heart.owner, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
 	var/datum/brain_trauma/picked_trauma
 	if(prob(10)) //10% chance for a severe trauma
