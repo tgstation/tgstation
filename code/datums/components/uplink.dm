@@ -27,6 +27,8 @@
 	var/datum/uplink_handler/uplink_handler
 	/// Code to unlock the uplink.
 	var/unlock_code
+	/// Excluded codes for lizard compatibility
+	var/list/excluded_codes = list("Foxtrot", "Oscar", "Sierra", "Whiskey", "X-ray")
 	/// Used for pen uplink
 	var/list/previous_attempts
 
@@ -443,6 +445,11 @@
 		returnable_code = list()
 		for(var/i in 1 to PEN_ROTATIONS)
 			returnable_code += rand(1, 360)
+
+	// check if the generated code is on the exclusion list. if it is, roll a new one.
+	for(var/code in 1 to excluded_codes.len)
+		if(returnable_code == excluded_codes[code])
+			return generate_code()
 
 	if(!unlock_code) // assume the unlock_code is our "base" code that we don't want to duplicate, and if we don't have an unlock code, immediately return out of it since there's nothing to compare to.
 		return returnable_code
