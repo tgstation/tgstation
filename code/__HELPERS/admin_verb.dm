@@ -14,6 +14,7 @@
 	} \
 	if(check_rights_for(usr.client, permissions)) { \
 		_##verb_name(arglist(args)); \
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "[#module]/[#verb_name]"); \
 	} else { \
 		to_chat(usr, span_warning("You lack the permissions ([rights2text(permissions, " ")]) for this verb!")); \
 	} \
@@ -31,6 +32,7 @@
 /client/proc/admin_context_wrapper_##context_id(##params){ \
 	if(check_rights_for(src, permissions)) { \
 		__admin_context_verb_##context_id(arglist(args)); \
+		SSblackbox.record_feedback("tally", "admin_context", 1, "[#context_id]/[context_name]"); \
 	} else { \
 		to_chat(usr, span_warning("You lack the permissions ([rights2text(permissions, " ")]) for this context menu action!")); \
 	} \

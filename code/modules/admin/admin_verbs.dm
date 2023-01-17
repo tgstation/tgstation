@@ -38,13 +38,6 @@ admin_verbs_spawn
 /client/proc/respawn_character
 
 admin_verbs_server
-/datum/admins/proc/delay
-/datum/admins/proc/delay_round_end
-/datum/admins/proc/end_round
-/datum/admins/proc/restart
-/datum/admins/proc/startnow
-/datum/admins/proc/toggleaban
-/datum/admins/proc/toggleAI
 /client/proc/adminchangemap
 /client/proc/cmd_admin_delete
 /client/proc/cmd_debug_del_all
@@ -126,18 +119,8 @@ admin_verbs_debug
 /client/proc/validate_puzzgrids
 /client/proc/view_runtimes
 
-admin_verbs_possess
-/proc/possess
-/proc/release
-
 admin_verbs_permissions
 /client/proc/edit_admin_permissions
-
-R_BUILD
-/client/proc/togglebuildmodeself
-
-R_SOUND & CONFIG_GET(string/invoke_youtubedl)
-	add_verb(src, /client/proc/play_web_sound)
 
  * END AVD TODO
  */

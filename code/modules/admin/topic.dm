@@ -138,8 +138,7 @@
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
 
 	else if(href_list["delay_round_end"])
-		// Permissions are checked in delay_round_end
-		delay_round_end()
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/server/delay_round_end)
 
 	else if(href_list["undelay_round_end"])
 		if(!check_rights(R_SERVER))
@@ -1495,7 +1494,7 @@
 		if(confirm == "No")
 			return
 		if(confirm == "Yes")
-			restart()
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/server/reboot_world)
 
 	else if(href_list["check_teams"])
 		if(!check_rights(R_ADMIN))
