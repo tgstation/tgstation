@@ -93,7 +93,8 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 		CRASH("Admin Verb Holder '[verb_type]' did not exist when an attempt to access the dynmap occured.")
 
 	usr = target.mob
-	holder:invoke(arglist(arguments))
+	var/holder_proc = text2path("[verb_type]/verb/invoke")
+	call(holder, holder_proc)(arglist(arguments))
 
 /datum/controller/subsystem/admin_verbs/proc/link_admin(mob/admin)
 	assosciations_by_ckey[admin.ckey] = list()
