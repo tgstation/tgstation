@@ -453,9 +453,9 @@
 	var/is_opponent_hoop = !(baller in team)
 	if(is_opponent_hoop)
 		. = ..()
-	
+
 	RegisterSignal(ball, COMSIG_ITEM_PICKUP, PROC_REF(ball_pickup_restriction), team)
-	
+
 	// add a timer on this
 	UnregisterSignal(ball, list(COMSIG_ITEM_PICKUP))
 
@@ -465,10 +465,10 @@
  * source - our ball
  * user - the mob picking our [source]
  */
-/obj/item/toy/basketball/proc/ball_pickup_restriction(obj/item/source, mob/grabber)
+/obj/structure/hoop/minigame/proc/ball_pickup_restriction(obj/item/source, mob/grabber)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+	//UnregisterSignal(src, COMSIG_ITEM_PICKUP)
 
 // No resetting the score
 /obj/structure/hoop/minigame/CtrlClick(mob/living/user)
