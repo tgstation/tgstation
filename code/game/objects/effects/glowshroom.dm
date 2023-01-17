@@ -209,7 +209,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 	var/list/dir_list = list()
 
-	for(var/i=1,i<=16,i <<= 1)
+	for(var/i=1,i <= 16,i <<= 1)
 		if(direction & i)
 			dir_list += i
 

@@ -562,3 +562,64 @@
   - bugfix: Uranium, Diamonds, and Bananium now update visually in the techfab UI
   tralezab:
   - rscdel: Atmospherics beret and black beret
+2023-01-17:
+  Fikou:
+  - bugfix: fixes generic tanks not being printable
+  - bugfix: fixes being able to eat, use pills etc through gas masks and such
+  LT3:
+  - admin: Changed admin comm/fax notification sound to be less confusing
+  Melbert:
+  - refactor: Refactored blindness and nearsightedness. Important to note is that
+      all mobs are naturally blind until their eyes are actually created.
+  - refactor: Refactored "is covered" procs
+  - bugfix: Less sources of blindness now cause permanent blindness. Includes the
+      "Blind" Spell and "Blind Sting" from changelings.
+  - admin: Ahealing someone no longer flashes the blind overlay for 1 tick.
+  - admin: I removed an unused (sort of) inaccessible admin verb that allowed you
+      to toggle the tint from all welding helmets (and clothing) (and lack of eyes)
+      in existence, let me know if you want similar back
+  - balance: Changeling "Blind Sting" now causes eye damage (enough to blind) rather
+      than arbitrarily forcing blindness.
+  - balance: Visionloss virus symptom now causes eye damage (enough to blind) rather
+      than arbitrarily forcing blindness.
+  - balance: Oculine has been reworked slightly. Prior, Oculine arbitrarily healed
+      blindness and nearsightedness from eye damage reagrdless of how damaged the
+      eyes were, and applied blur on success. Now, Oculine just heals eye damage,
+      and blindness / nearsightedness is restored in the process. There is now a probability
+      every tick that eye blur is applied based on how pure the oculine is while healing
+      very damaged eyes.
+  - balance: Pacifists can no longer eyestab.
+  - balance: Any clothing item that covers your eyes contributes to getting the bonus
+      while sleeping, and to removing temporary blindness faster
+  Mey-Ha-Zah:
+  - bugfix: improved maintenance eyes light detection.
+  NamelessFairy:
+  - bugfix: Maintenance adapted eyes no-longer prevent the game from compiling
+  - qol: Inspecting a cell charger now tells you the type of cell in it.
+  - qol: Rulebook for TGC has been added to the TGC arena.
+  - bugfix: Holographic TGC coins are no longer legal tender and cannot be inserted
+      into your ID.
+  Rhials:
+  - bugfix: Swiping the Crab-17 checkout machine too early will no longer instantly
+      explode it and lock everyone out of their bank accounts.
+  - rscadd: Adds the Terrify spell and Terrified status effect. Terrified victims
+      will suffer increasingly detrimental effects until they're calmed down.
+  - balance: Nightmares can now cast the Terrify spell on victims to plague their
+      prey with. Attacking a Terrified human with your open hand will trip them up.
+  - imageadd: Adds status effect and spell icons for Terrify/Terrified.
+  - spellcheck: fixes a typo in the message for consuming a nightmare heart.
+  SyncIt21:
+  - bugfix: spelling of Airlocks
+  - bugfix: checks for toggling silo link and for selecting machine, furnishing designs
+  - bugfix: properly remove the stock part from the RPED after exchanging it
+  - refactor: renames datum parts above tier 1 accordingly to their tier
+  Thunder12345:
+  - qol: Extinguisher cabiners are now opened and closed with right click instead
+      of alt+click.
+  Zergspower:
+  - bugfix: ERT Headsets have the proper key
+  axietheaxolotl:
+  - imageadd: cargo's jumpskirt has been shortened to help fit in better with the
+      jumpsuit's shorts.
+  tralezab:
+  - balance: Ceremonial blades no longer wound.

@@ -389,6 +389,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
 	sideslist = list("nanotrasen", "syndicate")
+	override_material_worth = TRUE
 
 /obj/item/storage/card_binder
 	name = "card binder"

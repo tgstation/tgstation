@@ -111,7 +111,7 @@
 	balloon_alert(user, "welding the APC frame")
 	if(!welder.use_tool(src, user, 50, volume=50, amount=3))
 		return
-	if((machine_stat & BROKEN) || opened==APC_COVER_REMOVED)
+	if((machine_stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/iron(loc)
 		user.visible_message(span_notice("[user.name] cuts [src] apart with [welder]."))
 		balloon_alert(user, "disassembled the broken frame")
