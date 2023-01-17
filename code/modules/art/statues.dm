@@ -275,7 +275,7 @@
 	attack_verb_continuous = list("stabs")
 	attack_verb_simple = list("stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound = 'sound/items/handling/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
@@ -339,6 +339,7 @@ Moving interrupts
 
 /obj/item/chisel/proc/start_sculpting(mob/living/user)
 	user.balloon_alert(user, "sculpting block...")
+	playsound(src, pick(usesound), 75, TRUE)
 	sculpting = TRUE
 	//How long whole process takes
 	var/sculpting_time = 30 SECONDS
@@ -347,9 +348,11 @@ Moving interrupts
 	var/interrupted = FALSE
 	var/remaining_time = sculpting_time - (prepared_block.completion * sculpting_time)
 
-	var/datum/progressbar/total_progress_bar = new(user, sculpting_time, prepared_block )
+	var/datum/progressbar/total_progress_bar = new(user, sculpting_time, prepared_block)
 	while(remaining_time > 0 && !interrupted)
-		if(do_after(user,sculpting_period, target = prepared_block, progress = FALSE))
+		if(do_after(user, sculpting_period, target = prepared_block, progress = FALSE))
+			if(remaining_time % 2) // gives a small delay so we don't play this sound every second
+				playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 			remaining_time -= sculpting_period
 			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time)
 			total_progress_bar.update(sculpting_time - remaining_time)
