@@ -367,7 +367,7 @@
 /mob/proc/click_random_mob()
 	var/list/nearby_mobs = list()
 	for(var/mob/living/L in range(1, src))
-		if(L!=src)
+		if(L != src)
 			nearby_mobs |= L
 	if(nearby_mobs.len)
 		var/mob/living/T = pick(nearby_mobs)
