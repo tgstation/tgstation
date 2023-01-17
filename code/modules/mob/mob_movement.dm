@@ -237,7 +237,7 @@
 					for(var/turf/T in get_line(mobloc, L.loc))
 						new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
 						limit--
-						if(limit<=0)
+						if(limit <= 0)
 							break
 			else
 				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
