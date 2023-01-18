@@ -16,7 +16,6 @@ GLOBAL_VAR_INIT(failed_any_test, FALSE)
 GLOBAL_VAR(test_log)
 /// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
 GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
-GLOBAL_LIST_EMPTY(crucial_map_items)
 
 /// The name of the test that is currently focused.
 /// Use the PERFORM_ALL_TESTS macro instead.

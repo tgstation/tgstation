@@ -20,7 +20,7 @@
 #endif
 
 #ifdef UNIT_TESTS
-#define REGISTER_CRUCIAL_MAP_ITEM(arguments...) AddElement(/datum/element/map_crucial_item, ##arguments...)
+#define REGISTER_REQUIRED_MAP_ITEM(arguments...) AddElement(/datum/element/required_map_item, ##arguments...)
 #else
-#define REGISTER_CRUCIAL_MAP_ITEM(arguments...)
+#define REGISTER_REQUIRED_MAP_ITEM(arguments...)
 #endif
