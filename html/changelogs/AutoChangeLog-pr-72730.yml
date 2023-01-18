@@ -1,0 +1,4 @@
+author: "YakumoChen"
+delete-after: True
+changes:
+  - bugfix: "The tables on the bridge of the NTSS Independence are now usable. Fancy!"

@@ -249,7 +249,7 @@
 		/obj/machinery/chem_heater = 3,
 		/obj/machinery/power/emitter = 3
 	)
-	required_stock_part = /datum/stock_part/micro_laser/high
+	required_stock_part = /obj/item/stock_parts/micro_laser/high
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors
 	name = "Advanced Capacitors Benchmark"
@@ -265,7 +265,7 @@
 		/obj/machinery/chem_dispenser/drinks = 3, /*actually having only the chem dispenser works for scanning soda/booze dispensers but im not quite sure how would i go about actually pointing that out w/o these two lines*/
 		/obj/machinery/chem_dispenser/drinks/beer = 3
 	)
-	required_stock_part = /datum/stock_part/capacitor/adv
+	required_stock_part = /obj/item/stock_parts/capacitor/adv
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules
 	name = "Advanced Scanning Modules Calibration"
@@ -278,7 +278,7 @@
 		/obj/machinery/piratepad/civilian = 2,
 		/obj/machinery/rnd/bepis = 3
 	)
-	required_stock_part = /datum/stock_part/scanning_module/adv
+	required_stock_part = /obj/item/stock_parts/scanning_module/adv
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells
 	name = "Power Cells Capacity Test"
@@ -306,7 +306,7 @@
 		/obj/machinery/chem_heater = 2,
 		/obj/machinery/chem_mass_spec = 3
 	)
-	required_stock_part = /datum/stock_part/micro_laser/ultra
+	required_stock_part = /obj/item/stock_parts/micro_laser/ultra
 
 /datum/experiment/scanning/random/mecha_damage_scan
 	name = "Exosuit Materials 1: Stress Failure Test"

@@ -314,7 +314,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "\improper CentCom bowman headset"
 	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs."
 	icon_state = "cent_headset_alt"
-	keyslot = null
+	keyslot2 = null
 
 /obj/item/radio/headset/headset_cent/alt/Initialize(mapload)
 	. = ..()
