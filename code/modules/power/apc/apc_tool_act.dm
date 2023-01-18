@@ -23,10 +23,9 @@
 	if(!opened || has_electronics != APC_ELECTRONICS_INSTALLED)
 		return
 	if(terminal)
-		balloon_alert(user, "disconnect the wires first!")
+		balloon_alert(user, "disconnect wires first!")
 		return
 	crowbar.play_tool_sound(src)
-	balloon_alert(user, "removing the board")
 	if(!crowbar.use_tool(src, user, 50))
 		return
 	if(has_electronics != APC_ELECTRONICS_INSTALLED)
@@ -60,10 +59,10 @@
 
 	if(!opened)
 		if(obj_flags & EMAGGED)
-			balloon_alert(user, "the interface is broken!")
+			balloon_alert(user, "interface is broken!")
 			return
 		toggle_panel_open()
-		balloon_alert(user, "wires are [panel_open ? "exposed" : "unexposed"]")
+		balloon_alert(user, "wires [panel_open ? "exposed" : "unexposed"]")
 		update_appearance()
 		return
 
@@ -175,9 +174,9 @@
 		return
 
 	if(opened)
-		balloon_alert(user, "must close the cover to swipe!")
+		balloon_alert(user, "close the cover first!")
 	else if(panel_open)
-		balloon_alert(user, "must close the panel first!")
+		balloon_alert(user, "close the panel first!")
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
 	else
@@ -209,9 +208,9 @@
 	if(obj_flags & EMAGGED)
 		balloon_alert(user, "interface is broken!")
 	else if(opened)
-		balloon_alert(user, "must close the cover to swipe!")
+		balloon_alert(user, "close the cover first!")
 	else if(panel_open)
-		balloon_alert(user, "must close the panel!")
+		balloon_alert(user, "close the panel first!")
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
 	else
