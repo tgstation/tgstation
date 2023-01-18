@@ -1,0 +1,8 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - rscadd: "Atmospheric Gloves, thick gloves that are fully fireproof and fire protective and let you fireman carry people faster."
+  - bugfix: "fixes engine goggles starting with darkness vision"
+  - qol: "firefighter helmets can now enable a welding visor"
+  - qol: "welding hardhats change mode with right click instead of altclick"
+  - balance: "firesuits no longer protect your hands"

@@ -393,7 +393,7 @@
 	id = "eng_gloves"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
-	build_path = /obj/item/clothing/gloves/color/latex/engineering
+	build_path = /obj/item/clothing/gloves/tinkerer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)

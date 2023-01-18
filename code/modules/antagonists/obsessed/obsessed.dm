@@ -61,7 +61,7 @@
 	name = "Obsessed (Preview only)"
 
 	uniform = /obj/item/clothing/under/misc/overalls
-	gloves = /obj/item/clothing/gloves/color/latex
+	gloves = /obj/item/clothing/gloves/latex
 	mask = /obj/item/clothing/mask/surgical
 	neck = /obj/item/camera
 	suit = /obj/item/clothing/suit/apron
