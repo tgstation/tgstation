@@ -139,10 +139,6 @@
 	name = "Long Bedhead"
 	icon_state = "hair_long_bedhead"
 
-/datum/sprite_accessory/hair/bedheadfloorlength
-	name = "Floorlength Bedhead"
-	icon_state = "hair_floorlength_bedhead"
-
 /datum/sprite_accessory/hair/badlycut
 	name = "Shorter Long Bedhead"
 	icon_state = "hair_verybadlycut"
@@ -186,10 +182,6 @@
 /datum/sprite_accessory/hair/bowlcut2
 	name = "Bowlcut 2"
 	icon_state = "hair_bowlcut2"
-
-/datum/sprite_accessory/hair/braid
-	name = "Braid (Floorlength)"
-	icon_state = "hair_braid"
 
 /datum/sprite_accessory/hair/braided
 	name = "Braided"
