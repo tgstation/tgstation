@@ -3,25 +3,14 @@
  * AVD TODO
 
 admin_verbs_fun
-/datum/admins/proc/station_traits_panel
-/client/proc/admin_change_sec_level
-/client/proc/cinematic
 /client/proc/cmd_admin_add_freeform_ai_law
-/client/proc/cmd_admin_gib_self
 /client/proc/cmd_select_equipment
-/client/proc/command_report_footnote
-/client/proc/delay_command_report
 /client/proc/forceEvent
-/client/proc/mass_zombie_cure
-/client/proc/mass_zombie_infection
 /client/proc/object_say
-/client/proc/polymorph_all
 /client/proc/reset_ooc
-/client/proc/run_weather
 /client/proc/set_dynex_scale
 /client/proc/set_ooc
 /client/proc/show_tip
-/client/proc/smite
 /client/proc/summon_ert
 /client/proc/toggle_nuke
 /client/proc/toggle_random_events
@@ -40,7 +29,6 @@ admin_verbs_server
 /client/proc/cmd_debug_del_all
 /client/proc/cmd_debug_force_del_all
 /client/proc/cmd_debug_hard_del_all
-/client/proc/everyone_random
 /client/proc/forcerandomrotate
 /client/proc/generate_job_config
 /client/proc/panicbunker

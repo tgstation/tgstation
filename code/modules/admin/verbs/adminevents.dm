@@ -285,47 +285,28 @@
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(N)].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[N.timing]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/admin_change_sec_level()
-	set category = "Admin.Events"
-	set name = "Set Security Level"
-	set desc = "Changes the security level. Announcement only, i.e. setting to Delta won't activate nuke"
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(events, set_security_level, "Changes the security level. Announcement only, i.e. setting to Delta won't activate nuke", R_ADMIN)
 	var/level = tgui_input_list(usr, "Select Security Level:", "Set Security Level", SSsecurity_level.available_levels)
-
 	if(!level)
 		return
 
 	SSsecurity_level.set_level(level)
-
 	log_admin("[key_name(usr)] changed the security level to [level]")
 	message_admins("[key_name_admin(usr)] changed the security level to [level]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Security Level [capitalize(level)]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/run_weather()
-	set category = "Admin.Events"
-	set name = "Run Weather"
-	set desc = "Triggers a weather on the z-level you choose."
-
-	if(!holder)
-		return
-
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
+ADMIN_VERB(events, run_weather, "Triggers a weather on the specified z-level", R_FUN)
+	var/weather_type = input(usr, "Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!weather_type)
 		return
 
-	var/turf/T = get_turf(mob)
-	var/z_level = input("Z-Level to target?", "Z-Level", T?.z) as num|null
+	var/turf/T = get_turf(usr)
+	var/z_level = input(usr, "Z-Level to target?", "Z-Level", T?.z) as num|null
 	if(!isnum(z_level))
 		return
 
 	SSweather.run_weather(weather_type, z_level)
-
 	message_admins("[key_name_admin(usr)] started weather of type [weather_type] on the z-level [z_level].")
 	log_admin("[key_name(usr)] started weather of type [weather_type] on the z-level [z_level].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Run Weather")
 
 ADMIN_VERB(events, add_mob_ability, "Adds an ability to a marked mob", R_FUN)
 	var/datum/admins/holder = usr.client.holder
@@ -397,47 +378,31 @@ ADMIN_VERB(events, remove_mob_ability, "Removes an ability from the marked mob",
 	message_admins("[key_name_admin(usr)] removed ability [ability_name] from mob [marked_mob].")
 	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
 
-/client/proc/command_report_footnote()
-	set category = "Admin.Events"
-	set name = "Command Report Footnote"
-	set desc = "Adds a footnote to the roundstart command report."
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(events, command_report_footnote, "Adds a footnote to the roundstart command report", R_ADMIN)
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 	SScommunications.block_command_report++ //Add a blocking condition to the counter until the inputs are done.
 
 	command_report_footnote.message = tgui_input_text(usr, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
-
 	if(!command_report_footnote.message)
+		SScommunications.block_command_report--
 		return
 
 	command_report_footnote.signature = tgui_input_text(usr, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
-
 	if(!command_report_footnote.signature)
 		command_report_footnote.signature = "Classified"
 
+	message_admins("[usr] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
 	SScommunications.command_report_footnotes += command_report_footnote
 	SScommunications.block_command_report--
-
-	message_admins("[usr] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
 
 /datum/command_footnote
 	var/message
 	var/signature
 
-/client/proc/delay_command_report()
-	set category = "Admin.Events"
-	set name = "Delay Command Report"
-	set desc = "Prevents the roundstart command report from being sent until toggled."
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(events, delay_command_report, "Prevents the roundstart command report from being sent until toggled", R_ADMIN)
 	if(SScommunications.block_command_report) //If it's anything other than 0, decrease. If 0, increase.
 		SScommunications.block_command_report--
-		message_admins("[usr] has enabled the roundstart command report.")
+		message_admins("[key_name_admin(usr)] has enabled the roundstart command report.")
 	else
 		SScommunications.block_command_report++
-		message_admins("[usr] has delayed the roundstart command report.")
+		message_admins("[key_name_admin(usr)] has delayed the roundstart command report.")
