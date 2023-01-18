@@ -579,9 +579,8 @@
 /// Remove a volume of gas from the breath. Used to simulate absorbtion and interchange of gas in the lungs.
 /// Removes all of the given gas type unless given a volume argument.
 /// Returns the amount of gas theoretically removed.
-/obj/item/organ/internal/lungs/proc/breathe_gas_volume(list/breath_gases, datum/gas/remove_gas, datum/gas/exchange_gas = null, volume = null)
-	if(volume == null)
-		volume = breath_gases[remove_gas][MOLES]
+/obj/item/organ/internal/lungs/proc/breathe_gas_volume(list/breath_gases, datum/gas/remove_gas, datum/gas/exchange_gas = null, volume = INFINITY)
+	volume = min(volume, breath_gases[remove_gas][MOLES])
 	breath_gases[remove_gas][MOLES] -= volume
 	if(exchange_gas)
 		breath_gases[exchange_gas][MOLES] += volume
