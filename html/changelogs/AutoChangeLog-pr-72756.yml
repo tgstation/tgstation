@@ -1,4 +1,0 @@
-author: "SuperSlayer0"
-delete-after: True
-changes:
-  - code_imp: "Now species to which are changed necromantic stone targets are determinated by a variable rather then just skeleton species"
