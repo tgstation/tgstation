@@ -2,79 +2,24 @@
  * # associative List pick component
  *
  * Allows user to select 1 entry from a list
+ * For actuel code refer to code\modules\wiremod\components\list\list_pick.dm
  */
-/obj/item/circuit_component/assoc_list_pick
+/obj/item/circuit_component/list_pick/assoc
 	display_name = "Associative List Pick"
 	desc = "A component that lets a user pick 1 element from an associative list. Returns the selected element."
 	category = "List"
 
-	var/datum/port/input/option/list_options
-
-	/// The list that will be shown to the user
-	var/datum/port/input/input_list
-	/// The user to show the list too
-	var/datum/port/input/user
-	/// Name passed onto the TGUI(gives the UI a name)
-	var/datum/port/input/input_name
-
-	/// What was picked from input_list
-	var/datum/port/output/output
-	/// A value was picked
-	var/datum/port/output/success
-	/// Either it was canceld or out of range
-	var/datum/port/output/failure
-
-	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
-
-	var/index_type = PORT_TYPE_NUMBER
-
-/obj/item/circuit_component/assoc_list_pick/populate_options()
+/obj/item/circuit_component/list_pick/assoc/populate_options()
 	list_options = add_option_port("List Type", GLOB.wiremod_basic_types)
 
-/obj/item/circuit_component/assoc_list_pick/proc/make_list_port()
+/obj/item/circuit_component/list_pick/assoc/proc/make_list_port()
 	input_list = add_input_port("List", PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, PORT_TYPE_LIST(PORT_TYPE_ANY)))
 
-/obj/item/circuit_component/assoc_list_pick/populate_ports()
-	input_name = add_input_port("Input Name", PORT_TYPE_STRING)
-	user = add_input_port("User", PORT_TYPE_ATOM)
-	make_list_port()
 
-	output = add_output_port("Picked Item", PORT_TYPE_NUMBER)
-	trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL)
-	failure = add_output_port("On Failure", PORT_TYPE_SIGNAL)
-	success = add_output_port("On Success", PORT_TYPE_SIGNAL)
-
-
-/obj/item/circuit_component/assoc_list_pick/pre_input_received(datum/port/input/port)
+/obj/item/circuit_component/list_pick/assoc/pre_input_received(datum/port/input/port)
 	if(port == list_options)
 		var/new_type = list_options.value
 		input_list.set_datatype(PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, new_type))
 		output.set_datatype(new_type)
-
-
-/obj/item/circuit_component/assoc_list_pick/input_received(datum/port/input/port)
-	if(parent.Adjacent(user.value))
-		return
-
-	if(ismob(user.value))
-		trigger_output.set_output(COMPONENT_SIGNAL)
-		INVOKE_ASYNC(src, PROC_REF(show_list), user.value, input_name.value, input_list.value)
-
-/// Show a list of options to the user using standed TGUI input list
-/obj/item/circuit_component/assoc_list_pick/proc/show_list(mob/user, message, list/showed_list)
-	if(!showed_list || showed_list.len == 0)
-		failure.set_output(COMPONENT_SIGNAL)
-		return
-	if(!(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)))
-		return
-	var/picked = tgui_input_list(user, message = message, items = showed_list)
-	if(!(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)))
-		return
-	if(showed_list[picked])
-		output.set_output(showed_list[picked])
-		success.set_output(COMPONENT_SIGNAL)
-	else
-		failure.set_output(COMPONENT_SIGNAL)
-
 
 

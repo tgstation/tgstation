@@ -8,6 +8,7 @@
 	desc = "A component that lets a user pick 1 element from a list. Returns the selected element."
 	category = "List"
 
+	/// The data type of the input_list
 	var/datum/port/input/option/list_options
 
 	/// The list that will be shown to the user
@@ -42,7 +43,7 @@
 	output = add_output_port("Picked Item", PORT_TYPE_NUMBER)
 	trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL)
 	failure = add_output_port("On Failure", PORT_TYPE_SIGNAL)
-	succes = add_output_port("On Succes", PORT_TYPE_SIGNAL)
+	success = add_output_port("On Succes", PORT_TYPE_SIGNAL)
 
 
 /obj/item/circuit_component/list_pick/pre_input_received(datum/port/input/port)
@@ -74,7 +75,7 @@
 		return
 	if(picked)
 		output.set_output(picked)
-		succes.set_output(COMPONENT_SIGNAL)
+		success.set_output(COMPONENT_SIGNAL)
 	else
 		failure.set_output(COMPONENT_SIGNAL)
 
