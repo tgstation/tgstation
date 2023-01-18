@@ -49,7 +49,7 @@
 		overlay_y = 12)
 
 /obj/item/gun/energy/pulse/carbine/lethal
-	list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode)
 
 /obj/item/gun/energy/pulse/carbine/loyalpin
 	pin = /obj/item/firing_pin/implant/mindshield
