@@ -31,11 +31,15 @@ GLOBAL_VAR(basketball_game)
 	var/list/home_team_landmarks = list()
 	/// Home team players
 	var/list/home_team_players = list()
+	/// The basketball hoop used by home team
+	var/obj/structure/hoop/minigame/home_hoop
 
 	/// Spawn points for away team players
 	var/list/away_team_landmarks = list()
 	/// Away team players
 	var/list/away_team_players = list()
+	/// The basketball hoop used by away team
+	var/obj/structure/hoop/minigame/away_hoop
 
 /datum/basketball_controller/New()
 	. = ..()
@@ -76,9 +80,23 @@ GLOBAL_VAR(basketball_game)
 		CRASH("Loading basketball map failed!")
 	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23, spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
 
+	var/turf/home_hoop_turf = get_turf(locate(/obj/effect/landmark/basketball/team_spawn/home_hoop) in GLOB.landmarks_list)
+	if(!home_hoop_turf)
+		CRASH("No home landmark for basketball hoop detected!")
+	home_hoop = (locate(/obj/structure/hoop/minigame) in home_hoop_turf)
+	if(!home_hoop)
+		CRASH("No minigame basketball hoop detected for home team!")
+
 	if(!home_team_landmarks.len)
 		for(var/obj/effect/landmark/basketball/team_spawn/home/possible_spawn in GLOB.landmarks_list)
 			home_team_landmarks += possible_spawn
+
+	var/turf/away_hoop_turf = get_turf(locate(/obj/effect/landmark/basketball/team_spawn/away_hoop) in GLOB.landmarks_list)
+	if(!away_hoop_turf)
+		CRASH("No away landmark for basketball hoop detected!")
+	away_hoop = (locate(/obj/structure/hoop/minigame) in away_hoop_turf)
+	if(!away_hoop)
+		CRASH("No minigame basketball hoop detected for away team!")
 
 	if(!away_team_landmarks.len)
 		for(var/obj/effect/landmark/basketball/team_spawn/away/possible_spawn in GLOB.landmarks_list)
@@ -120,6 +138,10 @@ GLOBAL_VAR(basketball_game)
 	var/team_uniform
 	var/team_name
 
+	// rename the hoops to their appropriate teams names
+	home_hoop.name = current_map.team_name
+	away_hoop.name = away_map.team_name
+
 	for(var/player_key in ready_players)
 
 
@@ -130,11 +152,13 @@ GLOBAL_VAR(basketball_game)
 		if(length(ready_players) % 2) // odd is home team
 			spawn_landmark = pick_n_take(home_spawnpoints)
 			home_team_players |= player_key
+			home_hoop.team |= player_key
 			team_uniform = current_map.home_team_uniform
 			team_name = current_map.team_name
 		else // even is away team
 			spawn_landmark = pick_n_take(away_spawnpoints)
 			away_team_players |= player_key
+			away_hoop.team |= player_key
 			team_uniform = away_map.home_team_uniform
 			team_name = away_map.team_name
 
