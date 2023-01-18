@@ -220,6 +220,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
+	///Which species the resurected humanoid will be
+	var/applied_species = /datum/species/skeleton
 
 /obj/item/necromantic_stone/unlimited
 	unlimited = 1
@@ -249,7 +251,7 @@
 		to_chat(user, span_warning("This artifact can only affect three undead at a time!"))
 		return
 
-	M.set_species(/datum/species/skeleton, icon_update=0)
+	M.set_species(applied_species, icon_update=0)
 	M.revive(ADMIN_HEAL_ALL)
 	spooky_scaries |= M
 	to_chat(M, "[span_userdanger("You have been revived by ")]<B>[user.real_name]!</B>")

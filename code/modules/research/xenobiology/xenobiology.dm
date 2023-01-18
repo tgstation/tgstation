@@ -754,7 +754,7 @@
 		return
 	if(prompted || !ismob(switchy_mob))
 		return
-	if(!(isanimal(switchy_mob) || isbasicmob(switchy_mob))|| switchy_mob.ckey) //much like sentience, these will not work on something that is already player controlled
+	if(!(isanimal(switchy_mob) || isbasicmob(switchy_mob)) || switchy_mob.ckey) //much like sentience, these will not work on something that is already player controlled
 		to_chat(user, span_warning("[switchy_mob] already has a higher consciousness!"))
 		return ..()
 	if(switchy_mob.stat)
@@ -780,7 +780,7 @@
 		return
 
 	prompted = 1
-	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No"))=="No")
+	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) == "No")
 		prompted = 0
 		return
 

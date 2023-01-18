@@ -623,3 +623,21 @@
       jumpsuit's shorts.
   tralezab:
   - balance: Ceremonial blades no longer wound.
+2023-01-18:
+  Comxy:
+  - rscadd: Adds garden gnomes.
+  - imageadd: Adds garden gnome sprites.
+  Fikou:
+  - rscadd: Atmospheric Gloves, thick gloves that are fully fireproof and fire protective
+      and let you fireman carry people faster.
+  - bugfix: fixes engine goggles starting with darkness vision
+  - qol: firefighter helmets can now enable a welding visor
+  - qol: welding hardhats change mode with right click instead of altclick
+  - balance: firesuits no longer protect your hands
+  Mothblocks:
+  - bugfix: Polls are fixed
+  SuperSlayer0:
+  - code_imp: Now species to which are changed necromantic stone targets are determinated
+      by a variable rather then just skeleton species
+  YakumoChen:
+  - rscadd: Service borgs have a chisel now, make some statues!
