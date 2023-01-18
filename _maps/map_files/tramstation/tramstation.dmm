@@ -32890,6 +32890,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"lQG" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/glass/reinforced/tram,
+/area/station/hallway/primary/tram/left)
 "lQM" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/port/central)
@@ -158830,7 +158834,7 @@ iMR
 wpP
 wVw
 tep
-tep
+lQG
 klT
 aRN
 dDG
