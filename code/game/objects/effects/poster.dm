@@ -1068,6 +1068,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 /obj/structure/sign/poster/official/download
 	name = "You Wouldn't Download A Gun"
 	desc = "A poster reminding the crew that corporate secrets should stay in the workplace."
-	icon_state = "boombox"
+	icon_state = "download_gun"
 
 #undef PLACE_SPEED
