@@ -189,6 +189,9 @@
 			return TRUE
 
 		if("logout")
+			if(istype(src, /obj/machinery/computer/secure_data/syndie))
+				balloon_alert(usr, "access denied")
+				return TRUE
 			balloon_alert(usr, "logged out")
 			playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
 			logged_in = FALSE
@@ -249,7 +252,7 @@
 /// Handles logging into the computer.
 /obj/machinery/computer/secure_data/proc/login(mob/user)
 	if(!isliving(user) || issilicon(user))
-		balloon_alert(player, "access denied")
+		balloon_alert(user, "access denied")
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
