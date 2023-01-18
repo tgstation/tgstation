@@ -7,6 +7,7 @@
 
 #define MIN_DISARM_CHANCE 25
 #define MAX_DISARM_CHANCE 75
+#define PICKUP_RESTRICTION_TIME 3 SECONDS // so other players can pickup the ball after someone scores
 
 /obj/item/toy/basketball
 	name = "basketball"
@@ -17,14 +18,15 @@
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 	/// The person dribbling the basketball
 	var/mob/living/wielder
-
-	// So the basketball doesn't make sound every step
+	/// So the basketball doesn't make sound every step
 	var/steps = 0
 	var/step_delay = 2
-
-	// So they can't spam dribbling (at least not too much)
+	/// So they can't spam dribbling (at least not too much)
 	var/last_use = 0
 	var/use_delay = 0.2 SECONDS
+	/// List of player ckeys who aren't allowed to pickup the ball (after scoring)
+	/// This resets after someone else picks up the ball or a certain amount of time has passed
+	var/pickup_restriction_ckeys = list()
 
 // what about wielder.combat_mode  ???
 
@@ -36,6 +38,11 @@
 
 // basketball/qdel don't forget to remove these signals
 //	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+
+/obj/item/toy/basketball/reset_pickup_restriction()
+	pickup_restriction_ckeys = list()
+	UnregisterSignal(ball, list(COMSIG_ITEM_PICKUP))
+	// remove timer if it existsxf
 
 /obj/item/toy/basketball/proc/on_equip(obj/item/source, mob/living/user, slot)
 	SIGNAL_HANDLER
@@ -447,17 +454,19 @@
 
 // Special hoops for the minigame
 /obj/structure/hoop/minigame
+	/// This is a list of ckeys for the minigame to prevent scoring on their own hoops
 	var/list/team = list()
 
 /obj/structure/hoop/minigame/score(obj/item/ball, mob/living/baller, points)
-	var/is_opponent_hoop = !(baller in team)
-	if(is_opponent_hoop)
-		. = ..()
+	var/is_team_hoop = baller.ckey in team
+	if(is_team_hoop)
+		baller.balloon_alert_to_viewers("cant score own hoop!")
+		return
 
-	RegisterSignal(ball, COMSIG_ITEM_PICKUP, PROC_REF(ball_pickup_restriction), team)
+	. = ..()
 
-	// add a timer on this
-	UnregisterSignal(ball, list(COMSIG_ITEM_PICKUP))
+	RegisterSignal(ball, COMSIG_ITEM_PICKUP, TYPE_PROC_REF(/obj/item/toy/basketball, pickup_restriction), team)
+	addtimer(CALLBACK(ball, TYPE_PROC_REF(/obj/item/toy/basketball, reset_pickup_restriction)), PICKUP_RESTRICTION_TIME)
 
 /**
  * Checks if a team can pickup the ball after scoring
@@ -465,15 +474,21 @@
  * source - our ball
  * user - the mob picking our [source]
  */
-/obj/structure/hoop/minigame/proc/ball_pickup_restriction(obj/item/source, mob/grabber)
+/obj/item/toy/basketball/proc/pickup_restriction(obj/item/source, mob/grabber, team)
 	SIGNAL_HANDLER
 
-	//UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+	if(grabber.ckey in team)
+		// prevent pickup
+	else
+		// remove timer and unregister signal
 
-// No resetting the score
+		UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+
+// No resetting the score for minigame hoops
 /obj/structure/hoop/minigame/CtrlClick(mob/living/user)
 	return
 
 #undef FACE_TO_BACK
 #undef FACE_TO_SIDE
 #undef FACE_TO_FACE
+#undef PICKUP_RESTRICTION_TIME
