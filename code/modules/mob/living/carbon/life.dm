@@ -270,12 +270,12 @@
 		// CO2 side-effects.
 		if(!co2overloadtime)
 			co2overloadtime = world.time
-		else if(world.time - co2overloadtime > 120)
-			Unconscious(60)
-			adjustOxyLoss(3)
-			if(world.time - co2overloadtime > 300)
-				adjustOxyLoss(8)
+		else if((world.time - co2overloadtime) > 12 SECONDS)
 			throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
+			Unconscious(6 SECONDS)
+			adjustOxyLoss(3)
+			if((world.time - co2overloadtime) > 30 SECONDS)
+				adjustOxyLoss(8)
 		if(prob(20))
 			emote("cough")
 	else
@@ -347,28 +347,26 @@
 				clear_mood_event("smell")
 
 	//-- NITROUS OXIDE --//
-	if(!n2o_pp || (0.01 >= n2o_pp))
-		// Reset side-effects, for zero or extremely small amounts of N2O.
-		n2o_euphoria = EUPHORIA_INACTIVE
-		clear_alert(ALERT_TOO_MUCH_N2O)
-	// N2O side-effects. "Too much N2O!"
-	// Small amount of N2O, small side-effects. Causes random euphoria and giggling.
-	else if(n2o_pp > n2o_para_min)
+	if(n2o_pp > n2o_para_min)
 		// More N2O, more severe side-effects. Causes stun/sleep.
 		n2o_euphoria = EUPHORIA_ACTIVE
 		throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 		// 60 gives them one second to wake up and run away a bit!
-		Unconscious(60)
+		Unconscious(6 SECONDS)
 		// Enough to make the mob sleep.
 		if(n2o_pp > n2o_sleep_min)
 			Sleeping(max(AmountSleeping() + 40, 200))
-	else
+	else if(n2o_pp > 0.01)
 		// No alert for small amounts, but the mob randomly feels euphoric.
 		if(prob(20))
 			n2o_euphoria = EUPHORIA_ACTIVE
 			emote(pick("giggle","laugh"))
 		else
 			n2o_euphoria = EUPHORIA_INACTIVE
+	else
+	// Reset side-effects, for zero or extremely small amounts of N2O.
+		n2o_euphoria = EUPHORIA_INACTIVE
+		clear_alert(ALERT_TOO_MUCH_N2O)
 
 	//-- NITRIUM --//
 	if(nitrium_pp)

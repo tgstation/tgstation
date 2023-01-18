@@ -286,20 +286,19 @@
 	if(safe_co2_max)
 		if(co2_pp && (co2_pp > safe_co2_max))
 			// CO2 side-effects.
-			// If there was enough O2 in the air but too much CO2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 			// Give the mob a chance to notice.
 			if(prob(20))
 				breather.emote("cough")
 			// If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 			if(!breather.co2overloadtime)
 				breather.co2overloadtime = world.time
-			else if(world.time - breather.co2overloadtime > 120)
+			else if((world.time - breather.co2overloadtime) > 12 SECONDS)
 				breather.throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
-				breather.Unconscious(60)
+				breather.Unconscious(6 SECONDS)
 				// Lets hurt em a little, let them know we mean business.
 				breather.apply_damage_type(3, co2_damage_type)
 				// They've been in here 30s now, start to kill them for their own good!
-				if(world.time - breather.co2overloadtime > 300)
+				if((world.time - breather.co2overloadtime) > 30 SECONDS)
 					breather.apply_damage_type(8, co2_damage_type)
 		else
 			// Reset side-effects.
@@ -370,12 +369,14 @@
 			breather.adjust_hallucinations(20 SECONDS)
 			breather.reagents.add_reagent(/datum/reagent/bz_metabolites, 5)
 		if(bz_pp > BZ_brain_damage_min && prob(33))
-			breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
+			breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150, ORGAN_ORGANIC)
 
 	//-- FREON --//
 	if(freon_pp)
 		// Inhale Freon. Exhale nothing.
-		gas_breathed = breathe_gas_volume(breath_gases, /datum/gas/freon)
+		breathe_gas_volume(breath_gases, /datum/gas/freon)
+		if (freon_pp > gas_stimulation_min)
+			breather.reagents.add_reagent(/datum/reagent/freon, 1)
 		if (prob(freon_pp))
 			to_chat(breather, span_alert("Your mouth feels like it's burning!"))
 		if (freon_pp > 40)
@@ -386,8 +387,6 @@
 				breather.set_silence_if_lower(6 SECONDS)
 		else
 			breather.adjustFireLoss(freon_pp / 4)
-		if (gas_breathed > gas_stimulation_min)
-			breather.reagents.add_reagent(/datum/reagent/freon, 1)
 
 	//-- HALON --//
 	if(halon_pp)
@@ -417,7 +416,7 @@
 		// Stun/Sleep side-effects.
 		if(healium_pp > healium_para_min)
 			// Random chance to stun mob. Timing not in seconds to have a much higher variation
-			breather.Unconscious(rand(30, 50))
+			breather.Unconscious(rand(3 SECONDS, 5 SECONDS))
 		// Metabolize to reagent when concentration is high enough.
 		if(healium_pp > healium_sleep_min)
 			breather.reagents.add_reagent(/datum/reagent/healium, max(0, 1 - breather.reagents.get_reagent_amount(/datum/reagent/healium)))
@@ -492,22 +491,18 @@
 		owner.adjust_disgust(0.1 * miasma_pp)
 
 	//-- N2O --//
-	if(!n2o_pp || (0.01 >= n2o_pp))
-		// Reset side-effects, for zero or extremely small amounts of N2O.
-		n2o_euphoria = EUPHORIA_INACTIVE
-		breather.clear_alert(ALERT_TOO_MUCH_N2O)
 	// N2O side-effects. "Too much N2O!"
 	// Small amount of N2O, small side-effects. Causes random euphoria and giggling.
-	else if (n2o_pp > n2o_para_min)
+	if (n2o_pp > n2o_para_min)
 		// More N2O, more severe side-effects. Causes stun/sleep.
 		n2o_euphoria = EUPHORIA_ACTIVE
 		breather.throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 		// 60 gives them one second to wake up and run away a bit!
-		breather.Unconscious(60)
+		breather.Unconscious(6 SECONDS)
 		// Enough to make the mob sleep.
 		if(n2o_pp > n2o_sleep_min)
 			breather.Sleeping(min(breather.AmountSleeping() + 100, 200))
-	else
+	else if(n2o_pp > 0.01)
 		// No alert for small amounts, but the mob randomly feels euphoric.
 		breather.clear_alert(ALERT_TOO_MUCH_N2O)
 		if(prob(20))
@@ -515,24 +510,27 @@
 			breather.emote(pick("giggle", "laugh"))
 		else
 			n2o_euphoria = EUPHORIA_INACTIVE
+	else
+		// Reset side-effects, for zero or extremely small amounts of N2O.
+		n2o_euphoria = EUPHORIA_INACTIVE
+		breather.clear_alert(ALERT_TOO_MUCH_N2O)
 
 	//-- NITRIUM --//
 	if (nitrium_pp)
 		// Inhale Nitrium. Exhale nothing.
 		breathe_gas_volume(breath_gases, /datum/gas/nitrium)
 		// Random chance to inflict side effects increases with pressure.
-		if(!(prob(nitrium_pp) && (nitrium_pp > 15)))
-			return
-		// Nitrium side-effect.
-		breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitrium_pp * 0.1)
-		to_chat(breather, "<span class='notice'>You feel a burning sensation in your chest</span>")
-		// Metabolize to reagents.
-		if (nitrium_pp > 5)
-			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)
-			breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
-		if (nitrium_pp > 10)
-			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
-			breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
+		if((prob(nitrium_pp) && (nitrium_pp > 15)))
+			// Nitrium side-effect.
+			breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitrium_pp * 0.1)
+			to_chat(breather, "<span class='notice'>You feel a burning sensation in your chest</span>")
+			// Metabolize to reagents.
+			if (nitrium_pp > 5)
+				var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)
+				breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
+			if (nitrium_pp > 10)
+				var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
+				breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
 
 	//-- PROTO-NITRATE --//
 	// Inert
