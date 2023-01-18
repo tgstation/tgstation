@@ -5958,10 +5958,7 @@
 /area/centcom/central_command_areas/evacuation)
 "Cg" = (
 /obj/item/cardboard_cutout{
-	desc = "They seem to be ignoring you... Typical.";
-	dir = 1;
-	icon_state = "cutout_ntsec";
-	name = "Private Security Officer"
+	starting_cutout = "Private Security Officer"
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -8855,9 +8852,7 @@
 /area/centcom/central_command_areas/admin)
 "UA" = (
 /obj/item/cardboard_cutout{
-	desc = "They seem to be ignoring you... Typical.";
-	icon_state = "cutout_ntsec";
-	name = "Private Security Officer"
+	starting_cutout = "Private Security Officer"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
