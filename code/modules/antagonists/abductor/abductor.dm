@@ -17,11 +17,6 @@
 	/// Type path for the associated job datum.
 	var/role_job = /datum/job/abductor_agent
 
-/datum/antagonist/abductor/New()
-	// lets get the loading started now, but don't block waiting for it
-	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
-	return ..()
-
 /datum/antagonist/abductor/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/scientist = new
 	var/mob/living/carbon/human/dummy/consistent/agent = new
