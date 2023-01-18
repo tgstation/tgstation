@@ -2,7 +2,7 @@
 GLOBAL_LIST_EMPTY(dynamic_human_icons)
 
 ///This proc takes an amount of arguments and creates a human dummy using the paths, for visuals you want!
-/proc/get_dynamic_human_icon(outfit_path, species_path = /datum/species/human, mob_spawn_path, r_hand, l_hand, bloody_slots = NONE, list/generated_dirs = GLOB.cardinals)
+/proc/get_dynamic_human_icon(outfit_path, species_path = /datum/species/human, mob_spawn_path, r_hand, l_hand, bloody_slots = NONE, list/generated_dirs = GLOB.cardinals, animated = TRUE)
 	if(!species_path)
 		return FALSE
 	var/arg_string = "[outfit_path]_[species_path]_[mob_spawn_path]_[l_hand]_[r_hand]_[bloody_slots]_[generated_dirs.Join(",")]"
@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(dynamic_human_icons)
 	dummy.update_held_items()
 	var/icon/output = icon('icons/blanks/32x32.dmi', "nothing")
 	for(var/direction in generated_dirs)
-		var/icon/partial = getFlatIcon(dummy, defdir = direction)
+		var/icon/partial = getFlatIcon(dummy, defdir = direction, no_anim = !animated)
 		output.Insert(partial, dir = direction)
 	GLOB.dynamic_human_icons[arg_string] = output
 	qdel(dummy)

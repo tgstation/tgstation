@@ -309,3 +309,9 @@
 	id = /obj/item/card/id/advanced
 	l_pocket = /obj/item/paper/fluff/bee_objectives
 	mask = /obj/item/clothing/mask/animal/small/bee
+
+/obj/effect/mob_spawn/corpse/human/generic_assistant
+	name = "Generic Assistant"
+	hairstyle = "Short Hair"
+	facial_haircolor = COLOR_BLACK
+	outfit = /datum/outfit/job/assistant/consistent

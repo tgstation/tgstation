@@ -178,9 +178,9 @@ GLOBAL_LIST(cardboard_cutouts)
 /datum/cardboard_cutout/New()
 	. = ..()
 	if(direct_icon)
-		applied_icon = icon(direct_icon, direct_icon_state, dir = SOUTH)
+		applied_icon = icon(direct_icon, direct_icon_state, dir = SOUTH, frame = 1)
 	else
-		applied_icon = get_dynamic_human_icon(outfit, species, mob_spawner, l_hand, r_hand, generated_dirs = list(SOUTH))
+		applied_icon = get_dynamic_human_icon(outfit, species, mob_spawner, l_hand, r_hand, generated_dirs = list(SOUTH), animated = FALSE)
 
 /// This proc returns the name that the cardboard cutout item will use.
 /datum/cardboard_cutout/proc/get_name()
@@ -196,7 +196,7 @@ GLOBAL_LIST(cardboard_cutouts)
 	name = "Assistant"
 	applied_name = "John Greytide"
 	applied_desc = "A cardboard cutout of an assistant."
-	outfit = /datum/outfit/job/assistant/consistent
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/generic_assistant
 
 /datum/cardboard_cutout/assistant/get_name()
 	return "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
