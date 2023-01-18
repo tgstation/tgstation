@@ -116,6 +116,7 @@
 	if(cable.use(insert_amount))
 		balloon_alert(user, "inserted [insert_amount] cable")
 		current_amount += insert_amount
+		update_appearance()
 
 /// get cached reference of cable which gets used over time
 /obj/item/rwd/proc/get_cable()
@@ -133,10 +134,6 @@
 	if(!isturf(user.loc))
 		return
 	var/turf/the_turf = user.loc
-	// pick up any stray cable pieces lying on the floor
-	for(var/obj/item/stack/cable_coil/cable_piece in the_turf)
-		add_cable(user, cable_piece)
-
 	/**
 	 * Dont bother if
 	 * - device is not active
@@ -152,6 +149,11 @@
 	if(cable && !QDELETED(cable)) // if user does not have insulated gloves the cable can deconstruct from shock i.e. get deleted
 		current_amount -= 1
 		update_appearance()
+
+	// pick up any stray cable pieces lying on the floor
+	for(var/obj/item/stack/cable_coil/cable_piece in the_turf)
+		add_cable(user, cable_piece)
+
 
 
 /obj/item/rwd/loaded
