@@ -313,5 +313,7 @@
 /obj/effect/mob_spawn/corpse/human/generic_assistant
 	name = "Generic Assistant"
 	hairstyle = "Short Hair"
-	facial_haircolor = COLOR_BLACK
+	haircolor = COLOR_BLACK
+	facial_hairstyle = "Shaved"
+	skin_tone = "caucasian1"
 	outfit = /datum/outfit/job/assistant/consistent
