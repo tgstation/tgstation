@@ -22,9 +22,6 @@
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
-	/// Empty breath - Used in the event that [lungs/proc/check_breath()] gets a null breath.
-	var/datum/gas_mixture/empty_breath = new
-
 	//Breath damage
 	//These thresholds are checked against what amounts to total_mix_pressure * (gas_type_mols/total_mols)
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
@@ -123,6 +120,7 @@
 
 	// Breath may be null, so use a fallback "empty breath" for convenience.
 	if(!breath)
+		var/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
 		breath = empty_breath
 
 	// Ensure gas volumes are present.
@@ -569,12 +567,10 @@
 		owner.clear_mood_event("chemical_euphoria")
 	// Activate mood on first flag, remove on second, do nothing on third.
 
-	// If breath was originally null, it may now be the locally stored "empty_breath".
-	if(breath != empty_breath)
-		if(has_moles)
-			handle_breath_temperature(breath, breather)
-		// GC breath only if it wasn't the locally stored one.
-		breath.garbage_collect()
+	if(has_moles)
+		handle_breath_temperature(breath, breather)
+
+	breath.garbage_collect()
 
 ///override this for breath handling unique to lung subtypes, breath_gas is the list of gas in the breath while gas breathed is just what is being added or removed from that list, just as they are when this is called in check_breath()
 /obj/item/organ/internal/lungs/proc/handle_gas_override(mob/living/carbon/human/breather, list/breath_gas, gas_breathed)

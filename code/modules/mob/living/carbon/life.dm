@@ -153,6 +153,7 @@
 
 	// Breath may be null, so use a fallback "empty breath" for convenience.
 	if(!breath)
+		var/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
 		breath = empty_breath
 
 	// Ensure gas volumes are present.
@@ -234,10 +235,8 @@
 	//-- PLUOXIUM --//
 	// Behaves like Oxygen with 8X efficacy, but metabolizes into a reagent.
 	if(pluoxium_pp)
-		var/pluoxium_used = 0
 		// Inhale Pluoxium. Exhale nothing.
-		pluoxium_used = breath_gases[/datum/gas/pluoxium][MOLES]
-		breath_gases[/datum/gas/pluoxium][MOLES] -= pluoxium_used
+		breath_gases[/datum/gas/pluoxium][MOLES] = 0
 		// Metabolize to reagent.
 		if(pluoxium_pp > gas_stimulation_min)
 			var/existing = reagents.get_reagent_amount(/datum/reagent/pluoxium)
@@ -386,12 +385,10 @@
 		clear_mood_event("chemical_euphoria")
 	// Activate mood on first flag, remove on second, do nothing on third.
 
-	// If breath was originally null, it may now be the locally stored "empty_breath".
-	if(breath != empty_breath)
-		if(has_moles)
-			handle_breath_temperature(breath)
-		// GC breath only if it wasn't the locally stored one.
-		breath.garbage_collect()
+	if(has_moles)
+		handle_breath_temperature(breath)
+
+	breath.garbage_collect()
 
 /mob/living/carbon/proc/handle_suffocation(breath_pp = 0, safe_breath_min = 0, true_pp = 0)
 	. = 0
