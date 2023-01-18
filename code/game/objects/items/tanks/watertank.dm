@@ -29,8 +29,7 @@
 	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
 
 /obj/item/watertank/Destroy()
-	if(!QDELETED(noz))
-		QDEL_NULL(noz)
+	QDEL_NULL(noz)
 	return ..()
 
 
