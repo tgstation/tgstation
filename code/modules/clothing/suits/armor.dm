@@ -215,9 +215,9 @@
 	desc = "A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks. Helps the wearer resist shoving in close quarters."
 	icon_state = "riot"
 	inhand_icon_state = "swat_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = CHEST|GROIN
+	cold_protection = CHEST|GROIN
+	heat_protection = CHEST|GROIN
 	armor_type = /datum/armor/armor_riot
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80

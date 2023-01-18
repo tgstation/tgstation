@@ -199,6 +199,22 @@
 	contains = list(/obj/item/clothing/head/helmet/alt = 3)
 	crate_name = "bulletproof helmets crate"
 
+/datum/supply_pack/security/armory/bulletbraces
+	name = "Bulletproof Braces Crate"
+	desc = "Contains three sets of bulletproof braces. Guaranteed to reduce a bullet's \
+		stopping power by over half. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/clothing/gloves/braces/bulletproof = 3)
+	crate_name = "bulletproof braces crate"
+
+/datum/supply_pack/security/armory/bulletgreaves
+	name = "Bulletproof Greaves Crate"
+	desc = "Contains three sets of bulletproof greaves. Guaranteed to reduce a bullet's \
+		stopping power by over half. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/clothing/shoes/greaves/bulletproof = 3)
+	crate_name = "bulletproof greaves crate"
+
 /datum/supply_pack/security/armory/chemimp
 	name = "Chemical Implants Crate"
 	desc = "Contains five Remote Chemical implants. Requires Armory access to open."
@@ -291,6 +307,24 @@
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/clothing/suit/armor/riot = 3)
 	crate_name = "riot armor crate"
+
+/datum/supply_pack/security/armory/riotbraces
+	name = "Riot Braces Crate"
+	desc = "Contains three sets of riot braces. Advanced padding protects \
+		against close-ranged weaponry, making melee attacks feel only half as \
+		potent to the user. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/clothing/gloves/braces/riot = 3)
+	crate_name = "riot braces crate"
+
+/datum/supply_pack/security/armory/riotgreaves
+	name = "Riot Greaves Crate"
+	desc = "Contains three sets of riot greaves. Advanced padding protects \
+		against close-ranged weaponry, making melee attacks feel only half as \
+		potent to the user. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/clothing/shoes/greaves/riot = 3)
+	crate_name = "riot greaves crate"
 
 /datum/supply_pack/security/armory/riothelmets
 	name = "Riot Helmets Crate"
