@@ -194,3 +194,54 @@
 	var/obj/item/photo/photo = new(null, picture)
 	field_name = photo
 	return photo
+
+/// Returns a paper printout of the current record's crime data.
+/datum/record/crew/proc/get_rapsheet()
+	var/print_count = ++GLOB.data_core.print_count
+	var/obj/item/paper/printed_paper = new
+	var/final_paper_text = "<CENTER><B>Security Record - (SR-[print_count])</B></CENTER><BR>"
+
+	final_paper_text += text("Name: [] <BR>\nGender: []<BR>\nAge: []<BR>", name, gender, age)
+	final_paper_text += "\nSpecies: [species]<BR>"
+	final_paper_text += text("\nFingerprint: []<BR>", fingerprint)
+	final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", wanted_status)
+	final_paper_text += "<BR>\n<BR>\nCrimes:<BR>\n"
+	final_paper_text += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+						<tr>
+						<th>Crime</th>
+						<th>Details</th>
+						<th>Author</th>
+						<th>Time Added</th>
+						</tr>"}
+	for(var/datum/crime/crime in crimes)
+		final_paper_text += "<tr><td>[crime.name]</td>"
+		final_paper_text += "<td>[crime.details]</td>"
+		final_paper_text += "<td>[crime.author]</td>"
+		final_paper_text += "<td>[crime.time]</td>"
+		final_paper_text += "</tr>"
+	final_paper_text += "</table>"
+
+	final_paper_text  += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+						<tr>
+						<th>Citation</th>
+						<th>Details</th>
+						<th>Author</th>
+						<th>Time Added</th>
+						<th>Fine</th>
+						</tr>"}
+	for(var/datum/crime/citation in citations)
+		final_paper_text += "<tr><td>[citation.name]</td>"
+		final_paper_text += "<td>[citation.details]</td>"
+		final_paper_text += "<td>[citation.author]</td>"
+		final_paper_text += "<td>[citation.time]</td>"
+		final_paper_text += "<td>[citation.fine]</td>"
+		final_paper_text += "</tr>"
+	final_paper_text += "</table>"
+
+	final_paper_text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", security_note)
+	printed_paper.name = text("CR-[] '[]'", print_count, name)
+	final_paper_text += "</TT>"
+	printed_paper.add_raw_text(final_paper_text)
+	printed_paper.update_appearance()
+
+	return printed_paper

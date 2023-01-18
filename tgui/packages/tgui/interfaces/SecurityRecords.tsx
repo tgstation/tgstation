@@ -219,14 +219,27 @@ const RecordView = (props, context) => {
       <Stack.Item grow>
         <Section
           buttons={
-            <Dropdown
-              onSelected={(value) =>
-                act('set_wanted', { ref: ref, status: value })
-              }
-              options={available_statuses}
-              selected={wanted_status}
-              width="10rem"
-            />
+            <Stack>
+              <Stack.Item>
+                <Button
+                  height="1.7rem"
+                  icon="print"
+                  onClick={() => act('print_record', { ref: ref })}>
+                  Print
+                </Button>
+              </Stack.Item>
+              <Stack.Item>
+                <Dropdown
+                  height="1.7rem"
+                  onSelected={(value) =>
+                    act('set_wanted', { ref: ref, status: value })
+                  }
+                  options={available_statuses}
+                  selected={wanted_status}
+                  width="10rem"
+                />
+              </Stack.Item>
+            </Stack>
           }
           fill
           scrollable

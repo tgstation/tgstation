@@ -190,17 +190,12 @@
 
 		if("logout")
 			balloon_alert(usr, "logged out")
-			playsound(src, 'sound/machines/terminal_off.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
 			logged_in = FALSE
 			return TRUE
 
 		if("print_record")
-			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-			if(!record)
-				return FALSE
-
-			var/datum/datacore/records = GLOB.data_core
-			records.print_security_record(record, src)
+			print_record(usr, params)
 
 			return TRUE
 
@@ -251,18 +246,6 @@
 	record.wanted_status = STATE_ARREST
 	return TRUE
 
-/// Returns a photo of the user.
-/obj/machinery/computer/secure_data/proc/get_photo(mob/user)
-	var/obj/item/photo/printout = null
-	if(issilicon(user))
-		var/mob/living/silicon/tempAI = user
-		var/datum/picture/selection = tempAI.GetPhoto(user)
-		if(selection)
-			printout = new(null, selection)
-	else if(istype(user.get_active_held_item(), /obj/item/photo))
-		printout = user.get_active_held_item()
-	return printout
-
 /// Handles logging into the computer.
 /obj/machinery/computer/secure_data/proc/login(mob/user)
 	if(!isliving(user) || issilicon(user))
@@ -276,26 +259,41 @@
 
 	if(!check_access_list(access))
 		balloon_alert(player, "access denied")
-		playsound(src, 'sound/machines/terminal_error.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
 	balloon_alert(player, "access granted")
-	playsound(src, 'sound/machines/terminal_on.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/terminal_on.ogg', 70, TRUE)
 	logged_in = TRUE
 	return TRUE
 
-/// Prints the photo of the user at location.
-/obj/machinery/computer/secure_data/proc/print_photo(icon/temp, person_name)
-	if (printing)
-		return
-	printing = TRUE
-	sleep(2 SECONDS)
-	var/obj/item/photo/printout = new/obj/item/photo(drop_location())
-	var/datum/picture/toEmbed = new(name = person_name, desc = "The photo on file for [person_name].", image = temp)
-	printout.set_picture(toEmbed, TRUE, TRUE)
-	printout.pixel_x = rand(-10, 10)
-	printout.pixel_y = rand(-10, 10)
+/obj/machinery/computer/secure_data/proc/print_finish()
 	printing = FALSE
+	return TRUE
+
+/// Prints the photo of the user at location.
+/obj/machinery/computer/secure_data/proc/print_record(mob/user, list/params)
+	if(printing)
+		balloon_alert(user, "printer busy")
+		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
+		return FALSE
+
+	var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
+	if(!record)
+		return FALSE
+
+	printing = TRUE
+	balloon_alert(user, "printing")
+	playsound(src, 'sound/machines/printer.ogg', 70, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(print_finish)), 5 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+
+	var/obj/item/paper/rapsheet = record.get_rapsheet()
+	if(!rapsheet)
+		balloon_alert(user, "error")
+		return FALSE
+	user.put_in_hands(rapsheet)
+
+	return TRUE
 
 /**
  * Security circuit component
