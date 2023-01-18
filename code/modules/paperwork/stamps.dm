@@ -35,7 +35,7 @@
 /obj/item/stamp/head/Initialize(mapload)
 	. = ..()
 	// All maps should have at least 1 of each stamp
-	REGISTER_REQUIRED_MAP_ITEM(max_amount = INFINITY)
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 
 /obj/item/stamp/head/captain
 	name = "captain's rubber stamp"

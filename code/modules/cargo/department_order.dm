@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 /obj/machinery/computer/department_orders/Initialize(mapload, obj/item/circuitboard/board)
 	. = ..()
 	// All maps should have ONLY ONE of each order console roundstart
-	REGISTER_REQUIRED_MAP_ITEM(max_amount = 1)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 	if(mapload) //check for mapping errors
 
