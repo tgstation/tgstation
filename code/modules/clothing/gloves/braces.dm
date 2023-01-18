@@ -12,7 +12,7 @@
 	strip_delay = 80
 	armor_type = /datum/armor/braces_combat
 	resistance_flags = NONE
-	body_parts_covered = ARMS|HANDS
+	body_parts_covered = ARMS
 
 /datum/armor/braces_combat
 	bio = 90
@@ -26,14 +26,14 @@
 	inhand_icon_state = "armor"
 	greyscale_colors = null
 	siemens_coefficient = 0
-	cold_protection = HANDS
+	cold_protection = HANDS|ARMS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
+	heat_protection = HANDS|ARMS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 80
 	armor_type = /datum/armor/armor_bulletproof
 	resistance_flags = NONE
-	body_parts_covered = ARMS|HANDS
+	body_parts_covered = ARMS
 
 /obj/item/clothing/gloves/braces/riot
 	name = "riot braces"
@@ -49,4 +49,4 @@
 	strip_delay = 80
 	armor_type = /datum/armor/armor_riot
 	resistance_flags = NONE
-	body_parts_covered = ARMS|HANDS
+	body_parts_covered = HANDS
