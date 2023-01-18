@@ -22,9 +22,9 @@ ADMIN_CONTEXT_ENTRY(context_atom_explosion, "Explosion", R_ADMIN, atom/target as
 			if (tgui_alert(usr, "Are you sure you want to do this? It will laaag.", "Confirmation", list("Yes", "No")) == "No")
 				return
 
-		explosion(O, devastation, heavy, light, flames, flash, explosion_cause = mob)
-		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(O)]")
-		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(O)]")
+		explosion(target, devastation, heavy, light, flames, flash, explosion_cause = mob)
+		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(target)]")
+		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(target)]")
 
 ADMIN_CONTEXT_ENTRY(context_atom_emp, "EM Pulse", R_ADMIN, atom/target as obj|mob|turf in world)
 	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
@@ -35,9 +35,9 @@ ADMIN_CONTEXT_ENTRY(context_atom_emp, "EM Pulse", R_ADMIN, atom/target as obj|mo
 		return
 
 	if (heavy || light)
-		empulse(O, heavy, light)
-		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at [AREACOORD(O)]")
-		message_admins("[key_name_admin(usr)] created an EM Pulse ([heavy],[light]) at [AREACOORD(O)]")
+		empulse(target, heavy, light)
+		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at [AREACOORD(target)]")
+		message_admins("[key_name_admin(usr)] created an EM Pulse ([heavy],[light]) at [AREACOORD(target)]")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "EM Pulse") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ADMIN_CONTEXT_ENTRY(context_mob_gib, "Gib", R_ADMIN, mob/victim in GLOB.mob_list)
@@ -131,9 +131,9 @@ ADMIN_VERB(fun, polymorph_all_mobs, "This will prove to be a terrible idea", R_F
 		return
 
 	var/who_did_it = key_name_admin(usr)
-	message_admins("[who_did_it)] started polymorphed all living mobs.")
+	message_admins("[who_did_it] started polymorphed all living mobs.")
 	log_admin("[key_name(usr)] polymorphed all living mobs.")
-	for(var/mob/living/wabbajee in shuffle(mobs))
+	for(var/mob/living/wabbajee in shuffle(GLOB.alive_mob_list))
 		CHECK_TICK
 
 		if(!wabbajee)
@@ -146,10 +146,10 @@ ADMIN_VERB(fun, polymorph_all_mobs, "This will prove to be a terrible idea", R_F
 
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
-ADMIN_VERB(fun, smite, "Begone thot", (R_ADMIN|R_FUN), mob/living/victim as mob in view())
+ADMIN_CONTEXT_ENTRY(context_smite, "Smite", (R_ADMIN|R_FUN), mob/living/victim as mob in view())
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in GLOB.smites
 
-	if(QDELETED(target) || !punishment)
+	if(QDELETED(victim) || !punishment)
 		return
 
 	var/smite_path = GLOB.smites[punishment]
@@ -157,7 +157,7 @@ ADMIN_VERB(fun, smite, "Begone thot", (R_ADMIN|R_FUN), mob/living/victim as mob 
 	var/configuration_success = smite.configure(usr)
 	if (configuration_success == FALSE)
 		return
-	smite.effect(usr.client, target)
+	smite.effect(usr.client, victim)
 
 ///"Turns" people into bread. Really, we just add them to the contents of the bread food item.
 /proc/breadify(atom/movable/target)

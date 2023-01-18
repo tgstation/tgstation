@@ -1286,10 +1286,10 @@
 					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
 	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
-		usr.client.cmd_admin_explosion(src)
+		usr.client.admin_context_wrapper_context_atom_explosion(src)
 
 	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
-		usr.client.cmd_admin_emp(src)
+		usr.client.admin_context_wrapper_context_atom_emp(src)
 
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS] && check_rights(R_ADMIN))
 		usr.client.cmd_show_hiddenprints(src)

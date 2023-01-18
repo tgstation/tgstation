@@ -196,7 +196,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			if (!H || !istype(H))
 				to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
 				return TRUE
-			usr.client.smite(H)
+			usr.client.admin_context_wrapper_context_smite(H)
 			return TRUE
 		if ("rply")
 			if (request.req_type == REQUEST_PRAYER)

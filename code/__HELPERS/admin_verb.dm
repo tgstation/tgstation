@@ -1,6 +1,5 @@
 /**
  * Creates an admin verb with the specified module(category) name, desc, permissions, and parameters as needed.
- * If module is ADMIN_VERB_MODULE_CONTEXT, it will not be visible in the verb panel
  */
 #define ADMIN_VERB(module, verb_name, verb_desc, permissions, params...) \
 /mob/admin_module_holder/##module/##verb_name/verb/invoke(##params){ \
@@ -42,3 +41,13 @@
 	context_map[/client/proc/admin_context_wrapper_##context_id] = list(context_name, permissions); \
 } \
 /client/proc/__admin_context_verb_##context_id(##params)
+
+// THIS IS DONE HERE TO ENSURE IT ALWAYS MATCHES THE ABOVE MACRO.
+// IF YOU CHANGE THE MACRO MAKE SURE THIS STILL WORKS CORRECTLY!! -Zephyr
+
+/client/CanProcCall(procname)
+	if(findtext(procname, "admin_context_wrapper_") == 1)
+		return FALSE
+	if(findtext(procname, "__admin_context_verb") == 1)
+		return FALSE
+	return ..()

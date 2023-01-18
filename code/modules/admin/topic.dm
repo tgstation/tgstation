@@ -964,7 +964,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
 			return
 
-		usr.client.smite(H)
+		usr.client.admin_context_wrapper_context_smite(H)
 
 	else if(href_list["CentComReply"])
 		if(!check_rights(R_ADMIN))

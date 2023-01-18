@@ -1277,7 +1277,7 @@
 	if(href_list[VV_HK_GIB])
 		if(!check_rights(R_FUN))
 			return
-		usr.client.cmd_admin_gib(src)
+		usr.client.admin_context_wrapper_context_mob_gib(src)
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
 			return
