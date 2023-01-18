@@ -27,8 +27,7 @@
 /mob/Destroy()
 	if(client)
 		stack_trace("Mob with client has been deleted.")
-
-	if(ckey)
+	else if(ckey)
 		stack_trace("Mob without client but with associated ckey has been deleted.")
 
 	remove_from_mob_list()
