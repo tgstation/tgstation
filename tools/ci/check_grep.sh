@@ -175,7 +175,7 @@ done
 
 part "updatepaths validity"
 lines=$(find tools/UpdatePaths/Scripts -type f ! -name "*.txt" | wc -l)
-if [ "$lines" -gt 0 ]; then
+if [ $lines -gt 0 ]; then
 	echo
 	echo -e "${RED}ERROR: Found an UpdatePaths File that doesn't end in .txt! Please add the proper file extension!${NC}"
 	st=1
