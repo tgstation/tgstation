@@ -10,13 +10,18 @@
 
 	var/datum/port/input/option/list_options
 
+	/// The list that will be shown to the user
 	var/datum/port/input/input_list
+	/// The user to show the list too
 	var/datum/port/input/user
+	/// Name passed onto the TGUI(gives the UI a name)
 	var/datum/port/input/input_name
 
-
+	/// What was picked from input_list
 	var/datum/port/output/output
-	var/datum/port/output/succes
+	/// A value was picked
+	var/datum/port/output/success
+	/// Either it was canceld or out of range
 	var/datum/port/output/failure
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
@@ -55,6 +60,7 @@
 		trigger_output.set_output(COMPONENT_SIGNAL)
 		INVOKE_ASYNC(src, PROC_REF(show_list), user.value, input_name.value, input_list.value)
 
+/// Show a list of options to the user using standed TGUI input list
 /obj/item/circuit_component/list_pick/proc/show_list(mob/user, message, list/showed_list)
 	if(!showed_list || showed_list.len == 0)
 		failure.set_output(COMPONENT_SIGNAL)
