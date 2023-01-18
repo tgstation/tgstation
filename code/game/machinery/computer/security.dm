@@ -1,11 +1,14 @@
-#define STATE_ARREST "*Arrest*"
-#define STATE_PRISONER "Incarcerated"
-#define STATE_SUSPECTED "Suspected"
-#define STATE_PAROL "Paroled"
-#define STATE_DISCHARGED "Discharged"
-#define STATE_NONE "None"
 #define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
 #define MAX_FINE 1000
+#define PRINTOUT_MISSING "Missing"
+#define PRINTOUT_RAPSHEET "Rapsheet"
+#define PRINTOUT_WANTED "Wanted"
+#define STATE_ARREST "*Arrest*"
+#define STATE_DISCHARGED "Discharged"
+#define STATE_NONE "None"
+#define STATE_PAROL "Paroled"
+#define STATE_PRISONER "Incarcerated"
+#define STATE_SUSPECTED "Suspected"
 
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "security records console"
@@ -198,9 +201,26 @@
 			return TRUE
 
 		if("print_record")
-			print_record(usr, params)
+			if(printing)
+				balloon_alert(usr, "printer busy")
+				playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+				return FALSE
 
-			return TRUE
+			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
+			if(!record)
+				return FALSE
+
+			switch(params["print_type"])
+				if("missing")
+					print_missing(usr, record)
+					return TRUE
+				if("wanted")
+					print_wanted(usr, record)
+					return TRUE
+				if("crime")
+					print_rapsheet(usr, record)
+					return TRUE
+			return FALSE
 
 		if("set_note")
 			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
@@ -253,53 +273,94 @@
 /obj/machinery/computer/secure_data/proc/login(mob/user)
 	if(!isliving(user) || issilicon(user))
 		balloon_alert(user, "access denied")
-		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
+		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/mob/living/player = user
 	var/obj/item/card/id/auth = player.get_idcard(TRUE)
 	if(!auth)
 		balloon_alert(player, "access denied")
-		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
+		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 	var/list/access = auth.GetAccess()
 
 	if(!check_access_list(access))
 		balloon_alert(player, "access denied")
-		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
+		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	balloon_alert(player, "access granted")
-	playsound(src, 'sound/machines/terminal_on.ogg', 70, TRUE)
+	playsound(src, 'sound/machines/terminal_on.ogg', 100, TRUE)
 	logged_in = TRUE
 	return TRUE
 
-/obj/machinery/computer/secure_data/proc/print_finish()
+/obj/machinery/computer/secure_data/proc/print_finish(obj/item/printable)
 	printing = FALSE
+	playsound(src, 'sound/machines/terminal_eject.ogg', 100, TRUE)
+
+	printable.forceMove(loc)
+
+	return FALSE
+
+/// Prints out a missing poster for the person.
+/obj/machinery/computer/secure_data/proc/print_missing(mob/user, datum/record/crew/record)
+	var/missing_name = tgui_input_text(user, "Enter an alias for the missing person", "Print Missing Persons Poster", record.name)
+	if(!missing_name)
+		return FALSE
+
+	var/default_description = "A poster declaring [missing_name] to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately."
+	var/headerText = tgui_input_text(user, "Enter a poster heading", "Print Missing Persons Poster", "MISSING", 7)
+
+	var/info = tgui_input_text(user, "Input a description for the poster", "Print Missing Persons Poster", default_description)
+	if(!info)
+		return FALSE
+
+	print_start(user)
+	var/obj/item/photo/mugshot = record.get_front_photo()
+	var/obj/item/poster/wanted/missing/missing_poster = new(src, mugshot.picture.picture_image, missing_name, info, headerText)
+	addtimer(CALLBACK(src, PROC_REF(print_finish), missing_poster), 3 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 	return TRUE
 
-/// Prints the photo of the user at location.
-/obj/machinery/computer/secure_data/proc/print_record(mob/user, list/params)
-	if(printing)
-		balloon_alert(user, "printer busy")
-		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
+/// Prints out a wanted poster for the person.
+/obj/machinery/computer/secure_data/proc/print_wanted(mob/user, datum/record/crew/record)
+	var/wanted_name = tgui_input_text(usr, "Enter an alias for the criminal", "Print Wanted Poster", record.name)
+	if(!wanted_name)
 		return FALSE
 
-	var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-	if(!record)
+	var/list/crimes = record.crimes
+	if(!length(crimes))
+		balloon_alert(user, "no crimes")
 		return FALSE
 
+	var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."
+	default_description += "\n[wanted_name] is wanted for the following crimes:\n"
+	for(var/datum/crime/incident in crimes)
+		default_description += "\n[incident.name]\n"
+		default_description += "[incident.details]\n"
+
+	var/headerText = tgui_input_text(usr, "Enter a poster heading", "Print Wanted Poster", "WANTED", 7)
+	var/info = tgui_input_text(usr, "Input a description for the poster", "Print Wanted Poster", default_description)
+	if(!info)
+		return FALSE
+
+	print_start(user)
+	var/obj/item/photo/mugshot = record.get_front_photo()
+	var/obj/item/poster/wanted/wanted_poster = new(src, mugshot.picture.picture_image, wanted_name, info, headerText)
+	addtimer(CALLBACK(src, PROC_REF(print_finish), wanted_poster), 3 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+	return TRUE
+
+/// Paper printout of crimes
+/obj/machinery/computer/secure_data/proc/print_rapsheet(mob/user, datum/record/crew/record)
+	print_start(user)
+	var/obj/item/paper/rapsheet = record.get_rapsheet()
+	addtimer(CALLBACK(src, PROC_REF(print_finish), rapsheet), 3 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+	return TRUE
+
+/// Alerts the user that the printer is printing
+/obj/machinery/computer/secure_data/proc/print_start(mob/user)
 	printing = TRUE
 	balloon_alert(user, "printing")
-	playsound(src, 'sound/machines/printer.ogg', 70, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(print_finish)), 5 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
-
-	var/obj/item/paper/rapsheet = record.get_rapsheet()
-	if(!rapsheet)
-		balloon_alert(user, "error")
-		return FALSE
-	user.put_in_hands(rapsheet)
-
+	playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
 	return TRUE
 
 /**
@@ -440,11 +501,14 @@
 		for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
 			human.sec_hud_set_security_status()
 
-#undef STATE_ARREST
-#undef STATE_PRISONER
-#undef STATE_SUSPECTED
-#undef STATE_PAROL
-#undef STATE_DISCHARGED
-#undef STATE_NONE
 #undef COMP_SECURITY_ARREST_AMOUNT_TO_FLAG
 #undef MAX_FINE
+#undef PRINTOUT_MISSING
+#undef PRINTOUT_RAPSHEET
+#undef PRINTOUT_WANTED
+#undef STATE_ARREST
+#undef STATE_DISCHARGED
+#undef STATE_NONE
+#undef STATE_PAROL
+#undef STATE_PRISONER
+#undef STATE_SUSPECTED
