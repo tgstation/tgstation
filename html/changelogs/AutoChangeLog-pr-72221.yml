@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - bugfix: "Strange geysers have random reagents again"
+  - bugfix: "Geysers regen reagents again"
