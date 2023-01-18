@@ -88,9 +88,8 @@
 
 /obj/machinery/computer/communications/Initialize(mapload)
 	. = ..()
-	if(mapload && !syndicate)
-		// All maps should have at least 1 comms console
-		REGISTER_REQUIRED_MAP_ITEM(max_amount = INFINITY)
+	// All maps should have at least 1 comms console
+	REGISTER_REQUIRED_MAP_ITEM(max_amount = INFINITY)
 
 	GLOB.shuttle_caller_list += src
 	AddComponent(/datum/component/gps, "Secured Communications Signal")

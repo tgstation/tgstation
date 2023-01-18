@@ -24,7 +24,7 @@
 /// Datum for tracking
 /datum/required_item
 	/// Type (exact) being tracked
-	var/type
+	var/tracked_type
 	/// How many exist in the world
 	var/total_amount = 0
 	/// Min. amount of this type that should exist roundstart (inclusive)
@@ -32,8 +32,8 @@
 	/// Max. amount of this type that should exist roundstart (inclusive)
 	var/maximum_amount = 1
 
-/datum/required_item/New(type, minimum_amount = 1, maximum_amount = 1)
-	src.type = type
+/datum/required_item/New(tracked_type, minimum_amount = 1, maximum_amount = 1)
+	src.tracked_type = tracked_type
 	src.minimum_amount = minimum_amount
 	src.maximum_amount = maximum_amount
 	total_amount += 1

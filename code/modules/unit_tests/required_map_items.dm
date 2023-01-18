@@ -1,8 +1,3 @@
-/// Global assoc list of required items
-/// Set up [item typepath] to [required item datum].
-/// See [/datum/element/required_map_item]
-GLOBAL_LIST_EMPTY(required_map_items)
-
 /**
  * Tests that all expected items are mapped in roundstart.
  *
@@ -25,7 +20,7 @@ GLOBAL_LIST_EMPTY(required_map_items)
 	setup_expected_types()
 
 	for(var/got_type in expected_types)
-		var/datum/map_necessary_item/item = GLOB.required_map_items[got_type]
+		var/datum/required_item/item = GLOB.required_map_items[got_type]
 		var/items_found = item?.total_amount || 0
 		if(items_found <= 0)
 			TEST_FAIL("Item [item] was not found, but is expected to be mapped in on mapload!")
