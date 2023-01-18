@@ -524,13 +524,13 @@
 			// Nitrium side-effect.
 			breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitrium_pp * 0.1)
 			to_chat(breather, "<span class='notice'>You feel a burning sensation in your chest</span>")
-			// Metabolize to reagents.
-			if (nitrium_pp > 5)
-				var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)
-				breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
-			if (nitrium_pp > 10)
-				var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
-				breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
+		// Metabolize to reagents.
+		if (nitrium_pp > 5)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)
+			breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
+		if (nitrium_pp > 10)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
+			breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
 
 	//-- PROTO-NITRATE --//
 	// Inert
