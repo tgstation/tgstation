@@ -592,7 +592,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 //////////////////////////////////////////////
 
 // called when cable_coil is clicked on a turf
-/obj/item/stack/cable_coil/proc/place_turf(turf/T, mob/user, dirnew)
+/obj/item/stack/cable_coil/proc/place_turf(turf/T, mob/user, dirnew, shock_mob = TRUE)
 	if(!isturf(user.loc))
 		return
 
@@ -625,7 +625,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	use(1)
 
-	if(C.shock(user, 50))
+	if(shock_mob && C.shock(user, 50))
 		if(prob(50)) //fail
 			C.deconstruct()
 
