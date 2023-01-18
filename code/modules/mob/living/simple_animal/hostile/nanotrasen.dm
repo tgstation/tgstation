@@ -27,7 +27,9 @@
 	del_on_death = TRUE
 	dodging = TRUE
 	footstep_type = FOOTSTEP_MOB_SHOE
+	/// Path of the mob spawner we base the mob's visuals off of.
 	var/mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
+	/// Path of the held item we give to the mob's visuals.
 	var/held_item
 
 /mob/living/simple_animal/hostile/nanotrasen/Initialize(mapload)
@@ -58,7 +60,7 @@
 	held_item = /obj/item/gun/ballistic/automatic/wt550
 
 
-/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace
 	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force."
 	icon = 'icons/mob/simple/simple_human.dmi'
@@ -84,6 +86,7 @@
 	unsuitable_atmos_damage = 7.5
 	status_flags = CANPUSH
 	search_objects = 1
+	/// Path of the held item we give to the mob's visuals.
 	var/held_item
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/Initialize(mapload)

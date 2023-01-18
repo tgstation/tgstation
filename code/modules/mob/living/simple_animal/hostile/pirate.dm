@@ -24,7 +24,9 @@
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate)
 	del_on_death = TRUE
 	faction = list("pirate")
+	/// Path of the mob spawner we base the mob's visuals off of.
 	var/mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate
+	/// Path of the held item we give to the mob's visuals.
 	var/held_item
 
 /mob/living/simple_animal/hostile/pirate/Initialize(mapload)

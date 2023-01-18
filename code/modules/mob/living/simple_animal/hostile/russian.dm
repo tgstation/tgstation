@@ -28,7 +28,9 @@
 	status_flags = CANPUSH
 	footstep_type = FOOTSTEP_MOB_SHOE
 	del_on_death = TRUE
+	/// The mob spawner we base the icon off of.
 	var/mob_spawner = /obj/effect/mob_spawn/corpse/human/russian
+	/// The item the icon will hold.
 	var/held_item = /obj/item/knife/kitchen
 
 /mob/living/simple_animal/hostile/russian/Initialize(mapload)

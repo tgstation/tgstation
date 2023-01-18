@@ -370,12 +370,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector
 	name = "Human Icon Injector"
 	icon_state = "icon"
+	/// Path of the outfit we give the human.
 	var/outfit_path
+	/// Path of the species we give the human.
 	var/species_path = /datum/species/human
+	/// Path of the mob spawner we base the human off of.
 	var/mob_spawn_path
+	/// Path of the right hand item we give the human.
 	var/r_hand = NO_REPLACE
+	/// Path of the left hand item we give the human.
 	var/l_hand = NO_REPLACE
+	/// Which slots on the mob should be bloody?
 	var/bloody_slots = NONE
+	/// Directions we generate for the mob.
 	var/generated_dirs = list(NORTH, SOUTH, EAST, WEST)
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/check_validity()

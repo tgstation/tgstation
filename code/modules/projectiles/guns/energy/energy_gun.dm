@@ -165,6 +165,5 @@
 		if(151 to INFINITY)
 			. += "[icon_state]_fail_2"
 
-/obj/item/gun/energy/e_gun/lethal/Initialize(mapload)
-	. = ..()
-	select_fire()
+/obj/item/gun/energy/e_gun/lethal
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)

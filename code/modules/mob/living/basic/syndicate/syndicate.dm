@@ -22,9 +22,13 @@
 	unsuitable_heat_damage = 7.5
 	faction = list(ROLE_SYNDICATE)
 	ai_controller = /datum/ai_controller/basic_controller/syndicate
+	/// Loot this mob drops on death.
 	var/loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
+	/// Path of the mob spawner we base the mob's visuals off of.
 	var/mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatesoldier
+	/// Path of the right hand held item we give to the mob's visuals.
 	var/r_hand
+	/// Path of the left hand held item we give to the mob's visuals.
 	var/l_hand
 
 /mob/living/basic/syndicate/Initialize(mapload)

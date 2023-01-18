@@ -1,3 +1,4 @@
+///Global list of all cardboard cutout datums, cached by name to instance.
 GLOBAL_LIST(cardboard_cutouts)
 
 //Cardboard cutouts! They're man-shaped and can be colored with a crayon to look like a human in a certain outfit, although it's limited, discolored, and obvious to more than a cursory glance.
@@ -13,7 +14,7 @@ GLOBAL_LIST(cardboard_cutouts)
 	var/pushed_over = FALSE
 	/// If the cutout actually appears as what it portray and not a discolored version
 	var/deceptive = FALSE
-	/// Should we load a cutout datum at the start?
+	/// What cutout datum we spawn at the start? Uses the name, not the path.
 	var/starting_cutout
 
 /obj/item/cardboard_cutout/Initialize(mapload)
@@ -142,6 +143,7 @@ GLOBAL_LIST(cardboard_cutouts)
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
 	deceptive = TRUE
 
+///Proc that returns a list of all the cardboard cutouts (we create all subtypes) to be used in the global list.
 /proc/generate_cardboard_cutouts()
 	var/list/cutouts = list()
 	for(var/datum/cardboard_cutout/cutout as anything in subtypesof(/datum/cardboard_cutout))
@@ -150,16 +152,27 @@ GLOBAL_LIST(cardboard_cutouts)
 	GLOB.cardboard_cutouts = cutouts
 
 /datum/cardboard_cutout
+	/// Name of the cutout, used for radial selection and the global list.
 	var/name = "Boardjak"
+	/// The icon we apply to the cardboard cutout.
 	var/applied_icon = null
+	/// The base name we actually give to to the cardboard cutout. Can be overridden in get_name().
 	var/applied_name = "boardjak"
+	/// The desc we give to the cardboard cutout.
 	var/applied_desc = "A cardboard cutout of a boardjak."
+	/// If we're not using dynamic generation (for non-humans), we can set a direct icon to give.
 	var/direct_icon = null
+	/// Same as direct_icon, but icon_state!
 	var/direct_icon_state = ""
+	/// If we're using dynamic generation, the outfit the generated mob will have.
 	var/outfit = null
+	/// If we're using dynamic generation, the right hand item the generated mob will have.
 	var/r_hand = NO_REPLACE
+	/// If we're using dynamic generation, the left hand item the generated mob will have.
 	var/l_hand = NO_REPLACE
+	/// If we're using dynamic generation, the mob spawner the generated mob will base visuals from.
 	var/mob_spawner = null
+	/// If we're using dynamic generation, the species of the generated mob.
 	var/species = /datum/species/human
 
 /datum/cardboard_cutout/New()
@@ -169,9 +182,11 @@ GLOBAL_LIST(cardboard_cutouts)
 	else
 		applied_icon = get_dynamic_human_icon(outfit, species, mob_spawner, l_hand, r_hand, generated_dirs = list(SOUTH))
 
+/// This proc returns the name that the cardboard cutout item will use.
 /datum/cardboard_cutout/proc/get_name()
 	return applied_name
 
+/// This proc sets the cardboard cutout item's vars.
 /datum/cardboard_cutout/proc/apply(obj/item/cardboard_cutout/cutouts)
 	cutouts.icon = applied_icon
 	cutouts.name = get_name()

@@ -32,8 +32,11 @@
 	death_message = "collapses into a pile of bones!"
 	del_on_death = TRUE
 	loot = list(/obj/effect/decal/remains/human)
-	var/outfit = /datum/outfit
+	/// Path of the outfit we give to the mob's visuals.
+	var/outfit = null
+	/// Path of the species we give to the mob's visuals.
 	var/species = /datum/species/skeleton
+	/// Path of the held item we give to the mob's visuals.
 	var/held_item
 
 /mob/living/simple_animal/hostile/skeleton/Initialize(mapload)

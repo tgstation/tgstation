@@ -22,7 +22,9 @@
 	death_message = "collapses, flesh gone in a pile of bones!"
 	del_on_death = TRUE
 	loot = list(/obj/effect/decal/remains/human)
+	/// The probability that we give people real zombie infections on hit.
 	var/infection_chance = 0
+	/// Outfit the zombie spawns with for visuals.
 	var/outfit = /datum/outfit/corpse_doctor
 
 /mob/living/simple_animal/hostile/zombie/Initialize(mapload)
