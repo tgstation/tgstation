@@ -480,7 +480,7 @@
 	if(!unspooled)
 		return FALSE
 	balloon_alert_to_viewers("respooling tape...", vision_distance = 1)
-	if(tool.use_tool(src, user, 1.2 SECONDS))
+	if(tool.use_tool(src, user, 12 SECONDS))
 		balloon_alert_to_viewers("tape respooled", vision_distance = 1)
 		respool()
 
