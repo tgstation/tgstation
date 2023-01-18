@@ -33,7 +33,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/multitool
+/datum/design/rwd
 	name = "Rapid Wiring Device"
 	id = "rwd"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
