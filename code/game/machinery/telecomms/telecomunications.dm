@@ -106,6 +106,12 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	. = ..()
 	soundloop = new(src, on)
 	GLOB.telecomms_list += src
+	var/static/list/multitool_tips = list(
+		TOOL_MULTITOOL = list(
+			SCREENTIP_CONTEXT_RMB = "Link/Unlink from multitool buffer",
+		)
+	)
+	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
 
