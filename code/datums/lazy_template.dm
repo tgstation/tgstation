@@ -64,6 +64,7 @@
 		var/area/current = cordon_turf.loc
 		current.turfs_to_uncontain += cordon_turf
 		cordon_area.contents += cordon_turf
+		cordon_area.contained_turfs += cordon_turf
 
 	var/turf/reservation_bottom_left = locate(cordon_x[1] + 1, cordon_y[1] + 1, reservation.bottom_left_coords[3])
 	if(!loading.load(reservation_bottom_left))
