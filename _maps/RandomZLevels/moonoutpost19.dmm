@@ -3057,7 +3057,7 @@
 	dir = 8
 	},
 /obj/item/folder/white,
-/obj/item/stamp/rd{
+/obj/item/stamp/head/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},

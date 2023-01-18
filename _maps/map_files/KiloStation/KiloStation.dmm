@@ -8794,7 +8794,7 @@
 	pixel_y = 6
 	},
 /obj/item/pen/fourcolor,
-/obj/item/stamp/hop{
+/obj/item/stamp/head/hop{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -34797,7 +34797,7 @@
 	},
 /obj/item/lighter,
 /obj/item/clothing/mask/cigarette/cigar/cohiba,
-/obj/item/stamp/ce,
+/obj/item/stamp/head/ce,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "jNR" = (
@@ -42055,7 +42055,7 @@
 	pixel_y = 4
 	},
 /obj/item/pen,
-/obj/item/stamp/cmo{
+/obj/item/stamp/head/cmo{
 	pixel_x = 8;
 	pixel_y = 20
 	},
@@ -48762,7 +48762,7 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/obj/item/stamp/qm{
+/obj/item/stamp/head/qm{
 	pixel_x = 8;
 	pixel_y = 10
 	},
@@ -55382,7 +55382,7 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
-/obj/item/stamp/captain{
+/obj/item/stamp/head/captain{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -74687,7 +74687,7 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/stamp/rd{
+/obj/item/stamp/head/rd{
 	pixel_x = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -81268,7 +81268,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/stamp/hos,
+/obj/item/stamp/head/hos,
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "wYX" = (
