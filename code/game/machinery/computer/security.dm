@@ -249,6 +249,8 @@
 /// Handles logging into the computer.
 /obj/machinery/computer/secure_data/proc/login(mob/user)
 	if(!isliving(user) || issilicon(user))
+		balloon_alert(player, "access denied")
+		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
 	var/mob/living/player = user
