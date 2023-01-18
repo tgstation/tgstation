@@ -164,20 +164,8 @@
 	var/zauker_pp = 0
 
 	// Check for moles of gas and handle partial pressures / special conditions.
-	if(!has_moles)
-		// Breath has 0 moles of gas.
-		if(can_breathe_vacuum)
-			// The lungs can breathe anyways. What are you? Some bottom-feeding, scum-sucking algae eater?
-			breather.failed_last_breath = FALSE
-			// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
-			if(breather.health >= breather.crit_threshold)
-				breather.adjustOxyLoss(-5)
-		else
-			// Can't breathe!
-			. = FALSE
-			breather.failed_last_breath = TRUE
-	else
-		// Breath has >0 moles of gas.
+	if(has_moles)
+		// Breath has more than 0 moles of gas.
 		// Route gases through mask filter if breather is wearing one.
 		if(istype(breather.wear_mask) && (breather.wear_mask.clothing_flags & GAS_FILTERING) && breather.wear_mask.has_filter)
 			breath = breather.wear_mask.consume_filter(breath)
@@ -200,6 +188,18 @@
 		nitrium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrium][MOLES])
 		trit_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/tritium][MOLES])
 		zauker_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/zauker][MOLES])
+
+	// Breath has 0 moles of gas.
+	else if(can_breathe_vacuum)
+		// The lungs can breathe anyways. What are you? Some bottom-feeding, scum-sucking algae eater?
+		breather.failed_last_breath = FALSE
+		// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
+		if(breather.health >= breather.crit_threshold)
+			breather.adjustOxyLoss(-5)
+	else
+		// Can't breathe!
+		. = FALSE
+		breather.failed_last_breath = TRUE
 
 	// Handle subtypes' breath processing
 	handle_gas_override(breather, breath_gases, 0)
@@ -337,9 +337,9 @@
 			var/ratio = (breath_gases[/datum/gas/plasma][MOLES] / safe_plasma_max) * 10
 			breather.apply_damage_type(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type)
 			breather.throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
-	else
-		// Reset side-effects.
-		breather.clear_alert(ALERT_TOO_MUCH_PLASMA)
+		else
+			// Reset side-effects.
+			breather.clear_alert(ALERT_TOO_MUCH_PLASMA)
 
 	// Minimum Plasma effects.
 	// If the lungs need Plasma to breathe properly, Plasma is exchanged with CO2.
@@ -403,6 +403,7 @@
 	//-- HEALIUM --//
 	// Sleeping gas with healing properties.
 	if(!healium_pp)
+		// Reset side-effects.
 		healium_euphoria = EUPHORIA_INACTIVE
 	else
 		// Inhale Healium. Exhale nothing.

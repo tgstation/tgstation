@@ -168,14 +168,15 @@
 	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	/// Indicates if lungs can breathe without gas.
 	var/can_breathe_vacuum = FALSE
-	if(!lungs)
+	if(lungs)
+		// Breathing with lungs.
+		// Check for vacuum-adapted lungs.
+		can_breathe_vacuum = HAS_TRAIT(lungs, TRAIT_SPACEBREATHING)
+	else
 		// Can't breathe without the lungs organ.
 		. = FALSE
 		failed_last_breath = TRUE
 		adjustOxyLoss(2)
-	else
-		// Breathing with vacuum-adapted lungs.
-		can_breathe_vacuum = HAS_TRAIT(lungs, TRAIT_SPACEBREATHING)
 
 	/// Minimum O2 before suffocation.
 	var/safe_oxygen_min = 16
@@ -204,21 +205,9 @@
 	var/miasma_pp = 0
 
 	// Check for moles of gas and handle partial pressures / special conditions.
-	if(!has_moles)
-		// Breath has 0 moels of gas.
-		if(can_breathe_vacuum)
-			// The mob can breathe anyways. What are you? Some bottom-feeding, scum-sucking algae eater?
-			failed_last_breath = FALSE
-			// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
-			if(health >= crit_threshold)
-				adjustOxyLoss(-5)
-		else
-			// Can't breathe!
-			. = FALSE
-			failed_last_breath = TRUE
-	else
-		// Breath has >0 moles of gas.
-		// Partial pressures of "main gases.
+	if(has_moles)
+		// Breath has more than 0 moles of gas.
+		// Partial pressures of "main gases".
 		pluoxium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES])
 		o2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES] + (8 * pluoxium_pp))
 		plasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
@@ -229,6 +218,18 @@
 		miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
 		n2o_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
 		nitrium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrium][MOLES])
+
+	// Breath has 0 moles of gas.
+	else if(can_breathe_vacuum)
+		// The mob can breathe anyways. What are you? Some bottom-feeding, scum-sucking algae eater?
+		failed_last_breath = FALSE
+		// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
+		if(health >= crit_threshold)
+			adjustOxyLoss(-5)
+	else
+		// Can't breathe!
+		. = FALSE
+		failed_last_breath = TRUE
 
 	//-- PLUOXIUM --//
 	// Behaves like Oxygen with 8X efficacy, but metabolizes into a reagent.
@@ -396,12 +397,9 @@
 	. = 0
 	if(!safe_breath_min)
 		return
-
 	failed_last_breath = TRUE
-
 	if(prob(20))
 		emote("gasp")
-
 	// Epinephrine prevents some oxyloss.
 	if(!reagents.has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE))
 		if(health <= crit_threshold)
