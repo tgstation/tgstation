@@ -256,6 +256,8 @@
 	var/mob/living/player = user
 	var/obj/item/card/id/auth = player.get_idcard(TRUE)
 	if(!auth)
+		balloon_alert(player, "access denied")
+		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 	var/list/access = auth.GetAccess()
 
