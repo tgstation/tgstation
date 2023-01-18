@@ -108,7 +108,7 @@
 
 	uniform = /obj/item/clothing/under/color/grey
 	suit = /obj/item/clothing/suit/armor/vest
-	gloves = /obj/item/clothing/gloves/color/chief_engineer
+	gloves = /obj/item/clothing/gloves/chief_engineer
 	mask = /obj/item/clothing/mask/gas
 	belt = /obj/item/storage/belt
 	l_hand = /obj/item/melee/energy/sword/saber/red
