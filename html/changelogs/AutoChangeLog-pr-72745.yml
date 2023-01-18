@@ -1,0 +1,4 @@
+author: "A.C.M.O."
+delete-after: True
+changes:
+  - bugfix: "Fixed buggy organ filtering code in the DNA Infuser which stopped it from infusing organs."

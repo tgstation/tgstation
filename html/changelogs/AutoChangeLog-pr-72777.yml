@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - code_imp: "The ninja module folder is now stored in the antagonists folder."

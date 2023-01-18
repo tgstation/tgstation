@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Tramstation's exterior is now in the correct area, no longer marked as Lavaland"
+  - bugfix: "You can now create new areas on Tramstation's asteroid turfs"
