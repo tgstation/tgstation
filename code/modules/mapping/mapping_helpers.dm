@@ -384,6 +384,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/bloody_slots = NONE
 	/// Directions we generate for the mob.
 	var/generated_dirs = list(NORTH, SOUTH, EAST, WEST)
+	/// Do we draw more than one frame for the mob?
+	var/animated = TRUE
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/check_validity()
 	if(!ispath(species_path, /datum/species))
@@ -399,7 +401,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return TRUE
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/inject(atom/target)
-	apply_dynamic_human_icon(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, generated_dirs)
+	apply_dynamic_human_icon(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, generated_dirs, animated)
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/generate_stack_trace()
 	. = ..()
