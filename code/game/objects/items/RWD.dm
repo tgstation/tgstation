@@ -1,6 +1,6 @@
 /obj/item/rwd
 	name = "rapid wiring device"
-	desc = "A device used to rapidly lay cable & pick up stray cable pieces lying around."
+	desc = "A device used to rapidly lay cable & pick up stray cable pieces laying around."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcl-0"
 	inhand_icon_state = "rcl-0"
