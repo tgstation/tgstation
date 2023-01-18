@@ -49,4 +49,4 @@
 	strip_delay = 80
 	armor_type = /datum/armor/armor_riot
 	resistance_flags = NONE
-	body_parts_covered = HANDS
+	body_parts_covered = ARMS
