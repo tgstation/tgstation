@@ -127,15 +127,15 @@
 	for(var/gas_id in GLOB.meta_gas_info)
 		breath.assert_gas(gas_id)
 
-	/// Indicates if there are moles of gas in the breath.
+	// Indicates if there are moles of gas in the breath.
 	var/has_moles = breath.total_moles() != 0
 
-	/// The list of gases in the breath.
+	// The list of gases in the breath.
 	var/list/breath_gases = breath.gases
 
-	/// Indicates if lungs can breathe without gas.
+	// Indicates if lungs can breathe without gas.
 	var/can_breathe_vacuum = HAS_TRAIT(src, TRAIT_SPACEBREATHING)
-	/// Re-usable var used to remove a limited volume of each gas from the given gas mixture.
+	// Re-usable var used to remove a limited volume of each gas from the given gas mixture.
 	var/gas_breathed = 0
 	// Vars for N2O/healium induced euphoria, stun, and sleep.
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG

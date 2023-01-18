@@ -165,9 +165,8 @@
 	var/has_moles = breath.total_moles() != 0
 
 	// Validate lungs organ.
-	// FIXME: This is mostly original behavior, and it doesn't check organ damage.
 	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
-	/// Indicates if lungs can breathe without gas.
+	// Indicates if lungs can breathe without gas.
 	var/can_breathe_vacuum = FALSE
 	if(lungs)
 		// Breathing with lungs.
