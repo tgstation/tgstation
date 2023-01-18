@@ -38,24 +38,23 @@
 			for(var/datum/record/crew/person in GLOB.data_core.general)
 				var/list/current_record = list()
 
-				current_record["wanted"] = person.wanted_status
-				current_record["id"] = person.id_number
+				current_record["age"] = person.age
+				current_record["fingerprint"] = person.fingerprint
+				current_record["gender"] = person.gender
 				current_record["name"] = person.name
 				current_record["rank"] = person.rank
-				current_record["gender"] = person.gender
-				current_record["age"] = person.age
 				current_record["species"] = person.species
-				current_record["fingerprint"] = person.fingerprint
+				current_record["wanted"] = person.wanted_status
 
 				all_records += list(current_record)
 		if("medical")
 			for(var/datum/record/crew/person in GLOB.data_core.general)
 				var/list/current_record = list()
 
-				current_record["name"] = person.name
 				current_record["bloodtype"] = person.blood_type
-				current_record["minor_disabilities"] = person.minor_disabilities_desc
 				current_record["ma_dis"] = person.major_disabilities_desc
+				current_record["minor_disabilities"] = person.minor_disabilities_desc
+				current_record["name"] = person.name
 				current_record["notes"] = person.medical_notes
 
 				all_records += list(current_record)

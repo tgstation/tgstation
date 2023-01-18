@@ -21,13 +21,15 @@
 
 /obj/machinery/computer/med_data/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(.)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "MedicalRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		addtimer(CALLBACK(character_preview_view, PROC_REF(update_body)), 1 SECONDS)
+		addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/obj/machinery/computer, update_body)), 1 SECONDS)
 
 /obj/machinery/computer/med_data/ui_data(mob/user)
 	var/list/data = list()
@@ -40,6 +42,8 @@
 			appearance = character_preview_view.assigned_map,
 			blood_type = target.blood_type,
 			dna = target.dna_string,
+			lock_ref = target.lock_ref,
+			gender = target.gender,
 			major_disabilities = target.major_disabilities_desc,
 			notes = target.medical_notes,
 			minor_disabilities = target.minor_disabilities_desc,
@@ -62,13 +66,6 @@
 		return
 
 	switch(action)
-		if("view_record")
-			var/datum/record/locked/record = find_record(params["name"], locked_only = TRUE)
-			if(!record)
-				return FALSE
-			update_body(record)
-			return TRUE
-
 		if("add_notes")
 			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
 
@@ -84,6 +81,13 @@
 				record.medical_notes.Cut(1, 2)
 			record.medical_notes += note
 
+			return TRUE
+
+		if("view_record")
+			var/datum/record/locked/record = locate(params["lock_ref"]) in GLOB.data_core.locked
+			if(!record)
+				return FALSE
+			update_body(record)
 			return TRUE
 
 	return FALSE

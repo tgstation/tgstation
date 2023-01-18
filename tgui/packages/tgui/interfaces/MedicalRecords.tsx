@@ -1,6 +1,6 @@
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Icon, LabeledList, NoticeBox, Section, Stack, Tabs, TextArea, Tooltip } from '../components';
+import { Box, Icon, Input, LabeledList, NoticeBox, Section, Stack, Tabs, TextArea, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { CharacterPreview } from './PreferencesMenu/CharacterPreview';
 
@@ -13,6 +13,8 @@ type MedicalRecord = {
   appearance: string;
   blood_type: string;
   dna: string;
+  gender: string;
+  lock_ref: string;
   major_disabilities: string;
   minor_disabilities: string;
   name: string;
@@ -44,59 +46,75 @@ export const MedicalRecords = (props, context) => {
 const RecordTabs = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { records } = data;
+  const [search, setSearch] = useLocalState(context, 'search', '');
   const [selectedRecord, setSelectedRecord] = useLocalState<
     MedicalRecord | undefined
   >(context, 'selectedRecord', undefined);
+  // Filters the records by the search string
+  const filteredRecords = records.filter((record) =>
+    record.dna?.toLowerCase().includes(search?.toLowerCase())
+  );
 
   const selectRecord = (record: MedicalRecord) => {
-    if (selectedRecord === record) {
+    if (selectedRecord?.ref === record.ref) {
       setSelectedRecord(undefined);
     } else {
       setSelectedRecord(record);
-      act('view_record', { name: record.name });
+      act('view_record', { lock_ref: record.lock_ref });
     }
   };
 
   return (
-    <Section fill>
-      <Tabs vertical>
-        {records.map((record, index) => (
-          <Tabs.Tab
-            className="candystripe"
-            key={index}
-            label={record.name}
-            onClick={() => selectRecord(record)}
-            selected={selectedRecord === record}>
-            {record.name}
-          </Tabs.Tab>
-        ))}
-      </Tabs>
-    </Section>
+    <Stack fill vertical>
+      <Stack.Item>
+        <Input
+          fluid
+          onInput={(_, value) => setSearch(value)}
+          placeholder="DNA Search"
+        />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Section fill scrollable>
+          <Tabs vertical>
+            {filteredRecords.length === 0 ? (
+              <NoticeBox>No matching DNA. Refine your search.</NoticeBox>
+            ) : (
+              filteredRecords.map((record, index) => (
+                <Tabs.Tab
+                  className="candystripe"
+                  key={index}
+                  label={record.name}
+                  onClick={() => selectRecord(record)}
+                  selected={selectedRecord === record}>
+                  {record.name}
+                </Tabs.Tab>
+              ))
+            )}
+          </Tabs>
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 };
 
 /** Views a selected record. */
 const RecordView = (props, context) => {
-  const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
-    context,
-    'selectedRecord',
-    undefined
-  );
-
-  if (!selectedRecord) return <NoticeBox>Nothing selected</NoticeBox>;
+  const foundRecord = getCurrentRecord(context);
+  if (!foundRecord) return <NoticeBox>No record selected.</NoticeBox>;
 
   const {
     age,
     appearance,
     blood_type,
     dna,
+    gender,
     major_disabilities,
     minor_disabilities,
     name,
     quirk_notes,
     rank,
     species,
-  } = selectedRecord;
+  } = foundRecord;
 
   const minor_disabilities_array = getStringArray(minor_disabilities);
   const major_disabilities_array = getStringArray(major_disabilities);
@@ -120,6 +138,7 @@ const RecordView = (props, context) => {
             <LabeledList.Item label="Job">{rank}</LabeledList.Item>
             <LabeledList.Item label="Age">{age}</LabeledList.Item>
             <LabeledList.Item label="Species">{species}</LabeledList.Item>
+            <LabeledList.Item label="Gender">{gender}</LabeledList.Item>
             <LabeledList.Item color="good" label="DNA">
               <Box wrap>{dna}</Box>
             </LabeledList.Item>
@@ -150,24 +169,13 @@ const RecordView = (props, context) => {
 
 /** Small section for adding notes. Passes a ref and note to Byond. */
 const NoteKeeper = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+  const foundRecord = getCurrentRecord(context);
+  if (!foundRecord) return <> </>;
 
-  const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
-    context,
-    'selectedRecord',
-    undefined
-  );
-  if (!selectedRecord) return <> </>;
+  const { act } = useBackend<Data>(context);
+  const { notes, ref } = foundRecord;
 
-  // We have to find the record because the selectedRecord is a copy of the
-  // record in the data.
-  const locatedRecord = data.records.find(
-    (record) => record.ref === selectedRecord.ref
-  );
-  if (!locatedRecord) return <> </>;
-  const { notes, ref } = locatedRecord;
-
-  const [selectedNote, setSelectedNote] = useLocalState<number | undefined>(
+  const [selectedNote] = useLocalState<number | undefined>(
     context,
     'selectedNote',
     undefined
@@ -201,17 +209,9 @@ const NoteKeeper = (props, context) => {
 
 /** Displays the notes with an add tab next to. */
 const NoteTabs = (props, context) => {
-  const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
-    context,
-    'selectedRecord',
-    undefined
-  );
-  if (!selectedRecord) return <> </>;
-
-  const { data } = useBackend<Data>(context);
-  const { records } = data;
-  const notes =
-    records.find((record) => record.ref === selectedRecord.ref)?.notes || [];
+  const foundRecord = getCurrentRecord(context);
+  if (!foundRecord) return <> </>;
+  const { notes } = foundRecord;
 
   const [selectedNote, setSelectedNote] = useLocalState<number | undefined>(
     context,
@@ -260,4 +260,22 @@ const NoteTabs = (props, context) => {
 /** Splits a medical string on <br> into a string array */
 const getStringArray = (string: string) => {
   return string.split('<br>');
+};
+
+/** We need an active reference and this a pain to rewrite */
+const getCurrentRecord = (context) => {
+  const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
+    context,
+    'selectedRecord',
+    undefined
+  );
+  if (!selectedRecord) return;
+  const { data } = useBackend<Data>(context);
+  const { records } = data;
+  const foundRecord = records.find(
+    (record) => record.ref === selectedRecord.ref
+  );
+  if (!foundRecord) return;
+
+  return foundRecord;
 };

@@ -105,14 +105,28 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		return
 
 	var/assignment = person.mind.assigned_role.title
-	var/static/record_id_num = 1001
-	var/id_number = num2hex(record_id_num++, 6)
 	var/mutable_appearance/character_appearance = new(person.appearance)
 	var/person_gender = "Other"
 	if(person.gender == "male")
 		person_gender = "Male"
 	if(person.gender == "female")
 		person_gender = "Female"
+
+	var/datum/record/locked/lockfile = new(
+		age = person.age,
+		blood_type = person.dna.blood_type,
+		dna_string = person.dna.unique_enzymes,
+		fingerprint = md5(person.dna.unique_identity),
+		gender = person_gender,
+		initial_rank = assignment,
+		name = person.real_name,
+		rank = assignment,
+		species = person.dna.species.name,
+		trim = assignment,
+		// Locked specifics
+		dna_ref = person.dna,
+		mindref = person.mind,
+	)
 
 	new /datum/record/crew(
 		age = person.age,
@@ -121,35 +135,18 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		dna_string = person.dna.unique_enzymes,
 		fingerprint = md5(person.dna.unique_identity),
 		gender = person_gender,
-		id_number = id_number,
 		initial_rank = assignment,
 		name = person.real_name,
 		rank = assignment,
 		species = person.dna.species.name,
 		trim = assignment,
 		// Crew specific
+		lock_ref = REF(lockfile),
 		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY),
 		major_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MAJOR_DISABILITY),
 		minor_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY),
 		minor_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
 		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
-	)
-
-	new /datum/record/locked(
-		age = person.age,
-		blood_type = person.dna.blood_type,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
-		gender = person_gender,
-		id_number = id_number,
-		initial_rank = assignment,
-		name = person.real_name,
-		rank = assignment,
-		species = person.dna.species.name,
-		trim = assignment,
-		// Locked specific
-		dna_ref = person.dna,
-		mindref = person.mind,
 	)
 
 	return
@@ -169,7 +166,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		final_paper_text += "<B>General Record Lost!</B><BR>"
 		return
 
-	final_paper_text += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", crew_record.name, crew_record.id_number, crew_record.gender, crew_record.age)
+	final_paper_text += text("Name: [] <BR>\nGender: []<BR>\nAge: []<BR>", crew_record.name, crew_record.gender, crew_record.age)
 	final_paper_text += "\nSpecies: [crew_record.species]<BR>"
 	final_paper_text += text("\nFingerprint: []<BR>", crew_record.fingerprint)
 	final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", crew_record.wanted_status)
@@ -189,7 +186,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		final_paper_text += "</tr>"
 	final_paper_text += "</table>"
 
-	final_paper_text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", crew_record.security_notes)
+	final_paper_text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", crew_record.security_note)
 	printed_paper.name = text("CR-[] '[]'", print_count, crew_record.name)
 	final_paper_text += "</TT>"
 	printed_paper.add_raw_text(final_paper_text)

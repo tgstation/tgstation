@@ -14,8 +14,6 @@
 	var/fingerprint
 	/// The character's gender
 	var/gender
-	/// The character's ID number
-	var/id_number
 	/// The character's initial rank at roundstart
 	var/initial_rank
 	/// The character's name
@@ -34,7 +32,6 @@
 	dna_string = "Unknown",
 	fingerprint = "?????",
 	gender = "Other",
-	id_number = "000000",
 	initial_rank = "Unassigned",
 	name = "Unknown",
 	rank = "Unassigned",
@@ -47,7 +44,6 @@
 	src.dna_string = dna_string
 	src.fingerprint = fingerprint
 	src.gender = gender
-	src.id_number = id_number
 	src.initial_rank = rank
 	src.name = name
 	src.rank = rank
@@ -62,6 +58,8 @@
 	var/list/citations = list()
 	/// List of crimes
 	var/list/crimes = list()
+	/// Unique ID generated that is used to fetch lock record
+	var/lock_ref
 	/// Names of major disabilities
 	var/major_disabilities
 	/// Fancy description of major disabilities
@@ -74,8 +72,8 @@
 	var/minor_disabilities_desc
 	/// Positive and neutral quirk strings
 	var/quirk_notes
-	/// List of security notes
-	var/list/security_notes = list()
+	/// Security note
+	var/security_note
 	/// Current arrest status
 	var/wanted_status = "None"
 
@@ -86,13 +84,13 @@
 	dna_string = "Unknown",
 	fingerprint = "?????",
 	gender = "Other",
-	id_number = "000000",
 	initial_rank = "Unassigned",
 	name = "Unknown",
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
 	/// Crew specific
+	lock_ref,
 	major_disabilities = "None",
 	major_disabilities_desc = "No disabilities have been diagnosed at the moment.",
 	minor_disabilities = "None",
@@ -100,6 +98,7 @@
 	quirk_notes,
 )
 	. = ..()
+	src.lock_ref = lock_ref
 	src.major_disabilities = major_disabilities
 	src.major_disabilities_desc = major_disabilities_desc
 	src.minor_disabilities = minor_disabilities
@@ -128,14 +127,13 @@
 	dna_string = "Unknown",
 	fingerprint = "?????",
 	gender = "Other",
-	id_number = "000000",
 	initial_rank = "Unassigned",
 	name = "Unknown",
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
 	/// Locked specific
-	dna_ref,
+	datum/dna/dna_ref,
 	datum/mind/mindref,
 )
 	. = ..()

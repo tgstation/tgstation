@@ -2,6 +2,7 @@
  * Crime data. Used to store information about crimes.
  */
 /datum/crime
+	/// Name of the crime
 	var/name = "Crime"
 	/// Details about the crime
 	var/details

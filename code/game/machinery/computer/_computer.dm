@@ -177,14 +177,6 @@
 	mannequin.dress_up_as_job(found_job, TRUE)
 
 	var/datum/dna/dna = record.dna_ref
-	mannequin.hardset_dna(
-		unique_identity = dna.unique_identity,
-		mutation_index = dna.mutation_index,
-		default_mutation_genes = dna.default_mutation_genes,
-		mrace = dna.species,
-		newfeatures = dna.features,
-		mutations = dna.mutations,
-		force_transfer_mutations = TRUE,
-	)
+	dna.transfer_identity(mannequin, transfer_SE = TRUE, transfer_species = TRUE)
 
 	return mannequin.appearance

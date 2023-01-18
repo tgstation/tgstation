@@ -233,7 +233,7 @@
 						to_chat(human_user, "<b>Details:</b> <A href='?src=[REF(src)];hud=s;add_details=1;crime=[crime]'>\[Add details]</A>")
 					to_chat(human_user, "Added by [crime.author] at [crime.time]")
 					to_chat(human_user, "----------")
-				to_chat(human_user, "<b>Notes:</b> [target_record.security_notes]")
+				to_chat(human_user, "<b>Notes:</b> [target_record.security_note]")
 				return
 
 			if(href_list["add_citation"])
