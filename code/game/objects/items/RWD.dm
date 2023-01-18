@@ -10,7 +10,7 @@
 	throw_speed = 1
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	var/max_amount = 150
+	var/max_amount = 210
 	var/current_amount = 0
 	var/active = FALSE
 	var/mob/listeningTo
@@ -54,9 +54,9 @@
 		return
 
 	/**
-	 * if the user say requested 20 pieces but the cached cable reference has only 5 pieces then it wont be an exact multiple
-	 * So the while loop runs twice i.e 1st iteration it uses 5 pieces and it has 20-5= 15 pieces left to consume from this device
-	 * Finally 2nd iteration it consumes the remaining 15 pieces and now the device will use the cached cable containing 15 pieces
+	 * if the user say requested 22 pieces but the cached cable reference has only 5 pieces then it wont be an exact multiple
+	 * So the while loop runs twice i.e 1st iteration it uses 5 pieces and it has 22-5= 17 pieces left to consume from this device
+	 * Finally 2nd iteration it creates a new cached cable & consumes the remaining 17 pieces and now the device will use the cached cable containing 30-17 = 30 pieces.
 	 */
 	var/amount_to_consume = amount
 	while(amount_to_consume)
@@ -148,14 +148,15 @@
 	var/obj/item/stack/cable_coil/coil = get_cable()
 	if(!coil)
 		return
-	if(coil.place_turf(the_turf, user, shock_mob = FALSE))
+	var/obj/structure/cable/cable = coil.place_turf(the_turf, user)
+	if(cable && !QDELETED(cable)) // if user does not have insulated gloves the cable can deconstruct from shock i.e. get deleted
 		current_amount -= 1
 		update_appearance()
 
 
 /obj/item/rwd/loaded
 	icon_state = "rwd-30"
-	current_amount = 150
+	current_amount = 210
 
 /obj/item/rwd/admin
 	name = "admin RWD"
