@@ -132,7 +132,7 @@
 	// Sometimes ammo_type has paths, sometimes it has atom.
 	for (var/atom/item in ammo_type)
 		qdel(item)
-		ammo_type -= item
+	ammo_type = null
 
 	return ..()
 
