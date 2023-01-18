@@ -146,7 +146,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/thermal/monocle
-	gloves = /obj/item/clothing/gloves/color/latex
+	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/utility/welding
 	mask = /obj/item/clothing/mask/surgical
 	l_pocket = /obj/item/knife/kitchen
