@@ -16,7 +16,7 @@
 	circuit = /obj/item/circuitboard/computer/secure_data
 	light_color = COLOR_SOFT_RED
 	/// The current state of the printer
-	var/printing = null
+	var/printing = FALSE
 	/// Logged in to the console
 	var/logged_in = FALSE
 	/// Available statuses for the wanted status
