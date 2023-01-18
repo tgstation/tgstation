@@ -300,7 +300,7 @@ multiple modular subtrees with behaviors
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
-	var/new_ai_status = (new_stat == DEAD) ? AI_STATUS_OFF : AI_STATUS_ON
+	var/new_ai_status = get_setup_mob_ai_status(source)
 	set_ai_status(new_ai_status)
 
 /datum/ai_controller/proc/on_sentience_gained()
