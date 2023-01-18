@@ -1,0 +1,4 @@
+author: "Autisem"
+delete-after: True
+changes:
+  - rscadd: "New circuit component, list pick!"
