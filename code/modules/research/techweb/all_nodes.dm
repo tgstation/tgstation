@@ -560,6 +560,7 @@
 		"emergency_oxygen_engi",
 		"firealarm_electronics",
 		"firelock_board",
+		"generic_tank",
 		"grounding_rod",
 		"high_cell",
 		"high_micro_laser",
@@ -2286,26 +2287,3 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE
 	experimental = TRUE
-
-//Helpers for debugging/balancing the techweb in its entirety!
-/proc/total_techweb_points()
-	var/list/datum/techweb_node/processing = list()
-	for(var/i in subtypesof(/datum/techweb_node))
-		processing += new i
-	var/datum/techweb/TW = new
-	TW.research_points = list()
-	for(var/i in processing)
-		var/datum/techweb_node/TN = i
-		TW.add_point_list(TN.research_costs)
-	return TW.research_points
-
-/proc/total_techweb_points_printout()
-	var/list/datum/techweb_node/processing = list()
-	for(var/i in subtypesof(/datum/techweb_node))
-		processing += new i
-	var/datum/techweb/TW = new
-	TW.research_points = list()
-	for(var/i in processing)
-		var/datum/techweb_node/TN = i
-		TW.add_point_list(TN.research_costs)
-	return TW.printout_points()

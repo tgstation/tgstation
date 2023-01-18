@@ -89,7 +89,7 @@
 		usr.set_machine(src)
 
 		if(href_list["id"])
-			if(href_list["id"] =="insert" && !contained_id)
+			if(href_list["id"] == "insert" && !contained_id)
 				id_insert(usr)
 			else if(contained_id)
 				switch(href_list["id"])

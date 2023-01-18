@@ -104,7 +104,7 @@
 		/obj/item/clothing/head/beret/engi = 3,
 		/obj/item/clothing/mask/bandana/striped/engineering = 3,
 		/obj/item/clothing/head/utility/hardhat = 3,
-		/obj/item/clothing/head/utility/hardhat/weldhat = 3,
+		/obj/item/clothing/head/utility/hardhat/welding = 3,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -127,7 +127,6 @@
 		/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
-		/obj/item/clothing/head/beret/atmos = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
 		)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
@@ -543,7 +542,7 @@
 		/obj/item/clothing/suit/jacket/det_suit/noir = 1,
 		/obj/item/clothing/head/fedora = 2,
 		/obj/item/clothing/gloves/color/black = 2,
-		/obj/item/clothing/gloves/color/latex = 2,
+		/obj/item/clothing/gloves/latex = 2,
 		/obj/item/clothing/under/rank/security/detective/disco = 1,
 		/obj/item/clothing/suit/jacket/det_suit/disco = 1,
 		/obj/item/clothing/shoes/discoshoes = 1,

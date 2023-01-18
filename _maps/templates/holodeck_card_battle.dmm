@@ -60,8 +60,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/coin/thunderdome,
 /obj/structure/table/reinforced/titaniumglass,
+/obj/item/coin/thunderdome,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "iB" = (
@@ -233,6 +233,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/titaniumglass,
+/obj/item/book/manual/wiki/tgc,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "tT" = (
@@ -317,6 +318,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/tgc,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "IB" = (
