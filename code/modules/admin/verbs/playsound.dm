@@ -125,6 +125,7 @@
 							music_extra_data["title"] = data["title"]
 							to_chat(world, span_boldannounce("An admin played: [webpage_url]"), confidential = TRUE)
 						if("No")
+							music_extra_data["link"] = "Song Link Hidden"
 							music_extra_data["title"] = "Song Title Hidden"
 							music_extra_data["artist"] = "Song Artist Hidden"
 							music_extra_data["upload_date"] = "Song Upload Date Hidden"
