@@ -3,7 +3,6 @@
  *
  * Allows user to select 1 entry from a list
  */
-
 /obj/item/circuit_component/assoc_list_pick
 	display_name = "Associative List Pick"
 	desc = "A component that lets a user pick 1 element from an associative list. Returns the selected element."

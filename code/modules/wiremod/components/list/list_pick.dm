@@ -3,7 +3,6 @@
  *
  * Allows user to select 1 entry from a list
  */
-
 /obj/item/circuit_component/list_pick
 	display_name = "List Pick"
 	desc = "A component that lets a user pick 1 element from a list. Returns the selected element."
