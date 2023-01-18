@@ -20,7 +20,7 @@
 #endif
 
 #ifdef UNIT_TESTS
-#define REGISTER_REQUIRED_MAP_ITEM(arguments...) if(mapload) { AddElement(/datum/element/required_map_item, ##arguments...) }
+#define REGISTER_REQUIRED_MAP_ITEM(min, max) if(mapload) { AddElement(/datum/element/required_map_item, min_amount = min, max_amount = max) }
 #else
-#define REGISTER_REQUIRED_MAP_ITEM(arguments...)
+#define REGISTER_REQUIRED_MAP_ITEM(min, max)
 #endif
