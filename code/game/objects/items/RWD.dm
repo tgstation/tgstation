@@ -46,7 +46,7 @@
 
 /obj/item/rwd/attack_self_secondary(mob/user, modifiers)
 	if(current_amount == 0)
-		balloon_alert(user, "Nothing to dispense")
+		balloon_alert(user, "nothing to dispense")
 		return
 
 	var/amount = tgui_input_number(user = user, message = "Enter amount to dispense", title = "Custom cable", default = 0, max_value = min(30, current_amount), min_value = min(1, current_amount), timeout = 0, round_value = TRUE)
@@ -71,7 +71,7 @@
 	//spawn the cable. if it merged with the stak below then you pick that up else put it in the user's hand
 	var/obj/item/stack/cable_coil/new_cable = new(user.drop_location(), amount)
 	if(QDELETED(new_cable))
-		balloon_alert(user,"Merged with stack below")
+		balloon_alert(user,"merged with stack below!")
 	else
 		user.put_in_active_hand(new_cable)
 	//update
@@ -109,12 +109,12 @@
 /// insert cable into the rwd
 /obj/item/rwd/proc/add_cable(mob/user, obj/item/stack/cable_coil/cable)
 	if(current_amount == max_amount)
-		balloon_alert(user, "Device is full")
+		balloon_alert(user, "device is full")
 		return
 
 	var/insert_amount = min(cable.amount, max_amount - current_amount)
 	if(cable.use(insert_amount))
-		balloon_alert(user, "Inserted [insert_amount] cable")
+		balloon_alert(user, "inserted [insert_amount] cable")
 		current_amount += insert_amount
 
 /// get cached reference of cable which gets used over time
