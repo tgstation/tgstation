@@ -135,26 +135,23 @@
 		return
 	var/turf/the_turf = user.loc
 	/**
-	 * Dont bother if
-	 * - device is not active
-	 * - the turf cannot hold cable
-	 * - there is already cable on the turf
+	 * Lay cable only if
+	 * - device is active
+	 * - the turf can hold cable
+	 * - there is no already cable on the turf
 	 */
-	if(!active || !the_turf.can_have_cabling() || !the_turf.can_lay_cable() || locate(/obj/structure/cable, the_turf))
-		return
-	var/obj/item/stack/cable_coil/coil = get_cable()
-	if(!coil)
-		return
-	var/obj/structure/cable/cable = coil.place_turf(the_turf, user)
-	if(cable && !QDELETED(cable)) // if user does not have insulated gloves the cable can deconstruct from shock i.e. get deleted
-		current_amount -= 1
-		update_appearance()
+	if(active && the_turf.can_have_cabling() && the_turf.can_lay_cable() && !locate(/obj/structure/cable, the_turf))
+		var/obj/item/stack/cable_coil/coil = get_cable()
+		if(!coil)
+			return
+		var/obj/structure/cable/cable = coil.place_turf(the_turf, user)
+		if(cable && !QDELETED(cable)) // if user does not have insulated gloves the cable can deconstruct from shock i.e. get deleted
+			current_amount -= 1
+			update_appearance()
 
 	// pick up any stray cable pieces lying on the floor
 	for(var/obj/item/stack/cable_coil/cable_piece in the_turf)
 		add_cable(user, cable_piece)
-
-
 
 /obj/item/rwd/loaded
 	icon_state = "rwd-30"
