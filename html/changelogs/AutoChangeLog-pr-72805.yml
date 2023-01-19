@@ -1,0 +1,4 @@
+author: "SomeRandomOwl"
+delete-after: True
+changes:
+  - admin: "Modified the Play Internet Sound Verb so it now displays extra info about any song being actively played as well as showing the link"
