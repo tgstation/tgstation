@@ -85,7 +85,7 @@
 	var/list/data = list()
 
 	data["available_statuses"] = WANTED_STATUSES()
-	data["logged_in"] = logged_in
+	data["logged_in"] = logged_in || issilicon(user)
 
 	if(!logged_in)
 		return data
@@ -174,9 +174,11 @@
 			return TRUE
 
 		if("logout")
-			if(istype(src, /obj/machinery/computer/secure_data/syndie))
+			if(istype(src, /obj/machinery/computer/secure_data/syndie) || issilicon(usr))
 				balloon_alert(usr, "access denied")
+				playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 				return TRUE
+
 			balloon_alert(usr, "logged out")
 			playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
 			logged_in = FALSE
@@ -244,7 +246,7 @@
 		record.citations += new_citation
 		return TRUE
 
-	var/datum/crime/new_crime = new(name = params["name"], details = params["details"], author = usr, time = world.time)
+	var/datum/crime/new_crime = new(name = params["name"], details = input_details, author = usr, time = world.time)
 	record.crimes += new_crime
 	record.wanted_status = WANTED_ARREST
 
@@ -252,7 +254,7 @@
 
 /// Handles logging into the computer.
 /obj/machinery/computer/secure_data/proc/login(mob/user)
-	if(!isliving(user) || issilicon(user))
+	if(!isliving(user))
 		to_chat(user, span_warning("ACCESS DENIED"))
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
@@ -260,13 +262,13 @@
 	var/mob/living/player = user
 	var/obj/item/card/id/auth = player.get_idcard(TRUE)
 	if(!auth)
-		to_chat(user, span_warning("ACCESS DENIED"))
+		to_chat(user, span_warning("ACCESS DENIED: No ID card detected."))
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 	var/list/access = auth.GetAccess()
 
 	if(!check_access_list(access))
-		to_chat(user, span_warning("ACCESS DENIED"))
+		to_chat(user, span_warning("ACCESS DENIED: Insufficient access."))
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
