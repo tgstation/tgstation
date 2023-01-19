@@ -1,14 +1,7 @@
 #define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
-#define MAX_FINE 1000
 #define PRINTOUT_MISSING "Missing"
 #define PRINTOUT_RAPSHEET "Rapsheet"
 #define PRINTOUT_WANTED "Wanted"
-#define STATE_ARREST "*Arrest*"
-#define STATE_DISCHARGED "Discharged"
-#define STATE_NONE "None"
-#define STATE_PAROL "Paroled"
-#define STATE_PRISONER "Incarcerated"
-#define STATE_SUSPECTED "Suspected"
 
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "security records console"
@@ -22,15 +15,7 @@
 	var/printing = FALSE
 	/// Logged in to the console
 	var/logged_in = FALSE
-	/// Available statuses for the wanted status
-	var/static/list/available_statuses = list(
-		STATE_NONE,
-		STATE_ARREST,
-		STATE_PRISONER,
-		STATE_SUSPECTED,
-		STATE_PAROL,
-		STATE_DISCHARGED,
-	)
+
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"
 	req_one_access = list(ACCESS_SYNDICATE)
@@ -75,7 +60,7 @@
 				if(3)
 					record.age = rand(5, 85)
 				if(4)
-					record.wanted_status = pick(available_statuses)
+					record.wanted_status = pick(WANTED_STATUSES())
 				if(5)
 					record.species = pick(get_selectable_species())
 			continue
@@ -99,7 +84,7 @@
 /obj/machinery/computer/secure_data/ui_data(mob/user)
 	var/list/data = list()
 
-	data["available_statuses"] = available_statuses
+	data["available_statuses"] = WANTED_STATUSES()
 	data["logged_in"] = logged_in
 
 	if(!logged_in)
@@ -201,26 +186,8 @@
 			return TRUE
 
 		if("print_record")
-			if(printing)
-				balloon_alert(usr, "printer busy")
-				playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
-				return FALSE
-
-			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-			if(!record)
-				return FALSE
-
-			switch(params["print_type"])
-				if("missing")
-					print_missing(usr, record)
-					return TRUE
-				if("wanted")
-					print_wanted(usr, record)
-					return TRUE
-				if("crime")
-					print_rapsheet(usr, record)
-					return TRUE
-			return FALSE
+			print_record(usr, params)
+			return TRUE
 
 		if("set_note")
 			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
@@ -237,7 +204,7 @@
 				return FALSE
 
 			var/wanted_status = params["status"]
-			if(!wanted_status || !(wanted_status in available_statuses))
+			if(!wanted_status || !(wanted_status in WANTED_STATUSES()))
 				return FALSE
 			record.wanted_status = wanted_status
 			return TRUE
@@ -256,36 +223,38 @@
 	if(!params["name"])
 		to_chat(usr, span_warning("You must enter a name for the crime."))
 		return FALSE
-	if(params["fine"] > MAX_FINE)
-		to_chat(usr, span_warning("The maximum fine is [MAX_FINE] credits."))
+	if(params["fine"] > MAX_CITATION_FINE)
+		to_chat(usr, span_warning("The maximum fine is [MAX_CITATION_FINE] credits."))
 		return FALSE
 
-	var/datum/crime/new_crime = new(name = params["name"], details = params["details"], author = usr, time = world.time, fine = params["fine"], paid = 0)
+	var/input_details = params["details"] || "No details provided."
+	var/datum/crime/new_crime = new(name = params["name"], details = input_details, author = usr, time = world.time, fine = params["fine"], paid = 0)
 
 	if(new_crime.fine > COMP_SECURITY_ARREST_AMOUNT_TO_FLAG)
 		record.citations += new_crime
 		return TRUE
 	record.crimes += new_crime
-	record.wanted_status = STATE_ARREST
+	record.wanted_status = WANTED_ARREST
+
 	return TRUE
 
 /// Handles logging into the computer.
 /obj/machinery/computer/secure_data/proc/login(mob/user)
 	if(!isliving(user) || issilicon(user))
-		balloon_alert(user, "access denied")
+		to_chat(user, span_warning("ACCESS DENIED"))
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/mob/living/player = user
 	var/obj/item/card/id/auth = player.get_idcard(TRUE)
 	if(!auth)
-		balloon_alert(player, "access denied")
+		to_chat(user, span_warning("ACCESS DENIED"))
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 	var/list/access = auth.GetAccess()
 
 	if(!check_access_list(access))
-		balloon_alert(player, "access denied")
+		to_chat(user, span_warning("ACCESS DENIED"))
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
@@ -294,73 +263,66 @@
 	logged_in = TRUE
 	return TRUE
 
+/// Finishes printing, resets the printer.
 /obj/machinery/computer/secure_data/proc/print_finish(obj/item/printable)
 	printing = FALSE
 	playsound(src, 'sound/machines/terminal_eject.ogg', 100, TRUE)
-
 	printable.forceMove(loc)
 
 	return FALSE
 
-/// Prints out a missing poster for the person.
-/obj/machinery/computer/secure_data/proc/print_missing(mob/user, datum/record/crew/record)
-	var/missing_name = tgui_input_text(user, "Enter an alias for the missing person", "Print Missing Persons Poster", record.name)
-	if(!missing_name)
+/// Handles printing records via UI. Takes the params from UI_act.
+/obj/machinery/computer/secure_data/proc/print_record(mob/user, list/params)
+	if(printing)
+		balloon_alert(usr, "printer busy")
+		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
-	var/default_description = "A poster declaring [missing_name] to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately."
-	var/headerText = tgui_input_text(user, "Enter a poster heading", "Print Missing Persons Poster", "MISSING", 7)
-
-	var/info = tgui_input_text(user, "Input a description for the poster", "Print Missing Persons Poster", default_description)
-	if(!info)
+	var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
+	if(!record)
 		return FALSE
 
-	print_start(user)
-	var/obj/item/photo/mugshot = record.get_front_photo()
-	var/obj/item/poster/wanted/missing/missing_poster = new(src, mugshot.picture.picture_image, missing_name, info, headerText)
-	addtimer(CALLBACK(src, PROC_REF(print_finish), missing_poster), 3 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
-	return TRUE
-
-/// Prints out a wanted poster for the person.
-/obj/machinery/computer/secure_data/proc/print_wanted(mob/user, datum/record/crew/record)
-	var/wanted_name = tgui_input_text(usr, "Enter an alias for the criminal", "Print Wanted Poster", record.name)
-	if(!wanted_name)
-		return FALSE
-
-	var/list/crimes = record.crimes
-	if(!length(crimes))
-		balloon_alert(user, "no crimes")
-		return FALSE
-
-	var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."
-	default_description += "\n[wanted_name] is wanted for the following crimes:\n"
-	for(var/datum/crime/incident in crimes)
-		default_description += "\n[incident.name]\n"
-		default_description += "[incident.details]\n"
-
-	var/headerText = tgui_input_text(usr, "Enter a poster heading", "Print Wanted Poster", "WANTED", 7)
-	var/info = tgui_input_text(usr, "Input a description for the poster", "Print Wanted Poster", default_description)
-	if(!info)
-		return FALSE
-
-	print_start(user)
-	var/obj/item/photo/mugshot = record.get_front_photo()
-	var/obj/item/poster/wanted/wanted_poster = new(src, mugshot.picture.picture_image, wanted_name, info, headerText)
-	addtimer(CALLBACK(src, PROC_REF(print_finish), wanted_poster), 3 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
-	return TRUE
-
-/// Paper printout of crimes
-/obj/machinery/computer/secure_data/proc/print_rapsheet(mob/user, datum/record/crew/record)
-	print_start(user)
-	var/obj/item/paper/rapsheet = record.get_rapsheet()
-	addtimer(CALLBACK(src, PROC_REF(print_finish), rapsheet), 3 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
-	return TRUE
-
-/// Alerts the user that the printer is printing
-/obj/machinery/computer/secure_data/proc/print_start(mob/user)
 	printing = TRUE
 	balloon_alert(user, "printing")
 	playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
+
+	var/obj/item/printable
+	var/input_alias = trim(params["alias"], MAX_NAME_LEN) || record.name
+	var/input_description = trim(params["desc"], MAX_BROADCAST_LEN) || "No further details."
+	var/input_header = trim(params["head"], 8) || capitalize(params["type"])
+
+	switch(params["type"])
+		if("missing")
+			var/obj/item/photo/mugshot = record.get_front_photo()
+			var/obj/item/poster/wanted/missing/missing_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
+
+			printable = missing_poster
+
+		if("wanted")
+			var/list/crimes = record.crimes
+			if(!length(crimes))
+				balloon_alert(user, "no crimes")
+				return FALSE
+
+			for(var/datum/crime/incident in crimes)
+				input_description += "\n[incident.name]\n"
+				input_description += "[incident.details]\n"
+
+			var/obj/item/photo/mugshot = record.get_front_photo()
+			var/obj/item/poster/wanted/wanted_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
+
+			printable = wanted_poster
+
+		if("rapsheet")
+			var/list/crimes = record.crimes
+			if(!length(crimes))
+				balloon_alert(user, "no crimes")
+				return FALSE
+
+			var/obj/item/paper/rapsheet = record.get_rapsheet(input_alias, input_header, input_description)
+			printable = rapsheet
+
+	addtimer(CALLBACK(src, PROC_REF(print_finish), printable), 2 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 	return TRUE
 
 /**
@@ -460,7 +422,7 @@
 /obj/item/circuit_component/arrest_console_arrest/populate_options()
 	if(!attached_console)
 		return
-	var/list/available_statuses = attached_console.available_statuses.Copy()
+	var/list/available_statuses = WANTED_STATUSES()
 	new_status = add_option_port("Arrest Options", available_statuses)
 
 /obj/item/circuit_component/arrest_console_arrest/populate_ports()
@@ -502,13 +464,6 @@
 			human.sec_hud_set_security_status()
 
 #undef COMP_SECURITY_ARREST_AMOUNT_TO_FLAG
-#undef MAX_FINE
 #undef PRINTOUT_MISSING
 #undef PRINTOUT_RAPSHEET
 #undef PRINTOUT_WANTED
-#undef STATE_ARREST
-#undef STATE_DISCHARGED
-#undef STATE_NONE
-#undef STATE_PAROL
-#undef STATE_PRISONER
-#undef STATE_SUSPECTED

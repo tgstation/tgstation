@@ -175,8 +175,8 @@
  * returns the generated/cached photo otherwise.
  */
 /datum/record/crew/proc/get_photo(field_name, orientation)
-	if(field_name)
-		return field_name
+	if(!field_name)
+		return
 
 	if(!character_appearance)
 		return new /icon()
@@ -196,12 +196,16 @@
 	return photo
 
 /// Returns a paper printout of the current record's crime data.
-/datum/record/crew/proc/get_rapsheet()
+/datum/record/crew/proc/get_rapsheet(alias, header = "Rapsheet", description = "No further details.")
 	var/print_count = ++GLOB.data_core.print_count
 	var/obj/item/paper/printed_paper = new
-	var/final_paper_text = "<CENTER><B>Security Record - (SR-[print_count])</B></CENTER><BR>"
+	var/final_paper_text = "<CENTER><B>[header]</B></CENTER><BR>"
+	final_paper_text += text("<B>(SR-[print_count])</BR>")
 
 	final_paper_text += text("Name: [] <BR>\nGender: []<BR>\nAge: []<BR>", name, gender, age)
+	if(alias != name)
+		final_paper_text += text("Alias: []<BR>", alias)
+
 	final_paper_text += "\nSpecies: [species]<BR>"
 	final_paper_text += text("\nFingerprint: []<BR>", fingerprint)
 	final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", wanted_status)
@@ -238,9 +242,10 @@
 		final_paper_text += "</tr>"
 	final_paper_text += "</table>"
 
-	final_paper_text += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", security_note)
-	printed_paper.name = text("CR-[] '[]'", print_count, name)
+	final_paper_text += text("<BR>\n<CENTER>Important Notes:</CENTER><BR>\n\t[]<BR>\n<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", security_note, description)
 	final_paper_text += "</TT>"
+
+	printed_paper.name = text("CR-[] '[]'", print_count, name)
 	printed_paper.add_raw_text(final_paper_text)
 	printed_paper.update_appearance()
 
