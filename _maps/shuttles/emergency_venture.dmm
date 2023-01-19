@@ -409,11 +409,11 @@
 /obj/item/hemostat{
 	pixel_x = -4
 	},
-/obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/surgicaldrill,
 /obj/item/cautery,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uR" = (
