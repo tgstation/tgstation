@@ -2,7 +2,6 @@ import { useLocalState, useBackend } from 'tgui/backend';
 import { SECURETAB, Crime, SecureData } from './types';
 import { getCurrentRecord } from './helpers';
 import { Stack, Section, Tabs, Tooltip, Icon, NoticeBox, BlockQuote, Box, Button, Collapsible, Input, LabeledList, RestrictedInput, TextArea } from 'tgui/components';
-import { formatTime } from 'tgui/format';
 
 /** Displays a list of crimes and allows to add new ones. */
 export const CrimeWatcher = (props, context) => {
@@ -102,7 +101,7 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
         color={fine && fine > 0 ? 'average' : ''}
         title={name.slice(0, 18) + showFine}>
         <LabeledList>
-          <LabeledList.Item label="Time">{formatTime(time)}</LabeledList.Item>
+          <LabeledList.Item label="Time">{time}</LabeledList.Item>
           <LabeledList.Item label="Author">{author}</LabeledList.Item>
           {fine && (
             <>

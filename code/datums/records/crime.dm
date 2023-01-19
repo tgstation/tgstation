@@ -11,7 +11,7 @@
 	/// Time of the crime
 	var/time
 
-/datum/crime/New(name = "Crime", details = "No details provided.", author = "Anonymous", time = world.time)
+/datum/crime/New(name = "Crime", details = "No details provided.", author = "Anonymous", time = station_time_timestamp())
 	src.author = author
 	src.details = details
 	src.name = name
@@ -23,7 +23,7 @@
 	/// Amount of money paid for the crime
 	var/paid
 
-/datum/crime/citation/New(name = "Citation", details = "No details provided.", author = "Anonymous", time = world.time, fine = 0, paid = 0)
+/datum/crime/citation/New(name = "Citation", details = "No details provided.", author = "Anonymous", time = station_time_timestamp(), fine = 0, paid = 0)
 	. = ..()
 	src.fine = fine
 	src.paid = paid

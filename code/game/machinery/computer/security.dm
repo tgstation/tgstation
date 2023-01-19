@@ -242,11 +242,11 @@
 		input_details = params["details"]
 
 	if(params["fine"] > 0)
-		var/datum/crime/citation/new_citation = new(name = params["name"], details = input_details, author = usr, time = world.time, fine = params["fine"], paid = 0)
+		var/datum/crime/citation/new_citation = new(name = params["name"], details = input_details, author = usr, fine = params["fine"])
 		record.citations += new_citation
 		return TRUE
 
-	var/datum/crime/new_crime = new(name = params["name"], details = input_details, author = usr, time = world.time)
+	var/datum/crime/new_crime = new(name = params["name"], details = input_details, author = usr)
 	record.crimes += new_crime
 	record.wanted_status = WANTED_ARREST
 

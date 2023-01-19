@@ -1,7 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 import { BlockQuote, Button, Collapsible, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Tabs } from '../components';
-import { formatTime } from '../format';
 
 type Data = {
   records: WarrantRecord[];
@@ -151,7 +150,7 @@ const CitationManager = (props, context) => {
           <BlockQuote>{details}</BlockQuote>
         </LabeledList.Item>
         <LabeledList.Item label="Author">{author}</LabeledList.Item>
-        <LabeledList.Item label="Time">{formatTime(time)}</LabeledList.Item>
+        <LabeledList.Item label="Time">{time}</LabeledList.Item>
         <LabeledList.Item label="Fine">{fine}</LabeledList.Item>
         <LabeledList.Item label="Paid">{paid}</LabeledList.Item>
         {fine > 0 && (
