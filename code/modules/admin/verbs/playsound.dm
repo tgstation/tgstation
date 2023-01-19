@@ -132,7 +132,7 @@
 						if("Cancel")
 							return
 
-					var/anon = tgui_alert(usr, "Display who played the song?",, list("No", "Yes", "Cancel"))
+					var/anon = tgui_alert(usr, "Display who played the song?", "Credit Yourself?", list("No", "Yes", "Cancel"))
 					switch(anon)
 						if("Yes")
 							if(res == "Yes")
