@@ -152,13 +152,13 @@ GLOBAL_VAR(basketball_game)
 		if(length(ready_players) % 2) // odd is home team
 			spawn_landmark = pick_n_take(home_spawnpoints)
 			home_team_players |= player_key
-			home_hoop.team |= player_key
+			home_hoop.team_ckeys |= player_key
 			team_uniform = current_map.home_team_uniform
 			team_name = current_map.team_name
 		else // even is away team
 			spawn_landmark = pick_n_take(away_spawnpoints)
 			away_team_players |= player_key
-			away_hoop.team |= player_key
+			away_hoop.team_ckeys |= player_key
 			team_uniform = away_map.home_team_uniform
 			team_name = away_map.team_name
 
