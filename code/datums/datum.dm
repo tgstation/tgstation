@@ -298,12 +298,14 @@
 	filter_data[name] = copied_parameters
 	update_filters()
 
+/// Reapplies all the filters.
 /datum/proc/update_filters()
-	var/atom/atom_cast = src // this works with even images
+	ASSERT(isatom(src) || istype(src, /image))
+	var/atom/atom_cast = src // filters only work with images or atoms.
 	atom_cast.filters = null
 	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
-	for(var/f in filter_data)
-		var/list/data = filter_data[f]
+	for(var/filter_raw in filter_data)
+		var/list/data = filter_data[filter_raw]
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		atom_cast.filters += filter(arglist(arguments))
@@ -348,6 +350,7 @@
 	animate(filter, new_params, time = time, easing = easing, loop = loop)
 	modify_filter(name, new_params)
 
+/// Updates the priority of the passed filter key
 /datum/proc/change_filter_priority(name, new_priority)
 	if(!filter_data || !filter_data[name])
 		return
@@ -355,9 +358,11 @@
 	filter_data[name]["priority"] = new_priority
 	update_filters()
 
+/// Returns the filter associated with the passed key
 /datum/proc/get_filter(name)
+	ASSERT(isatom(src) || istype(src, /image))
 	if(filter_data && filter_data[name])
-		var/atom/atom_cast = src // this works with even images
+		var/atom/atom_cast = src // filters only work with images or atoms.
 		return atom_cast.filters[filter_data.Find(name)]
 
 /// Returns the indice in filters of the given filter name.
@@ -365,6 +370,7 @@
 /datum/proc/get_filter_index(name)
 	return filter_data?.Find(name)
 
+/// Removes the passed filter, or multiple filters, if supplied with a list.
 /datum/proc/remove_filter(name_or_names)
 	if(!filter_data)
 		return
@@ -377,6 +383,7 @@
 	update_filters()
 
 /datum/proc/clear_filters()
-	var/atom/atom_cast = src // this works with even images
+	ASSERT(isatom(src) || istype(src, /image))
+	var/atom/atom_cast = src // filters only work with images or atoms.
 	filter_data = null
 	atom_cast.filters = null
