@@ -30,7 +30,7 @@
 		return . | SPELL_CANCEL_CAST
 
 	to_send = tgui_input_text(cast_on, "What would you like to tell your other self?", "Commune")
-	if(QDELETED(src) || QDELETED(trauma)|| QDELETED(cast_on) || QDELETED(trauma.owner) || !can_cast_spell())
+	if(QDELETED(src) || QDELETED(trauma) || QDELETED(cast_on) || QDELETED(trauma.owner) || !can_cast_spell())
 		return . | SPELL_CANCEL_CAST
 	if(!to_send)
 		reset_cooldown()

@@ -16,7 +16,7 @@
 /area/template_noop)
 "aL" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/structure/window{

@@ -29,7 +29,7 @@
 ///// Power stuff /////
 ///////////////////////
 /obj/vehicle/sealed/mecha/proc/has_charge(amount)
-	return (get_charge()>=amount)
+	return (get_charge() >= amount)
 
 /obj/vehicle/sealed/mecha/proc/get_charge()
 	return cell?.charge

@@ -148,7 +148,7 @@
 	var/mob/living/carbon/human/H = owner.current
 	var/gear = tgui_alert(admin,"Agent or Scientist Gear", "Gear", list("Agent", "Scientist"))
 	if(gear)
-		if(gear=="Agent")
+		if(gear == "Agent")
 			H.equipOutfit(/datum/outfit/abductor/agent)
 		else
 			H.equipOutfit(/datum/outfit/abductor/scientist)

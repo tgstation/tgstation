@@ -25,7 +25,7 @@
 					/obj/item/clothing/suit/bio_suit = 2,
 					/obj/item/storage/bag/bio,
 					/obj/item/reagent_containers/syringe/antiviral = 2,
-					/obj/item/clothing/gloves/color/latex/nitrile = 2,
+					/obj/item/clothing/gloves/latex/nitrile = 2,
 				)
 	crate_name = "bio suit crate"
 

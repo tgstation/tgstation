@@ -361,3 +361,318 @@
   - bugfix: fixes wizard rod form infinitely travelling in hyperspace
   timothymtorres:
   - bugfix: Fix antags being revealed by hallucinations
+2023-01-12:
+  Fikou:
+  - bugfix: fixes twohanded items not letting you switch hands
+  GoldenAlpharex:
+  - code_imp: Made the worn_icons unit test check the worn GAGS config rather than
+      the normal one.
+  LT3:
+  - imageadd: Tram controls are now side mounted, freeing up space. Even better, you
+      now have two of them!
+  - imageadd: Added a new accessible space on the tram for wheelchairs
+  - bugfix: Removed duplicate tram plate/platforms
+  - code_imp: Tram has its own floor subtype for the walls and windows
+  - rscadd: Emergency exit feature added for people who are silly enough to not carry
+      a crowbar
+  LemonInTheDark:
+  - bugfix: You can now properly start drifting after moving out of a drift
+  MiiyaBot:
+  - rscadd: Two new hairstyles! ("All the Fuzz" & "Over Eye (Izutsumi)")
+  - spellcheck: Renamed "Marginally shorter yet long bedhead" to "Shorter Long Bedhead"
+  - spellcheck: Renamed "BedHead 4X" to "Bedhead 4x"
+  - bugfix: Slight changes to "Jade", "Shorter Bedhead", "Bedhead 4x"
+  Rhials:
+  - spellcheck: Head-spears are now named properly when using alternate spear types.
+  SyncIt21:
+  - rscadd: RPED  can now pick up & install machine circuit boards in machine frames
+  - rscadd: RPED can pick up computer circuit boards for storage convenience but doesn't
+      install them
+  - bugfix: don't call after attack twice
+  - bugfix: normal RPED from behaving like an BRPED when installing stock parts in
+      an incomplete machine frame
+  - code_imp: datum stock part for every obj stock part
+  - refactor: all machines & dependent experiments to use datum stock parts
+  Zytolg:
+  - bugfix: Chemists can now properly open and close their desk windoor on Deltastation
+  san7890:
+  - balance: Due to materials costing a lot more than ever, Nanotrasen's Spare ID
+      Safe Supplier have cut down on the space inside of the ID Safe, meaning you
+      can only cram in things as thin as an ID Card.
+  stanalbatross, thedonkified:
+  - rscadd: added the ability to make up to 10 individual highlights in tgchat, customise
+      their colours, and toggle if they highlight the whole message or not. Ported
+      from CM.
+  - rscadd: you can now use regex for text highlighting. The syntax is /[regex expression]/,
+      eg /dog[0-9]/. There are no quantifiers, but you can use capture groups. The
+      regex must read a minimum of two characters.
+2023-01-13:
+  1393F:
+  - bugfix: you can nolonger use a goldgrub as a shield to kill colossus
+  Fikou:
+  - qol: fixes chisels
+  Higgin:
+  - rscadd: Adds ear surgery to repair damaged ears/deafness.
+  PestoVerde, Imaginos, Wallem:
+  - imageadd: New material and ore sprites by PestoVerde & Imaginos
+  Profakos:
+  - bugfix: pancakes no longer show an error sprite when added to a stack
+  dawsonkeyes:
+  - bugfix: metal hydrogen golems no longer die to low pressures and cold temperatures
+  - bugfix: metal hydrogen golems are no longer solid white, and are now the actual
+      color of metal hydrogen
+  - balance: metal hydrogen golems are also now immune to most environmental threats,
+      and get more armor
+  san7890:
+  - bugfix: There is no longer a button on a window at the CentCom Thunderdome.
+2023-01-14:
+  Jacquerel:
+  - bugfix: Dead basic mobs are no longer "dense" objects and can be stepped on.
+  Melbert:
+  - bugfix: Fixed a runtime from neck slices on headless mobs.
+  - qol: Neck sliced folk now have an examine message saying as much.
+  Rhials:
+  - qol: The Scrubber Clog event now gives an orbit popup to ghosts!
+  - bugfix: Bald/Shaved ghosts will no longer cause a runtime and spawn without a
+      name.
+  - bugfix: viewing the botkeeper app as an observer will no longer runtime.
+  - bugfix: The walls of the luxury shuttle no longer bend in strange directions.
+  ShizCalev:
+  - qol: Airlock interfaces will now open up automatically if access is restored early
+      while an AI is hacking it.
+  SuperSlayer0:
+  - qol: Pinpointers now tell what they are tracking when examined
+  timothymtorres:
+  - bugfix: Fix blood overlays on energy daggers
+  - code_imp: Add `NO_BLOOD_ON_ITEM` bitfield for items
+  tralezab:
+  - rscadd: Some prisoner backgrounds have more or less tattoos.
+  - rscadd: More Memories to collect involving fishing and getting converted
+2023-01-15:
+  Comxy:
+  - bugfix: Fixes being able to place things on space tiles with a z-layer destination.
+  FernandoJ8:
+  - bugfix: the examine text for damage now properly uses the most common examine
+      text out of all the mob's limbs
+  - bugfix: all robotic limbs now have the robotic damage descriptions (charring,
+      denting)
+  - code_imp: improved the get_majority_bodypart_damage_desc() proc to reduce redundancies
+      and add support for limb-based cellular damage
+  Guillaume Prata:
+  - rscadd: Mothroach DNA infusion. For better or worse, anyone can get closer to
+      being a Moth person now!
+  Inari-Whitebear:
+  - spellcheck: fixed grammar/typo in Nanotrasen Pay System add
+  Jacquerel:
+  - bugfix: Mice won't try to path through walls to escape from sight and constantly
+      squeak.
+  - bugfix: Mice will stop running away from you if they can't see you any more.
+  - bugfix: Rats won't bite racks and tables while passing over them.
+  - bugfix: Syndicate mobs will no longer attempt to shoot you through walls, building
+      up massive piles of empty bullet casings in the process.
+  - qol: Bullet casings from "weapons" fired by certain mobs will clean themselves
+      up after 30 seconds.
+  JohnFulpWillard:
+  - refactor: Duplicating mobs now should now give properly functioning mobs, as duplications
+      in general have been reworked. Admins can feel free to use the pod feature on
+      people.
+  LemonInTheDark:
+  - bugfix: Fixes clientside lavaland lag on long rounds
+  Melbert:
+  - bugfix: Fixed not getting moodlet from freshly laundered clothing
+  - bugfix: Fixed durability tags not showing their ratings
+  Mothblocks:
+  - bugfix: Fixed chem dispensers keeping their upgrade chemicals even after stock
+      parts were downgraded.
+  NamelessFairy:
+  - bugfix: AI eyes, megafauna and robots will appear in the orbit menu NPC section
+      again.
+  - qol: Everything deadchat controlled will now be highlighted in the orbit menu.
+  Reco201:
+  - bugfix: Cyborgs turning their lights on and off can now be seen doing so.
+  Rhials:
+  - code_imp: Anomaly effects now have their own files, rather than being crammed
+      into a single, probably-too-large file.
+  ShizCalev:
+  - bugfix: Drunk scientists & the RDs rejoice! You can now reach the Ballmer peak!
+  - admin: Fixed a bunch of liver traits not being assignable.
+  SovietWomble, dessysalta, dopamiin:
+  - soundadd: the hygienebots speak now
+  Stonetear:
+  - bugfix: Mosin Nagant bolt sprites are now visible.  It's like 5 pixels so not
+      a surprise nobody noticed for years.
+  SuperSlayer0:
+  - code_imp: Removes double CAN_BE_INTERN flag in chaplain and cargo tech job flags
+  - code_imp: Replaces a string in chemist departamental head variable with a job
+      define.
+  - bugfix: Fixes monkey heretics being unable to invoke their runes
+  - bugfix: Fixes security stunbatons knockdowning you even if you have baton resistance
+      trait
+  SyncIt21:
+  - bugfix: Getting stuck or trapping someone else in the DNA infuser
+  Tattle:
+  - admin: cyborg creation details (synced AI and default laws) are now logged
+  TheWolfbringer:
+  - rscadd: Added atmos holofans to metastation's ordnance lab.
+  san7890:
+  - qol: Spirits of possessed blades (Chaplain's Null Rod Option) will be able re-try
+      selecting their name if it ends up to be filtered for any reason.
+  tralezab:
+  - admin: Force Event no longer filters by tab when searching.
+  vinylspiders:
+  - bugfix: fixed mob biotypes being ignored when applying toxin damage and oxyloss
+2023-01-16:
+  A.C.M.O.:
+  - bugfix: Fixed the DNA Infuser's Goliath Infusion and its organ set bonus. The
+      Goliath hammer will now apply bonus attack damage as expected.
+  - bugfix: Fixed incorrect grammar and pronoun usage in the DNA Infuser's noticeable
+      organs examine-text.
+  - bugfix: Fixed the DNA Infuser giving mutated organs to androids and other non-organic/DNA-less
+      species.
+  - bugfix: Fixed the DNA Infuser mutating organs which the occupant doesn't have.
+  - bugfix: Fixed the DNA Infuser not allowing addition of dead creatures.
+  JohnFulpWillard:
+  - bugfix: If there are several techwebs, sabotaging the master server of one of
+      them will no longer cut research point generation of the rest.
+  - qol: Removed the tech disk part of the ORM's UI as it was entirely unused, now
+      it's a little more compact with less scrolling needed.
+  - refactor: Autolathes, Limb growers, Biogenerators, ORMs and Smelters now share
+      techwebs with other machines of their types, rather than all make new techwebs
+      each time. This means they only build their nodes once, including hacked ones.
+      Instead of researching nodes on hacking the machine, they now show hacked ones
+      depending on if it's hacked.
+  Sealed101:
+  - bugfix: pinpoint machine scanning experiments work again (again)
+  ShizCalev:
+  - bugfix: gorillas can now fuck people up again
+  - bugfix: You'll no longer constantly be spammed with messages if your fingers are
+      too big to interact with a computer's keyboard.
+  - bugfix: You can no longer interact with programs that were previously opened on
+      a computer if your fingers are too big to use the keyboard.
+  - bugfix: You can now look at computer screens even if your fingers are too big
+      to use the keyboard.
+  - bugfix: Trading cards are no longer invisible when stacked.
+  SmoSmoSmoSmok:
+  - qol: miner console now displays the item's icons and has a minus button feature
+      to remove 1 item
+  SyncIt21:
+  - bugfix: Directional windows won't block construction of machine & compute frames
+      by the RCD
+  Wallem:
+  - bugfix: Uranium, Diamonds, and Bananium now update visually in the techfab UI
+  tralezab:
+  - rscdel: Atmospherics beret and black beret
+2023-01-17:
+  Fikou:
+  - bugfix: fixes generic tanks not being printable
+  - bugfix: fixes being able to eat, use pills etc through gas masks and such
+  LT3:
+  - admin: Changed admin comm/fax notification sound to be less confusing
+  Melbert:
+  - refactor: Refactored blindness and nearsightedness. Important to note is that
+      all mobs are naturally blind until their eyes are actually created.
+  - refactor: Refactored "is covered" procs
+  - bugfix: Less sources of blindness now cause permanent blindness. Includes the
+      "Blind" Spell and "Blind Sting" from changelings.
+  - admin: Ahealing someone no longer flashes the blind overlay for 1 tick.
+  - admin: I removed an unused (sort of) inaccessible admin verb that allowed you
+      to toggle the tint from all welding helmets (and clothing) (and lack of eyes)
+      in existence, let me know if you want similar back
+  - balance: Changeling "Blind Sting" now causes eye damage (enough to blind) rather
+      than arbitrarily forcing blindness.
+  - balance: Visionloss virus symptom now causes eye damage (enough to blind) rather
+      than arbitrarily forcing blindness.
+  - balance: Oculine has been reworked slightly. Prior, Oculine arbitrarily healed
+      blindness and nearsightedness from eye damage reagrdless of how damaged the
+      eyes were, and applied blur on success. Now, Oculine just heals eye damage,
+      and blindness / nearsightedness is restored in the process. There is now a probability
+      every tick that eye blur is applied based on how pure the oculine is while healing
+      very damaged eyes.
+  - balance: Pacifists can no longer eyestab.
+  - balance: Any clothing item that covers your eyes contributes to getting the bonus
+      while sleeping, and to removing temporary blindness faster
+  Mey-Ha-Zah:
+  - bugfix: improved maintenance eyes light detection.
+  NamelessFairy:
+  - bugfix: Maintenance adapted eyes no-longer prevent the game from compiling
+  - qol: Inspecting a cell charger now tells you the type of cell in it.
+  - qol: Rulebook for TGC has been added to the TGC arena.
+  - bugfix: Holographic TGC coins are no longer legal tender and cannot be inserted
+      into your ID.
+  Rhials:
+  - bugfix: Swiping the Crab-17 checkout machine too early will no longer instantly
+      explode it and lock everyone out of their bank accounts.
+  - rscadd: Adds the Terrify spell and Terrified status effect. Terrified victims
+      will suffer increasingly detrimental effects until they're calmed down.
+  - balance: Nightmares can now cast the Terrify spell on victims to plague their
+      prey with. Attacking a Terrified human with your open hand will trip them up.
+  - imageadd: Adds status effect and spell icons for Terrify/Terrified.
+  - spellcheck: fixes a typo in the message for consuming a nightmare heart.
+  SyncIt21:
+  - bugfix: spelling of Airlocks
+  - bugfix: checks for toggling silo link and for selecting machine, furnishing designs
+  - bugfix: properly remove the stock part from the RPED after exchanging it
+  - refactor: renames datum parts above tier 1 accordingly to their tier
+  Thunder12345:
+  - qol: Extinguisher cabiners are now opened and closed with right click instead
+      of alt+click.
+  Zergspower:
+  - bugfix: ERT Headsets have the proper key
+  axietheaxolotl:
+  - imageadd: cargo's jumpskirt has been shortened to help fit in better with the
+      jumpsuit's shorts.
+  tralezab:
+  - balance: Ceremonial blades no longer wound.
+2023-01-18:
+  Comxy:
+  - rscadd: Adds garden gnomes.
+  - imageadd: Adds garden gnome sprites.
+  Fikou:
+  - rscadd: Atmospheric Gloves, thick gloves that are fully fireproof and fire protective
+      and let you fireman carry people faster.
+  - bugfix: fixes engine goggles starting with darkness vision
+  - qol: firefighter helmets can now enable a welding visor
+  - qol: welding hardhats change mode with right click instead of altclick
+  - balance: firesuits no longer protect your hands
+  Mothblocks:
+  - bugfix: Polls are fixed
+  SuperSlayer0:
+  - code_imp: Now species to which are changed necromantic stone targets are determinated
+      by a variable rather then just skeleton species
+  YakumoChen:
+  - rscadd: Service borgs have a chisel now, make some statues!
+2023-01-19:
+  A.C.M.O.:
+  - bugfix: Fixed buggy organ filtering code in the DNA Infuser which stopped it from
+      infusing organs.
+  Autisem:
+  - rscadd: New circuit component, list pick!
+  - bugfix: Pickle crafting no longer gives an empty beaker
+  - bugfix: Pickle crafting costs/gives 10 cucumbers/pickles
+  Fikou, a hood by Viro:
+  - refactor: humanoid mobs and cardboard cutouts automatically generate their sprites,
+      they no longer will be outdated
+  Guillaume Prata:
+  - qol: APCs have contextual screen tips now.
+  JohnFulpWillard, sprites by Tramzz:
+  - rscadd: Added Maintenance tablet applications, applications that can't be cloned
+      or downloaded from the store, instead you can find one app in maintenance.
+  - balance: The Analyzer tablet application is also a maintenance tablet application
+      now.
+  LT3:
+  - bugfix: Tramstation's west wing is reconnected to the power grid
+  - admin: Changing the station status displays now generates a log entry
+  - bugfix: Tramstation's exterior is now in the correct area, no longer marked as
+      Lavaland
+  - bugfix: You can now create new areas on Tramstation's asteroid turfs
+  Rhials:
+  - code_imp: The ninja module folder is now stored in the antagonists folder.
+  Time-Green:
+  - bugfix: Strange geysers have random reagents again
+  - bugfix: Geysers regen reagents again
+  YakumoChen:
+  - bugfix: The tables on the bridge of the NTSS Independence are now usable. Fancy!
+  Zytolg:
+  - bugfix: Fixed the Survivalist N2O System
+  scriptis:
+  - rscadd: a goose for the tram to run over
