@@ -106,9 +106,6 @@
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * delta_time)
 	affected_mob.adjustPlasma(20 * REM * delta_time)
-	if(isplasmaman(affected_mob)) // having wounds repaired still requires plasmaman biology, in case of transplanted plasma livers
-		for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
 	return ..()
 
 /// Handles plasma boiling.
@@ -157,9 +154,6 @@
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
 		humi.adjust_coretemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, affected_mob.get_body_temp_normal())
-	if(isplasmaman(affected_mob)) // hot ice is frozen plasma
-		for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
 	return ..()
 
 /datum/reagent/toxin/lexorin
