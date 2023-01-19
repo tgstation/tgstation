@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes:
+  - rscadd: "Bolter Wrench as a new tool, it can raise the bolts of airlocks regardless of it's power status to smoother station repairs. It can be printed and is unlocked on the same tier as RCD. It can also rarely be a mail gift for engineers."
