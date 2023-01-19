@@ -387,23 +387,36 @@
 
 	breath.garbage_collect()
 
+/// Applies suffocation side-effects to a given Human, scaling based on ratio of required pressure VS "true" pressure.
+/// If pressure is greater than 0, the return value will represent the amount of gas successfully breathed.
 /mob/living/carbon/proc/handle_suffocation(breath_pp = 0, safe_breath_min = 0, true_pp = 0)
 	. = 0
+	// Can't suffocate without minimum breath pressure.
 	if(!safe_breath_min)
 		return
+	// Mob is suffocating.
 	failed_last_breath = TRUE
+	// Give them a chance to notice something is wrong.
 	if(prob(20))
 		emote("gasp")
-	// Epinephrine prevents some oxyloss.
-	if(!reagents.has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE))
-		if(health <= crit_threshold)
-			if(breath_pp > 0)
-				var/ratio = safe_breath_min / breath_pp
-				. = true_pp * ratio / 6
-				// Can't breathe, and Mob is NOT at critical health yet.
-				adjustOxyLoss(min(5 * ratio, 3))
-			else
-				adjustOxyLoss(3)
+	// Mob is at critical health, check if they can be damaged further.
+	if(health < crit_threshold)
+		// Mob is immune to damage at critical health.
+		if(HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
+			return
+		// Reagents like Epinephrine stop suffocation at critical health.
+		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE))
+			return
+	// Low pressure.
+	if(breath_pp)
+		var/ratio = safe_breath_min / breath_pp
+		adjustOxyLoss(min(5 * ratio, 3))
+		return true_pp * ratio / 6
+	// Zero pressure.
+	if(health >= crit_threshold)
+		adjustOxyLoss(3)
+	else
+		adjustOxyLoss(1)
 
 /// Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)

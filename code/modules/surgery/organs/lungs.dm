@@ -584,27 +584,36 @@
 		breath_gases[exchange_gas][MOLES] += volume
 	return volume
 
+/// Applies suffocation side-effects to a given Human, scaling based on ratio of required pressure VS "true" pressure.
+/// If pressure is greater than 0, the return value will represent the amount of gas successfully breathed.
 /obj/item/organ/internal/lungs/proc/handle_suffocation(mob/living/carbon/human/suffocator = null, breath_pp = 0, safe_breath_min = 0, true_pp = 0)
 	. = 0
+	// Can't suffocate without a Human, or without minimum breath pressure.
 	if(!suffocator || !safe_breath_min)
 		return
-
+	// Mob is suffocating.
 	suffocator.failed_last_breath = TRUE
-
+	// Give them a chance to notice something is wrong.
 	if(prob(20))
 		suffocator.emote("gasp")
-
-	if(breath_pp > 0)
-		var/ratio = safe_breath_min/breath_pp
-		suffocator.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!
-		. = true_pp * ratio / 6
-	else if(!suffocator.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
-		if(suffocator.health >= suffocator.crit_threshold)
-			// Can't breathe, and Mob is NOT at critical health yet.
-			suffocator.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		else if(!HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE))
-			// Can't breathe, and Mob IS at critical health, and isn't crit-immune.
-			suffocator.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
+	// If mob is at critical health, check if they can be damaged further.
+	if(suffocator.health < suffocator.crit_threshold)
+		// Mob is immune to damage at critical health.
+		if(HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE))
+			return
+		// Reagents like Epinephrine stop suffocation at critical health.
+		if(suffocator.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
+			return
+	// Low pressure.
+	if(breath_pp)
+		var/ratio = safe_breath_min / breath_pp
+		suffocator.adjustOxyLoss(min(5 * ratio, HUMAN_MAX_OXYLOSS))
+		return true_pp * ratio / 6
+	// Zero pressure.
+	if(suffocator.health >= suffocator.crit_threshold)
+		suffocator.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+	else
+		suffocator.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 
 /obj/item/organ/internal/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/breather) // called by human/life, handles temperatures
