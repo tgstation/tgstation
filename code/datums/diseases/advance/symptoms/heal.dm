@@ -524,7 +524,7 @@
 			var/datum/gas_mixture/tank_contents = internals_tank.return_air()
 			if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
 				if(tank_contents.gases[/datum/gas/plasma])
-					// higher tank distribution pressure leads to more healing, but once you get to about 12kpa you reach the max
+					// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
 					. += power * min(0.75, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
 	// Check environment			
 	if(M.loc)
