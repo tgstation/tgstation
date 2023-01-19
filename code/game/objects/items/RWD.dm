@@ -10,23 +10,34 @@
 	throw_speed = 1
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	var/max_amount = 210
-	var/current_amount = 0
-	var/active = FALSE
-	var/mob/listeningTo
-	var/obj/item/stack/cable_coil/cable
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+
+	/// maximum amount of cable this device can hold
+	var/max_amount = 210
+	/// current amount of cable in the machine
+	var/current_amount = 0
+	/// are we dual wielding this machine
+	var/active = FALSE
+	/// the player currently holding this device.
+	var/mob/listeningTo
+	/// cached reference of the cable used in the device
+	var/obj/item/stack/cable_coil/cable
 
 /obj/item/rwd/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
-	update_appearance()
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/rwd/Destroy(force)
+	. = ..()
+	if(!QDELETED(cable))
+		QDEL_NULL(cable)
 
 /obj/item/rwd/examine(mob/user)
 	. = ..()
-	. += "It has [current_amount] pieces remaining"
-	. += "Right click on it to dispense a custom amount of cable"
+	. += "It has [current_amount] pieces remaining."
+	. += "Right click on it to dispense a custom amount of cable."
 
 /obj/item/rwd/update_icon_state()
 	switch(current_amount)
@@ -71,11 +82,11 @@
 	//spawn the cable. if it merged with the stak below then you pick that up else put it in the user's hand
 	var/obj/item/stack/cable_coil/new_cable = new(user.drop_location(), amount)
 	if(QDELETED(new_cable))
-		balloon_alert(user,"merged with stack below!")
+		balloon_alert(user, "merged with stack below!")
 	else
 		user.put_in_active_hand(new_cable)
 	//update
-	update_appearance()
+	update_appearance(UPDATE_ICON_STATE)
 
 /// triggered on wield of two handed item
 /obj/item/rwd/proc/on_wield(obj/item/source, mob/user)
@@ -109,14 +120,14 @@
 /// insert cable into the rwd
 /obj/item/rwd/proc/add_cable(mob/user, obj/item/stack/cable_coil/cable)
 	if(current_amount == max_amount)
-		balloon_alert(user, "device is full")
+		balloon_alert(user, "device is full!")
 		return
 
 	var/insert_amount = min(cable.amount, max_amount - current_amount)
 	if(cable.use(insert_amount))
 		balloon_alert(user, "inserted [insert_amount] cable")
 		current_amount += insert_amount
-		update_appearance()
+		update_appearance(UPDATE_ICON_STATE)
 
 /// get cached reference of cable which gets used over time
 /obj/item/rwd/proc/get_cable()
@@ -145,9 +156,9 @@
 		if(!coil)
 			return
 		var/obj/structure/cable/cable = coil.place_turf(the_turf, user)
-		if(cable && !QDELETED(cable)) // if user does not have insulated gloves the cable can deconstruct from shock i.e. get deleted
+		if(!QDELETED(cable)) // if user does not have insulated gloves the cable can deconstruct from shock i.e. get deleted
 			current_amount -= 1
-			update_appearance()
+			update_appearance(UPDATE_ICON_STATE)
 
 	// pick up any stray cable pieces lying on the floor
 	for(var/obj/item/stack/cable_coil/cable_piece in the_turf)
