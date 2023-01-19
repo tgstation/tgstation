@@ -180,6 +180,7 @@
 "iJ" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "jj" = (
@@ -686,7 +687,6 @@
 /area/shuttle/escape)
 "LO" = (
 /obj/structure/table,
-/obj/machinery/light/directional/east,
 /obj/item/storage/medkit/regular{
 	pixel_x = 5;
 	pixel_y = 3
@@ -703,6 +703,7 @@
 /obj/structure/sign/poster/official/moth_epi{
 	pixel_y = -32
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Me" = (
@@ -917,13 +918,6 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"YI" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Za" = (
 /obj/structure/closet{
@@ -1322,7 +1316,7 @@ rh
 jv
 TS
 sg
-YI
+NO
 NO
 iJ
 qo
