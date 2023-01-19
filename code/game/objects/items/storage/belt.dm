@@ -149,7 +149,7 @@
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver, src)
-	SSwardrobe.provide_type(/obj/item/wrench/bolter, src)
+	SSwardrobe.provide_type(/obj/item/wrench, src)
 	SSwardrobe.provide_type(/obj/item/weldingtool/largetank, src)
 	SSwardrobe.provide_type(/obj/item/crowbar, src)
 	SSwardrobe.provide_type(/obj/item/wirecutters, src)

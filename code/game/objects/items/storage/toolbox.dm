@@ -86,16 +86,6 @@
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
-/obj/item/storage/toolbox/mechanical/engi
-
-/obj/item/storage/toolbox/mechanical/engi/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench/bolter(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/analyzer(src)
-	new /obj/item/wirecutters(src)
-
 /obj/item/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
