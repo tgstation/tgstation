@@ -40,8 +40,10 @@
 
 /obj/item/rwd/examine(mob/user)
 	. = ..()
+	. += "Dual wield & walk over floors to lay cable."
 	. += "It has [current_amount] pieces remaining."
 	. += "Right click on it to dispense a custom amount of cable."
+	. += "Alt click to change cable layer."
 
 /obj/item/rwd/update_icon_state()
 	switch(current_amount)
