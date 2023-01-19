@@ -107,7 +107,8 @@
 	return TRUE
 
 /datum/keybinding/mob/target/down(client/user)
-	if((. = ..()))
+	. = ..()
+	if(.)
 		return .
 
 	var/original = user.mob.zone_selected
