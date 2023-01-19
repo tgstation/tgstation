@@ -422,6 +422,7 @@
 	var/overlay_icon = 'icons/hud/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
+	var/log_zone_target = TRUE
 
 /atom/movable/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -517,7 +518,8 @@
 		return
 
 	if(choice != hud.mymob.zone_selected)
-		hud.mymob.log_manual_zone_selected_update("screen_hud", new_target = choice)
+		if(log_zone_target)
+			hud.mymob.log_manual_zone_selected_update("screen_hud", new_target = choice)
 		hud.mymob.zone_selected = choice
 		update_appearance()
 		SEND_SIGNAL(user, COMSIG_MOB_SELECTED_ZONE_SET, choice)

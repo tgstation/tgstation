@@ -208,7 +208,11 @@
 				return TRUE
 
 			var/atom/movable/screen/zone_sel/zone_selector = user.hud_used?.zone_select
-			zone_selector?.set_selected_zone(zone, user)
+			if(zone_selector) // prevent logging zone changes done through the surgery hud
+				var/old_log_val = zone_selector.log_zone_target
+				zone_selector.log_zone_target = FALSE
+				zone_selector.set_selected_zone(zone, user)
+				zone_selector.log_zone_target = old_log_val
 
 			return TRUE
 		if ("start_surgery")
