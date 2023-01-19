@@ -223,18 +223,19 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	name = "THING"
 	desc = "IT DOES STUFF"
 	icon = 'icons/obj/toys/tcgmisc.dmi'
-	icon_state = "card_holder_inactive"
+	icon_state = "mana_buttons"
 	use_power = NO_POWER_USE
 
 	var/obj/effect/decal/trading_card_panel/display_panel_ref
 	var/display_panel_type = /obj/effect/decal/trading_card_panel
-	var/panel_offset = 1
+	var/panel_offset_x = 1
+	var/panel_offset_y = 0
 
 GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 
 /obj/machinery/trading_card_button/Initialize(mapload)
 	. = ..()
-	display_panel_ref = new display_panel_type(locate(x + panel_offset, y, z))
+	display_panel_ref = new display_panel_type(locate(x + panel_offset_x, y + panel_offset_y, z))
 
 /obj/machinery/trading_card_button/Destroy()
 	qdel(display_panel_ref)
@@ -273,8 +274,9 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	return TRUE
 
 /obj/machinery/trading_card_button/health
+	icon_state = "health_buttons"
 	display_panel_type = /obj/effect/decal/trading_card_panel/health
-	panel_offset = -1	
+	panel_offset = -1
 
 /obj/effect/decal/trading_card_panel
 	name = "mana panel"
@@ -285,10 +287,12 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	var/gems = 1
 	var/max_gems = 10
 	var/gem_bar_offset_z = -18
-	var/individual_gem_offset = 5
+	var/gem_bar_offset_w = 0
+	var/individual_gem_offset_y = 5
+	var/individual_gem_offset_x = -10
 	var/number_of_rows = 10
 	var/number_of_columns = 1
-	var/column_offset = -10
+	var/gem_icon = "gem_blue"
 
 /obj/effect/decal/trading_card_panel/Initialize(mapload)
 	. = ..()
@@ -302,18 +306,22 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	for(var/gem_row in 1 to number_of_rows)
 		for(var/gem in 1 to number_of_columns)
 			if(gems >= (gem_row - 1) * number_of_columns + gem)
-				var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', "gem")
-				gem_overlay.pixel_z = gem_row * individual_gem_offset + gem_bar_offset_z
-				gem_overlay.pixel_w = (gem - 1) * column_offset
+				var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', gem_icon)
+				gem_overlay.pixel_z = gem_row * individual_gem_offset_y + gem_bar_offset_z
+				gem_overlay.pixel_w = (gem - 1) * individual_gem_offset_x + gem_bar_offset_w
 				. += gem_overlay
 
 /obj/effect/decal/trading_card_panel/health
 	name = "health panel"
 	pixel_x = 9
+	
 
 	gems = 20
 	max_gems = 20
+	gem_bar_offset_w = 3
+	individual_gem_offset_x = -5
 	number_of_columns = 2
+	gem_icon = "gem_red"
 
 /obj/effect/decal/trading_card_panel/south
 	name = "trading card point panel south"
