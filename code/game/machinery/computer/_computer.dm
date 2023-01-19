@@ -157,7 +157,7 @@
 	return character_preview_view
 
 /// Takes a record and updates the character preview view to match it.
-/obj/machinery/computer/proc/update_body(var/datum/record/locked/record)
+/obj/machinery/computer/proc/update_body(datum/record/locked/record)
 	var/mob/living/carbon/human/dummy/mannequin = character_preview_view.body
 
 	if (isnull(mannequin))
