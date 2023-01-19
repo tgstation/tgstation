@@ -151,7 +151,6 @@ const ContactsScreen = (props, context) => {
           <Section fill>
             <Stack vertical>
               {users.length === 0 && 'No users found'}
-
               {users.map((messenger) => (
                 <Button
                   key={messenger.ref}
