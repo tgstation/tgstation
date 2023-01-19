@@ -495,7 +495,7 @@
 
 	var/atom/handitem = get_active_held_item()
 	var/atom/offhand = get_inactive_held_item()
-	var/log_message = ""[key_name(src)] changed selected zone from [old_target] to [new_target]."
+	var/log_message = "[key_name(src)] changed selected zone from [old_target] to [new_target]."
 	if(handitem)
 		log_message += " active item: ([handitem.type])[handitem]"
 	if(offhand)
