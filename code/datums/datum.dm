@@ -311,6 +311,10 @@
 		atom_cast.filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
 
+/obj/item/update_filters()
+	. = ..()
+	update_item_action_buttons()
+
 /** Update a filter's parameter to the new one. If the filter doesnt exist we won't do anything.
  *
  * Arguments:
@@ -328,10 +332,6 @@
 		for(var/thing in new_params)
 			filter_data[name][thing] = new_params[thing]
 	update_filters()
-
-/obj/item/update_filters()
-	. = ..()
-	update_item_action_buttons()
 
 /** Update a filter's parameter and animate this change. If the filter doesnt exist we won't do anything.
  * Basically a [datum/proc/modify_filter] call but with animations. Unmodified filter parameters are kept.
