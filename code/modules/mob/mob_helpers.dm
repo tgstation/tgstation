@@ -490,10 +490,14 @@
 
 	old_target ||= zone_selected
 	new_target ||= zone_selected
-
 	if(old_target == new_target)
 		return
 
-	var/handitem = "[get_active_held_item()]"
-	var/offhand = "[get_inactive_held_item()]"
-	log_game("Manual Zone Select Change: ([source])([key_name(src)]): [old_target] -> [new_target] | Active Item: [handitem] | Inactive Item: [offhand]")
+	var/atom/handitem = get_active_held_item()
+	var/atom/offhand = get_inactive_held_item()
+	var/log_message = ""[key_name(src)] changed selected zone from [old_target] to [new_target]."
+	if(handitem)
+		log_message += " active item: ([handitem.type])[handitem]"
+	if(offhand)
+		log_message += " inactive item: ([offhand.type])[offhand]"
+	log_game(log_message)
