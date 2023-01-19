@@ -479,3 +479,21 @@
 	else if(iscarbon(mob) || isAI(mob) || isbrain(mob))
 		divided_health = abs(HEALTH_THRESHOLD_DEAD - mob.health) / abs(HEALTH_THRESHOLD_DEAD - mob.maxHealth)
 	return divided_health * 100
+
+/**
+ * Generates a log message when a user manually changes their targeted zone.
+ * Only need to one of new_target or old_target, and the other will be auto populated with the current selected zone.
+ */
+/mob/proc/log_manual_zone_selected_update(source, new_target, old_target)
+	if(!new_target && !old_target)
+		CRASH("Called log_manual_zone_selected_update without specifying a new or old target")
+
+	old_target ||= zone_selected
+	new_target ||= zone_selected
+
+	if(old_target == new_target)
+		return
+
+	var/handitem = "[get_active_held_item()]"
+	var/offhand = "[get_inactive_held_item()]"
+	log_game("Manual Zone Select Change: ([source])([key_name(src)]): [old_target] -> [new_target] | Active Item: [handitem] | Inactive Item: [offhand]")

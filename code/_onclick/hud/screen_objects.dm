@@ -517,6 +517,7 @@
 		return
 
 	if(choice != hud.mymob.zone_selected)
+		hud.mymob.log_manual_zone_selected_update("screen_hud", new_target = choice)
 		hud.mymob.zone_selected = choice
 		update_appearance()
 		SEND_SIGNAL(user, COMSIG_MOB_SELECTED_ZONE_SET, choice)
