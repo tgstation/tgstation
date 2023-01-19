@@ -184,9 +184,9 @@
 
 /// get cached reference of cable which gets used over time
 /obj/item/rwd/proc/get_cable()
-	if(!cable || QDELETED(cable))
+	if(QDELETED(cable))
 		var/create_amount = min(30, current_amount)
-		if(!create_amount)
+		if(create_amount == 0)
 			return null
 		cable = new/obj/item/stack/cable_coil(src, create_amount)
 	return modify_cable(cable)
