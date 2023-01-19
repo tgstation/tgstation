@@ -309,15 +309,15 @@ Security HUDs! Basic mode shows only the job.
 		if(!record || record.wanted_status == "None")
 			return
 		switch(record.wanted_status)
-			if("*Arrest*")
+			if(WANTED_ARREST)
 				holder.icon_state = "hudwanted"
-			if("Incarcerated")
+			if(WANTED_PRISONER)
 				holder.icon_state = "hudincarcerated"
-			if("Suspected")
+			if(WANTED_SUSPECT)
 				holder.icon_state = "hudsuspected"
-			if("Paroled")
+			if(WANTED_PAROLE)
 				holder.icon_state = "hudparolled"
-			if("Discharged")
+			if(WANTED_DISCHARGED)
 				holder.icon_state = "huddischarged"
 
 	holder.icon_state = null

@@ -159,7 +159,7 @@ The console is located at computer/gulag_teleporter.dm
 	if(id)
 		prisoner.equip_to_appropriate_slot(id, qdel_on_fail = TRUE)
 	if(record)
-		record.wanted_status = "Incarcerated"
+		record.wanted_status = WANTED_PRISONER
 
 	use_power(active_power_usage)
 

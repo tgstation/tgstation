@@ -1,6 +1,5 @@
 import { useBackend, useLocalState } from 'tgui/backend';
 import { NoticeBox, Stack, Section, Button, Dropdown, Table, LabeledList, Input } from 'tgui/components';
-import { logger } from '../../logging';
 import { CharacterPreview } from '../PreferencesMenu/CharacterPreview';
 import { CRIMESTATUS2COLOR } from './constants';
 import { CrimeWatcher } from './CrimeWatcher';
@@ -16,7 +15,6 @@ export const RecordView = (props, context) => {
   const { act, data } = useBackend<SecureData>(context);
   const { available_statuses } = data;
   const [open, setOpen] = useLocalState<boolean>(context, 'printOpen', false);
-  logger.log(available_statuses);
 
   const {
     age,

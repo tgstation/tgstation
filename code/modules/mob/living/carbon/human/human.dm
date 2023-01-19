@@ -206,7 +206,7 @@
 				to_chat(human_user, span_warning("ERROR: Unable to locate data core entry for target."))
 				return
 			if(href_list["status"])
-				var/setcriminal = input(human_user, "Specify a new criminal status for this person.", "Security HUD", target_record.wanted_status) in list("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged", "Cancel")
+				var/setcriminal = input(human_user, "Specify a new criminal status for this person.", "Security HUD", target_record.wanted_status) in list(WANTED_NONE, WANTED_SUSPECT, WANTED_ARREST, WANTED_PRISONER, WANTED_PAROLE, WANTED_DISCHARGED, "Cancel")
 				if(setcriminal != "Cancel")
 					if(!target_record)
 						return
@@ -249,7 +249,7 @@
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
-				var/datum/crime/citation = new(name = t1, author = allowed_access, time = station_time_timestamp(), fine = fine)
+				var/datum/crime/citation/new_citation = new(name = t1, author = allowed_access, time = station_time_timestamp(), fine = fine)
 				for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
 					if(tablet.saved_identification == target_record.name)
 						var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
@@ -262,9 +262,9 @@
 						))
 						signal.send_to_receivers()
 						human_user.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-				target_record.citations += citation
+				target_record.citations += new_citation
 				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
-				SSblackbox.ReportCitation(citation.crime_id, human_user.ckey, human_user.real_name, target_record.name, t1, fine)
+				SSblackbox.ReportCitation(REF(new_citation), human_user.ckey, human_user.real_name, target_record.name, t1, fine)
 				return
 
 			if(href_list["add_crime"])
@@ -378,13 +378,13 @@
 		var/datum/record/crew/record = find_record(perpname)
 		if(record?.wanted_status)
 			switch(record.wanted_status)
-				if("*Arrest*")
+				if(WANTED_ARREST)
 					threatcount += 5
-				if("Incarcerated")
+				if(WANTED_PRISONER)
 					threatcount += 2
-				if("Suspected")
+				if(WANTED_SUSPECT)
 					threatcount += 2
-				if("Paroled")
+				if(WANTED_PAROLE)
 					threatcount += 2
 
 	//Check for dresscode violations

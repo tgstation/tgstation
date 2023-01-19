@@ -145,6 +145,7 @@ const CrimeAuthor = (props, context) => {
     SECURETAB.Crimes
   );
 
+  /** Sends form to backend */
   const createCrime = () => {
     if (!crimeName) return;
     act('add_crime', {
@@ -153,6 +154,14 @@ const CrimeAuthor = (props, context) => {
       name: crimeName,
       ref: ref,
     });
+    reset();
+  };
+
+  /** Resets form data since it persists.. */
+  const reset = () => {
+    setCrimeDetails('');
+    setCrimeFine(0);
+    setCrimeName('');
     setSelectedTab(crimeFine ? SECURETAB.Citations : SECURETAB.Crimes);
   };
 
@@ -185,9 +194,12 @@ const CrimeAuthor = (props, context) => {
         />
       </Stack.Item>
       <Stack.Item>
-        <Button disabled={!crimeName} icon="plus" onClick={createCrime}>
-          Create
-        </Button>
+        <Button.Confirm
+          content="Create"
+          disabled={!crimeName}
+          icon="plus"
+          onClick={createCrime}
+        />
       </Stack.Item>
     </Stack>
   );

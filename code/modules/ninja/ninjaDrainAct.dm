@@ -157,7 +157,7 @@
 	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja)))
 		return
 	for(var/datum/record/crew/record in GLOB.data_core.general)
-		record.wanted_status = "*Arrest*"
+		record.wanted_status = WANTED_ARREST
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
 		return

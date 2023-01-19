@@ -94,21 +94,21 @@
 
 	for(var/datum/record/crew/target in GLOB.data_core.general)
 		var/list/citations = list()
-		for(var/datum/crime/citation as anything in target.citations)
+		for(var/datum/crime/citation/warrant in target.citations)
 			var/list/entry = list(list(
-				author = citation.author,
-				details = citation.details,
-				name = citation.name,
-				time = citation.time,
-				fine = citation.fine,
-				paid = citation.paid,
-				ref = REF(citation),
+				author = warrant.author,
+				details = warrant.details,
+				fine = warrant.fine,
+				name = warrant.name,
+				paid = warrant.paid,
+				ref = REF(warrant),
+				time = warrant.time,
 			))
 
 			citations += entry
 
 		var/list/crimes = list()
-		for(var/datum/crime/crime as anything in target.crimes)
+		for(var/datum/crime/crime in target.crimes)
 			var/list/entry = list(list(
 				author = crime.author,
 				details = crime.details,
@@ -147,11 +147,7 @@
 
 	switch(action)
 		if("add_crime")
-			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-			if(!record)
-				return FALSE
-
-			add_crime(usr, record, params)
+			add_crime(usr, params)
 			return TRUE
 
 		if("delete_crime")
@@ -164,6 +160,7 @@
 				record.crimes -= crime
 				qdel(crime)
 				return TRUE
+
 			var/datum/crime/citation = locate(params["crime_ref"]) in record.citations
 			if(citation)
 				record.citations -= citation
@@ -183,6 +180,7 @@
 			balloon_alert(usr, "logged out")
 			playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
 			logged_in = FALSE
+
 			return TRUE
 
 		if("print_record")
@@ -196,6 +194,7 @@
 
 			var/note = params["note"]
 			record.security_note = trim(note, MAX_MESSAGE_LEN)
+
 			return TRUE
 
 		if("set_wanted")
@@ -207,6 +206,7 @@
 			if(!wanted_status || !(wanted_status in WANTED_STATUSES()))
 				return FALSE
 			record.wanted_status = wanted_status
+
 			return TRUE
 
 		if("view_record")
@@ -214,25 +214,37 @@
 			if(!record)
 				return FALSE
 			update_body(record)
+
 			return TRUE
 
 	return FALSE
 
 /// Handles adding a crime to a particular record.
-/obj/machinery/computer/secure_data/proc/add_crime(mob/user, datum/record/crew/record, list/params)
+/obj/machinery/computer/secure_data/proc/add_crime(mob/user, list/params)
+	var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
+	if(!record)
+		return FALSE
+
 	if(!params["name"])
 		to_chat(usr, span_warning("You must enter a name for the crime."))
+		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
+
 	if(params["fine"] > MAX_CITATION_FINE)
 		to_chat(usr, span_warning("The maximum fine is [MAX_CITATION_FINE] credits."))
+		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
-	var/input_details = params["details"] || "No details provided."
-	var/datum/crime/new_crime = new(name = params["name"], details = input_details, author = usr, time = world.time, fine = params["fine"], paid = 0)
+	var/input_details
+	if(params["details"])
+		input_details = params["details"]
 
-	if(new_crime.fine > COMP_SECURITY_ARREST_AMOUNT_TO_FLAG)
-		record.citations += new_crime
+	if(params["fine"] > 0)
+		var/datum/crime/citation/new_citation = new(name = params["name"], details = input_details, author = usr, time = world.time, fine = params["fine"], paid = 0)
+		record.citations += new_citation
 		return TRUE
+
+	var/datum/crime/new_crime = new(name = params["name"], details = params["details"], author = usr, time = world.time)
 	record.crimes += new_crime
 	record.wanted_status = WANTED_ARREST
 
@@ -269,7 +281,7 @@
 	playsound(src, 'sound/machines/terminal_eject.ogg', 100, TRUE)
 	printable.forceMove(loc)
 
-	return FALSE
+	return TRUE
 
 /// Handles printing records via UI. Takes the params from UI_act.
 /obj/machinery/computer/secure_data/proc/print_record(mob/user, list/params)

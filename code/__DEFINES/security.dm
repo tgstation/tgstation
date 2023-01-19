@@ -62,12 +62,12 @@
 #define WANTED_NONE "None"
 #define WANTED_PAROLE "Parole"
 #define WANTED_PRISONER "Incarcerated"
-#define WANTED_SUSPECTED "Suspected"
+#define WANTED_SUSPECT "Suspected"
 
 /// List of available wanted statuses
 #define WANTED_STATUSES(...) list(\
 	WANTED_NONE, \
-	WANTED_SUSPECTED, \
+	WANTED_SUSPECT, \
 	WANTED_ARREST, \
 	WANTED_PRISONER, \
 	WANTED_PAROLE, \

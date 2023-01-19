@@ -75,7 +75,7 @@
 	/// Security note
 	var/security_note
 	/// Current arrest status
-	var/wanted_status = "None"
+	var/wanted_status = WANTED_NONE
 
 /datum/record/crew/New(
 	age = 18,
@@ -233,12 +233,12 @@
 						<th>Time Added</th>
 						<th>Fine</th>
 						</tr>"}
-	for(var/datum/crime/citation in citations)
-		final_paper_text += "<tr><td>[citation.name]</td>"
-		final_paper_text += "<td>[citation.details]</td>"
-		final_paper_text += "<td>[citation.author]</td>"
-		final_paper_text += "<td>[citation.time]</td>"
-		final_paper_text += "<td>[citation.fine]</td>"
+	for(var/datum/crime/citation/warrant in citations)
+		final_paper_text += "<tr><td>[warrant.name]</td>"
+		final_paper_text += "<td>[warrant.details]</td>"
+		final_paper_text += "<td>[warrant.author]</td>"
+		final_paper_text += "<td>[warrant.time]</td>"
+		final_paper_text += "<td>[warrant.fine]</td>"
 		final_paper_text += "</tr>"
 	final_paper_text += "</table>"
 
