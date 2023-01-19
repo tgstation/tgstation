@@ -373,7 +373,8 @@
 	pixel_y = -4
 	},
 /obj/machinery/trading_card_button/health{
-	pixel_y = 10
+	pixel_y = 10;
+	panel_offset_y = -1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -412,7 +413,8 @@
 	pixel_y = -4
 	},
 /obj/machinery/trading_card_button{
-	pixel_y = 10
+	pixel_y = 10;
+	panel_offset_y = -1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)

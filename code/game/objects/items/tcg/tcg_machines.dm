@@ -240,31 +240,41 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 /obj/machinery/trading_card_button/Destroy()
 	qdel(display_panel_ref)
 	. = ..()
-	
 
 /obj/machinery/trading_card_button/attack_hand(mob/user)
-	var/list/choices = GLOB.tcgcard_mana_bar_radial_choices
+	var/list/choices = setup_global()
 	if(!length(choices))
-		choices = GLOB.tcgcard_mana_bar_radial_choices = list(
-		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
-		"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
-		"Modify" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_modify"),
-		)
+		choices = setup_radial()
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
-	switch(choice)
-		if("Pickup")
-			display_panel_ref.gems += 1
-		if("Tap")
-			display_panel_ref.gems -= 1
-		if("Modify")
-			display_panel_ref.gems = initial(display_panel_ref.gems)
+	handle_choice(choice, user)
 	display_panel_ref.update_icon(UPDATE_OVERLAYS)
 	add_fingerprint(user)
 	return ..()
 
+/obj/machinery/trading_card_button/proc/setup_global()
+	return GLOB.tcgcard_mana_bar_radial_choices
+
 /obj/machinery/trading_card_button/proc/setup_radial()
+	var/radial_choices 
+	radial_choices = GLOB.tcgcard_mana_bar_radial_choices = list(
+	"Set Mana" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
+	"Set Mana Slots" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_modify"),
+	"New Turn" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+	)
+	return radial_choices
+
+/obj/machinery/trading_card_button/proc/handle_choice(var/choice, mob/user)
+	switch(choice)
+		if("Set Mana")
+			display_panel_ref.gems = tgui_input_number(user, "Please input total mana", "Set mana", display_panel_ref.gems, display_panel_ref.gem_slots, 0)
+		if("Set Mana Slots")
+			display_panel_ref.gem_slots = tgui_input_number(user, "Please input total mana slots", "Set mana slots", display_panel_ref.gem_slots, 10, 1)
+		if("New Turn")
+			if display_panel_ref.gem_slots(<=9)
+				display_panel_ref.gem_slots += 1
+			display_panel_ref.gems = display_panel_ref.gem_slots
 
 /obj/machinery/trading_card_button/proc/check_menu(mob/living/user)
 	if(!istype(user))
@@ -276,23 +286,46 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 /obj/machinery/trading_card_button/health
 	icon_state = "health_buttons"
 	display_panel_type = /obj/effect/decal/trading_card_panel/health
-	panel_offset = -1
+	panel_offset_x = -1
+
+GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
+
+/obj/machinery/trading_card_button/health/setup_global()
+	return GLOB.tcgcard_health_bar_radial_choices
+
+/obj/machinery/trading_card_button/health/setup_radial()
+	var/radial_choices 
+	radial_choices = GLOB.tcgcard_health_bar_radial_choices = list(
+	"Set Health" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
+	"Inflict Damage" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+	)
+	return radial_choices
+
+/obj/machinery/trading_card_button/health/handle_choice(choice, mob/user)
+	switch(choice)
+		if("Set Health")
+			display_panel_ref.gems = tgui_input_number(user, "Please input total health", "Set health", display_panel_ref.gems, display_panel_ref.gem_slots, 0)
+		if("Inflict Damage")
+			display_panel_ref.gems -= tgui_input_number(user, "Please input total damage", "Inflict damage", 1, display_panel_ref.gem_slots, 0)
 
 /obj/effect/decal/trading_card_panel
 	name = "mana panel"
-	icon = 'icons/obj/toys/tcgmisc.dmi'
-	icon_state = "point_panel_north"
+	icon = 'icons/obj/toys/tcgmisc_large.dmi'
+	icon_state = "display_panel"
 	pixel_x = -10
 
 	var/gems = 1
+	var/gem_slots = 1
 	var/max_gems = 10
-	var/gem_bar_offset_z = -18
+	var/gem_bar_offset_z = -11
 	var/gem_bar_offset_w = 0
 	var/individual_gem_offset_y = 5
 	var/individual_gem_offset_x = -10
 	var/number_of_rows = 10
 	var/number_of_columns = 1
 	var/gem_icon = "gem_blue"
+	var/empty_gem_icon = "gem_blue_empty"
+	var/gem_title = "mana"
 
 /obj/effect/decal/trading_card_panel/Initialize(mapload)
 	. = ..()
@@ -300,29 +333,33 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 
 /obj/effect/decal/trading_card_panel/update_overlays()
 	. = ..()
-	if(!gems)
+	if(!gem_slots)
 		return
-	gems = clamp(gems, 0, max_gems)
+	gems = clamp(gems, 0, gem_slots)
 	for(var/gem_row in 1 to number_of_rows)
 		for(var/gem in 1 to number_of_columns)
-			if(gems >= (gem_row - 1) * number_of_columns + gem)
-				var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', gem_icon)
+			if(gem_slots >= (gem_row - 1) * number_of_columns + gem)
+				var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', empty_gem_icon)
+				if(gems >= (gem_row - 1) * number_of_columns + gem)
+					gem_overlay.icon_state = gem_icon
 				gem_overlay.pixel_z = gem_row * individual_gem_offset_y + gem_bar_offset_z
 				gem_overlay.pixel_w = (gem - 1) * individual_gem_offset_x + gem_bar_offset_w
 				. += gem_overlay
 
+/obj/effect/decal/trading_card_panel/examine(mob/user)
+	. = ..()
+	. += span_notice("It is currently showing [gems] out of [gem_slots] [gem_title]")
+
 /obj/effect/decal/trading_card_panel/health
-	name = "health panel"
+	name = "life shard panel"
 	pixel_x = 9
-	
 
 	gems = 20
+	gem_slots = 20
 	max_gems = 20
 	gem_bar_offset_w = 3
 	individual_gem_offset_x = -5
 	number_of_columns = 2
 	gem_icon = "gem_red"
-
-/obj/effect/decal/trading_card_panel/south
-	name = "trading card point panel south"
-	icon_state = "point_panel_south"
+	empty_gem_icon = "gem_red_empty"
+	gem_title = "life shards"
