@@ -200,7 +200,7 @@
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/stack/rods) && broken)
+	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
 		if(shock(user, 90))
 			return
 		var/obj/item/stack/rods/R = W

@@ -88,13 +88,13 @@
 	var/new_max_items = 10
 	var/new_processed_items_per_cycle = 0
 
-	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
-		new_max_items += MAX_ITEMS_PER_RATING * bin.rating
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		new_max_items += MAX_ITEMS_PER_RATING * bin.tier
 
-	for(var/obj/item/stock_parts/manipulator/manipulator in component_parts)
-		new_productivity += manipulator.rating
-		new_efficiency += manipulator.rating
-		new_processed_items_per_cycle += PROCESSED_ITEMS_PER_RATING * manipulator.rating
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		new_productivity += manipulator.tier
+		new_efficiency += manipulator.tier
+		new_processed_items_per_cycle += PROCESSED_ITEMS_PER_RATING * manipulator.tier
 
 	max_items = new_max_items
 	efficiency = new_efficiency

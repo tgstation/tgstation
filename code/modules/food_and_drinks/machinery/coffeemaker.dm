@@ -65,8 +65,8 @@
 /obj/machinery/coffeemaker/RefreshParts()
 	. = ..()
 	speed = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		speed += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		speed += laser.tier
 
 /obj/machinery/coffeemaker/examine(mob/user)
 	. = ..()
