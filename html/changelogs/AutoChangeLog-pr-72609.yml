@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed give_important_for_life proc in species.dm, which is supposed to be used to help ensure plasmamen (and potentially other races) are always spawned with internals and such"
+  - bugfix: "fixed issue where plasmamen who are spawned without a plasmaman-specific job outfit could spawn without internals and a suit, and just start dying immediately"

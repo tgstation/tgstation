@@ -641,3 +641,38 @@
       by a variable rather then just skeleton species
   YakumoChen:
   - rscadd: Service borgs have a chisel now, make some statues!
+2023-01-19:
+  A.C.M.O.:
+  - bugfix: Fixed buggy organ filtering code in the DNA Infuser which stopped it from
+      infusing organs.
+  Autisem:
+  - rscadd: New circuit component, list pick!
+  - bugfix: Pickle crafting no longer gives an empty beaker
+  - bugfix: Pickle crafting costs/gives 10 cucumbers/pickles
+  Fikou, a hood by Viro:
+  - refactor: humanoid mobs and cardboard cutouts automatically generate their sprites,
+      they no longer will be outdated
+  Guillaume Prata:
+  - qol: APCs have contextual screen tips now.
+  JohnFulpWillard, sprites by Tramzz:
+  - rscadd: Added Maintenance tablet applications, applications that can't be cloned
+      or downloaded from the store, instead you can find one app in maintenance.
+  - balance: The Analyzer tablet application is also a maintenance tablet application
+      now.
+  LT3:
+  - bugfix: Tramstation's west wing is reconnected to the power grid
+  - admin: Changing the station status displays now generates a log entry
+  - bugfix: Tramstation's exterior is now in the correct area, no longer marked as
+      Lavaland
+  - bugfix: You can now create new areas on Tramstation's asteroid turfs
+  Rhials:
+  - code_imp: The ninja module folder is now stored in the antagonists folder.
+  Time-Green:
+  - bugfix: Strange geysers have random reagents again
+  - bugfix: Geysers regen reagents again
+  YakumoChen:
+  - bugfix: The tables on the bridge of the NTSS Independence are now usable. Fancy!
+  Zytolg:
+  - bugfix: Fixed the Survivalist N2O System
+  scriptis:
+  - rscadd: a goose for the tram to run over

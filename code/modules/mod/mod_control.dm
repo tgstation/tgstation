@@ -417,9 +417,11 @@
 	if(wearer.stat < UNCONSCIOUS && prob(10))
 		wearer.emote("scream")
 
+/obj/item/mod/control/visual_equipped(mob/user, slot, initial = FALSE)
+	if(slot & slot_flags)
+		set_wearer(user)
+
 /obj/item/mod/control/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
-	if(visuals_only)
-		set_wearer(outfit_wearer) //we need to set wearer manually since it doesnt call equipped
 	quick_activation()
 
 /obj/item/mod/control/doStrip(mob/stripper, mob/owner)
