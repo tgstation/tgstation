@@ -351,7 +351,7 @@ Moving interrupts
 	var/datum/progressbar/total_progress_bar = new(user, sculpting_time, prepared_block)
 	while(remaining_time > 0 && !interrupted)
 		if(do_after(user, sculpting_period, target = prepared_block, progress = FALSE))
-			if(remaining_time % 2) // gives a small delay so we don't play this sound every second
+			if(!(remaining_time % 4)) // gives a small delay so we don't play this sound every second
 				playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 			remaining_time -= sculpting_period
 			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time)
