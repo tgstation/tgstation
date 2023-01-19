@@ -132,6 +132,7 @@
 		if(COMSIG_KB_MOB_TARGETLEFTLEG_DOWN)
 			user.body_l_leg()
 		else
+			stack_trace("Target keybind pressed but not implemented! '[keybind_signal]'")
 			return FALSE
 	user.mob.log_manual_zone_selected_update("keybind", old_target = original)
 
