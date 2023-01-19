@@ -60,7 +60,7 @@
 	return ..()
 
 /obj/item/rwd/attack_self_secondary(mob/user, modifiers)
-	if(current_amount == 0)
+	if(current_amount <= 0)
 		balloon_alert(user, "nothing to dispense!")
 		return
 
@@ -79,9 +79,10 @@
 		if(!the_cable)
 			return
 		var/consumed = min(amount_to_consume, the_cable.amount)
-		the_cable.use(consumed)
+		if(!the_cable.use(consumed))
+			return
+		delta_cable(consumed, decrement = TRUE)
 		amount_to_consume -= consumed
-	current_amount -= amount
 
 	//spawn the cable. if it merged with the stak below then you pick that up else put it in the user's hand
 	var/obj/item/stack/cable_coil/new_cable = new(user.drop_location(), amount)
@@ -160,10 +161,12 @@
 		return
 
 	var/insert_amount = min(cable.amount, max_amount - current_amount)
-	if(cable.use(insert_amount))
-		balloon_alert(user, "inserted [insert_amount] cable")
-		current_amount += insert_amount
-		update_appearance(UPDATE_ICON_STATE)
+	if(!cable.use(insert_amount))
+		return
+
+	delta_cable(insert_amount, decrement = FALSE)
+	update_appearance(UPDATE_ICON_STATE)
+	balloon_alert(user, "inserted [insert_amount] cable")
 
 /// modify cable properties according to its layer
 /obj/item/rwd/proc/modify_cable(obj/item/stack/cable_coil/target_cable)
@@ -186,7 +189,7 @@
 /obj/item/rwd/proc/get_cable()
 	if(QDELETED(cable))
 		var/create_amount = min(30, current_amount)
-		if(create_amount == 0)
+		if(create_amount <= 0)
 			return null
 		cable = new/obj/item/stack/cable_coil(src, create_amount)
 	return modify_cable(cable)
@@ -210,6 +213,14 @@
 
 	return TRUE
 
+/// extra safe modify just to be sure
+/obj/item/rwd/proc/delta_cable(amount, decrement)
+	if(decrement)
+		current_amount -= amount
+	else
+		current_amount += amount
+	current_amount = clamp(current_amount, 0, max_amount)
+
 /// stuff to do when moving
 /obj/item/rwd/proc/on_move(mob/user)
 	SIGNAL_HANDLER
@@ -227,10 +238,10 @@
 		var/obj/item/stack/cable_coil/coil = get_cable()
 		if(!coil)
 			return
-		var/obj/structure/cable/cable = coil.place_turf(the_turf, user)
-		if(!QDELETED(cable)) // if user does not have insulated gloves the cable can deconstruct from shock i.e. get deleted
-			current_amount -= 1
-			update_appearance(UPDATE_ICON_STATE)
+
+		coil.place_turf(the_turf, user)
+		delta_cable(1, decrement = TRUE)
+		update_appearance(UPDATE_ICON_STATE)
 
 	// pick up any stray cable pieces lying on the floor
 	for(var/obj/item/stack/cable_coil/cable_piece in the_turf)
