@@ -418,8 +418,7 @@ GLOBAL_LIST_EMPTY(lifts)
 				var/datum/callback/land_slam = new(collided, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
 
-				if(istype(collided, /mob/living/carbon/human)) //don't increment the counter when birdboat gets hit
-					SEND_SIGNAL(src, COMSIG_TRAM_COLLISION)
+				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, collided)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)

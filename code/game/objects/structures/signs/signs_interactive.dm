@@ -111,10 +111,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 /obj/structure/sign/collision_counter/Destroy()
 	return ..()
 
-/obj/structure/sign/collision_counter/proc/new_hit()
+/obj/structure/sign/collision_counter/proc/new_hit(lift_master, collided_type)
 	SIGNAL_HANDLER
 
+	if(!istype(collided_type, /mob/living/carbon/human)) //don't increment the counter when birdboat gets hit
+		return
+
 	hit_count++
+
 	if(hazard_flash)
 		update_appearance()
 		return
