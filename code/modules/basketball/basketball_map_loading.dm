@@ -46,7 +46,6 @@
 	team_name = "Nanotrasen Basketball Department"
 	//home_team_uniform defaults to blue or red jerseys for regular stadium
 
-
 /datum/map_template/basketball/lusty_xenomorphs
 	name = "Lusty Xenomorphs Stadium"
 	description = "The homecourt of the Lusty Xenomorphs."
