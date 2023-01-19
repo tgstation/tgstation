@@ -1,0 +1,7 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - qol: "The orbit menu now sorts antagonists into groups more effectively. Some get new named groups."
+  - admin: "Traitor panel should have slightly more sane categories."
+  - rscadd: "Many minor antagonists now have \"objectives\"."
+  - refactor: "Refactors code in several antag datums."
