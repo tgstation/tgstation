@@ -159,7 +159,7 @@
 /obj/item/storage/belt/utility/full/engi/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/screwdriver
-	to_preload += /obj/item/wrench/bolter
+	to_preload += /obj/item/wrench
 	to_preload += /obj/item/weldingtool/largetank
 	to_preload += /obj/item/crowbar
 	to_preload += /obj/item/wirecutters
