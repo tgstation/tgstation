@@ -1,9 +1,55 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"cr" = (
-/obj/structure/rack,
-/turf/open/floor/iron/dark/side,
+"aL" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"dc" = (
+"aV" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"bC" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron,
+/area/ruin/powered/golem_ship)
+"dh" = (
+/obj/structure/rack,
+/obj/item/pickaxe{
+	pixel_y = 8
+	},
+/obj/item/pickaxe{
+	pixel_y = 4
+	},
+/obj/item/pickaxe,
+/obj/item/pickaxe{
+	pixel_y = -4
+	},
+/obj/item/pickaxe{
+	pixel_y = -8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"dW" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/turf/open/floor/iron,
+/area/ruin/powered/golem_ship)
+"ef" = (
+/obj/machinery/power/shuttle_engine/large{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"fD" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/powered/golem_ship)
+"fK" = (
+/turf/open/floor/iron/dark/side{
+	dir = 10
+	},
+/area/ruin/powered/golem_ship)
+"ha" = (
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"hW" = (
 /obj/structure/rack,
 /obj/item/shovel{
 	pixel_y = 8
@@ -20,86 +66,7 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"dx" = (
-/obj/structure/rack,
-/obj/item/mining_scanner{
-	pixel_x = -8
-	},
-/obj/item/mining_scanner{
-	pixel_x = -4
-	},
-/obj/item/mining_scanner,
-/obj/item/mining_scanner{
-	pixel_x = 4
-	},
-/obj/item/mining_scanner{
-	pixel_x = 8
-	},
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"dI" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/statue/gold/rd,
-/obj/machinery/light/floor,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"eS" = (
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"eX" = (
-/obj/machinery/autolathe,
-/turf/open/floor/iron/dark/side,
-/area/ruin/powered/golem_ship)
-"fB" = (
-/turf/template_noop,
-/area/template_noop)
-"fI" = (
-/obj/machinery/computer/order_console/mining/golem,
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered/golem_ship)
-"gs" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"hz" = (
-/obj/structure/fluff/tram_rail/end{
-	dir = 8
-	},
-/turf/template_noop,
-/area/template_noop)
-"hX" = (
-/turf/open/floor/iron/dark,
-/area/ruin/powered/golem_ship)
-"ie" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8
-	},
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"is" = (
-/obj/structure/rack,
-/obj/item/flashlight/lantern{
-	pixel_x = -8
-	},
-/obj/item/flashlight/lantern{
-	pixel_x = -4
-	},
-/obj/item/flashlight/lantern,
-/obj/item/flashlight/lantern{
-	pixel_x = 4
-	},
-/obj/item/flashlight/lantern{
-	pixel_x = 8
-	},
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"iH" = (
+"ij" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -117,108 +84,60 @@
 /obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"jh" = (
+"jj" = (
+/obj/structure/table/wood,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"jl" = (
+/obj/structure/ore_box,
 /obj/machinery/light/directional/east,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"jJ" = (
-/turf/open/floor/iron/dark/smooth_half,
+"kE" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"kQ" = (
-/turf/open/space/basic,
-/area/ruin/powered/golem_ship)
-"le" = (
-/obj/machinery/computer/arcade/battle,
-/turf/open/floor/iron/dark/corner,
-/area/ruin/powered/golem_ship)
-"lj" = (
+"lu" = (
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark/side{
-	dir = 4
+	dir = 1
 	},
 /area/ruin/powered/golem_ship)
-"lT" = (
-/obj/machinery/light/directional/north,
+"lx" = (
+/obj/structure/rack,
 /turf/open/floor/iron/dark/side,
 /area/ruin/powered/golem_ship)
-"mw" = (
+"mP" = (
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/ruin/powered/golem_ship)
+"oa" = (
 /obj/structure/rack,
-/obj/item/storage/medkit/fire{
+/obj/item/storage/medkit/brute{
 	pixel_y = 8
 	},
-/obj/item/storage/medkit/fire{
+/obj/item/storage/medkit/brute{
 	pixel_y = 4
 	},
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/fire{
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
 	pixel_y = -4
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"ox" = (
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"oG" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"oK" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/side{
-	dir = 4
-	},
-/area/ruin/powered/golem_ship)
-"po" = (
-/obj/structure/extinguisher_cabinet/directional/east,
-/turf/open/floor/iron,
-/area/ruin/powered/golem_ship)
-"pO" = (
-/obj/structure/table/wood,
-/obj/item/stock_parts/matter_bin,
-/obj/item/assembly/igniter,
-/obj/item/stock_parts/micro_laser,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/turf/open/floor/iron/dark/corner,
-/area/ruin/powered/golem_ship)
-"qT" = (
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"rp" = (
-/obj/structure/ore_box,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"rv" = (
-/turf/open/floor/iron/dark/side,
-/area/ruin/powered/golem_ship)
-"sC" = (
+"oo" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark/side,
 /area/ruin/powered/golem_ship)
-"tU" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor/shutters{
-	id = "golem_shutters"
-	},
-/turf/open/floor/plating,
+"qj" = (
+/obj/item/circuitboard/machine/ore_redemption,
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/five,
+/turf/open/floor/iron/dark/side,
 /area/ruin/powered/golem_ship)
-"uD" = (
-/obj/structure/bed/pod,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"vg" = (
-/obj/structure/ore_box,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"vj" = (
-/turf/open/floor/iron/dark/corner{
-	dir = 4
-	},
-/area/ruin/powered/golem_ship)
-"vn" = (
+"qo" = (
 /obj/structure/rack,
 /obj/item/resonator{
 	pixel_x = -8
@@ -229,75 +148,37 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered/golem_ship)
-"vH" = (
-/obj/structure/rack,
-/obj/item/card/id/advanced/mining{
-	pixel_y = 8
+"qs" = (
+/obj/machinery/computer/shuttle{
+	dir = 4
 	},
-/obj/item/card/id/advanced/mining{
-	pixel_y = 4
-	},
-/obj/item/card/id/advanced/mining,
-/obj/item/card/id/advanced/mining{
-	pixel_y = -4
-	},
-/obj/item/card/id/advanced/mining{
-	pixel_y = -8
-	},
-/turf/open/floor/iron/dark/textured,
+/turf/open/floor/iron,
 /area/ruin/powered/golem_ship)
-"vM" = (
+"rf" = (
+/obj/machinery/power/shuttle_engine/huge{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"rD" = (
 /obj/structure/table/wood,
 /obj/item/surgical_drapes,
 /obj/item/disk/design_disk/golem_shell,
 /turf/open/floor/iron/dark/side,
 /area/ruin/powered/golem_ship)
-"xt" = (
-/turf/open/floor/iron/dark/side{
-	dir = 8
-	},
-/area/ruin/powered/golem_ship)
-"xM" = (
-/obj/machinery/door/airlock/titanium/glass{
-	name = "Shuttle Storage"
-	},
+"rG" = (
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"yp" = (
+"rO" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/ruin/powered/golem_ship)
+"rV" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"yT" = (
-/obj/structure/table/wood,
-/obj/item/resonator/upgraded,
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
-/area/ruin/powered/golem_ship)
-"yY" = (
-/obj/structure/rack,
-/obj/item/pickaxe{
-	pixel_y = 8
-	},
-/obj/item/pickaxe{
-	pixel_y = 4
-	},
-/obj/item/pickaxe,
-/obj/item/pickaxe{
-	pixel_y = -4
-	},
-/obj/item/pickaxe{
-	pixel_y = -8
-	},
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"zi" = (
-/obj/structure/bed/pod{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"zV" = (
+"sT" = (
 /obj/structure/rack,
 /obj/item/mining_scanner{
 	pixel_x = -8
@@ -315,117 +196,303 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"Am" = (
-/obj/structure/rack,
-/obj/item/storage/medkit/brute{
-	pixel_y = 8
+"uG" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
 	},
-/obj/item/storage/medkit/brute{
-	pixel_y = 4
-	},
-/obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/brute{
-	pixel_y = -4
-	},
-/turf/open/floor/mineral/titanium/purple,
+/turf/open/floor/iron,
 /area/ruin/powered/golem_ship)
-"AA" = (
-/turf/open/floor/iron/dark/side{
-	dir = 6
-	},
-/area/ruin/powered/golem_ship)
-"Be" = (
+"uO" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"Bu" = (
-/obj/machinery/door/airlock/titanium/glass{
-	name = "Shuttle Quarters"
-	},
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"BX" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/turf/open/floor/iron,
-/area/ruin/powered/golem_ship)
-"Cx" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
-/area/ruin/powered/golem_ship)
-"CH" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
-/area/ruin/powered/golem_ship)
-"DE" = (
-/turf/open/floor/iron/dark/corner{
-	dir = 1
-	},
-/area/ruin/powered/golem_ship)
-"ED" = (
-/obj/structure/table/wood,
-/obj/machinery/reagentgrinder,
-/turf/open/floor/iron/dark/corner{
-	dir = 1
-	},
-/area/ruin/powered/golem_ship)
-"Fq" = (
+"uZ" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/iron/dark/side,
 /area/ruin/powered/golem_ship)
-"FQ" = (
-/obj/structure/extinguisher_cabinet/directional/east,
-/turf/open/floor/iron/dark/textured,
+"vi" = (
+/turf/open/floor/iron/dark/smooth_half,
 /area/ruin/powered/golem_ship)
-"GV" = (
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"IL" = (
-/obj/machinery/button/door{
-	id = "golem_shutters"
+"vJ" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 8
 	},
-/obj/structure/table/reinforced,
-/turf/open/floor/iron,
 /area/ruin/powered/golem_ship)
-"JE" = (
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/mineral/titanium,
+"vN" = (
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
 /area/ruin/powered/golem_ship)
-"JU" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ruin/powered/golem_ship)
-"LB" = (
+"wc" = (
 /obj/machinery/door/airlock/titanium{
 	name = "shuttle Dock"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"Nt" = (
-/turf/open/floor/iron/dark/smooth_edge,
+"xg" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/statue/gold/rd,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"Ny" = (
-/obj/item/circuitboard/machine/ore_redemption,
-/obj/structure/frame/machine,
-/obj/item/stack/cable_coil/five,
-/turf/open/floor/iron/dark/side,
-/area/ruin/powered/golem_ship)
-"NQ" = (
-/obj/machinery/power/shuttle_engine/huge{
+"ye" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 8
+	},
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
-"Oq" = (
+"yC" = (
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"zD" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/ruin/powered/golem_ship)
+"BL" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"Ca" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"Cj" = (
+/turf/template_noop,
+/area/template_noop)
+"CB" = (
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"CL" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters{
+	id = "golem_shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"Dd" = (
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/ruin/powered/golem_ship)
+"Dk" = (
+/obj/structure/table/wood,
+/obj/item/resonator/upgraded,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/ruin/powered/golem_ship)
+"Dt" = (
+/turf/open/floor/iron/dark,
+/area/ruin/powered/golem_ship)
+"DB" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"DI" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/iron/dark/corner,
+/area/ruin/powered/golem_ship)
+"EH" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/ruin/powered/golem_ship)
+"Fa" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"Gr" = (
+/obj/machinery/computer/order_console/mining/golem,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"GC" = (
+/obj/structure/table/wood,
+/obj/item/stock_parts/matter_bin,
+/obj/item/assembly/igniter,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/turf/open/floor/iron/dark/corner,
+/area/ruin/powered/golem_ship)
+"GY" = (
+/obj/structure/bed/pod,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"If" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"Ik" = (
+/turf/open/floor/iron/dark/side{
+	dir = 6
+	},
+/area/ruin/powered/golem_ship)
+"IW" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"JC" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/ruin/powered/golem_ship)
+"Kb" = (
+/turf/open/floor/iron/dark/smooth_edge,
+/area/ruin/powered/golem_ship)
+"LG" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
+"LO" = (
+/obj/machinery/button/door{
+	id = "golem_shutters"
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/iron,
+/area/ruin/powered/golem_ship)
+"Mz" = (
+/obj/structure/table/wood,
+/obj/item/disk/design_disk/golem_shell,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/ruin/powered/golem_ship)
+"NC" = (
+/obj/structure/rack,
+/obj/item/mining_scanner{
+	pixel_x = -8
+	},
+/obj/item/mining_scanner{
+	pixel_x = -4
+	},
+/obj/item/mining_scanner,
+/obj/item/mining_scanner{
+	pixel_x = 4
+	},
+/obj/item/mining_scanner{
+	pixel_x = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"NO" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/ruin/powered/golem_ship)
+"Of" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/golem_ship)
+"Oo" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/ruin/powered/golem_ship)
+"Ov" = (
+/obj/structure/rack,
+/obj/item/storage/medkit/fire{
+	pixel_y = 8
+	},
+/obj/item/storage/medkit/fire{
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire{
+	pixel_y = -4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"PW" = (
+/obj/machinery/door/airlock/titanium/glass{
+	name = "Shuttle Storage"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"QL" = (
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"Rv" = (
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/ruin/powered/golem_ship)
+"Rw" = (
+/obj/structure/rack,
+/obj/item/storage/bag/ore{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/storage/bag/ore{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/storage/bag/ore{
+	pixel_x = -5
+	},
+/obj/item/storage/bag/ore{
+	pixel_y = -4;
+	pixel_x = -5
+	},
+/obj/item/storage/bag/ore{
+	pixel_y = 8;
+	pixel_x = 5
+	},
+/obj/item/storage/bag/ore{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/storage/bag/ore{
+	pixel_x = 5
+	},
+/obj/item/storage/bag/ore{
+	pixel_y = -4;
+	pixel_x = 5
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"RW" = (
+/obj/machinery/door/airlock/titanium/glass{
+	name = "Shuttle Quarters"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"SB" = (
+/obj/structure/ore_box,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/powered/golem_ship)
+"SW" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/ruin/powered/golem_ship)
+"Ue" = (
+/obj/machinery/autolathe,
+/turf/open/floor/iron/dark/side,
+/area/ruin/powered/golem_ship)
+"Ug" = (
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
 /area/ruin/powered/golem_ship)
-"QD" = (
+"Vp" = (
 /obj/structure/table/wood,
 /obj/item/areaeditor/blueprints{
 	desc = "Use to build new structures in the wastes.";
@@ -436,682 +503,615 @@
 	dir = 1
 	},
 /area/ruin/powered/golem_ship)
-"Rq" = (
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
+"Xi" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"Su" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/powered/golem_ship)
-"SH" = (
+"XJ" = (
 /obj/structure/table/reinforced,
 /obj/item/pen/fourcolor,
 /turf/open/floor/iron,
 /area/ruin/powered/golem_ship)
-"Ui" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/dark/textured,
+"Ye" = (
+/turf/open/floor/iron/dark/side,
 /area/ruin/powered/golem_ship)
-"UL" = (
-/obj/machinery/computer/arcade/battle,
-/turf/open/floor/iron/dark/corner{
-	dir = 8
-	},
-/area/ruin/powered/golem_ship)
-"UV" = (
+"Yz" = (
 /obj/structure/rack,
-/obj/item/storage/bag/ore{
-	pixel_y = 8;
-	pixel_x = -5
+/obj/item/flashlight/lantern{
+	pixel_x = -8
 	},
-/obj/item/storage/bag/ore{
-	pixel_y = 4;
-	pixel_x = -5
+/obj/item/flashlight/lantern{
+	pixel_x = -4
 	},
-/obj/item/storage/bag/ore{
-	pixel_x = -5
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern{
+	pixel_x = 4
 	},
-/obj/item/storage/bag/ore{
-	pixel_y = -4;
-	pixel_x = -5
-	},
-/obj/item/storage/bag/ore{
-	pixel_y = 8;
-	pixel_x = 5
-	},
-/obj/item/storage/bag/ore{
-	pixel_y = 4;
-	pixel_x = 5
-	},
-/obj/item/storage/bag/ore{
-	pixel_x = 5
-	},
-/obj/item/storage/bag/ore{
-	pixel_y = -4;
-	pixel_x = 5
+/obj/item/flashlight/lantern{
+	pixel_x = 8
 	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"UW" = (
-/obj/machinery/computer/shuttle{
-	dir = 4
+"YV" = (
+/obj/structure/rack,
+/obj/item/card/id/advanced/mining{
+	pixel_y = 8
 	},
-/turf/open/floor/iron,
-/area/ruin/powered/golem_ship)
-"Vx" = (
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 1
+/obj/item/card/id/advanced/mining{
+	pixel_y = 4
 	},
+/obj/item/card/id/advanced/mining,
+/obj/item/card/id/advanced/mining{
+	pixel_y = -4
+	},
+/obj/item/card/id/advanced/mining{
+	pixel_y = -8
+	},
+/turf/open/floor/iron/dark/textured,
 /area/ruin/powered/golem_ship)
-"VR" = (
+"Zg" = (
+/turf/template_noop,
+/area/ruin/powered/golem_ship)
+"Zr" = (
 /obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"Wt" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"Xm" = (
-/obj/structure/table/wood,
-/obj/item/disk/design_disk/golem_shell,
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
-/area/ruin/powered/golem_ship)
-"Xv" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/powered/golem_ship)
-"XO" = (
-/turf/open/floor/iron/dark/side{
-	dir = 10
-	},
-/area/ruin/powered/golem_ship)
-"XY" = (
-/obj/machinery/power/shuttle_engine/large{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
-"Yw" = (
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered/golem_ship)
-"YT" = (
-/turf/open/floor/iron/dark/corner{
-	dir = 8
-	},
-/area/ruin/powered/golem_ship)
-"YY" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/powered/golem_ship)
-"Zn" = (
-/obj/structure/table/wood,
-/obj/item/storage/toolbox/mechanical,
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered/golem_ship)
-"ZH" = (
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/golem_ship)
 
 (1,1,1) = {"
-fB
-fB
-fB
-fB
-fB
-JU
-tU
-tU
-tU
-tU
-JU
-fB
-fB
-fB
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Cj
+Of
+CL
+CL
+CL
+CL
+Of
+Cj
+Cj
+Cj
+Cj
+Cj
 "}
 (2,1,1) = {"
-fB
-fB
-fB
-fB
-fB
-tU
-BX
-SH
-UW
-IL
-tU
-hz
-fB
-fB
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Cj
+CL
+dW
+XJ
+qs
+LO
+CL
+IW
+Cj
+Cj
+Cj
+Cj
 "}
 (3,1,1) = {"
-fB
-fB
-fB
-fB
-hz
-tU
-jh
-po
-YY
-jh
-JU
-ZH
-fB
-fB
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+IW
+CL
+rO
+bC
+uG
+rO
+Of
+Ca
+Cj
+Cj
+Cj
+Cj
 "}
 (4,1,1) = {"
-fB
-fB
-fB
-fB
-ZH
-JU
-JU
-JU
-Be
-JU
-JU
-JU
-fB
-fB
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Ca
+Of
+Of
+Of
+uO
+Of
+Of
+Of
+Cj
+Cj
+Cj
+Cj
 "}
 (5,1,1) = {"
-fB
-fB
-fB
-fB
-JU
-le
-oK
-lj
-lj
-oK
-vj
-JU
-fB
-fB
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Of
+DI
+Oo
+Dd
+Dd
+Oo
+EH
+Of
+Cj
+Cj
+Cj
+Cj
 "}
 (6,1,1) = {"
-fB
-fB
-fB
-fB
-JU
-cr
-hX
-hX
-hX
-hX
-Rq
-JU
-ZH
-fB
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Of
+lx
+Dt
+Dt
+Dt
+Dt
+vN
+Of
+Ca
+Cj
+Cj
+Cj
 "}
 (7,1,1) = {"
-fB
-fB
-fB
-fB
-JU
-cr
-hX
-hX
-hX
-hX
-Rq
-dI
-JU
-hz
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Of
+lx
+Dt
+Dt
+Dt
+Dt
+vN
+xg
+Of
+IW
+Cj
+Cj
 "}
 (8,1,1) = {"
-fB
-fB
-hz
-ZH
-JU
-UL
-xt
-XO
-hX
-Oq
-DE
-iH
-JU
-ZH
-fB
-fB
+Cj
+Cj
+IW
+Ca
+Of
+SW
+mP
+fK
+Dt
+Ug
+JC
+ij
+Of
+Ca
+Cj
+Cj
 "}
 (9,1,1) = {"
-fB
-fB
-ZH
-JU
-JU
-JU
-JU
-sC
-hX
-Cx
-JU
-JU
-JU
-JU
-fB
-fB
+Cj
+Cj
+Ca
+Of
+Of
+Of
+Of
+oo
+Dt
+lu
+Of
+Of
+Of
+Of
+Cj
+Cj
 "}
 (10,1,1) = {"
-fB
-ZH
-JU
-fI
-JU
-pO
-lj
-AA
-hX
-Rq
-JU
-Am
-mw
-JU
-fB
-fB
+Cj
+Ca
+Of
+Gr
+Of
+GC
+Dd
+Ik
+Dt
+vN
+Of
+oa
+Ov
+Of
+Cj
+Cj
 "}
 (11,1,1) = {"
-fB
-JU
-Zn
-Yw
-JU
-vM
-hX
-hX
-hX
-Rq
-JU
-ox
-ox
-JU
-ZH
-fB
+Cj
+Of
+jj
+yC
+Of
+rD
+Dt
+Dt
+Dt
+vN
+Of
+aV
+aV
+Of
+Ca
+Cj
 "}
 (12,1,1) = {"
-fB
-JU
-Yw
-Yw
-JU
-lT
-Nt
-jJ
-Vx
-CH
-JU
-Wt
-ox
-ox
-JU
-fB
+Cj
+Of
+yC
+yC
+Of
+uZ
+Kb
+vi
+Rv
+zD
+Of
+Xi
+aV
+aV
+Of
+Cj
 "}
 (13,1,1) = {"
-fB
-JU
-Fq
-Yw
-JU
-Ny
-Nt
-jJ
-Vx
-Rq
-JU
-ox
-VR
-VR
-JU
-fB
+Cj
+Of
+Fa
+yC
+Of
+qj
+Kb
+vi
+Rv
+vN
+Of
+aV
+Zr
+Zr
+Of
+Cj
 "}
 (14,1,1) = {"
-fB
-JU
-Yw
-Yw
-JU
-eX
-Nt
-jJ
-Vx
-Rq
-JU
-ox
-uD
-uD
-JU
-fB
+Cj
+Of
+yC
+yC
+Of
+Ue
+Kb
+vi
+Rv
+vN
+Of
+aV
+GY
+GY
+Of
+Cj
 "}
 (15,1,1) = {"
-fB
-JU
-Yw
-Yw
-LB
-rv
-Nt
-jJ
-Vx
-Rq
-Bu
-ox
-zi
-zi
-JU
-fB
+Cj
+Of
+yC
+yC
+wc
+Ye
+Kb
+vi
+Rv
+vN
+RW
+aV
+CB
+CB
+Of
+Cj
 "}
 (16,1,1) = {"
-fB
-JU
-Yw
-Yw
-LB
-rv
-Nt
-jJ
-Vx
-Xm
-JU
-ox
-VR
-VR
-JU
-fB
+Cj
+Of
+yC
+yC
+wc
+Ye
+Kb
+vi
+Rv
+Mz
+Of
+aV
+Zr
+Zr
+Of
+Cj
 "}
 (17,1,1) = {"
-fB
-JU
-JE
-Yw
-JU
-rv
-Nt
-jJ
-Vx
-yT
-JU
-ox
-uD
-uD
-JU
-fB
+Cj
+Of
+LG
+yC
+Of
+Ye
+Kb
+vi
+Rv
+Dk
+Of
+aV
+GY
+GY
+Of
+Cj
 "}
 (18,1,1) = {"
-fB
-JU
-JE
-Yw
-JU
-lT
-hX
-hX
-hX
-QD
-JU
-Wt
-zi
-zi
-JU
-fB
+Cj
+Of
+LG
+yC
+Of
+uZ
+Dt
+Dt
+Dt
+Vp
+Of
+Xi
+CB
+CB
+Of
+Cj
 "}
 (19,1,1) = {"
-fB
-JU
-Fq
-Yw
-JU
-YT
-xt
-xt
-xt
-ED
-JU
-ox
-VR
-VR
-JU
-fB
+Cj
+Of
+Fa
+yC
+Of
+vJ
+mP
+mP
+mP
+NO
+Of
+aV
+Zr
+Zr
+Of
+Cj
 "}
 (20,1,1) = {"
-fB
-LB
-Yw
-Yw
-JU
-JU
-JU
-xM
-JU
-JU
-JU
-JU
-JU
-JU
-JU
-fB
+Cj
+wc
+yC
+yC
+Of
+Of
+Of
+PW
+Of
+Of
+Of
+Of
+Of
+Of
+Of
+Cj
 "}
 (21,1,1) = {"
-fB
-LB
-Yw
-Yw
-JU
-Ui
-GV
-GV
-eS
-gs
-GV
-GV
-rp
-rp
-JU
-fB
+Cj
+wc
+yC
+yC
+Of
+If
+QL
+QL
+DB
+kE
+QL
+QL
+SB
+SB
+Of
+Cj
 "}
 (22,1,1) = {"
-fB
-JU
-vn
-vn
-JU
-UV
-UV
-GV
-yY
-GV
-yY
-GV
-rp
-rp
-JU
-fB
+Cj
+Of
+qo
+qo
+Of
+Rw
+Rw
+QL
+dh
+QL
+dh
+QL
+SB
+SB
+Of
+Cj
 "}
 (23,1,1) = {"
-fB
-ZH
-JU
-JU
-JU
-is
-is
-GV
-dc
-GV
-dc
-GV
-rp
-rp
-JU
-fB
+Cj
+Ca
+Of
+Of
+Of
+Yz
+Yz
+QL
+hW
+QL
+hW
+QL
+SB
+SB
+Of
+Cj
 "}
 (24,1,1) = {"
-fB
-fB
-fB
-ZH
-JU
-GV
-GV
-GV
-GV
-GV
-GV
-GV
-rp
-rp
-JU
-fB
+Cj
+Cj
+Cj
+Ca
+Of
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+SB
+SB
+Of
+Cj
 "}
 (25,1,1) = {"
-fB
-fB
-fB
-fB
-Xv
-dx
-zV
-FQ
-vH
-GV
-vH
-GV
-vg
-rp
-Xv
-fB
+Cj
+Cj
+Cj
+Cj
+fD
+NC
+sT
+aL
+YV
+QL
+YV
+QL
+jl
+SB
+fD
+Cj
 "}
 (26,1,1) = {"
-fB
-fB
-fB
-fB
-Xv
-Xv
-Xv
-Xv
-Su
-GV
-oG
-Xv
-Xv
-Xv
-Xv
-fB
+Cj
+Cj
+Cj
+Cj
+fD
+fD
+fD
+fD
+rG
+QL
+BL
+fD
+fD
+fD
+fD
+Cj
 "}
 (27,1,1) = {"
-fB
-fB
-fB
-fB
-Xv
-ie
-ie
-Xv
-Su
-yp
-oG
-Xv
-ie
-ie
-Xv
-fB
+Cj
+Cj
+Cj
+Cj
+fD
+ye
+ye
+fD
+rG
+rV
+BL
+fD
+ye
+ye
+fD
+Cj
 "}
 (28,1,1) = {"
-fB
-fB
-fB
-fB
-fB
-qT
-XY
-Xv
-Xv
-Xv
-Xv
-Xv
-qT
-XY
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Cj
+ha
+ef
+fD
+fD
+fD
+fD
+fD
+ha
+ef
+Cj
+Cj
 "}
 (29,1,1) = {"
-fB
-fB
-fB
-fB
-fB
-fB
-fB
-Xv
-ie
-ie
-ie
-Xv
-fB
-fB
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+fD
+ye
+ye
+ye
+fD
+Cj
+Cj
+Cj
+Cj
 "}
 (30,1,1) = {"
-fB
-fB
-fB
-fB
-fB
-fB
-fB
-Xv
-qT
-qT
-NQ
-Xv
-fB
-fB
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+fD
+ha
+ha
+rf
+fD
+Cj
+Cj
+Cj
+Cj
 "}
 (31,1,1) = {"
-fB
-fB
-fB
-fB
-fB
-fB
-fB
-Xv
-kQ
-kQ
-kQ
-Xv
-fB
-fB
-fB
-fB
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+fD
+Zg
+Zg
+Zg
+fD
+Cj
+Cj
+Cj
+Cj
 "}
