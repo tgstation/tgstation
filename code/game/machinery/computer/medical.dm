@@ -98,6 +98,7 @@
 			to_chat(player, span_warning("ACCESS DENIED"))
 			return FALSE
 
+	var/note = params["note"]
 	if(!note)
 		return FALSE
 
