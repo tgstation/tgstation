@@ -191,8 +191,8 @@
 	update_appearance()
 
 	addtimer(CALLBACK(src, PROC_REF(update)), 5)
-  
-  register_context()
+
+	register_context()
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
