@@ -136,12 +136,12 @@
 					switch(anon)
 						if("Yes")
 							if(res == "Yes")
-								to_chat(world, "<span class='boldannounce'>[src] played: [webpage_url]</span>", confidential = TRUE)
+								to_chat(world, span_boldannounce("[src] played: [webpage_url]"), confidential = TRUE)
 							else
-								to_chat(world, span_boldannounce("<span class='boldannounce'>[src] played some music</span>"), confidential = TRUE)
+								to_chat(world, span_boldannounce("[src] played some music"), confidential = TRUE)
 						if("No")
 							if(res == "Yes")
-								to_chat(world, "<span class='boldannounce'>An admin played: [webpage_url]</span>", confidential = TRUE)
+								to_chat(world, span_boldannounce("An admin played: [webpage_url]"), confidential = TRUE)
 						if("Cancel")
 							return
 
