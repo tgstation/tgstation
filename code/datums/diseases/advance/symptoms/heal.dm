@@ -554,6 +554,7 @@
 			to_chat(M, span_notice("You feel warmer."))
 
 	M.adjustToxLoss(-heal_amt)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -heal_amt)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 	if(!parts.len)
