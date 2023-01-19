@@ -73,8 +73,8 @@
 	if(!infusing_into)
 		//no valid recipe, so you get a fly mutation
 		infusing_into = GLOB.infuser_entries[1]
-	playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
-	to_chat(human_occupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
+	playsound(src, 'sound/machines/blender.ogg', 50, vary = TRUE)
+	to_chat(human_occupant, span_danger("Little needles repeatedly prick you!"))
 	human_occupant.take_overall_damage(10)
 	human_occupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = human_occupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
 	Shake(15, 15, INFUSING_TIME)
@@ -83,50 +83,60 @@
 	update_appearance()
 
 /obj/machinery/dna_infuser/proc/end_infuse()
-	infuse_organ(occupant)
+	if(infuse_organ(occupant))
+		to_chat(occupant, span_danger("You feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	infusing = FALSE
 	infusing_into = null
 	QDEL_NULL(infusing_from)
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, vary = FALSE)
 	toggle_open()
 	update_appearance()
 
 /// Attempt to replace/add-to the occupant's organs with "mutated" equivalents.
+/// Returns TRUE on success, FALSE on failure.
+/// Requires the target mob to have an existing organic organ to "mutate".
 // TODO: In the future, this should have more logic:
 // - Replace non-mutant organs before mutant ones.
 /obj/machinery/dna_infuser/proc/infuse_organ(mob/living/carbon/human/target)
 	if(!ishuman(target) || !infusing_into)
-		// Already filters humans from entering, but you know, just in case.
-		return
-	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
-	// Filter incompatible or identical organs from being inserted.
-	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
-		var/obj/item/organ/old_organ = target.getorganslot(new_organ.slot)
-		if(!old_organ && !istype(new_organ, /obj/item/organ/external))
-			// Occupant doesn't have the organ and isn't growing an external appendage.
-			potential_new_organs -= new_organ.type
-		else if(old_organ.type == new_organ.type)
-			// Occupant already has the same mutated organ.
-			potential_new_organs -= new_organ.type
-		else if(old_organ.status != ORGAN_ORGANIC)
-			// Occupant's organ isn't organic and can't mutate.
-			potential_new_organs -= new_organ.type
-	// Nothing to mutate.
-	if(!length(potential_new_organs))
-		return
-	var/obj/item/organ/new_organ = pick(potential_new_organs)
-	new_organ = new new_organ()
+		return FALSE
+	var/obj/item/organ/new_organ = pick_organ(target)
+	if(!new_organ)
+		return FALSE
 	if(!istype(new_organ, /obj/item/organ/internal/brain))
 		// Organ ISN'T brain, insert normally.
 		new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
-		return
-	// Organ IS brain, insert via special logic:
-	var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-	// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
-	old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
-	qdel(old_brain)
-	var/obj/item/organ/internal/brain/new_brain = new_organ
-	new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+	else
+		// Organ IS brain, insert via special logic:
+		var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+		// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
+		old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
+		qdel(old_brain)
+		var/obj/item/organ/internal/brain/new_brain = new_organ
+		new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+	return TRUE
+
+/// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
+/// Tries to return a valid mutant organ if all of the following criteria are true:
+/// 1. Target must have a pre-existing organ in the same organ slot as the new organ;
+///   - or the new organ must be external.
+/// 2. Target's pre-existing organ must be organic / not robotic.
+/// 3. Target must not have the same/identical organ.
+/obj/machinery/dna_infuser/proc/pick_organ(mob/living/carbon/human/target)
+	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
+	for(var/obj/item/organ/new_organ in infusing_into.output_organs)
+		var/obj/item/organ/old_organ = target.getorganslot(initial(new_organ.slot))
+		if(old_organ)
+			if((old_organ.type != new_organ) && (old_organ.status == ORGAN_ORGANIC))
+				continue // Old organ can be mutated!
+		else if(isexternalorgan(new_organ))
+			continue // External organ can be grown!
+		// Internal organ is either missing, or is non-organic.
+		potential_new_organs -= new_organ
+	// Pick a random organ from the filtered list.
+	if(length(potential_new_organs))
+		return pick(potential_new_organs)
+	return FALSE
 
 /obj/machinery/dna_infuser/update_icon_state()
 	//out of order
@@ -150,16 +160,13 @@
 		if(user)
 			balloon_alert(user, "close panel first!")
 		return
-
 	if(state_open)
 		close_machine()
 		return
-
 	else if(infusing)
 		if(user)
 			balloon_alert(user, "not while it's on!")
 		return
-
 	open_machine(drop = FALSE)
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
@@ -198,11 +205,9 @@
 	// if the machine is closed, already has a infusion target, or the target is not valid then no adding.
 	if(!state_open || !is_valid_infusion(target, user))
 		return
-
 	if(!user.transferItemToLoc(target, src))
 		to_chat(user, span_warning("[target] is stuck to your hand!"))
 		return
-
 	infusing_from = target
 
 // mostly good for dead mobs like corpses (drag to add).
@@ -210,7 +215,6 @@
 	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
 	if(!state_open || !is_valid_infusion(target, user))
 		return
-
 	infusing_from = target
 	infusing_from.forceMove(src)
 

@@ -183,16 +183,16 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 
 	for(words,words>0,words--)//Randomly picks from one of the choices below.
 
-		if(words==1&&(1 in safety)&&(2 in safety))//If there is only one word remaining and choice 1 or 2 have not been selected.
+		if(words == 1 && (1 in safety) && (2 in safety))//If there is only one word remaining and choice 1 or 2 have not been selected.
 			safety = list(pick(1,2))//Select choice 1 or 2.
-		else if(words==1&&maxwords==2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
+		else if(words == 1 && maxwords == 2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
 			safety = list(3)//Default to list 3
 
 		switch(pick(safety))//Chance based on the safety list.
 			if(1)//1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
 				switch(rand(1,2))//Mainly to add more options later.
 					if(1)
-						if(names.len&&prob(70))
+						if(names.len && prob(70))
 							. += pick(names)
 						else
 							if(prob(10))
@@ -230,7 +230,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 					if(4)
 						. += lowertext(pick(threats))
 		if(!return_list)
-			if(words==1)
+			if(words == 1)
 				. += "."
 			else
 				. += ", "

@@ -1,0 +1,4 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "Canisters no longer keep their shielding when their shielding cell fails"

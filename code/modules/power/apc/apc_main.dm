@@ -191,6 +191,8 @@
 	update_appearance()
 
 	addtimer(CALLBACK(src, PROC_REF(update)), 5)
+  
+  register_context()
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
@@ -232,7 +234,7 @@
 		return
 	if(opened)
 		if(has_electronics && terminal)
-			. += "The cover is [opened==APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
+			. += "The cover is [opened == APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 		else
 			. += {"It's [ !terminal ? "not" : "" ] wired up.\n
 			The electronics are[!has_electronics?"n't":""] installed."}
