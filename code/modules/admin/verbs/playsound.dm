@@ -113,7 +113,7 @@
 					var/webpage_url = title
 					if (data["webpage_url"])
 						webpage_url = "<a href=\"[data["webpage_url"]]\">[title]</a>"
-					music_extra_data["duration"] = DisplayTimeText(data["duration"] * 10)
+					music_extra_data["duration"] = DisplayTimeText(data["duration"] * 1 SECONDS)
 					music_extra_data["link"] = data["webpage_url"]
 					music_extra_data["artist"] = data["artist"]
 					music_extra_data["upload_date"] = data["upload_date"]
