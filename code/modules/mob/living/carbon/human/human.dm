@@ -751,6 +751,26 @@
 		return 1
 	..()
 
+/mob/living/carbon/human/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, mob_height))
+		var/static/list/heights = list(
+			HUMAN_HEIGHT_SHORTEST,
+			HUMAN_HEIGHT_SHORT,
+			HUMAN_HEIGHT_MEDIUM,
+			HUMAN_HEIGHT_TALL,
+			HUMAN_HEIGHT_TALLEST
+		)
+		if(!(var_value in heights))
+			return
+
+		. = set_mob_height(var_value)
+
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+
+	return ..()
+
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")

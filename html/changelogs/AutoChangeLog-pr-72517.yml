@@ -1,4 +1,0 @@
-author: "Fikou, a hood by Viro"
-delete-after: True
-changes:
-  - refactor: "humanoid mobs and cardboard cutouts automatically generate their sprites, they no longer will be outdated"
