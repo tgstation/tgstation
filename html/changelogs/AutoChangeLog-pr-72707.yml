@@ -1,0 +1,4 @@
+author: "Inari-Whitebear"
+delete-after: True
+changes:
+  - bugfix: "Firebots no longer attempt to extinguish themselves constantly"
