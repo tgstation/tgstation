@@ -123,13 +123,25 @@
 					switch(res)
 						if("Yes")
 							music_extra_data["title"] = data["title"]
-							to_chat(world, span_boldannounce("An admin played: [webpage_url]"), confidential = TRUE)
 						if("No")
 							music_extra_data["link"] = "Song Link Hidden"
 							music_extra_data["title"] = "Song Title Hidden"
 							music_extra_data["artist"] = "Song Artist Hidden"
 							music_extra_data["upload_date"] = "Song Upload Date Hidden"
 							music_extra_data["album"] = "Song Album Hidden"
+						if("Cancel")
+							return
+
+					var/anon = tgui_alert(usr, "Display who played the song?",, list("No", "Yes", "Cancel"))
+					switch(anon)
+						if("Yes")
+							if(res == "Yes")
+								to_chat(world, "<span class='boldannounce'>[src] played: [webpage_url]</span>", confidential = TRUE)
+							else
+								to_chat(world, span_boldannounce("<span class='boldannounce'>[src] played some music</span>"), confidential = TRUE)
+						if("No")
+							if(res == "Yes")
+								to_chat(world, "<span class='boldannounce'>An admin played: [webpage_url]</span>", confidential = TRUE)
 						if("Cancel")
 							return
 
