@@ -27,6 +27,8 @@
 	/// List of player ckeys who aren't allowed to pickup the ball (after scoring)
 	/// This resets after someone else picks up the ball or a certain amount of time has passed
 	var/pickup_restriction_ckeys = list()
+	/// Pickup restriction cooldown
+	COOLDOWN_DECLARE(pickup_cooldown)
 
 // what about wielder.combat_mode  ???
 
@@ -35,13 +37,14 @@
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 
 // basketball/qdel don't forget to remove these signals
-//	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+//	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP))
 
 /obj/item/toy/basketball/reset_pickup_restriction()
 	pickup_restriction_ckeys = list()
-	UnregisterSignal(ball, list(COMSIG_ITEM_PICKUP))
+	COOLDOWN_RESET(src, pickup_cooldown)
 	// remove timer if it existsxf
 
 /obj/item/toy/basketball/proc/on_equip(obj/item/source, mob/living/user, slot)
@@ -315,6 +318,9 @@
 	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 	total_score += points
 	update_appearance()
+	// whoever scored doesn't get to pickup the ball instantly
+	COOLDOWN_START(ball, pickup_cooldown, PICKUP_RESTRICTION_TIME)
+	ball.pickup_restriction_ckeys |= baller.ckey
 
 /obj/structure/hoop/update_overlays()
 	. = ..()
@@ -455,18 +461,19 @@
 // Special hoops for the minigame
 /obj/structure/hoop/minigame
 	/// This is a list of ckeys for the minigame to prevent scoring on their own hoops
-	var/list/team = list()
+	var/list/team_ckeys = list()
 
 /obj/structure/hoop/minigame/score(obj/item/ball, mob/living/baller, points)
-	var/is_team_hoop = baller.ckey in team
+	var/is_team_hoop = baller.ckey in team_ckeys
 	if(is_team_hoop)
 		baller.balloon_alert_to_viewers("cant score own hoop!")
 		return
 
+	ball.pickup_restriction_ckeys |= team_ckeys
 	. = ..()
 
-	RegisterSignal(ball, COMSIG_ITEM_PICKUP, TYPE_PROC_REF(/obj/item/toy/basketball, pickup_restriction), team)
-	addtimer(CALLBACK(ball, TYPE_PROC_REF(/obj/item/toy/basketball, reset_pickup_restriction)), PICKUP_RESTRICTION_TIME)
+	// RegisterSignal(ball, COMSIG_ITEM_PICKUP, TYPE_PROC_REF(/obj/item/toy/basketball, pickup_restriction), team)
+	// addtimer(CALLBACK(ball, TYPE_PROC_REF(/obj/item/toy/basketball, reset_pickup_restriction)), PICKUP_RESTRICTION_TIME)
 
 /**
  * Checks if a team can pickup the ball after scoring
@@ -474,15 +481,17 @@
  * source - our ball
  * user - the mob picking our [source]
  */
-/obj/item/toy/basketball/proc/pickup_restriction(obj/item/source, mob/grabber, team)
+/obj/item/toy/basketball/proc/pickup_restriction(obj/item/source, mob/grabber)
 	SIGNAL_HANDLER
 
-	if(grabber.ckey in team)
+	if(grabber.ckey in team_ckeys)
+		if(!COOLDOWN_FINISHED(src, pickup_cooldown))
+		
+			baller.balloon_alert_to_viewers("cant pickup after scoring for [COOLDOWN_TIMELEFT(src, pickup_cooldown)]!")
+			return
 		// prevent pickup
 	else
-		// remove timer and unregister signal
-
-		UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+		reset_pickup_restriction()
 
 // No resetting the score for minigame hoops
 /obj/structure/hoop/minigame/CtrlClick(mob/living/user)
