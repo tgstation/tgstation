@@ -21,8 +21,12 @@
 	var/active = FALSE
 	/// the player currently holding this device.
 	var/mob/listeningTo
+	/// what layer of cable are we working with
+	var/cable_layer = CABLE_LAYER_2
 	/// cached reference of the cable used in the device
 	var/obj/item/stack/cable_coil/cable
+	/// radial menu to select cable layer
+	var/list/radial_menu = null
 
 /obj/item/rwd/Initialize(mapload)
 	. = ..()
@@ -42,14 +46,14 @@
 /obj/item/rwd/update_icon_state()
 	switch(current_amount)
 		if(61 to INFINITY)
-			icon_state = "rwd-30"
-			inhand_icon_state = "rwd"
+			icon_state = "rwd-30-layer[cable_layer]"
+			inhand_icon_state = "rwd-layer[cable_layer]"
 		if(31 to 60)
-			icon_state = "rwd-20"
-			inhand_icon_state = "rwd"
+			icon_state = "rwd-20-layer[cable_layer]"
+			inhand_icon_state = "rwd-layer[cable_layer]"
 		if(1 to 30)
-			icon_state = "rwd-10"
-			inhand_icon_state = "rwd"
+			icon_state = "rwd-10-layer[cable_layer]"
+			inhand_icon_state = "rwd-layer[cable_layer]"
 		else
 			icon_state = "rcl-0"
 			inhand_icon_state = "rcl-0"
@@ -84,7 +88,7 @@
 	if(QDELETED(new_cable))
 		balloon_alert(user, "merged with stack below!")
 	else
-		user.put_in_active_hand(new_cable)
+		user.put_in_active_hand(modify_cable(new_cable))
 
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -118,6 +122,37 @@
 	add_cable(user, cable)
 	return TRUE
 
+/obj/item/rwd/AltClick(mob/user)
+	. = ..()
+	if(!radial_menu)
+		radial_menu = list(
+			"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
+			"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
+			"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
+		)
+
+	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(layer_result)
+		if("Layer 1")
+			cable_layer = CABLE_LAYER_1
+		if("Layer 2")
+			cable_layer = CABLE_LAYER_2
+		if("Layer 3")
+			cable_layer = CABLE_LAYER_3
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/rwd/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(!ISADVANCEDTOOLUSER(user))
+		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
 /// insert cable into the rwd
 /obj/item/rwd/proc/add_cable(mob/user, obj/item/stack/cable_coil/cable)
 	if(current_amount == max_amount)
@@ -130,6 +165,23 @@
 		current_amount += insert_amount
 		update_appearance(UPDATE_ICON_STATE)
 
+/// modify cable properties according to its layer
+/obj/item/rwd/proc/modify_cable(obj/item/stack/cable_coil/target_cable)
+	switch(cable_layer)
+		if(CABLE_LAYER_1)
+			target_cable.set_cable_color(CABLE_COLOR_RED)
+			target_cable.target_type = /obj/structure/cable/layer1
+			target_cable.target_layer = CABLE_LAYER_1
+		if(CABLE_LAYER_2)
+			target_cable.set_cable_color(CABLE_COLOR_YELLOW)
+			target_cable.target_type = /obj/structure/cable
+			target_cable.target_layer = CABLE_LAYER_2
+		else
+			target_cable.set_cable_color(CABLE_COLOR_BLUE)
+			target_cable.target_type = /obj/structure/cable/layer3
+			target_cable.target_layer = CABLE_LAYER_3
+	return target_cable
+
 /// get cached reference of cable which gets used over time
 /obj/item/rwd/proc/get_cable()
 	if(!cable || QDELETED(cable))
@@ -137,7 +189,26 @@
 		if(!create_amount)
 			return null
 		cable = new/obj/item/stack/cable_coil(src, create_amount)
-	return cable
+	return modify_cable(cable)
+
+/// check if the turf has the same cable layer as this design. If it does don't put cable here
+/obj/item/rwd/proc/cable_allowed_here(turf/the_turf)
+	// infer our intended cable design from the layer
+	var/obj/structure/cable/design_type
+	switch(cable_layer)
+		if(CABLE_LAYER_1)
+			design_type = /obj/structure/cable/layer1
+		if(CABLE_LAYER_2)
+			design_type = /obj/structure/cable
+		else
+			design_type = /obj/structure/cable/layer3
+
+	for(var/obj/structure/cable/cable as anything in the_turf)
+		// cable layer on the turf is the same as our intended design layer so nope
+		if(cable.type == design_type)
+			return FALSE
+
+	return TRUE
 
 /// stuff to do when moving
 /obj/item/rwd/proc/on_move(mob/user)
@@ -150,9 +221,9 @@
 	 * Lay cable only if
 	 * - device is active
 	 * - the turf can hold cable
-	 * - there is no cable already on the turf
+	 * - there is no cable on the turf or there is cable on the turf but its not the same layer we are gonna put on the turf
 	 */
-	if(active && the_turf.can_have_cabling() && the_turf.can_lay_cable() && !locate(/obj/structure/cable, the_turf))
+	if(active && the_turf.can_have_cabling() && the_turf.can_lay_cable() && cable_allowed_here(the_turf))
 		var/obj/item/stack/cable_coil/coil = get_cable()
 		if(!coil)
 			return
@@ -166,7 +237,7 @@
 		add_cable(user, cable_piece)
 
 /obj/item/rwd/loaded
-	icon_state = "rwd-30"
+	icon_state = "rwd-30-layer2"
 	current_amount = 210
 
 /obj/item/rwd/admin
