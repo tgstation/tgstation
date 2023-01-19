@@ -1,13 +1,3 @@
-/datum/antagonist/blobspore
-	name = "\improper Blob Spore"
-	antagpanel_category = "Biohazards"
-	show_name_in_check_antagonists = TRUE
-	show_to_ghosts = TRUE
-
-////////////////
-// BLOB SPORE //
-////////////////
-
 /mob/living/simple_animal/hostile/blob/blobspore
 	name = "blob spore"
 	desc = "A floating, fragile spore."
@@ -54,12 +44,10 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/mind_initialize()
 	. = ..()
-	if(independent)
+	if(independent || !overmind)
 		return FALSE
-	if(mind.has_antag_datum(/datum/antagonist/blobspore))
-		return FALSE
-	var/datum/antagonist/blobspore/blobspore = mind.add_antag_datum(/datum/antagonist/blobspore)
-	create_objectives(blobspore)
+	var/datum/antagonist/blob_minion/blob_zombie/zombie = new(overmind)
+	mind.add_antag_datum(zombie)
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!is_zombie && isturf(loc))

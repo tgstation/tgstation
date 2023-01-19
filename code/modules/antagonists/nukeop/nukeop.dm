@@ -1,7 +1,7 @@
 /datum/antagonist/nukeop
 	name = ROLE_NUCLEAR_OPERATIVE
 	roundend_category = "syndicate operatives" //just in case
-	antagpanel_category = "NukeOp"
+	antagpanel_category = ANTAG_GROUP_SYNDICATE
 	job_rank = ROLE_OPERATIVE
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
@@ -118,7 +118,7 @@
 	else
 		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
 
-/datum/antagonist/nukeop/proc/forge_objectives()
+/datum/antagonist/nukeop/forge_objectives()
 	if(nuke_team)
 		objectives |= nuke_team.objectives
 

@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 /datum/antagonist/wizard
 	name = "\improper Space Wizard"
 	roundend_category = "wizards/witches"
-	antagpanel_category = "Wizard"
+	antagpanel_category = ANTAG_GROUP_WIZARDS
 	job_rank = ROLE_WIZARD
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
-	antagpanel_category = "Wizard"
+	antagpanel_category = "Wizard Federation"
 	antag_hud_name = "apprentice"
 	show_in_roundend = FALSE
 	show_name_in_check_antagonists = TRUE
