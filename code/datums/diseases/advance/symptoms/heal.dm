@@ -479,9 +479,6 @@
 /// Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
 #define HEALING_PER_MOL 1.1
 /// Determines the rate at which Plasma Fixation heals based on the amount of plasma being breathed through internals
- // the amount of mols in breaths is significantly lower than in the environment so we are just going to use the tank's
- // distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
- // balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
 #define HEALING_PER_BREATH_PRESSURE 0.05
 
 /datum/symptom/heal/plasma
@@ -517,6 +514,9 @@
 	. = 0
 
 	// Check internals
+	///  the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
+	///  distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
+	///  balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/obj/item/tank/internals/internals_tank = C.internal
