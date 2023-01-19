@@ -57,7 +57,7 @@
 
 /obj/item/rwd/attack_self_secondary(mob/user, modifiers)
 	if(current_amount == 0)
-		balloon_alert(user, "nothing to dispense")
+		balloon_alert(user, "nothing to dispense!")
 		return
 
 	var/amount = tgui_input_number(user = user, message = "Enter amount to dispense", title = "Custom cable", default = 0, max_value = min(30, current_amount), min_value = min(1, current_amount), timeout = 0, round_value = TRUE)
@@ -85,7 +85,7 @@
 		balloon_alert(user, "merged with stack below!")
 	else
 		user.put_in_active_hand(new_cable)
-	//update
+
 	update_appearance(UPDATE_ICON_STATE)
 
 /// triggered on wield of two handed item
@@ -97,16 +97,16 @@
 	active = FALSE
 
 /obj/item/rwd/pickup(mob/to_hook)
-	..()
+	. = ..()
 	if(listeningTo == to_hook)
-		return
+		return .
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	listeningTo = to_hook
 
 /obj/item/rwd/dropped(mob/wearer)
-	..()
+	. = ..()
 	UnregisterSignal(wearer, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
 
@@ -116,6 +116,7 @@
 		return
 	var/obj/item/stack/cable_coil/cable = attacking_item
 	add_cable(user, cable)
+	return TRUE
 
 /// insert cable into the rwd
 /obj/item/rwd/proc/add_cable(mob/user, obj/item/stack/cable_coil/cable)
