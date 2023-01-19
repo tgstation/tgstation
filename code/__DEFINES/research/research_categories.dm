@@ -190,5 +190,4 @@
 // Meta categories
 #define RND_CATEGORY_INITIAL "initial"
 #define RND_CATEGORY_HACKED "hacked"
-#define RND_CATEGORY_EMAGGED "emagged"
 #define RND_CATEGORY_IMPORTED "/Imported Designs"

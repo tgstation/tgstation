@@ -1329,6 +1329,7 @@
 	chameleon_card_action.chameleon_name = "ID Card"
 	chameleon_card_action.initialize_disguises()
 	add_item_action(chameleon_card_action)
+	register_item_context()
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
@@ -1341,7 +1342,7 @@
 	if(isidcard(target))
 		theft_target = WEAKREF(target)
 		ui_interact(user)
-		return
+		return AFTERATTACK_PROCESSED_ITEM
 
 	return ..()
 
@@ -1592,6 +1593,19 @@
 			set_new_account(user)
 			return
 	return ..()
+
+/obj/item/card/id/advanced/chameleon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
+	. = ..()
+
+	if(!in_range(user, target))
+		return .
+	if(ishuman(target))
+		context[SCREENTIP_CONTEXT_RMB] = "Copy access"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(isitem(target))
+		context[SCREENTIP_CONTEXT_RMB] = "Scan for access"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /// A special variant of the classic chameleon ID card which accepts all access.
 /obj/item/card/id/advanced/chameleon/black
