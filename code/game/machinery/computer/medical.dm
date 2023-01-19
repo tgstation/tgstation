@@ -67,19 +67,7 @@
 
 	switch(action)
 		if("add_notes")
-			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-
-			if(!record)
-				return FALSE
-			var/note = params["note"]
-
-			if(!note)
-				return FALSE
-
-			note = trim(note, MAX_MESSAGE_LEN)
-			if(length(record.medical_notes) > 2)
-				record.medical_notes.Cut(1, 2)
-			record.medical_notes += note
+			create_note(usr, params)
 
 			return TRUE
 
@@ -92,3 +80,30 @@
 
 	return FALSE
 
+/obj/machinery/computer/med_data/proc/create_note(mob/user, list/params)
+	var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
+
+	if(!record || !isliving(usr))
+		return FALSE
+
+	var/mob/living/player = usr
+	if(!issilicon(player)) // Silicons don't need to authenticate
+		var/obj/item/card/auth = player.get_idcard(TRUE)
+		if(!auth)
+			to_chat(player, span_warning("ACCESS DENIED: No ID card detected."))
+			return FALSE
+		var/list/access = auth.GetAccess()
+		if(!check_access_list(access))
+			to_chat(player, span_warning("ACCESS DENIED"))
+			return FALSE
+
+	if(!note)
+		return FALSE
+
+	note = trim(note, MAX_MESSAGE_LEN)
+	if(length(record.medical_notes) > 2)
+		record.medical_notes.Cut(1, 2)
+
+	record.medical_notes += note
+
+	return TRUE

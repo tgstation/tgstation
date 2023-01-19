@@ -1,0 +1,6 @@
+author: "Zergspower"
+delete-after: True
+changes:
+  - qol: "Protolathes and the like had their printable items categorized further"
+  - bugfix: "fixes a few uncategorized items in protolathes and the like"
+  - refactor: "Cleaner techweb code with more categories to break apart individual printable items at proto/mech fabs"

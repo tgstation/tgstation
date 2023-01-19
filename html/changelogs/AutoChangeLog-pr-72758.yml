@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - qol: "Theres now a visual indicator when you attempt to grab an object or person restrained by the HAUL gauntlets."

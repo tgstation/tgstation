@@ -1,5 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "AI eyes, megafauna and robots will appear in the orbit menu NPC section again."
-  - qol: "Everything deadchat controlled will now be highlighted in the orbit menu."

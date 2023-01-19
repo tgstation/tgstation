@@ -3,7 +3,7 @@
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
 	var/is_in_use = 0
-	if (subject!=null)
+	if (subject != null)
 		for(var/A in GLOB.ai_list)
 			var/mob/living/silicon/ai/M = A
 			if ((M.client && M.machine == subject))
@@ -1007,7 +1007,7 @@
 
 	for(var/borgie in GLOB.available_ai_shells)
 		var/mob/living/silicon/robot/R = borgie
-		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
+		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai || (R.connected_ai == src)))
 			possible += R
 
 	if(!LAZYLEN(possible))
@@ -1018,7 +1018,7 @@
 
 	if(isnull(target))
 		return
-	if (target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
+	if (target.stat == DEAD || target.deployed || !(!target.connected_ai || (target.connected_ai == src)))
 		return
 
 	else if(mind)
@@ -1123,6 +1123,6 @@
 
 /mob/living/silicon/ai/GetVoice()
 	. = ..()
-	if(ai_voicechanger&&ai_voicechanger.changing_voice)
+	if(ai_voicechanger && ai_voicechanger.changing_voice)
 		return ai_voicechanger.say_name
 	return

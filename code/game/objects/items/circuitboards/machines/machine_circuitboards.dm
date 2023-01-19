@@ -6,7 +6,7 @@
 	build_path = /obj/machinery/bsa/back //No freebies!
 	specific_parts = TRUE
 	req_components = list(
-		/datum/stock_part/capacitor/quadratic = 5,
+		/datum/stock_part/capacitor/tier4 = 5,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/circuitboard/machine/bsa/front
@@ -15,7 +15,7 @@
 	build_path = /obj/machinery/bsa/front
 	specific_parts = TRUE
 	req_components = list(
-		/datum/stock_part/manipulator/femto = 5,
+		/datum/stock_part/manipulator/tier4 = 5,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/circuitboard/machine/bsa/middle
@@ -32,8 +32,8 @@
 	build_path = /obj/machinery/dna_vault //No freebies!
 	specific_parts = TRUE
 	req_components = list(
-		/datum/stock_part/capacitor/super = 5,
-		/datum/stock_part/manipulator/pico = 5,
+		/datum/stock_part/capacitor/tier3 = 5,
+		/datum/stock_part/manipulator/tier3 = 5,
 		/obj/item/stack/cable_coil = 2)
 
 //Engineering
@@ -648,9 +648,9 @@
 	build_path = /obj/machinery/chem_dispenser/fullupgrade
 	specific_parts = TRUE
 	req_components = list(
-		/datum/stock_part/matter_bin/bluespace = 2,
-		/datum/stock_part/capacitor/quadratic = 2,
-		/datum/stock_part/manipulator/femto = 2,
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/capacitor/tier4 = 2,
+		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell/bluespace = 1,
 	)
@@ -659,9 +659,9 @@
 	build_path = /obj/machinery/chem_dispenser/mutagensaltpeter
 	specific_parts = TRUE
 	req_components = list(
-		/datum/stock_part/matter_bin/bluespace = 2,
-		/datum/stock_part/capacitor/quadratic = 2,
-		/datum/stock_part/manipulator/femto = 2,
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/capacitor/tier4 = 2,
+		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell/bluespace = 1,
 	)
@@ -673,9 +673,9 @@
 	build_path = /obj/machinery/chem_dispenser/abductor
 	specific_parts = TRUE
 	req_components = list(
-		/datum/stock_part/matter_bin/bluespace = 2,
-		/datum/stock_part/capacitor/quadratic = 2,
-		/datum/stock_part/manipulator/femto = 2,
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/capacitor/tier4 = 2,
+		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell/bluespace = 1,
 	)
@@ -781,7 +781,7 @@
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
-		/datum/stock_part/manipulator/femto  = 1,
+		/datum/stock_part/manipulator/tier4  = 1,
 		/obj/item/reagent_containers/cup/beaker/bluespace = 2,
 		/obj/item/stack/sheet/glass = 1)
 
@@ -803,8 +803,8 @@
 /obj/item/circuitboard/machine/sleeper/fullupgrade
 	build_path = /obj/machinery/sleeper/syndie/fullupgrade
 	req_components = list(
-		/datum/stock_part/matter_bin/bluespace = 1,
-		/datum/stock_part/manipulator/femto = 1,
+		/datum/stock_part/matter_bin/tier4 = 1,
+		/datum/stock_part/manipulator/tier4 = 1,
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
@@ -1034,9 +1034,9 @@
 /obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
 	build_path = /obj/machinery/chem_dispenser/drinks/fullupgrade
 	req_components = list(
-		/datum/stock_part/matter_bin/bluespace = 2,
-		/datum/stock_part/capacitor/quadratic = 2,
-		/datum/stock_part/manipulator/femto = 2,
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/capacitor/tier4 = 2,
+		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell/bluespace = 1,
 	)
@@ -1049,9 +1049,9 @@
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer/fullupgrade
 	build_path = /obj/machinery/chem_dispenser/drinks/beer/fullupgrade
 	req_components = list(
-		/datum/stock_part/matter_bin/bluespace = 2,
-		/datum/stock_part/capacitor/quadratic = 2,
-		/datum/stock_part/manipulator/femto = 2,
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/capacitor/tier4 = 2,
+		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell/bluespace = 1,
 	)
@@ -1278,8 +1278,8 @@
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stock_parts/cell/infinite/abductor = 1)
 	def_components = list(
-		/datum/stock_part/capacitor = /datum/stock_part/capacitor/quadratic,
-		/datum/stock_part/micro_laser = /datum/stock_part/micro_laser/quadultra)
+		/datum/stock_part/capacitor = /datum/stock_part/capacitor/tier4,
+		/datum/stock_part/micro_laser = /datum/stock_part/micro_laser/tier4)
 
 /obj/item/circuitboard/machine/hypnochair
 	name = "Enhanced Interrogation Chamber"
@@ -1389,6 +1389,6 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/reagent_containers/cup/beaker = 2,
 		/datum/stock_part/water_recycler = 1,
-		/datum/stock_part/capacitor/adv = 1,
-		/datum/stock_part/micro_laser/high = 2,
+		/datum/stock_part/capacitor/tier2 = 1,
+		/datum/stock_part/micro_laser/tier2 = 2,
 	)
