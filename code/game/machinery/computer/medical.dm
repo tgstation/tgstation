@@ -80,6 +80,7 @@
 
 	return FALSE
 
+/// Checks for proper authorization to add notes, then adds to record.
 /obj/machinery/computer/med_data/proc/create_note(mob/user, list/params)
 	var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
 
