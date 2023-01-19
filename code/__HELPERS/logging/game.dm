@@ -32,3 +32,7 @@
 /proc/log_vote(text)
 	if (CONFIG_GET(flag/log_vote))
 		WRITE_LOG(GLOB.world_game_log, "VOTE: [text]")
+
+/proc/log_zone_switch(text)
+	if(CONFIG_GET(flag/log_zone_switch))
+		WRITE_LOG(GLOB.world_zone_switch_log, text)

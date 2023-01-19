@@ -500,4 +500,4 @@
 		log_message += " active item: ([handitem.type])[handitem]"
 	if(offhand)
 		log_message += " inactive item: ([offhand.type])[offhand]"
-	log_game(log_message)
+	log_zone_switch(log_message)
