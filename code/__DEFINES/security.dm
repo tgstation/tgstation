@@ -55,7 +55,6 @@
 /// if any categories list has this entry, it will be hidden
 #define DETSCAN_BLOCK "DETSCAN_BLOCK"
 
-
 /// Wanted statuses
 #define WANTED_ARREST "Arrest"
 #define WANTED_DISCHARGED "Discharged"
