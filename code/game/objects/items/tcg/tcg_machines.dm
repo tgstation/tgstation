@@ -269,7 +269,7 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	)
 	return radial_choices
 
-/obj/machinery/trading_card_button/proc/handle_choice(var/choice, mob/user)
+/obj/machinery/trading_card_button/proc/handle_choice(choice, mob/user)
 	var/input_value
 	switch(choice)
 		if("Set Mana")
