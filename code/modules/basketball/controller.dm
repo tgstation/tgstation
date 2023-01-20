@@ -143,14 +143,12 @@ GLOBAL_VAR(basketball_game)
 	home_hoop.name = current_map.team_name
 	away_hoop.name = away_map.team_name
 
+	var/player_count = 0
+
 	for(var/player_key in ready_players)
+		player_count++
 
-
-		// we need an iterator that ++1 so we can get correct even/odds
-
-
-
-		if(length(ready_players) % 2) // odd is home team
+		if(player_count % 2) // odd is home team
 			spawn_landmark = pick_n_take(home_spawnpoints)
 			home_team_players |= player_key
 			home_hoop.team_ckeys |= player_key
@@ -315,11 +313,11 @@ GLOBAL_VAR(basketball_game)
 				return
 			if(GLOB.basketball_signup[signup_client.ckey])
 				GLOB.basketball_signup -= signup_client.ckey
-				to_chat(signup_client, span_notice("You unregister from Mafia."))
+				to_chat(signup_client, span_notice("You unregister from basketball."))
 				return TRUE
 			else
 				GLOB.basketball_signup[signup_client.ckey] = signup_client
-				to_chat(signup_client, span_notice("You sign up for Mafia."))
+				to_chat(signup_client, span_notice("You sign up for basketball."))
 
 			check_signups()
 			try_autostart()
