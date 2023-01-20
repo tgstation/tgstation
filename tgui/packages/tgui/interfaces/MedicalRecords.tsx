@@ -48,14 +48,21 @@ export const MedicalRecords = (props, context) => {
 const RecordTabs = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { records } = data;
+
+  const errorMessage = !records.length
+    ? 'No records found.'
+    : 'No match. Refine your search.';
+
   const [search, setSearch] = useLocalState(context, 'search', '');
   const [selectedRecord, setSelectedRecord] = useLocalState<
     MedicalRecord | undefined
   >(context, 'medicalRecord', undefined);
 
   const sorted = flow([
-    filter((record: MedicalRecord) =>
-      record.dna?.toLowerCase().includes(search?.toLowerCase())
+    filter(
+      (record: MedicalRecord) =>
+        record.dna?.toLowerCase().includes(search?.toLowerCase()) ||
+        record.name?.toLowerCase().includes(search?.toLowerCase())
     ),
     sortBy((record: MedicalRecord) => record.name?.toLowerCase()),
   ])(records);
@@ -81,8 +88,8 @@ const RecordTabs = (props, context) => {
       <Stack.Item grow>
         <Section fill scrollable>
           <Tabs vertical>
-            {sorted.length === 0 ? (
-              <NoticeBox>No matching records.</NoticeBox>
+            {!sorted.length ? (
+              <NoticeBox>{errorMessage}</NoticeBox>
             ) : (
               sorted.map((record, index) => (
                 <Tabs.Tab
