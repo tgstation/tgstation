@@ -6,6 +6,8 @@
  * angle2text
  * worldtime2text
  * text2dir_extended & dir2text_short
+ * dir2nautical
+ * nautical2dir
  */
 
 
@@ -37,35 +39,7 @@
 		if(SOUTHWEST)
 			return "southwest"
 		else
-	return
-
-//Turns a direction into a nautical direction
-/proc/dir2nautical(direction)
-	switch(direction)
-		if(NORTH)
-			return "fore"
-		if(SOUTH)
-			return "aft"
-		if(EAST)
-			return "starboard"
-		if(WEST)
-			return "port"
-		else
-	return
-
-//Turns a nautical direction into a direction
-/proc/nautical2dir(direction)
-	switch(uppertext(direction))
-		if("FORE")
-			return NORTH
-		if("AFT")
-			return SOUTH
-		if("STARBOARD")
-			return EAST
-		if("PORT")
-			return WEST
-		else
-	return
+			CRASH("Tried to convert dir [direction] to text, but received unrecognised direction.")
 
 //Turns text into proper directions
 /proc/text2dir(direction)
@@ -87,7 +61,35 @@
 		if("SOUTHWEST")
 			return SOUTHWEST
 		else
-	return
+			CRASH("Tried to convert text [direction] to dir, but received unrecognised direction.")
+
+//Turns a direction into a nautical direction
+/proc/dir2nautical(direction)
+	switch(direction)
+		if(NORTH)
+			return "fore"
+		if(SOUTH)
+			return "aft"
+		if(EAST)
+			return "starboard"
+		if(WEST)
+			return "port"
+		else
+			CRASH("Tried to convert dir [direction] to nautical, but received unrecognised direction.")
+
+//Turns a nautical direction into a direction
+/proc/nautical2dir(direction)
+	switch(uppertext(direction))
+		if("FORE")
+			return NORTH
+		if("AFT")
+			return SOUTH
+		if("STARBOARD")
+			return EAST
+		if("PORT")
+			return WEST
+		else
+			CRASH("Tried to convert nautical [direction] to dir, but received unrecognised direction.")
 
 //Converts an angle (degrees) into a ss13 direction
 GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST))
