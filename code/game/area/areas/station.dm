@@ -1454,3 +1454,19 @@
 
 /area/station/maintenance/external/port/bow
 	name = "\improper Port Bow External Hull Access"
+
+//Tramstation - External
+/area/misc/asteroid
+	name = "\improper Asteroid"
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "asteroid"
+	has_gravity = STANDARD_GRAVITY
+	sound_environment = SOUND_AREA_ASTEROID
+	ambient_buzz = 'sound/ambience/ambiatmos.ogg'
+	outdoors = TRUE
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+	ambience_index = AMBIENCE_MINING

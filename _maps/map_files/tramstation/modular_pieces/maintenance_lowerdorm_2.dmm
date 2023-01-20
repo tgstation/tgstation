@@ -61,7 +61,7 @@
 	name = "walter"
 	},
 /turf/open/misc/asteroid,
-/area/lavaland/surface)
+/area/misc/asteroid)
 "fP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -211,7 +211,7 @@
 /area/template_noop)
 "uZ" = (
 /turf/open/misc/asteroid,
-/area/lavaland/surface)
+/area/misc/asteroid)
 "vZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -237,7 +237,7 @@
 /area/station/maintenance/central/lesser)
 "xu" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/lavaland/surface)
+/area/misc/asteroid)
 "yj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -255,11 +255,11 @@
 "yu" = (
 /obj/item/relic,
 /turf/open/misc/asteroid/dug,
-/area/lavaland/surface)
+/area/misc/asteroid)
 "yw" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
-/area/lavaland/surface)
+/area/misc/asteroid)
 "yD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
@@ -463,11 +463,11 @@
 "Oi" = (
 /obj/item/stack/ore/silver,
 /turf/open/misc/asteroid,
-/area/lavaland/surface)
+/area/misc/asteroid)
 "OF" = (
 /obj/item/pickaxe/emergency,
 /turf/open/misc/asteroid,
-/area/lavaland/surface)
+/area/misc/asteroid)
 "OI" = (
 /turf/template_noop,
 /area/template_noop)
@@ -533,7 +533,7 @@
 "XU" = (
 /obj/structure/barricade/wooden,
 /turf/open/misc/asteroid,
-/area/lavaland/surface)
+/area/misc/asteroid)
 "Ya" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,

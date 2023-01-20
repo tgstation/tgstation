@@ -113,15 +113,35 @@
 					var/webpage_url = title
 					if (data["webpage_url"])
 						webpage_url = "<a href=\"[data["webpage_url"]]\">[title]</a>"
-					music_extra_data["start"] = data["start_time"]
-					music_extra_data["end"] = data["end_time"]
+					music_extra_data["duration"] = DisplayTimeText(data["duration"] * 1 SECONDS)
 					music_extra_data["link"] = data["webpage_url"]
+					music_extra_data["artist"] = data["artist"]
+					music_extra_data["upload_date"] = data["upload_date"]
+					music_extra_data["album"] = data["album"]
 
 					var/res = tgui_alert(usr, "Show the title of and link to this song to the players?\n[title]",, list("No", "Yes", "Cancel"))
 					switch(res)
 						if("Yes")
 							music_extra_data["title"] = data["title"]
-							to_chat(world, span_boldannounce("An admin played: [webpage_url]"), confidential = TRUE)
+						if("No")
+							music_extra_data["link"] = "Song Link Hidden"
+							music_extra_data["title"] = "Song Title Hidden"
+							music_extra_data["artist"] = "Song Artist Hidden"
+							music_extra_data["upload_date"] = "Song Upload Date Hidden"
+							music_extra_data["album"] = "Song Album Hidden"
+						if("Cancel")
+							return
+
+					var/anon = tgui_alert(usr, "Display who played the song?", "Credit Yourself?", list("No", "Yes", "Cancel"))
+					switch(anon)
+						if("Yes")
+							if(res == "Yes")
+								to_chat(world, span_boldannounce("[src] played: [webpage_url]"), confidential = TRUE)
+							else
+								to_chat(world, span_boldannounce("[src] played some music"), confidential = TRUE)
+						if("No")
+							if(res == "Yes")
+								to_chat(world, span_boldannounce("An admin played: [webpage_url]"), confidential = TRUE)
 						if("Cancel")
 							return
 

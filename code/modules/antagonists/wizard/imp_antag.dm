@@ -9,6 +9,7 @@
 	show_in_antagpanel = FALSE
 	show_in_roundend = FALSE
 	ui_name = "AntagInfoDemon"
+	antagpanel_category = ANTAG_GROUP_WIZARDS
 
 /datum/antagonist/imp/on_gain()
 	. = ..()
