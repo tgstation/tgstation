@@ -21,8 +21,6 @@
 	var/authenticated = FALSE
 	/// The character preview view for the UI.
 	var/atom/movable/screen/map_view/char_preview/character_preview_view
-	/// Character preview
-	var/mutable_appearance/character_preview
 
 /datum/armor/machinery_computer
 	fire = 40
