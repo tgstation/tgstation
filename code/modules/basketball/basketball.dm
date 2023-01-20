@@ -37,15 +37,13 @@
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 
 // basketball/qdel don't forget to remove these signals
-//	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP))
+//	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 /obj/item/toy/basketball/proc/reset_pickup_restriction()
 	pickup_restriction_ckeys = list()
 	COOLDOWN_RESET(src, pickup_cooldown)
-	// remove timer if it existsxf
 
 /obj/item/toy/basketball/proc/on_equip(obj/item/source, mob/living/user, slot)
 	SIGNAL_HANDLER
@@ -70,22 +68,16 @@
 	wielder = null
 	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN))
 
-/**
- * Checks if a team can pickup the ball after scoring
- *
- * source - our ball
- * user - the mob picking our [source]
- */
-/obj/item/toy/basketball/proc/on_pickup(obj/item/source, mob/living/grabber)
-	SIGNAL_HANDLER
+/obj/item/toy/basketball/attack_hand(mob/living/user, list/modifiers)
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = FALSE, need_hands = !iscyborg(user)))
+		return
 
-	if(grabber.ckey in pickup_restriction_ckeys)
-		if(!COOLDOWN_FINISHED(src, pickup_cooldown))
-			src.balloon_alert(grabber, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown)] seconds!")
-			return
-		// prevent pickup
-	else
-		reset_pickup_restriction()
+	if(user.ckey in pickup_restriction_ckeys && !COOLDOWN_FINISHED(src, pickup_cooldown))
+		src.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) * SECONDS] seconds!")
+		return
+
+	reset_pickup_restriction()
+	return ..()
 
 /obj/item/toy/basketball/proc/movement_effect(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
