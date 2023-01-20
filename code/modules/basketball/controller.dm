@@ -130,6 +130,7 @@ GLOBAL_VAR(basketball_game)
 /datum/basketball_controller/proc/create_bodies(ready_players)
 	var/list/possible_away_teams = subtypesof(/datum/map_template/basketball) - current_map
 	var/datum/map_template/basketball/away_map = pick(possible_away_teams)
+	away_map = new away_map
 
 	var/list/home_spawnpoints = home_team_landmarks.Copy()
 	var/list/away_spawnpoints = away_team_landmarks.Copy()
