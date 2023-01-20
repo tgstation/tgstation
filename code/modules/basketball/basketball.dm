@@ -42,7 +42,7 @@
 // basketball/qdel don't forget to remove these signals
 //	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP))
 
-/obj/item/toy/basketball/reset_pickup_restriction()
+/obj/item/toy/basketball/proc/reset_pickup_restriction()
 	pickup_restriction_ckeys = list()
 	COOLDOWN_RESET(src, pickup_cooldown)
 	// remove timer if it existsxf
@@ -56,7 +56,8 @@
 	*/
 	wielder = user
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(movement_effect))
-	RegisterSignal(user, COMSIG_MOB_EMOTE, PROC_REF(emote_stamina_drain))
+	//RegisterSignal(user, COMSIG_MOB_EMOTE, PROC_REF(on_spin))
+	RegisterSignal(user, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
 	RegisterSignal(user, COMSIG_HUMAN_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
 	RegisterSignal(user, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_equipped_mob_knockdown))
 
@@ -69,26 +70,39 @@
 	wielder = null
 	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN))
 
+/**
+ * Checks if a team can pickup the ball after scoring
+ *
+ * source - our ball
+ * user - the mob picking our [source]
+ */
+/obj/item/toy/basketball/proc/on_pickup(obj/item/source, mob/living/grabber)
+	SIGNAL_HANDLER
+
+	if(grabber.ckey in pickup_restriction_ckeys)
+		if(!COOLDOWN_FINISHED(src, pickup_cooldown))
+			src.balloon_alert(grabber, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown)] seconds!")
+			return
+		// prevent pickup
+	else
+		reset_pickup_restriction()
+
 /obj/item/toy/basketball/proc/movement_effect(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 
 	if(steps > step_delay)
 		playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 		steps = 0
-		wielder.adjustStaminaLoss(1) // balling drains your stamina as you move
+		//wielder.adjustStaminaLoss(1) // balling drains your stamina as you move
 	else
 		steps++
 
-/obj/item/toy/basketball/proc/emote_stamina_drain(mob/living/user, datum/emote/emote)
+/obj/item/toy/basketball/proc/on_spin(mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!istype(emote, /datum/emote/spin))
-		return
-
 	for(var/i in 1 to 6)
-		playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
-		sleep(0.25 SECONDS)
-		user.adjustStaminaLoss(2)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/basketball_bounce.ogg', 75, FALSE), 0.25 SECONDS * i)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon/, adjustStaminaLoss), 15), 1.5 SECONDS)
 
 /**
  * Handles the directionality of the attack
@@ -153,7 +167,8 @@
 	switch(blocking_dir_bonus)
 		if(FACE_TO_FACE)
 			stealer.balloon_alert_to_viewers("steals the ball")
-			stealer.put_in_hands(src)
+			INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src) // put_in_hands uses sleep() so need to use ASYNCH
+			//stealer.put_in_hands(src)
 		if(FACE_TO_SIDE)
 			if(prob(50))
 				if(!baller.dropItemToGround(src))
@@ -161,7 +176,8 @@
 				stealer.balloon_alert_to_viewers("bats the ball")
 			else
 				stealer.balloon_alert_to_viewers("steals the ball")
-				stealer.put_in_hands(src)
+				INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src) // put_in_hands uses sleep() so need to use ASYNCH
+				//stealer.put_in_hands(src)
 		if(FACE_TO_BACK)
 			if(!baller.dropItemToGround(src))
 				return
@@ -314,13 +330,19 @@
 /obj/structure/hoop/proc/reset_appearance()
 	update_appearance()
 
-/obj/structure/hoop/proc/score(obj/item/ball, mob/living/baller, points)
+/obj/structure/hoop/proc/score(obj/item/toy/basketball/ball, mob/living/baller, points)
+	// we still play buzzer sound regardless of the object
 	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+
+	if(!istype(ball))
+		return
+
 	total_score += points
 	update_appearance()
 	// whoever scored doesn't get to pickup the ball instantly
 	COOLDOWN_START(ball, pickup_cooldown, PICKUP_RESTRICTION_TIME)
 	ball.pickup_restriction_ckeys |= baller.ckey
+	return TRUE
 
 /obj/structure/hoop/update_overlays()
 	. = ..()
@@ -438,60 +460,31 @@
 
 		if(prob(score_chance))
 			AM.forceMove(get_turf(src))
-
-			if(distance > 2) // 3 pointer shot
-				score(AM, thrower, 3)
-			else
-				score(AM, thrower, 2)
-
-			if(click_on_hoop)
-				visible_message(span_warning("Swish! [AM] lands in [src]."))
-			else
-				visible_message(span_warning("[AM] bounces off the backboard and lands in [src]."))
-			return
+			// is it a 3 pointer shot
+			var/points = (distance > 2) ? 3 : 2
+			score(AM, thrower, points)
+			visible_message(span_warning("[click_on_hoop ? "Swish!" : ""] [AM] lands in [src]."))
 		else
-			if(click_on_hoop)
-				visible_message(span_danger("[AM] bounces off of [src]'s rim!"))
-			else
-				visible_message(span_danger("[AM] bounces off of [src]'s backboard!"))
-			return ..()
-	else
-		return ..()
+			visible_message(span_danger("[AM] bounces off of [src]'s [click_on_hoop ? "rim" : "backboard"]!"))
+
+	return ..()
 
 // Special hoops for the minigame
 /obj/structure/hoop/minigame
 	/// This is a list of ckeys for the minigame to prevent scoring on their own hoops
 	var/list/team_ckeys = list()
 
-/obj/structure/hoop/minigame/score(obj/item/ball, mob/living/baller, points)
-	var/is_team_hoop = baller.ckey in team_ckeys
+/obj/structure/hoop/minigame/score(obj/item/toy/basketball/ball, mob/living/baller, points)
+	var/is_team_hoop = (baller.ckey in team_ckeys)
 	if(is_team_hoop)
 		baller.balloon_alert_to_viewers("cant score own hoop!")
 		return
 
-	ball.pickup_restriction_ckeys |= team_ckeys
-	. = ..()
+	if(..())
+		ball.pickup_restriction_ckeys |= team_ckeys
 
 	// RegisterSignal(ball, COMSIG_ITEM_PICKUP, TYPE_PROC_REF(/obj/item/toy/basketball, pickup_restriction), team)
 	// addtimer(CALLBACK(ball, TYPE_PROC_REF(/obj/item/toy/basketball, reset_pickup_restriction)), PICKUP_RESTRICTION_TIME)
-
-/**
- * Checks if a team can pickup the ball after scoring
- *
- * source - our ball
- * user - the mob picking our [source]
- */
-/obj/item/toy/basketball/proc/pickup_restriction(obj/item/source, mob/grabber)
-	SIGNAL_HANDLER
-
-	if(grabber.ckey in team_ckeys)
-		if(!COOLDOWN_FINISHED(src, pickup_cooldown))
-		
-			baller.balloon_alert_to_viewers("cant pickup after scoring for [COOLDOWN_TIMELEFT(src, pickup_cooldown)]!")
-			return
-		// prevent pickup
-	else
-		reset_pickup_restriction()
 
 // No resetting the score for minigame hoops
 /obj/structure/hoop/minigame/CtrlClick(mob/living/user)
