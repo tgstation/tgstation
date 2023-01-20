@@ -1,0 +1,4 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - bugfix: "Fixes reverse revolver sprite being swapped to normal revolver sprite"
