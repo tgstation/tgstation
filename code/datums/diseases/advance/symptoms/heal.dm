@@ -505,6 +505,7 @@
 	if(A.totalTransmittable() >= 6)
 		temp_rate = 4
 
+// We do this to prevent liver damage from injecting plasma when plasma fixation virus reaches stage 4 and beyond
 /datum/symptom/heal/plasma/on_stage_change(datum/disease/advance/A)
 	. = ..()
 	if(!.)
