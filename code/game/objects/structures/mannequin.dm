@@ -1,3 +1,4 @@
+/// A mannequin! A structure that can display clothing on itself.
 /obj/structure/mannequin
 	name = "mannequin"
 	desc = "Oh, so this is a dress-up game now."
@@ -6,7 +7,11 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = FLAMMABLE
+	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	/// Which body type we use, male or female?
 	var/body_type
+	/// Static list of slot flags we have clothing slots for.
 	var/static/list/slot_flags = list(
 		ITEM_SLOT_HEAD,
 		ITEM_SLOT_EYES,
@@ -22,6 +27,7 @@
 		ITEM_SLOT_GLOVES,
 		ITEM_SLOT_FEET,
 	)
+	/// Assoc list of all item slots (turned to strings) to the items they hold.
 	var/list/worn_items = list()
 
 /obj/structure/mannequin/Initialize(mapload)
@@ -33,6 +39,7 @@
 	if(body_type == FEMALE)
 		icon_state = "mannequin_female"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
+	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
 
 /obj/structure/mannequin/Destroy()
 	QDEL_LIST_ASSOC_VAL(worn_items)
@@ -54,13 +61,13 @@
 
 /obj/structure/mannequin/update_overlays()
 	. = ..()
-	var/default_layer = 0
-	var/default_icon = null
-	var/female_icon = NO_FEMALE_UNIFORM
 	for(var/slot_flag in worn_items)
 		var/obj/item/worn_item = worn_items[slot_flag]
 		if(!worn_item)
 			continue
+		var/default_layer = 0
+		var/default_icon = null
+		var/female_icon = NO_FEMALE_UNIFORM
 		switch(text2num(slot_flag)) //this kinda sucks because build worn icon kinda sucks
 			if(ITEM_SLOT_HEAD)
 				default_layer = HEAD_LAYER
@@ -108,7 +115,18 @@
 
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,
+	/datum/strippable_item/mannequin_slot/eyes,
+	/datum/strippable_item/mannequin_slot/ears,
+	/datum/strippable_item/mannequin_slot/mask,
+	/datum/strippable_item/mannequin_slot/neck,
+	/datum/strippable_item/mannequin_slot/back,
+	/datum/strippable_item/mannequin_slot/belt,
+	/datum/strippable_item/mannequin_slot/id,
+	/datum/strippable_item/mannequin_slot/uniform,
 	/datum/strippable_item/mannequin_slot/suit,
+	/datum/strippable_item/mannequin_slot/suit_storage,
+	/datum/strippable_item/mannequin_slot/gloves,
+	/datum/strippable_item/mannequin_slot/feet,
 )))
 
 /datum/strippable_item/mannequin_slot
@@ -123,7 +141,7 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!(equipping.item_flags & item_slot))
+	if(!(equipping.slot_flags & item_slot))
 		to_chat(user, span_warning("[equipping] won't fit!"))
 		return FALSE
 	return TRUE
@@ -148,6 +166,63 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	key = STRIPPABLE_ITEM_HEAD
 	item_slot = ITEM_SLOT_HEAD
 
+/datum/strippable_item/mannequin_slot/eyes
+	key = STRIPPABLE_ITEM_EYES
+	item_slot = ITEM_SLOT_EYES
+
+/datum/strippable_item/mannequin_slot/ears
+	key = STRIPPABLE_ITEM_EARS
+	item_slot = ITEM_SLOT_EARS
+
+/datum/strippable_item/mannequin_slot/mask
+	key = STRIPPABLE_ITEM_MASK
+	item_slot = ITEM_SLOT_MASK
+
+/datum/strippable_item/mannequin_slot/neck
+	key = STRIPPABLE_ITEM_NECK
+	item_slot = ITEM_SLOT_NECK
+
+/datum/strippable_item/mannequin_slot/back
+	key = STRIPPABLE_ITEM_BACK
+	item_slot = ITEM_SLOT_BACK
+
+/datum/strippable_item/mannequin_slot/belt
+	key = STRIPPABLE_ITEM_BELT
+	item_slot = ITEM_SLOT_BELT
+
+/datum/strippable_item/mannequin_slot/id
+	key = STRIPPABLE_ITEM_ID
+	item_slot = ITEM_SLOT_ID
+
+/datum/strippable_item/mannequin_slot/uniform
+	key = STRIPPABLE_ITEM_JUMPSUIT
+	item_slot = ITEM_SLOT_ICLOTHING
+
 /datum/strippable_item/mannequin_slot/suit
 	key = STRIPPABLE_ITEM_SUIT
 	item_slot = ITEM_SLOT_OCLOTHING
+
+/datum/strippable_item/mannequin_slot/suit_storage
+	key = STRIPPABLE_ITEM_SUIT_STORAGE
+	item_slot = ALL //we check for ourselves
+
+/datum/strippable_item/mannequin_slot/suit_storage/try_equip(atom/source, obj/item/equipping, mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/structure/mannequin/mannequin_source = source
+	if(!istype(mannequin_source))
+		return FALSE
+	var/obj/item/suit = mannequin_source.worn_items["[ITEM_SLOT_OCLOTHING]"]
+	if(suit && is_type_in_list(src, suit.allowed))
+		return TRUE
+	to_chat(user, span_warning("[equipping] won't fit!"))
+	return FALSE
+
+/datum/strippable_item/mannequin_slot/gloves
+	key = STRIPPABLE_ITEM_GLOVES
+	item_slot = ITEM_SLOT_GLOVES
+
+/datum/strippable_item/mannequin_slot/feet
+	key = STRIPPABLE_ITEM_FEET
+	item_slot = ITEM_SLOT_FEET
