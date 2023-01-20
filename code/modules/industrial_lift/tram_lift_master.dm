@@ -221,5 +221,3 @@
 
 		else
 			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")
-
-#undef XING_STATE_MALF
