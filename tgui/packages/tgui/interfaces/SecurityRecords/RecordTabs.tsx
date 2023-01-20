@@ -4,6 +4,7 @@ import { useBackend, useLocalState } from 'tgui/backend';
 import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon } from 'tgui/components';
 import { JOB2ICON } from '../common/JobToIcon';
 import { CRIMESTATUS2COLOR } from './constants';
+import { isRecordMatch } from './helpers';
 import { SecureData, SecurityRecord } from './types';
 
 /** Tabs on left, with search bar */
@@ -18,11 +19,7 @@ export const RecordTabs = (props, context) => {
   const [search, setSearch] = useLocalState(context, 'search', '');
 
   const sorted: SecurityRecord[] = flow([
-    filter(
-      (record: SecurityRecord) =>
-        record.fingerprint?.toLowerCase().includes(search?.toLowerCase()) ||
-        record.name?.toLowerCase().includes(search?.toLowerCase())
-    ),
+    filter((record: SecurityRecord) => isRecordMatch(record, search)),
     sortBy((record: SecurityRecord) => record.name),
   ])(records);
 
@@ -31,7 +28,7 @@ export const RecordTabs = (props, context) => {
       <Stack.Item>
         <Input
           fluid
-          placeholder="Fingerprints or Name"
+          placeholder="Name/Job/Fingerprints"
           onInput={(event, value) => setSearch(value)}
         />
       </Stack.Item>

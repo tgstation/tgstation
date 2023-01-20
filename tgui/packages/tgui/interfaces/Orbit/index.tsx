@@ -234,7 +234,7 @@ const ObservableItem = (
 ) => {
   const { act } = useBackend<OrbitData>(context);
   const { color, item } = props;
-  const { extra, full_name, job, job_icon, health, name, orbiters, ref } = item;
+  const { extra, full_name, job, health, name, orbiters, ref } = item;
 
   const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
   const [heatMap] = useLocalState<boolean>(context, 'heatMap', false);

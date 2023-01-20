@@ -6,6 +6,7 @@ import { Box, Icon, Input, LabeledList, NoticeBox, Section, Stack, Tabs, TextAre
 import { Window } from '../layouts';
 import { JOB2ICON } from './common/JobToIcon';
 import { CharacterPreview } from './PreferencesMenu/CharacterPreview';
+import { isRecordMatch } from './SecurityRecords/helpers';
 
 type Data = {
   records: MedicalRecord[];
@@ -60,11 +61,7 @@ const RecordTabs = (props, context) => {
   >(context, 'medicalRecord', undefined);
 
   const sorted: MedicalRecord[] = flow([
-    filter(
-      (record: MedicalRecord) =>
-        record.dna?.toLowerCase().includes(search?.toLowerCase()) ||
-        record.name?.toLowerCase().includes(search?.toLowerCase())
-    ),
+    filter((record: MedicalRecord) => isRecordMatch(record, search)),
     sortBy((record: MedicalRecord) => record.name?.toLowerCase()),
   ])(records);
 
@@ -83,7 +80,7 @@ const RecordTabs = (props, context) => {
         <Input
           fluid
           onInput={(_, value) => setSearch(value)}
-          placeholder="DNA or Name"
+          placeholder="Name/Job/DNA"
         />
       </Stack.Item>
       <Stack.Item grow>
