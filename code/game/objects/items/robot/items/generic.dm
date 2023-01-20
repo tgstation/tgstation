@@ -335,7 +335,8 @@
 		user.log_message("used a Cyborg Harm Alarm", LOG_ATTACK)
 		if(iscyborg(user))
 			var/mob/living/silicon/robot/robot_user = user
-			to_chat(robot_user.connected_ai, "<br>[span_notice("NOTICE - Peacekeeping 'HARM ALARM' used by: [user]")]<br>")
+			if(robot_user.connected_ai)
+				to_chat(robot_user.connected_ai, "<br>[span_notice("NOTICE - Peacekeeping 'HARM ALARM' used by: [user]")]<br>")
 	else
 		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
