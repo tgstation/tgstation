@@ -85,7 +85,7 @@
 	var/list/data = list()
 
 	data["available_statuses"] = WANTED_STATUSES()
-	data["logged_in"] = logged_in || issilicon(user)
+	data["logged_in"] = isliving(user) && (logged_in || issilicon(user))
 
 	if(!logged_in)
 		return data

@@ -4,6 +4,7 @@ import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Icon, Input, LabeledList, NoticeBox, Section, Stack, Tabs, TextArea, Tooltip } from '../components';
 import { Window } from '../layouts';
+import { JOB2ICON } from './common/JobToIcon';
 import { CharacterPreview } from './PreferencesMenu/CharacterPreview';
 
 type Data = {
@@ -29,7 +30,7 @@ type MedicalRecord = {
 
 export const MedicalRecords = (props, context) => {
   return (
-    <Window title="Medical Records" width={700} height={500}>
+    <Window title="Medical Records" width={750} height={550}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
@@ -58,7 +59,7 @@ const RecordTabs = (props, context) => {
     MedicalRecord | undefined
   >(context, 'medicalRecord', undefined);
 
-  const sorted = flow([
+  const sorted: MedicalRecord[] = flow([
     filter(
       (record: MedicalRecord) =>
         record.dna?.toLowerCase().includes(search?.toLowerCase()) ||
@@ -82,7 +83,7 @@ const RecordTabs = (props, context) => {
         <Input
           fluid
           onInput={(_, value) => setSearch(value)}
-          placeholder="DNA Search"
+          placeholder="DNA or Name"
         />
       </Stack.Item>
       <Stack.Item grow>
@@ -97,8 +98,10 @@ const RecordTabs = (props, context) => {
                   key={index}
                   label={record.name}
                   onClick={() => selectRecord(record)}
-                  selected={selectedRecord === record}>
-                  {record.name}
+                  selected={selectedRecord?.ref === record.ref}>
+                  <Box wrap>
+                    <Icon name={JOB2ICON[record.rank]} /> {record.name}
+                  </Box>
                 </Tabs.Tab>
               ))
             )}

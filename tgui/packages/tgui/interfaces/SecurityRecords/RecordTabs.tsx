@@ -1,25 +1,23 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Stack, Input, Section, Tabs, NoticeBox, Box } from 'tgui/components';
+import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon } from 'tgui/components';
+import { JOB2ICON } from '../common/JobToIcon';
 import { CRIMESTATUS2COLOR } from './constants';
 import { SecureData, SecurityRecord } from './types';
 
 /** Tabs on left, with search bar */
 export const RecordTabs = (props, context) => {
-  const { act, data } = useBackend<SecureData>(context);
+  const { data } = useBackend<SecureData>(context);
   const { records } = data;
 
   const errorMessage = !records.length
     ? 'No records found.'
     : 'No match. Refine your search.';
 
-  const [selectedRecord, setSelectedRecord] = useLocalState<
-    SecurityRecord | undefined
-  >(context, 'securityRecord', undefined);
   const [search, setSearch] = useLocalState(context, 'search', '');
 
-  const sorted = flow([
+  const sorted: SecurityRecord[] = flow([
     filter(
       (record: SecurityRecord) =>
         record.fingerprint?.toLowerCase().includes(search?.toLowerCase()) ||
@@ -27,6 +25,39 @@ export const RecordTabs = (props, context) => {
     ),
     sortBy((record: SecurityRecord) => record.name),
   ])(records);
+
+  return (
+    <Stack fill vertical>
+      <Stack.Item>
+        <Input
+          fluid
+          placeholder="Fingerprints or Name"
+          onInput={(event, value) => setSearch(value)}
+        />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Section fill scrollable>
+          <Tabs vertical>
+            {!sorted.length ? (
+              <NoticeBox>{errorMessage}</NoticeBox>
+            ) : (
+              sorted.map((record, index) => (
+                <CrewTab record={record} key={index} />
+              ))
+            )}
+          </Tabs>
+        </Section>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+/** Individual record */
+const CrewTab = ({ record }, context) => {
+  const { act } = useBackend<SecureData>(context);
+  const [selectedRecord, setSelectedRecord] = useLocalState<
+    SecurityRecord | undefined
+  >(context, 'securityRecord', undefined);
 
   /** Chooses a record */
   const selectRecord = (record: SecurityRecord) => {
@@ -38,37 +69,18 @@ export const RecordTabs = (props, context) => {
     }
   };
 
+  const { name, rank, ref, wanted_status } = record;
+  const isSelected = selectedRecord?.ref === ref;
+
   return (
-    <Stack fill vertical>
-      <Stack.Item>
-        <Input
-          fluid
-          placeholder="Fingerprint Search"
-          onInput={(event, value) => setSearch(value)}
-        />
-      </Stack.Item>
-      <Stack.Item grow>
-        <Section fill scrollable>
-          <Tabs vertical>
-            {!sorted.length ? (
-              <NoticeBox>{errorMessage}</NoticeBox>
-            ) : (
-              sorted.map((record, index) => (
-                <Tabs.Tab
-                  className="candystripe"
-                  key={index}
-                  label={record.name}
-                  onClick={() => selectRecord(record)}
-                  selected={selectedRecord?.ref === record.ref}>
-                  <Box color={CRIMESTATUS2COLOR[record.wanted_status]}>
-                    {record.name}
-                  </Box>
-                </Tabs.Tab>
-              ))
-            )}
-          </Tabs>
-        </Section>
-      </Stack.Item>
-    </Stack>
+    <Tabs.Tab
+      className="candystripe"
+      label={record.name}
+      onClick={() => selectRecord(record)}
+      selected={isSelected}>
+      <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]} wrap>
+        <Icon name={JOB2ICON[rank]} /> {name}
+      </Box>
+    </Tabs.Tab>
   );
 };

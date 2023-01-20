@@ -10,7 +10,7 @@ export const SecurityRecords = (props, context) => {
   const { logged_in } = data;
 
   return (
-    <Window title="Security Records" width={700} height={550}>
+    <Window title="Security Records" width={750} height={550}>
       <Window.Content>
         <Stack fill>{!logged_in ? <RestrictedView /> : <AuthView />}</Stack>
       </Window.Content>
@@ -56,7 +56,7 @@ const AuthView = (props, context) => {
       <Stack.Item grow>
         <RecordTabs />
       </Stack.Item>
-      <Stack.Item grow={3}>
+      <Stack.Item grow={2}>
         <Stack fill vertical>
           <Stack.Item grow>
             <RecordView />
