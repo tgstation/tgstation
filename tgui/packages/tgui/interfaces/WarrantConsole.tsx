@@ -51,7 +51,7 @@ export const WarrantConsole = (props, context) => {
 /** Displays all valid records with warrants. */
 const RecordList = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { records } = data;
+  const { records = [] } = data;
   const sorted = sortBy((record: WarrantRecord) => record.crew_name)(records);
 
   const [selectedRecord, setSelectedRecord] = useLocalState<
@@ -190,7 +190,7 @@ export const getCurrentRecord = (context) => {
   );
   if (!selectedRecord) return;
   const { data } = useBackend<Data>(context);
-  const { records } = data;
+  const { records = [] } = data;
   const foundRecord = records.find(
     (record) => record.crew_ref === selectedRecord.crew_ref
   );

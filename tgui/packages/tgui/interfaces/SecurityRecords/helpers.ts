@@ -10,7 +10,7 @@ export const getCurrentRecord = (context) => {
   );
   if (!selectedRecord) return;
   const { data } = useBackend<SecureData>(context);
-  const { records } = data;
+  const { records = [] } = data;
   const foundRecord = records.find(
     (record) => record.ref === selectedRecord.ref
   );

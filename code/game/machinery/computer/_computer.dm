@@ -21,6 +21,8 @@
 	var/authenticated = FALSE
 	/// The character preview view for the UI.
 	var/atom/movable/screen/map_view/char_preview/character_preview_view
+	/// Character preview
+	var/mutable_appearance/character_preview
 
 /datum/armor/machinery_computer
 	fire = 40
@@ -179,9 +181,9 @@
 /obj/machinery/computer/proc/update_preview(datum/record/locked/record)
 	if(!record)
 		return
-	var/mutable_appearance/preview = new(record.character_appearance)
-	if(!istype(preview))
-		return
 
-	preview.setDir(SOUTH)
+	var/mutable_appearance/preview = new(record.character_appearance)
+	preview.underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
+	preview.add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
+
 	character_preview_view.appearance = preview.appearance

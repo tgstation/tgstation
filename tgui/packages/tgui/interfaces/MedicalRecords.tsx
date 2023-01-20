@@ -49,7 +49,7 @@ export const MedicalRecords = (props, context) => {
 /** Displays all found records. */
 const RecordTabs = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { records } = data;
+  const { records = [] } = data;
 
   const errorMessage = !records.length
     ? 'No records found.'
@@ -283,7 +283,7 @@ const getCurrentRecord = (context) => {
   );
   if (!selectedRecord) return;
   const { data } = useBackend<Data>(context);
-  const { records } = data;
+  const { records = [] } = data;
   const foundRecord = records.find(
     (record) => record.ref === selectedRecord.ref
   );

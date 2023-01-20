@@ -10,7 +10,7 @@ import { SecureData, SecurityRecord } from './types';
 /** Tabs on left, with search bar */
 export const RecordTabs = (props, context) => {
   const { data } = useBackend<SecureData>(context);
-  const { records } = data;
+  const { records = [] } = data;
 
   const errorMessage = !records.length
     ? 'No records found.'
