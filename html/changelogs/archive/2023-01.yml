@@ -676,3 +676,45 @@
   - bugfix: Fixed the Survivalist N2O System
   scriptis:
   - rscadd: a goose for the tram to run over
+2023-01-20:
+  Guillaume Prata:
+  - rscadd: Bolter Wrench as a new tool, it can raise the bolts of airlocks regardless
+      of it's power status to smoother station repairs. It can be printed and is unlocked
+      on the same tier as RCD. It can also rarely be a mail gift for engineers.
+  Iamgoofball:
+  - bugfix: Fixes players bypassing the gas mask FOV restrictions with biohoods that
+      do almost everything the mask does without an FOV
+  Inari-Whitebear:
+  - bugfix: Firebots no longer attempt to extinguish themselves constantly
+  Melbert, That REALLY Good Soda Flavor, FatFat, AndreyGusev:
+  - rscadd: Spacemen can now have varying height. (Admin only for now)
+  - rscadd: Dwarfs are now slightly shorter, but look way better.
+  NamelessFairy:
+  - qol: Theres now a visual indicator when you attempt to grab an object or person
+      restrained by the HAUL gauntlets.
+  PositiveEntropy:
+  - rscadd: 'Adds a new short length haircut: the Chin-Length Bob Cut!'
+  SomeRandomOwl:
+  - admin: Modified the Play Internet Sound Verb so it now displays extra info about
+      any song being actively played as well as showing the link
+  Wallem:
+  - imageadd: Made the station's iron sheets less shiny to increase sprite legibility.
+  ZephyrTFA:
+  - bugfix: Canisters no longer keep their shielding when their shielding cell fails
+  Zergspower:
+  - qol: Protolathes and the like had their printable items categorized further
+  - bugfix: fixes a few uncategorized items in protolathes and the like
+  - refactor: Cleaner techweb code with more categories to break apart individual
+      printable items at proto/mech fabs
+  jlsnow301:
+  - qol: The orbit menu now sorts antagonists into groups more effectively. Some get
+      new named groups.
+  - admin: Traitor panel should have slightly more sane categories.
+  - rscadd: Many minor antagonists now have "objectives".
+  - refactor: Refactors code in several antag datums.
+  vinylspiders:
+  - bugfix: fixed give_important_for_life proc in species.dm, which is supposed to
+      be used to help ensure plasmamen (and potentially other races) are always spawned
+      with internals and such
+  - bugfix: fixed issue where plasmamen who are spawned without a plasmaman-specific
+      job outfit could spawn without internals and a suit, and just start dying immediately
