@@ -117,7 +117,7 @@
 	stamp_job = /datum/job/quartermaster
 	stamp_icon = "paper_stamp-qm"
 
-/obj/item/paperwork/cargo/Initialize()
+/obj/item/paperwork/cargo/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The papers are a mess of shipping order paperwork. There's no rhyme or reason to how these documents are sorted at all.")
@@ -130,7 +130,7 @@
 	stamp_job = /datum/job/head_of_security
 	stamp_icon = "paper_stamp-hos"
 
-/obj/item/paperwork/security/Initialize()
+/obj/item/paperwork/security/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The stack of documents are related to a civil case being processed by a neighboring installation.")
@@ -143,7 +143,7 @@
 	stamp_job = /datum/job/head_of_personnel
 	stamp_icon = "paper_stamp-hop"
 
-/obj/item/paperwork/service/Initialize()
+/obj/item/paperwork/service/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" You begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")
@@ -156,7 +156,7 @@
 	stamp_job = /datum/job/chief_medical_officer
 	stamp_icon = "paper_stamp-cmo"
 
-/obj/item/paperwork/medical/Initialize()
+/obj/item/paperwork/medical/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The stack of documents appear to be a medical report from a nearby station, detailing the autopsy of an unknown xenofauna.")
@@ -170,7 +170,7 @@
 	stamp_job = /datum/job/chief_engineer
 	stamp_icon = "paper_stamp-ce"
 
-/obj/item/paperwork/engineering/Initialize()
+/obj/item/paperwork/engineering/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" These papers are a power output report from a neighboring station. It details the power output and other engineering data regarding the station during a typical shift.")
@@ -183,7 +183,7 @@
 	stamp_job = /datum/job/research_director
 	stamp_icon = "paper_stamp-rd"
 
-/obj/item/paperwork/research/Initialize()
+/obj/item/paperwork/research/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The documents detail the results of a standard ordnance test that occured on a nearby station.")
@@ -196,7 +196,7 @@
 	stamp_job = /datum/job/captain
 	stamp_icon = "paper_stamp-cap"
 
-/obj/item/paperwork/captain/Initialize()
+/obj/item/paperwork/captain/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The documents are an unsigned correspondence from the captain's desk of a nearby station.")
