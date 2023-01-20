@@ -1,0 +1,4 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - balance: "Nerve splicing surgery now additionaly reduces stamina damage taken by 20%"

@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "a wall covered by a screen on runtimestation has been modified into a reinforced wall."
