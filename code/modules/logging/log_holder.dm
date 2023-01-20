@@ -50,12 +50,13 @@ GLOBAL_PROTECT(log_holder)
 		var/category_json = category.json_dump()
 		rustg_file_write(category_json, "[GLOB.log_directory]/[lowertext(category.category)].json")
 
-/datum/log_holder/proc/log(category, message, list/data)
+/// This is Log because log is a byond internal proc
+/datum/log_holder/proc/Log(category, message, list/data)
 	if(disabled_categories[category])
 		return
 
 	var/datum/log_category/log_category = log_categories[category]
 	if(!log_category)
-		log(LOG_CATEGORY_NOT_FOUND, message, data)
+		Log(LOG_CATEGORY_NOT_FOUND, message, data)
 		CRASH("Attempted to log to a category that doesn't exist! [category]")
 	log_category.add_entry(message, data)
