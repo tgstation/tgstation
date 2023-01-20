@@ -505,6 +505,26 @@
 	if(A.totalTransmittable() >= 6)
 		temp_rate = 4
 
+/datum/symptom/heal/plasma/on_stage_change(datum/disease/advance/A)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/organ/internal/liver/liver = A.affected_mob.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver)
+		if(A.stage >= 4)
+			ADD_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+		else 
+			REMOVE_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	return TRUE
+
+/datum/symptom/heal/plasma/End(datum/disease/advance/A)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/organ/internal/liver/liver = A.affected_mob.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver)
+		REMOVE_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+
 // Check internals breath, environmental plasma, and plasma in bloodstream to determine the heal power
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
@@ -554,7 +574,6 @@
 			to_chat(M, span_notice("You feel warmer."))
 
 	M.adjustToxLoss(-heal_amt)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -heal_amt)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 	if(!parts.len)
