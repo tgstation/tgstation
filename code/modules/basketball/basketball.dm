@@ -402,9 +402,9 @@
 			animate(baller, pixel_x = 0, pixel_y = 0, time = 3) // easing = BOUNCE_EASING)
 
 			visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
+			score(ball, baller, 2)
 
 			if(istype(ball, /obj/item/toy/basketball))
-				score(ball, baller, 2)
 				baller.adjustStaminaLoss(10) // dunking is more strenous than shooting
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
