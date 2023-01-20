@@ -76,9 +76,6 @@
 /datum/lift_master/tram/proc/gracefully_break(atom/bumped_atom)
 	SIGNAL_HANDLER
 
-	if(istype(bumped_atom, /obj/machinery/field))
-		return
-
 	travel_distance = 0
 	bumped_atom.visible_message(span_userdanger("The [bumped_atom.name] crashes into the field violently!"))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms)
