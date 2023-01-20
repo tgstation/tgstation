@@ -1,3 +1,5 @@
+#define XING_STATE_MALF 3
+
 /datum/lift_master/tram
 
 	///whether this tram is traveling across vertical and/or horizontal axis for some distance. not all lifts use this
@@ -80,18 +82,34 @@
 		return
 
 	travel_distance = 0
-
 	bumped_atom.visible_message(span_userdanger("[src] crashes into the field violently!"))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms)
 		tram_part.set_travelling(FALSE)
-		if(prob(15) || locate(/mob/living) in tram_part.lift_load) //always go boom on people on the track
-			explosion(tram_part, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
-		qdel(tram_part)
+		for(var/i in 1 to tram_part.lift_load.len)
+			var/to_explode = tram_part.lift_load[i]
+			if(istype(to_explode, /obj/effect))
+				continue
+
+			if(istype(to_explode, /mob/living))
+				explosion(to_explode, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
+
+			else if(prob(9))
+				explosion(to_explode, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
+
+			explosion(tram_part, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
+			qdel(tram_part)
+
+		for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+			desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
+
+		for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+			xing.set_signal_state(XING_STATE_MALF)
+			xing.update_appearance()
 
 /**
  * Handles moving the tram
  *
- * Tells the individual tram parts where to actually go and has an extra safety check
+ * Tells the individual tram parts where to actually go and has an extra safety checks
  * incase multiple inputs get through, preventing conflicting directions and the tram
  * literally ripping itself apart. all of the actual movement is handled by SStramprocess
  */
@@ -206,3 +224,5 @@
 
 		else
 			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")
+
+#undef XING_STATE_MALF
