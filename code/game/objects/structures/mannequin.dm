@@ -1,3 +1,6 @@
+#define MANNEQUIN_WOOD "wood"
+#define MANNEQUIN_MARBLE "marble"
+
 /// A mannequin! A structure that can display clothing on itself.
 /obj/structure/mannequin
 	name = "mannequin"
@@ -5,12 +8,21 @@
 	icon = 'icons/mob/species/human/mannequin.dmi'
 	icon_state = "mannequin_male"
 	density = TRUE
-	anchored = TRUE
 	resistance_flags = FLAMMABLE
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	pixel_y = 3
+	base_pixel_y = 3
 	/// Which body type we use, male or female?
 	var/body_type
+	/// Material we're used of, wood or marble?
+	var/material
+	/// String for the underwear we use.
+	var/underwear_name
+	/// String for the undershirt we use.
+	var/undershirt_name
+	/// String for the socks we use.
+	var/socks_name
 	/// Static list of slot flags we have clothing slots for.
 	var/static/list/slot_flags = list(
 		ITEM_SLOT_HEAD,
@@ -36,13 +48,22 @@
 		worn_items["[slot_flag]"] = null
 	if(!body_type)
 		body_type = pick(MALE, FEMALE)
-	if(body_type == FEMALE)
-		icon_state = "mannequin_female"
+	if(!material)
+		body_type = pick("wood", "marble")
+	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
+	update_appearance()
 
 /obj/structure/mannequin/Destroy()
 	QDEL_LIST_ASSOC_VAL(worn_items)
+	return ..()
+
+/obj/structure/mannequin/atom_destruction(damage_flag)
+	for(var/slot_flag in worn_items)
+		var/obj/item/worn_item = worn_items[slot_flag]
+		if(worn_item)
+			worn_item.forceMove(drop_location())
 	return ..()
 
 /obj/structure/mannequin/Exited(atom/movable/gone, direction)
@@ -52,15 +73,31 @@
 			worn_items[slot_flag] = null
 	update_appearance()
 
-/obj/structure/mannequin/atom_destruction(damage_flag)
-	for(var/slot_flag in worn_items)
-		var/obj/item/worn_item = worn_items[slot_flag]
-		if(worn_item)
-			worn_item.forceMove(drop_location())
-	return ..()
+/obj/structure/mannequin/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/mannequin/update_overlays()
 	. = ..()
+	var/mutable_appearance/pedestal = mutable_appearance(icon, "pedestal_[material]")
+	pedestal.pixel_y = -3
+	. += pedestal
+	var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[underwear_name]
+	if(underwear)
+		if(body_type == FEMALE && underwear.gender == MALE)
+			. += wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+		else
+			. += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+	var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[undershirt_name]
+	if(undershirt)
+		if(body_type == FEMALE)
+			. += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+		else
+			. += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+	var/datum/sprite_accessory/socks/socks = GLOB.socks_list[socks_name]
+	if(socks)
+		. += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 	for(var/slot_flag in worn_items)
 		var/obj/item/worn_item = worn_items[slot_flag]
 		if(!worn_item)
@@ -113,6 +150,34 @@
 				default_icon = DEFAULT_SHOES_FILE
 		. += worn_item.build_worn_icon(default_layer, default_icon, female_uniform = female_icon)
 
+/obj/structure/mannequin/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	var/choice = tgui_input_list(user, "Underwear, Undershirt, or Socks?", "Changing", list("Underwear","Undershirt","Socks"))
+	if(!Adjacent(user))
+		return
+	switch(choice)
+		if("Underwear")
+			var/new_undies = tgui_input_list(user, "Select the mannequin's underwear", "Changing", GLOB.underwear_list)
+			if(new_undies)
+				underwear_name = new_undies
+		if("Undershirt")
+			var/new_undershirt = tgui_input_list(user, "Select the mannequin's undershirt", "Changing", GLOB.undershirt_list)
+			if(new_undershirt)
+				undershirt_name = new_undershirt
+		if("Socks")
+			var/new_socks = tgui_input_list(user, "Select the mannequin's socks", "Changing", GLOB.socks_list)
+			if(new_socks)
+				socks_name = new_socks
+	update_appearance()
+
+/obj/structure/mannequin/wood
+	material = MANNEQUIN_WOOD
+
+/obj/structure/mannequin/marble
+	material = MANNEQUIN_MARBLE
+
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,
 	/datum/strippable_item/mannequin_slot/eyes,
@@ -160,7 +225,7 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	if(!istype(mannequin_source))
 		return
 	var/obj/item/unequipped = mannequin_source.worn_items["[item_slot]"]
-	unequipped.forceMove(mannequin_source.drop_location())
+	user.put_in_hands(unequipped)
 
 /datum/strippable_item/mannequin_slot/head
 	key = STRIPPABLE_ITEM_HEAD
@@ -216,7 +281,7 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	var/obj/item/clothing/suit = mannequin_source.worn_items["[ITEM_SLOT_OCLOTHING]"]
 	if(istype(suit) && is_type_in_list(src, suit.allowed))
 		return TRUE
-	to_chat(user, span_warning("[equipping]2 won't fit!"))
+	to_chat(user, span_warning("[equipping] won't fit!"))
 	return FALSE
 
 /datum/strippable_item/mannequin_slot/gloves
@@ -226,3 +291,6 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 /datum/strippable_item/mannequin_slot/feet
 	key = STRIPPABLE_ITEM_FEET
 	item_slot = ITEM_SLOT_FEET
+
+#undef MANNEQUIN_WOOD
+#undef MANNEQUIN_MARBLE
