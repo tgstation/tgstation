@@ -220,8 +220,8 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	mouse_opacity = 0
 
 /obj/machinery/trading_card_button
-	name = "THING"
-	desc = "IT DOES STUFF"
+	name = "mana control panel"
+	desc = "a set of buttons that lets you keep track of your mana when playing Tactical Game Cards."
 	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "mana_buttons"
 	use_power = NO_POWER_USE
@@ -289,6 +289,8 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	return TRUE
 
 /obj/machinery/trading_card_button/health
+	name = "life control panel"
+	desc = "a set of buttons that lets you keep track of your life shards when playing Tactical Game Cards."
 	icon_state = "health_buttons"
 	display_panel_type = /obj/effect/decal/trading_card_panel/health
 	panel_offset_x = -1
@@ -356,7 +358,7 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 
 /obj/effect/decal/trading_card_panel/examine(mob/user)
 	. = ..()
-	. += span_notice("It is currently showing [gems] out of [gem_slots] [gem_title]")
+	. += span_notice("It is currently showing [gems] out of [gem_slots] [gem_title].")
 
 /obj/effect/decal/trading_card_panel/health
 	name = "life shard panel"
