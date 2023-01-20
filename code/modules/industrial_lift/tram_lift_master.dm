@@ -85,16 +85,15 @@
 	bumped_atom.visible_message(span_userdanger("[src] crashes into the field violently!"))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms)
 		tram_part.set_travelling(FALSE)
-		for(var/i in 1 to tram_part.lift_load.len)
-			var/to_explode = tram_part.lift_load[i]
-			if(iseffect(to_explode))
+		for(var/tram_contents in tram_part.lift_load)
+			if(iseffect(tram_contents))
 				continue
 
-			if(isliving(to_explode))
-				explosion(to_explode, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
+			if(isliving(tram_contents))
+				explosion(tram_contents, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
 
 			else if(prob(9))
-				explosion(to_explode, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
+				explosion(tram_contents, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 
 			explosion(tram_part, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 			qdel(tram_part)
