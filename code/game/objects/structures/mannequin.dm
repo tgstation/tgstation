@@ -213,10 +213,10 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	var/obj/structure/mannequin/mannequin_source = source
 	if(!istype(mannequin_source))
 		return FALSE
-	var/obj/item/suit = mannequin_source.worn_items["[ITEM_SLOT_OCLOTHING]"]
-	if(suit && is_type_in_list(src, suit.allowed))
+	var/obj/item/clothing/suit = mannequin_source.worn_items["[ITEM_SLOT_OCLOTHING]"]
+	if(istype(suit) && is_type_in_list(src, suit.allowed))
 		return TRUE
-	to_chat(user, span_warning("[equipping] won't fit!"))
+	to_chat(user, span_warning("[equipping]2 won't fit!"))
 	return FALSE
 
 /datum/strippable_item/mannequin_slot/gloves
