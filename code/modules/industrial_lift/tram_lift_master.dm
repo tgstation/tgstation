@@ -90,7 +90,7 @@
 			if(istype(to_explode, /obj/effect))
 				continue
 
-			if(istype(to_explode, /mob/living))
+			if(isliving(to_explode))
 				explosion(to_explode, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
 
 			else if(prob(9))
