@@ -87,7 +87,7 @@
 		tram_part.set_travelling(FALSE)
 		for(var/i in 1 to tram_part.lift_load.len)
 			var/to_explode = tram_part.lift_load[i]
-			if(istype(to_explode, /obj/effect))
+			if(iseffect(to_explode))
 				continue
 
 			if(isliving(to_explode))
