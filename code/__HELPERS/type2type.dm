@@ -39,6 +39,34 @@
 		else
 	return
 
+//Turns a direction into a nautical direction
+/proc/dir2nautical(direction)
+	switch(direction)
+		if(NORTH)
+			return "fore"
+		if(SOUTH)
+			return "aft"
+		if(EAST)
+			return "starboard"
+		if(WEST)
+			return "port"
+		else
+	return
+
+//Turns a nautical direction into a direction
+/proc/nautical2dir(direction)
+	switch(uppertext(direction))
+		if("FORE")
+			return NORTH
+		if("AFT")
+			return SOUTH
+		if("STARBOARD")
+			return EAST
+		if("PORT")
+			return WEST
+		else
+	return
+
 //Turns text into proper directions
 /proc/text2dir(direction)
 	switch(uppertext(direction))

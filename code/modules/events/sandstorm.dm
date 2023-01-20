@@ -52,22 +52,7 @@
 	else
 		start_side = pick(GLOB.cardinals)
 
-	var/start_side_text = "unknown"
-	switch(start_side)
-		if(NORTH)
-			start_side_text = "fore"
-		if(SOUTH)
-			start_side_text = "aft"
-		if(EAST)
-			start_side_text = "starboard"
-		if(WEST)
-			start_side_text = "port"
-		else
-			stack_trace("Sandstorm event given [start_side] as unrecognized direction. Cancelling event...")
-			kill()
-			return
-
-	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
+	priority_announce("A large wave of space dust is approaching from the [dir2nautical(start_side)] side of the station. \
 		Impact is expected in the next two minutes. All employees are encouranged to assist in repairs and damage mitigation if possible.", "Collision Emergency Alert")
 
 /datum/round_event/sandstorm/tick()
