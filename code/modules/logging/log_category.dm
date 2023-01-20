@@ -1,5 +1,7 @@
 /datum/log_category
 	var/category
+	/// If set this config flag is checked to enable this log category
+	var/config_flag
 	var/list/entries
 
 /// Backup log category to catch attempts to log to a category that doesn't exist
