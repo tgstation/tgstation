@@ -118,7 +118,7 @@
 	/// Mob's dna
 	var/datum/dna/dna_ref
 	/// Mind datum
-	var/datum/mind/mindref
+	var/datum/mind/mind_ref
 
 /datum/record/locked/New(
 	age = 18,
@@ -134,11 +134,11 @@
 	trim = "Unassigned",
 	/// Locked specific
 	datum/dna/dna_ref,
-	datum/mind/mindref,
+	datum/mind/mind_ref,
 )
 	. = ..()
 	src.dna_ref = dna_ref
-	src.mindref = mindref
+	src.mind_ref = mind_ref
 
 	GLOB.data_core.locked += src
 

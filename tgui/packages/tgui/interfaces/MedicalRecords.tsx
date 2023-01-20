@@ -1,3 +1,5 @@
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Icon, Input, LabeledList, NoticeBox, Section, Stack, Tabs, TextArea, Tooltip } from '../components';
@@ -49,11 +51,14 @@ const RecordTabs = (props, context) => {
   const [search, setSearch] = useLocalState(context, 'search', '');
   const [selectedRecord, setSelectedRecord] = useLocalState<
     MedicalRecord | undefined
-  >(context, 'selectedRecord', undefined);
-  // Filters the records by the search string
-  const filteredRecords = records.filter((record) =>
-    record.dna?.toLowerCase().includes(search?.toLowerCase())
-  );
+  >(context, 'medicalRecord', undefined);
+
+  const sorted = flow([
+    filter((record: MedicalRecord) =>
+      record.dna?.toLowerCase().includes(search?.toLowerCase())
+    ),
+    sortBy((record: MedicalRecord) => record.name?.toLowerCase()),
+  ])(records);
 
   const selectRecord = (record: MedicalRecord) => {
     if (selectedRecord?.ref === record.ref) {
@@ -76,10 +81,10 @@ const RecordTabs = (props, context) => {
       <Stack.Item grow>
         <Section fill scrollable>
           <Tabs vertical>
-            {filteredRecords.length === 0 ? (
-              <NoticeBox>No matching DNA. Refine your search.</NoticeBox>
+            {sorted.length === 0 ? (
+              <NoticeBox>No matching records.</NoticeBox>
             ) : (
-              filteredRecords.map((record, index) => (
+              sorted.map((record, index) => (
                 <Tabs.Tab
                   className="candystripe"
                   key={index}
@@ -266,7 +271,7 @@ const getStringArray = (string: string) => {
 const getCurrentRecord = (context) => {
   const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
     context,
-    'selectedRecord',
+    'medicalRecord',
     undefined
   );
   if (!selectedRecord) return;

@@ -115,6 +115,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	var/datum/record/locked/lockfile = new(
 		age = person.age,
 		blood_type = person.dna.blood_type,
+		character_appearance = character_appearance,
 		dna_string = person.dna.unique_enzymes,
 		fingerprint = md5(person.dna.unique_identity),
 		gender = person_gender,
@@ -125,7 +126,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		trim = assignment,
 		// Locked specifics
 		dna_ref = person.dna,
-		mindref = person.mind,
+		mind_ref = person.mind,
 	)
 
 	new /datum/record/crew(

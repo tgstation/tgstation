@@ -1,6 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 import { BlockQuote, Button, Collapsible, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Tabs } from '../components';
+import { sortBy } from 'common/collections';
 
 type Data = {
   records: WarrantRecord[];
@@ -25,7 +26,7 @@ type Citation = {
 export const WarrantConsole = (props, context) => {
   const [selectedRecord] = useLocalState<WarrantRecord | undefined>(
     context,
-    'selectedRecord',
+    'warrantRecord',
     undefined
   );
 
@@ -51,10 +52,11 @@ export const WarrantConsole = (props, context) => {
 const RecordList = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { records } = data;
+  const sorted = sortBy((record: WarrantRecord) => record.crew_name)(records);
 
   const [selectedRecord, setSelectedRecord] = useLocalState<
     WarrantRecord | undefined
-  >(context, 'selectedRecord', undefined);
+  >(context, 'warrantRecord', undefined);
 
   const selectHandler = (record: WarrantRecord) => {
     if (selectedRecord?.crew_ref === record.crew_ref) {
@@ -82,7 +84,7 @@ const RecordList = (props, context) => {
           <NoticeBox>No citations issued.</NoticeBox>
         ) : (
           <Tabs vertical>
-            {records.map((record, index) => (
+            {sorted.map((record, index) => (
               <Tabs.Tab
                 className="candystripe"
                 key={index}
@@ -144,6 +146,7 @@ const CitationManager = (props, context) => {
           Print
         </Button>
       }
+      color={getFineColor(fine)}
       title={fine_name}>
       <LabeledList>
         <LabeledList.Item label="Details">
@@ -182,7 +185,7 @@ const CitationManager = (props, context) => {
 export const getCurrentRecord = (context) => {
   const [selectedRecord] = useLocalState<WarrantRecord | undefined>(
     context,
-    'selectedRecord',
+    'warrantRecord',
     undefined
   );
   if (!selectedRecord) return;
@@ -194,4 +197,18 @@ export const getCurrentRecord = (context) => {
   if (!foundRecord) return;
 
   return foundRecord;
+};
+
+/** Returns a color based on the fine amount */
+export const getFineColor = (fine: number) => {
+  switch (true) {
+    case fine > 700:
+      return 'bad';
+    case fine > 300:
+      return 'average';
+    case fine === 0:
+      return 'grey';
+    default:
+      return '';
+  }
 };

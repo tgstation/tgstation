@@ -191,10 +191,10 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
-	for(var/datum/record/locked/record in GLOB.data_core.locked)
-		var/datum/mind/mindref = record.mindref
-		if(mindref && ishuman(mindref.current))
-			addFile(mindref.current)
+	for(var/datum/record/locked/target in GLOB.data_core.locked)
+		var/datum/mind/mind_ref = target.mind_ref
+		if(mind_ref && ishuman(mind_ref.current))
+			addFile(mind_ref.current)
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
 	new /obj/item/paper/employment_contract(src, employee.mind.name)

@@ -79,7 +79,7 @@
 		ui = new(user, src, "SecurityRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/obj/machinery/computer, update_body)), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(update_preview)), 1 SECONDS)
 
 /obj/machinery/computer/secure_data/ui_data(mob/user)
 	var/list/data = list()
@@ -215,7 +215,7 @@
 			var/datum/record/locked/record = locate(params["lock_ref"]) in GLOB.data_core.locked
 			if(!record)
 				return FALSE
-			update_body(record)
+			update_preview(record)
 
 			return TRUE
 
@@ -223,8 +223,8 @@
 
 /// Handles adding a crime to a particular record.
 /obj/machinery/computer/secure_data/proc/add_crime(mob/user, list/params)
-	var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-	if(!record)
+	var/datum/record/crew/target = locate(params["ref"]) in GLOB.data_core.general
+	if(!target)
 		return FALSE
 
 	if(!params["name"])
@@ -241,14 +241,15 @@
 	if(params["details"])
 		input_details = params["details"]
 
-	if(params["fine"] > 0)
-		var/datum/crime/citation/new_citation = new(name = params["name"], details = input_details, author = usr, fine = params["fine"])
-		record.citations += new_citation
+	if(params["fine"] == 0)
+		var/datum/crime/new_crime = new(name = params["name"], details = input_details, author = usr)
+		target.crimes += new_crime
+		target.wanted_status = WANTED_ARREST
 		return TRUE
 
-	var/datum/crime/new_crime = new(name = params["name"], details = input_details, author = usr)
-	record.crimes += new_crime
-	record.wanted_status = WANTED_ARREST
+	var/datum/crime/citation/new_citation = new(name = params["name"], details = input_details, author = usr, fine = params["fine"])
+	target.citations += new_citation
+	citation_alert(user, target.name, "You have been issued a [params["fine"]]cr citation for [params["name"]].")
 
 	return TRUE
 

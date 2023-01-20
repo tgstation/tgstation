@@ -29,7 +29,7 @@
 		ui = new(user, src, "MedicalRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/obj/machinery/computer, update_body)), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(update_preview)), 1 SECONDS)
 
 /obj/machinery/computer/med_data/ui_data(mob/user)
 	var/list/data = list()
@@ -75,7 +75,7 @@
 			var/datum/record/locked/record = locate(params["lock_ref"]) in GLOB.data_core.locked
 			if(!record)
 				return FALSE
-			update_body(record)
+			update_preview(record)
 			return TRUE
 
 	return FALSE

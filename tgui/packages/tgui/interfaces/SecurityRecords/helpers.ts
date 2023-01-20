@@ -5,7 +5,7 @@ import { SecureData, SecurityRecord } from './types';
 export const getCurrentRecord = (context) => {
   const [selectedRecord] = useLocalState<SecurityRecord | undefined>(
     context,
-    'selectedRecord',
+    'securityRecord',
     undefined
   );
   if (!selectedRecord) return;

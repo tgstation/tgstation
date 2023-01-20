@@ -147,36 +147,41 @@
 	update_use_power(IDLE_POWER_USE)
 
 
+/// Sends a citation alert message to the target's PDA.
+/obj/machinery/computer/proc/citation_alert(mob/origin, target_name, message)
+	for(var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
+		if(tablet.saved_identification != target_name)
+			continue
+
+		var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
+			name = "Security Citation",
+			job = "Citation Server",
+			message = message,
+			targets = list(tablet),
+			automated = TRUE
+		))
+		signal.send_to_receivers()
+		origin.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+		break
+
+	return TRUE
+
 /// Creates a character preview view for the UI.
 /obj/machinery/computer/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src)
 	character_preview_view.generate_view("record_preview_[REF(character_preview_view)]")
-	update_body()
+	update_preview()
 	character_preview_view.display_to(user)
 
 	return character_preview_view
 
 /// Takes a record and updates the character preview view to match it.
-/obj/machinery/computer/proc/update_body(datum/record/locked/record)
-	var/mob/living/carbon/human/dummy/mannequin = character_preview_view.body
-
-	if (isnull(mannequin))
-		character_preview_view.create_body()
-	else
-		mannequin.wipe_state()
-
-	character_preview_view.appearance = render_new_preview_appearance(mannequin, record)
-
-/// Updates the character preview view to match the given record (if any)
-/obj/machinery/computer/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin, datum/record/locked/record)
+/obj/machinery/computer/proc/update_preview(datum/record/locked/record)
 	if(!record)
 		return
+	var/mutable_appearance/preview = new(record.character_appearance)
+	if(!istype(preview))
+		return
 
-	var/datum/job/found_job = SSjob.GetJob(record.initial_rank)
-	mannequin.job = found_job.title
-	mannequin.dress_up_as_job(found_job, TRUE)
-
-	var/datum/dna/dna = record.dna_ref
-	dna.transfer_identity(mannequin, transfer_SE = TRUE, transfer_species = TRUE)
-
-	return mannequin.appearance
+	preview.setDir(SOUTH)
+	character_preview_view.appearance = preview.appearance

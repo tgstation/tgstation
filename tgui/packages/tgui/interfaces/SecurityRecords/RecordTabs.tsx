@@ -1,3 +1,5 @@
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Stack, Input, Section, Tabs, NoticeBox, Box } from 'tgui/components';
 import { CRIMESTATUS2COLOR } from './constants';
@@ -10,13 +12,15 @@ export const RecordTabs = (props, context) => {
 
   const [selectedRecord, setSelectedRecord] = useLocalState<
     SecurityRecord | undefined
-  >(context, 'selectedRecord', undefined);
+  >(context, 'securityRecord', undefined);
   const [search, setSearch] = useLocalState(context, 'search', '');
 
-  // Filters the records by the search string
-  const filteredRecords = records.filter((record) =>
-    record.fingerprint?.toLowerCase().includes(search?.toLowerCase())
-  );
+  const sorted = flow([
+    filter((record: SecurityRecord) =>
+      record.fingerprint?.toLowerCase().includes(search?.toLowerCase())
+    ),
+    sortBy((record: SecurityRecord) => record.name),
+  ])(records);
 
   /** Chooses a record */
   const selectRecord = (record: SecurityRecord) => {
@@ -40,10 +44,10 @@ export const RecordTabs = (props, context) => {
       <Stack.Item grow>
         <Section fill scrollable>
           <Tabs vertical>
-            {!filteredRecords.length ? (
+            {!sorted.length ? (
               <NoticeBox>No fingerprints match. Refine your search.</NoticeBox>
             ) : (
-              filteredRecords.map((record, index) => (
+              sorted.map((record, index) => (
                 <Tabs.Tab
                   className="candystripe"
                   key={index}

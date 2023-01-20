@@ -107,9 +107,28 @@
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
-	warrant.pay_fine(user, amount, target.name)
+	account.bank_card_talk("You have paid [amount]cr towards [target.name]'s fine of [warrant.fine]cr.")
 
-	to_chat(usr, span_notice("You have paid towards [target.name]'s fine of [amount] credits."))
+	warrant.pay_fine(amount)
+
+	if(amount >= 100 && target?.name != user)
+		var/list/titles = list(
+			"An anonymous benefactor",
+			"A generous citizen",
+			"A kind soul",
+			"A good samaritan",
+			"A friendly face",
+			"A helpful stranger",
+		)
+		citation_alert(user, target.name, "[pick(titles)] has paid [amount]cr towards your fine.")
+
+	var/datum/bank_account/sec_account = SSeconomy.get_dep_account(ACCOUNT_SEC)
+	sec_account.adjust_money(amount)
+
+	if(warrant.fine != 0 || target.name == user)
+		return TRUE
+
+	citation_alert(user, target.name, "One of your outstanding warrants has been completely paid.")
 	return TRUE
 
 /// Finishes printing, resets the printer.
