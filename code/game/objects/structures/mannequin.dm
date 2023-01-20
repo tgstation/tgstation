@@ -1,5 +1,5 @@
 #define MANNEQUIN_WOOD "wood"
-#define MANNEQUIN_MARBLE "marble"
+#define MANNEQUIN_PLASTIC "plastic"
 
 /// A mannequin! A structure that can display clothing on itself.
 /obj/structure/mannequin
@@ -13,9 +13,11 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	pixel_y = 3
 	base_pixel_y = 3
+	layer = ABOVE_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	/// Which body type we use, male or female?
 	var/body_type
-	/// Material we're used of, wood or marble?
+	/// Material we're used of, wood or plastic?
 	var/material
 	/// String for the underwear we use.
 	var/underwear_name
@@ -35,7 +37,6 @@
 		ITEM_SLOT_ID,
 		ITEM_SLOT_ICLOTHING,
 		ITEM_SLOT_OCLOTHING,
-		ITEM_SLOT_SUITSTORE,
 		ITEM_SLOT_GLOVES,
 		ITEM_SLOT_FEET,
 	)
@@ -49,7 +50,7 @@
 	if(!body_type)
 		body_type = pick(MALE, FEMALE)
 	if(!material)
-		body_type = pick("wood", "marble")
+		body_type = pick("wood", "plastic")
 	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
@@ -139,9 +140,6 @@
 			if(ITEM_SLOT_OCLOTHING)
 				default_layer = SUIT_LAYER
 				default_icon = DEFAULT_SUIT_FILE
-			if(ITEM_SLOT_SUITSTORE)
-				default_layer = SUIT_STORE_LAYER
-				default_icon = 'icons/mob/clothing/belt_mirror.dmi'
 			if(ITEM_SLOT_GLOVES)
 				default_layer = GLOVES_LAYER
 				default_icon = 'icons/mob/clothing/hands.dmi'
@@ -175,8 +173,8 @@
 /obj/structure/mannequin/wood
 	material = MANNEQUIN_WOOD
 
-/obj/structure/mannequin/marble
-	material = MANNEQUIN_MARBLE
+/obj/structure/mannequin/plastic
+	material = MANNEQUIN_PLASTIC
 
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,
@@ -189,7 +187,6 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/id,
 	/datum/strippable_item/mannequin_slot/uniform,
 	/datum/strippable_item/mannequin_slot/suit,
-	/datum/strippable_item/mannequin_slot/suit_storage,
 	/datum/strippable_item/mannequin_slot/gloves,
 	/datum/strippable_item/mannequin_slot/feet,
 )))
@@ -267,23 +264,6 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	key = STRIPPABLE_ITEM_SUIT
 	item_slot = ITEM_SLOT_OCLOTHING
 
-/datum/strippable_item/mannequin_slot/suit_storage
-	key = STRIPPABLE_ITEM_SUIT_STORAGE
-	item_slot = ALL //we check for ourselves
-
-/datum/strippable_item/mannequin_slot/suit_storage/try_equip(atom/source, obj/item/equipping, mob/user)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/obj/structure/mannequin/mannequin_source = source
-	if(!istype(mannequin_source))
-		return FALSE
-	var/obj/item/clothing/suit = mannequin_source.worn_items["[ITEM_SLOT_OCLOTHING]"]
-	if(istype(suit) && is_type_in_list(src, suit.allowed))
-		return TRUE
-	to_chat(user, span_warning("[equipping] won't fit!"))
-	return FALSE
-
 /datum/strippable_item/mannequin_slot/gloves
 	key = STRIPPABLE_ITEM_GLOVES
 	item_slot = ITEM_SLOT_GLOVES
@@ -293,4 +273,4 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	item_slot = ITEM_SLOT_FEET
 
 #undef MANNEQUIN_WOOD
-#undef MANNEQUIN_MARBLE
+#undef MANNEQUIN_PLASTIC
