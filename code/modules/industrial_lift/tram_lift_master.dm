@@ -1,5 +1,3 @@
-#define XING_STATE_MALF 3
-
 /datum/lift_master/tram
 
 	///whether this tram is traveling across vertical and/or horizontal axis for some distance. not all lifts use this
