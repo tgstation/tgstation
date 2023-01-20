@@ -346,6 +346,8 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 	var/number_of_rows = 10
 	///The maximum number of columns that can be displayed on the panel.
 	var/number_of_columns = 1
+	///File that both icon states for gems are pulled from
+	var/gem_icon_file = 'icons/obj/toys/tcgmisc.dmi'
 	///The icon of an "active" gem.
 	var/gem_icon = "gem_blue"
 	///The icon of an "inactive" gem.
@@ -365,7 +367,7 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 	for(var/gem_row in 1 to number_of_rows)
 		for(var/gem in 1 to number_of_columns)
 			if(gem_slots >= (gem_row - 1) * number_of_columns + gem)
-				var/mutable_appearance/gem_overlay = mutable_appearance('icons/obj/toys/tcgmisc.dmi', empty_gem_icon)
+				var/mutable_appearance/gem_overlay = mutable_appearance(gem_icon_file, empty_gem_icon)
 				if(gems >= (gem_row - 1) * number_of_columns + gem)
 					gem_overlay.icon_state = gem_icon
 				gem_overlay.pixel_z = gem_row * individual_gem_offset_y + gem_bar_offset_z
