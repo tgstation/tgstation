@@ -4,6 +4,15 @@
 // #define EAST 4
 // #define WEST 8
 
+/// North direction in nautical directions
+#define FORE 1
+/// South direction in nautical directions
+#define AFT 2
+/// East direction in nautical directions
+#define STARBOARD 4
+/// West direction in nautical directions
+#define PORT 8
+
 /// North direction as a string "[1]"
 #define TEXT_NORTH "[NORTH]"
 /// South direction as a string "[2]"
