@@ -164,7 +164,6 @@
 	/// Indicates if there are moles of gas in the breath.
 	var/has_moles = breath.total_moles() != 0
 
-	// Validate lungs organ.
 	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	// Indicates if lungs can breathe without gas.
 	var/can_breathe_vacuum = FALSE
@@ -173,9 +172,10 @@
 		// Check for vacuum-adapted lungs.
 		can_breathe_vacuum = HAS_TRAIT(lungs, TRAIT_SPACEBREATHING)
 	else
-		// Can't breathe without the lungs organ.
-		. = FALSE
-		failed_last_breath = TRUE
+		// Lungs are missing! Can't breathe.
+		// Simulates breathing zero moles of gas.
+		has_moles = FALSE
+		// Extra damage, let God sort ’em out!
 		adjustOxyLoss(2)
 
 	/// Minimum O2 before suffocation.
@@ -227,7 +227,7 @@
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
 	else
-		// Can't breathe!
+		// Can't breathe! Lungs are missing, and/or breath is empty.
 		. = FALSE
 		failed_last_breath = TRUE
 
