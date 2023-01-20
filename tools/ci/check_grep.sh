@@ -123,7 +123,7 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
 fi;
 
 part "improper atom initialize args"
-if $grep '\/(obj|mob|turf|area|atom)\/.+\/Initialize\((?!mapload).*\)' $code_files; then
+if $grep '/(obj|mob|turf|area|atom)/.+/Initialize\((?!mapload).*\)' $code_files; then
 	echo
 	echo -e "${RED}ERROR: Initialize override without 'mapload' argument.${NC}"
 	st=1
