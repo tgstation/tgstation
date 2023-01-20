@@ -54,6 +54,19 @@
 #define LOGSRC_CKEY "Ckey"
 #define LOGSRC_MOB "Mob"
 
+// Log data keys
+#define LOG_ENTRY_MESSAGE "message"
+#define LOG_ENTRY_TIMESTAMP "timestamp"
+
+// Log json keys
+#define LOG_JSON_CATEGORY "category"
+#define LOG_JSON_ENTRIES "entries"
+#define LOG_JSON_LOGGING_START "log_start"
+
+// Log categories
+#define LOG_CATEGORY_NOT_FOUND "invalid_category"
+#define LOG_CATEGORY_TARGET_ZONE_SWITCH "target_zone_switch"
+
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B
 #define DIRECT_INPUT(A, B) A >> B

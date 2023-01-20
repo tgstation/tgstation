@@ -493,11 +493,30 @@
 	if(old_target == new_target)
 		return
 
+	var/list/data = list(
+		"new_target" = new_target,
+		"old_target" = old_target,
+	)
+
+	if(mind?.assigned_role)
+		data["assigned_role"] = mind.assigned_role.title
+	if(job)
+		data["assigned_job"] = job
+
 	var/atom/handitem = get_active_held_item()
+	data["active_item"] = list(
+		"type" = handitem.type,
+		"name" = handitem.name,
+	)
+
 	var/atom/offhand = get_inactive_held_item()
-	var/log_message = "[key_name(src)] changed selected zone from [old_target] to [new_target]."
-	if(handitem)
-		log_message += " active item: ([handitem.type])[handitem]"
-	if(offhand)
-		log_message += " inactive item: ([offhand.type])[offhand]"
-	log_zone_switch(log_message)
+	data["offhand_item"] = list(
+		"type" = offhand.type,
+		"name" = offhand.name,
+	)
+
+	GLOB.log_holder.log(
+		LOG_CATEGORY_TARGET_ZONE_SWITCH,
+		"[key_name(src)] manually changed selected zone",
+		data,
+	)
