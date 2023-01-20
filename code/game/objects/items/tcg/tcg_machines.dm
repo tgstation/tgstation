@@ -259,20 +259,25 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 /obj/machinery/trading_card_button/proc/setup_radial()
 	var/radial_choices 
 	radial_choices = GLOB.tcgcard_mana_bar_radial_choices = list(
-	"Set Mana" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
-	"Set Mana Slots" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_modify"),
-	"New Turn" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+	"Set Mana" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_set_mana"),
+	"Set Mana Slots" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_set_slots"),
+	"Next Turn" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_next"),
 	)
 	return radial_choices
 
 /obj/machinery/trading_card_button/proc/handle_choice(var/choice, mob/user)
+	var/input_value
 	switch(choice)
 		if("Set Mana")
-			display_panel_ref.gems = tgui_input_number(user, "Please input total mana", "Set mana", display_panel_ref.gems, display_panel_ref.gem_slots, 0)
+			input_value = tgui_input_number(user, "Please input total mana", "Set mana", display_panel_ref.gems, display_panel_ref.gem_slots, 0)
+			if(input_value)
+				display_panel_ref.gems = input_value
 		if("Set Mana Slots")
-			display_panel_ref.gem_slots = tgui_input_number(user, "Please input total mana slots", "Set mana slots", display_panel_ref.gem_slots, 10, 1)
-		if("New Turn")
-			if display_panel_ref.gem_slots(<=9)
+			input_value = tgui_input_number(user, "Please input total mana slots", "Set mana slots", display_panel_ref.gem_slots, 10, 1)
+			if(input_value)
+				display_panel_ref.gem_slots = input_value
+		if("Next Turn")
+			if (display_panel_ref.gem_slots <= 9)
 				display_panel_ref.gem_slots += 1
 			display_panel_ref.gems = display_panel_ref.gem_slots
 
@@ -296,15 +301,18 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 /obj/machinery/trading_card_button/health/setup_radial()
 	var/radial_choices 
 	radial_choices = GLOB.tcgcard_health_bar_radial_choices = list(
-	"Set Health" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
-	"Inflict Damage" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+	"Set Life" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_set_life"),
+	"Inflict Damage" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_damage"),
 	)
 	return radial_choices
 
 /obj/machinery/trading_card_button/health/handle_choice(choice, mob/user)
+	var/input_value
 	switch(choice)
-		if("Set Health")
-			display_panel_ref.gems = tgui_input_number(user, "Please input total health", "Set health", display_panel_ref.gems, display_panel_ref.gem_slots, 0)
+		if("Set Life")
+			input_value = tgui_input_number(user, "Please input total life", "Set life", display_panel_ref.gems, display_panel_ref.gem_slots, 0)
+			if(input_value)
+				display_panel_ref.gems = input_value
 		if("Inflict Damage")
 			display_panel_ref.gems -= tgui_input_number(user, "Please input total damage", "Inflict damage", 1, display_panel_ref.gem_slots, 0)
 
