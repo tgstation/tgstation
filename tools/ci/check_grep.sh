@@ -209,7 +209,7 @@ if [ "$pcre2_support" -eq 1 ]; then
 		st=1
 	fi;
 	part "improper atom initialize args"
-	if $grep '^/(obj|mob|turf|area|atom)/.+/Initialize\((?!mapload).*\)' $code_files; then
+	if $grep -P '^/(obj|mob|turf|area|atom)/.+/Initialize\((?!mapload).*\)' $code_files; then
 		echo
 		echo -e "${RED}ERROR: Initialize override without 'mapload' argument.${NC}"
 		st=1
