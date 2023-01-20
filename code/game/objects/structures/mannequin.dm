@@ -50,7 +50,7 @@
 	if(!body_type)
 		body_type = pick(MALE, FEMALE)
 	if(!material)
-		body_type = pick("wood", "plastic")
+		material = pick("wood", "plastic")
 	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
