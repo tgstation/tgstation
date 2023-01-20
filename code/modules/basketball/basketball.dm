@@ -72,8 +72,12 @@
 	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		return
 
+	if(user.resting)
+		user.balloon_alert(user, "cant pickup while resting!")
+		return		
+
 	if(user.ckey in pickup_restriction_ckeys && !COOLDOWN_FINISHED(src, pickup_cooldown))
-		src.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) * SECONDS] seconds!")
+		user.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) * SECONDS] seconds!")
 		return
 
 	reset_pickup_restriction()
