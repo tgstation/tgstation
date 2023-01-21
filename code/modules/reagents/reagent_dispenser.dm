@@ -302,7 +302,7 @@
 /obj/structure/reagent_dispensers/wall
 	name = "wall-mounted reagent dispenser"
 	desc = "A conveniently wall-mounted refillable reagent dispenser."
-	icon_state = "empty"
+	icon_state = "pepper"
 	reagent_id = null
 	anchored = TRUE
 	density = FALSE
@@ -317,6 +317,7 @@
 
 /obj/item/wallframe/reagent_dispenser
 	icon = 'icons/obj/medical/chemical_tanks.dmi'
+	icon_state = "pepper"
 	custom_materials = list(
 		/datum/material/iron = MINERAL_MATERIAL_AMOUNT,
 		/datum/material/plastic = MINERAL_MATERIAL_AMOUNT,
