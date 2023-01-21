@@ -22,6 +22,7 @@
 		of illusion back to the Geometer so they may know Truth. Your form and any you are \
 		pulling can pass through runed walls effortlessly.</B>"
 	can_repair = TRUE
+	slowed_by_drag = FALSE
 
 
 /mob/living/simple_animal/hostile/construct/harvester/Bump(atom/thing)
