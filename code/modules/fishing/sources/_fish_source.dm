@@ -69,6 +69,12 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 				. += DISLIKED_BAIT_DIFFICULTY_MOD
 				break
 
+	// Checks if our fisherman is wearing fishnets, these logically make fishing easier.
+	if(iscarbon(fisherman))
+		var/mob/living/carbon/human/highly_experienced_fisherman = fisherman
+		if(highly_experienced_fisherman.socks in fishing_nets)
+			. += FAV_BAIT_DIFFICULTY_MOD
+
 	// Matching/not matching fish traits and equipment
 	var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fishing_traits)]
 
@@ -82,12 +88,6 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 
 	. += additive_mod
 	. *= multiplicative_mod
-
-	if(iscarbon(fisherman))
-		var/mob/living/carbon/human/highly_experienced_fisherman = fisherman
-		if(highly_experienced_fisherman.socks in fishing_nets)
-			message_admins("[highly_experienced_fisherman] has just started fishing while wearing fishnets, how skilled of them.")
-			. += FAV_BAIT_DIFFICULTY_MOD
 
 /// In case you want more complex rules for specific spots
 /datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
