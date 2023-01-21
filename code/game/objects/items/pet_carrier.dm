@@ -53,7 +53,7 @@
 	else
 		. += span_notice("It has nothing inside.")
 	if(user.canUseTopic(src))
-		. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door.")
+		. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door. Click-drag onto floor to release its occupants.")
 		if(!open)
 			. += span_notice("Alt-click to [locked ? "unlock" : "lock"] its door.")
 
