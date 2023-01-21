@@ -40,6 +40,7 @@
 /datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/R, list/contents)
 	var/list/item_instances = contents["instances"]
 	var/list/machines = contents["machinery"]
+	var/list/structures = contents["structures"]
 	contents = contents["other"]
 
 
@@ -76,6 +77,10 @@
 	for(var/machinery_path in R.machinery)
 		if(!machines[machinery_path])//We don't care for volume with machines, just if one is there or not
 			return FALSE
+			
+	for(var/structure_path in R.structures)
+		if(!structures[structure_path])//We don't care for volume with structures either, just if one is there or not
+			return FALSE
 
 	return R.check_requirements(a, requirements_list)
 
@@ -97,6 +102,7 @@
 	.["other"] = list()
 	.["instances"] = list()
 	.["machinery"] = list()
+	.["structures"] = list()
 	for(var/obj/object in get_environment(a, blacklist))
 		if(isitem(object))
 			var/obj/item/item = object
@@ -116,6 +122,8 @@
 				.["other"][item.type] += 1
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
+		else if (isstructure(object))
+			LAZYADDASSOCLIST(.["structure"], object.type, object)
 
 
 
@@ -229,10 +237,12 @@
 		requirements += R.reqs
 	if(R.machinery)
 		requirements += R.machinery
+	if(R.structures)
+		requirements += R.structures
 	main_loop:
 		for(var/path_key in requirements)
-			amt = R.reqs[path_key] || R.machinery[path_key]
-			if(!amt)//since machinery can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
+			amt = R.reqs[path_key] || R.machinery[path_key] || R.structures[path_key]
+			if(!amt)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 				continue main_loop
 			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
@@ -538,6 +548,12 @@
 		data["machinery"] = list()
 		for(var/req_atom as anything in recipe.machinery)
 			data["machinery"] += atoms.Find(req_atom)
+			
+	// Structures
+	if(recipe.structures)
+		data["structures"] = list()
+		for(var/req_atom as anything in recipe.structures)
+			data["structures"] += atoms.Find(req_atom)
 
 	// Ingredients / Materials
 	if(recipe.reqs.len)
