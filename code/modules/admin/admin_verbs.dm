@@ -15,14 +15,6 @@ admin_verbs_fun
 /client/proc/toggle_nuke
 /client/proc/toggle_random_events
 
-admin_verbs_spawn
-/datum/admins/proc/beaker_panel
-/datum/admins/proc/podspawn_atom
-/datum/admins/proc/spawn_atom
-/datum/admins/proc/spawn_cargo
-/datum/admins/proc/spawn_objasmob
-/client/proc/respawn_character
-
 admin_verbs_server
 /client/proc/adminchangemap
 /client/proc/cmd_admin_delete
@@ -32,7 +24,6 @@ admin_verbs_server
 /client/proc/forcerandomrotate
 /client/proc/generate_job_config
 /client/proc/panicbunker
-/client/proc/toggle_cdn
 /client/proc/toggle_hub
 /client/proc/toggle_interviews
 /client/proc/toggle_random_events
@@ -44,7 +35,6 @@ admin_verbs_debug
 #endif
 
 /proc/machine_upgrade
-/datum/admins/proc/create_or_modify_area
 /client/proc/adventure_manager
 /client/proc/atmos_control
 /client/proc/callproc
@@ -97,7 +87,6 @@ admin_verbs_debug
 /client/proc/test_cardpack_distribution
 /client/proc/test_movable_UI
 /client/proc/test_snap_UI
-/client/proc/toggle_cdn
 /client/proc/toggle_medal_disable
 /client/proc/unload_ctf
 /client/proc/validate_cards
