@@ -97,7 +97,7 @@
 		return
 	last_pipe.expel(src, get_turf(src), dir)
 
-/// Handels what happens to the contents when the qdel signal triggers
+/// Handles what happens to the contents when the qdel signal triggers
 /obj/structure/disposalholder/proc/movement_stop(datum/source)
 	SIGNAL_HANDLER
 	current_pipe = null
