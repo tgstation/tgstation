@@ -9,7 +9,7 @@
 	dir = NONE
 	var/obj/structure/disposalpipe/last_pipe
 	var/obj/structure/disposalpipe/current_pipe
-	 /// Gas used to flush, will appear at exit point
+	/// Gas used to flush, will appear at exit point
 	var/datum/gas_mixture/gas
 	/// True if the holder is moving, otherwise inactive
 	var/active = FALSE
