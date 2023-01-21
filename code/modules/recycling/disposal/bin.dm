@@ -432,7 +432,7 @@
 		. += "dispover-ready"
 		. += emissive_appearance(icon, "dispover-ready-glow", src, alpha = src.alpha)
 
-///Initiates flushing
+/// Initiates flushing
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
 	flush()
@@ -531,7 +531,7 @@
 		M.forceMove(src)
 	flush()
 
-///Called to check if an atom can fit inside the diposal
+/// Called to check if an atom can fit inside the diposal
 /atom/movable/proc/CanEnterDisposals()
 	return TRUE
 
