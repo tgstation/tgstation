@@ -15,7 +15,7 @@
 /datum/log_category/proc/add_entry(message, list/data)
 	var/list/entry = list(
 		LOG_ENTRY_MESSAGE = message,
-		LOG_ENTRY_TIMESTAMP = "[rustg_unix_timestamp()]",
+		LOG_ENTRY_TIMESTAMP = number2text(rustg_unix_timestamp()),
 	)
 	if(data)
 		entry["data"] = data
@@ -25,6 +25,6 @@
 /datum/log_category/proc/json_dump()
 	var/datum/json_savefile/json_tree = new
 	json_tree.set_entry(LOG_JSON_CATEGORY, category)
-	json_tree.set_entry(LOG_JSON_LOGGING_START, "[GLOB.logger.logging_start_timestamp]")
+	json_tree.set_entry(LOG_JSON_LOGGING_START, number2text(GLOB.logger.logging_start_timestamp))
 	json_tree.set_entry(LOG_JSON_ENTRIES, entries)
 	return json_tree.serialize_json()
