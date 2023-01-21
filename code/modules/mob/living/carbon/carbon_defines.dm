@@ -66,9 +66,6 @@
 
 	var/rotate_on_lying = 1
 
-	/// Total level of visualy impairing items
-	var/tinttotal = 0
-
 	/// Gets filled up in [/datum/species/proc/replace_body].
 	/// Will either contain a list of typepaths if nothing has been created yet,
 	/// or a list of the body part objects.

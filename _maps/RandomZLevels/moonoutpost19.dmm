@@ -2651,7 +2651,7 @@
 /area/awaymission/moonoutpost19/research)
 "gV" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/structure/alien/weeds,
@@ -2789,7 +2789,7 @@
 /area/awaymission/moonoutpost19/research)
 "hn" = (
 /obj/structure/closet/crate/bin,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/trash/chips,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/north,
@@ -2820,7 +2820,7 @@
 	req_access = list("away_maintenance")
 	},
 /obj/item/storage/backpack/satchel/science,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},

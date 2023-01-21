@@ -197,3 +197,16 @@
 	access_view = ACCESS_JANITOR
 	contains = list(/mob/living/simple_animal/hostile/lizard)
 	crate_name = "lizard crate"
+
+/datum/supply_pack/critter/garden_gnome
+	name = "Garden Gnome Crate"
+	desc = "Collect them all for your garden. Comes with three!"
+	hidden = TRUE
+	cost = CARGO_CRATE_VALUE * 20
+	contains = list(/mob/living/basic/garden_gnome)
+	crate_name = "garden gnome crate"
+
+/datum/supply_pack/critter/garden_gnome/generate()
+	. = ..()
+	for(var/i in 1 to 2)
+		new /mob/living/basic/garden_gnome(.)

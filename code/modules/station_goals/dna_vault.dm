@@ -190,7 +190,7 @@
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
 	var/datum/weakref/human_weakref = WEAKREF(H)
-	if(!(upgrade_type in power_lottery[human_weakref])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
+	if(!(upgrade_type in power_lottery[human_weakref]) || (HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
 	var/datum/species/S = H.dna.species
 	switch(upgrade_type)

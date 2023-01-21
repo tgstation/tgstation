@@ -43,7 +43,7 @@
 		return
 	var/mob/living/M = A.affected_mob
 	if(power < 2)
-		if(prob(base_message_chance) || A.stage >=4)
+		if(prob(base_message_chance) || A.stage >= 4)
 			to_chat(M, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))
 	if(power >= 2 && A.stage >= 4)
 		to_chat(M, span_warning("[pick("Your head hurts a lot.", "Your head pounds incessantly.")]"))
