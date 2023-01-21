@@ -114,7 +114,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 /obj/structure/sign/collision_counter/proc/new_hit(lift_master, collided_type)
 	SIGNAL_HANDLER
 
-	if(istype(collided_type, /mob/living/simple_animal/hostile/retaliate/goose/vomit)) //don't increment the counter when birdboat gets hit
+	if(!istype(collided_type, /mob/living/carbon/human)) // carbons only so you can't game the high score
 		return
 
 	hit_count++
