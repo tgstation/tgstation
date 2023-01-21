@@ -1519,6 +1519,7 @@
 #include "code\game\machinery\computer\security.dm"
 #include "code\game\machinery\computer\station_alert.dm"
 #include "code\game\machinery\computer\teleporter.dm"
+#include "code\game\machinery\computer\telescreen.dm"
 #include "code\game\machinery\computer\terminal.dm"
 #include "code\game\machinery\computer\warrant.dm"
 #include "code\game\machinery\computer\arcade\arcade.dm"
