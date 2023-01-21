@@ -39,8 +39,8 @@
 	///HUD images that this atom can provide.
 	var/list/hud_possible
 
-	///Value used to increment ex_act() if reactionary_explosions is on
-	var/explosion_block = 0
+	///How much this atom resists explosions by, in the end
+	var/explosive_resistance = 0
 
 	/**
 	 * used to store the different colors on an atom
@@ -73,8 +73,6 @@
 	var/buckle_message_cooldown = 0
 	///Last fingerprints to touch this atom
 	var/fingerprintslast
-
-	var/list/filter_data //For handling persistent filters
 
 	//List of datums orbiting this atom
 	var/datum/component/orbiter/orbiters
@@ -1601,101 +1599,6 @@
 /atom/proc/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
-/** Add a filter to the atom.
- * Can also be used to assert a filter's existence. I.E. update a filter regardless if it exists or not.
- *
- * Arguments:
- * * name - Filter name
- * * priority - Priority used when sorting the filter.
- * * params - Parameters of the filter.
- */
-/atom/proc/add_filter(name, priority, list/params)
-	LAZYINITLIST(filter_data)
-	var/list/copied_parameters = params.Copy()
-	copied_parameters["priority"] = priority
-	filter_data[name] = copied_parameters
-	update_filters()
-
-/atom/proc/update_filters()
-	filters = null
-	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
-	for(var/f in filter_data)
-		var/list/data = filter_data[f]
-		var/list/arguments = data.Copy()
-		arguments -= "priority"
-		filters += filter(arglist(arguments))
-	UNSETEMPTY(filter_data)
-
-/** Update a filter's parameter and animate this change. If the filter doesnt exist we won't do anything.
- * Basically a [atom/proc/modify_filter] call but with animations. Unmodified filter parameters are kept.
- *
- * Arguments:
- * * name - Filter name
- * * new_params - New parameters of the filter
- * * time - time arg of the BYOND animate() proc.
- * * easing - easing arg of the BYOND animate() proc.
- * * loop - loop arg of the BYOND animate() proc.
- */
-/atom/proc/transition_filter(name, list/new_params, time, easing, loop)
-	var/filter = get_filter(name)
-	if(!filter)
-		return
-	animate(filter, new_params, time = time, easing = easing, loop = loop)
-	modify_filter(name, new_params)
-
-/** Update a filter's parameter to the new one. If the filter doesnt exist we won't do anything.
- *
- * Arguments:
- * * name - Filter name
- * * new_params - New parameters of the filter
- * * overwrite - TRUE means we replace the parameter list completely. FALSE means we only replace the things on new_params.
- */
-/atom/proc/modify_filter(name, list/new_params, overwrite = FALSE)
-	var/filter = get_filter(name)
-	if(!filter)
-		return
-	if(overwrite)
-		filter_data[name] = new_params
-	else
-		for(var/thing in new_params)
-			filter_data[name][thing] = new_params[thing]
-	update_filters()
-
-/atom/proc/change_filter_priority(name, new_priority)
-	if(!filter_data || !filter_data[name])
-		return
-
-	filter_data[name]["priority"] = new_priority
-	update_filters()
-
-/obj/item/update_filters()
-	. = ..()
-	update_item_action_buttons()
-
-/atom/proc/get_filter(name)
-	if(filter_data && filter_data[name])
-		return filters[filter_data.Find(name)]
-
-/// Returns the indice in filters of the given filter name.
-/// If it is not found, returns null.
-/atom/proc/get_filter_index(name)
-	return filter_data?.Find(name)
-
-/atom/proc/remove_filter(name_or_names)
-	if(!filter_data)
-		return
-
-	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
-
-	for(var/name in names)
-		if(filter_data[name])
-			filter_data -= name
-	update_filters()
-
-/atom/proc/clear_filters()
-	filter_data = null
-	filters = null
-
 /atom/proc/intercept_zImpact(list/falling_movables, levels = 1)
 	SHOULD_CALL_PARENT(TRUE)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, falling_movables, levels)
@@ -1849,6 +1752,10 @@
 	base_pixel_y = new_value
 
 	pixel_y = pixel_y + base_pixel_y - .
+
+// Not a valid operation, turfs and movables handle block differently
+/atom/proc/set_explosion_block(explosion_block)
+	return
 
 /**
  * Returns true if this atom has gravity for the passed in turf

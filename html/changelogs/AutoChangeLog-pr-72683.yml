@@ -1,0 +1,6 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add torches, porcini mushroom seeds, towercap seeds to ash walker ruin."
+  - rscadd: "Change drying racks to not require power."
+  - rscadd: "Add crafting recipe for smoking pipe that uses wood"

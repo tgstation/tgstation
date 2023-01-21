@@ -30,7 +30,7 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/swap_hand(held_index)
+/mob/living/carbon/perform_hand_swap(held_index)
 	. = ..()
 	if(!.)
 		return
@@ -518,6 +518,7 @@
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
 	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION))
 	update_stat()
+	update_stamina()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
 		become_husk(BURN)
 	med_hud_set_health()
@@ -556,15 +557,14 @@
 
 	var/new_sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
-	var/obj/item/organ/internal/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-	if(!E)
-		update_tint()
-	else
-		set_invis_see(E.see_invisible)
-		set_see_in_dark(E.see_in_dark)
-		new_sight |= E.sight_flags
-		if(!isnull(E.lighting_alpha))
-			lighting_alpha = E.lighting_alpha
+
+	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		set_invis_see(eyes.see_invisible)
+		set_see_in_dark(eyes.see_in_dark)
+		new_sight |= eyes.sight_flags
+		if(!isnull(eyes.lighting_alpha))
+			lighting_alpha = eyes.lighting_alpha
 
 	if(client.eye && client.eye != src)
 		var/atom/A = client.eye
@@ -607,34 +607,34 @@
 	set_sight(new_sight)
 	return ..()
 
-
-//to recalculate and update the mob's total tint from tinted equipment it's wearing.
+/**
+ * Calculates how visually impaired the mob is by their equipment and other factors
+ *
+ * This is where clothing adds its various vision limiting effects, such as welding helmets
+ */
 /mob/living/carbon/proc/update_tint()
-	if(!GLOB.tinted_weldhelh)
-		return
-	tinttotal = get_total_tint()
-	if(tinttotal >= TINT_BLIND)
+	var/tint = 0
+	if(isclothing(head))
+		tint += head.tint
+	if(isclothing(wear_mask))
+		tint += wear_mask.tint
+	if(isclothing(glasses))
+		tint += glasses.tint
+
+	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		tint += eyes.tint
+
+	if(tint >= TINT_BLIND)
 		become_blind(EYES_COVERED)
-	else if(tinttotal >= TINT_DARKENED)
+
+	else if(tint >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
+
 	else
 		cure_blind(EYES_COVERED)
-		clear_fullscreen("tint", 0)
-
-/mob/living/carbon/proc/get_total_tint()
-	. = 0
-	if(isclothing(head))
-		. += head.tint
-	if(isclothing(wear_mask))
-		. += wear_mask.tint
-
-	var/obj/item/organ/internal/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-	if(E)
-		. += E.tint
-
-	else
-		. += INFINITY
+		clear_fullscreen("tint", 0 SECONDS)
 
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
@@ -1183,7 +1183,7 @@
 	var/obscured = check_obscured_slots()
 
 	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
-	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
+	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		update_worn_glasses()
 		. = TRUE
 
