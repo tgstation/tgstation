@@ -47,9 +47,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
-"t" = (
-/turf/closed/wall,
-/area/station/maintenance/department/medical)
 "u" = (
 /obj/structure/rack,
 /obj/item/storage/fancy/candle_box,
@@ -120,43 +117,43 @@
 /area/station/maintenance/department/medical)
 
 (1,1,1) = {"
-t
 W
+a
 a
 O
 r
 "}
 (2,1,1) = {"
-t
 N
+a
 a
 a
 X
 "}
 (3,1,1) = {"
-t
 s
+a
 a
 a
 r
 "}
 (4,1,1) = {"
-t
 P
+a
 a
 a
 r
 "}
 (5,1,1) = {"
-t
 u
+a
 a
 a
 r
 "}
 (6,1,1) = {"
-t
 h
+a
 a
 o
 r

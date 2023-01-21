@@ -24,6 +24,7 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "p" = (
@@ -59,6 +60,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "J" = (

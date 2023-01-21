@@ -2,54 +2,180 @@ directory = "_maps/map_files/tramstation/maintenance_modules/"
 
 [rooms.medsciupper]
 modules = ["medsciupper_1.dmm", "medsciupper_2.dmm", "medsciupper_3.dmm"]
+- 1. U-bend connection between Medical and Science. Nothing special.
+- 2. U-bend connection between Medical and Science. Has extended flora area with window view from maintenance hall.
+- 3. U-bend connection between Medical and Science. Extended side platform near floor overhang and window view has shattered windows.
 
 [rooms.medsciupper_attachment_a]
 modules = ["medsciupper_attachment_a_1.dmm", "medsciupper_attachment_a_2.dmm", "medsciupper_attachment_a_3.dmm"]
+- 1. Robotics storage room.
+- 2. Maintenance containment room with a basic shield setup.
+- 3. Target practice/test firing range.
 
 [rooms.medsciupper_attachment_b]
 modules = ["medsciupper_attachment_b_1.dmm", "medsciupper_attachment_b_2.dmm", "medsciupper_attachment_b_3.dmm"]
+- 1. Extra morgue storage + funny skeleton.
+- 2. Surgery storage with meme organs/basic meds.
+- 3. Generic medical storage with a random medkit and minor hearing.
 
 [rooms.barcargoupper]
 modules = ["barcargoupper_1.dmm", "barcargoupper_2.dmm", "barcargoupper_3.dmm"]
+- 1. Straight way between Bar and Cargo. Extended overhang to view bottom maintenance hall with window view into flora area.
+- 2. Straight way interrupted by small U-bend connection between Bar and Cargo. Has window view into flora area
+- 3. Straight way between Bar and Cargo. Ladder access has additional bridge to a windowed maintenance room with various misc loot.
 
 [rooms.barcargoupper_cave]
 modules = ["barcargoupper_cave_1.dmm", "barcargoupper_cave_2.dmm", "barcargoupper_cave_3.dmm"]
+- 1. Dug out cave with blocked off ore refinery at end. Assortment of random mining tools.
+- 2. Dug out cave with a scanner/mining tools and bone tongue/trombone at the end. Doot.
+- 3. Dug out cave with a blocked off ore refinery at the start. Scattered mining tools, leads to a random relic spawn.
 
 [rooms.barcargoupper_attachment_a]
 modules = ["barcargoupper_attachment_a_1.dmm", "barcargoupper_attachment_a_2.dmm", "barcargoupper_attachment_a_3.dmm"]
+- 1. Theatre storage with extra costumes/vending restock.
+- 2. Kitchen storage with basic kitchen items and vending restock.
+- 3. Bar storage with spare keg/vending restock/random booze spawn.
 
 [rooms.barcargoupper_attachment_b]
 modules = ["barcargoupper_attachment_b_1.dmm", "barcargoupper_attachment_b_2.dmm", "barcargoupper_attachment_b_3.dmm"]
+- 1. Random crate storage.
+- 2. Mining gear storage with 2 spare vouchers.
+- 3. Relic tinkering room with random artifact and secret chem recipe paper.
 
 [rooms.secbarupper]
 modules = ["secbarupper_1.dmm", "secbarupper_2.dmm", "secbarupper_3.dmm"]
+- 1. Zagged path between Security and Bar. Has multiple overhangs to view lower floor. Has water closet.
+- 2. Zagged path between Security and Bar. Mulebot path is finished fully (no cave spawn).
+- 3. Zagged path between Security and Bar. Flora area is expanded with small park area.
 
 [rooms.secbarupper_attachment_a]
 modules = ["secbarupper_attachment_a_1.dmm", "secbarupper_attachment_a_2.dmm", "secbarupper_attachment_a_3.dmm"]
+- 1. Random assortment of paperwork-related items (fax, briefcases, folders, ect). Spawns secret chem paper.
+- 2. Security storage with 2 spare secways and a set of degraded armor.
+- 3. Generic side room with assorted trash and hidden hobo hideout.
 
 [rooms.secbarupper_attachment_b]
 modules = ["secbarupper_attachment_b_1.dmm", "secbarupper_attachment_b_2.dmm", "secbarupper_attachment_b_3.dmm"]
+- 1. Generic storage room with maintenance crates behind doors.
+- 2. Generic storage room with a relic spawner and hidden gambling table.
+- 3. Segmented side rooms with random weed spawn and maintenance loot.
 
 [rooms.secbarupper_cave]
 modules = ["secbarupper_cave_1.dmm", "secbarupper_cave_2.dmm", "secbarupper_cave_3.dmm"]
+- 1. Dug out hole with a relic spawn in the middle.
+- 2. Dug out spiral with a lot of sand. It gets everywhere. Stack of 5 silver and 5 gold ore.
+- 3. Unfinished maintenance room exposed to asteroid. Has basic construction tools and machine frames.
 
 [rooms.dormmedupper]
 modules = ["dormmedupper_1.dmm", "dormmedupper_2.dmm", "dormmedupper_3.dmm"]
+- 1. Straight way between Dorms and Medical. Has a windowed side room with some gambling items. Has external hatch to flora area above.
+- 2. Straight way between Dorms and Medical. Mulebot routes are finished and flora area has additional window in recreational area to view from.
+- 3. Straight way between Dorms and Medical. Flora area has small park area with public access from the holodeck control room.
 
 [rooms.dormmedupper_attachment_a]
 modules = ["dormmedupper_attachment_a_1.dmm", "dormmedupper_attachment_a_2.dmm", "dormmedupper_attachment_a_3.dmm"]
+- 1. Side attachment to maintenance hall with misc maintenance loot.
+- 2. Art storage with extra various crayons/spraycans/canvas portraits.
+- 3. Library/Chapel storage with extra misc job items for both departments.
 
 [rooms.dormmedupper_attachment_b]
 modules = ["dormmedupper_attachment_b_1.dmm", "dormmedupper_attachment_b_2.dmm", "dormmedupper_attachment_b_3.dmm"]
+- 1. Side attachment to maintenance hall with misc maintenance loot and drugs.
+- 2. Segmented rooms with custodial closet. Misc maintenance loot.
+- 3. Generic side room with hidden dug out room with booze for the boys.
 
 [rooms.secservicelower]
 modules = ["secservicelower_1.dmm", "secservicelower_1.dmm", "secservicelower_1.dmm"]
+- 1. C-shaped connection between most-left tram tunnel, Service and backdoor Prison access. Has a space bridge spanning a large space hole in asteroid with EVA access.
+- 2. C-shaped connection between most-left tram tunnel, Service and backdoor Prison access. Cave tunnel segment connects the three main points with a scattering of mining tools.
+- 3. Zagged connection between most-left tram tunnel, Service and backdoor Prison access. WIndows view into natural cave segment of asteroid mostly untouched.
 
 [rooms.secservicelower_attachment_a]
 modules = ["secservicelower_attachment_a_1.dmm", "secservicelower_attachment_a_2.dmm", "secservicelower_attachment_a_3.dmm"]
+- 1. Side attachment to maintenance hall with gambling table and misc drug/gambling loot.
+- 2. Side security room with tucked away interrogation room.
+- 3. Side maintenance room with custodial closet and misc maintenance loot.
 
 [rooms.secservicelower_attachment_b]
 modules = ["secservicelower_attachment_b_1.dmm", "secservicelower_attachment_b_2.dmm", "secservicelower_attachment_b_3.dmm"]
+- 1. Side attachment to maintenance hall with misc maintenance loot.
+- 2. Generic side room with costume/booze spawners.
+- 3. Segmented rooms with various misc maintenance loot.
 
 [rooms.secservicelower_attachment_c]
 modules = ["secservicelower_attachment_c_1.dmm", "secservicelower_attachment_c_2.dmm", "secservicelower_attachment_c_3.dmm"]
+- 1. Windowed maintenance room with tank/atmos machinery spawner. Misc maintenance loot.
+- 2. Various segmented rooms connected by a small main hall with a blast door toggle.
+- 3. Small external access room with a mining gear closet leading to a dug out area with a mining scanner.
+
+[rooms.servicecargolower]
+modules = ["servicecargolower_1.dmm", "servicecargolower_1.dmm", "servicecargolower_1.dmm"]
+- 1. Straight connection between Service and Cargo with Solar access. Has a small custodial closet.
+- 2. Straight connection between Service and Cargo with Solar access. Has expanded sides with blast door toggles and a windowed side room.
+- 3. Straight connection between Service and Cargo with Solar access. Nothing special.
+
+[rooms.servicecargolower_attachment_a]
+modules = ["servicecargolower_attachment_a_1.dmm", "servicecargolower_attachment_a_1.dmm", "servicecargolower_attachment_a_1.dmm"]
+- 1. Segmented side rooms connected by a small main hall. Has a gambling den with various gambling items and cash.
+- 2. Side attachment to maintenance hall with a windowed view into a space hole. Has a side room with 3 atmos machinery spawners.
+- 3. Segmented side rooms with a hidden dug-out area.
+
+[rooms.servicecargolower_attachment_b]
+modules = ["servicecargolower_attachment_b_1.dmm", "servicecargolower_attachment_b_1.dmm", "servicecargolower_attachment_b_1.dmm"]
+- 1. Side attachment to maintenance hall with various costume/wardrome closet spawner. Has a steam vent.
+- 2. Maintenance room layout set up for a seedy shop, comes with various maintenance loot and small cash spawn.
+- 3. Exposed dug-out section with a random relic spawn.
+
+[rooms.cargoscilower]
+modules = ["cargoscilower_1.dmm", "cargoscilower_1.dmm", "cargoscilower_1.dmm"]
+- 1. Zagged connection between Cargo, most-right tram tunnel and Science. Has a decommissioned pod bay with spare tools and a bit of titanium.
+- 2. 
+- 3. 
+
+[rooms.cargoscilower_attachment_a]
+modules = ["cargoscilower_attachment_a_1.dmm", "cargoscilower_attachment_a_1.dmm", "cargoscilower_attachment_a_1.dmm"]
+- 1.
+- 2.
+- 3. 
+
+[rooms.cargoscilower_attachment_b]
+modules = ["cargoscilower_attachment_b_1.dmm", "cargoscilower_attachment_b_1.dmm", "cargoscilower_attachment_b_1.dmm"]
+- 1.
+- 2.
+- 3. 
+
+[rooms.atmosscilower]
+modules = ["atmosscilower_1.dmm", "atmosscilower_2.dmm", "atmosscilower_3.dmm"]
+- 1.
+- 2. 
+- 3. 
+
+[rooms.atmosscilower_attachment_a]
+modules = ["atmosscilower_attachment_a_1.dmm", "atmosscilower_attachment_a_2.dmm", "atmosscilower_attachment_a_3.dmm"]
+- 1.
+- 2. 
+- 3. 
+
+[rooms.atmosscilower_attachment_b]
+modules = ["atmosscilower_attachment_b_1.dmm", "atmosscilower_attachment_b_2.dmm", "atmosscilower_attachment_b_3.dmm"]
+- 1.
+- 2. 
+- 3. 
+
+[rooms.dormengine_lower]
+modules = ["dormengine_lower_1.dmm", "dormengine_lower_2.dmm", "dormengine_lower_3.dmm"]
+- 1.
+- 2. 
+- 3. 
+
+[rooms.dormengine_lower_attachment_a]
+modules = ["dormengine_lower_attachment_a_1.dmm", "dormengine_lower_attachment_a_2.dmm", "dormengine_lower_attachment_a_3.dmm"]
+- 1.
+- 2. 
+- 3. 
+
+[rooms.dormengine_lower_attachment_b]
+modules = ["dormengine_lower_attachment_b_1.dmm", "dormengine_lower_attachment_b_2.dmm", "dormengine_lower_attachment_b_3.dmm"]
+- 1.
+- 2. 
+- 3. 

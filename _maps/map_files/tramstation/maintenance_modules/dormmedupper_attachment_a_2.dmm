@@ -84,9 +84,6 @@
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
-"Y" = (
-/turf/closed/wall,
-/area/station/maintenance/department/medical)
 "Z" = (
 /obj/structure/rack,
 /obj/item/rcl/pre_loaded,
@@ -99,43 +96,43 @@
 /area/station/maintenance/department/medical)
 
 (1,1,1) = {"
-Y
 B
+a
 a
 a
 r
 "}
 (2,1,1) = {"
-Y
 N
+a
 a
 a
 X
 "}
 (3,1,1) = {"
-Y
 c
+a
 a
 a
 r
 "}
 (4,1,1) = {"
-Y
 c
+a
 a
 a
 r
 "}
 (5,1,1) = {"
-Y
 Z
+a
 a
 R
 r
 "}
 (6,1,1) = {"
-Y
 P
+a
 a
 x
 r

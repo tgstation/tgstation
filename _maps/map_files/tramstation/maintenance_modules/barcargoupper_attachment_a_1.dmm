@@ -22,6 +22,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "o" = (
@@ -44,6 +45,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "x" = (
@@ -56,6 +58,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "I" = (
@@ -66,6 +69,10 @@
 /obj/effect/spawner/random/clothing/costume,
 /obj/effect/spawner/random/clothing/costume,
 /obj/item/vending_refill/autodrobe,
+/obj/item/bedsheet/mime,
+/obj/item/clothing/mask/gas/mime,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/item/bedsheet/clown,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "J" = (
@@ -89,7 +96,18 @@
 /area/station/maintenance/department/cargo)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /turf/open/floor/iron/white,
+/area/station/maintenance/department/cargo)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/cargo)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "R" = (
 /obj/effect/decal/cleanable/dirt,
@@ -135,7 +153,7 @@ T
 e
 M
 J
-Y
+P
 s
 "}
 (3,1,1) = {"
@@ -144,7 +162,7 @@ a
 a
 T
 R
-M
+N
 J
 Y
 o
@@ -155,7 +173,7 @@ a
 a
 T
 x
-M
+N
 m
 Y
 s

@@ -12,6 +12,14 @@
 /obj/item/wrench,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
+"ar" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat,
+/obj/item/clothing/head/utility/hardhat,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "az" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
@@ -30,6 +38,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "ck" = (
@@ -233,6 +242,14 @@
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
+"my" = (
+/obj/structure/rack,
+/obj/item/shovel,
+/obj/item/pickaxe{
+	pixel_x = 5
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "ne" = (
 /turf/closed/wall,
 /area/station/maintenance/central/greater)
@@ -256,6 +273,12 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
+"qB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
 "qH" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -452,6 +475,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"Cn" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "CL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -549,6 +576,23 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"Ng" = (
+/obj/structure/closet/crate/miningcar{
+	desc = "A mining cart. This one doesn't work on rails, which is good because we never had rails to begin with.";
+	name = "mining cart"
+	},
+/obj/item/stack/ore/glass{
+	amount = 15
+	},
+/obj/item/stack/ore/iron{
+	amount = 15
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"Ns" = (
+/obj/item/stack/ore/iron,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "Nu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -572,6 +616,10 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"NW" = (
+/obj/item/storage/bag/ore,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "Ph" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -637,6 +685,9 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
+"SZ" = (
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
 "Tt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -662,6 +713,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"Us" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
 "VH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -670,6 +725,17 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"Wh" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"Wn" = (
+/obj/item/shovel{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
 "Wz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
@@ -1263,7 +1329,7 @@ GP
 GP
 GP
 GP
-GP
+qB
 js
 "}
 (12,1,1) = {"
@@ -2308,7 +2374,7 @@ kM
 kM
 sB
 kM
-kM
+Ns
 az
 zz
 zz
@@ -2353,7 +2419,7 @@ az
 az
 az
 az
-kM
+my
 kM
 kM
 sB
@@ -2403,7 +2469,7 @@ az
 az
 az
 az
-kM
+Ng
 kM
 AC
 zQ
@@ -2453,7 +2519,7 @@ az
 az
 az
 az
-kM
+Wh
 kM
 sB
 kM
@@ -2492,10 +2558,10 @@ zz
 zz
 az
 az
-kM
-kM
-kM
-kM
+Us
+SZ
+SZ
+SZ
 kM
 az
 az
@@ -2541,11 +2607,11 @@ zz
 zz
 zz
 az
-kM
-kM
-kM
-kM
-kM
+SZ
+SZ
+SZ
+Wn
+SZ
 kM
 az
 kM
@@ -2595,8 +2661,8 @@ az
 az
 az
 kM
-kM
-kM
+SZ
+Us
 kM
 kM
 kM
@@ -2646,8 +2712,8 @@ az
 az
 az
 az
-kM
-kM
+NW
+Cn
 kM
 kM
 kM
@@ -2781,8 +2847,8 @@ az
 ne
 cA
 ne
-kM
-kM
+az
+az
 az
 az
 az
@@ -2899,7 +2965,7 @@ kM
 kM
 kM
 kM
-kM
+Ns
 az
 az
 az
@@ -2994,8 +3060,8 @@ kM
 kw
 az
 az
-kM
-kM
+Wh
+Wh
 az
 az
 az
@@ -3031,10 +3097,10 @@ az
 ne
 cA
 ne
-kM
-kM
-kM
-kM
+az
+az
+az
+az
 az
 az
 az
@@ -3205,7 +3271,7 @@ az
 kM
 sB
 rp
-kM
+ar
 az
 kM
 kM

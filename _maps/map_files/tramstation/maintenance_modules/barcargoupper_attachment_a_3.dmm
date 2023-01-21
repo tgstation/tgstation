@@ -63,6 +63,9 @@
 /obj/effect/spawner/random/food_or_drink/booze{
 	spawn_random_offset = 1
 	},
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "Z" = (

@@ -51,23 +51,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/medical)
-"V" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/bodycontainer/morgue{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/skeleton{
-	name = "Jim";
-	desc = "Left to rot in maintenance, a poor soul whose green light was never noticed by the doctor..."
-	},
-/turf/open/floor/iron/dark,
-/area/station/maintenance/department/medical)
 "W" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
 /obj/effect/landmark/xeno_spawn,
+/obj/structure/closet/body_bag,
+/mob/living/simple_animal/hostile/skeleton{
+	name = "Jim";
+	desc = "Left to rot in maintenance, a poor soul whose green light was never noticed by the doctor..."
+	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/medical)
 "Y" = (
@@ -79,7 +73,7 @@
 
 (1,1,1) = {"
 W
-V
+d
 "}
 (2,1,1) = {"
 T

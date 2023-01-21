@@ -30,6 +30,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "ek" = (
@@ -262,12 +263,20 @@
 "tZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner/north,
-/turf/open/floor/iron/smooth,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "uj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"wi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "wq" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -1128,7 +1137,7 @@ fL
 Ul
 kb
 Ms
-Ms
+wi
 He
 "}
 (12,1,1) = {"

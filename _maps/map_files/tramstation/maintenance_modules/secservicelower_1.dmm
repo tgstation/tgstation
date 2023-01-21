@@ -375,6 +375,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
+"ym" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/greater)
 "yL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -799,6 +805,12 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
+"ZU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/central)
 
 (1,1,1) = {"
 nk
@@ -1347,7 +1359,7 @@ yd
 Ex
 Ex
 Ex
-Ex
+ZU
 Ve
 "}
 (12,1,1) = {"
@@ -3586,7 +3598,7 @@ TQ
 TQ
 yg
 Zs
-PM
+ym
 kA
 nk
 nk

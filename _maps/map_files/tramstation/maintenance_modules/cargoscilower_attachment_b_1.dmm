@@ -1,0 +1,100 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"r" = (
+/turf/template_noop,
+/area/template_noop)
+"z" = (
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+
+(1,1,1) = {"
+r
+r
+r
+r
+r
+r
+"}
+(2,1,1) = {"
+a
+a
+a
+r
+r
+r
+"}
+(3,1,1) = {"
+a
+a
+r
+r
+r
+r
+"}
+(4,1,1) = {"
+a
+a
+z
+r
+r
+r
+"}
+(5,1,1) = {"
+a
+a
+r
+r
+r
+r
+"}
+(6,1,1) = {"
+a
+a
+r
+r
+r
+r
+"}
+(7,1,1) = {"
+a
+a
+r
+r
+r
+r
+"}
+(8,1,1) = {"
+a
+a
+r
+r
+r
+r
+"}
+(9,1,1) = {"
+r
+a
+r
+r
+r
+r
+"}
+(10,1,1) = {"
+r
+a
+r
+r
+r
+r
+"}
+(11,1,1) = {"
+r
+a
+a
+a
+a
+r
+"}
