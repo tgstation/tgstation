@@ -91,20 +91,20 @@
 		if(!user.transferItemToLoc(I,src))
 			return
 		mytape = I
-		balloon_alert_to_viewers("inserted [mytape]!", vision_distance = 1)
+		balloon_alert(user, "inserted [mytape]")
 		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
 		update_appearance()
 
 
 /obj/item/taperecorder/proc/eject(mob/user)
 	if(!mytape)
-		balloon_alert_to_viewers("no tape!", vision_distance = 1)
+		balloon_alert(user, "no tape!")
 		return
 	if(playing)
-		balloon_alert_to_viewers("stop the tape first!", vision_distance = 1)
+		balloon_alert(user, "stop the tape first!")
 		return
 	playsound(src, 'sound/items/taperecorder/taperecorder_open.ogg', 50, FALSE)
-	balloon_alert_to_viewers("ejected [mytape]!", vision_distance = 1)
+	balloon_alert(user, "ejected [mytape]")
 	stop()
 	user.put_in_hands(mytape)
 	mytape = null
@@ -132,10 +132,10 @@
 	set category = "Object"
 
 	if(!can_use(usr))
-		balloon_alert_to_viewers("can't use!", vision_distance = 1)
+		balloon_alert(usr, "can't use!")
 		return
 	if(!mytape)
-		balloon_alert_to_viewers("no tape!", vision_distance = 1)
+		balloon_alert(usr, "no tape!")
 		return
 
 	eject(usr)
@@ -167,23 +167,23 @@
 	set category = "Object"
 
 	if(!can_use(usr))
-		balloon_alert_to_viewers("can't use!", vision_distance = 1)
+		balloon_alert(usr, "can't use!")
 		return
 	if(!mytape || mytape.unspooled)
-		balloon_alert_to_viewers("no spooled tape!", vision_distance = 1)
+		balloon_alert(usr, "no spooled tape!")
 		return
 	if(recording)
-		balloon_alert_to_viewers("stop recording first!", vision_distance = 1)
+		balloon_alert(usr, "stop recording first!")
 		return
 	if(playing)
-		balloon_alert_to_viewers("already playing!", vision_distance = 1)
+		balloon_alert(usr, "already playing!")
 		return
 
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		recording = TRUE
-		balloon_alert_to_viewers("started recording", vision_distance = 1)
+		balloon_alert(usr, "started recording")
 		update_sound()
 		update_appearance()
 		var/used = mytape.used_capacity //to stop runtimes when you eject the tape
@@ -193,14 +193,14 @@
 			used += 1 SECONDS
 			if(max - used < time_left_warning && !time_warned)
 				time_warned = TRUE
-				balloon_alert_to_viewers("[(max - used) / 10] seconds left!", vision_distance = 1)
+				balloon_alert(usr, "[(max - used) / 10] seconds left")
 			sleep(1 SECONDS)
 		if(used >= max)
-			balloon_alert_to_viewers("tape full!", vision_distance = 1)
+			balloon_alert(usr, "tape full!")
 			sleep(1 SECONDS) //prevent balloon alerts layering over the top of each other
 		stop()
 	else
-		balloon_alert_to_viewers("tape full!", vision_distance = 1)
+		balloon_alert(usr, "tape full!")
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
@@ -209,16 +209,16 @@
 	set category = "Object"
 
 	if(!can_use(usr))
-		balloon_alert_to_viewers("can't use!", vision_distance = 1)
+		balloon_alert(usr, "can't use!")
 		return
 
 	if(recording)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		balloon_alert_to_viewers("stopped recording", vision_distance = 1)
+		balloon_alert(usr, "stopped recording")
 		recording = FALSE
 	else if(playing)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		balloon_alert_to_viewers("stopped playing", vision_distance = 1)
+		balloon_alert(usr, "stopped playing")
 		playing = FALSE
 	time_warned = FALSE
 	update_appearance()
@@ -229,25 +229,25 @@
 	set category = "Object"
 
 	if(!can_use(usr))
-		balloon_alert_to_viewers("can't use!", vision_distance = 1)
+		balloon_alert(usr, "can't use!")
 		return
 	if(!mytape || mytape.unspooled)
-		balloon_alert_to_viewers("no spooled tape!", vision_distance = 1)
+		balloon_alert(usr, "no spooled tape!")
 		return
 	if(recording)
-		balloon_alert_to_viewers("stop recording first!", vision_distance = 1)
+		balloon_alert(usr, "stop recording first!")
 		return
 	if(playing)
-		balloon_alert_to_viewers("already playing!", vision_distance = 1)
+		balloon_alert(usr, "already playing!")
 		return
 	if(mytape.storedinfo?.len <= 0)
-		balloon_alert_to_viewers("[mytape] is empty!", vision_distance = 1)
+		balloon_alert(usr, "[mytape] is empty!")
 		return
 
 	playing = TRUE
 	update_appearance()
 	update_sound()
-	balloon_alert_to_viewers("started playing", vision_distance = 1)
+	balloon_alert(usr, "started playing")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 	var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
@@ -257,7 +257,7 @@
 		if(playing == FALSE)
 			break
 		if(mytape.storedinfo.len < i)
-			balloon_alert_to_viewers("recording ended", vision_distance = 1)
+			balloon_alert(usr, "recording ended")
 			sleep(1 SECONDS) //prevents multiple balloon alerts covering each other
 			break
 		say("[mytape.storedinfo[i]]", sanitize=FALSE)//We want to display this properly, don't double encode
@@ -277,7 +277,7 @@
 
 /obj/item/taperecorder/attack_self(mob/user)
 	if(!mytape)
-		balloon_alert_to_viewers("[src] is empty!", vision_distance = 1)
+		balloon_alert(user, "[src] is empty!")
 		return
 
 	update_available_icons()
@@ -303,22 +303,22 @@
 
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))
-		balloon_alert_to_viewers("[mytape] is empty!", vision_distance = 1)
+		balloon_alert(usr, "[mytape] is empty!")
 		return
 	if(!canprint)
-		balloon_alert_to_viewers("can't print that fast!", vision_distance = 1)
+		balloon_alert(usr, "can't print that fast!")
 		return
 	if(!can_use(usr))
-		balloon_alert_to_viewers("can't use!", vision_distance = 1)
+		balloon_alert(usr, "can't use!")
 		return
 	if(!mytape || mytape.unspooled)
-		balloon_alert_to_viewers("no spooled tape!", vision_distance = 1)
+		balloon_alert(usr, "no spooled tape!")
 		return
 	if(recording)
-		balloon_alert_to_viewers("stop recording first!", vision_distance = 1)
+		balloon_alert(usr, "stop recording first!")
 		return
 	if(playing)
-		balloon_alert_to_viewers("already playing!", vision_distance = 1)
+		balloon_alert(usr, "already playing!")
 		return
 
 	var/transcribed_text = "<b>Transcript:</b><br><br>"
@@ -333,7 +333,7 @@
 
 		// Very unexpected. Better abort non-gracefully.
 		if(excerpt_length > MAX_PAPER_LENGTH)
-			balloon_alert_to_viewers("data corrupted, cannot print!", vision_distance = 1)
+			balloon_alert(usr, "data corrupted, cannot print!")
 			CRASH("Transcript entry has more than [MAX_PAPER_LENGTH] chars: [excerpt_length] chars")
 
 		// If we're going to overflow the paper's length, print the current transcribed text out first and reset to prevent us
@@ -353,7 +353,7 @@
 	transcript_paper.name = "[paper_name] page [page_count]"
 	transcript_paper.update_appearance()
 
-	balloon_alert_to_viewers("transcript printed, [page_count] pages", vision_distance = 1)
+	balloon_alert(usr, "transcript printed, [page_count] pages")
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 
 	// Can't put the entire stack into their hands if there's multple pages, but hey we can at least put one page in.
@@ -434,13 +434,13 @@
 				if(loc != user)
 					return
 				tapeflip()
-				balloon_alert_to_viewers("flipped [src]", vision_distance = 1)
+				balloon_alert(user, "flipped [src]")
 				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', 70, FALSE)
 			if("Unwind tape")
 				if(loc != user)
 					return
 				unspool()
-				balloon_alert_to_viewers("unspooled [src]!", vision_distance = 1)
+				balloon_alert(user, "unspooled [src]")
 
 /obj/item/tape/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(prob(50))
@@ -479,10 +479,12 @@
 /obj/item/tape/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!unspooled)
 		return FALSE
-	balloon_alert_to_viewers("respooling tape...", vision_distance = 1)
-	if(tool.use_tool(src, user, 12 SECONDS))
-		balloon_alert_to_viewers("tape respooled", vision_distance = 1)
-		respool()
+	balloon_alert(user, "respooling tape...")
+	if(!tool.use_tool(src, user, 12 SECONDS))
+		balloon_alert(user, "respooling failed!")
+		return FALSE
+	balloon_alert(user, "tape respooled")
+	respool()
 
 //Random colour tapes
 /obj/item/tape/random
