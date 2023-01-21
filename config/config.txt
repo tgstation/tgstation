@@ -492,6 +492,9 @@ MINUTE_CLICK_LIMIT 400
 ## Send a message with the station name starting a new game.
 #CHAT_ANNOUNCE_NEW_GAME
 
+## Send a message with the round ID when a game has just ended.
+#CHAT_ANNOUNCE_END_GAME
+
 ## Ping users who use the `notify` command when a new game starts.
 #CHAT_NEW_GAME_NOTIFICATIONS
 

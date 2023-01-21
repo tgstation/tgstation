@@ -238,6 +238,7 @@
 	//Set news report and mode result
 	mode.set_round_result()
 
+	send2chat("Round [GLOB.round_id ? GLOB.round_id : "NULL"] just ended.", CONFIG_GET(string/chat_announce_end_game))
 	send2adminchat("Server", "Round just ended.")
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
