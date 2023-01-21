@@ -123,8 +123,8 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/perpname = H.get_face_name(H.get_id_name())
-				var/datum/record/crew/record = find_record(perpname)
-				if(!record || (record.wanted_status == WANTED_ARREST))
+				var/datum/record/crew/target = find_record(perpname)
+				if(!target || (target.wanted_status == WANTED_ARREST))
 					beep = TRUE
 		if(SCANGATE_MINDSHIELD)
 			if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
