@@ -28,6 +28,12 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
 	var/background = "fishing_background_default"
+	/// The types of socks that count as "fishnets" for making fishing spot difficulty lower
+	var/list/static/fishing_nets = list(
+		"Knee-high (Fishnet)",
+		"Stockings (Fishnet)",
+		"Thigh-high (Fishnet)",
+	)
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
@@ -76,6 +82,12 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 
 	. += additive_mod
 	. *= multiplicative_mod
+
+	if(iscarbon(fisherman))
+		var/mob/living/carbon/human/highly_experienced_fisherman
+		if(highly_experienced_fisherman.socks in fishing_nets)
+			message_admins("[highly_experienced_fisherman] has just started fishing while wearing fishnets, how skilled of them.")
+			. += FAV_BAIT_DIFFICULTY_MOD
 
 /// In case you want more complex rules for specific spots
 /datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
