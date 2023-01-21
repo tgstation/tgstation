@@ -1,6 +1,6 @@
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack, Tabs } from '../components';
+import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack, Tabs, Input } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -19,9 +19,13 @@ const ShoppingTab = (props, context) => {
   const { order_categories, order_datums } = data;
   const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
   const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
-  const mapped_food = order_datums.filter(
-    (food) => food && food.cat === shopIndex
-  );
+  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  let goods = order_datums.filter((good) => {
+    if (searchItem.length > 0) {
+      return good.name.toLowerCase().includes(searchItem.toLowerCase());
+    }
+    return good.cat === shopIndex;
+  });
   return (
     <Stack fill vertical>
       <Section mb={-0.9}>
@@ -36,20 +40,26 @@ const ShoppingTab = (props, context) => {
               </Tabs.Tab>
             ))}
           </Tabs>
-          <Button
-            ml={65}
-            mt={-2}
-            color={condensed ? 'green' : 'red'}
-            content={condensed ? 'Uncondense' : 'Condense'}
-            onClick={() => setCondensed(!condensed)}
-          />
+          <Box ml={38}>
+            <Input
+              width="150px"
+              placeholder="Search item..."
+              value={searchItem}
+              onInput={(e, value) => setSearchItem(value)}
+            />
+            <Button
+              color={condensed ? 'green' : 'red'}
+              content={condensed ? 'Uncondense' : 'Condense'}
+              onClick={() => setCondensed(!condensed)}
+            />
+          </Box>
         </Stack.Item>
       </Section>
       <Stack.Item grow>
         <Section fill scrollable>
           <Stack vertical mt={-2}>
             <Divider />
-            {mapped_food.map((item) => (
+            {goods.map((item) => (
               <Stack.Item key={item}>
                 <Stack>
                   <span
@@ -83,8 +93,8 @@ const ShoppingTab = (props, context) => {
                     <br />
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
-                    <Box fontSize="10px" color="label" textAlign="right">
-                      {' costs ' + item.cost + ' per order.'}
+                    <Box fontSize="10px" color="label">
+                      {item.cost + ' per order.'}
                     </Box>
                     <Button
                       icon="minus"
