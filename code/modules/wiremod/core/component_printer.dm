@@ -218,15 +218,6 @@
 
 	return data
 
-/obj/item/circuitboard/machine/component_printer
-	name = "\improper Component Printer (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/component_printer
-	req_components = list(
-		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/manipulator = 2,
-	)
-
 /obj/machinery/debug_component_printer
 	name = "debug component printer"
 	desc = "Produces components for the creation of integrated circuits."
@@ -529,12 +520,3 @@
 		data[initial(material_type.name)] = materials[material_type] * efficiency_coeff
 
 	return data
-
-/obj/item/circuitboard/machine/module_duplicator
-	name = "\improper Module Duplicator (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/module_duplicator
-	req_components = list(
-		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/manipulator = 2,
-	)
