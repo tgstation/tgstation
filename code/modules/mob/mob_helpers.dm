@@ -504,16 +504,18 @@
 		data["assigned_job"] = job
 
 	var/atom/handitem = get_active_held_item()
-	data["active_item"] = list(
-		"type" = handitem.type,
-		"name" = handitem.name,
-	)
+	if(handitem)
+		data["active_item"] = list(
+			"type" = handitem.type,
+			"name" = handitem.name,
+		)
 
 	var/atom/offhand = get_inactive_held_item()
-	data["offhand_item"] = list(
-		"type" = offhand.type,
-		"name" = offhand.name,
-	)
+	if(offhand)
+		data["offhand_item"] = list(
+			"type" = offhand.type,
+			"name" = offhand.name,
+		)
 
 	GLOB.logger.Log(
 		LOG_CATEGORY_TARGET_ZONE_SWITCH,
