@@ -718,3 +718,21 @@
       with internals and such
   - bugfix: fixed issue where plasmamen who are spawned without a plasmaman-specific
       job outfit could spawn without internals and a suit, and just start dying immediately
+2023-01-21:
+  LT3:
+  - bugfix: Kilostation comfy chairs now provide the correct stack of iron on deconstruction
+  PositiveEntropy:
+  - imageadd: Resprites the detective's wardrobe!
+  Rhials:
+  - bugfix: a wall covered by a screen on runtimestation has been modified into a
+      reinforced wall.
+  SuperSlayer0:
+  - bugfix: Fixes reverse revolver sprite being swapped to normal revolver sprite
+  - balance: Nerve splicing surgery now additionaly reduces stamina damage taken by
+      20%
+  Trigg:
+  - bugfix: Admins - Saving a VV outfit will no longer save their cached_ref variable,
+      which caused problems when the game tried to use that cache on another round.
+      Existing broken outfits will need to be loaded and saved again.
+  mc-oofert:
+  - rscadd: Added a new emergency shuttle, the Venture

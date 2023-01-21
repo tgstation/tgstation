@@ -1,4 +1,0 @@
-author: "Trigg"
-delete-after: True
-changes:
-  - bugfix: "Admins - Saving a VV outfit will no longer save their cached_ref variable, which caused problems when the game tried to use that cache on another round. Existing broken outfits will need to be loaded and saved again."
