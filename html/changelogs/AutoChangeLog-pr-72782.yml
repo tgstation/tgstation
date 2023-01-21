@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - bugfix: "Mice given sentience through intelligence potions no longer immediately consume the body and soul of the person whom uplifted them."
