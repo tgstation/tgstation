@@ -1,24 +1,28 @@
-GLOBAL_DATUM_INIT(log_holder, /datum/log_holder, new)
-GLOBAL_PROTECT(log_holder)
+GLOBAL_DATUM_INIT(logger, /datum/log_holder, new)
+GLOBAL_PROTECT(logger)
 
 /**
  * Main datum to manage logging actions
  */
 /datum/log_holder
+	/// Round ID, if set, that logging is initialized for
 	var/round_id
+	/// When the log_holder first initialized
 	var/logging_start_timestamp
 
-	/// Assosciative: category -> datum
+	/// Associative: category -> datum
 	var/list/datum/log_category/log_categories
+	/// typecache list for categories that exist but are disabled
 	var/list/disabled_categories
 
-	var/init = FALSE
+	var/initialized = FALSE
 	var/shutdown = FALSE
 
+/// Assembles basic information for logging, creating the log category datums and checking for config flags as required
 /datum/log_holder/proc/init_logging()
-	if(init)
+	if(initialized)
 		CRASH("Attempted to call init_logging twice!")
-	init = TRUE
+	initialized = TRUE
 
 	round_id = GLOB.round_id
 	logging_start_timestamp = rustg_unix_timestamp()
@@ -40,6 +44,7 @@ GLOBAL_PROTECT(log_holder)
 
 		log_categories[category] = new category_type
 
+/// Tells the log_holder to not allow any more logging to be done, and dumps all categories to their json file
 /datum/log_holder/proc/shutdown_logging()
 	if(shutdown)
 		CRASH("Attempted to call shutdown_logging twice!")
@@ -52,7 +57,7 @@ GLOBAL_PROTECT(log_holder)
 
 /// This is Log because log is a byond internal proc
 /datum/log_holder/proc/Log(category, message, list/data)
-	if(!init || shutdown)
+	if(!initialized || shutdown)
 		CRASH("Attempted to perform logging before initializion or after shutdown!")
 
 	if(disabled_categories[category])

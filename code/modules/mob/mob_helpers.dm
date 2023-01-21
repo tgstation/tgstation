@@ -515,7 +515,7 @@
 		"name" = offhand.name,
 	)
 
-	GLOB.log_holder.Log(
+	GLOB.logger.Log(
 		LOG_CATEGORY_TARGET_ZONE_SWITCH,
 		"[key_name(src)] manually changed selected zone",
 		data,
