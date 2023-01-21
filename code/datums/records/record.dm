@@ -199,17 +199,17 @@
 /datum/record/crew/proc/get_rapsheet(alias, header = "Rapsheet", description = "No further details.")
 	var/print_count = ++GLOB.data_core.print_count
 	var/obj/item/paper/printed_paper = new
-	var/final_paper_text = "<CENTER><B>[header]</B></CENTER><BR>"
-	final_paper_text += text("<B>(SR-[print_count])</BR>")
+	var/final_paper_text = text("<center><b>SR-[print_count]: [header]</b></center><br>")
 
-	final_paper_text += text("Name: [] <BR>\nGender: []<BR>\nAge: []<BR>", name, gender, age)
+	final_paper_text += text("Name: []<br>Gender: []<br>Age: []<br>", name, gender, age)
 	if(alias != name)
-		final_paper_text += text("Alias: []<BR>", alias)
+		final_paper_text += text("Alias: []<br>", alias)
 
-	final_paper_text += "\nSpecies: [species]<BR>"
-	final_paper_text += text("\nFingerprint: []<BR>", fingerprint)
-	final_paper_text += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", wanted_status)
-	final_paper_text += "<BR>\n<BR>\nCrimes:<BR>\n"
+	final_paper_text += text("Species: []<br>Fingerprint: []<br>Wanted Status: []<br><br>", species, fingerprint, wanted_status)
+
+	final_paper_text += text("<center><B>Security Data</B></center><br><br>")
+
+	final_paper_text += "Crimes:<br>"
 	final_paper_text += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
 						<th>Crime</th>
@@ -223,8 +223,9 @@
 		final_paper_text += "<td>[crime.author]</td>"
 		final_paper_text += "<td>[crime.time]</td>"
 		final_paper_text += "</tr>"
-	final_paper_text += "</table>"
+	final_paper_text += "</table><br><br>"
 
+	final_paper_text += "Citations:<br>"
 	final_paper_text  += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
 						<th>Citation</th>
@@ -232,7 +233,7 @@
 						<th>Author</th>
 						<th>Time Added</th>
 						<th>Fine</th>
-						</tr>"}
+						</tr><br>"}
 	for(var/datum/crime/citation/warrant in citations)
 		final_paper_text += "<tr><td>[warrant.name]</td>"
 		final_paper_text += "<td>[warrant.details]</td>"
@@ -240,10 +241,13 @@
 		final_paper_text += "<td>[warrant.time]</td>"
 		final_paper_text += "<td>[warrant.fine]</td>"
 		final_paper_text += "</tr>"
-	final_paper_text += "</table>"
+	final_paper_text += "</table><br><br>"
 
-	final_paper_text += text("<BR>\n<CENTER>Important Notes:</CENTER><BR>\n\t[]<BR>\n<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", security_note, description)
-	final_paper_text += "</TT>"
+	final_paper_text += text("<center>Important Notes:</center><br>")
+	if(security_note)
+		final_paper_text += text("- [security_note]<br>")
+	if(description)
+		final_paper_text += text("- [description]<br>")
 
 	printed_paper.name = text("CR-[] '[]'", print_count, name)
 	printed_paper.add_raw_text(final_paper_text)

@@ -320,8 +320,8 @@
 				return FALSE
 
 			for(var/datum/crime/incident in crimes)
-				input_description += "\n[incident.name]\n"
-				input_description += "[incident.details]\n"
+				input_description += "\n<bCrime:</b> [incident.name]\n"
+				input_description += "<b>Details:</b> [incident.details]\n"
 
 			var/obj/item/photo/mugshot = record.get_front_photo()
 			var/obj/item/poster/wanted/wanted_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
