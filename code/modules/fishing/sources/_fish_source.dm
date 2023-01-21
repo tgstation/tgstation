@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	. *= multiplicative_mod
 
 	if(iscarbon(fisherman))
-		var/mob/living/carbon/human/highly_experienced_fisherman
+		var/mob/living/carbon/human/highly_experienced_fisherman = fisherman
 		if(highly_experienced_fisherman.socks in fishing_nets)
 			message_admins("[highly_experienced_fisherman] has just started fishing while wearing fishnets, how skilled of them.")
 			. += FAV_BAIT_DIFFICULTY_MOD
