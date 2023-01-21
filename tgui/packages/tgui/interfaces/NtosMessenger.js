@@ -134,16 +134,13 @@ const ContactsScreen = (props, context) => {
           <Section fill textAlign="center">
             <Icon name="address-card" mr={1} />
             Detected Messengers
-          </Section>
-          <Section fill textAling="center">
-            <Icon name="search" mr={1} />
-            Search By Name Or Occupation
             <Input
-              autoFocus
-              width="250px"
+              width="220px"
+              placeholder="Search by name or job..."
               value={searchUser}
               onInput={(e, value) => setSearchUser(value)}
               mx={1}
+              ml={27}
             />
           </Section>
         </Stack>
