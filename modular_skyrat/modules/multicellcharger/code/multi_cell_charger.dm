@@ -194,4 +194,7 @@
 	desc = "The circuit board for a multi-cell charger."
 	id = "multi_cell_charger"
 	build_path = /obj/item/circuitboard/machine/cell_charger_multi
-	category = list ("Misc. Machinery")
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
