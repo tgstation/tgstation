@@ -27,6 +27,28 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
+/obj/structure/industrial_lift/tram/white
+	icon_state = "titanium_white"
+
+/obj/structure/industrial_lift/tram/subfloor
+	name = "tram"
+	desc = "A tram for tramversing the station."
+	icon_state = "tram_subfloor"
+
+/obj/structure/industrial_lift/tram/subfloor/window
+	name = "tram"
+	desc = "A tram for tramversing the station."
+	icon_state = "tram_subfloor_window"
+
+/obj/structure/industrial_lift/tram/accessible
+	icon_state = "titanium_accessible_north"
+
+/obj/structure/industrial_lift/tram/accessible/north
+	icon_state = "titanium_accessible_north"
+
+/obj/structure/industrial_lift/tram/accessible/south
+	icon_state = "titanium_accessible_south"
+
 /obj/structure/chair/sofa/bench/tram
 	greyscale_colors = "#00CCFF"
 
