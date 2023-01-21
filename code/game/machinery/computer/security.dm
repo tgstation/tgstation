@@ -319,6 +319,7 @@
 				balloon_alert(user, "no crimes")
 				return FALSE
 
+			input_description += "\n\n<b>WANTED FOR:</b>"
 			for(var/datum/crime/incident in crimes)
 				input_description += "\n<bCrime:</b> [incident.name]\n"
 				input_description += "<b>Details:</b> [incident.details]\n"
