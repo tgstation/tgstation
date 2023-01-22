@@ -29,4 +29,4 @@
 
 /// Writes an entry to the output file for the category
 /datum/log_category/proc/write_entry(list/entry)
-	rustg_file_append(json_encode(entry), get_output_file(entry))
+	rustg_file_append("[json_encode(entry)]\n", get_output_file(entry))

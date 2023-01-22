@@ -47,7 +47,7 @@ GLOBAL_PROTECT(logger)
 			LOG_HEADER_INIT_TIMESTAMP = number2text(logging_start_timestamp),
 			LOG_HEADER_ROUND_ID = number2text(GLOB.round_id),
 		)
-		rustg_file_write(json_encode(log_start_entry), category_type.get_output_file(null))
+		rustg_file_write("[json_encode(log_start_entry)]\n", category_type.get_output_file(null))
 
 /// Tells the log_holder to not allow any more logging to be done, and dumps all categories to their json file
 /datum/log_holder/proc/shutdown_logging()
