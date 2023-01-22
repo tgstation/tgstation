@@ -446,6 +446,15 @@
 	return ..()
 
 /obj/item/mod/control/proc/set_wearer(mob/living/carbon/human/user)
+	if (wearer == user)
+		// This should also not happen.
+		// This path is hit when equipping an outfit with visualsOnly, but only sometimes, and this eventually gets called twice.
+		// I'm not sure this proc should ever be being called by visualsOnly, but it is,
+		// and this was an emergency patch.
+		return
+	else if (!isnull(wearer))
+		stack_trace("set_wearer() was called with a new wearer without unset_wearer() being called")
+
 	wearer = user
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
