@@ -722,7 +722,7 @@
 	)
 
 /obj/item/toy/plush/greek_cucumber
-	name = "cucumber greek"
+	name = "greek cucumber"
 	desc = "A plushie depicting a large cucumber with eyes, it seems that according to the manufacturer of the toy, the human race will look like in the future."
 	icon_state = "cucumber"
 	inhand_icon_state = null
