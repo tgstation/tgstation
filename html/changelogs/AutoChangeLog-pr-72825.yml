@@ -1,0 +1,4 @@
+author: "unit0016"
+delete-after: True
+changes:
+  - spellcheck: "Wire Terminals' Description now informs the player that they're an input."
