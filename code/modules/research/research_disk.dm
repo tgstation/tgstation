@@ -9,7 +9,7 @@
 /obj/item/disk/tech_disk/Initialize(mapload)
 	. = ..()
 	if(!stored_research)
-		stored_research = new /datum/techweb
+		stored_research = new /datum/techweb/disk
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
 

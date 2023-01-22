@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - qol: "Airlock interfaces will now open up automatically if access is restored early while an AI is hacking it."
