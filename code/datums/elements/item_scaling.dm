@@ -76,10 +76,10 @@
 
 //Grabs any move signals and checks its loc, properly scaling it when in storage,inhand, or in world.
 /datum/element/item_scaling/proc/scale_by_loc(atom/scale)
-    if(isturf(scale.loc))
-        scale_overworld(scale)
-    else
-        scale_storage(scale)
+	if(isturf(scale.loc))
+		scale_overworld(scale)
+	else
+		scale_storage(scale)
 
 /**
  * Shrinks when inworld
