@@ -1,4 +1,4 @@
-import { capitalize } from 'common/string';
+import { capitalize, createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Divider, Icon, Input, NumberInput, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -20,12 +20,11 @@ const ShoppingTab = (props, context) => {
   const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
   const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
-  let goods = order_datums.filter((good) => {
-    if (searchItem.length > 0) {
-      return good.name.toLowerCase().includes(searchItem.toLowerCase());
-    }
-    return good.cat === shopIndex;
-  });
+  const search = createSearch(searchItem, (order_datums) => order_datums.name);
+  const goods =
+    searchItem.length > 0
+      ? data.order_datums.filter(search)
+      : order_datums.filter((item) => item && item.cat === shopIndex);
   return (
     <Stack fill vertical>
       <Section mb={-1}>
