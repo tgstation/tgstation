@@ -1,7 +1,11 @@
 ///If the machine is used/deleted in the crafting process
 #define CRAFTING_MACHINERY_CONSUME 1
+///If the structure is used/deleted in the crafting process
+#define CRAFTING_STRUCTURE_CONSUME 1
 ///If the machine is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
 #define CRAFTING_MACHINERY_USE 0
+///If the structure is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
+#define CRAFTING_STRUCTURE_USE 0
 
 /datum/crafting_recipe
 	///in-game display name
@@ -26,10 +30,10 @@
 	var/category
 	///Set to FALSE if it needs to be learned first.
 	var/always_available = TRUE
-	/// Additonal requirements text shown in UI
-	var/additional_req_text
 	///Required machines for the craft, set the assigned value of the typepath to CRAFTING_MACHINERY_CONSUME or CRAFTING_MACHINERY_USE. Lazy associative list: type_path key -> flag value.
 	var/list/machinery
+	///Required structures for the craft, set the assigned value of the typepath to CRAFTING_STRUCTURE_CONSUME or CRAFTING_STRUCTURE_USE. Lazy associative list: type_path key -> flag value.
+	var/list/structures
 	///Should only one object exist on the same turf?
 	var/one_per_turf = FALSE
 	/// Steps needed to achieve the result
@@ -772,7 +776,6 @@
 	reqs = list(/obj/item/paper = 5)
 	category = CAT_CONTAINERS
 
-
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
 	result = /obj/item/organ/internal/eyes/robotic/flashlight
@@ -1210,7 +1213,10 @@
 	)
 	result = /obj/item/storage/basket
 	category = CAT_CONTAINERS
-	additional_req_text = " being underwater, underwater basketweaving mastery"
+	steps = list(
+		"master the art of underwater basketweaving", 
+		"be underwater"
+	)
 
 /datum/crafting_recipe/underwater_basket/check_requirements(mob/user, list/collected_requirements)
 	. = ..()
@@ -1229,7 +1235,6 @@
 	reqs = list(
 		/obj/item/food/grown/wheat = 50
 	)
-
 
 /datum/crafting_recipe/elder_atmosian_statue
 	name = "Elder Atmosian Statue"
@@ -1453,7 +1458,6 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/layer_adapter/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1474,7 +1478,6 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/color_adapter/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1495,7 +1498,6 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/he_pipe/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1516,7 +1518,6 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/he_junction/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1538,7 +1539,6 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/pressure_pump/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1559,7 +1559,6 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/manual_valve/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1581,7 +1580,6 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/vent/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1603,7 +1601,6 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/scrubber/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1625,7 +1622,6 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/filter/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1647,7 +1643,6 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/mixer/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1668,7 +1663,6 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/connector/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1689,7 +1683,6 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/passive_vent/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1711,7 +1704,6 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/injector/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1732,7 +1724,6 @@
 		/obj/item/stack/sheet/plasteel = 1)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
-	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/he_exchanger/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1768,28 +1759,32 @@
 	category = CAT_ENTERTAINMENT
 	tool_behaviors = list(TOOL_WRENCH)
 	reqs = list(/obj/item/flamethrower = 1)
-	machinery = list( /obj/structure/toilet)
+	structures = list(/obj/structure/toilet = CRAFTING_STRUCTURE_CONSUME)
 	result = /obj/structure/toiletbong
 	time = 5 SECONDS
-	additional_req_text = " plasma tank (on flamethrower), toilet"
+	steps = list(
+		"make sure the flamethrower has a plasma tank attached",
+		"attach flamethrower to toilet"
+	)
 
 /datum/crafting_recipe/toiletbong/check_requirements(mob/user, list/collected_requirements)
-	if((locate(/obj/structure/toilet) in range(1, user.loc)) == null)
-		return FALSE
 	var/obj/item/flamethrower/flamethrower = collected_requirements[/obj/item/flamethrower][1]
-	if(flamethrower.ptank == null)
+	if(!flamethrower.ptank)
 		return FALSE
-	return TRUE
+	return ..()
 
 /datum/crafting_recipe/toiletbong/on_craft_completion(mob/user, atom/result)
 	var/obj/structure/toiletbong/toiletbong = result
-	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1, user.loc)
-	for (var/obj/item/cistern_item in toilet.contents)
-		cistern_item.forceMove(user.loc)
-		to_chat(user, span_warning("[cistern_item] falls out of the toilet!"))
-	toiletbong.dir = toilet.dir
-	toiletbong.loc = toilet.loc
-	qdel(toilet)
+
+	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1)
+	if(toilet)
+		for (var/obj/item/cistern_item in toilet.contents)
+			cistern_item.forceMove(user.loc)
+			to_chat(user, span_warning("[cistern_item] falls out of the toilet!"))
+			
+		toiletbong.dir = toilet.dir
+		toiletbong.loc = toilet.loc
+	
 	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
 
 /datum/crafting_recipe/pillow_suit
@@ -1869,3 +1864,5 @@
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE
+#undef CRAFTING_STRUCTURE_CONSUME
+#undef CRAFTING_STRUCTURE_USE

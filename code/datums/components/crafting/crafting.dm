@@ -77,9 +77,18 @@
 	for(var/machinery_path in R.machinery)
 		if(!machines[machinery_path])//We don't care for volume with machines, just if one is there or not
 			return FALSE
-			
-	for(var/structure_path in R.structures)
-		if(!structures[structure_path])//We don't care for volume with structures either, just if one is there or not
+	
+	for(var/required_structure_path in R.structures)
+		// Check for the presence of the required structure. Allow for subtypes to be used if not blacklisted
+		var/needed_amount = 1
+		for(var/structure_path in structures)
+			if(ispath(structure_path, required_structure_path) && !R.blacklist.Find(structure_path))
+				needed_amount--
+				requirements_list[required_structure_path] = structures[structure_path] // Store an instance of what we are using for check_requirements
+				break
+		
+		// We didn't find the required item
+		if(needed_amount > 0)
 			return FALSE
 
 	return R.check_requirements(a, requirements_list)
@@ -123,7 +132,7 @@
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
 		else if (isstructure(object))
-			LAZYADDASSOCLIST(.["structure"], object.type, object)
+			LAZYADDASSOCLIST(.["structures"], object.type, object)
 
 
 
@@ -241,7 +250,7 @@
 		requirements += R.structures
 	main_loop:
 		for(var/path_key in requirements)
-			amt = R.reqs[path_key] || R.machinery[path_key] || R.structures[path_key]
+			amt = R.reqs[path_key] || R.machinery[path_key] //TODO fix this it is bugged
 			if(!amt)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 				continue main_loop
 			surroundings = get_environment(a, R.blacklist)
