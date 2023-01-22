@@ -736,3 +736,17 @@
       Existing broken outfits will need to be loaded and saved again.
   mc-oofert:
   - rscadd: Added a new emergency shuttle, the Venture
+2023-01-22:
+  Melbert:
+  - qol: RTD fits in toolbelts.
+  NamelessFairy:
+  - bugfix: Viscerators are no longer invisible.
+  Timberpoes:
+  - bugfix: Mice given sentience through intelligence potions no longer immediately
+      consume the body and soul of the person whom uplifted them.
+  justricky21:
+  - spellcheck: small amendment on pet carrier
+  timothymtorres:
+  - rscadd: Add torches, porcini mushroom seeds, towercap seeds to ash walker ruin.
+  - rscadd: Change drying racks to not require power.
+  - rscadd: Add crafting recipe for smoking pipe that uses wood

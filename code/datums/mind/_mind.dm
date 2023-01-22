@@ -54,8 +54,6 @@
 	/// Martial art on this mind
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
-	/// Mime's vow of silence
-	var/miming = FALSE
 	/// List of antag datums on this mind
 	var/list/antag_datums
 	/// this mind's ANTAG_HUD should have this icon_state
