@@ -1,4 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
+import { createSearch } from 'common/string';
 import { Box, Button, Dimmer, Icon, Section, Stack, Input } from '../components';
 import { NtosWindow } from '../layouts';
 
@@ -51,15 +52,12 @@ const ContactsScreen = (props, context) => {
     sending_virus,
   } = data;
   const [searchUser, setSearchUser] = useLocalState(context, 'searchUser', '');
+  const search = createSearch(
+    searchUser,
+    (messengers) => messengers.name + messengers.job
+  );
   let users =
-    searchUser.length > 0
-      ? messengers.filter((user) => {
-        return (
-          user.name.toLowerCase().includes(searchUser.toLowerCase()) ||
-          user.job.toLowerCase().includes(searchUser.toLowerCase())
-        );
-      })
-      : messengers;
+    searchUser.length > 0 ? data.messengers.filter(search) : messengers;
   return (
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
