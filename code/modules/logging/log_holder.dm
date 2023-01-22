@@ -41,19 +41,19 @@ GLOBAL_PROTECT(logger)
 		if(config_flag && !config.Get(config_flag))
 			disabled_categories[category] = TRUE
 			continue
-
-		log_categories[category] = new category_type
+		category_type = log_categories[category] = new category_type
+		var/list/log_start_entry = list(
+			LOG_HEADER_CATEGORY = category,
+			LOG_HEADER_INIT_TIMESTAMP = number2text(logging_start_timestamp),
+			LOG_HEADER_ROUND_ID = number2text(GLOB.round_id),
+		)
+		rustg_file_write(json_encode(log_start_entry), category_type.get_output_file(null))
 
 /// Tells the log_holder to not allow any more logging to be done, and dumps all categories to their json file
 /datum/log_holder/proc/shutdown_logging()
 	if(shutdown)
 		CRASH("Attempted to call shutdown_logging twice!")
 	shutdown = TRUE
-
-	for(var/datum/log_category/category as anything in log_categories)
-		category = log_categories[category]
-		var/category_json = category.json_dump()
-		rustg_file_write(category_json, "[GLOB.log_directory]/[lowertext(category.category)].json")
 
 /// This is Log because log is a byond internal proc
 /datum/log_holder/proc/Log(category, message, list/data)

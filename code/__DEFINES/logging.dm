@@ -54,9 +54,15 @@
 #define LOGSRC_CKEY "Ckey"
 #define LOGSRC_MOB "Mob"
 
+// Log header keys
+#define LOG_HEADER_CATEGORY "category"
+#define LOG_HEADER_INIT_TIMESTAMP "timestamp"
+#define LOG_HEADER_ROUND_ID "roundid"
+
 // Log data keys
 #define LOG_ENTRY_MESSAGE "message"
 #define LOG_ENTRY_TIMESTAMP "timestamp"
+#define LOG_ENTRY_DATA "data"
 
 // Log json keys
 #define LOG_JSON_CATEGORY "category"
