@@ -101,7 +101,7 @@
 		return FALSE
 	var/content = trim(params["content"], MAX_MESSAGE_LEN)
 
-	var/datum/medical_note/new_note = new(usr, content)
+	var/datum/medical_note/new_note = new(user.name, content)
 	while(length(target.medical_notes) > 2)
 		target.medical_notes.Cut(1, 2)
 
