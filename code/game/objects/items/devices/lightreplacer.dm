@@ -233,16 +233,16 @@
 		add_shards(1, user)
 		target.status = LIGHT_EMPTY
 		target.update()
-	var/obj/item/light/L2 = new target.light_type()
-	target.status = L2.status
-	target.switchcount = L2.switchcount
-	target.brightness = L2.brightness
+	var/obj/item/light/old_light = new target.light_type()
+	target.status = old_light.status
+	target.switchcount = old_light.switchcount
+	target.brightness = old_light.brightness
 	if(obj_flags & EMAGGED)
 		target.create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER | TRANSPARENT)
 		target.reagents.add_reagent(/datum/reagent/toxin/plasma, 10)
 	target.on = target.has_power()
 	target.update()
-	qdel(L2)
+	qdel(old_light)
 
 	Use(user)
 	to_chat(user, span_notice("You replace \the [target.fitting] with \the [src]."))
