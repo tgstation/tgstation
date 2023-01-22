@@ -109,8 +109,7 @@
 	return ..()
 
 /datum/reagent/toxin/plasma/on_mob_metabolize(mob/living/carbon/affected_mob)
-	var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && HAS_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM)) // Some livers can metabolize plasma
+	if(HAS_TRAIT(affected_mob, TRAIT_PLASMA_LOVER_METABOLISM)) // sometimes mobs can temporarily metabolize plasma (e.g. plasma fixation disease symptom)
 		toxpwr = 0
 
 /datum/reagent/toxin/plasma/on_mob_end_metabolize(mob/living/carbon/affected_mob)
@@ -165,8 +164,7 @@
 	return ..()
 
 /datum/reagent/toxin/hot_ice/on_mob_metabolize(mob/living/carbon/affected_mob)
-	var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && HAS_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM)) // Some livers can metabolize plasma
+	if(HAS_TRAIT(affected_mob, TRAIT_PLASMA_LOVER_METABOLISM))
 		toxpwr = 0
 
 /datum/reagent/toxin/hot_ice/on_mob_end_metabolize(mob/living/carbon/affected_mob)

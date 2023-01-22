@@ -222,10 +222,6 @@
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
 	liver_biotype = MOB_MINERAL
 
-/obj/item/organ/internal/liver/plasmaman/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_PLASMA_LOVER_METABOLISM, INNATE_TRAIT)
-
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/internal/liver/alien
 	name = "alien liver" // doesnt matter for actual aliens because they dont take toxin damage

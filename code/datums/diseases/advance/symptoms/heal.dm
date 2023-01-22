@@ -526,21 +526,19 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/item/organ/internal/liver/liver = A.affected_mob.getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		if(A.stage >= 4)
-			ADD_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
-		else 
-			REMOVE_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+		
+	if(A.stage >= 4)
+		ADD_TRAIT(A.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	else 
+		REMOVE_TRAIT(A.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
 	return TRUE
 
 /datum/symptom/heal/plasma/End(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/organ/internal/liver/liver = A.affected_mob.getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		REMOVE_TRAIT(liver, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+		
+	REMOVE_TRAIT(A.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
 
 // Check internals breath, environmental plasma, and plasma in bloodstream to determine the heal power
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/A)
