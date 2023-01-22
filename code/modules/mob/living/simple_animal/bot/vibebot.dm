@@ -2,7 +2,8 @@
 	name = "\improper Vibebot"
 	desc = "A little robot. It's just vibing, doing its thing."
 	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "vibebot"
+	icon_state = "vibebot1"
+	base_icon_state = "vibebot"
 	density = FALSE
 	anchored = FALSE
 	health = 25
