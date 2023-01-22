@@ -88,17 +88,16 @@
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjust_eye_blur(-2 SECONDS * REM * delta_time)
-	affected_mob.adjust_blindness(-1 * REM * delta_time)
+	affected_mob.adjust_temp_blindness(-2 SECONDS * REM * delta_time)
 	switch(current_cycle)
 		if(1 to 20)
 			//nothing
 		if(21 to 110)
 			if(DT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), delta_time))
-				affected_mob.cure_nearsighted(list(EYE_DAMAGE))
+				affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
 		if(110 to INFINITY)
-			affected_mob.cure_nearsighted(list(EYE_DAMAGE))
-	..()
-	return
+			affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
+	return ..()
 
 /datum/reagent/consumable/berryjuice
 	name = "Berry Juice"
@@ -209,7 +208,7 @@
 	icon_state = "nothing"
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(ishuman(drinker) && drinker.mind?.miming)
+	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE

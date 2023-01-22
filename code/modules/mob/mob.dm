@@ -206,7 +206,7 @@
 	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if(type & MSG_VISUAL && is_blind() )//Vision related
+		if(type & MSG_VISUAL && is_blind())//Vision related
 			if(!alt_msg)
 				return
 			else
@@ -678,7 +678,7 @@
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
-	if((spintime < 1)||(speed < 1)||!spintime||!speed)
+	if((spintime < 1) || (speed < 1) || !spintime || !speed)
 		return
 
 	flags_1 |= IS_SPINNING_1
@@ -1163,10 +1163,6 @@
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
 
-/// Is this mob affected by nearsight
-/mob/proc/is_nearsighted()
-	return HAS_TRAIT(src, TRAIT_NEARSIGHT)
-
 /// This mob is abile to read books
 /mob/proc/is_literate()
 	return HAS_TRAIT(src, TRAIT_LITERATE) && !HAS_TRAIT(src, TRAIT_ILLITERATE)
@@ -1371,9 +1367,6 @@
 			. = TRUE
 		if(NAMEOF(src, stat))
 			set_stat(var_value)
-			. = TRUE
-		if(NAMEOF(src, eye_blind))
-			set_blindness(var_value)
 			. = TRUE
 
 	if(!isnull(.))

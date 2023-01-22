@@ -6,6 +6,9 @@
 
 	setup_mood()
 
+	// All start without eyes, and get them via set species
+	become_blind(NO_EYES)
+
 	create_dna()
 	dna.species.create_fresh_body(src)
 	setup_human_dna()
@@ -409,7 +412,7 @@
 
 	//Check for ID
 	var/obj/item/card/id/idcard = get_idcard(FALSE)
-	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name=="Unknown")
+	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name == "Unknown")
 		threatcount += 4
 
 	//Check for weapons
@@ -597,7 +600,7 @@
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
-	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
+	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		update_worn_glasses()
 		. = TRUE
 
@@ -682,11 +685,6 @@
 		if(R)
 			R.fields["name"] = newname
 
-/mob/living/carbon/human/get_total_tint()
-	. = ..()
-	if(glasses)
-		. += glasses.tint
-
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
 		return
@@ -743,12 +741,6 @@
 
 	return ..()
 
-/mob/living/carbon/human/is_nearsighted()
-	var/obj/item/clothing/glasses/eyewear = glasses
-	if(istype(eyewear) && eyewear.vision_correction)
-		return FALSE
-	return ..()
-
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if(blood && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		if(message)
@@ -758,6 +750,26 @@
 			Stun(20 SECONDS)
 		return 1
 	..()
+
+/mob/living/carbon/human/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, mob_height))
+		var/static/list/heights = list(
+			HUMAN_HEIGHT_SHORTEST,
+			HUMAN_HEIGHT_SHORT,
+			HUMAN_HEIGHT_MEDIUM,
+			HUMAN_HEIGHT_TALL,
+			HUMAN_HEIGHT_TALLEST
+		)
+		if(!(var_value in heights))
+			return
+
+		. = set_mob_height(var_value)
+
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+
+	return ..()
 
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()
