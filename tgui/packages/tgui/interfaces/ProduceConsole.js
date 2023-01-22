@@ -1,6 +1,6 @@
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack, Tabs, Input } from '../components';
+import { Box, Button, Dimmer, Divider, Icon, Input, NumberInput, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -28,7 +28,7 @@ const ShoppingTab = (props, context) => {
   });
   return (
     <Stack fill vertical>
-      <Section mb={-0.9}>
+      <Section mb={-1}>
         <Stack.Item>
           <Tabs>
             {order_categories.map((item, key) => (
@@ -39,20 +39,19 @@ const ShoppingTab = (props, context) => {
                 {item}
               </Tabs.Tab>
             ))}
+            <Stack.Item grow>
+              <Input
+                ml={5}
+                width="150px"
+                mt={0.5}
+                placeholder="Search item..."
+                value={searchItem}
+                onInput={(e, value) => {
+                  setSearchItem(value);
+                }}
+              />
+            </Stack.Item>
           </Tabs>
-          <Box ml={38}>
-            <Input
-              width="150px"
-              placeholder="Search item..."
-              value={searchItem}
-              onInput={(e, value) => setSearchItem(value)}
-            />
-            <Button
-              color={condensed ? 'green' : 'red'}
-              content={condensed ? 'Uncondense' : 'Condense'}
-              onClick={() => setCondensed(!condensed)}
-            />
-          </Box>
         </Stack.Item>
       </Section>
       <Stack.Item grow>
@@ -93,7 +92,7 @@ const ShoppingTab = (props, context) => {
                     <br />
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
-                    <Box fontSize="10px" color="label">
+                    <Box fontSize="10px" color="label" textAlign="right">
                       {item.cost + ' per order.'}
                     </Box>
                     <Button
@@ -255,6 +254,7 @@ export const ProduceConsole = (props, context) => {
   const { act, data } = useBackend(context);
   const { points, off_cooldown } = data;
   const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
+  const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
     <Window width={500} height={400}>
@@ -288,9 +288,18 @@ export const ProduceConsole = (props, context) => {
             </Section>
           </Stack.Item>
           <Section>
-            <Stack grow>
-              <Stack.Item>
+            <Stack direction="column">
+              <Stack.Item grow>
                 Currently available balance: {points || 0}
+              </Stack.Item>
+              <Stack.Item textAlign="right" fill>
+                <Button
+                  ml={65}
+                  mt={-4}
+                  color={condensed ? 'green' : 'red'}
+                  content={condensed ? 'Uncondense' : 'Condense'}
+                  onClick={() => setCondensed(!condensed)}
+                />
               </Stack.Item>
             </Stack>
           </Section>
