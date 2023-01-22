@@ -114,7 +114,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 /obj/structure/sign/collision_counter/proc/new_hit(lift_master, collided_type)
 	SIGNAL_HANDLER
 
-	if(!istype(collided_type, /mob/living/carbon/human)) // carbons only so you can't game the high score
+	if(!ismob(collided_type))
+		return
+
+	var/mob/living/carbon/human/victim = collided_type // Real players only, no gaming high score
+	if(!victim.client)
 		return
 
 	hit_count++
