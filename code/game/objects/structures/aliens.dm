@@ -462,6 +462,7 @@
 /obj/structure/alien/egg/fake
 	status = FAKE
 	icon_state = "egg_growing"
+	layer = LOW_ITEM_LAYER
 
 #undef FAKE
 #undef BURSTING
