@@ -21,7 +21,7 @@ const ShoppingTab = (props, context) => {
   const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
   const search = createSearch(searchItem, (order_datums) => order_datums.name);
-  const goods =
+  let goods =
     searchItem.length > 0
       ? data.order_datums.filter(search)
       : order_datums.filter((item) => item && item.cat === shopIndex);
@@ -34,12 +34,19 @@ const ShoppingTab = (props, context) => {
               <Tabs.Tab
                 key={item.id}
                 selected={item === shopIndex}
-                onClick={() => setShopIndex(item)}>
+                onClick={() => {
+                  setShopIndex(item);
+
+                  if (searchItem.length > 0) {
+                    setSearchItem('');
+                  }
+                }}>
                 {item}
               </Tabs.Tab>
             ))}
             <Stack.Item grow>
               <Input
+                autoFocus
                 ml={5}
                 width="150px"
                 mt={0.5}
@@ -47,7 +54,12 @@ const ShoppingTab = (props, context) => {
                 value={searchItem}
                 onInput={(e, value) => {
                   setSearchItem(value);
+
+                  if (value.length > 0) {
+                    setShopIndex(1);
+                  }
                 }}
+                fluid
               />
             </Stack.Item>
           </Tabs>
