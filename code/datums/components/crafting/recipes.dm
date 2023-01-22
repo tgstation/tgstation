@@ -1764,7 +1764,6 @@
 	time = 5 SECONDS
 	steps = list(
 		"make sure the flamethrower has a plasma tank attached",
-		"attach flamethrower to toilet"
 	)
 
 /datum/crafting_recipe/toiletbong/check_requirements(mob/user, list/collected_requirements)
