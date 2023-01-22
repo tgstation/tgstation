@@ -145,10 +145,10 @@
 		replace_light(target, user)
 	to_chat(user, status_string())
 
-/obj/item/lightreplacer/proc/range_check(atom/A, mob/user)
-	if(A.z != user.z)
+/obj/item/lightreplacer/proc/range_check(atom/destination, mob/user)
+	if(destination.z != user.z)
 		return
-	if(!(A in view(7, get_turf(user))))
+	if(!(destination in view(7, get_turf(user))))
 		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
 		return FALSE
 	else
