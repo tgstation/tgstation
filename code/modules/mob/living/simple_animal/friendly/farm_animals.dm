@@ -74,29 +74,44 @@
 		eat_plants()
 
 /mob/living/simple_animal/hostile/retaliate/goat/proc/eat_plants()
-	var/eaten = FALSE
-	var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
-	if(SV)
-		SV.eat(src)
-		eaten = TRUE
+	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+	if(vine)
+		vine.eat(src)
+	
+	var/obj/structure/alien/resin/flower_bud/flower = locate(/obj/structure/alien/resin/flower_bud) in loc
+	if(flower)
+		qdel(flower)
 
-	var/obj/structure/glowshroom/GS = locate(/obj/structure/glowshroom) in loc
-	if(GS)
-		qdel(GS)
-		eaten = TRUE
+	var/obj/structure/glowshroom/mushroom = locate(/obj/structure/glowshroom) in loc
+	if(mushroom)
+		qdel(mushroom)
 
-	if(eaten && prob(10))
-		say("Nom")
+	if((vine || flower || mushroom) && prob(10))
+		say("Nom") // bon appetit
+		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 
 /mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
 	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.dna.species, /datum/species/pod))
-			var/obj/item/bodypart/NB = pick(H.bodyparts)
-			H.visible_message(span_warning("[src] takes a big chomp out of [H]!"), \
-								  span_userdanger("[src] takes a big chomp out of your [NB]!"))
-			NB.dismember()
+	
+	if(!. || !isliving(target))
+		return
+		
+	var/mob/living/plant_target = target
+	if(!(plant_target.mob_biotypes & MOB_PLANT))
+		return
+
+	plant_target.adjustHealth(15)
+	playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
+	var/obj/item/bodypart/edible_bodypart
+	
+	if(ishuman(plant_target))
+		var/mob/living/carbon/human/plant_man = target
+		edible_bodypart = pick(plant_man.bodyparts)
+		edible_bodypart.dismember()
+
+	plant_target.visible_message(span_warning("[src] takes a big chomp out of [plant_target]!"), \
+							span_userdanger("[src] takes a big chomp out of your [edible_bodypart || "body"]!"))
+
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"
