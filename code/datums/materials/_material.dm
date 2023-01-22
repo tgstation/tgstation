@@ -150,7 +150,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
 		return
 	// We assume no parallax means no space means no light
-	if(SSmapping.level_trait(our_turf.z, ZTRAIT_NOPARALLAX))
+	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
 		return
 	on.set_light(2, 0.75, starlight_color)
 

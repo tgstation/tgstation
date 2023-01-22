@@ -44,7 +44,7 @@
 	if(GET_TURF_PLANE_OFFSET(src) != GET_LOWEST_STACK_OFFSET(z)) // We ain't the bottom brother
 		return
 	// We assume no parallax means no space means no light
-	if(SSmapping.level_trait(our_turf.z, ZTRAIT_NOPARALLAX))
+	if(SSmapping.level_trait(z, ZTRAIT_NOPARALLAX))
 		return
 
 	glow_stuff = partially_block_emissives(src, alpha_to_leave)
