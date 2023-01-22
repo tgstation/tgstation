@@ -395,11 +395,62 @@ SUBSYSTEM_DEF(statpanels)
 	listed_turf = new_turf
 	if(!client)
 		return
-	if(!client.obj_window)
-		client.obj_window = new(client)
-	if(listed_turf)
-		client.stat_panel.send_message("create_listedturf", listed_turf.name)
-		client.obj_window.start_turf_tracking()
-	else
-		client.stat_panel.send_message("remove_listedturf")
-		client.obj_window.stop_turf_tracking()
+
+	var/datum/tgui/ui = SStgui.try_update_ui(usr, src, "LootPanel")
+	if(!ui)
+		ui = new(usr, src, "LootPanel")
+		ui.open()
+
+/mob/ui_data(mob/user)
+	var/list/data = list()
+
+	var/list/contents = list()
+	for(var/atom/thing in listed_turf.contents)
+		var/generated_string
+		if(ismob(thing) || length(thing.overlays) > 2)
+			generated_string = costly_icon2html(thing, client, sourceonly=TRUE)
+		else
+			generated_string = icon2html(thing, client, sourceonly=TRUE)
+
+		contents += list(list(
+			"ref" = REF(thing),
+			"name" = thing.name,
+			"image" = generated_string,
+		))
+
+	data["contents"] = contents
+
+	return data
+
+/mob/ui_state(mob/user)
+	. = ..()
+	if(. == UI_UPDATE)
+		return UI_CLOSE
+
+/mob/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("grab")
+			if(!listed_turf)
+				return
+
+			var/atom/thing = locate(params["ref"]) in listed_turf.contents
+			if(QDELETED(thing) || QDELETED(src) || !thing.Adjacent(src))
+				return FALSE
+
+			put_in_active_hand(thing)
+			return TRUE
+
+	return FALSE
+
+	// if(!client.obj_window)
+	// 	client.obj_window = new(client)
+	// if(listed_turf)
+	// 	client.stat_panel.send_message("create_listedturf", listed_turf.name)
+	// 	client.obj_window.start_turf_tracking()
+	// else
+	// 	client.stat_panel.send_message("remove_listedturf")
+	// 	client.obj_window.stop_turf_tracking()
