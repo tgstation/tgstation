@@ -179,6 +179,10 @@
 			for(var/atom/req_atom as anything in recipe.machinery)
 				if(!(req_atom in atom_lists[list_index]))
 					atom_lists[list_index] += req_atom
+			// Structures
+			for(var/atom/req_atom as anything in recipe.structures)
+				if(!(req_atom in atom_lists[list_index]))
+					atom_lists[list_index] += req_atom
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
