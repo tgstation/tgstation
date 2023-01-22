@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - bugfix: "Randomized round-start posters now pull from the selected poster's icon file, meaning TG Downstreams can have them in a seperate .dmi"
