@@ -92,10 +92,11 @@ const ShoppingTab = (props, context) => {
                     <br />
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
-                    <Box fontSize="10px" color="label" textAlign="right">
+                    <Box fontSize="10px" color="label" textAlign="right" mr={2}>
                       {item.cost + ' per order.'}
                     </Box>
                     <Button
+                      ml={2}
                       icon="minus"
                       onClick={() =>
                         act('remove_one', {
