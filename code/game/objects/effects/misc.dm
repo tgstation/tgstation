@@ -63,6 +63,7 @@
 	icon = 'icons/effects/alphacolors.dmi'
 	icon_state = "white"
 	plane = LIGHTING_PLANE
+	layer = LIGHTING_ABOVE_ALL
 	blend_mode = BLEND_ADD
 	luminosity = 1
 
