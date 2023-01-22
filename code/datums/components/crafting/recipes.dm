@@ -1759,7 +1759,7 @@
 	category = CAT_ENTERTAINMENT
 	tool_behaviors = list(TOOL_WRENCH)
 	reqs = list(/obj/item/flamethrower = 1)
-	structures = list(/obj/structure/toilet = CRAFTING_STRUCTURE_CONSUME)
+	structures = list(/obj/structure/toilet = CRAFTING_STRUCTURE_USE) // we will handle the consumption manually in on_craft_completion for this one
 	result = /obj/structure/toiletbong
 	time = 5 SECONDS
 	steps = list(
@@ -1776,14 +1776,15 @@
 /datum/crafting_recipe/toiletbong/on_craft_completion(mob/user, atom/result)
 	var/obj/structure/toiletbong/toiletbong = result
 
-	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1)
+	// because we want to set the toilet's location and dir, we need to do the consumption manually
+	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1) 
 	if(toilet)
 		for (var/obj/item/cistern_item in toilet.contents)
 			cistern_item.forceMove(user.loc)
 			to_chat(user, span_warning("[cistern_item] falls out of the toilet!"))
-			
 		toiletbong.dir = toilet.dir
 		toiletbong.loc = toilet.loc
+		qdel(toilet)
 	
 	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
 

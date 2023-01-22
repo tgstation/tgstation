@@ -250,7 +250,7 @@
 		requirements += R.structures
 	main_loop:
 		for(var/path_key in requirements)
-			amt = R.reqs[path_key] || R.machinery[path_key] //TODO fix this it is bugged
+			amt = R.reqs?[path_key] || R.machinery?[path_key] || R.structures?[path_key]
 			if(!amt)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 				continue main_loop
 			surroundings = get_environment(a, R.blacklist)
@@ -342,7 +342,7 @@
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)
-		// Snowflake handling of reagent containers and storage atoms.
+		// Snowflake handling of reagent containers, storage atoms, and structures with contents.
 		// If we consumed them in our crafting, we should dump their contents out before qdeling them.
 		if(is_reagent_container(DL))
 			var/obj/item/reagent_containers/container = DL
@@ -350,6 +350,11 @@
 		else if(istype(DL, /obj/item/storage))
 			var/obj/item/storage/container = DL
 			container.emptyStorage()
+		else if(isstructure(DL))
+			var/obj/structure/structure = DL
+			if(structure.contents.len)
+				for(var/obj/item in structure.contents)
+					item.forceMove(item.drop_location())
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/is_recipe_available(datum/crafting_recipe/recipe, mob/user)
