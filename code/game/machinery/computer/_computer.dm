@@ -146,26 +146,6 @@
 	. = ..()
 	update_use_power(IDLE_POWER_USE)
 
-
-/// Sends a citation alert message to the target's PDA.
-/obj/machinery/computer/proc/citation_alert(mob/origin, target_name, message)
-	for(var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
-		if(tablet.saved_identification != target_name)
-			continue
-
-		var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
-			name = "Security Citation",
-			job = "Citation Server",
-			message = message,
-			targets = list(tablet),
-			automated = TRUE
-		))
-		signal.send_to_receivers()
-		origin.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-		break
-
-	return TRUE
-
 /// Creates a character preview view for the UI.
 /obj/machinery/computer/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src)

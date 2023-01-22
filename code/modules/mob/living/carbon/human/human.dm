@@ -209,17 +209,12 @@
 				to_chat(human_user, span_warning("ERROR: Unable to locate data core entry for target."))
 				return
 			if(href_list["status"])
-				var/setcriminal = input(human_user, "Specify a new criminal status for this person.", "Security HUD", target_record.wanted_status) in list(WANTED_NONE, WANTED_SUSPECT, WANTED_ARREST, WANTED_PRISONER, WANTED_PAROLE, WANTED_DISCHARGED, "Cancel")
-				if(setcriminal != "Cancel")
-					if(!target_record)
-						return
-					if(!human_user.canUseHUD())
-						return
-					if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
-						return
-					investigate_log("has been set from [target_record.wanted_status] to [setcriminal] by [key_name(human_user)].", INVESTIGATE_RECORDS)
-					target_record.wanted_status = setcriminal
-					sec_hud_set_security_status()
+				var/setcriminal = tgui_input_list(human_user, "Specify a new criminal status for this person.", "Security HUD", WANTED_STATUSES(), target_record.wanted_status)
+				if(!setcriminal || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
+					return
+				investigate_log("has been set from [target_record.wanted_status] to [setcriminal] by [key_name(human_user)].", INVESTIGATE_RECORDS)
+				target_record.wanted_status = setcriminal
+				sec_hud_set_security_status()
 				return
 
 			if(href_list["view"])
@@ -227,76 +222,55 @@
 					return
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				to_chat(human_user, "<b>Name:</b> [target_record.name] <b>Criminal Status:</b> [target_record.wanted_status]")
+				to_chat(human_user, "<b>Name:</b> [target_record.name]")
+				to_chat(human_user, "<b>Criminal Status:</b> [target_record.wanted_status]")
+				to_chat(human_user, "<b>Rapsheet:</b>")
 				for(var/datum/crime/crime in target_record.crimes)
 					to_chat(human_user, "<b>Crime:</b> [crime.name]")
-					if (crime.details)
-						to_chat(human_user, "<b>Details:</b> [crime.details]")
-					else
-						to_chat(human_user, "<b>Details:</b> <A href='?src=[REF(src)];hud=s;add_details=1;crime=[crime]'>\[Add details]</A>")
+					to_chat(human_user, "<b>Details:</b> [crime.details]")
 					to_chat(human_user, "Added by [crime.author] at [crime.time]")
 					to_chat(human_user, "----------")
-				to_chat(human_user, "<b>Notes:</b> [target_record.security_note]")
+				to_chat(human_user, "<b>Citations:</b> [length(target_record.citations)]")
+				to_chat(human_user, "<b>Note:</b> [target_record.security_note || "None."]")
+
 				return
 
 			if(href_list["add_citation"])
-				var/maxFine = CONFIG_GET(number/maxfine)
-				var/t1 = tgui_input_text(human_user, "Citation crime", "Security HUD")
-				var/fine = tgui_input_number(human_user, "Citation fine", "Security HUD", 50, maxFine, 5)
-				if(!fine)
-					return
-				if(!target_record || !t1 || !allowed_access)
-					return
-				if(!human_user.canUseHUD())
-					return
-				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
+				var/max_fine = CONFIG_GET(number/maxfine)
+				var/citation_name = tgui_input_text(human_user, "Citation crime", "Security HUD")
+				var/fine = tgui_input_number(human_user, "Citation fine", "Security HUD", 50, max_fine, 5)
+				if(!fine || !target_record || !citation_name || !allowed_access || !isnum(fine) || fine > max_fine || fine <= 0 || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
-				var/datum/crime/citation/new_citation = new(name = t1, author = allowed_access, time = station_time_timestamp(), fine = fine)
-				for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
-					if(tablet.saved_identification == target_record.name)
-						var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
-						var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
-							"name" = "Security Citation",
-							"job" = "Citation Server",
-							"message" = message,
-							"targets" = list(tablet),
-							"automated" = TRUE
-						))
-						signal.send_to_receivers()
-						human_user.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+				var/datum/crime/citation/new_citation = new(name = citation_name, author = allowed_access, fine = fine)
+
 				target_record.citations += new_citation
-				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
-				SSblackbox.ReportCitation(REF(new_citation), human_user.ckey, human_user.real_name, target_record.name, t1, fine)
+				new_citation.alert_owner(target_record.name, "You have been fined [fine] credits for '[citation_name]'. Fines may be paid at security.")
+				investigate_log("New Citation: <strong>[citation_name]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+				SSblackbox.ReportCitation(REF(new_citation), human_user.ckey, human_user.real_name, target_record.name, citation_name, fine)
+
 				return
 
 			if(href_list["add_crime"])
-				var/t1 = tgui_input_text(human_user, "Crime name", "Security HUD")
-				if(!target_record || !t1 || !allowed_access)
+				var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD")
+				if(!target_record || !crime_name || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				if(!human_user.canUseHUD())
-					return
-				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
-					return
-				var/datum/crime/crime = new(name = t1, author = allowed_access, time = station_time_timestamp())
-				target_record.crimes += crime
-				investigate_log("New Crime: <strong>[t1]</strong> | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+
+				var/datum/crime/new_crime = new(name = crime_name, author = allowed_access)
+
+				target_record.crimes += new_crime
+				investigate_log("New Crime: <strong>[crime_name]</strong> | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 				to_chat(human_user, span_notice("Successfully added a crime."))
+
 				return
 
-			if(href_list["add_details"])
-				var/t1 = tgui_input_text(human_user, "Crime details", "Security Records", multiline = TRUE)
-				if(!target_record || !t1 || !allowed_access)
+			if(href_list["add_note"])
+				var/new_note = tgui_input_text(human_user, "Security note", "Security Records", multiline = TRUE)
+				if(!target_record || !new_note || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				if(!human_user.canUseHUD())
-					return
-				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
-					return
-				if(href_list["crime_id"])
-					var/datum/crime/crime = href_list["crime_id"]
-					crime.details = t1
-					investigate_log("New Crime details: [t1] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
-					to_chat(human_user, span_notice("Successfully added details."))
+
+				target_record.security_note = new_note
+
 				return
 
 	..() //end of this massive fucking chain. TODO: make the hud chain not spooky. - Yeah, great job doing that.

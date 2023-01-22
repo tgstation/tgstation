@@ -121,7 +121,7 @@
 			"A friendly face",
 			"A helpful stranger",
 		)
-		citation_alert(user, target.name, "[pick(titles)] has paid [amount]cr towards your fine.")
+		warrant.alert_owner(user, src, target.name, "[pick(titles)] has paid [amount]cr towards your fine.")
 
 	var/datum/bank_account/sec_account = SSeconomy.get_dep_account(ACCOUNT_SEC)
 	sec_account.adjust_money(amount)
@@ -129,7 +129,7 @@
 	if(warrant.fine != 0 || target.name == user)
 		return TRUE
 
-	citation_alert(user, target.name, "One of your outstanding warrants has been completely paid.")
+	warrant.alert_owner(user, src, target.name, "One of your outstanding warrants has been completely paid.")
 	return TRUE
 
 /// Finishes printing, resets the printer.

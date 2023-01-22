@@ -249,7 +249,9 @@
 
 	var/datum/crime/citation/new_citation = new(name = params["name"], details = input_details, author = usr, fine = params["fine"])
 	target.citations += new_citation
-	citation_alert(user, target.name, "You have been issued a [params["fine"]]cr citation for [params["name"]].")
+	new_citation.alert_owner(user, src, target.name, "You have been issued a [params["fine"]]cr citation for [params["name"]]. Fines are payable at Security.")
+	investigate_log("New Citation: <strong>[params["name"]]</strong> Fine: [params["fine"]] | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
+	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, target.name, params["name"], params["fine"])
 
 	return TRUE
 

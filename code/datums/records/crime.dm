@@ -39,3 +39,22 @@
 		fine = 0
 
 	return TRUE
+
+/// Sends a citation alert message to the target's PDA.
+/datum/crime/citation/proc/alert_owner(mob/sender, atom/source, target_name, message)
+	for(var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
+		if(tablet.saved_identification != target_name)
+			continue
+
+		var/datum/signal/subspace/messaging/tablet_msg/signal = new(source, list(
+			name = "Security Citation",
+			job = "Citation Server",
+			message = message,
+			targets = list(tablet),
+			automated = TRUE
+		))
+		signal.send_to_receivers()
+		sender.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+		break
+
+	return TRUE
