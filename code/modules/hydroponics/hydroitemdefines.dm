@@ -529,6 +529,7 @@
 	speed = 9 SECONDS, \
 	effectiveness = 105, \
 	)
+	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/venus_human_trap, damage_multiplier = 1.5)
 
 /obj/item/scythe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -540,18 +541,23 @@
 			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
 	return BRUTELOSS
 
-/obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
-	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
+/obj/item/scythe/pre_attack(atom/target, mob/living/user, params)
+	if(!istype(target, /obj/structure/alien/resin/flower_bud) && !istype(target, /obj/structure/spacevine))
+		return ..()
+	if(swiping || get_turf(target) == get_turf(user))
 		return ..()
 	var/turf/user_turf = get_turf(user)
-	var/dir_to_target = get_dir(user_turf, get_turf(A))
+	var/dir_to_target = get_dir(user_turf, get_turf(target))
 	swiping = TRUE
 	var/static/list/scythe_slash_angles = list(0, 45, 90, -45, -90)
 	for(var/i in scythe_slash_angles)
-		var/turf/T = get_step(user_turf, turn(dir_to_target, i))
-		for(var/obj/structure/spacevine/V in T)
-			if(user.Adjacent(V))
-				melee_attack_chain(user, V)
+		var/turf/user_turf = get_step(user_turf, turn(dir_to_target, i))
+		for(var/obj/structure/spacevine/vine in user_turf)
+			if(user.Adjacent(vine))
+				melee_attack_chain(user, vine)
+		for(var/obj/structure/alien/resin/flower_bud/flower in user_turf)
+			if(user.Adjacent(flower))
+				melee_attack_chain(user, flower)
 	swiping = FALSE
 	return TRUE
 
