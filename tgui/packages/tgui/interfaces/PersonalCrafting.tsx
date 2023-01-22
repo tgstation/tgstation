@@ -564,6 +564,23 @@ const MaterialContent = (props, context) => {
 
 const FoodtypeContent = (props) => {
   const { type, diet, craftableCount } = props;
+  let iconName = '',
+    iconColor = '';
+
+  // We use iconName in the return to see if this went through.
+  if (type !== 'Can Make' && diet) {
+    if (diet.liked_food.includes(type)) {
+      iconName = 'face-laugh-beam';
+      iconColor = 'good';
+    } else if (diet.disliked_food.includes(type)) {
+      iconName = 'face-tired';
+      iconColor = 'average';
+    } else if (diet.toxic_food.includes(type)) {
+      iconName = 'skull-crossbones';
+      iconColor = 'bad';
+    }
+  }
+
   return (
     <Stack>
       <Stack.Item width="14px" textAlign="center">
@@ -575,16 +592,7 @@ const FoodtypeContent = (props) => {
       <Stack.Item>
         {type === 'Can Make'
           ? craftableCount
-          : diet &&
-          (diet.liked_food.includes(type) ? (
-            <Icon name="face-laugh-beam" color={'good'} />
-          ) : diet.disliked_food.includes(type) ? (
-            <Icon name="face-tired" color={'average'} />
-          ) : (
-            diet.toxic_food.includes(type) && (
-              <Icon name="skull-crossbones" color={'bad'} />
-            )
-          ))}
+          : iconName && <Icon name={iconName} color={iconColor} />}
       </Stack.Item>
     </Stack>
   );
