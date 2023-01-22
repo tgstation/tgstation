@@ -330,7 +330,7 @@ Moving interrupts
 // We aim at something distant.
 /obj/item/chisel/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!proximity_flag)
+	if(proximity_flag)
 		return .
 
 	if (!sculpting && prepared_block && ismovable(target) && prepared_block.completion == 0)

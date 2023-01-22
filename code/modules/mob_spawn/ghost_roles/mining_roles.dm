@@ -255,9 +255,13 @@
 		notify_ghosts("An ash walker egg is ready to hatch in \the [spawner_area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
 
 /datum/outfit/ashwalker
-	name ="Ashwalker"
+	name = "Ash Walker"
 	head = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
+
+/datum/outfit/ashwalker/spear
+	name = "Ash Walker - Spear"
+	back = /obj/item/spear/bonespear
 
 ///Syndicate Listening Post
 

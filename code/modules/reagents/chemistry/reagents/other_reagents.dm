@@ -338,7 +338,7 @@
 	. = ..()
 	if(!istype(exposed_turf))
 		return
-	if(reac_volume>=10)
+	if(reac_volume >= 10)
 		for(var/obj/effect/rune/R in exposed_turf)
 			qdel(R)
 	exposed_turf.Bless()
@@ -508,7 +508,7 @@
 				var/len = length(string)
 				var/char = ""
 				var/ascii = 0
-				for(var/i=1, i<=len, i += length(char))
+				for(var/i=1, i <= len, i += length(char))
 					char = string[i]
 					ascii = text2ascii(char)
 					switch(ascii)

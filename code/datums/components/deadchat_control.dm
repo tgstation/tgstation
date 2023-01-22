@@ -26,7 +26,8 @@
 	var/deadchat_mode
 	/// In DEMOCRACY_MODE, this is how long players have to vote on an input. In ANARCHY_MODE, this is how long between inputs for each unique player.
 	var/input_cooldown
-
+	///Set to true if a point of interest was created for an object, and needs to be removed if deadchat control is removed. Needed for preventing objects from having two points of interest.
+	var/generated_point_of_interest = FALSE
 	/// Callback invoked when this component is Destroy()ed to allow the parent to return to a non-deadchat controlled state.
 	var/datum/callback/on_removal
 
@@ -46,12 +47,17 @@
 			stack_trace("deadchat_control component added to [parent.type] with both democracy and anarchy modes enabled.")
 		timerid = addtimer(CALLBACK(src, PROC_REF(democracy_loop)), input_cooldown, TIMER_STOPPABLE | TIMER_LOOP)
 	notify_ghosts("[parent] is now deadchat controllable!", source = parent, action = NOTIFY_ORBIT, header="Something Interesting!")
+	if(!ismob(parent) && !SSpoints_of_interest.is_valid_poi(parent))
+		SSpoints_of_interest.make_point_of_interest(parent)
+		generated_point_of_interest = TRUE
 
 /datum/component/deadchat_control/Destroy(force, silent)
 	on_removal?.Invoke()
 	inputs = null
 	orbiters = null
 	ckey_to_cooldown = null
+	if(generated_point_of_interest)
+		SSpoints_of_interest.remove_point_of_interest(parent)
 	return ..()
 
 /datum/component/deadchat_control/proc/deadchat_react(mob/source, message)
