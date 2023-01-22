@@ -373,6 +373,6 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 /proc/url2htmlloader(url)
 	return {"<html><head><meta http-equiv="refresh" content="0;URL='[url]'"/></head><body onLoad="parent.location='[url]'"></body></html>"}
 
-/// Acts as num2text but will not round the number
-/proc/number2text(number)
+/// Formats a larger number to correct textual representation without losing data
+/proc/big_number_to_text(number)
 	return num2text(number, INFINITY)
