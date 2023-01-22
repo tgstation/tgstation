@@ -796,6 +796,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	custom_materials = list(/datum/material/titanium=500)
 	//kind of a centerpiece of the station, so pretty tough to destroy
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
