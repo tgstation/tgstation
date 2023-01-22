@@ -348,17 +348,18 @@
 /obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
-		return
+		return .
 	if(!selected_reagent)
 		balloon_alert(user, "no reagent selected!")
-		return
+		return .
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(target.is_refillable())
 		if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
 			balloon_alert(user, "not enough [selected_reagent.name]!")
-			return
+			return .
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			balloon_alert(user, "[target] is full!")
-			return
+			return .
 
 		// This is the in-between where we're storing the reagent we're going to pour into the container
 		// because we cannot specify a singular reagent to transfer in trans_to
@@ -368,6 +369,7 @@
 
 		shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
+	return .
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"

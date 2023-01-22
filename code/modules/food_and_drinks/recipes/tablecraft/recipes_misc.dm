@@ -303,6 +303,11 @@
 	result = /obj/item/storage/fancy/pickles_jar
 	category = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/pickles_jar/on_craft_completion(mob/user, atom/result)
+	. = ..()
+	var/obj/item/storage/fancy/pickles_jar/jar = result
+	qdel(locate(/obj/item/reagent_containers/cup/beaker/large) in jar.contents)
+
 /datum/crafting_recipe/food/springroll
 	name = "Spring roll"
 	reqs = list(
@@ -395,38 +400,38 @@
 	result = /obj/item/food/raw_vegetarian_calzone
 	category = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/caramel_truffle
+/datum/crafting_recipe/food/bonbon/caramel_truffle
 	name = "Caramel truffle"
 	reqs = list(
 		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/caramel = 5,
 	)
-	result = /obj/item/food/caramel_truffle
+	result = /obj/item/food/bonbon/caramel_truffle
 	category = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/chocolate_truffle
+/datum/crafting_recipe/food/bonbon/chocolate_truffle
 	name = "Chocolate truffle"
 	reqs = list(
 		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/sugar = 5,
 	)
-	result = /obj/item/food/chocolate_truffle
+	result = /obj/item/food/bonbon/chocolate_truffle
 	category = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/peanut_truffle
+/datum/crafting_recipe/food/bonbon/peanut_truffle
 	name = "Peanut truffle"
 	reqs = list(
 		/obj/item/food/chocolatebar = 1,
 		/obj/item/food/grown/peanut = 1,
 	)
-	result = /obj/item/food/peanut_truffle
+	result = /obj/item/food/bonbon/peanut_truffle
 	category = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/peanut_butter_cup
+/datum/crafting_recipe/food/bonbon/peanut_butter_cup
 	name = "Peanut butter cup"
 	reqs = list(
 		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/peanut_butter = 5,
 	)
-	result = /obj/item/food/peanut_butter_cup
+	result = /obj/item/food/bonbon/peanut_butter_cup
 	category = CAT_MISCFOOD

@@ -922,7 +922,7 @@
 /obj/machinery/light/directional/north,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
-/obj/item/clothing/gloves/color/latex/nitrile{
+/obj/item/clothing/gloves/latex/nitrile{
 	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,

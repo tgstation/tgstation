@@ -30,7 +30,7 @@
 	if(isopenspaceturf(rift_spawn_turf))
 		owner.balloon_alert(dragon, "needs stable ground!")
 		return
-	owner.balloon_alert(owner, "You begin to open a rift...")
+	owner.balloon_alert(owner, "opening rift...")
 	if(!do_after(owner, 10 SECONDS, target = owner))
 		return
 	if(locate(/obj/structure/carp_rift) in owner.loc)
@@ -237,6 +237,8 @@
 		ckey_list += user.ckey
 	newcarp.key = user.key
 	newcarp.set_name()
+	var/datum/antagonist/space_carp/carp_antag = new(src)
+	newcarp.mind.add_antag_datum(carp_antag)
 	dragon.carp += newcarp.mind
 	to_chat(newcarp, span_boldwarning("You have arrived in order to assist the space dragon with securing the rifts. Do not jeopardize the mission, and protect the rifts at all costs!"))
 	carp_stored--

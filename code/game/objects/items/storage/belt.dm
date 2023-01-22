@@ -53,6 +53,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/construction/rcd,
 		/obj/item/construction/rld,
+		/obj/item/construction/rtd,
 		/obj/item/crowbar,
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,
@@ -482,13 +483,6 @@
 		/obj/item/clothing/mask/luchador
 		))
 
-/obj/item/storage/belt/cummerbund
-	name = "cummerbund"
-	desc = "A pleated sash that pairs well with a suit jacket."
-	icon_state = "cummerbund"
-	inhand_icon_state = null
-	worn_icon_state = "cummerbund"
-
 /obj/item/storage/belt/military
 	name = "chest rig"
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
@@ -769,6 +763,13 @@
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	worn_icon_state = "fannypack_yellow"
+
+/obj/item/storage/belt/fannypack/cummerbund
+	name = "cummerbund"
+	desc = "A pleated sash that pairs well with a suit jacket."
+	icon_state = "cummerbund"
+	inhand_icon_state = null
+	worn_icon_state = "cummerbund"
 
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"

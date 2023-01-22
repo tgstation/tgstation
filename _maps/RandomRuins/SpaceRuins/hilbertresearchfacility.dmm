@@ -183,7 +183,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "ex" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1448,7 +1448,8 @@
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/button/tram{
 	id = "right_part_hilbert";
-	pixel_y = 4
+	pixel_y = 4;
+	lift_id = "tram_hilbert"
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -2097,7 +2098,7 @@
 	dir = 4
 	},
 /obj/item/clothing/suit/toggle/labcoat,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)

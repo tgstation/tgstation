@@ -179,8 +179,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
-	check_failing_thresholds()
 	prev_damage = damage
+
+	if(damage >= maxHealth)
+		organ_flags |= ORGAN_FAILING
+	else
+		organ_flags &= ~ORGAN_FAILING
+
 	if(mess && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, mess)
 
@@ -212,13 +217,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			return high_threshold_cleared
 		if(prev_damage == maxHealth)
 			return now_fixed
-
-///Checks if an organ should/shouldn't be failing and gives the appropriate organ flag
-/obj/item/organ/proc/check_failing_thresholds()
-	if(damage >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-	if(damage < maxHealth)
-		organ_flags &= ~ORGAN_FAILING
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
@@ -291,9 +289,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * For example, lungs won't be given if you have NO_BREATH, stomachs check for NO_HUNGER, and livers check for NO_METABOLISM.
  * If you want a carbon to have a trait that normally blocks an organ but still want the organ. Attach the trait to the organ using the organ_traits var
  * Arguments:
- * owner_species - species, needed to return whether the species has an organ specific trait
+ * owner_species - species, needed to return the mutant slot as true or false. stomach set to null means it shouldn't have one.
+ * owner_mob - for more specific checks, like nightmares.
  */
-/obj/item/organ/proc/get_availability(datum/species/owner_species)
+/obj/item/organ/proc/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return TRUE
 
 /// Called before organs are replaced in regenerate_organs with new ones

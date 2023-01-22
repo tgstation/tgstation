@@ -81,6 +81,7 @@
 /obj/item/ph_paper/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!is_reagent_container(target))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/obj/item/reagent_containers/cont = target
 	if(used == TRUE)
 		to_chat(user, span_warning("[src] has already been used!"))
@@ -116,6 +117,7 @@
 	. = ..()
 	if(!is_reagent_container(target))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/obj/item/reagent_containers/cont = target
 	if(LAZYLEN(cont.reagents.reagent_list) == null)
 		return
@@ -188,17 +190,21 @@
 /obj/item/burner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(lit)
+		. |= AFTERATTACK_PROCESSED_ITEM
 		if(is_reagent_container(target))
 			var/obj/item/reagent_containers/container = target
 			container.reagents.expose_temperature(get_temperature())
 			to_chat(user, span_notice("You heat up the [src]."))
 			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
-			return
+			return .
 	else if(isitem(target))
 		var/obj/item/item = target
 		if(item.heat > 1000)
+			. |= AFTERATTACK_PROCESSED_ITEM
 			set_lit(TRUE)
 			user.visible_message(span_notice("[user] lights up the [src]."))
+
+	return .
 
 /obj/item/burner/update_icon_state()
 	. = ..()
@@ -289,12 +295,14 @@
 
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(target.reagents)
 		if(!user.transferItemToLoc(src, target))
-			return
+			return .
 		attached_to_reagents = target.reagents
 		to_chat(user, span_notice("You add the [src] to the [target]."))
 		ui_interact(usr, null)
+	return .
 
 /obj/item/thermometer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

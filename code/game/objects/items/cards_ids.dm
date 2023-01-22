@@ -45,8 +45,8 @@
 	name = "retro identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "card_grey"
-	worn_icon_state = "card_retro"
 	inhand_icon_state = "card-id"
+	worn_icon_state = "nothing"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
@@ -839,10 +839,6 @@
 	desc = "An ID card that allows access to bots maintenance protocols."
 	trim = /datum/id_trim/away/old/robo
 
-/datum/armor/card_id
-	fire = 100
-	acid = 100
-
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 
@@ -853,10 +849,6 @@
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
 	registered_age = null
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/departmental_budget/Initialize(mapload)
 	. = ..()
@@ -881,10 +873,6 @@
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
 
-/datum/armor/card_id
-	fire = 100
-	acid = 100
-
 /obj/item/card/id/departmental_budget/AltClick(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
 
@@ -892,7 +880,6 @@
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station. Has an integrated digital display and advanced microchips."
 	icon_state = "card_grey"
-	worn_icon_state = "card_grey"
 
 	wildcard_slots = WILDCARD_LIMIT_GREY
 	flags_1 = UNPAINTABLE_1
@@ -914,10 +901,6 @@
 	var/trim_assignment_override
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
@@ -1054,13 +1037,11 @@
 	name = "rainbow identification card"
 	desc = "A rainbow card, promoting fun in a 'business proper' sense!"
 	icon_state = "card_rainbow"
-	worn_icon_state = "card_rainbow"
 
 /obj/item/card/id/advanced/silver
 	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "card_silver"
-	worn_icon_state = "card_silver"
 	inhand_icon_state = "silver_id"
 	assigned_icon_state = "assigned_silver"
 	wildcard_slots = WILDCARD_LIMIT_SILVER
@@ -1079,14 +1060,9 @@
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "card_gold"
-	worn_icon_state = "card_gold"
 	inhand_icon_state = "gold_id"
 	assigned_icon_state = "assigned_gold"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/advanced/gold/Initialize(mapload)
 	. = ..()
@@ -1099,10 +1075,6 @@
 	trim = /datum/id_trim/job/captain
 	registered_age = null
 
-/datum/armor/card_id
-	fire = 100
-	acid = 100
-
 /obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
 		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
@@ -1114,7 +1086,6 @@
 	name = "\improper CentCom ID"
 	desc = "An ID straight from Central Command."
 	icon_state = "card_centcom"
-	worn_icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	registered_name = JOB_CENTCOM
 	registered_age = null
@@ -1160,7 +1131,6 @@
 	name = "black identification card"
 	desc = "This card is telling you one thing and one thing alone. The person holding this card is an utter badass."
 	icon_state = "card_black"
-	worn_icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 
@@ -1198,10 +1168,6 @@
 	registered_name = "Captain"
 	registered_age = null
 
-/datum/armor/card_id
-	fire = 100
-	acid = 100
-
 /obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare/update_label()
 	if(registered_name == "Captain")
 		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
@@ -1214,14 +1180,9 @@
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
 	icon_state = "card_centcom"
-	worn_icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	trim = /datum/id_trim/admin
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
@@ -1231,7 +1192,6 @@
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
 	icon_state = "card_prisoner"
-	worn_icon_state = "card_prisoner"
 	inhand_icon_state = "orange-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
@@ -1251,10 +1211,6 @@
 	var/time_to_assign
 	/// Time left on a card till they can leave.
 	var/time_left = 0
-
-/datum/armor/card_id
-	fire = 100
-	acid = 100
 
 /obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
 	..()
@@ -1348,7 +1304,6 @@
 	registered_name = "Highlander"
 	desc = "There can be only one!"
 	icon_state = "card_black"
-	worn_icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 	trim = /datum/id_trim/highlander
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
@@ -1366,10 +1321,6 @@
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
 
-/datum/armor/card_id
-	fire = 100
-	acid = 100
-
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
 	. = ..()
 
@@ -1378,6 +1329,7 @@
 	chameleon_card_action.chameleon_name = "ID Card"
 	chameleon_card_action.initialize_disguises()
 	add_item_action(chameleon_card_action)
+	register_item_context()
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
@@ -1390,7 +1342,7 @@
 	if(isidcard(target))
 		theft_target = WEAKREF(target)
 		ui_interact(user)
-		return
+		return AFTERATTACK_PROCESSED_ITEM
 
 	return ..()
 
@@ -1642,10 +1594,22 @@
 			return
 	return ..()
 
+/obj/item/card/id/advanced/chameleon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
+	. = ..()
+
+	if(!in_range(user, target))
+		return .
+	if(ishuman(target))
+		context[SCREENTIP_CONTEXT_RMB] = "Copy access"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(isitem(target))
+		context[SCREENTIP_CONTEXT_RMB] = "Scan for access"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
+
 /// A special variant of the classic chameleon ID card which accepts all access.
 /obj/item/card/id/advanced/chameleon/black
 	icon_state = "card_black"
-	worn_icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 
