@@ -1,6 +1,8 @@
+import { BooleanLike } from 'common/react';
+
 export type SecureData = {
   available_statuses: string[];
-  logged_in: boolean;
+  logged_in: BooleanLike;
   records: SecurityRecord[];
 };
 

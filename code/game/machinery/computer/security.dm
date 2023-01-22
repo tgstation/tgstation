@@ -79,23 +79,21 @@
 		ui = new(user, src, "SecurityRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		addtimer(CALLBACK(src, PROC_REF(update_preview)), 1 SECONDS)
 
 /obj/machinery/computer/secure_data/ui_data(mob/user)
 	var/list/data = list()
 
-	data["available_statuses"] = WANTED_STATUSES()
-	data["logged_in"] = isliving(user) && (logged_in || issilicon(user))
-
-	if(!logged_in)
+	if(!has_auth(user))
 		return data
 
-	var/list/records = list()
+	data["available_statuses"] = WANTED_STATUSES()
+	data["logged_in"] = logged_in
 
+	var/list/records = list()
 	for(var/datum/record/crew/target in GLOB.data_core.general)
 		var/list/citations = list()
 		for(var/datum/crime/citation/warrant in target.citations)
-			var/list/entry = list(list(
+			citations += list(list(
 				author = warrant.author,
 				details = warrant.details,
 				fine = warrant.fine,
@@ -105,11 +103,9 @@
 				time = warrant.time,
 			))
 
-			citations += entry
-
 		var/list/crimes = list()
 		for(var/datum/crime/crime in target.crimes)
-			var/list/entry = list(list(
+			crimes += list(list(
 				author = crime.author,
 				details = crime.details,
 				name = crime.name,
@@ -117,9 +113,7 @@
 				time = crime.time,
 			))
 
-			crimes += entry
-
-		var/list/record = list(list(
+		records += list(list(
 			age = target.age,
 			appearance = character_preview_view.assigned_map,
 			citations = citations,
@@ -135,7 +129,6 @@
 			wanted_status = target.wanted_status,
 		))
 
-		records += record
 	data["records"] = records
 
 	return data
@@ -151,34 +144,19 @@
 			return TRUE
 
 		if("delete_crime")
-			var/datum/record/crew/record = locate(params["crew_ref"]) in GLOB.data_core.general
-			if(!record)
-				return FALSE
-
-			var/datum/crime/crime = locate(params["crime_ref"]) in record.crimes
-			if(crime)
-				record.crimes -= crime
-				qdel(crime)
-				return TRUE
-
-			var/datum/crime/citation = locate(params["crime_ref"]) in record.citations
-			if(citation)
-				record.citations -= citation
-				qdel(citation)
-				return TRUE
-
+			delete_crime(params)
 			return FALSE
 
 		if("login")
-			login(usr)
+			if(!has_auth(usr))
+				return FALSE
+			balloon_alert(usr, "logged in")
+			playsound(src, 'sound/machines/terminal_on.ogg', 70, TRUE)
+			logged_in = TRUE
+
 			return TRUE
 
 		if("logout")
-			if(istype(src, /obj/machinery/computer/secure_data/syndie) || issilicon(usr))
-				balloon_alert(usr, "access denied")
-				playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
-				return TRUE
-
 			balloon_alert(usr, "logged out")
 			playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
 			logged_in = FALSE
@@ -232,22 +210,25 @@
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
-	if(params["fine"] > MAX_CITATION_FINE)
-		to_chat(usr, span_warning("The maximum fine is [MAX_CITATION_FINE] credits."))
+	var/max = CONFIG_GET(number/maxfine)
+	if(params["fine"] > max)
+		to_chat(usr, span_warning("The maximum fine is [max] credits."))
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/input_details
 	if(params["details"])
-		input_details = params["details"]
+		input_details = trim(params["details"], MAX_MESSAGE_LEN)
 
 	if(params["fine"] == 0)
 		var/datum/crime/new_crime = new(name = params["name"], details = input_details, author = usr)
 		target.crimes += new_crime
 		target.wanted_status = WANTED_ARREST
+		investigate_log("New Crime: <strong>[params["name"]]</strong> | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
 		return TRUE
 
 	var/datum/crime/citation/new_citation = new(name = params["name"], details = input_details, author = usr, fine = params["fine"])
+
 	target.citations += new_citation
 	new_citation.alert_owner(user, src, target.name, "You have been issued a [params["fine"]]cr citation for [params["name"]]. Fines are payable at Security.")
 	investigate_log("New Citation: <strong>[params["name"]]</strong> Fine: [params["fine"]] | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
@@ -255,30 +236,25 @@
 
 	return TRUE
 
-/// Handles logging into the computer.
-/obj/machinery/computer/secure_data/proc/login(mob/user)
-	if(!isliving(user))
-		to_chat(user, span_warning("ACCESS DENIED"))
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+/// Deletes a crime or citation from the chosen record.
+/obj/machinery/computer/secure_data/proc/delete_crime(list/params)
+	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
+	if(!target)
 		return FALSE
 
-	var/mob/living/player = user
-	var/obj/item/card/id/auth = player.get_idcard(TRUE)
-	if(!auth)
-		to_chat(user, span_warning("ACCESS DENIED: No ID card detected."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
-		return FALSE
-	var/list/access = auth.GetAccess()
+	var/datum/crime/crime = locate(params["crime_ref"]) in target.crimes
+	if(crime)
+		target.crimes -= crime
+		qdel(crime)
+		return TRUE
 
-	if(!check_access_list(access))
-		to_chat(user, span_warning("ACCESS DENIED: Insufficient access."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
-		return FALSE
+	var/datum/crime/citation = locate(params["crime_ref"]) in target.citations
+	if(citation)
+		target.citations -= citation
+		qdel(citation)
+		return TRUE
 
-	balloon_alert(player, "access granted")
-	playsound(src, 'sound/machines/terminal_on.ogg', 100, TRUE)
-	logged_in = TRUE
-	return TRUE
+	return FALSE
 
 /// Finishes printing, resets the printer.
 /obj/machinery/computer/secure_data/proc/print_finish(obj/item/printable)
@@ -341,6 +317,7 @@
 			printable = rapsheet
 
 	addtimer(CALLBACK(src, PROC_REF(print_finish), printable), 2 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+
 	return TRUE
 
 /**

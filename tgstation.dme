@@ -1294,6 +1294,7 @@
 #include "code\datums\quirks\neutral_quirks.dm"
 #include "code\datums\quirks\positive_quirks.dm"
 #include "code\datums\records\crime.dm"
+#include "code\datums\records\medical_note.dm"
 #include "code\datums\records\record.dm"
 #include "code\datums\ruins\icemoon.dm"
 #include "code\datums\ruins\lavaland.dm"

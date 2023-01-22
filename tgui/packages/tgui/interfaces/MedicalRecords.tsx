@@ -1,14 +1,16 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Icon, Input, LabeledList, NoticeBox, Section, Stack, Tabs, TextArea, Tooltip } from '../components';
+import { BlockQuote, Box, Button, Icon, Input, LabeledList, NoticeBox, Section, Stack, Tabs, TextArea, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { JOB2ICON } from './common/JobToIcon';
 import { CharacterPreview } from './PreferencesMenu/CharacterPreview';
 import { isRecordMatch } from './SecurityRecords/helpers';
 
 type Data = {
+  can_view: BooleanLike;
   records: MedicalRecord[];
 };
 
@@ -16,17 +18,24 @@ type MedicalRecord = {
   age: number;
   appearance: string;
   blood_type: string;
+  crew_ref: string;
   dna: string;
   gender: string;
   lock_ref: string;
   major_disabilities: string;
   minor_disabilities: string;
   name: string;
-  notes: string[];
+  notes: Note[];
   quirk_notes: string;
   rank: string;
-  ref: string;
   species: string;
+};
+
+type Note = {
+  author: string;
+  content: string;
+  note_ref: string;
+  time: string;
 };
 
 export const MedicalRecords = (props, context) => {
@@ -66,7 +75,7 @@ const RecordTabs = (props, context) => {
   ])(records);
 
   const selectRecord = (record: MedicalRecord) => {
-    if (selectedRecord?.ref === record.ref) {
+    if (selectedRecord?.crew_ref === record.crew_ref) {
       setSelectedRecord(undefined);
     } else {
       setSelectedRecord(record);
@@ -95,7 +104,7 @@ const RecordTabs = (props, context) => {
                   key={index}
                   label={record.name}
                   onClick={() => selectRecord(record)}
-                  selected={selectedRecord?.ref === record.ref}>
+                  selected={selectedRecord?.crew_ref === record.crew_ref}>
                   <Box wrap>
                     <Icon name={JOB2ICON[record.rank]} /> {record.name}
                   </Box>
@@ -113,6 +122,9 @@ const RecordTabs = (props, context) => {
 const RecordView = (props, context) => {
   const foundRecord = getCurrentRecord(context);
   if (!foundRecord) return <NoticeBox>No record selected.</NoticeBox>;
+
+  const { data } = useBackend<Data>(context);
+  const { can_view } = data;
 
   const {
     age,
@@ -140,7 +152,7 @@ const RecordView = (props, context) => {
             <CharacterPreview height="100%" id={appearance} />
           </Stack.Item>
           <Stack.Item grow>
-            <NoteKeeper />
+            {!can_view ? <NoteAuthorized /> : <NoteKeeper />}
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -185,18 +197,31 @@ const NoteKeeper = (props, context) => {
   if (!foundRecord) return <> </>;
 
   const { act } = useBackend<Data>(context);
-  const { notes, ref } = foundRecord;
+  const { crew_ref } = foundRecord;
 
-  const [selectedNote] = useLocalState<number | undefined>(
+  const [selectedNote, setSelectedNote] = useLocalState<Note | undefined>(
     context,
     'selectedNote',
     undefined
   );
+
   const [writing, setWriting] = useLocalState(context, 'note', false);
 
   const addNote = (event, value: string) => {
-    act('add_notes', { ref: ref, note: value });
+    act('add_note', {
+      crew_ref: crew_ref,
+      content: value,
+    });
     setWriting(false);
+  };
+
+  const deleteNote = () => {
+    if (!selectedNote) return;
+    act('delete_note', {
+      crew_ref: crew_ref,
+      note_ref: selectedNote.note_ref,
+    });
+    setSelectedNote(undefined);
   };
 
   return (
@@ -210,10 +235,25 @@ const NoteKeeper = (props, context) => {
         />
       )}
 
-      {selectedNote !== undefined && (
-        <Box color="label" wrap>
-          {notes[selectedNote]}
-        </Box>
+      {!!selectedNote && (
+        <>
+          <LabeledList>
+            <LabeledList.Item
+              label="Author"
+              buttons={
+                <Button color="bad" icon="trash" onClick={deleteNote} />
+              }>
+              {selectedNote.author}
+            </LabeledList.Item>
+            <LabeledList.Item label="Time">
+              {selectedNote.time}
+            </LabeledList.Item>
+          </LabeledList>
+          <Box color="label" mb={1} mt={1}>
+            Content:
+          </Box>
+          <BlockQuote wrap>{selectedNote.content}</BlockQuote>
+        </>
       )}
     </Section>
   );
@@ -225,7 +265,7 @@ const NoteTabs = (props, context) => {
   if (!foundRecord) return <> </>;
   const { notes } = foundRecord;
 
-  const [selectedNote, setSelectedNote] = useLocalState<number | undefined>(
+  const [selectedNote, setSelectedNote] = useLocalState<Note | undefined>(
     context,
     'selectedNote',
     undefined
@@ -233,11 +273,11 @@ const NoteTabs = (props, context) => {
   const [writing, setWriting] = useLocalState(context, 'note', false);
 
   /** Selects or deselects a note. */
-  const setNote = (index: number) => {
-    if (selectedNote === index) {
+  const setNote = (note: Note) => {
+    if (selectedNote?.note_ref === note.note_ref) {
       setSelectedNote(undefined);
     } else {
-      setSelectedNote(index);
+      setSelectedNote(note);
     }
   };
 
@@ -253,8 +293,8 @@ const NoteTabs = (props, context) => {
         <Tabs.Tab
           key={index}
           label={index + 1}
-          onClick={() => setNote(index)}
-          selected={index === selectedNote}>
+          onClick={() => setNote(note)}
+          selected={selectedNote?.note_ref === note.note_ref}>
           {index + 1}
         </Tabs.Tab>
       ))}
@@ -266,6 +306,26 @@ const NoteTabs = (props, context) => {
         </Tabs.Tab>
       </Tooltip>
     </Tabs>
+  );
+};
+
+/** Warning on notes */
+const NoteAuthorized = (props, context) => {
+  // Psychic damage from this pun
+  return (
+    <Section fill title="Notes">
+      <NoticeBox align="center" info>
+        <Stack fill>
+          <Stack.Item>
+            <Icon color="average" name="exclamation-triangle" size={1.3} />
+          </Stack.Item>
+          <Stack.Item grow>Confidential</Stack.Item>
+          <Stack.Item>
+            <Icon color="average" name="exclamation-triangle" size={1.3} />
+          </Stack.Item>
+        </Stack>
+      </NoticeBox>
+    </Section>
   );
 };
 
@@ -285,7 +345,7 @@ const getCurrentRecord = (context) => {
   const { data } = useBackend<Data>(context);
   const { records = [] } = data;
   const foundRecord = records.find(
-    (record) => record.ref === selectedRecord.ref
+    (record) => record.crew_ref === selectedRecord.crew_ref
   );
   if (!foundRecord) return;
 

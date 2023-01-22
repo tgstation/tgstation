@@ -11,11 +11,11 @@
 	/// Time of the crime
 	var/time
 
-/datum/crime/New(name = "Crime", details = "No details provided.", author = "Anonymous", time = station_time_timestamp())
+/datum/crime/New(name = "Crime", details = "No details provided.", author = "Anonymous")
 	src.author = author
 	src.details = details
 	src.name = name
-	src.time = time
+	src.time = station_time_timestamp()
 
 /datum/crime/citation
 	/// Fine for the crime
@@ -23,10 +23,10 @@
 	/// Amount of money paid for the crime
 	var/paid
 
-/datum/crime/citation/New(name = "Citation", details = "No details provided.", author = "Anonymous", time = station_time_timestamp(), fine = 0, paid = 0)
+/datum/crime/citation/New(name = "Citation", details = "No details provided.", author = "Anonymous", fine = 0)
 	. = ..()
 	src.fine = fine
-	src.paid = paid
+	src.paid = 0
 
 /// Pays off a fine and attempts to fix any weird values.
 /datum/crime/citation/proc/pay_fine(amount)

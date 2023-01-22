@@ -150,18 +150,32 @@
 /obj/machinery/computer/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src)
 	character_preview_view.generate_view("record_preview_[REF(character_preview_view)]")
-	update_preview()
 	character_preview_view.display_to(user)
 
 	return character_preview_view
 
 /// Takes a record and updates the character preview view to match it.
 /obj/machinery/computer/proc/update_preview(datum/record/locked/record)
-	if(!record)
-		return
-
 	var/mutable_appearance/preview = new(record.character_appearance)
 	preview.underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
 	preview.add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
 
 	character_preview_view.appearance = preview.appearance
+
+/// Detects whether a user can use buttons on the machine
+/obj/machinery/computer/proc/has_auth(mob/user)
+	if(!isliving(user))
+		return FALSE
+	var/mob/living/player = user
+
+	if(issilicon(player)) // Silicons don't need to authenticate
+		return TRUE
+
+	var/obj/item/card/auth = player.get_idcard(TRUE)
+	if(!auth)
+		return FALSE
+	var/list/access = auth.GetAccess()
+	if(!check_access_list(access))
+		return FALSE
+
+	return TRUE

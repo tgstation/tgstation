@@ -72,6 +72,3 @@
 	WANTED_PAROLE, \
 	WANTED_DISCHARGED, \
 )
-
-// Maximum citation fine
-#define MAX_CITATION_FINE 1000

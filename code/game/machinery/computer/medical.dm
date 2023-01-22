@@ -29,32 +29,40 @@
 		ui = new(user, src, "MedicalRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		addtimer(CALLBACK(src, PROC_REF(update_preview)), 1 SECONDS)
 
 /obj/machinery/computer/med_data/ui_data(mob/user)
 	var/list/data = list()
 
+	data["can_view"] = has_auth(user) // just for notes (HIPAA compliance)
+
 	var/list/records = list()
 
 	for(var/datum/record/crew/target in GLOB.data_core.general)
-		var/list/record = list(list(
+		var/list/notes = list()
+		for(var/datum/medical_note/note in target.medical_notes)
+			notes += list(list(
+				author = note.author,
+				content = note.content,
+				note_ref = REF(note),
+				time = note.time,
+			))
+
+		records += list(list(
 			age = target.age,
 			appearance = character_preview_view.assigned_map,
 			blood_type = target.blood_type,
+			crew_ref = REF(target),
 			dna = target.dna_string,
 			lock_ref = target.lock_ref,
 			gender = target.gender,
 			major_disabilities = target.major_disabilities_desc,
-			notes = target.medical_notes,
+			notes = notes,
 			minor_disabilities = target.minor_disabilities_desc,
 			name = target.name,
 			quirk_notes = target.quirk_notes,
 			rank = target.rank,
-			ref = REF(target),
 			species = target.species,
 		))
-
-		records += record
 
 	data["records"] = records
 
@@ -66,9 +74,12 @@
 		return
 
 	switch(action)
-		if("add_notes")
+		if("add_note")
 			create_note(usr, params)
+			return TRUE
 
+		if("delete_note")
+			delete_note(usr, params)
 			return TRUE
 
 		if("view_record")
@@ -82,30 +93,33 @@
 
 /// Checks for proper authorization to add notes, then adds to record.
 /obj/machinery/computer/med_data/proc/create_note(mob/user, list/params)
-	var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-
-	if(!record || !isliving(usr))
+	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
+	if(!target || !has_auth(user))
 		return FALSE
 
-	var/mob/living/player = usr
-	if(!issilicon(player)) // Silicons don't need to authenticate
-		var/obj/item/card/auth = player.get_idcard(TRUE)
-		if(!auth)
-			to_chat(player, span_warning("ACCESS DENIED: No ID card detected."))
-			return FALSE
-		var/list/access = auth.GetAccess()
-		if(!check_access_list(access))
-			to_chat(player, span_warning("ACCESS DENIED"))
-			return FALSE
+	if(!params["content"])
+		return FALSE
+	var/content = trim(params["content"], MAX_MESSAGE_LEN)
 
-	var/note = params["note"]
-	if(!note)
+	var/datum/medical_note/new_note = new(usr, content)
+	while(length(target.medical_notes) > 2)
+		target.medical_notes.Cut(1, 2)
+
+	target.medical_notes += new_note
+
+	return TRUE
+
+/// Deletes a note from a record.
+/obj/machinery/computer/med_data/proc/delete_note(mob/user, list/params)
+	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
+	if(!target || !has_auth(user))
 		return FALSE
 
-	note = trim(note, MAX_MESSAGE_LEN)
-	if(length(record.medical_notes) > 2)
-		record.medical_notes.Cut(1, 2)
+	var/datum/medical_note/old_note = locate(params["note_ref"]) in target.medical_notes
+	if(!old_note)
+		return FALSE
 
-	record.medical_notes += note
+	target.medical_notes -= old_note
+	qdel(old_note)
 
 	return TRUE
