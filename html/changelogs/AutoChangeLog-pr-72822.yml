@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Kilostation comfy chairs now provide the correct stack of iron on deconstruction"
