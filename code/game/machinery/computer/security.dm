@@ -83,11 +83,12 @@
 /obj/machinery/computer/secure_data/ui_data(mob/user)
 	var/list/data = list()
 
-	if(!has_auth(user))
+	var/has_access = logged_in && isliving(user)
+	data["logged_in"] = has_access
+	if(!has_access)
 		return data
 
 	data["available_statuses"] = WANTED_STATUSES()
-	data["logged_in"] = logged_in
 
 	var/list/records = list()
 	for(var/datum/record/crew/target in GLOB.data_core.general)
@@ -145,10 +146,13 @@
 
 		if("delete_crime")
 			delete_crime(params)
-			return FALSE
+			return TRUE
 
 		if("login")
 			if(!has_auth(usr))
+				if(ishuman(usr))
+					balloon_alert(usr, "access denied")
+					playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 				return FALSE
 			balloon_alert(usr, "logged in")
 			playsound(src, 'sound/machines/terminal_on.ogg', 70, TRUE)
@@ -242,16 +246,16 @@
 	if(!target)
 		return FALSE
 
-	var/datum/crime/crime = locate(params["crime_ref"]) in target.crimes
-	if(crime)
-		target.crimes -= crime
-		qdel(crime)
+	var/datum/crime/incident = locate(params["crime_ref"]) in target.crimes
+	if(incident)
+		target.crimes -= incident
+		qdel(incident)
 		return TRUE
 
-	var/datum/crime/citation = locate(params["crime_ref"]) in target.citations
-	if(citation)
-		target.citations -= citation
-		qdel(citation)
+	var/datum/crime/citation/warrant = locate(params["crime_ref"]) in target.citations
+	if(warrant)
+		target.citations -= warrant
+		qdel(warrant)
 		return TRUE
 
 	return FALSE

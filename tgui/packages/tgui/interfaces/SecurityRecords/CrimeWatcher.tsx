@@ -79,8 +79,9 @@ const CrimeList = (props, context) => {
 const CrimeDisplay = ({ item }: { item: Crime }, context) => {
   const foundRecord = getCurrentRecord(context);
   if (!foundRecord) return <> </>;
+
   const { act } = useBackend<SecureData>(context);
-  const { author, details, fine, name, paid, time } = item;
+  const { author, details, fine, name, paid, ref, time } = item;
   const showFine = !!fine && fine > 0 ? `: ${fine} cr` : '';
 
   return (
@@ -93,7 +94,7 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
             onClick={() =>
               act('delete_crime', {
                 crew_ref: foundRecord.ref,
-                crime_ref: item.ref,
+                crime_ref: ref,
               })
             }
           />
