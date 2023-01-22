@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Added a new random event, \"Radiation Leak\". A random machine starts to emit radiation and toxic fumes. Engineers may be able to stop it with their tools."
+  - rscadd: "The \"Radioactive\" gene from genetics will now emit rads when on stasis or dead, rather than just while you're alive."
