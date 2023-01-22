@@ -1,13 +1,3 @@
-/datum/antagonist/blobbernaut
-	name = "\improper Blobbernaut"
-	antagpanel_category = "Biohazards"
-	show_name_in_check_antagonists = TRUE
-	show_to_ghosts = TRUE
-
-/////////////////
-// BLOBBERNAUT //
-/////////////////
-
 /mob/living/simple_animal/hostile/blob/blobbernaut
 	name = "blobbernaut"
 	desc = "A hulking, mobile chunk of blobmass."
@@ -38,12 +28,10 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/mind_initialize()
 	. = ..()
-	if(independent)
-		return FALSE
-	if(mind.has_antag_datum(/datum/antagonist/blobbernaut))
-		return FALSE
-	var/datum/antagonist/blobbernaut/blobbernaut = mind.add_antag_datum(/datum/antagonist/blobbernaut)
-	create_objectives(blobbernaut)
+	if(independent | !overmind)
+		return
+	var/datum/antagonist/blob_minion/blobbernaut/naut = new(overmind)
+	mind.add_antag_datum(naut)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

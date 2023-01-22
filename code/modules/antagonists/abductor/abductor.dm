@@ -3,7 +3,7 @@
 /datum/antagonist/abductor
 	name = "\improper Abductor"
 	roundend_category = "abductors"
-	antagpanel_category = "Abductor"
+	antagpanel_category = ANTAG_GROUP_ABDUCTORS
 	job_rank = ROLE_ABDUCTOR
 	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes

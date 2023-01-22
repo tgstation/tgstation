@@ -633,9 +633,7 @@
 
 	add_new_profile(owner.current)
 
-
-/// Generate objectives for our changeling.
-/datum/antagonist/changeling/proc/forge_objectives()
+/datum/antagonist/changeling/forge_objectives()
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone

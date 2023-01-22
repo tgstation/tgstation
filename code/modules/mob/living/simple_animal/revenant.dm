@@ -525,7 +525,7 @@
 /datum/objective/revenant_fluff
 
 /datum/objective/revenant_fluff/New()
-	var/list/explanationTexts = list(
+	var/list/explanation_texts = list(
 		"Assist and exacerbate existing threats at critical moments.", \
 		"Impersonate or be worshipped as a god.", \
 		"Cause as much chaos and anger as you can without being killed.", \
@@ -538,8 +538,9 @@
 		"Make the captain as miserable as possible.", \
 		"Prevent the use of energy weapons where possible.",
 	)
-	explanation_text = pick(explanationTexts)
+	explanation_text = pick(explanation_texts)
 	..()
 
 /datum/objective/revenant_fluff/check_completion()
 	return TRUE
+

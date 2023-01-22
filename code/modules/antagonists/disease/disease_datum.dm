@@ -1,7 +1,7 @@
 /datum/antagonist/disease
 	name = "Sentient Disease"
 	roundend_category = "diseases"
-	antagpanel_category = "Biohazards"
+	antagpanel_category = ANTAG_GROUP_BIOHAZARDS
 	show_to_ghosts = TRUE
 	var/disease_name = ""
 

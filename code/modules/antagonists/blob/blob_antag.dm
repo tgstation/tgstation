@@ -1,8 +1,9 @@
 /datum/antagonist/blob
 	name = "\improper Blob"
 	roundend_category = "blobs"
-	antagpanel_category = "Biohazards"
+	antagpanel_category = ANTAG_GROUP_BIOHAZARDS
 	show_to_ghosts = TRUE
+	show_in_antagpanel = FALSE
 	job_rank = ROLE_BLOB
 	ui_name = "AntagInfoBlob"
 	/// Action to release a blob infection
@@ -140,6 +141,8 @@
 
 /// A subtype of blob meant to represent the infective version.
 /datum/antagonist/blob/infection
+	name = "\improper Blob Infection"
+	show_in_antagpanel = TRUE
 	job_rank = ROLE_BLOB_INFECTION
 
 /datum/antagonist/blob/infection/get_preview_icon()
