@@ -11,7 +11,7 @@ const NoIDDimmer = (props, context) => {
       <Stack.Item>
         <Dimmer>
           <Stack align="baseline" vertical>
-            <Stack.Item
+            <Stack.Item>
               <Stack ml={-2}>
                 <Stack.Item>
                   <Icon color="red" name="address-card" size={10} />
