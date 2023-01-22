@@ -182,11 +182,14 @@ SUBSYSTEM_DEF(overlays)
 			appearance_indx++
 
 		real_appearances[tmp_key] = new_appearance
+		var/add_index = queue_index
 		// Now check its children
 		for(var/mutable_appearance/child_appearance as anything in appearance.overlays)
-			queue += child_appearance
+			add_index++
+			queue.Insert(add_index, child_appearance)
 		for(var/mutable_appearance/child_appearance as anything in appearance.underlays)
-			queue += child_appearance
+			add_index++
+			queue.Insert(add_index, child_appearance)
 	return real_appearances
 
 /// Takes two appearances as args, prints out, logs, and returns a text representation of their differences
