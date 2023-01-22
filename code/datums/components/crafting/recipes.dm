@@ -1768,7 +1768,8 @@
 	category = CAT_ENTERTAINMENT
 	tool_behaviors = list(TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/iron = 1,
-			    /obj/item/flamethrower = 1)
+			    /obj/item/flamethrower = 1,
+				/obj/item/tank/internals/plasma = 1)
 	result = /obj/structure/toiletbong
 	time = 5 SECONDS
 
