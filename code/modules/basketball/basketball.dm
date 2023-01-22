@@ -74,10 +74,10 @@
 
 	if(user.resting)
 		user.balloon_alert(user, "cant pickup while resting!")
-		return		
+		return
 
 	if(user.ckey in pickup_restriction_ckeys && !COOLDOWN_FINISHED(src, pickup_cooldown))
-		user.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) * SECONDS] seconds!")
+		user.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) SECONDS] seconds!")
 		return
 
 	reset_pickup_restriction()
