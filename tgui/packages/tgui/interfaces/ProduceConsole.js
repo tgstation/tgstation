@@ -96,7 +96,7 @@ const ShoppingTab = (props, context) => {
                       {item.cost + ' per order.'}
                     </Box>
                     <Button
-                      ml={2}
+                      ml={1}
                       icon="minus"
                       onClick={() =>
                         act('remove_one', {
