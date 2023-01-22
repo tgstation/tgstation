@@ -46,6 +46,7 @@ const ShoppingTab = (props, context) => {
             ))}
             <Stack.Item grow>
               <Input
+
                 autoFocus
                 ml={5}
                 width="150px"
