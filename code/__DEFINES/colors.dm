@@ -62,7 +62,6 @@
 #define COLOR_PAI_GREEN "#00FF88"
 #define COLOR_PALE_GREEN "#20e28e"
 
-#define COLOR_BLUE_WHITE "#CCCEFF"
 #define COLOR_CYAN "#00FFFF"
 #define COLOR_DARK_CYAN "#00A2FF"
 #define COLOR_TEAL "#008080"
@@ -173,6 +172,9 @@
 
 ///Colors for eigenstates
 #define COLOR_PERIWINKLEE "#9999FF"
+
+/// Starlight!
+#define COLOR_STARLIGHT "#8589fa"
 /**
  * Some defines to generalise colours used in lighting.
  *

@@ -99,7 +99,7 @@
 	SSatoms.InitializeAtoms(areas + turfs + movables, returns_created_atoms ? created_atoms : null)
 
 	for(var/turf/unlit as anything in turfs)
-		if(unlit.always_lit)
+		if(unlit.space_lit)
 			continue
 		var/area/loc_area = unlit.loc
 		if(!loc_area.static_lighting)

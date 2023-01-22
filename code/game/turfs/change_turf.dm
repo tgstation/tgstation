@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_directional_opacity = directional_opacity
 	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
-	var/old_always_lit = always_lit
+	var/old_space_lit = space_lit
 	var/old_lattice_underneath = lattice_underneath
 
 	var/old_bp = blueprint_data
@@ -128,11 +128,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	lattice_underneath = old_lattice_underneath
 
 	var/area/our_area = new_turf.loc
-	if(new_turf.always_lit && !our_area.area_has_base_lighting)
+	if(new_turf.space_lit && !our_area.area_has_base_lighting)
 		// We are guarenteed to have these overlays because of how generation works
 		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 		new_turf.add_overlay(overlay)
-	else if (old_always_lit && !our_area.area_has_base_lighting)
+	else if (old_space_lit && !our_area.area_has_base_lighting)
 		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 		new_turf.cut_overlay(overlay)
 
