@@ -163,17 +163,15 @@
 
 	var/evaporated_obstacles = FALSE
 	for (var/atom/possible_obstacle in range(1, target_turf))
+		if (!possible_obstacle.density)
+			continue
+		evaporated_obstacles = TRUE
+		new /obj/effect/temp_visual/emp/pulse(possible_obstacle)
+
 		if (iswallturf(possible_obstacle))
-			evaporated_obstacles = TRUE
-			new /obj/effect/temp_visual/emp/pulse(possible_obstacle)
 			var/turf/closed/wall/wall = possible_obstacle
 			wall.dismantle_wall(devastated = TRUE)
 			continue
-		if (!possible_obstacle.density)
-			continue
-
-		evaporated_obstacles = TRUE
-		new /obj/effect/temp_visual/emp/pulse(possible_obstacle)
 		possible_obstacle.atom_destruction("magic")
 
 	if (evaporated_obstacles)

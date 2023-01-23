@@ -367,29 +367,10 @@
 		"Tremble before my glory!",
 		"Pick a god and pray!",
 		"It's no use!",
-		"Chaos... Control!!",
-		"Destruction of nature, gather in flame!",
 		"If the gods wanted you to live, they would not have created me!",
 		"God stays in heaven out of fear of what I have created!",
-		"Scurry and scatter!",
-		"The hearts of men are black with corruption and must needs be cleansed!",
-		"Death, and death alone!",
 		"Ruination is come!",
-		"Raise your swords against the coming night!",
-		"Your journey ends here!",
-		"The gods will not be watching.",
-		"There is time enough for regret in the flames of hell.",
-		"And now the scales will tip!",
-		"Even the strongest of shields cannot defend the weakest of wills!",
-		"You shall rue the day you raised your eyes to the heavens.",
-		"Denizens of the abyss! From ink of blackest night, I summon you! Darkness to me!",
-		"Your very soul shall not escape my wrath!",
-		"All of creation, bend to my will!",
-		"From broken skies fall tears of flame!",
-		"My life's work! My masterpiece!",
-		"Rejoice and partake of my gift!",
-		"Leave naught but ash in your wake!",
-		"Let seep sorrow into your hearts!")
+		"All of creation, bend to my will!",)
 
 /datum/grand_finale/armageddon/trigger(mob/living/carbon/human/invoker)
 	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]")
