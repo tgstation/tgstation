@@ -203,16 +203,16 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	wiz_mob.fully_replace_character_name(wiz_mob.real_name, newname)
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	M.faction |= ROLE_WIZARD
-	add_team_hud(M)
-	ritual.Grant(mob_override)
+	var/mob/living/wizard_mob = mob_override || owner.current
+	wizard_mob.faction |= ROLE_WIZARD
+	add_team_hud(wizard_mob)
+	ritual.Grant(wizard_mob)
 	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	M.faction -= ROLE_WIZARD
-	ritual.Remove(mob_override)
+	var/mob/living/wizard_mob = mob_override || owner.current
+	wizard_mob.faction -= ROLE_WIZARD
+	ritual.Remove(wizard_mob)
 	UnregisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
 
 /// If we receive this signal, you're done with objectives
