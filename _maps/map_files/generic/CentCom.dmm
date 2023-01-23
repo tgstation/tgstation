@@ -8049,7 +8049,8 @@
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
 	department = "Captain's Desk";
-	departmentType = 5
+	assistance_requestable = 1;
+	anon_tips_receiver = 1
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
