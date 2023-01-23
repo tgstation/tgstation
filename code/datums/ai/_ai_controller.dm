@@ -110,6 +110,7 @@ multiple modular subtrees with behaviors
 		set_ai_status(AI_STATUS_ON)
 	else
 		set_ai_status(get_setup_mob_ai_status(new_pawn))
+		RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
@@ -123,7 +124,6 @@ multiple modular subtrees with behaviors
 	if(ai_traits & CAN_ACT_WHILE_DEAD)
 		return final_status
 
-	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	if(mob_pawn.stat == DEAD)
 		final_status = AI_STATUS_OFF
 
