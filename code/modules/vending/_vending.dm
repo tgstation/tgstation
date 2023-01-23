@@ -668,7 +668,7 @@
 
 	. = FALSE
 
-	if(Adjacent(fatty))
+	if(Adjacent(fatty) && isopenturf(get_turf(fatty)))
 		for(var/mob/living/L in get_turf(fatty))
 			var/was_alive = (L.stat != DEAD)
 			var/mob/living/carbon/C = L
