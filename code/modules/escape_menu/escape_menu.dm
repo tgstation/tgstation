@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(escape_menus)
 
-// PRTODO: Protect from F12
-// PRTODO: Protect from Observe
+// MBTODO: Protect from F12
+// MBTODO: Protect from Observe
 
 /// Opens the escape menu.
 /// Verb, hardcoded to Escape, set in the client skin.
@@ -46,6 +46,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	show_page()
 
 	RegisterSignal(client, COMSIG_PARENT_QDELETING, PROC_REF(on_client_qdel))
+	RegisterSignal(client, COMSIG_CLIENT_MOB_LOGIN, PROC_REF(on_client_mob_login))
 
 	if (!isnull(ckey))
 		GLOB.escape_menus[ckey] = src
@@ -63,6 +64,13 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	PRIVATE_PROC(TRUE)
 
 	qdel(src)
+
+/datum/escape_menu/proc/on_client_mob_login()
+	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
+	if (menu_page == PAGE_LEAVE_BODY)
+		open_home_page()
 
 /datum/escape_menu/proc/show_page()
 	PRIVATE_PROC(TRUE)
@@ -99,6 +107,10 @@ GLOBAL_LIST_EMPTY(escape_menus)
 
 /atom/movable/screen/escape_menu
 	plane = ESCAPE_MENU_PLANE
+	clear_with_screen = FALSE
+
+// The escape menu can be opened before SSatoms
+INITIALIZE_IMMEDIATE(/atom/movable/screen/escape_menu)
 
 #undef PAGE_HOME
 #undef PAGE_LEAVE_BODY

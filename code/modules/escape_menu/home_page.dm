@@ -28,9 +28,8 @@
 		)
 	)
 
-	// MBTODO: Disable when not in a body
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button(
+		new /atom/movable/screen/escape_menu/home_button/leave_body(
 			null,
 			src,
 			"Leave Body",
@@ -54,7 +53,6 @@
 		datum/escape_menu/escape_menu
 		datum/callback/on_click_callback
 
-// MBTODO: escape_menu subtype should have init immediate shit on it
 /atom/movable/screen/escape_menu/home_button/Initialize(
 	mapload,
 	datum/escape_menu/escape_menu,
@@ -84,6 +82,9 @@
 	return ..()
 
 /atom/movable/screen/escape_menu/home_button/Click(location, control, params)
+	if (!enabled())
+		return
+
 	on_click_callback.InvokeAsync()
 
 /atom/movable/screen/escape_menu/home_button/MouseEntered(location, control, params)
@@ -93,7 +94,10 @@
 	home_button_text.set_hovered(FALSE)
 
 /atom/movable/screen/escape_menu/home_button/proc/text_color()
-	return "white"
+	return enabled() ? "white" : "gray"
+
+/atom/movable/screen/escape_menu/home_button/proc/enabled()
+	return TRUE
 
 // Needs to be separated so it doesn't scale
 /atom/movable/screen/escape_menu/home_button_text
@@ -127,7 +131,6 @@
 	if (hovered)
 		maptext = "<u>[maptext]</u>"
 
-// MBTODO: Inactive when adminhelp() would fail, if there's no active ticket
 /atom/movable/screen/escape_menu/home_button/admin_help
 	VAR_PRIVATE
 		current_blink = FALSE
@@ -146,13 +149,18 @@
 	. = ..()
 
 	RegisterSignal(escape_menu.client, COMSIG_ADMIN_HELP_RECEIVED, PROC_REF(on_admin_help_received))
+	RegisterSignals(escape_menu.client, list(COMSIG_CLIENT_VERB_ADDED, COMSIG_CLIENT_VERB_REMOVED), PROC_REF(on_client_verb_changed))
 
 	var/datum/admin_help/current_ticket = escape_menu.client?.current_ticket
-	if (!isnull(current_ticket) && !current_ticket?.player_replied)
+	if (!isnull(current_ticket))
 		connect_ticket(current_ticket)
-		begin_processing()
+		if (!current_ticket?.player_replied)
+			begin_processing()
 
 /atom/movable/screen/escape_menu/home_button/admin_help/Click(location, control, params)
+	if (!enabled())
+		return
+
 	QDEL_IN(escape_menu, 0)
 
 	var/client/client = escape_menu.client
@@ -184,6 +192,12 @@
 
 	begin_processing()
 
+/atom/movable/screen/escape_menu/home_button/admin_help/proc/on_client_verb_changed(client/source, list/verbs_changed)
+	SIGNAL_HANDLER
+
+	if (/client/verb/adminhelp in verbs_changed)
+		home_button_text.update_text()
+
 /atom/movable/screen/escape_menu/home_button/admin_help/proc/begin_processing()
 	if (is_blinking)
 		return
@@ -212,6 +226,15 @@
 
 	end_processing()
 
+/atom/movable/screen/escape_menu/home_button/admin_help/enabled()
+	if (!..())
+		return FALSE
+
+	if (!has_open_adminhelp())
+		return /client/verb/adminhelp in escape_menu.client?.verbs
+
+	return TRUE
+
 /atom/movable/screen/escape_menu/home_button/admin_help/process(delta_time)
 	if (world.time - last_blink_time < blink_interval)
 		return
@@ -220,9 +243,11 @@
 	last_blink_time = world.time
 	home_button_text.update_text()
 
-// MBTODO: Resepect enabled/disabled
 /atom/movable/screen/escape_menu/home_button/admin_help/text_color()
-	return current_blink ? "red" : "white"
+	if (!enabled())
+		return ..()
+
+	return current_blink ? "red" : ..()
 
 /atom/movable/screen/escape_menu/home_button/admin_help/MouseEntered(location, control, params)
 	. = ..()
@@ -234,3 +259,27 @@
 	. = ..()
 
 	closeToolTip(usr)
+
+/atom/movable/screen/escape_menu/home_button/leave_body
+
+/atom/movable/screen/escape_menu/home_button/leave_body/Initialize(
+	mapload,
+	datum/escape_menu/escape_menu,
+	button_text,
+	offset,
+	on_click_callback,
+)
+	. = ..()
+
+	RegisterSignal(escape_menu.client, COMSIG_CLIENT_MOB_LOGIN, PROC_REF(on_client_mob_login))
+
+/atom/movable/screen/escape_menu/home_button/leave_body/enabled()
+	if (!..())
+		return FALSE
+
+	return isliving(escape_menu.client?.mob)
+
+/atom/movable/screen/escape_menu/home_button/leave_body/proc/on_client_mob_login()
+	SIGNAL_HANDLER
+
+	home_button_text.update_text()

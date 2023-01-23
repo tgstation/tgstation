@@ -35,7 +35,7 @@
 	computer_id = client.computer_id
 	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
 	world.update_status()
-	client.screen = list() //remove hud items just in case
+	client.clear_screen() //remove hud items just in case
 	client.images = list()
 	client.set_right_click_menu_mode(shift_to_open_context_menu)
 
@@ -112,6 +112,7 @@
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
 	log_mob_tag("NEW OWNER: [key_name(src)]")
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
+	SEND_SIGNAL(client, COMSIG_CLIENT_MOB_LOGIN, src)
 	client.init_verbs()
 
 	AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)

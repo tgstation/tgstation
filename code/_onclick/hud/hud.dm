@@ -288,7 +288,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	// This code is the absolute fucking worst, I want it to go die in a fire
 	// Seriously, why
-	screenmob.client.screen = list()
+	screenmob.client.clear_screen()
 	screenmob.client.apply_clickcatcher()
 
 	var/display_hud_version = version

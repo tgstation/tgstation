@@ -1,4 +1,3 @@
-// MBTODO: When mob changes, hide the menu
 /datum/escape_menu/proc/show_leave_body_page()
 	PRIVATE_PROC(TRUE)
 

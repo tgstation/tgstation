@@ -5,3 +5,4 @@
 	alpha = 200
 	plane = ESCAPE_MENU_PLANE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	clear_with_screen = FALSE

@@ -13,9 +13,6 @@ GLOBAL_DATUM(escape_menu_title, /atom/movable/screen/escape_menu/title)
 	maptext_height = 100
 	maptext_width = 500
 
-// We want people to open the Escape menu before subsystems
-INITIALIZE_IMMEDIATE(/atom/movable/screen/escape_menu/title)
-
 /atom/movable/screen/escape_menu/title/Initialize(mapload)
 	. = ..()
 

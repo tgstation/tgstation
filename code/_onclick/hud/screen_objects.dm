@@ -33,6 +33,9 @@
 	 */
 	var/del_on_map_removal = TRUE
 
+	/// If FALSE, this will not be cleared when calling /client/clear_screen()
+	var/clear_with_screen = TRUE
+
 /atom/movable/screen/Destroy()
 	master = null
 	hud = null
