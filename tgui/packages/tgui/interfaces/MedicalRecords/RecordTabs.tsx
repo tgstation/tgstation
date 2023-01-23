@@ -33,36 +33,36 @@ export const MedicalRecordTabs = (props, context) => {
       </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable>
-          <Stack fill vertical>
-            <Stack.Item grow>
-              <Tabs vertical>
-                {!sorted.length ? (
-                  <NoticeBox>{errorMessage}</NoticeBox>
-                ) : (
-                  sorted.map((record, index) => (
-                    <CrewTab key={index} record={record} />
-                  ))
-                )}
-              </Tabs>
-            </Stack.Item>
-            <Stack.Item>
-              <Box align="right">
-                <Button
-                  disabled
-                  icon="plus"
-                  tooltip="Add new records by inserting a photo into the terminal. You do not need this screen open.">
-                  Create
-                </Button>
-                <Button.Confirm
-                  content="Purge"
-                  icon="trash"
-                  onClick={() => act('purge_records')}
-                  tooltip="Wipe all record data."
-                />
-              </Box>
-            </Stack.Item>
-          </Stack>
+          <Tabs vertical>
+            {!sorted.length ? (
+              <NoticeBox>{errorMessage}</NoticeBox>
+            ) : (
+              sorted.map((record, index) => (
+                <CrewTab key={index} record={record} />
+              ))
+            )}
+          </Tabs>
         </Section>
+      </Stack.Item>
+      <Stack.Item align="center">
+        <Stack fill>
+          <Stack.Item>
+            <Button
+              disabled
+              icon="plus"
+              tooltip="Add new records by inserting a photo into the terminal. You do not need this screen open.">
+              Create
+            </Button>
+          </Stack.Item>
+          <Stack.Item>
+            <Button.Confirm
+              content="Purge"
+              icon="trash"
+              onClick={() => act('purge_records')}
+              tooltip="Wipe all record data."
+            />
+          </Stack.Item>
+        </Stack>
       </Stack.Item>
     </Stack>
   );
