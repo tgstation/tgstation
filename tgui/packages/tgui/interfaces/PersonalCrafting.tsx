@@ -115,6 +115,7 @@ type Recipe = {
   tool_behaviors: string[];
   tool_paths: string[];
   machinery: string[];
+  structures: string[];
   steps: string[];
   foodtypes: string[];
 };
@@ -658,6 +659,11 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }, context) => {
                     item.machinery
                       .map((item) => data.atom_data[(item as any) - 1]?.name)
                       .join(', ')}
+                {item.structures &&
+                  ', ' +
+                    item.structures
+                      .map((item) => data.atom_data[(item as any) - 1]?.name)
+                      .join(', ')}
               </Box>
             </Stack.Item>
             <Stack.Item>
@@ -784,6 +790,14 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
                   <Box>
                     <GroupTitle title="Machinery" />
                     {item.machinery.map((atom_id) => (
+                      <AtomContent key={atom_id} atom_id={atom_id} amount={1} />
+                    ))}
+                  </Box>
+                )}
+                {item.structures && (
+                  <Box>
+                    <GroupTitle title="Structures" />
+                    {item.structures.map((atom_id) => (
                       <AtomContent key={atom_id} atom_id={atom_id} amount={1} />
                     ))}
                   </Box>

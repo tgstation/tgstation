@@ -594,6 +594,7 @@
 	possible_destinations = "pod_asteroid"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
+	circuit = /obj/item/circuitboard/computer/emergency_pod
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
 

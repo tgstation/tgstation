@@ -1,0 +1,4 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - bugfix: "Wielded high frequency blades no longer ignore pacifism"
