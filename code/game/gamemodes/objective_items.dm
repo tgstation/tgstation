@@ -281,9 +281,21 @@
 	difficulty = 20 //beyond the impossible
 
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/potential_storage)
-	for(var/mob/living/silicon/ai/captured_being in potential_storage)
-		if(isAI(captured_being) && captured_being.stat != DEAD) //See if any AI's are alive inside that card.
-			return TRUE
+	var/mob/living/silicon/ai/being
+
+	if(istype(potential_storage, /obj/item/aicard))
+		var/obj/item/aicard/card = potential_storage
+		being = card.AI // why is this one capitalized and the other one not? i wish i knew.
+	else if(istype(potential_storage, /obj/item/mod/control))
+		var/obj/item/mod/control/suit = potential_storage
+		being = suit.ai
+	else
+		stack_trace("check_special_completion() called on [src] with [potential_storage] ([potential_storage.type])! That's not supposed to happen!")
+		return FALSE
+
+	if(isAI(being) && being.stat != DEAD)
+		return TRUE
+
 	return FALSE
 
 /datum/objective_item/steal/blueprints
