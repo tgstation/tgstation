@@ -6,6 +6,8 @@
 	max_occurrences = 2
 	min_players = 1
 	category = EVENT_CATEGORY_HEALTH
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 2
 
 	/// For admins, what hallucination did we pick
 	var/admin_forced_hallucination

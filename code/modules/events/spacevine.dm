@@ -57,6 +57,8 @@
 	min_players = 10
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Kudzu begins to overtake the station. Might spawn man-traps."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/spacevine
 	fakeable = FALSE

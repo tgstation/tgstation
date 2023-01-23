@@ -4,6 +4,8 @@
 	weight = 25
 	category = EVENT_CATEGORY_HEALTH
 	description = "A crewmember gains a random trauma."
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
 
 /datum/round_event/brain_trauma
 	fakeable = FALSE

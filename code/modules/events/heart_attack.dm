@@ -6,6 +6,8 @@
 	min_players = 40 // To avoid shafting lowpop
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember's heart gives out."
+	min_wizard_trigger_potency = 6
+	max_wizard_trigger_potency = 7
 	///Candidates for recieving a healthy dose of heart disease
 	var/list/heart_attack_candidates = list()
 	///Number of candidates to be smote

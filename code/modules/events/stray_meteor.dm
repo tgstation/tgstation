@@ -7,6 +7,8 @@
 	earliest_start = 20 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "Throw a random meteor somewhere near the station."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 7
 	///The selected meteor type if chosen through admin setup.
 	var/chosen_meteor
 

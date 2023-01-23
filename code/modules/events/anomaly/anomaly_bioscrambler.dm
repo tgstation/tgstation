@@ -6,6 +6,8 @@
 	max_occurrences = 5
 	weight = 20
 	description = "This anomaly replaces the limbs of nearby people."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 2
 
 /datum/round_event/anomaly/anomaly_bioscrambler
 	start_when = 10

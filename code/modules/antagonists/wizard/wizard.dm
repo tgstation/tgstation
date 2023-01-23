@@ -20,6 +20,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
 	show_to_ghosts = TRUE
+	/// This mob's Grand Ritual ability
+	var/datum/action/grand_ritual/ritual = new
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
@@ -179,6 +181,13 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	data["objectives"] = get_objectives()
 	return data
 
+/datum/antagonist/wizard/ui_data(mob/user)
+	var/list/data = list()
+	data["ritual"] = list(\
+		"remaining" = GRAND_RITUAL_FINALE_COUNT - ritual.times_completed,
+		"next_area" = initial(ritual.target_area.name),)
+	return data
+
 /datum/antagonist/wizard/proc/rename_wizard()
 	set waitfor = FALSE
 
@@ -197,11 +206,24 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/mob/living/M = mob_override || owner.current
 	M.faction |= ROLE_WIZARD
 	add_team_hud(M)
+	ritual.Grant(mob_override)
+	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	M.faction -= ROLE_WIZARD
+	ritual.Remove(mob_override)
+	UnregisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
 
+/// If we receive this signal, you're done with objectives
+/datum/antagonist/wizard/proc/on_ritual_complete()
+	SIGNAL_HANDLER
+	var/datum/objective/custom/successful_ritual = new()
+	successful_ritual.owner = owner
+	successful_ritual.explanation_text = "Complete the Grand Ritual at least seven times."
+	successful_ritual.completed = TRUE
+	objectives = list(successful_ritual)
+	UnregisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
 
 /datum/antagonist/wizard/get_admin_commands()
 	. = ..()
@@ -356,6 +378,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/list/parts = list()
 
 	parts += printplayer(owner)
+	parts += "<br><B>Grand Rituals completed:</B> [ritual.times_completed]<br>"
 
 	var/count = 1
 	var/wizardwin = 1

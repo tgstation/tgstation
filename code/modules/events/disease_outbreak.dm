@@ -6,6 +6,8 @@
 	weight = 5
 	category = EVENT_CATEGORY_HEALTH
 	description = "A 'classic' virus will infect some members of the crew." //These are the ones with PERSONALITY
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
 	///Admin selected disease, to be passed down to the round_event
@@ -104,6 +106,8 @@
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
 	description = "An 'advanced' disease will infect some members of the crew." //These are the ones that get viro lynched!
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
 	///Admin selected custom severity rating for the event
 	var/chosen_severity
 	///Admin selected custom value for the maximum symptoms this virus should have

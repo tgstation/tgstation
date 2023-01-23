@@ -5,6 +5,8 @@
 	max_occurrences = 1
 	weight = 15
 	description = "This anomaly randomly teleports all items and mobs in a large area."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 2
 
 /datum/round_event/anomaly/anomaly_bluespace
 	start_when = 3

@@ -6,6 +6,8 @@
 	description = "Vending machines will attack people until the Patient Zero is disabled."
 	min_players = 15
 	max_occurrences = 1
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
 	///Var used to determine vendor subtype if used for admin setup
 	var/chosen_vendor
 

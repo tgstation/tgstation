@@ -5,6 +5,8 @@
 	max_occurrences = 3
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Turns off all APCs for a while, or until they are manually rebooted."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 4
 
 /datum/round_event/grid_check
 	announce_when = 1

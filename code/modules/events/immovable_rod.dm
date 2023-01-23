@@ -12,6 +12,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	typepath = /datum/round_event/immovable_rod
 	min_players = 15
 	max_occurrences = 5
+	min_wizard_trigger_potency = 6
+	max_wizard_trigger_potency = 7
 	var/atom/special_target
 	var/force_looping = FALSE
 	category = EVENT_CATEGORY_SPACE
