@@ -156,8 +156,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	GLOB.allConsoles += src
 
-	// once all request consoles on every map are cleaned, this section above can be deleted
-
 	if((assistance_requestable) && !(department in GLOB.req_console_assistance)) // adding to assistance list if not already present
 		GLOB.req_console_assistance += department
 
