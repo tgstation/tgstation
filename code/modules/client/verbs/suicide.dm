@@ -80,8 +80,6 @@
 		final_checkout(held_item, do_damage = FALSE)
 		return
 
-	var/suicide_message
-
 	if(!combat_mode)
 		var/obj/item/organ/internal/brain/userbrain = getorgan(/obj/item/organ/internal/brain)
 		if(userbrain?.damage >= 75)
@@ -272,5 +270,8 @@
 #undef ALIEN_SUICIDE_MESSAGE
 #undef ANIMAL_SUICIDE_MESSAGE
 #undef BRAIN_SUICIDE_MESSAGE
+#undef HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE
+#undef HUMAN_COMBAT_MODE_SUICIDE_MESSAGE
+#undef HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE
 #undef MECHANICAL_SUICIDE_MESSAGE
 #undef PAI_SUICIDE_MESSAGE
