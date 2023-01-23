@@ -37,47 +37,13 @@
 	set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
 	var/obj/item/held_item = get_active_held_item()
 
-	var/damagetype = SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_ACT) || held_item?.suicide_act(src)
-	if(damagetype)
-		if(damagetype & SHAME)
-			adjustStaminaLoss(200)
-			set_suicide(FALSE)
-			add_mood_event("shameful_suicide", /datum/mood_event/shameful_suicide)
-			return
-
-		if(damagetype & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
-			set_suicide(FALSE)
-			return
-
-		var/damage_mod = 0
-		for(var/type in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
-			damage_mod += (type & damagetype) ? 1 : 0
-		damage_mod = max(1, damage_mod)
-
-		//Do 200 damage divided by the number of damage types applied.
-		if(damagetype & BRUTELOSS)
-			adjustBruteLoss(200/damage_mod)
-
-		if(damagetype & FIRELOSS)
-			adjustFireLoss(200/damage_mod)
-
-		if(damagetype & TOXLOSS)
-			adjustToxLoss(200/damage_mod)
-
-		if(damagetype & OXYLOSS)
-			adjustOxyLoss(200/damage_mod)
-
-		if(damagetype & MANUAL_SUICIDE) //Assume the object will handle the death.
-			suicide_log(held_item)
-			return
-
-		//If something went wrong, just do normal oxyloss
-		if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
-			adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-
-		final_checkout(held_item, do_damage = FALSE)
+	var/damage_type = SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_ACT) || held_item?.suicide_act(src)
+	if(damage_type)
+		if(apply_suicide_damage(damage_type))
+			final_checkout(held_item, do_damage = FALSE)
 		return
 
+	// if no specific item or damage type we want to deal, default to doing the deed with our own bare hands.
 	if(!combat_mode)
 		var/obj/item/organ/internal/brain/userbrain = getorgan(/obj/item/organ/internal/brain)
 		if(userbrain?.damage >= 75)
@@ -86,7 +52,6 @@
 			dispatch_message_from_tree(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
 	else
 		dispatch_message_from_tree(HUMAN_COMBAT_MODE_SUICIDE_MESSAGE)
-
 
 	final_checkout(held_item)
 
@@ -185,11 +150,60 @@
 /// Set do_damage to FALSE in order to not do damage (in case it's handled elsewhere in the verb or another proc that the suicide tree calls).
 /mob/living/proc/final_checkout(obj/item/suicide_tool, do_damage = TRUE)
 	if(do_damage) // enough to really drive home the point that they are DEAD.
-		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		apply_damage()
 
 	suicide_log(suicide_tool)
 	death(FALSE)
 	ghostize(FALSE)
+
+/// The actual proc that will apply the damage to the suiciding mob. damage_type is the actual type of damage we want to deal, if that matters.
+/// Return TRUE if we actually apply any real damage, FALSE otherwise.
+/mob/living/proc/apply_suicide_damage(damage_type)
+	adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+	return TRUE
+
+/mob/living/carbon/human/apply_suicide_damage(damage_type == NONE)
+	// if we don't have any damage_type passed in, default to parent.
+	if(damage_type == NONE)
+		return ..()
+
+	if(damage_type & SHAME)
+		adjustStaminaLoss(200)
+		set_suicide(FALSE)
+		add_mood_event("shameful_suicide", /datum/mood_event/shameful_suicide)
+		return FALSE
+
+	if(damage_type & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
+		set_suicide(FALSE)
+		return FALSE
+
+	var/damage_mod = 0
+	for(var/type in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
+		damage_mod += (type & damage_type) ? 1 : 0
+	damage_mod = max(1, damage_mod)
+
+	//Do 200 damage divided by the number of damage types applied.
+	if(damage_type & BRUTELOSS)
+		adjustBruteLoss(200/damage_mod)
+
+	if(damage_type & FIRELOSS)
+		adjustFireLoss(200/damage_mod)
+
+	if(damage_type & TOXLOSS)
+		adjustToxLoss(200/damage_mod)
+
+	if(damage_type & OXYLOSS)
+		adjustOxyLoss(200/damage_mod)
+
+	if(damage_type & MANUAL_SUICIDE) //Assume the object will handle the death.
+		suicide_log(held_item)
+		return FALSE
+
+	//If no specific damage_type, just do normal oxyloss (handled by parent proc)
+	if(!(damage_type & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
+		return ..()
+
+	return TRUE
 
 /// We re-use a few messages in several contexts, so let's minimize some nasty footprint in the verbs.
 /mob/living/proc/dispatch_message_from_tree(type)
