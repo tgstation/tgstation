@@ -36,15 +36,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/auto_name = FALSE // Autonaming by area on?
 	var/department = "" //Department name (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
 	var/list/messages = list() // List of all messages
-	var/departmentType = 0 // bitflag, DEPRECATED. If maps no longer contain this var, delete it. Use the flags. -fippe
-		// 0 = none (not listed, can only replied to)
-		// assistance = 1
-		// supplies = 2
-		// info = 4
-		// assistance + supplies = 3
-		// assistance + info = 5
-		// supplies + info = 6
-		// assistance + supplies + info = 7
 	var/newmessagepriority = REQ_NO_NEW_MESSAGE
 	var/screen = REQ_SCREEN_MAIN
 		// 0 = main menu,
@@ -140,15 +131,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	GLOB.allConsoles += src
 
-	if(departmentType) // Do we have department type flags? Old, deletable once all req consoles are cleaned
-		if((departmentType & REQ_DEP_TYPE_ASSISTANCE) && !(department in GLOB.req_console_assistance))
-			assistance_requestable = TRUE
-
-		if((departmentType & REQ_DEP_TYPE_SUPPLIES) && !(department in GLOB.req_console_supplies))
-			supplies_requestable = TRUE
-
-		if((departmentType & REQ_DEP_TYPE_INFORMATION) && !(department in GLOB.req_console_information))
-			anon_tips_receiver = TRUE
 	// once all request consoles on every map are cleaned, this section above can be deleted
 
 	if((assistance_requestable) && !(department in GLOB.req_console_assistance)) // adding to assistance list if not already present
