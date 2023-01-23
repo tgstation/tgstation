@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 
-from .error import MaplintError
+from .error import MapParseError
 
 REGEX_TYPEPATH = re.compile(r'^/[\w/]+$')
 
@@ -11,7 +11,7 @@ class Typepath:
 
     def __init__(self, path):
         if not REGEX_TYPEPATH.match(path):
-            raise MaplintError(f"Invalid typepath {path!r}.")
+            raise MapParseError(f"Invalid typepath {path!r}.")
 
         self.path = path
         self.segments = path.split('/')[1:]
