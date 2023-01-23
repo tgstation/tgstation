@@ -279,7 +279,7 @@
 	targetitem = /obj/item/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/New()
+/datum/objective_item/steal/functionalai/New()
 	. = ..()
 	altitems += typesof(/obj/item/mod/control) // only here so we can account for AIs tucked away in a MODsuit.
 
