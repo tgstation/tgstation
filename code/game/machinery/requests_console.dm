@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/hackState = FALSE
 	/// FALSE = This console cannot be used to send department announcements, TRUE = This console can send department announcements
 	var/announcementConsole = FALSE
-	 // TRUE if maintenance panel is open
+	// TRUE if maintenance panel is open
 	var/open = FALSE
 	/// Will be set to TRUE when you authenticate yourself for announcements
 	var/announceAuth = FALSE
