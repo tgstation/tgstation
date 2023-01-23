@@ -153,7 +153,6 @@
 
 	// Breath may be null, so use a fallback "empty breath" for convenience.
 	if(!breath)
-		var/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
 		breath = empty_breath
 
 	// Ensure gas volumes are present.
@@ -268,16 +267,20 @@
 	// Maximum CO2 effects. "Too much CO2!"
 	if(co2_pp > safe_co2_max)
 		// CO2 side-effects.
+		// Give the mob a chance to notice.
+		if(prob(20))
+			emote("cough")
+		// If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 		if(!co2overloadtime)
 			co2overloadtime = world.time
 		else if((world.time - co2overloadtime) > 12 SECONDS)
 			throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
 			Unconscious(6 SECONDS)
+			// Lets hurt em a little, let them know we mean business.
 			adjustOxyLoss(3)
+			// They've been in here 30s now, start to kill them for their own good!
 			if((world.time - co2overloadtime) > 30 SECONDS)
 				adjustOxyLoss(8)
-		if(prob(20))
-			emote("cough")
 	else
 		// Reset side-effects.
 		co2overloadtime = 0
