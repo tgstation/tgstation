@@ -353,7 +353,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		forceMove(summoner.loc)
 		new /obj/effect/temp_visual/guardian/phase(loc)
 
-/mob/living/simple_animal/hostile/guardian/canSuicide()
+/mob/living/simple_animal/hostile/guardian/can_suicide()
 	return FALSE
 
 /mob/living/simple_animal/hostile/guardian/proc/is_deployed()

@@ -1,3 +1,9 @@
+#define ALIEN_SUICIDE_MESSAGE "alien"
+#define ANIMAL_SUICIDE_MESSAGE "animal"
+#define BRAIN_SUICIDE_MESSAGE "brain"
+#define MECHANICAL_SUICIDE_MESSAGE "mechanical"
+#define PAI_SUICIDE_MESSAGE "pai"
+
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
 	if(suicide_state)
@@ -21,7 +27,9 @@
 
 /mob/living/carbon/human/verb/suicide()
 	set hidden = TRUE
-	if(!suicide_alert() || (ckey != oldkey))
+	var/oldkey = ckey
+
+	if(!suicide_alert() || (ckey != oldkey)) // check to make sure that while we were sleeping in suicide_alert() that we didn't have a ckey change.
 		return
 
 	set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
@@ -102,9 +110,7 @@
 		return
 
 	set_suicide(TRUE)
-	visible_message(span_danger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."), \
-					span_userdanger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."))
-
+	dispatch_message_from_tree(BRAIN_SUICIDE_MESSAGE)
 	final_checkout(do_damage = FALSE)
 
 /mob/living/silicon/ai/verb/suicide()
@@ -113,9 +119,7 @@
 		return
 
 	set_suicide(TRUE)
-	visible_message(span_danger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."), \
-			span_userdanger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."))
-
+	dispatch_message_from_tree(MECHANICAL_SUICIDE_MESSAGE)
 	final_checkout()
 
 /mob/living/silicon/robot/verb/suicide()
@@ -124,19 +128,15 @@
 		return
 
 	set_suicide(TRUE)
-	visible_message(span_danger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."), \
-			span_userdanger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."))
-
+	dispatch_message_from_tree(MECHANICAL_SUICIDE_MESSAGE)
 	final_checkout()
 
 /mob/living/silicon/pai/verb/suicide()
 	set hidden = TRUE
 	if(!suicide_alert())
 		return
-	var/turf/location = get_turf(src)
-	location.visible_message(span_notice("[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""), null, \
-		span_notice("[src] bleeps electronically."))
 
+	dispatch_message_from_tree(PAI_SUICIDE_MESSAGE)
 	final_checkout()
 
 /mob/living/carbon/alien/adult/verb/suicide()
@@ -145,10 +145,7 @@
 		return
 
 	set_suicide(TRUE)
-	visible_message(span_danger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
-			span_userdanger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
-			span_hear("You hear thrashing."))
-
+	dispatch_message_from_tree(ALIEN_SUICIDE_MESSAGE)
 	final_checkout()
 
 /mob/living/simple_animal/verb/suicide()
@@ -157,20 +154,16 @@
 		return
 
 	set_suicide(TRUE)
-	visible_message(span_danger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."), \
-					span_userdanger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."))
-
+	dispatch_message_from_tree(ANIMAL_SUICIDE_MESSAGE)
 	final_checkout()
 
 /mob/living/basic/verb/suicide()
 	set hidden = TRUE
-	if(!suicide_alert)
+	if(!suicide_alert())
 		return
 
 	set_suicide(TRUE)
-	visible_message(span_danger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."), \
-					span_userdanger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."))
-
+	dispatch_message_from_tree(ANIMAL_SUICIDE_MESSAGE)
 	final_checkout()
 
 /mob/living/proc/suicide_log()
@@ -180,7 +173,7 @@
 /mob/living/carbon/human/suicide_log()
 	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
 
-/// Sends a TGUI Alert to the person attempting to commit suicide. Returns TRUE if they confirm they want to die, FALSE otherwise. Check for canSuicide here as well.
+/// Sends a TGUI Alert to the person attempting to commit suicide. Returns TRUE if they confirm they want to die, FALSE otherwise. Check can_suicide here as well.
 /mob/living/proc/suicide_alert(mob/living/user)
 	if(!can_suicide())
 		return FALSE
@@ -206,6 +199,28 @@
 	suicide_log()
 	death(FALSE)
 	ghostize(FALSE)
+
+/// We re-use a few messages in several contexts, so let's minimize some nasty footprint in the verbs.
+/mob/living/proc/dispatch_message_from_tree(type)
+	switch(type)
+		if(ALIEN_SUICIDE_MESSAGE)
+			visible_message(span_danger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
+			span_userdanger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
+			span_hear("You hear thrashing."))
+		if(ANIMAL_SUICIDE_MESSAGE)
+			visible_message(span_danger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."), \
+			span_userdanger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."))
+		if(BRAIN_SUICIDE_MESSAGE)
+				visible_message(span_danger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."), \
+				span_userdanger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."))
+		if(MECHANICAL_SUICIDE_MESSAGE)
+			visible_message(span_danger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."), \
+			span_userdanger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."))
+		if(PAI_SUICIDE_MESSAGE)
+			var/turf/location = get_turf(src)
+			location.visible_message(span_notice("[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""), null, \
+			span_notice("[src] bleeps electronically."))
+
 
 /// Checks if we are in a valid state to suicide (not already suiciding, capable of actually killing ourselves, area checks, etc.) Returns TRUE if we can suicide, FALSE if we can not.
 /mob/living/proc/can_suicide()
@@ -236,3 +251,9 @@
 		to_chat(src, span_warning("You can't commit suicide whilst immobile! (You can type Ghost instead however)."))
 		return FALSE
 	return TRUE
+
+#undef ALIEN_SUICIDE_MESSAGE
+#undef ANIMAL_SUICIDE_MESSAGE
+#undef BRAIN_SUICIDE_MESSAGE
+#undef MECHANICAL_SUICIDE_MESSAGE
+#undef PAI_SUICIDE_MESSAGE
