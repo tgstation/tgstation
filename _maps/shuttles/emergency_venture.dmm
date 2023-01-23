@@ -119,7 +119,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/docking_port/mobile/emergency/shuttle_build{
+/obj/docking_port/mobile/emergency{
 	name = "Venture Emergency Shuttle";
 	port_direction = 4;
 	preferred_direction = 2
@@ -792,12 +792,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"RM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
 "Sv" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -1103,7 +1097,7 @@ jA
 kw
 Ea
 tg
-RM
+AC
 AC
 uR
 dU
