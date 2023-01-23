@@ -386,7 +386,7 @@
 
 	if(istype(target) && target.reagents)
 		var/list/render_list = list() //The master list of readouts, including reagents in the blood/stomach, addictions, quirks, etc.
-		var/list/render_block = list() //A second block of text strings. If this ends up empty after checking stomach/blood contents, we give the "empty" message.
+		var/list/render_block = list() //A second block of readout strings. If this ends up empty after checking stomach/blood contents, we give the "empty" header.
 
 		// Blood reagents
 		if(target.reagents.reagent_list.len)
@@ -396,11 +396,11 @@
 					continue
 				render_block += "<span class='notice ml-2'>[round(reagent.volume, 0.001)] units of [reagent.name][reagent.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
 
-		if(!length(render_block)) //If no VISIBLY DISPLAYED reagents are present, we say nothing.
+		if(!length(render_block)) //If no VISIBLY DISPLAYED reagents are present, we report as if there is nothing.
 			render_list += "<span class='notice ml-1'>Subject contains no reagents in their blood.</span>\n"
 		else
 			render_list += "<span class='notice ml-1'>Subject contains the following reagents in their blood:</span>\n"
-			render_list += render_block //Otherwise, we add the reagent readouts and clear the readout block for use on the stomach.
+			render_list += render_block //Otherwise, we add the header, reagent readouts, and clear the readout block for use on the stomach.
 			render_block.Cut()
 
 		// Stomach reagents
@@ -409,7 +409,7 @@
 			if(belly.reagents.reagent_list.len)
 				for(var/bile in belly.reagents.reagent_list)
 					var/datum/reagent/bit = bile
-					if(bit.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems on scanners
+					if(bit.chemical_flags & REAGENT_INVISIBLE)
 						continue
 					if(!belly.food_reagents[bit.type])
 						render_block += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
