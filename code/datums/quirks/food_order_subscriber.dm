@@ -143,7 +143,7 @@
 	var/list/deliverable_food
 
 /// deliverable food is the list from the quirk, max is the longest time between deliveries, 25 minuites, min is the smallest time, 15 minutes, delivery charge is an assisstaints entire paycheck
-/datum/component/food_order_sub_quirk/Initialize(list/deliverable_food, max_delivery_time = 1 MINUTES , min_delivery_time = 40 SECONDS, delivery_charge = PAYCHECK_LOWER)
+/datum/component/food_order_sub_quirk/Initialize(list/deliverable_food, max_delivery_time = 25 MINUTES , min_delivery_time = 15 MINUTES, delivery_charge = PAYCHECK_LOWER)
 	. = ..()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
