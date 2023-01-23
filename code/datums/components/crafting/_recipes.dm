@@ -1,7 +1,11 @@
 ///If the machine is used/deleted in the crafting process
 #define CRAFTING_MACHINERY_CONSUME 1
+///If the structure is used/deleted in the crafting process
+#define CRAFTING_STRUCTURE_CONSUME 1
 ///If the machine is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
 #define CRAFTING_MACHINERY_USE 0
+///If the structure is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
+#define CRAFTING_STRUCTURE_USE 0
 
 /datum/crafting_recipe
 	///in-game display name
@@ -26,10 +30,10 @@
 	var/category
 	///Set to FALSE if it needs to be learned first.
 	var/always_available = TRUE
-	/// Additonal requirements text shown in UI
-	var/additional_req_text
 	///Required machines for the craft, set the assigned value of the typepath to CRAFTING_MACHINERY_CONSUME or CRAFTING_MACHINERY_USE. Lazy associative list: type_path key -> flag value.
 	var/list/machinery
+	///Required structures for the craft, set the assigned value of the typepath to CRAFTING_STRUCTURE_CONSUME or CRAFTING_STRUCTURE_USE. Lazy associative list: type_path key -> flag value.
+	var/list/structures
 	///Should only one object exist on the same turf?
 	var/one_per_turf = FALSE
 	/// Steps needed to achieve the result
