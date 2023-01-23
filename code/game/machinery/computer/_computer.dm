@@ -157,6 +157,7 @@
 
 	switch(action)
 		if("edit_field")
+			target = locate(params["ref"]) in GLOB.data_core.general
 			var/field = params["field"]
 			if(!field || !target?.vars[field])
 				return FALSE
@@ -220,8 +221,8 @@
 	return character_preview_view
 
 /// Takes a record and updates the character preview view to match it.
-/obj/machinery/computer/proc/update_preview(datum/record/locked/record)
-	var/mutable_appearance/preview = new(record.character_appearance)
+/obj/machinery/computer/proc/update_preview(datum/record/crew/target)
+	var/mutable_appearance/preview = new(target.character_appearance)
 	preview.underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
 	preview.add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
 
@@ -254,11 +255,17 @@
 	if(!mugshot || !is_operational || !user.canUseTopic(src, be_close = !issilicon(user)))
 		return FALSE
 
-	var/name = tgui_input_text(user, "Enter the name of the new record.", "New Record", mugshot.name, MAX_NAME_LEN)
+	if(!has_auth(user))
+		balloon_alert(user, "access denied")
+		playsound(src, 'sound/machines/terminal_alert.ogg', 70, TRUE)
+		return FALSE
+
+	var/trimmed = copytext(mugshot.name, 8, MAX_NAME_LEN)
+	var/name = tgui_input_text(user, "Enter the name of the new record.", "New Record", trimmed, MAX_NAME_LEN)
 	if(!name || !is_operational || !user.canUseTopic(src, be_close = !issilicon(user)) || !mugshot || QDELETED(mugshot) || QDELETED(src))
 		return FALSE
 
-	new /datum/record/crew(name = name, character_appearance = mugshot.picture)
+	new /datum/record/crew(name = name, character_appearance = mugshot.picture.picture_image)
 
 	balloon_alert(user, "record created")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 70, TRUE)
