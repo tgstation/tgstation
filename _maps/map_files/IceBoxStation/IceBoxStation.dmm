@@ -6461,8 +6461,8 @@
 /obj/item/defibrillator/loaded{
 	pixel_y = 3
 	},
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "bVv" = (
@@ -24653,7 +24653,7 @@
 /area/station/commons/lounge)
 "hzz" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/science,
@@ -39492,7 +39492,7 @@
 	dir = 1;
 	pixel_y = 2
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/tile/neutral/full,
@@ -41353,8 +41353,8 @@
 /obj/item/defibrillator/loaded{
 	pixel_y = 3
 	},
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "mMM" = (
@@ -41615,7 +41615,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/cmo)
 "mQE" = (
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/structure/table/glass,
@@ -70629,7 +70629,7 @@
 /area/station/science/xenobiology)
 "vPE" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/surgical_drapes,
 /obj/item/razor,
 /obj/machinery/airalarm/directional/north,
@@ -71780,7 +71780,7 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "whb" = (

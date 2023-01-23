@@ -1,4 +1,0 @@
-author: "Reco201"
-delete-after: True
-changes:
-  - bugfix: "Cyborgs turning their lights on and off can now be seen doing so."
