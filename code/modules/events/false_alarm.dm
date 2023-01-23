@@ -21,7 +21,7 @@
 
 	forced_type = input(usr, "Select the scare.","False event") as null|anything in sort_names(possible_types)
 
-/datum/round_event_control/falsealarm/can_spawn_event(players_amt)
+/datum/round_event_control/falsealarm/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return .

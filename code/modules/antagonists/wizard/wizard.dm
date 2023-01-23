@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
 	show_to_ghosts = TRUE
 	/// This mob's Grand Ritual ability
-	var/datum/action/grand_ritual/ritual = new
+	var/datum/action/cooldown/grand_ritual/ritual = new
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"

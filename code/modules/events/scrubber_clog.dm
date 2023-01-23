@@ -86,7 +86,7 @@
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
-/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt)
+/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return

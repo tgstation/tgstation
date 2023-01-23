@@ -13,7 +13,7 @@
  * The 7th ritual completion is special and allows you to pick a "finale" effect which should be very dramatic.
  * Further completion after that returns to the usual behaviour.
  */
-/datum/action/grand_ritual
+/datum/action/cooldown/grand_ritual
 	name = "Grand Ritual"
 	desc = "Provides direction to a nexus of power, then draws a rune in that location for completing the Grand Ritual. \
 		The ritual process will take longer each time it is completed."
@@ -21,6 +21,7 @@
 	background_icon_state = "bg_spell"
 	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "draw"
+	cooldown_rounding = 0
 	/// Path to area we want to draw in next
 	var/area/target_area
 	/// Number of times the grand ritual has been completed somewhere by this user
@@ -64,7 +65,7 @@
 		/area/station/science/server,
 	))
 
-/datum/action/grand_ritual/IsAvailable(feedback)
+/datum/action/cooldown/grand_ritual/IsAvailable(feedback)
 	. = ..()
 	if (!.)
 		return
@@ -81,18 +82,15 @@
 		return FALSE
 	return TRUE
 
-/datum/action/grand_ritual/Trigger(trigger_flags)
+/datum/action/cooldown/grand_ritual/Activate(trigger_flags)
 	. = ..()
-	if (!.)
-		return
-
 	validate_area()
 	if (istype(get_area(owner), target_area))
 		start_drawing_rune()
 	else
 		pinpoint_area()
 
-/datum/action/grand_ritual/Grant(mob/grant_to)
+/datum/action/cooldown/grand_ritual/Grant(mob/grant_to)
 	. = ..()
 	if (!target_area)
 		set_new_area()
@@ -101,21 +99,21 @@
 			COMSIG_MOB_AFTER_EXIT_JAUNT,
 		), PROC_REF(update_status_on_signal))
 
-/datum/action/grand_ritual/Remove(mob/remove_from)
+/datum/action/cooldown/grand_ritual/Remove(mob/remove_from)
 	. = ..()
 	UnregisterSignal(remove_from, list(
 		COMSIG_MOB_AFTER_EXIT_JAUNT,
 		COMSIG_MOB_ENTER_JAUNT,))
 
 /// If the target area doesn't exist or has been invalidated somehow, pick another one
-/datum/action/grand_ritual/proc/validate_area()
+/datum/action/cooldown/grand_ritual/proc/validate_area()
 	if (!target_area || !length(get_area_turfs(target_area)))
 		set_new_area()
 		return FALSE
 	return TRUE
 
 /// Finds a random station area to place our rune in
-/datum/action/grand_ritual/proc/set_new_area()
+/datum/action/cooldown/grand_ritual/proc/set_new_area()
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for (var/area/possible_area as anything in possible_areas)
 		if (initial(possible_area.outdoors) \
@@ -128,7 +126,7 @@
 		to_chat(owner, span_alert("The next nexus of power lies within [initial(target_area.name)]"))
 
 /// Checks if you're actually able to draw a rune here
-/datum/action/grand_ritual/proc/start_drawing_rune()
+/datum/action/cooldown/grand_ritual/proc/start_drawing_rune()
 	var/atom/existing_rune = rune?.resolve()
 	if (existing_rune)
 		owner.balloon_alert(owner, "rune already exists!")
@@ -152,7 +150,7 @@
 	INVOKE_ASYNC(src, PROC_REF(draw_rune), target_turf)
 
 /// Draws the ritual rune
-/datum/action/grand_ritual/proc/draw_rune(turf/target_turf)
+/datum/action/cooldown/grand_ritual/proc/draw_rune(turf/target_turf)
 	drawing_rune = TRUE
 	target_turf.balloon_alert(owner, "conjuring rune...")
 	var/obj/effect/temp_visual/drawing_rune/draw_effect = new(target_turf)
@@ -163,19 +161,33 @@
 		new /obj/effect/temp_visual/failed_draw(target_turf)
 		return
 
-	for (var/turf/closed/wall/wall in RANGE_TURFS(1, target_turf))
-		playsound(wall, 'sound/magic/blind.ogg', 100, TRUE)
-		new /obj/effect/decal/cleanable/ash(wall)
-		wall.dismantle_wall(devastated = TRUE)
+	var/evaporated_obstacles = FALSE
+	for (var/atom/possible_obstacle in range(1, target_turf))
+		if (iswallturf(possible_obstacle))
+			evaporated_obstacles = TRUE
+			new /obj/effect/temp_visual/emp/pulse(possible_obstacle)
+			var/turf/closed/wall/wall = possible_obstacle
+			wall.dismantle_wall(devastated = TRUE)
+			continue
+		if (!possible_obstacle.density)
+			continue
+
+		evaporated_obstacles = TRUE
+		new /obj/effect/temp_visual/emp/pulse(possible_obstacle)
+		possible_obstacle.atom_destruction("magic")
+
+	if (evaporated_obstacles)
+		playsound(target_turf, 'sound/magic/blind.ogg', 100, TRUE)
 
 	target_turf.balloon_alert(owner, "rune created")
 	var/obj/effect/grand_rune/new_rune = create_appropriate_rune(target_turf)
 	rune = WEAKREF(new_rune)
 	RegisterSignal(new_rune, COMSIG_GRAND_RUNE_COMPLETE, PROC_REF(on_rune_complete))
 	drawing_rune = FALSE
+	StartCooldown(2 MINUTES) // To put a damper on wizards who have 5 ranks of Teleport
 
 /// The seventh rune we spawn is special
-/datum/action/grand_ritual/proc/create_appropriate_rune(turf/target_turf)
+/datum/action/cooldown/grand_ritual/proc/create_appropriate_rune(turf/target_turf)
 	if (times_completed < GRAND_RITUAL_FINALE_COUNT - 1)
 		return new /obj/effect/grand_rune(target_turf, times_completed)
 	if (drew_finale)
@@ -184,7 +196,7 @@
 	return new /obj/effect/grand_rune/finale(target_turf, times_completed)
 
 /// Called when you finish invoking a rune you drew, get ready for another one.
-/datum/action/grand_ritual/proc/on_rune_complete(atom/source)
+/datum/action/cooldown/grand_ritual/proc/on_rune_complete(atom/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_GRAND_RUNE_COMPLETE)
 	rune = null
@@ -201,7 +213,7 @@
 			SEND_SIGNAL(src, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
 
 /// Pinpoints the ritual area
-/datum/action/grand_ritual/proc/pinpoint_area()
+/datum/action/cooldown/grand_ritual/proc/pinpoint_area()
 	var/area/area_turf = pick(get_area_turfs(target_area)) // Close enough probably
 	var/area/our_turf = get_turf(owner)
 	owner.balloon_alert(owner, get_pinpoint_text(area_turf, our_turf))
@@ -211,7 +223,7 @@
  * Similar to heretic target locating.
  * But simplified because we shouldn't be able to target locations on lavaland or the gateway anyway.
  */
-/datum/action/grand_ritual/proc/get_pinpoint_text(area/area_turf, area/our_turf)
+/datum/action/cooldown/grand_ritual/proc/get_pinpoint_text(area/area_turf, area/our_turf)
 	var/area_z = area_turf?.z
 	var/our_z = our_turf?.z
 	var/balloon_message = "something went wrong!"

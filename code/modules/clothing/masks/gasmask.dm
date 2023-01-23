@@ -1,3 +1,12 @@
+/// Map of names of clown mask types to clown mask icon states
+GLOBAL_LIST_INIT(clown_mask_options, list(
+	"True Form" = "clown",
+	"The Feminist" = "sexyclown",
+	"The Madman" = "joker",
+	"The Rainbow Color" = "rainbow",
+	"The Jester" = "chaos",
+))
+
 /obj/item/clothing/mask/gas
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. Good for concealing your identity and with a filter slot to help remove those toxins." //More accurate
@@ -218,13 +227,7 @@
 	if(!istype(user) || user.incapacitated())
 		return
 
-	var/list/options = list()
-	options["True Form"] = "clown"
-	options["The Feminist"] = "sexyclown"
-	options["The Madman"] = "joker"
-	options["The Rainbow Color"] ="rainbow"
-	options["The Jester"] ="chaos" //Nepeta33Leijon is holding me captive and forced me to help with this please send help
-
+	var/list/options = GLOB.clown_mask_options.Copy()
 	var/choice = show_radial_menu(user,src, clownmask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE

@@ -59,7 +59,7 @@
 	wizard_murder.explanation_text = "Kill [wizard.current.name], the one who did this."
 	antag_datum.objectives += wizard_murder
 
-	to_chat(aggrieved_crewmate.current, span_warning("No! This... isn't right!"))
+	to_chat(aggrieved_crewmate.current, span_warning("No! This isn't right!"))
 	aggrieved_crewmate.announce_objectives()
 
 /**
@@ -78,7 +78,7 @@
 /// Become the official Captain of the station
 /datum/grand_finale/usurp
 	name = "Usurpation"
-	desc = "The ultimate prank! Rewrite time such that you have been Captain of this station the whole time."
+	desc = "The ultimate use of your gathered power! Rewrite time such that you have been Captain of this station the whole time."
 	icon = 'icons/obj/card.dmi'
 	icon_state = "card_gold"
 
@@ -196,7 +196,7 @@
 /// Dress the crew as magical clowns
 /datum/grand_finale/clown
 	name = "Jubilation"
-	desc = "The ultimate prank! Rewrite time so that everyone went to clown college! Now they'll prank each other for you!"
+	desc = "The ultimate use of your gathered power! Rewrite time so that everyone went to clown college! Now they'll prank each other for you!"
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "clown"
 	glow_colour = "#ffff0048"
@@ -261,12 +261,7 @@
 
 	var/obj/item/clothing/mask/gas/clown_hat/clown_mask = victim.get_item_by_slot(ITEM_SLOT_MASK)
 	if (clown_mask)
-		var/list/options = list()
-		options["True Form"] = "clown"
-		options["Sexy Clown"] = "sexyclown"
-		options["The Madman"] = "joker"
-		options["The Rainbow Color"] ="rainbow"
-		options["The Jester"] ="chaos"
+		var/list/options = GLOB.clown_mask_options.Copy()
 		clown_mask.icon_state = options[pick(clown_mask.clownmask_designs)]
 		victim.update_worn_mask()
 		clown_mask.update_item_action_buttons()
@@ -280,7 +275,7 @@
 /// Give everyone magic items
 /datum/grand_finale/magic
 	name = "Evolution"
-	desc = "The ultimate prank! Give the crew their own magic, they'll surely realise that right and wrong have no meaning when you hold ultimate power!"
+	desc = "The ultimate use of your gathered power! Give the crew their own magic, they'll surely realise that right and wrong have no meaning when you hold ultimate power!"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 
@@ -291,7 +286,7 @@
 /// Open all of the doors
 /datum/grand_finale/all_access
 	name = "Connection"
-	desc = "The ultimate prank! Unlock every single door that they have! Nobody will be able to keep you out now, or anyone else for that matter!"
+	desc = "The ultimate use of your gathered power! Unlock every single door that they have! Nobody will be able to keep you out now, or anyone else for that matter!"
 	icon = 'icons/mob/actions/actions_spells.dmi'
 	icon_state = "knock"
 
@@ -301,21 +296,22 @@
 		if(is_station_level(target_door.z))
 			target_door.unlock()
 			target_door.req_access = list()
+			target_door.req_one_access = list()
 			INVOKE_ASYNC(target_door, TYPE_PROC_REF(/obj/machinery/door/airlock, open))
 	priority_announce("AULIE OXIN FIERA!!", null, 'sound/magic/knock.ogg', sender_override = "[invoker.real_name]")
 
 /// Completely transform the station
 /datum/grand_finale/midas
 	name = "Transformation"
-	desc = "The ultimate prank! Turn their precious station into something much MORE precious, materially speaking!"
+	desc = "The ultimate use of your gathered power! Turn their precious station into something much MORE precious, materially speaking!"
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sheet-gold_2"
 	glow_colour = "#dbdd4c48"
 	var/static/list/permitted_transforms = list( // Non-dangerous only
 		/datum/dimension_theme/gold,
 		/datum/dimension_theme/meat,
-		/datum/dimension_theme/glass,
-		/datum/dimension_theme/disco)
+		/datum/dimension_theme/pizza,
+		/datum/dimension_theme/natural)
 	var/datum/dimension_theme/chosen_theme
 
 // I sure hope this doesn't have performance implications
@@ -399,7 +395,7 @@
 	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]")
 	var/turf/current_location = get_turf(invoker)
 	invoker.gib()
-	var/doom = rand(1, 4)
+	var/doom = rand(1, 3)
 	switch(doom)
 		if (1)
 			var/obj/singularity/singulo = new(current_location)
@@ -408,14 +404,7 @@
 			var/obj/energy_ball/tesla = new (current_location)
 			tesla.energy = 200
 		if (3)
-			/**
-			 * Note: this is very cool and also automatically ends the round with a cutscene after about three minutes.
-			 * This follows the at least 3 minutes of warning they have had about it happening.
-			 * Should be a rare event, so I guess we will see how much people hate it.
-			 */
-			new /obj/narsie(current_location)
-		if (4)
 			var/datum/dynamic_ruleset/roundstart/meteor/meteors = new()
 			meteors.meteordelay = 0
 			var/datum/game_mode/dynamic/mode = SSticker.mode
-			mode.execute_roundstart_rule(meteors) // Meteors will continue until crew leaves.
+			mode.execute_roundstart_rule(meteors) // Meteors will continue until morale is crushed.

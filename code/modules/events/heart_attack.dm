@@ -13,7 +13,7 @@
 	///Number of candidates to be smote
 	var/quantity = 1
 
-/datum/round_event_control/heart_attack/can_spawn_event(players_amt)
+/datum/round_event_control/heart_attack/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return .

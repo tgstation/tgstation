@@ -57,9 +57,8 @@
 			"...inforcement IV! Turn Vermin X! Protection from Evil II! Mage's Shield! Venerious's Mediocre Enhancement II! Expand Power! Banish Hu...",
 			"...nger II! Protection from Neutral! Surecastaga! Refresh! Refresh II! Sharpcast X! Aetherial Manipulation! Ley Line Absorption! Invoke Grand Ritual!!"),
 		list("git checkout origin master", "git reset --hard HEAD~2", "git push origin master --force!!"),
-		list("Eenie, meenie... ", "Miney... ", "Mo!!"),
+		list("Eenie... ", "Meenie... ", "Minie'Mo!!"),
 		list("Levios!", "Graviole!", "Explomb!!"),
-		list("...", "...... heh.", "*snap"),
 		list("Ultimate School of Magic!", "Ultimate Ritual!", "Macrocosm!!"),
 	)
 
@@ -183,7 +182,7 @@
 
 	var/datum/round_event_control/final_event = pick (possible_events)
 	final_event.runEvent()
-	to_chat(user, span_notice("Your released magic afflicts the crew; [final_event.name]!"))
+	to_chat(user, span_notice("Your released magic afflicts the crew: [final_event.name]!"))
 
 /// Applies some local side effects to the area
 /obj/effect/grand_rune/proc/trigger_side_effects(mob/living/user)
@@ -294,7 +293,7 @@
 	var/datum/radial_menu_choice/choice_none = new()
 	choice_none.name = PICK_NOTHING
 	choice_none.image = image(icon = 'icons/mob/actions/actions_cult.dmi', icon_state = "draw")
-	choice_none.info = "The ultimate prank! They will never expect you to continue to do \
+	choice_none.info = "The ultimate use of your gathered power! They will never expect you to continue to do \
 		exactly the same kind of thing you've been doing this whole time!"
 	options += list("[choice_none.name]" = choice_none)
 

@@ -32,7 +32,7 @@
 	///The admin-selected loan offer ID.
 	var/chosen_event
 
-/datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
+/datum/round_event_control/shuttle_loan/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 
 	for(var/datum/round_event/running_event in SSevents.running)

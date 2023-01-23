@@ -8,7 +8,7 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	description = "Wizard no longer needs robes to cast spells."
-	min_wizard_trigger_potency = 0
+	min_wizard_trigger_potency = 4
 	max_wizard_trigger_potency = 7
 
 /datum/round_event/wizard/robelesscasting/start()

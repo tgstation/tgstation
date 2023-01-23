@@ -13,7 +13,7 @@
 	///Admin selected disease, to be passed down to the round_event
 	var/chosen_disease
 
-/datum/round_event_control/disease_outbreak/can_spawn_event(players_amt)
+/datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return .

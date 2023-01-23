@@ -78,7 +78,7 @@
 	if(!scrubbers.len)
 		return kill()
 
-/datum/round_event_control/scrubber_overflow/can_spawn_event(players_amt)
+/datum/round_event_control/scrubber_overflow/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return
