@@ -315,7 +315,7 @@ Moving interrupts
 		var/obj/structure/carving_block/sculpt_block = target
 
 		if(sculpt_block.completion) // someone already started sculpting this so just finish
-			set_block(sculpt_block, user, silent=TRUE)
+			set_block(sculpt_block, user, silent = TRUE)
 			start_sculpting(user)
 		else if(sculpt_block == prepared_block && (prepared_block.current_target || prepared_block.current_preset_type))
 			start_sculpting(user)
