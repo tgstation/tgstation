@@ -202,8 +202,8 @@
 			visible_message(span_danger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."), \
 			span_userdanger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."))
 		if(BRAIN_SUICIDE_MESSAGE)
-				visible_message(span_danger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."), \
-				span_userdanger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."))
+			visible_message(span_danger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."), \
+			span_userdanger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."))
 		if(MECHANICAL_SUICIDE_MESSAGE)
 			visible_message(span_danger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."), \
 			span_userdanger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."))
