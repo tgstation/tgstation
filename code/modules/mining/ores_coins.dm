@@ -346,9 +346,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0
-	var/value
+	var/value = 0
 	var/coinflip
 	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
+	///If you do not want this coin to be valued based on its materials and instead set a custom value set this to TRUE and set value to the desired value.
+	var/override_material_worth = FALSE
 
 /obj/item/coin/Initialize(mapload)
 	. = ..()
@@ -359,6 +361,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/set_custom_materials(list/materials, multiplier = 1)
 	. = ..()
+	if(override_material_worth)
+		return
 	value = 0
 	for(var/i in custom_materials)
 		var/datum/material/M = i
@@ -480,6 +484,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	custom_materials = list(/datum/material/plastic = 400)
 	sideslist = list("valid", "salad")
 	material_flags = NONE
+	override_material_worth = TRUE
 
 /obj/item/coin/iron
 

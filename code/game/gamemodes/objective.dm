@@ -295,7 +295,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/target_role_type = FALSE
 	var/human_check = TRUE
 
-
 /datum/objective/protect/check_completion()
 	var/obj/item/organ/internal/brain/brain_target
 	if(human_check)

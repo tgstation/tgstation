@@ -119,13 +119,17 @@ RSF
 	if(cooldown > world.time)
 		return
 	. = ..()
-	if(!proximity || !is_allowed(A))
-		return
+	if(!proximity)
+		return .
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if (!is_allowed(A))
+		return .
 	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
 		playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
 		var/atom/meme = new to_dispense(get_turf(A))
 		to_chat(user, span_notice("[action_type] [meme.name]..."))
 		cooldown = world.time + cooldowndelay
+	return .
 
 ///A helper proc. checks to see if we can afford the amount of charge that is passed, and if we can docs the charge from our base, and returns TRUE. If we can't we return FALSE
 /obj/item/rsf/proc/use_matter(charge, mob/user)

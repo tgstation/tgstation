@@ -55,8 +55,7 @@
 		return
 	//adjust burden
 	burden_level = increase ? burden_level + 1 : burden_level - 1
-	if(burden_level < 0) //basically a clamp with a stack on it, because this shouldn't be happening
-		stack_trace("somehow, burden trauma is removing more burden than it's adding.")
+	if(burden_level < 0)
 		burden_level = 0
 	//send a message and handle rewards
 	switch(burden_level)
@@ -113,11 +112,12 @@
 			else
 				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
 		if(9)
-			to_chat(owner, span_notice("You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you."))
-			var/mob/living/carbon/human/knower = owner
-			if(!istype(knower))
-				return
-			INVOKE_ASYNC(knower, TYPE_PROC_REF(/mob/living/carbon/human, slow_psykerize))
+			if(increase)
+				to_chat(owner, span_notice("You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you."))
+				var/mob/living/carbon/human/knower = owner
+				if(!istype(knower))
+					return
+				INVOKE_ASYNC(knower, TYPE_PROC_REF(/mob/living/carbon/human, slow_psykerize))
 
 /// Signal to decrease burden_level (see update_burden proc) if an organ is added
 /datum/brain_trauma/special/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)
@@ -136,20 +136,50 @@
 
 	update_burden(increase = FALSE)//working organ
 
+/datum/brain_trauma/special/burdened/proc/is_burdensome_to_lose_organ(mob/burdened, obj/item/organ/old_organ, special)
+	if(special) //aheals
+		return
+	if(!ishuman(burdened))
+		return //mobs that don't care about organs
+	var/mob/living/carbon/human/burdened_human = burdened
+	var/datum/species/burdened_species = burdened_human.dna?.species
+	if(!burdened_species)
+		return
+
+	/// only organs that are slotted in these count. because there's a lot of useless organs to cheese with.
+	var/list/critical_slots = list(
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_TONGUE,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
+	if(!burdened_species.mutantheart)
+		critical_slots -= ORGAN_SLOT_HEART
+	if(!burdened_species.mutanttongue)
+		critical_slots -= ORGAN_SLOT_TONGUE
+	if(!burdened_species.mutantlungs)
+		critical_slots -= ORGAN_SLOT_LUNGS
+	if(!burdened_species.mutantstomach)
+		critical_slots -= ORGAN_SLOT_STOMACH
+	if(!burdened_species.mutantliver)
+		critical_slots -= ORGAN_SLOT_LIVER
+
+	if(!(old_organ.slot in critical_slots))
+		return FALSE
+	else if(istype(old_organ, /obj/item/organ/internal/eyes))
+		var/obj/item/organ/internal/eyes/old_eyes = old_organ
+		if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
+			return TRUE
+		return FALSE
+	return TRUE
+
 /// Signal to increase burden_level (see update_burden proc) if an organ is removed
 /datum/brain_trauma/special/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
-
-	if(special) //aheals
-		return
-
-	if(istype(old_organ, /obj/item/organ/internal/eyes))
-		var/obj/item/organ/internal/eyes/old_eyes = old_organ
-		if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
-			update_burden(TRUE)
-		return
-	else if(istype(old_organ, /obj/item/organ/internal/appendix))
-		return
 
 	update_burden(increase = TRUE)//lost organ
 

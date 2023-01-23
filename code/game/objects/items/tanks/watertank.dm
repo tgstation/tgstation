@@ -131,19 +131,16 @@
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
 	slot_flags = NONE
 
-	var/obj/item/watertank/tank
-
 /obj/item/reagent_containers/spray/mister/Initialize(mapload)
 	. = ..()
-	tank = loc
-	if(!tank?.reagents)
+	if(!loc?.reagents)
 		return INITIALIZE_HINT_QDEL
-	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
+	reagents = loc.reagents //This mister is really just a proxy for the tank's reagents
 
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
 		return
-	..()
+	return ..()
 
 //Janitor tank
 /obj/item/watertank/janitor
@@ -299,8 +296,7 @@
 	if(AttemptRefill(target, user))
 		return
 	if(nozzle_mode == EXTINGUISHER)
-		..()
-		return
+		return ..()
 	var/Adj = user.Adjacent(target)
 	if(nozzle_mode == RESIN_LAUNCHER)
 		if(Adj)
@@ -324,7 +320,7 @@
 		return
 
 	if(nozzle_mode == RESIN_FOAM)
-		if(!Adj|| !isturf(target))
+		if(!Adj || !isturf(target))
 			balloon_alert(user, "too far!")
 			return
 		for(var/S in target)

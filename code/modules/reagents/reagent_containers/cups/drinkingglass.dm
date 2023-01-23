@@ -18,9 +18,18 @@
 	//the screwdriver cocktail can make a drinking glass into the world's worst screwdriver. beautiful.
 	toolspeed = 25
 
+	/// The type to compare to glass_style.required_container type, or null to use class type.
+	/// This allows subtypes to utilize parent styles.
+	var/base_container_type = null
+
 /obj/item/reagent_containers/cup/glass/drinkingglass/Initialize(mapload, vol)
 	. = ..()
-	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_glass_change)), CALLBACK(src, PROC_REF(on_glass_reset)))
+	AddComponent( \
+		/datum/component/takes_reagent_appearance, \
+		CALLBACK(src, PROC_REF(on_glass_change)), \
+		CALLBACK(src, PROC_REF(on_glass_reset)), \
+		base_container_type = base_container_type, \
+	)
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
@@ -70,6 +79,13 @@
 		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
 	else
 		desc = "A shot glass - the universal symbol for bad decisions."
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled
+	base_container_type = /obj/item/reagent_containers/cup/glass/drinkingglass
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/Initialize(mapload, vol)
+	. = ..()
+	update_appearance()
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/soda
 	name = "Soda Water"

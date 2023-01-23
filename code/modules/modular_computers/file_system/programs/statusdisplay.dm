@@ -45,6 +45,7 @@
  */
 /datum/computer_file/program/status/proc/post_message(upper, lower)
 	post_status("message", upper, lower)
+	log_game("[key_name(usr)] has changed the station status display message to \"[upper] [lower]\" [loc_name(usr)]")
 
 /**
  * Post a picture to status displays
@@ -58,6 +59,8 @@
 		post_status(picture)
 	else
 		post_status("alert", picture)
+
+	log_game("[key_name(usr)] has changed the station status display message to \"[picture]\" [loc_name(usr)]")
 
 /datum/computer_file/program/status/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()

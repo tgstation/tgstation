@@ -278,7 +278,7 @@
 			var/obj/machinery/porta_turret/P = the_target
 			if(P.in_faction(src)) //Don't attack if the turret is in the same faction
 				return FALSE
-			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
+			if(P.has_cover && !P.raised) //Don't attack invincible turrets
 				return FALSE
 			if(P.machine_stat & BROKEN) //Or turrets that are already broken
 				return FALSE

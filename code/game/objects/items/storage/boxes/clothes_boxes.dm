@@ -7,7 +7,7 @@
 
 /obj/item/storage/box/gloves/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/clothing/gloves/color/latex(src)
+		new /obj/item/clothing/gloves/latex(src)
 
 /obj/item/storage/box/masks
 	name = "box of sterile masks"

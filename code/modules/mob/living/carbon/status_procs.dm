@@ -1,6 +1,5 @@
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
-//eye_blind, TRAIT_BLIND trait, TRAIT_NEARSIGHT trait, and TRAIT_HUSK trait.
+//The effects include: stun, knockdown, unconscious, sleeping, resting
 
 
 /mob/living/carbon/IsParalyzed(include_stamcrit = TRUE)

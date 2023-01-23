@@ -22,16 +22,17 @@
 	/// Variable that holds a timer which is used for callbacks to `send_console_message()`. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.
 	var/console_notify_timer
 	var/datum/techweb/stored_research
-	var/obj/item/disk/design_disk/inserted_disk
 	var/datum/component/remote_materials/materials
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
-	stored_research = new /datum/techweb/specialized/autounlocking/smelter
+	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
+		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
+	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
 	materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
 
 /obj/machinery/mineral/ore_redemption/Destroy()
-	QDEL_NULL(stored_research)
+	stored_research = null
 	materials = null
 	return ..()
 
@@ -71,7 +72,7 @@
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
 	var/datum/component/material_container/mat_container = materials.mat_container
-	if(!mat_container || D.make_reagents.len)
+	if(!mat_container || D.make_reagent)
 		return FALSE
 
 	var/build_amount = 0
@@ -172,14 +173,9 @@
 	if(!powered())
 		return ..()
 
-	if(istype(W, /obj/item/disk/design_disk))
-		if(user.transferItemToLoc(W, src))
-			inserted_disk = W
-			return TRUE
-
 	var/obj/item/stack/ore/O = W
 	if(istype(O))
-		if(O.refined_type == null)
+		if(isnull(O.refined_type))
 			to_chat(user, span_warning("[O] has already been refined!"))
 			return
 
@@ -230,16 +226,6 @@
 	else if (materials.on_hold())
 		data["disconnected"] = "mineral withdrawal is on hold"
 
-	data["diskDesigns"] = list()
-	data["hasDisk"] = FALSE
-	if(inserted_disk)
-		data["hasDisk"] = TRUE
-		if(inserted_disk.blueprints.len)
-			var/index = 1
-			for (var/datum/design/thisdesign in inserted_disk.blueprints)
-				if(thisdesign)
-					data["diskDesigns"] += list(list("name" = thisdesign.name, "index" = index, "canupload" = thisdesign.build_type&SMELTER))
-				index++
 	return data
 
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
@@ -277,43 +263,17 @@
 					return
 
 				var/stored_amount = CEILING(amount / MINERAL_MATERIAL_AMOUNT, 0.1)
-
 				if(!stored_amount)
 					return
 
-				var/desired = 0
-				if (params["sheets"])
-					desired = text2num(params["sheets"])
-				else
-					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt",  max_value = stored_amount)
-					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
-						return
-				var/sheets_to_remove = round(min(desired,50,stored_amount))
+				var/desired = text2num(params["sheets"])
+				var/sheets_to_remove = round(min(desired, 50, stored_amount))
 
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
 				mats[mat] = MINERAL_MATERIAL_AMOUNT
 				materials.silo_log(src, "released", -count, "sheets", mats)
 				//Logging deleted for quick coding
-			return TRUE
-		if("diskInsert")
-			var/obj/item/disk/design_disk/disk = usr.get_active_held_item()
-			if(istype(disk))
-				if(!usr.transferItemToLoc(disk,src))
-					return
-				inserted_disk = disk
-			else
-				to_chat(usr, span_warning("Not a valid Design Disk!"))
-			return TRUE
-		if("diskEject")
-			if(inserted_disk)
-				usr.put_in_hands(inserted_disk)
-				inserted_disk = null
-			return TRUE
-		if("diskUpload")
-			var/n = text2num(params["design"])
-			if(inserted_disk && inserted_disk.blueprints && inserted_disk.blueprints[n])
-				stored_research.add_design(inserted_disk.blueprints[n])
 			return TRUE
 		if("Smelt")
 			if(!mat_container)
@@ -328,15 +288,7 @@
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
 			if((check_access(user_id_card) || allowed(usr)) && alloy)
-				var/smelt_amount = can_smelt_alloy(alloy)
-				var/desired = 0
-				if (params["sheets"])
-					desired = text2num(params["sheets"])
-				else
-					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt", max_value = smelt_amount)
-					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
-						return
-				var/amount = round(min(desired,50,smelt_amount))
+				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
 				mat_container.use_materials(alloy.materials, amount)
