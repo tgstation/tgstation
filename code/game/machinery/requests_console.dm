@@ -455,7 +455,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
 
 /obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
-
 	tool.play_tool_sound(src, 50)
 	if(open)
 		to_chat(user, span_notice("You close the maintenance panel."))
@@ -501,11 +500,24 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		return
 	return ..()
 
+/obj/machinery/requests_console/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/wallframe/requests_console(loc)
+	qdel(src)
+
 /obj/machinery/requests_console/auto_name // Register an autoname variant and then make the directional helpers before undefing all the magic bits
 	auto_name = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
+
+/obj/item/wallframe/requests_console
+	name = "requests console"
+	desc = "An unmounted requests console. Attach it to a wall to use."
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "req_comp_off"
+	result_path = /obj/machinery/requests_console/auto_name
+	pixel_shift = 30
 
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING

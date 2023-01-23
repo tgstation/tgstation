@@ -73,3 +73,73 @@
 	clothing_traits = list(TRAIT_DOUBLE_TAP)
 	icon_state = "black"
 	greyscale_colors = "#2f2e31"
+
+/obj/item/clothing/gloves/captain
+	desc = "Regal blue gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky."
+	name = "captain's gloves"
+	icon_state = "captain"
+	inhand_icon_state = null
+	greyscale_colors = null
+	siemens_coefficient = 0
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	strip_delay = 60
+	armor_type = /datum/armor/captain_gloves
+	resistance_flags = NONE
+
+/datum/armor/captain_gloves
+	bio = 90
+	fire = 70
+	acid = 50
+
+/obj/item/clothing/gloves/latex
+	name = "latex gloves"
+	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip."
+	icon_state = "latex"
+	inhand_icon_state = "latex_gloves"
+	greyscale_colors = null
+	siemens_coefficient = 0.3
+	armor_type = /datum/armor/latex_gloves
+	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
+	resistance_flags = NONE
+
+/datum/armor/latex_gloves
+	bio = 100
+
+/obj/item/clothing/gloves/latex/nitrile
+	name = "nitrile gloves"
+	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
+	icon_state = "nitrile"
+	inhand_icon_state = "greyscale_gloves"
+	greyscale_colors = "#99eeff"
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+
+/obj/item/clothing/gloves/tinkerer
+	name = "tinker's gloves"
+	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."
+	inhand_icon_state = "greyscale_gloves"
+	icon_state = "clockwork_gauntlets"
+	greyscale_colors = "#db6f05"
+	siemens_coefficient = 0.8
+	armor_type = /datum/armor/tinker_gloves
+	clothing_traits = list(TRAIT_QUICK_BUILD)
+	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
+	resistance_flags = NONE
+
+/datum/armor/tinker_gloves
+	bio = 70
+
+/obj/item/clothing/gloves/atmos
+	name = "atmospheric extrication gloves"
+	desc = "Heavy duty gloves for firefighters. These are thick, non-flammable and let you carry people faster."
+	icon_state = "atmos"
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF
+	siemens_coefficient = 0.3
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_CHUNKYFINGERS)
+	clothing_flags = THICKMATERIAL

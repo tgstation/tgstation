@@ -4793,7 +4793,6 @@
 /area/station/security/office)
 "bvA" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	color = "#c45c57";
 	dir = 4
 	},
@@ -20251,7 +20250,7 @@
 /area/station/security/office)
 "fPQ" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/healthanalyzer,
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = -3;
@@ -23239,7 +23238,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
 	},
@@ -25047,7 +25046,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clipboard{
@@ -26504,7 +26503,6 @@
 /area/station/security/execution/transfer)
 "hCV" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	color = "#c45c57";
 	dir = 1
 	},
@@ -27533,7 +27531,7 @@
 	name = "medical locker"
 	},
 /obj/structure/grille/broken,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
@@ -28951,7 +28949,6 @@
 /area/station/engineering/gravity_generator)
 "ijd" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	color = "#c45c57";
 	dir = 1
 	},
@@ -30961,8 +30958,8 @@
 /area/station/cargo/storage)
 "iIF" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/glasses/science{
 	pixel_x = 4;
 	pixel_y = 4
@@ -39644,8 +39641,8 @@
 /area/station/medical/pharmacy)
 "lko" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/storage/box/disks{
 	pixel_y = 5
 	},
@@ -41256,7 +41253,7 @@
 /area/station/service/chapel)
 "lHy" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/paper/guides/jobs/medical/morgue,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -44171,8 +44168,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/storage/box/monkeycubes{
 	pixel_x = 2;
 	pixel_y = 5
@@ -46384,7 +46381,7 @@
 "nij" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/item/mmi,
@@ -49170,7 +49167,7 @@
 /area/station/commons/locker)
 "obU" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma,
@@ -57914,7 +57911,6 @@
 /area/station/service/chapel/monastery)
 "qBR" = (
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	color = "#c45c57";
 	dir = 8
 	},
@@ -61370,7 +61366,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/machinery/firealarm/directional/east,
@@ -69162,7 +69158,6 @@
 	name = "command camera"
 	},
 /obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
 	color = "#c45c57";
 	dir = 8
 	},
@@ -77362,7 +77357,7 @@
 	dir = 1
 	},
 /obj/structure/noticeboard/directional/west,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/hemostat,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/fore)

@@ -194,7 +194,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/harvest()
 	var/counter
-	for(counter=0, counter<=powerlevel, counter++)
+	for(counter=0, counter <= powerlevel, counter++)
 		var/obj/item/food/hugemushroomslice/S = new /obj/item/food/hugemushroomslice(src.loc)
 		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
