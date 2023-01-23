@@ -299,6 +299,17 @@
 /datum/quirk/item_quirk/tagger/add_unique(client/client_source)
 	give_item_to_holder(/obj/item/toy/crayon/spraycan, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
+/datum/quirk/throwingarm
+	name = "Throwing Arm"
+	desc = "Your arms have a lot of heft to them! Objects that you throw just always seem to fly further than everyone elses, and you never miss a toss."
+	icon = "baseball"
+	value = 2
+	mob_trait = TRAIT_THROWINGARM
+	gain_text = "<span class='notice'>Your arms are full of energy!</span>"
+	lose_text = "<span class='danger'>Your arms ache a bit.</span>"
+	medical_record_text = "Patient displays mastery over throwing balls."
+	mail_goodies = list(/obj/item/toy/beach_ball/baseball, /obj/item/toy/beach_ball/holoball, /obj/item/toy/beach_ball/holoball/dodgeball)
+
 /datum/quirk/voracious
 	name = "Voracious"
 	desc = "Nothing gets between you and your food. You eat faster and can binge on junk food! Being fat suits you just fine."
