@@ -631,7 +631,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ANXIOUS "anxious"
 #define TRAIT_SMOKER "smoker"
 #define TRAIT_POSTERBOY "poster_boy"
-#define TRAIT_NTGRUB_SUBCRIBER "ntgrub_subscriber"
+#define TRAIT_NTGRUB_SUBSCRIBER "ntgrub_subscriber"
 #define TRAIT_THROWINGARM "throwingarm"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't

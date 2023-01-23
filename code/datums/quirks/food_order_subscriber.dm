@@ -4,10 +4,10 @@
 	desc = "You have subscribed to NTGRUB, for a low-low price you will receive regular deliveries of food tailored to your tastes."
 	icon = "gift"
 	value = 7
-	mob_trait = TRAIT_NTGRUB_SUBCRIBER
+	mob_trait = TRAIT_NTGRUB_SUBSCRIBER
 	gain_text = "<span class='danger'>You have subscribed to NTGRUB!</span>"
 	lose_text = "<span class='notice'>You feel as if your subscription to NTGRUB has been cancelled.</span>"
-	medical_record_text = "Patient is susceptible to GREAT DEALS! SUBSCRIBE TO NTGRUB NOW."
+	medical_record_text = "Patient is fufilling their dietary needs with a food subscription service."
 	mail_goodies = list(/obj/item/plate/large, /obj/item/kitchen/fork, /obj/item/knife/plastic, /obj/item/kitchen/spoon, /obj/item/reagent_containers/cup/bowl)
 	var/datum/component/food_order_sub_quirk/quirk_component
 	/// semi random list of foods for NTGRUB. avoids pizza and desserts as much as it can, to replicate the like, style of like, your Blue Aprons
