@@ -17,14 +17,14 @@ GLOBAL_DATUM(escape_menu_details, /atom/movable/screen/escape_menu/details)
 	. = ..()
 
 	update_text()
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSescape_menu, src)
 
 /atom/movable/screen/escape_menu/details/Destroy()
 	if (GLOB.escape_menu_details == src)
 		stack_trace("Something tried to delete the escape menu details screen")
 		return QDEL_HINT_LETMELIVE
 
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSescape_menu, src)
 	return ..()
 
 /atom/movable/screen/escape_menu/details/process(delta_time)

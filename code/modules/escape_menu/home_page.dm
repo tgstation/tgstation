@@ -204,7 +204,7 @@
 
 	is_blinking = TRUE
 	current_blink = TRUE
-	START_PROCESSING(SShome_page_blinking, src)
+	START_PROCESSING(SSescape_menu, src)
 	home_button_text.update_text()
 
 /atom/movable/screen/escape_menu/home_button/admin_help/proc/end_processing()
@@ -213,7 +213,7 @@
 
 	is_blinking = FALSE
 	current_blink = FALSE
-	STOP_PROCESSING(SShome_page_blinking, src)
+	STOP_PROCESSING(SSescape_menu, src)
 	home_button_text.update_text()
 
 /atom/movable/screen/escape_menu/home_button/admin_help/proc/connect_ticket(datum/admin_help/admin_help)

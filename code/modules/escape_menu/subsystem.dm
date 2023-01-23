@@ -1,6 +1,6 @@
-/// Subsystem for controlling blinking of the adminhelp button
-PROCESSING_SUBSYSTEM_DEF(home_page_blinking)
-	name = "Home Page Blinking"
+/// Subsystem for controlling anything related to the escape menu
+PROCESSING_SUBSYSTEM_DEF(escape_menu)
+	name = "Escape Menu"
 	flags = SS_NO_INIT
 	runlevels = ALL
 	wait = 2 SECONDS
