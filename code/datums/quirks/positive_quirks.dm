@@ -232,14 +232,13 @@
 	var/department = posterboy.assigned_role.paycheck_department
 	if(department == ACCOUNT_CIV) //if you are not part of a department you instead get 3 neutral posters
 		for(var/i in 1 to 2)
-			new /obj/item/poster/quirk/crew/random/(src)
+			new /obj/item/poster/quirk/crew/random(src)
 		return
 	for(var/potential_poster in subtypesof(/obj/item/poster/quirk))
-		var/obj/item/poster/quirk/new_dept_poster = new potential_poster()
-		if(new_dept_poster.quirk_poster_department != department)
-			qdel(new_dept_poster)
+		var/obj/item/poster/quirk/new_dept_poster = potential_poster
+		if(initial(new_dept_poster.quirk_poster_department) != department)
 			continue
-		new_dept_poster.forceMove(src)
+		new potential_poster(src)
 
 /datum/quirk/selfaware
 	name = "Self-Aware"

@@ -28,7 +28,6 @@
 		balloon_alert(user, "interrupted!")
 		return
 	var/obj/item/poster/traitor/quirkspawn = new(get_turf(src))
-	moveToNullspace()
 	user.put_in_hands(quirkspawn)
 	to_chat(user, span_notice("You have converted one of your posters!"))
 	qdel(src)
