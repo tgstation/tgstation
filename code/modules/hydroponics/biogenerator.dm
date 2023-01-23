@@ -45,18 +45,17 @@
 	/// The sound loop that can be heard when the generator is processing.
 	var/datum/looping_sound/generator/soundloop
 
-
 /obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
-	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
+	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator])
+		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator] = new /datum/techweb/autounlocking/biogenerator
+	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator]
 	soundloop = new(src, processing)
-
 
 /obj/machinery/biogenerator/Destroy()
 	QDEL_NULL(beaker)
 	QDEL_NULL(soundloop)
 	return ..()
-
 
 /obj/machinery/biogenerator/contents_explosion(severity, target)
 	. = ..()
@@ -70,7 +69,6 @@
 			SSexplosions.med_mov_atom += beaker
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
-
 
 /obj/machinery/biogenerator/handle_atom_del(atom/deleting_atom)
 	. = ..()
@@ -217,23 +215,6 @@
 				to_chat(user, span_info("You insert \the [attacking_item] in \the [src]"))
 
 		return TRUE //no afterattack
-
-	else if (istype(attacking_item, /obj/item/disk/design_disk))
-		user.visible_message(
-			span_notice("[user] begins to load \the [attacking_item] in \the [src]..."),
-			span_notice("You begin to load a design from \the [attacking_item]..."),
-			span_hear("You hear the chatter of a floppy drive.")
-		)
-		processing = TRUE
-		var/obj/item/disk/design_disk/design_disk = attacking_item
-
-		if(do_after(user, 1 SECONDS, target = src))
-			for(var/blueprint in design_disk.blueprints)
-				if(blueprint)
-					stored_research.add_design(blueprint)
-
-		processing = FALSE
-		return TRUE
 
 	else
 		to_chat(user, span_warning("You cannot put \the [attacking_item] in \the [src]!"))

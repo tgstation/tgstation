@@ -212,7 +212,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 75)
 	build_path = /obj/item/melee/synthetic_arm_blade
-	category = list(RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_EMAGGED)
+	category = list(RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_HACKED)
 
 /// Design disks and designs - for adding limbs and organs to the limbgrower.
 /obj/item/disk/design_disk/limbs

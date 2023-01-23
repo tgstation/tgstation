@@ -271,7 +271,7 @@
 	var/found_amount = 0
 	var/datum/gas_mixture/mix = T.return_air()
 	found_amount += mix.gases[/datum/gas/plasma] ? mix.gases[/datum/gas/plasma][MOLES] : 0
-	return found_amount>=target_amount
+	return found_amount >= target_amount
 
 
 /datum/objective_item/steal/functionalai
@@ -402,7 +402,7 @@
 
 	if(istype(S, targetitem))
 		found_amount = S.amount
-	return found_amount>=target_amount
+	return found_amount >= target_amount
 
 /datum/objective_item/stack/diamond
 	name = "10 diamonds"
