@@ -48,8 +48,8 @@
 			return
 
 		var/damage_mod = 0
-		for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
-			damage_mod += (T & damagetype) ? 1 : 0
+		for(var/type in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
+			damage_mod += (type & damagetype) ? 1 : 0
 		damage_mod = max(1, damage_mod)
 
 		//Do 200 damage divided by the number of damage types applied.
@@ -66,16 +66,14 @@
 			adjustOxyLoss(200/damage_mod)
 
 		if(damagetype & MANUAL_SUICIDE) //Assume the object will handle the death.
-			investigate_log("has died from committing suicide[held_item ? " with [held_item]" : ""].", INVESTIGATE_DEATHS)
+			suicide_log(held_item)
 			return
 
 		//If something went wrong, just do normal oxyloss
 		if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
 			adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
-		investigate_log("has died from committing suicide[held_item ? " with [held_item]" : ""].", INVESTIGATE_DEATHS)
-		final_checkout(do_damage = FALSE)
-
+		final_checkout(held_item, do_damage = FALSE)
 		return
 
 	var/suicide_message
@@ -101,8 +99,7 @@
 
 	visible_message(span_danger("[suicide_message]"), span_userdanger("[suicide_message]"))
 
-	investigate_log("has died from committing suicide[held_item ? " with [held_item]" : ""].", INVESTIGATE_DEATHS)
-	final_checkout()
+	final_checkout(held_item)
 
 /mob/living/brain/verb/suicide()
 	set hidden = TRUE
@@ -166,11 +163,13 @@
 	dispatch_message_from_tree(ANIMAL_SUICIDE_MESSAGE)
 	final_checkout()
 
-/mob/living/proc/suicide_log()
+/// Inserts logging in both the mob's logs and the investigate log pertaining to their death. Suicide tool is the object we used to commit suicide, if one was held and used.
+/mob/living/proc/suicide_log(obj/item/suicide_tool)
 	investigate_log("has died from committing suicide.", INVESTIGATE_DEATHS)
 	log_message("committed suicide as [src.type]", LOG_ATTACK)
 
-/mob/living/carbon/human/suicide_log()
+/mob/living/carbon/human/suicide_log(obj/item/suicide_tool)
+	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool]" : ""].", INVESTIGATE_DEATHS)
 	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
 
 /// Sends a TGUI Alert to the person attempting to commit suicide. Returns TRUE if they confirm they want to die, FALSE otherwise. Check can_suicide here as well.
@@ -191,12 +190,13 @@
 	return FALSE
 
 /// Inserts in logging and death + mind dissociation when we're fully done with ending the life of our mob, as well as adjust the health. We will disallow re-entering the body when this is called.
+/// The suicide_tool variable is currently only used for humans in order to allow suicide log to properly put stuff in investigate log.
 /// Set do_damage to FALSE in order to not do damage (in case it's handled elsewhere in the verb or another proc that the suicide tree calls).
-/mob/living/proc/final_checkout(do_damage = TRUE)
+/mob/living/proc/final_checkout(obj/item/suicide_tool, do_damage = TRUE)
 	if(do_damage) // enough to really drive home the point that they are DEAD.
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
-	suicide_log()
+	suicide_log(suicide_tool)
 	death(FALSE)
 	ghostize(FALSE)
 
@@ -220,6 +220,9 @@
 			var/turf/location = get_turf(src)
 			location.visible_message(span_notice("[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""), null, \
 			span_notice("[src] bleeps electronically."))
+
+/mob/living/carbon/human/dispatch_message_from_tree(type)
+	switch(type)
 
 
 /// Checks if we are in a valid state to suicide (not already suiciding, capable of actually killing ourselves, area checks, etc.) Returns TRUE if we can suicide, FALSE if we can not.
