@@ -364,7 +364,7 @@ Moving interrupts
 		user.balloon_alert(user, "statue finished")
 	stop_sculpting(silent = !interrupted)
 
-/obj/item/chisel/proc/set_block(obj/structure/carving_block/B, mob/living/user, silent=FALSE)
+/obj/item/chisel/proc/set_block(obj/structure/carving_block/B, mob/living/user, silent = FALSE)
 	prepared_block = B
 	tracked_user = user
 	RegisterSignal(tracked_user, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
