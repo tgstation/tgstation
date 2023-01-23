@@ -1748,7 +1748,7 @@
  * - [required_material][/datum/material]: The type of material we are checking for
  * - mat_amount: The minimum required amount of material
  */
-/atom/proc/has_material_type(datum/material/required_material, mat_amount=0)
+/atom/proc/has_material_type(datum/material/required_material, mat_amount = 0)
 	var/list/cached_materials = custom_materials
 	if(!length(cached_materials))
 		return null
