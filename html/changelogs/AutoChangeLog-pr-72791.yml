@@ -1,0 +1,4 @@
+author: "Potato-Masher"
+delete-after: True
+changes:
+  - bugfix: "Morphs now properly move faster when disguised rather than slowing down."

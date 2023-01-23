@@ -164,9 +164,10 @@
 
 		if("make_limb")
 			var/design_id = params["design_id"]
-			if(!stored_research.researched_designs.Find(design_id) && !imported_designs.Find(design_id))
+			if(!stored_research.researched_designs.Find(design_id) && !stored_research.hacked_designs.Find(design_id) && !imported_designs.Find(design_id))
 				return
-			/// All the reagents we're using to make our organ.
+			being_built = SSresearch.techweb_design_by_id(design_id)
+			// All the reagents we're using to make our organ.
 			var/list/consumed_reagents_list = being_built.reagents_list.Copy()
 			/// The amount of power we're going to use, based on how much reagent we use.
 			var/power = 0
@@ -186,9 +187,7 @@
 			icon_state = "limbgrower_idleon"
 			selected_category = params["active_tab"]
 			addtimer(CALLBACK(src, PROC_REF(build_item), consumed_reagents_list), production_speed * production_coefficient)
-			. = TRUE
-
-	return
+			return TRUE
 
 /*
  * The process of beginning to build a limb or organ.

@@ -62,7 +62,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 /obj/machinery/deepfryer/deconstruct(disassembled)
 	// This handles nulling out frying via exited
-	frying.forceMove(drop_location())
+	if(frying)
+		frying.forceMove(drop_location())
 	return ..()
 
 /obj/machinery/deepfryer/RefreshParts()
