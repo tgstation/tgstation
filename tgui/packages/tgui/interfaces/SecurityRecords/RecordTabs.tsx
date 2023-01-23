@@ -1,15 +1,15 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon } from 'tgui/components';
+import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon, Button } from 'tgui/components';
 import { JOB2ICON } from '../common/JobToIcon';
 import { CRIMESTATUS2COLOR } from './constants';
 import { isRecordMatch } from './helpers';
 import { SecureData, SecurityRecord } from './types';
 
 /** Tabs on left, with search bar */
-export const RecordTabs = (props, context) => {
-  const { data } = useBackend<SecureData>(context);
+export const SecurityRecordTabs = (props, context) => {
+  const { act, data } = useBackend<SecureData>(context);
   const { records = [] } = data;
 
   const errorMessage = !records.length
@@ -34,15 +34,28 @@ export const RecordTabs = (props, context) => {
       </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable>
-          <Tabs vertical>
-            {!sorted.length ? (
-              <NoticeBox>{errorMessage}</NoticeBox>
-            ) : (
-              sorted.map((record, index) => (
-                <CrewTab record={record} key={index} />
-              ))
-            )}
-          </Tabs>
+          <Stack fill vertical>
+            <Stack.Item grow>
+              <Tabs vertical>
+                {!sorted.length ? (
+                  <NoticeBox>{errorMessage}</NoticeBox>
+                ) : (
+                  sorted.map((record, index) => (
+                    <CrewTab record={record} key={index} />
+                  ))
+                )}
+              </Tabs>
+            </Stack.Item>
+            <Stack.Item>
+              <Box align="right">
+                <Button.Confirm
+                  content="Purge Records"
+                  icon="trash"
+                  onClick={() => act('purge_records')}
+                />
+              </Box>
+            </Stack.Item>
+          </Stack>
         </Section>
       </Stack.Item>
     </Stack>
@@ -76,7 +89,7 @@ const CrewTab = ({ record }, context) => {
       onClick={() => selectRecord(record)}
       selected={isSelected}>
       <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]} wrap>
-        <Icon name={JOB2ICON[rank]} /> {name}
+        <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>
   );

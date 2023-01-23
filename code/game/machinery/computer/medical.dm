@@ -33,10 +33,12 @@
 /obj/machinery/computer/med_data/ui_data(mob/user)
 	var/list/data = list()
 
-	data["can_view"] = has_auth(user) // just for notes (HIPAA compliance)
+	var/has_access = authenticated && isliving(user)
+	data["authenticated"] = authenticated
+	if(!has_access)
+		return data
 
 	var/list/records = list()
-
 	for(var/datum/record/crew/target in GLOB.data_core.general)
 		var/list/notes = list()
 		for(var/datum/medical_note/note in target.medical_notes)
@@ -75,51 +77,56 @@
 
 	switch(action)
 		if("add_note")
-			create_note(usr, params)
+			var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
+			if(!target || !has_auth(usr))
+				return FALSE
+
+			if(!params["content"])
+				return FALSE
+			var/content = trim(params["content"], MAX_MESSAGE_LEN)
+
+			var/datum/medical_note/new_note = new(usr.name, content)
+			while(length(target.medical_notes) > 2)
+				target.medical_notes.Cut(1, 2)
+
+			target.medical_notes += new_note
+
 			return TRUE
 
 		if("delete_note")
-			delete_note(usr, params)
-			return TRUE
-
-		if("view_record")
-			var/datum/record/locked/record = locate(params["lock_ref"]) in GLOB.data_core.locked
-			if(!record)
+			var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
+			if(!target || !has_auth(usr))
 				return FALSE
-			update_preview(record)
+
+			var/datum/medical_note/old_note = locate(params["note_ref"]) in target.medical_notes
+			if(!old_note)
+				return FALSE
+
+			target.medical_notes -= old_note
+			qdel(old_note)
+
 			return TRUE
 
 	return FALSE
 
-/// Checks for proper authorization to add notes, then adds to record.
-/obj/machinery/computer/med_data/proc/create_note(mob/user, list/params)
-	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
-	if(!target || !has_auth(user))
+/// Deletes medical information from a record.
+/obj/machinery/computer/med_data/expunge_record_info(datum/record/crew/target)
+	if(!target)
 		return FALSE
 
-	if(!params["content"])
-		return FALSE
-	var/content = trim(params["content"], MAX_MESSAGE_LEN)
-
-	var/datum/medical_note/new_note = new(user.name, content)
-	while(length(target.medical_notes) > 2)
-		target.medical_notes.Cut(1, 2)
-
-	target.medical_notes += new_note
-
-	return TRUE
-
-/// Deletes a note from a record.
-/obj/machinery/computer/med_data/proc/delete_note(mob/user, list/params)
-	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
-	if(!target || !has_auth(user))
-		return FALSE
-
-	var/datum/medical_note/old_note = locate(params["note_ref"]) in target.medical_notes
-	if(!old_note)
-		return FALSE
-
-	target.medical_notes -= old_note
-	qdel(old_note)
+	target.age = 18
+	target.blood_type = pick(list("A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"))
+	target.dna_string = "Unknown"
+	target.gender = "Unknown"
+	target.major_disabilities = ""
+	target.major_disabilities_desc = ""
+	target.medical_notes.Cut()
+	target.minor_disabilities = ""
+	target.minor_disabilities_desc = ""
+	target.name = "Unknown"
+	target.quirk_notes = ""
+	target.rank = "Unknown"
+	target.species = "Unknown"
+	target.trim = "Unknown"
 
 	return TRUE

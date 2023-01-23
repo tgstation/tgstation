@@ -13,13 +13,10 @@
 	light_color = COLOR_SOFT_RED
 	/// The current state of the printer
 	var/printing = FALSE
-	/// Logged in to the console
-	var/logged_in = FALSE
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"
 	req_one_access = list(ACCESS_SYNDICATE)
-	logged_in = TRUE
 
 /obj/machinery/computer/secure_data/laptop
 	name = "security laptop"
@@ -32,7 +29,6 @@
 /obj/machinery/computer/secure_data/laptop/syndie
 	desc = "A cheap, jailbroken security laptop. It functions as a security records console. It's bolted to the table."
 	req_one_access = list(ACCESS_SYNDICATE)
-	logged_in = TRUE
 
 /obj/machinery/computer/secure_data/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -83,8 +79,8 @@
 /obj/machinery/computer/secure_data/ui_data(mob/user)
 	var/list/data = list()
 
-	var/has_access = logged_in && isliving(user)
-	data["logged_in"] = has_access
+	var/has_access = authenticated && isliving(user)
+	data["authenticated"] = has_access
 	if(!has_access)
 		return data
 
@@ -134,7 +130,7 @@
 
 	return data
 
-/obj/machinery/computer/secure_data/ui_act(action, list/params)
+/obj/machinery/computer/secure_data/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -146,25 +142,6 @@
 
 		if("delete_crime")
 			delete_crime(params)
-			return TRUE
-
-		if("login")
-			if(!has_auth(usr))
-				if(ishuman(usr))
-					balloon_alert(usr, "access denied")
-					playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
-				return FALSE
-			balloon_alert(usr, "logged in")
-			playsound(src, 'sound/machines/terminal_on.ogg', 70, TRUE)
-			logged_in = TRUE
-
-			return TRUE
-
-		if("logout")
-			balloon_alert(usr, "logged out")
-			playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
-			logged_in = FALSE
-
 			return TRUE
 
 		if("print_record")
@@ -193,14 +170,6 @@
 
 			return TRUE
 
-		if("view_record")
-			var/datum/record/locked/record = locate(params["lock_ref"]) in GLOB.data_core.locked
-			if(!record)
-				return FALSE
-			update_preview(record)
-
-			return TRUE
-
 	return FALSE
 
 /// Handles adding a crime to a particular record.
@@ -209,7 +178,8 @@
 	if(!target)
 		return FALSE
 
-	if(!params["name"])
+	var/input_name = trim(params["name"], 24)
+	if(!input_name)
 		to_chat(usr, span_warning("You must enter a name for the crime."))
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
@@ -225,18 +195,18 @@
 		input_details = trim(params["details"], MAX_MESSAGE_LEN)
 
 	if(params["fine"] == 0)
-		var/datum/crime/new_crime = new(name = params["name"], details = input_details, author = usr)
+		var/datum/crime/new_crime = new(name = input_name, details = input_details, author = usr)
 		target.crimes += new_crime
 		target.wanted_status = WANTED_ARREST
-		investigate_log("New Crime: <strong>[params["name"]]</strong> | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
+		investigate_log("New Crime: <strong>[input_name]</strong> | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
 		return TRUE
 
-	var/datum/crime/citation/new_citation = new(name = params["name"], details = input_details, author = usr, fine = params["fine"])
+	var/datum/crime/citation/new_citation = new(name = input_name, details = input_details, author = usr, fine = params["fine"])
 
 	target.citations += new_citation
-	new_citation.alert_owner(user, src, target.name, "You have been issued a [params["fine"]]cr citation for [params["name"]]. Fines are payable at Security.")
-	investigate_log("New Citation: <strong>[params["name"]]</strong> Fine: [params["fine"]] | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
-	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, target.name, params["name"], params["fine"])
+	new_citation.alert_owner(user, src, target.name, "You have been issued a [params["fine"]]cr citation for [input_name]. Fines are payable at Security.")
+	investigate_log("New Citation: <strong>[input_name]</strong> Fine: [params["fine"]] | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
+	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, target.name, input_name, params["fine"])
 
 	return TRUE
 
@@ -259,6 +229,25 @@
 		return TRUE
 
 	return FALSE
+
+/// Deletes security information from a record.
+/obj/machinery/computer/secure_data/expunge_record_info(datum/record/crew/target)
+	if(!target)
+		return FALSE
+
+	target.age = 18
+	target.citations.Cut()
+	target.crimes.Cut()
+	target.fingerprint = "Unknown"
+	target.gender = "Unknown"
+	target.name = "Unknown"
+	target.rank = "Unknown"
+	target.security_note = "None"
+	target.species = "Unknown"
+	target.trim = "Unknown"
+	target.wanted_status = WANTED_NONE
+
+	return TRUE
 
 /// Finishes printing, resets the printer.
 /obj/machinery/computer/secure_data/proc/print_finish(obj/item/printable)
@@ -323,6 +312,7 @@
 	addtimer(CALLBACK(src, PROC_REF(print_finish), printable), 2 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 	return TRUE
+
 
 /**
  * Security circuit component

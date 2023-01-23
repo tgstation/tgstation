@@ -1,11 +1,11 @@
 import { useBackend, useLocalState } from 'tgui/backend';
 import { PRINTOUT, SecureData } from './types';
 import { Box, Button, Input, Section, Stack } from 'tgui/components';
-import { getCurrentRecord } from './helpers';
+import { getSecurityRecord, getDefaultPrintDescription, getDefaultPrintHeader } from './helpers';
 
 /** Handles printing posters and rapsheets */
 export const RecordPrint = (props, context) => {
-  const foundRecord = getCurrentRecord(context);
+  const foundRecord = getSecurityRecord(context);
   if (!foundRecord) return <> </>;
 
   const { crimes, name, ref } = foundRecord;
@@ -55,21 +55,21 @@ export const RecordPrint = (props, context) => {
         setAlias(name);
         break;
       case 'header':
-        setHeader(getDefaultHeader(printType));
+        setHeader(getDefaultPrintHeader(printType));
         break;
       case 'description':
-        setDescription(getDefaultDescription(name, printType));
+        setDescription(getDefaultPrintDescription(name, printType));
         break;
     }
   };
 
   /** If they have the fields defaulted to a specific type, change the message */
   const swapTabs = (tab: PRINTOUT) => {
-    if (description === getDefaultDescription(name, printType)) {
-      setDescription(getDefaultDescription(name, tab));
+    if (description === getDefaultPrintDescription(name, printType)) {
+      setDescription(getDefaultPrintDescription(name, tab));
     }
-    if (header === getDefaultHeader(printType)) {
-      setHeader(getDefaultHeader(tab));
+    if (header === getDefaultPrintHeader(printType)) {
+      setHeader(getDefaultPrintHeader(tab));
     }
     setPrintType(tab);
   };
@@ -175,28 +175,4 @@ export const RecordPrint = (props, context) => {
       </Stack>
     </Section>
   );
-};
-
-/** Returns a string header based on print type */
-const getDefaultHeader = (printType: PRINTOUT) => {
-  switch (printType) {
-    case PRINTOUT.Rapsheet:
-      return 'Record';
-    case PRINTOUT.Wanted:
-      return 'WANTED';
-    case PRINTOUT.Missing:
-      return 'MISSING';
-  }
-};
-
-/** Returns a string description based on print type */
-const getDefaultDescription = (name: string, printType: PRINTOUT) => {
-  switch (printType) {
-    case PRINTOUT.Rapsheet:
-      return `A standard security record for ${name}.`;
-    case PRINTOUT.Wanted:
-      return `A poster declaring ${name} to be a wanted criminal, wanted by Nanotrasen. Report any sightings to security immediately.`;
-    case PRINTOUT.Missing:
-      return `A poster declaring ${name} to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately.`;
-  }
 };

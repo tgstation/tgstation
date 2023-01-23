@@ -1,37 +1,38 @@
-import { useBackend } from 'tgui/backend';
-import { Box, Button, Icon, NoticeBox, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
-import { SecureData } from './types';
-import { SecurityRecordView } from './RecordView';
-import { SecurityRecordTabs } from './RecordTabs';
+import { useBackend } from '../../backend';
+import { Box, Button, Icon, NoticeBox, Stack } from '../../components';
+import { MedicalRecordTabs } from './RecordTabs';
+import { MedicalRecordView } from './RecordView';
+import { MedicalRecordData } from './types';
 
-export const SecurityRecords = (props, context) => {
-  const { data } = useBackend<SecureData>(context);
+export const MedicalRecords = (props, context) => {
+  const { data } = useBackend<MedicalRecordData>(context);
   const { authenticated } = data;
 
   return (
-    <Window title="Security Records" width={750} height={550}>
+    <Window title="Medical Records" width={750} height={550}>
       <Window.Content>
-        <Stack fill>{!authenticated ? <RestrictedView /> : <AuthView />}</Stack>
+        <Stack fill>
+          {!authenticated ? <UnauthorizedView /> : <AuthView />}
+        </Stack>
       </Window.Content>
     </Window>
   );
 };
 
-/** Unauthorized view. User can only log in with ID */
-const RestrictedView = (props, context) => {
-  const { act } = useBackend<SecureData>(context);
+const UnauthorizedView = (props, context) => {
+  const { act } = useBackend<MedicalRecordData>(context);
 
   return (
     <Stack.Item grow>
       <Stack fill vertical>
         <Stack.Item grow />
         <Stack.Item align="center" grow={2}>
-          <Icon color="average" name="exclamation-triangle" size={15} />
+          <Icon color="teal" name="staff-snake" size={15} />
         </Stack.Item>
         <Stack.Item align="center" grow>
-          <Box color="red" fontSize="18px" bold mt={5}>
-            Nanotrasen SecurityHUB
+          <Box color="good" fontSize="18px" bold mt={5}>
+            Nanotrasen HealthPRO
           </Box>
         </Stack.Item>
         <Stack.Item>
@@ -47,19 +48,18 @@ const RestrictedView = (props, context) => {
   );
 };
 
-/** Logged in view */
 const AuthView = (props, context) => {
-  const { act } = useBackend<SecureData>(context);
+  const { act } = useBackend<MedicalRecordData>(context);
 
   return (
     <>
       <Stack.Item grow>
-        <SecurityRecordTabs />
+        <MedicalRecordTabs />
       </Stack.Item>
       <Stack.Item grow={2}>
         <Stack fill vertical>
           <Stack.Item grow>
-            <SecurityRecordView />
+            <MedicalRecordView />
           </Stack.Item>
           <Stack.Item>
             <NoticeBox align="right" info>

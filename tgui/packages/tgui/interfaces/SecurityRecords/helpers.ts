@@ -1,8 +1,8 @@
 import { useBackend, useLocalState } from 'tgui/backend';
-import { SecureData, SecurityRecord } from './types';
+import { PRINTOUT, SecureData, SecurityRecord } from './types';
 
 /** We need an active reference and this a pain to rewrite */
-export const getCurrentRecord = (context) => {
+export const getSecurityRecord = (context) => {
   const [selectedRecord] = useLocalState<SecurityRecord | undefined>(
     context,
     'securityRecord',
@@ -41,5 +41,32 @@ export const isRecordMatch = (record: GenericRecord, search: string) => {
 
     default:
       return false;
+  }
+};
+
+/** Returns a string header based on print type */
+export const getDefaultPrintHeader = (printType: PRINTOUT) => {
+  switch (printType) {
+    case PRINTOUT.Rapsheet:
+      return 'Record';
+    case PRINTOUT.Wanted:
+      return 'WANTED';
+    case PRINTOUT.Missing:
+      return 'MISSING';
+  }
+};
+
+/** Returns a string description based on print type */
+export const getDefaultPrintDescription = (
+  name: string,
+  printType: PRINTOUT
+) => {
+  switch (printType) {
+    case PRINTOUT.Rapsheet:
+      return `A standard security record for ${name}.`;
+    case PRINTOUT.Wanted:
+      return `A poster declaring ${name} to be a wanted criminal, wanted by Nanotrasen. Report any sightings to security immediately.`;
+    case PRINTOUT.Missing:
+      return `A poster declaring ${name} to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately.`;
   }
 };

@@ -1,11 +1,11 @@
 import { useLocalState, useBackend } from 'tgui/backend';
 import { SECURETAB, Crime, SecureData } from './types';
-import { getCurrentRecord } from './helpers';
-import { Stack, Section, Tabs, Tooltip, Icon, NoticeBox, BlockQuote, Box, Button, Collapsible, Input, LabeledList, RestrictedInput, TextArea } from 'tgui/components';
+import { getSecurityRecord } from './helpers';
+import { BlockQuote, Box, Button, Collapsible, Icon, Input, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Tabs, TextArea, Tooltip } from 'tgui/components';
 
 /** Displays a list of crimes and allows to add new ones. */
 export const CrimeWatcher = (props, context) => {
-  const foundRecord = getCurrentRecord(context);
+  const foundRecord = getSecurityRecord(context);
   if (!foundRecord) return <> </>;
 
   const { crimes, citations } = foundRecord;
@@ -53,7 +53,7 @@ export const CrimeWatcher = (props, context) => {
 
 /** Displays the crimes and citations of a record. */
 const CrimeList = (props, context) => {
-  const foundRecord = getCurrentRecord(context);
+  const foundRecord = getSecurityRecord(context);
   if (!foundRecord) return <> </>;
 
   const { citations, crimes } = foundRecord;
@@ -77,7 +77,7 @@ const CrimeList = (props, context) => {
 
 /** Displays an individual crime */
 const CrimeDisplay = ({ item }: { item: Crime }, context) => {
-  const foundRecord = getCurrentRecord(context);
+  const foundRecord = getSecurityRecord(context);
   if (!foundRecord) return <> </>;
 
   const { act } = useBackend<SecureData>(context);
@@ -126,7 +126,7 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
 
 /** Writes a new crime. Reducers don't seem to work here, so... */
 const CrimeAuthor = (props, context) => {
-  const foundRecord = getCurrentRecord(context);
+  const foundRecord = getSecurityRecord(context);
   if (!foundRecord) return <> </>;
 
   const { ref } = foundRecord;
@@ -172,6 +172,7 @@ const CrimeAuthor = (props, context) => {
         <Input
           onChange={(_, value) => setCrimeName(value)}
           fluid
+          maxLength={25}
           placeholder="Brief overview"
         />
       </Stack.Item>

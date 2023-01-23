@@ -162,6 +162,10 @@
 
 	character_preview_view.appearance = preview.appearance
 
+/// Expunges info from a record.
+/obj/machinery/computer/proc/expunge_record_info(datum/record/crew/target)
+	return
+
 /// Detects whether a user can use buttons on the machine
 /obj/machinery/computer/proc/has_auth(mob/user)
 	if(!isliving(user))
@@ -179,3 +183,83 @@
 		return FALSE
 
 	return TRUE
+
+/// Secure login
+/obj/machinery/computer/proc/secure_login(mob/user)
+	if(!user.canUseTopic(src, be_close = !issilicon(user)) || !is_operational)
+		return FALSE
+
+	if(!has_auth(user))
+		if(ishuman(user))
+			balloon_alert(usr, "access denied")
+			playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
+		return FALSE
+
+	balloon_alert(user, "logged in")
+	playsound(src, 'sound/machines/terminal_on.ogg', 70, TRUE)
+
+	return TRUE
+
+/obj/machinery/computer/ui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("edit_field")
+			var/datum/record/crew/target = locate(params["ref"]) in GLOB.data_core.general
+			var/field = params["field"]
+			if(!field || !target?.vars[field])
+				return FALSE
+
+			var/value = trim(params["value"], MAX_BROADCAST_LEN)
+			target.vars[field] = value || "Unknown"
+
+			return TRUE
+
+		if("expunge_record")
+			var/datum/record/crew/target = locate(params["ref"]) in GLOB.data_core.general
+			if(!target)
+				return FALSE
+
+			expunge_record_info(target)
+			balloon_alert(usr, "record expunged")
+			playsound(src, 'sound/machines/terminal_eject.ogg', 70, TRUE)
+
+			return TRUE
+
+		if("login")
+			authenticated = secure_login(usr)
+			return TRUE
+
+		if("logout")
+			balloon_alert(usr, "logged out")
+			playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
+			authenticated = FALSE
+
+			return TRUE
+
+		if("purge_records")
+			ui.close()
+			balloon_alert(usr, "purging records")
+			playsound(src, 'sound/machines/terminal_alert.ogg', 70, TRUE)
+
+			if(do_after(usr, 5 SECONDS))
+				for(var/datum/record/crew/target in GLOB.data_core.general)
+					expunge_record_info(target)
+
+				balloon_alert(usr, "records purged")
+				playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
+
+			return TRUE
+
+		if("view_record")
+			var/datum/record/locked/record = locate(params["lock_ref"]) in GLOB.data_core.locked
+			if(!record)
+				return FALSE
+
+			playsound(src, "sound/machines/terminal_button0[rand(1, 8)].ogg", 50, TRUE)
+			update_preview(record)
+			return TRUE
+
+	return FALSE
