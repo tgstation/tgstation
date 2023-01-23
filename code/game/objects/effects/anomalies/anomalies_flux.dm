@@ -49,3 +49,10 @@
 			explosion(src, heavy_impact_range = 1, light_impact_range = 4, flash_range = 6)
 		if(FLUX_NO_EXPLOSION)
 			new /obj/effect/particle_effect/sparks(loc)
+
+/// A flux anomaly which doesn't explode or produce a core
+/obj/effect/anomaly/flux/minor
+	explosive = FLUX_NO_EXPLOSION
+
+/obj/effect/anomaly/flux/minor/Initialize(mapload, new_lifespan, drops_core = FALSE, explosive = FLUX_NO_EXPLOSION)
+	return ..()
