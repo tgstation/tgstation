@@ -23,10 +23,15 @@
 
 /datum/crafting_recipe/underwater_basket
 	name = "Underwater Basket (Bamboo)"
-	reqs = list(/obj/item/stack/sheet/mineral/bamboo = 20)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/bamboo = 20
+	)
 	result = /obj/item/storage/basket
 	category = CAT_CONTAINERS
-	additional_req_text = " being underwater, underwater basketweaving mastery"
+	steps = list(
+		"master the art of underwater basketweaving", 
+		"be underwater"
+	)
 
 /datum/crafting_recipe/underwater_basket/check_requirements(mob/user, list/collected_requirements)
 	. = ..()

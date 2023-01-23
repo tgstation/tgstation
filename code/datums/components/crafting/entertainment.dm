@@ -129,31 +129,35 @@
 
 /datum/crafting_recipe/toiletbong
 	name = "Toiletbong"
-	result = /obj/structure/toiletbong
-	time = 5 SECONDS
+	category = CAT_ENTERTAINMENT
 	tool_behaviors = list(TOOL_WRENCH)
 	reqs = list(/obj/item/flamethrower = 1)
-	machinery = list(/obj/structure/toilet)
-	additional_req_text = " plasma tank (on flamethrower), toilet"
-	category = CAT_ENTERTAINMENT
+	structures = list(/obj/structure/toilet = CRAFTING_STRUCTURE_USE) // we will handle the consumption manually in on_craft_completion for this one
+	result = /obj/structure/toiletbong
+	time = 5 SECONDS
+	steps = list(
+		"make sure the flamethrower has a plasma tank attached",
+	)
 
 /datum/crafting_recipe/toiletbong/check_requirements(mob/user, list/collected_requirements)
-	if((locate(/obj/structure/toilet) in range(1, user.loc)) == null)
-		return FALSE
 	var/obj/item/flamethrower/flamethrower = collected_requirements[/obj/item/flamethrower][1]
-	if(flamethrower.ptank == null)
+	if(!flamethrower.ptank)
 		return FALSE
-	return TRUE
+	return ..()
 
 /datum/crafting_recipe/toiletbong/on_craft_completion(mob/user, atom/result)
 	var/obj/structure/toiletbong/toiletbong = result
-	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1, user.loc)
-	for (var/obj/item/cistern_item in toilet.contents)
-		cistern_item.forceMove(user.loc)
-		to_chat(user, span_warning("[cistern_item] falls out of the toilet!"))
-	toiletbong.dir = toilet.dir
-	toiletbong.loc = toilet.loc
-	qdel(toilet)
+
+	// because we want to set the toilet's location and dir, we need to do the consumption manually
+	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1) 
+	if(toilet)
+		for (var/obj/item/cistern_item in toilet.contents)
+			cistern_item.forceMove(user.drop_location())
+			to_chat(user, span_warning("[cistern_item] falls out of the toilet!"))
+		toiletbong.dir = toilet.dir
+		toiletbong.loc = toilet.loc
+		qdel(toilet)
+	
 	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
 
 /datum/crafting_recipe/punching_bag
