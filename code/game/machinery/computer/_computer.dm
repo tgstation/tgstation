@@ -193,8 +193,8 @@
 			playsound(src, 'sound/machines/terminal_alert.ogg', 70, TRUE)
 
 			if(do_after(usr, 5 SECONDS))
-				for(var/datum/record/crew/target in GLOB.data_core.general)
-					expunge_record_info(target)
+				for(var/datum/record/crew/entry in GLOB.data_core.general)
+					expunge_record_info(entry)
 
 				balloon_alert(usr, "records purged")
 				playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
