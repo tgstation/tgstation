@@ -30,7 +30,7 @@ export const MedicalRecordTabs = (props, context) => {
       setSelectedRecord(undefined);
     } else {
       setSelectedRecord(record);
-      act('view_record', { lock_ref: record.lock_ref });
+      act('view_record', { crew_ref: record.crew_ref });
     }
   };
 

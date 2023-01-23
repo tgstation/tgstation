@@ -12,7 +12,6 @@ export type MedicalRecord = {
   crew_ref: string;
   dna: string;
   gender: string;
-  lock_ref: string;
   major_disabilities: string;
   minor_disabilities: string;
   name: string;

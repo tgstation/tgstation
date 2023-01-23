@@ -14,7 +14,6 @@ export type SecurityRecord = {
   crimes: Crime[];
   fingerprint: string;
   gender: string;
-  lock_ref: string;
   name: string;
   note: string;
   rank: string;

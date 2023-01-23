@@ -124,7 +124,6 @@
 			crimes = crimes,
 			fingerprint = target.fingerprint,
 			gender = target.gender,
-			lock_ref = target.lock_ref,
 			name = target.name,
 			note = target.security_note,
 			rank = target.rank,

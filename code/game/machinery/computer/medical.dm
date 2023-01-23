@@ -61,7 +61,6 @@
 			blood_type = target.blood_type,
 			crew_ref = REF(target),
 			dna = target.dna_string,
-			lock_ref = target.lock_ref,
 			gender = target.gender,
 			major_disabilities = target.major_disabilities_desc,
 			notes = notes,
