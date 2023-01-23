@@ -33,6 +33,7 @@ export const EditableText = (props: Props, context) => {
   return editing ? (
     <Input
       autoFocus
+      autoSelect
       width="50%"
       maxLength={512}
       onEscape={() => setEditing(false)}

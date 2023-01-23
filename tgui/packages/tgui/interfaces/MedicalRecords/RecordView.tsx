@@ -11,11 +11,11 @@ export const MedicalRecordView = (props, context) => {
   const foundRecord = getMedicalRecord(context);
   if (!foundRecord) return <NoticeBox>No record selected.</NoticeBox>;
 
-  const { act } = useBackend<MedicalRecordData>(context);
+  const { act, data } = useBackend<MedicalRecordData>(context);
+  const { assigned_view } = data;
 
   const {
     age,
-    appearance,
     blood_type,
     crew_ref,
     dna,
@@ -37,7 +37,7 @@ export const MedicalRecordView = (props, context) => {
       <Stack.Item grow>
         <Stack fill>
           <Stack.Item>
-            <CharacterPreview height="100%" id={appearance} />
+            <CharacterPreview height="100%" id={assigned_view} />
           </Stack.Item>
           <Stack.Item grow>
             <NoteKeeper />
@@ -59,12 +59,6 @@ export const MedicalRecordView = (props, context) => {
           title={name}
           wrap>
           <LabeledList>
-            <LabeledList.Item>
-              <Box bold color="label" mb={1}>
-                Personal Information:
-              </Box>
-            </LabeledList.Item>
-            <LabeledList.Divider />
             <LabeledList.Item label="Name">
               <EditableText field="name" target_ref={crew_ref} text={name} />
             </LabeledList.Item>

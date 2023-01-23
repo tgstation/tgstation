@@ -44,6 +44,8 @@
 	if(!has_access)
 		return data
 
+	data["assigned_view"] = character_preview_view.assigned_map
+
 	var/list/records = list()
 	for(var/datum/record/crew/target in GLOB.data_core.general)
 		var/list/notes = list()
@@ -57,15 +59,14 @@
 
 		records += list(list(
 			age = target.age,
-			appearance = character_preview_view.assigned_map,
 			blood_type = target.blood_type,
 			crew_ref = REF(target),
 			dna = target.dna_string,
 			gender = target.gender,
 			major_disabilities = target.major_disabilities_desc,
-			notes = notes,
 			minor_disabilities = target.minor_disabilities_desc,
 			name = target.name,
+			notes = notes,
 			quirk_notes = target.quirk_notes,
 			rank = target.rank,
 			species = target.species,

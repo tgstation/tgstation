@@ -255,12 +255,12 @@
 	if(!mugshot || !is_operational || !user.canUseTopic(src, be_close = !issilicon(user)))
 		return FALSE
 
-	if(!has_auth(user))
+	if(!authenticated && !has_auth(user))
 		balloon_alert(user, "access denied")
-		playsound(src, 'sound/machines/terminal_alert.ogg', 70, TRUE)
+		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
-	var/trimmed = copytext(mugshot.name, 8, MAX_NAME_LEN)
+	var/trimmed = copytext(mugshot.name, 9, MAX_NAME_LEN) // Remove "photo - "
 	var/name = tgui_input_text(user, "Enter the name of the new record.", "New Record", trimmed, MAX_NAME_LEN)
 	if(!name || !is_operational || !user.canUseTopic(src, be_close = !issilicon(user)) || !mugshot || QDELETED(mugshot) || QDELETED(src))
 		return FALSE

@@ -52,12 +52,14 @@ export const SecurityRecordTabs = (props, context) => {
                   disabled
                   icon="plus"
                   tooltip="Add new records by inserting a photo into the terminal. You do not need this screen open.">
-                  Add Record
+                  Create
                 </Button>
                 <Button.Confirm
-                  content="Purge Records"
+                  content="Purge"
+                  color="average"
                   icon="trash"
                   onClick={() => act('purge_records')}
+                  tooltip="Wipe all record data."
                 />
               </Box>
             </Stack.Item>

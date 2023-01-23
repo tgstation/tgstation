@@ -90,6 +90,7 @@
 	if(!has_access)
 		return data
 
+	data["assigned_view"] = character_preview_view.assigned_map
 	data["available_statuses"] = WANTED_STATUSES()
 
 	var/list/records = list()
@@ -118,7 +119,6 @@
 
 		records += list(list(
 			age = target.age,
-			appearance = character_preview_view.assigned_map,
 			citations = citations,
 			crew_ref = REF(target),
 			crimes = crimes,
