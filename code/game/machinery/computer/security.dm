@@ -65,6 +65,12 @@
 			qdel(record)
 			continue
 
+/obj/machinery/computer/secure_data/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	if(!istype(attacking_item, /obj/item/photo))
+		return
+	insert_new_record(user, attacking_item)
+
 /obj/machinery/computer/secure_data/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -92,11 +98,11 @@
 		for(var/datum/crime/citation/warrant in target.citations)
 			citations += list(list(
 				author = warrant.author,
+				crime_ref = REF(warrant),
 				details = warrant.details,
 				fine = warrant.fine,
 				name = warrant.name,
 				paid = warrant.paid,
-				ref = REF(warrant),
 				time = warrant.time,
 			))
 
@@ -104,9 +110,9 @@
 		for(var/datum/crime/crime in target.crimes)
 			crimes += list(list(
 				author = crime.author,
+				crime_ref = REF(crime),
 				details = crime.details,
 				name = crime.name,
-				ref = REF(crime),
 				time = crime.time,
 			))
 
@@ -114,6 +120,7 @@
 			age = target.age,
 			appearance = character_preview_view.assigned_map,
 			citations = citations,
+			crew_ref = REF(target),
 			crimes = crimes,
 			fingerprint = target.fingerprint,
 			gender = target.gender,
@@ -121,7 +128,6 @@
 			name = target.name,
 			note = target.security_note,
 			rank = target.rank,
-			ref = REF(target),
 			species = target.species,
 			wanted_status = target.wanted_status,
 		))
@@ -135,49 +141,42 @@
 	if(.)
 		return
 
+	var/datum/record/crew/target
+	if(params["crew_ref"])
+		target = locate(params["crew_ref"]) in GLOB.data_core.general
+	if(!target)
+		return FALSE
+
 	switch(action)
 		if("add_crime")
-			add_crime(usr, params)
+			add_crime(usr, target, params)
 			return TRUE
 
 		if("delete_crime")
-			delete_crime(params)
+			delete_crime(target, params)
 			return TRUE
 
 		if("print_record")
-			print_record(usr, params)
+			print_record(usr, target, params)
 			return TRUE
 
 		if("set_note")
-			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-			if(!record)
-				return FALSE
-
 			var/note = params["note"]
-			record.security_note = trim(note, MAX_MESSAGE_LEN)
-
+			target.security_note = trim(note, MAX_MESSAGE_LEN)
 			return TRUE
 
 		if("set_wanted")
-			var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-			if(!record)
-				return FALSE
-
 			var/wanted_status = params["status"]
 			if(!wanted_status || !(wanted_status in WANTED_STATUSES()))
 				return FALSE
-			record.wanted_status = wanted_status
+			target.wanted_status = wanted_status
 
 			return TRUE
 
 	return FALSE
 
 /// Handles adding a crime to a particular record.
-/obj/machinery/computer/secure_data/proc/add_crime(mob/user, list/params)
-	var/datum/record/crew/target = locate(params["ref"]) in GLOB.data_core.general
-	if(!target)
-		return FALSE
-
+/obj/machinery/computer/secure_data/proc/add_crime(mob/user, datum/record/crew/target, list/params)
 	var/input_name = trim(params["name"], 24)
 	if(!input_name)
 		to_chat(usr, span_warning("You must enter a name for the crime."))
@@ -211,11 +210,7 @@
 	return TRUE
 
 /// Deletes a crime or citation from the chosen record.
-/obj/machinery/computer/secure_data/proc/delete_crime(list/params)
-	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
-	if(!target)
-		return FALSE
-
+/obj/machinery/computer/secure_data/proc/delete_crime(datum/record/crew/target, list/params)
 	var/datum/crime/incident = locate(params["crime_ref"]) in target.crimes
 	if(incident)
 		target.crimes -= incident
@@ -232,9 +227,6 @@
 
 /// Deletes security information from a record.
 /obj/machinery/computer/secure_data/expunge_record_info(datum/record/crew/target)
-	if(!target)
-		return FALSE
-
 	target.age = 18
 	target.citations.Cut()
 	target.crimes.Cut()
@@ -258,14 +250,10 @@
 	return TRUE
 
 /// Handles printing records via UI. Takes the params from UI_act.
-/obj/machinery/computer/secure_data/proc/print_record(mob/user, list/params)
+/obj/machinery/computer/secure_data/proc/print_record(mob/user, datum/record/crew/target, list/params)
 	if(printing)
 		balloon_alert(usr, "printer busy")
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
-		return FALSE
-
-	var/datum/record/crew/record = locate(params["ref"]) in GLOB.data_core.general
-	if(!record)
 		return FALSE
 
 	printing = TRUE
@@ -273,19 +261,19 @@
 	playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
 
 	var/obj/item/printable
-	var/input_alias = trim(params["alias"], MAX_NAME_LEN) || record.name
+	var/input_alias = trim(params["alias"], MAX_NAME_LEN) || target.name
 	var/input_description = trim(params["desc"], MAX_BROADCAST_LEN) || "No further details."
 	var/input_header = trim(params["head"], 8) || capitalize(params["type"])
 
 	switch(params["type"])
 		if("missing")
-			var/obj/item/photo/mugshot = record.get_front_photo()
+			var/obj/item/photo/mugshot = target.get_front_photo()
 			var/obj/item/poster/wanted/missing/missing_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
 
 			printable = missing_poster
 
 		if("wanted")
-			var/list/crimes = record.crimes
+			var/list/crimes = target.crimes
 			if(!length(crimes))
 				balloon_alert(user, "no crimes")
 				return FALSE
@@ -295,18 +283,18 @@
 				input_description += "\n<bCrime:</b> [incident.name]\n"
 				input_description += "<b>Details:</b> [incident.details]\n"
 
-			var/obj/item/photo/mugshot = record.get_front_photo()
+			var/obj/item/photo/mugshot = target.get_front_photo()
 			var/obj/item/poster/wanted/wanted_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
 
 			printable = wanted_poster
 
 		if("rapsheet")
-			var/list/crimes = record.crimes
+			var/list/crimes = target.crimes
 			if(!length(crimes))
 				balloon_alert(user, "no crimes")
 				return FALSE
 
-			var/obj/item/paper/rapsheet = record.get_rapsheet(input_alias, input_header, input_description)
+			var/obj/item/paper/rapsheet = target.get_rapsheet(input_alias, input_header, input_description)
 			printable = rapsheet
 
 	addtimer(CALLBACK(src, PROC_REF(print_finish), printable), 2 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)

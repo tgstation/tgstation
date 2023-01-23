@@ -1,5 +1,5 @@
 import { useLocalState, useBackend } from 'tgui/backend';
-import { SECURETAB, Crime, SecureData } from './types';
+import { SECURETAB, Crime, SecurityRecordsData } from './types';
 import { getSecurityRecord } from './helpers';
 import { BlockQuote, Box, Button, Collapsible, Icon, Input, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Tabs, TextArea, Tooltip } from 'tgui/components';
 
@@ -80,8 +80,9 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
   const foundRecord = getSecurityRecord(context);
   if (!foundRecord) return <> </>;
 
-  const { act } = useBackend<SecureData>(context);
-  const { author, details, fine, name, paid, ref, time } = item;
+  const { crew_ref } = foundRecord;
+  const { act } = useBackend<SecurityRecordsData>(context);
+  const { author, crime_ref, details, fine, name, paid, time } = item;
   const showFine = !!fine && fine > 0 ? `: ${fine} cr` : '';
 
   return (
@@ -93,8 +94,8 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
             icon="trash"
             onClick={() =>
               act('delete_crime', {
-                crew_ref: foundRecord.ref,
-                crime_ref: ref,
+                crew_ref: crew_ref,
+                crime_ref: crime_ref,
               })
             }
           />
@@ -129,8 +130,8 @@ const CrimeAuthor = (props, context) => {
   const foundRecord = getSecurityRecord(context);
   if (!foundRecord) return <> </>;
 
-  const { ref } = foundRecord;
-  const { act } = useBackend<SecureData>(context);
+  const { crew_ref } = foundRecord;
+  const { act } = useBackend<SecurityRecordsData>(context);
 
   const [crimeName, setCrimeName] = useLocalState(context, 'crimeName', '');
   const [crimeDetails, setCrimeDetails] = useLocalState(
@@ -149,10 +150,10 @@ const CrimeAuthor = (props, context) => {
   const createCrime = () => {
     if (!crimeName) return;
     act('add_crime', {
+      crew_ref: crew_ref,
       details: crimeDetails,
       fine: crimeFine,
       name: crimeName,
-      ref: ref,
     });
     reset();
   };

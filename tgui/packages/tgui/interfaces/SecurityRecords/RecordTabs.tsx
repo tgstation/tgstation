@@ -5,11 +5,11 @@ import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon, Button } from 'tgui/
 import { JOB2ICON } from '../common/JobToIcon';
 import { CRIMESTATUS2COLOR } from './constants';
 import { isRecordMatch } from './helpers';
-import { SecureData, SecurityRecord } from './types';
+import { SecurityRecordsData, SecurityRecord } from './types';
 
 /** Tabs on left, with search bar */
 export const SecurityRecordTabs = (props, context) => {
-  const { act, data } = useBackend<SecureData>(context);
+  const { act, data } = useBackend<SecurityRecordsData>(context);
   const { records = [] } = data;
 
   const errorMessage = !records.length
@@ -48,6 +48,12 @@ export const SecurityRecordTabs = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               <Box align="right">
+                <Button
+                  disabled
+                  icon="plus"
+                  tooltip="Add new records by inserting a photo into the terminal. You do not need this screen open.">
+                  Add Record
+                </Button>
                 <Button.Confirm
                   content="Purge Records"
                   icon="trash"
@@ -63,24 +69,24 @@ export const SecurityRecordTabs = (props, context) => {
 };
 
 /** Individual record */
-const CrewTab = ({ record }, context) => {
-  const { act } = useBackend<SecureData>(context);
+const CrewTab = ({ record }: { record: SecurityRecord }, context) => {
+  const { act } = useBackend<SecurityRecordsData>(context);
   const [selectedRecord, setSelectedRecord] = useLocalState<
     SecurityRecord | undefined
   >(context, 'securityRecord', undefined);
 
   /** Chooses a record */
   const selectRecord = (record: SecurityRecord) => {
-    if (selectedRecord?.ref === record.ref) {
+    if (selectedRecord?.crew_ref === record.crew_ref) {
       setSelectedRecord(undefined);
     } else {
       setSelectedRecord(record);
-      act('view_record', { lock_ref: record.lock_ref });
+      act('view_record', { crew_ref: record.crew_ref });
     }
   };
 
-  const { name, rank, ref, wanted_status } = record;
-  const isSelected = selectedRecord?.ref === ref;
+  const { crew_ref, name, rank, wanted_status } = record;
+  const isSelected = selectedRecord?.crew_ref === crew_ref;
 
   return (
     <Tabs.Tab

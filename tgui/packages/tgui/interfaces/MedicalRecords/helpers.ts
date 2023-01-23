@@ -1,4 +1,4 @@
-import { useLocalState, useBackend } from '../../backend';
+import { useLocalState, useBackend } from 'tgui/backend';
 import { MedicalRecord, MedicalRecordData } from './types';
 
 /** Splits a medical string on <br> into a string array */

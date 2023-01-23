@@ -59,6 +59,15 @@ export const MedicalRecordView = (props, context) => {
           title={name}
           wrap>
           <LabeledList>
+            <LabeledList.Item>
+              <Box bold color="label" mb={1}>
+                Personal Information:
+              </Box>
+            </LabeledList.Item>
+            <LabeledList.Divider />
+            <LabeledList.Item label="Name">
+              <EditableText field="name" target_ref={crew_ref} text={name} />
+            </LabeledList.Item>
             <LabeledList.Item label="Job">
               <EditableText field="job" target_ref={crew_ref} text={rank} />
             </LabeledList.Item>
@@ -90,10 +99,13 @@ export const MedicalRecordView = (props, context) => {
                 text={gender}
               />
             </LabeledList.Item>
-            <LabeledList.Item color="good" label="DNA">
-              <Box wrap>
-                <EditableText field="dna" target_ref={crew_ref} text={dna} />
-              </Box>
+            <LabeledList.Item label="DNA">
+              <EditableText
+                color="good"
+                field="dna"
+                target_ref={crew_ref}
+                text={dna}
+              />
             </LabeledList.Item>
             <LabeledList.Item color="bad" label="Blood Type">
               <EditableText

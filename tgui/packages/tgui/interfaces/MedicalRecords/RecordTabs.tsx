@@ -1,7 +1,7 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { useBackend, useLocalState } from '../../backend';
-import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon, Button } from '../../components';
+import { useBackend, useLocalState } from 'tgui/backend';
+import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon, Button } from 'tgui/components';
 import { JOB2ICON } from '../common/JobToIcon';
 import { isRecordMatch } from '../SecurityRecords/helpers';
 import { MedicalRecord, MedicalRecordData } from './types';
@@ -69,6 +69,12 @@ export const MedicalRecordTabs = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               <Box align="right">
+                <Button
+                  disabled
+                  icon="plus"
+                  tooltip="Add new records by inserting a photo into the terminal. You do not need this screen open.">
+                  Add Record
+                </Button>
                 <Button.Confirm
                   content="Purge Records"
                   icon="trash"

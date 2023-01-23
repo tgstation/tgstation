@@ -19,6 +19,12 @@
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
 
+/obj/machinery/computer/med_data/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	if(!istype(attacking_item, /obj/item/photo))
+		return
+	insert_new_record(user, attacking_item)
+
 /obj/machinery/computer/med_data/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -75,12 +81,14 @@
 	if(.)
 		return
 
+	var/datum/record/crew/target
+	if(params["crew_ref"])
+		target = locate(params["crew_ref"]) in GLOB.data_core.general
+	if(!target)
+		return FALSE
+
 	switch(action)
 		if("add_note")
-			var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
-			if(!target || !has_auth(usr))
-				return FALSE
-
 			if(!params["content"])
 				return FALSE
 			var/content = trim(params["content"], MAX_MESSAGE_LEN)
@@ -94,10 +102,6 @@
 			return TRUE
 
 		if("delete_note")
-			var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
-			if(!target || !has_auth(usr))
-				return FALSE
-
 			var/datum/medical_note/old_note = locate(params["note_ref"]) in target.medical_notes
 			if(!old_note)
 				return FALSE

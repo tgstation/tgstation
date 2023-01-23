@@ -2,6 +2,7 @@ import { useBackend, useLocalState } from 'tgui/backend';
 import { Input, Stack, Box, Button } from 'tgui/components';
 
 type Props = {
+  color?: string;
   field: string;
   target_ref: string;
   text: string;
@@ -19,8 +20,8 @@ type Props = {
  *
  */
 export const EditableText = (props: Props, context) => {
-  const { target_ref, field, text } = props;
-  if (!field || !text) return <> </>;
+  const { color, field, target_ref, text } = props;
+  if (!field) return <> </>;
 
   const { act } = useBackend(context);
   const [editing, setEditing] = useLocalState<boolean>(
@@ -46,6 +47,7 @@ export const EditableText = (props: Props, context) => {
       <Stack.Item>
         <Box
           as="span"
+          color={!text ? 'grey' : color || 'white'}
           style={{
             'text-decoration': 'underline',
             'text-decoration-color': 'white',
@@ -53,7 +55,7 @@ export const EditableText = (props: Props, context) => {
             'text-underline-offset': '1px',
           }}
           onClick={() => setEditing(true)}>
-          {text}
+          {!text ? '(none)' : text}
         </Box>
       </Stack.Item>
       <Stack.Item>

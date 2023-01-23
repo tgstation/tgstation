@@ -1,31 +1,31 @@
 import { useBackend, useLocalState } from 'tgui/backend';
-import { NoticeBox, Stack, Section, Button, Table, LabeledList, Box, RestrictedInput } from 'tgui/components';
+import { NoticeBox, Stack, Section, Button, LabeledList, Box, RestrictedInput, Table } from 'tgui/components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
 import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
 import { CrimeWatcher } from './CrimeWatcher';
 import { getSecurityRecord } from './helpers';
 import { RecordPrint } from './RecordPrint';
-import { SecureData } from './types';
+import { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
 export const SecurityRecordView = (props, context) => {
   const foundRecord = getSecurityRecord(context);
   if (!foundRecord) return <NoticeBox>Nothing selected.</NoticeBox>;
 
-  const { act, data } = useBackend<SecureData>(context);
+  const { act, data } = useBackend<SecurityRecordsData>(context);
   const { available_statuses } = data;
   const [open, setOpen] = useLocalState<boolean>(context, 'printOpen', false);
 
   const {
     age,
     appearance,
+    crew_ref,
     fingerprint,
     gender,
     name,
     note,
     rank,
-    ref,
     species,
     wanted_status,
   } = foundRecord;
@@ -48,21 +48,27 @@ export const SecurityRecordView = (props, context) => {
         ) : (
           <Section
             buttons={
-              <>
-                <Button
-                  height="1.7rem"
-                  icon="print"
-                  onClick={() => setOpen(true)}
-                  tooltip="Print a rapsheet or poster.">
-                  Print
-                </Button>
-                <Button.Confirm
-                  content="Delete"
-                  icon="trash"
-                  onClick={() => act('expunge_record', { crew_ref: ref })}
-                  tooltip="Expunge record data."
-                />
-              </>
+              <Stack>
+                <Stack.Item>
+                  <Button
+                    height="1.7rem"
+                    icon="print"
+                    onClick={() => setOpen(true)}
+                    tooltip="Print a rapsheet or poster.">
+                    Print
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button.Confirm
+                    content="Delete"
+                    icon="trash"
+                    onClick={() =>
+                      act('expunge_record', { crew_ref: crew_ref })
+                    }
+                    tooltip="Expunge record data."
+                  />
+                </Stack.Item>
+              </Stack>
             }
             fill
             scrollable
@@ -73,39 +79,6 @@ export const SecurityRecordView = (props, context) => {
             }
             wrap>
             <LabeledList>
-              <LabeledList.Item label="Job">
-                <EditableText field="rank" target_ref={ref} text={rank} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Age">
-                <RestrictedInput
-                  minValue={18}
-                  maxValue={100}
-                  onEnter={(event, value) =>
-                    act('edit_field', {
-                      field: 'age',
-                      ref: ref,
-                      value: value,
-                    })
-                  }
-                  value={age}
-                />
-              </LabeledList.Item>
-              <LabeledList.Item label="Species">
-                <EditableText field="species" target_ref={ref} text={species} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Gender">
-                <EditableText field="gender" target_ref={ref} text={gender} />
-              </LabeledList.Item>
-              <LabeledList.Item color="good" label="Fingerprint">
-                <EditableText
-                  field="fingerprint"
-                  target_ref={ref}
-                  text={fingerprint}
-                />
-              </LabeledList.Item>
-              <LabeledList.Item label="Notes">
-                <EditableText field="note" target_ref={ref} text={note} />
-              </LabeledList.Item>
               <LabeledList.Item
                 buttons={available_statuses.map((button, index) => {
                   const isSelected = button === wanted_status;
@@ -115,7 +88,10 @@ export const SecurityRecordView = (props, context) => {
                       icon={isSelected ? 'check' : ''}
                       color={isSelected ? CRIMESTATUS2COLOR[button] : 'grey'}
                       onClick={() =>
-                        act('set_wanted', { ref: ref, status: button })
+                        act('set_wanted', {
+                          crew_ref: crew_ref,
+                          status: button,
+                        })
                       }
                       pl={!isSelected ? '1.8rem' : 1}
                       tooltip={CRIMESTATUS2DESC[button] || ''}
@@ -128,6 +104,58 @@ export const SecurityRecordView = (props, context) => {
                 <Box color={CRIMESTATUS2COLOR[wanted_status]}>
                   {wanted_status}
                 </Box>
+              </LabeledList.Item>
+              <LabeledList.Divider />
+              <LabeledList.Item>
+                <Box bold color="label" mb={1}>
+                  Personal Information:
+                </Box>
+              </LabeledList.Item>
+              <LabeledList.Divider />
+              <LabeledList.Item label="Name">
+                <EditableText field="name" target_ref={crew_ref} text={name} />
+              </LabeledList.Item>
+              <LabeledList.Item label="Job">
+                <EditableText field="rank" target_ref={crew_ref} text={rank} />
+              </LabeledList.Item>
+              <LabeledList.Item label="Age">
+                <RestrictedInput
+                  minValue={18}
+                  maxValue={100}
+                  onEnter={(event, value) =>
+                    act('edit_field', {
+                      crew_ref: crew_ref,
+                      field: 'age',
+                      value: value,
+                    })
+                  }
+                  value={age}
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Species">
+                <EditableText
+                  field="species"
+                  target_ref={crew_ref}
+                  text={species}
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Gender">
+                <EditableText
+                  field="gender"
+                  target_ref={crew_ref}
+                  text={gender}
+                />
+              </LabeledList.Item>
+              <LabeledList.Item color="good" label="Fingerprint">
+                <EditableText
+                  color="good"
+                  field="fingerprint"
+                  target_ref={crew_ref}
+                  text={fingerprint}
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Note">
+                <EditableText field="note" target_ref={crew_ref} text={note} />
               </LabeledList.Item>
             </LabeledList>
           </Section>

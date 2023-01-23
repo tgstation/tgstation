@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 
-export type SecureData = {
+export type SecurityRecordsData = {
   authenticated: BooleanLike;
   available_statuses: string[];
   records: SecurityRecord[];
@@ -10,6 +10,7 @@ export type SecurityRecord = {
   age: number;
   appearance: string;
   citations: Crime[];
+  crew_ref: string;
   crimes: Crime[];
   fingerprint: string;
   gender: string;
@@ -17,18 +18,17 @@ export type SecurityRecord = {
   name: string;
   note: string;
   rank: string;
-  ref: string;
   species: string;
   wanted_status: string;
 };
 
 export type Crime = {
   author: string;
+  crime_ref: string;
   details: string;
   fine: number;
   name: string;
   paid: number;
-  ref: string;
   time: number;
 };
 

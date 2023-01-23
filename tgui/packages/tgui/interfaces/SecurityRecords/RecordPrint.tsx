@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from 'tgui/backend';
-import { PRINTOUT, SecureData } from './types';
+import { PRINTOUT, SecurityRecordsData } from './types';
 import { Box, Button, Input, Section, Stack } from 'tgui/components';
 import { getSecurityRecord, getDefaultPrintDescription, getDefaultPrintHeader } from './helpers';
 
@@ -8,9 +8,9 @@ export const RecordPrint = (props, context) => {
   const foundRecord = getSecurityRecord(context);
   if (!foundRecord) return <> </>;
 
-  const { crimes, name, ref } = foundRecord;
+  const { crew_ref, crimes, name } = foundRecord;
   const innocent = !crimes?.length;
-  const { act } = useBackend<SecureData>(context);
+  const { act } = useBackend<SecurityRecordsData>(context);
 
   const [open, setOpen] = useLocalState<boolean>(context, 'printOpen', true);
   const [alias, setAlias] = useLocalState<string>(context, 'printAlias', name);
@@ -31,9 +31,9 @@ export const RecordPrint = (props, context) => {
   const printSheet = () => {
     act('print_record', {
       alias: alias,
+      crew_ref: crew_ref,
       desc: description,
       head: header,
-      ref: ref,
       type: printType,
     });
     reset();
