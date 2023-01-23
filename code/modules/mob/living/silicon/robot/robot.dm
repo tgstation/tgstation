@@ -554,7 +554,7 @@
 		new /obj/item/bodypart/arm/right/robot(T)
 		new /obj/item/bodypart/head/robot(T)
 		var/b
-		for(b=0, b!=2, b++)
+		for(b=0, b != 2, b++)
 			var/obj/item/assembly/flash/handheld/F = new /obj/item/assembly/flash/handheld(T)
 			F.burn_out()
 	if (cell) //Sanity check.
