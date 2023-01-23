@@ -397,7 +397,7 @@ Moving interrupts
 	var/list/choices = list()
 	for(var/statue_path in prepared_block.get_possible_statues())
 		var/obj/structure/statue/abstract_statue = statue_path
-		choices[statue_path] = image(icon=initial(abstract_statue.icon), icon_state=initial(abstract_statue.icon_state))
+		choices[statue_path] = image(icon = initial(abstract_statue.icon), icon_state = initial(abstract_statue.icon_state))
 	if(!choices.len)
 		user.balloon_alert(user, "no abstract statues for material!")
 
