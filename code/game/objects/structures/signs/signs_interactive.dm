@@ -117,7 +117,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	if(!ismob(collided_type))
 		return
 
-	var/mob/living/carbon/human/victim = collided_type // Real players only, no gaming high score
+	var/mob/victim = collided_type // Real players only, no gaming high score
 	if(!victim.client)
 		return
 
