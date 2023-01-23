@@ -137,3 +137,5 @@
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
 
+///Called when you add quirks to a mob
+#define COMSIG_QUIRK_ADDED "quirk_added"

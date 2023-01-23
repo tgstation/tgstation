@@ -92,6 +92,8 @@
 
 	RegisterSignal(quirk_holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdeleting))
 
+	SEND_SIGNAL(quirk_holder, COMSIG_QUIRK_ADDED, src)
+
 	return TRUE
 
 /// Removes the quirk from the current quirk_holder.
