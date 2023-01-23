@@ -88,7 +88,7 @@
 
 /datum/orderable_item/mining/kheiralcuffs
 	item_path = /obj/item/kheiral_cuffs
-	cost_per_order = 2000
+	cost_per_order = 750
 
 /datum/orderable_item/mining/bhop
 	item_path = /obj/item/clothing/shoes/bhop
