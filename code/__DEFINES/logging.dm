@@ -57,7 +57,7 @@
 // Log header keys
 #define LOG_HEADER_CATEGORY "category"
 #define LOG_HEADER_INIT_TIMESTAMP "timestamp"
-#define LOG_HEADER_ROUND_ID "roundid"
+#define LOG_HEADER_ROUND_ID "round_id"
 
 // Log data keys
 #define LOG_ENTRY_MESSAGE "message"
