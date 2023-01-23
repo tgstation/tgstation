@@ -9,12 +9,18 @@
 	dir = NONE
 	var/obj/structure/disposalpipe/last_pipe
 	var/obj/structure/disposalpipe/current_pipe
-	var/datum/gas_mixture/gas // gas used to flush, will appear at exit point
-	var/active = FALSE // true if the holder is moving, otherwise inactive
-	var/count = 1000 // can travel 1000 steps before going inactive (in case of loops)
-	var/destinationTag = NONE // changes if contains a delivery container
-	var/tomail = FALSE // contains wrapped package
-	var/hasmob = FALSE // contains a mob
+	/// Gas used to flush, will appear at exit point
+	var/datum/gas_mixture/gas
+	/// True if the holder is moving, otherwise inactive
+	var/active = FALSE
+	/// Can travel 1000 steps before going inactive (in case of loops)
+	var/count = 1000
+	/// Changes if contains a delivery container
+	var/destinationTag = NONE
+	/// Contains wrapped package?
+	var/tomail = FALSE
+	/// Contains a mob?
+	var/hasmob = FALSE
 
 /obj/structure/disposalholder/Initialize(mapload)
 	. = ..()
@@ -26,7 +32,7 @@
 	current_pipe = null
 	return ..()
 
-// initialize a holder from the contents of a disposal unit
+/// Initializes a holder from the contents of a disposal unit
 /obj/structure/disposalholder/proc/init(obj/machinery/disposal/D)
 	gas = D.air_contents// transfer gas resv. into holder object
 
@@ -59,8 +65,7 @@
 				destinationTag = tagger.currTag
 
 
-// start the movement process
-// argument is the disposal unit the holder started in
+/// Starts the movement process, argument is the disposal unit the holder started in
 /obj/structure/disposalholder/proc/start(obj/machinery/disposal/D)
 	if(QDELETED(D.trunk))
 		D.expel(src) // no trunk connected, so expel immediately
@@ -80,16 +85,19 @@
 		RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, PROC_REF(movement_stop))
 		current_pipe = loc
 
+/// Handles the preprocess check signal, sets the current pipe as the last pipe
 /obj/structure/disposalholder/proc/pre_move(datum/move_loop/source)
 	SIGNAL_HANDLER
 	last_pipe = loc
 
+/// Handles the postprocess check signal, tries to leave the pipe
 /obj/structure/disposalholder/proc/try_expel(datum/move_loop/source, succeed, visual_delay)
 	SIGNAL_HANDLER
 	if(current_pipe || !active)
 		return
 	last_pipe.expel(src, get_turf(src), dir)
 
+/// Handles what happens to the contents when the qdel signal triggers
 /obj/structure/disposalholder/proc/movement_stop(datum/source)
 	SIGNAL_HANDLER
 	current_pipe = null
@@ -151,11 +159,11 @@
 		AM.forceMove(drop_location())
 	qdel(src)
 
-// find the turf which should contain the next pipe
+/// Finds the turf which should contain the next pipe
 /obj/structure/disposalholder/proc/nextloc()
 	return get_step(src, dir)
 
-// find a matching pipe on a turf
+/// Finds a matching pipe on a turf
 /obj/structure/disposalholder/proc/findpipe(turf/T)
 	if(!T)
 		return null
@@ -169,8 +177,7 @@
 	// if no matching pipe, return null
 	return null
 
-// merge two holder objects
-// used when a holder meets a stuck holder
+/// Merge two holder objects, used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
 	for(var/A in other)
 		var/atom/movable/AM = A
@@ -181,6 +188,8 @@
 			hasmob = TRUE
 	if(destinationTag == 0 && other.destinationTag != 0)
 		destinationTag = other.destinationTag
+	if(!tomail && other.tomail)
+		tomail = TRUE
 	qdel(other)
 
 
@@ -192,7 +201,7 @@
 		M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", MSG_AUDIBLE)
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, FALSE, FALSE)
 
-// called to vent all gas in holder to a location
+/// Called to vent all gas in holder to a location
 /obj/structure/disposalholder/proc/vent_gas(turf/T)
 	T.assume_air(gas)
 
