@@ -70,6 +70,12 @@ if $grep '(new|newlist|icon|matrix|sound)\(.+\)' $map_files;	then
 	echo -e "${RED}ERROR: Using unsupported procs in variables in a map file! Please remove all instances of this.${NC}"
 	st=1
 fi;
+part "armor lists"
+if $grep '\tarmor = list' $map_files; then
+	echo
+	echo -e "${RED}ERROR: Outdated armor list in map file.${NC}"
+	st=1
+fi;
 part "common spelling mistakes"
 if $grep -i 'nanotransen' $map_files; then
 	echo
