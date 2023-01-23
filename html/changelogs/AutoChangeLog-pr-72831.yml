@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Deconstructing deep friers should now work properly."

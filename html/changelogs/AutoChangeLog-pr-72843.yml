@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "Being wet no longer causes you to be EXTRA flammable, and instead properly protects you from catching on fire. If you're wet enough, of course."
