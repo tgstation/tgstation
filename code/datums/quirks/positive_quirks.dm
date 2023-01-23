@@ -302,7 +302,7 @@
 	name = "Throwing Arm"
 	desc = "Your arms have a lot of heft to them! Objects that you throw just always seem to fly further than everyone elses, and you never miss a toss."
 	icon = "baseball"
-	value = 2
+	value = 7
 	mob_trait = TRAIT_THROWINGARM
 	gain_text = "<span class='notice'>Your arms are full of energy!</span>"
 	lose_text = "<span class='danger'>Your arms ache a bit.</span>"
