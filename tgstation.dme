@@ -3100,6 +3100,7 @@
 #include "code\modules\escape_menu\escape_menu.dm"
 #include "code\modules\escape_menu\home_page.dm"
 #include "code\modules\escape_menu\leave_body.dm"
+#include "code\modules\escape_menu\subsystem.dm"
 #include "code\modules\escape_menu\title.dm"
 #include "code\modules\events\_event.dm"
 #include "code\modules\events\aurora_caelus.dm"

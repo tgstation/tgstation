@@ -2,14 +2,12 @@
 /datum/escape_menu/proc/show_leave_body_page()
 	PRIVATE_PROC(TRUE)
 
-	// var/static/dead_clown
-	// if (isnull(dead_clown))
-	// 	if (MC_RUNNING(SSatoms.init_stage)) // We're about to create a bunch of atoms for a human
-	// 		dead_clown = create_dead_clown()
-	// 	else
-	// 		stack_trace("The leave body menu was opened before the atoms SS. This shouldn't be possible, as the leave body menu should only be accessible when you have a body.")
-
-	var/dead_clown = create_dead_clown()
+	var/static/dead_clown
+	if (isnull(dead_clown))
+		if (MC_RUNNING(SSatoms.init_stage)) // We're about to create a bunch of atoms for a human
+			dead_clown = create_dead_clown()
+		else
+			stack_trace("The leave body menu was opened before the atoms SS. This shouldn't be possible, as the leave body menu should only be accessible when you have a body.")
 
 	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/leave_body_button(
 		src,

@@ -199,6 +199,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/player_interactions
 	/// List of admin ckeys that are involved, like through responding
 	var/list/admins_involved = list()
+	/// Has the player replied to this ticket yet?
+	var/player_replied = FALSE
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket
@@ -417,11 +419,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			confidential = TRUE)
 
 	//show it to the person adminhelping too
-	to_chat(initiator,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminnotice("PM to-<b>Admins</b>: [span_linkify(msg)]"),
-		confidential = TRUE)
+	reply_to_admins_notification(msg)
 	SSblackbox.LogAhelp(id, "Ticket Opened", msg, null, initiator.ckey, urgent = urgent)
+
+/// Sends a message to the player that they are replying to admins.
+/datum/admin_help/proc/reply_to_admins_notification(message)
+	to_chat(
+		initiator,
+		type = MESSAGE_TYPE_ADMINPM,
+		html = span_notice("PM to-<b>Admins</b>: [span_linkify(message)]"),
+		confidential = TRUE,
+	)
+
+	player_replied = TRUE
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()
