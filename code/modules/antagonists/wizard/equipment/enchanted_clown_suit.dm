@@ -67,7 +67,7 @@
 
 /// Prints a funny message, exists so I can override it to print a different message
 /datum/action/cooldown/spell/clown_pockets/proc/cast_message(mob/cast_on)
-	cast_on.visible_message(span_notice("[cast_on] reaches far deeper into [cast_on.p_their()] pants than you think \
+	cast_on.visible_message(span_notice("[cast_on] reaches far deeper into [cast_on.p_their()] pockets than you think \
 		should be possible and starts rummaging around for something."))
 
 /datum/action/cooldown/spell/clown_pockets/after_cast(atom/cast_on)
