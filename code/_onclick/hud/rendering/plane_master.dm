@@ -589,8 +589,16 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/splashscreen
 	name = "Splashscreen"
-	documentation = "Anything that's drawn above LITERALLY everything else. Think cinimatics and the well, spashscreen."
+	documentation = "Cinematics and the splash screen."
 	plane = SPLASHSCREEN_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
+	allows_offsetting = FALSE
+
+/atom/movable/screen/plane_master/escape_menu
+	name = "Escape Menu"
+	documentation = "Anything relating to the escape menu."
+	plane = ESCAPE_MENU_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	render_relay_planes = list(RENDER_PLANE_MASTER)
 	allows_offsetting = FALSE
