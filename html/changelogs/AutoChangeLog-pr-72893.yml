@@ -1,0 +1,6 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "toilet bongs crafting recipes"
+  - bugfix: "fixed crafting itself"
+  - refactor: "cleaned up some old code in the recipes file, added support for structures in recipes"
