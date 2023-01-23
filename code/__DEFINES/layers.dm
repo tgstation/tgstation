@@ -261,6 +261,7 @@
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
+#define PLANE_MASTERS_NON_MASTER "plane_masters_non_master"
 #define PLANE_MASTERS_COLORBLIND "plane_masters_colorblind"
 
 //Plane master critical flags
