@@ -1306,6 +1306,7 @@
 #include "code\datums\proximity_monitor\fields\projectile_dampener.dm"
 #include "code\datums\proximity_monitor\fields\timestop.dm"
 #include "code\datums\quirks\_quirk.dm"
+#include "code\datums\quirks\food_order_subscriber.dm"
 #include "code\datums\quirks\negative_quirks.dm"
 #include "code\datums\quirks\neutral_quirks.dm"
 #include "code\datums\quirks\positive_quirks.dm"
