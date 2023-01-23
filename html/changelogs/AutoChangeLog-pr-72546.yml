@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Species that don't suffer from hunger can now properly open the cooking menu."

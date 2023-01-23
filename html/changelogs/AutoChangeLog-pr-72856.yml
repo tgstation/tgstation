@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - qol: "fireaxe cabinets, mech removal cabinets, and mirrors can now all be crafted"
