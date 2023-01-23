@@ -201,7 +201,9 @@
 	var/list/lookup = (target.comp_lookup ||= list())
 
 	if(!override && target_procs[signal_type])
-		log_signal("[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]")
+		var/override_message = "[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]"
+		log_signal(override_message)
+		stack_trace(override_message)
 
 	target_procs[signal_type] = proctype
 	var/list/looked_up = lookup[signal_type]
@@ -218,7 +220,7 @@
 /// Registers multiple signals to the same proc.
 /datum/proc/RegisterSignals(datum/target, list/signal_types, proctype, override = FALSE)
 	for (var/signal_type in signal_types)
-		RegisterSignal(target, signal_type, proctype)
+		RegisterSignal(target, signal_type, proctype, override)
 
 /**
  * Stop listening to a given signal from target

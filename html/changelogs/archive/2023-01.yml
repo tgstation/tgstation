@@ -718,3 +718,76 @@
       with internals and such
   - bugfix: fixed issue where plasmamen who are spawned without a plasmaman-specific
       job outfit could spawn without internals and a suit, and just start dying immediately
+2023-01-21:
+  LT3:
+  - bugfix: Kilostation comfy chairs now provide the correct stack of iron on deconstruction
+  PositiveEntropy:
+  - imageadd: Resprites the detective's wardrobe!
+  Rhials:
+  - bugfix: a wall covered by a screen on runtimestation has been modified into a
+      reinforced wall.
+  SuperSlayer0:
+  - bugfix: Fixes reverse revolver sprite being swapped to normal revolver sprite
+  - balance: Nerve splicing surgery now additionaly reduces stamina damage taken by
+      20%
+  Trigg:
+  - bugfix: Admins - Saving a VV outfit will no longer save their cached_ref variable,
+      which caused problems when the game tried to use that cache on another round.
+      Existing broken outfits will need to be loaded and saved again.
+  mc-oofert:
+  - rscadd: Added a new emergency shuttle, the Venture
+2023-01-22:
+  Melbert:
+  - qol: RTD fits in toolbelts.
+  NamelessFairy:
+  - bugfix: Viscerators are no longer invisible.
+  Timberpoes:
+  - bugfix: Mice given sentience through intelligence potions no longer immediately
+      consume the body and soul of the person whom uplifted them.
+  justricky21:
+  - spellcheck: small amendment on pet carrier
+  timothymtorres:
+  - rscadd: Add torches, porcini mushroom seeds, towercap seeds to ash walker ruin.
+  - rscadd: Change drying racks to not require power.
+  - rscadd: Add crafting recipe for smoking pipe that uses wood
+2023-01-23:
+  Ed640:
+  - bugfix: fixed Item scaling objects not properly scaling in inventory slots.
+  Fikou:
+  - rscadd: You can now craft mannequins with wood or plastic.
+  GoldenAlpharex:
+  - balance: Water now makes you wet on touch and vapor application, with vapor being
+      much less effective than touch. Yes, that means you can now spend two minutes
+      putting someone out with a spray bottle full of water!
+  - bugfix: Being wet no longer causes you to be EXTRA flammable, and instead properly
+      protects you from catching on fire. If you're wet enough, of course.
+  Inari-Whitebear:
+  - bugfix: Fixed integrated circuit component menu search crashing on certain symbols
+      being entered.
+  LT3:
+  - spellcheck: Added missing event panel description for Tram Malfunction
+  - bugfix: Portable atmos machinery is layered correctly
+  Melbert:
+  - rscadd: Added a new random event, "Radiation Leak". A random machine starts to
+      emit radiation and toxic fumes. Engineers may be able to stop it with their
+      tools.
+  - rscadd: The "Radioactive" gene from genetics will now emit rads when on stasis
+      or dead, rather than just while you're alive.
+  OrionTheFox:
+  - bugfix: Randomized round-start posters now pull from the selected poster's icon
+      file, meaning TG Downstreams can have them in a seperate .dmi
+  Rhials:
+  - balance: The Magnitis disease will now hurl objects at infectees at higher stages.
+      Watch your head!
+  Ryll/Shaps:
+  - bugfix: You can no longer climb ladders while buckled to an anchored object
+  SmoSmoSmoSmok:
+  - qol: u can now search for players in the messenger by typing their name or their
+      job
+  san7890:
+  - bugfix: Deconstructing deep friers should now work properly.
+  timothymtorres:
+  - qol: Allow illiterate people to play slot machines
+  unit0016:
+  - spellcheck: Wire Terminals' Description now informs the player that they're an
+      input.

@@ -313,7 +313,9 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/buckler, 20, time = 4 SECONDS, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 5 SECONDS, category = CAT_TOOLS),\
+	new/datum/stack_recipe("mannequin", /obj/structure/mannequin/wood, 25, time = 5 SECONDS, one_per_turf = TRUE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("smoking pipe", /obj/item/clothing/mask/cigarette/pipe, 2, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 1 SECONDS, category = CAT_TOOLS),\
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/cup/bucket/wooden, 3, time = 1 SECONDS, category = CAT_CONTAINERS),\
 	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 1 SECONDS, category = CAT_TOOLS),\
@@ -735,6 +737,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/empty, category = CAT_CONTAINERS), \
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/large/empty, 3, category = CAT_CONTAINERS), \
 	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/cup/glass/colocup, 1, category = CAT_CONTAINERS), \
+	new /datum/stack_recipe("mannequin", /obj/structure/mannequin/plastic, 25, time = 5 SECONDS, one_per_turf = TRUE, category = CAT_ENTERTAINMENT), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1, category = CAT_FURNITURE)))
