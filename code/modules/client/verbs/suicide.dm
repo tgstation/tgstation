@@ -216,23 +216,27 @@
 	var/suicide_message = ""
 	switch(type)
 		if(HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE) // god damn this message is fucking stupid
-			suicide_message = "[src] pulls both arms outwards in front of [p_their()] chest and pumps them behind [p_their()] back, repeats this motion in a smaller range of motion \
-					down to [p_their()] hips two times once more all while sliding [p_their()] legs in a faux walking motion, claps [p_their()] hands together \
-					in front of [p_them()] while both [p_their()] knees knock together, pumps [p_their()] arms downward, pronating [p_their()] wrists and abducting \
-					[p_their()] fingers outward while crossing [p_their()] legs back and forth, repeats this motion again two times while keeping [p_their()] shoulders low\
-					and hunching over, does finger guns with right hand and left hand bent on [p_their()] hip while looking directly forward and putting [p_their()] left leg forward then\
-					crossing [p_their()] arms and leaning back a little while bending [p_their()] knees at an angle! It looks like [p_theyre()] trying to commit suicide."
+			suicide_message = {"[src] pulls both arms outwards in front of [p_their()] chest and pumps them behind [p_their()] back, repeats this motion in a smaller range of motion
+					down to [p_their()] hips two times once more all while sliding [p_their()] legs in a faux walking motion, claps [p_their()] hands together
+					in front of [p_them()] while both [p_their()] knees knock together, pumps [p_their()] arms downward, pronating [p_their()] wrists and abducting
+					[p_their()] fingers outward while crossing [p_their()] legs back and forth, repeats this motion again two times while keeping [p_their()] shoulders low
+					and hunching over, does finger guns with right hand and left hand bent on [p_their()] hip while looking directly forward and putting [p_their()] left leg forward then
+					crossing [p_their()] arms and leaning back a little while bending [p_their()] knees at an angle! It looks like [p_theyre()] trying to commit suicide."}
 
 		if(HUMAN_COMBAT_MODE_SUICIDE_MESSAGE)
-			suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.")
+			suicide_message = pick(list(
+							"[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.",
+							"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.",
+							"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.",
+							"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.",
+			))
 
 		if(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
-			suicide_message = pick("[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
-						"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
-						"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.")
+			suicide_message = pick(list(
+						"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.",
+						"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.",
+						"[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.",
+			))
 
 	visible_message(span_danger("[suicide_message]"), span_userdanger("[suicide_message]"))
 
