@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "Monkey Humans no longer have their AI turned on upon revival"

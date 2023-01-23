@@ -157,12 +157,15 @@ Runs the event
 	var/datum/round_event_control/control
 
 	/// When in the lifetime to call start().
+	/// This is in seconds - so 1 = ~2 seconds in.
 	var/start_when = 0
 	/// When in the lifetime to call announce(). If you don't want it to announce use announce_chance, below.
+	/// This is in seconds - so 1 = ~2 seconds in.
 	var/announce_when = 0
 	/// Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in the ion storm event.
 	var/announce_chance = 100
 	/// When in the lifetime the event should end.
+	/// This is in seconds - so 1 = ~2 seconds in.
 	var/end_when = 0
 
 	/// How long the event has existed. You don't need to change this.
