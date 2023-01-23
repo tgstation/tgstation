@@ -27,7 +27,7 @@
 	. = ..()
 	vibe_ability = new(src)
 	vibe_ability.Grant(src)
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON)
 
 /mob/living/simple_animal/bot/vibebot/Destroy()
 	QDEL_NULL(vibe_ability)
