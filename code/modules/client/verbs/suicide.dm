@@ -31,7 +31,7 @@
 
 /mob/living/carbon/human/verb/suicide()
 	set hidden = TRUE
-	if(!suicide_alert()) // check to make sure that while we were sleeping in suicide_alert() that we didn't have a ckey change.
+	if(!suicide_alert())
 		return
 
 	set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
@@ -162,13 +162,13 @@
 	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
 
 /// Sends a TGUI Alert to the person attempting to commit suicide. Returns TRUE if they confirm they want to die, FALSE otherwise. Check can_suicide here as well.
-/mob/living/proc/suicide_alert(mob/living/user)
+/mob/living/proc/suicide_alert()
 	// Save this for later to ensure that if we change ckeys somehow, we exit out of the suicide.
 	var/oldkey = ckey
 	if(!can_suicide())
 		return FALSE
 
-	var/confirm = tgui_alert(user, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
+	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	// ensure our situation didn't change while we were sleeping waiting for the tgui_alert.
 	if(!can_suicide() || (ckey != oldkey))
@@ -177,7 +177,7 @@
 	if(confirm == "Yes")
 		return TRUE
 
-	balloon_alert(user, "suicide attempt aborted!")
+	balloon_alert(src, "suicide attempt aborted!")
 	return FALSE
 
 /// Inserts in logging and death + mind dissociation when we're fully done with ending the life of our mob, as well as adjust the health. We will disallow re-entering the body when this is called.
