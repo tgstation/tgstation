@@ -369,6 +369,8 @@
 		"integrated_circuit",
 		"module_duplicator",
 		"usb_cable",
+		"comp_list_pick",
+		"assoc_comp_list_pick"
 	)
 
 /////////////////////////Biotech/////////////////////////
