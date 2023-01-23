@@ -16,9 +16,6 @@
 
 #define NUM_E 2.71828183
 
-// This is left here to let people know using sqrt(2) is correct.
-// sqrt(2) constant folds to a better value
-// #define SQRT_2 1.414214
 
 #define PI 3.1416
 #define INFINITY 1e31 //closer then enough
