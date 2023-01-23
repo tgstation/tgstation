@@ -277,11 +277,12 @@
 /datum/objective_item/steal/functionalai
 	name = "a functional AI"
 	targetitem = /obj/item/aicard
+	altitems = list(/obj/item/mod) // only here so we can account for AIs tucked away in a MODsuit.
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/aicard/C)
-	for(var/mob/living/silicon/ai/A in C)
-		if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/potential_storage)
+	for(var/mob/living/silicon/ai/captured_being in potential_storage)
+		if(isAI(captured_being) && captured_being.stat != DEAD) //See if any AI's are alive inside that card.
 			return TRUE
 	return FALSE
 
