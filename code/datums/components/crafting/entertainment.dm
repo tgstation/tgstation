@@ -152,7 +152,7 @@
 	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1) 
 	if(toilet)
 		for (var/obj/item/cistern_item in toilet.contents)
-			cistern_item.forceMove(user.loc)
+			cistern_item.forceMove(user.drop_location())
 			to_chat(user, span_warning("[cistern_item] falls out of the toilet!"))
 		toiletbong.dir = toilet.dir
 		toiletbong.loc = toilet.loc
