@@ -1,3 +1,5 @@
+#define SCULPT_SOUND_INCREMENT 4
+
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
@@ -337,6 +339,7 @@ Moving interrupts
 
 	return . | AFTERATTACK_PROCESSED_ITEM
 
+/// Starts or continues the sculpting action on the carving block material
 /obj/item/chisel/proc/start_sculpting(mob/living/user)
 	user.balloon_alert(user, "sculpting block...")
 	playsound(src, pick(usesound), 75, TRUE)
@@ -351,7 +354,7 @@ Moving interrupts
 	var/datum/progressbar/total_progress_bar = new(user, sculpting_time, prepared_block)
 	while(remaining_time > 0 && !interrupted)
 		if(do_after(user, sculpting_period, target = prepared_block, progress = FALSE))
-			var/time_delay = !(remaining_time % 4)
+			var/time_delay = !(remaining_time % SCULPT_SOUND_INCREMENT)
 			if(time_delay)
 				playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 			remaining_time -= sculpting_period
@@ -365,6 +368,7 @@ Moving interrupts
 		user.balloon_alert(user, "statue finished")
 	stop_sculpting(silent = !interrupted)
 
+/// To setup the sculpting target for the carving block
 /obj/item/chisel/proc/set_block(obj/structure/carving_block/B, mob/living/user, silent = FALSE)
 	prepared_block = B
 	tracked_user = user
@@ -376,6 +380,7 @@ Moving interrupts
 	. = ..()
 	stop_sculpting()
 
+/// Cancel the sculpting action
 /obj/item/chisel/proc/stop_sculpting(silent = FALSE)
 	sculpting = FALSE
 	if(prepared_block && prepared_block.completion == 0)
@@ -602,3 +607,5 @@ Moving interrupts
 	. = ..()
 	if(content_ma)
 		. += content_ma
+
+#undef SCULPT_SOUND_INCREMENT
