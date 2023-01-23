@@ -154,6 +154,17 @@ SUBSYSTEM_DEF(shuttle)
 		if(!pack.contains)
 			continue
 
+		//Adds access requirements to the end of each description.
+		if(pack.access && pack.access_view)
+			if(pack.access == pack.access_view)
+				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open or purchase."
+			else
+				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open, or [SSid_access.get_access_desc(pack.access_view)] access to purchase."
+		else if(pack.access)
+			pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open."
+		else if(pack.access_view)
+			pack.desc += " Requires [SSid_access.get_access_desc(pack.access_view)] access to purchase."
+
 		supply_packs[pack.id] = pack
 
 	setup_shuttles(stationary_docking_ports)
