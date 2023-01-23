@@ -46,7 +46,6 @@
 	change_message(message)
 
 /atom/movable/screen/tutorial_instruction_text/proc/change_message(message)
-	// MBTODO: test this
 	message = MAPTEXT_VCR_OSD_MONO("<span style='font-size: 22px; text-align: center'>[message]</span>")
 
 	animate(src, alpha = 0, time = (maptext ? 0.5 SECONDS : 0), easing = SINE_EASING)

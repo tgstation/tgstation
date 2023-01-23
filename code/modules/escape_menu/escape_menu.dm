@@ -1,7 +1,5 @@
 GLOBAL_LIST_EMPTY(escape_menus)
 
-// MBTODO: Protect from F12
-
 /// Opens the escape menu.
 /// Verb, hardcoded to Escape, set in the client skin.
 /client/verb/open_escape_menu()
