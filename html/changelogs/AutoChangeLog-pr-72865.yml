@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "Bundles of disposal packages that contain a wrapped parcel will be now successfully redirected by the wrapping sorters"

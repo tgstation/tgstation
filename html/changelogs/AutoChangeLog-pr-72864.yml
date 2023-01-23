@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed a bug where petri dish smartfridges could not be constructed from a circuit board"

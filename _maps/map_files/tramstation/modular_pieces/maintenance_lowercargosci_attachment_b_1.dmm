@@ -36,7 +36,7 @@
 /area/station/maintenance/starboard/central)
 "E" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/lavaland/surface)
+/area/misc/asteroid)
 "H" = (
 /turf/template_noop,
 /area/template_noop)

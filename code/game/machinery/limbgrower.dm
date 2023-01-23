@@ -19,15 +19,27 @@
 	/// The design we're printing currently.
 	var/datum/design/being_built
 	/// Our internal techweb for limbgrower designs.
-	var/datum/techweb/stored_research
+	var/datum/techweb/autounlocking/stored_research
 	/// All the categories of organs we can print.
 	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_LIMBS_DIGITIGRADE)
+	///Designs imported from technology disks that we can print.
+	var/list/imported_designs = list()
 
 /obj/machinery/limbgrower/Initialize(mapload)
 	create_reagents(100, OPENCONTAINER)
-	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
+	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/limbgrower])
+		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/limbgrower] = new /datum/techweb/autounlocking/limbgrower
+	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/limbgrower]
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
+
+/// Emagging a limbgrower allows you to build synthetic armblades.
+/obj/machinery/limbgrower/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	. = ..()
+	obj_flags |= EMAGGED
+	update_static_data(user)
 
 /obj/machinery/limbgrower/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -63,7 +75,14 @@
 	var/species_categories = categories.Copy()
 	for(var/species in species_categories)
 		species_categories[species] = list()
-	for(var/design_id in stored_research.researched_designs)
+
+	var/list/available_nodes = stored_research.researched_designs.Copy()
+	if(imported_designs.len)
+		available_nodes += imported_designs
+	if(obj_flags & EMAGGED)
+		available_nodes += stored_research.hacked_designs
+
+	for(var/design_id in available_nodes)
 		var/datum/design/limb_design = SSresearch.techweb_design_by_id(design_id)
 		for(var/found_category in species_categories)
 			if(found_category in limb_design.category)
@@ -98,7 +117,7 @@
 /obj/machinery/limbgrower/on_deconstruction()
 	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
 		reagents.trans_to(our_beaker, our_beaker.reagents.maximum_volume)
-	..()
+	return ..()
 
 /obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
 	if (busy)
@@ -113,7 +132,7 @@
 		var/obj/item/disk/design_disk/limbs/limb_design_disk = user_item
 		if(do_after(user, 2 SECONDS, target = src))
 			for(var/datum/design/found_design in limb_design_disk.blueprints)
-				stored_research.add_design(found_design)
+				imported_designs[found_design.id] = TRUE
 			update_static_data(user)
 		busy = FALSE
 		return
@@ -144,11 +163,11 @@
 			. = TRUE
 
 		if("make_limb")
-			being_built = stored_research.isDesignResearchedID(params["design_id"])
-			if(!being_built)
-				CRASH("[src] was passed an invalid design id!")
-
-			/// All the reagents we're using to make our organ.
+			var/design_id = params["design_id"]
+			if(!stored_research.researched_designs.Find(design_id) && !stored_research.hacked_designs.Find(design_id) && !imported_designs.Find(design_id))
+				return
+			being_built = SSresearch.techweb_design_by_id(design_id)
+			// All the reagents we're using to make our organ.
 			var/list/consumed_reagents_list = being_built.reagents_list.Copy()
 			/// The amount of power we're going to use, based on how much reagent we use.
 			var/power = 0
@@ -164,13 +183,11 @@
 
 			busy = TRUE
 			use_power(power)
-			flick("limbgrower_fill",src)
+			flick("limbgrower_fill", src)
 			icon_state = "limbgrower_idleon"
 			selected_category = params["active_tab"]
 			addtimer(CALLBACK(src, PROC_REF(build_item), consumed_reagents_list), production_speed * production_coefficient)
-			. = TRUE
-
-	return
+			return TRUE
 
 /*
  * The process of beginning to build a limb or organ.
@@ -261,7 +278,6 @@
 
 /obj/machinery/limbgrower/fullupgrade //Inherently cheaper organ production. This is to NEVER be inherently emagged, no valids.
 	desc = "It grows new limbs using Synthflesh. This alien model seems more efficient."
-	obj_flags = CAN_BE_HIT
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/limbgrower/fullupgrade
 
@@ -269,17 +285,5 @@
 	. = ..()
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
-		if((found_design.build_type & LIMBGROWER) && !(RND_CATEGORY_EMAGGED in found_design.category))
-			stored_research.add_design(found_design)
-
-/// Emagging a limbgrower allows you to build synthetic armblades.
-/obj/machinery/limbgrower/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	for(var/design_id in SSresearch.techweb_designs)
-		var/datum/design/found_design = SSresearch.techweb_design_by_id(design_id)
-		if((found_design.build_type & LIMBGROWER) && (RND_CATEGORY_EMAGGED in found_design.category))
-			stored_research.add_design(found_design)
-	to_chat(user, span_warning("Safety overrides have been deactivated!"))
-	obj_flags |= EMAGGED
-	update_static_data(user)
+		if((found_design.build_type & LIMBGROWER) && !(RND_CATEGORY_HACKED in found_design.category))
+			imported_designs += found_design.id

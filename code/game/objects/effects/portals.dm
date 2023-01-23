@@ -4,7 +4,7 @@
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
 	var/obj/effect/portal/P1 = new newtype(source, _lifespan, null, FALSE, null)
 	var/obj/effect/portal/P2 = new newtype(actual_destination, _lifespan, P1, TRUE, null)
-	if(!istype(P1)||!istype(P2))
+	if(!istype(P1) || !istype(P2))
 		return
 	P1.link_portal(P2)
 	P1.hardlinked = TRUE

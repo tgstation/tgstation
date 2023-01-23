@@ -275,3 +275,20 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define OBJECTIVE_WEIGHT_HUGE 20
 
 #define REVENANT_NAME_FILE "revenant_names.json"
+
+/// Antag panel groups
+#define ANTAG_GROUP_ABDUCTORS "Abductors"
+#define ANTAG_GROUP_ABOMINATIONS "Extradimensional Abominations"
+#define ANTAG_GROUP_ARACHNIDS "Arachnid Infestation"
+#define ANTAG_GROUP_ASHWALKERS "Ash Walkers"
+#define ANTAG_GROUP_BIOHAZARDS "Biohazards"
+#define ANTAG_GROUP_CLOWNOPS "Clown Operatives"
+#define ANTAG_GROUP_ERT "Emergency Response Team"
+#define ANTAG_GROUP_HORRORS "Eldritch Horrors"
+#define ANTAG_GROUP_LEVIATHANS "Spaceborne Leviathans"
+#define ANTAG_GROUP_NINJAS "Ninja Clan"
+#define ANTAG_GROUP_OVERGROWTH "Invasive Overgrowth"
+#define ANTAG_GROUP_PIRATES "Pirate Crew"
+#define ANTAG_GROUP_SYNDICATE "Syndicate"
+#define ANTAG_GROUP_WIZARDS "Wizard Federation"
+#define ANTAG_GROUP_XENOS "Xenomorph Infestation"

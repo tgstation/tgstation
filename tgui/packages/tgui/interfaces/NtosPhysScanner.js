@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import { Section, Box, Dropdown } from '../components';
+import { Section, Box } from '../components';
 import { sanitizeText } from '../sanitize';
 
 export const NtosPhysScanner = (props, context) => {
@@ -15,20 +15,6 @@ export const NtosPhysScanner = (props, context) => {
         <Section>
           Tap something (right-click) with your tablet to use the physical
           scanner.
-        </Section>
-        <Section>
-          <Box bold>
-            SELECTED MODE <br /> <br />
-          </Box>
-          <Dropdown
-            options={available_modes}
-            selected={set_mode}
-            onSelected={(value) =>
-              act('selectMode', {
-                newMode: value,
-              })
-            }
-          />
         </Section>
         <Section>
           <Box bold>

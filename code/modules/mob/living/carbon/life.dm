@@ -339,7 +339,7 @@
 			return
 		for(var/obj/item/organ/internal/organ as anything in internal_organs)
 			// On-death is where organ decay is handled
-			organ.on_death(delta_time, times_fired)
+			organ?.on_death(delta_time, times_fired) // organ can be null due to reagent metabolization causing organ shuffling
 			// We need to re-check the stat every organ, as one of our others may have revived us
 			if(stat != DEAD)
 				break

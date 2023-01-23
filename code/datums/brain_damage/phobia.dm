@@ -121,7 +121,7 @@
 		if(3)
 			to_chat(owner, span_warning("You shut your eyes in terror!"))
 			owner.set_jitter_if_lower(10 SECONDS)
-			owner.adjust_blindness(10)
+			owner.adjust_temp_blindness(20 SECONDS)
 		if(4)
 			owner.adjust_dizzy(20 SECONDS)
 			owner.adjust_confusion(10 SECONDS)
