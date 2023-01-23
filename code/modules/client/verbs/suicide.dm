@@ -31,8 +31,6 @@
 
 /mob/living/carbon/human/verb/suicide()
 	set hidden = TRUE
-	var/oldkey = ckey
-
 	if(!suicide_alert()) // check to make sure that while we were sleeping in suicide_alert() that we didn't have a ckey change.
 		return
 
