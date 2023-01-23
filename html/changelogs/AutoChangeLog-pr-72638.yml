@@ -1,0 +1,9 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - soundadd: "Chisels now make sculpting sounds when used on carving blocks"
+  - qol: "Chisels now give balloon alerts when selecting a target, cancelling, or sculpting"
+  - qol: "Chisels used on carving blocks that were interrupted will now continue"
+  - bugfix: "Fix chisel targets to have no range requirement (so you can use binoculars, cameras, etc.)"
+  - bugfix: "Fix standard mineral blocks (uranium, diamond, plasma, etc.) not letting people use the radial menu to craft abstract statues properly.  This does not work with custom mineral blocks. (pizza, glass, etc.)"
+  - code_imp: "Change chisel and statue code to be more readable"
