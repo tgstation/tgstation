@@ -13,8 +13,8 @@
 /obj/effect/grand_rune
 	name = "grand rune"
 	desc = "A flowing circle of shapes and runes is etched into the floor, the lines twist and move before your eyes."
-	icon = 'orbstation/icons/effects/rune.dmi'
-	icon_state = "rune"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "wizard_rune"
 	pixel_x = -28
 	pixel_y = -33
 	anchored = TRUE
@@ -131,7 +131,7 @@
 	if(times_invoked >= GRAND_RUNE_INVOKES_TO_COMPLETE)
 		on_invocation_complete(user)
 		return
-	flick("flash", src)
+	flick("wizard_rune_flash", src)
 	playsound(src,'sound/magic/staff_animation.ogg', 75, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(invoke_rune), user)
 
@@ -325,8 +325,8 @@
 /obj/effect/decal/cleanable/grand_remains
 	name = "circle of ash"
 	desc = "Looks like someone's been drawing weird shapes with ash on the ground."
-	icon = 'orbstation/icons/effects/rune.dmi'
-	icon_state = "burned"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "wizard_rune_burned"
 	pixel_x = -28
 	pixel_y = -34
 	anchored = TRUE

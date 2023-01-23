@@ -251,8 +251,8 @@
 
 /// Animates drawing a cool rune
 /obj/effect/temp_visual/drawing_rune
-	icon = 'orbstation/icons/effects/rune.dmi'
-	icon_state = "draw"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "wizard_rune_draw"
 	pixel_x = -28
 	pixel_y = -33
 	anchored = TRUE
@@ -264,8 +264,8 @@
 
 /// Displayed if you stop drawing it
 /obj/effect/temp_visual/failed_draw
-	icon = 'orbstation/icons/effects/rune.dmi'
-	icon_state = "fail"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "wizard_rune_fail"
 	pixel_x = -28
 	pixel_y = -33
 	anchored = TRUE
