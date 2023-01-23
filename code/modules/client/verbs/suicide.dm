@@ -39,7 +39,7 @@
 
 	var/damage_type = SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_ACT) || held_item?.suicide_act(src)
 	if(damage_type)
-		if(apply_suicide_damage(damage_type))
+		if(apply_suicide_damage(held_item, damage_type))
 			final_checkout(held_item, do_damage = FALSE)
 		return
 
@@ -150,7 +150,7 @@
 /// Set do_damage to FALSE in order to not do damage (in case it's handled elsewhere in the verb or another proc that the suicide tree calls).
 /mob/living/proc/final_checkout(obj/item/suicide_tool, do_damage = TRUE)
 	if(do_damage) // enough to really drive home the point that they are DEAD.
-		apply_damage()
+		apply_suicide_damage()
 
 	suicide_log(suicide_tool)
 	death(FALSE)
@@ -158,11 +158,11 @@
 
 /// The actual proc that will apply the damage to the suiciding mob. damage_type is the actual type of damage we want to deal, if that matters.
 /// Return TRUE if we actually apply any real damage, FALSE otherwise.
-/mob/living/proc/apply_suicide_damage(damage_type)
+/mob/living/proc/apply_suicide_damage(obj/item/suicide_tool, damage_type = NONE)
 	adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 	return TRUE
 
-/mob/living/carbon/human/apply_suicide_damage(damage_type == NONE)
+/mob/living/carbon/human/apply_suicide_damage(obj/item/suicide_tool, damage_type = NONE)
 	// if we don't have any damage_type passed in, default to parent.
 	if(damage_type == NONE)
 		return ..()
@@ -196,7 +196,7 @@
 		adjustOxyLoss(200/damage_mod)
 
 	if(damage_type & MANUAL_SUICIDE) //Assume the object will handle the death.
-		suicide_log(held_item)
+		suicide_log(suicide_tool)
 		return FALSE
 
 	//If no specific damage_type, just do normal oxyloss (handled by parent proc)
@@ -239,17 +239,17 @@
 
 		if(HUMAN_COMBAT_MODE_SUICIDE_MESSAGE)
 			suicide_message = pick(list(
-							"[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.",
-							"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.",
-							"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.",
-							"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.",
+				"[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.",
+				"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.",
+				"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.",
+				"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.",
 			))
 
 		if(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
 			suicide_message = pick(list(
-						"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.",
-						"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.",
-						"[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.",
+				"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.",
+				"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.",
+				"[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.",
 			))
 
 	visible_message(span_danger("[suicide_message]"), span_userdanger("[suicide_message]"))
