@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes:
-  - bugfix: "You can no longer climb ladders while buckled to an anchored object"
