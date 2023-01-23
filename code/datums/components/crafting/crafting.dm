@@ -355,9 +355,7 @@
 			container.emptyStorage()
 		else if(isstructure(DL))
 			var/obj/structure/structure = DL
-			if(structure.contents.len)
-				for(var/obj/item in structure.contents)
-					item.forceMove(item.drop_location())
+			structure.dump_contents()
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/is_recipe_available(datum/crafting_recipe/recipe, mob/user)
