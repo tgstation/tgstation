@@ -11,18 +11,26 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT | USES_TGUI
 
-	var/datum/gas_mixture/air_contents // internal reservoir
+	/// The internal air reservoir of the disposal
+	var/datum/gas_mixture/air_contents
+	/// Is the disposal at full pressure
 	var/full_pressure = FALSE
+	/// Is the pressure charging
 	var/pressure_charging = TRUE
-	var/flush = 0 // true if flush handle is pulled
-	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
-	var/flushing = 0 // true if flushing in progress
-	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
-	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
+	// True if flush handle is pulled
+	var/flush = FALSE
+	/// The attached pipe trunk
+	var/obj/structure/disposalpipe/trunk/trunk = null
+	/// True if flushing in progress
+	var/flushing = FALSE
+	/// Every 30 ticks it will look whether it is ready to flush
+	var/flush_every_ticks = 30
+	/// This var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
+	var/flush_count = 0
+	/// The last time a sound was played
 	var/last_sound = 0
+	/// The stored disposal construction pipe
 	var/obj/structure/disposalconstruct/stored
-	// create a new disposal
-	// find the attached trunk (if present) and init gas resvr.
 
 /datum/armor/machinery_disposal
 	melee = 25
@@ -32,6 +40,8 @@
 	fire = 90
 	acid = 30
 
+// create a new disposal
+// find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 
@@ -56,6 +66,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
+/// Checks if there a connecting trunk diposal pipe under the disposal
 /obj/machinery/disposal/proc/trunk_check()
 	var/obj/structure/disposalpipe/trunk/found_trunk = locate() in loc
 	if(!found_trunk)
@@ -122,6 +133,7 @@
 	else
 		return ..()
 
+/// The regal rat spawns ratty treasures from the disposal
 /obj/machinery/disposal/proc/rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
 	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
 	if (do_mob(king, src, 2 SECONDS, interaction_key = "regalrat"))
@@ -141,15 +153,17 @@
 				to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
 				new pickedtrash(get_turf(king))
 
+/// Moves an item into the diposal bin
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
 	I.forceMove(src)
 	user.visible_message(span_notice("[user.name] places \the [I] into \the [src]."), span_notice("You place \the [I] into \the [src]."))
 
-//mouse drop another mob or self
+/// Mouse drop another mob or self
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
 	if(istype(target))
 		stuff_mob_in(target, user)
 
+/// Handles stuffing a grabbed mob into the disposal
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	var/ventcrawler = HAS_TRAIT(user, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(user, TRAIT_VENTCRAWLER_NUDE)
 	if(!iscarbon(user) && !ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
@@ -192,12 +206,13 @@
 /obj/machinery/disposal/container_resist_act(mob/living/user)
 	attempt_escape(user)
 
+/// Checks if a mob can climb out of the disposal, and lets them if they can
 /obj/machinery/disposal/proc/attempt_escape(mob/user)
 	if(flushing)
 		return
 	go_out(user)
 
-// leave the disposal
+/// Makes a mob in the disposal climb out
 /obj/machinery/disposal/proc/go_out(mob/user)
 	user.forceMove(loc)
 	update_appearance()
@@ -212,11 +227,12 @@
 	update_appearance()
 
 
-// eject the contents of the disposal unit
+/// Ejects the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
 	pipe_eject(src, FALSE, FALSE)
 	update_appearance()
 
+/// Plays the animations and sounds for flushing, and initializes the diposal holder object
 /obj/machinery/disposal/proc/flush()
 	flushing = TRUE
 	flushAnimation()
@@ -235,15 +251,18 @@
 	flushing = FALSE
 	flush = FALSE
 
+/// Sets the default destinationTag of the disposal holder object
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
+	H.destinationTag = SORT_TYPE_DISPOSALS
 	for(var/obj/item/delivery/O in src)
 		H.tomail = TRUE
 		return
 
+/// Plays the flushing animation of the disposal
 /obj/machinery/disposal/proc/flushAnimation()
 	flick("[icon_state]-flush", src)
 
-// called when holder is expelled from a disposal
+/// Called when holder is expelled from a disposal
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	H.active = FALSE
 
@@ -267,7 +286,7 @@
 		AM.forceMove(T)
 	..()
 
-//How disposal handles getting a storage dump from a storage object
+///How disposal handles getting a storage dump from a storage object
 /obj/machinery/disposal/proc/on_storage_dump(datum/source, obj/item/storage_source, mob/user)
 	SIGNAL_HANDLER
 
@@ -413,6 +432,7 @@
 		. += "dispover-ready"
 		. += emissive_appearance(icon, "dispover-ready-glow", src, alpha = src.alpha)
 
+/// Initiates flushing
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
 	flush()
@@ -511,6 +531,7 @@
 		M.forceMove(src)
 	flush()
 
+/// Called to check if an atom can fit inside the diposal
 /atom/movable/proc/CanEnterDisposals()
 	return TRUE
 
@@ -523,18 +544,13 @@
 /obj/vehicle/sealed/mecha/CanEnterDisposals()
 	return
 
-/obj/machinery/disposal/bin/newHolderDestination(obj/structure/disposalholder/H)
-	H.destinationTag = 1
-
-/obj/machinery/disposal/delivery_chute/newHolderDestination(obj/structure/disposalholder/H)
-	H.destinationTag = 1
-
-
+/// Handles the signal for the rat king looking inside the disposal
 /obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/disposal/, rat_rummage), king)
 
+/// Handles a carbon mob getting shoved into the disposal bin
 /obj/machinery/disposal/proc/trash_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
 	if(!shove_blocked)
