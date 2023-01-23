@@ -277,8 +277,11 @@
 /datum/objective_item/steal/functionalai
 	name = "a functional AI"
 	targetitem = /obj/item/aicard
-	altitems = list(/obj/item/mod) // only here so we can account for AIs tucked away in a MODsuit.
 	difficulty = 20 //beyond the impossible
+
+/datum/objective_item/steal/New()
+	. = ..()
+	altitems += typesof(/obj/item/mod/control) // only here so we can account for AIs tucked away in a MODsuit.
 
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/potential_storage)
 	var/mob/living/silicon/ai/being
