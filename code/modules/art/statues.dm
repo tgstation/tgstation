@@ -1,3 +1,5 @@
+/// This controls the delay for the sculpt rock breaking sound
+/// Every 4th iterator while sculpting will emit a sound (rougly every couple of seconds)
 #define SCULPT_SOUND_INCREMENT 4
 
 /obj/structure/statue
