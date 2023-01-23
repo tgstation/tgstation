@@ -33,7 +33,7 @@
 	set hidden = TRUE
 	var/oldkey = ckey
 
-	if(!suicide_alert() || (ckey != oldkey)) // check to make sure that while we were sleeping in suicide_alert() that we didn't have a ckey change.
+	if(!suicide_alert()) // check to make sure that while we were sleeping in suicide_alert() that we didn't have a ckey change.
 		return
 
 	set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
@@ -165,13 +165,15 @@
 
 /// Sends a TGUI Alert to the person attempting to commit suicide. Returns TRUE if they confirm they want to die, FALSE otherwise. Check can_suicide here as well.
 /mob/living/proc/suicide_alert(mob/living/user)
+	// Save this for later to ensure that if we change ckeys somehow, we exit out of the suicide.
+	var/oldkey = ckey
 	if(!can_suicide())
 		return FALSE
 
 	var/confirm = tgui_alert(user, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	// ensure our situation didn't change while we were sleeping waiting for the tgui_alert.
-	if(!can_suicide())
+	if(!can_suicide() || (ckey != oldkey))
 		return FALSE
 
 	if(confirm == "Yes")
@@ -239,7 +241,6 @@
 			))
 
 	visible_message(span_danger("[suicide_message]"), span_userdanger("[suicide_message]"))
-
 
 /// Checks if we are in a valid state to suicide (not already suiciding, capable of actually killing ourselves, area checks, etc.) Returns TRUE if we can suicide, FALSE if we can not.
 /mob/living/proc/can_suicide()
