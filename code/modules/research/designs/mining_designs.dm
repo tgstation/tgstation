@@ -189,3 +189,14 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/survival_capsule
+	name = "Bluespace Shelter Capsule"
+	id = "survival_capsule"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/titanium = 20000, /datum/material/glass = 10000, /datum/material/silver = 5000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/survivalcapsule
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
