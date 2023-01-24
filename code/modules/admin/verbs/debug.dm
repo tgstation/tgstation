@@ -145,7 +145,7 @@ ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mo
 	if(target.ckey)
 		var/force = tgui_alert(
 			usr,
-			"This mob is already being controlled by '[target.ckey]'. Are you sure you wish to assume control of it? The existing client will be made a ghost."
+			"This mob is already being controlled by '[target.ckey]'. Are you sure you wish to assume control of it? The existing client will be made a ghost.",
 			"Assuming Control",
 			list("Yes", "No"),
 			)

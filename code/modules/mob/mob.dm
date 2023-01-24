@@ -1289,7 +1289,7 @@
 	if(href_list[VV_HK_DIRECT_CONTROL])
 		if(!check_rights(NONE))
 			return
-		usr.client.cmd_assume_direct_control(src)
+		usr.client.admin_context_wrapper_context_assume_control(src)
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
 		if(!check_rights(NONE))
 			return
