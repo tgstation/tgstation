@@ -113,5 +113,5 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 //shutters that go from the sides look bad
 /obj/machinery/door/poddoor/shutters/shuttleRotate(rotation, params)
-	. = ..()
 	params = NONE
+	return ..()
