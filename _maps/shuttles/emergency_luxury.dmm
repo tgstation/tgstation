@@ -100,7 +100,8 @@
 /area/shuttle/escape)
 "gG" = (
 /obj/machinery/door/poddoor/shutters/indestructible/preopen{
-	id = "gimmemoney"
+	id = "gimmemoney";
+	dir = 4
 	},
 /turf/closed/indestructible/opsglass{
 	desc = "A durable looking window made of an alloy of of plasma and titanium.";
