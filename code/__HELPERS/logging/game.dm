@@ -27,6 +27,7 @@
 	logger.Log(LOG_CATEGORY_GAME_ACCESS, text, data)
 
 /// Logging for OOC votes
-/proc/log_vote(text, list/data)
-	logger.Log(LOG_CATEGORY_GAME_VOTE, text, data)
+/proc/log_vote(text)
+	if (CONFIG_GET(flag/log_vote))
+		WRITE_LOG(GLOB.world_game_log, "VOTE: [text]")
 
