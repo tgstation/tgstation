@@ -87,12 +87,12 @@
 
 	var/i
 	var/obj/item/toy/plush/P
-	for(i=1, i<=scorned.len, i++)
+	for(i=1, i <= scorned.len, i++)
 		P = scorned[i]
 		P.bad_news(src)
 	scorned = null
 
-	for(i=1, i<=scorned_by.len, i++)
+	for(i=1, i <= scorned_by.len, i++)
 		P = scorned_by[i]
 		P.bad_news(src)
 	scorned_by = null
@@ -694,6 +694,7 @@
 	name = "runner plushie"
 	desc = "A plushie depicting a xenomorph runner, made to commemorate the centenary of the Battle of LV-426. Much cuddlier than the real thing."
 	icon_state = "rouny"
+	item_flags = XENOMORPH_HOLDABLE
 	inhand_icon_state = null
 	attack_verb_continuous = list("slashes", "bites", "charges")
 	attack_verb_simple = list("slash", "bite", "charge")
@@ -721,11 +722,11 @@
 	)
 
 /obj/item/toy/plush/greek_cucumber
-	name = "cucumber greek"
+	name = "greek cucumber"
 	desc = "A plushie depicting a large cucumber with eyes, it seems that according to the manufacturer of the toy, the human race will look like in the future."
 	icon_state = "cucumber"
 	inhand_icon_state = null
-	attack_verb_continuous = list("squishуы", "creakes", "crunches")
+	attack_verb_continuous = list("squishes", "creaks", "crunches")
 	attack_verb_simple = list("squish", "creak", "crunch")
 	squeak_override = list(
 		'sound/effects/slosh.ogg' = 1,

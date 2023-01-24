@@ -7,7 +7,7 @@
 	name = "Plasma Assembly Crate"
 	desc = "Everything you need to burn something to the ground, this contains three \
 		plasma assembly sets. Each set contains a plasma tank, igniter, proximity sensor, \
-		and timer! Warranty void if exposed to high temperatures. Requires Ordnance access to open."
+		and timer! Warranty void if exposed to high temperatures."
 	cost = CARGO_CRATE_VALUE * 2
 	access = ACCESS_ORDNANCE
 	access_view = ACCESS_ORDNANCE
@@ -104,8 +104,7 @@
 	name = "Robotics Assembly Crate"
 	desc = "The tools you need to replace those finicky humans with a loyal robot army! \
 		Contains four proximity sensors, two empty first aid kits, two health analyzers, \
-		two red hardhats, two mechanical toolboxes, and two cleanbot assemblies! \
-		Requires Robotics access to open."
+		two red hardhats, two mechanical toolboxes, and two cleanbot assemblies!"
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_ROBOTICS
 	access_view = ACCESS_ROBOTICS
@@ -121,15 +120,13 @@
 	desc = "Need to rebuild the ORM but science got annihialted after a bomb test? \
 		Buy this for the most advanced parts NT can give you."
 	cost = CARGO_CRATE_VALUE * 3
-	access_view = FALSE
 	contains = list(/obj/item/storage/part_replacer/cargo)
 	crate_name = "\improper RPED crate"
 
 /datum/supply_pack/science/shieldwalls
 	name = "Shield Generator Crate"
 	desc = "These high powered Shield Wall Generators are guaranteed to keep any unwanted \
-		lifeforms on the outside, where they belong! Contains four shield wall generators. \
-		Requires Teleporter access to open."
+		lifeforms on the outside, where they belong! Contains four shield wall generators."
 	cost = CARGO_CRATE_VALUE * 4
 	access = ACCESS_TELEPORTER
 	access_view = ACCESS_TELEPORTER
@@ -140,7 +137,7 @@
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
 	desc = "The key ingredient for making a lot of people very angry very fast. \
-		Contains two tank transfer valves. Requires RD access to open."
+		Contains two tank transfer valves."
 	cost = CARGO_CRATE_VALUE * 12
 	access = ACCESS_RD
 	contains = list(/obj/item/transfer_valve = 2)

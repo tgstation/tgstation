@@ -4,18 +4,28 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = null
 	w_class = WEIGHT_CLASS_TINY
+	/// The maximum amount of reagents per transfer that will be moved out of this reagent container
 	var/amount_per_transfer_from_this = 5
+	/// The different possible amounts of reagent to transfer out of the container
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	/// Where we are in the possible transfer amount list.
 	var/amount_list_position = 1
+	/// The maximum amount of reagents this container can hold
 	var/volume = 30
+	/// Reagent flags, a few examples being if the container is open or not, if its transparent, if you can inject stuff in and out of the container, and so on
 	var/reagent_flags
+	/// A list of what initial reagents this container should spawn with
 	var/list/list_reagents = null
+	/// If this container should spawn with a disease type inside of it
 	var/spawned_disease = null
+	/// How much of a disease specified in spawned_disease should this container spawn with
 	var/disease_amount = 20
+	/// If the reagents inside of this container will splash out when the container tries to splash onto someone or something
 	var/spillable = FALSE
+	/// The different thresholds at which the reagent fill overlay will change
 	var/list/fill_icon_thresholds = null
-	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
+	/// The optional custom name for the reagent fill icon_state prefix
+	var/fill_icon_state = null
 	/// The icon file to take fill icon appearances from
 	var/fill_icon = 'icons/obj/reagentfillings.dmi'
 
@@ -116,6 +126,14 @@
 			span_userdanger("You feel drenched!"),
 		)
 
+	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
+
+	var/image/splash_animation = image('icons/effects/effects.dmi', target, "splash")
+	if(isturf(target))
+		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
+	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
+	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
+
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
 
@@ -135,9 +153,9 @@
 		return FALSE
 	var/mob/living/carbon/C = eater
 	var/covered = ""
-	if(C.is_mouth_covered(head_only = 1))
+	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
 		covered = "headgear"
-	else if(C.is_mouth_covered(mask_only = 1))
+	else if(C.is_mouth_covered(ITEM_SLOT_MASK))
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
@@ -203,6 +221,14 @@
 		reagents.expose(target, TOUCH)
 		if(QDELETED(src))
 			return
+
+	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
+
+	var/image/splash_animation = image('icons/effects/effects.dmi', target, "splash")
+	if(isturf(target))
+		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
+	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
+	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
 
 	reagents.clear_reagents()
 

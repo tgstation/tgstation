@@ -356,7 +356,7 @@
 	outfit_type = /datum/outfit/job/captain
 
 /datum/preset_holoimage/nanotrasenprivatesecurity
-	outfit_type = /datum/outfit/nanotrasensoldiercorpse2
+	outfit_type = /datum/outfit/nanotrasensoldiercorpse
 
 /datum/preset_holoimage/hivebot
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/hivebot

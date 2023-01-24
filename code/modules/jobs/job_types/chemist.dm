@@ -2,7 +2,7 @@
 	title = JOB_CHEMIST
 	description = "Supply the doctors with chemicals, make medicine, as well as \
 		less likable substances in the comfort of a fully reinforced room."
-	department_head = list("Chief Medical Officer")
+	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2

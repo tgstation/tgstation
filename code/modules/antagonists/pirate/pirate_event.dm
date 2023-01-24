@@ -144,10 +144,8 @@
 
 //interrupt_research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
-	for(var/obj/machinery/rnd/server/S as anything in SSresearch.servers)
+	for(var/obj/machinery/rnd/server/S as anything in SSresearch.science_tech.techweb_servers)
 		if(S.machine_stat & (NOPOWER|BROKEN))
-			continue
-		if(S.stored_research != SSresearch.science_tech) //only target the station
 			continue
 		S.emp_act()
 		new /obj/effect/temp_visual/emp(get_turf(S))
@@ -193,6 +191,14 @@
 	x_offset = 9
 	y_offset = 0
 	see_hidden = FALSE
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/psyker
+	name = "psyker navigation warper"
+	desc = "Used to designate a precise transit location for the psyker shuttle, using sent out brainwaves as detailed sight."
+	icon_screen = "recharge_comp_on"
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE //blind friendly
+	x_offset = 0
+	y_offset = 11
 
 /obj/docking_port/mobile/pirate
 	name = "pirate shuttle"

@@ -129,5 +129,6 @@
 		return
 	if(!isturf(target) || !isobj(target))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(target.color != initial(target.color))
 		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

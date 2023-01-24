@@ -103,6 +103,9 @@
 /// log voting
 /datum/config_entry/flag/log_vote
 
+/// log manual zone switching
+/datum/config_entry/flag/log_zone_switch
+
 /// log client whisper
 /datum/config_entry/flag/log_whisper
 
@@ -645,3 +648,5 @@
 	default = 50
 
 /datum/config_entry/string/morgue_cadaver_override_species
+
+/datum/config_entry/flag/toast_notification_on_init

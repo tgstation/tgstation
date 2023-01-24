@@ -5,6 +5,16 @@
 "ad" = (
 /turf/open/space,
 /area/space)
+"ai" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_3_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "ar" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -94,6 +104,17 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
+"aL" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_2_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "aM" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/food/meat/rawbacon,
@@ -3742,16 +3763,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"sj" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 5;
-	name = "recovery ship";
-	shuttle_id = "pod_4_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "sn" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security"
@@ -5005,10 +5016,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
-"xG" = (
-/obj/machinery/button/showtime,
-/turf/closed/indestructible/fakeglass,
-/area/centcom/tdome/administration)
 "xN" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
@@ -5402,7 +5409,7 @@
 /obj/item/hemostat{
 	pixel_x = -4
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue{
@@ -5951,10 +5958,7 @@
 /area/centcom/central_command_areas/evacuation)
 "Cg" = (
 /obj/item/cardboard_cutout{
-	desc = "They seem to be ignoring you... Typical.";
-	dir = 1;
-	icon_state = "cutout_ntsec";
-	name = "Private Security Officer"
+	starting_cutout = "Private Security Officer"
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -6580,6 +6584,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"Iv" = (
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 5;
+	name = "recovery ship";
+	shuttle_id = "pod_4_away";
+	width = 3
+	},
+/turf/open/space,
+/area/space)
 "Iz" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
@@ -8062,16 +8076,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/prison)
-"Qt" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 5;
-	name = "recovery ship";
-	shuttle_id = "pod_3_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "Qv" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -8848,9 +8852,7 @@
 /area/centcom/central_command_areas/admin)
 "UA" = (
 /obj/item/cardboard_cutout{
-	desc = "They seem to be ignoring you... Typical.";
-	icon_state = "cutout_ntsec";
-	name = "Private Security Officer"
+	starting_cutout = "Private Security Officer"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -9777,17 +9779,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
-"YS" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 5;
-	name = "recovery ship";
-	shuttle_id = "pod_2_away";
-	width = 3
-	},
-/turf/open/space,
-/area/space)
 "YT" = (
 /obj/structure/table/wood,
 /obj/structure/plaque/static_plaque/thunderdome{
@@ -36193,7 +36184,7 @@ aa
 aa
 aa
 aa
-sj
+Iv
 KO
 KV
 KV
@@ -37221,7 +37212,7 @@ aa
 aa
 aa
 aa
-Qt
+ai
 KO
 KV
 KV
@@ -38257,7 +38248,7 @@ KQ
 KH
 aa
 aa
-YS
+aL
 aa
 aa
 aa
@@ -52365,7 +52356,7 @@ IG
 IG
 IG
 It
-xG
+Pj
 Xn
 Sz
 Sz

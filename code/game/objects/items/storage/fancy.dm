@@ -162,7 +162,7 @@
 	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
-	spawn_type = /obj/item/candle
+	spawn_type = /obj/item/flashlight/flare/candle
 	spawn_count = 5
 	is_open = TRUE
 	contents_tag = "candle"
@@ -501,7 +501,7 @@
 	name = "pickles"
 	desc = "A jar for containing pickles."
 	spawn_type = /obj/item/food/pickle
-	spawn_count = 5
+	spawn_count = 10
 	contents_tag = "pickle"
 	fold_result = null
 	custom_materials = list(/datum/material/glass = 2000)

@@ -571,7 +571,3 @@
 	equipped.eye_color_left = BLOODCULT_EYE
 	equipped.eye_color_right = BLOODCULT_EYE
 	equipped.update_body()
-
-	var/obj/item/clothing/suit/hooded/hooded = locate() in equipped
-	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
-	hooded.ToggleHood()
