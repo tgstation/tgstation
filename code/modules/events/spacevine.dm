@@ -655,7 +655,7 @@
 	/// Actual maximum spread rate for this process tick
 	var/spread_max = round(clamp(delta_time * (spread_base + start_spread_bonus), max(delta_time * minimum_spread_rate, 1), spread_cap))
 	var/amount_processed = 0
-	for(var/obj/structure/spacevine/vine as anything in growth_queue)
+	for(var/obj/structure/spacevine/vine in growth_queue)
 		if(!vine.can_spread)
 			continue
 		growth_queue -= vine
