@@ -157,7 +157,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	name_chaser += "Power/Resolve: [summon_power]/[summon_resolve]"
 	if(template.rules) //This can sometimes be empty
 		name_chaser += "Ruleset: [template.rules]"
-	name_chaser += list("[icon2html(card_ref.get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
+	name_chaser += list("[icon2html(card_ref.get_cached_flat_icon(), user, "extra_classes" = "hugeicon")]")
 	return name_chaser
 
 /obj/structure/trading_card_summon/update_overlays()
