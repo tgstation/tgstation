@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - code_imp: "Tram hit counter typepath check is changed to be more accurate in player vs. goose detection"
