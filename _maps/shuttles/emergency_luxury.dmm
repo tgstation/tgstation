@@ -805,6 +805,10 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Jd" = (
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
 "JB" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/gun/energy/laser/practice,
@@ -902,6 +906,11 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Nu" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
 "Oc" = (
 /obj/effect/spawner/random/maintenance/eight,
 /obj/structure/closet/crate/engineering/electrical,
@@ -1100,6 +1109,10 @@
 "We" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"Wx" = (
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "WF" = (
 /turf/open/floor/mineral/titanium/white,
@@ -1439,7 +1452,7 @@ SN
 SN
 SN
 SN
-SN
+Jd
 Ex
 "}
 (13,1,1) = {"
@@ -1466,7 +1479,7 @@ Ex
 "}
 (14,1,1) = {"
 Gq
-jC
+Nu
 la
 la
 gU
@@ -1620,7 +1633,7 @@ Ex
 "}
 (21,1,1) = {"
 Ex
-jJ
+Wx
 SN
 SN
 SN

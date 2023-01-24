@@ -110,3 +110,8 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	. = ..()
 	if(wall_turret_direction && (params & ROTATE_DIR))
 		wall_turret_direction = turn(wall_turret_direction,rotation)
+
+//shutters that go from the sides look bad
+/obj/machinery/door/poddoor/shutters/shuttleRotate(rotation, params)
+	. = ..()
+	params = NONE
