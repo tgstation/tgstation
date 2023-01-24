@@ -118,7 +118,7 @@
 /area/station/maintenance/starboard/greater)
 "F" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "da clubbe"
+	name = "Da Clubbe"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,

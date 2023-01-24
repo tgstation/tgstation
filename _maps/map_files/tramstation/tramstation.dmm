@@ -11765,7 +11765,6 @@
 "cmv" = (
 /obj/machinery/duct,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -23635,7 +23634,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -31407,7 +31405,6 @@
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
 "jIN" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
 	},
@@ -33939,7 +33936,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "kFx" = (
-/obj/structure/grille,
 /obj/structure/grille,
 /obj/structure/lattice,
 /turf/open/space/openspace,
@@ -38548,7 +38544,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -46684,8 +46679,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "ppM" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/science/breakroom)
 "pqH" = (
@@ -55653,7 +55646,6 @@
 /area/station/security/prison)
 "sBa" = (
 /obj/structure/table/reinforced,
-/obj/structure/table/reinforced,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3;
 	pixel_y = 3
@@ -58208,17 +58200,13 @@
 /obj/machinery/door/airlock/research{
 	name = "Ordnance Lab"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance_storage,
 /obj/machinery/door/airlock/research{
 	name = "Ordnance Lab"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor/heavy,
@@ -59620,9 +59608,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "tYd" = (
-/obj/machinery/door/airlock/research{
-	name = "Ordnance Lab"
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/disposalpipe/segment,
@@ -59630,7 +59615,6 @@
 /obj/machinery/door/airlock/research{
 	name = "Ordnance Lab"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance_storage,
@@ -60212,7 +60196,6 @@
 	dir = 1
 	},
 /obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -66046,7 +66029,6 @@
 /area/station/hallway/secondary/service)
 "wqC" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
 /obj/structure/railing,
 /obj/structure/railing/corner{
 	dir = 4
@@ -66460,7 +66442,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "wyT" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space/openspace,

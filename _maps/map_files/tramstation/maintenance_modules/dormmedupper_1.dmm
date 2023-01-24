@@ -187,9 +187,7 @@
 /area/station/maintenance/department/medical)
 "zp" = (
 /obj/effect/spawner/structure/window,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = ssssssss
-	},
+/obj/machinery/door/poddoor/shutters/preopen,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "Bz" = (
