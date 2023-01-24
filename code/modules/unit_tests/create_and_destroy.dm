@@ -98,6 +98,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	ignore += typesof(/obj/structure/industrial_lift)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	ignore += subtypesof(/obj/machinery/airlock_controller)
+	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
+	ignore += subtypesof(/atom/movable/screen/escape_menu)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type
