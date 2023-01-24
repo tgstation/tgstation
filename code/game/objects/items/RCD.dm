@@ -574,7 +574,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 					if(is_type_in_list(movable_content, ignored_atoms))
 						ignored_content += movable_content
 			//check if the structure can fit on this turf
-			if(target_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = null, ignore_atoms = ignored_content))
+			if(target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = ignored_content))
 				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 				qdel(rcd_effect)
 				return FALSE
