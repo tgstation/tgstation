@@ -512,11 +512,13 @@
 							return BODY_ZONE_PRECISE_EYES
 				return BODY_ZONE_HEAD
 
-/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
+/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user, should_log = TRUE)
 	if(user != hud?.mymob)
 		return
 
 	if(choice != hud.mymob.zone_selected)
+		if(should_log)
+			hud.mymob.log_manual_zone_selected_update("screen_hud", new_target = choice)
 		hud.mymob.zone_selected = choice
 		update_appearance()
 		SEND_SIGNAL(user, COMSIG_MOB_SELECTED_ZONE_SET, choice)
