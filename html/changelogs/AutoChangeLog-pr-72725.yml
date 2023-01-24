@@ -1,0 +1,12 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - refactor: "Crew records have been refactored."
+  - refactor: "Medical records -> TGUI"
+  - refactor: "Security records -> TGUI"
+  - refactor: "Warrants console -> TGUI"
+  - qol: "Players are now alerted when their fines are paid off."
+  - qol: "Cleaned up sec hud examination text."
+  - qol: "Adding and deleting crimes is easier."
+  - qol: "Writing crimes in the console sets players to arrest."
+  - qol: "You can now mark someone as a suspect through sec hud."

@@ -43,7 +43,7 @@
 
 /obj/item/ph_booklet/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	var/mob/living/user = usr
-	if(!isliving(user))
+	if(!isliving(user) || !Adjacent(user))
 		return
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
