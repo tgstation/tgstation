@@ -35,11 +35,6 @@
 	desc = "A tram for tramversing the station."
 	icon_state = "tram_subfloor"
 
-/obj/structure/industrial_lift/tram/subfloor/window
-	name = "tram"
-	desc = "A tram for tramversing the station."
-	icon_state = "tram_subfloor_window"
-
 /obj/structure/industrial_lift/tram/accessible
 	icon_state = "titanium_accessible_north"
 
