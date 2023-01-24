@@ -80,7 +80,7 @@
 
 	var/obj/structure/alien/resin/flower_bud/flower = locate(/obj/structure/alien/resin/flower_bud) in loc
 	if(flower)
-		qdel(flower)
+		flower.take_damage(rand(30, 50), BRUTE, 0)
 
 	var/obj/structure/glowshroom/mushroom = locate(/obj/structure/glowshroom) in loc
 	if(mushroom)
