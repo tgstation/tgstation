@@ -115,7 +115,7 @@
 		updateDialog(usr) // make sure updates when complete
 
 /datum/song/Topic(href, href_list)
-	if(!usr.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = FALSE, need_hands = FALSE))
+	if(!usr.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = FALSE, need_hands = FALSE, floor_okay = TRUE))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
