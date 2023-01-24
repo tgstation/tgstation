@@ -23,16 +23,13 @@ ADMIN_VERB( \
 	message_admins("[key_name_admin(usr)] sent a tip of the round.")
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 
-/datum/admins/proc/unprison(mob/M in GLOB.mob_list)
-	set category = "Admin"
-	set name = "Unprison"
-	if (is_centcom_level(M.z))
-		SSjob.SendToLateJoin(M)
-		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
-		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
+ADMIN_CONTEXT_ENTRY(context_unprison, "Release from Prison", R_ADMIN, mob/freeing in world)
+	if(is_centcom_level(freeing.z))
+		SSjob.SendToLateJoin(freeing)
+		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(freeing)]")
+		log_admin("[key_name(usr)] has unprisoned [key_name(freeing)]")
 	else
-		tgui_alert(usr,"[M.name] is not prisoned.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		tgui_alert(usr,"[freeing.name] is not prisoned.")
 
 ADMIN_VERB(admin, player_playtime, "Check the playtime for connected players", R_ADMIN)
 	if(!CONFIG_GET(flag/use_exp_tracking))
