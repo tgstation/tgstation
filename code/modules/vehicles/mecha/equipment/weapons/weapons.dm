@@ -97,6 +97,8 @@
 	icon_state = "mecha_disabler"
 	energy_drain = 30
 	projectile = /obj/projectile/beam/disabler
+	variance = 30
+	projectiles_per_shot = 3
 	fire_sound = 'sound/weapons/taser2.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
