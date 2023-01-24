@@ -27,6 +27,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/monkey_mind
+	name = "Monkey Mind Magnification Helmet"
+	id = "monkey_mind"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/bananium = 500)
+	build_path = /obj/item/clothing/head/helmet/monkey_sentience
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/ai_cam_upgrade
 	name = "AI Surveillance Software Update"
 	desc = "A software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading."
