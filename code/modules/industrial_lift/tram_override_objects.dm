@@ -96,7 +96,7 @@
 	base_state = "right"
 
 /obj/machinery/door/window/tram/open(forced=FALSE)
-	if(icon_state == "[base_state]open")
+	if(icon_state == "[base_state]open") //if doors are already open, return
 		return 1
 	if(operating) //doors can still open when emag-disabled
 		return 0
@@ -121,7 +121,7 @@
 	return 1
 
 /obj/machinery/door/window/tram/close(forced=FALSE)
-	if(icon_state == base_state)
+	if(icon_state == base_state) //if doors are already closed, return
 		return 1
 	if(operating)
 		return 0
