@@ -27,7 +27,6 @@
 	var/liver_resistance = LIVER_DEFAULT_TOX_RESISTANCE
 	var/filterToxins = TRUE //whether to filter toxins
 	var/operated = FALSE //whether the liver's been repaired with surgery and can be fixed again or not
-	var/liver_biotype = MOB_ORGANIC //whether the liver is organic by design. some mobs like plasmamen can have inorganic organs.
 
 /obj/item/organ/internal/liver/Initialize(mapload)
 	. = ..()
@@ -108,7 +107,7 @@
 
 	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
-			if(!(liver_biotype & toxin.affected_biotype)) //this particular toxin does not affect this biotype
+			if(status != toxin.affected_organtype) //this particular toxin does not affect this biotype
 				continue 
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
@@ -220,7 +219,7 @@
 	name = "reagent processing crystal"
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
-	liver_biotype = MOB_MINERAL
+	status = ORGAN_INORGANIC
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/internal/liver/alien
