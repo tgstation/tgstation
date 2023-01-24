@@ -79,6 +79,17 @@
 //////////////////Misc///////////////////
 /////////////////////////////////////////
 
+/datum/design/laser_pointer
+	name = "Laser Pointer"
+	id = "laser_pointer"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron=500, /datum/material/glass=500)
+	build_path = /obj/item/laser_pointer
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/welding_goggles
 	name = "Welding Goggles"
 	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."

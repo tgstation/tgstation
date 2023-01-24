@@ -1057,6 +1057,7 @@
 	prereq_ids = list("emp_basic")
 	design_ids = list(
 		"ultra_micro_laser",
+		"laser_pointer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser = 1500)
