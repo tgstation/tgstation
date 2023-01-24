@@ -1,0 +1,31 @@
+"a" = (/turf/closed/wall/mineral/titanium,/area/space)
+"b" = (/obj/machinery/conveyor{dir = 8; id = "cargoload"},/obj/machinery/door/poddoor{id = "QMLoaddoor"; name = "supply dock loading door"},/turf/open/floor/mineral/titanium/blue,/area/space)
+"f" = (/turf/open/floor/mineral/titanium/blue,/area/space)
+"k" = (/obj/machinery/light/dim/directional/east,/turf/open/floor/mineral/titanium/blue,/area/space)
+"n" = (/obj/machinery/door/poddoor{id = "QMLoaddoor"; name = "supply dock loading door"},/turf/open/floor/mineral/titanium/blue,/area/space)
+"r" = (/obj/effect/spawner/structure/window/reinforced/shuttle,/turf/open/floor/plating,/area/space)
+"D" = (/obj/machinery/button/door/directional/south{id = "cargo_shuttle"; name = "Shuttle Shutter Controls"},/obj/machinery/door/poddoor/shutters{id = "cargo_shuttle"; name = "Cargo Shuttle Shutters"},/turf/open/floor/mineral/titanium,/area/space)
+"F" = (/obj/machinery/light/dim/directional/west,/turf/open/floor/mineral/titanium/blue,/area/space)
+"G" = (/obj/machinery/door/poddoor/shutters,/turf/open/floor/mineral/titanium,/area/space)
+"H" = (/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "supply dock loading door"},/obj/machinery/conveyor{dir = 4; id = "cargounload"},/turf/open/floor/mineral/titanium/blue,/area/space)
+"J" = (/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "supply dock loading door"},/turf/open/floor/mineral/titanium/blue,/area/space)
+"P" = (/obj/machinery/door/poddoor/shutters{id = "cargo_shuttle"; name = "Cargo Shuttle Shutters"},/turf/open/floor/mineral/titanium,/area/space)
+"S" = (/obj/machinery/door/poddoor/shutters{id = "cargo_shuttle"; name = "Cargo Shuttle Shutters"},/obj/machinery/button/door/directional/north{id = "cargo_shuttle"; name = "Shuttle Shutter Controls"},/turf/open/floor/mineral/titanium,/area/space)
+
+(1,1,1) = {"
+arrra
+JfffH
+aFfka
+GfffP
+GfffP
+GfffD
+afffa
+rFfkr
+afffa
+GfffS
+GfffP
+GfffP
+aFfka
+nfffb
+arrra
+"}
