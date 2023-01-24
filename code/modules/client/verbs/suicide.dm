@@ -1,7 +1,7 @@
-/// Defines for all the types of messages we can dispatch, since there are a few that are re-used in different contexts (like animals, mechanical)
+/// Defines for all the types of messages we can dispatch, since there are a few that are re-used in different contexts (like generic messages, mechanical)
 #define ALIEN_SUICIDE_MESSAGE "alien message"
-#define ANIMAL_SUICIDE_MESSAGE "animal message"
 #define BRAIN_SUICIDE_MESSAGE "brain message"
+#define GENERIC_SUICIDE_MESSAGE "generic message"
 #define HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE "brain damaged message"
 #define HUMAN_COMBAT_MODE_SUICIDE_MESSAGE "combat mode message"
 #define HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE "default mode message"
@@ -31,8 +31,45 @@
 		if(mmi.brainmob)
 			mmi.brainmob.suiciding = suicide_state
 
+/mob/living/verb/suicide()
+	set hidden = TRUE
+	handle_suicide(GENERIC_SUICIDE_MESSAGE)
+
 /mob/living/carbon/human/verb/suicide()
 	set hidden = TRUE
+	handle_suicide() // message types are handled in handle_suicide for this type.
+
+/mob/living/brain/verb/suicide()
+	set hidden = TRUE
+	handle_suicide(message_type = BRAIN_SUICIDE_MESSAGE, do_damage = FALSE)
+
+/mob/living/silicon/ai/verb/suicide()
+	set hidden = TRUE
+	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
+
+/mob/living/silicon/robot/verb/suicide()
+	set hidden = TRUE
+	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
+
+/mob/living/silicon/pai/verb/suicide()
+	set hidden = TRUE
+	handle_suicide(message_type = PAI_SUICIDE_MESSAGE)
+
+/mob/living/carbon/alien/adult/verb/suicide()
+	set hidden = TRUE
+	handle_suicide(message_type = ALIEN_SUICIDE_MESSAGE)
+
+/// Actually handles the bare basics of the suicide process. If we kill ourselves with a specified tool, pass it in as suicide tool. Message type is the message we want to dispatch in the world regarding the suicide.
+/// If do not want to do damage to the mob (if it's incompatible with damage or something weird), set the do_damage boolean to FALSE when you call this proc.
+/mob/living/proc/handle_suicide(obj/item/suicide_tool, message_type, do_damage = TRUE)
+	if(!suicide_alert())
+		return
+
+	set_suicide(TRUE)
+	dispatch_message_from_tree(message_type)
+	final_checkout(suicide_tool, apply_damage = do_damage)
+
+/mob/living/carbon/human/handle_suicide(obj/item/suicide_tool, message_type, do_damage = TRUE)
 	if(!suicide_alert())
 		return
 
@@ -43,7 +80,7 @@
 
 	if(damage_type)
 		if(apply_suicide_damage(held_item, damage_type))
-			final_checkout(held_item, do_damage = FALSE)
+			final_checkout(held_item, apply_damage = FALSE)
 		return
 
 	// if no specific item or damage type we want to deal, default to doing the deed with our own bare hands.
@@ -56,79 +93,7 @@
 		else
 			dispatch_message_from_tree(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
 
-	final_checkout(held_item)
-
-/mob/living/brain/verb/suicide()
-	set hidden = TRUE
-	if(!suicide_alert())
-		return
-
-	set_suicide(TRUE)
-	dispatch_message_from_tree(BRAIN_SUICIDE_MESSAGE)
-	final_checkout(do_damage = FALSE)
-
-/mob/living/silicon/ai/verb/suicide()
-	set hidden = TRUE
-	if(!suicide_alert())
-		return
-
-	set_suicide(TRUE)
-	dispatch_message_from_tree(MECHANICAL_SUICIDE_MESSAGE)
-	final_checkout()
-
-/mob/living/silicon/robot/verb/suicide()
-	set hidden = TRUE
-	if(!suicide_alert())
-		return
-
-	set_suicide(TRUE)
-	dispatch_message_from_tree(MECHANICAL_SUICIDE_MESSAGE)
-	final_checkout()
-
-/mob/living/silicon/pai/verb/suicide()
-	set hidden = TRUE
-	if(!suicide_alert())
-		return
-
-	set_suicide(TRUE)
-	dispatch_message_from_tree(PAI_SUICIDE_MESSAGE)
-	final_checkout()
-
-/mob/living/carbon/alien/adult/verb/suicide()
-	set hidden = TRUE
-	if(!suicide_alert())
-		return
-
-	set_suicide(TRUE)
-	dispatch_message_from_tree(ALIEN_SUICIDE_MESSAGE)
-	final_checkout()
-
-/mob/living/simple_animal/verb/suicide()
-	set hidden = TRUE
-	if(!suicide_alert())
-		return
-
-	set_suicide(TRUE)
-	dispatch_message_from_tree(ANIMAL_SUICIDE_MESSAGE)
-	final_checkout()
-
-/mob/living/basic/verb/suicide()
-	set hidden = TRUE
-	if(!suicide_alert())
-		return
-
-	set_suicide(TRUE)
-	dispatch_message_from_tree(ANIMAL_SUICIDE_MESSAGE)
-	final_checkout()
-
-/// Inserts logging in both the mob's logs and the investigate log pertaining to their death. Suicide tool is the object we used to commit suicide, if one was held and used.
-/mob/living/proc/suicide_log(obj/item/suicide_tool)
-	investigate_log("has died from committing suicide.", INVESTIGATE_DEATHS)
-	log_message("committed suicide as [src.type]", LOG_ATTACK)
-
-/mob/living/carbon/human/suicide_log(obj/item/suicide_tool)
-	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool]" : ""].", INVESTIGATE_DEATHS)
-	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
+	final_checkout(held_item, do_damage)
 
 /// Sends a TGUI Alert to the person attempting to commit suicide. Returns TRUE if they confirm they want to die, FALSE otherwise. Check can_suicide here as well.
 /mob/living/proc/suicide_alert()
@@ -151,14 +116,23 @@
 
 /// Inserts in logging and death + mind dissociation when we're fully done with ending the life of our mob, as well as adjust the health. We will disallow re-entering the body when this is called.
 /// The suicide_tool variable is currently only used for humans in order to allow suicide log to properly put stuff in investigate log.
-/// Set do_damage to FALSE in order to not do damage (in case it's handled elsewhere in the verb or another proc that the suicide tree calls). Will dissociate client from mind and ghost the player regardless.
-/mob/living/proc/final_checkout(obj/item/suicide_tool, do_damage = TRUE)
-	if(do_damage) // enough to really drive home the point that they are DEAD.
+/// Set apply_damage to FALSE in order to not do damage (in case it's handled elsewhere in the verb or another proc that the suicide tree calls). Will dissociate client from mind and ghost the player regardless.
+/mob/living/proc/final_checkout(obj/item/suicide_tool, apply_damage = TRUE)
+	if(apply_damage) // enough to really drive home the point that they are DEAD.
 		apply_suicide_damage()
 
 	suicide_log(suicide_tool)
 	death(FALSE)
 	ghostize(FALSE)
+
+/// Inserts logging in both the mob's logs and the investigate log pertaining to their death. Suicide tool is the object we used to commit suicide, if one was held and used.
+/mob/living/proc/suicide_log(obj/item/suicide_tool)
+	investigate_log("has died from committing suicide.", INVESTIGATE_DEATHS)
+	log_message("committed suicide as [src.type]", LOG_ATTACK)
+
+/mob/living/carbon/human/suicide_log(obj/item/suicide_tool)
+	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool]" : ""].", INVESTIGATE_DEATHS)
+	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
 
 /// The actual proc that will apply the damage to the suiciding mob. damage_type is the actual type of damage we want to deal, if that matters.
 /// Return TRUE if we actually apply any real damage, FALSE otherwise.
@@ -302,8 +276,8 @@
 	return TRUE
 
 #undef ALIEN_SUICIDE_MESSAGE
-#undef ANIMAL_SUICIDE_MESSAGE
 #undef BRAIN_SUICIDE_MESSAGE
+#undef GENERIC_SUICIDE_MESSAGE
 #undef HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE
 #undef HUMAN_COMBAT_MODE_SUICIDE_MESSAGE
 #undef HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE
