@@ -378,7 +378,7 @@
 			if((worn_item.body_parts_covered & HANDS) && (worn_item.clothing_flags & THICKMATERIAL))
 				return expected_damage
 
-	if(HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
+	if(HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(user, TRAIT_PLANT_SAFE))
 		return expected_damage
 
 	if(prob(THORN_MUTATION_CUT_PROB) && istype(hitter) && !isvineimmune(hitter))
