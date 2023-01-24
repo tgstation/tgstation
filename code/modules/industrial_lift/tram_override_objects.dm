@@ -95,6 +95,54 @@
 	icon_state = "right"
 	base_state = "right"
 
+/obj/machinery/door/window/tram/open(forced=FALSE)
+	if(icon_state == "[base_state]open")
+		return 1
+	if(operating) //doors can still open when emag-disabled
+		return 0
+	if(!forced)
+		if(!hasPower())
+			return 0
+	if(forced < 2)
+		if(obj_flags & EMAGGED)
+			return 0
+	if(!operating) //in case of emag
+		operating = TRUE
+	do_animate("opening")
+	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
+	icon_state ="[base_state]open"
+	sleep(8 DECISECONDS)
+	set_density(FALSE)
+	air_update_turf(TRUE, FALSE)
+	update_freelook_sight()
+
+	if(operating == 1) //emag again
+		operating = FALSE
+	return 1
+
+/obj/machinery/door/window/tram/close(forced=FALSE)
+	if(icon_state == base_state)
+		return 1
+	if(operating)
+		return 0
+	if(!forced)
+		if(!hasPower())
+			return 0
+	if(forced < 2)
+		if(obj_flags & EMAGGED)
+			return 0
+	operating = TRUE
+	do_animate("closing")
+	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
+	icon_state = base_state
+	sleep(17 DECISECONDS)
+	set_density(TRUE)
+	air_update_turf(TRUE, TRUE)
+	update_freelook_sight()
+
+	operating = FALSE
+	return 1
+
 /obj/machinery/door/window/tram/proc/find_tram()
 	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
 		if(lift.specific_lift_id == associated_lift)
