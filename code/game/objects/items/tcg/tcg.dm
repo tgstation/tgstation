@@ -63,7 +63,7 @@
 	name_chaser += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
 	if(data_holder.rules) //This can sometimes be empty
 		name_chaser += "Ruleset: [data_holder.rules]"
-	name_chaser += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
+	name_chaser += list("[icon2html(get_cached_flat_icon(), user, "extra_classes" = "hugeicon")]")
 
 	return name_chaser
 
