@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - qol: "Inspecting a trading card or card hologram will now let you see the full enlarged card art."

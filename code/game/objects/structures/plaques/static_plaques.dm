@@ -147,4 +147,5 @@
 	desc = "A plate showing details from the manufacturer about this Nakamura Engineering SkyyTram Mk IV, serial number LT301TG2563. We are not responsible for any injuries or fatalites caused by usage of the tram. For technical assistance in the event of malfunction please contact: (the info seems to be scratched up to the point of being unreadable.)"
 	icon_state = "commission_tram"
 	custom_materials = list(/datum/material/titanium = 2000)
+	plane = GAME_PLANE
 	layer = LOW_OBJ_LAYER
