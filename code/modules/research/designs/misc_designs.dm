@@ -86,9 +86,9 @@
 	materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	build_path = /obj/item/laser_pointer
 	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/welding_goggles
 	name = "Welding Goggles"
