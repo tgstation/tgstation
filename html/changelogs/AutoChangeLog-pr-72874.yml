@@ -1,0 +1,4 @@
+author: "Cenrus"
+delete-after: True
+changes:
+  - balance: "Harvesters are now not affected by drag slowdown."

@@ -224,6 +224,8 @@
 /mob/living/basic/viscerator
 	name = "viscerator"
 	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
+	icon_state = "viscerator_attack"
+	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE | PASSMOB
 	combat_mode = TRUE
 	mob_biotypes = MOB_ROBOTIC

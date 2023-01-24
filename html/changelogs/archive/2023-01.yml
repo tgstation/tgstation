@@ -676,3 +676,198 @@
   - bugfix: Fixed the Survivalist N2O System
   scriptis:
   - rscadd: a goose for the tram to run over
+2023-01-20:
+  Guillaume Prata:
+  - rscadd: Bolter Wrench as a new tool, it can raise the bolts of airlocks regardless
+      of it's power status to smoother station repairs. It can be printed and is unlocked
+      on the same tier as RCD. It can also rarely be a mail gift for engineers.
+  Iamgoofball:
+  - bugfix: Fixes players bypassing the gas mask FOV restrictions with biohoods that
+      do almost everything the mask does without an FOV
+  Inari-Whitebear:
+  - bugfix: Firebots no longer attempt to extinguish themselves constantly
+  Melbert, That REALLY Good Soda Flavor, FatFat, AndreyGusev:
+  - rscadd: Spacemen can now have varying height. (Admin only for now)
+  - rscadd: Dwarfs are now slightly shorter, but look way better.
+  NamelessFairy:
+  - qol: Theres now a visual indicator when you attempt to grab an object or person
+      restrained by the HAUL gauntlets.
+  PositiveEntropy:
+  - rscadd: 'Adds a new short length haircut: the Chin-Length Bob Cut!'
+  SomeRandomOwl:
+  - admin: Modified the Play Internet Sound Verb so it now displays extra info about
+      any song being actively played as well as showing the link
+  Wallem:
+  - imageadd: Made the station's iron sheets less shiny to increase sprite legibility.
+  ZephyrTFA:
+  - bugfix: Canisters no longer keep their shielding when their shielding cell fails
+  Zergspower:
+  - qol: Protolathes and the like had their printable items categorized further
+  - bugfix: fixes a few uncategorized items in protolathes and the like
+  - refactor: Cleaner techweb code with more categories to break apart individual
+      printable items at proto/mech fabs
+  jlsnow301:
+  - qol: The orbit menu now sorts antagonists into groups more effectively. Some get
+      new named groups.
+  - admin: Traitor panel should have slightly more sane categories.
+  - rscadd: Many minor antagonists now have "objectives".
+  - refactor: Refactors code in several antag datums.
+  vinylspiders:
+  - bugfix: fixed give_important_for_life proc in species.dm, which is supposed to
+      be used to help ensure plasmamen (and potentially other races) are always spawned
+      with internals and such
+  - bugfix: fixed issue where plasmamen who are spawned without a plasmaman-specific
+      job outfit could spawn without internals and a suit, and just start dying immediately
+2023-01-21:
+  LT3:
+  - bugfix: Kilostation comfy chairs now provide the correct stack of iron on deconstruction
+  PositiveEntropy:
+  - imageadd: Resprites the detective's wardrobe!
+  Rhials:
+  - bugfix: a wall covered by a screen on runtimestation has been modified into a
+      reinforced wall.
+  SuperSlayer0:
+  - bugfix: Fixes reverse revolver sprite being swapped to normal revolver sprite
+  - balance: Nerve splicing surgery now additionaly reduces stamina damage taken by
+      20%
+  Trigg:
+  - bugfix: Admins - Saving a VV outfit will no longer save their cached_ref variable,
+      which caused problems when the game tried to use that cache on another round.
+      Existing broken outfits will need to be loaded and saved again.
+  mc-oofert:
+  - rscadd: Added a new emergency shuttle, the Venture
+2023-01-22:
+  Melbert:
+  - qol: RTD fits in toolbelts.
+  NamelessFairy:
+  - bugfix: Viscerators are no longer invisible.
+  Timberpoes:
+  - bugfix: Mice given sentience through intelligence potions no longer immediately
+      consume the body and soul of the person whom uplifted them.
+  justricky21:
+  - spellcheck: small amendment on pet carrier
+  timothymtorres:
+  - rscadd: Add torches, porcini mushroom seeds, towercap seeds to ash walker ruin.
+  - rscadd: Change drying racks to not require power.
+  - rscadd: Add crafting recipe for smoking pipe that uses wood
+2023-01-23:
+  Ed640:
+  - bugfix: fixed Item scaling objects not properly scaling in inventory slots.
+  Fikou:
+  - rscadd: You can now craft mannequins with wood or plastic.
+  GoldenAlpharex:
+  - balance: Water now makes you wet on touch and vapor application, with vapor being
+      much less effective than touch. Yes, that means you can now spend two minutes
+      putting someone out with a spray bottle full of water!
+  - bugfix: Being wet no longer causes you to be EXTRA flammable, and instead properly
+      protects you from catching on fire. If you're wet enough, of course.
+  Inari-Whitebear:
+  - bugfix: Fixed integrated circuit component menu search crashing on certain symbols
+      being entered.
+  LT3:
+  - spellcheck: Added missing event panel description for Tram Malfunction
+  - bugfix: Portable atmos machinery is layered correctly
+  Melbert:
+  - rscadd: Added a new random event, "Radiation Leak". A random machine starts to
+      emit radiation and toxic fumes. Engineers may be able to stop it with their
+      tools.
+  - rscadd: The "Radioactive" gene from genetics will now emit rads when on stasis
+      or dead, rather than just while you're alive.
+  OrionTheFox:
+  - bugfix: Randomized round-start posters now pull from the selected poster's icon
+      file, meaning TG Downstreams can have them in a seperate .dmi
+  Rhials:
+  - balance: The Magnitis disease will now hurl objects at infectees at higher stages.
+      Watch your head!
+  Ryll/Shaps:
+  - bugfix: You can no longer climb ladders while buckled to an anchored object
+  SmoSmoSmoSmok:
+  - qol: u can now search for players in the messenger by typing their name or their
+      job
+  san7890:
+  - bugfix: Deconstructing deep friers should now work properly.
+  timothymtorres:
+  - qol: Allow illiterate people to play slot machines
+  unit0016:
+  - spellcheck: Wire Terminals' Description now informs the player that they're an
+      input.
+2023-01-24:
+  BlueMemesauce:
+  - code_imp: The access requirements at the end of supply crate descriptions are
+      now automatically generated
+  - bugfix: Supply console now tells you what access each crate needs to be privately
+      purchased
+  GoldenAlpharex:
+  - bugfix: Species that don't suffer from hunger can now properly open the cooking
+      menu.
+  Inari-Whitebear:
+  - bugfix: Tape recorders are not deaf anymore
+  JohnFulpWillard:
+  - bugfix: Hacked autolathes and Limbgrowers can now properly print things again.
+  LT3:
+  - qol: Reduced volume of firedoor alarm sound loop
+  - bugfix: Tram hit counter now only increments when actual players are hit. No more
+      free points hitting the horrible goose
+  Mey-Ha-Zah:
+  - rscadd: Burn Medkit to Mining Vendor
+  Mothblocks:
+  - spellcheck: Cucumber greek is now Greek cucumber
+  - spellcheck: Fixed attack verbs on the greek cucumber
+  Potato-Masher:
+  - bugfix: Morphs now properly move faster when disguised rather than slowing down.
+  Profakos:
+  - bugfix: Bundles of disposal packages that contain a wrapped parcel will be now
+      successfully redirected by the wrapping sorters
+  SuperSlayer0:
+  - bugfix: Wielded high frequency blades no longer ignore pacifism
+  - code_imp: Replaced some random() procs in lavaland elite code with prob() procs
+  - bugfix: Monkey cultists are now able to invoke cult runes
+  SyncIt21:
+  - bugfix: bluespace light replacer from fixing lights/turfs containing lights not
+      in its line of sight
+  - bugfix: beaming any turf even those not containing lights from causing lag
+  Tattle:
+  - qol: urinals and noticeboards can be handcrafted
+  - qol: pod computers can be deconstructed
+  - qol: fireaxe cabinets, mech removal cabinets, and mirrors can now all be crafted
+  Tattle, Kryson:
+  - qol: light switches, request consoles, telescreens, and ticket machines can now
+      all be printed from lathes
+  Wallem:
+  - balance: Kheiral Cuffs now cost 750 mining points instead of 2000.
+  Wallemations:
+  - rscadd: Bartenders can now mix up the Mississippi Queen for those willing to take
+      the plunge.
+  Winter Schock:
+  - bugfix: Blind doll with monophobia dont get stress while someone in 1 tile range
+  YakumoChen:
+  - imageadd: Two new corporate themed posters.
+  ZephyrTFA:
+  - bugfix: NanoTrasen Engineering has identified and resolved an issue with MechOS
+      that prevented diagnostics for internal shorting
+  mc-oofert:
+  - bugfix: Monkey Humans no longer have their AI turned on upon revival
+  san7890:
+  - bugfix: Spacemen with a clear lack of genetics powers can no longer bend space
+      and time to pull out pH indicator strips.
+  - bugfix: Nanotrasen has pushed an update to their Transit System Consoles, which
+      just makes sure the buttons look visually appropriate.
+  timothymtorres:
+  - bugfix: Fix ordance bomb site being a safe teleport area after surviving the heretic
+      minigame
+  - soundadd: Chisels now make sculpting sounds when used on carving blocks
+  - qol: Chisels now give balloon alerts when selecting a target, cancelling, or sculpting
+  - qol: Chisels used on carving blocks that were interrupted will now continue
+  - bugfix: Fix chisel targets to have no range requirement (so you can use binoculars,
+      cameras, etc.)
+  - bugfix: Fix standard mineral blocks (uranium, diamond, plasma, etc.) not letting
+      people use the radial menu to craft abstract statues properly.  This does not
+      work with custom mineral blocks. (pizza, glass, etc.)
+  - code_imp: Change chisel and statue code to be more readable
+  vinylspiders:
+  - bugfix: toilet bongs crafting recipes
+  - bugfix: fixed crafting itself
+  - refactor: cleaned up some old code in the recipes file, added support for structures
+      in recipes
+  - bugfix: fixed a bug where petri dish smartfridges could not be constructed from
+      a circuit board
