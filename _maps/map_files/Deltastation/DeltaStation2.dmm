@@ -32513,15 +32513,11 @@
 /turf/open/floor/plating,
 /area/station/command/corporate_showroom)
 "hTv" = (
-/obj/structure/table/glass,
-/obj/item/paper_bin,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/item/folder/white,
-/obj/item/pen/red,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hTR" = (
 /obj/structure/closet/crate/coffin,
@@ -47771,11 +47767,11 @@
 /area/station/engineering/atmos/pumproom)
 "lBH" = (
 /obj/structure/reagent_dispensers/wall/virusfood/directional/east,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "lBR" = (
@@ -51564,6 +51560,14 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
+/obj/structure/rack,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -6
+	},
+/obj/item/book/manual/wiki/infections,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe/antiviral,
+/obj/item/reagent_containers/syringe/antiviral,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "mzu" = (
@@ -76227,7 +76231,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/virology)
 "sFS" = (
@@ -93717,10 +93720,8 @@
 /area/station/hallway/secondary/entry)
 "wOz" = (
 /obj/structure/chair/office/light,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6
-	},
 /obj/effect/landmark/start/virologist,
+/obj/effect/turf_decal/trimline/green/filled/warning,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "wOP" = (
@@ -96379,10 +96380,10 @@
 "xyb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "xyt" = (
@@ -98980,14 +98981,10 @@
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/east,
-/obj/structure/rack,
-/obj/item/book/manual/wiki/infections,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -6
-	},
+/obj/structure/table/glass,
+/obj/item/paper_bin,
+/obj/item/folder/white,
+/obj/item/pen/red,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "yeZ" = (
