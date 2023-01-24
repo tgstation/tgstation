@@ -15,13 +15,19 @@
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
+	/// The current amount of unclaimed points in the machine
 	var/points = 0
+	/// Smelted ore's amount is multiplied by this
 	var/ore_multiplier = 1
+	/// Increases the amount of points the miners gain
 	var/point_upgrade = 1
+	/// Details how many credits each smelted ore is worth
 	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
 	/// Variable that holds a timer which is used for callbacks to `send_console_message()`. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.
 	var/console_notify_timer
+	/// References the alloys the smelter can create
 	var/datum/techweb/stored_research
+	/// Linkage to the ORM silo
 	var/datum/component/remote_materials/materials
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
@@ -41,6 +47,7 @@
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the input and output direction.")
 
+/// Turns ore into its refined type, and sends it to its material container
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	if(QDELETED(O))
 		return
@@ -70,6 +77,7 @@
 		materials.silo_log(src, "smelted", amount, "someone", mats)
 		qdel(O)
 
+/// Returns the amount of a specific alloy design, based on the accessible materials
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if(!mat_container || D.make_reagent)
@@ -96,10 +104,12 @@
 
 	return build_amount
 
+/// Smelts the passed ores one by one
 /obj/machinery/mineral/ore_redemption/proc/process_ores(list/ores_to_process)
 	for(var/ore in ores_to_process)
 		smelt_ore(ore)
 
+/// Sends a message to the request consoles that signed up for ore updates
 /obj/machinery/mineral/ore_redemption/proc/send_console_message()
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if(!mat_container || !is_station_level(z))
@@ -315,30 +325,23 @@
 	. = ..()
 	if((machine_stat & NOPOWER))
 		return
-	var/image/ore_input
-	var/image/ore_output
+	var/image/ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[input_dir]")
+	var/image/ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[turn(input_dir, 180)]")
 
 	switch(input_dir)
 		if(NORTH)
-			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
 			ore_input.pixel_y = 32
-			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
 			ore_output.pixel_y = -32
 		if(SOUTH)
-			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
 			ore_input.pixel_y = -32
-			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
 			ore_output.pixel_y = 32
 		if(EAST)
-			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
 			ore_input.pixel_x = 32
-			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
 			ore_output.pixel_x = -32
 		if(WEST)
-			ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
 			ore_input.pixel_x = -32
-			ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
 			ore_output.pixel_x = 32
+
 	ore_input.color = COLOR_MODERATE_BLUE
 	ore_output.color = COLOR_SECURITY_RED
 	var/mutable_appearance/light_in = emissive_appearance(ore_input.icon, ore_input.icon_state, offset_spokesman = src, alpha = ore_input.alpha)
