@@ -90,7 +90,7 @@
 	if(!has_access)
 		return data
 
-	data["assigned_view"] = character_preview_view.assigned_map
+	data["assigned_view"] = "preview_[user.ckey]_[REF(src)]_records"
 	data["available_statuses"] = WANTED_STATUSES()
 
 	var/list/records = list()

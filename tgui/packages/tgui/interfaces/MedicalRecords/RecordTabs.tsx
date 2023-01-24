@@ -74,17 +74,18 @@ const CrewTab = (props: { record: MedicalRecord }, context) => {
     MedicalRecord | undefined
   >(context, 'medicalRecord', undefined);
 
-  const { act } = useBackend<MedicalRecordData>(context);
+  const { act, data } = useBackend<MedicalRecordData>(context);
+  const { assigned_view } = data;
   const { record } = props;
   const { crew_ref, name, rank } = record;
 
   /** Sets the record to preview */
   const selectRecord = (record: MedicalRecord) => {
-    if (selectedRecord?.crew_ref === record.crew_ref) {
+    if (selectedRecord?.crew_ref === crew_ref) {
       setSelectedRecord(undefined);
     } else {
       setSelectedRecord(record);
-      act('view_record', { crew_ref: record.crew_ref });
+      act('view_record', { assigned_view: assigned_view, crew_ref: crew_ref });
     }
   };
 

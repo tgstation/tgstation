@@ -70,23 +70,26 @@ export const SecurityRecordTabs = (props, context) => {
 };
 
 /** Individual record */
-const CrewTab = ({ record }: { record: SecurityRecord }, context) => {
-  const { act } = useBackend<SecurityRecordsData>(context);
+const CrewTab = (props: { record: SecurityRecord }, context) => {
   const [selectedRecord, setSelectedRecord] = useLocalState<
     SecurityRecord | undefined
   >(context, 'securityRecord', undefined);
 
+  const { act, data } = useBackend<SecurityRecordsData>(context);
+  const { assigned_view } = data;
+  const { record } = props;
+  const { crew_ref, name, rank, wanted_status } = record;
+
   /** Chooses a record */
   const selectRecord = (record: SecurityRecord) => {
-    if (selectedRecord?.crew_ref === record.crew_ref) {
+    if (selectedRecord?.crew_ref === crew_ref) {
       setSelectedRecord(undefined);
     } else {
       setSelectedRecord(record);
-      act('view_record', { crew_ref: record.crew_ref });
+      act('view_record', { assigned_view: assigned_view, crew_ref: crew_ref });
     }
   };
 
-  const { crew_ref, name, rank, wanted_status } = record;
   const isSelected = selectedRecord?.crew_ref === crew_ref;
 
   return (

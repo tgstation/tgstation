@@ -31,7 +31,7 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		character_preview_view = create_character_preview_view(user)
+		create_character_preview_view(user)
 		ui = new(user, src, "MedicalRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -44,7 +44,7 @@
 	if(!has_access)
 		return data
 
-	data["assigned_view"] = character_preview_view.assigned_map
+	data["assigned_view"] = "preview_[user.ckey]_[REF(src)]_records"
 
 	var/list/records = list()
 	for(var/datum/record/crew/target in GLOB.data_core.general)
