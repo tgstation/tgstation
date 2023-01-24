@@ -263,7 +263,7 @@
 			span_userdanger("You are nailed by a sharp thorn!"))
 			log_combat(vine, living_mob, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
 		else
-			if(prob(80) && !HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
+			if(prob(80) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 				victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
 				victim.Knockdown(2 SECONDS)
 				playsound(victim, 'sound/weapons/whip.ogg', 50, TRUE, -1)
@@ -378,7 +378,7 @@
 			if((worn_item.body_parts_covered & HANDS) && (worn_item.clothing_flags & THICKMATERIAL))
 				return expected_damage
 
-	if(HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(user, TRAIT_PLANT_SAFE))
+	if(HAS_TRAIT(hitter, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(hitter, TRAIT_PLANT_SAFE))
 		return expected_damage
 
 	if(prob(THORN_MUTATION_CUT_PROB) && istype(hitter) && !isvineimmune(hitter))
