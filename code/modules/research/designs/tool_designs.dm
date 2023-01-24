@@ -8,7 +8,7 @@
 	id = "adv_fire_extinguisher"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/titanium = 500, /datum/material/gold = 500)
-	build_path = /obj/item/extinguisher/advanced
+	build_path = /obj/item/extinguisher/advanced/empty
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
