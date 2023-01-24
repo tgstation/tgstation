@@ -713,6 +713,9 @@
 /obj/structure/spacevine/proc/spread()
 	var/direction = pick(GLOB.cardinals)
 	var/turf/stepturf = get_step(src, direction)
+	if(!istype(stepturf))
+		return
+
 	if(!isspaceturf(stepturf) && stepturf.Enter(src))
 		var/obj/structure/spacevine/spot_taken = locate() in stepturf //Locates any vine on target turf. Calls that vine "spot_taken".
 		var/datum/spacevine_mutation/vine_eating/eating = locate() in mutations //Locates the vine eating trait in our own seed and calls it E.
