@@ -156,7 +156,7 @@
 		if(!istext(design_id))
 			return
 
-		if(!stored_research.researched_designs.Find(design_id) && !imported_designs.Find(design_id))
+		if(!stored_research.researched_designs.Find(design_id) && !stored_research.hacked_designs.Find(design_id) && !imported_designs.Find(design_id))
 			return
 
 		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
