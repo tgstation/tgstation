@@ -90,6 +90,7 @@
 	if(!suicide_alert())
 		return
 
+	set_suicide(TRUE)
 	dispatch_message_from_tree(PAI_SUICIDE_MESSAGE)
 	final_checkout()
 
