@@ -128,6 +128,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
 	rustg_log_close_all()
+	GLOB.logger.shutdown_logging()
 
 /* Helper procs for building detailed log lines */
 /proc/key_name(whom, include_link = null, include_name = TRUE)

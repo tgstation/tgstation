@@ -722,11 +722,11 @@
 	)
 
 /obj/item/toy/plush/greek_cucumber
-	name = "cucumber greek"
+	name = "greek cucumber"
 	desc = "A plushie depicting a large cucumber with eyes, it seems that according to the manufacturer of the toy, the human race will look like in the future."
 	icon_state = "cucumber"
 	inhand_icon_state = null
-	attack_verb_continuous = list("squishуы", "creakes", "crunches")
+	attack_verb_continuous = list("squishes", "creaks", "crunches")
 	attack_verb_simple = list("squish", "creak", "crunch")
 	squeak_override = list(
 		'sound/effects/slosh.ogg' = 1,

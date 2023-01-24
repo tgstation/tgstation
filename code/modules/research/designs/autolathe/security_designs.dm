@@ -221,3 +221,33 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/telescreen_interrogation
+	name = "Interrogation Telescreen"
+	id = "telescreen_interrogation"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = 10000,
+		/datum/material/glass = 5000,
+	)
+	build_path = /obj/item/wallframe/telescreen/interrogation
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/telescreen_prison
+	name = "Prison Telescreen"
+	id = "telescreen_prison"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = 10000,
+		/datum/material/glass = 5000,
+	)
+	build_path = /obj/item/wallframe/telescreen/prison
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
