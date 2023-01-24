@@ -1,19 +1,17 @@
 // Admin Tab - Admin Verbs
 
-/client/proc/show_tip()
-	set category = "Admin"
-	set name = "Show Tip"
-	set desc = "Sends a tip (that you specify) to all players. After all \
-		you're the experienced player here."
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB( \
+	admin, \
+	show_tip, \
+	"Sends a tip, which you specify, to all players", \
+	R_ADMIN, \
+	)
 	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
 	if(!input)
 		return
 
-	if(!SSticker)
+	if(!SSticker.initialized)
+		to_chat(usr, span_warning("Please wait for the game to initialize!"))
 		return
 
 	// If we've already tipped, then send it straight away.
@@ -24,7 +22,6 @@
 
 	message_admins("[key_name_admin(usr)] sent a tip of the round.")
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Tip")
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"
@@ -37,12 +34,7 @@
 		tgui_alert(usr,"[M.name] is not prisoned.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_check_player_exp() //Allows admins to determine who the newer players are.
-	set category = "Admin"
-	set name = "Player Playtime"
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(admin, player_playtime, "Check the playtime for connected players", R_ADMIN)
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		to_chat(usr, span_warning("Tracking is disabled in the server configuration file."), confidential = TRUE)
 		return
@@ -52,8 +44,9 @@
 	for(var/client/client in sort_list(GLOB.clients, GLOBAL_PROC_REF(cmp_playtime_asc)))
 		msg += "<LI> [ADMIN_PP(client.mob)] [key_name_admin(client)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(client.mob)]'>" + client.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
-	src << browse(msg.Join(), "window=Player_playtime_check")
+	usr << browse(msg.Join(), "window=Player_playtime_check")
 
+ADMIN_VERB(admin, trigger_centcom_recall, "", R_ADMIN, reason = pick(GLOB.admiral_messages) as text)
 /client/proc/trigger_centcom_recall()
 	if(!check_rights(R_ADMIN))
 		return

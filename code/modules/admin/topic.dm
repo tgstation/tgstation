@@ -711,7 +711,7 @@
 			to_chat(usr, "That's already a cyborg.", confidential = TRUE)
 			return
 
-		usr.client.cmd_admin_robotize(our_mob)
+		usr.client.admin_context_wrapper_context_make_cyborg(our_mob)
 
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])

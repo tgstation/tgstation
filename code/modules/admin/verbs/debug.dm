@@ -1,40 +1,19 @@
-/client/proc/Debug2()
-	set category = "Debug"
-	set name = "Debug-Game"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(debug, toggle_global_debugging, "", R_DEBUG)
+	GLOB.Debug2 = !GLOB.Debug2
+	var/message = "has toggled global debugging [(GLOB.Debug2 ? "on" : "off")]"
+	log_admin("[key_name(usr)] [message]")
+	message_admins("[key_name_admin(usr)] [message]")
 
-	if(GLOB.Debug2)
-		GLOB.Debug2 = 0
-		message_admins("[key_name(src)] toggled debugging off.")
-		log_admin("[key_name(src)] toggled debugging off.")
-	else
-		GLOB.Debug2 = 1
-		message_admins("[key_name(src)] toggled debugging on.")
-		log_admin("[key_name(src)] toggled debugging on.")
+ADMIN_VERB(debug, get_air_status, "", R_DEBUG)
+	atmos_scan(user=usr, target=get_turf(usr), silent=TRUE)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/Cell()
-	set category = "Debug"
-	set name = "Air Status in Location"
-	if(!mob)
-		return
-	var/turf/T = get_turf(mob)
-	if(!isturf(T))
-		return
-	atmos_scan(user=usr, target=T, silent=TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Make Cyborg"
-
+ADMIN_CONTEXT_ENTRY(context_make_cyborg, "Make Cyborg", R_DEBUG, mob/target in GLOB.mob_list)
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
-	log_admin("[key_name(src)] has robotized [M.key].")
-	INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, Robotize))
+
+	log_admin("[key_name(usr)] has robotized [key_name(target)].")
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, Robotize))
 
 /client/proc/poll_type_to_del(search_string)
 	var/list/types = get_fancy_list_of_atom_types()
@@ -50,162 +29,144 @@
 		return
 	return types[key]
 
-//TODO: merge the vievars version into this or something maybe mayhaps
-/client/proc/cmd_debug_del_all(object as text)
-	set category = "Debug"
-	set name = "Del-All"
-
-	var/type_to_del = poll_type_to_del(object)
-
+ADMIN_VERB(debug, delete_all_of_type, "", R_DEBUG, object as text)
+	var/type_to_del = usr.client.poll_type_to_del(object)
 	if(!type_to_del)
 		return
+
+	var/force_del = tgui_alert(usr, "Force Deletion?", "Del-All", list("Yes", "No", "Cancel"))
+	if(force_del == "Cancel")
+		return
+	force_del = (force_del == "Yes")
 
 	var/counter = 0
-	for(var/atom/O in world)
-		if(istype(O, type_to_del))
-			counter++
-			qdel(O)
+	var/atom/target
+	while((target = locate(type_to_del) in world))
+		counter++
+		qdel(target, force = force_del)
 		CHECK_TICK
-	log_admin("[key_name(src)] has deleted all ([counter]) instances of [type_to_del].")
-	message_admins("[key_name_admin(src)] has deleted all ([counter]) instances of [type_to_del].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_debug_force_del_all(object as text)
-	set category = "Debug"
-	set name = "Force-Del-All"
+	var/message = "has [(force_del ? "forcibly" : "")] deleted all ([counter]) instances of '[type_to_del]'"
+	log_admin("[key_name(usr)] [message]")
+	message_admins("[key_name_admin(usr)] [message]")
 
-	var/type_to_del = poll_type_to_del(object)
-
+ADMIN_VERB(debug, hard_delete_all_of_type, "", R_DEBUG, object as text)
+	var/type_to_del = usr.client.poll_type_to_del(object)
 	if(!type_to_del)
 		return
 
-	var/counter = 0
-	for(var/atom/O in world)
-		if(istype(O, type_to_del))
-			counter++
-			qdel(O, force = TRUE)
-		CHECK_TICK
-	log_admin("[key_name(src)] has force-deleted all ([counter]) instances of [type_to_del].")
-	message_admins("[key_name_admin(src)] has force-deleted all ([counter]) instances of [type_to_del].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Force-Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/cmd_debug_hard_del_all(object as text)
-	set category = "Debug"
-	set name = "Hard-Del-All"
-
-	var/type_to_del = poll_type_to_del(object)
-
-	if(!type_to_del)
-		return
-
-	var/choice = alert("ARE YOU SURE that you want to hard delete this type? It will cause MASSIVE lag.", "Hoooo lad what happen?", "Yes", "No")
+	var/choice = tgui_alert(
+		usr,
+		"ARE YOU SURE that you want to hard delete this type? This will cause MASSIVE lag!",
+		"What the fuck happened?",
+		list("Yes", "No"),
+		)
 	if(choice != "Yes")
 		return
 
-	choice = alert("Do you want to pre qdelete the atom? This will speed things up significantly, but may break depending on your level of fuckup.", "How do you even get it that bad", "Yes", "No")
+	choice = tgui_alert(
+		usr,
+		"Do you want to pre qdelete the atom? This will speed things up significantly, but may break depending on your level of fuckup.",
+		"How do you even get it that bad",
+		list("Yes", "No"),
+		)
 	var/should_pre_qdel = TRUE
 	if(choice == "No")
 		should_pre_qdel = FALSE
 
-	choice = alert("Ok one last thing, do you want to yield to the game? or do it all at once. These are hard deletes remember.", "Jesus christ man", "Yield", "Ignore the server")
+	choice = tgui_alert(
+		usr,
+		"Ok one last thing, do you want to yield to the game? or do it all at once. These are hard deletes remember.",
+		"Jesus christ man",
+		list("Yield", "Ignore the server"),
+		)
 	var/should_check_tick = TRUE
 	if(choice == "Ignore the server")
 		should_check_tick = FALSE
 
 	var/counter = 0
-	if(should_check_tick)
-		for(var/atom/O in world)
-			if(istype(O, type_to_del))
-				counter++
-				if(should_pre_qdel)
-					qdel(O)
-				del(O)
-			CHECK_TICK
-	else
-		for(var/atom/O in world)
-			if(istype(O, type_to_del))
-				counter++
-				if(should_pre_qdel)
-					qdel(O)
-				del(O)
-			CHECK_TICK
-	log_admin("[key_name(src)] has hard deleted all ([counter]) instances of [type_to_del].")
-	message_admins("[key_name_admin(src)] has hard deleted all ([counter]) instances of [type_to_del].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hard Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/atom/target
+	while((target = locate(type_to_del) in world))
+		counter++
+		if(should_pre_qdel)
+			qdel(target)
+		del(target)
 
-/client/proc/cmd_debug_make_powernets()
-	set category = "Debug"
-	set name = "Make Powernets"
+		if(should_check_tick)
+			CHECK_TICK
+
+	var/message = "has HARD DELETED all ([counter]) instances of '[type_to_del]'"
+	log_admin("[key_name(usr)] [message]")
+	message_admins("[key_name_admin(usr)] [message]")
+
+ADMIN_VERB(debug, make_powernets, "", R_DEBUG)
 	SSmachines.makepowernets()
-	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
-	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Powernets") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(src)] has remade the powernet.")
+	message_admins("[key_name_admin(src)] has remade the powernets.")
 
-/client/proc/cmd_admin_grantfullaccess(mob/M in GLOB.mob_list)
-	set category = "Debug"
-	set name = "Grant Full Access"
-
+ADMIN_CONTEXT_ENTRY(context_grant_full_access, "Grant Full Access", R_ADMIN, mob/living/carbon/human/target in view())
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/worn = H.wear_id
-		var/obj/item/card/id/id = null
 
-		if(worn)
-			id = worn.GetID()
-		if(id)
-			if(id == worn)
-				worn = null
-			qdel(id)
+	var/obj/item/worn = target.wear_id
+	var/obj/item/card/id/id = null
 
-		id = new /obj/item/card/id/advanced/debug()
+	if(worn)
+		id = worn.GetID()
+	if(id)
+		if(id == worn)
+			worn = null
+		qdel(id)
 
-		id.registered_name = H.real_name
-		id.update_label()
-		id.update_icon()
+	id = new /obj/item/card/id/advanced/debug()
 
-		if(worn)
-			if(istype(worn, /obj/item/modular_computer/pda))
-				var/obj/item/modular_computer/pda/PDA = worn
-				PDA.InsertID(id, H)
+	id.registered_name = target.real_name
+	id.update_label()
+	id.update_icon()
 
-			else if(istype(worn, /obj/item/storage/wallet))
-				var/obj/item/storage/wallet/W = worn
-				W.front_id = id
-				id.forceMove(W)
-				W.update_icon()
-		else
-			H.equip_to_slot(id,ITEM_SLOT_ID)
+	if(worn)
+		if(istype(worn, /obj/item/modular_computer/pda))
+			var/obj/item/modular_computer/pda/PDA = worn
+			PDA.InsertID(id, target)
 
+		else if(istype(worn, /obj/item/storage/wallet))
+			var/obj/item/storage/wallet/wallet = worn
+			wallet.front_id = id
+			id.forceMove(target)
+			target.update_icon()
 	else
-		tgui_alert(usr,"Invalid mob")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(src)] has granted [M.key] full access.")
-	message_admins(span_adminnotice("[key_name_admin(usr)] has granted [M.key] full access."))
+		target.equip_to_slot(id, ITEM_SLOT_ID)
 
-/client/proc/cmd_assume_direct_control(mob/M in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Assume direct control"
-	set desc = "Direct intervention"
+	log_admin("[key_name(usr)] has granted [key_name(target)] full access.")
+	message_admins("[key_name_admin(usr)] has granted [key_name_admin(target)] full access.")
 
-	if(M.ckey)
-		if(tgui_alert(usr,"This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
+ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mob/target in world)
+	if(target.ckey)
+		var/force = tgui_alert(
+			usr,
+			"This mob is already being controlled by '[target.ckey]'. Are you sure you wish to assume control of it? The existing client will be made a ghost."
+			"Assuming Control",
+			list("Yes", "No"),
+			)
+		if(force != "Yes")
 			return
-	if(!M || QDELETED(M))
+
+	if(QDELETED(target))
 		to_chat(usr, span_warning("The target mob no longer exists."))
 		return
-	message_admins(span_adminnotice("[key_name_admin(usr)] assumed direct control of [M]."))
-	log_admin("[key_name(usr)] assumed direct control of [M].")
-	var/mob/adminmob = mob
-	if(M.ckey)
-		M.ghostize(FALSE)
-	M.key = key
-	init_verbs()
+
+	var/target_name = key_name(target)
+	if(target.ckey)
+		target.ghostize(FALSE)
+
+	var/adminmob = usr
+	target.key = usr.key
 	if(isobserver(adminmob))
 		qdel(adminmob)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+	message_admins(span_adminnotice("[key_name_admin(usr)] assumed direct control of [target_name]."))
+	log_admin("[key_name(usr)] assumed direct control of [target_name].")
 
 /client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
 	set category = "Admin.Game"
