@@ -44,14 +44,14 @@
 		return
 
 	// if no specific item or damage type we want to deal, default to doing the deed with our own bare hands.
-	if(!combat_mode)
+	if(combat_mode)
+		dispatch_message_from_tree(HUMAN_COMBAT_MODE_SUICIDE_MESSAGE)
+	else
 		var/obj/item/organ/internal/brain/userbrain = getorgan(/obj/item/organ/internal/brain)
 		if(userbrain?.damage >= 75)
 			dispatch_message_from_tree(HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE)
 		else
 			dispatch_message_from_tree(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
-	else
-		dispatch_message_from_tree(HUMAN_COMBAT_MODE_SUICIDE_MESSAGE)
 
 	final_checkout(held_item)
 
