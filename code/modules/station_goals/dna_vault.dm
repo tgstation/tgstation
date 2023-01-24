@@ -117,25 +117,25 @@
 		qdel(filler)
 	return ..()
 
-/obj/machinery/dna_vault/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/dna_probe))
-		var/obj/item/dna_probe/P = I
+/obj/machinery/dna_vault/attackby(obj/item/Item, mob/user, params)
+	if(istype(Item, /obj/item/dna_probe))
+		var/obj/item/dna_probe/our_probe = I
 		var/uploaded = 0
-		var/Pdna_length = length(P.stored_dna_plants)
-		var/Hdna_length = length(P.stored_dna_human)
-		var/Adna_length = length(P.stored_dna_animal)
-		if(Pdna_length)
-			uploaded += Pdna_length
-			plants += P.stored_dna_plants
-			P.stored_dna_plants.Cut()
-		if(Hdna_length)
-			uploaded += Hdna_length
-			dna += P.stored_dna_human
-			P.stored_dna_human.Cut()
-		if(Adna_length)
-			uploaded += Adna_length
-			animals += P.stored_dna_animal
-			P.stored_dna_animal.Cut()
+		var/plant_dna_length = length(our_probe.stored_dna_plants)
+		var/human_dna_length = length(our_probe.stored_dna_human)
+		var/animal_dna_length = length(our_probe.stored_dna_animal)
+		if(plant_dna_length)
+			uploaded += plant_dna_length
+			plants += our_probe.stored_dna_plants
+			our_probe.stored_dna_plants.Cut()
+		if(human_dna_length)
+			uploaded += human_dna_length
+			dna += our_probe.stored_dna_human
+			our_probe.stored_dna_human.Cut()
+		if(animal_dna_length)
+			uploaded += animal_dna_length
+			animals += our_probe.stored_dna_animal
+			our_probe.stored_dna_animal.Cut()
 		check_goal()
 		to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
 	else
@@ -154,13 +154,13 @@
 	if((user_weakref in power_lottery) || isdead(user))
 		return
 	possible_powers = list(
-		/datum/mutation/human/Breathless,
-		/datum/mutation/human/Dextrous,
-		/datum/mutation/human/Quick,
-		/datum/mutation/human/Fire_Immunity,
-		/datum/mutation/human/Plasmocile,
-		/datum/mutation/human/Quick_Recovery,
-		/datum/mutation/human/Tough,
+		/datum/mutation/human/breathless,
+		/datum/mutation/human/dextrous,
+		/datum/mutation/human/quick,
+		/datum/mutation/human/fire_Immunity,
+		/datum/mutation/human/plasmocile,
+		/datum/mutation/human/quick_Recovery,
+		/datum/mutation/human/tough,
 	)
 	var/list/gained_mutation = list()
 	gained_mutation += pick_n_take(possible_powers)
@@ -181,10 +181,10 @@
 	data["choiceA"] = ""
 	data["choiceB"] = ""
 	if(user && completed)
-		var/list/Mutant = power_lottery[WEAKREF(user)]
-		if(length(Mutant))
-			var/datum/mutation/human/mutation1 = Mutant[1]
-			var/datum/mutation/human/mutation2 = Mutant[2]
+		var/list/mutation_options = power_lottery[WEAKREF(user)]
+		if(length(mutation_options))
+			var/datum/mutation/human/mutation1 = mutation_options[1]
+			var/datum/mutation/human/mutation2 = mutation_options[2]
 			data["used"] = FALSE
 			data["choiceA"] = initial(mutation1.name)
 			data["choiceB"] = initial(mutation2.name)
@@ -207,13 +207,14 @@
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
 	var/datum/weakref/human_weakref = WEAKREF(H)
 	var/static/list/associated_mutation = list(
-		"Breathless" = /datum/mutation/human/Breathless,
-		"Dextrous" = /datum/mutation/human/Dextrous,
-		"Quick" = /datum/mutation/human/Quick,
-		"Fire Immunity" = /datum/mutation/human/Fire_Immunity,
-		"Plasmocile" = /datum/mutation/human/Plasmocile,
-		"Quick Recovery" = /datum/mutation/human/Quick_Recovery,
-		"Tough" = /datum/mutation/human/Tough,)
+		"Breathless" = /datum/mutation/human/breathless,
+		"Dextrous" = /datum/mutation/human/dextrous,
+		"Quick" = /datum/mutation/human/quick,
+		"Fire Immunity" = /datum/mutation/human/fire_Immunity,
+		"Plasmocile" = /datum/mutation/human/plasmocile,
+		"Quick Recovery" = /datum/mutation/human/quick_Recovery,
+		"Tough" = /datum/mutation/human/tough,
+		)
 	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
 	H.dna.add_mutation(associated_mutation[upgrade_type], MUT_OTHER, 0)
