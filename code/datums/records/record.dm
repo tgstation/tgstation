@@ -105,10 +105,10 @@
 	src.minor_disabilities_desc = minor_disabilities_desc
 	src.quirk_notes = quirk_notes
 
-	GLOB.data_core.general += src
+	GLOB.manifest.general += src
 
 /datum/record/crew/Destroy()
-	GLOB.data_core.general -= src
+	GLOB.manifest.general -= src
 	return ..()
 
 /**
@@ -140,10 +140,10 @@
 	src.dna_ref = dna_ref
 	src.mind_ref = mind_ref
 
-	GLOB.data_core.locked += src
+	GLOB.manifest.locked += src
 
 /datum/record/locked/Destroy()
-	GLOB.data_core.locked -= src
+	GLOB.manifest.locked -= src
 	return ..()
 
 /// A helper proc to get the front photo of a character from the record.
@@ -197,7 +197,7 @@
 
 /// Returns a paper printout of the current record's crime data.
 /datum/record/crew/proc/get_rapsheet(alias, header = "Rapsheet", description = "No further details.")
-	var/print_count = ++GLOB.data_core.print_count
+	var/print_count = ++GLOB.manifest.print_count
 	var/obj/item/paper/printed_paper = new
 	var/final_paper_text = text("<center><b>SR-[print_count]: [header]</b></center><br>")
 

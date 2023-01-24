@@ -153,11 +153,11 @@
 
 	var/datum/record/crew/target
 	if(params["crew_ref"])
-		target = locate(params["crew_ref"]) in GLOB.data_core.general
+		target = locate(params["crew_ref"]) in GLOB.manifest.general
 
 	switch(action)
 		if("edit_field")
-			target = locate(params["ref"]) in GLOB.data_core.general
+			target = locate(params["ref"]) in GLOB.manifest.general
 			var/field = params["field"]
 			if(!field || !target?.vars[field])
 				return FALSE
@@ -194,7 +194,7 @@
 			playsound(src, 'sound/machines/terminal_alert.ogg', 70, TRUE)
 
 			if(do_after(usr, 5 SECONDS))
-				for(var/datum/record/crew/entry in GLOB.data_core.general)
+				for(var/datum/record/crew/entry in GLOB.manifest.general)
 					expunge_record_info(entry)
 
 				balloon_alert(usr, "records purged")
@@ -256,7 +256,7 @@
 
 	return TRUE
 
-/// Inserts a new record into GLOB.data_core.general. Requires a photo to be taken.
+/// Inserts a new record into GLOB.manifest.general. Requires a photo to be taken.
 /obj/machinery/computer/proc/insert_new_record(mob/user, obj/item/photo/mugshot)
 	if(!mugshot || !is_operational || !user.canUseTopic(src, be_close = !issilicon(user)))
 		return FALSE

@@ -176,7 +176,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	var/locations = strings(LOCATIONS_FILE, "locations")
 
 	var/list/names = list()
-	for(var/datum/record/crew/target in GLOB.data_core.general)//Picks from crew manifest.
+	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
 		names += target.name
 
 	var/maxwords = words//Extra var to check for duplicates.

@@ -1,33 +1,26 @@
-GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
+GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
-//TODO: someone please get rid of this shit
-/datum/datacore
+/** Stores crew records. */
+/datum/manifest
 	/// All of the crew records.
 	var/list/general = list()
-	var/print_count = 0
-	var/crime_counter = 0
 	/// This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/list/locked = list()
+	/// Total number of security rapsheet prints. Changes the header.
+	var/print_count = 0
 
-/datum/data
-	var/name
-
-/datum/datacore/proc/manifest()
+/// Builds the list of crew records for all crew members.
+/datum/manifest/proc/build()
 	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/N = i
-		if(N.new_character)
-			log_manifest(N.ckey,N.new_character.mind,N.new_character)
-		if(ishuman(N.new_character))
-			manifest_inject(N.new_character)
+		var/mob/dead/new_player/readied_player = i
+		if(readied_player.new_character)
+			log_manifest(readied_player.ckey,readied_player.new_character.mind,readied_player.new_character)
+		if(ishuman(readied_player.new_character))
+			inject(readied_player.new_character)
 		CHECK_TICK
 
-/datum/datacore/proc/manifest_modify(name, assignment, trim)
-	var/datum/record/crew/found_record = find_record(name)
-	if(found_record)
-		found_record.rank = assignment
-		found_record.trim = trim
-
-/datum/datacore/proc/get_manifest()
+/// Gets the current manifest.
+/datum/manifest/proc/get_manifest()
 	// First we build up the order in which we want the departments to appear in.
 	var/list/manifest_out = list()
 	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
@@ -35,10 +28,10 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	manifest_out[DEPARTMENT_UNASSIGNED] = list()
 
 	var/list/departments_by_type = SSjob.joinable_departments_by_type
-	for(var/datum/record/crew/record as anything in GLOB.data_core.general)
-		var/name = record.name
-		var/rank = record.rank // user-visible job
-		var/trim = record.trim // internal jobs by trim type
+	for(var/datum/record/crew/target as anything in GLOB.manifest.general)
+		var/name = target.name
+		var/rank = target.rank // user-visible job
+		var/trim = target.trim // internal jobs by trim type
 		var/datum/job/job = SSjob.GetJob(trim)
 		if(!job || !(job.job_flags & JOB_CREW_MANIFEST) || !LAZYLEN(job.departments_list)) // In case an unlawful custom rank is added.
 			var/list/misc_list = manifest_out[DEPARTMENT_UNASSIGNED]
@@ -70,7 +63,8 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 	return manifest_out
 
-/datum/datacore/proc/get_manifest_html(monochrome = FALSE)
+/// Returns the manifest as an html.
+/datum/manifest/proc/get_html(monochrome = FALSE)
 	var/list/manifest = get_manifest()
 	var/dat = {"
 	<head><style>
@@ -99,7 +93,8 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	return dat
 
 
-/datum/datacore/proc/manifest_inject(mob/living/carbon/human/person)
+/// Injects a record into the manifest.
+/datum/manifest/proc/inject(mob/living/carbon/human/person)
 	set waitfor = FALSE
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
@@ -152,3 +147,11 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 	return
 
+/// Edits the rank and trim of the found record.
+/datum/manifest/proc/modify(name, assignment, trim)
+	var/datum/record/crew/target = find_record(name)
+	if(!target)
+		return
+
+	target.rank = assignment
+	target.trim = trim

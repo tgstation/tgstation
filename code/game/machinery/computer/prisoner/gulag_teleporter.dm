@@ -37,8 +37,8 @@
 		prisoner_list["name"] = prisoner.real_name
 		if(contained_id)
 			can_teleport = TRUE
-		if(!isnull(GLOB.data_core.general))
-			for(var/datum/record/crew/record as anything in GLOB.data_core.general)
+		if(!isnull(GLOB.manifest.general))
+			for(var/datum/record/crew/record as anything in GLOB.manifest.general)
 				if(record.name == prisoner_list["name"])
 					temporary_record = record
 					prisoner_list["crimstat"] = temporary_record.wanted_status

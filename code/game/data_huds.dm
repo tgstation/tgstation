@@ -305,7 +305,7 @@ Security HUDs! Basic mode shows only the job.
 	holder.pixel_y = sec_icon.Height() - world.icon_size
 	var/perp_name = get_face_name(get_id_name(""))
 
-	if(!perp_name || !GLOB.data_core)
+	if(!perp_name || !GLOB.manifest)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
 		return

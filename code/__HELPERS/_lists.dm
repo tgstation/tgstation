@@ -649,16 +649,16 @@
  */
 /proc/find_record(value, locked_only = FALSE)
 	if(locked_only)
-		for(var/datum/record/locked/record_to_check in GLOB.data_core.locked)
-			if(record_to_check.name != value)
+		for(var/datum/record/locked/target in GLOB.manifest.locked)
+			if(target.name != value)
 				continue
-			return record_to_check
+			return target
 		return null
 
-	for(var/datum/record/crew/record_to_check in GLOB.data_core.general)
-		if(record_to_check.name != value)
+	for(var/datum/record/crew/target in GLOB.manifest.general)
+		if(target.name != value)
 			continue
-		return record_to_check
+		return target
 	return null
 
 

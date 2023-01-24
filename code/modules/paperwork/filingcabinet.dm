@@ -126,7 +126,7 @@
 /obj/structure/filingcabinet/security/proc/populate()
 	if(!virgin)
 		return
-	for(var/datum/record/crew/target in GLOB.data_core.general)
+	for(var/datum/record/crew/target in GLOB.manifest.general)
 		var/obj/item/paper/rapsheet = target.get_rapsheet()
 		rapsheet.forceMove(src)
 		virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
@@ -150,7 +150,7 @@
 /obj/structure/filingcabinet/medical/proc/populate()
 	if(!virgin)
 		return
-	for(var/datum/record/crew/record in GLOB.data_core.general)
+	for(var/datum/record/crew/record in GLOB.manifest.general)
 		var/obj/item/paper/med_record_paper = new /obj/item/paper(src)
 		var/med_record_text = "<CENTER><B>Medical Record</B></CENTER><BR>"
 		med_record_text += "Name: [record.name] Rank: [record.rank]<BR>\nGender: [record.gender]<BR>\nAge: [record.age]<BR>"
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
-	for(var/datum/record/locked/target in GLOB.data_core.locked)
+	for(var/datum/record/locked/target in GLOB.manifest.locked)
 		var/datum/mind/mind_ref = target.mind_ref
 		if(mind_ref && ishuman(mind_ref.current))
 			addFile(mind_ref.current)

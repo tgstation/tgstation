@@ -47,7 +47,7 @@
 	data["assigned_view"] = "preview_[user.ckey]_[REF(src)]_records"
 
 	var/list/records = list()
-	for(var/datum/record/crew/target in GLOB.data_core.general)
+	for(var/datum/record/crew/target in GLOB.manifest.general)
 		var/list/notes = list()
 		for(var/datum/medical_note/note in target.medical_notes)
 			notes += list(list(
@@ -83,7 +83,7 @@
 
 	var/datum/record/crew/target
 	if(params["crew_ref"])
-		target = locate(params["crew_ref"]) in GLOB.data_core.general
+		target = locate(params["crew_ref"]) in GLOB.manifest.general
 	if(!target)
 		return FALSE
 

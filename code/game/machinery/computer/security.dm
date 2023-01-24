@@ -43,26 +43,26 @@
 	if(machine_stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
 		return
 
-	for(var/datum/record/crew/record in GLOB.data_core.general)
+	for(var/datum/record/crew/target in GLOB.manifest.general)
 		if(prob(10/severity))
 			switch(rand(1,5))
 				if(1)
 					if(prob(10))
-						record.name = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
+						target.name = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
 					else
-						record.name = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
+						target.name = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
 				if(2)
-					record.gender = pick("Male", "Female", "Other")
+					target.gender = pick("Male", "Female", "Other")
 				if(3)
-					record.age = rand(5, 85)
+					target.age = rand(5, 85)
 				if(4)
-					record.wanted_status = pick(WANTED_STATUSES())
+					target.wanted_status = pick(WANTED_STATUSES())
 				if(5)
-					record.species = pick(get_selectable_species())
+					target.species = pick(get_selectable_species())
 			continue
 
 		else if(prob(1))
-			qdel(record)
+			qdel(target)
 			continue
 
 /obj/machinery/computer/secure_data/attacked_by(obj/item/attacking_item, mob/living/user)
@@ -94,7 +94,7 @@
 	data["available_statuses"] = WANTED_STATUSES()
 
 	var/list/records = list()
-	for(var/datum/record/crew/target in GLOB.data_core.general)
+	for(var/datum/record/crew/target in GLOB.manifest.general)
 		var/list/citations = list()
 		for(var/datum/crime/citation/warrant in target.citations)
 			citations += list(list(
@@ -142,7 +142,7 @@
 
 	var/datum/record/crew/target
 	if(params["crew_ref"])
-		target = locate(params["crew_ref"]) in GLOB.data_core.general
+		target = locate(params["crew_ref"]) in GLOB.manifest.general
 	if(!target)
 		return FALSE
 
@@ -348,12 +348,12 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	if(isnull(GLOB.data_core.general))
+	if(isnull(GLOB.manifest.general))
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
 	var/list/new_table = list()
-	for(var/datum/record/crew/player_record as anything in GLOB.data_core.general)
+	for(var/datum/record/crew/player_record as anything in GLOB.manifest.general)
 		var/list/entry = list()
 		entry["age"] = player_record.age
 		entry["arrest_status"] = player_record.wanted_status

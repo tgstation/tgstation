@@ -35,7 +35,7 @@
 
 	switch(mode)
 		if("security")
-			for(var/datum/record/crew/person in GLOB.data_core.general)
+			for(var/datum/record/crew/person in GLOB.manifest.general)
 				var/list/current_record = list()
 
 				current_record["age"] = person.age
@@ -48,7 +48,7 @@
 
 				all_records += list(current_record)
 		if("medical")
-			for(var/datum/record/crew/person in GLOB.data_core.general)
+			for(var/datum/record/crew/person in GLOB.manifest.general)
 				var/list/current_record = list()
 
 				current_record["bloodtype"] = person.blood_type

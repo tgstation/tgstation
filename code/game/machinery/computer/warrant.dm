@@ -21,7 +21,7 @@
 
 	var/list/records = list()
 
-	for(var/datum/record/crew/target in GLOB.data_core.general)
+	for(var/datum/record/crew/target in GLOB.manifest.general)
 		if(!length(target.citations))
 			continue
 
@@ -75,7 +75,7 @@
 
 /// Pays towards a listed fine.
 /obj/machinery/computer/warrant/proc/pay_fine(mob/user, list/params)
-	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
+	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.manifest.general
 	if(!target)
 		return FALSE
 
@@ -147,7 +147,7 @@
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
-	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.data_core.general
+	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.manifest.general
 	if(!target)
 		return FALSE
 
