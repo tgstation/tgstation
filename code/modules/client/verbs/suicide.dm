@@ -9,6 +9,7 @@
 #define PAI_SUICIDE_MESSAGE "pai message"
 
 /// Proc that handles changing the suiciding var on the mob in question, as well as additional operations to ensure that everything goes smoothly when we're certain that this person is going to kill themself.
+/// suicide_state is a boolean, to match the suiciding/suicided var.
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
 	if(suicide_state)
@@ -18,9 +19,9 @@
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()
-	var/obj/item/organ/internal/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
-	if(brain)
-		brain.suicided = suicide_state
+	var/obj/item/organ/internal/brain/userbrain = getorganslot(ORGAN_SLOT_BRAIN)
+	if(userbrain)
+		userbrain.suicided = suicide_state
 
 /mob/living/silicon/robot/set_suicide(suicide_state)
 	. = ..()
@@ -35,10 +36,11 @@
 	if(!suicide_alert())
 		return
 
-	set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
-	var/obj/item/held_item = get_active_held_item()
+	set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicide
 
+	var/obj/item/held_item = get_active_held_item()
 	var/damage_type = SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_ACT) || held_item?.suicide_act(src)
+
 	if(damage_type)
 		if(apply_suicide_damage(held_item, damage_type))
 			final_checkout(held_item, do_damage = FALSE)
@@ -148,7 +150,7 @@
 
 /// Inserts in logging and death + mind dissociation when we're fully done with ending the life of our mob, as well as adjust the health. We will disallow re-entering the body when this is called.
 /// The suicide_tool variable is currently only used for humans in order to allow suicide log to properly put stuff in investigate log.
-/// Set do_damage to FALSE in order to not do damage (in case it's handled elsewhere in the verb or another proc that the suicide tree calls).
+/// Set do_damage to FALSE in order to not do damage (in case it's handled elsewhere in the verb or another proc that the suicide tree calls). Will dissociate client from mind and ghost the player regardless.
 /mob/living/proc/final_checkout(obj/item/suicide_tool, do_damage = TRUE)
 	if(do_damage) // enough to really drive home the point that they are DEAD.
 		apply_suicide_damage()
