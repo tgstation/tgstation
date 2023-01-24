@@ -201,14 +201,3 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
-/datum/design/mining_scanner_advanced
-	name = "Advanced Mining Scanner"
-	id = "mining_scanner_adv"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500, /datum/material/iron = 500, /datum/material/silver = 1000, /datum/material/uranium = 1000)
-	build_path = /obj/item/t_scanner/adv_mining_scanner
-	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO
-
