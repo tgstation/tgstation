@@ -3,7 +3,7 @@
 /datum/antagonist/abductor
 	name = "\improper Abductor"
 	roundend_category = "abductors"
-	antagpanel_category = "Abductor"
+	antagpanel_category = ANTAG_GROUP_ABDUCTORS
 	job_rank = ROLE_ABDUCTOR
 	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes
@@ -148,7 +148,7 @@
 	var/mob/living/carbon/human/H = owner.current
 	var/gear = tgui_alert(admin,"Agent or Scientist Gear", "Gear", list("Agent", "Scientist"))
 	if(gear)
-		if(gear=="Agent")
+		if(gear == "Agent")
 			H.equipOutfit(/datum/outfit/abductor/agent)
 		else
 			H.equipOutfit(/datum/outfit/abductor/scientist)

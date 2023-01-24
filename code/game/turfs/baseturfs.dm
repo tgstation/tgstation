@@ -118,6 +118,8 @@
 /// If found, returns how deep it is for use in other baseturf procs, or null if it cannot be found.
 /// For example, this number can be passed into ScrapeAway to scrape everything until that point.
 /turf/proc/depth_to_find_baseturf(baseturf_type)
+	if(!islist(baseturfs))
+		return baseturfs == baseturf_type ? 1 : null
 	var/index = baseturfs.Find(baseturf_type)
 	if (index == 0)
 		return null

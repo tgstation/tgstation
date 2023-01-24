@@ -375,9 +375,13 @@
 	. = ..()
 	var/damage = min(round(0.4 * reac_volume, 0.1), 10)
 	if(exposed_mob.mob_biotypes & MOB_PLANT)
-		exposed_mob.adjustToxLoss(damage, required_biotype = affected_biotype)
+		// spray bottle emits 5u so it's dealing 10 dmg per spray
+		exposed_mob.adjustToxLoss(damage * 5, required_biotype = affected_biotype)
+		return
+
 	if(!(methods & VAPOR) || !iscarbon(exposed_mob))
 		return
+
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	if(!exposed_carbon.wear_mask)
 		exposed_carbon.adjustToxLoss(damage, required_biotype = affected_biotype)

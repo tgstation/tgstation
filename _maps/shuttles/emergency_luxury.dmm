@@ -692,7 +692,7 @@
 /obj/item/hemostat{
 	pixel_x = -4
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/surgicaldrill,
 /obj/item/cautery,
@@ -888,6 +888,9 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
+"xz" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/shuttle/escape/luxury)
 "zh" = (
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
@@ -1054,7 +1057,7 @@ ag
 ag
 af
 ag
-ag
+xz
 ay
 av
 av
@@ -1118,7 +1121,7 @@ ag
 Lt
 ag
 ag
-ag
+xz
 bV
 aC
 aE
@@ -1203,7 +1206,7 @@ bW
 bY
 ao
 ci
-ag
+xz
 ag
 ag
 bb
@@ -1311,7 +1314,7 @@ bc
 bc
 bc
 bc
-ag
+xz
 ag
 ag
 ag

@@ -114,26 +114,18 @@
 	difficulty = 16
 	instability = 5
 	conflicts = list(/datum/mutation/human/gigantism)
-	locked = TRUE    // Default intert species for now, so locked from regular pool.
+	locked = TRUE // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	var/matrix/new_transform = matrix()
-	new_transform.Scale(1, 0.8)
-	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	var/matrix/new_transform = matrix()
-	new_transform.Scale(1, 1.25)
-	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
@@ -480,19 +472,19 @@
 		qdel(I)
 
 	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
-	for(var/mob/living/carbon/human/H in view(2,owner))
-		var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+	for(var/mob/living/carbon/human/splashed in view(2, owner))
+		var/obj/item/organ/internal/eyes/eyes = splashed.getorganslot(ORGAN_SLOT_EYES)
 		if(eyes)
-			to_chat(H, span_userdanger("You are blinded by a shower of blood!"))
+			to_chat(splashed, span_userdanger("You are blinded by a shower of blood!"))
+			eyes.applyOrganDamage(5)
 		else
-			to_chat(H, span_userdanger("You are knocked down by a wave of... blood?!"))
-		H.Stun(20)
-		H.set_eye_blur_if_lower(40 SECONDS)
-		eyes?.applyOrganDamage(5)
-		H.adjust_confusion(3 SECONDS)
-	for(var/mob/living/silicon/S in view(2,owner))
-		to_chat(S, span_userdanger("Your sensors are disabled by a shower of blood!"))
-		S.Paralyze(60)
+			to_chat(splashed, span_userdanger("You are knocked down by a wave of... blood?!"))
+		splashed.Stun(2 SECONDS)
+		splashed.set_eye_blur_if_lower(40 SECONDS)
+		splashed.adjust_confusion(3 SECONDS)
+	for(var/mob/living/silicon/borgo in view(2, owner))
+		to_chat(borgo, span_userdanger("Your sensors are disabled by a shower of blood!"))
+		borgo.Paralyze(6 SECONDS)
 	owner.investigate_log("has been gibbed by the martyrdom mutation.", INVESTIGATE_DEATHS)
 	owner.gib()
 

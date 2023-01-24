@@ -16,7 +16,7 @@
 
 	create_notice()
 
-	RegisterSignal(
+	RegisterSignals(
 		ticket,
 		list(
 			COMSIG_ADMIN_HELP_MADE_INACTIVE,

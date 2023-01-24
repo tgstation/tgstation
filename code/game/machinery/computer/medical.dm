@@ -256,7 +256,7 @@
 				temp = {"<b>Name:</b> [disease.name]
 <BR><b>Number of stages:</b> [disease.max_stages]
 <BR><b>Spread:</b> [disease.spread_text] Transmission
-<BR><b>Possible Cure:</b> [(disease.cure_text||"none")]
+<BR><b>Possible Cure:</b> [(disease.cure_text || "none")]
 <BR><b>Affected Lifeforms:</b>[applicable_mob_names]
 <BR>
 <BR><b>Notes:</b> [disease.desc]
