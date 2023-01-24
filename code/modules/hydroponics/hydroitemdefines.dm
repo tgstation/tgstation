@@ -551,11 +551,11 @@
 	swiping = TRUE
 	var/static/list/scythe_slash_angles = list(0, 45, 90, -45, -90)
 	for(var/i in scythe_slash_angles)
-		var/turf/user_turf = get_step(user_turf, turn(dir_to_target, i))
-		for(var/obj/structure/spacevine/vine in user_turf)
+		var/turf/adjacent_turf = get_step(user_turf, turn(dir_to_target, i))
+		for(var/obj/structure/spacevine/vine in adjacent_turf)
 			if(user.Adjacent(vine))
 				melee_attack_chain(user, vine)
-		for(var/obj/structure/alien/resin/flower_bud/flower in user_turf)
+		for(var/obj/structure/alien/resin/flower_bud/flower in adjacent_turf)
 			if(user.Adjacent(flower))
 				melee_attack_chain(user, flower)
 	swiping = FALSE
