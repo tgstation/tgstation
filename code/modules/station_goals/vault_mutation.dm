@@ -128,8 +128,6 @@
 	if(improved_lungs)
 		improved_lungs.plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 		improved_lungs.plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
-	else
-		return
 
 /datum/mutation/human/plasmocile/proc/remove_modification(mob/source, obj/item/organ/old_organ)
 	SIGNAL_HANDLER
