@@ -1773,6 +1773,7 @@
 #include "code\game\objects\items\RPD.dm"
 #include "code\game\objects\items\RSF.dm"
 #include "code\game\objects\items\RTD.dm"
+#include "code\game\objects\items\RWD.dm"
 #include "code\game\objects\items\scrolls.dm"
 #include "code\game\objects\items\secret_documents.dm"
 #include "code\game\objects\items\sharpener.dm"
