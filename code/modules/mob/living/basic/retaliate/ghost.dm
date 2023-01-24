@@ -108,6 +108,9 @@
 /datum/ai_behavior/basic_melee_attack/ghost
 	action_cooldown = 2 SECONDS
 
+
+/// Weaker variant of ghosts that can smash structures. Meant to be summoned in swarms via the ectoplasmic anomaly and associated ghost portal.
+
 /mob/living/basic/ghost/swarm
 	name = "vengeful spirit"
 	desc = "Oh my god, they're EVERYWHERE."
@@ -119,6 +122,7 @@
 	attack_verb_simple = "smash"
 	death_message = "wails as it is torn back to the realm from which it came!"
 	random_identity = FALSE
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 
 /mob/living/basic/ghost/swarm/death(gibbed)
 	. = ..()
