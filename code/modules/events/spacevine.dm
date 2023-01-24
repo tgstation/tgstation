@@ -485,7 +485,7 @@
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		override += mutation.on_chem(src, chem)
 	if(!override && istype(chem, /datum/reagent/toxin/plantbgone))
-		if(prob(50))
+		if(prob(75))
 			qdel(src)
 
 /obj/structure/spacevine/proc/eat(mob/eater)
