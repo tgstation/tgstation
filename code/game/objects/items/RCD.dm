@@ -558,7 +558,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		if(rcd_results["mode"] == RCD_WINDOWGRILLE && locate(/obj/structure/grille, target_turf) && (!locate(/obj/structure/window, target_turf) && !locate(/obj/structure/window/reinforced, target_turf)))
 			//no checks proceed
 		else
-			//structures which are small enough to fit in turfs containing directional windows.
+			//structures which are small enough to fit on turfs containing directional windows.
 			var/static/list/small_structures = list(
 				RCD_MACHINE,
 				RCD_COMPUTER,
@@ -566,7 +566,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				RCD_FLOODLIGHT,
 				RCD_FURNISHING
 			)
-			//find all directional windows in the turf
+			//find all directional windows on the turf
 			var/list/ignored_content = list()
 			if(rcd_results["mode"] in small_structures)
 				var/static/list/ignored_atoms = list(/obj/structure/window, /obj/structure/window/reinforced)
