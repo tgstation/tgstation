@@ -73,7 +73,7 @@
 		return
 
 	mytray.mutation_roll(user)
-	
+
 	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
@@ -375,8 +375,8 @@
 	. = ..()
 	var/damage = min(round(0.4 * reac_volume, 0.1), 10)
 	if(exposed_mob.mob_biotypes & MOB_PLANT)
-		// spray bottle emits 5u so it's dealing 10 dmg per spray
-		exposed_mob.adjustToxLoss(damage * 5, required_biotype = affected_biotype)
+		// spray bottle emits 5u so it's dealing ~15 dmg per spray
+		exposed_mob.adjustToxLoss(damage * 20, required_biotype = affected_biotype)
 		return
 
 	if(!(methods & VAPOR) || !iscarbon(exposed_mob))

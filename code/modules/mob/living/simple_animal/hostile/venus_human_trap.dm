@@ -62,10 +62,11 @@
 
 /obj/structure/alien/resin/flower_bud/attacked_by(obj/item/item, mob/living/user)
 	var/damage_dealt = item.force
-	if(item.get_sharpness())
-		damage_dealt *= 4
 	if(item.damtype == BURN)
 		damage_dealt *= 4
+	// alien resin applies 75% reduction to brute damage
+	if(item.damtype == BRUTE && item.get_sharpness())
+		damage_dealt *= 8 // so this is really only doing x2 damage
 
 	take_damage(damage_dealt, item.damtype, MELEE, 1)
 

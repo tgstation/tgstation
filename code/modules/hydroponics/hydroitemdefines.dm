@@ -521,6 +521,7 @@
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = SHARP_EDGED
 	var/swiping = FALSE
 
 /obj/item/scythe/Initialize(mapload)
@@ -529,7 +530,7 @@
 	speed = 9 SECONDS, \
 	effectiveness = 105, \
 	)
-	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/venus_human_trap, damage_multiplier = 1.5)
+	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/venus_human_trap, requires_combat_mode = FALSE)
 
 /obj/item/scythe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
