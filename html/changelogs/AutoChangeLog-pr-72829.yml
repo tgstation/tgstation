@@ -1,4 +1,0 @@
-author: "Winter Schock"
-delete-after: True
-changes:
-  - bugfix: "Blind doll with monophobia dont get stress while someone in 1 tile range"
