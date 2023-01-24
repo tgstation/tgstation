@@ -73,6 +73,8 @@
 
 /mob/living/shared_ui_interaction(src_object)
 	. = ..()
+	if(istype(src_object, /obj/item/modular_computer/pda))
+		return UI_INTERACTIVE
 	if(!(mobility_flags & MOBILITY_UI) && . == UI_INTERACTIVE)
 		return UI_UPDATE
 
