@@ -3,7 +3,7 @@
 	desc = "It looks like the souls of the damned are trying to break into the realm of the living again. How upsetting."
 	icon_state = "ectoplasm"
 	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
-	lifespan = 90 SECONDS
+	lifespan = 120 SECONDS //This one takes a bit longer, because it can run away.
 	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
 	var/override_ghosts = FALSE
 	///The numerical power of the anomaly. Calculated in anomalyEffect. Also used in determining the category of detonation effects.
@@ -14,16 +14,19 @@
 /obj/effect/anomaly/ectoplasm/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
 
-	AddComponent(/datum/component/deadchat_control/cardinal_movement, ANARCHY_MODE, list(), 2 SECONDS)
+	AddComponent(/datum/component/deadchat_control/cardinal_movement, ANARCHY_MODE, list(), 7 SECONDS)
 
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
 
-/obj/effect/anomaly/ectoplasm/examine_more(mob/user)
+/obj/effect/anomaly/ectoplasm/examine(mob/user)
 	. = ..()
 
 	if(isobserver(user))
-		. += span_info("Orbiting this anomaly will increase its effect power. It will also accept directional commands!")
+		. += " Orbiting this anomaly will increase the size and intensity of its effects."
+
+/obj/effect/anomaly/ectoplasm/examine_more(mob/user)
+	. = ..()
 
 	switch(effect_power)
 		if(0 to 25)
@@ -33,7 +36,7 @@
 		if(50 to 100)
 			. += span_alert("The anomaly pulsates heavily, about to burst with unearthly energy. This can't be good.")
 
-/obj/effect/anomaly/ectoplasm/anomalyEffect(delta_time) //Updates ghost count
+/obj/effect/anomaly/ectoplasm/anomalyEffect(delta_time)
 	. = ..()
 	if(!override_ghosts)
 		ghosts_orbiting = 0
@@ -136,7 +139,9 @@
 		playsound(src, pick(spooky_noises), 100)
 
 /obj/structure/ghost_portal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, pick(spooky_noises), 50)
+	playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
+	if(prob(40))
+		playsound(src, pick(spooky_noises), 50)
 
 /obj/structure/ghost_portal/Destroy()
 	. = ..()
@@ -157,11 +162,11 @@
 		if(!isobserver(candidate))
 			continue
 		var/mob/dead/observer/candidate_ghost = candidate //typecast so we can pull their key
-		var/mob/living/basic/ghost/new_ghost = new /mob/living/basic/ghost(get_turf(src))
+		var/mob/living/basic/ghost/swarm/new_ghost = new /mob/living/basic/ghost(get_turf(src))
 		new_ghost.ghostize(FALSE)
 		new_ghost.key = candidate_ghost.key
 		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
-		var/policy = get_policy(ROLE_PYROCLASTIC_SLIME)
+		var/policy = get_policy(ROLE_ANOMALY_GHOST)
 		if (policy)
 			to_chat(new_ghost, policy)
 		else
