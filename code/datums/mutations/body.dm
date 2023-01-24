@@ -114,26 +114,18 @@
 	difficulty = 16
 	instability = 5
 	conflicts = list(/datum/mutation/human/gigantism)
-	locked = TRUE    // Default intert species for now, so locked from regular pool.
+	locked = TRUE // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	var/matrix/new_transform = matrix()
-	new_transform.Scale(1, 0.8)
-	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	var/matrix/new_transform = matrix()
-	new_transform.Scale(1, 1.25)
-	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
