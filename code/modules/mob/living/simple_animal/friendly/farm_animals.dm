@@ -77,7 +77,7 @@
 	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
 	if(vine)
 		vine.eat(src)
-	
+
 	var/obj/structure/alien/resin/flower_bud/flower = locate(/obj/structure/alien/resin/flower_bud) in loc
 	if(flower)
 		qdel(flower)
@@ -92,18 +92,18 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
 	. = ..()
-	
+
 	if(!. || !isliving(target))
 		return
-		
+
 	var/mob/living/plant_target = target
 	if(!(plant_target.mob_biotypes & MOB_PLANT))
 		return
 
-	plant_target.adjustHealth(15)
+	plant_target.adjustBruteLoss(15)
 	playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 	var/obj/item/bodypart/edible_bodypart
-	
+
 	if(ishuman(plant_target))
 		var/mob/living/carbon/human/plant_man = target
 		edible_bodypart = pick(plant_man.bodyparts)
