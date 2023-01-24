@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix ordance bomb site being a safe teleport area after surviving the heretic minigame"
