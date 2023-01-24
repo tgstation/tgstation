@@ -33,7 +33,7 @@
 
 /mob/living/verb/suicide()
 	set hidden = TRUE
-	handle_suicide(GENERIC_SUICIDE_MESSAGE)
+	handle_suicide(message_type = GENERIC_SUICIDE_MESSAGE)
 
 /mob/living/brain/suicide()
 	set hidden = TRUE
@@ -45,13 +45,9 @@
 
 /mob/living/carbon/human/suicide()
 	set hidden = TRUE
-	handle_suicide() // message types are handled in handle_suicide for this type.
+	handle_suicide() // message types are handled in handle_suicide for humans. no args needed.
 
 /mob/living/silicon/ai/suicide()
-	set hidden = TRUE
-	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
-
-/mob/living/silicon/robot/suicide()
 	set hidden = TRUE
 	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
 
@@ -59,9 +55,13 @@
 	set hidden = TRUE
 	handle_suicide(message_type = PAI_SUICIDE_MESSAGE)
 
-/// Actually handles the bare basics of the suicide process. If we kill ourselves with a specified tool, pass it in as suicide tool. Message type is the message we want to dispatch in the world regarding the suicide.
+/mob/living/silicon/robot/suicide()
+	set hidden = TRUE
+	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
+
+/// Actually handles the bare basics of the suicide process. Message type is the message we want to dispatch in the world regarding the suicide, using the defines in this file.
 /// If do not want to do damage to the mob (if it's incompatible with damage or something weird), set the do_damage boolean to FALSE when you call this proc.
-/mob/living/proc/handle_suicide(obj/item/suicide_tool, message_type, do_damage = TRUE)
+/mob/living/proc/handle_suicide(message_type, do_damage = TRUE)
 	if(!suicide_alert())
 		return
 
@@ -69,7 +69,7 @@
 	dispatch_message_from_tree(message_type)
 	final_checkout(suicide_tool, apply_damage = do_damage)
 
-/mob/living/carbon/human/handle_suicide(obj/item/suicide_tool, message_type, do_damage = TRUE)
+/mob/living/carbon/human/handle_suicide(message_type, do_damage = TRUE)
 	if(!suicide_alert())
 		return
 
