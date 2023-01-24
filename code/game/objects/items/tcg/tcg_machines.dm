@@ -253,7 +253,7 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 		choices = setup_radial()
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	handle_choice(choice, user)
 	display_panel_ref.update_icon(UPDATE_OVERLAYS)
 	add_fingerprint(user)
