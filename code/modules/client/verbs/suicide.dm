@@ -8,6 +8,7 @@
 #define MECHANICAL_SUICIDE_MESSAGE "mechanical message"
 #define PAI_SUICIDE_MESSAGE "pai message"
 
+/// Proc that handles changing the suiciding var on the mob in question, as well as additional operations to ensure that everything goes smoothly when we're certain that this person is going to kill themself.
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
 	if(suicide_state)
