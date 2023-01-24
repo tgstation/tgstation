@@ -100,7 +100,6 @@
 /area/shuttle/escape)
 "gG" = (
 /obj/machinery/door/poddoor/shutters/indestructible/preopen{
-	name = "anti-poor shutters";
 	id = "gimmemoney"
 	},
 /turf/closed/indestructible/opsglass{
