@@ -34,7 +34,8 @@
 			update_appearance()
 			current_summon = new summon_type(locate(x + summon_offset_x, y + summon_offset_y, z))
 			current_summon.template = card_template
-			current_summon.load_model(current_card)
+			current_summon.card_ref = current_card
+			current_summon.load_model()
 		else
 			to_chat(user, span_notice("The [src] smartly rejects the non-creature card."))
 			current_card = null
@@ -108,6 +109,8 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
 	///Holds all the default details of the card.
 	var/datum/card/template
+	///Holds a reference to the card itself.
+	var/obj/item/tcgcard/card_ref
 
 	///Power statistics for the hologram, stored seperately to the template as they can be modified.
 	var/summon_power
@@ -131,7 +134,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	///Color of the holograms produced.
 	var/team_color = "#77abff"
 
-/obj/structure/trading_card_summon/proc/load_model(obj/item/tcgcard/current_card)
+/obj/structure/trading_card_summon/proc/load_model()
 
 	hologram = new(loc)
 
@@ -148,13 +151,13 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
 
 /obj/structure/trading_card_summon/get_name_chaser(mob/user, list/name_chaser = list())
-
 	name_chaser += "Faction: [template.faction]"
 	name_chaser += "Cost: [template.summoncost]"
 	name_chaser += "Type: [template.cardtype] - [template.cardsubtype]"
 	name_chaser += "Power/Resolve: [summon_power]/[summon_resolve]"
 	if(template.rules) //This can sometimes be empty
 		name_chaser += "Ruleset: [template.rules]"
+	name_chaser += list("[icon2html(card_ref.get_cached_flat_icon(), user, "extra_classes" = "hugeicon")]")
 	return name_chaser
 
 /obj/structure/trading_card_summon/update_overlays()
