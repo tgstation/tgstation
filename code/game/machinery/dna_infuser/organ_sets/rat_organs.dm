@@ -2,7 +2,6 @@
 #define RAT_ORGAN_COLOR "#646464"
 #define RAT_SCLERA_COLOR "#f0e055"
 #define RAT_PUPIL_COLOR "#000000"
-
 #define RAT_COLORS RAT_ORGAN_COLOR + RAT_SCLERA_COLOR + RAT_PUPIL_COLOR
 
 ///bonus of the rat: you can ventcrawl!
@@ -18,8 +17,6 @@
 /datum/status_effect/organ_set_bonus/rat/disable_bonus()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_VENTCRAWLER_NUDE, REF(src))
-
-
 
 ///way better night vision, super sensitive. lotta things work like this, huh?
 /obj/item/organ/internal/eyes/night_vision/rat
@@ -39,8 +36,6 @@
 	AddElement(/datum/element/noticable_organ, "eyes have deep, shifty black pupils, surrounded by a sickening yellow sclera.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
-
-
 ///increases hunger, disgust recovers quicker, expands what is defined as "food"
 /obj/item/organ/internal/stomach/rat
 	name = "mutated rat-stomach"
@@ -56,11 +51,8 @@
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
-/obj/item/organ/internal/stomach/rat/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
-	AddElement(/datum/element/noticable_organ, "salivate[reciever.p_s()] excessively.", BODY_ZONE_HEAD)
-	return ..()
-
 /obj/item/organ/internal/stomach/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+	AddElement(/datum/element/noticable_organ, "salivate[reciever.p_s()] excessively.", BODY_ZONE_HEAD)
 	. = ..()
 	if(!ishuman(reciever))
 		return
@@ -92,8 +84,6 @@
 	human_holder.physiology.hunger_mod /= 10
 	UnregisterSignal(stomach_owner, COMSIG_SPECIES_GAIN)
 
-
-
 /// makes you smaller, walk over tables, and take 1.5x damage
 /obj/item/organ/internal/heart/rat
 	name = "mutated rat-heart"
@@ -108,11 +98,8 @@
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
-/obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
-	AddElement(/datum/element/noticable_organ, "hunch[owner.p_es()] over unnaturally!")
-	return ..()
-
 /obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+	AddElement(/datum/element/noticable_organ, "hunch[owner.p_es()] over unnaturally!")
 	. = ..()
 	if(!ishuman(reciever))
 		return
@@ -128,8 +115,6 @@
 	var/mob/living/carbon/human/human_heartless = heartless
 	human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
 	human_heartless.physiology.damage_resistance += 50
-
-
 
 /// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/internal/tongue/rat
@@ -181,5 +166,4 @@
 #undef RAT_ORGAN_COLOR
 #undef RAT_SCLERA_COLOR
 #undef RAT_PUPIL_COLOR
-
 #undef RAT_COLORS

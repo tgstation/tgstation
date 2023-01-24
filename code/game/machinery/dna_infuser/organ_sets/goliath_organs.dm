@@ -2,7 +2,6 @@
 #define GOLIATH_ORGAN_COLOR "#875652"
 #define GOLIATH_SCLERA_COLOR "#ac0f32"
 #define GOLIATH_PUPIL_COLOR "#FF0000"
-
 #define GOLIATH_COLORS GOLIATH_ORGAN_COLOR + GOLIATH_SCLERA_COLOR + GOLIATH_PUPIL_COLOR
 
 ///bonus of the goliath: you can swim through space!
@@ -167,10 +166,10 @@
 
 /obj/item/organ/internal/heart/goliath/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
-/obj/item/organ/internal/heart/goliath/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
-	AddElement(/datum/element/noticable_organ, "skin [reciever.p_have()] visible hard plates growing from within.", BODY_ZONE_CHEST)
-	return ..()
-
+#undef GOLIATH_ORGAN_COLOR
+#undef GOLIATH_SCLERA_COLOR
+#undef GOLIATH_PUPIL_COLOR
 #undef GOLIATH_COLORS

@@ -2,7 +2,6 @@
 #define CARP_ORGAN_COLOR "#4caee7"
 #define CARP_SCLERA_COLOR "#ffffff"
 #define CARP_PUPIL_COLOR "#00b1b1"
-
 #define CARP_COLORS CARP_ORGAN_COLOR + CARP_SCLERA_COLOR + CARP_PUPIL_COLOR
 
 ///bonus of the carp: you can swim through space!
@@ -108,11 +107,8 @@
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
-/obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/reciever, special, drop_if_replaced, no_id_transfer)
-	AddElement(/datum/element/noticable_organ, "seem[reciever.p_s()] unable to stay still.")
-	return ..()
-
 /obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/brain_owner, special, drop_if_replaced, no_id_transfer)
+	AddElement(/datum/element/noticable_organ, "seem[brain_owner.p_s()] unable to stay still.")
 	. = ..()
 	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
 	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(satisfied_nomad))
@@ -148,14 +144,10 @@
 
 /obj/item/organ/internal/heart/carp/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/noticable_organ, "skin has small patches of scales growing on it.")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
-
-/obj/item/organ/internal/heart/carp/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
-	AddElement(/datum/element/noticable_organ, "[reciever.p_have()] small patches of scales growing on [reciever.p_their()] skin...")
-	return ..()
 
 #undef CARP_ORGAN_COLOR
 #undef CARP_SCLERA_COLOR
 #undef CARP_PUPIL_COLOR
-
 #undef CARP_COLORS
