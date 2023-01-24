@@ -254,6 +254,7 @@
 	effectiveness = 110, \
 	)
 	//the harvest gives a high bonus chance
+	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/venus_human_trap, damage_multiplier = 1.5)
 
 /obj/item/nullrod/scythe/vibro
 	name = "high frequency blade"
