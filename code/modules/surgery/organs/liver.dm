@@ -107,7 +107,7 @@
 
 	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
-			if(status != toxin.affected_organtype) //this particular toxin does not affect this biotype
+			if(status != toxin.affected_organtype) //this particular toxin does not affect this type of organ
 				continue 
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
