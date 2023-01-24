@@ -40,12 +40,12 @@
 
 /datum/mutation/human/tough/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	acquirer.armor += 30
+	acquirer.physiology.brute_mod *= 0.7
 	ADD_TRAIT(acquirer, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/human/tough/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.armor -= 30
+	owner.physiology.brute_mod /= 0.7
 	REMOVE_TRAIT(owner, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/human/dextrous
