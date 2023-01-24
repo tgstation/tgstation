@@ -72,6 +72,36 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/telescreen_research
+	name = "Research Telescreen"
+	id = "telescreen_research"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = 10000,
+		/datum/material/glass = 5000,
+	)
+	build_path = /obj/item/wallframe/telescreen/research
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/telescreen_ordnance
+	name = "Ordnance Telescreen"
+	id = "telescreen_ordnance"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = 10000,
+		/datum/material/glass = 5000,
+	)
+	build_path = /obj/item/wallframe/telescreen/ordnance
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 // MedSci Designs
 /datum/design/syringe
 	name = "Syringe"
