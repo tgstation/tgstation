@@ -195,9 +195,10 @@
 	desc = "Two disgustingly cute slimey friends. Cytologists love them! \
 		Contains one frog and one axolotl. Warning: Frog may have hallucinogenic properties."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/mob/living/basic/axolotl,
-					/mob/living/basic/frog,
-					)
+	contains = list(
+		/mob/living/basic/axolotl,
+		/mob/living/basic/frog,
+	)
 	crate_name = "amphibian crate"
 
 /datum/supply_pack/critter/lizard
