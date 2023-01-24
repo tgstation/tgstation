@@ -176,37 +176,50 @@
 		add_mood_event("shameful_suicide", /datum/mood_event/shameful_suicide)
 		return FALSE
 
-	if(damage_type & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
+	if(damage_type & MANUAL_SUICIDE_NONLETHAL)
 		set_suicide(FALSE)
 		return FALSE
 
-	var/damage_mod = 0
-	for(var/type in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
-		damage_mod += (type & damage_type) ? 1 : 0
-	damage_mod = max(1, damage_mod)
-
-	//Do 200 damage divided by the number of damage types applied.
-	if(damage_type & BRUTELOSS)
-		adjustBruteLoss(200/damage_mod)
-
-	if(damage_type & FIRELOSS)
-		adjustFireLoss(200/damage_mod)
-
-	if(damage_type & TOXLOSS)
-		adjustToxLoss(200/damage_mod)
-
-	if(damage_type & OXYLOSS)
-		adjustOxyLoss(200/damage_mod)
-
-	if(damage_type & MANUAL_SUICIDE) //Assume the object will handle the death.
+	if(damage_type & MANUAL_SUICIDE) // Assume that the suicide tool will handle the death.
 		suicide_log(suicide_tool)
 		return FALSE
 
-	//If no specific damage_type, just do normal oxyloss (handled by parent proc)
-	if(!(damage_type & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
-		return ..()
+	if(damage_type & (BRUTELOSS | FIRELOSS | OXYLOSS | TOXLOSS))
+		handle_suicide_damage_spread(damage_type)
+		return TRUE
 
-	return TRUE
+	return ..() //if all else fails, hope parent accounts for it or just do whatever damage that parent prescribes.
+
+
+/// If we want to apply multiple types of damage to a carbon mob based on the way they suicide, this is the proc that handles that.
+/// Currently only compatible with Brute, Burn, Toxin, and Suffocation Damage. damage_type is the bitflag that carries the information.
+/mob/living/carbon/proc/handle_suicide_damage_spread(damage_type)
+	// We split up double the total health the mob has, then spread it out.
+	var/damage_to_apply = (maxHealth * 2) // For humans, this value comes out to 200.
+	// The multiplier that we divide damage_to_apply by.
+	var/damage_mod = 0
+	// We don't want to damage_type again and again, this will hold the results.
+	var/list/filtered_damage_types = list()
+
+	for(var/type in list(BRUTELOSS, FIRELOSS, OXYLOSS, TOXLOSS))
+		if(!(type & damage_type))
+			continue
+		damage_mod++
+		filtered_damage_types += type
+
+	damage_mod = max(1, damage_mod) // division by zero is silly
+	damage_to_apply = (damage_to_apply / damage_mod)
+
+	for(var/filtered_type in filtered_damage_types)
+		switch(filtered_type)
+			if(BRUTELOSS)
+				adjustBruteLoss(damage_to_apply)
+			if(FIRELOSS)
+				adjustFireLoss(damage_to_apply)
+			if(OXYLOSS)
+				adjustOxyLoss(damage_to_apply)
+			if(TOXLOSS)
+				adjustToxLoss(damage_to_apply)
 
 /// We re-use a few messages in several contexts, so let's minimize some nasty footprint in the verbs.
 /mob/living/proc/dispatch_message_from_tree(type)
