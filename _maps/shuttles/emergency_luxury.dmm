@@ -535,7 +535,7 @@
 /area/shuttle/escape)
 "yB" = (
 /obj/structure/chair/stool/bar{
-	name = "buckeable bar stool";
+	name = "buckleable bar stool";
 	can_buckle = 1;
 	dir = 1
 	},
@@ -566,7 +566,7 @@
 /area/shuttle/escape/luxury)
 "zM" = (
 /obj/structure/chair/stool/bar{
-	name = "buckeable bar stool";
+	name = "buckleable bar stool";
 	can_buckle = 1;
 	dir = 8
 	},
