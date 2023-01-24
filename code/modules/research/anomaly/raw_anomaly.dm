@@ -68,6 +68,12 @@
 	anomaly_type = /obj/item/assembly/signaler/anomaly/dimensional
 	icon_state = "rawcore_dimensional"
 
+/obj/item/raw_anomaly_core/ectoplasm //Inaccessible from cargo or roundstart spawns
+	name = "\improper ectoplasm anomaly core"
+	desc = "The raw core of an ectoplasmic anomaly. It contains secrets it wishes to share with you."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/ectoplasm
+	icon_state = "dimensional_core"
+
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()
 	var/path = pick(subtypesof(/obj/item/raw_anomaly_core))

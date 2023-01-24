@@ -162,7 +162,7 @@
 		if(!isobserver(candidate))
 			continue
 		var/mob/dead/observer/candidate_ghost = candidate //typecast so we can pull their key
-		var/mob/living/basic/ghost/swarm/new_ghost = new /mob/living/basic/ghost(get_turf(src))
+		var/mob/living/basic/ghost/swarm/new_ghost = new /mob/living/basic/ghost/swarm(get_turf(src))
 		new_ghost.ghostize(FALSE)
 		new_ghost.key = candidate_ghost.key
 		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
