@@ -563,9 +563,6 @@
 		return
 	if(new_resting == resting)
 		return
-	if(!isturf(loc))
-		to_chat(src, span_notice("You do not have room to reposition yourself."))
-		return
 
 	. = resting
 	resting = new_resting
