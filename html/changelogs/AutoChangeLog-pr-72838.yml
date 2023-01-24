@@ -1,0 +1,5 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - rscadd: "The TGC arena on the holodeck now features display panels to track each player's life shards and mana."
+  - qol: "Slightly increased the amount of space on the TGC holodeck arena's tables by removing the windows on either side of the player."
