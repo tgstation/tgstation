@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "NanoTrasen Engineering has identified and resolved an issue with MechOS that prevented diagnostics for internal shorting"
