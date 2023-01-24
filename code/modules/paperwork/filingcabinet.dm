@@ -126,8 +126,9 @@
 /obj/structure/filingcabinet/security/proc/populate()
 	if(!virgin)
 		return
-	for(var/datum/record/crew/record in GLOB.data_core.general)
-		record.get_rapsheet()
+	for(var/datum/record/crew/target in GLOB.data_core.general)
+		var/obj/item/paper/rapsheet = target.get_rapsheet()
+		rapsheet.forceMove(src)
 		virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 					//before the records have been generated, so we do this inside the loop.
 

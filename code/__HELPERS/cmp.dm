@@ -16,12 +16,11 @@
 /proc/cmp_name_dsc(atom/a, atom/b)
 	return sorttext(a.name, b.name)
 
-GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_records_asc(datum/record/a, datum/record/b)
-	return sorttext(b[GLOB.cmp_field], a[GLOB.cmp_field])
+	return sorttext(b.name, a.name)
 
 /proc/cmp_records_dsc(datum/record/a, datum/record/b)
-	return sorttext(a[GLOB.cmp_field], b[GLOB.cmp_field])
+	return sorttext(a.name, b.name)
 
 // Datum cmp with vars is always slower than a specialist cmp proc, use your judgement.
 /proc/cmp_datum_numeric_asc(datum/a, datum/b, variable)

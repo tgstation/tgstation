@@ -594,12 +594,11 @@
 			inserted_list[key] = temp[key]
 
 ///for sorting clients or mobs by ckey
-/proc/sort_key(list/ckey_list, order=1)
+/proc/sort_key(list/ckey_list, order = 1)
 	return sortTim(ckey_list, order >= 0 ? GLOBAL_PROC_REF(cmp_ckey_asc) : GLOBAL_PROC_REF(cmp_ckey_dsc))
 
 ///Specifically for record datums in a list.
-/proc/sort_record(list/record_list, field = "name", order = 1)
-	GLOB.cmp_field = field
+/proc/sort_record(list/record_list, order = 1)
 	return sortTim(record_list, order >= 0 ? GLOBAL_PROC_REF(cmp_records_asc) : GLOBAL_PROC_REF(cmp_records_dsc))
 
 ///sort any value in a list

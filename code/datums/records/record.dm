@@ -249,7 +249,7 @@
 	if(description)
 		final_paper_text += text("- [description]<br>")
 
-	printed_paper.name = text("CR-[] '[]'", print_count, name)
+	printed_paper.name = text("SR-[] '[]'", print_count, name)
 	printed_paper.add_raw_text(final_paper_text)
 	printed_paper.update_appearance()
 
