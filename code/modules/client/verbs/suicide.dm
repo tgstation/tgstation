@@ -35,27 +35,27 @@
 	set hidden = TRUE
 	handle_suicide(GENERIC_SUICIDE_MESSAGE)
 
-/mob/living/carbon/human/verb/suicide()
+/mob/living/carbon/human/suicide()
 	set hidden = TRUE
 	handle_suicide() // message types are handled in handle_suicide for this type.
 
-/mob/living/brain/verb/suicide()
+/mob/living/brain/suicide()
 	set hidden = TRUE
 	handle_suicide(message_type = BRAIN_SUICIDE_MESSAGE, do_damage = FALSE)
 
-/mob/living/silicon/ai/verb/suicide()
+/mob/living/silicon/ai/suicide()
 	set hidden = TRUE
 	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
 
-/mob/living/silicon/robot/verb/suicide()
+/mob/living/silicon/robot/suicide()
 	set hidden = TRUE
 	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
 
-/mob/living/silicon/pai/verb/suicide()
+/mob/living/silicon/pai/suicide()
 	set hidden = TRUE
 	handle_suicide(message_type = PAI_SUICIDE_MESSAGE)
 
-/mob/living/carbon/alien/adult/verb/suicide()
+/mob/living/carbon/alien/adult/suicide()
 	set hidden = TRUE
 	handle_suicide(message_type = ALIEN_SUICIDE_MESSAGE)
 
