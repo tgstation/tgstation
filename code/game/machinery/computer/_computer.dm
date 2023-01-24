@@ -215,7 +215,7 @@
 /// Creates a character preview view for the UI.
 /obj/machinery/computer/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src)
-	character_preview_view.generate_view("record_preview_[REF(character_preview_view)]")
+	character_preview_view.generate_view("records_preview_[user.ckey]_[REF(src)]")
 	character_preview_view.display_to(user)
 
 	return character_preview_view
@@ -280,9 +280,8 @@
 		return FALSE
 
 	if(!has_auth(user))
-		if(ishuman(user))
-			balloon_alert(usr, "access denied")
-			playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
+		balloon_alert(user, "access denied")
+		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
 	balloon_alert(user, "logged in")
