@@ -278,6 +278,8 @@
 			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
 		if(RCD_COMPUTER)
 			return list("mode" = RCD_COMPUTER, "delay" = 20, "cost" = 25)
+		if(RCD_FLOODLIGHT)
+			return list("mode" = RCD_FLOODLIGHT, "delay" = 30, "cost" = 35)
 		if(RCD_FURNISHING)
 			return list("mode" = RCD_FURNISHING, "delay" = the_rcd.furnish_delay, "cost" = the_rcd.furnish_cost)
 	return FALSE
@@ -373,6 +375,15 @@
 			new_computer.set_anchored(TRUE)
 			new_computer.state = 1
 			new_computer.setDir(the_rcd.computer_dir)
+			return TRUE
+		if(RCD_FLOODLIGHT)
+			if(locate(/obj/structure/floodlight_frame) in src)
+				return FALSE
+			var/obj/structure/floodlight_frame/new_floodlight = new(src)
+			new_floodlight.name = "secured [new_floodlight.name]"
+			new_floodlight.desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
+			new_floodlight.icon_state = "floodlight_c3"
+			new_floodlight.state = FLOODLIGHT_NEEDS_LIGHTS
 			return TRUE
 		if(RCD_FURNISHING)
 			if(locate(the_rcd.furnish_type) in src)
