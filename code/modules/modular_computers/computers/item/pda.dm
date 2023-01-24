@@ -84,6 +84,9 @@
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
 		explode(usr, from_message_menu = TRUE)
 
+/obj/item/modular_computer/pda/ui_state(mob/user)
+	return GLOB.conscious_state
+
 /obj/item/modular_computer/pda/attack_self(mob/user)
 	// bypass literacy checks to access syndicate uplink
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
