@@ -81,6 +81,7 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/queen_bee = 1,
 		/datum/micro_organism/cell_line/snake = 1,
 		/datum/micro_organism/cell_line/walking_mushroom = 2,
+		/datum/micro_organism/cell_line/axolotl = 1
 	)
 ))
 

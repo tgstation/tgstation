@@ -589,15 +589,17 @@
 
 	supplementary_reagents = list(
 		/datum/reagent/ants = 3,
-		/datum/reagent/consumable/eggwhite= 2,
+		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/eggwhite= 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1,)
 
 	suppressive_reagents = list(
-		/datum/reagent/toxin/carpotoxin = -3,
+		/datum/reagent/ammonia = -3,
 		/datum/reagent/toxin/bungotoxin = -3,
 		/datum/reagent/toxin/spore = -3,
 		/datum/reagent/toxin/plantbgone = -2, //GAY AXOLOTLS
-		/datum/reagent/drying_agent = -2,
+		/datum/reagent/drying_agent = -4,
 		/datum/reagent/consumable/mold = -2,
 		/datum/reagent/toxin = -1)
 
