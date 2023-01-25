@@ -110,7 +110,7 @@
 
 		new /obj/structure/ghost_portal(get_turf(src), candidate_list)
 
-	priority_announce("Ectoplasmic outburst detected.", "Anomaly Alert")
+		priority_announce("Anomaly has reached critical mass. Ectoplasmic outburst detected.", "Anomaly Alert")
 
 // Ghost Portal. Used to bring anomaly orbiters into the playing field as ghosts. Destroys itself and all of its associated ghosts after two minutes.
 // Can be destroyed early to the same effect.
