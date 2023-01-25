@@ -214,7 +214,7 @@
 	var/string = "You hear something hitting the floor."
 	return string
 
-/mob/living/carbon/human/dispatch_message_from_tree(type)
+/mob/living/carbon/human/send_applicable_messages()
 	var/suicide_message = ""
 	switch(type)
 		if(HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE) // god damn this message is fucking stupid
@@ -240,7 +240,7 @@
 				"[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.",
 			))
 
-	visible_message(span_danger("[suicide_message]"), span_userdanger("[suicide_message]"))
+	visible_message(span_danger(suicide_message), span_userdanger(suicide_message), span_hear(get_blind_suicide_message()))
 
 /// Checks if we are in a valid state to suicide (not already suiciding, capable of actually killing ourselves, area checks, etc.) Returns TRUE if we can suicide, FALSE if we can not.
 /mob/living/proc/can_suicide()
