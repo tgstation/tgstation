@@ -443,7 +443,7 @@
 
 /datum/design/component/list_pick_assoc
 	name = "Associative List Pick Component"
-	id = "assoc_comp_list_pick"
+	id = "comp_assoc_list_pick"
 	build_path = /obj/item/circuit_component/list_pick/assoc
 
 /datum/design/compact_remote_shell
