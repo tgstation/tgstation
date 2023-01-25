@@ -1,7 +1,7 @@
 ///Bodypart ovarlay datum. These can be added to any limb to give them a proper overlay, that'll even stay if the limb gets removed
-///This is the abstract parent, don't use it
+///This is the abstract parent, don't use it!!
 /datum/bodypart_overlay
-	///Sometimes we need multiple layers, for like the back, middle and front of the person
+	///Sometimes we need multiple layers, for like the back, middle and front of the person (EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
 	var/layers
 	///List of all possible layers. Used for looping through in drawing
 	var/static/list/all_layers = list(EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
@@ -24,12 +24,12 @@
 	return
 
 ///Called on being added to a limb
-/datum/bodypart_overlay/proc/add_to_limb(obj/item/bodypart/limb)
-	limb.bodypart_overlays += src
+/datum/bodypart_overlay/proc/added_to_limb(obj/item/bodypart/limb)
+	return
 
 ///Called on being removed from a limb
-/datum/bodypart_overlay/proc/remove_from_limb(obj/item/bodypart/limb)
-	limb.bodypart_overlays -= src
+/datum/bodypart_overlay/proc/removed_from_limb(obj/item/bodypart/limb)
+	return
 
 ///Use this to change the appearance (and yes you must overwrite hahahahahah) (or dont use this, I just dont want people directly changing the image)
 /datum/bodypart_overlay/proc/set_appearance()

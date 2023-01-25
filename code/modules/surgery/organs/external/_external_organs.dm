@@ -90,14 +90,14 @@
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 
-	if(ownerlimb)
+	if(ownerlimb && !moving)
 		remove_from_limb()
+
+		if(use_mob_sprite_as_obj_sprite)
+			update_appearance(UPDATE_OVERLAYS)
 
 	if(organ_owner)
 		organ_owner.update_body_parts()
-
-	if(use_mob_sprite_as_obj_sprite)
-		update_appearance(UPDATE_OVERLAYS)
 
 ///Transfers the organ to the limb, and to the limb's owner, if it has one.
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
@@ -113,11 +113,11 @@
 
 /obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
 	ownerlimb = bodypart
-	bodypart_overlay.add_to_limb(bodypart)
+	ownerlimb.add_bodypart_overlay(bodypart_overlay)
 	return ..()
 
 /obj/item/organ/external/remove_from_limb()
-	bodypart_overlay.remove_from_limb(ownerlimb)
+	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
 	if(ownerlimb.owner && external_bodytypes)
 		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
 	ownerlimb = null

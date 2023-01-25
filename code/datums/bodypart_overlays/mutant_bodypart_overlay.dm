@@ -3,7 +3,7 @@
 	///Sprite datum we use to draw on the bodypart
 	var/datum/sprite_accessory/sprite_datum
 
-	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth'. 'mothwings' would then be feature_key
+	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth_ADJ'. 'mothwings' would then be feature_key
 	var/feature_key = ""
 
 	///The color this organ draws with. Updated by bodypart/inherit_color()
@@ -38,7 +38,7 @@
 /datum/bodypart_overlay/mutant/proc/get_base_icon_state()
 	return sprite_datum.icon_state
 
-///Add the overlays we need to draw on a person. Called from _bodyparts.dm. Limb can be null
+///Get the image we need to draw on the person. Called from get_overlay() which is called from _bodyparts.dm. Limb can be null
 /datum/bodypart_overlay/mutant/get_image(image_layer, obj/item/bodypart/limb)
 	if(!sprite_datum)
 		return
@@ -62,8 +62,7 @@
 /datum/bodypart_overlay/mutant/color_image(image/overlay, obj/item/bodypart/limb)
 	overlay.color = sprite_datum.color_src ? draw_color : null
 
-/datum/bodypart_overlay/mutant/add_to_limb(obj/item/bodypart/limb)
-	..()
+/datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)
 	inherit_color(limb)
 
 ///Change our accessory sprite, using the accesssory type. If you need to change the sprite for something, use simple_change_sprite()
@@ -76,7 +75,7 @@
 	sprite_datum = fetch_sprite_datum_from_name(accessory_name)
 	cache_key = jointext(generate_icon_cache(), "_")
 
-///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse)
+///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse, but mostly curse)
 /datum/bodypart_overlay/mutant/generate_icon_cache()
 	. = list()
 	. += "[get_base_icon_state()]"
