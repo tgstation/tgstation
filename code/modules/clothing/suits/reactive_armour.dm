@@ -495,8 +495,8 @@
 
 /obj/item/clothing/suit/armor/reactive/ectoplasm
 	name = "reactive possession armor"
-	desc = "An experimental suit of armor that animates nearby objects with a ghostly possession. The "
-	emp_message = span_warning("Your suit vibrates, letting out a gentle hum. It sounds like it's .")
+	desc = "An experimental suit of armor that animates nearby objects with a ghostly possession."
+	emp_message = span_warning("The reactive armor lets out a horrible noise, and ghostly whispers fill your ears...")
 	cooldown_message = span_danger("Ectoplasmic Matrix out of balance. Please wait for calibration to complete!")
 	reactivearmor_cooldown_duration = 40 SECONDS
 
