@@ -48,8 +48,7 @@
 	visible_message(span_danger(get_visible_suicide_message()), span_userdanger(get_visible_suicide_message()))
 
 /mob/living/brain/get_visible_suicide_message()
-	var/string = "[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."
-	return string
+	return "[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."
 
 /mob/living/brain/apply_suicide_damage() // we don't really care about applying damage to the brain mob and is just needless work.
 	return FALSE
