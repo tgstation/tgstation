@@ -1,4 +1,8 @@
 /// This file handles anything related to suicide related to humans, as it's a bit more involved/complex than suicide on any other type of mob.
+/// Defines for all the types of messages we can dispatch.
+#define HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE "brain damaged message"
+#define HUMAN_COMBAT_MODE_SUICIDE_MESSAGE "combat mode message"
+#define HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE "default mode message"
 
 /mob/living/carbon/human/handle_suicide()
 	if(!suicide_alert())
@@ -24,7 +28,7 @@
 		else
 			send_applicable_messages(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
 
-	final_checkout(held_item, do_damage)
+	final_checkout(held_item, apply_damage = TRUE)
 
 /mob/living/carbon/human/apply_suicide_damage(obj/item/suicide_tool, damage_type = NONE)
 	// if we don't have any damage_type passed in, default to parent.
@@ -83,3 +87,7 @@
 /mob/living/carbon/human/suicide_log(obj/item/suicide_tool)
 	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool]" : ""].", INVESTIGATE_DEATHS)
 	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
+
+#undef HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE
+#undef HUMAN_COMBAT_MODE_SUICIDE_MESSAGE
+#undef HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE

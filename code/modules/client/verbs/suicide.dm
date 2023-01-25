@@ -1,22 +1,3 @@
-/// Defines for all the types of messages we can dispatch, since there are a few that are re-used in different contexts (like generic messages, mechanical)
-#define ALIEN_SUICIDE_MESSAGE "alien message"
-#define BRAIN_SUICIDE_MESSAGE "brain message"
-#define GENERIC_SUICIDE_MESSAGE "generic message"
-#define HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE "brain damaged message"
-#define HUMAN_COMBAT_MODE_SUICIDE_MESSAGE "combat mode message"
-#define HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE "default mode message"
-#define MECHANICAL_SUICIDE_MESSAGE "mechanical message"
-#define PAI_SUICIDE_MESSAGE "pai message"
-
-/// Proc that handles changing the suiciding var on the mob in question, as well as additional operations to ensure that everything goes smoothly when we're certain that this person is going to kill themself.
-/// suicide_state is a boolean, to match the suiciding/suicided var.
-/mob/proc/set_suicide(suicide_state)
-	suiciding = suicide_state
-	if(suicide_state)
-		add_to_mob_suicide_list()
-	else
-		remove_from_mob_suicide_list()
-
 /// Verb to simply kill yourself (in a very visual way to all players) in game! How family-friendly. Can be governed by a series of multiple checks (i.e. confirmation, is it allowed in this area, etc.) which are
 /// handled and called by the proc this verb invokes. It's okay to block this, because we typically always give mobs in-game the ability to Ghost out of their current mob irregardless of context. This, in contrast,
 /// can have as many different checks as you desire to prevent people from doing the deed to themselves.
@@ -34,6 +15,15 @@
 	set_suicide(TRUE)
 	send_applicable_messages()
 	final_checkout()
+
+/// Proc that handles changing the suiciding var on the mob in question, as well as additional operations to ensure that everything goes smoothly when we're certain that this person is going to kill themself.
+/// suicide_state is a boolean, to match the suiciding/suicided var.
+/mob/proc/set_suicide(suicide_state)
+	suiciding = suicide_state
+	if(suicide_state)
+		add_to_mob_suicide_list()
+	else
+		remove_from_mob_suicide_list()
 
 /// Sends a TGUI Alert to the person attempting to commit suicide. Returns TRUE if they confirm they want to die, FALSE otherwise. Check can_suicide here as well.
 /mob/living/proc/suicide_alert()
@@ -141,12 +131,3 @@
 		if(DEAD)
 			to_chat(src, span_warning("You're already dead!"))
 	return FALSE
-
-#undef ALIEN_SUICIDE_MESSAGE
-#undef BRAIN_SUICIDE_MESSAGE
-#undef GENERIC_SUICIDE_MESSAGE
-#undef HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE
-#undef HUMAN_COMBAT_MODE_SUICIDE_MESSAGE
-#undef HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE
-#undef MECHANICAL_SUICIDE_MESSAGE
-#undef PAI_SUICIDE_MESSAGE
