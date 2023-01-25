@@ -169,10 +169,12 @@
 	location.visible_message(span_danger(get_visible_suicide_message()), null, span_hear(get_blind_suicide_message())) // null in the second arg here because we're sending from the turf
 
 /mob/living/silicon/robot/get_visible_suicide_message()
-	return "[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""
+	var/string = "[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""
+	return string
 
 /mob/living/silicon/robot/get_blind_suicide_message()
-	return "[src] bleeps electronically."
+	var/string = "[src] bleeps electronically."
+	return string
 
 /mob/living/silicon/pai/emag_act(mob/user)
 	handle_emag(user)

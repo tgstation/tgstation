@@ -243,10 +243,12 @@
 	return ..()
 
 /mob/living/silicon/ai/get_visible_suicide_message()
-	return "[src] is powering down. It looks like [p_theyre()] trying to commit suicide."
+	var/string = "[src] is powering down. It looks like [p_theyre()] trying to commit suicide."
+	return string
 
 /mob/living/silicon/ai/get_blind_suicide_message()
-	return "You hear a long, hissing electronic whine."
+	var/string = "You hear a long, hissing electronic whine."
+	return string
 
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
