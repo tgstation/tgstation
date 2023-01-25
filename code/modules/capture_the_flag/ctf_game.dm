@@ -647,7 +647,7 @@
 	for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
 		if (!team.ctf_enabled)
 			continue
-		scores += "<span class='maptext [team.team_span]'>[team.team] - [team.control_points]/[team.control_points_to_win]</span>\n"
+		scores += "<span class='maptext'>[team.team] - [team.control_points]/[team.control_points_to_win]</span>\n"
 
 	balloon_alert_to_viewers(scores)
 
@@ -662,14 +662,14 @@
 
 /obj/machinery/control_point/proc/capture(mob/user)
 	if(do_after(user, 30, target = src))
-		for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
-			if(CTF.ctf_enabled && (user.ckey in CTF.team_members))
-				controlling = CTF
-				icon_state = "dominator-[CTF.team]"
+		for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
+			if(team.ctf_enabled && (user.ckey in team.team_members))
+				controlling = team
+				icon_state = "dominator-[team.team]"
 				for(var/mob/M in GLOB.player_list)
 					var/area/mob_area = get_area(M)
 					if(istype(mob_area, game_area))
-						to_chat(M, span_userdanger("[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!"))
+						to_chat(M, "<span class='userdanger [team.team_span]'>[user.real_name] has captured \the [src], claiming it for [team.team]! Go take it back!</span>")
 				break
 
 /proc/is_ctf_target(atom/target)
