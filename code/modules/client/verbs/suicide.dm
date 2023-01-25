@@ -63,14 +63,15 @@
 	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
 
 /// Actually handles the bare basics of the suicide process. Message type is the message we want to dispatch in the world regarding the suicide, using the defines in this file.
-/// If do not want to do damage to the mob (if it's incompatible with damage or something weird), set the do_damage boolean to FALSE when you call this proc.
-/mob/living/proc/handle_suicide(message_type, do_damage = TRUE)
+/// Override this ENTIRELY if you want to add any special behavior to your suicide handling, if you fuck up the order of operations then shit will break.
+/mob/living/proc/handle_suicide()
+	SHOULD_CALL_PARENT(FALSE)
 	if(!suicide_alert())
 		return
 
 	set_suicide(TRUE)
-	dispatch_message_from_tree(message_type)
-	final_checkout(apply_damage = do_damage)
+	send_applicable_messages()
+	final_checkout()
 
 /mob/living/carbon/human/handle_suicide(message_type, do_damage = TRUE)
 	if(!suicide_alert())
@@ -199,6 +200,10 @@
 			if(TOXLOSS)
 				adjustToxLoss(damage_to_apply)
 
+/// Send all suicide-related messages out to the world.
+/mob/living/proc/send_applicable_messages()
+	visible_message(span_danger(get_visible_suicide_message()), span_userdanger(get_visible_suicide_message()), span_hear(get_blind_suicide_message()))
+
 /// Returns a subtype-specific flavorful string pertaining to this exact living mob's ending their own life to those who can see it (visible message).
 /mob/living/proc/get_visible_suicide_message()
 	var/string = "[src] begins to fall down. It looks like [p_theyve()] lost the will to live."
@@ -208,27 +213,6 @@
 /mob/living/proc/get_blind_suicide_message()
 	var/string = "You hear something hitting the floor."
 	return string
-
-/// We re-use a few messages in several contexts, so let's minimize some nasty footprint in the verbs.
-/mob/living/proc/dispatch_message_from_tree(type)
-	switch(type)
-		if(ALIEN_SUICIDE_MESSAGE)
-			visible_message(span_danger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
-			span_userdanger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
-			span_hear("You hear thrashing."))
-		if(BRAIN_SUICIDE_MESSAGE)
-			visible_message(span_danger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."), \
-			span_userdanger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."))
-		if(GENERIC_SUICIDE_MESSAGE)
-			visible_message(span_danger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."), \
-			span_userdanger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."))
-		if(MECHANICAL_SUICIDE_MESSAGE)
-			visible_message(span_danger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."), \
-			span_userdanger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."))
-		if(PAI_SUICIDE_MESSAGE)
-			var/turf/location = get_turf(src)
-			location.visible_message(span_notice("[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""), null, \
-			span_notice("[src] bleeps electronically."))
 
 /mob/living/carbon/human/dispatch_message_from_tree(type)
 	var/suicide_message = ""
