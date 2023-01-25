@@ -77,15 +77,17 @@
 	death(FALSE)
 	ghostize(FALSE)
 
-/// Send all suicide-related messages out to the world. message_type is a string macro that you can use to change out the dispatched suicide message if you desire that.
+/// Send all suicide-related messages out to the world. message_type can be used to change out the dispatched suicide message depending on the suicide context.
 /mob/living/proc/send_applicable_messages(message_type)
 	visible_message(span_danger(get_visible_suicide_message()), span_userdanger(get_visible_suicide_message()), span_hear(get_blind_suicide_message()))
 
 /// Returns a subtype-specific flavorful string pertaining to this exact living mob's ending their own life to those who can see it (visible message).
+/// If you don't want a message, prefer to override send_applicable_messages() on your subtype instead.
 /mob/living/proc/get_visible_suicide_message()
 	return "[src] begins to fall down. It looks like [p_theyve()] lost the will to live."
 
-/// Returns an appropriate string for what people who lack visibility hear when this mob kills itself. Return an empty string if it's impossible to hear.
+/// Returns an appropriate string for what people who lack visibility hear when this mob kills itself.
+/// If you don't want a message, prefer to override send_applicable_messages() on your subtype instead.
 /mob/living/proc/get_blind_suicide_message()
 	return "You hear something hitting the floor."
 
