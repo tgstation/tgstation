@@ -1,5 +1,7 @@
 /**
- * Run when a client is put in this mob or reconnets to byond and their client was on this mob
+ * Run when a client is put in this mob or reconnets to byond and their client was on this mob.
+ * Anything that sleeps can result in the client reference being dropped, due to byond using that sleep to handle a client disconnect.
+ * You can save a lot of headache if you make Login use SHOULD_NOT_SLEEP, but that would require quite a bit of refactoring how Login code works.
  *
  * Things it does:
  * * Adds player to player_list

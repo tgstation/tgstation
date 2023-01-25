@@ -441,7 +441,6 @@ There are several things that need to be remembered:
 		if(OFFSET_FACEMASK in dna.species.offset_features)
 			mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
 			mask_overlay.pixel_y += dna.species.offset_features[OFFSET_FACEMASK][2]
-
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
 	apply_overlay(FACEMASK_LAYER)
@@ -641,7 +640,14 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 */
-/obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, female_uniform = NO_FEMALE_UNIFORM, override_state = null, override_file = null)
+/obj/item/proc/build_worn_icon(
+	default_layer = 0,
+	default_icon_file = null,
+	isinhands = FALSE,
+	female_uniform = NO_FEMALE_UNIFORM,
+	override_state = null,
+	override_file = null,
+)
 
 	//Find a valid icon_state from variables+arguments
 	var/t_state
@@ -669,6 +675,25 @@ generate/load female uniform sprites matching all previously decided variables
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
 	if(worn_overlays?.len)
+		if(!isinhands && default_layer && ishuman(loc))
+			var/mob/living/carbon/human/human_loc = loc
+			if(human_loc.get_mob_height() != HUMAN_HEIGHT_MEDIUM)
+				var/string_form_layer = num2text(default_layer)
+				var/offset_amount = GLOB.layers_to_offset[string_form_layer]
+				if(isnull(offset_amount))
+					// Worn overlays don't get batched in with standing overlays because they are overlay overlays
+					// ...So we need to apply human height here as well
+					for(var/mutable_appearance/applied_appearance as anything in worn_overlays)
+						if(isnull(applied_appearance))
+							continue
+						human_loc.apply_height_filters(applied_appearance)
+
+				else
+					for(var/mutable_appearance/applied_appearance in worn_overlays)
+						if(isnull(applied_appearance))
+							continue
+						human_loc.apply_height_offsets(applied_appearance, offset_amount)
+
 		standing.overlays.Add(worn_overlays)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
@@ -760,5 +785,91 @@ generate/load female uniform sprites matching all previously decided variables
 				add_overlay(missing_eyes)
 	update_worn_head()
 	update_worn_mask()
+
+// Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
+// Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.
+// Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
+// So instead we have to pass them through an offset, which is close enough to look good.
+/mob/living/carbon/human/apply_overlay(cache_index)
+	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM)
+		return ..()
+
+	var/raw_applied = overlays_standing[cache_index]
+	var/string_form_index = num2text(cache_index)
+	var/offset_amount = GLOB.layers_to_offset[string_form_index]
+	if(isnull(offset_amount))
+		if(islist(raw_applied))
+			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+				if(isnull(applied_appearance))
+					continue
+				apply_height_filters(applied_appearance)
+		else if(!isnull(raw_applied))
+			apply_height_filters(raw_applied)
+	else
+		if(islist(raw_applied))
+			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
+				if(isnull(applied_appearance))
+					continue
+				apply_height_offsets(applied_appearance, offset_amount)
+		else if(!isnull(raw_applied))
+			apply_height_offsets(raw_applied, offset_amount)
+
+	return ..()
+
+/**
+ * Used in some circumstances where appearances can get cut off from the mob sprite from being too tall
+ *
+ * upper_torso is to specify whether the appearance is locate in the upper half of the mob rather than the lower half,
+ * higher up things (hats for example) need to be offset more due to the location of the filter displacement
+ */
+/mob/living/carbon/human/proc/apply_height_offsets(mutable_appearance/appearance, upper_torso)
+	var/height_to_use = num2text(get_mob_height())
+	var/final_offset = 0
+	switch(upper_torso)
+		if(UPPER_BODY)
+			final_offset = GLOB.human_heights_to_offsets[height_to_use][1]
+		if(LOWER_BODY)
+			final_offset = GLOB.human_heights_to_offsets[height_to_use][2]
+		else
+			return
+
+	appearance.pixel_y += final_offset
+	return appearance
+
+/**
+ * Applies a filter to an appearance according to mob height
+ */
+/mob/living/carbon/human/proc/apply_height_filters(mutable_appearance/appearance)
+	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
+	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
+	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
+	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi', "Cut4")
+
+	appearance.remove_filter(list(
+		"Cut_Torso",
+		"Cut_Legs",
+		"Lenghten_Legs",
+		"Lenghten_Torso",
+		"Gnome_Cut_Torso",
+		"Gnome_Cut_Legs",
+	))
+
+	switch(get_mob_height())
+		// Don't set this one directly, use TRAIT_DWARF
+		if(HUMAN_HEIGHT_DWARF)
+			appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
+			appearance.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
+		if(HUMAN_HEIGHT_SHORTEST)
+			appearance.add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
+			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+		if(HUMAN_HEIGHT_SHORT)
+			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+		if(HUMAN_HEIGHT_TALL)
+			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+		if(HUMAN_HEIGHT_TALLEST)
+			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
+			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+
+	return appearance
 
 #undef RESOLVE_ICON_STATE

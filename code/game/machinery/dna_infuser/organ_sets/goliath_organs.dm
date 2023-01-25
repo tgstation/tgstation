@@ -34,7 +34,7 @@
 
 /obj/item/organ/internal/eyes/night_vision/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "eyes are blood red and stone like.", BODY_ZONE_HEAD)
+	AddElement(/datum/element/noticable_organ, "eyes are blood red and stone-like.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 /obj/item/organ/internal/eyes/night_vision/goliath/Insert(mob/living/carbon/eyes_owner, special, drop_if_replaced)
@@ -120,10 +120,8 @@
 	hitsound = 'sound/effects/bamf.ogg'
 	tool_behaviour = TOOL_MINING
 	toolspeed = 0.1
-	/// List of factions we deal bonus damage to
-	var/list/nemesis_factions = list("mining", "boss")
-	/// Amount of damage we deal to the above factions
-	var/faction_bonus_force = 80
+	/// Amount of damage we deal to the mining and boss factions.
+	var/mining_bonus_force = 80
 
 /obj/item/goliath_infuser_hammer/Initialize(mapload)
 	. = ..()
@@ -134,28 +132,26 @@
 	user.changeNext_move(CLICK_CD_MELEE * 2) //hits slower but HARD
 
 /obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user)
+	// Check for nemesis factions on the target.
+	if(!("mining" in target.faction) && !("boss" in target.faction))
+		// Target is not a nemesis, so attack normally.
+		return ..()
+	// Apply nemesis-specific effects.
+	nemesis_effects(user, target)
+	// Can't apply bonus force if target isn't "solid", or is occupying the same turf as the user.
 	if(!target.density || get_turf(target) == get_turf(user))
-		faction_bonus_force = 0
-	var/is_nemesis_faction = FALSE
-	for(var/found_faction in target.faction)
-		if(found_faction in nemesis_factions)
-			is_nemesis_faction = TRUE
-			force += faction_bonus_force
-			nemesis_effects(user, target)
-			break
+		return ..()
+	// Target is a nemesis, and we CAN apply bonus force.
+	force += mining_bonus_force
 	. = ..()
-	if(is_nemesis_faction)
-		force -= faction_bonus_force
+	force -= mining_bonus_force
 
 /obj/item/goliath_infuser_hammer/proc/nemesis_effects(mob/living/user, mob/living/target)
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
 		return
 	///we obtain the relative direction from the bat itself to the target
-	var/relative_direction = get_cardinal_dir(src, target)
-	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
 	if(!QDELETED(target))
-		var/whack_speed = (prob(60) ? 1 : 4)
-		target.throw_at(throw_target, rand(1, 2), whack_speed, user)
+		target.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), rand(1, 2), prob(60) ? 1 : 4, user)
 
 /// goliath heart gives you the ability to survive ash storms.
 /obj/item/organ/internal/heart/goliath
@@ -171,7 +167,10 @@
 
 /obj/item/organ/internal/heart/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
+
+/obj/item/organ/internal/heart/goliath/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+	AddElement(/datum/element/noticable_organ, "skin [reciever.p_have()] visible hard plates growing from within.", BODY_ZONE_CHEST)
+	return ..()
 
 #undef GOLIATH_COLORS

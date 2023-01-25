@@ -252,7 +252,6 @@
 					else if(!islist(floor_designs))
 						floor_designs = list(floor.managed_overlays)
 					for(var/mutable_appearance/appearance as anything in floor_designs)
-						design_overlays += new /datum/overlay_info(appearance)
 
 					//store all information about this tile
 					root_category = main_root

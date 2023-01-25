@@ -18,7 +18,7 @@
 	)
 	required_atoms = list(
 		/obj/item/clothing/suit = 1,
-		/obj/item/clothing/gloves/color/latex = 1,
+		/obj/item/clothing/gloves/latex = 1,
 	)
 	limit = 1
 	cost = 1

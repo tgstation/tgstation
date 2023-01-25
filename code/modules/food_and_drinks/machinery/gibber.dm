@@ -85,7 +85,7 @@
 			to_chat(user, span_warning("This item is not suitable for [src]!"))
 			return
 		var/mob/living/carbon/C = L
-		if(C.buckled ||C.has_buckled_mobs())
+		if(C.buckled || C.has_buckled_mobs())
 			to_chat(user, span_warning("[C] is attached to something!"))
 			return
 

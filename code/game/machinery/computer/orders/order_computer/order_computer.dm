@@ -96,6 +96,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"ref" = REF(item),
 			"cost" = item.cost_per_order,
 			"amt" = grocery_list[item],
+			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(item.item_path.icon), icon_state = initial(item.item_path.icon_state)), no_anim=TRUE))
 		))
 	return data
 
@@ -110,6 +111,14 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		if("add_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
 			grocery_list[wanted_item] += 1
+			update_static_data(living_user)
+		if("remove_one")
+			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
+			if(!grocery_list[wanted_item])
+				return
+			grocery_list[wanted_item] -= 1
+			if(!grocery_list[wanted_item])
+				grocery_list -= wanted_item
 			update_static_data(living_user)
 		if("cart_set")
 			//this is null if the action doesn't need it (purchase, quickpurchase)

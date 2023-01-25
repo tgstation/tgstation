@@ -70,6 +70,10 @@
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR
 	dog_fashion = null
 
+/obj/item/clothing/head/wizard/hood
+	name = "wizard hood"
+	icon_state = "wizhood"
+
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificent, gem-lined robe that seems to radiate power."

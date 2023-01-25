@@ -426,6 +426,8 @@
 	for(var/datum/stock_part/manipulator/manipulator in component_parts)
 		if (manipulator.tier > 3)
 			dispensable_reagents |= upgrade_reagents
+		else
+			dispensable_reagents -= upgrade_reagents
 		parts_rating += manipulator.tier
 	powerefficiency = round(newpowereff, 0.01)
 

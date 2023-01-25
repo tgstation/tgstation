@@ -92,7 +92,7 @@
 /obj/item/tank/internals/plasma/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/flamethrower))
 		var/obj/item/flamethrower/F = W
-		if ((!F.status)||(F.ptank))
+		if ((!F.status) || (F.ptank))
 			return
 		if(!user.transferItemToLoc(src, F))
 			return

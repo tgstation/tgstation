@@ -49,6 +49,11 @@
 
 	setup_device()
 
+/obj/machinery/button/Destroy()
+	QDEL_NULL(device)
+	QDEL_NULL(board)
+	return ..()
+
 /obj/machinery/button/update_icon_state()
 	if(panel_open)
 		icon_state = "button-open"

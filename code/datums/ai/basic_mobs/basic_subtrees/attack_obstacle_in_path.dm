@@ -14,7 +14,7 @@
 		return
 
 	var/turf/next_step = get_step_towards(controller.pawn, target)
-	if (!next_step.is_blocked_turf(exclude_mobs = TRUE))
+	if (!next_step.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn))
 		return
 
 	controller.queue_behavior(attack_behaviour, target_key)
@@ -56,7 +56,7 @@
 
 /datum/ai_behavior/attack_obstructions/proc/attack_in_direction(datum/ai_controller/controller, mob/living/basic/basic_mob, direction)
 	var/turf/next_step = get_step(basic_mob, direction)
-	if (!next_step.is_blocked_turf(exclude_mobs = TRUE))
+	if (!next_step.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn))
 		return FALSE
 
 	for (var/obj/object as anything in next_step.contents)
