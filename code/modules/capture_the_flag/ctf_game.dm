@@ -240,6 +240,7 @@
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
+	density = TRUE
 	resistance_flags = INDESTRUCTIBLE
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 
@@ -377,7 +378,7 @@
 
 	var/client/new_team_member = user.client
 	team_members |= new_team_member.ckey
-	to_chat(user, "<span class='warning'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
+	to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
 	spawn_team_member(new_team_member)
 
 
@@ -423,7 +424,8 @@
 				   //there isn't a game going on any more, you are no longer a member of this team (perhaps a new match already started?)
 		chosen_class = ctf_gear[choice]
 
-	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_turf(src))
+	var/turf/spawn_point = pick(get_adjacent_open_turfs(get_turf(src)))
+	var/mob/living/carbon/human/M = new /mob/living/carbon/human(spawn_point)
 	new_team_member.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	if(M.dna.species.outfit_important_for_life)
 		M.set_species(/datum/species/human)
@@ -639,6 +641,15 @@
 		controlling.control_points += point_rate * delta_time
 		if(controlling.control_points >= controlling.control_points_to_win)
 			controlling.victory()
+
+	var/scores
+
+	for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
+		if (!team.ctf_enabled)
+			continue
+		scores += "<span class='maptext [team.team_span]'>[team.team] - [team.control_points]/[team.control_points_to_win]</span>\n"
+
+	balloon_alert_to_viewers(scores)
 
 /obj/machinery/control_point/attackby(mob/user, params)
 	capture(user)
