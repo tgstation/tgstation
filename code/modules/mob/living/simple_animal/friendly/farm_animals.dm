@@ -61,7 +61,15 @@
 
 	for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 		var/step = get_step(src, direction)
-		if(step && ((locate(/obj/structure/spacevine) in step) || (locate(/obj/structure/glowshroom) in step)))
+
+		if(!step)
+			return
+
+		var/vine = locate(/obj/structure/spacevine) in step
+		var/mushroom = locate(/obj/structure/glowshroom) in step
+		var/flower = locate(/obj/structure/alien/resin/flower_bud) in step
+
+		if(vine || mushroom || flower)
 			Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
