@@ -118,8 +118,9 @@
 /datum/emote/living/deathgasp/run_emote(mob/living/user, params, type_override, intentional)
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return
-	if(user.death_message)
-		message_animal_or_basic = user.death_message
+	var/custom_message = user.death_message
+	if(custom_message)
+		message_animal_or_basic = custom_message
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
 	if(. && user.death_sound)
