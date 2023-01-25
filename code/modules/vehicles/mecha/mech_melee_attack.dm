@@ -62,11 +62,15 @@
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return 0
 	mecha_attacker.do_attack_animation(src)
+	var/dmg = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
+	if(ishuman(src))
+		var/mob/living/carbon/human/defending_human = src
+		if(defending_human.check_shields(mecha_attacker, dmg, "[mecha_attacker]'s strike",  MELEE_ATTACK))
+			return
 	if(mecha_attacker.damtype == BRUTE)
 		step_away(src, mecha_attacker, 15)
 	var/obj/item/bodypart/selected_zone = get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_HEAD))
 	if(selected_zone)
-		var/dmg = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
 		switch(mecha_attacker.damtype)
 			if(BRUTE)
 				if(mecha_attacker.force > 35) // durand and other heavy mechas
