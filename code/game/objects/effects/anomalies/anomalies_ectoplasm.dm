@@ -4,6 +4,7 @@
 	icon_state = "ectoplasm"
 	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
 	lifespan = 100 SECONDS //This one takes slightly longer, because it can run away.
+	immobile = TRUE //It's controlled by deadchat!
 
 	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
 	var/override_ghosts = FALSE
@@ -39,15 +40,17 @@
 
 /obj/effect/anomaly/ectoplasm/anomalyEffect(delta_time)
 	. = ..()
+
 	if(!override_ghosts)
 		ghosts_orbiting = 0
 		for(var/mob/dead/observer/orbiter in orbiters?.orbiter_list)
 			ghosts_orbiting++
 
-		var/total_dead = length(GLOB.dead_player_list) + length(GLOB.current_observers_list)
-
-		//The actual event severity is determined by what % the current ghosts are circling the anomaly.
-		effect_power = ghosts_orbiting / total_dead * 100
+		if(ghosts_orbiting)
+			var/total_dead = length(GLOB.dead_player_list) + length(GLOB.current_observers_list)
+			effect_power = ghosts_orbiting / total_dead * 100
+		else
+			effect_power = 0
 
 		if(effect_power >= 50) //If we're at the threshold for the highest tier effect, we change sprites in preparation for the spooks.
 			icon_state = "ectoplasm_heavy"

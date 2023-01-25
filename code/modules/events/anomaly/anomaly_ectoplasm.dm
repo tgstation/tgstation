@@ -53,7 +53,7 @@
 			newAnomaly.override_ghosts = TRUE
 			newAnomaly.effect_power = anomaly_event.effect_override
 			newAnomaly.ghosts_orbiting = anomaly_event.ghost_override
-			if(newAnomaly.effect_power >= 50) //Otherwise it won't update because anomalyEffect is overridden and blocked
+			if(newAnomaly.effect_power >= 50) //Otherwise it won't update, because admin-manipulated anomalies don't go through anomalyEffect and the icon will not update
 				newAnomaly.icon_state = "ectoplasm_heavy"
 				newAnomaly.update_appearance(UPDATE_ICON_STATE)
 		if (newAnomaly)
