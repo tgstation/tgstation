@@ -99,7 +99,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
 /obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
-	AddElement(/datum/element/noticable_organ, "hunch[owner.p_es()] over unnaturally!")
+	AddElement(/datum/element/noticable_organ, "hunch[reciever.p_es()] over unnaturally!")
 	. = ..()
 	if(!ishuman(reciever))
 		return
