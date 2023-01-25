@@ -116,8 +116,6 @@
 	desc = "Oh my god, they're EVERYWHERE."
 	maxHealth = 30
 	health = 30
-	melee_damage_lower = 10
-	melee_damage_upper = 10
 	attack_verb_continuous = "smashes"
 	attack_verb_simple = "smash"
 	death_message = "wails as it is torn back to the realm from which it came!"

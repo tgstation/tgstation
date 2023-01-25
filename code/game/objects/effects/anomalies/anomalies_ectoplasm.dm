@@ -3,7 +3,7 @@
 	desc = "It looks like the souls of the damned are trying to break into the realm of the living again. How upsetting."
 	icon_state = "ectoplasm"
 	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
-	lifespan = 120 SECONDS //This one takes a bit longer, because it can run away.
+	lifespan = 100 SECONDS //This one takes slightly longer, because it can run away.
 	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
 	var/override_ghosts = FALSE
 	///The numerical power of the anomaly. Calculated in anomalyEffect. Also used in determining the category of detonation effects.
@@ -23,7 +23,7 @@
 	. = ..()
 
 	if(isobserver(user))
-		. += " Orbiting this anomaly will increase the size and intensity of its effects."
+		. += span_info("Orbiting this anomaly will increase the size and intensity of its effects.")
 
 /obj/effect/anomaly/ectoplasm/examine_more(mob/user)
 	. = ..()
@@ -43,11 +43,7 @@
 		for(var/mob/dead/observer/orbiter in orbiters?.orbiter_list)
 			ghosts_orbiting++
 
-		if(!ghosts_orbiting)
-			effect_power = 0
-			return
-
-		var/total_dead = length(GLOB.dead_player_list + GLOB.current_observers_list)
+		var/total_dead = length(GLOB.dead_player_list) + length(GLOB.current_observers_list)
 
 		//The actual event severity is determined by what % the current ghosts are circling the anomaly.
 		effect_power = ghosts_orbiting / total_dead * 100
@@ -67,7 +63,7 @@
 		return
 
 	if(effect_power >= 10) //Performs something akin to a revenant defile spell.
-		var/effect_range = ghosts_orbiting + 5
+		var/effect_range = ghosts_orbiting + 3
 		var/effect_area = spiral_range(effect_range, src)
 
 		for(var/impacted_thing in effect_area)
@@ -157,11 +153,15 @@
  */
 
 /obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list)
+	if(!length(candidate_list)) //If we are not passed a candidate list we just poll everyone who is dead, meaning these can also be spawned directly.
+		candidate_list += GLOB.current_observers_list
+		candidate_list += GLOB.dead_player_list
+
 	var/list/candidates = poll_candidates("Would you like to participate in a spooky ghost swarm?", ROLE_SENTIENCE, FALSE, 10 SECONDS, group = candidate_list)
 	for(var/candidate in candidates)
 		if(!isobserver(candidate))
 			continue
-		var/mob/dead/observer/candidate_ghost = candidate //typecast so we can pull their key
+		var/mob/dead/observer/candidate_ghost = candidate
 		var/mob/living/basic/ghost/swarm/new_ghost = new /mob/living/basic/ghost/swarm(get_turf(src))
 		new_ghost.ghostize(FALSE)
 		new_ghost.key = candidate_ghost.key
