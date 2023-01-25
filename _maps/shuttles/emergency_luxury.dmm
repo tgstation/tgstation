@@ -261,6 +261,13 @@
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"lH" = (
+/obj/structure/chair/comfy/teal{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape/luxury)
 "md" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -380,6 +387,15 @@
 "ra" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"rt" = (
+/obj/structure/table/wood/fancy/black,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"rP" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "rZ" = (
 /obj/item/food/pizza/dank{
@@ -547,6 +563,14 @@
 /obj/item/storage/box/drinkingglasses,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
+"zk" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/engineering,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/extinguisher/crafted,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "zq" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/closed/indestructible/riveted/plastinum/nodiagonal,
@@ -693,6 +717,10 @@
 /obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"DQ" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape/luxury)
 "Eg" = (
 /obj/structure/chair/comfy/teal{
 	dir = 4
@@ -1004,6 +1032,9 @@
 	dir = 4;
 	layer = 2.9
 	},
+/obj/item/toy/plush/rouny{
+	name = "rouny plushie"
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Rk" = (
@@ -1042,6 +1073,7 @@
 /area/shuttle/escape/luxury)
 "SE" = (
 /mob/living/simple_animal/bot/medbot,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
 "SN" = (
@@ -1056,6 +1088,7 @@
 /obj/effect/spawner/random/trash/botanical_waste,
 /obj/structure/closet/crate/bin,
 /obj/machinery/light/directional/west,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "TD" = (
@@ -1106,6 +1139,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Wa" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
 "We" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/carpet/orange,
@@ -1116,6 +1153,10 @@
 /area/shuttle/escape/luxury)
 "WF" = (
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"WG" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "WO" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -1261,7 +1302,7 @@ CQ
 CQ
 ZL
 In
-VO
+zk
 Ow
 XY
 fJ
@@ -1486,7 +1527,7 @@ gU
 oA
 oA
 oA
-DK
+rt
 yB
 jJ
 We
@@ -1606,7 +1647,7 @@ SN
 SN
 SN
 SN
-SN
+WG
 Ex
 "}
 (20,1,1) = {"
@@ -1655,7 +1696,7 @@ Ex
 "}
 (22,1,1) = {"
 Ex
-jJ
+rP
 jJ
 jJ
 jJ
@@ -1668,7 +1709,7 @@ Ex
 TD
 TD
 TD
-TD
+DQ
 Ex
 AT
 lr
@@ -1768,7 +1809,7 @@ Ex
 Eg
 Eg
 Eg
-Eg
+lH
 Ex
 ek
 WF
@@ -1782,7 +1823,7 @@ YV
 Ex
 Ex
 Ex
-WF
+Wa
 Ex
 "}
 (28,1,1) = {"
