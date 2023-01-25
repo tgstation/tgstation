@@ -82,16 +82,14 @@
 	visible_message(span_danger(get_visible_suicide_message()), span_userdanger(get_visible_suicide_message()), span_hear(get_blind_suicide_message()))
 
 /// Returns a subtype-specific flavorful string pertaining to this exact living mob's ending their own life to those who can see it (visible message).
-/// We don't return the raw string because of src memes sadly. If you don't want a message, prefer to override send_applicable_messages() on your subtype instead.
+/// If you don't want a message, prefer to override send_applicable_messages() on your subtype instead.
 /mob/living/proc/get_visible_suicide_message()
-	var/string = "[src] begins to fall down. It looks like [p_theyve()] lost the will to live."
-	return string
+	return "[src] begins to fall down. It looks like [p_theyve()] lost the will to live."
 
 /// Returns an appropriate string for what people who lack visibility hear when this mob kills itself.
-/// We don't return the raw string because of src memes sadly. If you don't want a message, prefer to override send_applicable_messages() on your subtype instead.
+/// If you don't want a message, prefer to override send_applicable_messages() on your subtype instead.
 /mob/living/proc/get_blind_suicide_message()
-	var/string = "You hear something hitting the floor."
-	return string
+	return "You hear something hitting the floor."
 
 /// Inserts logging in both the mob's logs and the investigate log pertaining to their death. Suicide tool is the object we used to commit suicide, if one was held and used (presently only humans use this arg).
 /mob/living/proc/suicide_log(obj/item/suicide_tool)

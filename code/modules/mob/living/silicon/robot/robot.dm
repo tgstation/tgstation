@@ -110,12 +110,10 @@
 			mmi.brainmob.suiciding = suicide_state
 
 /mob/living/silicon/robot/get_visible_suicide_message()
-	var/string = "[src] is powering down. It looks like [p_theyre()] trying to commit suicide."
-	return string
+	return "[src] is powering down. It looks like [p_theyre()] trying to commit suicide."
 
 /mob/living/silicon/robot/get_blind_suicide_message()
-	var/string = "You hear a long, hissing electronic whine."
-	return string
+	return "You hear a long, hissing electronic whine."
 
 /**
  * Sets the tablet theme and icon
