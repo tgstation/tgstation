@@ -44,6 +44,28 @@
 	balloon_alert(src, "suicide attempt aborted!")
 	return FALSE
 
+/// Checks if we are in a valid state to suicide (not already suiciding, capable of actually killing ourselves, area checks, etc.) Returns TRUE if we can suicide, FALSE if we can not.
+/mob/living/proc/can_suicide()
+	if(suiciding)
+		to_chat(src, span_warning("You are already commiting suicide!"))
+		return FALSE
+
+	var/area/checkable = get_area(src)
+	if(checkable.area_flags & BLOCK_SUICIDE)
+		to_chat(src, span_warning("You can't commit suicide here! You can ghost if you'd like."))
+		return FALSE
+
+	switch(stat)
+		if(CONSCIOUS)
+			return TRUE
+		if(SOFT_CRIT)
+			to_chat(src, span_warning("You can't commit suicide while in a critical condition!"))
+		if(UNCONSCIOUS, HARD_CRIT)
+			to_chat(src, span_warning("You need to be conscious to commit suicide!"))
+		if(DEAD)
+			to_chat(src, span_warning("You're already dead!"))
+	return FALSE
+
 /// Inserts in logging and death + mind dissociation when we're fully done with ending the life of our mob, as well as adjust the health. We will disallow re-entering the body when this is called.
 /// The suicide_tool variable is currently only used for humans in order to allow suicide log to properly put stuff in investigate log.
 /// Set apply_damage to FALSE in order to not do damage (in case it's handled elsewhere in the verb or another proc that the suicide tree calls). Will dissociate client from mind and ghost the player regardless.
@@ -54,6 +76,20 @@
 	suicide_log(suicide_tool)
 	death(FALSE)
 	ghostize(FALSE)
+
+/// Send all suicide-related messages out to the world. message_type is a string macro that you can use to change out the dispatched suicide message if you desire that.
+/mob/living/proc/send_applicable_messages(message_type)
+	visible_message(span_danger(get_visible_suicide_message()), span_userdanger(get_visible_suicide_message()), span_hear(get_blind_suicide_message()))
+
+/// Returns a subtype-specific flavorful string pertaining to this exact living mob's ending their own life to those who can see it (visible message).
+/mob/living/proc/get_visible_suicide_message()
+	var/string = "[src] begins to fall down. It looks like [p_theyve()] lost the will to live."
+	return string
+
+/// Returns an appropriate string for what people who lack visibility hear when this mob kills itself. Return an empty string if it's impossible to hear.
+/mob/living/proc/get_blind_suicide_message()
+	var/string = "You hear something hitting the floor."
+	return string
 
 /// Inserts logging in both the mob's logs and the investigate log pertaining to their death. Suicide tool is the object we used to commit suicide, if one was held and used (presently only humans use this arg).
 /mob/living/proc/suicide_log(obj/item/suicide_tool)
@@ -95,39 +131,3 @@
 				adjustOxyLoss(damage_to_apply)
 			if(TOXLOSS)
 				adjustToxLoss(damage_to_apply)
-
-/// Send all suicide-related messages out to the world. message_type is a string macro that you can use to change out the dispatched suicide message if you desire that.
-/mob/living/proc/send_applicable_messages(message_type)
-	visible_message(span_danger(get_visible_suicide_message()), span_userdanger(get_visible_suicide_message()), span_hear(get_blind_suicide_message()))
-
-/// Returns a subtype-specific flavorful string pertaining to this exact living mob's ending their own life to those who can see it (visible message).
-/mob/living/proc/get_visible_suicide_message()
-	var/string = "[src] begins to fall down. It looks like [p_theyve()] lost the will to live."
-	return string
-
-/// Returns an appropriate string for what people who lack visibility hear when this mob kills itself. Return an empty string if it's impossible to hear.
-/mob/living/proc/get_blind_suicide_message()
-	var/string = "You hear something hitting the floor."
-	return string
-
-/// Checks if we are in a valid state to suicide (not already suiciding, capable of actually killing ourselves, area checks, etc.) Returns TRUE if we can suicide, FALSE if we can not.
-/mob/living/proc/can_suicide()
-	if(suiciding)
-		to_chat(src, span_warning("You are already commiting suicide!"))
-		return FALSE
-
-	var/area/checkable = get_area(src)
-	if(checkable.area_flags & BLOCK_SUICIDE)
-		to_chat(src, span_warning("You can't commit suicide here! You can ghost if you'd like."))
-		return FALSE
-
-	switch(stat)
-		if(CONSCIOUS)
-			return TRUE
-		if(SOFT_CRIT)
-			to_chat(src, span_warning("You can't commit suicide while in a critical condition!"))
-		if(UNCONSCIOUS, HARD_CRIT)
-			to_chat(src, span_warning("You need to be conscious to commit suicide!"))
-		if(DEAD)
-			to_chat(src, span_warning("You're already dead!"))
-	return FALSE
