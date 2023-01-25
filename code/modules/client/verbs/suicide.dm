@@ -17,50 +17,12 @@
 	else
 		remove_from_mob_suicide_list()
 
-/mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
-	. = ..()
-	var/obj/item/organ/internal/brain/userbrain = getorganslot(ORGAN_SLOT_BRAIN)
-	if(userbrain)
-		userbrain.suicided = suicide_state
-
-/mob/living/silicon/robot/set_suicide(suicide_state)
-	. = ..()
-	if(mmi)
-		if(mmi.brain)
-			mmi.brain.suicided = suicide_state
-		if(mmi.brainmob)
-			mmi.brainmob.suiciding = suicide_state
-
 /// Verb to simply kill yourself (in a very visual way to all players) in game! How family-friendly. Can be governed by a series of multiple checks (i.e. confirmation, is it allowed in this area, etc.) which are
 /// handled and called by the proc this verb invokes. It's okay to block this, because we typically always give mobs in-game the ability to Ghost out of their current mob irregardless of context. This, in contrast,
 /// can have as many different checks as you desire to prevent people from doing the deed to themselves.
 /mob/living/verb/suicide()
 	set hidden = TRUE
-	handle_suicide(message_type = GENERIC_SUICIDE_MESSAGE)
-
-/mob/living/brain/suicide()
-	set hidden = TRUE
-	handle_suicide(message_type = BRAIN_SUICIDE_MESSAGE, do_damage = FALSE) // brains don't need damage applied.
-
-/mob/living/carbon/alien/adult/suicide()
-	set hidden = TRUE
-	handle_suicide(message_type = ALIEN_SUICIDE_MESSAGE)
-
-/mob/living/carbon/human/suicide()
-	set hidden = TRUE
-	handle_suicide() // message types are handled in handle_suicide for humans. no args needed.
-
-/mob/living/silicon/ai/suicide()
-	set hidden = TRUE
-	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
-
-/mob/living/silicon/pai/suicide()
-	set hidden = TRUE
-	handle_suicide(message_type = PAI_SUICIDE_MESSAGE)
-
-/mob/living/silicon/robot/suicide()
-	set hidden = TRUE
-	handle_suicide(message_type = MECHANICAL_SUICIDE_MESSAGE)
+	handle_suicide()
 
 /// Actually handles the bare basics of the suicide process. Message type is the message we want to dispatch in the world regarding the suicide, using the defines in this file.
 /// Override this ENTIRELY if you want to add any special behavior to your suicide handling, if you fuck up the order of operations then shit will break.
@@ -72,32 +34,6 @@
 	set_suicide(TRUE)
 	send_applicable_messages()
 	final_checkout()
-
-/mob/living/carbon/human/handle_suicide(message_type, do_damage = TRUE)
-	if(!suicide_alert())
-		return
-
-	set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicide
-
-	var/obj/item/held_item = get_active_held_item()
-	var/damage_type = SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_ACT) || held_item?.suicide_act(src)
-
-	if(damage_type)
-		if(apply_suicide_damage(held_item, damage_type))
-			final_checkout(held_item, apply_damage = FALSE)
-		return
-
-	// if no specific item or damage type we want to deal, default to doing the deed with our own bare hands.
-	if(combat_mode)
-		dispatch_message_from_tree(HUMAN_COMBAT_MODE_SUICIDE_MESSAGE)
-	else
-		var/obj/item/organ/internal/brain/userbrain = getorgan(/obj/item/organ/internal/brain)
-		if(userbrain?.damage >= 75)
-			dispatch_message_from_tree(HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE)
-		else
-			dispatch_message_from_tree(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
-
-	final_checkout(held_item, do_damage)
 
 /// Sends a TGUI Alert to the person attempting to commit suicide. Returns TRUE if they confirm they want to die, FALSE otherwise. Check can_suicide here as well.
 /mob/living/proc/suicide_alert()
@@ -134,41 +70,11 @@
 	investigate_log("has died from committing suicide.", INVESTIGATE_DEATHS)
 	log_message("committed suicide as [src.type]", LOG_ATTACK)
 
-/mob/living/carbon/human/suicide_log(obj/item/suicide_tool)
-	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool]" : ""].", INVESTIGATE_DEATHS)
-	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
-
 /// The actual proc that will apply the damage to the suiciding mob. damage_type is the actual type of damage we want to deal, if that matters.
 /// Return TRUE if we actually apply any real damage, FALSE otherwise.
 /mob/living/proc/apply_suicide_damage(obj/item/suicide_tool, damage_type = NONE)
 	adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 	return TRUE
-
-/mob/living/carbon/human/apply_suicide_damage(obj/item/suicide_tool, damage_type = NONE)
-	// if we don't have any damage_type passed in, default to parent.
-	if(damage_type == NONE)
-		return ..()
-
-	if(damage_type & SHAME)
-		adjustStaminaLoss(200)
-		set_suicide(FALSE)
-		add_mood_event("shameful_suicide", /datum/mood_event/shameful_suicide)
-		return FALSE
-
-	if(damage_type & MANUAL_SUICIDE_NONLETHAL)
-		set_suicide(FALSE)
-		return FALSE
-
-	if(damage_type & MANUAL_SUICIDE) // Assume that the suicide tool will handle the death.
-		suicide_log(suicide_tool)
-		return FALSE
-
-	if(damage_type & (BRUTELOSS | FIRELOSS | OXYLOSS | TOXLOSS))
-		handle_suicide_damage_spread(damage_type)
-		return TRUE
-
-	return ..() //if all else fails, hope parent accounts for it or just do whatever damage that parent prescribes.
-
 
 /// If we want to apply multiple types of damage to a carbon mob based on the way they suicide, this is the proc that handles that.
 /// Currently only compatible with Brute, Burn, Toxin, and Suffocation Damage. damage_type is the bitflag that carries the information.
@@ -200,8 +106,8 @@
 			if(TOXLOSS)
 				adjustToxLoss(damage_to_apply)
 
-/// Send all suicide-related messages out to the world.
-/mob/living/proc/send_applicable_messages()
+/// Send all suicide-related messages out to the world. message_type is a string macro that you can use to change out the dispatched suicide message if you desire that.
+/mob/living/proc/send_applicable_messages(message_type)
 	visible_message(span_danger(get_visible_suicide_message()), span_userdanger(get_visible_suicide_message()), span_hear(get_blind_suicide_message()))
 
 /// Returns a subtype-specific flavorful string pertaining to this exact living mob's ending their own life to those who can see it (visible message).
@@ -213,34 +119,6 @@
 /mob/living/proc/get_blind_suicide_message()
 	var/string = "You hear something hitting the floor."
 	return string
-
-/mob/living/carbon/human/send_applicable_messages()
-	var/suicide_message = ""
-	switch(type)
-		if(HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE) // god damn this message is fucking stupid
-			suicide_message = "[src] pulls both arms outwards in front of [p_their()] chest and pumps them behind [p_their()] back, repeats this motion in a smaller range of motion \
-			down to [p_their()] hips two times once more all while sliding [p_their()] legs in a faux walking motion, claps [p_their()] hands together \
-			in front of [p_them()] while both [p_their()] knees knock together, pumps [p_their()] arms downward, pronating [p_their()] wrists and abducting \
-			[p_their()] fingers outward while crossing [p_their()] legs back and forth, repeats this motion again two times while keeping [p_their()] shoulders low \
-			and hunching over, does finger guns with right hand and left hand bent on [p_their()] hip while looking directly forward and putting [p_their()] left leg forward then \
-			crossing [p_their()] arms and leaning back a little while bending [p_their()] knees at an angle! It looks like [p_theyre()] trying to commit suicide."
-
-		if(HUMAN_COMBAT_MODE_SUICIDE_MESSAGE)
-			suicide_message = pick(list(
-				"[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.",
-				"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.",
-				"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.",
-				"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.",
-			))
-
-		if(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
-			suicide_message = pick(list(
-				"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.",
-				"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.",
-				"[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.",
-			))
-
-	visible_message(span_danger(suicide_message), span_userdanger(suicide_message), span_hear(get_blind_suicide_message()))
 
 /// Checks if we are in a valid state to suicide (not already suiciding, capable of actually killing ourselves, area checks, etc.) Returns TRUE if we can suicide, FALSE if we can not.
 /mob/living/proc/can_suicide()
@@ -263,14 +141,6 @@
 		if(DEAD)
 			to_chat(src, span_warning("You're already dead!"))
 	return FALSE
-
-/mob/living/carbon/can_suicide()
-	if(!..())
-		return FALSE
-	if(!(mobility_flags & MOBILITY_USE)) //just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		to_chat(src, span_warning("You can't commit suicide whilst immobile! (You can type Ghost instead however)."))
-		return FALSE
-	return TRUE
 
 #undef ALIEN_SUICIDE_MESSAGE
 #undef BRAIN_SUICIDE_MESSAGE

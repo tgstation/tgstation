@@ -101,6 +101,14 @@
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
+/mob/living/silicon/robot/set_suicide(suicide_state)
+	. = ..()
+	if(mmi)
+		if(mmi.brain)
+			mmi.brain.suicided = suicide_state
+		if(mmi.brainmob)
+			mmi.brainmob.suiciding = suicide_state
+
 /mob/living/silicon/robot/get_visible_suicide_message()
 	var/string = "[src] is powering down. It looks like [p_theyre()] trying to commit suicide."
 	return string
