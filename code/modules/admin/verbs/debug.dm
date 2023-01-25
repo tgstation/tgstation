@@ -168,12 +168,7 @@ ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mo
 	message_admins(span_adminnotice("[key_name_admin(usr)] assumed direct control of [target_name]."))
 	log_admin("[key_name(usr)] assumed direct control of [target_name].")
 
-/client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Give direct control"
-
-	if(!M)
-		return
+ADMIN_CONTEXT_ENTRY(context_give_direct_control, "Give Direct Control", R_DEBUG, mob/pawn in world)
 	if(M.ckey)
 		if(tgui_alert(usr,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
@@ -182,23 +177,20 @@ ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mo
 	var/delmob = FALSE
 	if((isobserver(oldmob) || tgui_alert(usr,"Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))
 		delmob = TRUE
-	if(!M || QDELETED(M))
+	if(QDELETED(pawn))
 		to_chat(usr, span_warning("The target mob no longer exists, aborting."))
 		return
-	if(M.ckey)
-		M.ghostize(FALSE)
-	M.ckey = newkey.key
-	M.client?.init_verbs()
+
+	if(pawn.ckey)
+		pawn.ghostize(FALSE)
+	pawn.ckey = newkey.key
+	pawn.client?.init_verbs()
 	if(delmob)
 		qdel(oldmob)
 	message_admins(span_adminnotice("[key_name_admin(usr)] gave away direct control of [M] to [newkey]."))
 	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_areatest(on_station, filter_maint)
-	set category = "Mapping"
-	set name = "Test Areas"
-
+/datum/admins/proc/cmd_admin_areatest(on_station = FALSE, filter_main = FALSE)
 	var/list/dat = list()
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
@@ -388,24 +380,16 @@ ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mo
 	popup.set_content(dat.Join())
 	popup.open()
 
+ADMIN_VERB(mapping, test_station_areas, "", R_DEBUG)
+	usr.client.holder.cmd_admin_areatest(on_station = TRUE)
 
-/client/proc/cmd_admin_areatest_station()
-	set category = "Mapping"
-	set name = "Test Areas (STATION ONLY)"
-	cmd_admin_areatest(TRUE)
+ADMIN_VERB(mapping, test_station_areas_without_maint, "", R_DEBUG)
+	usr.client.holder.cmd_admin_areatest(on_station = TRUE, filter_maint = TRUE)
 
-/client/proc/cmd_admin_areatest_station_no_maintenance()
-	set category = "Mapping"
-	set name = "Test Areas (STATION - NO MAINT)"
-	cmd_admin_areatest(on_station = TRUE, filter_maint = TRUE)
-
-/client/proc/cmd_admin_areatest_all()
-	set category = "Mapping"
-	set name = "Test Areas (ALL)"
-	cmd_admin_areatest(FALSE)
+ADMIN_VERB(mapping, test_all_areas, "", R_DEBUG)
+	usr.client.holder.cmd_admin_areatest()
 
 /client/proc/robust_dress_shop()
-
 	var/list/baseoutfits = list("Naked","Custom","As Job...", "As Plasmaman...")
 	var/list/outfits = list()
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman)
@@ -456,88 +440,66 @@ ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mo
 
 	return dresscode
 
-/client/proc/cmd_admin_rejuvenate(mob/living/M in GLOB.mob_list)
-	set category = "Debug"
-	set name = "Rejuvenate"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if(!mob)
-		return
-	if(!istype(M))
-		tgui_alert(usr,"Cannot revive a ghost")
-		return
-	M.revive(ADMIN_HEAL_ALL)
-
-	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
-	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
+ADMIN_CONTEXT_ENTRY(context_rejuvenate, "Rejuvenate", R_ADMIN, mob/living/fallen in world)
+	fallen.revive(ADMIN_HEAL_ALL)
+	log_admin("[key_name(usr)] healed / revived [key_name(fallen)]")
+	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(fallen)]!")
 	message_admins(msg)
-	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Rejuvenate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	admin_ticket_log(fallen, msg)
 
-/client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
-	set category = "Debug"
-	set name = "Delete"
+ADMIN_CONTEXT_ENTRY(context_delete, "Delete", (R_SPAWN|R_DEBUG), atom/target as obj|mob|turf in world)
+	holder.admin_delete(A)
 
-	if(!check_rights(R_SPAWN|R_DEBUG))
-		return
+ADMIN_CONTEXT_ENTRY(context_check_contents, "Check Contents", R_ADMIN, mob/living/target in world)
+	var/list/all_contents = target.get_contents()
+	for(var/content in all_contents)
+		to_chat(usr, "[content] [ADMIN_VV(content)] [ADMIN_TAG(content)]", confidential = TRUE)
 
-	admin_delete(A)
-
-/client/proc/cmd_admin_check_contents(mob/living/M in GLOB.mob_list)
-	set category = "Debug"
-	set name = "Check Contents"
-
-	var/list/L = M.get_contents()
-	for(var/t in L)
-		to_chat(usr, "[t] [ADMIN_VV(t)] [ADMIN_TAG(t)]", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Contents") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/modify_goals()
-	set category = "Debug"
-	set name = "Modify goals"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	holder.modify_goals()
-
-/datum/admins/proc/modify_goals()
+ADMIN_VERB(debug, modify_goals, "", R_ADMIN)
 	var/dat = ""
 	for(var/datum/station_goal/S in GLOB.station_goals)
 		dat += "[S.name] - <a href='?src=[REF(S)];[HrefToken()];announce=1'>Announce</a> | <a href='?src=[REF(S)];[HrefToken()];remove=1'>Remove</a><br>"
 	dat += "<br><a href='?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
-/client/proc/cmd_debug_mob_lists()
-	set category = "Debug"
-	set name = "Debug Mob Lists"
-	set desc = "For when you just gotta know"
-	var/chosen_list = tgui_input_list(usr, "Which list?", "Select List", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+#define MOB_LIST_PLAYERS "Players"
+#define MOB_LIST_ADMINS "Admins"
+#define MOB_LIST_MOBS "Mobs"
+#define MOB_LIST_MOBS_LIVING "Living Mobs"
+#define MOB_LIST_MOBS_DEAD "Dead Mobs"
+#define MOB_LIST_CLIENTS "Clients"
+#define MOB_LIST_CLIENTS_JOINED "Joined Clients"
+// Theres probably a better name for this
+#define MOB_LIST_LIST list( \
+	MOB_LIST_PLAYERS, \
+	MOB_LIST_ADMINS, \
+	MOB_LIST_MOBS, \
+	MOB_LIST_MOBS_LIVING, \
+	MOB_LIST_MOBS_DEAD, \
+	MOB_LIST_CLIENTS, \
+	MOB_LIST_CLIENTS_JOINED)
+
+ADMIN_VERB(debug, debug_mob_lists, "For when you just gotta know", R_DEBUG)
+	var/chosen_list = tgui_input_list(usr, "Which list?", "Select List", MOB_LIST_LIST)
 	if(isnull(chosen_list))
 		return
 	switch(chosen_list)
-		if("Players")
+		if(MOB_LIST_PLAYERS)
 			to_chat(usr, jointext(GLOB.player_list,","), confidential = TRUE)
-		if("Admins")
+		if(MOB_LIST_ADMINS)
 			to_chat(usr, jointext(GLOB.admins,","), confidential = TRUE)
-		if("Mobs")
+		if(MOB_LIST_MOBS)
 			to_chat(usr, jointext(GLOB.mob_list,","), confidential = TRUE)
-		if("Living Mobs")
+		if(MOB_LIST_MOBS_LIVING)
 			to_chat(usr, jointext(GLOB.alive_mob_list,","), confidential = TRUE)
-		if("Dead Mobs")
+		if(MOB_LIST_MOBS_DEAD)
 			to_chat(usr, jointext(GLOB.dead_mob_list,","), confidential = TRUE)
-		if("Clients")
+		if(MOB_LIST_CLIENTS)
 			to_chat(usr, jointext(GLOB.clients,","), confidential = TRUE)
-		if("Joined Clients")
+		if(MOB_LIST_CLIENTS_JOINED)
 			to_chat(usr, jointext(GLOB.joined_player_list,","), confidential = TRUE)
 
-/client/proc/cmd_display_del_log()
-	set category = "Debug"
-	set name = "Display del() Log"
-	set desc = "Display del's log of everything that's passed through it."
-
+ADMIN_VERB(debug, display_del_log, "Display del's log of everything that's passed through it", R_DEBUG)
 	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
 	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
 	for(var/path in SSgarbage.items)
@@ -567,37 +529,19 @@ ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mo
 
 	usr << browse(dellog.Join(), "window=dellog")
 
-/client/proc/cmd_display_overlay_log()
-	set category = "Debug"
-	set name = "Display overlay Log"
-	set desc = "Display SSoverlays log of everything that's passed through it."
-
+ADMIN_VERB(debug, display_overlay_log, "Display SSoverlays log of everything that's passed through it", R_DEBUG)
 	render_stats(SSoverlays.stats, src)
 
-/client/proc/cmd_display_init_log()
-	set category = "Debug"
-	set name = "Display Initialize() Log"
-	set desc = "Displays a list of things that didn't handle Initialize() properly"
-
+ADMIN_VERB(debug, display_initailize_log, "Displays a list of things that didn't handle Initialize() properly", R_DEBUG)
 	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
 
-/client/proc/open_colorblind_test()
-	set category = "Debug"
-	set name = "Colorblind Testing"
-	set desc = "Change your view to a budget version of colorblindness to test for usability"
+ADMIN_VERB(debug, colorblind_testing, "Change your view to a budger version of colorblindness to test for usability", R_DEBUG)
+	usr.client.holder.color_test.ui_interact(mob)
 
-	if(!holder)
-		return
-	holder.color_test.ui_interact(mob)
+ADMIN_VERB(debug, edit_debug_planes, "Edit and visuaize plane masters and their connections (relays)", R_DEBUG)
+	usr.client.holder.edit_plane_masters()
 
-/client/proc/debug_plane_masters()
-	set category = "Debug"
-	set name = "Edit/Debug Planes"
-	set desc = "Edit and visualize plane masters and their connections (relays)"
-
-	edit_plane_masters()
-
-/client/proc/edit_plane_masters(mob/debug_on)
+/datum/admins/edit_plane_masters(mob/debug_on)
 	if(!holder)
 		return
 	if(debug_on)
