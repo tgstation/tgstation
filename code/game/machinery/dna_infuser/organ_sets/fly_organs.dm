@@ -3,6 +3,7 @@
 
 ///bonus of the fly: you... are a flyperson now. sorry.
 /datum/status_effect/organ_set_bonus/fly
+	id = "organ_set_bonus_fly"
 	organs_needed = 4 //there are actually 7 fly organs that count, but you only need 4 to go full-flyperson. Be careful!
 	bonus_activate_text = null
 	bonus_deactivate_text = null

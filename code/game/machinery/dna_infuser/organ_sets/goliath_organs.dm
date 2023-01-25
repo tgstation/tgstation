@@ -6,6 +6,7 @@
 
 ///bonus of the goliath: you can swim through space!
 /datum/status_effect/organ_set_bonus/goliath
+	id = "organ_set_bonus_goliath"
 	organs_needed = 4
 	bonus_activate_text = span_notice("goliath DNA is deeply infused with you! You can now endure walking on lava!")
 	bonus_deactivate_text = span_notice("You feel your muscle mass shrink and the tendrils around your skin wither. Your Goliath DNA is mostly gone and so is your ability to survive lava.")
