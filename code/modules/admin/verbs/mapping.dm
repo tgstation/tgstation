@@ -22,12 +22,7 @@
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/atmosscan, //check plumbing
 	/client/proc/powerdebug, //check power
-	/client/proc/cmd_give_direct_control,
 	/client/proc/set_server_fps, //allows you to set the ticklag.
-	/client/proc/cmd_admin_areatest_all,
-	/client/proc/cmd_admin_areatest_station,
-	/client/proc/cmd_admin_areatest_station_no_maintenance,
-	/client/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
 	/client/proc/manipulate_organs,
 	/client/proc/start_line_profiling,

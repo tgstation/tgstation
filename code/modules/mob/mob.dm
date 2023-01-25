@@ -1287,9 +1287,7 @@
 		usr.client.admin_context_wrapper_context_assume_control(src)
 
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_give_direct_control(src)
+		usr.client.admin_context_wrapper_context_give_direct_control(src)
 
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
@@ -1297,9 +1295,8 @@
 		offer_control(src)
 
 	if(href_list[VV_HK_VIEW_PLANES])
-		if(!check_rights(R_DEBUG))
-			return
-		usr.client.edit_plane_masters(src)
+		usr.client.holder.edit_plane_masters(src)
+
 /**
  * extra var handling for the logging var
  */

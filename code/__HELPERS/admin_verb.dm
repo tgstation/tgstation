@@ -11,6 +11,10 @@
 		del(src); \
 		return; \
 	} \
+	if(IsAdminAdvancedProcCall()) { \
+		message_admins("[key_name_admin(usr)] attempted to elevate permissions by executing an admin verb using ProcCall!"); \
+		return; \
+	} \
 	if(check_rights_for(usr.client, permissions)) { \
 		_##verb_name(arglist(args)); \
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "[#module]/[#verb_name]"); \

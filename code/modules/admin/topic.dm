@@ -1307,7 +1307,7 @@
 			G.report_message = description
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
 		GLOB.station_goals += G
-		modify_goals()
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/)
 
 	else if(href_list["change_lag_switch"])
 		if(!check_rights(R_ADMIN))

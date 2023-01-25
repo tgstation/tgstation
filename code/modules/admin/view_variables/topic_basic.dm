@@ -43,7 +43,7 @@
 			SSadmin_verbs.dynamic_invoke_admin_verb(C, /mob/admin_module_holder/debug/view_variables, target)
 	if(check_rights(R_DEBUG))
 		if(href_list[VV_HK_DELETE])
-			usr.client.admin_delete(target)
+			usr.client.holder.admin_delete(target)
 			if (isturf(target)) // show the turf that took its place
 				SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, target)
 				return

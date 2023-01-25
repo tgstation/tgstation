@@ -101,8 +101,8 @@ ADMIN_VERB(debug, hard_delete_all_of_type, "", R_DEBUG, object as text)
 
 ADMIN_VERB(debug, make_powernets, "", R_DEBUG)
 	SSmachines.makepowernets()
-	log_admin("[key_name(src)] has remade the powernet.")
-	message_admins("[key_name_admin(src)] has remade the powernets.")
+	log_admin("[key_name(usr)] has remade the powernet.")
+	message_admins("[key_name_admin(usr)] has remade the powernets.")
 
 ADMIN_CONTEXT_ENTRY(context_grant_full_access, "Grant Full Access", R_ADMIN, mob/living/carbon/human/target in view())
 	if(!SSticker.HasRoundStarted())
@@ -169,8 +169,8 @@ ADMIN_CONTEXT_ENTRY(context_assume_control, "Assume Direct Control", R_ADMIN, mo
 	log_admin("[key_name(usr)] assumed direct control of [target_name].")
 
 ADMIN_CONTEXT_ENTRY(context_give_direct_control, "Give Direct Control", R_DEBUG, mob/pawn in world)
-	if(M.ckey)
-		if(tgui_alert(usr,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
+	if(pawn.ckey)
+		if(tgui_alert(usr,"This mob is being controlled by [pawn.key]. Are you sure you wish to give someone else control of it? [pawn.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
 	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sort_list(GLOB.clients)
 	var/mob/oldmob = newkey.mob
@@ -187,10 +187,10 @@ ADMIN_CONTEXT_ENTRY(context_give_direct_control, "Give Direct Control", R_DEBUG,
 	pawn.client?.init_verbs()
 	if(delmob)
 		qdel(oldmob)
-	message_admins(span_adminnotice("[key_name_admin(usr)] gave away direct control of [M] to [newkey]."))
-	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
+	message_admins(span_adminnotice("[key_name_admin(usr)] gave away direct control of [pawn] to [newkey]."))
+	log_admin("[key_name(usr)] gave away direct control of [pawn] to [newkey].")
 
-/datum/admins/proc/cmd_admin_areatest(on_station = FALSE, filter_main = FALSE)
+/datum/admins/proc/cmd_admin_areatest(on_station = FALSE, filter_maint = FALSE)
 	var/list/dat = list()
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
@@ -448,7 +448,7 @@ ADMIN_CONTEXT_ENTRY(context_rejuvenate, "Rejuvenate", R_ADMIN, mob/living/fallen
 	admin_ticket_log(fallen, msg)
 
 ADMIN_CONTEXT_ENTRY(context_delete, "Delete", (R_SPAWN|R_DEBUG), atom/target as obj|mob|turf in world)
-	holder.admin_delete(A)
+	holder.admin_delete(target)
 
 ADMIN_CONTEXT_ENTRY(context_check_contents, "Check Contents", R_ADMIN, mob/living/target in world)
 	var/list/all_contents = target.get_contents()
@@ -459,7 +459,7 @@ ADMIN_VERB(debug, modify_goals, "", R_ADMIN)
 	var/dat = ""
 	for(var/datum/station_goal/S in GLOB.station_goals)
 		dat += "[S.name] - <a href='?src=[REF(S)];[HrefToken()];announce=1'>Announce</a> | <a href='?src=[REF(S)];[HrefToken()];remove=1'>Remove</a><br>"
-	dat += "<br><a href='?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
+	dat += "<br><a href='?src=[REF(usr)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
 #define MOB_LIST_PLAYERS "Players"
@@ -530,42 +530,37 @@ ADMIN_VERB(debug, display_del_log, "Display del's log of everything that's passe
 	usr << browse(dellog.Join(), "window=dellog")
 
 ADMIN_VERB(debug, display_overlay_log, "Display SSoverlays log of everything that's passed through it", R_DEBUG)
-	render_stats(SSoverlays.stats, src)
+	render_stats(SSoverlays.stats, usr)
 
 ADMIN_VERB(debug, display_initailize_log, "Displays a list of things that didn't handle Initialize() properly", R_DEBUG)
 	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
 
 ADMIN_VERB(debug, colorblind_testing, "Change your view to a budger version of colorblindness to test for usability", R_DEBUG)
-	usr.client.holder.color_test.ui_interact(mob)
+	usr.client.holder.color_test.ui_interact(usr)
 
 ADMIN_VERB(debug, edit_debug_planes, "Edit and visuaize plane masters and their connections (relays)", R_DEBUG)
 	usr.client.holder.edit_plane_masters()
 
 /datum/admins/edit_plane_masters(mob/debug_on)
-	if(!holder)
-		return
 	if(debug_on)
-		holder.plane_debug.set_mirroring(TRUE)
-		holder.plane_debug.set_target(debug_on)
+		owner.holder.plane_debug.set_mirroring(TRUE)
+		owner.holder.plane_debug.set_target(debug_on)
 	else
-		holder.plane_debug.set_mirroring(FALSE)
-	holder.plane_debug.ui_interact(mob)
+		owner.holder.plane_debug.set_mirroring(FALSE)
+	owner.holder.plane_debug.ui_interact(usr)
 
-/client/proc/debug_huds(i as num)
-	set category = "Debug"
-	set name = "Debug HUDs"
-	set desc = "Debug the data or antag HUDs"
+ADMIN_VERB(debug, debug_huds, "Debug one of the HUDs", R_DEBUG)
+	var/list/choices = list()
+	for(var/idx in 1 to length(GLOB.huds))
+		var/datum/hud = GLOB.huds[idx]
+		choices["[hud.type]"] = hud
 
-	if(!holder)
+	var/choice = tgui_input_list(usr, "Select Hud Type", "Debug HUDs", choices)
+	if(!choice)
 		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(src, /mob/admin_module_holder/debug/view_variables, GLOB.huds[i])
+	SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/debug/view_variables, choices[choice])
 
-/client/proc/jump_to_ruin()
-	set category = "Debug"
-	set name = "Jump to Ruin"
-	set desc = "Displays a list of all placed ruins to teleport to."
-	if(!holder)
-		return
+ADMIN_VERB(debug, jump_to_ruin, "Displays a list of all placed ruins for teleporting", R_DEBUG)
 	var/list/names = list()
 	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
 		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
@@ -581,23 +576,21 @@ ADMIN_VERB(debug, edit_debug_planes, "Edit and visuaize plane masters and their 
 		names[name] = ruin_landmark
 
 	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in sort_list(names)
-
-
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]
 
 	if(istype(landmark))
 		var/datum/map_template/ruin/template = landmark.ruin_template
-		usr.forceMove(get_turf(landmark))
+		if(!isobserver(usr))
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/aghost)
+			if(!isobserver(usr))
+				to_chat(usr, span_warning("Failed to aghost."))
+				return
+
+		usr.abstract_move(get_turf(landmark))
 		to_chat(usr, span_name("[template.name]"), confidential = TRUE)
 		to_chat(usr, "<span class='italics'>[template.description]</span>", confidential = TRUE)
 
-/client/proc/place_ruin()
-	set category = "Debug"
-	set name = "Spawn Ruin"
-	set desc = "Attempt to randomly place a specific ruin."
-	if (!holder)
-		return
-
+ADMIN_VERB(debug, spawn_ruin, "Attempt to randomly place a specific ruin", R_DEBUG)
 	var/list/exists = list()
 	for(var/landmark in GLOB.ruin_landmarks)
 		var/obj/effect/landmark/ruin/L = landmark
@@ -621,6 +614,11 @@ ADMIN_VERB(debug, edit_debug_planes, "Edit and visuaize plane masters and their 
 	if (exists[template])
 		var/response = tgui_alert(usr,"There is already a [template] in existence.", "Spawn Ruin", list("Jump", "Place Another", "Cancel"))
 		if (response == "Jump")
+			if(!isobserver(usr))
+				SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/aghost)
+				if(!isobserver(usr))
+					to_chat(usr, span_warning("Failed to aghost."))
+					return
 			usr.forceMove(get_turf(exists[template]))
 			return
 		else if (response == "Cancel")
@@ -630,12 +628,12 @@ ADMIN_VERB(debug, edit_debug_planes, "Edit and visuaize plane masters and their 
 	seedRuins(SSmapping.levels_by_trait(data[2]), max(1, template.cost), data[3], list(ruinname = template))
 	if (GLOB.ruin_landmarks.len > len)
 		var/obj/effect/landmark/ruin/landmark = GLOB.ruin_landmarks[GLOB.ruin_landmarks.len]
-		log_admin("[key_name(src)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
+		log_admin("[key_name(usr)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
 		usr.forceMove(get_turf(landmark))
-		to_chat(src, span_name("[template.name]"), confidential = TRUE)
-		to_chat(src, "<span class='italics'>[template.description]</span>", confidential = TRUE)
+		to_chat(usr, span_name("[template.name]"), confidential = TRUE)
+		to_chat(usr, "<span class='italics'>[template.description]</span>", confidential = TRUE)
 	else
-		to_chat(src, span_warning("Failed to place [template.name]."), confidential = TRUE)
+		to_chat(usr, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
 /client/proc/unload_ctf()
 	set category = "Debug"

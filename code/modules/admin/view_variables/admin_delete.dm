@@ -20,7 +20,7 @@
 			var/turf/T = D
 			T.ScrapeAway()
 		else
-			vv_update_display(D, "deleted", VV_MSG_DELETED)
+			owner?.vv_update_display(D, "deleted", VV_MSG_DELETED)
 			qdel(D)
 			if(!QDELETED(D))
-				vv_update_display(D, "deleted", "")
+				owner?.vv_update_display(D, "deleted", "")
