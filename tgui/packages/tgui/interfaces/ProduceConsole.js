@@ -16,7 +16,7 @@ const TAB2NAME = [
 
 const ShoppingTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const { order_categories, order_datums } = data;
+  const { credit_type, order_categories, order_datums } = data;
   const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
   const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
@@ -103,8 +103,8 @@ const ShoppingTab = (props, context) => {
                     <br />
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
-                    <Box fontSize="10px" color="label" textAlign="right" mr={4}>
-                      {item.cost + ' per order.'}
+                    <Box fontSize="10px" color="label" textAlign="right">
+                      {item.cost + item.credit_type + ' per order.'}
                     </Box>
                     <Button
                       ml={2}
@@ -151,6 +151,7 @@ const ShoppingTab = (props, context) => {
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
   const {
+    credit_type,
     purchase_tooltip,
     express_tooltip,
     forced_express,
@@ -185,7 +186,11 @@ const CheckoutTab = (props, context) => {
                       {'"' + item.desc + '"'}
                       <br />
                       <Box textAlign="right">
-                        {item.name + ' costs ' + item.cost + ' per order.'}
+                        {item.name +
+                          ' costs ' +
+                          item.cost +
+                          item.credit_type +
+                          ' per order.'}
                       </Box>
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>

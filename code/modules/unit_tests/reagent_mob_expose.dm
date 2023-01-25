@@ -29,9 +29,9 @@
 	TEST_ASSERT(human.fire_stacks > 1, "Human fire stacks did not increase after life tick")
 
 	// TOUCH
-	dropper.reagents.add_reagent(/datum/reagent/water, 1)
+	dropper.reagents.add_reagent(/datum/reagent/water, 5)
 	dropper.afterattack(human, human, TRUE)
-	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human still has fire stacks after touching water")
+	TEST_ASSERT(human.fire_stacks < 0, "Human still has fire stacks after touching water")
 
 	// VAPOR
 	TEST_ASSERT_NULL(human.has_status_effect(/datum/status_effect/drowsiness), "Human is drowsy at the start of testing")
@@ -39,6 +39,11 @@
 	drink.reagents.add_reagent(/datum/reagent/nitrous_oxide, 10)
 	drink.reagents.trans_to(human, 10, methods = VAPOR)
 	TEST_ASSERT_NOTNULL(human.has_status_effect(/datum/status_effect/drowsiness), "Human is not drowsy after exposure to vapors")
+	drink.reagents.clear_reagents()
+	drink.reagents.add_reagent(/datum/reagent/water, 10)
+	var/old_fire_stacks = human.fire_stacks
+	drink.reagents.trans_to(human, 10, methods = VAPOR)
+	TEST_ASSERT(human.fire_stacks < old_fire_stacks, "Human does not get wetter after being exposed to water by vapors")
 
 	// PATCH
 	human.health = 100

@@ -25,11 +25,6 @@
 	/// The amount of limited discounts that the team get
 	var/discount_limited_amount = 10
 
-/datum/antagonist/nukeop/New()
-	if(send_to_spawnpoint) // lets get the loading started now, but don't block waiting for it
-		INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_NUKIEBASE)
-	return ..()
-
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
 		return

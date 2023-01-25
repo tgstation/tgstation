@@ -1,0 +1,7 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - refactor: "External organs have been near-completely refactored."
+  - admin: "Admin-spawned external organs will load with a random icon and color"
+  - bugfix: "fixes angel wings not working for non-humans (it was so fucking broken)"
+  - bugfix: "fixes external organs being invisible if they werent initialized with a human"

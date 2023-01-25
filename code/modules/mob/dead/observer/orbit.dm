@@ -97,8 +97,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			else
 				var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
 				serialized["job"] = id_card?.get_trim_assignment()
-				var/datum/id_trim/trim = id_card?.trim
-				serialized["job_icon"] = trim?.orbit_icon
 
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
 			if (antag_datum.show_to_ghosts)
