@@ -1,5 +1,8 @@
 directory = "_maps/map_files/tramstation/maintenance_modules/"
 
+[rooms.arrivalsecupper]
+modules = ["arrivalsecupper_1.dmm", "arrivalsecupper_2.dmm", "arrivalsecupper_3.dmm"]
+
 [rooms.medsciupper]
 modules = ["medsciupper_1.dmm", "medsciupper_2.dmm", "medsciupper_3.dmm"]
 
