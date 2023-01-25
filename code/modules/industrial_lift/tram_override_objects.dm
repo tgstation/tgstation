@@ -54,7 +54,6 @@
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
-	layer = TRAM_XING_LAYER
 
 /obj/machinery/door/window/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'

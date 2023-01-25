@@ -127,7 +127,7 @@
 	multiplicative_slowdown = 5
 
 /datum/movespeed_modifier/morph_disguised
-	multiplicative_slowdown = 1
+	multiplicative_slowdown = -1
 
 /datum/movespeed_modifier/auto_wash
 	multiplicative_slowdown = 3

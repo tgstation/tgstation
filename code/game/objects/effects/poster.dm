@@ -269,6 +269,7 @@
 		return
 
 	placed_poster.on_placed_poster(user)
+	return TRUE
 
 /obj/structure/sign/poster/proc/snowflake_wall_turf_check(atom/hopefully_still_a_wall_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
 	return iswallturf(hopefully_still_a_wall_turf)
@@ -1060,5 +1061,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 	name = "Festive Notice Poster"
 	desc = "A poster that informs of active holidays. None are today, so you should get back to work."
 	icon_state = "holiday_none"
+
+/obj/structure/sign/poster/official/boombox
+	name = "Boombox"
+	desc = "An outdated poster containing a list of supposed 'kill words' and code phrases. The poster alleges rival corporations use these to remotely deactivate their agents."
+	icon_state = "boombox"
+
+/obj/structure/sign/poster/official/download
+	name = "You Wouldn't Download A Gun"
+	desc = "A poster reminding the crew that corporate secrets should stay in the workplace."
+	icon_state = "download_gun"
 
 #undef PLACE_SPEED

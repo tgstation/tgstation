@@ -1648,11 +1648,10 @@
  * Fetches a list of all of the materials this object has of the desired type. Returns null if there is no valid materials of the type
  *
  * Arguments:
- * - [mat_type][/datum/material]: The type of material we are checking for
- * - exact: Whether to search for the _exact_ material type
+ * - [required_material][/datum/material]: The type of material we are checking for
  * - mat_amount: The minimum required amount of material
  */
-/atom/proc/has_material_type(datum/material/mat_type, exact=FALSE, mat_amount=0)
+/atom/proc/has_material_type(datum/material/required_material, mat_amount = 0)
 	var/list/cached_materials = custom_materials
 	if(!length(cached_materials))
 		return null
@@ -1662,7 +1661,7 @@
 		if(cached_materials[current_material] < mat_amount)
 			continue
 		var/datum/material/material = GET_MATERIAL_REF(current_material)
-		if(exact ? material.type != current_material : !istype(material, mat_type))
+		if(!istype(material, required_material))
 			continue
 		LAZYSET(materials_of_type, material, cached_materials[current_material])
 

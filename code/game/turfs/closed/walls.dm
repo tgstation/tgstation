@@ -222,11 +222,11 @@
 		var/obj/item/wallframe/F = W
 		if(F.try_build(src, user))
 			F.attach(src, user)
-		return TRUE
+			return TRUE
+		return FALSE
 	//Poster stuff
 	else if(istype(W, /obj/item/poster) && Adjacent(user)) //no tk memes.
-		place_poster(W,user)
-		return TRUE
+		return place_poster(W,user)
 
 	return FALSE
 
@@ -277,10 +277,18 @@
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
+		if(RCD_WALLFRAME)
+			return list("mode" = RCD_WALLFRAME, "delay" = 10, "cost" = 25)
 	return FALSE
 
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
+		if(RCD_WALLFRAME)
+			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
+			if(!try_wallmount(new_wallmount, user, src))
+				qdel(new_wallmount)
+				return FALSE
+			return TRUE
 		if(RCD_DECONSTRUCT)
 			to_chat(user, span_notice("You deconstruct the wall."))
 			ScrapeAway()
