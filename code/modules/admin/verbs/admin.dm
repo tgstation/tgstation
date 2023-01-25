@@ -43,12 +43,11 @@ ADMIN_VERB(admin, player_playtime, "Check the playtime for connected players", R
 	msg += "</UL></BODY></HTML>"
 	usr << browse(msg.Join(), "window=Player_playtime_check")
 
-ADMIN_VERB(admin, trigger_centcom_recall, "", R_ADMIN, reason = pick(GLOB.admiral_messages) as text)
-/client/proc/trigger_centcom_recall()
+ADMIN_VERB(admin, trigger_centcom_recall, "", R_ADMIN)
 	if(!check_rights(R_ADMIN))
 		return
 	var/message = pick(GLOB.admiral_messages)
-	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
+	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as message|null
 
 	if(!message)
 		return
@@ -139,26 +138,20 @@ ADMIN_VERB(admin, trigger_centcom_recall, "", R_ADMIN, reason = pick(GLOB.admira
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-/client/proc/cmd_admin_drop_everything(mob/M in GLOB.mob_list)
-	set category = null
-	set name = "Drop Everything"
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/confirm = tgui_alert(usr, "Make [M] drop everything?", "Message", list("Yes", "No"))
+ADMIN_CONTEXT_ENTRY(context_drop_everything, "Drop Everything", R_ADMIN, mob/target in world)
+	var/confirm = tgui_alert(usr, "Make [target] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/W in M)
-		if(!M.dropItemToGround(W))
-			qdel(W)
-			M.regenerate_icons()
+	for(var/obj/item/held in target)
+		if(!target.dropItemToGround(held))
+			qdel(held)
+	target.regenerate_icons()
 
-	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
-	var/msg = "[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] drop everything!"
+	log_admin("[key_name(usr)] made [key_name(target)] drop everything!")
+	var/msg = "[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(target)] drop everything!"
 	message_admins(msg)
-	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Everything") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	admin_ticket_log(target, msg)
 
 /proc/cmd_admin_mute(whom, mute_type, automute = 0)
 	if(!whom)

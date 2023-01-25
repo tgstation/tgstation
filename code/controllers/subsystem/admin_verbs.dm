@@ -83,7 +83,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	for(var/mob/admin_module_holder/holder_type as anything in admin_verb_map)
 		holder_map[holder_type] = new holder_type
 
-/datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_admin_verb(client/target, verb_type, list/arguments = list())
+/datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_admin_verb(mob/target, verb_type, ...)
 	if(IsAdminAdvancedProcCall())
 		return
 
@@ -92,8 +92,13 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 		to_chat(usr, span_big("Attempted to dynamic invoke an admin verb that didnt exist, this is a really bad problem!"))
 		CRASH("Admin Verb Holder '[verb_type]' did not exist when an attempt to access the dynmap occured.")
 
-	usr = target.mob
+	if(IS_CLIENT_OR_MOCK(target))
+		var/client/clientele = target
+		target = clientele.mob
+
+	usr = target
 	var/holder_proc = text2path("[verb_type]/verb/invoke")
+	var/list/arguments = args.Copy(3)
 	call(holder, holder_proc)(arglist(arguments))
 
 /datum/controller/subsystem/admin_verbs/proc/link_admin(mob/admin)

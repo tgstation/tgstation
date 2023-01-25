@@ -1256,14 +1256,12 @@
 		if(!check_rights(NONE))
 			return
 		regenerate_icons()
+
 	if(href_list[VV_HK_PLAYER_PANEL])
-		if(!check_rights(NONE))
-			return
-		usr.client.holder.show_player_panel(src)
+		usr.client.admin_context_wrapper_context_player_panel(src)
+
 	if(href_list[VV_HK_GODMODE])
-		if(!check_rights(R_ADMIN))
-			return
-		usr.client.cmd_admin_godmode(src)
+		usr.client.admin_context_wrapper_context_godmod(src)
 
 	if(href_list[VV_HK_GIVE_SPELL])
 		usr.client.admin_context_wrapper_context_give_spell(src)
@@ -1275,29 +1273,29 @@
 		usr.client.admin_context_wrapper_context_give_disease(src)
 
 	if(href_list[VV_HK_GIB])
-		if(!check_rights(R_FUN))
-			return
 		usr.client.admin_context_wrapper_context_mob_gib(src)
+
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
 			return
 		togglebuildmode(src)
+
 	if(href_list[VV_HK_DROP_ALL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_admin_drop_everything(src)
+		usr.client.admin_context_wrapper_context_drop_everything(src)
+
 	if(href_list[VV_HK_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
 		usr.client.admin_context_wrapper_context_assume_control(src)
+
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_give_direct_control(src)
+
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
 		offer_control(src)
+
 	if(href_list[VV_HK_VIEW_PLANES])
 		if(!check_rights(R_DEBUG))
 			return

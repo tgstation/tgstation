@@ -113,10 +113,7 @@
 		minor_announce("The emergency shuttle will reach its destination in [DisplayTimeText(timer SECONDS)].")
 		message_admins(span_adminnotice("[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds."))
 	else if(href_list["trigger_centcom_recall"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		usr.client.trigger_centcom_recall()
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/events/recall_shuttle)
 
 	else if(href_list["move_shuttle"])
 		if(!check_rights(R_ADMIN))
@@ -714,8 +711,7 @@
 		usr.client.admin_context_wrapper_context_make_cyborg(our_mob)
 
 	else if(href_list["adminplayeropts"])
-		var/mob/M = locate(href_list["adminplayeropts"])
-		show_player_panel(M)
+		usr.client.admin_context_wrapper_context_player_panel(locate(href_list["adminplayeropts"]))
 
 	else if(href_list["ppbyckey"])
 		var/target_ckey = href_list["ppbyckey"]
@@ -730,7 +726,7 @@
 			return
 
 		to_chat(usr, span_notice("Jumping to [target_ckey]'s new mob: [target_mob]!"))
-		show_player_panel(target_mob)
+		usr.client.admin_context_wrapper_context_player_panel(target_mob)
 
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
@@ -967,25 +963,21 @@
 		usr.client.admin_context_wrapper_context_smite(H)
 
 	else if(href_list["CentComReply"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["CentComReply"])
-		usr.client.admin_headset_message(M, RADIO_CHANNEL_CENTCOM)
+		usr.client.admin_context_wrapper_contexxt_headset_message(
+			locate(href_list["CentComReply"]),
+			RADIO_CHANNEL_CENTCOM,
+			)
 
 	else if(href_list["SyndicateReply"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["SyndicateReply"])
-		usr.client.admin_headset_message(M, RADIO_CHANNEL_SYNDICATE)
+		usr.client.admin_context_wrapper_contexxt_headset_message(
+			locate(href_list["SyndicateReply"]),
+			RADIO_CHANNEL_SYNDICATE,
+			)
 
 	else if(href_list["HeadsetMessage"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["HeadsetMessage"])
-		usr.client.admin_headset_message(M)
+		usr.client.admin_context_wrapper_contexxt_headset_message(
+			locate(href_list["HeadsetMessage"]),
+			)
 
 	else if(href_list["reject_custom_name"])
 		if(!check_rights(R_ADMIN))
@@ -993,6 +985,7 @@
 		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
 		if(istype(charter))
 			charter.reject_proposed(usr)
+
 	else if(href_list["jumpto"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
@@ -1017,18 +1010,10 @@
 		usr.client.sendmob(M)
 
 	else if(href_list["narrateto"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["narrateto"])
-		usr.client.cmd_admin_direct_narrate(M)
+		usr.client.admin_context_wrapper_context_direct_narrate(locate(href_list["narrateto"]))
 
 	else if(href_list["subtlemessage"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["subtlemessage"])
-		usr.client.cmd_admin_subtle_message(M)
+		usr.client.admin_context_wrapper_context_subtle_message(locate(href_list["subtlemessage"]))
 
 	else if(href_list["playsoundto"])
 		if(!check_rights(R_SOUND))
@@ -1041,7 +1026,7 @@
 
 		var/S = input("", "Select a sound file",) as null|sound
 		if(S)
-			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/fun/play_direct_mob_sound, list(S, M))
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/fun/play_direct_mob_sound, S, M)
 
 	else if(href_list["individuallog"])
 		if(!check_rights(R_ADMIN))
