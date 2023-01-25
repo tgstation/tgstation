@@ -193,16 +193,16 @@
 /datum/lift_master/tram/proc/set_door_state(tram_door, action)
 	switch(action)
 		if(LOCK_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, lock))
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, lock))
 
 		if(UNLOCK_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, unlock))
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, unlock))
 
 		if(OPEN_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, open))
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)
 
 		if(CLOSE_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, close))
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)
 
 		else
 			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")

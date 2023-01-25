@@ -90,30 +90,47 @@
 	icon_state = "right"
 	base_state = "right"
 
-/obj/machinery/door/window/tram/open(forced=FALSE)
-	if(icon_state == "[base_state]open") //if doors are already open, return
+/obj/machinery/door/window/tram/proc/cycle_doors(command, forced=FALSE)
+	if(command == "open" && icon_state == "[base_state]open")
+		if(!forced)
+			if(!hasPower())
+				return 0
 		return 1
-	if(operating) //doors can still open when emag-disabled
+	if(command == "close" && icon_state == base_state)
+		return 1
+	if(operating) //doors can still function when emag-disabled
 		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
 			return 0
 	if(!operating) //in case of emag
 		operating = TRUE
-	do_animate("opening")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
-	icon_state ="[base_state]open"
-	sleep(8 DECISECONDS)
-	set_density(FALSE)
-	air_update_turf(TRUE, FALSE)
+	switch(command)
+		if("open")
+			do_animate("opening")
+			icon_state ="[base_state]open"
+			sleep(8 DECISECONDS)
+			set_density(FALSE)
+			air_update_turf(TRUE, FALSE)
+			if(operating == 1) //emag again
+				operating = FALSE
+		if("close")
+			do_animate("closing")
+			icon_state = base_state
+			sleep(17 DECISECONDS)
+			set_density(TRUE)
+			air_update_turf(TRUE, TRUE)
+			operating = FALSE
 	update_freelook_sight()
-
-	if(operating == 1) //emag again
-		operating = FALSE
 	return 1
+
+//When the tram is in station, the doors are locked to engineering only.
+/obj/machinery/door/window/tram/lock()
+	req_access = list("engineering")
+
+/obj/machinery/door/window/tram/unlock()
+	req_access = null
 
 /obj/machinery/door/window/tram/close(forced=FALSE)
 	if(icon_state == base_state) //if doors are already closed, return
@@ -128,7 +145,6 @@
 			return 0
 	operating = TRUE
 	do_animate("closing")
-	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state = base_state
 	sleep(17 DECISECONDS)
 	set_density(TRUE)
