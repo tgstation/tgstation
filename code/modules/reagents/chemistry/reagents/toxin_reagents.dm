@@ -364,7 +364,10 @@
 	. = ..()
 	if(istype(exposed_obj, /obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = exposed_obj
-		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
+		alien_weeds.take_damage(rand(15, 35), BRUTE, 0) // Kills alien weeds pretty fast
+	if(istype(exposed_obj, /obj/structure/alien/resin/flower_bud))
+		var/obj/structure/alien/resin/flower_bud/flower = exposed_obj
+		flower.take_damage(rand(30, 50), BRUTE, 0)
 	else if(istype(exposed_obj, /obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(exposed_obj)
 	else if(istype(exposed_obj, /obj/structure/spacevine))
