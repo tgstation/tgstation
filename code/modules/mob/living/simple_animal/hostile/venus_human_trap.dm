@@ -65,7 +65,7 @@
 	if(item.damtype == BURN)
 		damage_dealt *= 4
 	if(item.get_sharpness())
-		damage_dealt *= 16 	// alien resin applies 75% reduction to brute damage so this actually x4 damage
+		damage_dealt *= 16 // alien resin applies 75% reduction to brute damage so this actually x4 damage
 
 	take_damage(damage_dealt, item.damtype, MELEE, 1)
 
