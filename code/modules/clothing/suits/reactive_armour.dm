@@ -495,20 +495,19 @@
 
 /obj/item/clothing/suit/armor/reactive/ectoplasm
 	name = "reactive possession armor"
-	desc = "An experimental suit of armor that calls upon the power of the dead when struck."
-	emp_message = span_warning("Your suit vibrates, letting out a gentle hum. Ghostly whispers loom around you when you hold it.")
+	desc = "An experimental suit of armor that animates nearby objects with a ghostly possession. The "
+	emp_message = span_warning("Your suit vibrates, letting out a gentle hum. .")
 	cooldown_message = span_danger("Ectoplasmic Matrix out of balance. Please wait for calibration to complete!")
-	reactivearmor_cooldown_duration = 8 SECONDS
+	reactivearmor_cooldown_duration = 40 SECONDS
 
 /obj/item/clothing/suit/armor/reactive/ectoplasm/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/hallucinations/veryfar_noise.ogg', 100, TRUE)
 	owner.visible_message(span_danger("The [src] lets loose a burst of otherworldly energy!"))
 
-	haunt_outburst(get_turf(owner), 6, 35)
+	haunt_outburst(get_turf(owner), 5, 85, 30 SECONDS)
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/ectoplasm/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	to_chat(owner, span_boldwarning("The [name] beeps an alarm, and the ghostly whispering grows louder..."))
-	owner.reagents?.add_reagent(/datum/reagent/inverse/helgrasp/heretic, 30)
+	owner.reagents?.add_reagent(/datum/reagent/inverse/helgrasp/heretic, 20)

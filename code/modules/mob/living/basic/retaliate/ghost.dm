@@ -118,11 +118,8 @@
 	health = 30
 	attack_verb_continuous = "smashes"
 	attack_verb_simple = "smash"
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	death_message = "wails as it is torn back to the realm from which it came!"
 	random_identity = FALSE
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-
-/mob/living/basic/ghost/swarm/death(gibbed)
-	. = ..()
-
-	new /obj/effect/decal/cleanable/greenglow/ecto(get_turf(src))
