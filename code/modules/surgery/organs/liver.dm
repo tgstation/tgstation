@@ -219,7 +219,7 @@
 	name = "reagent processing crystal"
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
-	status = ORGAN_INORGANIC
+	status = ORGAN_MINERAL
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/internal/liver/alien
