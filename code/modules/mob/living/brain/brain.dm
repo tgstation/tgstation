@@ -43,6 +43,15 @@
 	QDEL_NULL(stored_dna)
 	return ..()
 
+/mob/living/brain/handle_suicide()
+
+
+/mob/living/brain/get_visible_suicide_message()
+	var/string = "[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."
+	return string
+
+/mob/living/brain/get_blind_suicide_message()
+	return null
 
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return FALSE

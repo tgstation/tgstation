@@ -199,6 +199,16 @@
 			if(TOXLOSS)
 				adjustToxLoss(damage_to_apply)
 
+/// Returns a subtype-specific flavorful string pertaining to this exact living mob's ending their own life to those who can see it (visible message).
+/mob/living/proc/get_visible_suicide_message()
+	var/string = "[src] begins to fall down. It looks like [p_theyve()] lost the will to live."
+	return string
+
+/// Returns an appropriate string for what people who lack visibility hear when this mob kills itself. Return an empty string if it's impossible to hear.
+/mob/living/proc/get_blind_suicide_message()
+	var/string = "You hear something hitting the floor."
+	return string
+
 /// We re-use a few messages in several contexts, so let's minimize some nasty footprint in the verbs.
 /mob/living/proc/dispatch_message_from_tree(type)
 	switch(type)

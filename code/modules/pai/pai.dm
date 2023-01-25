@@ -163,6 +163,19 @@
 	GLOB.pai_list.Remove(src)
 	return ..()
 
+// Need to override parent here because we have a special message to dispatch... FUCK
+/mob/living/silicon/pai/handle_suicide()
+	if(!suicide_alert())
+		return
+
+	set_suicide(TRUE)
+
+	// send out the visible message from the turf because the pAI could be anywhere on a person's body. i hate it here.
+	var/turf/location = get_turf(src)
+	location.visible_message(span_notice("[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""), null, \
+	span_notice("[src] bleeps electronically."))
+	final_checkout()
+
 /mob/living/silicon/pai/emag_act(mob/user)
 	handle_emag(user)
 
