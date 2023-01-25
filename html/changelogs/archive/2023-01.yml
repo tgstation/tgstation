@@ -871,3 +871,39 @@
       in recipes
   - bugfix: fixed a bug where petri dish smartfridges could not be constructed from
       a circuit board
+2023-01-25:
+  Cenrus:
+  - balance: Harvesters are now not affected by drag slowdown.
+  LT3:
+  - code_imp: Tram hit counter typepath check is changed to be more accurate in player
+      vs. goose detection
+  - bugfix: Wires and pipes again rest on top of lattice catwalk
+  NamelessFairy:
+  - rscadd: The TGC arena on the holodeck now features display panels to track each
+      player's life shards and mana.
+  - qol: Slightly increased the amount of space on the TGC holodeck arena's tables
+      by removing the windows on either side of the player.
+  - qol: Inspecting a trading card or card hologram will now let you see the full
+      enlarged card art.
+  SyncIt21:
+  - bugfix: vibebot being invisible
+  - rscadd: Rapid wiring device
+  - imageadd: Sprite for RWD
+  Xander3359:
+  - bugfix: Deltastation - Virology's food dispenser isn't blocked by a rack anymore.
+  jlsnow301:
+  - refactor: Crew records have been refactored.
+  - refactor: Medical records -> TGUI
+  - refactor: Security records -> TGUI
+  - refactor: Warrants console -> TGUI
+  - qol: Players are now alerted when their fines are paid off.
+  - qol: Cleaned up sec hud examination text.
+  - qol: Adding and deleting crimes is easier.
+  - qol: Writing crimes in the console sets players to arrest.
+  - qol: You can now mark someone as a suspect through sec hud.
+  san7890:
+  - bugfix: 'After over a year of continuous research, the Syndicate have finally
+      managed to crack Nanotrasen''s Protocol for transferring AIs from an intelliCard
+      into a MODsuit, and vice-versa in order to extract the valuable AI in a method
+      fit-for-sale. In short: The "Steal a Functional AI" objective will work if the
+      "captured" AI is in a MODsuit.'
