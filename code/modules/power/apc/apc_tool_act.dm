@@ -129,20 +129,21 @@
 		if(machine_stat & BROKEN)
 			balloon_alert(user, "frame is too damaged!")
 			return FALSE
-		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
+		return list("mode" = RCD_WALLFRAME, "delay" = 20, "cost" = 1)
 
 	if(!cell)
 		if(machine_stat & MAINT)
 			balloon_alert(user, "no board for a cell!")
 			return FALSE
-		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 50, "cost" = 10) //16 for a wall
+		return list("mode" = RCD_WALLFRAME, "delay" = 50, "cost" = 10)
 
 	balloon_alert(user, "has both board and cell!")
 	return FALSE
 
 /obj/machinery/power/apc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	if(!(passed_mode & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if(!(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS) || passed_mode != RCD_WALLFRAME)
 		return FALSE
+
 	if(!has_electronics)
 		if(machine_stat & BROKEN)
 			balloon_alert(user, "frame is too damaged!")

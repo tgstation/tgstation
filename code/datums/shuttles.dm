@@ -176,6 +176,12 @@
 	description = "A respectable mid-sized shuttle that first saw service shuttling Nanotrasen crew to and from their asteroid belt embedded facilities."
 	credit_cost = CARGO_CRATE_VALUE * 6
 
+/datum/map_template/shuttle/emergency/venture
+	suffix = "venture"
+	name = "Venture Emergency Shuttle"
+	description = "A mid-sized shuttle for those who like a lot of space for their legs."
+	credit_cost = CARGO_CRATE_VALUE * 10
+
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
