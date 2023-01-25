@@ -104,7 +104,7 @@ const ShoppingTab = (props, context) => {
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
                     <Box fontSize="10px" color="label" textAlign="right">
-                      {item.cost + item.credit_type + ' per order.'}
+                      {item.cost + credit_type + ' per order.'}
                     </Box>
                     <Button
                       ml={2}
@@ -189,7 +189,7 @@ const CheckoutTab = (props, context) => {
                         {item.name +
                           ' costs ' +
                           item.cost +
-                          item.credit_type +
+                          credit_type +
                           ' per order.'}
                       </Box>
                     </Stack.Item>
