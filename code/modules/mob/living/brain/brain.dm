@@ -51,6 +51,9 @@
 	var/string = "[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."
 	return string
 
+/mob/living/brain/apply_suicide_damage() // we don't really care about applying damage to the brain mob and is just needless work.
+	return FALSE
+
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return FALSE
 
