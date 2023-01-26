@@ -41,6 +41,8 @@
 /datum/element/bane/proc/species_check(obj/item/source, mob/living/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
 
+!(!mob_biotypes && (target.mob_biotypes & mob_biotypes)) // figure this out
+
 	if(!proximity_flag || !istype(target) || !is_species(target, target_type) || !(target.mob_biotypes & mob_biotypes))
 		return
 
