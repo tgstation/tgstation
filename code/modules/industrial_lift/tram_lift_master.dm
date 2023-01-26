@@ -35,6 +35,8 @@
 	///how many times we moved while costing less than 0.5 * SStramprocess.max_time milliseconds per movement
 	var/times_below = 0
 
+	var/is_operational = TRUE
+
 /datum/lift_master/tram/New(obj/structure/industrial_lift/tram/lift_platform)
 	. = ..()
 	horizontal_speed = lift_platform.horizontal_speed
