@@ -22,7 +22,7 @@
 
 /obj/item/poster/examine(mob/user)
 	. = ..()
-	. += span_notice("You can trap it with a glass shard")
+	. += span_notice("You can booby-trap the poster by using a glass shard on it before you put it up.")
 
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
