@@ -870,7 +870,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			cleanup_observe()
 	if(..())
 		if(hud_used)
-			client.screen = list()
+			client.clear_screen()
 			hud_used.show_hud(hud_used.hud_version)
 
 
@@ -926,7 +926,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			set_sight(null) //we dont want ghosts to see through walls in secret areas
 		RegisterSignal(mob_eye, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_observing_z_changed))
 		if(mob_eye.hud_used)
-			client.screen = list()
+			client.clear_screen()
 			LAZYOR(mob_eye.observers, src)
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 			observetarget = mob_eye
