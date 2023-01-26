@@ -243,16 +243,13 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			log_admin("[key_name(holder)] made all SMESs powered", 1)
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all SMESs powered"))
 			power_restore_quick()
+
 		if("anon_name")
-			if(!is_funmin)
-				return
-			holder.anon_names()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/events/setup_anonymous_names)
+
 		if("tripleAI")
-			if(!is_funmin)
-				return
-			holder.triple_ai()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
+			SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/events/toggle_ai_triumvirate)
+
 		if("onlyone")
 			if(!is_funmin)
 				return

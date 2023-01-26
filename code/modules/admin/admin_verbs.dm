@@ -2,39 +2,12 @@
 /**
  * AVD TODO
 
-admin_verbs_fun
-/client/proc/cmd_admin_add_freeform_ai_law
-/client/proc/cmd_select_equipment
-/client/proc/forceEvent
-/client/proc/object_say
-/client/proc/reset_ooc
-/client/proc/set_dynex_scale
-/client/proc/set_ooc
-/client/proc/show_tip
-/client/proc/summon_ert
-/client/proc/toggle_nuke
-/client/proc/toggle_random_events
-
-admin_verbs_server
-/client/proc/adminchangemap
-/client/proc/cmd_admin_delete
-/client/proc/cmd_debug_del_all
-/client/proc/cmd_debug_force_del_all
-/client/proc/cmd_debug_hard_del_all
-/client/proc/forcerandomrotate
-/client/proc/generate_job_config
-/client/proc/panicbunker
-/client/proc/toggle_hub
-/client/proc/toggle_interviews
-/client/proc/toggle_random_events
-
 admin_verbs_debug
 #ifdef TESTING
 /client/proc/check_missing_sprites
 /client/proc/run_dynamic_simulations
 #endif
 
-/proc/machine_upgrade
 /client/proc/adventure_manager
 /client/proc/atmos_control
 /client/proc/callproc
@@ -43,12 +16,8 @@ admin_verbs_debug
 /client/proc/check_timer_sources
 /client/proc/clear_dynamic_transit
 /client/proc/cmd_admin_debug_traitor_objectives
-/client/proc/cmd_admin_delete
 /client/proc/cmd_admin_list_open_jobs
 /client/proc/cmd_admin_toggle_fov
-/client/proc/cmd_debug_del_all
-/client/proc/cmd_debug_force_del_all
-/client/proc/cmd_debug_hard_del_all
 /client/proc/cmd_debug_make_powernets
 /client/proc/cmd_debug_mob_lists
 /client/proc/cmd_display_del_log
@@ -82,7 +51,6 @@ admin_verbs_debug
 /client/proc/restart_controller
 /client/proc/run_empty_query
 /client/proc/SDQL2_query
-/client/proc/set_dynex_scale
 /client/proc/spawn_debug_full_crew
 /client/proc/test_cardpack_distribution
 /client/proc/test_movable_UI
@@ -539,7 +507,7 @@ ADMIN_VERB(game, toggle_admin_ai_interaction, "Allows you to interact with most 
 	log_admin("[key_name(usr)] has [usr.client.AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [usr.client.AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
-/client/proc/admin_2fa_verify()
+/client/proc/admin_2fa_verify() // not an ADMIN_VERB for a reason
 	set name = "Verify Admin"
 	set category = "Admin"
 

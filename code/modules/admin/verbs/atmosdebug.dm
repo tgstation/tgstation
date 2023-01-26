@@ -17,7 +17,7 @@ ADMIN_VERB(mapping, check_plumbing, "", R_DEBUG)
 			if(!(node1 in node2.nodes))
 				to_chat(usr, "One-way connection in [node1.name] located at [ADMIN_VERBOSEJMP(node1)]", confidential = TRUE)
 
-ADMIN_VERB(mapping, check_power, "". R_DEBUG)
+ADMIN_VERB(mapping, check_power, "", R_DEBUG)
 	var/list/results = list()
 
 	for (var/datum/powernet/PN in SSmachines.powernets)

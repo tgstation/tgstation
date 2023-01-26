@@ -1,11 +1,6 @@
 // Admin Tab - Admin Verbs
 
-ADMIN_VERB( \
-	admin, \
-	show_tip, \
-	"Sends a tip, which you specify, to all players", \
-	R_ADMIN, \
-	)
+ADMIN_VERB(admin, show_tip, "Sends a tip, which you specify, to all players", R_ADMIN)
 	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
 	if(!input)
 		return

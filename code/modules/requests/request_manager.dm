@@ -180,7 +180,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 					D.traitor_panel()
 					return TRUE
 			else
-				usr.client.holder.show_traitor_panel(M)
+				usr.client.admin_context_wrapper_context_traitor_panel(M)
 				return TRUE
 
 		if ("logs")

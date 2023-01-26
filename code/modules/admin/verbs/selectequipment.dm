@@ -1,8 +1,4 @@
-/client/proc/cmd_select_equipment(mob/target in GLOB.mob_list)
-	set category = "Admin.Events"
-	set name = "Select equipment"
-
-
+ADMIN_CONTEXT_ENTRY(context_select_equipment, "Select Equipment", R_ADMIN, mob/target in world)
 	var/datum/select_equipment/ui = new(usr, target)
 	ui.ui_interact(usr)
 

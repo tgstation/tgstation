@@ -19,18 +19,7 @@
 //- Identify how hard it is to break into the area and where the weak points are
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
-GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/datum/admins/proc/show_traitor_panel,
-	/client/proc/manipulate_organs,
-))
-GLOBAL_PROTECT(admin_verbs_debug_mapping)
-
-ADMIN_VERB( \
-	mapping, \
-	camera_range_display, \
-	"Iterate over all cameras in world and generate a camera map", \
-	R_DEBUG)
-
+ADMIN_VERB(mapping, camera_range_display, "Iterate over all cameras in world and generate a camera map", R_DEBUG)
 	if(tgui_alert(usr, "This can take a very long time and lock up the game!", "Don't do this on live", list("Okay", "Nevermind")) != "Okay")
 		return
 

@@ -756,7 +756,7 @@
 		if(!isobserver(usr))
 			SSadmin_verbs.dynamic_invoke_admin_verb(C, /mob/admin_module_holder/game/aghost)
 		sleep(0.2 SECONDS)
-		C.jumptocoord(x,y,z)
+		SSadmin_verbs.dynamic_invoke_admin_verb(C, /mob/admin_module_holder/game/jump_to_coordinate, x, y, z)
 
 	else if(href_list["adminmoreinfo"])
 		var/mob/subject = locate(href_list["adminmoreinfo"]) in GLOB.mob_list
@@ -990,8 +990,7 @@
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
 
-		var/mob/M = locate(href_list["jumpto"])
-		usr.client.jumptomob(M)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/jump_to_mob, locate(href_list["jumpto"]))
 
 	else if(href_list["getmob"])
 		if(!check_rights(R_ADMIN))
@@ -999,15 +998,10 @@
 
 		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
 			return
-		var/mob/M = locate(href_list["getmob"])
-		usr.client.Getmob(M)
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/get_mob, locate(href_list["getmob"]))
 
 	else if(href_list["sendmob"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["sendmob"])
-		usr.client.sendmob(M)
+		usr.client.admin_context_wrapper_context_sendmob(locate(href_list["sendmob"]))
 
 	else if(href_list["narrateto"])
 		usr.client.admin_context_wrapper_context_direct_narrate(locate(href_list["narrateto"]))
@@ -1066,37 +1060,13 @@
 			else
 				D.traitor_panel()
 		else
-			show_traitor_panel(M)
+			usr.client.admin_context_wrapper_context_traitor_panel(M)
 
 	else if(href_list["skill"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(!SSticker.HasRoundStarted())
-			tgui_alert(usr,"The game hasn't started yet!")
-			return
-
-		var/target = locate(href_list["skill"])
-		var/datum/mind/target_mind
-		if(ismob(target))
-			var/mob/target_mob = target
-			target_mind = target_mob.mind
-		else if (istype(target, /datum/mind))
-			target_mind = target
-		else
-			to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
-			return
-		show_skill_panel(target_mind)
+		usr.client.admin_context_wrapper_context_skill_panel(locate(href_list["skill"]))
 
 	else if(href_list["borgpanel"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["borgpanel"])
-		if(!iscyborg(M))
-			to_chat(usr, "This can only be used on cyborgs", confidential = TRUE)
-		else
-			open_borgopanel(M)
+		usr.client.admin_context_wrapper_context_borg_panel(locate(href_list["borgpanel"]))
 
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
@@ -1330,7 +1300,7 @@
 					log_admin("[key_name(usr)] turned a Lag Switch measure at index ([switch_index]) [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 					message_admins("[key_name_admin(usr)] turned a Lag Switch measure [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 
-		src.show_lag_switch_panel()
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/show_lag_switches)
 
 	else if(href_list["change_lag_switch_option"])
 		if(!check_rights(R_ADMIN))
@@ -1359,7 +1329,7 @@
 					log_admin("[key_name(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 					message_admins("[key_name_admin(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 
-		src.show_lag_switch_panel()
+		SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/game/show_lag_switches)
 
 	else if(href_list["viewruntime"])
 		var/datum/error_viewer/error_viewer = locate(href_list["viewruntime"])

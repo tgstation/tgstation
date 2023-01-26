@@ -148,12 +148,7 @@ If a guy was gibbed and you want to revive him, this is a good way to do so.
 Works kind of like entering the game with a new character. Character receives a new mind if they didn't have one.
 Traitors and the like can also be revived with the previous role mostly intact.
 */
-ADMIN_VERB(game, \
-	respawn_character, \
-	"Respawn a player that has been gibbed/dusted/killed. They must be a ghost", \
-	R_SPAWN, \
-	input as text)
-
+ADMIN_VERB(game, respawn_character, "Respawn a player that has been gibbed/dusted/killed. They must be a ghost", R_SPAWN, input as text)
 	var/mob/dead/observer/G_found
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		if(G.ckey == input)
@@ -323,23 +318,15 @@ ADMIN_VERB(game, change_view_range, "Switch between default and larger views", R
 		view_size.resetToDefault(getScreenSize(usr.client.prefs.read_preference(/datum/preference/toggle/widescreen)))
 	log_admin("[key_name(usr)] changed their view range to [usr.client.view].")
 
-/client/proc/toggle_combo_hud()
-	set category = "Admin.Game"
-	set name = "Toggle Combo HUD"
-	set desc = "Toggles the Admin Combo HUD (antag, sci, med, eng)"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if (combo_hud_enabled)
-		disable_combo_hud()
+ADMIN_VERB(game, toggle_combo_hud, "Toggles the Admin Combo HUD (all huds)", R_ADMIN)
+	if(usr.client.combo_hud_enabled)
+		usr.client.disable_combo_hud()
 	else
-		enable_combo_hud()
+		usr.client.enable_combo_hud()
 
-	to_chat(usr, "You toggled your admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
-	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
-	log_admin("[key_name(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[combo_hud_enabled ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	to_chat(usr, "You toggled your admin combo HUD [usr.client.combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
+	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [usr.client.combo_hud_enabled ? "ON" : "OFF"].")
+	log_admin("[key_name(usr)] toggled their admin combo HUD [usr.client.combo_hud_enabled ? "ON" : "OFF"].")
 
 /client/proc/enable_combo_hud()
 	if (combo_hud_enabled)
@@ -373,45 +360,28 @@ ADMIN_VERB(game, change_view_range, "Switch between default and larger views", R
 	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()
 
-/datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
-	set category = "Admin.Game"
-	set desc = "Edit mobs's memory and role"
-	set name = "Show Traitor Panel"
-	var/datum/mind/target_mind = target_mob.mind
+ADMIN_CONTEXT_ENTRY(context_traitor_panel, "Show Traitor Panel", R_ADMIN, mob/traitor in world)
+	var/datum/mind/target_mind = traitor.mind
 	if(!target_mind)
 		to_chat(usr, "This mob has no mind!", confidential = TRUE)
 		return
-	if(!istype(target_mob) && !istype(target_mind))
-		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
-		return
 	target_mind.traitor_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/show_skill_panel(target)
-	set category = "Admin.Game"
-	set desc = "Edit mobs's experience and skill levels"
-	set name = "Show Skill Panel"
-	var/datum/mind/target_mind
-	if(ismob(target))
-		var/mob/target_mob = target
-		target_mind = target_mob.mind
-	else if (istype(target, /datum/mind))
-		target_mind = target
-	else
-		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+ADMIN_CONTEXT_ENTRY(context_skill_panel, "Show Skill Panel", R_ADMIN, mob/skilled in world)
+	if(!SSticker.HasRoundStarted())
+		tgui_alert(usr,"The game hasn't started yet!")
+		return
+
+	var/datum/mind/target_mind = skilled.mind
+	if(!target_mind)
+		to_chat(usr, "This mob has no mind!", confidential = TRUE)
 		return
 	var/datum/skill_panel/SP = new(usr, target_mind)
 	SP.ui_interact(usr)
 
-/datum/admins/proc/show_lag_switch_panel()
-	set category = "Admin.Game"
-	set name = "Show Lag Switches"
-	set desc="Display the controls for drastic lag mitigation measures."
-
+ADMIN_VERB(game, show_lag_switches, "Display the controls for drastic lag mitigation measures", R_ADMIN)
 	if(!SSlag_switch.initialized)
 		to_chat(usr, span_notice("The Lag Switch subsystem has not yet been initialized."))
-		return
-	if(!check_rights())
 		return
 
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Lag Switches</title></head><body><h2><B>Lag (Reduction) Switches</B></h2>")
