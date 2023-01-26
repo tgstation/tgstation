@@ -57,8 +57,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
-		RegisterSignal(tram_part, COMSIG_TRAM_SIGN_REINIT, PROC_REF(set_signal_state))
-		GLOB.tram_signals += src
+	GLOB.tram_signals += src
 
 /obj/machinery/crossing_signal/Destroy()
 	GLOB.tram_signals -= src
@@ -67,7 +66,6 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		UnregisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING)
-		UnregisterSignal(tram_part, COMSIG_TRAM_SIGN_REINIT)
 
 /obj/machinery/crossing_signal/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -134,7 +132,6 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	end_processing()
 
 /obj/machinery/crossing_signal/process()
-	SIGNAL_HANDLER
 
 	var/datum/lift_master/tram/tram = tram_ref?.resolve()
 

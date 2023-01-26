@@ -141,8 +141,6 @@
 		update_tram_doors(LOCK_DOORS)
 		update_tram_doors(OPEN_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
-		if(!is_operational)
-			SEND_SIGNAL(src, COMSIG_TRAM_SIGN_REINIT, XING_STATE_MALF)
 		return PROCESS_KILL
 	else if(world.time >= next_move)
 		var/start_time = TICK_USAGE
