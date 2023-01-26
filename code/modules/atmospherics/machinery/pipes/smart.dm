@@ -42,9 +42,9 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 		connections |= connected_dir
 	//set the correct direction for this node in case of binary directions
 	switch(connections)
-		if(EAST|WEST)
+		if(EAST | WEST)
 			dir = EAST
-		if(SOUTH|NORTH)
+		if(SOUTH | NORTH)
 			dir = SOUTH
 		else
 			dir = connections
