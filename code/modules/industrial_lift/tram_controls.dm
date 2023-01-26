@@ -133,23 +133,24 @@
 
 /obj/machinery/computer/tram_controls/on_set_machine_stat()
 	. = ..()
-	for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
-		xing.update_operating()
+//	for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+		update_operating()
 
 /obj/machinery/computer/tram_controls/power_change()
 	. = ..()
-	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
-		sign.update_sign()
-	update_operating()
+//	for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+		update_operating()
 
 /obj/machinery/computer/tram_controls/proc/update_operating()
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(machine_stat & NOPOWER)
 		tram_part.is_operational = FALSE
+//		SEND_SIGNAL(src, COMSIG_TRAM_SIGN_REINIT, XING_STATE_MALF)
 	else
 		tram_part.is_operational = TRUE
+//		SEND_SIGNAL(src, COMSIG_TRAM_SIGN_REINIT, XING_STATE_AMBER)
 
-	INVOKE_ASYNC(tram_part, TYPE_PROC_REF(/datum/lift_master/tram/, set_travelling), FALSE)
+//	INVOKE_ASYNC(tram_part, TYPE_PROC_REF(/datum/lift_master/tram/, set_travelling), FALSE)
 
 /obj/item/circuit_component/tram_controls
 	display_name = "Tram Controls"

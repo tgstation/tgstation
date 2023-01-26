@@ -57,6 +57,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
+		RegisterSignal(tram_part, COMSIG_TRAM_SIGN_REINIT, PROC_REF(set_signal_state))
 		GLOB.tram_signals += src
 
 /obj/machinery/crossing_signal/Destroy()
@@ -66,6 +67,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		UnregisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING)
+		UnregisterSignal(tram_part, COMSIG_TRAM_SIGN_REINIT)
 
 /obj/machinery/crossing_signal/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -132,6 +134,8 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	end_processing()
 
 /obj/machinery/crossing_signal/process()
+	SIGNAL_HANDLER
+
 	var/datum/lift_master/tram/tram = tram_ref?.resolve()
 
 	// Check for stopped states.
@@ -202,6 +206,8 @@ GLOBAL_LIST_EMPTY(tram_signals)
  * force_update - force appearance to update even if state didn't change.
  */
 /obj/machinery/crossing_signal/proc/set_signal_state(new_state, force = FALSE)
+	SIGNAL_HANDLER
+
 	if(new_state == signal_state && !force)
 		return
 
@@ -268,5 +274,4 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	pixel_y = 20
 
 #undef XING_STATE_GREEN
-#undef XING_STATE_AMBER
 #undef XING_STATE_RED

@@ -6,3 +6,6 @@
 
 /// Sent from /obj/structure/industrial_lift/tram when it hits someone: ()
 #define COMSIG_TRAM_COLLISION "tram_collided"
+
+/// Sent from /obj/structure/industrial_lift/tram when the destination signs need to reinitalize
+#define COMSIG_TRAM_SIGN_REINIT "tram_reint"
