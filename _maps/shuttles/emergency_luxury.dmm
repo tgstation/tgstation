@@ -839,8 +839,8 @@
 /area/shuttle/escape/luxury)
 "JB" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice{
+/obj/item/gun/energy/laser/luxurypaywall,
+/obj/item/gun/energy/laser/luxurypaywall{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet/blue,
