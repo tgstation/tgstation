@@ -635,11 +635,7 @@ ADMIN_VERB(debug, spawn_ruin, "Attempt to randomly place a specific ruin", R_DEB
 	else
 		to_chat(usr, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
-/client/proc/unload_ctf()
-	set category = "Debug"
-	set name = "Unload CTF"
-	set desc = "Despawns the majority of CTF"
-
+ADMIN_VERB(debug, unload_ctf, "Despawns CTF", R_DEBUG)
 	toggle_id_ctf(usr, unload=TRUE)
 
 /client/proc/run_empty_query(val as num)
@@ -660,43 +656,25 @@ ADMIN_VERB(debug, spawn_ruin, "Attempt to randomly place a specific ruin", R_DEB
 
 	message_admins("[key_name_admin(src)] ran [val] empty queries.")
 
-/client/proc/clear_dynamic_transit()
-	set category = "Debug"
-	set name = "Clear Dynamic Turf Reservations"
-	set desc = "Deallocates all reserved space, restoring it to round start conditions."
-	if(!holder)
-		return
+ADMIN_VERB(debug, clear_dynamic_turf_reserverations, "Deallocates all reserved space, restoring it to round start conditions", R_DEBUG)
+	if(length(SSmapping.loaded_lazy_templates))
+		to_chat(usr, span_boldbig("WARNING, THERE ARE LOADED LAZY TEMPLATES, THIS WILL CAUSE THEM TO BE UNLOADED AND POTENTIALLY RUIN THE ROUND"))
+
 	var/answer = tgui_alert(usr,"WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!", "Really wipe dynamic turfs?", list("YES", "NO"))
 	if(answer != "YES")
 		return
+
 	message_admins(span_adminnotice("[key_name_admin(src)] cleared dynamic transit space."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Clear Dynamic Transit") // If...
 	log_admin("[key_name(src)] cleared dynamic transit space.")
 	SSmapping.wipe_reservations() //this goes after it's logged, incase something horrible happens.
 
-/client/proc/toggle_medal_disable()
-	set category = "Debug"
-	set name = "Toggle Medal Disable"
-	set desc = "Toggles the safety lock on trying to contact the medal hub."
-
-	if(!check_rights(R_DEBUG))
-		return
-
+ADMIN_VERB(debug, toggle_medal_disable, "Toggles the safety lock on trying to contact the medal hub", R_DEBUG)
 	SSachievements.achievements_enabled = !SSachievements.achievements_enabled
+	message_admins(span_adminnotice("[key_name_admin(usr)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout."))
+	log_admin("[key_name(usr)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
-	message_admins(span_adminnotice("[key_name_admin(src)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Medal Disable") // If...
-	log_admin("[key_name(src)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout.")
-
-/client/proc/view_runtimes()
-	set category = "Debug"
-	set name = "View Runtimes"
-	set desc = "Open the runtime Viewer"
-
-	if(!holder)
-		return
-
-	GLOB.error_cache.show_to(src)
+ADMIN_VERB(debug, view_runtimes, "Opem the Runtime Viewer", R_DEBUG)
+	GLOB.error_cache.show_to(usr)
 
 	// The runtime viewer has the potential to crash the server if there's a LOT of runtimes
 	// this has happened before, multiple times, so we'll just leave an alert on it
@@ -707,74 +685,38 @@ ADMIN_VERB(debug, spawn_ruin, "Attempt to randomly place a specific ruin", R_DEB
 		// Not using TGUI alert, because it's view runtimes, stuff is probably broken
 		alert(usr, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
 
-/client/proc/pump_random_event()
-	set category = "Debug"
-	set name = "Pump Random Event"
-	set desc = "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification."
-	if(!holder)
-		return
-
+ADMIN_VERB(debug, pump_random_event, "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification", R_FUN)
 	SSevents.scheduled = world.time
+	message_admins(span_adminnotice("[key_name_admin(usr)] pumped a random event."))
+	log_admin("[key_name(usr)] pumped a random event.")
 
-	message_admins(span_adminnotice("[key_name_admin(src)] pumped a random event."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Pump Random Event")
-	log_admin("[key_name(src)] pumped a random event.")
-
-/client/proc/start_line_profiling()
-	set category = "Profile"
-	set name = "Start Line Profiling"
-	set desc = "Starts tracking line by line profiling for code lines that support it"
-
+ADMIN_VERB(debug, start_line_profiling, "Starts tracking line by line profiling for code lines that support it", R_DEBUG)
 	LINE_PROFILE_START
-
 	message_admins(span_adminnotice("[key_name_admin(src)] started line by line profiling."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Line Profiling")
 	log_admin("[key_name(src)] started line by line profiling.")
 
-/client/proc/stop_line_profiling()
-	set category = "Profile"
-	set name = "Stops Line Profiling"
-	set desc = "Stops tracking line by line profiling for code lines that support it"
-
+ADMIN_VERB(debug, stop_line_profiling, "Stops tracking line by line profiling for code lines that support it", R_DEBUG)
 	LINE_PROFILE_STOP
-
 	message_admins(span_adminnotice("[key_name_admin(src)] stopped line by line profiling."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop Line Profiling")
 	log_admin("[key_name(src)] stopped line by line profiling.")
 
-/client/proc/show_line_profiling()
-	set category = "Profile"
-	set name = "Show Line Profiling"
-	set desc = "Shows tracked profiling info from code lines that support it"
-
+ADMIN_VERB(debug, show_line_profiling, "Shows tracked profiling info from code lines that support it", R_DEBUG)
 	var/sortlist = list(
 		"Avg time" = GLOBAL_PROC_REF(cmp_profile_avg_time_dsc),
 		"Total Time" = GLOBAL_PROC_REF(cmp_profile_time_dsc),
 		"Call Count" = GLOBAL_PROC_REF(cmp_profile_count_dsc)
 	)
-	var/sort = input(src, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
+	var/sort = input(usr, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
 	if (!sort)
 		return
 	sort = sortlist[sort]
-	profile_show(src, sort)
+	profile_show(usr, sort)
 
-/client/proc/reload_configuration()
-	set category = "Debug"
-	set name = "Reload Configuration"
-	set desc = "Force config reload to world default"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(debug, reload_configuration, "Force config reload to world default", R_DEBUG)
 	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", list("No", "Yes")) == "Yes")
 		config.admin_reload()
 
-/// A debug verb to check the sources of currently running timers
-/client/proc/check_timer_sources()
-	set category = "Debug"
-	set name = "Check Timer Sources"
-	set desc = "Checks the sources of the running timers"
-	if (!check_rights(R_DEBUG))
-		return
-
+ADMIN_VERB(debug, check_timer_sources, "Checks the sources of the running timers", R_DEBUG)
 	var/bucket_list_output = generate_timer_source_output(SStimer.bucket_list)
 	var/second_queue = generate_timer_source_output(SStimer.second_queue)
 

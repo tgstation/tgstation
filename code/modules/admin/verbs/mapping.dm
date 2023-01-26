@@ -20,15 +20,8 @@
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/client/proc/atmosscan, //check plumbing
-	/client/proc/powerdebug, //check power
-	/client/proc/set_server_fps, //allows you to set the ticklag.
 	/datum/admins/proc/show_traitor_panel,
 	/client/proc/manipulate_organs,
-	/client/proc/start_line_profiling,
-	/client/proc/stop_line_profiling,
-	/client/proc/show_line_profiling,
-	/client/proc/place_ruin,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
