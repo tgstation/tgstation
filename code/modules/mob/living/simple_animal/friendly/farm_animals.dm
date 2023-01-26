@@ -60,9 +60,9 @@
 		return
 
 	for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
-		var/step = get_step(src, direction)
+		var/turf/step = get_step(src, direction)
 
-		if(!step)
+		if(!istype(step))
 			return
 
 		var/vine = locate(/obj/structure/spacevine) in step
