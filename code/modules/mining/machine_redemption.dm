@@ -241,7 +241,7 @@
 				user_id_card = user.get_idcard(TRUE)
 			if(points)
 				if(user_id_card)
-					user_id_card.mining_points += points
+					user_id_card.registered_account.mining_points += points
 					points = 0
 				else
 					to_chat(usr, span_warning("No valid ID detected."))
