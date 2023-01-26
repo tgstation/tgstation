@@ -76,22 +76,34 @@
 /datum/lift_master/tram/proc/gracefully_break(atom/bumped_atom)
 	SIGNAL_HANDLER
 
-	if(istype(bumped_atom, /obj/machinery/field))
-		return
-
 	travel_distance = 0
-
-	bumped_atom.visible_message(span_userdanger("[src] crashes into the field violently!"))
+	bumped_atom.visible_message(span_userdanger("The [bumped_atom.name] crashes into the field violently!"))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms)
 		tram_part.set_travelling(FALSE)
-		if(prob(15) || locate(/mob/living) in tram_part.lift_load) //always go boom on people on the track
-			explosion(tram_part, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
-		qdel(tram_part)
+		for(var/tram_contents in tram_part.lift_load)
+			if(iseffect(tram_contents))
+				continue
+
+			if(isliving(tram_contents))
+				explosion(tram_contents, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
+
+			else if(prob(9))
+				explosion(tram_contents, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
+
+			explosion(tram_part, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
+			qdel(tram_part)
+
+		for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+			desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
+
+		for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+			xing.set_signal_state(XING_STATE_MALF)
+			xing.update_appearance()
 
 /**
  * Handles moving the tram
  *
- * Tells the individual tram parts where to actually go and has an extra safety check
+ * Tells the individual tram parts where to actually go and has an extra safety checks
  * incase multiple inputs get through, preventing conflicting directions and the tram
  * literally ripping itself apart. all of the actual movement is handled by SStramprocess
  */
