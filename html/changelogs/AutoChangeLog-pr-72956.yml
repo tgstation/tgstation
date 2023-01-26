@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes:
+  - bugfix: "Regular asteroid turfs now dig up regular asteroid sand instead of the basalt variant from Lavaland."

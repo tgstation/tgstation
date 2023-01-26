@@ -907,3 +907,37 @@
       into a MODsuit, and vice-versa in order to extract the valuable AI in a method
       fit-for-sale. In short: The "Steal a Functional AI" objective will work if the
       "captured" AI is in a MODsuit.'
+2023-01-26:
+  Autisem:
+  - bugfix: You can print the new list pick and associative list pick components
+  - bugfix: Associative list pick works as intended now
+  JohnFulpWillard:
+  - qol: Mining points is now tied to bank accounts instead of individual IDs, so
+      they transfer over in cases of an ID replacement.
+  LT3:
+  - bugfix: Fixed the tram not exploding when it's supposed to
+  SmoSmoSmoSmok:
+  - qol: you can now search for items on the mining vendor
+  - bugfix: item prices will no longer appear as NaN
+  SyncIt21:
+  - rscadd: 'more designs for the rcd
+
+      refactor:` try_wallmount()` to return true only after successful mount'
+  - bugfix: '`apc_tool_act/rcd_act()`  incorrecly checking for simple circuits upgrade
+      in the wrong variable'
+  - bugfix: newly created APC's not assigning themselves to their areas.
+  - bugfix: rcd building structures [walls, airlocks etc] on turf's that already have
+      structures on them
+  Time-Green:
+  - refactor: External organs have been near-completely refactored.
+  - admin: Admin-spawned external organs will load with a random icon and color
+  - bugfix: fixes angel wings not working for non-humans (it was so fucking broken)
+  - bugfix: fixes external organs being invisible if they werent initialized with
+      a human
+  jlsnow301:
+  - bugfix: Sec huds should properly label targets with the new record system
+  mc-oofert:
+  - bugfix: venture shuttle no longer docks on purchase
+  san7890:
+  - bugfix: 'All Mobs (including Basic mobs) are now able to suicide. (warning: some
+      exclusions remain)'

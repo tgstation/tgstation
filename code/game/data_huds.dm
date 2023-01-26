@@ -312,6 +312,8 @@ Security HUDs! Basic mode shows only the job.
 
 	var/datum/record/crew/target = find_record(perp_name)
 	if(!target || target.wanted_status == WANTED_NONE)
+		holder.icon_state = null
+		set_hud_image_inactive(WANTED_HUD)
 		return
 
 	switch(target.wanted_status)
@@ -325,6 +327,8 @@ Security HUDs! Basic mode shows only the job.
 			holder.icon_state = "hudparolled"
 		if(WANTED_DISCHARGED)
 			holder.icon_state = "huddischarged"
+
+	set_hud_image_active(WANTED_HUD)
 
 /***********************************************
 Diagnostic HUDs!
