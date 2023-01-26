@@ -4,7 +4,7 @@
  * themselves moving to re register signals onto the turf via connect_loc. this is bad and dumb since it makes the tram
  * more expensive to move.
  *
- * if you map something on to the tram, make SURE if possible that it doesnt have anythign reacting to its own movement
+ * if you map something on to the tram, make SURE if possible that it doesnt have anything reacting to its own movement
  * it will make the tram more expensive to move and we dont want that because we dont want to return to the days where
  * the tram took a third of the tick per movement when its just carrying its default mapped in objects
  */
@@ -132,28 +132,6 @@
 /obj/machinery/door/window/tram/unlock()
 	req_access = null
 
-/obj/machinery/door/window/tram/close(forced=FALSE)
-	if(icon_state == base_state) //if doors are already closed, return
-		return 1
-	if(operating)
-		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
-	if(forced < 2)
-		if(obj_flags & EMAGGED)
-			return 0
-	operating = TRUE
-	do_animate("closing")
-	icon_state = base_state
-	sleep(17 DECISECONDS)
-	set_density(TRUE)
-	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
-
-	operating = FALSE
-	return 1
-
 /obj/machinery/door/window/tram/proc/find_tram()
 	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
 		if(lift.specific_lift_id == associated_lift)
@@ -171,7 +149,7 @@
 	. += span_notice("It has labels indicating that it has an emergency mechanism to open from the inside using <b>just your hands</b> in the event of an emergency.")
 
 /obj/machinery/door/window/tram/try_safety_unlock(mob/user)
-	if(!hasPower())
+	if(!hasPower()  && density)
 		to_chat(user, span_notice("You begin pulling the tram emergency exit handle..."))
 		if(do_after(user, 15 SECONDS, target = src))
 			try_to_crowbar(null, user, TRUE)
