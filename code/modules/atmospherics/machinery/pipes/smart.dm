@@ -63,28 +63,6 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	else
 		initialize_directions = ALL_CARDINALS
 
-/obj/machinery/atmospherics/pipe/smart/proc/check_binary_direction(direction)
-	switch(direction)
-		if(EAST|WEST)
-			return EAST
-		if(SOUTH|NORTH)
-			return SOUTH
-		else
-			return direction
-
-/obj/machinery/atmospherics/pipe/smart/proc/check_manifold_direction(direction)
-	switch(direction)
-		if(NORTH|SOUTH|EAST)
-			return WEST
-		if(NORTH|SOUTH|WEST)
-			return EAST
-		if(NORTH|WEST|EAST)
-			return SOUTH
-		if(SOUTH|WEST|EAST)
-			return NORTH
-		else
-			return null
-
 //mapping helpers
 /obj/machinery/atmospherics/pipe/smart/simple
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'

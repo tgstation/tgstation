@@ -316,7 +316,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(istype(target, /obj/machinery/air_sensor))
 		if(!do_after(user, destroy_speed, target))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 		qdel(target)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

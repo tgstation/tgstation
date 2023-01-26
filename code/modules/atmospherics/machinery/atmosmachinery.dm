@@ -279,7 +279,7 @@
 	if(target.loc == loc)
 		return FALSE
 
-	//is the target is not in the same piping layer & it does not the all layer connection flag[which allows it to be connected regardless of layer] then we are out
+	//if the target is not in the same piping layer & it does not have the all layer connection flag[which allows it to be connected regardless of layer] then we are out
 	if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
 		return FALSE
 
