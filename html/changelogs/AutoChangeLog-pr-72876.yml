@@ -1,0 +1,5 @@
+author: "SmoSmoSmoSmok"
+delete-after: True
+changes:
+  - qol: "you can now search for items on the mining vendor"
+  - bugfix: "item prices will no longer appear as NaN"
