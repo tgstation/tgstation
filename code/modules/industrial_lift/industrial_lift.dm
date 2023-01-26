@@ -849,7 +849,6 @@ GLOBAL_LIST_EMPTY(lifts)
  * Tram finds its location at this point before fully unlocking controls to the user.
  */
 /obj/structure/industrial_lift/tram/proc/unlock_controls()
-	visible_message(span_notice("[src]'s controls are now unlocked."))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
 		lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)

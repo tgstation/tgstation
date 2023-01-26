@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
-	GLOB.tram_signals += src
+		GLOB.tram_signals += src
 
 /obj/machinery/crossing_signal/Destroy()
 	GLOB.tram_signals -= src
@@ -203,8 +203,6 @@ GLOBAL_LIST_EMPTY(tram_signals)
  * force_update - force appearance to update even if state didn't change.
  */
 /obj/machinery/crossing_signal/proc/set_signal_state(new_state, force = FALSE)
-	SIGNAL_HANDLER
-
 	if(new_state == signal_state && !force)
 		return
 

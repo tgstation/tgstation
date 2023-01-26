@@ -213,7 +213,7 @@
 			tram = possible_match
 			break
 
-	if(!tram || !tram.is_operational)
+	if(!tram || !tram.is_operational) //tram is QDEL or has no power
 		say("The tram is not in service. Please send a technician to repair the internals of the tram.")
 		return
 	if(tram.travelling) //in use

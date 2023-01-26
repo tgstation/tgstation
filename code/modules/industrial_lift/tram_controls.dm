@@ -131,10 +131,9 @@
 	update_appearance(UPDATE_ICON)
 	return PROCESS_KILL
 
-/obj/machinery/computer/tram_controls/power_change()
+/obj/machinery/computer/tram_controls/power_change() // Change tram operating status on power loss/recovery
 	. = ..()
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
-	message_admins("Power Change, Update Operating")
 	update_operating()
 	if(!tram_part.travelling)
 		if(is_operational)
@@ -152,13 +151,11 @@
 
 
 
-/obj/machinery/computer/tram_controls/proc/update_operating()
+/obj/machinery/computer/tram_controls/proc/update_operating() // Pass the operating status from the controls to the lift_master
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(machine_stat & NOPOWER)
-		message_admins("tram_part operational is [tram_part.is_operational]")
 		tram_part.is_operational = FALSE
 	else
-		message_admins("tram_part operational is [tram_part.is_operational]")
 		tram_part.is_operational = TRUE
 
 /obj/item/circuit_component/tram_controls
