@@ -7,6 +7,23 @@
 	earliest_start = 10 MINUTES
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "A pod containing a random supply crate lands on the station."
+	///Admin setable override that is used instead of selecting a random location
+	var/atom/landing_turf_override
+	///Admin setable override to spawn a specific cargo pack type
+	var/pack_type_override
+
+/datum/round_event_control/stray_cargo/admin_setup(mob/admin)
+	var/admin_targeted = tgui_alert(usr,"Aimed at current turf?", "Pod Targetting", list("Yes", "No"))
+	if(admin_targeted == "Yes")
+		landing_turf_override = get_turf(usr)
+	var/admin_selected_pack = tgui_alert(usr,"Select pod contents?", "Pod Contents", list("Yes", "No"))
+	if(admin_selected_pack == "Yes")
+		override_contents()
+	message_admins("[key_name_admin(usr)] has aimed a stray cargo pod at [AREACOORD(landing_turf_override)]. The pod contains [pack_type_override].")
+	log_admin("[key_name_admin(usr)] has aimed a stray cargo pod at [AREACOORD(landing_turf_override)]. The pod contains [pack_type_override].")
+
+/datum/round_event_control/stray_cargo/proc/override_contents()
+	pack_type_override = tgui_input_list(usr, "Choose a cargo crate to drop.", "Choose pod contents.", sort_list(subtypesof(/datum/supply_pack), /proc/cmp_typepaths_asc))
 
 ///Spawns a cargo pod containing a random cargo supply pack on a random area of the station
 /datum/round_event/stray_cargo
@@ -14,6 +31,10 @@
 	announce_chance = 75
 	var/list/possible_pack_types = list() ///List of possible supply packs dropped in the pod, if empty picks from the cargo list
 	var/static/list/stray_spawnable_supply_packs = list() ///List of default spawnable supply packs, filtered from the cargo list
+	///Admin setable override that is used instead of selecting a random location
+	var/atom/admin_override_turf
+	///Admin setable override to spawn a specific cargo pack type
+	var/admin_override_contents
 
 /datum/round_event/stray_cargo/announce(fake)
 	priority_announce("Stray cargo pod detected on long-range scanners. Expected location of impact: [impact_area.name].", "Collision Alert")
@@ -23,14 +44,23 @@
 * Also randomizes the start timer
 */
 /datum/round_event/stray_cargo/setup()
+	var/datum/round_event_control/stray_cargo/event_controller = control
 	start_when = rand(20, 40)
-	impact_area = find_event_area()
+	if(event_controller.landing_turf_override)
+		admin_override_turf = event_controller.landing_turf_override
+		impact_area = admin_override_turf.loc
+		event_controller.landing_turf_override = null
+	else
+		impact_area = find_event_area()
 	if(!impact_area)
 		CRASH("No valid areas for cargo pod found.")
 	var/list/turf_test = get_area_turfs(impact_area)
 	if(!turf_test.len)
 		CRASH("Stray Cargo Pod : No valid turfs found for [impact_area] - [impact_area.type]")
-
+	
+	if(event_controller.pack_type_override)
+		admin_override_contents = event_controller.pack_type_override
+		event_controller.pack_type_override = null
 	if(!stray_spawnable_supply_packs.len)
 		stray_spawnable_supply_packs = SSshuttle.supply_packs.Copy()
 		for(var/pack in stray_spawnable_supply_packs)
@@ -46,23 +76,33 @@
 		var/turf/T = i
 		if(T.density)
 			valid_turfs -= T
-	var/turf/LZ = pick(valid_turfs)
-	var/pack_type
-	if(possible_pack_types.len)
-		pack_type = pick(possible_pack_types)
+	var/turf/landing_zone
+	if(admin_override_turf)
+		landing_zone = admin_override_turf
 	else
-		pack_type = pick(stray_spawnable_supply_packs)
+		landing_zone = pick(valid_turfs)
+	var/pack_type
+	if(admin_override_contents)
+		pack_type = admin_override_contents
+	else
+		if(possible_pack_types.len)
+			pack_type = pick(possible_pack_types)
+		else
+			pack_type = pick(stray_spawnable_supply_packs)
 	var/datum/supply_pack/SP
 	if(ispath(pack_type, /datum/supply_pack))
 		SP = new pack_type
 	else  // treat this as a supply pack id and resolving it with SSshuttle
-		SP = SSshuttle.supply_packs[pack_type]
+		if(admin_override_contents)
+			SP = admin_override_contents //Syndicate crates create a new datum while being customized which will result in this being triggered. Outside of this situation this should never trigger
+		else
+			SP = SSshuttle.supply_packs[pack_type]
 	var/obj/structure/closet/crate/crate = SP.generate(null)
 	if(crate) //empty supply packs are a thing! get memed on.
 		crate.locked = FALSE //Unlock secure crates
 		crate.update_appearance()
 	var/obj/structure/closet/supplypod/pod = make_pod()
-	new /obj/effect/pod_landingzone(LZ, pod, crate)
+	new /obj/effect/pod_landingzone(landing_zone, pod, crate)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()
@@ -96,6 +136,20 @@
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
 	description = "A pod containing syndicate gear lands on the station."
+
+/datum/round_event_control/stray_cargo/syndicate/override_contents()
+	var/datum/supply_pack/misc/syndicate/custom_value/syndicate_pack = new
+	var/pack_telecrystals = tgui_input_number(usr, "Please input crate's value in telecrystals.", "Set Telecrystals.", 30)
+	if(isnull(pack_telecrystals))
+		pack_telecrystals = 30
+	var/list/possible_uplinks = list("Traitor" = UPLINK_TRAITORS, "Nuke Op" = UPLINK_NUKE_OPS, "Clown Op" = UPLINK_CLOWN_OPS)
+	var/uplink_type = tgui_input_list(usr, "Choose uplink to draw items from.", "Choose uplink type.", possible_uplinks)
+	var/selection = possible_uplinks[uplink_type]
+	if(isnull(selection))
+		selection = UPLINK_TRAITORS
+	syndicate_pack.setup_contents(pack_telecrystals, selection)
+	pack_type_override = syndicate_pack
+
 
 /datum/round_event/stray_cargo/syndicate
 	possible_pack_types = list(/datum/supply_pack/misc/syndicate)
