@@ -530,7 +530,7 @@
 	speed = 9 SECONDS, \
 	effectiveness = 105, \
 	)
-	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/venus_human_trap, damage_multiplier = 0.5, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
 
 /obj/item/scythe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
