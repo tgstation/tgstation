@@ -1942,7 +1942,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(istransparentturf(front_hole))
 			ceiling = front_hole
 		else
-			var/list/checkturfs = block(locate(x-1,y-1,ceiling.z),locate(x+1,y+1,ceiling.z))-ceiling-front_hole //Try find hole near of us
+			var/list/checkturfs = BLOCK_COORDS(x - 1, y - 1, ceiling.z, x + 1, y + 1, ceiling.z)
+			checkturfs -= ceiling
 			for(var/turf/checkhole in checkturfs)
 				if(istransparentturf(checkhole))
 					ceiling = checkhole
@@ -1991,7 +1992,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			floor = front_hole
 			lower_level = get_step_multiz(front_hole, DOWN)
 		else
-			var/list/checkturfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))-floor //Try find hole near of us
+			// Try to find a hole near us
+			var/list/checkturfs = BLOCK_COORDS(x - 1, y - 1, z, x + 1, y + 1, z)
+			checkturfs -= floor
 			for(var/turf/checkhole in checkturfs)
 				if(istransparentturf(checkhole))
 					floor = checkhole

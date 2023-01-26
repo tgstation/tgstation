@@ -245,7 +245,8 @@
 	var/gauss_major = 0
 	var/gauss_minor = 0
 	var/gauss_real = 0
-	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z)) //NO MORE DISCS IN WINDOWS
+
+	var/list/turfs = BLOCK_COORDS(x - 1, y - 1, z, x + 1, y + 1, z) //NO MORE DISCS IN WINDOWS
 	while(length(turfs))
 		var/turf/T = pick_n_take(turfs)
 		if(T.is_blocked_turf(TRUE))

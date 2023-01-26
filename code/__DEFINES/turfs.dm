@@ -27,6 +27,9 @@
 
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
 
+/// Returns a list of turfs in the rectangle specified by the two coordinates
+#define BLOCK_COORDS(tx1, ty1, tz1, tx2, ty2, tz2) block(locate(tx1, ty1, tz1), locate(tx2, ty2, tz2))
+
 /// The pipes, disposals, and wires are hidden
 #define UNDERFLOOR_HIDDEN 0
 /// The pipes, disposals, and wires are visible but cannot be interacted with
