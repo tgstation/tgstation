@@ -61,13 +61,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	 *This is actually just an bandage for lazy mappers using + pipes all over the place without carying about directions so hopefully when they map pipes correctly we can remove this
 	 */
 	if(map_loaded_pipe)
-		for(var/i in 1 to device_type)
-			var/spanning_direction = spanning_directions[i]
-			if(!spanning_direction)
-				continue
-			//looks like there is a machine connected in this direction so lets draw the sprite here
-			if(spanning_direction & connections)
-				sprite_bits |= spanning_direction
+		sprite_bits = connections
 		/**
 		 * if pipe is connected in only one direction[e.g. after disconnecting its neighbour] then to avoid a broken sprite append the reverse direction of its one connected end.
 		 * this wont work for L pipes because if one of its ends is broken then the opposite direction of any of its last connected end is invalid
