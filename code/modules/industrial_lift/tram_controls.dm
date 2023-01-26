@@ -135,26 +135,28 @@
 	. = ..()
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	update_operating()
-	if(!tram_part.travelling)
-		if(is_operational)
-			for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
-				xing.set_signal_state(XING_STATE_AMBER, TRUE)
-			for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
-				desto.icon_state = "[desto.base_icon_state][DESTINATION_OFF]"
-				desto.update_appearance()
-		else
-			for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
-				xing.set_signal_state(XING_STATE_MALF, TRUE)
-			for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
-				desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
-				desto.update_appearance()
+	if(tram_part)
+		if(!tram_part.travelling)
+			if(is_operational)
+				for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+					xing.set_signal_state(XING_STATE_AMBER, TRUE)
+				for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+					desto.icon_state = "[desto.base_icon_state][DESTINATION_OFF]"
+					desto.update_appearance()
+			else
+				for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+					xing.set_signal_state(XING_STATE_MALF, TRUE)
+				for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+					desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
+					desto.update_appearance()
 
 /obj/machinery/computer/tram_controls/proc/update_operating() // Pass the operating status from the controls to the lift_master
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
-	if(machine_stat & NOPOWER)
-		tram_part.is_operational = FALSE
-	else
-		tram_part.is_operational = TRUE
+	if(tram_part)
+		if(machine_stat & NOPOWER)
+			tram_part.is_operational = FALSE
+		else
+			tram_part.is_operational = TRUE
 
 /obj/item/circuit_component/tram_controls
 	display_name = "Tram Controls"
