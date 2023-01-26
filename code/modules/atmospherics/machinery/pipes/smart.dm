@@ -19,6 +19,11 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	. = ..()
 	map_loaded_pipe = mapload
 
+/// when maploaded pipes are disconnected they break their illusion i.e. they go back to being visible in their respective directions
+/obj/machinery/atmospherics/pipe/smart/disconnect(obj/machinery/atmospherics/reference)
+	map_loaded_pipe = FALSE
+	..()
+
 /obj/machinery/atmospherics/pipe/smart/update_pipe_icon()
 	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
 	connections = NONE
