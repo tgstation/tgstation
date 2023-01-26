@@ -149,8 +149,6 @@
 				desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 				desto.update_appearance()
 
-
-
 /obj/machinery/computer/tram_controls/proc/update_operating() // Pass the operating status from the controls to the lift_master
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(machine_stat & NOPOWER)
