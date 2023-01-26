@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - rscadd: "more designs for the rcd\nrefactor:` try_wallmount()` to return true only after successful mount"
-  - bugfix: "`apc_tool_act/rcd_act()`  incorrecly checking for simple circuits upgrade in the wrong variable"
-  - bugfix: "newly created APC's not assigning themselves to their areas."
-  - bugfix: "rcd building structures [walls, airlocks etc] on turf's that already have structures on them"
