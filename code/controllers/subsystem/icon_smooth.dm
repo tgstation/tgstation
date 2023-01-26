@@ -17,24 +17,10 @@ SUBSYSTEM_DEF(icon_smooth)
 		smooth_queue_cache.len--
 		if(QDELETED(smoothing_atom) || !(smoothing_atom.smoothing_flags & SMOOTH_QUEUED))
 			continue
-
-		var/defer = FALSE
-		if(!(smoothing_atom.flags_1 & INITIALIZED_1))
-			defer = TRUE
-		else if(isturf(smoothing_atom))
-			var/turf/smoothing_turf = smoothing_atom
-			// So, when we go to load a template, we wipe the turfs information to prepare it for loading from the template
-			// Which is fine, and you would think nothing could go wrong here
-			// However, if one of the turfs bordering the border of the template area gets triggered to smooth,
-			// it tries to access the loading turfs canSmoothWith list, which will be null!
-			if(smoothing_turf.turf_flags & TURF_MAPLOADING)
-				defer = TRUE
-
-		if(!defer)
+		if(smoothing_atom.flags_1 & INITIALIZED_1)
 			smoothing_atom.smooth_icon()
 		else
 			deferred += smoothing_atom
-
 		if (MC_TICK_CHECK)
 			return
 
