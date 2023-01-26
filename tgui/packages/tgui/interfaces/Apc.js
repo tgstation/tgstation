@@ -66,7 +66,7 @@ const ApcContent = (props, context) => {
   const adjustedCellChange = data.powerCellStatus / 100;
   if (data.failTime > 0) {
     return (
-      <NoticeBox textAlign="center" info mb={0}>
+      <NoticeBox info textAlign="center" mb={0}>
         <b>
           <h3>SYSTEM FAILURE</h3>
         </b>
