@@ -124,7 +124,7 @@
 	update_freelook_sight()
 	return 1
 
-//When the tram is in station, the doors are locked to engineering only.
+//When the tram is in station, the doors are locked to engineering and command only.
 /obj/machinery/door/window/tram/lock()
 	req_access = list("engineering")
 
