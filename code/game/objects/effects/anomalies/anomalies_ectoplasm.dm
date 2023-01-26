@@ -68,7 +68,7 @@
 
 	if(effect_power >= 10) //Performs something akin to a revenant defile spell.
 		var/effect_range = ghosts_orbiting + 3
-		var/effect_area = spiral_range(effect_range, src)
+		var/effect_area = range(effect_range, src)
 
 		for(var/impacted_thing in effect_area)
 			if(isfloorturf(impacted_thing))
