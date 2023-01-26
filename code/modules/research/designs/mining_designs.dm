@@ -29,7 +29,7 @@
 /datum/design/pickaxe
 	name = "Pickaxe"
 	id = "pickaxe"
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 2000)
 	build_path = /obj/item/pickaxe
 	category = list(
