@@ -20,6 +20,10 @@
 	var/poster_type
 	var/obj/structure/sign/poster/poster_structure
 
+/obj/item/poster/examine(mob/user)
+	. = ..()
+	. += span_notice("You can trap it with a glass shard")
+
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
 
