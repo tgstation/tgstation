@@ -117,7 +117,7 @@
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
 		return FALSE
 	tram_part.tram_travel(to_where)
-	say("The tram has been called to [to_where.name].")
+	say("Departing to: [to_where.name].")
 	update_appearance()
 	return TRUE
 
