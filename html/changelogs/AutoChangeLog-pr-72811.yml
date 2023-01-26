@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram hit counter now only increments when actual players are hit. No more free points hitting the horrible goose"

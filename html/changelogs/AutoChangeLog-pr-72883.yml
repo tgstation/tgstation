@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "bluespace light replacer from fixing lights/turfs containing lights not in its line of sight"
-  - bugfix: "beaming any turf even those not containing lights from causing lag"
