@@ -1,0 +1,4 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - bugfix: "RD has access to the AI SAT on deltastation"
