@@ -160,8 +160,7 @@
 	// Grab the border one larger than the load area, except when at the edge of the map
 	var/list/border = BLOCK_COORDS(
 		max(T.x - 1, 1), max(T.y - 1, 1), T.z,
-		min(T.x + width + 1, world.maxx), min(T.y + height + 1, world.maxy), T.z
-		)
+		min(T.x + width + 1, world.maxx), min(T.y + height + 1, world.maxy), T.z)
 
 	// iterate over turfs in the border and clear them from active atmos processing and assign TURF_MAPLOADING
 	for(var/turf/border_turf as anything in border)
