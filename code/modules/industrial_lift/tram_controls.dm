@@ -138,6 +138,8 @@
 
 /obj/machinery/computer/tram_controls/power_change()
 	. = ..()
+	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
+		sign.update_sign()
 	update_operating()
 
 /obj/machinery/computer/tram_controls/proc/update_operating()
