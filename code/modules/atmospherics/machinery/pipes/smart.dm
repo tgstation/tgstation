@@ -19,48 +19,75 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	. = ..()
 	map_loaded_pipe = mapload
 
-/// when maploaded pipes are disconnected they break their illusion i.e. they go back to being visible in their respective directions
-/obj/machinery/atmospherics/pipe/smart/disconnect(obj/machinery/atmospherics/reference)
-	map_loaded_pipe = FALSE
-	..()
+///helper function to append all directions into an single bit flag
+/obj/machinery/atmospherics/pipe/smart/proc/append_directions(list/spanning_directions)
+	var/bit_flag = 0
+	for(var/i in 1 to spanning_directions.len)
+		var/spanning_direction = spanning_directions[i]
+		if(!spanning_direction)
+			continue
+		bit_flag |= spanning_direction
+	return bit_flag
 
 /obj/machinery/atmospherics/pipe/smart/update_pipe_icon()
 	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
-	connections = NONE
 
+	//find all directions this pipe is connected with other nodes
+	connections = NONE
+	for(var/i in 1 to device_type)
+		if(!nodes[i])
+			continue
+		var/obj/machinery/atmospherics/node = nodes[i]
+		var/connected_dir = get_dir(src, node)
+		connections |= connected_dir
+	//set the correct direction for this node in case of binary directions
+	switch(connections)
+		if(EAST|WEST)
+			dir = EAST
+		if(SOUTH|NORTH)
+			dir = SOUTH
+		else
+			dir = connections
+
+	//same as connections but used for spriting
+	var/sprite_bits = NONE
 	//the directions this pipe stretches out in e.g. T pipe is EAST,WEST & SOUTH, L pipe is NORTH,EAST & so on
 	var/list/spanning_directions = get_node_connects()
-
 	/**
 	 *For pipes created during mapload we draw the pipes sprite only in directions where its connected to a machine
 	 *so for example if an T shaped pipe is connected only in its EAST & WEST directions then only those ends are drawn
 	 *but the SOUTH end is not drawn
 	 *this will allow mappers to use whatever pipes but the end result has no visual clutter.
+	 *This is actually just an bandage for lazy mappers using + pipes all over the place without carying about directions so hopefully when they map pipes correctly we can remove this
 	 */
 	if(map_loaded_pipe)
-		var/draw_sprite_in_this_direction = FALSE
-		for(var/spanning_direction in spanning_directions)
-			//find atleast one machine connected in spanning_direction
-			draw_sprite_in_this_direction = FALSE
-			for(var/i in 1 to device_type)
-				if(!nodes[i])
-					continue
-				var/obj/machinery/atmospherics/node = nodes[i]
-				var/target_direction = get_dir(src, node)
-				//we found a machine connected in this direction so lets draw the sprite this way
-				if(spanning_direction == target_direction)
-					draw_sprite_in_this_direction = TRUE
-					break
-			if(draw_sprite_in_this_direction)
-				connections |= spanning_direction
+		for(var/i in 1 to device_type)
+			var/spanning_direction = spanning_directions[i]
+			if(!spanning_direction)
+				continue
+			//looks like there is a machine connected in this direction so lets draw the sprite here
+			if(spanning_direction & connections)
+				sprite_bits |= spanning_direction
+		/**
+		 * if pipe is connected in only one direction[e.g. after disconnecting its neighbour] then to avoid a broken sprite append the reverse direction of its one connected end.
+		 * this wont work for L pipes because if one of its ends is broken then the opposite direction of any of its last connected end is invalid
+		 * e.g. for an L pipe if the top[NORTH] end is broken the opposite of its one remaining connected end[i.e EAST END] is WEST but thats not an valid direction for this pipe
+		 * so we have to again check one last time after this to make sure the pipe isnt broken
+		 */
+		if(ISSTUB(sprite_bits))
+			// & initialize_directions will yield 0 if the reversed direction is not valid
+			sprite_bits |= REVERSE_DIR(sprite_bits) & get_init_directions()
+			//if its still broken after the above patch then screw it we make the pipe an normal non mapload type and do the usual stuff with player created pipes
+			if(ISSTUB(sprite_bits))
+				sprite_bits = append_directions(spanning_directions)
 	/**
 	 *for pipes created by players during the round we draw the pipe in all directions so they
 	 *can visually see what ends are free.
 	*/
 	else
-		for(var/spanning_direction in spanning_directions)
-			connections |= spanning_direction
-	icon_state = "[connections]_[piping_layer]"
+		sprite_bits = append_directions(spanning_directions)
+
+	icon_state = "[sprite_bits]_[piping_layer]"
 
 /obj/machinery/atmospherics/pipe/smart/set_init_directions(init_dir)
 	if(init_dir)
