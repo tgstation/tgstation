@@ -68,9 +68,9 @@
 	anomaly_type = /obj/item/assembly/signaler/anomaly/dimensional
 	icon_state = "rawcore_dimensional"
 
-/obj/item/raw_anomaly_core/ectoplasm //Inaccessible from cargo or roundstart spawns
+/obj/item/raw_anomaly_core/ectoplasm //Has no cargo order option, but can sometimes be a roundstart pick
 	name = "\improper ectoplasm anomaly core"
-	desc = "The raw core of an ectoplasmic anomaly. It contains secrets it wishes to share with you."
+	desc = "The raw core of an ectoplasmic anomaly. It wants to share it's secrets with you."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/ectoplasm
 	icon_state = "dimensional_core"
 
