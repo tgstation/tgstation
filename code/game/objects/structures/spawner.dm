@@ -92,3 +92,49 @@
 	name = "wumborian fugu den"
 	desc = "A den housing a nest of wumborian fugus, how do they all even fit in there?"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/fugu)
+
+/obj/structure/spawner/nether
+	name = "netherworld link"
+	desc = null //see examine()
+	icon_state = "nether"
+	max_integrity = 50
+	spawn_time = 60 SECONDS
+	max_mobs = 15
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
+	spawn_text = "crawls through"
+	mob_types = list(/mob/living/basic/netherworld/migo, /mob/living/basic/netherworld/creature, /mob/living/basic/netherworld)
+	faction = list("nether")
+
+/obj/structure/spawner/nether/Initialize(mapload)
+	.=..()
+	START_PROCESSING(SSprocessing, src)
+
+/obj/structure/spawner/nether/examine(mob/user)
+	. = ..()
+	if(isskeleton(user) || iszombie(user))
+		. += "A direct link to another dimension full of creatures very happy to see you. [span_nicegreen("You can see your house from here!")]"
+	else
+		. += "A direct link to another dimension full of creatures not very happy to see you. [span_warning("Entering the link would be a very bad idea.")]"
+
+/obj/structure/spawner/nether/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(isskeleton(user) || iszombie(user))
+		to_chat(user, span_notice("You don't feel like going home yet..."))
+	else
+		user.visible_message(span_warning("[user] is violently pulled into the link!"), \
+							span_userdanger("Touching the portal, you are quickly pulled through into a world of unimaginable horror!"))
+		contents.Add(user)
+
+/obj/structure/spawner/nether/process(delta_time)
+	for(var/mob/living/M in contents)
+		if(M)
+			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+			M.adjustBruteLoss(60 * delta_time)
+			new /obj/effect/gibspawner/generic(get_turf(M), M)
+			if(M.stat == DEAD)
+				var/mob/living/basic/netherworld/blank
+				blank = new(loc)
+				blank.name = "[M]"
+				blank.desc = "It's [M], but [M.p_their()] flesh has an ashy texture, and [M.p_their()] face is featureless save an eerie smile."
+				src.visible_message(span_warning("[M] reemerges from the link!"))
+				qdel(M)
