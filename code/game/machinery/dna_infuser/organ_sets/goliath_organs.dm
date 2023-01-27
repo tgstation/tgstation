@@ -10,14 +10,7 @@
 	organs_needed = 4
 	bonus_activate_text = span_notice("goliath DNA is deeply infused with you! You can now endure walking on lava!")
 	bonus_deactivate_text = span_notice("You feel your muscle mass shrink and the tendrils around your skin wither. Your Goliath DNA is mostly gone and so is your ability to survive lava.")
-
-/datum/status_effect/organ_set_bonus/goliath/enable_bonus()
-	. = ..()
-	ADD_TRAIT(owner, TRAIT_LAVA_IMMUNE, REF(src))
-
-/datum/status_effect/organ_set_bonus/goliath/disable_bonus()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_LAVA_IMMUNE, REF(src))
+	bonus_traits = TRAIT_LAVA_IMMUNE
 
 ///goliath eyes, simple night vision
 /obj/item/organ/internal/eyes/night_vision/goliath
@@ -32,18 +25,12 @@
 	eye_color_left = "#FF0000"
 	eye_color_right = "#FF0000"
 
+	organ_traits = list(TRAIT_UNNATURAL_RED_GLOWY_EYES)
+
 /obj/item/organ/internal/eyes/night_vision/goliath/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "eyes are blood red and stone-like.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
-
-/obj/item/organ/internal/eyes/night_vision/goliath/Insert(mob/living/carbon/eyes_owner, special, drop_if_replaced)
-	. = ..()
-	ADD_TRAIT(eyes_owner, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
-
-/obj/item/organ/internal/eyes/night_vision/goliath/Remove(mob/living/carbon/eyes_owner, special, drop_if_replaced)
-	REMOVE_TRAIT(eyes_owner, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
-	return ..()
 
 ///goliath lungs! You can breathe lavaland air mix but can't breath pure O2 from a tank anymore.
 /obj/item/organ/internal/lungs/lavaland/goliath

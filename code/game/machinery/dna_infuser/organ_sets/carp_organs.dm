@@ -7,17 +7,9 @@
 ///bonus of the carp: you can swim through space!
 /datum/status_effect/organ_set_bonus/carp
 	id = "organ_set_bonus_carp"
-	organs_needed = 4
 	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
-
-/datum/status_effect/organ_set_bonus/carp/enable_bonus()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, REF(src))
-
-/datum/status_effect/organ_set_bonus/carp/disable_bonus()
-	. = ..()
-	REMOVE_TRAIT(src, TRAIT_SPACEWALK, REF(src))
+	bonus_traits = TRAIT_SPACEWALK
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
 /obj/item/organ/internal/lungs/carp
