@@ -1,5 +1,5 @@
 /*
-* Changeling event. Takes a ghost volunteer and stuffs them into a changeling with some randomly generated identities.
+* Changeling midround spawn event. Takes a ghost volunteer and stuffs them into a changeling with some randomly generated identities.
 * They arrive via a meateor, which collides with the station. They are expected to find their own way into the station.
 *
 */
@@ -11,7 +11,7 @@
 	max_occurrences = 3
 	min_players = 20
 	dynamic_should_hijack = TRUE
-	category = EVENT_CATEGORY_INVASION
+	category = EVENT_CATEGORY_ENTITIES
 	description = "A changeling is summoned and thrown at the exterior of the station."
 
 /datum/round_event/ghost_role/changeling
@@ -30,7 +30,8 @@
 
 	spawned_mobs += generate_changeling_meteor(pick_n_take(candidate))
 
-	return SUCCESSFUL_SPAWN
+	if(spawned_mobs)
+		return SUCCESSFUL_SPAWN
 
 /**
  * Recieves a mob candidate, transforms them into a changeling, and hurls them at the station inside of a changeling meteor
@@ -54,18 +55,20 @@
 	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new/obj/effect/meteor/meaty/changeling(picked_start, pick(shuffle(GLOB.station_turfs))) //Let's make sure this thing REALLY hits
 	var/mob/living/carbon/human/new_changeling = new /mob/living/carbon/human/(picked_start)
 
-	new_changeling.forceMove(changeling_meteor) //Place our payload inside of its vessel
+	if(!new_changeling.forceMove(changeling_meteor)) //Place our payload inside of its vessel
+		CRASH("Changeling meteor failed to load changeling into itself, aborting.")
+		return
 
 	player_mind.transfer_to(new_changeling)
 	player_mind.special_role = ROLE_CHANGELING_MIDROUND
 	player_mind.add_antag_datum(/datum/antagonist/changeling)
 	SEND_SOUND(new_changeling, sound('sound/magic/mutate.ogg'))
-	message_admins("[ADMIN_LOOKUPFLW(new_changeling)] has been made into a changeling by an event.")
-	new_changeling.log_message("was spawned as a midround changeling by an event.", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(new_changeling)] has been made into a space changeling by an event.")
+	new_changeling.log_message("was spawned as a midround space changeling by an event.", LOG_GAME)
 
-	for(var/datum/antagonist/changeling/changeling_datum in player_mind.antag_datums) //Automatically buys the flesh space suit ability :)
-		changeling_datum.purchase_power(/datum/action/changeling/suit/organic_space_suit)
-		new_changeling.equipOutfit(/datum/outfit/changeling_space)
+	var/datum/antagonist/changeling/changeling_datum = locate(/datum/antagonist/changeling) in player_mind.antag_datums
+	changeling_datum.purchase_power(/datum/action/changeling/suit/organic_space_suit, TRUE) //We get a free space suit to compensate.
+	new_changeling.equipOutfit(/datum/outfit/changeling_space)
 
 	return new_changeling
 
@@ -74,11 +77,10 @@
 	//Set up midround dynamic interaction override stuff (?)
 	//Better text explanation for what you're expected to do
 	//midround ling isnt showing up in prefs for some reason
-	//more like pee-gui because thi
 
 /obj/effect/meteor/meaty/changeling
 	name = "unsettlingly meaty meteor"
-	desc = "A tightly packed knit of flesh and skin. Did it just move?"
+	desc = "A tightly packed knit of flesh and skin, pulsating with life."
 	icon_state = "changeling"
 	heavy = FALSE
 	hits = 1 //Instant impact explosion

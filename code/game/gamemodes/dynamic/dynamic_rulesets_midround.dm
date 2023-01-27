@@ -860,4 +860,6 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)
 	var/body = generate_changeling_meteor(applicant)
+	message_admins("[ADMIN_LOOKUPFLW(body)] has been made into a space changeling by the midround ruleset.")
+	log_dynamic("[key_name(body)] was spawned as a space changeling by the midround ruleset.")
 	return body

@@ -363,7 +363,7 @@
  *
  * [sting_path] - the power that's being purchased / evolved.
  */
-/datum/antagonist/changeling/proc/purchase_power(datum/action/changeling/sting_path)
+/datum/antagonist/changeling/proc/purchase_power(datum/action/changeling/sting_path, free = FALSE)
 	if(!ispath(sting_path))
 		CRASH("Changeling purchase_power attempted to purchase an invalid typepath!")
 
@@ -398,7 +398,8 @@
 		to_chat(owner.current, "This is awkward. Changeling power purchase failed, please report this bug to a coder!")
 		CRASH("Changeling purchase_power was unable to create a new changeling action for path [sting_path]!")
 
-	genetic_points -= new_action.dna_cost
+	if(!free)
+		genetic_points -= new_action.dna_cost
 	purchased_powers[sting_path] = new_action
 	new_action.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
 	log_changeling_power("[key_name(owner)] adapted the [new_action] power")
