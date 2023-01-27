@@ -1706,8 +1706,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "axt" = (
-/obj/structure/grille,
-/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "axy" = (
@@ -2309,7 +2308,6 @@
 	name = "Atmospherics HFR Room"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
@@ -7419,11 +7417,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
-"bRR" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/openspace,
-/area/station/engineering/supermatter)
 "bRS" = (
 /obj/structure/railing{
 	dir = 4
@@ -8073,10 +8066,9 @@
 /turf/open/floor/glass/reinforced,
 /area/station/service/bar)
 "cal" = (
-/obj/structure/grille,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "cas" = (
@@ -13985,12 +13977,6 @@
 /obj/item/hemostat,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/surgery/theatre)
-"dui" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/turf/open/lava/plasma/ice_moon,
-/area/icemoon/underground/explored)
 "dus" = (
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -18965,7 +18951,6 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "eFF" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock/security{
 	name = "Security Post - Engineering"
 	},
@@ -19455,12 +19440,12 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "command_dorm";
-	name = "Command Dorms Blast door"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/poddoor/preopen{
+	id = "command_dorm";
+	name = "Command Dorms Blast Door"
+	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -21980,7 +21965,6 @@
 	name = "Atmospherics HFR Room"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /obj/machinery/door/firedoor,
@@ -25590,11 +25574,11 @@
 /turf/open/openspace,
 /area/station/maintenance/central/greater)
 "gmj" = (
+/obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgedoors";
-	name = "Bridge Access Blast door"
+	name = "Bridge Access Blast Door"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/command/bridge)
 "gmr" = (
@@ -28953,7 +28937,9 @@
 /turf/closed/wall,
 /area/mine/production)
 "hhi" = (
-/obj/machinery/door/poddoor/incinerator_ordmix,
+/obj/machinery/door/poddoor/incinerator_ordmix{
+	name = "Combustion Chamber Vent"
+	},
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "hhn" = (
@@ -32361,7 +32347,6 @@
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Distribution Pump Room"
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -41461,7 +41446,7 @@
 "kij" = (
 /obj/machinery/door/poddoor{
 	id = "ord_cold_vent";
-	name = "cooling chamber vent"
+	name = "Cooling Chamber Vent"
 	},
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/freezerchamber)
@@ -46847,6 +46832,10 @@
 	},
 /obj/effect/turf_decal/siding/white{
 	dir = 4
+	},
+/obj/machinery/button/door/directional/north{
+	id = "ord_cold_vent";
+	name = "Cooling Chamber Vent Control"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/ordnance/freezerchamber)
@@ -53351,14 +53340,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "mYI" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "bridgedoors";
-	name = "Bridge Access Blast door"
-	},
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridgedoors";
+	name = "Bridge Access Blast Door"
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/command/bridge)
 "mYP" = (
@@ -64369,7 +64358,7 @@
 "pAF" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgedoors";
-	name = "Bridge Access Blast door"
+	name = "Bridge Access Blast Door"
 	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/command/bridge)
@@ -81868,10 +81857,6 @@
 	dir = 1
 	},
 /area/station/medical/treatment_center)
-"tFq" = (
-/obj/structure/lattice/catwalk,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter/room)
 "tFx" = (
 /obj/machinery/light/cold/no_nightlight/directional/south,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
@@ -87934,7 +87919,7 @@
 "uZP" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "command_dorm";
-	name = "Command Dorms Blast door"
+	name = "Command Dorms Blast Door"
 	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
@@ -89261,7 +89246,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "detectivewindows";
-	name = "Detective Privacy Blast door"
+	name = "Detective Privacy Blast Door"
 	},
 /obj/structure/curtain/cloth/fancy/mechanical{
 	id = "det_curtains";
@@ -97020,7 +97005,6 @@
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics Turbine Room"
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /obj/machinery/door/firedoor,
@@ -102255,7 +102239,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron,
 /area/station/hallway/primary/central/aft)
@@ -134873,7 +134856,7 @@ tvr
 tvr
 tvr
 fMl
-dui
+fMl
 qzK
 ety
 cvs
@@ -352966,7 +352949,7 @@ pfr
 pfr
 pfr
 kIC
-tFq
+kIC
 gcT
 aMu
 igA
@@ -416709,7 +416692,7 @@ boY
 boY
 cCu
 cSD
-bRR
+tzB
 fTh
 tzB
 cSD
