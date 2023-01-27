@@ -1095,6 +1095,9 @@
 	icon_state = "courtroom"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/station/security/courtroom/holding
+	name = "\improper Courtroom Prisoner Holding Room"
+
 /area/station/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
