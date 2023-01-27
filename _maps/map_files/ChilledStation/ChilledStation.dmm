@@ -2691,6 +2691,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "aKw" = (
@@ -5746,6 +5747,7 @@
 	name = "Security Checkpoint"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/escape)
 "bAD" = (
@@ -10416,6 +10418,20 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"cGC" = (
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/mining_scanner,
+/obj/item/flashlight,
+/obj/item/clothing/glasses/meson,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/security/prison)
 "cGF" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 4
@@ -17657,6 +17673,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/tcommsat/computer)
 "eoX" = (
@@ -30628,10 +30645,10 @@
 /area/station/hallway/primary/port)
 "hBB" = (
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
 	name = "AI Upload turret control";
-	pixel_y = 28
+	pixel_y = 39
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -61967,7 +61984,6 @@
 /area/station/security/interrogation)
 "oYe" = (
 /obj/machinery/door/airlock/maintenance_hatch,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -67797,6 +67813,7 @@
 	pixel_x = 5
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/escape)
 "qqV" = (
@@ -72559,6 +72576,7 @@
 	name = "Telecomms Relay"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/tcommsat/computer)
 "ryZ" = (
@@ -96281,11 +96299,19 @@
 /turf/closed/wall/ice,
 /area/station/medical/storage)
 "wPZ" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 5
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/mining_scanner,
+/obj/item/flashlight,
+/obj/item/clothing/glasses/meson,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/white{
+	dir = 4
 	},
-/turf/open/floor/iron/dark,
-/area/station/security/checkpoint/escape)
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/security/prison)
 "wQa" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/wooden_tv{
@@ -135089,7 +135115,7 @@ mVs
 mVs
 mVs
 tsh
-tsh
+wPZ
 tsh
 mVs
 mVs
@@ -135860,7 +135886,7 @@ wdh
 fHD
 flN
 igu
-xvO
+uTZ
 xvO
 fZl
 vRF
@@ -136117,7 +136143,7 @@ mVs
 mVs
 mVs
 vAR
-vAR
+cGC
 vAR
 mVs
 mVs
@@ -274507,7 +274533,7 @@ qsE
 qsE
 vYG
 vYG
-kqg
+qvL
 vYG
 fPC
 cvh
@@ -404365,7 +404391,7 @@ mqf
 qwg
 jxg
 pGK
-wPZ
+uFD
 dEV
 mDC
 xlI
