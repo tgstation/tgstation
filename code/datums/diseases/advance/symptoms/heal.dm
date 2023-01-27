@@ -503,14 +503,6 @@
 		"Transmission 6" = "Increases temperature adjustment rate.",
 		"Stage Speed 7" = "Increases healing speed.",
 	)
-	
-	//vars to easily tweak healing numbers in game for debugging
-	var/healing_per_mol = HEALING_PER_MOL
-	var/healing_per_breath_pressure = HEALING_PER_BREATH_PRESSURE
-	var/max_heal_coefficient_internals = MAX_HEAL_COEFFICIENT_INTERNALS
-	var/max_heal_coefficient_environment = MAX_HEAL_COEFFICIENT_ENVIRONMENT
-	var/max_heal_coefficient_bloodstream = MAX_HEAL_COEFFICIENT_BLOODSTREAM
-	var/base_heal = BASE_HEAL_PLASMA_FIXATION
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
 	. = ..()
@@ -560,20 +552,20 @@
 			if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
 				if(tank_contents.gases[/datum/gas/plasma])
 					// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
-					. += power * min(max_heal_coefficient_internals, internals_tank.distribute_pressure * healing_per_breath_pressure)
+					. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
 	// Check environment			
 	if(M.loc)
 		environment = M.loc.return_air()
 	if(environment)
 		gases = environment.gases
 		if(gases[/datum/gas/plasma])
-			. += power * min(max_heal_coefficient_internals, gases[/datum/gas/plasma][MOLES] * healing_per_mol)
+			. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
 	// Check for reagents in bloodstream
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
-		. += power * max_heal_coefficient_bloodstream //Determines how much the symptom heals if injected or ingested
+		. += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
-	var/heal_amt = base_heal * actual_power
+	var/heal_amt = BASE_HEAL_PLASMA_FIXATION * actual_power
 
 	if(prob(5))
 		to_chat(M, span_notice("You feel yourself absorbing plasma inside and around you..."))
