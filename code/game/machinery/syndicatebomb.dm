@@ -25,7 +25,7 @@
 
 	var/open_panel = FALSE //are the wires exposed?
 	var/active = FALSE //is the bomb counting down?
-	var/obj/item/bombcore/payload = /obj/item/bombcore
+	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE //delay wire pulsed?
 	var/delayedlittle = FALSE //activation wire pulsed?
@@ -47,6 +47,9 @@
 /obj/machinery/syndicatebomb/atom_destruction()
 	if(!try_detonate())
 		..()
+
+/obj/machinery/syndicatebomb/ex_act(severity, target)
+	return
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
@@ -99,6 +102,8 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	. = ..()
+	. += {"The patented external shell design is resistant to "probably all" forms of external explosive compression, protecting the electronically-trigged bomb core from accidental early detonation."}
+	. += "A small window reveals some information about the payload: [payload.desc]."
 	. += {"A digital display on it reads "[seconds_remaining()]"."}
 
 /obj/machinery/syndicatebomb/update_icon_state()
@@ -273,7 +278,7 @@
 /obj/machinery/syndicatebomb/self_destruct
 	name = "self-destruct device"
 	desc = "Do not taunt. Warranty invalid if exposed to high temperature. Not suitable for agents under 3 years of age."
-	payload = /obj/item/bombcore/large
+	payload = /obj/item/bombcore/syndicate/large
 	can_unanchor = FALSE
 
 ///Bomb Cores///
@@ -298,7 +303,6 @@
 /obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
 
-
 /obj/item/bombcore/burn()
 	detonate()
 	..()
@@ -316,6 +320,24 @@
 //Note: the machine's defusal is mostly done from the wires code, this is here if you want the core itself to do anything.
 
 ///Bomb Core Subtypes///
+
+/// Subtype for the bomb cores found inside syndicate bombs, which will not detonate due to explosion/burning.
+/obj/item/bombcore/syndicate
+	name = "Donk Co. Super-Stable Bomb Payload"
+	desc = "After a string of unwanted detonations, this payload has been specifically redesigned to not explode unless triggered electronically by a bomb shell."
+
+/obj/item/bombcore/syndicate/ex_act(severity, target)
+	return
+
+/obj/item/bombcore/syndicate/burn()
+	return ..()
+
+/obj/item/bombcore/syndicate/large
+	name = "Donk Co. Super-Stable Bomb Payload XL"
+	range_heavy = 5
+	range_medium = 10
+	range_light = 20
+	range_flame = 20
 
 /obj/item/bombcore/training
 	name = "dummy payload"
