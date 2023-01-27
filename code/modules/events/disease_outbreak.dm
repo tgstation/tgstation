@@ -1,4 +1,3 @@
-#define CLS_ANNOUNCE_DELAY 120 //Classic virus announcement delay
 #define ADV_MIN_SYMPTOMS 3 //Advanced min symptoms
 #define ADV_MAX_SYMPTOMS 4 //Advanced max symptoms
 #define ADV_ANNOUNCE_DELAY 75 //How long the virus stays hidden
@@ -64,7 +63,7 @@
 		disease_candidates += candidate
 
 /datum/round_event/disease_outbreak
-	announce_when = CLS_ANNOUNCE_DELAY
+	announce_when = ADV_ANNOUNCE_DELAY
 	///The disease type we will be spawning
 	var/datum/disease/virus_type
 	///Disease recipient candidates, passed from the round_event_control object
@@ -74,7 +73,7 @@
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK7)
 
 /datum/round_event/disease_outbreak/setup()
-	announce_when = CLS_ANNOUNCE_DELAY
+	announce_when = ADV_ANNOUNCE_DELAY
 
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
@@ -180,7 +179,7 @@
 		disease_event.chosen_max_symptoms = null
 
 	else
-		max_symptoms = rand(ADV_MIN_SYMPTOMS,ADV_MAX_SYMPTOMS) // Pick how many symptoms
+		max_symptoms = rand(ADV_MIN_SYMPTOMS, ADV_MAX_SYMPTOMS) // Pick how many symptoms
 
 	if(disease_event.chosen_severity)
 		max_severity = disease_event.chosen_severity
@@ -319,7 +318,6 @@
 		var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
 		cure_text = cure.name
 
-#undef CLS_ANNOUNCE_DELAY
 #undef ADV_MIN_SYMPTOMS
 #undef ADV_MAX_SYMPTOMS
 #undef ADV_ANNOUNCE_DELAY
