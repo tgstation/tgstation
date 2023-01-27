@@ -107,7 +107,7 @@
 /obj/machinery/syndicatebomb/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(countdown)
-	end_processing()a
+	end_processing()
 	return ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
