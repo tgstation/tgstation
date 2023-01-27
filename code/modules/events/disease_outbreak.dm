@@ -1,14 +1,14 @@
-#define CLS_ANNOUNCE_DELAY 120
-#define ADV_MIN_SYMPTOMS 3
-#define ADV_MAX_SYMPTOMS 4
-#define ADV_ANNOUNCE_DELAY 75
+#define CLS_ANNOUNCE_DELAY 120 //Classic announce delay
+#define ADV_MIN_SYMPTOMS 3 //Advanced min symptoms
+#define ADV_MAX_SYMPTOMS 4 //Advanced max symptoms
+#define ADV_ANNOUNCE_DELAY 75 //How long the virus stays hidden
 #define ADV_DISEASE_MEDIUM 4
 #define ADV_DISEASE_HARMFUL 5
 #define ADV_DISEASE_DANGEROUS 7
-#define ADV_RNG_LOW 30
-#define ADV_RNG_MID 85
-#define ADV_SPREAD_LOW 30
-#define ADV_SPREAD_MID 90
+#define ADV_RNG_LOW 30 //Percentile for low severity
+#define ADV_RNG_MID 85 //Percentile for mid severity
+#define ADV_SPREAD_LOW 30 //Percentile for low transmissibility
+#define ADV_SPREAD_MID 90 //Percentile for mid transmissibility
 
 /datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak: Classic"
@@ -270,7 +270,7 @@
 /datum/disease/advance/random/AssignProperties()
 	visibility_flags |= HIDDEN_SCANNER
 	var/transmissibility = rand(1, 100)
-	addtimer(CALLBACK(src, PROC_REF(MakeVisible)), 140 SECONDS) // One life loop is 2 seconds, so this number is double announce_when
+	addtimer(CALLBACK(src, PROC_REF(MakeVisible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS) // Keep the virus hidden until the timer expires
 
 	if(properties?.len)
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
@@ -288,7 +288,7 @@
 			SetSpread(DISEASE_SPREAD_AIRBORNE)
 
 	else
-		CRASH("Our properties were empty or null!")
+		CRASH("Our virus properties were empty or null!")
 
 // Reveal the virus when the level 7 announcement happens
 /datum/disease/advance/random/proc/MakeVisible()
