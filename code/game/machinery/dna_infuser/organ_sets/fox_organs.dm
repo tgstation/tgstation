@@ -1,4 +1,3 @@
-
 /obj/item/organ/internal/ears/fox
 	name = "fox ears"
 	icon = 'icons/obj/clothing/head/costume.dmi'

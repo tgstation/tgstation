@@ -1,4 +1,3 @@
-
 #define RAT_ORGAN_COLOR "#646464"
 #define RAT_SCLERA_COLOR "#f0e055"
 #define RAT_PUPIL_COLOR "#000000"

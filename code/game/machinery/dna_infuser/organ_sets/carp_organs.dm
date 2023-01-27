@@ -1,4 +1,3 @@
-
 #define CARP_ORGAN_COLOR "#4caee7"
 #define CARP_SCLERA_COLOR "#ffffff"
 #define CARP_PUPIL_COLOR "#00b1b1"

@@ -1,13 +1,13 @@
 /// Tests the "organ set bonus" Elements and Status Effects, which are for the DNA Infuser.
 /// Ensures the developers properly change IDs to be unique.
 /datum/unit_test/organ_set_bonus_id/Run()
-	var/list/bonus_effects = subtypesof(/datum/status_effect/organ_set_bonus)
+	var/list/bonus_effects = typesof(/datum/status_effect/organ_set_bonus)
 	var/list/existing_ids = list()
 	for(var/datum/status_effect/organ_set_bonus/bonus_effect as anything in bonus_effects)
 		var/effect_id = initial(bonus_effect.id)
-		var/id_exists = (effect_id in existing_ids)
-		if(id_exists)
-			TEST_FAIL("ID of [bonus_effect] was duplicated in another status effect.")
+		var/existing_status = (effect_id in existing_ids)
+		if(existing_status)
+			TEST_FAIL("The ID of [bonus_effect] was duplicated in another status effect.")
 		else
 			existing_ids += effect_id
 
