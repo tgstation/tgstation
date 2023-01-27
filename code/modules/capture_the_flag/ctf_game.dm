@@ -647,7 +647,7 @@
 	for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
 		if (!team.ctf_enabled)
 			continue
-		scores += "<span class='maptext'>[team.team] - [team.control_points]/[team.control_points_to_win]</span>\n"
+		scores += UNLINT("<span style='color: [team.team]'>[team.team] - [team.control_points]/[team.control_points_to_win]</span>\n")
 
 	balloon_alert_to_viewers(scores)
 
