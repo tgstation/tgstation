@@ -36,6 +36,8 @@
 /obj/effect/turf_decal/sand,
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/two,
+/obj/item/clothing/suit/armor/vest/old,
+/obj/item/clothing/head/helmet/old,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "r" = (
@@ -43,6 +45,8 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/mod/maint,
+/obj/item/clothing/suit/armor/vest/old,
+/obj/item/clothing/head/helmet/old,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "t" = (

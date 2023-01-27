@@ -3,6 +3,9 @@ directory = "_maps/map_files/tramstation/maintenance_modules/"
 [rooms.arrivalsecupper]
 modules = ["arrivalsecupper_1.dmm", "arrivalsecupper_2.dmm", "arrivalsecupper_3.dmm"]
 
+[rooms.arrivallibraryupper]
+modules = ["arrivallibraryupper_1.dmm", "arrivallibraryupper_2.dmm", "arrivallibraryupper_3.dmm"]
+
 [rooms.medsciupper]
 modules = ["medsciupper_1.dmm", "medsciupper_2.dmm", "medsciupper_3.dmm"]
 
@@ -84,11 +87,11 @@ modules = ["atmosscilower_attachment_a_1.dmm", "atmosscilower_attachment_a_2.dmm
 [rooms.atmosscilower_attachment_b]
 modules = ["atmosscilower_attachment_b_1.dmm", "atmosscilower_attachment_b_2.dmm", "atmosscilower_attachment_b_3.dmm"]
 
-[rooms.dormengine_lower]
-modules = ["dormengine_lower_1.dmm", "dormengine_lower_2.dmm", "dormengine_lower_3.dmm"]
+[rooms.atmoscilower]
+modules = ["atmoscilower_1.dmm", "atmoscilower_2.dmm", "atmoscilower_3.dmm"]
 
-[rooms.dormengine_lower_attachment_a]
-modules = ["dormengine_lower_attachment_a_1.dmm", "dormengine_lower_attachment_a_2.dmm", "dormengine_lower_attachment_a_3.dmm"]
+[rooms.atmoscilower_attachment_a]
+modules = ["atmoscilower_attachment_a_1.dmm", "atmoscilower_attachment_a_2.dmm", "atmoscilower_attachment_a_3.dmm"]
 
-[rooms.dormengine_lower_attachment_b]
-modules = ["dormengine_lower_attachment_b_1.dmm", "dormengine_lower_attachment_b_2.dmm", "dormengine_lower_attachment_b_3.dmm"] 
+[rooms.atmoscilower_attachment_b]
+modules = ["atmoscilower_attachment_b_1.dmm", "atmoscilower_attachment_b_2.dmm", "atmoscilower_attachment_b_3.dmm"]
