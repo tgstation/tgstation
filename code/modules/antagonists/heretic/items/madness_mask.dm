@@ -1,7 +1,7 @@
 // The spooky "void" / "abyssal" / "madness" mask for heretics.
 /obj/item/clothing/mask/madness_mask
 	name = "Abyssal Mask"
-	desc = "A mask created from the suffering of existance. Looking down it's eyes, you notice something gazing back at you."
+	desc = "A mask created from the suffering of existence. Looking down it's eyes, you notice something gazing back at you."
 	icon_state = "mad_mask"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
