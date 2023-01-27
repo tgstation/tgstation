@@ -177,24 +177,3 @@
 /datum/computer_file/program/ntnetdownload/kill_program(forced)
 	abort_file_download()
 	return ..()
-
-////////////////////////
-//Syndicate Downloader//
-////////////////////////
-
-/// This app only lists programs normally found in the emagged section of the normal downloader app
-
-/datum/computer_file/program/ntnetdownload/syndicate
-	filename = "syndownloader"
-	filedesc = "Software Download Tool"
-	program_icon_state = "generic"
-	extended_desc = "This program allows downloads of software from shared Syndicate repositories"
-	requires_ntnet = FALSE
-	ui_header = "downloader_finished.gif"
-	tgui_id = "NtosNetDownloader"
-	emagged = TRUE
-
-/datum/computer_file/program/ntnetdownload/syndicate/on_start()
-	. = ..()
-	main_repo = SSmodular_computers.available_antag_software
-	antag_repo = null
