@@ -264,7 +264,7 @@
 
 /obj/item/modular_computer/pda/nukeops/Initialize(mapload)
 	. = ..()
-	src.emag_act(forced = TRUE)
+	emag_act(forced = TRUE)
 	var/datum/computer_file/program/messenger/msg = locate() in stored_files
 	if(msg)
 		msg.invisible = TRUE
