@@ -204,5 +204,5 @@
 
 /obj/item/gun/energy/laser/luxurypaywall
 	name = "luxurious laser gun"
-	desc = "A laser gun modified to cost 30 credits to fire. Point towards poor people."
+	desc = "A laser gun modified to cost 20 credits to fire. Point towards poor people."
 	pin = /obj/item/firing_pin/paywall/luxury
