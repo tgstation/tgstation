@@ -7,7 +7,7 @@
 	"space_empty_levels": 0,
 	"planetary": 1,
 	"shuttles": {
-		"cargo": "cargo_box",
+		"cargo": "cargo_chilled",
 		"ferry": "ferry_fancy",
 		"whiteship": "whiteship_box",
 		"emergency": "emergency_box"

@@ -22,7 +22,7 @@
 /area/shuttle/arrival)
 "m" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -43,7 +43,7 @@
 /area/shuttle/arrival)
 "r" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -76,7 +76,7 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/arrival)
 "A" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/template_noop,
@@ -91,7 +91,7 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/arrival)
 "C" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/template_noop,
@@ -153,10 +153,7 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/arrival)
 "U" = (
-/obj/docking_port/mobile/arrivals{
-	height = 17;
-	name = "chilled arrivals shuttle"
-	},
+/obj/docking_port/mobile/arrivals,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "W" = (
