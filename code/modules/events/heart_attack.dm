@@ -6,6 +6,7 @@
 	min_players = 40 // To avoid shafting lowpop
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember's heart gives out."
+	admin_setup = /datum/event_admin_setup/heart_attack
 	///Candidates for recieving a healthy dose of heart disease
 	var/list/heart_attack_candidates = list()
 

@@ -6,6 +6,7 @@
 	max_occurrences = 2
 	min_players = 1
 	category = EVENT_CATEGORY_HEALTH
+	admin_setup = /datum/event_admin_setup/mass_hallucination
 
 /datum/round_event/mass_hallucination
 	fakeable = FALSE

@@ -32,7 +32,7 @@
 	normal_run_option = "Random Meteor"
 
 /datum/event_admin_setup/listed_options/stray_meteor/get_list()
-	return subtypesof(subtypesof(/obj/effect/meteor))
+	return subtypesof(/obj/effect/meteor)
 
 /datum/event_admin_setup/listed_options/stray_meteor/apply_to_event(datum/round_event/stray_meteor/event)
 	event.chosen_meteor = chosen

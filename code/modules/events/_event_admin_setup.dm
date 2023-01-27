@@ -14,7 +14,7 @@
 
 /datum/event_admin_setup/proc/apply_to_event(datum/round_event/event)
 	SHOULD_CALL_PARENT(FALSE)
-	CRASH("Unimplemented prompt_admins() on [event_control]'s admin setup.")
+	CRASH("Unimplemented apply_to_event() on [event_control]'s admin setup.")
 
 /// A very common pattern is picking from a tgui list input, so this does that.
 /// Supply a list in `get_list` and prompt admins will have the admin pick from it or cancel.

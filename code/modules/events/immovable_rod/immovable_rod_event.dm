@@ -41,3 +41,7 @@
 		force_looping = TRUE
 	message_admins("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
 	log_admin("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
+
+/datum/event_admin_setup/immovable_rod/apply_to_event(datum/round_event/immovable_rod/event)
+	event.special_target = special_target
+	event.force_looping = force_looping
