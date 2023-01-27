@@ -1,4 +1,4 @@
-#define CLS_ANNOUNCE_DELAY 120 //Classic announce delay
+#define CLS_ANNOUNCE_DELAY 120 //Classic virus announcement delay
 #define ADV_MIN_SYMPTOMS 3 //Advanced min symptoms
 #define ADV_MAX_SYMPTOMS 4 //Advanced max symptoms
 #define ADV_ANNOUNCE_DELAY 75 //How long the virus stays hidden
@@ -214,8 +214,8 @@
 	name = "Experimental Disease"
 	copy_type = /datum/disease/advance
 
-/datum/round_event/disease_outbreak/setup()
-	announce_when = CLS_ANNOUNCE_DELAY
+/datum/round_event/disease_outbreak/advance/setup()
+	announce_when = ADV_ANNOUNCE_DELAY
 
 // Pick the symptoms of the generated virus.
 /datum/disease/advance/random/New(max_symptoms, max_severity)
@@ -319,6 +319,7 @@
 		var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
 		cure_text = cure.name
 
+#undef CLS_ANNOUNCE_DELAY
 #undef ADV_MIN_SYMPTOMS
 #undef ADV_MAX_SYMPTOMS
 #undef ADV_ANNOUNCE_DELAY
