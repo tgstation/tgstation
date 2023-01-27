@@ -151,13 +151,6 @@
 /datum/round_event_control/scrubber_overflow/custom/announce_deadchat(random)
 	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>Scrubber Overflow: [initial(custom_reagent.name)]</b>", message_type=DEADCHAT_ANNOUNCEMENT)
 
-/datum/round_event_control/scrubber_overflow/custom/admin_setup(mob/admin)
-	if(!check_rights(R_FUN))
-		return
-	custom_reagent = tgui_input_list(usr, "Choose a reagent to flood.", "Choose a reagent.", sort_list(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc))
-	if (isnull(custom_reagent))
-		return ADMIN_CANCEL_EVENT
-
 /datum/round_event/scrubber_overflow/custom
 	overflow_probability = 100
 	forced_reagent = /datum/reagent/consumable/ethanol/beer
@@ -167,3 +160,12 @@
 	var/datum/round_event_control/scrubber_overflow/custom/event_controller = control
 	forced_reagent = event_controller.custom_reagent
 	return ..()
+
+/datum/event_admin_setup/listed_options/scrubber_overflow
+	normal_run_option = "Random Reagent"
+
+/datum/event_admin_setup/listed_options/scrubber_overflow/get_list()
+	return sort_list(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc)
+
+/datum/event_admin_setup/listed_options/scrubber_overflow/apply_to_event(datum/round_event/scrubber_overflow/event)
+	event.forced_reagent = chosen
