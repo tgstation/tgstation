@@ -264,13 +264,7 @@
 
 /obj/item/modular_computer/pda/nukeops/Initialize(mapload)
 	. = ..()
-	obj_flags |= EMAGGED //Mostly for consistency purposes; the programs will do their own emag handling
-	var/newemag = FALSE
-	for(var/datum/computer_file/program/app in stored_files)
-		if(!istype(app))
-			continue
-		if(app.run_emag())
-			newemag = TRUE
+	src.emag_act(forced = TRUE)
 	var/datum/computer_file/program/messenger/msg = locate() in stored_files
 	if(msg)
 		msg.invisible = TRUE
