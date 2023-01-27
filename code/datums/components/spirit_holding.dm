@@ -81,8 +81,7 @@
 
 	// Now that all of the important things are in place for our spirit, it's time for them to choose their name.
 	var/valid_input_name = custom_name(awakener)
-	if(parent && valid_input_name)
-		parent = valid_input_name
+	if(valid_input_name)
 		bound_spirit.fully_replace_character_name(null, "The spirit of [valid_input_name]")
 
 	attempting_awakening = FALSE
