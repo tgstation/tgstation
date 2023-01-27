@@ -6,9 +6,15 @@ import { ScrollableSection } from './LibraryConsole';
 
 type Data = {
   server_connected: BooleanLike;
-  logs: LogData[];
-  servers: string[];
+  servers: ServerData[];
   consoles: ConsoleData[];
+  logs: LogData[];
+};
+
+type ServerData = {
+  server_name: string;
+  server_details: string;
+  server_disabled: string;
 };
 
 type ConsoleData = {
@@ -53,7 +59,15 @@ export const ServerControl = (props, context) => {
             {servers.map((server) => (
               <>
                 <Table.Row header key={server} />
-                <Table.Cell> {server} </Table.Cell>
+                <Table.Cell> {server.server_name}</Table.Cell>
+                <Button
+                  mt={1}
+                  tooltip={server.server_details}
+                  color={server.server_disabled ? 'good' : 'bad'}
+                  content={server.server_disabled ? 'Online' : 'Offline'}
+                  fluid
+                  textAlign="center"
+                />
               </>
             ))}
           </Table>
@@ -71,7 +85,10 @@ export const ServerControl = (props, context) => {
             {consoles.map((console) => (
               <>
                 <Table.Row header key={console} />
-                <Table.Cell> {console.console_name} - Location: {console.console_location} </Table.Cell>
+                <Table.Cell>
+                  {' '}
+                  {console.console_name} - Location: {console.console_location}{' '}
+                </Table.Cell>
                 <Button
                   mt={1}
                   color={console.console_locked ? 'good' : 'bad'}
@@ -96,29 +113,6 @@ export const ServerControl = (props, context) => {
         )}
       </Window.Content>
     </Window>
-  );
-};
-
-const ConsoleLogs = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const { logs } = data;
-  return (
-    <Table>
-      <Table.Row header>
-        <Table.Cell>Research Name</Table.Cell>
-        <Table.Cell>Cost</Table.Cell>
-        <Table.Cell>Researcher Name</Table.Cell>
-        <Table.Cell>Console Location</Table.Cell>
-      </Table.Row>
-      {logs.map((server_log) => (
-        <Table.Row mt={1} key={server_log.node_name}>
-          <Table.Cell>{server_log.node_name}</Table.Cell>
-          <Table.Cell>{server_log.node_cost}</Table.Cell>
-          <Table.Cell>{server_log.node_researcher}</Table.Cell>
-          <Table.Cell>{server_log.node_research_location}</Table.Cell>
-        </Table.Row>
-      ))}
-    </Table>
   );
 };
 

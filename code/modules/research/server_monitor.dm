@@ -42,6 +42,12 @@
 	if(stored_research)
 		data["servers"] = stored_research.techweb_servers
 		data["logs"] += stored_research.research_logs
+		for(var/obj/machinery/rnd/server/server anything in stored_research.techweb_servers)
+			data["servers"] += list(list(
+				"server_name" = server,
+				"server_details" = server.get_status_text(),
+				"server_disabled" = server.research_disabled,
+			))
 		for(var/obj/machinery/computer/rdconsole/console as anything in stored_research.consoles_accessing)
 			data["consoles"] += list(list(
 				"console_name" = console,
