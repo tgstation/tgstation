@@ -9,7 +9,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/mineral/titanium/blue,
@@ -24,7 +24,7 @@
 "n" = (
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/mineral/titanium/blue,
@@ -72,7 +72,7 @@
 "H" = (
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 4;
@@ -84,7 +84,7 @@
 "J" = (
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/mineral/titanium/blue,
