@@ -1,33 +1,211 @@
-"a" = (/turf/closed/wall/mineral/titanium,/area/shuttle/supply)
-"b" = (/obj/machinery/conveyor{dir = 8; id = "cargoload"},/obj/machinery/door/poddoor{id = "QMLoaddoor"; name = "supply dock loading door"},/obj/structure/fans/tiny/invisible,/turf/open/floor/mineral/titanium/blue,/area/shuttle/supply)
-"f" = (/turf/open/floor/mineral/titanium/blue,/area/shuttle/supply)
-"k" = (/obj/machinery/light/dim/directional/east,/turf/open/floor/mineral/titanium/blue,/area/shuttle/supply)
-"n" = (/obj/machinery/door/poddoor{id = "QMLoaddoor"; name = "supply dock loading door"},/obj/structure/fans/tiny/invisible,/turf/open/floor/mineral/titanium/blue,/area/shuttle/supply)
-"q" = (/obj/docking_port/mobile/supply,/obj/structure/fans/tiny/invisible,/obj/machinery/door/poddoor/shutters{dir = 4; id = "cargo_shuttle"; name = "Cargo Train Shutters"},/turf/open/floor/mineral/titanium,/area/shuttle/supply)
-"r" = (/obj/effect/spawner/structure/window/reinforced/shuttle,/turf/open/floor/plating,/area/shuttle/supply)
-"D" = (/obj/machinery/button/door/directional/south{id = "cargo_shuttle"; name = "Shuttle Shutter Controls"},/obj/structure/fans/tiny/invisible,/obj/machinery/door/poddoor/shutters{dir = 4; id = "cargo_shuttle"; name = "Cargo Train Shutters"},/turf/open/floor/mineral/titanium,/area/shuttle/supply)
-"F" = (/obj/machinery/light/dim/directional/west,/turf/open/floor/mineral/titanium/blue,/area/shuttle/supply)
-"G" = (/obj/structure/fans/tiny/invisible,/obj/machinery/door/poddoor/shutters{dir = 8; id = "cargo_shuttle"; name = "Cargo Train Shutters"},/turf/open/floor/mineral/titanium,/area/shuttle/supply)
-"H" = (/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "supply dock loading door"},/obj/machinery/conveyor{dir = 4; id = "cargounload"},/obj/structure/fans/tiny/invisible,/turf/open/floor/mineral/titanium/blue,/area/shuttle/supply)
-"J" = (/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "supply dock loading door"},/obj/structure/fans/tiny/invisible,/turf/open/floor/mineral/titanium/blue,/area/shuttle/supply)
-"L" = (/obj/machinery/door/poddoor/shutters{dir = 8; id = "cargo_shuttle"; name = "Cargo Train Shutters"},/obj/structure/fans/tiny/invisible,/turf/open/floor/mineral/titanium,/area/shuttle/supply)
-"P" = (/obj/structure/fans/tiny/invisible,/obj/machinery/door/poddoor/shutters{dir = 4; id = "cargo_shuttle"; name = "Cargo Train Shutters"},/turf/open/floor/mineral/titanium,/area/shuttle/supply)
-"S" = (/obj/machinery/button/door/directional/north{id = "cargo_shuttle"; name = "Shuttle Shutter Controls"},/obj/structure/fans/tiny/invisible,/obj/machinery/door/poddoor/shutters{dir = 4; id = "cargo_shuttle"; name = "Cargo Train Shutters"},/turf/open/floor/mineral/titanium,/area/shuttle/supply)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"b" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargoload"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "supply dock loading door"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"f" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"k" = (
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"n" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "supply dock loading door"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"q" = (
+/obj/docking_port/mobile/supply,
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "cargo_shuttle";
+	name = "Cargo Train Shutters"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"r" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"D" = (
+/obj/machinery/button/door/directional/south{
+	id = "cargo_shuttle";
+	name = "Shuttle Shutter Controls"
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "cargo_shuttle";
+	name = "Cargo Train Shutters"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"F" = (
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"G" = (
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/poddoor/shutters{
+	dir = 8;
+	id = "cargo_shuttle";
+	name = "Cargo Train Shutters"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"H" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "supply dock loading door"
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargounload"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"J" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "supply dock loading door"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"L" = (
+/obj/machinery/door/poddoor/shutters{
+	dir = 8;
+	id = "cargo_shuttle";
+	name = "Cargo Train Shutters"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"N" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"P" = (
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "cargo_shuttle";
+	name = "Cargo Train Shutters"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"S" = (
+/obj/machinery/button/door/directional/north{
+	id = "cargo_shuttle";
+	name = "Shuttle Shutter Controls"
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "cargo_shuttle";
+	name = "Cargo Train Shutters"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
 
 (1,1,1) = {"
-arrra
-JfffH
-aFfka
-GfffP
-GfffP
-GfffD
-afffa
-rFfkr
-afffa
-GfffS
-GfffP
-Lfffq
-aFfka
-nfffb
-arrra
+a
+J
+a
+G
+G
+G
+a
+r
+a
+G
+G
+L
+a
+n
+a
+"}
+(2,1,1) = {"
+r
+f
+F
+f
+f
+f
+f
+F
+f
+f
+f
+f
+F
+f
+r
+"}
+(3,1,1) = {"
+r
+f
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+f
+r
+"}
+(4,1,1) = {"
+r
+f
+k
+f
+f
+f
+f
+k
+f
+f
+f
+f
+k
+f
+r
+"}
+(5,1,1) = {"
+a
+H
+a
+P
+P
+D
+a
+r
+a
+S
+P
+q
+a
+b
+a
 "}
