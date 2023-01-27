@@ -149,18 +149,7 @@
 
 		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 3, 15)
 
-		chosen_transmissibility = tgui_input_list(usr, "Pick a transmission method!","Epidemic warning, stand by!", list("Fluids", "On Contact", "Airborne", "Cancel"))
-		switch(chosen_transmissibility)
-			if("Fluids")
-				chosen_transmissibility = DISEASE_SPREAD_CONTACT_FLUIDS
-			if("On Contact")
-				chosen_transmissibility = DISEASE_SPREAD_CONTACT_SKIN
-			if("Airborne")
-				chosen_transmissibility = DISEASE_SPREAD_AIRBORNE
-			if("Cancel")
-				return ADMIN_CANCEL_EVENT
-
-	if(tgui_alert(usr,"Are you happy with your selections?", "Last chance.", list("Yes", "Cancel")) != "Yes")
+	if(tgui_alert(usr,"Are you happy with your selections?", "Last chance to turn back.", list("Yes", "Cancel")) != "Yes")
 		return ADMIN_CANCEL_EVENT
 
 /datum/round_event/disease_outbreak/advanced
@@ -268,7 +257,10 @@
 // Assign the properties for the virus
 /datum/disease/advance/random/AssignProperties()
 	visibility_flags |= HIDDEN_SCANNER
+
+	//Spread method this virus should have
 	var/transmissibility = rand(1, 100)
+
 	addtimer(CALLBACK(src, PROC_REF(MakeVisible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS) // Keep the virus hidden until the timer expires
 
 	if(properties?.len)
@@ -283,7 +275,7 @@
 		else if(transmissibility < ADV_SPREAD_MID)
 			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
 
-		else if(transmissibility > 3)
+		else
 			SetSpread(DISEASE_SPREAD_AIRBORNE)
 
 	else
