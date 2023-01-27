@@ -3,39 +3,41 @@
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
 "aab" = (
+/obj/structure/cable,
 /obj/machinery/door/airlock/external{
 	name = "External Access"
 	},
-/obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "aac" = (
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
 "aad" = (
+/obj/structure/cable,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "aae" = (
+/obj/structure/cable,
 /obj/machinery/door/airlock/external{
 	name = "External Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "aaf" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "aag" = (
@@ -49,7 +51,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/structure/cable/layer1,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "aai" = (
@@ -73,10 +74,9 @@
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "aal" = (
+/obj/effect/spawner/structure/electrified_grille,
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/cable/layer1,
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/station/asteroid)
 "aam" = (
 /obj/machinery/power/solar{
@@ -10183,6 +10183,12 @@
 /obj/machinery/dna_infuser,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
+"bMV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/greater)
 "bMX" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
@@ -15917,8 +15923,8 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
@@ -36876,6 +36882,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"lPV" = (
+/obj/effect/spawner/structure/electrified_grille,
+/turf/open/floor/plating,
+/area/station/asteroid)
 "lPY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -39718,8 +39728,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/transit_tube)
 "mST" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/layer1,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "mTa" = (
@@ -41793,7 +41802,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "nKj" = (
@@ -56158,6 +56166,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"sYd" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/asteroid)
 "sYh" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -69020,7 +69033,6 @@
 	},
 /obj/machinery/portable_atmospherics/canister,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xYj" = (
@@ -86087,7 +86099,7 @@ aaa
 aaa
 aac
 aac
-aal
+lPV
 bhr
 bhr
 bhr
@@ -86344,7 +86356,7 @@ aaa
 aaa
 aac
 aal
-aal
+lPV
 kPC
 lFk
 lFk
@@ -90453,9 +90465,9 @@ vXM
 aaa
 aaa
 aac
-aaC
-nIc
-aaC
+sYd
+sYd
+sYd
 aal
 aal
 aal
@@ -90710,7 +90722,7 @@ vXM
 aaa
 aaa
 aac
-aaC
+sYd
 aac
 aac
 aaa
@@ -90967,7 +90979,7 @@ vXM
 aaa
 aaa
 aaa
-aaC
+sYd
 aaa
 aaa
 xwf
@@ -91224,7 +91236,7 @@ vXM
 aaa
 aaa
 aaa
-aaC
+sYd
 hFr
 hFr
 xwf
@@ -91481,12 +91493,12 @@ vXM
 aaa
 aaa
 aac
-aaC
+sYd
 aab
 aad
 aae
 mST
-dqp
+bMV
 nMu
 vzY
 xwf
@@ -111554,8 +111566,8 @@ aac
 aac
 aaa
 aaa
-aak
-aak
+aaC
+aaC
 aac
 aac
 aac
@@ -111807,11 +111819,11 @@ aaC
 aaC
 aaC
 aaC
-aak
-aak
-aak
-aak
-aak
+aaC
+aaC
+aaC
+aaC
+aaC
 aac
 aac
 aac
