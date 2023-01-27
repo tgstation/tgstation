@@ -1,6 +1,6 @@
-import { capitalize } from 'common/string';
+import { capitalize, createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack, Tabs } from '../components';
+import { Box, Button, Dimmer, Divider, Icon, Input, NumberInput, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -19,37 +19,57 @@ const ShoppingTab = (props, context) => {
   const { credit_type, order_categories, order_datums } = data;
   const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
   const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
-  const mapped_food = order_datums.filter(
-    (food) => food && food.cat === shopIndex
-  );
+  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  const search = createSearch(searchItem, (order_datums) => order_datums.name);
+  let goods =
+    searchItem.length > 0
+      ? data.order_datums.filter(search)
+      : order_datums.filter((item) => item && item.cat === shopIndex);
   return (
     <Stack fill vertical>
-      <Section mb={-0.9}>
+      <Section mb={-1}>
         <Stack.Item>
           <Tabs>
             {order_categories.map((item, key) => (
               <Tabs.Tab
                 key={item.id}
                 selected={item === shopIndex}
-                onClick={() => setShopIndex(item)}>
+                onClick={() => {
+                  setShopIndex(item);
+
+                  if (searchItem.length > 0) {
+                    setSearchItem('');
+                  }
+                }}>
                 {item}
               </Tabs.Tab>
             ))}
+            <Stack.Item grow>
+              <Input
+                autoFocus
+                ml={5}
+                width="150px"
+                mt={0.5}
+                placeholder="Search item..."
+                value={searchItem}
+                onInput={(e, value) => {
+                  setSearchItem(value);
+
+                  if (value.length > 0) {
+                    setShopIndex(1);
+                  }
+                }}
+                fluid
+              />
+            </Stack.Item>
           </Tabs>
-          <Button
-            ml={65}
-            mt={-2}
-            color={condensed ? 'green' : 'red'}
-            content={condensed ? 'Uncondense' : 'Condense'}
-            onClick={() => setCondensed(!condensed)}
-          />
         </Stack.Item>
       </Section>
       <Stack.Item grow>
         <Section fill scrollable>
           <Stack vertical mt={-2}>
             <Divider />
-            {mapped_food.map((item) => (
+            {goods.map((item) => (
               <Stack.Item key={item}>
                 <Stack>
                   <span
@@ -84,9 +104,10 @@ const ShoppingTab = (props, context) => {
                   </Stack.Item>
                   <Stack.Item mt={-0.5}>
                     <Box fontSize="10px" color="label" textAlign="right">
-                      {' costs ' + item.cost + item.credit_type + ' per order.'}
+                      {item.cost + credit_type + ' per order.'}
                     </Box>
                     <Button
+                      ml={2}
                       icon="minus"
                       onClick={() =>
                         act('remove_one', {
@@ -168,7 +189,7 @@ const CheckoutTab = (props, context) => {
                         {item.name +
                           ' costs ' +
                           item.cost +
-                          item.credit_type +
+                          credit_type +
                           ' per order.'}
                       </Box>
                     </Stack.Item>
@@ -250,6 +271,7 @@ export const ProduceConsole = (props, context) => {
   const { act, data } = useBackend(context);
   const { points, off_cooldown } = data;
   const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
+  const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
     <Window width={500} height={400}>
@@ -283,9 +305,18 @@ export const ProduceConsole = (props, context) => {
             </Section>
           </Stack.Item>
           <Section>
-            <Stack grow>
-              <Stack.Item>
+            <Stack direction="column">
+              <Stack.Item grow>
                 Currently available balance: {points || 0}
+              </Stack.Item>
+              <Stack.Item textAlign="right" fill>
+                <Button
+                  ml={65}
+                  mt={-4}
+                  color={condensed ? 'green' : 'red'}
+                  content={condensed ? 'Uncondense' : 'Condense'}
+                  onClick={() => setCondensed(!condensed)}
+                />
               </Stack.Item>
             </Stack>
           </Section>
