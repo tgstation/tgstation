@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Button, Section, Table, NoticeBox } from '../components';
+import { Button, Collapsible, Section, Table, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -117,28 +117,30 @@ export const ServerControl = (props, context) => {
           </Section>
         )}
 
-        {!logs.length ? (
-          <NoticeBox mt={2} info>
-            No history found.
-          </NoticeBox>
-        ) : (
-          <Table>
-            <Table.Row header>
-              <Table.Cell>Research Name</Table.Cell>
-              <Table.Cell>Cost</Table.Cell>
-              <Table.Cell>Researcher Name</Table.Cell>
-              <Table.Cell>Console Location</Table.Cell>
-            </Table.Row>
-            {logs.map((server_log) => (
-              <Table.Row mt={1} key={server_log.node_name}>
-                <Table.Cell>{server_log.node_name}</Table.Cell>
-                <Table.Cell>{server_log.node_cost}</Table.Cell>
-                <Table.Cell>{server_log.node_researcher}</Table.Cell>
-                <Table.Cell>{server_log.node_research_location}</Table.Cell>
+        <Collapsible title="Research History">
+          {!logs.length ? (
+            <NoticeBox mt={2} info>
+              No history found.
+            </NoticeBox>
+          ) : (
+            <Table>
+              <Table.Row header>
+                <Table.Cell>Research Name</Table.Cell>
+                <Table.Cell>Cost</Table.Cell>
+                <Table.Cell>Researcher Name</Table.Cell>
+                <Table.Cell>Console Location</Table.Cell>
               </Table.Row>
-            ))}
-          </Table>
-        )}
+              {logs.map((server_log) => (
+                <Table.Row mt={1} key={server_log.node_name}>
+                  <Table.Cell>{server_log.node_name}</Table.Cell>
+                  <Table.Cell>{server_log.node_cost}</Table.Cell>
+                  <Table.Cell>{server_log.node_researcher}</Table.Cell>
+                  <Table.Cell>{server_log.node_research_location}</Table.Cell>
+                </Table.Row>
+              ))}
+            </Table>
+          )}
+        </Collapsible>
       </Window.Content>
     </Window>
   );
