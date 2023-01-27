@@ -253,7 +253,6 @@
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
 	device_theme = "syndicate"
-	has_pda_programs = TRUE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
