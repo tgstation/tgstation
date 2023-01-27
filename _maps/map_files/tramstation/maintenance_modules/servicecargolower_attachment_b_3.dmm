@@ -33,6 +33,11 @@
 "t" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/starboard/greater)
+"z" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "G" = (
 /turf/closed/wall/rock/porous,
 /area/station/maintenance/starboard/greater)
@@ -89,7 +94,7 @@ t
 p
 "}
 (5,1,1) = {"
-W
+z
 t
 t
 t

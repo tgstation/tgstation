@@ -114,15 +114,12 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "Q" = (
-/obj/modular_map_root/tramstation{
-	key = "servicecargolower_attachment_a";
-	name = "servicecargolower_attachment_a"
-	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "S" = (

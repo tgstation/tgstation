@@ -355,21 +355,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
-"TU" = (
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Bar Maintenance Hatch"
-	},
-/obj/machinery/duct,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/security)
 "Uo" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -1964,7 +1949,7 @@ ZA
 ZA
 ZA
 bW
-TU
+eg
 eg
 eg
 eg

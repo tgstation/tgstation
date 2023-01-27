@@ -12,10 +12,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "i" = (
-/obj/modular_map_root/tramstation{
-	key = "servicecargolower_attachment_b";
-	name = "servicecargolower_attachment_b"
-	},
+/obj/modular_map_connector,
 /turf/closed/wall,
 /area/station/maintenance/starboard/greater)
 "o" = (

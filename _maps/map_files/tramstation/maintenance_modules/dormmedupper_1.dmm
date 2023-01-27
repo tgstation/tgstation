@@ -377,17 +377,6 @@
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/medical)
-"Vm" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Medical Maintenance Hatch"
-	},
-/obj/machinery/duct,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/medical)
 "VY" = (
 /turf/closed/wall/rust,
 /area/station/maintenance/department/medical)
@@ -1682,7 +1671,7 @@ LS
 LS
 LS
 LS
-Vm
+LS
 LS
 LS
 LS

@@ -6,10 +6,7 @@
 /turf/template_noop,
 /area/template_noop)
 "l" = (
-/obj/modular_map_root/tramstation{
-	key = "atmoscilower_attachment_b";
-	name = "atmoscilower_attachment_b"
-	},
+/obj/modular_map_connector,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 

@@ -7,11 +7,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "i" = (
-/obj/modular_map_root/tramstation{
-	key = "servicecargolower_attachment_b";
-	name = "servicecargolower_attachment_b"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "o" = (
