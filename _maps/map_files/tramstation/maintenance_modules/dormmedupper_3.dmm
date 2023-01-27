@@ -13,14 +13,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "cs" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
 "dI" = (
 /obj/item/shovel,
 /turf/open/misc/asteroid,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "fh" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/railing{
@@ -33,7 +33,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "fQ" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/grass,
@@ -41,7 +41,7 @@
 "gd" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "gm" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/railing{
@@ -66,7 +66,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "jc" = (
 /turf/closed/wall,
 /area/station/asteroid)
@@ -74,24 +74,24 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "kx" = (
 /turf/open/openspace,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "lb" = (
 /obj/effect/landmark/xeno_spawn,
 /turf/open/misc/asteroid,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "lr" = (
 /obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
 "mJ" = (
 /turf/closed/wall/rock,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "or" = (
 /turf/open/misc/asteroid,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "oy" = (
 /obj/structure/flora/tree/jungle/style_3,
 /turf/open/floor/grass,
@@ -100,19 +100,19 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "oP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "pi" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/structure/cable/multilayer/multiz,
 /obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "pB" = (
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
@@ -121,13 +121,10 @@
 /obj/effect/spawner/random/engineering/tank,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "qr" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/department/medical)
-"rs" = (
-/turf/open/openspace/airless/planetary,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "rO" = (
 /turf/open/floor/grass,
 /area/station/asteroid)
@@ -143,7 +140,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/openspace,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "uz" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access"
@@ -155,12 +152,12 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "uB" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "vg" = (
 /obj/structure/flora/tree/jungle/style_5,
 /turf/open/floor/grass,
@@ -170,7 +167,7 @@
 	key = "dormmedupper_attachment_a"
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "vp" = (
 /obj/structure/railing{
 	dir = 4
@@ -182,13 +179,13 @@
 /obj/effect/spawner/random/engineering/vending_restock,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "vF" = (
 /obj/modular_map_root/tramstation{
 	key = "dormmedupper_attachment_b"
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "wq" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access"
@@ -197,7 +194,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "ym" = (
 /turf/template_noop,
 /area/template_noop)
@@ -229,44 +226,47 @@
 	dir = 1
 	},
 /turf/open/openspace,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "CL" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/conveyor{
 	id = "engineeringchute"
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Db" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
+"Eh" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/department/crew_quarters/dorms)
 "Eq" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "EW" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "FT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "GE" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/asteroid)
 "GW" = (
 /turf/closed/wall,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "GX" = (
 /obj/structure/lattice,
-/turf/open/openspace/airless/planetary,
-/area/station/maintenance/department/medical)
+/turf/open/openspace,
+/area/station/maintenance/department/crew_quarters/dorms)
 "Iz" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
@@ -279,7 +279,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Kk" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron,
@@ -288,12 +288,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "KO" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Mq" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -308,7 +308,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/openspace,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Ms" = (
 /obj/structure/railing{
 	dir = 1
@@ -328,17 +328,17 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "PJ" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Qr" = (
 /turf/closed/wall/rust,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Qt" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /mob/living/simple_animal/butterfly,
@@ -359,14 +359,14 @@
 	id = "engineeringchute"
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "SV" = (
 /obj/structure/plasticflaps/opaque{
 	name = "airtight delivery flaps"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Tn" = (
 /obj/structure/railing{
 	dir = 4
@@ -376,27 +376,27 @@
 /obj/effect/spawner/random/medical/minor_healing,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Uy" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/plasticflaps/opaque{
 	name = "airtight delivery flaps"
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "VM" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "VU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Wh" = (
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
@@ -426,7 +426,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
 /turf/open/openspace,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "XJ" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -434,12 +434,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "XV" = (
 /obj/item/stack/ore/glass,
 /obj/item/relic,
 /turf/open/misc/asteroid/dug,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "ZJ" = (
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
@@ -1448,7 +1448,7 @@ ym
 oP
 cm
 GW
-gn
+Eh
 GW
 Qr
 cs
@@ -1487,7 +1487,7 @@ Db
 Db
 EW
 lb
-gn
+Eh
 qr
 qr
 qr
@@ -1527,7 +1527,7 @@ dI
 or
 qr
 or
-gn
+Eh
 Qr
 GW
 ym
@@ -1562,7 +1562,7 @@ or
 or
 CL
 Rz
-rs
+kx
 GX
 GW
 ym
@@ -1596,9 +1596,9 @@ qr
 qr
 Qr
 qr
-gn
+Eh
 Qr
-gn
+Eh
 GW
 ym
 "}

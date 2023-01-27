@@ -2,7 +2,7 @@
 "a" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "h" = (
 /obj/structure/rack,
 /obj/structure/window/spawner/east,
@@ -18,7 +18,7 @@
 /obj/structure/window/spawner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "o" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/suit/chaplainsuit/bishoprobe,
@@ -30,7 +30,7 @@
 /obj/item/clothing/suit/chaplainsuit/monkrobeeast,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "r" = (
 /turf/template_noop,
 /area/template_noop)
@@ -46,7 +46,7 @@
 /obj/structure/window/spawner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "u" = (
 /obj/structure/rack,
 /obj/item/storage/fancy/candle_box,
@@ -57,7 +57,7 @@
 /obj/machinery/door/window/right/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "N" = (
 /obj/structure/rack,
 /obj/item/camera_film,
@@ -72,7 +72,7 @@
 /obj/machinery/door/window/left/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "O" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder,
@@ -86,7 +86,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "P" = (
 /obj/structure/rack,
 /obj/structure/window/spawner/west,
@@ -94,7 +94,7 @@
 /obj/structure/window/spawner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "W" = (
 /obj/structure/rack,
 /obj/structure/window/spawner/west,
@@ -106,7 +106,7 @@
 /obj/structure/window/spawner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "X" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Public Services Storage Maintenance Hatch"
@@ -114,7 +114,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 
 (1,1,1) = {"
 W

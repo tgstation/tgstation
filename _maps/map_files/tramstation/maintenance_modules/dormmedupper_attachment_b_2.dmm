@@ -6,37 +6,37 @@
 /obj/item/chair/stool,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "g" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "l" = (
 /obj/structure/mop_bucket,
 /obj/item/mop,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "o" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "s" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "t" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "u" = (
 /obj/structure/sink/directional/east,
 /obj/item/reagent_containers/cup/bucket{
@@ -47,35 +47,35 @@
 /obj/structure/mirror/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "v" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "B" = (
 /turf/closed/wall,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "E" = (
 /obj/structure/closet/cardboard,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "J" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "N" = (
 /turf/template_noop,
 /area/template_noop)
@@ -83,14 +83,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "S" = (
 /obj/structure/table,
 /obj/effect/spawner/random/bureaucracy/folder,
 /obj/effect/spawner/random/bureaucracy/pen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "T" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -99,14 +99,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 "Y" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
+/area/station/maintenance/department/crew_quarters/dorms)
 
 (1,1,1) = {"
 N
