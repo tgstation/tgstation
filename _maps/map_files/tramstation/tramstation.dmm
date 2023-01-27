@@ -73,8 +73,9 @@
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "aal" = (
-/obj/effect/spawner/structure/electrified_grille,
 /obj/effect/turf_decal/sand/plating,
+/obj/structure/cable/layer1,
+/obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "aam" = (
@@ -1682,7 +1683,7 @@
 /area/station/asteroid)
 "aeh" = (
 /turf/open/space/basic,
-/area/station/asteroid)
+/area/space/nearstation)
 "aei" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1776,10 +1777,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
 "aev" = (
-/obj/structure/cable/multilayer/connected,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/station/asteroid)
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/station/solars/starboard/fore)
 "aew" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
@@ -2790,7 +2791,7 @@
 	dir = 1
 	},
 /turf/open/space/openspace,
-/area/station/asteroid)
+/area/space/nearstation)
 "ahw" = (
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 10
@@ -9190,6 +9191,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
+"bwp" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/solar{
+	id = "forestarboard";
+	name = "Starboard Solar Array"
+	},
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/station/solars/starboard/fore)
 "bwz" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -9698,7 +9708,7 @@
 	network = list("aicore")
 	},
 /turf/open/space/openspace,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
+/area/space/nearstation)
 "bGr" = (
 /obj/structure/closet/secure_closet/cytology,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -20340,6 +20350,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
+"fCB" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
 "fCO" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -40457,6 +40473,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"njz" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/space/basic,
+/area/station/solars/starboard/fore)
 "njC" = (
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -41709,6 +41730,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"nIc" = (
+/obj/structure/cable/layer1,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
 "nIr" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -47967,6 +47993,10 @@
 /obj/structure/railing,
 /turf/open/openspace,
 /area/station/solars/port)
+"pZH" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/station/solars/starboard/fore)
 "pZU" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/blue,
@@ -54914,9 +54944,8 @@
 /area/station/hallway/secondary/entry)
 "sCG" = (
 /obj/structure/holosign/barrier/atmos/tram,
-/obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment,
-/turf/open/space/basic,
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "sCO" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
@@ -64499,7 +64528,7 @@
 	dir = 10
 	},
 /turf/open/space/openspace,
-/area/station/ai_monitored/turret_protected/ai_upload)
+/area/space)
 "wdC" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
@@ -69731,7 +69760,7 @@
 	network = list("aicore")
 	},
 /turf/open/space/openspace,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
+/area/space/nearstation)
 "ylv" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
 /obj/effect/turf_decal/bot{
@@ -90425,8 +90454,8 @@ aaa
 aaa
 aac
 aaC
+nIc
 aaC
-aev
 aal
 aal
 aal
@@ -91563,7 +91592,7 @@ aak
 vXM
 rWa
 vXM
-auz
+qdd
 pHM
 pHM
 rWa
@@ -93112,7 +93141,7 @@ rWa
 pHM
 pHM
 pHM
-qdd
+rWa
 pHM
 pHM
 qdd
@@ -94366,8 +94395,8 @@ jnq
 jnq
 jnq
 jnq
-aak
 aaC
+nIc
 aak
 aak
 aac
@@ -103123,7 +103152,7 @@ eIM
 awE
 awE
 fjQ
-vXM
+aeh
 aaa
 aaa
 vXM
@@ -105591,10 +105620,10 @@ pHM
 aac
 aam
 aan
-aak
-aas
-aak
-aak
+aan
+fCB
+aan
+aan
 aam
 aac
 aac
@@ -106105,9 +106134,9 @@ vXM
 aac
 aac
 aam
-aak
 aan
-aak
+aan
+aan
 aam
 aac
 aac
@@ -106203,7 +106232,7 @@ lCk
 hZr
 pHM
 hZr
-vXM
+aeh
 mQi
 aac
 aac
@@ -107134,7 +107163,7 @@ vXM
 aac
 aac
 aam
-aak
+aan
 aan
 aak
 aam
@@ -107229,7 +107258,7 @@ hZr
 diq
 csN
 hZr
-vXM
+aeh
 aac
 aac
 hYn
@@ -108163,7 +108192,7 @@ vXM
 aac
 aac
 aam
-aak
+aan
 aan
 aak
 aam
@@ -109193,7 +109222,7 @@ aac
 aac
 aac
 aac
-aan
+aak
 aac
 aac
 aac
@@ -109949,13 +109978,13 @@ pHM
 pHM
 pHM
 pHM
-qCU
+bwp
 pHM
 pHM
 pHM
 pHM
 pHM
-qCU
+bwp
 pHM
 aai
 aac
@@ -110206,13 +110235,13 @@ vXM
 vXM
 vXM
 vXM
-qdd
+aev
 vXM
 vXM
-qCU
+bwp
 vXM
 vXM
-auz
+pZH
 vXM
 aac
 aac
@@ -110461,16 +110490,16 @@ vXM
 fYW
 vXM
 pdy
-pHM
-pHM
-auz
-pHM
-pHM
-qdd
-pHM
-pHM
-auz
-pHM
+pdy
+pdy
+pZH
+pdy
+pdy
+aev
+pdy
+pdy
+pZH
+pdy
 aac
 aac
 aac
@@ -110717,20 +110746,20 @@ vXM
 vXM
 fYW
 vXM
-pHM
-skt
-auz
-auz
-auz
-auz
-auz
-auz
-auz
-auz
-auz
-qdd
+pdy
+njz
+pZH
+pZH
+pZH
+pZH
+pZH
+pZH
+pZH
+aev
+aev
+aev
 aan
-aak
+aan
 aar
 plk
 tdO
@@ -110974,18 +111003,18 @@ vXM
 vXM
 fYW
 vXM
-pHM
-pHM
-pHM
-auz
-pHM
-pHM
-auz
-pHM
-pHM
-auz
-pHM
-pHM
+pdy
+pdy
+pdy
+pZH
+pdy
+pdy
+pZH
+pdy
+pdy
+aev
+pdy
+pdy
 aac
 aac
 aan
@@ -111234,18 +111263,18 @@ vXM
 vXM
 vXM
 vXM
-auz
+pZH
 vXM
 vXM
 qCU
 vXM
 vXM
-qdd
+aev
 vXM
 vXM
 aac
 aac
-aak
+aan
 plk
 plk
 plk
@@ -111491,13 +111520,13 @@ pHM
 pHM
 pHM
 pHM
-qCU
+bwp
 pHM
 pHM
 pHM
 pHM
 pHM
-qCU
+bwp
 pHM
 pHM
 pHM
@@ -112790,8 +112819,8 @@ aac
 aac
 aam
 aan
-aak
-aak
+aan
+aan
 aak
 aak
 aan
@@ -113819,7 +113848,7 @@ aac
 aac
 aam
 aan
-aak
+aan
 aan
 aak
 aak
@@ -114336,7 +114365,7 @@ aac
 aam
 aak
 aan
-aak
+aan
 aam
 aac
 aac
@@ -157618,7 +157647,7 @@ jhd
 jhd
 tMW
 jhd
-tMW
+mAG
 jhd
 mAG
 jhd
