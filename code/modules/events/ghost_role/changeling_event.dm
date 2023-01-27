@@ -57,7 +57,6 @@
 
 	if(!new_changeling.forceMove(changeling_meteor)) //Place our payload inside of its vessel
 		CRASH("Changeling meteor failed to load changeling into itself, aborting.")
-		return
 
 	player_mind.transfer_to(new_changeling)
 	player_mind.special_role = ROLE_CHANGELING_MIDROUND
