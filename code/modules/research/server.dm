@@ -9,7 +9,7 @@
 /// The ninja has blown the HDD up.
 #define HDD_OVERLOADED 4
 
-#define SERVER_NOMINAL_TEXT "<font color='lightgreen'>Nominal</font>"
+#define SERVER_NOMINAL_TEXT "Nominal"
 
 /obj/machinery/rnd/server
 	name = "\improper R&D Server"
@@ -87,15 +87,15 @@
 /// Gets status text based on this server's status for the computer.
 /obj/machinery/rnd/server/proc/get_status_text()
 	if(machine_stat & EMPED)
-		return "<font color=red>O&F@I*$ - R3*&O$T R@U!R%D</font>"
+		return "O&F@I*$ - R3*&O$T R@U!R%D"
 	else if(machine_stat & NOPOWER)
-		return "<font color=red>Offline - Server Unpowered</font>"
+		return "Offline - Server Unpowered"
 	else if(research_disabled)
-		return "<font color=red>Offline - Server Control Disabled</font>"
+		return "Offline - Server Control Disabled"
 	else if(!working)
 		// If, for some reason, working is FALSE even though we're not emp'd or powerless,
 		// We need something to update our working state - such as rebooting the server
-		return "<font color=red>Offline - Reboot Required</font>"
+		return "Offline - Reboot Required"
 
 	return SERVER_NOMINAL_TEXT
 

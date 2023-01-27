@@ -1,8 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Button, Table, NoticeBox } from '../components';
+import { Button, Section, Table, NoticeBox } from '../components';
 import { Window } from '../layouts';
-import { ScrollableSection } from './LibraryConsole';
 
 type Data = {
   server_connected: BooleanLike;
@@ -15,12 +14,14 @@ type ServerData = {
   server_name: string;
   server_details: string;
   server_disabled: string;
+  server_ref: string;
 };
 
 type ConsoleData = {
   console_name: string;
   console_location: string;
   console_locked: string;
+  console_ref: string;
 };
 
 type LogData = {
@@ -45,60 +46,75 @@ export const ServerControl = (props, context) => {
     );
   }
   return (
-    <Window width={575} height={400}>
-      <Window.Content>
-        {!servers.length ? (
+    <Window width={575} height={400} scrollable fill>
+      <Window.Content scrollable>
+        {!servers ? (
           <NoticeBox mt={2} info>
             No servers found.
           </NoticeBox>
         ) : (
-          <Table cellpadding="3" textAlign="center">
-            <Table.Row header>
-              <Table.Cell>Research Servers</Table.Cell>
-            </Table.Row>
-            {servers.map((server) => (
-              <>
-                <Table.Row header key={server} />
-                <Table.Cell> {server.server_name}</Table.Cell>
-                <Button
-                  mt={1}
-                  tooltip={server.server_details}
-                  color={server.server_disabled ? 'good' : 'bad'}
-                  content={server.server_disabled ? 'Online' : 'Offline'}
-                  fluid
-                  textAlign="center"
-                />
-              </>
-            ))}
-          </Table>
+          <Section>
+            <Table cellpadding="3" textAlign="center">
+              <Table.Row header>
+                <Table.Cell>Research Servers</Table.Cell>
+              </Table.Row>
+              {servers.map((server) => (
+                <>
+                  <Table.Row header key={server} />
+                  <Table.Cell> {server.server_name}</Table.Cell>
+                  <Button
+                    mt={1}
+                    tooltip={server.server_details}
+                    color={server.server_disabled ? 'bad' : 'good'}
+                    content={server.server_disabled ? 'Offline' : 'Online'}
+                    fluid
+                    textAlign="center"
+                    onClick={() =>
+                      act('lockdown_server', {
+                        selected_server: server.server_ref,
+                      })
+                    }
+                  />
+                </>
+              ))}
+            </Table>
+          </Section>
         )}
 
-        {!consoles.length ? (
+        {!consoles ? (
           <NoticeBox mt={2} info>
             No consoles found.
           </NoticeBox>
         ) : (
-          <Table cellpadding="3" textAlign="center">
-            <Table.Row header>
-              <Table.Cell>Research Consoles</Table.Cell>
-            </Table.Row>
-            {consoles.map((console) => (
-              <>
-                <Table.Row header key={console} />
-                <Table.Cell>
-                  {' '}
-                  {console.console_name} - Location: {console.console_location}{' '}
-                </Table.Cell>
-                <Button
-                  mt={1}
-                  color={console.console_locked ? 'good' : 'bad'}
-                  content={console.console_locked ? 'Unlock' : 'Lock'}
-                  fluid
-                  textAlign="center"
-                />
-              </>
-            ))}
-          </Table>
+          <Section align="right">
+            <Table cellpadding="3" textAlign="center">
+              <Table.Row header>
+                <Table.Cell>Research Consoles</Table.Cell>
+              </Table.Row>
+              {consoles.map((console) => (
+                <>
+                  <Table.Row header key={console} />
+                  <Table.Cell>
+                    {' '}
+                    {console.console_name} - Location:{' '}
+                    {console.console_location}{' '}
+                  </Table.Cell>
+                  <Button
+                    mt={1}
+                    color={console.console_locked ? 'bad' : 'good'}
+                    content={console.console_locked ? 'LOCKED' : 'UNLOCKED'}
+                    fluid
+                    textAlign="center"
+                    onClick={() =>
+                      act('lock_console', {
+                        selected_console: console.console_ref,
+                      })
+                    }
+                  />
+                </>
+              ))}
+            </Table>
+          </Section>
         )}
 
         {!logs.length ? (
@@ -106,35 +122,24 @@ export const ServerControl = (props, context) => {
             No history found.
           </NoticeBox>
         ) : (
-          <ScrollableSection
-            header="Research History"
-            contents={<ServerLogs />}
-          />
+          <Table>
+            <Table.Row header>
+              <Table.Cell>Research Name</Table.Cell>
+              <Table.Cell>Cost</Table.Cell>
+              <Table.Cell>Researcher Name</Table.Cell>
+              <Table.Cell>Console Location</Table.Cell>
+            </Table.Row>
+            {logs.map((server_log) => (
+              <Table.Row mt={1} key={server_log.node_name}>
+                <Table.Cell>{server_log.node_name}</Table.Cell>
+                <Table.Cell>{server_log.node_cost}</Table.Cell>
+                <Table.Cell>{server_log.node_researcher}</Table.Cell>
+                <Table.Cell>{server_log.node_research_location}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table>
         )}
       </Window.Content>
     </Window>
-  );
-};
-
-const ServerLogs = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const { logs } = data;
-  return (
-    <Table>
-      <Table.Row header>
-        <Table.Cell>Research Name</Table.Cell>
-        <Table.Cell>Cost</Table.Cell>
-        <Table.Cell>Researcher Name</Table.Cell>
-        <Table.Cell>Console Location</Table.Cell>
-      </Table.Row>
-      {logs.map((server_log) => (
-        <Table.Row mt={1} key={server_log.node_name}>
-          <Table.Cell>{server_log.node_name}</Table.Cell>
-          <Table.Cell>{server_log.node_cost}</Table.Cell>
-          <Table.Cell>{server_log.node_researcher}</Table.Cell>
-          <Table.Cell>{server_log.node_research_location}</Table.Cell>
-        </Table.Row>
-      ))}
-    </Table>
   );
 };
