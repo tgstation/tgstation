@@ -86,12 +86,12 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/asteroid)
+/area/station/solars/starboard/fore)
 "aan" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/port)
 "aao" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -3702,10 +3702,10 @@
 "aor" = (
 /obj/effect/landmark/start/station_engineer,
 /obj/effect/turf_decal/trimline/yellow/arrow_cw,
-/obj/structure/cable/layer1,
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 1
 	},
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "aow" = (
@@ -4415,14 +4415,9 @@
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "auz" = (
-/obj/machinery/power/solar{
-	id = "forestarboard";
-	name = "Starboard Solar Array"
-	},
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/port)
 "auG" = (
 /obj/structure/sign/poster/official/safety_report{
 	pixel_y = 32
@@ -7420,10 +7415,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"aPX" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
 "aQc" = (
 /obj/item/storage/book/bible,
 /obj/structure/altar_of_gods,
@@ -13805,6 +13796,10 @@
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
+"dbr" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/solars/starboard/fore)
 "dbu" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -28193,7 +28188,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable/layer1,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "iJd" = (
@@ -34011,7 +34006,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "kNT" = (
@@ -36377,11 +36371,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable/layer1,
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/arrow_cw,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "lGV" = (
@@ -40141,6 +40135,11 @@
 	},
 /turf/open/space/openspace,
 /area/station/solars/starboard/fore)
+"ncE" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/station/solars/starboard/fore)
 "ncF" = (
 /turf/closed/wall,
 /area/station/maintenance/tram/left)
@@ -40161,10 +40160,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
-"ndH" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/station/solars/port)
 "ndO" = (
 /obj/machinery/door/airlock/silver{
 	name = "Bathroom"
@@ -41370,6 +41365,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"nzN" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating/airless,
+/area/station/solars/port)
 "nzU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -42105,6 +42106,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "nPR" = (
@@ -52752,11 +52754,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"rNq" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/station/solars/port)
 "rNt" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
@@ -58013,6 +58010,11 @@
 /mob/living/simple_animal/bot/floorbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"tIw" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating/airless,
+/area/station/solars/starboard/fore)
 "tIJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/arrow_ccw{
 	dir = 1
@@ -62272,6 +62274,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "vnI" = (
@@ -64008,12 +64011,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
-"vTu" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/obj/structure/cable/layer1,
-/turf/open/floor/plating/airless,
-/area/station/solars/port)
 "vTv" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -65024,6 +65021,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "wnh" = (
@@ -68835,11 +68833,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
-"xVm" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable/layer1,
-/turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
 "xVp" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -85965,11 +85958,11 @@ apC
 aac
 aac
 aek
-ndH
-ndH
-ndH
-ndH
-rNq
+auz
+auz
+auz
+auz
+aan
 aek
 pHM
 pHM
@@ -86224,7 +86217,7 @@ aac
 aac
 aac
 aac
-ndH
+auz
 aac
 aac
 aac
@@ -86480,9 +86473,9 @@ aac
 aac
 aac
 aek
-rNq
-ndH
-ndH
+aan
+auz
+auz
 aek
 aac
 aac
@@ -86738,7 +86731,7 @@ aac
 aac
 aac
 aac
-ndH
+auz
 aac
 aac
 aac
@@ -86993,11 +86986,11 @@ aac
 aac
 aac
 aek
-ndH
-ndH
-ndH
-ndH
-ndH
+auz
+auz
+auz
+auz
+auz
 aek
 aac
 aac
@@ -87252,7 +87245,7 @@ aac
 aac
 aac
 aac
-ndH
+auz
 aac
 aac
 aac
@@ -87509,7 +87502,7 @@ aac
 aac
 aac
 aac
-rNq
+aan
 aac
 aac
 aac
@@ -87765,11 +87758,11 @@ aaa
 aac
 aac
 aek
-rNq
-rNq
-rNq
-ndH
-ndH
+aan
+aan
+aan
+auz
+auz
 aek
 pHM
 pHM
@@ -88024,7 +88017,7 @@ aac
 aac
 aac
 aac
-rNq
+aan
 aac
 aac
 aac
@@ -88280,9 +88273,9 @@ aaa
 aac
 aac
 aek
-rNq
-rNq
-rNq
+aan
+aan
+aan
 aek
 aac
 aac
@@ -88538,7 +88531,7 @@ aac
 aac
 aac
 aac
-ndH
+auz
 aac
 aac
 aac
@@ -88793,11 +88786,11 @@ aaa
 aac
 aac
 aek
-ndH
-ndH
-ndH
-ndH
-rNq
+auz
+auz
+auz
+auz
+aan
 aek
 aac
 vXM
@@ -89052,7 +89045,7 @@ aac
 aac
 aac
 aac
-ndH
+auz
 aez
 aac
 aac
@@ -89309,7 +89302,7 @@ aac
 aac
 aac
 aac
-ndH
+auz
 qEH
 aac
 aac
@@ -89565,11 +89558,11 @@ aac
 aac
 aac
 aek
-ndH
-ndH
-ndH
-ndH
-rNq
+auz
+auz
+auz
+auz
+aan
 aek
 aac
 vXM
@@ -89824,7 +89817,7 @@ aac
 aac
 aac
 aac
-ndH
+auz
 aac
 aac
 aac
@@ -90080,9 +90073,9 @@ aac
 aac
 aac
 aek
-ndH
-ndH
-ndH
+auz
+auz
+auz
 aek
 aac
 aac
@@ -90338,7 +90331,7 @@ aac
 aac
 aac
 aac
-ndH
+auz
 aac
 aac
 aac
@@ -90593,11 +90586,11 @@ aac
 aac
 aac
 aek
-ndH
-ndH
-ndH
-ndH
-rNq
+auz
+auz
+auz
+auz
+aan
 aek
 pHM
 pHM
@@ -90852,7 +90845,7 @@ aac
 aac
 aac
 aac
-ndH
+auz
 aac
 aac
 aac
@@ -91107,11 +91100,11 @@ aaa
 aac
 aac
 aac
-rNq
-rNq
+aan
+aan
 aeE
-ndH
-ndH
+auz
+auz
 aac
 aac
 aac
@@ -91363,14 +91356,14 @@ aaa
 aaa
 aac
 aac
-rNq
-rNq
+aan
+aan
 aST
 aST
 aST
-ndH
-ndH
-ndH
+auz
+auz
+auz
 aac
 aek
 pHM
@@ -91618,18 +91611,18 @@ fGL
 jnq
 aaa
 aac
-rNq
-rNq
-rNq
+aan
+aan
+aan
 aST
 aST
 edx
 aST
 aST
 aST
-ndH
+auz
 aac
-ndH
+auz
 vXM
 rWa
 vXM
@@ -91875,7 +91868,7 @@ jnq
 jnq
 aaa
 aac
-rNq
+aan
 xCe
 xCe
 xCe
@@ -91884,9 +91877,9 @@ lMD
 lMD
 fSH
 aST
-ndH
+auz
 aac
-ndH
+auz
 vXM
 oQf
 vXM
@@ -92142,8 +92135,8 @@ lst
 cnX
 aST
 aeU
-rNq
-rNq
+aan
+aan
 bRE
 oQf
 oQf
@@ -92389,7 +92382,7 @@ aaa
 aaa
 aac
 aac
-vTu
+nzN
 xCe
 xCe
 xCe
@@ -92398,9 +92391,9 @@ gbj
 vAx
 vAx
 aST
-rNq
+aan
 aac
-ndH
+auz
 vXM
 oQf
 vXM
@@ -92646,18 +92639,18 @@ aac
 aac
 aac
 aac
-vTu
-rNq
-rNq
+nzN
+aan
+aan
 aST
 aST
 kgA
 aST
 aST
 aST
-rNq
+aan
 aac
-ndH
+auz
 vXM
 rWa
 vXM
@@ -92905,14 +92898,14 @@ aac
 aac
 aem
 aac
-rNq
-rNq
+aan
+aan
 aST
 aST
 aST
-rNq
-rNq
-rNq
+aan
+aan
+aan
 aac
 aek
 pHM
@@ -93163,11 +93156,11 @@ aac
 aaC
 aac
 aac
-rNq
-rNq
-rNq
-rNq
-rNq
+aan
+aan
+aan
+aan
+aan
 aac
 aac
 aac
@@ -105659,13 +105652,13 @@ pHM
 pHM
 pHM
 aac
-auz
-aan
-aan
+aam
+ncE
+ncE
 fCB
-aan
-aan
-auz
+ncE
+ncE
+aam
 aac
 aac
 aaa
@@ -105919,7 +105912,7 @@ aac
 aac
 aac
 aac
-aan
+ncE
 aac
 aac
 aac
@@ -106174,11 +106167,11 @@ vXM
 vXM
 aac
 aac
-auz
-aan
-aan
-aan
-auz
+aam
+ncE
+ncE
+ncE
+aam
 aac
 aac
 aac
@@ -106433,7 +106426,7 @@ aac
 aac
 aac
 aac
-aPX
+dbr
 aat
 aac
 aac
@@ -106687,14 +106680,14 @@ vXM
 vXM
 vXM
 aac
-auz
-aPX
-aPX
-aPX
-aPX
-aPX
-aPX
-auz
+aam
+dbr
+dbr
+dbr
+dbr
+dbr
+dbr
+aam
 aac
 aac
 aaa
@@ -106948,7 +106941,7 @@ aac
 aac
 aac
 aac
-aan
+ncE
 aac
 aac
 aac
@@ -107203,11 +107196,11 @@ vXM
 vXM
 aac
 aac
-auz
-aan
-aan
-aPX
-auz
+aam
+ncE
+ncE
+dbr
+aam
 aac
 aac
 aac
@@ -107462,7 +107455,7 @@ aac
 aac
 aac
 aac
-aPX
+dbr
 aac
 aac
 aac
@@ -107717,13 +107710,13 @@ pHM
 pHM
 aac
 aam
-aan
-aPX
-aPX
-aPX
-aPX
-aan
-auz
+ncE
+dbr
+dbr
+dbr
+dbr
+ncE
+aam
 aac
 aaa
 aaa
@@ -107977,7 +107970,7 @@ aac
 aac
 aac
 aac
-aPX
+dbr
 aac
 aac
 aac
@@ -108232,11 +108225,11 @@ vXM
 vXM
 aac
 aac
-auz
-aan
-aan
-aPX
-auz
+aam
+ncE
+ncE
+dbr
+aam
 aac
 aac
 aac
@@ -108491,7 +108484,7 @@ aac
 aac
 aac
 aac
-aPX
+dbr
 aac
 aac
 aac
@@ -108745,14 +108738,14 @@ vXM
 vXM
 aac
 aac
-auz
-aPX
-aPX
-aPX
-aPX
-aPX
-aan
-auz
+aam
+dbr
+dbr
+dbr
+dbr
+dbr
+ncE
+aam
 aac
 aaa
 aaa
@@ -109006,7 +108999,7 @@ aac
 aac
 aac
 csA
-aPX
+dbr
 aac
 aac
 aac
@@ -109263,7 +109256,7 @@ aac
 aac
 aac
 aac
-aPX
+dbr
 aac
 aac
 aac
@@ -109520,7 +109513,7 @@ aac
 aac
 aac
 aac
-aPX
+dbr
 aac
 aac
 aac
@@ -109775,11 +109768,11 @@ aac
 aac
 aac
 aac
-aPX
-aPX
+dbr
+dbr
 aau
-aPX
-aPX
+dbr
+dbr
 aac
 aac
 aac
@@ -110030,14 +110023,14 @@ pHM
 aai
 aac
 aac
-aPX
-aPX
-aPX
+dbr
+dbr
+dbr
 plk
 plk
 plk
-aPX
-aPX
+dbr
+dbr
 aac
 aac
 aaa
@@ -110287,16 +110280,16 @@ vXM
 aac
 aac
 aac
-aPX
+dbr
 plk
 plk
 plk
 deQ
 plk
 plk
-aan
-aan
-aan
+ncE
+ncE
+ncE
 aac
 aac
 aaa
@@ -110544,7 +110537,7 @@ pdy
 aac
 aac
 aac
-aPX
+dbr
 plk
 lhT
 fvK
@@ -110553,7 +110546,7 @@ jge
 sEZ
 sEZ
 sEZ
-aan
+ncE
 aac
 aac
 aac
@@ -110799,8 +110792,8 @@ pZH
 aev
 aev
 aev
-aan
-aan
+ncE
+ncE
 aar
 plk
 tdO
@@ -110811,12 +110804,12 @@ xDy
 caP
 mWu
 aaA
-xVm
-xVm
-xVm
-xVm
-xVm
-xVm
+tIw
+tIw
+tIw
+tIw
+tIw
+tIw
 aac
 aaa
 aaa
@@ -111058,7 +111051,7 @@ pdy
 pdy
 aac
 aac
-aan
+ncE
 plk
 koo
 koo
@@ -111067,13 +111060,13 @@ mJF
 sEZ
 sEZ
 sEZ
-aan
+ncE
 aac
 aac
 aac
 aac
 aac
-xVm
+tIw
 aac
 aaa
 aac
@@ -111315,22 +111308,22 @@ vXM
 vXM
 aac
 aac
-aan
+ncE
 plk
 plk
 plk
 eBc
 plk
 plk
-aan
-aan
-aan
+ncE
+ncE
+ncE
 aac
 aac
 aac
 aac
 aac
-xVm
+tIw
 aac
 aac
 aac
@@ -111572,14 +111565,14 @@ pHM
 pHM
 pHM
 aai
-aan
-aan
-aPX
+ncE
+ncE
+dbr
 plk
 plk
 plk
-aPX
-aPX
+dbr
+dbr
 aac
 aac
 aac
@@ -111587,7 +111580,7 @@ aac
 aac
 aac
 aac
-xVm
+tIw
 aac
 aac
 aac
@@ -111595,8 +111588,8 @@ aac
 aac
 aaa
 aaa
-xVm
-xVm
+tIw
+tIw
 aac
 aac
 aac
@@ -111831,11 +111824,11 @@ vXM
 aac
 aac
 aac
-aPX
-aPX
+dbr
+dbr
 aas
-aPX
-aPX
+dbr
+dbr
 aac
 aac
 aac
@@ -111844,15 +111837,15 @@ aac
 aac
 aac
 aac
-xVm
-xVm
-xVm
-xVm
-xVm
-xVm
-xVm
-xVm
-xVm
+tIw
+tIw
+tIw
+tIw
+tIw
+tIw
+tIw
+tIw
+tIw
 aac
 aac
 aac
@@ -112090,7 +112083,7 @@ aac
 aac
 aac
 aac
-aan
+ncE
 aac
 aac
 aac
@@ -112347,7 +112340,7 @@ aac
 aac
 aac
 aac
-aan
+ncE
 aac
 aac
 aac
@@ -112604,7 +112597,7 @@ aac
 aac
 aac
 aac
-aan
+ncE
 csA
 aac
 aac
@@ -112858,14 +112851,14 @@ vXM
 vXM
 aac
 aac
-auz
-aan
-aan
-aan
-aPX
-aPX
-aan
-auz
+aam
+ncE
+ncE
+ncE
+dbr
+dbr
+ncE
+aam
 aac
 aac
 aac
@@ -113119,7 +113112,7 @@ aac
 aac
 aac
 aac
-aPX
+dbr
 aac
 aac
 aac
@@ -113374,11 +113367,11 @@ vXM
 aac
 aac
 aac
-auz
-aPX
-aPX
-aPX
-auz
+aam
+dbr
+dbr
+dbr
+aam
 aac
 aac
 aac
@@ -113633,7 +113626,7 @@ aac
 aac
 aac
 aac
-aPX
+dbr
 aac
 aac
 aac
@@ -113887,14 +113880,14 @@ pHM
 pHM
 aac
 aac
-auz
-aan
-aan
-aan
-aPX
-aPX
-aPX
-auz
+aam
+ncE
+ncE
+ncE
+dbr
+dbr
+dbr
+aam
 aac
 aac
 aac
@@ -114148,7 +114141,7 @@ aac
 aac
 aac
 aaw
-aPX
+dbr
 aac
 aac
 aac
@@ -114403,11 +114396,11 @@ aac
 aac
 aac
 aac
-auz
-aPX
-aan
-aan
-auz
+aam
+dbr
+ncE
+ncE
+aam
 aac
 aac
 aac
@@ -114662,7 +114655,7 @@ aac
 aac
 aac
 aac
-aan
+ncE
 aac
 aac
 aac
@@ -114916,14 +114909,14 @@ vXM
 vXM
 aac
 aac
-auz
-aPX
-aPX
-aan
-aPX
-aPX
-aPX
-auz
+aam
+dbr
+dbr
+ncE
+dbr
+dbr
+dbr
+aam
 aac
 aac
 aac
@@ -115177,7 +115170,7 @@ aac
 aac
 aac
 aac
-aPX
+dbr
 aac
 aac
 aac
@@ -115432,11 +115425,11 @@ aac
 aac
 aac
 aac
-auz
-aan
-aan
-aPX
-auz
+aam
+ncE
+ncE
+dbr
+aam
 aac
 aac
 aac
@@ -115691,7 +115684,7 @@ aac
 aac
 aac
 aac
-aan
+ncE
 aac
 aac
 aac
@@ -115945,13 +115938,13 @@ pHM
 aac
 aac
 aac
-auz
-aPX
-aPX
+aam
+dbr
+dbr
 aau
-aPX
-aPX
-auz
+dbr
+dbr
+aam
 aac
 aac
 aac
