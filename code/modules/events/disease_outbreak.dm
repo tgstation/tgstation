@@ -136,7 +136,7 @@
 	message_admins("[length(disease_candidates)] candidates found!")
 
 	//Custom virus creation
-	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No", "Cancel")) == "Yes")
+	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
 		chosen_severity = tgui_input_list(usr, "Pick a severity!","Medbay could use a wake up call.", list("Medium", "Harmful", "Dangerous", "Cancel"))
 		switch(chosen_severity)
 			if("Medium")
@@ -160,6 +160,9 @@
 				chosen_transmissibility = DISEASE_SPREAD_AIRBORNE
 			if("Cancel")
 				return ADMIN_CANCEL_EVENT
+
+	if(tgui_alert(usr,"Are you happy with your selections?", "Last chance.", list("Yes", "Cancel")) != "Yes")
+		return ADMIN_CANCEL_EVENT
 
 /datum/round_event/disease_outbreak/advanced
 	///Max severity of our custom virus
@@ -193,7 +196,7 @@
 		else
 			max_severity = ADV_DISEASE_DANGEROUS
 
-	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, max_severity)
+	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_symptoms, max_severity)
 
 	var/list/name_symptoms = list() // For feedback
 	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
@@ -264,9 +267,9 @@
 	name = "Sample #[rand(1, 9999)]"
 
 // Assign the properties for the virus
-/datum/disease/advance/random/event/AssignProperties()
+/datum/disease/advance/random/AssignProperties()
 	visibility_flags |= HIDDEN_SCANNER
-	var/transmissibility = rand(1, 10)
+	var/transmissibility = rand(1, 100)
 	addtimer(CALLBACK(src, PROC_REF(MakeVisible)), 140 SECONDS) // One life loop is 2 seconds, so this number is double announce_when
 
 	if(properties?.len)
@@ -288,11 +291,11 @@
 		CRASH("Our properties were empty or null!")
 
 // Reveal the virus when the level 7 announcement happens
-/datum/disease/advance/random/event/proc/MakeVisible()
+/datum/disease/advance/random/proc/MakeVisible()
 	visibility_flags &= ~HIDDEN_SCANNER
 
 // Assign the spread type and give it the correct description
-/datum/disease/advance/random/event/SetSpread(spread_id)
+/datum/disease/advance/random/SetSpread(spread_id)
 	switch(spread_id)
 		if(DISEASE_SPREAD_CONTACT_FLUIDS)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
@@ -304,10 +307,10 @@
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
 			spread_text = "Airborne"
 
-// Select 1 of 5 groups of potential cures
-/datum/disease/advance/random/event/GenerateCure()
+// Select 1 of 6 groups of potential cures
+/datum/disease/advance/random/GenerateCure()
 	if(properties?.len)
-		var/res = rand(1, 5)
+		var/res = rand(1, 6)
 		if(res == oldres)
 			return
 		cures = list(pick(advance_cures[res]))
