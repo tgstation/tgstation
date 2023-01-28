@@ -16,19 +16,7 @@
 	. = ..()
 	if(. && ishuman(user)) // Give them a visual crying effect if they're human
 		var/mob/living/carbon/human/human_user = user
-
-		//create emote overlay
-		var/datum/bodypart_overlay/emote/crying_overlay = new()
-		crying_overlay.layers = EXTERNAL_ADJACENT
-		crying_overlay.icon_state = "tears"
-		crying_overlay.icon = 'icons/mob/species/human/human_face.dmi'
-		crying_overlay.draw_color = COLOR_DARK_CYAN
-		if(OFFSET_FACE in human_user.dna?.species.offset_features)
-			var/offset = human_user.dna.species.offset_features[OFFSET_FACE]
-			crying_overlay.offset_x = offset[1]
-			crying_overlay.offset_y = offset[2]
-
-		//apply emote overlay
+		var/datum/bodypart_overlay/crying_overlay = new /datum/bodypart_overlay/emote/cry()
 		var/obj/item/bodypart/head/human_head = human_user.get_bodypart(BODY_ZONE_HEAD)
 		human_head.add_bodypart_overlay(crying_overlay)
 		human_user.update_body()

@@ -16,19 +16,7 @@
 	. = ..()
 	if(. && ishuman(user)) // Give them a visual blush effect if they're human
 		var/mob/living/carbon/human/human_user = user
-
-		//create emote overlay
-		var/datum/bodypart_overlay/emote/blush_overlay = new()
-		blush_overlay.layers = EXTERNAL_ADJACENT
-		blush_overlay.icon_state = "blush"
-		blush_overlay.icon = 'icons/mob/species/human/human_face.dmi'
-		blush_overlay.draw_color = COLOR_BLUSH_PINK
-		if(OFFSET_FACE in human_user.dna?.species.offset_features)
-			var/offset = human_user.dna.species.offset_features[OFFSET_FACE]
-			blush_overlay.offset_x = offset[1]
-			blush_overlay.offset_y = offset[2]
-
-		//apply emote overlay
+		var/datum/bodypart_overlay/blush_overlay = new /datum/bodypart_overlay/emote/blush()
 		var/obj/item/bodypart/head/human_head = human_user.get_bodypart(BODY_ZONE_HEAD)
 		human_head.add_bodypart_overlay(blush_overlay)
 		human_user.update_body_parts()

@@ -2,7 +2,7 @@
 ///Don't forget to go over this again later
 /datum/bodypart_overlay/emote
 	///Icon state of the overlay
-	var/icon_state
+	var/icon_state = 'icons/mob/species/human/human_face.dmi'
 	///Icon of the overlay
 	var/icon
 	///Color we apply to our overlay (none by default)
@@ -20,3 +20,19 @@
 
 /datum/bodypart_overlay/emote/color_image(mutable_appearance/overlay, layer)
 	overlay.color = draw_color
+
+/datum/bodypart_overlay/emote/added_to_limb(obj/item/bodypart/limb)
+	if(OFFSET_FACE in limb.owner?.dna?.species.offset_features)
+		var/offset = limb.owner.dna.species.offset_features[OFFSET_FACE]
+		offset_x = offset[1]
+		offset_y = offset[2]
+
+/datum/bodypart_overlay/emote/blush
+	layers = EXTERNAL_ADJACENT
+	icon_state = "blush"
+	draw_color = COLOR_BLUSH_PINK
+
+/datum/bodypart_overlay/emote/cry
+	layers = EXTERNAL_ADJACENT
+	icon_state = "tears"
+	draw_color = COLOR_DARK_CYAN
