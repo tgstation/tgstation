@@ -538,7 +538,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
-
 /datum/design/universal_scanner
 	name = "Universal Scanner"
 	desc = "A utility scanner that fills multiple roles: Exports, sales, vendor pricetags."
