@@ -206,7 +206,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma = 100)
 	build_path = /obj/item/clothing/glasses/meson/engine/atmos_imaging
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ATMOSPHERICS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/nvgmesons
@@ -324,7 +326,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
 	build_path = /obj/item/botpad_remote
-	category = list(RND_CATEGORY_EQUIPMENT)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/anomaly_neutralizer
@@ -393,7 +397,7 @@
 	id = "eng_gloves"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
-	build_path = /obj/item/clothing/gloves/color/latex/engineering
+	build_path = /obj/item/clothing/gloves/tinkerer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)
@@ -782,7 +786,7 @@
 	materials = list(/datum/material/iron = 100)
 	build_path = /obj/item/gas_filter
 	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS_EQUIPMENT
 	)
 	departmental_flags = ALL
 
@@ -793,7 +797,7 @@
 	materials = list(/datum/material/iron = 100)
 	build_path = /obj/item/gas_filter/plasmaman
 	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS_EQUIPMENT
 	)
 	departmental_flags = ALL
 

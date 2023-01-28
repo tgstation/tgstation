@@ -317,7 +317,7 @@
 // This checks that the user isn't on the station Z-level.
 /obj/item/firing_pin/explorer/pin_auth(mob/living/user)
 	var/turf/station_check = get_turf(user)
-	if(!station_check||is_station_level(station_check.z))
+	if(!station_check || is_station_level(station_check.z))
 		return FALSE
 	return TRUE
 

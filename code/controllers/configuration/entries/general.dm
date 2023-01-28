@@ -103,6 +103,9 @@
 /// log voting
 /datum/config_entry/flag/log_vote
 
+/// log manual zone switching
+/datum/config_entry/flag/log_zone_switch
+
 /// log client whisper
 /datum/config_entry/flag/log_whisper
 

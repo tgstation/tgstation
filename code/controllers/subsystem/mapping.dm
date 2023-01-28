@@ -608,7 +608,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	set name = "Load Away Mission"
 	set category = "Admin.Events"
 
-	if(!holder ||!check_rights(R_FUN))
+	if(!holder || !check_rights(R_FUN))
 		return
 
 
@@ -853,6 +853,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)
+
+	UNTIL(initialized)
 	var/static/lazy_loading = FALSE
 	UNTIL(!lazy_loading)
 

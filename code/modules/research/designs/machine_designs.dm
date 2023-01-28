@@ -140,7 +140,9 @@
 	id = "botpad"
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/botpad
-	category = list(RND_CATEGORY_MACHINE)
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/launchpad
@@ -244,7 +246,6 @@
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_CHEMISTRY
 	)
-	category = list(RND_CATEGORY_MACHINE)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/hypnochair

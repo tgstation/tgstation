@@ -715,7 +715,7 @@
 				launchList |= typecache_filter_list_reverse(acceptable_turf.contents, ignored_atoms) //filter a random turf from the acceptableTurfs list and add it to the launchList
 				if (iswallturf(acceptable_turf))
 					launchList += acceptable_turf
-	updateSelector() //Call updateSelector(), which, if we are launching one at a time (launchChoice==2), will move to the next turf that will be launched
+	updateSelector() //Call updateSelector(), which, if we are launching one at a time (launchChoice == 2), will move to the next turf that will be launched
 	//UpdateSelector() is here (instead if the if(1) switch block) because it also moves the selector to nullspace (to hide it) if needed
 
 /datum/centcom_podlauncher/proc/launch(turf/target_turf) //Game time started

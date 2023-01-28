@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - refactor: "Duplicating mobs now should now give properly functioning mobs, as duplications in general have been reworked. Admins can feel free to use the pod feature on people."

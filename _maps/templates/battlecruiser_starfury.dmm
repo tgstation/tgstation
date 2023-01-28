@@ -927,7 +927,7 @@
 /area/shuttle/sbc_starfury)
 "ds" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/machinery/airalarm/directional/north{
