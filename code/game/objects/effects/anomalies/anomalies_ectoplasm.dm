@@ -4,7 +4,6 @@
 	icon_state = "ectoplasm"
 	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
 	lifespan = 100 SECONDS //This one takes slightly longer, because it can run away.
-	immobile = TRUE //It's controlled by deadchat!
 
 	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
 	var/override_ghosts = FALSE
