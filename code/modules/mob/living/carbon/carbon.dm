@@ -1158,6 +1158,8 @@
 		return TRUE
 	if(IsSleeping())
 		return TRUE
+	if(IsUnconscious())
+		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
 	if(mob_mood.sanity < SANITY_UNSTABLE)
