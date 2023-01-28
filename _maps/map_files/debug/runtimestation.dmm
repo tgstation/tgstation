@@ -1123,9 +1123,9 @@
 	dir = 8;
 	dwidth = 3;
 	height = 15;
-	shuttle_id = "arrival_stationary";
 	name = "arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
+	shuttle_id = "arrival_stationary";
 	width = 7
 	},
 /turf/open/floor/engine,
@@ -1212,10 +1212,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"ey" = (
-/obj/machinery/status_display/supply,
-/turf/closed/wall,
-/area/station/cargo/storage)
 "ez" = (
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1247,8 +1243,8 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	shuttle_id = "ferry_home";
 	name = "port bay 2";
+	shuttle_id = "ferry_home";
 	width = 5
 	},
 /turf/open/space/basic,
@@ -1278,8 +1274,8 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	shuttle_id = "cargo_home";
 	name = "Cargo Bay";
+	shuttle_id = "cargo_home";
 	width = 12
 	},
 /turf/open/space/basic,
@@ -1428,8 +1424,8 @@
 	dir = 2;
 	dwidth = 11;
 	height = 15;
-	shuttle_id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
+	shuttle_id = "whiteship_home";
 	width = 28
 	},
 /turf/open/space/basic,
@@ -1442,12 +1438,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "fi" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "fj" = (
@@ -1485,8 +1476,8 @@
 	dir = 2;
 	dwidth = 9;
 	height = 25;
-	shuttle_id = "emergency_home";
 	name = "Runtimestation emergency evac bay";
+	shuttle_id = "emergency_home";
 	width = 29
 	},
 /turf/open/space/basic,
@@ -1859,7 +1850,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "gD" = (
-/obj/machinery/camera/autoname/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -2074,8 +2064,8 @@
 /area/station/construction)
 "tG" = (
 /obj/docking_port/stationary/random{
-	shuttle_id = "pod_lavaland";
-	name = "lavaland"
+	name = "lavaland";
+	shuttle_id = "pod_lavaland"
 	},
 /turf/open/space/basic,
 /area/space)
@@ -2628,6 +2618,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science)
+"YL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "ZD" = (
 /obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/iron,
@@ -4130,7 +4127,7 @@ Qu
 qQ
 qQ
 qQ
-ME
+YL
 em
 eh
 eh
@@ -8738,7 +8735,7 @@ aa
 aa
 aa
 et
-ey
+fB
 fh
 fh
 fh

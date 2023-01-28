@@ -303,7 +303,7 @@
 		var/limb_hit = hit_limb
 		if(limb_hit)
 			organ_hit_text = " in \the [parse_zone(limb_hit)]"
-		if(suppressed==SUPPRESSED_VERY)
+		if(suppressed == SUPPRESSED_VERY)
 			playsound(loc, hitsound, 5, TRUE, -1)
 		else if(suppressed)
 			playsound(loc, hitsound, 5, TRUE, -1)
@@ -336,7 +336,7 @@
 			log_combat(logged_mob, L, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
 		return BULLET_ACT_HIT
 
-	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_VICTIM, color="orange", log_globally=FALSE)
+	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()

@@ -320,8 +320,6 @@ Nothing else in the console has ID requirements.
 				to_chat(usr, span_boldwarning("Unauthorized Access."))
 			return TRUE
 		if ("researchNode")
-			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
-				return TRUE
 			research_node(params["node_id"], usr)
 			return TRUE
 		if ("ejectDisk")

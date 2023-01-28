@@ -616,7 +616,7 @@
 	else
 		mode()
 
-/mob/living/simple_animal/swap_hand(hand_index)
+/mob/living/simple_animal/perform_hand_swap(hand_index)
 	. = ..()
 	if(!.)
 		return

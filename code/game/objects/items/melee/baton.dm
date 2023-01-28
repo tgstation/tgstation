@@ -590,7 +590,8 @@
 	if(!target.IsKnockdown())
 		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 
-	target.Knockdown(knockdown_time * (trait_check ? 0.1 : 1))
+	if(!trait_check)
+		target.Knockdown(knockdown_time)
 
 /obj/item/melee/baton/security/get_wait_description()
 	return span_danger("The baton is still charging!")
@@ -654,11 +655,6 @@
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
 
-/datum/armor/baton_security
-	bomb = 50
-	fire = 80
-	acid = 80
-
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
@@ -701,11 +697,6 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
-/datum/armor/baton_security
-	bomb = 50
-	fire = 80
-	acid = 80
-
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
@@ -728,11 +719,6 @@
 	icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
 	slot_flags = null
-
-/datum/armor/baton_security
-	bomb = 50
-	fire = 80
-	acid = 80
 
 /obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()

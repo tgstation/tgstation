@@ -65,8 +65,8 @@
 /obj/machinery/coffeemaker/RefreshParts()
 	. = ..()
 	speed = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		speed += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		speed += laser.tier
 
 /obj/machinery/coffeemaker/examine(mob/user)
 	. = ..()
@@ -427,7 +427,7 @@
 /obj/item/coffee_cartridge
 	name = "coffeemaker cartridge- Caffè Generico"
 	desc = "A coffee cartridge manufactured by Piccionaia Coffee, for use with the Modello 3 system."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/cartridges.dmi'
 	icon_state = "cartridge_basic"
 	var/charges = 4
 	var/list/drink_type = list(/datum/reagent/consumable/coffee = 120)
@@ -477,7 +477,7 @@
 /obj/item/blank_coffee_cartridge
 	name = "blank coffee cartridge"
 	desc = "A blank coffee cartridge, ready to be filled with coffee paste."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/cartridges.dmi'
 	icon_state = "cartridge_blank"
 
 //now, how do you store coffee carts? well, in a rack, of course!
@@ -491,7 +491,7 @@
 	is_open = TRUE
 	spawn_type = /obj/item/coffee_cartridge
 
-/obj/item/storage/fancy/coffee_cart_rack/Initialize()
+/obj/item/storage/fancy/coffee_cart_rack/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(/obj/item/coffee_cartridge))

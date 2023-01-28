@@ -28,13 +28,6 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/datum/armor/security_head_of_security
-	melee = 10
-	bio = 100
-	fire = 95
-	acid = 95
-	wound = 10
-
 /obj/item/clothing/under/plasmaman/chief_engineer
 	name = "chief engineer's plasma envirosuit"
 	desc = "An air-tight suit designed to be used by plasmamen insane enough to achieve the rank of \"Chief Engineer\"."

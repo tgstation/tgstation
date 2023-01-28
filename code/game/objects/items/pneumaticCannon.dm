@@ -161,6 +161,7 @@
 	if(!istype(user))
 		return
 	Fire(user, target)
+	return AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, atom/target)
 	if(!istype(user) && !target)
@@ -310,10 +311,6 @@
 	maxWeightClass = 150 //50 pies. :^)
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
-
-/datum/armor/item_pneumatic_cannon
-	fire = 60
-	acid = 50
 
 /obj/item/pneumatic_cannon/pie/Initialize(mapload)
 	. = ..()

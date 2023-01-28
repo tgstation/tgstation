@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "you can correctly redirect yourself with neurotoxin as a xeno"
-  - bugfix: "you can see your active hand correctly as xeno"

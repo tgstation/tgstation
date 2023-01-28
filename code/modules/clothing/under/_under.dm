@@ -363,10 +363,6 @@
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER
 
-/datum/armor/clothing_under
-	bio = 10
-	wound = 5
-
 /obj/item/clothing/under/proc/dump_attachment()
 	if(!attached_accessory)
 		return

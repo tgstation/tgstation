@@ -872,6 +872,7 @@
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
 
@@ -951,6 +952,7 @@
 	name = "xenomorph action figure"
 	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = XENOMORPH_HOLDABLE
 	var/cooldown = 0
 
 /obj/item/toy/toy_xeno/attack_self(mob/user)

@@ -3,7 +3,7 @@
 /datum/antagonist/abductor
 	name = "\improper Abductor"
 	roundend_category = "abductors"
-	antagpanel_category = "Abductor"
+	antagpanel_category = ANTAG_GROUP_ABDUCTORS
 	job_rank = ROLE_ABDUCTOR
 	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes
@@ -99,6 +99,8 @@
 	H.real_name = "[team.name] [sub_role]"
 	H.equipOutfit(outfit)
 
+	// We require that the template be loaded here, so call it in a blocking manner, if its already done loading, this won't block
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	//Teleport to ship
 	for(var/obj/effect/landmark/abductor/LM in GLOB.landmarks_list)
 		if(istype(LM, landmark_type) && LM.team_number == team.team_number)
@@ -116,7 +118,6 @@
 	. = ..()
 
 /datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)
-	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	var/list/current_teams = list()
 	for(var/datum/team/abductor_team/T in GLOB.antagonist_teams)
 		current_teams[T.name] = T
@@ -142,7 +143,7 @@
 	var/mob/living/carbon/human/H = owner.current
 	var/gear = tgui_alert(admin,"Agent or Scientist Gear", "Gear", list("Agent", "Scientist"))
 	if(gear)
-		if(gear=="Agent")
+		if(gear == "Agent")
 			H.equipOutfit(/datum/outfit/abductor/agent)
 		else
 			H.equipOutfit(/datum/outfit/abductor/scientist)

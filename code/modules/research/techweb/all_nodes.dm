@@ -237,6 +237,7 @@
 		"plant_analyzer",
 		"plunger",
 		"pushbroom",
+		"rwd",
 		"razor",
 		"screwdriver",
 		"secateurs",
@@ -301,6 +302,7 @@
 		"circuit_multitool",
 		"comp_access_checker",
 		"comp_arithmetic",
+		"comp_assoc_list_pick",
 		"comp_binary_convert",
 		"comp_clock",
 		"comp_comparison",
@@ -331,6 +333,7 @@
 		"comp_list_assoc_literal",
 		"comp_list_clear",
 		"comp_list_literal",
+		"comp_list_pick",
 		"comp_list_remove",
 		"comp_logic",
 		"comp_matscanner",
@@ -368,7 +371,7 @@
 		"component_printer",
 		"integrated_circuit",
 		"module_duplicator",
-		"usb_cable",
+		"usb_cable"
 	)
 
 /////////////////////////Biotech/////////////////////////
@@ -560,6 +563,7 @@
 		"emergency_oxygen_engi",
 		"firealarm_electronics",
 		"firelock_board",
+		"generic_tank",
 		"grounding_rod",
 		"high_cell",
 		"high_micro_laser",
@@ -609,8 +613,10 @@
 		"rcd_loaded",
 		"rcd_ammo",
 		"rpd_loaded",
+		"rtd_loaded",
 		"sheetifier",
 		"weldingmask",
+		"bolter_wrench",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
 	discount_experiments = list(
@@ -2285,26 +2291,3 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE
 	experimental = TRUE
-
-//Helpers for debugging/balancing the techweb in its entirety!
-/proc/total_techweb_points()
-	var/list/datum/techweb_node/processing = list()
-	for(var/i in subtypesof(/datum/techweb_node))
-		processing += new i
-	var/datum/techweb/TW = new
-	TW.research_points = list()
-	for(var/i in processing)
-		var/datum/techweb_node/TN = i
-		TW.add_point_list(TN.research_costs)
-	return TW.research_points
-
-/proc/total_techweb_points_printout()
-	var/list/datum/techweb_node/processing = list()
-	for(var/i in subtypesof(/datum/techweb_node))
-		processing += new i
-	var/datum/techweb/TW = new
-	TW.research_points = list()
-	for(var/i in processing)
-		var/datum/techweb_node/TN = i
-		TW.add_point_list(TN.research_costs)
-	return TW.printout_points()

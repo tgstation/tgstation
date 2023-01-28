@@ -40,9 +40,13 @@
 			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_verygood)
 		if (DRINK_FANTASTIC)
 			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_fantastic)
-			exposed_mob.mind?.add_memory(MEMORY_DRINK, list(DETAIL_DRINK = src), story_value = STORY_VALUE_OKAY)
+			exposed_mob.add_mob_memory(/datum/memory/good_drink, drink = src)
 		if (FOOD_AMAZING)
 			exposed_mob.add_mood_event("quality_food", /datum/mood_event/amazingtaste)
+			// The food this was in was really tasty, not the reagent itself
+			var/obj/item/the_real_food = holder.my_atom
+			if(isitem(the_real_food) && !is_reagent_container(the_real_food))
+				exposed_mob.add_mob_memory(/datum/memory/good_food, food = the_real_food)
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -56,9 +60,10 @@
 	var/burn_heal = 0
 
 /datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.2))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.2))
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(30, delta_time))
@@ -228,10 +233,11 @@
 
 // Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 /datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_weedlevel(rand(1,2))
-		mytray.adjust_pestlevel(rand(1,2))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_weedlevel(rand(1,2))
+	mytray.adjust_pestlevel(rand(1,2))
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))
@@ -253,9 +259,10 @@
 
 	// Compost for EVERYTHING
 /datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.5))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.5))
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -378,16 +385,14 @@
 
 	var/mob/living/carbon/victim = exposed_mob
 	if(methods & (TOUCH|VAPOR))
-		var/pepper_proof = victim.is_pepper_proof()
-
 		//check for protection
 		//actually handle the pepperspray effects
-		if (!(pepper_proof)) // you need both eye and mouth protection
+		if (!victim.is_pepper_proof()) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
 			victim.emote("cry")
 			victim.set_eye_blur_if_lower(10 SECONDS)
-			victim.adjust_blindness(3) // 6 seconds
+			victim.adjust_temp_blindness(6 SECONDS)
 			victim.set_confusion_if_lower(5 SECONDS)
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
@@ -493,7 +498,7 @@
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))
 			victim.emote("cry")
-			victim.set_eye_blur_if_lower(6 SECONDS)
+			victim.adjust_eye_blur(6 SECONDS)
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
@@ -679,13 +684,14 @@
 
 	// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
 /datum/reagent/consumable/honey/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		if(myseed && prob(20))
-			mytray.pollinate(1)
-		else
-			mytray.adjust_weedlevel(rand(1,2))
-			mytray.adjust_pestlevel(rand(1,2))
+	if(!check_tray(chems, mytray))
+		return
+
+	if(myseed && prob(20))
+		mytray.pollinate(1)
+	else
+		mytray.adjust_weedlevel(rand(1,2))
+		mytray.adjust_pestlevel(rand(1,2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * delta_time)
@@ -1091,3 +1097,16 @@
 	nutriment_factor = 1.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/creamer
+	
+/datum/reagent/consumable/mintextract
+	name = "Mint Extract"
+	description = "Useful for dealing with undesirable customers."
+	color = "#CF3600" // rgb: 207, 54, 0
+	taste_description = "mint"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/mintextract/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	if(HAS_TRAIT(affected_mob, TRAIT_FAT))
+		affected_mob.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
+		affected_mob.inflate_gib()
+	return ..()

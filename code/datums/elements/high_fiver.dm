@@ -63,8 +63,8 @@
 		return COMPONENT_OFFER_INTERRUPT
 
 	playsound(offerer, 'sound/weapons/slap.ogg', min(50 * slappers_giver, 300), TRUE, 1)
-	offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = descriptor), story_value = STORY_VALUE_OKAY)
-	taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = descriptor), story_value = STORY_VALUE_OKAY)
+	offerer.add_mob_memory(/datum/memory/high_five, deuteragonist = taker, high_five_type = descriptor, high_ten = high_ten)
+	taker.add_mob_memory(/datum/memory/high_five, deuteragonist = offerer, high_five_type = descriptor, high_ten = high_ten)
 
 	if(high_ten)
 		to_chat(taker, span_nicegreen("You give high-tenning [offerer] your all!"))

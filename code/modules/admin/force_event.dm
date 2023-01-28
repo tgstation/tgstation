@@ -3,7 +3,7 @@
 	set name = "Trigger Event"
 	set category = "Admin.Events"
 
-	if(!holder ||!check_rights(R_FUN))
+	if(!holder || !check_rights(R_FUN))
 		return
 
 	holder.forceEvent()

@@ -5,11 +5,9 @@
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
 	species_traits = list(
-		NOBLOOD,
 		NOTRANSSTING,
 		NOEYESPRITES,
 		NO_DNA_COPY,
-		NOAPPENDIX,
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -28,10 +26,15 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_XENO_IMMUNE,
+		TRAIT_NOBLOOD,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
 	mutantstomach = /obj/item/organ/internal/stomach/bone
+	mutantappendix = null
+	mutantheart = null
+	mutantliver = null
+	mutantlungs = null
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW | GORE
 	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)

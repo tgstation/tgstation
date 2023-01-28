@@ -18,11 +18,15 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
+		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
+		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
+		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/carp,
+		/datum/ai_planning_subtree/carp_migration,
 	)
 
 /**
@@ -38,9 +42,12 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
+		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
+		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/carp,
 	)
 
@@ -52,11 +59,15 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
+		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/find_nearest_magicarp_spell_target,
 		/datum/ai_planning_subtree/targetted_mob_ability/magicarp,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
+		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
+		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/magicarp,
+		/datum/ai_planning_subtree/carp_migration,
 	)

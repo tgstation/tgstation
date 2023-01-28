@@ -161,13 +161,15 @@
  * * font - The font to use.
  * * color - The font color to use.
  * * bold - Whether this text should be rendered completely bold.
+ * * advanced_html - Boolean that is true when the writer has R_FUN permission, which sanitizes less HTML (such as images) from the new paper_input
  */
-/obj/item/paper/proc/add_raw_text(text, font, color, bold)
+/obj/item/paper/proc/add_raw_text(text, font, color, bold, advanced_html)
 	var/new_input_datum = new /datum/paper_input(
 		text,
 		font,
 		color,
 		bold,
+		advanced_html,
 	)
 
 	input_field_count += get_input_field_count(text)
@@ -407,6 +409,7 @@
 			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), rand(0, 360), writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
 			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
+			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 		else
 			to_chat(user, span_notice("You ready your stamp over the paper! "))
 			ui_interact(user)
@@ -540,6 +543,7 @@
 
 			add_stamp(stamp_class, stamp_x, stamp_y, stamp_rotation, stamp_icon_state)
 			user.visible_message(span_notice("[user] stamps [src] with \the [holding.name]!"), span_notice("You stamp [src] with \the [holding.name]!"))
+			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 			update_appearance()
 			update_static_data(user, ui)
@@ -583,7 +587,7 @@
 			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
 			var/writing_implement_data = holding.get_writing_implement_details()
 
-			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"])
+			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], check_rights_for(user?.client, R_FUN))
 
 			log_paper("[key_name(user)] wrote to [name]: \"[paper_input]\"")
 			to_chat(user, "You have added to your paper masterpiece!");
@@ -670,15 +674,18 @@
 	var/colour = ""
 	/// Whether to render the font bold or not.
 	var/bold = FALSE
+	/// Whether the creator of this input field has the R_FUN permission, thus allowing less sanitization
+	var/advanced_html = FALSE
 
-/datum/paper_input/New(_raw_text, _font, _colour, _bold)
+/datum/paper_input/New(_raw_text, _font, _colour, _bold, _advanced_html)
 	raw_text = _raw_text
 	font = _font
 	colour = _colour
 	bold = _bold
+	advanced_html = _advanced_html
 
 /datum/paper_input/proc/make_copy()
-	return new /datum/paper_input(raw_text, font, colour, bold);
+	return new /datum/paper_input(raw_text, font, colour, bold, advanced_html)
 
 /datum/paper_input/proc/to_list()
 	return list(
@@ -686,6 +693,7 @@
 		font = font,
 		color = colour,
 		bold = bold,
+		advanced_html = advanced_html,
 	)
 
 /// A single instance of a saved stamp on paper.

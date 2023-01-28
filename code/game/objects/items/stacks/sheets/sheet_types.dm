@@ -63,6 +63,12 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		new /datum/stack_recipe("Black Queen", /obj/structure/chess/blackqueen, 2, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
 		new /datum/stack_recipe("Black King", /obj/structure/chess/blackking, 2, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
 	)),
+	new /datum/stack_recipe_list("checkers pieces", list( \
+		new /datum/stack_recipe("White Checker Man", /obj/structure/chess/checker/whiteman, 2, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
+		new /datum/stack_recipe("White Checker King", /obj/structure/chess/checker/whiteking, 2, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
+		new /datum/stack_recipe("Black Checker Man", /obj/structure/chess/checker/blackman, 2, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
+		new /datum/stack_recipe("Black Checker King", /obj/structure/chess/checker/blackking, 2, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
+	)),
 	null, \
 	new/datum/stack_recipe("rack parts", /obj/item/rack_parts, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
@@ -81,24 +87,24 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("machine frame", /obj/structure/frame/machine, 5, time = 2.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
 	null, \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
-		new /datum/stack_recipe("standard airlock assembly", /obj/structure/door_assembly, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("public airlock assembly", /obj/structure/door_assembly/door_assembly_public, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("command airlock assembly", /obj/structure/door_assembly/door_assembly_com, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("security airlock assembly", /obj/structure/door_assembly/door_assembly_sec, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("engineering airlock assembly", /obj/structure/door_assembly/door_assembly_eng, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("mining airlock assembly", /obj/structure/door_assembly/door_assembly_min, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("atmospherics airlock assembly", /obj/structure/door_assembly/door_assembly_atmo, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("research airlock assembly", /obj/structure/door_assembly/door_assembly_research, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("freezer airlock assembly", /obj/structure/door_assembly/door_assembly_fre, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("science airlock assembly", /obj/structure/door_assembly/door_assembly_science, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("medical airlock assembly", /obj/structure/door_assembly/door_assembly_med, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("hydroponics airlock assembly", /obj/structure/door_assembly/door_assembly_hydro, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("virology airlock assembly", /obj/structure/door_assembly/door_assembly_viro, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("maintenance airlock assembly", /obj/structure/door_assembly/door_assembly_mai, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("external airlock assembly", /obj/structure/door_assembly/door_assembly_ext, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("external maintenance airlock assembly", /obj/structure/door_assembly/door_assembly_extmai, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("airtight hatch assembly", /obj/structure/door_assembly/door_assembly_hatch, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
-		new /datum/stack_recipe("maintenance hatch assembly", /obj/structure/door_assembly/door_assembly_mhatch, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS), \
+		new /datum/stack_recipe("standard airlock assembly", /obj/structure/door_assembly, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("public airlock assembly", /obj/structure/door_assembly/door_assembly_public, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("command airlock assembly", /obj/structure/door_assembly/door_assembly_com, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("security airlock assembly", /obj/structure/door_assembly/door_assembly_sec, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("engineering airlock assembly", /obj/structure/door_assembly/door_assembly_eng, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("mining airlock assembly", /obj/structure/door_assembly/door_assembly_min, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("atmospherics airlock assembly", /obj/structure/door_assembly/door_assembly_atmo, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("research airlock assembly", /obj/structure/door_assembly/door_assembly_research, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("freezer airlock assembly", /obj/structure/door_assembly/door_assembly_fre, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("science airlock assembly", /obj/structure/door_assembly/door_assembly_science, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("medical airlock assembly", /obj/structure/door_assembly/door_assembly_med, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("hydroponics airlock assembly", /obj/structure/door_assembly/door_assembly_hydro, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("virology airlock assembly", /obj/structure/door_assembly/door_assembly_viro, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("maintenance airlock assembly", /obj/structure/door_assembly/door_assembly_mai, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("external airlock assembly", /obj/structure/door_assembly/door_assembly_ext, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("external maintenance airlock assembly", /obj/structure/door_assembly/door_assembly_extmai, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("airtight hatch assembly", /obj/structure/door_assembly/door_assembly_hatch, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
+		new /datum/stack_recipe("maintenance hatch assembly", /obj/structure/door_assembly/door_assembly_mhatch, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
 	)), \
 	null, \
 	new/datum/stack_recipe("firelock frame", /obj/structure/firelock_frame, 3, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
@@ -116,14 +122,15 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("extinguisher cabinet frame", /obj/item/wallframe/extinguisher_cabinet, 2, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1, category = CAT_EQUIPMENT), \
 	null, \
-	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
+	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("filing cabinet", /obj/structure/filingcabinet, 2, time = 10 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("desk bell", /obj/structure/desk_bell, 2, time = 3 SECONDS, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 5 SECONDS, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 5 SECONDS, category = CAT_CHEMISTRY), \
 	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 5 SECONDS, category = CAT_ROBOT), \
-	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time= 2 SECONDS, category = CAT_FURNITURE)
+	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time = 2 SECONDS, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("urinal", /obj/item/wallframe/urinal, 2, time = 1 SECONDS, category = CAT_FURNITURE)
 ))
 
 /obj/item/stack/sheet/iron
@@ -245,8 +252,8 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	new/datum/stack_recipe("Large Gas Tank", /obj/structure/tank_frame, 4, time=1 SECONDS, one_per_turf=TRUE, category = CAT_ATMOSPHERIC),
 	null,
 	new /datum/stack_recipe_list("airlock assemblies", list( \
-		new/datum/stack_recipe("high security airlock assembly", /obj/structure/door_assembly/door_assembly_highsecurity, 4, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS),
-		new/datum/stack_recipe("vault door assembly", /obj/structure/door_assembly/door_assembly_vault, 6, time = 5 SECONDS, one_per_turf = 1, on_solid_ground = 1, category = CAT_DOORS),
+		new/datum/stack_recipe("high security airlock assembly", /obj/structure/door_assembly/door_assembly_highsecurity, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS),
+		new/datum/stack_recipe("vault door assembly", /obj/structure/door_assembly/door_assembly_vault, 6, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS),
 	)), \
 ))
 
@@ -307,7 +314,9 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/buckler, 20, time = 4 SECONDS, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 5 SECONDS, category = CAT_TOOLS),\
+	new/datum/stack_recipe("mannequin", /obj/structure/mannequin/wood, 25, time = 5 SECONDS, one_per_turf = TRUE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("smoking pipe", /obj/item/clothing/mask/cigarette/pipe, 2, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 1 SECONDS, category = CAT_TOOLS),\
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/cup/bucket/wooden, 3, time = 1 SECONDS, category = CAT_CONTAINERS),\
 	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 1 SECONDS, category = CAT_TOOLS),\
@@ -319,6 +328,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("firebrand", /obj/item/match/firebrand, 2, time = 10 SECONDS, category = CAT_TOOLS), \
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("easel", /obj/structure/easel, 5, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("noticeboard", /obj/item/wallframe/noticeboard, 1, time = 1 SECONDS, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_FURNITURE), \
 	null, \
 	new/datum/stack_recipe_list("pews", list(
 		new /datum/stack_recipe("pew (middle)", /obj/structure/chair/pew, 3, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),
@@ -340,7 +350,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	armor_type = /datum/armor/mineral_wood
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
-	novariants = TRUE
 	material_type = /datum/material/wood
 	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
 	walltype = /turf/closed/wall/mineral/wood
@@ -458,9 +467,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 20)
 
-/datum/armor/mineral_bamboo
-	fire = 50
-
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
 	. += GLOB.cloth_recipes
@@ -490,9 +496,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/durathread
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-
-/datum/armor/mineral_bamboo
-	fire = 50
 
 /obj/item/stack/sheet/durathread/get_main_recipes()
 	. = ..()
@@ -592,9 +595,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	null, \
 ))
 
-/datum/armor/mineral_bamboo
-	fire = 50
-
 /obj/item/stack/sheet/cardboard //BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
@@ -616,9 +616,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
-
-/datum/armor/mineral_bamboo
-	fire = 50
 
 /obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
@@ -681,9 +678,6 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	walltype = /turf/closed/wall/mineral/bronze
 	has_unique_girder = TRUE
 
-/datum/armor/mineral_bamboo
-	fire = 50
-
 /obj/item/stack/sheet/bronze/get_main_recipes()
 	. = ..()
 	. += GLOB.bronze_recipes
@@ -745,6 +739,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/empty, category = CAT_CONTAINERS), \
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/large/empty, 3, category = CAT_CONTAINERS), \
 	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/cup/glass/colocup, 1, category = CAT_CONTAINERS), \
+	new /datum/stack_recipe("mannequin", /obj/structure/mannequin/plastic, 25, time = 5 SECONDS, one_per_turf = TRUE, category = CAT_ENTERTAINMENT), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1, category = CAT_FURNITURE)))
@@ -766,9 +761,6 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 /obj/item/stack/sheet/plastic/five
 	amount = 5
 
-/datum/armor/mineral_bamboo
-	fire = 50
-
 /obj/item/stack/sheet/plastic/get_main_recipes()
 	. = ..()
 	. += GLOB.plastic_recipes
@@ -788,9 +780,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 20)
 	material_type = /datum/material/paper
-
-/datum/armor/mineral_bamboo
-	fire = 50
 
 /obj/item/stack/sheet/paperframes/get_main_recipes()
 	. = ..()

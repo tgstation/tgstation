@@ -70,10 +70,6 @@
 	desc = "It's a bulky crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
 	w_class = WEIGHT_CLASS_BULKY
 
-/datum/armor/item_crowbar
-	fire = 50
-	acid = 30
-
 /obj/item/crowbar/large/heavy //from space ruin
 	name = "heavy crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
@@ -86,10 +82,6 @@
 	desc = "It's an old crowbar. Much larger than the pocket sized ones, carrying a lot more heft. They don't make 'em like they used to."
 	throwforce = 10
 	throw_speed = 2
-
-/datum/armor/item_crowbar
-	fire = 50
-	acid = 30
 
 /obj/item/crowbar/large/old/Initialize(mapload)
 	. = ..()
@@ -110,10 +102,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
-
-/datum/armor/item_crowbar
-	fire = 50
-	acid = 30
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
@@ -145,10 +133,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	force_opens = TRUE
-
-/datum/armor/item_crowbar
-	fire = 50
-	acid = 30
 
 /obj/item/crowbar/power/examine()
 	. = ..()

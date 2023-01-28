@@ -27,30 +27,10 @@
 	cell = /obj/item/stock_parts/cell/hyper
 
 //Green syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/green
 	name = "green space helmet"
 	icon_state = "syndicate-helm-green"
 	inhand_icon_state = "space_helmet_syndicate"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/green
 	name = "green space suit"
@@ -59,30 +39,10 @@
 
 
 //Dark green syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/green/dark
 	name = "dark green space helmet"
 	icon_state = "syndicate-helm-green-dark"
 	inhand_icon_state = "syndicate-helm-green-dark"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/green/dark
 	name = "dark green space suit"
@@ -91,30 +51,10 @@
 
 
 //Orange syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/orange
 	name = "orange space helmet"
 	icon_state = "syndicate-helm-orange"
 	inhand_icon_state = "syndicate-helm-orange"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/orange
 	name = "orange space suit"
@@ -122,30 +62,10 @@
 	inhand_icon_state = "syndicate-orange"
 
 //Blue syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/blue
 	name = "blue space helmet"
 	icon_state = "syndicate-helm-blue"
 	inhand_icon_state = "syndicate-helm-blue"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/blue
 	name = "blue space suit"
@@ -154,30 +74,10 @@
 
 
 //Black syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/black
 	name = "black space helmet"
 	icon_state = "syndicate-helm-black"
 	inhand_icon_state = "syndicate-helm-black"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/black
 	name = "black space suit"
@@ -186,30 +86,10 @@
 
 
 //Black-green syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/black/green
 	name = "black space helmet"
 	icon_state = "syndicate-helm-black-green"
 	inhand_icon_state = "syndicate-helm-black-green"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/black/green
 	name = "black and green space suit"
@@ -218,30 +98,10 @@
 
 
 //Black-blue syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/black/blue
 	name = "black space helmet"
 	icon_state = "syndicate-helm-black-blue"
 	inhand_icon_state = "syndicate-helm-black-blue"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/black/blue
 	name = "black and blue space suit"
@@ -250,30 +110,10 @@
 
 
 //Black medical syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/black/med
 	name = "black space helmet"
 	icon_state = "syndicate-helm-black-med"
 	inhand_icon_state = "syndicate-helm-black"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/black/med
 	name = "green space suit"
@@ -282,30 +122,10 @@
 
 
 //Black-orange syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/black/orange
 	name = "black space helmet"
 	icon_state = "syndicate-helm-black-orange"
 	inhand_icon_state = "syndicate-helm-black"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/black/orange
 	name = "black and orange space suit"
@@ -314,30 +134,10 @@
 
 
 //Black-red syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/black/red
 	name = "black space helmet"
 	icon_state = "syndicate-helm-black-red"
 	inhand_icon_state = "syndicate-helm-black-red"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/black/red
 	name = "black and red space suit"
@@ -345,32 +145,12 @@
 	inhand_icon_state = "syndicate-black-red"
 
 //Black-red syndicate contract varient
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/contract
 	name = "contractor helmet"
 	desc = "A specialised black and gold helmet that's more compact than its standard Syndicate counterpart. Can be ultra-compressed into even the tightest of spaces."
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract-helm"
 	inhand_icon_state = "contractor_helmet"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/contract
 	name = "contractor space suit"
@@ -381,30 +161,10 @@
 	inhand_icon_state = null
 
 //Black with yellow/red engineering syndicate space suit
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
-
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
 	name = "black space helmet"
 	icon_state = "syndicate-helm-black-engie"
 	inhand_icon_state = "syndicate-helm-black"
-
-/datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 80
-	acid = 85
 
 /obj/item/clothing/suit/space/syndicate/black/engie
 	name = "black engineering space suit"

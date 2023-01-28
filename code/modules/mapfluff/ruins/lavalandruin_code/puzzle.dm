@@ -316,15 +316,6 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "prison_cube"
 
-/datum/armor/puzzle_element_prison
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 50
-	fire = 50
-	acid = 50
-
 /obj/item/prisoncube/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag || !isliving(target))

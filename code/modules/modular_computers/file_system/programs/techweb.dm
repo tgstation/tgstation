@@ -109,8 +109,6 @@
 				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
 			return TRUE
 		if ("researchNode")
-			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
-				return TRUE
 			research_node(params["node_id"], usr)
 			return TRUE
 

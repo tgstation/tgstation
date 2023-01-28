@@ -205,8 +205,8 @@
 	else
 		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
-/obj/item/organ/internal/stomach/get_availability(datum/species/owner_species)
-	return !(NOSTOMACH in owner_species.species_traits)
+/obj/item/organ/internal/stomach/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantstomach
 
 ///This gets called after the owner takes a bite of food
 /obj/item/organ/internal/stomach/proc/after_eat(atom/edible)

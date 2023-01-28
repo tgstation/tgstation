@@ -138,7 +138,7 @@
 			if(M.pulledby == src && !too_strong)
 				mob_swap = TRUE
 			else if(
-				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
+				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP)) &&\
 				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !their_combat_mode) &&\
 				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !combat_mode)
 			)
@@ -563,6 +563,7 @@
 		return
 	if(new_resting == resting)
 		return
+
 	. = resting
 	resting = new_resting
 	if(new_resting)
@@ -849,10 +850,7 @@
 
 	// These should be tracked by status effects
 	losebreath = 0
-	set_blindness(0)
 	set_disgust(0)
-	cure_nearsighted()
-	cure_blind()
 	cure_husk()
 
 	if(heal_flags & HEAL_TEMP)
@@ -976,7 +974,7 @@
 			TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLEED))
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 	..()
 
@@ -1186,6 +1184,8 @@
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
 		return FALSE
 	if(is_away_level(T.z))
+		return FALSE
+	if(onSyndieBase() && !(ROLE_SYNDICATE in user.faction))
 		return FALSE
 	if(user != null && src == user)
 		return FALSE
@@ -2408,10 +2408,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. = ..()
 	add_mood_event("gaming", /datum/mood_event/gaming)
 
-/// Proc for giving a mob a new 'friend', generally used for AI control and targetting
+/// Proc for giving a mob a new 'friend', generally used for AI control and targetting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
-	faction |= REF(new_friend)
+	var/friend_ref = REF(new_friend)
+	if (faction.Find(friend_ref))
+		return FALSE
+	faction |= friend_ref
 	if (ai_controller)
 		var/list/friends = ai_controller.blackboard[BB_FRIENDS_LIST]
 		if (!friends)
@@ -2419,6 +2422,23 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		friends[WEAKREF(new_friend)] = TRUE
 		ai_controller.blackboard[BB_FRIENDS_LIST] = friends
 	SEND_SIGNAL(src, COMSIG_LIVING_BEFRIENDED, new_friend)
+	return TRUE
+
+/// Proc for removing a friend you added with the proc 'befriend'. Returns true if you removed a friend.
+/mob/living/proc/unfriend(mob/living/old_friend)
+	SHOULD_CALL_PARENT(TRUE)
+	var/friend_ref = REF(old_friend)
+	if (!faction.Find(friend_ref))
+		return FALSE
+	faction -= friend_ref
+	if (ai_controller)
+		var/list/friends = ai_controller.blackboard[BB_FRIENDS_LIST]
+		if (!friends)
+			return
+		friends[WEAKREF(old_friend)] = FALSE
+		ai_controller.blackboard[BB_FRIENDS_LIST] = friends
+	SEND_SIGNAL(src, COMSIG_LIVING_UNFRIENDED, old_friend)
+	return TRUE
 
 /// Admin only proc for making the mob hallucinate a certain thing
 /mob/living/proc/admin_give_hallucination(mob/admin)
@@ -2501,4 +2521,3 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client || "AI"] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")
-

@@ -737,7 +737,6 @@
 
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
-		owner.update_stamina()
 	update_total()
 
 /*
@@ -832,7 +831,6 @@
 		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose = TRUE)
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
-		owner.update_stamina()
 	update_total()
 
 /**
@@ -1911,7 +1909,7 @@
 			ui_reaction_id = text2path(params["id"])
 			return TRUE
 		if("search_reagents")
-			var/input_reagent = (input("Enter the name of any reagent", "Input") as text|null)
+			var/input_reagent = tgui_input_list(usr, "Select reagent", "Reagent", GLOB.chemical_name_list)
 			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
 			var/datum/reagent/reagent = find_reagent_object_from_type(input_reagent)
 			if(!reagent)

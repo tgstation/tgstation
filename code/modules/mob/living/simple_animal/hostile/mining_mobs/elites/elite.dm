@@ -363,16 +363,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	throw_speed = 3
 	throw_range = 5
 
-/datum/armor/structure_elite_tumor
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/item/tumor_shard/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
@@ -410,16 +400,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	light_color = COLOR_SOFT_RED
 	var/datum/weakref/activator_ref
 	var/datum/weakref/ourelite_ref
-
-/datum/armor/structure_elite_tumor
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
 
 /obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()

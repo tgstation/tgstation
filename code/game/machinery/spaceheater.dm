@@ -158,10 +158,10 @@
 	. = ..()
 	var/laser = 0
 	var/cap = 0
-	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		laser += M.rating
-	for(var/obj/item/stock_parts/capacitor/M in component_parts)
-		cap += M.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		laser += micro_laser.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		cap += capacitor.tier
 
 	heating_power = laser * 40000
 
@@ -281,10 +281,6 @@
 /obj/machinery/space_heater/constructed
 	cell = null
 
-/datum/armor/machinery_space_heater
-	fire = 80
-	acid = 10
-
 /obj/machinery/space_heater/constructed/Initialize(mapload)
 	. = ..()
 	set_panel_open(TRUE)
@@ -312,10 +308,6 @@
 	///How powerful the heating is, upgrades with parts. (ala chem_heater.dm's method, basically the same level of heating, but this is restricted)
 	var/chem_heating_power = 1
 	display_panel = FALSE
-
-/datum/armor/machinery_space_heater
-	fire = 80
-	acid = 10
 
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()
@@ -453,10 +445,10 @@
 	. = ..()
 	var/lasers_rating = 0
 	var/capacitors_rating = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		lasers_rating += laser.rating
-	for(var/obj/item/stock_parts/capacitor/capacitor in component_parts)
-		capacitors_rating += capacitor.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		lasers_rating += laser.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		capacitors_rating += capacitor.tier
 
 	heating_power = lasers_rating * 20000
 

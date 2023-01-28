@@ -12,8 +12,6 @@
 	type_of_meat = /obj/item/food/meat/slab/xeno
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
-	var/move_delay_add = 0 // movement delay to add
-
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	heat_protection = 0.5 // minor heat insulation

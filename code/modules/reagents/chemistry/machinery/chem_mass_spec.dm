@@ -55,8 +55,8 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 /obj/machinery/chem_mass_spec/RefreshParts()
 	. = ..()
 	cms_coefficient = 1
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		cms_coefficient /= laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		cms_coefficient /= laser.tier
 
 /obj/machinery/chem_mass_spec/deconstruct(disassembled)
 	if(beaker1)

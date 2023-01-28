@@ -291,11 +291,13 @@
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(cover_open)
 		balloon_alert(user, "close the cover!")
 		return
 	else
-		. = ..()
+		. |= ..()
 		update_appearance()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

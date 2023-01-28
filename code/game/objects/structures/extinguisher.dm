@@ -92,6 +92,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 	else
 		toggle_cabinet(user)
 
+/obj/structure/extinguisher_cabinet/attack_hand_secondary(mob/living/user)
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+		return ..()
+	toggle_cabinet(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/extinguisher_cabinet/attack_tk(mob/user)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
@@ -108,11 +113,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
-
-/obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
-		return
-	toggle_cabinet(user)
 
 /obj/structure/extinguisher_cabinet/proc/toggle_cabinet(mob/user)
 	if(opened && broken)

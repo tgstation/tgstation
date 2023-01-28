@@ -1,0 +1,2 @@
+class MaplintError(Exception):
+    pass

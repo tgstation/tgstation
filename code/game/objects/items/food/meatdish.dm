@@ -9,18 +9,25 @@
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "cubancarp"
 	bite_consumption = 3
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6,  /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/capsaicin = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("fish" = 4, "batter" = 1, "hot peppers" = 1)
 	foodtypes = SEAFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
-
 
 /obj/item/food/fishmeat
 	name = "fish fillet"
 	desc = "A fillet of some fish meat."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "fishfillet"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	bite_consumption = 6
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
@@ -30,7 +37,11 @@
 /obj/item/food/fishmeat/carp
 	name = "carp fillet"
 	desc = "A fillet of spess carp meat."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/carpotoxin = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/toxin/carpotoxin = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	/// Cytology category you can swab the meat for.
 	var/cell_line = CELL_LINE_TABLE_CARP
 
@@ -50,7 +61,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "moonfish_fillet"
 
-/obj/item/food/fishmeat/moonfish/MakeGrillable()
+/obj/item/food/fishmeat/moonfish/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_moonfish, rand(40 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/fishmeat/gunner_jellyfish
@@ -58,7 +69,10 @@
 	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "jellyfish_fillet"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/mindbreaker = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/toxin/mindbreaker = 2,
+	)
 
 /obj/item/food/fishmeat/armorfish
 	name = "cleaned armorfish"
@@ -78,7 +92,11 @@
 	desc = "A finger of fish."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "fishfingers"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	bite_consumption = 1
 	tastes = list("fish" = 1, "breadcrumbs" = 1)
 	foodtypes = SEAFOOD | FRIED
@@ -90,7 +108,11 @@
 	desc = "I do say so myself chap."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "fishandchips"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
 	venue_value = FOOD_PRICE_NORMAL
@@ -100,37 +122,37 @@
 	desc = "All that and no bag of chips..."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "fishfry"
-	food_reagents = list (/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
+	food_reagents = list (
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
 	tastes = list("fish" = 1, "pan seared vegtables" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/fishtaco
-	name = "fish taco"
-	desc = "A taco with fish, cheese, and cabbage."
-	icon_state = "fishtaco"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("taco" = 4, "fish" = 2, "cheese" = 2, "cabbage" = 1)
-	foodtypes = SEAFOOD | DAIRY | GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/vegetariansushiroll
 	name = "vegetarian sushi roll"
 	desc = "A roll of simple vegetarian sushi with rice, carrots, and potatoes. Sliceable into pieces!"
 	icon_state = "vegetariansushiroll"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/vegetariansushiroll/MakeProcessable()
+/obj/item/food/vegetariansushiroll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/vegetariansushislice, 4, screentip_verb = "Chop")
 
 /obj/item/food/vegetariansushislice
 	name = "vegetarian sushi slice"
 	desc = "A slice of simple vegetarian sushi with rice, carrots, and potatoes."
 	icon_state = "vegetariansushislice"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -139,19 +161,29 @@
 	name = "spicy filet sushi roll"
 	desc = "A roll of tasty, spicy sushi made with fish and vegetables. Sliceable into pieces!"
 	icon_state = "spicyfiletroll"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/capsaicin = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/capsaicin = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/spicyfiletsushiroll/MakeProcessable()
+/obj/item/food/spicyfiletsushiroll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spicyfiletsushislice, 4, screentip_verb = "Chop")
 
 /obj/item/food/spicyfiletsushislice
 	name = "spicy filet sushi slice"
 	desc = "A slice of tasty, spicy sushi made with fish and vegetables. Don't eat it too fast!."
 	icon_state = "spicyfiletslice"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/protein = 1,
+		/datum/reagent/consumable/capsaicin = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
@@ -164,7 +196,7 @@
 	icon_state = "vegetariansushiroll"
 	desc = "A roll of customized sushi."
 
-/obj/item/food/sushi/empty/MakeProcessable()
+/obj/item/food/sushi/empty/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sushislice/empty, 4, screentip_verb = "Chop")
 
 /obj/item/food/sushislice/empty
@@ -189,7 +221,11 @@
 	desc = "Simple poke, rice on the bottom, vegetables and meat on top. Should be mixed before eating."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "pokemeat"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment/protein = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 11,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+		/datum/reagent/consumable/nutriment/protein = 2,
+	)
 	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
 	foodtypes = SEAFOOD | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -199,7 +235,11 @@
 	desc = "Simple poke, rice on the bottom, vegetables and fish on top. Should be mixed before eating."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "pokefish"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/nutriment/protein = 2,
+	)
 	tastes = list("rice and fish" = 4, "lettuce" = 2, "soy sauce" = 2)
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -218,7 +258,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 
 // sliceable into 4xtempehslices
-/obj/item/food/tempeh/MakeProcessable()
+/obj/item/food/tempeh/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 //add an icon for slices
@@ -262,12 +302,15 @@
 	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "spiderleg"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/toxin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/toxin = 2,
+	)
 	tastes = list("cobwebs" = 1)
 	foodtypes = MEAT | TOXIC
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/spiderleg/MakeGrillable()
+/obj/item/food/spiderleg/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/boiledspiderleg, rand(50 SECONDS, 60 SECONDS), TRUE, TRUE)
 
 /obj/item/food/cornedbeef
@@ -275,7 +318,11 @@
 	desc = "Now you can feel like a real tourist vacationing in Ireland."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "cornedbeef"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("meat" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -285,7 +332,11 @@
 	desc = "Because eating bear wasn't manly enough."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "bearsteak"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 9, /datum/reagent/consumable/ethanol/manly_dorf = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 9,
+		/datum/reagent/consumable/ethanol/manly_dorf = 5,
+	)
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtypes = MEAT | ALCOHOL
 	w_class = WEIGHT_CLASS_SMALL
@@ -303,10 +354,10 @@
 	var/meatball_type = /obj/item/food/meatball
 	var/patty_type = /obj/item/food/raw_patty
 
-/obj/item/food/raw_meatball/MakeGrillable()
+/obj/item/food/raw_meatball/make_grillable()
 	AddComponent(/datum/component/grillable, meatball_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
-/obj/item/food/raw_meatball/MakeProcessable()
+/obj/item/food/raw_meatball/make_processable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, table_required = TRUE, screentip_verb = "Flatten")
 
 /obj/item/food/raw_meatball/human
@@ -377,7 +428,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/patty_type = /obj/item/food/patty/plain
 
-/obj/item/food/raw_patty/MakeGrillable()
+/obj/item/food/raw_patty/make_grillable()
 	AddComponent(/datum/component/grillable, patty_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
 /obj/item/food/raw_patty/human
@@ -441,13 +492,16 @@
 	desc = "A piece of mixed, long meat, but then raw."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "raw_sausage"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
 	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_sausage/MakeGrillable()
+/obj/item/food/raw_sausage/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/sausage, rand(60 SECONDS, 75 SECONDS), TRUE)
 
 /obj/item/food/sausage
@@ -455,7 +509,10 @@
 	desc = "A piece of mixed, long meat."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "sausage"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
@@ -464,7 +521,7 @@
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/sausage/MakeProcessable()
+/obj/item/food/sausage/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 
@@ -473,7 +530,7 @@
 	desc = "Snip."
 	icon_state = "american_sausage"
 
-/obj/item/food/sausage/american/MakeProcessable()
+/obj/item/food/sausage/american/make_processable()
 	return
 
 /obj/item/food/salami
@@ -492,12 +549,17 @@
 	desc = "One hundred khinkalis? Do I look like a pig?"
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "khinkali"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/garlic = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/protein = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/garlic = 1,
+	)
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/rawkhinkali/MakeGrillable()
+/obj/item/food/rawkhinkali/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/khinkali, rand(50 SECONDS, 60 SECONDS), TRUE)
 
 /obj/item/food/khinkali
@@ -505,7 +567,12 @@
 	desc = "One hundred khinkalis? Do I look like a pig?"
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "khinkali"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/garlic = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/garlic = 2,
+	)
 	bite_consumption = 3
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtypes = MEAT
@@ -514,10 +581,13 @@
 
 /obj/item/food/meatbun
 	name = "meat bun"
-	desc = "Has the potential to not be Dog."
+	desc = "Has the potential to not be dog."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "meatbun"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -527,7 +597,11 @@
 	name = "stewed soy meat"
 	desc = "Even non-vegetarians will LOVE this!"
 	icon_state = "stewedsoymeat"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("soy" = 1, "vegetables" = 1)
 	eatverbs = list("slurp", "sip", "inhale", "drink")
 	foodtypes = VEGETABLES
@@ -538,7 +612,11 @@
 	desc = "A giant spider's leg that's still twitching after being cooked. Gross!"
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "spiderlegcooked"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/capsaicin = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/capsaicin = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("hot peppers" = 1, "cobwebs" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
@@ -549,7 +627,10 @@
 	desc = "Would you eat them on a train? Would you eat them on a plane? Would you eat them on a state of the art corporate deathtrap floating through space?"
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "spidereggsham"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
 	bite_consumption = 4
 	tastes = list("meat" = 1, "the colour green" = 1)
 	foodtypes = MEAT
@@ -560,7 +641,11 @@
 	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself. You sure hope whoever made this is skilled."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "sashimi"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/capsaicin = 9, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/capsaicin = 9,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("fish" = 1, "hot peppers" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_TINY
@@ -573,7 +658,11 @@
 
 /obj/item/food/nugget
 	name = "chicken nugget"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 	icon = 'icons/obj/food/meat.dmi'
 	/// Default nugget icon for recipes that need any nugget
 	icon_state = "nugget_lump"
@@ -586,7 +675,7 @@
 /obj/item/food/nugget/Initialize(mapload)
 	. = ..()
 	var/shape = pick("lump", "star", "lizard", "corgi")
-	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
+	desc = "A \"chicken\" nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
 
 /obj/item/food/pigblanket
@@ -594,7 +683,11 @@
 	desc = "A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "pigblanket"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("meat" = 1, "butter" = 1)
 	foodtypes = MEAT | DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_TINY
@@ -605,7 +698,11 @@
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "ribs"
 	w_class = WEIGHT_CLASS_NORMAL
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/bbqsauce = 10)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/bbqsauce = 10,
+	)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtypes = MEAT | SUGAR
 
@@ -614,7 +711,11 @@
 	desc = "A delicious, round piece of meat clown. How horrifying."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "meatclown"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/banana = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/banana = 2,
+	)
 	tastes = list("meat" = 5, "clowns" = 3, "sixteen teslas" = 1)
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -626,7 +727,11 @@
 	name = "Lasagna"
 	desc = "A slice of lasagna. Perfect for a Monday afternoon."
 	icon_state = "lasagna"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/tomatojuice = 10)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/tomatojuice = 10,
+	)
 	tastes = list("meat" = 3, "pasta" = 3, "tomato" = 2, "cheese" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_NORMAL
@@ -645,7 +750,10 @@
 /obj/item/food/kebab/human
 	name = "human-kebab"
 	desc = "A human meat, on a stick."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 16,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
 	tastes = list("tender meat" = 3, "metal" = 1)
 	foodtypes = MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
@@ -653,7 +761,10 @@
 /obj/item/food/kebab/monkey
 	name = "meat-kebab"
 	desc = "Delicious meat, on a stick."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 16,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("meat" = 3, "metal" = 1)
 	foodtypes = MEAT
 	venue_value = FOOD_PRICE_CHEAP
@@ -669,7 +780,10 @@
 /obj/item/food/kebab/tail
 	name = "lizard-tail kebab"
 	desc = "Severed lizard tail on a stick."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 30, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("meat" = 8, "metal" = 4, "scales" = 1)
 	foodtypes = MEAT | GORE
 
@@ -679,7 +793,10 @@
 	icon_state = "ratkebab"
 	w_class = WEIGHT_CLASS_NORMAL
 	trash_type = null
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("rat meat" = 1, "metal" = 1)
 	foodtypes = MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
@@ -688,13 +805,22 @@
 	name = "double rat-kebab"
 	icon_state = "doubleratkebab"
 	tastes = list("rat meat" = 2, "metal" = 1)
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/iron = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 20,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/iron = 2,
+	)
 
 /obj/item/food/kebab/fiesta
 	name = "fiesta skewer"
 	icon_state = "fiestaskewer"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/capsaicin = 3,
+	)
 	tastes = list("tex-mex" = 3, "cumin" = 2)
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 12, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/capsaicin = 3)
+	foodtypes = MEAT | VEGETABLES
 
 /obj/item/food/fried_chicken
 	name = "fried chicken"
@@ -717,7 +843,10 @@
 	desc = "A russian dish that consists of beef and sauce. Really popular in japan, or at least that's what my animes would allude to."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "beefstroganoff"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 16,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("beef" = 3, "sour cream" = 1, "salt" = 1, "pepper" = 1)
 	foodtypes = MEAT | VEGETABLES | DAIRY
 
@@ -730,13 +859,16 @@
 	desc = "A luxurious log of beef, covered in a fine mushroom duxelle and pancetta ham, then bound in puff pastry."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "beef_wellington"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 21, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 21,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
 	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
 	venue_value = FOOD_PRICE_EXOTIC
 
-/obj/item/food/beef_wellington/MakeProcessable()
+/obj/item/food/beef_wellington/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
 
 /obj/item/food/beef_wellington_slice
@@ -744,7 +876,10 @@
 	desc = "A slice of beef wellington, topped with a rich gravy. Simply delicious."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "beef_wellington_slice"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -755,7 +890,10 @@
 	desc = "A hearty plate with all the trimmings, representing the pinnacle of the breakfast art."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "full_english"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("sausage" = 1, "bacon" = 1, "egg" = 1, "tomato" = 1, "mushrooms" = 1, "bread" = 1, "beans" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
@@ -766,12 +904,16 @@
 	desc = "A heavy 'loaf' of minced meat, onions, and garlic. Bake it in an oven!"
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "raw_meatloaf"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 40, /datum/reagent/consumable/nutriment/vitamin = 32, /datum/reagent/consumable/nutriment = 32)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 40,
+		/datum/reagent/consumable/nutriment/vitamin = 32,
+		/datum/reagent/consumable/nutriment = 32,
+	)
 	tastes = list("raw meat" = 3, "onions" = 1)
 	foodtypes = MEAT | RAW | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/food/raw_meatloaf/MakeBakeable()
+/obj/item/food/raw_meatloaf/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/meatloaf, rand(30 SECONDS, 40 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meatloaf
@@ -779,13 +921,17 @@
 	desc = "A mixture of meat, onions, and garlic formed into a loaf and baked in an oven. It's covered in a generous slathering of ketchup. Use a knife to cut it into slices!"
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "meatloaf"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 40, /datum/reagent/consumable/nutriment/vitamin = 32, /datum/reagent/consumable/nutriment = 32)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 40,
+		/datum/reagent/consumable/nutriment/vitamin = 32,
+		/datum/reagent/consumable/nutriment = 32,
+	)
 	tastes = list("juicy meat" = 3, "onions" = 1, "garlic" = 1, "ketchup" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
 	burns_in_oven = TRUE
 
-/obj/item/food/meatloaf/MakeProcessable()
+/obj/item/food/meatloaf/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meatloaf_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
 
 /obj/item/food/meatloaf_slice
@@ -793,7 +939,11 @@
 	desc = "A slice of delicious, juicy meatloaf with a ketchup topping."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "meatloaf_slice"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 8)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment = 8,
+	)
 	tastes = list("juicy meat" = 3, "onions" = 1, "garlic" = 1, "ketchup" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL

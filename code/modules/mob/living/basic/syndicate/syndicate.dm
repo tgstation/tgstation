@@ -1,18 +1,9 @@
 ///////////////Base Mob////////////
 
-/obj/effect/light_emitter/red_energy_sword //used so there's a combination of both their head light and light coming off the energy sword
-	set_luminosity = 2
-	set_cap = 2.5
-	light_color = COLOR_SOFT_RED
-
 /mob/living/basic/syndicate
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
 	icon = 'icons/mob/simple/simple_human.dmi'
-	icon_state = "syndicate"
-	icon_living = "syndicate"
-	icon_dead = "syndicate_dead"
-	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
 	maxHealth = 100
@@ -31,24 +22,30 @@
 	unsuitable_heat_damage = 7.5
 	faction = list(ROLE_SYNDICATE)
 	ai_controller = /datum/ai_controller/basic_controller/syndicate
-	
+	/// Loot this mob drops on death.
 	var/loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
+	/// Path of the mob spawner we base the mob's visuals off of.
+	var/mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatesoldier
+	/// Path of the right hand held item we give to the mob's visuals.
+	var/r_hand
+	/// Path of the left hand held item we give to the mob's visuals.
+	var/l_hand
 
 /mob/living/basic/syndicate/Initialize(mapload)
 	. = ..()
+	apply_dynamic_human_icon(src, mob_spawn_path = mob_spawner, r_hand = r_hand, l_hand = l_hand)
 	if(LAZYLEN(loot))
 		AddElement(/datum/element/death_drops, loot)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
 
 /mob/living/basic/syndicate/space
-	icon_state = "syndicate_space"
-	icon_living = "syndicate_space"
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
 	loot = list(/obj/effect/gibspawner/human)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/syndicate/space/Initialize(mapload)
 	. = ..()
@@ -56,22 +53,20 @@
 	set_light(4)
 
 /mob/living/basic/syndicate/space/stormtrooper
-	icon_state = "syndicate_stormtrooper"
-	icon_living = "syndicate_stormtrooper"
 	name = "Syndicate Stormtrooper"
 	maxHealth = 250
 	health = 250
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 
 /mob/living/basic/syndicate/melee //dude with a knife and no shields
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	icon_state = "syndicate_knife"
-	icon_living = "syndicate_knife"
 	loot = list(/obj/effect/gibspawner/human)
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
+	r_hand = /obj/item/knife/combat/survival
 	var/projectile_deflect_chance = 0
 
 /mob/living/basic/syndicate/melee/bullet_act(obj/projectile/projectile)
@@ -81,13 +76,12 @@
 	return ..()
 
 /mob/living/basic/syndicate/melee/space
-	icon_state = "syndicate_space_knife"
-	icon_living = "syndicate_space_knife"
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/syndicate/melee/space/Initialize(mapload)
 	. = ..()
@@ -95,65 +89,53 @@
 	set_light(4)
 
 /mob/living/basic/syndicate/melee/space/stormtrooper
-	icon_state = "syndicate_stormtrooper_knife"
-	icon_living = "syndicate_stormtrooper_knife"
 	name = "Syndicate Stormtrooper"
 	maxHealth = 250
 	health = 250
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 
 /mob/living/basic/syndicate/melee/sword
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	icon_state = "syndicate_sword"
-	icon_living = "syndicate_sword"
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
-	light_color = COLOR_SOFT_RED
 	projectile_deflect_chance = 50
-
-/mob/living/basic/syndicate/melee/sword/Initialize(mapload)
-	. = ..()
-	set_light(2)
+	light_range = 2
+	light_power = 2.5
+	light_color = COLOR_SOFT_RED
+	r_hand = /obj/item/melee/energy/sword/saber/red
+	l_hand = /obj/item/shield/energy
 
 /mob/living/basic/syndicate/melee/sword/space
-	icon_state = "syndicate_space_sword"
-	icon_living = "syndicate_space_sword"
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	projectile_deflect_chance = 50
-	var/obj/effect/light_emitter/red_energy_sword/sord
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/syndicate/melee/sword/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	sord = new(src)
-	set_light(4)
-/mob/living/basic/syndicate/melee/sword/space/Destroy()
-	QDEL_NULL(sord)
-	return ..()
 
 /mob/living/basic/syndicate/melee/sword/space/stormtrooper
-	icon_state = "syndicate_stormtrooper_sword"
-	icon_living = "syndicate_stormtrooper_sword"
 	name = "Syndicate Stormtrooper"
 	maxHealth = 250
 	health = 250
 	projectile_deflect_chance = 50
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 
 ///////////////Guns////////////
 
 /mob/living/basic/syndicate/ranged
-	icon_state = "syndicate_pistol"
-	icon_living = "syndicate_pistol"
-	var/casingtype = /obj/item/ammo_casing/c9mm
-	var/projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 	ai_controller = /datum/ai_controller/basic_controller/syndicate/ranged
+	r_hand = /obj/item/gun/ballistic/automatic/pistol
+	var/casingtype = /obj/item/ammo_casing/c9mm
+	var/projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 
 /mob/living/basic/syndicate/ranged/Initialize(mapload)
 	. = ..()
@@ -164,13 +146,12 @@
 	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
 
 /mob/living/basic/syndicate/ranged/space
-	icon_state = "syndicate_space_pistol"
-	icon_living = "syndicate_space_pistol"
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/syndicate/ranged/space/Initialize(mapload)
 	. = ..()
@@ -178,31 +159,29 @@
 	set_light(4)
 
 /mob/living/basic/syndicate/ranged/space/stormtrooper
-	icon_state = "syndicate_stormtrooper_pistol"
-	icon_living = "syndicate_stormtrooper_pistol"
 	name = "Syndicate Stormtrooper"
 	maxHealth = 250
 	health = 250
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 
 /mob/living/basic/syndicate/ranged/smg
-	icon_state = "syndicate_smg"
-	icon_living = "syndicate_smg"
 	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/syndicate/ranged/burst
+	r_hand = /obj/item/gun/ballistic/automatic/c20r
 
 /mob/living/basic/syndicate/ranged/smg/pilot //caravan ambush ruin
 	name = "Syndicate Salvage Pilot"
-	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
+	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatepilot)
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatepilot
 
 /mob/living/basic/syndicate/ranged/smg/space
-	icon_state = "syndicate_space_smg"
-	icon_living = "syndicate_space_smg"
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/syndicate/ranged/smg/space/Initialize(mapload)
 	. = ..()
@@ -210,27 +189,24 @@
 	set_light(4)
 
 /mob/living/basic/syndicate/ranged/smg/space/stormtrooper
-	icon_state = "syndicate_stormtrooper_smg"
-	icon_living = "syndicate_stormtrooper_smg"
 	name = "Syndicate Stormtrooper"
 	maxHealth = 250
 	health = 250
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 
 /mob/living/basic/syndicate/ranged/shotgun
-	icon_state = "syndicate_shotgun"
-	icon_living = "syndicate_shotgun"
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot //buckshot (up to 72.5 brute) fired in a two-round burst
 	ai_controller = /datum/ai_controller/basic_controller/syndicate/ranged/shotgunner
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog
 
 /mob/living/basic/syndicate/ranged/shotgun/space
-	icon_state = "syndicate_space_shotgun"
-	icon_living = "syndicate_space_shotgun"
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	speed = 1
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/syndicate/ranged/shotgun/space/Initialize(mapload)
 	. = ..()
@@ -238,11 +214,10 @@
 	set_light(4)
 
 /mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper
-	icon_state = "syndicate_stormtrooper_shotgun"
-	icon_living = "syndicate_stormtrooper_shotgun"
 	name = "Syndicate Stormtrooper"
 	maxHealth = 250
 	health = 250
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 
 ///////////////Misc////////////
 

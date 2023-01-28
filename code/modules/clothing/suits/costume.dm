@@ -36,16 +36,6 @@
 	equip_delay_other = 20
 	species_exception = null
 
-/datum/armor/pirate_armored
-	melee = 30
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 60
-	acid = 75
-
 /obj/item/clothing/suit/costume/pirate/captain
 	name = "pirate captain coat"
 	desc = "Yarr."
@@ -57,16 +47,6 @@
 	strip_delay = 40
 	equip_delay_other = 20
 	species_exception = null
-
-/datum/armor/pirate_armored
-	melee = 30
-	bullet = 50
-	laser = 30
-	energy = 40
-	bomb = 30
-	bio = 30
-	fire = 60
-	acid = 75
 
 /obj/item/clothing/suit/costume/cyborg_suit
 	name = "cyborg suit"
@@ -148,7 +128,7 @@
 	inhand_icon_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen)
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/flashlight/flare/candle, /obj/item/tank/internals/emergency_oxygen)
 
 /obj/item/clothing/suit/costume/chickensuit
 	name = "chicken suit"
@@ -496,14 +476,6 @@
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
 	icon_state = "clockwork_cuirass_old"
 	armor_type = /datum/armor/costume_bronze
-
-/datum/armor/costume_bronze
-	melee = 5
-	laser = -5
-	energy = -15
-	bomb = 10
-	fire = 20
-	acid = 20
 
 /obj/item/clothing/suit/hooded/mysticrobe
 	name = "mystic's robe"

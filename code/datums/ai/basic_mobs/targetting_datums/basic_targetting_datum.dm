@@ -22,6 +22,11 @@
 	if(isturf(the_target) || !the_target) // bail out on invalids
 		return FALSE
 
+	if(isobj(the_target.loc))
+		var/obj/container = the_target.loc
+		if(container.resistance_flags & INDESTRUCTIBLE)
+			return FALSE
+
 	if(ismob(the_target)) //Target is in godmode, ignore it.
 		var/mob/M = the_target
 		if(M.status_flags & GODMODE)

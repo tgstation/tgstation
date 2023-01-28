@@ -29,6 +29,7 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
 	bare_wound_bonus = 20
+	item_flags = NO_BLOOD_ON_ITEM
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/saber_color = "green"
 	var/two_hand_force = 34
@@ -62,7 +63,6 @@
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
 
-
 /// Triggered on unwield of two handed item
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
@@ -70,7 +70,6 @@
 	hitsound = SFX_SWING_HIT
 	STOP_PROCESSING(SSobj, src)
 	set_light_on(FALSE)
-
 
 /obj/item/dualsaber/get_sharpness()
 	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness
@@ -191,10 +190,6 @@
 
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
-
-/datum/armor/item_dualsaber
-	fire = 100
-	acid = 70
 
 /obj/item/dualsaber/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_MULTITOOL)

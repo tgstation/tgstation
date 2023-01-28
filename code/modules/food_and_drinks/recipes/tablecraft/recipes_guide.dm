@@ -49,7 +49,7 @@
 
 /datum/crafting_recipe/food/reaction/candle
 	reaction = /datum/chemical_reaction/candlefication
-	result = /obj/item/candle
+	result = /obj/item/flashlight/flare/candle
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/reaction/tofu

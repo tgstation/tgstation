@@ -39,15 +39,20 @@
 
 	src.check_access(null)
 
-	if(req_access.len || req_one_access.len)
+	if(length(req_access) || length(req_one_access))
 		board = new(src)
-		if(req_access.len)
+		if(length(req_access))
 			board.accesses = req_access
 		else
 			board.one_access = 1
 			board.accesses = req_one_access
 
 	setup_device()
+
+/obj/machinery/button/Destroy()
+	QDEL_NULL(device)
+	QDEL_NULL(board)
+	return ..()
 
 /obj/machinery/button/update_icon_state()
 	if(panel_open)
@@ -208,15 +213,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/datum/armor/machinery_button
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 10
-	fire = 90
-	acid = 70
-
 /obj/machinery/button/door/setup_device()
 	if(!device)
 		if(normaldoorcontrol)
@@ -315,15 +311,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	device_type = /obj/item/assembly/control/curtain
 	var/sync_doors = TRUE
 
-/datum/armor/machinery_button
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 10
-	fire = 90
-	acid = 70
-
 /obj/machinery/button/curtain/setup_device()
 	var/obj/item/assembly/control/curtain = device
 	curtain.sync_doors = sync_doors
@@ -359,15 +346,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	id = 1
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
-
-/datum/armor/machinery_button
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 10
-	fire = 90
-	acid = 70
 
 /obj/machinery/button/tram/setup_device()
 	var/obj/item/assembly/control/tram/tram_device = device

@@ -96,9 +96,6 @@
 	tackle_speed = 6
 	skill_mod = 7
 
-/datum/armor/combat_insulated
-	bio = 50
-
 /obj/item/clothing/gloves/tackler/offbrand
 	name = "improvised gripper gloves"
 	desc = "Ratty looking fingerless gloves wrapped with sticky tape. Beware anyone wearing these, for they clearly have no shame and nothing to lose."
@@ -109,9 +106,6 @@
 	base_knockdown = 1.75 SECONDS
 	min_distance = 2
 	skill_mod = -1
-
-/datum/armor/combat_insulated
-	bio = 50
 
 /obj/item/clothing/gloves/tackler/football
 	name = "football gloves"

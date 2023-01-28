@@ -119,7 +119,7 @@
 /datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
-		new /obj/item/candle(location)
+		new /obj/item/flashlight/flare/candle(location)
 
 /datum/chemical_reaction/meatification
 	required_reagents = list(/datum/reagent/liquidgibs = 10, /datum/reagent/consumable/nutriment = 10, /datum/reagent/carbon = 10)

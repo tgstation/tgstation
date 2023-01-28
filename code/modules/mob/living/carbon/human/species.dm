@@ -344,13 +344,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/obj/item/organ/oldorgan = C.getorganslot(slot) //used in removing
 		var/obj/item/organ/neworgan = slot_mutantorgans[slot] //used in adding
+		if(!neworgan) //these can be null, if so we shouldn't regenerate
+			continue
 
 		if(visual_only && !initial(neworgan.visual))
 			continue
 
 		var/used_neworgan = FALSE
 		neworgan = SSwardrobe.provide_type(neworgan)
-		var/should_have = neworgan.get_availability(src) //organ proc that points back to a species trait (so if the species is supposed to have this organ)
+		var/should_have = neworgan.get_availability(src, C) //organ proc that points back to a species trait (so if the species is supposed to have this organ)
 
 		/*
 		 * There is an existing organ in this slot, what should we do with it? Probably remove it!
@@ -392,16 +394,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(current_organ)
 				current_organ.Remove(C)
 				QDEL_NULL(current_organ)
-	for(var/external_organ in C.external_organs)
+	for(var/obj/item/organ/external/external_organ in C.internal_organs)
 		// External organ checking. We need to check the external organs owned by the carbon itself,
 		// because we want to also remove ones not shared by its species.
 		// This should be done even if species was not changed.
 		if(external_organ in external_organs)
 			continue // Don't remove external organs this species is supposed to have.
-		var/obj/item/organ/current_organ = C.getorgan(external_organ)
-		if(current_organ)
-			current_organ.Remove(C)
-			QDEL_NULL(current_organ)
+		external_organ.Remove(C)
+		QDEL_NULL(external_organ)
 
 	var/list/species_organs = mutant_organs + external_organs
 
@@ -523,7 +523,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.blood_type = random_blood_type()
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
-	for(var/obj/item/organ/external/organ as anything in C.external_organs)
+	for(var/obj/item/organ/external/organ in C.internal_organs)
 		organ.Remove(C)
 		qdel(organ)
 
@@ -805,9 +805,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/obj/item/organ/external/organ_path as anything in external_organs)
 		var/obj/item/organ/external/randomized_organ = human_mob.getorgan(organ_path)
 		if(randomized_organ)
-			var/new_look = pick(randomized_organ.get_global_feature_list())
-			human_mob.dna.features["[randomized_organ.feature_key]"] = new_look
-			mutant_bodyparts["[randomized_organ.feature_key]"] = new_look
+			var/datum/bodypart_overlay/mutant/overlay = randomized_organ.bodypart_overlay
+			var/new_look = pick(overlay.get_global_feature_list())
+			human_mob.dna.features["[overlay.feature_key]"] = new_look
+			mutant_bodyparts["[overlay.feature_key]"] = new_look
 
 ///Proc that randomizes all the appearance elements (external organs, markings, hair etc.) of a species' associated mob. Function set by child procs
 /datum/species/proc/randomize_features(mob/living/carbon/human/human_mob)
@@ -886,8 +887,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_EYES)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
-			var/obj/item/organ/internal/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-			if(E?.no_glasses)
+			var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+			if(eyes?.no_glasses)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_HEAD)
@@ -1013,8 +1014,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!outfit_important_for_life)
 		return
 
-	outfit_important_for_life= new()
-	outfit_important_for_life.equip(human_to_equip)
+	human_to_equip.equipOutfit(outfit_important_for_life)
 
 /**
  * Species based handling for irradiation
@@ -1114,7 +1114,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 		if(atk_effect == ATTACK_EFFECT_BITE)
-			if(user.is_mouth_covered(mask_only = TRUE))
+			if(user.is_mouth_covered(ITEM_SLOT_MASK))
 				to_chat(user, span_warning("You can't [atk_verb] with your mouth covered!"))
 				return FALSE
 		user.do_attack_animation(target, atk_effect)
@@ -2031,8 +2031,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/create_pref_blood_perks()
 	var/list/to_add = list()
 
-	// NOBLOOD takes priority by default
-	if(NOBLOOD in species_traits)
+	// TRAIT_NOBLOOD takes priority by default
+	if(TRAIT_NOBLOOD in inherent_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "tint-slash",

@@ -102,14 +102,6 @@ Slimecrossing Weapons
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
 
-/datum/armor/shield_adamantineshield
-	melee = 50
-	bullet = 50
-	laser = 50
-	bomb = 30
-	fire = 80
-	acid = 70
-
 /obj/item/gun/magic/bloodchill/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
@@ -137,14 +129,6 @@ Slimecrossing Weapons
 	damage_type = OXY
 	nodamage = TRUE
 	hitsound = 'sound/effects/splat.ogg'
-
-/datum/armor/shield_adamantineshield
-	melee = 50
-	bullet = 50
-	laser = 50
-	bomb = 30
-	fire = 80
-	acid = 70
 
 /obj/projectile/magic/bloodchill/on_hit(mob/living/target)
 	. = ..()

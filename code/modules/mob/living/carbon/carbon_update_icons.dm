@@ -445,8 +445,6 @@
 /mob/living/carbon/proc/update_hud_back(obj/item/I)
 	return
 
-
-
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
@@ -526,10 +524,10 @@
 		. += "-[draw_color]"
 	if(is_invisible)
 		. += "-invisible"
-	for(var/obj/item/organ/external/external_organ as anything in external_organs)
-		if(!external_organ.can_draw_on_bodypart(owner))
+	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+		if(!overlay.can_draw_on_bodypart(owner))
 			continue
-		. += "-[jointext(external_organ.generate_icon_cache(), "-")]"
+		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 
 	return .
 

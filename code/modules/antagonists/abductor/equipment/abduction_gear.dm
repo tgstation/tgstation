@@ -196,7 +196,7 @@
 	else
 		mode = GIZMO_SCAN
 		icon_state = "gizmo_scan"
-	to_chat(user, span_notice("You switch the device to [mode==GIZMO_SCAN? "SCAN": "MARK"] MODE"))
+	to_chat(user, span_notice("You switch the device to [mode == GIZMO_SCAN? "SCAN": "MARK"] MODE"))
 
 /obj/item/abductor/gizmo/attack(mob/living/M, mob/user)
 	if(!ScientistCheck(user))
@@ -217,16 +217,18 @@
 	if(flag)
 		return
 	if(!ScientistCheck(user))
-		return
+		return .
 	if(!console)
 		to_chat(user, span_warning("The device is not linked to console!"))
-		return
+		return .
 
 	switch(mode)
 		if(GIZMO_SCAN)
 			scan(target, user)
 		if(GIZMO_MARK)
 			mark(target, user)
+
+	return .
 
 /obj/item/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
@@ -275,9 +277,11 @@
 	. = ..()
 	if(flag)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!AbductorCheck(user))
-		return
+		return .
 	radio_off(target, user)
+	return .
 
 /obj/item/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
 	if( !(user in (viewers(7,target))) )
@@ -318,10 +322,11 @@
 	else
 		mode = MIND_DEVICE_MESSAGE
 		icon_state = "mind_device_message"
-	to_chat(user, span_notice("You switch the device to [mode==MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE"))
+	to_chat(user, span_notice("You switch the device to [mode == MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE"))
 
 /obj/item/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!ScientistCheck(user))
 		return
 

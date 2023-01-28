@@ -266,10 +266,13 @@
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
+	if(!environment)
+		stack_trace("We tried to check a gas_mixture that doesn't exist for its firetype, what are you DOING")
+		return
 
-	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(environment.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		return FIRELOCK_ALARM_TYPE_HOT
-	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+	if(environment.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
 		return FIRELOCK_ALARM_TYPE_COLD
 	return
 
@@ -684,15 +687,6 @@
 	density = TRUE
 	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
-/datum/armor/door_firedoor
-	melee = 10
-	bullet = 30
-	laser = 20
-	energy = 20
-	bomb = 30
-	fire = 95
-	acid = 70
-
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
 	adjust_lights_starting_offset()
@@ -764,15 +758,6 @@
 	density = TRUE
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
-
-/datum/armor/door_firedoor
-	melee = 10
-	bullet = 30
-	laser = 20
-	energy = 20
-	bomb = 30
-	fire = 95
-	acid = 70
 
 /obj/structure/firelock_frame/examine(mob/user)
 	. = ..()

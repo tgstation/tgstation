@@ -75,16 +75,6 @@
 	can_adjust = FALSE
 	has_sensor = NO_SENSORS
 
-/datum/armor/misc_adminsuit
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/item/clothing/under/misc/overalls
 	name = "laborer's overalls"
 	desc = "A set of durable overalls for getting the job done."
@@ -93,32 +83,12 @@
 	can_adjust = FALSE
 	custom_price = PAYCHECK_CREW
 
-/datum/armor/misc_adminsuit
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/item/clothing/under/misc/assistantformal
 	name = "assistant's formal uniform"
 	desc = "An assistant's formal-wear. Why an assistant needs formal-wear is still unknown."
 	icon_state = "assistant_formal"
 	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
-
-/datum/armor/misc_adminsuit
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
 
 /obj/item/clothing/under/misc/durathread
 	name = "durathread jumpsuit"
@@ -158,12 +128,6 @@
 	icon_state = "captain_parade"
 	inhand_icon_state = null
 	can_adjust = FALSE
-
-/datum/armor/misc_bouncer
-	melee = 5
-	bio = 10
-	fire = 30
-	acid = 30
 
 /obj/item/clothing/under/misc/syndicate_souvenir
 	name = "syndicate souvenir tee"

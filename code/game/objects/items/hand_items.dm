@@ -400,8 +400,8 @@
 		offerer.visible_message(span_notice("[offerer] helps [taker] up!"), span_nicegreen("You help [taker] up!"), span_hear("You hear someone helping someone else up!"), ignored_mobs = taker)
 		to_chat(taker, span_nicegreen("You take [offerer]'s hand, letting [offerer.p_them()] help your up! How nice of them!"))
 
-		offerer.mind.add_memory(MEMORY_HELPED_UP, list(DETAIL_DEUTERAGONIST = taker), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HELPED_UP, list(DETAIL_DEUTERAGONIST = offerer), story_value = STORY_VALUE_OKAY)
+		offerer.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
+		taker.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
 
 		offerer.add_mood_event("helping_up", /datum/mood_event/helped_up, taker, TRUE) // Different IDs because you could be helped up and then help someone else up.
 		taker.add_mood_event("helped_up", /datum/mood_event/helped_up, offerer, FALSE)
@@ -474,6 +474,7 @@
 
 /obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
 
@@ -562,11 +563,11 @@
 	if(!suppressed)  // direct
 		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 
-	living_target.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY)
+	living_target.add_mob_memory(/datum/memory/kissed, deuteragonist = firer)
 	living_target.add_mood_event("kiss", /datum/mood_event/kiss, firer, suppressed)
 	if(isliving(firer))
 		var/mob/living/kisser = firer
-		kisser.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
+		kisser.add_mob_memory(/datum/memory/kissed, protagonist = living_target, deuteragonist = firer)
 	try_fluster(living_target)
 
 /obj/projectile/kiss/proc/try_fluster(mob/living/living_target)

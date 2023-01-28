@@ -443,17 +443,6 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor_type = /datum/armor/knight_greyscale
 
-/datum/armor/knight_greyscale
-	melee = 35
-	bullet = 10
-	laser = 10
-	energy = 10
-	bomb = 10
-	bio = 10
-	fire = 40
-	acid = 40
-	wound = 15
-
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."

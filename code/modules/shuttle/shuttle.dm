@@ -275,6 +275,27 @@
 /obj/docking_port/stationary/get_docked()
 	. = locate(/obj/docking_port/mobile) in loc
 
+/// Subtype for escape pod ports so that we can give them trait behaviour
+/obj/docking_port/stationary/escape_pod
+	name = "escape pod loader"
+	height = 5
+	width = 3
+	dwidth = 1
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default
+	/// Set to true if you have a snowflake escape pod dock which needs to always have the normal pod or some other one
+	var/enforce_specific_pod = FALSE
+
+/obj/docking_port/stationary/escape_pod/Initialize(mapload)
+	. = ..()
+	if (enforce_specific_pod)
+		return
+
+	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
+		roundstart_template = /datum/map_template/shuttle/escape_pod/cramped
+		return
+	if (HAS_TRAIT(SSstation, STATION_TRAIT_BIGGER_PODS))
+		roundstart_template = /datum/map_template/shuttle/escape_pod/luxury
+
 /obj/docking_port/stationary/transit
 	name = "In Transit"
 	var/datum/turf_reservation/reserved_area

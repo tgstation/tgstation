@@ -43,7 +43,7 @@
 	if(!blob || isspaceturf(atom_source)) //does nothing in space
 		return
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
-	consume_returns(damage_increase = blob.get_integrity() * 0.5)
+	consume_returns(damage_increase = blob.get_integrity() * 0.05)
 	if(blob.get_integrity() > 100)
 		blob.visible_message(span_danger("\The [blob] strikes at \the [atom_source] and flinches away!"),
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
@@ -227,7 +227,7 @@
 		cause = "contact"
 	nom.visible_message(vis_msg, mob_msg, span_hear("You hear an unearthly noise as a wave of heat washes over you."))
 	atom_source.investigate_log("has been attacked ([cause]) by [key_name(nom)]", INVESTIGATE_ENGINE)
-	add_memory_in_range(atom_source, 7, MEMORY_SUPERMATTER_DUSTED, list(DETAIL_PROTAGONIST = nom, DETAIL_WHAT_BY = atom_source), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF)
+	add_memory_in_range(atom_source, 7, /datum/memory/witness_supermatter_dusting, protagonist = nom, antagonist = atom_source)
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume(atom_source, nom)
 
@@ -247,7 +247,7 @@
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
-			damage_increase += rand(-300, 300) // HONK
+			damage_increase += rand(-30, 30) // HONK
 		consume_returns(matter_increase, damage_increase)
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
