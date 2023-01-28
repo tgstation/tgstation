@@ -4,13 +4,17 @@
 
 /datum/mood_event/drunk/add_effects(param)
 	// Display blush visual
-	//ADD_TRAIT(owner, TRAIT_BLUSHING, "[type]") TODO apply blush overlay
-	owner.update_body()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.get_bodypart(BODY_ZONE_HEAD).add_bodypart_overlay(new /datum/bodypart_overlay/emote/blush())
+		human_owner.update_body()
 
 /datum/mood_event/drunk/remove_effects()
 	// Stop displaying blush visual
-	//REMOVE_TRAIT(owner, TRAIT_BLUSHING, "[type]") TODO apply blush overlay
-	owner.update_body()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.get_bodypart(BODY_ZONE_HEAD).remove_bodypart_overlay(new /datum/bodypart_overlay/emote/blush())
+		human_owner.update_body()
 
 /datum/mood_event/quality_nice
 	description = "That drink wasn't bad at all."
