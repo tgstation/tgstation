@@ -4,7 +4,7 @@ import { CHANGELING_MECHANICAL_DESCRIPTION } from './changeling';
 
 const ChangelingMidround: Antagonist = {
   key: 'changelingmidround',
-  name: 'Meteor Changeling',
+  name: 'Space Changeling',
   description: [
     multiline`
     A midround changeling does not recieve a crew identity, instead arriving
@@ -14,3 +14,5 @@ const ChangelingMidround: Antagonist = {
   ],
   category: Category.Midround,
 };
+
+export default ChangelingMidround;

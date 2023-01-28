@@ -846,10 +846,12 @@
 	return TRUE
 
 /// Space Changeling ruleset
-/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround //Entirely untested, waiting until I learn how I even would
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
 	name = "Space Changeling" //IT CAME FROM OUTER SPESS
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/changeling
 	antag_flag = ROLE_CHANGELING_MIDROUND
+	antag_flag_override = ROLE_CHANGELING
 	required_type = /mob/dead/observer
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0) //subject to change
 	required_candidates = 1

@@ -52,7 +52,7 @@
 	var/turf/picked_start = spaceDebrisStartLoc(start_side, start_z)
 	var/turf/destination
 
-	if(GLOB.xeno_spawn) //We want to really make sure this hits the station
+	if(length(GLOB.xeno_spawn)) //We want to really make sure this hits the station
 		destination = pick(GLOB.xeno_spawn)
 	else //Just in case. This is slightly less surefire but should still work.
 		warning("Changeling meteor could not find xeno_spawn marker to target. Defaulting to random station turf...")
