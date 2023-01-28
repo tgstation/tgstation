@@ -92,7 +92,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
 /obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
-	AddElement(/datum/element/noticable_organ, "hunch[reciever.p_es()] over unnaturally!")
+	AddElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 	. = ..()
 	if(!ishuman(reciever))
 		return
@@ -102,6 +102,7 @@
 	human_reciever.physiology.damage_resistance -= 50
 
 /obj/item/organ/internal/heart/rat/Remove(mob/living/carbon/heartless, special)
+	RemoveElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 	. = ..()
 	if(!ishuman(heartless))
 		return
