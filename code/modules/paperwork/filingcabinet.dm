@@ -124,14 +124,13 @@
 	var/virgin = TRUE
 
 /obj/structure/filingcabinet/security/proc/populate()
-	if(virgin)
-		for(var/datum/data/record/G in GLOB.data_core.general)
-			var/datum/data/record/S = find_record("name", G.fields["name"], GLOB.data_core.security)
-			if(!S)
-				continue
-			print_security_record(G, S, src)
-			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
-						//before the records have been generated, so we do this inside the loop.
+	if(!virgin)
+		return
+	for(var/datum/record/crew/target in GLOB.manifest.general)
+		var/obj/item/paper/rapsheet = target.get_rapsheet()
+		rapsheet.forceMove(src)
+		virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
+					//before the records have been generated, so we do this inside the loop.
 
 /obj/structure/filingcabinet/security/attack_hand(mob/user, list/modifiers)
 	populate()
@@ -149,24 +148,18 @@
 	var/virgin = TRUE
 
 /obj/structure/filingcabinet/medical/proc/populate()
-	if(virgin)
-		for(var/datum/data/record/G in GLOB.data_core.general)
-			var/datum/data/record/M = find_record("name", G.fields["name"], GLOB.data_core.medical)
-			if(!M)
-				continue
-			var/obj/item/paper/med_record_paper = new /obj/item/paper(src)
-			var/med_record_text = "<CENTER><B>Medical Record</B></CENTER><BR>"
-			med_record_text += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
-			med_record_text += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["blood_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[M.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
-			var/counter = 1
-			while(M.fields["com_[counter]"])
-				med_record_text += "[M.fields["com_[counter]"]]<BR>"
-				counter++
-			med_record_text += "</TT>"
-			med_record_paper.add_raw_text(med_record_text)
-			med_record_paper.name = "paper - '[G.fields["name"]]'"
-			med_record_paper.update_appearance()
-			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
+	if(!virgin)
+		return
+	for(var/datum/record/crew/record in GLOB.manifest.general)
+		var/obj/item/paper/med_record_paper = new /obj/item/paper(src)
+		var/med_record_text = "<CENTER><B>Medical Record</B></CENTER><BR>"
+		med_record_text += "Name: [record.name] Rank: [record.rank]<BR>\nGender: [record.gender]<BR>\nAge: [record.age]<BR>"
+		med_record_text += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [record.blood_type]<BR>\nDNA: [record.dna_string]<BR>\n<BR>\nMinor Disabilities: [record.minor_disabilities]<BR>\nDetails: [record.minor_disabilities_desc]<BR>\n<BR>\nMajor Disabilities: [record.major_disabilities]<BR>\nDetails: [record.major_disabilities_desc]<BR>\n<BR>\nImportant Notes:<BR>\n\t[record.medical_notes]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+		med_record_text += "</TT>"
+		med_record_paper.add_raw_text(med_record_text)
+		med_record_paper.name = "paper - '[record.name]'"
+		med_record_paper.update_appearance()
+		virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -199,14 +192,10 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
-	for(var/record in GLOB.data_core.locked)
-		var/datum/data/record/G = record
-		if(!G)
-			continue
-		var/datum/mind/M = G.fields["mindref"]
-		if(M && ishuman(M.current))
-			addFile(M.current)
-
+	for(var/datum/record/locked/target in GLOB.manifest.locked)
+		var/datum/mind/mind_ref = target.mind_ref
+		if(mind_ref && ishuman(mind_ref.current))
+			addFile(mind_ref.current)
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
 	new /obj/item/paper/employment_contract(src, employee.mind.name)

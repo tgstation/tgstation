@@ -133,7 +133,7 @@
 		// Eject the ID being modified.
 		if("PRG_ejectmodid")
 			if(inserted_auth_card)
-				GLOB.data_core.manifest_modify(inserted_auth_card.registered_name, inserted_auth_card.assignment, inserted_auth_card.get_trim_assignment())
+				GLOB.manifest.modify(inserted_auth_card.registered_name, inserted_auth_card.assignment, inserted_auth_card.get_trim_assignment())
 				return computer.RemoveID(usr)
 			else
 				var/obj/item/I = user.get_active_held_item()
