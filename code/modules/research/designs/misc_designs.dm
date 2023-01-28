@@ -446,7 +446,7 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/universal_scanner
 	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
 
