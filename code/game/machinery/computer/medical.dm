@@ -40,7 +40,7 @@
 	var/list/data = list()
 
 	var/has_access = authenticated && isliving(user)
-	data["authenticated"] = authenticated
+	data["authenticated"] = authenticated || isAdminGhostAI(user)
 	if(!has_access)
 		return data
 
