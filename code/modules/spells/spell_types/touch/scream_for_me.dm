@@ -3,12 +3,12 @@
 	name = "Scream For Me"
 	desc = "This wicked spell inflicts many severe wounds on your target, causing them to \
 		likely bleed to death unless they recieve immediate medical attention."
-	button_icon_state = "gib"
+	button_icon_state = "scream_for_me"
 	sound = null //trust me, you'll hear their wounds
 
 	school = SCHOOL_SANGUINE
 	invocation_type = INVOCATION_SHOUT
-	cooldown_time = 1 MINUTES
+	cooldown_time = 50 SECONDS
 	cooldown_reduction_per_rank = 10 SECONDS
 
 	invocation = "SCREAM FOR ME!!"

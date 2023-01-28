@@ -95,6 +95,7 @@
 	name = "Scream For Me"
 	desc = "Sadistic sanguine spell that inflicts numerous severe blood wounds all over the victim's body."
 	spell_type =  /datum/action/cooldown/spell/touch/scream_for_me
+	cost = 1
 	category = "Offensive"
 
 /datum/spellbook_entry/item/staffchaos
