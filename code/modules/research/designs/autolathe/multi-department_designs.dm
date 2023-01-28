@@ -411,8 +411,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
-
-
 /datum/design/ducts
 	name = "Fluid Duct"
 	id = "fluid_ducts"
