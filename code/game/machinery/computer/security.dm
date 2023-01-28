@@ -316,6 +316,8 @@
 
 			input_description += "\n\n<b>WANTED FOR:</b>"
 			for(var/datum/crime/incident in crimes)
+				if(!crime.valid)
+					continue
 				input_description += "\n<bCrime:</b> [incident.name]\n"
 				input_description += "<b>Details:</b> [incident.details]\n"
 
