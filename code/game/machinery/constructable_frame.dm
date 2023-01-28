@@ -317,7 +317,7 @@
 							if(!used_amt || !S.use(used_amt))
 								continue
 							req_components[path] -= used_amt
-							to_chat(user, span_notice("You add [used_amt][stack_name] to [src]."))
+							to_chat(user, span_notice("You add [used_amt] [stack_name] to [src]."))
 							play_sound = TRUE
 						else if(replacer.atom_storage.attempt_remove(part, src))
 							var/stock_part_datum = GLOB.stock_part_datums_per_object[part.type]
