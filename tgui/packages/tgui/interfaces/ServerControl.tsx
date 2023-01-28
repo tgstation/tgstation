@@ -131,7 +131,10 @@ export const ServerControl = (props, context) => {
                 <Table.Cell>Console Location</Table.Cell>
               </Table.Row>
               {logs.map((server_log) => (
-                <Table.Row mt={1} key={server_log.node_name}>
+                <Table.Row
+                  mt={1}
+                  key={server_log.node_name}
+                  className="candystripe">
                   <Table.Cell>{server_log.node_name}</Table.Cell>
                   <Table.Cell>{server_log.node_cost}</Table.Cell>
                   <Table.Cell>{server_log.node_researcher}</Table.Cell>
