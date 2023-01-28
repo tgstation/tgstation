@@ -40,22 +40,22 @@
 */
 /datum/bodypart_overlay/proc/mutant_bodyparts_layertext(layer)
 	switch(layer)
-		if(BODY_BEHIND_LAYER)
+		if(-BODY_BEHIND_LAYER)
 			return "BEHIND"
-		if(BODY_ADJ_LAYER)
+		if(-BODY_ADJ_LAYER)
 			return "ADJ"
-		if(BODY_FRONT_LAYER)
+		if(-BODY_FRONT_LAYER)
 			return "FRONT"
 
 ///Converts a bitflag to the right layer. I'd love to make this a static index list, but byond made an attempt on my life when i did
 /datum/bodypart_overlay/proc/bitflag_to_layer(layer)
 	switch(layer)
 		if(EXTERNAL_BEHIND)
-			return BODY_BEHIND_LAYER
+			return -BODY_BEHIND_LAYER
 		if(EXTERNAL_ADJACENT)
-			return BODY_ADJ_LAYER
+			return -BODY_ADJ_LAYER
 		if(EXTERNAL_FRONT)
-			return BODY_FRONT_LAYER
+			return -BODY_FRONT_LAYER
 
 ///Check whether we can draw the overlays. You generally don't want lizard snouts to draw over an EVA suit
 /datum/bodypart_overlay/proc/can_draw_on_bodypart(mob/living/carbon/human/human)
