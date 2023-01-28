@@ -503,6 +503,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/has_dna()
 	return dna
 
+/mob/proc/can_mutate()
+	return
+
+/mob/living/carbon/can_mutate()
+	if(!(owner.mob_biotypes & MOB_ORGANIC))
+		return FALSE
+	if(has_dna() && !HAS_TRAIT(src, TRAIT_GENELESS) && !HAS_TRAIT(src, TRAIT_BADDNA))
+		return TRUE
 
 /// Sets the DNA of the mob to the given DNA.
 /mob/living/carbon/human/proc/hardset_dna(unique_identity, list/mutation_index, list/default_mutation_genes, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/mutations, force_transfer_mutations)

@@ -68,11 +68,11 @@
 	if(!ishuman(brain_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = brain_owner
-	var/datum/species/rec_species = human_receiver.dna.species
-	rec_species.update_no_equip_flags(brain_owner, rec_species.no_equip_flags | ITEM_SLOT_GLOVES)
-
-	hammer = new/obj/item/goliath_infuser_hammer
-	brain_owner.put_in_hands(hammer)
+	if(human_receiver.can_mutate())
+		var/datum/species/rec_species = human_receiver.dna.species
+		rec_species.update_no_equip_flags(brain_owner, rec_species.no_equip_flags | ITEM_SLOT_GLOVES)
+		hammer = new/obj/item/goliath_infuser_hammer
+		brain_owner.put_in_hands(hammer)
 
 /obj/item/organ/internal/brain/goliath/Remove(mob/living/carbon/brain_owner, special, no_id_transfer)
 	. = ..()
@@ -80,12 +80,12 @@
 	if(!ishuman(brain_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = brain_owner
-	var/datum/species/rec_species = human_receiver.dna.species
-	rec_species.update_no_equip_flags(brain_owner, initial(rec_species.no_equip_flags))
+	if(human_receiver.can_mutate())
+		var/datum/species/rec_species = human_receiver.dna.species
+		rec_species.update_no_equip_flags(brain_owner, initial(rec_species.no_equip_flags))
 	if(hammer)
 		brain_owner.visible_message(span_warning("\The [hammer] disintegrates!"))
 		QDEL_NULL(hammer)
-	return ..()
 
 /obj/item/goliath_infuser_hammer
 	name = "tendril hammer"

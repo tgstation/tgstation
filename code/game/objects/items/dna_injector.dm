@@ -41,7 +41,7 @@
 	return attack_hand(user, modifiers)
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/target, mob/user)
-	if(target.has_dna() && !HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
+	if(target.can_mutate())
 		for(var/removed_mutation in remove_mutations)
 			target.dna.remove_mutation(removed_mutation)
 		for(var/added_mutation in add_mutations)
@@ -106,7 +106,7 @@
 		to_chat(user, span_notice("You can't modify [target]'s DNA while [target.p_theyre()] dead."))
 		return FALSE
 
-	if(target.has_dna() && !(HAS_TRAIT(target, TRAIT_BADDNA)))
+	if(target.can_mutate())
 		var/endtime = world.time + duration
 		for(var/mutation in remove_mutations)
 			if(mutation == /datum/mutation/human/race)
@@ -171,7 +171,7 @@
 	var/crispr_charge = FALSE // Look for viruses, look at symptoms, if research and Dormant DNA Activator or Viral Evolutionary Acceleration, set to true
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/target, mob/user)
-	if(target.has_dna() && !HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
+	if(target.can_mutate())
 		for(var/mutation in add_mutations)
 			var/datum/mutation/human/added_mutation = mutation
 			if(istype(added_mutation, /datum/mutation/human))

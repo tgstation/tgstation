@@ -50,13 +50,15 @@
 	if(!ishuman(reciever))
 		return
 	var/mob/living/carbon/human/human_holder = reciever
-	var/datum/species/species = human_holder.dna.species
-	//mmm, cheese. doesn't especially like anything else
-	species.liked_food = DAIRY
-	//but a rat can eat anything without issue
-	species.disliked_food = NONE
-	species.toxic_food = NONE
-	human_holder.physiology.hunger_mod *= 10
+	if(human_holder.can_mutate())
+		var/datum/species/species = human_holder.dna.species
+		//mmm, cheese. doesn't especially like anything else
+		species.liked_food = DAIRY
+		//but a rat can eat anything without issue
+		species.disliked_food = NONE
+		species.toxic_food = NONE
+		if(human_holder.physiology)
+			human_holder.physiology.hunger_mod *= 10
 	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
 
 /obj/item/organ/internal/stomach/rat/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
@@ -70,11 +72,13 @@
 	if(!ishuman(stomach_owner))
 		return
 	var/mob/living/carbon/human/human_holder = stomach_owner
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food = initial(species.liked_food)
-	species.disliked_food = initial(species.disliked_food)
-	species.toxic_food = initial(species.toxic_food)
-	human_holder.physiology.hunger_mod /= 10
+	if(human_holder.can_mutate())
+		var/datum/species/species = human_holder.dna.species
+		species.liked_food = initial(species.liked_food)
+		species.disliked_food = initial(species.disliked_food)
+		species.toxic_food = initial(species.toxic_food)
+		if(human_holder.physiology)
+			human_holder.physiology.hunger_mod /= 10
 	UnregisterSignal(stomach_owner, COMSIG_SPECIES_GAIN)
 
 /// makes you smaller, walk over tables, and take 1.5x damage
@@ -97,17 +101,21 @@
 	if(!ishuman(reciever))
 		return
 	var/mob/living/carbon/human/human_reciever = reciever
-	human_reciever.dna.add_mutation(/datum/mutation/human/dwarfism)
-	//but 1.5 damage
-	human_reciever.physiology.damage_resistance -= 50
+	if(human_receiver.can_mutate())
+		human_reciever.dna.add_mutation(/datum/mutation/human/dwarfism)
+		//but 1.5 damage
+		if(human_reciever.physiology)
+			human_reciever.physiology.damage_resistance -= 50
 
 /obj/item/organ/internal/heart/rat/Remove(mob/living/carbon/heartless, special)
 	. = ..()
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
-	human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
-	human_heartless.physiology.damage_resistance += 50
+	if(human_heartless.can_mutate())
+		human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
+		if(human_heartless.physiology)
+			human_heartless.physiology.damage_resistance += 50
 
 /// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/internal/tongue/rat

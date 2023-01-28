@@ -52,6 +52,8 @@
 	var/bonus_active = FALSE
 	var/bonus_activate_text = span_notice("??? DNA is deeply infused with you! You've learned how to make error reports!")
 	var/bonus_deactivate_text = span_notice("Your DNA is no longer majority ???. You did make an issue report, right?")
+	/// Required mob bio-type. Also checks DNA validity it's set to MOB_ORGANIC.
+	var/required_biotype = MOB_ORGANIC
 	/// A Trait or list of Traits added to the mob upon bonus activation.
 	var/bonus_traits
 
@@ -67,6 +69,11 @@
 
 /datum/status_effect/organ_set_bonus/proc/enable_bonus()
 	SHOULD_CALL_PARENT(TRUE)
+	if(required_biotype)
+		if(!(owner.mob_biotypes & required_biotype))
+			return FALSE
+		if((required_biotype == MOB_ORGANIC) && !owner.can_mutate())
+			return FALSE
 	bonus_active = TRUE
 	if(bonus_traits)
 		if(islist(bonus_traits))
@@ -76,6 +83,7 @@
 			ADD_TRAIT(owner, bonus_traits, REF(src))
 	if(bonus_activate_text)
 		to_chat(owner, bonus_activate_text)
+	return TRUE
 
 /datum/status_effect/organ_set_bonus/proc/disable_bonus()
 	SHOULD_CALL_PARENT(TRUE)

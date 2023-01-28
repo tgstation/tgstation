@@ -225,13 +225,13 @@
 
 /// Verify that the occupant/target is organic, and has mutable DNA.
 /obj/machinery/dna_infuser/proc/is_valid_occupant(mob/living/carbon/human/human_target, mob/user)
-	// Invalid: Occupant isn't Human, isn't organic, lacks DNA / has TRAIT_GENELESS.
-	if(!ishuman(human_target) || !(human_target.mob_biotypes & MOB_ORGANIC) || !human_target.has_dna() || HAS_TRAIT(human_target, TRAIT_GENELESS))
-		balloon_alert(user, "dna is missing!")
-		return FALSE
 	// Invalid: DNA is too damaged to mutate anymore / has TRAIT_BADDNA.
 	if(HAS_TRAIT(human_target, TRAIT_BADDNA))
 		balloon_alert(user, "dna is corrupted!")
+		return FALSE
+	// Invalid: Occupant isn't Human, isn't organic, lacks DNA / has TRAIT_GENELESS.
+	if(!ishuman(human_target) || !human_target.can_mutate())
+		balloon_alert(user, "dna is missing!")
 		return FALSE
 	// Valid: Occupant is an organic Human who has undamaged and mutable DNA.
 	return TRUE
