@@ -86,7 +86,7 @@
 		return
 	adjustFireLoss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = MOB_ORGANIC)
+/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!(mob_biotypes & required_biotype))
 		return
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
