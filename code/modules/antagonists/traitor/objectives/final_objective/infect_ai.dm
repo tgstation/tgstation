@@ -13,10 +13,10 @@
 	if(!.)
 		return FALSE
 
-    for(var/mob/living/silicon/ai/ai in GLOB.ai_list)
-        if(!ai.stat || ai.mind?.has_antag_datum(/datum/antagonist/malf_ai) || !is_station_level(ai.z))
-            continue
-        return TRUE
+	for(var/mob/living/silicon/ai/ai in GLOB.ai_list)
+		if(!ai.stat || ai.mind?.has_antag_datum(/datum/antagonist/malf_ai) || !is_station_level(ai.z))
+			continue
+		return TRUE
 
 	return FALSE
 
