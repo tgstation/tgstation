@@ -64,7 +64,8 @@
 	new_changeling.log_message("was spawned as a midround space changeling by an event.", LOG_GAME)
 
 	var/datum/antagonist/changeling/changeling_datum = locate(/datum/antagonist/changeling) in player_mind.antag_datums
-	changeling_datum.purchase_power(/datum/action/changeling/suit/organic_space_suit, TRUE) //We get a free space suit to compensate for the difficulty of breaking in.
+	changeling_datum.purchase_power(/datum/action/changeling/suit/organic_space_suit, TRUE)
+	changeling_datum.purchase_power(/datum/action/changeling/weapon/arm_blade, TRUE)
 	new_changeling.equipOutfit(/datum/outfit/changeling_space)
 
 	return new_changeling
