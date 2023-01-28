@@ -156,6 +156,12 @@
 /obj/machinery/suit_storage_unit/industrial/loader
 	mod_type = /obj/item/mod/control/pre_equipped/loader
 
+/obj/machinery/suit_storage_unit/industrial/engine
+	mod_type = /obj/item/mod/control/pre_equipped/engineering
+
+/obj/machinery/suit_storage_unit/industrial/atmos
+	mod_type = /obj/item/mod/control/pre_equipped/atmospheric
+
 /obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
