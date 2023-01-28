@@ -374,6 +374,11 @@
 	icon_state = "showroom"
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
+/area/station/command/bar
+	name = "\improper Officers' Lounge"
+	icon_state = "captain"
+	sound_environment = SOUND_AREA_WOODFLOOR
+
 /area/station/command/heads_quarters
 	icon_state = "heads_quarters"
 
@@ -1237,6 +1242,10 @@
 /area/station/security/range
 	name = "\improper Firing Range"
 	icon_state = "firingrange"
+
+/area/station/security/break_room
+	name = "\improper Security Break Room"
+	icon_state = "security"
 
 /area/station/security/execution
 	icon_state = "execution_room"
