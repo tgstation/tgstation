@@ -77,8 +77,8 @@ const RecordInfo = (props, context) => {
                 <Button.Confirm
                   content="Delete"
                   icon="trash"
-                  onClick={() => act('expunge_record', { crew_ref: crew_ref })}
-                  tooltip="Expunge record data."
+                  onClick={() => act('delete_record', { crew_ref: crew_ref })}
+                  tooltip="Delete record data."
                 />
               </Stack.Item>
             </Stack>

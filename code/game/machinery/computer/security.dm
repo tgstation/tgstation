@@ -157,6 +157,10 @@
 			add_crime(usr, target, params)
 			return TRUE
 
+		if("delete_record")
+			qdel(target)
+			return TRUE
+
 		if("edit_crime")
 			edit_crime(usr, target, params)
 			return TRUE
@@ -242,16 +246,9 @@
 
 /// Deletes security information from a record.
 /obj/machinery/computer/secure_data/expunge_record_info(datum/record/crew/target)
-	target.age = 18
 	target.citations.Cut()
 	target.crimes.Cut()
-	target.fingerprint = "Unknown"
-	target.gender = "Unknown"
-	target.name = "Unknown"
-	target.rank = "Unknown"
-	target.security_note = "None"
-	target.species = "Unknown"
-	target.trim = "Unknown"
+	target.security_note = null
 	target.wanted_status = WANTED_NONE
 
 	return TRUE
