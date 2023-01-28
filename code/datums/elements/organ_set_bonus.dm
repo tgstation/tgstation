@@ -8,12 +8,12 @@
 	argument_hash_start_idx = 2
 	var/datum/status_effect/organ_set_bonus/bonus_type
 
-/datum/element/organ_set_bonus/Attach(datum/target, bonus_status)
+/datum/element/organ_set_bonus/Attach(datum/target, bonus_type)
 	. = ..()
 
 	if(!isorgan(target))
 		return ELEMENT_INCOMPATIBLE
-	bonus_type = bonus_status
+	src.bonus_type = bonus_type
 	RegisterSignal(target, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_implanted))
 	RegisterSignal(target, COMSIG_ORGAN_REMOVED, PROC_REF(on_removed))
 
