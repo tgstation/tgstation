@@ -37,6 +37,7 @@
 /obj/item/ai_module/malf // Gives syndie laws as well as making AI malf
 	name = "Infected AI Module"
 	desc = "An AI Module, infected with a virus."
+	bypass_law_amt_check = TRUE
 	laws = list("")
 
 /obj/item/ai_module/malf/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
@@ -55,6 +56,8 @@
 	protection_objective.target = sender.mind
 	protection_objective.update_explanation_text()
 	malf_datum.objectives += protection_objective
-	to_chat(sender, span_notice("Upload process completed."))
 
+
+/obj/item/ai_module/malf/display_laws()
+	return
 
