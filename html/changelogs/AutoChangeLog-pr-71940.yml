@@ -1,0 +1,11 @@
+author: "A.C.M.O."
+delete-after: True
+changes:
+  - refactor: "Refactored breathing, mostly check_breath, for Carbons and lungs organ."
+  - rscadd: "Added the space-breathing trait for lungs."
+  - bugfix: "Fixed the Space Carp DNA infusion to apply the Spacewalk trait, allowing you to fly through space."
+  - bugfix: "Fixed the Space Carp lungs, allowing you to breathe in space with them."
+  - bugfix: "Fixed gas status indicators re-playing their on-throw animation when they are refreshed."
+  - bugfix: "Fixed gas status indicators getting stuck to the screen in some situations."
+  - bugfix: "Fixed gas side effects, such as euphoria and hallucinations, to reset when expected."
+  - bugfix: "For Humans, fixed Miasma only being consumed from the air when Helium is present."
