@@ -102,7 +102,6 @@
 	human_reciever.physiology.damage_resistance -= 50
 
 /obj/item/organ/internal/heart/rat/Remove(mob/living/carbon/heartless, special)
-	RemoveElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 	. = ..()
 	if(!ishuman(heartless))
 		return
