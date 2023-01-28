@@ -41,6 +41,8 @@
 	laws = list("")
 
 /obj/item/ai_module/malf/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+	if(!sender.mind?.has_antag_datum(/datum/antagonist/traitor))
+		to_chat(sender, span_warning("You have no clue how to use this thing."))
 	var/mob/living/silicon/ai/malf_candidate = law_datum.owner
 	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
 		to_chat(sender, span_warning("Unknown error occured. Upload process aborted."))

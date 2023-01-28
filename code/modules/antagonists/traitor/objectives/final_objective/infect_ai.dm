@@ -29,7 +29,7 @@
 	if(length(possible_areas) == 0)
 		return FALSE
 	board_area_pickup = pick(possible_areas)
-	replace_in_name("%AREA%", initial(board_area_pickup))
+	replace_in_name("%AREA%", initial(board_area_pickup.name))
 	return TRUE
 
 /datum/traitor_objective/ultimate/infect_ai/generate_ui_buttons(mob/user)
