@@ -162,15 +162,7 @@
 			return TRUE
 
 		if("invalidate_crime")
-			if(!has_armory_access(usr))
-				return FALSE
-			var/datum/crime/to_void = locate(params["crime_ref"]) in target.crimes
-			if(!to_void)
-				return FALSE
-
-			to_void.valid = FALSE
-			investigate_log("[key_name(usr)] has invalidated [target.name]'s crime: [to_void.name]", INVESTIGATE_RECORDS)
-
+			invalidate_crime(usr, target, params)
 			return TRUE
 
 		if("print_record")
@@ -276,6 +268,30 @@
 
 	if(!(ACCESS_ARMORY in auth.GetAccess()))
 		return FALSE
+
+	return TRUE
+
+/// Voids crimes, or sets someone to discharged if they have none left.
+/obj/machinery/computer/secure_data/proc/invalidate_crime(mob/user, datum/record/crew/target, list/params)
+	if(!has_armory_access(user))
+		return FALSE
+	var/datum/crime/to_void = locate(params["crime_ref"]) in target.crimes
+	if(!to_void)
+		return FALSE
+
+	to_void.valid = FALSE
+	investigate_log("[key_name(user)] has invalidated [target.name]'s crime: [to_void.name]", INVESTIGATE_RECORDS)
+
+	var/acquitted = TRUE
+	for(var/datum/crime/incident in target.crimes)
+		if(!incident.valid)
+			continue
+		acquitted = FALSE
+		break
+
+	if(acquitted)
+		target.wanted_status = WANTED_DISCHARGED
+		investigate_log("[key_name(user)] has invalidated [target.name]'s last valid crime. Their status is now [WANTED_DISCHARGED].", INVESTIGATE_RECORDS)
 
 	return TRUE
 

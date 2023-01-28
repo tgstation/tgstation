@@ -97,7 +97,7 @@ const RecordInfo = (props, context) => {
                 return (
                   <Button
                     color={isSelected ? CRIMESTATUS2COLOR[button] : 'grey'}
-                    disabled={!hasValidCrimes}
+                    disabled={button === 'Arrest' && !hasValidCrimes}
                     icon={isSelected ? 'check' : ''}
                     key={index}
                     onClick={() =>
