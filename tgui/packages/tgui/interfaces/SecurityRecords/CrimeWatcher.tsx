@@ -110,7 +110,9 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
         <LabeledList>
           <LabeledList.Item label="Time">{time}</LabeledList.Item>
           <LabeledList.Item label="Author">{author}</LabeledList.Item>
-          <LabeledList.Item label="Active">{valid}</LabeledList.Item>
+          <LabeledList.Item label="Active">
+            {valid ? 'Active' : 'Voided'}
+          </LabeledList.Item>
           {fine && (
             <>
               <LabeledList.Item color="bad" label="Fine">
