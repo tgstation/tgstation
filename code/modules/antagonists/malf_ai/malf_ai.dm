@@ -18,6 +18,8 @@
 	var/should_give_codewords = TRUE
 	///since the module purchasing is built into the antag info, we need to keep track of its compact mode here
 	var/module_picker_compactmode = FALSE
+	///Give zeroth law or no
+	var/give_zeroth_laws = TRUE 
 
 /datum/antagonist/malf_ai/New(give_objectives = TRUE)
 	. = ..()
@@ -31,12 +33,13 @@
 	owner.special_role = job_rank
 	if(give_objectives)
 		forge_ai_objectives()
-
-	employer = pick(GLOB.ai_employers)
+	if(!employer)
+		employer = pick(GLOB.ai_employers)
 
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
-	add_law_zero()
+	if(give_zeroth_laws)
+		add_law_zero()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
 
