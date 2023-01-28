@@ -853,11 +853,11 @@
 	antag_flag = ROLE_CHANGELING_MIDROUND
 	antag_flag_override = ROLE_CHANGELING
 	required_type = /mob/dead/observer
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0) //subject to change
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 3 //subject to change
-	cost = 8 //subject to change
-	minimum_players = 27 //subject to change
+	weight = 3
+	cost = 7
+	minimum_players = 15
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)

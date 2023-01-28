@@ -13,11 +13,11 @@
 	min_players = 20
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
-	description = "A changeling is summoned and thrown at the exterior of the station."
+	description = "A changeling meteor is summoned and thrown at the exterior of the station."
 
 /datum/round_event/ghost_role/changeling
 	minimum_required = 1
-	role_name = "changeling"
+	role_name = "space changeling"
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/changeling/spawn_role()
@@ -50,19 +50,11 @@
 	var/start_side = pick(GLOB.cardinals)
 	var/start_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/picked_start = spaceDebrisStartLoc(start_side, start_z)
-	var/turf/destination
 
-	if(length(GLOB.xeno_spawn)) //We want to really make sure this hits the station
-		destination = pick(GLOB.xeno_spawn)
-	else //Just in case. This is slightly less surefire but should still work.
-		warning("Changeling meteor could not find xeno_spawn marker to target. Defaulting to random station turf...")
-		destination = get_random_station_turf()
-
-	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new/obj/effect/meteor/meaty/changeling(picked_start, destination) //Let's make sure this thing REALLY hits
+	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new/obj/effect/meteor/meaty/changeling(picked_start, get_random_station_turf())
 	var/mob/living/carbon/human/new_changeling = new /mob/living/carbon/human/(picked_start)
 
-	if(!new_changeling.forceMove(changeling_meteor)) //Place our payload inside of its vessel
-		CRASH("Changeling meteor failed to load changeling into itself, aborting.")
+	new_changeling.forceMove(changeling_meteor) //Place our payload inside of its vessel
 
 	player_mind.transfer_to(new_changeling)
 	player_mind.special_role = ROLE_CHANGELING_MIDROUND
