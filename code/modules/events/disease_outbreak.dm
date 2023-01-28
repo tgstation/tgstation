@@ -117,8 +117,6 @@
 	description = "An 'advanced' disease will infect some members of the crew." //These are the ones that get viro lynched!
 	///Admin selected custom severity rating for the event
 	var/chosen_severity
-	///Admin selected spread method this virus should have
-	var/chosen_transmissibility
 	///Admin selected custom value for the maximum symptoms this virus should have
 	var/chosen_max_symptoms
 
