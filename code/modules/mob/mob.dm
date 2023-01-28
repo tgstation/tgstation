@@ -206,7 +206,7 @@
 	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if(type & MSG_VISUAL && is_blind() )//Vision related
+		if(type & MSG_VISUAL && is_blind())//Vision related
 			if(!alt_msg)
 				return
 			else
@@ -678,7 +678,7 @@
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
-	if((spintime < 1)||(speed < 1)||!spintime||!speed)
+	if((spintime < 1) || (speed < 1) || !spintime || !speed)
 		return
 
 	flags_1 |= IS_SPINNING_1
@@ -862,11 +862,23 @@
 
 	return data
 
-/mob/proc/swap_hand()
+/mob/proc/swap_hand(held_index)
+	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
+
 	var/obj/item/held_item = get_active_held_item()
-	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
 		to_chat(src, span_warning("Your other hand is too busy holding [held_item]."))
 		return FALSE
+
+	var/result = perform_hand_swap(held_index)
+	if (result)
+		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS)
+
+	return result
+
+/// Performs the actual ritual of swapping hands, such as setting the held index variables
+/mob/proc/perform_hand_swap(held_index)
+	PROTECTED_PROC(TRUE)
 	return TRUE
 
 /mob/proc/activate_hand(selhand)
@@ -1029,7 +1041,7 @@
 /**
  * Fully update the name of a mob
  *
- * This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
+ * This will update a mob's name, real_name, mind.name, GLOB.manifest records, pda, id and traitor text
  *
  * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
  */
@@ -1072,7 +1084,7 @@
 
 	return TRUE
 
-///Updates GLOB.data_core records with new name , see mob/living/carbon/human
+///Updates GLOB.manifest records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
 	return
 
@@ -1150,10 +1162,6 @@
 **/
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
-
-/// Is this mob affected by nearsight
-/mob/proc/is_nearsighted()
-	return HAS_TRAIT(src, TRAIT_NEARSIGHT)
 
 /// This mob is abile to read books
 /mob/proc/is_literate()
@@ -1359,9 +1367,6 @@
 			. = TRUE
 		if(NAMEOF(src, stat))
 			set_stat(var_value)
-			. = TRUE
-		if(NAMEOF(src, eye_blind))
-			set_blindness(var_value)
 			. = TRUE
 
 	if(!isnull(.))

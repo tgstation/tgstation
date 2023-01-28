@@ -24,14 +24,12 @@
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/records/medical,
-		/datum/computer_file/program/phys_scanner/all,
 	)
 
 /obj/item/computer_disk/command/cmo
 	name = "chief medical officer data disk"
 	desc = "Removable disk used to download essential CMO tablet apps."
 	starting_programs = list(
-		/datum/computer_file/program/phys_scanner/all,
 		/datum/computer_file/program/records/medical,
 	)
 
@@ -39,7 +37,6 @@
 	name = "research director data disk"
 	desc = "Removable disk used to download essential RD tablet apps."
 	starting_programs = list(
-		/datum/computer_file/program/phys_scanner/chemistry,
 		/datum/computer_file/program/signal_commander,
 	)
 
@@ -88,7 +85,6 @@
 	desc = "Removable disk used to download medical-related tablet apps."
 	icon_state = "datadisk7"
 	starting_programs = list(
-		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
 	)
 
@@ -96,9 +92,6 @@
 	name = "chemistry data disk"
 	desc = "Removable disk used to download chemistry-related tablet apps."
 	icon_state = "datadisk5"
-	starting_programs = list(
-		/datum/computer_file/program/phys_scanner/chemistry,
-	)
 
 /**
  * Supply

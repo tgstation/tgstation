@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - imageadd: "Hazard lights added to the tram collision counter"

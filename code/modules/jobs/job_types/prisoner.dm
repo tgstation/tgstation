@@ -39,11 +39,11 @@
 		return
 	if(crime_name == "Random")
 		crime_name = pick(assoc_to_keys(GLOB.prisoner_crimes))
-	var/datum/data/record/target_record = find_record("name", crewmember.real_name, GLOB.data_core.security)
-	var/crime_desc = GLOB.prisoner_crimes[crime_name]
-	target_record.fields["criminal"] = "Incarcerated"
-	var/datum/data/crime/past_crime = GLOB.data_core.createCrimeEntry(crime_name, crime_desc, "Central Command", "Indefinite.")
-	GLOB.data_core.addCrime(target_record.fields["id"], past_crime)
+
+	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
+	var/datum/record/crew/target_record = find_record(crewmember.real_name)
+	var/datum/crime/past_crime = new(crime.name, crime.desc, "Central Command", "Indefinite.")
+	target_record.crimes += past_crime
 	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
 
 /datum/outfit/job/prisoner
@@ -64,9 +64,16 @@
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
 	. = ..()
-	if(!length(SSpersistence.prison_tattoos_to_use) || visualsOnly)
+
+	var/crime_name = new_prisoner.client?.prefs?.read_preference(/datum/preference/choiced/prisoner_crime)
+	if(!crime_name)
 		return
-	var/obj/item/bodypart/tatted_limb = pick(new_prisoner.bodyparts)
-	var/list/tattoo = pick(SSpersistence.prison_tattoos_to_use)
-	tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])
-	SSpersistence.prison_tattoos_to_use -= tattoo
+	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
+
+	var/list/limbs_to_tat = new_prisoner.bodyparts.Copy()
+	for(var/i in 1 to crime.tattoos)
+		if(!length(SSpersistence.prison_tattoos_to_use) || visualsOnly)
+			return
+		var/obj/item/bodypart/tatted_limb = pick_n_take(limbs_to_tat)
+		var/list/tattoo = pick_n_take(SSpersistence.prison_tattoos_to_use)
+		tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])

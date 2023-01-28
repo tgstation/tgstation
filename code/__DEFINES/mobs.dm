@@ -8,7 +8,7 @@
 
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
-#define MOVE_INTENT_RUN  "run"
+#define MOVE_INTENT_RUN "run"
 
 //Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL 2150
@@ -35,8 +35,8 @@
 #define MOB_SIZE_HUGE 4 // Use this for things you don't want bluespace body-bagged
 
 //Ventcrawling defines
-#define VENTCRAWLER_NONE   0
-#define VENTCRAWLER_NUDE   1
+#define VENTCRAWLER_NONE 0
+#define VENTCRAWLER_NUDE 1
 #define VENTCRAWLER_ALWAYS 2
 
 //Mob bio-types flags
@@ -176,12 +176,12 @@
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
 #define BRAIN_TRAUMA_MAGIC /datum/brain_trauma/magic
 
-#define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
-#define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
-#define TRAUMA_RESILIENCE_LOBOTOMY 3   //Curable with lobotomy
-#define TRAUMA_RESILIENCE_WOUND 4    //Curable by healing the head wound
-#define TRAUMA_RESILIENCE_MAGIC 5      //Curable only with magic
-#define TRAUMA_RESILIENCE_ABSOLUTE 6   //This is here to stay
+#define TRAUMA_RESILIENCE_BASIC 1 //Curable with chems
+#define TRAUMA_RESILIENCE_SURGERY 2 //Curable with brain surgery
+#define TRAUMA_RESILIENCE_LOBOTOMY 3 //Curable with lobotomy
+#define TRAUMA_RESILIENCE_WOUND 4 //Curable by healing the head wound
+#define TRAUMA_RESILIENCE_MAGIC 5 //Curable only with magic
+#define TRAUMA_RESILIENCE_ABSOLUTE 6 //This is here to stay
 
 //Limit of traumas for each resilience tier
 #define TRAUMA_LIMIT_BASIC 3
@@ -342,7 +342,7 @@
 //determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE 0
 #define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
-#define ENVIRONMENT_SMASH_WALLS 2  //walls
+#define ENVIRONMENT_SMASH_WALLS 2 //walls
 #define ENVIRONMENT_SMASH_RWALLS 3 //rwalls
 
 #define NO_SLIP_WHEN_WALKING (1<<0)
@@ -411,11 +411,11 @@
 //MINOR TWEAKS/MISC
 #define AGE_MIN 17 //youngest a character can be
 #define AGE_MAX 85 //oldest a character can be
-#define AGE_MINOR 20  //legal age of space drinking and smoking
+#define AGE_MINOR 20 //legal age of space drinking and smoking
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
 #define APPRENTICE_AGE_MIN 29 //youngest an apprentice can be
 #define SHOES_SLOWDOWN 0 //How much shoes slow you down by default. Negative values speed you up
-#define SHOES_SPEED_SLIGHT  SHOES_SLOWDOWN - 1 // slightest speed boost to movement
+#define SHOES_SPEED_SLIGHT SHOES_SLOWDOWN - 1 // slightest speed boost to movement
 #define POCKET_STRIP_DELAY (4 SECONDS) //time taken to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
@@ -598,9 +598,35 @@
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
+// Height defines
+// - They are numbers so you can compare height values (x height < y height)
+// - They do not start at 0 for futureproofing
+// - They skip numbers for futureproofing as well
+// Otherwise they are completely arbitrary
+#define HUMAN_HEIGHT_DWARF 2
+#define HUMAN_HEIGHT_SHORTEST 4
+#define HUMAN_HEIGHT_SHORT 6
+#define HUMAN_HEIGHT_MEDIUM 8
+#define HUMAN_HEIGHT_TALL 10
+#define HUMAN_HEIGHT_TALLEST 12
+
+/// Assoc list of all heights, cast to strings, to """"tuples"""""
+/// The first """tuple""" index is the upper body offset
+/// The second """tuple""" index is the lower body offset
+GLOBAL_LIST_INIT(human_heights_to_offsets, list(
+	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
+	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -1),
+	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
+	"[HUMAN_HEIGHT_MEDIUM]" = list(0, 0),
+	"[HUMAN_HEIGHT_TALL]" = list(1, 1),
+	"[HUMAN_HEIGHT_TALLEST]" = list(2, 2),
+))
+
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
-#define TOTAL_LAYERS 33 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+/// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
+/// Also consider updating layers_to_offset
+#define TOTAL_LAYERS 33
 /// Mutations layer - Tk headglows, cold resistance glow, etc
 #define MUTATIONS_LAYER 33
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
@@ -619,9 +645,9 @@
 #define DAMAGE_LAYER 26
 /// Jumpsuit clothing layer
 #define UNIFORM_LAYER 25
-/// ID card layer (might be deprecated)
-#define ID_LAYER 24
 /// ID card layer
+#define ID_LAYER 24
+/// ID card layer (might be deprecated)
 #define ID_CARD_LAYER 23
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
 #define BODYPARTS_HIGH_LAYER 22
@@ -667,6 +693,49 @@
 #define HALO_LAYER 2
 /// Fire layer when you're on fire
 #define FIRE_LAYER 1
+
+#define UPPER_BODY "upper body"
+#define LOWER_BODY "lower body"
+#define NO_MODIFY "do not modify"
+
+/// Used for human height overlay adjustments
+/// Certain standing overlay layers shouldn't have a filter applied and should instead just offset by a pixel y
+/// This list contains all the layers that must offset, with its value being whether it's a part of the upper half of the body (TRUE) or not (FALSE)
+GLOBAL_LIST_INIT(layers_to_offset, list(
+	// Weapons commonly cross the middle of the sprite so they get cut in half by the filter
+	"[HANDS_LAYER]" = LOWER_BODY,
+	// Very tall hats will get cut off by filter
+	"[HEAD_LAYER]" = UPPER_BODY,
+	// Hair will get cut off by filter
+	"[HAIR_LAYER]" = UPPER_BODY,
+	// Long belts (sabre sheathe) will get cut off by filter
+	"[BELT_LAYER]" = LOWER_BODY,
+	// Everything below looks fine with or without a filter, so we can skip it and just offset
+	// (In practice they'd be fine if they got a filter but we can optimize a bit by not.)
+	"[GLASSES_LAYER]" = UPPER_BODY,
+	"[ABOVE_BODY_FRONT_GLASSES_LAYER]" = UPPER_BODY, // currently unused
+	"[ABOVE_BODY_FRONT_HEAD_LAYER]" = UPPER_BODY, // only used for head stuff
+	"[GLOVES_LAYER]" = LOWER_BODY,
+	"[HALO_LAYER]" = UPPER_BODY, // above the head
+	"[HANDCUFF_LAYER]" = LOWER_BODY,
+	"[ID_CARD_LAYER]" = UPPER_BODY, // unused
+	"[ID_LAYER]" = UPPER_BODY,
+	"[FACEMASK_LAYER]" = UPPER_BODY,
+	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
+	"[MUTATIONS_LAYER]" = NO_MODIFY,
+	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
+	// These DO get a filter, I'm leaving them here as reference,
+	// to show how many filters are added at a glance
+	// BACK_LAYER (backpacks are big)
+	// BODYPARTS_HIGH_LAYER (arms)
+	// BODY_ADJ_LAYER (external organs like wings)
+	// BODY_BEHIND_LAYER (external organs like wings)
+	// BODY_FRONT_LAYER (external organs like wings)
+	// DAMAGE_LAYER (full body)
+	// FIRE_LAYER (full body)
+	// UNIFORM_LAYER (full body)
+	// WOUND_LAYER (full body)
+))
 
 //Bitflags for the layers an external organ can draw on (organs can be drawn on multiple layers)
 /// Draws organ on the BODY_FRONT_LAYER
@@ -771,3 +840,6 @@
 /// Checking flags for [/mob/proc/can_read()]
 #define READING_CHECK_LITERACY (1<<0)
 #define READING_CHECK_LIGHT (1<<1)
+
+/// In dynamic human icon gen we don't replace the held item.
+#define NO_REPLACE 0

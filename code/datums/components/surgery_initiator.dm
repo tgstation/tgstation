@@ -208,7 +208,7 @@
 				return TRUE
 
 			var/atom/movable/screen/zone_sel/zone_selector = user.hud_used?.zone_select
-			zone_selector?.set_selected_zone(zone, user)
+			zone_selector?.set_selected_zone(zone, user, should_log = FALSE)
 
 			return TRUE
 		if ("start_surgery")

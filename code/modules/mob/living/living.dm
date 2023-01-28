@@ -138,7 +138,7 @@
 			if(M.pulledby == src && !too_strong)
 				mob_swap = TRUE
 			else if(
-				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
+				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP)) &&\
 				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !their_combat_mode) &&\
 				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !combat_mode)
 			)
@@ -563,6 +563,7 @@
 		return
 	if(new_resting == resting)
 		return
+
 	. = resting
 	resting = new_resting
 	if(new_resting)
@@ -849,10 +850,7 @@
 
 	// These should be tracked by status effects
 	losebreath = 0
-	set_blindness(0)
 	set_disgust(0)
-	cure_nearsighted()
-	cure_blind()
 	cure_husk()
 
 	if(heal_flags & HEAL_TEMP)

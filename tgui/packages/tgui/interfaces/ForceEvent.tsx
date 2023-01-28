@@ -123,7 +123,7 @@ export const EventSection = (props, context) => {
   const preparedEvents = paginateEvents(
     events.filter((event) => {
       // remove events not in the category you're looking at
-      if (event.category !== category.name) {
+      if (!searchQuery && event.category !== category.name) {
         return false;
       }
       // remove events not being searched for, if a search is active
@@ -135,12 +135,10 @@ export const EventSection = (props, context) => {
     EVENT_PAGE_ITEMS
   );
 
+  const sectionTitle = searchQuery ? 'Searching...' : category.name + ' Events';
+
   return (
-    <Section
-      scrollable
-      fill
-      title={category.name + ' Events'}
-      buttons={<PanelOptions />}>
+    <Section scrollable fill title={sectionTitle} buttons={<PanelOptions />}>
       <Stack vertical>
         {preparedEvents.map((eventPage, i) => (
           <Stack.Item key={i}>

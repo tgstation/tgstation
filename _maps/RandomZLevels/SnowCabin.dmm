@@ -780,7 +780,7 @@
 /area/awaymission/cabin)
 "cK" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton{
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,

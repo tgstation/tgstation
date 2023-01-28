@@ -66,7 +66,7 @@
 				\n[span_info("Body temperature: ???")]")
 		return
 
-	if(ispodperson(M)&& !advanced)
+	if(ispodperson(M) && !advanced)
 		to_chat(user, "<span class='info'>[M]'s biological structure is too complex for the health analyzer.")
 		return
 
@@ -212,7 +212,7 @@
 		if(istype(eyes))
 			if(carbontarget.is_blind())
 				render_list += "<span class='alert ml-2'>Subject is blind.\n</span>"
-			else if(HAS_TRAIT(carbontarget, TRAIT_NEARSIGHT))
+			else if(carbontarget.is_nearsighted())
 				render_list += "<span class='alert ml-2'>Subject is nearsighted.\n</span>"
 
 	// Body part damage report

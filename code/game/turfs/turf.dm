@@ -92,6 +92,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// Sorry for the mess
 	var/area/in_contents_of
 #endif
+	/// How much explosive resistance this turf is providing to itself
+	/// Defaults to -1, interpreted as initial(explosive_resistance)
+	/// This is an optimization to prevent turfs from needing to set these on init
+	/// This would either be expensive, or impossible to manage. Let's just avoid it yes?
+	/// Never directly access this, use get_explosive_block() instead
+	var/inherent_explosive_resistance = -1
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
@@ -673,6 +679,26 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			continue
 		movable_content.wash(clean_types)
 
+/turf/set_density(new_value)
+	var/old_density = density
+	. = ..()
+	if(old_density == density)
+		return
+
+	if(old_density)
+		explosive_resistance -= get_explosive_block()
+	if(density)
+		explosive_resistance += get_explosive_block()
+
+/// Wrapper around inherent_explosive_resistance
+/// We assume this proc is cold, so we can move the "what is our block" into it
+/turf/proc/get_explosive_block()
+	if(inherent_explosive_resistance != -1)
+		return inherent_explosive_resistance
+	if(explosive_resistance)
+		return initial(explosive_resistance)
+	return 0
+
 /**
  * Returns adjacent turfs to this turf that are reachable, in all cardinal directions
  *
@@ -702,3 +728,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/TakeTemperature(temp)
 	temperature += temp
+
+// I'm sorry, this is the only way that both makes sense and is cheap
+/turf/set_explosion_block(explosion_block)
+	explosive_resistance -= get_explosive_block()
+	inherent_explosive_resistance = explosion_block
+	explosive_resistance += get_explosive_block()

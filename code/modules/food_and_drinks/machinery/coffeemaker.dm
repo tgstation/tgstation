@@ -65,8 +65,8 @@
 /obj/machinery/coffeemaker/RefreshParts()
 	. = ..()
 	speed = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		speed += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		speed += laser.tier
 
 /obj/machinery/coffeemaker/examine(mob/user)
 	. = ..()
@@ -491,7 +491,7 @@
 	is_open = TRUE
 	spawn_type = /obj/item/coffee_cartridge
 
-/obj/item/storage/fancy/coffee_cart_rack/Initialize()
+/obj/item/storage/fancy/coffee_cart_rack/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(/obj/item/coffee_cartridge))

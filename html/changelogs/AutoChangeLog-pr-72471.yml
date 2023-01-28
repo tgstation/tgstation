@@ -1,6 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "Autosurgeon overlays now correctly update when removing organs."
-  - bugfix: "Autosurgeons now say what organ is removed from them when screwdrivered."
-  - bugfix: "Single use auto-surgeons cannot be reloaded again."

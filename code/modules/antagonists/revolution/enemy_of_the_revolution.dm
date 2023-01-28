@@ -8,7 +8,7 @@
 	show_in_antagpanel = FALSE
 	suicide_cry = "FOR NANOTRASEN, NOW AND FOREVER!!"
 
-/datum/antagonist/enemy_of_the_revolution/proc/forge_objectives()
+/datum/antagonist/enemy_of_the_revolution/forge_objectives()
 	var/datum/objective/survive/survive = new
 	survive.owner = owner
 	survive.explanation_text = "The station has been overrun by revolutionaries, stay alive until the end."

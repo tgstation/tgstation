@@ -970,7 +970,7 @@
 /area/station/security/brig)
 "atf" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/surgical_drapes,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -3932,14 +3932,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/burnchamber)
-"bqy" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 6
-	},
-/obj/structure/table,
-/obj/item/clipboard,
-/turf/open/floor/iron/white,
-/area/station/science/ordnance/office)
 "bqJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13823,7 +13815,7 @@
 /area/station/commons/storage/art)
 "feV" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -14110,7 +14102,7 @@
 /area/station/medical/medbay/central)
 "fiK" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/surgical_drapes,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -29582,7 +29574,7 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/clothing/gloves/color/latex{
+/obj/item/clothing/gloves/latex{
 	pixel_x = 4;
 	pixel_y = 9
 	},
@@ -42530,8 +42522,8 @@
 "pfK" = (
 /obj/machinery/light/directional/north,
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/item/reagent_containers/spray/cleaner{
@@ -54328,7 +54320,7 @@
 /area/station/medical/psychology)
 "tgD" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/science,
@@ -56534,6 +56526,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"tVv" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/obj/structure/table,
+/obj/item/clipboard,
+/obj/item/holosign_creator/atmos,
+/obj/item/holosign_creator/atmos,
+/turf/open/floor/iron/white,
+/area/station/science/ordnance/office)
 "tVP" = (
 /obj/machinery/light/no_nightlight/directional/east,
 /turf/open/floor/iron/dark,
@@ -60330,7 +60332,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "vkO" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -60553,10 +60555,10 @@
 "vok" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/north,
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
 /obj/item/wrench/medical,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
@@ -102189,7 +102191,7 @@ fnh
 mMX
 moF
 klT
-bqy
+tVv
 svS
 dKC
 lMW

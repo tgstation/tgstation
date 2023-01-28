@@ -80,7 +80,6 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 	mats_per_unit = list(/datum/material/runedmetal = MINERAL_MATERIAL_AMOUNT)
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
-	novariants = TRUE
 	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
 	material_type = /datum/material/runedmetal
 	has_unique_girder = TRUE

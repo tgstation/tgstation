@@ -1,6 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - rscadd: "Minor detectives now spawn with a candy cigarette and a flask full of apple juice."
-  - balance: "Candy Cigarettes added to the detective vendor."
-  - bugfix: "Minor detectives no longer spawn with real cigarettes or real alcohol, you'll need to ask you colleagues to buy you some, hopefully they wont arrest you for trying."

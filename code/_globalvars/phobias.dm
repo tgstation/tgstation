@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/simple_animal/bot/mulebot/paranormal,
 		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/dark_wizard,
-		/mob/living/simple_animal/hostile/faithless,
+		/mob/living/basic/faithless,
 		/mob/living/simple_animal/hostile/heretic_summon,
 		/mob/living/simple_animal/hostile/imp,
 		/mob/living/simple_animal/hostile/retaliate/bat,

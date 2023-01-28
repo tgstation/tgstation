@@ -418,7 +418,7 @@ GLOBAL_LIST_EMPTY(lifts)
 				var/datum/callback/land_slam = new(collided, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
 
-				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION)
+				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, collided)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)
@@ -815,6 +815,26 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/tram/white
 	icon_state = "titanium_white"
+
+/obj/structure/industrial_lift/tram/subfloor
+	name = "tram"
+	desc = "A tram for tramversing the station."
+	icon_state = "tram_subfloor"
+
+/datum/armor/structure_industrial_lift
+	melee = 50
+	fire = 80
+	acid = 50
+
+/obj/structure/industrial_lift/tram/accessible
+	icon_state = "titanium_accessible_north"
+
+/obj/structure/industrial_lift/tram/accessible/north
+	icon_state = "titanium_accessible_north"
+
+/obj/structure/industrial_lift/tram/accessible/south
+	icon_state = "titanium_accessible_south"
+
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()

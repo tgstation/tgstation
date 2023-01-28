@@ -60,8 +60,16 @@
 		return
 
 	for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
-		var/step = get_step(src, direction)
-		if(step && ((locate(/obj/structure/spacevine) in step) || (locate(/obj/structure/glowshroom) in step)))
+		var/turf/step = get_step(src, direction)
+
+		if(!istype(step))
+			return
+
+		var/vine = locate(/obj/structure/spacevine) in step
+		var/mushroom = locate(/obj/structure/glowshroom) in step
+		var/flower = locate(/obj/structure/alien/resin/flower_bud) in step
+
+		if(vine || mushroom || flower)
 			Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
@@ -74,29 +82,44 @@
 		eat_plants()
 
 /mob/living/simple_animal/hostile/retaliate/goat/proc/eat_plants()
-	var/eaten = FALSE
-	var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
-	if(SV)
-		SV.eat(src)
-		eaten = TRUE
+	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+	if(vine)
+		vine.eat(src)
 
-	var/obj/structure/glowshroom/GS = locate(/obj/structure/glowshroom) in loc
-	if(GS)
-		qdel(GS)
-		eaten = TRUE
+	var/obj/structure/alien/resin/flower_bud/flower = locate(/obj/structure/alien/resin/flower_bud) in loc
+	if(flower)
+		flower.take_damage(rand(30, 50), BRUTE, 0)
 
-	if(eaten && prob(10))
-		say("Nom")
+	var/obj/structure/glowshroom/mushroom = locate(/obj/structure/glowshroom) in loc
+	if(mushroom)
+		qdel(mushroom)
+
+	if((vine || flower || mushroom) && prob(10))
+		say("Nom") // bon appetit
+		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 
 /mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
 	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.dna.species, /datum/species/pod))
-			var/obj/item/bodypart/NB = pick(H.bodyparts)
-			H.visible_message(span_warning("[src] takes a big chomp out of [H]!"), \
-								  span_userdanger("[src] takes a big chomp out of your [NB]!"))
-			NB.dismember()
+
+	if(!. || !isliving(target))
+		return
+
+	var/mob/living/plant_target = target
+	if(!(plant_target.mob_biotypes & MOB_PLANT))
+		return
+
+	plant_target.adjustBruteLoss(20)
+	playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
+	var/obj/item/bodypart/edible_bodypart
+
+	if(ishuman(plant_target))
+		var/mob/living/carbon/human/plant_man = target
+		edible_bodypart = pick(plant_man.bodyparts)
+		edible_bodypart.dismember()
+
+	plant_target.visible_message(span_warning("[src] takes a big chomp out of [plant_target]!"), \
+							span_userdanger("[src] takes a big chomp out of your [edible_bodypart || "body"]!"))
+
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"

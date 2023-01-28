@@ -1192,7 +1192,7 @@
 /obj/item/t_scanner,
 /obj/item/screwdriver/power,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/head/utility/hardhat/weldhat,
+/obj/item/clothing/head/utility/hardhat/welding,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
 "ec" = (

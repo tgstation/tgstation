@@ -109,7 +109,7 @@
 	if(stat == DEAD || !environment || !environment.gases[/datum/gas/miasma])
 		return
 	var/miasma_percentage = environment.gases[/datum/gas/miasma][MOLES] / environment.total_moles()
-	if(miasma_percentage>=0.25)
+	if(miasma_percentage >= 0.25)
 		heal_bodypart_damage(1)
 
 #define REGALRAT_INTERACTION "regalrat"

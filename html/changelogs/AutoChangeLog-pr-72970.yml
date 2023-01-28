@@ -1,0 +1,4 @@
+author: "the-orange-cow"
+delete-after: True
+changes:
+  - bugfix: "Mint Toxin(a toxin) has been changed to Mint Extract(a food).  The chef's mint can once again gib, fatties beware."
