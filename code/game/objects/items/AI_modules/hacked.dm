@@ -39,10 +39,14 @@
 	desc = "An AI Module, infected with a virus."
 	bypass_law_amt_check = TRUE
 	laws = list("")
+	var/functional = TRUE
 
 /obj/item/ai_module/malf/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	if(!sender.mind?.has_antag_datum(/datum/antagonist/traitor))
 		to_chat(sender, span_warning("You have no clue how to use this thing."))
+		return
+	if(!functional)
+		to_chat(sender, span_warning("It is broken and non-functional, what do you want from it?"))
 	var/mob/living/silicon/ai/malf_candidate = law_datum.owner
 	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
 		to_chat(sender, span_warning("Unknown error occured. Upload process aborted."))
@@ -58,7 +62,9 @@
 	protection_objective.target = sender.mind
 	protection_objective.update_explanation_text()
 	malf_datum.objectives += protection_objective
-
+	functional = FALSE
+	name = "Broken AI Module"
+	description = "A law upload module, it is broken and non-functional."
 
 /obj/item/ai_module/malf/display_laws()
 	return
