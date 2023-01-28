@@ -85,6 +85,18 @@
 	category = "Offensive"
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
 
+/datum/spellbook_entry/exsanguinating_strike
+	name = "Exsanguinating Strike"
+	desc = "Sanguine spell that enchants your next weapon strike to deal more damage, heal you for damage dealt, and refill blood."
+	spell_type =  /datum/action/cooldown/spell/exsanguinating_strike
+	category = "Offensive"
+
+/datum/spellbook_entry/scream_for_me
+	name = "Scream For Me"
+	desc = "Sadistic sanguine spell that inflicts numerous severe blood wounds all over the victim's body."
+	spell_type =  /datum/action/cooldown/spell/touch/scream_for_me
+	category = "Offensive"
+
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
