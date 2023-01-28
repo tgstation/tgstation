@@ -209,15 +209,17 @@
 				to_chat(human_user, span_warning("ERROR: Unable to locate data core entry for target."))
 				return
 			if(href_list["status"])
-				var/setcriminal = tgui_input_list(human_user, "Specify a new criminal status for this person.", "Security HUD", WANTED_STATUSES(), target_record.wanted_status)
-				if(!setcriminal || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
+				var/new_status = tgui_input_list(human_user, "Specify a new criminal status for this person.", "Security HUD", WANTED_STATUSES(), target_record.wanted_status)
+				if(!new_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
-				var/datum/crime/new_crime = new(author = human_user, details = "Set by HUD")
-				target_record.crimes += new_crime
+				if(new_status == WANTED_ARREST)
+					var/datum/crime/new_crime = new(author = human_user, details = "Set by SecHUD.")
+					target_record.crimes += new_crime
+					investigate_log("SecHUD auto-crime | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 
-				investigate_log("has been set from [target_record.wanted_status] to [setcriminal] via HUD by [key_name(human_user)].", INVESTIGATE_RECORDS)
-				target_record.wanted_status = setcriminal
+				investigate_log("has been set from [target_record.wanted_status] to [new_status] via HUD by [key_name(human_user)].", INVESTIGATE_RECORDS)
+				target_record.wanted_status = new_status
 				sec_hud_set_security_status()
 				return
 
@@ -235,13 +237,12 @@
 					for(var/datum/crime/crime in target_record.crimes)
 						if(!crime.valid)
 							to_chat(human_user, span_notice("-- REDACTED --"))
-							to_chat(human_user, "----------")
 							continue
 
 						to_chat(human_user, "<b>Crime:</b> [crime.name]")
 						to_chat(human_user, "<b>Details:</b> [crime.details]")
 						to_chat(human_user, "Added by [crime.author] at [crime.time]")
-						to_chat(human_user, "----------")
+				to_chat(human_user, "----------")
 
 				return
 

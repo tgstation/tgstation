@@ -186,6 +186,8 @@
 			var/wanted_status = params["status"]
 			if(!wanted_status || !(wanted_status in WANTED_STATUSES()))
 				return FALSE
+			if(wanted_status == WANTED_ARREST && !length(target.crimes))
+				return FALSE
 
 			target.wanted_status = wanted_status
 
@@ -230,7 +232,7 @@
 /// Handles editing a crime on a particular record.
 /obj/machinery/computer/secure_data/proc/edit_crime(mob/user, datum/record/crew/target, list/params)
 	var/datum/crime/editing_crime = locate(params["crime_ref"]) in target.crimes
-	if(!editing_crime)
+	if(!editing_crime?.valid)
 		return FALSE
 
 	if(user != editing_crime.author && !has_armory_access(user)) // only warden/hos/command can edit crimes they didn't author
@@ -316,7 +318,8 @@
 
 			input_description += "\n\n<b>WANTED FOR:</b>"
 			for(var/datum/crime/incident in crimes)
-				if(!crime.valid)
+				if(!incident.valid)
+					input_description += "<b>--REDACTED--</b>"
 					continue
 				input_description += "\n<bCrime:</b> [incident.name]\n"
 				input_description += "<b>Details:</b> [incident.details]\n"

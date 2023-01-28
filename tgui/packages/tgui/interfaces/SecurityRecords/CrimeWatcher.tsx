@@ -110,8 +110,8 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
         <LabeledList>
           <LabeledList.Item label="Time">{time}</LabeledList.Item>
           <LabeledList.Item label="Author">{author}</LabeledList.Item>
-          <LabeledList.Item label="Active">
-            {valid ? 'Active' : 'Voided'}
+          <LabeledList.Item color={!valid ? 'bad' : 'good'} label="Status">
+            {!valid ? 'Void' : 'Active'}
           </LabeledList.Item>
           {fine && (
             <>
@@ -134,9 +134,7 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
             <Button
               disabled={!valid || (!higher_access && author !== current_user)}
               icon="pen"
-              onClick={() => setEditing(true)}
-              tooltip="Edit crime details."
-              tooltipPosition="bottom-start">
+              onClick={() => setEditing(true)}>
               Edit
             </Button>
             <Button.Confirm
@@ -149,12 +147,6 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
                   crime_ref: crime_ref,
                 })
               }
-              tooltip={
-                !higher_access
-                  ? 'Not authorized.'
-                  : 'Voids from records, removing it from HUDs.'
-              }
-              tooltipPosition="bottom-start"
             />
           </Box>
         ) : (
