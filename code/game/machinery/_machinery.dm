@@ -990,29 +990,33 @@
 	 * if the rped first picked up a tier 3 part AND THEN a tier 4 part
 	 * tier 3 would be installed and the loop would break and check for the next required component thus
 	 * completly ignoring the tier 4 component inside
+	 * we also ignore stack components inside the RPED cause we dont exchange that
 	 */
-	var/list/part_list = replacer_tool.get_sorted_parts()
-	for(var/datum/primary_part_base as anything in component_parts)
+	var/list/part_list = replacer_tool.get_sorted_parts(ignore_stacks = TRUE)
+	if(!part_list.len)
+		return FALSE
+	for(var/primary_part_base as anything in component_parts)
+		//we exchanged all we could time to bail
+		if(!part_list.len)
+			break
+
 		var/current_rating
 		var/required_type
 
-		if (istype(primary_part_base, /datum/stock_part))
+		//we dont exchange circuitboards cause thats dumb
+		if(istype(primary_part_base, /obj/item/circuitboard))
+			continue
+		else if(istype(primary_part_base, /datum/stock_part))
 			var/datum/stock_part/primary_stock_part = primary_part_base
 			current_rating = primary_stock_part.tier
 			required_type = primary_stock_part.physical_object_base_type
 		else
 			var/obj/item/primary_stock_part_item = primary_part_base
 			current_rating = primary_stock_part_item.get_part_rating()
-
 			for(var/design_type in machine_board.req_components)
-				if(!ispath(primary_stock_part_item.type, design_type))
-					continue
-
-				required_type = design_type
-
-		if (isnull(required_type))
-			// Not an error, happens with circuitboards.
-			continue
+				if(ispath(primary_stock_part_item.type, design_type))
+					required_type = design_type
+					break
 
 		for(var/obj/item/secondary_part in part_list)
 			if(!istype(secondary_part, required_type))
@@ -1024,7 +1028,10 @@
 				if(checked_cell.rigged || checked_cell.corrupted)
 					checked_cell.charge = checked_cell.maxcharge
 					checked_cell.explode()
+					break
 			if(secondary_part.get_part_rating() > current_rating)
+				//store name of part incase we qdel it below
+				var/secondary_part_name = secondary_part.name
 				if(replacer_tool.atom_storage.attempt_remove(secondary_part, src))
 					if (istype(primary_part_base, /datum/stock_part))
 						var/stock_part_datum = GLOB.stock_part_datums_per_object[secondary_part.type]
@@ -1049,7 +1056,7 @@
 					physical_part = primary_part_base
 
 				replacer_tool.atom_storage.attempt_insert(physical_part, user, TRUE)
-				to_chat(user, span_notice("[capitalize(physical_part.name)] replaced with [secondary_part.name]."))
+				to_chat(user, span_notice("[capitalize(physical_part.name)] replaced with [secondary_part_name]."))
 				shouldplaysound = TRUE //Only play the sound when parts are actually replaced!
 				break
 
