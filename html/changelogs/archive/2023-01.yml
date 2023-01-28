@@ -907,3 +907,65 @@
       into a MODsuit, and vice-versa in order to extract the valuable AI in a method
       fit-for-sale. In short: The "Steal a Functional AI" objective will work if the
       "captured" AI is in a MODsuit.'
+2023-01-26:
+  Autisem:
+  - bugfix: You can print the new list pick and associative list pick components
+  - bugfix: Associative list pick works as intended now
+  JohnFulpWillard:
+  - qol: Mining points is now tied to bank accounts instead of individual IDs, so
+      they transfer over in cases of an ID replacement.
+  LT3:
+  - bugfix: Fixed the tram not exploding when it's supposed to
+  SmoSmoSmoSmok:
+  - qol: you can now search for items on the mining vendor
+  - bugfix: item prices will no longer appear as NaN
+  SyncIt21:
+  - rscadd: 'more designs for the rcd
+
+      refactor:` try_wallmount()` to return true only after successful mount'
+  - bugfix: '`apc_tool_act/rcd_act()`  incorrecly checking for simple circuits upgrade
+      in the wrong variable'
+  - bugfix: newly created APC's not assigning themselves to their areas.
+  - bugfix: rcd building structures [walls, airlocks etc] on turf's that already have
+      structures on them
+  Time-Green:
+  - refactor: External organs have been near-completely refactored.
+  - admin: Admin-spawned external organs will load with a random icon and color
+  - bugfix: fixes angel wings not working for non-humans (it was so fucking broken)
+  - bugfix: fixes external organs being invisible if they werent initialized with
+      a human
+  jlsnow301:
+  - bugfix: Sec huds should properly label targets with the new record system
+  mc-oofert:
+  - bugfix: venture shuttle no longer docks on purchase
+  san7890:
+  - bugfix: 'All Mobs (including Basic mobs) are now able to suicide. (warning: some
+      exclusions remain)'
+2023-01-27:
+  MMMiracles:
+  - bugfix: Regular asteroid turfs now dig up regular asteroid sand instead of the
+      basalt variant from Lavaland.
+  Mothblocks:
+  - rscadd: Added a new menu that shows on Escape.
+  Xander3359:
+  - bugfix: RD has access to the AI SAT on deltastation
+  timothymtorres:
+  - rscadd: Add a pair of leather gloves to weed control crate
+  - balance: Mobs with the PLANT biotypes (venus flytraps, pod people, killer tomatoes)
+      are now much weaker vs scythes, goats, and plantbgone.
+  - balance: Plantbgone is now more effective at destroying weeds.
+  - balance: Regular scythes are now a sharp object
+  - bugfix: Fixed scythes, goats, and plantbgone not affecting flower bud vines.
+  - bugfix: Thick and botanical gloves not protecting from thorns
+  - bugfix: Golems not having pierce immunity from thorns
+  - bugfix: Runtime where vines tried to spread into null turf
+  - bugfix: Runtime where null vines that were destroyed were trying to spread to
+      nearby turfs
+  - soundadd: Add eat food sound when goats eat plants
+  - code_imp: Improved goat targeting code
+  - code_imp: The bane element now accepts `mob_biotypes` bitflags as an argument.
+  - qol: Add shovel to cargo lathe
+2023-01-28:
+  Unit2E:
+  - bugfix: Strange reagent once again spawns angry plants when added to hydroponics
+      trays!

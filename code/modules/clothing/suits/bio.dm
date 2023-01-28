@@ -12,7 +12,7 @@
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/obj/item/clothing/head/bio_hood/Initialize()
+/obj/item/clothing/head/bio_hood/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 

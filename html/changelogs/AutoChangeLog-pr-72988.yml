@@ -1,0 +1,5 @@
+author: "Vladoricious"
+delete-after: True
+changes:
+  - qol: "Nuclear PDAs now actually work like a PDA should, with the power to download normal programs and delete them too. The nerds over at Cybersun even installed a new \"Why Fy Dry Ver\", allowing you to download your programs while still on the base!"
+  - bugfix: "As a result, Lone Ops will no longer get scammed out of over 1/5th of their TC when buying the Detomatix cartridge and Midround Traitors with stolen Nuclear PDAs will not be denied an uplink."
