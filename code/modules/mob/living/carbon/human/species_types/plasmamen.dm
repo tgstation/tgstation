@@ -61,6 +61,8 @@
 /datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
 	C.set_safe_hunger_level()
+	if(!(old_species.inherent_biotypes & MOB_MINERAL)) // if the mob was previously not of the plasmaman biotype
+		C.adjustToxLoss(-C.getToxLoss()) // clear the organic toxin damage before turning into a plasmaman, as they are now immune
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	var/atmos_sealed = TRUE
