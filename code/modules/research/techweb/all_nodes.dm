@@ -125,6 +125,7 @@
 		"turbine_part_rotor",
 		"turbine_part_stator",
 		"turret_control",
+		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
 	)
@@ -587,7 +588,6 @@
 		"tank_compressor",
 		"tesla_coil",
 		"thermomachine",
-		"universal_scanner",
 		"w-recycler",
 		"welding_goggles",
 	)
