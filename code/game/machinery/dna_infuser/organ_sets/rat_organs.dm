@@ -90,9 +90,9 @@
 /obj/item/organ/internal/heart/rat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
+	AddElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 
 /obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
-	AddElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 	. = ..()
 	if(!ishuman(reciever))
 		return
