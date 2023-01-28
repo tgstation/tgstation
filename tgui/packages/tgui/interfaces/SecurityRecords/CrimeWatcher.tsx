@@ -167,7 +167,7 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
             />
             <Input
               fluid
-              maxLength={25}
+              maxLength={1025}
               mt={1}
               onEscape={() => setEditing(false)}
               onEnter={(event, value) => {
@@ -235,19 +235,20 @@ const CrimeAuthor = (props, context) => {
       <Stack.Item color="label">
         Name
         <Input
-          onChange={(_, value) => setCrimeName(value)}
           fluid
           maxLength={25}
+          onChange={(_, value) => setCrimeName(value)}
           placeholder="Brief overview"
         />
       </Stack.Item>
       <Stack.Item color="label">
         Details
         <TextArea
-          onChange={(_, value) => setCrimeDetails(value)}
-          multiline
-          height={4}
           fluid
+          height={4}
+          maxLength={1025}
+          multiline
+          onChange={(_, value) => setCrimeDetails(value)}
           placeholder="Type some details..."
         />
       </Stack.Item>
