@@ -345,7 +345,6 @@
 	if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
 		burn_human.ignite_mob()
 		burn_human.set_species(/datum/species/plasmaman)
-		burn_human.adjustToxLoss(-burn_human.getToxLoss()) // clear the toxin damage after turning into a plasmaman
 		burn_human.visible_message(span_warning("[burn_human] bursts into a brilliant purple flame as [burn_human.p_their()] entire body is that of a skeleton!"), \
 			span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))
 
