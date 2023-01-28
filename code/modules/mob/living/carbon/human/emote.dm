@@ -16,18 +16,33 @@
 	. = ..()
 	if(. && ishuman(user)) // Give them a visual crying effect if they're human
 		var/mob/living/carbon/human/human_user = user
-		ADD_TRAIT(human_user, TRAIT_CRYING, "[type]")
+
+		//create emote overlay
+		var/datum/bodypart_overlay/emote/crying_overlay = new()
+		crying_overlay.layers = EXTERNAL_ADJACENT
+		crying_overlay.icon_state = "tears"
+		crying_overlay.icon = 'icons/mob/species/human/human_face.dmi'
+		crying_overlay.draw_color = COLOR_DARK_CYAN
+		if(OFFSET_FACE in human_user.dna?.species.offset_features)
+			var/offset = human_user.dna.species.offset_features[OFFSET_FACE]
+			crying_overlay.offset_x = offset[1]
+			crying_overlay.offset_y = offset[2]
+
+		//apply emote overlay
+		var/obj/item/bodypart/head/human_head = human_user.get_bodypart(BODY_ZONE_HEAD)
+		human_head.add_bodypart_overlay(crying_overlay)
 		human_user.update_body()
 
 		// Use a timer to remove the effect after the defined duration has passed
 		var/list/key_emotes = GLOB.emote_list["cry"]
 		for(var/datum/emote/living/carbon/human/cry/human_emote in key_emotes)
 			// The existing timer restarts if it is already running
-			addtimer(CALLBACK(human_emote, PROC_REF(end_visual), human_user), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+			addtimer(CALLBACK(human_emote, PROC_REF(end_visual), human_user, human_head, crying_overlay), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-/datum/emote/living/carbon/human/cry/proc/end_visual(mob/living/carbon/human/human_user)
+/datum/emote/living/carbon/human/cry/proc/end_visual(mob/living/carbon/human/human_user, obj/item/bodypart/head/human_head, datum/bodypart_overlay/crying_overlay)
+	if(!QDELETED(human_head)) //keep in mind the human may have been decapitated by the time the callback runs
+		human_head.remove_bodypart_overlay(crying_overlay)
 	if(!QDELETED(human_user))
-		REMOVE_TRAIT(human_user, TRAIT_CRYING, "[type]")
 		human_user.update_body()
 
 #undef CRY_DURATION
