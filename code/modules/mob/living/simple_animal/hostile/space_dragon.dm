@@ -306,7 +306,7 @@
 	for(var/mob/living/L in T.contents)
 		if(L in hit_list)
 			continue
-		if(istype(L, /mob/living/basic/carp) && L?.mind.has_antag_datum(/datum/antagonist/space_carp))
+		if(L.mind?.has_antag_datum(/datum/antagonist/space_carp))
 			continue
 		hit_list += L
 		L.adjustFireLoss(30)
