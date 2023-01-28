@@ -134,7 +134,7 @@
 
 	//Custom virus creation
 	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
-		chosen_severity = tgui_input_list(usr, "Pick a severity!","Medbay could use a wake up call.", list("Medium", "Harmful", "Dangerous", "Cancel"))
+		chosen_severity = tgui_input_list(usr, "Pick a severity!","In the event of an airborne virus, try not to breathe.", list("Medium", "Harmful", "Dangerous", "Cancel"))
 		switch(chosen_severity)
 			if("Medium")
 				chosen_severity = ADV_DISEASE_MEDIUM
@@ -147,7 +147,7 @@
 
 		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 3, 15)
 
-	if(tgui_alert(usr,"Are you happy with your selections?", "Last chance to turn back.", list("Yes", "Cancel")) != "Yes")
+	if(tgui_alert(usr,"Are you happy with your selections?", "Epidemic warning, Standby!", list("Yes", "Cancel")) != "Yes")
 		return ADMIN_CANCEL_EVENT
 
 /datum/round_event/disease_outbreak/advanced
@@ -191,7 +191,7 @@
 	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
 	if(victim.ForceContractDisease(advanced_disease, FALSE))
 		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]. Transmissibility is [advanced_disease.spread_text].")
-		log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)].")
+		log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)]. Transmissibility is [advanced_disease.spread_text].")
 		announce_to_ghosts(victim)
 	else
 		log_game("An event attempted to trigger a random advanced virus outbreak on [key_name(victim)], but failed.")
