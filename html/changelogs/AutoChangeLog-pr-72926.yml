@@ -1,0 +1,4 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - qol: "Musicians rejoice! You can now interact with the instrument UI while laying down."
