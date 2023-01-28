@@ -45,11 +45,11 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 	AddElement(/datum/element/noticable_organ, "mouth is drooling excessively.", BODY_ZONE_PRECISE_MOUTH)
 
-/obj/item/organ/internal/stomach/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+/obj/item/organ/internal/stomach/rat/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-	if(!ishuman(reciever))
+	if(!ishuman(receiver))
 		return
-	var/mob/living/carbon/human/human_holder = reciever
+	var/mob/living/carbon/human/human_holder = receiver
 	if(human_holder.can_mutate())
 		var/datum/species/species = human_holder.dna.species
 		//mmm, cheese. doesn't especially like anything else
@@ -96,16 +96,16 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 	AddElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 
-/obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+/obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-	if(!ishuman(reciever))
+	if(!ishuman(receiver))
 		return
-	var/mob/living/carbon/human/human_reciever = reciever
+	var/mob/living/carbon/human/human_receiver = receiver
 	if(human_receiver.can_mutate())
-		human_reciever.dna.add_mutation(/datum/mutation/human/dwarfism)
+		human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
 		//but 1.5 damage
-		if(human_reciever.physiology)
-			human_reciever.physiology.damage_resistance -= 50
+		if(human_receiver.physiology)
+			human_receiver.physiology.damage_resistance -= 50
 
 /obj/item/organ/internal/heart/rat/Remove(mob/living/carbon/heartless, special)
 	. = ..()

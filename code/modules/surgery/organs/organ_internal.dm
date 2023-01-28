@@ -14,7 +14,7 @@
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/organ/internal/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(!.)
 		return

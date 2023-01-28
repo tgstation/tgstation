@@ -507,7 +507,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	return
 
 /mob/living/carbon/can_mutate()
-	if(!(owner.mob_biotypes & MOB_ORGANIC))
+	if(!(mob_biotypes & MOB_ORGANIC))
 		return FALSE
 	if(has_dna() && !HAS_TRAIT(src, TRAIT_GENELESS) && !HAS_TRAIT(src, TRAIT_BADDNA))
 		return TRUE
