@@ -80,16 +80,17 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	receiver.internal_organs |= src
 	receiver.internal_organs_slot[slot] = src
-
-	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, receiver)
-	SEND_SIGNAL(receiver, COMSIG_CARBON_GAIN_ORGAN, src, special)
-
 	owner = receiver
+
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_owner_examine))
 	update_organ_traits(receiver)
 	for(var/datum/action/action as anything in actions)
 		action.Grant(receiver)
+
+	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, receiver)
+	SEND_SIGNAL(receiver, COMSIG_CARBON_GAIN_ORGAN, src, special)
+
 	return TRUE
 
 /*

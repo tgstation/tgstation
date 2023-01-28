@@ -63,9 +63,9 @@
 		qdel(src)
 	if(organs >= organs_needed)
 		if(!bonus_active)
-			enable_bonus()
+			INVOKE_ASYNC(src, PROC_REF(enable_bonus))
 	else if(bonus_active)
-		disable_bonus()
+		INVOKE_ASYNC(src, PROC_REF(disable_bonus))
 
 /datum/status_effect/organ_set_bonus/proc/enable_bonus()
 	SHOULD_CALL_PARENT(TRUE)

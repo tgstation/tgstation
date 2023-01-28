@@ -16,7 +16,7 @@
 
 /obj/item/organ/internal/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	if(!.)
+	if(!. || !owner)
 		return
 
 	// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order
