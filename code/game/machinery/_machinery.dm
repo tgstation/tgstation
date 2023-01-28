@@ -1081,13 +1081,22 @@
 	var/list/part_count = list()
 
 	for(var/component_part in component_parts)
-		var/component_ref
+		var/obj/item/component_ref
 
 		if (istype(component_part, /datum/stock_part))
 			var/datum/stock_part/stock_part = component_part
 			component_ref = stock_part.physical_object_reference
 		else
 			component_ref = component_part
+			for(var/obj/item/counted_part in part_count)
+				//e.g. 2 beakers though they have the same type are still 2 different objects so component_ref wont keep them unique so we look for that type ourselves and increment it
+				if(istype(counted_part, component_ref.type))
+					part_count[counted_part]++
+					component_ref = null
+					break
+			//looks like we already counted an type of this obj reference, time to bail
+			if(!component_ref)
+				continue
 
 		if(part_count[component_ref])
 			part_count[component_ref]++
