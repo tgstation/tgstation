@@ -83,7 +83,7 @@
 		owner.dna?.species?.handle_body(affected_human) //updates eye icon
 
 /obj/item/organ/internal/eyes/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	..()
+	. = ..()
 	if(ishuman(eye_owner))
 		var/mob/living/carbon/human/human_owner = eye_owner
 		if(initial(eye_color_left))
@@ -298,7 +298,7 @@
 	return
 
 /obj/item/organ/internal/eyes/robotic/flashlight/Insert(mob/living/carbon/victim, special = FALSE, drop_if_replaced = FALSE)
-	..()
+	. = ..()
 	if(!eye)
 		eye = new /obj/item/flashlight/eyelight()
 	eye.on = TRUE
