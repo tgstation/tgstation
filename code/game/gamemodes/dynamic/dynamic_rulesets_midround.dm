@@ -847,7 +847,7 @@
 
 /// Space Changeling ruleset
 /datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
-	name = "Space Changeling" //IT CAME FROM OUTER SPESS
+	name = "Space Changeling"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/changeling
 	antag_flag = ROLE_CHANGELING_MIDROUND
