@@ -965,3 +965,7 @@
   - code_imp: Improved goat targeting code
   - code_imp: The bane element now accepts `mob_biotypes` bitflags as an argument.
   - qol: Add shovel to cargo lathe
+2023-01-28:
+  Unit2E:
+  - bugfix: Strange reagent once again spawns angry plants when added to hydroponics
+      trays!
