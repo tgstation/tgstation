@@ -941,3 +941,31 @@
   san7890:
   - bugfix: 'All Mobs (including Basic mobs) are now able to suicide. (warning: some
       exclusions remain)'
+2023-01-27:
+  MMMiracles:
+  - bugfix: Regular asteroid turfs now dig up regular asteroid sand instead of the
+      basalt variant from Lavaland.
+  Mothblocks:
+  - rscadd: Added a new menu that shows on Escape.
+  Xander3359:
+  - bugfix: RD has access to the AI SAT on deltastation
+  timothymtorres:
+  - rscadd: Add a pair of leather gloves to weed control crate
+  - balance: Mobs with the PLANT biotypes (venus flytraps, pod people, killer tomatoes)
+      are now much weaker vs scythes, goats, and plantbgone.
+  - balance: Plantbgone is now more effective at destroying weeds.
+  - balance: Regular scythes are now a sharp object
+  - bugfix: Fixed scythes, goats, and plantbgone not affecting flower bud vines.
+  - bugfix: Thick and botanical gloves not protecting from thorns
+  - bugfix: Golems not having pierce immunity from thorns
+  - bugfix: Runtime where vines tried to spread into null turf
+  - bugfix: Runtime where null vines that were destroyed were trying to spread to
+      nearby turfs
+  - soundadd: Add eat food sound when goats eat plants
+  - code_imp: Improved goat targeting code
+  - code_imp: The bane element now accepts `mob_biotypes` bitflags as an argument.
+  - qol: Add shovel to cargo lathe
+2023-01-28:
+  Unit2E:
+  - bugfix: Strange reagent once again spawns angry plants when added to hydroponics
+      trays!
