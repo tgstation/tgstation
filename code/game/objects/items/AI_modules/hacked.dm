@@ -50,6 +50,11 @@
 	malf_datum.give_zeroth_laws = FALSE
 	malf_candidate.mind(add_antag_datum(malf_datum))
 	malf_candidate.set_zeroth_law("Only [user.real_name] and people [user.p_they()] designate[user.p_s()] as being such are Syndicate Agents.")
+	var/datum/objective/protect/protection_objective = new
+	protection_objective.owner = malf_candidate.owner
+	protection_objective.target = sender.mind
+	protection_objective.update_explanation_text()
+	malf_datum.objectives += protection_objective
 	to_chat(sender, span_notice("Upload process completed."))
 
 
