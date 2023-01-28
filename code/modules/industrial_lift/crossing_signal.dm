@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/datum/weakref/tram_ref
 	/// Proximity threshold for amber warning (slow people may be in danger).
 	/// This is specific to Tramstation and may need to be adjusted if the map changes in the distance between tram stops.
-	var/amber_distance_threshold = 60
+	var/amber_distance_threshold = 35
 	/** Proximity threshold for red warning (running people will likely not be able to cross) This is specific to Tramstation and may need to be adjusted if the map changes in the distance between tram stops.
 	* This checks the distance between the tram and the signal, and based on the current Tramstation map this is the optimal number to prevent the lights from turning red for no reason for a few moments.
 	* If the value is set too high, it will cause the lights to turn red when the tram arrives at another station. You want to optimize the amount of warning without turning it red unnessecarily.
@@ -251,6 +251,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 /obj/machinery/crossing_signal/northwest
 	icon_state = "crossing-base-right"
 	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	amber_distance_threshold = 45
 	pixel_x = -32
 	pixel_y = -1
 
@@ -265,6 +266,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 /obj/machinery/crossing_signal/southwest
 	icon_state = "crossing-base-right"
 	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	amber_distance_threshold = 45
 	pixel_x = -32
 	pixel_y = 20
 
