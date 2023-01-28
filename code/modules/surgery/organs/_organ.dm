@@ -100,7 +100,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 
-	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(organ_owner, COMSIG_PARENT_EXAMINE)
 
 	organ_owner.internal_organs -= src
 	if(organ_owner.internal_organs_slot[slot] == src)
