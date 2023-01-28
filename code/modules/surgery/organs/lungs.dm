@@ -22,9 +22,6 @@
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
-	/// Fallback "empty breath" for convenience.
-	var/static/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
-
 	//Breath damage
 	//These thresholds are checked against what amounts to total_mix_pressure * (gas_type_mols/total_mols)
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
@@ -123,6 +120,8 @@
 
 	// Breath may be null, so use a fallback "empty breath" for convenience.
 	if(!breath)
+		/// Fallback "empty breath" for convenience.
+		var/static/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
 		breath = empty_breath
 
 	// Ensure gas volumes are present.
