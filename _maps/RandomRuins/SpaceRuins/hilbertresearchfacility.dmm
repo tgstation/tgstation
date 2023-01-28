@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ae" = (
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "am" = (
@@ -222,9 +222,9 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "gv" = (
 /obj/structure/fluff/tram_rail,
-/obj/machinery/door/window/survival_pod,
+/obj/machinery/door/window/tram/hilbert,
 /obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
+	icon_state = "titanium_purple"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -361,12 +361,8 @@
 	bulb_colour = "#deefff";
 	bulb_power = 0.6
 	},
-/obj/machinery/computer/tram_controls{
-	dir = 8;
-	specific_lift_id = "tram_hilbert"
-	},
 /obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
+	icon_state = "titanium_purple"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -989,7 +985,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "yq" = (
@@ -1518,7 +1514,7 @@
 	dir = 4
 	},
 /obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
+	icon_state = "titanium_purple"
 	},
 /obj/effect/landmark/lift_id/hilbert,
 /turf/open/floor/engine,
@@ -1622,7 +1618,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "JL" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "JM" = (
@@ -1822,11 +1818,11 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/machinery/door/window/survival_pod{
+/obj/machinery/door/window/tram/hilbert{
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
+	icon_state = "titanium_purple"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1904,7 +1900,13 @@
 	dir = 8
 	},
 /obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
+	icon_state = "titanium_purple"
+	},
+/obj/machinery/computer/tram_controls{
+	dir = 8;
+	specific_lift_id = "tram_hilbert";
+	icon_state = "tram_alt_controls";
+	density = 0
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
