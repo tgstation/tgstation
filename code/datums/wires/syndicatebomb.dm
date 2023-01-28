@@ -5,7 +5,7 @@
 
 /datum/wires/syndicatebomb/New(atom/holder)
 	wires = list(
-		WIRE_BOOM, WIRE_UNBOLT,
+		WIRE_BOOM, WIRE_BOOM2, WIRE_UNBOLT,
 		WIRE_ACTIVATE, WIRE_DELAY, WIRE_PROCEED
 	)
 	..()
@@ -20,7 +20,7 @@
 /datum/wires/syndicatebomb/on_pulse(wire)
 	var/obj/machinery/syndicatebomb/B = holder
 	switch(wire)
-		if(WIRE_BOOM)
+		if(WIRE_BOOM,WIRE_BOOM2)
 			if(B.active)
 				holder.visible_message(span_danger("[icon2html(B, viewers(holder))] An alarm sounds! It's go-"))
 				B.explode_now = TRUE
@@ -72,7 +72,7 @@
 /datum/wires/syndicatebomb/on_cut(wire, mend)
 	var/obj/machinery/syndicatebomb/B = holder
 	switch(wire)
-		if(WIRE_BOOM)
+		if(WIRE_BOOM,WIRE_BOOM2)
 			if(!mend && B.active)
 				holder.visible_message(span_danger("[icon2html(B, viewers(holder))] An alarm sounds! It's go-"))
 				B.explode_now = TRUE
