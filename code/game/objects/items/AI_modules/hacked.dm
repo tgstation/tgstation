@@ -64,7 +64,7 @@
 	malf_datum.objectives += protection_objective
 	functional = FALSE
 	name = "Broken AI Module"
-	description = "A law upload module, it is broken and non-functional."
+	desc = "A law upload module, it is broken and non-functional."
 
 /obj/item/ai_module/malf/display_laws()
 	return
