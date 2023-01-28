@@ -26,6 +26,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/pickaxe
+	name = "Pickaxe"
+	id = "pickaxe"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/pickaxe
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+
 /datum/design/drill
 	name = "Mining Drill"
 	desc = "Yours is the drill that will pierce through the rock walls."

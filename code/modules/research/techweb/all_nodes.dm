@@ -251,6 +251,7 @@
 		"wirebrush",
 		"wirecutters",
 		"wrench",
+		"pickaxe",
 	)
 
 /datum/techweb_node/basic_medical
