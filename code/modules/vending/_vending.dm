@@ -615,6 +615,11 @@
 	else
 		. = ..()
 		if(tiltable && !tilted && I.force)
+			if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
+				var/opposite_direction = REVERSE_DIR(get_dir(src, user))
+				var/target = get_step(src, opposite_direction)
+				tilt(get_turf(target))
+				return
 			switch(rand(1, 100))
 				if(1 to 5)
 					freebie(user, 3)
