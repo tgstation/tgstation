@@ -16,19 +16,34 @@
 	. = ..()
 	if(. && ishuman(user)) // Give them a visual blush effect if they're human
 		var/mob/living/carbon/human/human_user = user
-		ADD_TRAIT(human_user, TRAIT_BLUSHING, "[type]")
+
+		//create emote overlay
+		var/datum/bodypart_overlay/emote/blush_overlay = new()
+		blush_overlay.layers = EXTERNAL_ADJACENT
+		blush_overlay.icon_state = "blush"
+		blush_overlay.icon = 'icons/mob/species/human/human_face.dmi'
+		blush_overlay.draw_color = COLOR_BLUSH_PINK
+		if(OFFSET_FACE in human_user.dna?.species.offset_features)
+			var/offset = human_user.dna.species.offset_features[OFFSET_FACE]
+			blush_overlay.offset_x = offset[1]
+			blush_overlay.offset_y = offset[2]
+
+		//apply emote overlay
+		var/obj/item/bodypart/head/human_head = human_user.get_bodypart(BODY_ZONE_HEAD)
+		human_head.add_bodypart_overlay(blush_overlay)
 		human_user.update_body_parts()
 
 		// Use a timer to remove the blush effect after the BLUSH_DURATION has passed
 		var/list/key_emotes = GLOB.emote_list["blush"]
 		for(var/datum/emote/living/blush/living_emote in key_emotes)
 			// The existing timer restarts if it is already running
-			addtimer(CALLBACK(living_emote, PROC_REF(end_blush), human_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+			addtimer(CALLBACK(living_emote, PROC_REF(end_blush), human_user, human_head, blush_overlay), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-/datum/emote/living/blush/proc/end_blush(mob/living/carbon/human/human_user)
+/datum/emote/living/blush/proc/end_blush(mob/living/carbon/human/human_user, obj/item/bodypart/head/human_head, datum/bodypart_overlay/blush_overlay)
+	if(!QDELETED(human_head)) //keep in mind the human may have been decapitated by the time the callback runs
+		human_head.remove_bodypart_overlay(blush_overlay)
 	if(!QDELETED(human_user))
-		REMOVE_TRAIT(human_user, TRAIT_BLUSHING, "[type]")
-		human_user.update_body_parts()
+		human_user.update_body()
 
 #undef BLUSH_DURATION
 
