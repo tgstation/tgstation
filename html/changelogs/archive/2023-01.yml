@@ -750,3 +750,222 @@
   - rscadd: Add torches, porcini mushroom seeds, towercap seeds to ash walker ruin.
   - rscadd: Change drying racks to not require power.
   - rscadd: Add crafting recipe for smoking pipe that uses wood
+2023-01-23:
+  Ed640:
+  - bugfix: fixed Item scaling objects not properly scaling in inventory slots.
+  Fikou:
+  - rscadd: You can now craft mannequins with wood or plastic.
+  GoldenAlpharex:
+  - balance: Water now makes you wet on touch and vapor application, with vapor being
+      much less effective than touch. Yes, that means you can now spend two minutes
+      putting someone out with a spray bottle full of water!
+  - bugfix: Being wet no longer causes you to be EXTRA flammable, and instead properly
+      protects you from catching on fire. If you're wet enough, of course.
+  Inari-Whitebear:
+  - bugfix: Fixed integrated circuit component menu search crashing on certain symbols
+      being entered.
+  LT3:
+  - spellcheck: Added missing event panel description for Tram Malfunction
+  - bugfix: Portable atmos machinery is layered correctly
+  Melbert:
+  - rscadd: Added a new random event, "Radiation Leak". A random machine starts to
+      emit radiation and toxic fumes. Engineers may be able to stop it with their
+      tools.
+  - rscadd: The "Radioactive" gene from genetics will now emit rads when on stasis
+      or dead, rather than just while you're alive.
+  OrionTheFox:
+  - bugfix: Randomized round-start posters now pull from the selected poster's icon
+      file, meaning TG Downstreams can have them in a seperate .dmi
+  Rhials:
+  - balance: The Magnitis disease will now hurl objects at infectees at higher stages.
+      Watch your head!
+  Ryll/Shaps:
+  - bugfix: You can no longer climb ladders while buckled to an anchored object
+  SmoSmoSmoSmok:
+  - qol: u can now search for players in the messenger by typing their name or their
+      job
+  san7890:
+  - bugfix: Deconstructing deep friers should now work properly.
+  timothymtorres:
+  - qol: Allow illiterate people to play slot machines
+  unit0016:
+  - spellcheck: Wire Terminals' Description now informs the player that they're an
+      input.
+2023-01-24:
+  BlueMemesauce:
+  - code_imp: The access requirements at the end of supply crate descriptions are
+      now automatically generated
+  - bugfix: Supply console now tells you what access each crate needs to be privately
+      purchased
+  GoldenAlpharex:
+  - bugfix: Species that don't suffer from hunger can now properly open the cooking
+      menu.
+  Inari-Whitebear:
+  - bugfix: Tape recorders are not deaf anymore
+  JohnFulpWillard:
+  - bugfix: Hacked autolathes and Limbgrowers can now properly print things again.
+  LT3:
+  - qol: Reduced volume of firedoor alarm sound loop
+  - bugfix: Tram hit counter now only increments when actual players are hit. No more
+      free points hitting the horrible goose
+  Mey-Ha-Zah:
+  - rscadd: Burn Medkit to Mining Vendor
+  Mothblocks:
+  - spellcheck: Cucumber greek is now Greek cucumber
+  - spellcheck: Fixed attack verbs on the greek cucumber
+  Potato-Masher:
+  - bugfix: Morphs now properly move faster when disguised rather than slowing down.
+  Profakos:
+  - bugfix: Bundles of disposal packages that contain a wrapped parcel will be now
+      successfully redirected by the wrapping sorters
+  SuperSlayer0:
+  - bugfix: Wielded high frequency blades no longer ignore pacifism
+  - code_imp: Replaced some random() procs in lavaland elite code with prob() procs
+  - bugfix: Monkey cultists are now able to invoke cult runes
+  SyncIt21:
+  - bugfix: bluespace light replacer from fixing lights/turfs containing lights not
+      in its line of sight
+  - bugfix: beaming any turf even those not containing lights from causing lag
+  Tattle:
+  - qol: urinals and noticeboards can be handcrafted
+  - qol: pod computers can be deconstructed
+  - qol: fireaxe cabinets, mech removal cabinets, and mirrors can now all be crafted
+  Tattle, Kryson:
+  - qol: light switches, request consoles, telescreens, and ticket machines can now
+      all be printed from lathes
+  Wallem:
+  - balance: Kheiral Cuffs now cost 750 mining points instead of 2000.
+  Wallemations:
+  - rscadd: Bartenders can now mix up the Mississippi Queen for those willing to take
+      the plunge.
+  Winter Schock:
+  - bugfix: Blind doll with monophobia dont get stress while someone in 1 tile range
+  YakumoChen:
+  - imageadd: Two new corporate themed posters.
+  ZephyrTFA:
+  - bugfix: NanoTrasen Engineering has identified and resolved an issue with MechOS
+      that prevented diagnostics for internal shorting
+  mc-oofert:
+  - bugfix: Monkey Humans no longer have their AI turned on upon revival
+  san7890:
+  - bugfix: Spacemen with a clear lack of genetics powers can no longer bend space
+      and time to pull out pH indicator strips.
+  - bugfix: Nanotrasen has pushed an update to their Transit System Consoles, which
+      just makes sure the buttons look visually appropriate.
+  timothymtorres:
+  - bugfix: Fix ordance bomb site being a safe teleport area after surviving the heretic
+      minigame
+  - soundadd: Chisels now make sculpting sounds when used on carving blocks
+  - qol: Chisels now give balloon alerts when selecting a target, cancelling, or sculpting
+  - qol: Chisels used on carving blocks that were interrupted will now continue
+  - bugfix: Fix chisel targets to have no range requirement (so you can use binoculars,
+      cameras, etc.)
+  - bugfix: Fix standard mineral blocks (uranium, diamond, plasma, etc.) not letting
+      people use the radial menu to craft abstract statues properly.  This does not
+      work with custom mineral blocks. (pizza, glass, etc.)
+  - code_imp: Change chisel and statue code to be more readable
+  vinylspiders:
+  - bugfix: toilet bongs crafting recipes
+  - bugfix: fixed crafting itself
+  - refactor: cleaned up some old code in the recipes file, added support for structures
+      in recipes
+  - bugfix: fixed a bug where petri dish smartfridges could not be constructed from
+      a circuit board
+2023-01-25:
+  Cenrus:
+  - balance: Harvesters are now not affected by drag slowdown.
+  LT3:
+  - code_imp: Tram hit counter typepath check is changed to be more accurate in player
+      vs. goose detection
+  - bugfix: Wires and pipes again rest on top of lattice catwalk
+  NamelessFairy:
+  - rscadd: The TGC arena on the holodeck now features display panels to track each
+      player's life shards and mana.
+  - qol: Slightly increased the amount of space on the TGC holodeck arena's tables
+      by removing the windows on either side of the player.
+  - qol: Inspecting a trading card or card hologram will now let you see the full
+      enlarged card art.
+  SyncIt21:
+  - bugfix: vibebot being invisible
+  - rscadd: Rapid wiring device
+  - imageadd: Sprite for RWD
+  Xander3359:
+  - bugfix: Deltastation - Virology's food dispenser isn't blocked by a rack anymore.
+  jlsnow301:
+  - refactor: Crew records have been refactored.
+  - refactor: Medical records -> TGUI
+  - refactor: Security records -> TGUI
+  - refactor: Warrants console -> TGUI
+  - qol: Players are now alerted when their fines are paid off.
+  - qol: Cleaned up sec hud examination text.
+  - qol: Adding and deleting crimes is easier.
+  - qol: Writing crimes in the console sets players to arrest.
+  - qol: You can now mark someone as a suspect through sec hud.
+  san7890:
+  - bugfix: 'After over a year of continuous research, the Syndicate have finally
+      managed to crack Nanotrasen''s Protocol for transferring AIs from an intelliCard
+      into a MODsuit, and vice-versa in order to extract the valuable AI in a method
+      fit-for-sale. In short: The "Steal a Functional AI" objective will work if the
+      "captured" AI is in a MODsuit.'
+2023-01-26:
+  Autisem:
+  - bugfix: You can print the new list pick and associative list pick components
+  - bugfix: Associative list pick works as intended now
+  JohnFulpWillard:
+  - qol: Mining points is now tied to bank accounts instead of individual IDs, so
+      they transfer over in cases of an ID replacement.
+  LT3:
+  - bugfix: Fixed the tram not exploding when it's supposed to
+  SmoSmoSmoSmok:
+  - qol: you can now search for items on the mining vendor
+  - bugfix: item prices will no longer appear as NaN
+  SyncIt21:
+  - rscadd: 'more designs for the rcd
+
+      refactor:` try_wallmount()` to return true only after successful mount'
+  - bugfix: '`apc_tool_act/rcd_act()`  incorrecly checking for simple circuits upgrade
+      in the wrong variable'
+  - bugfix: newly created APC's not assigning themselves to their areas.
+  - bugfix: rcd building structures [walls, airlocks etc] on turf's that already have
+      structures on them
+  Time-Green:
+  - refactor: External organs have been near-completely refactored.
+  - admin: Admin-spawned external organs will load with a random icon and color
+  - bugfix: fixes angel wings not working for non-humans (it was so fucking broken)
+  - bugfix: fixes external organs being invisible if they werent initialized with
+      a human
+  jlsnow301:
+  - bugfix: Sec huds should properly label targets with the new record system
+  mc-oofert:
+  - bugfix: venture shuttle no longer docks on purchase
+  san7890:
+  - bugfix: 'All Mobs (including Basic mobs) are now able to suicide. (warning: some
+      exclusions remain)'
+2023-01-27:
+  MMMiracles:
+  - bugfix: Regular asteroid turfs now dig up regular asteroid sand instead of the
+      basalt variant from Lavaland.
+  Mothblocks:
+  - rscadd: Added a new menu that shows on Escape.
+  Xander3359:
+  - bugfix: RD has access to the AI SAT on deltastation
+  timothymtorres:
+  - rscadd: Add a pair of leather gloves to weed control crate
+  - balance: Mobs with the PLANT biotypes (venus flytraps, pod people, killer tomatoes)
+      are now much weaker vs scythes, goats, and plantbgone.
+  - balance: Plantbgone is now more effective at destroying weeds.
+  - balance: Regular scythes are now a sharp object
+  - bugfix: Fixed scythes, goats, and plantbgone not affecting flower bud vines.
+  - bugfix: Thick and botanical gloves not protecting from thorns
+  - bugfix: Golems not having pierce immunity from thorns
+  - bugfix: Runtime where vines tried to spread into null turf
+  - bugfix: Runtime where null vines that were destroyed were trying to spread to
+      nearby turfs
+  - soundadd: Add eat food sound when goats eat plants
+  - code_imp: Improved goat targeting code
+  - code_imp: The bane element now accepts `mob_biotypes` bitflags as an argument.
+  - qol: Add shovel to cargo lathe
+2023-01-28:
+  Unit2E:
+  - bugfix: Strange reagent once again spawns angry plants when added to hydroponics
+      trays!

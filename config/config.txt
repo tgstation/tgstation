@@ -106,6 +106,9 @@ LOG_GAME
 ## log player votes
 LOG_VOTE
 
+## log manual target zone switching
+LOG_ZONE_SWITCH
+
 ## log client Whisper
 LOG_WHISPER
 

@@ -47,8 +47,8 @@
 				continue
 
 			var/cur_stacks = stacks
-			adjust_stacks(-enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier)
-			enemy_effect.adjust_stacks(-cur_stacks * stack_modifier / enemy_effect.stack_modifier)
+			adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
+			enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
 			if(enemy_effect.stacks <= 0)
 				qdel(enemy_effect)
 

@@ -197,6 +197,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/webhook_sent = WEBHOOK_NONE
 	/// List of player interactions
 	var/list/player_interactions
+	/// List of admin ckeys that are involved, like through responding
+	var/list/admins_involved = list()
+	/// Has the player replied to this ticket yet?
+	var/player_replied = FALSE
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket
@@ -274,7 +278,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		"PLAYERS" = player_count,
 		"ROUND STATE" = round_state,
 		"ROUND ID" = GLOB.round_id,
-		"ROUND TIME" = ROUND_TIME,
+		"ROUND TIME" = ROUND_TIME(),
 		"MESSAGE" = message,
 		"ADMINS" = admin_text,
 	)
@@ -346,9 +350,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	return ..()
 
 /datum/admin_help/proc/AddInteraction(formatted_message, player_message)
-	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
-		heard_by_no_admins = FALSE
-		send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
+	if (!isnull(usr) && usr.ckey != initiator_ckey)
+		admins_involved |= usr.ckey
+		if(heard_by_no_admins)
+			heard_by_no_admins = FALSE
+			send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
+
 	ticket_interactions += "[time_stamp()]: [formatted_message]"
 	if (!isnull(player_message))
 		player_interactions += "[time_stamp()]: [player_message]"
@@ -412,11 +419,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			confidential = TRUE)
 
 	//show it to the person adminhelping too
-	to_chat(initiator,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminnotice("PM to-<b>Admins</b>: [span_linkify(msg)]"),
-		confidential = TRUE)
+	reply_to_admins_notification(msg)
 	SSblackbox.LogAhelp(id, "Ticket Opened", msg, null, initiator.ckey, urgent = urgent)
+
+/// Sends a message to the player that they are replying to admins.
+/datum/admin_help/proc/reply_to_admins_notification(message)
+	to_chat(
+		initiator,
+		type = MESSAGE_TYPE_ADMINPM,
+		html = span_notice("PM to-<b>Admins</b>: [span_linkify(message)]"),
+		confidential = TRUE,
+	)
+
+	player_replied = TRUE
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()
