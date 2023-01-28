@@ -15,16 +15,15 @@
 
 	hand_path = /obj/item/melee/touch_attack/scream_for_me
 
-/datum/action/cooldown/spell/touch/smite/on_antimagic_triggered(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
+/datum/action/cooldown/spell/touch/scream_for_me/on_antimagic_triggered(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	caster.visible_message(
 		span_warning("The feedback mutilates [caster]'s arm!"),
 		span_userdanger("The spell bounces from [victim]'s skin back into your arm!"),
 	)
-	// Off goes the arm we were casting with!
 	var/obj/item/bodypart/to_wound = caster.get_holding_bodypart_of_item(hand)
 	to_wound.force_wound_upwards(/datum/wound/slash/critical)
 
-/datum/action/cooldown/spell/touch/smite/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
+/datum/action/cooldown/spell/touch/scream_for_me/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	if(!ishuman(victim))
 		return
 	var/mob/living/carbon/human/human_victim = victim
