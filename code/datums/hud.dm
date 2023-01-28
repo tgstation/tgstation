@@ -284,13 +284,11 @@ GLOBAL_LIST_INIT(huds, list(
 
 			remove_all_atoms_from_single_hud(moved_atom, get_hud_atoms_for_z_level(old_turf.z))
 
-		// We rolled a handler for removing a bunch of atoms from one viewer, but not vis versa
-		// This is because we typically only have a few viewers, and many things to view
 		if(hud_atoms_all_z_levels[moved_atom])
 			hud_atoms[old_turf.z] -= moved_atom
 
-			for(var/mob/formerly_seeing as anything in get_hud_users_for_z_level(old_turf.z))//this wont include moved_atom since its removed
-				remove_atom_from_single_hud(formerly_seeing, moved_atom)
+			//this wont include moved_atom since its removed
+			remove_atom_from_all_huds(get_hud_users_for_z_level(old_turf.z), moved_atom)
 
 	if(new_turf)
 		if(hud_users_all_z_levels[moved_atom])
@@ -301,8 +299,7 @@ GLOBAL_LIST_INIT(huds, list(
 		if(hud_atoms_all_z_levels[moved_atom])
 			hud_atoms[new_turf.z] |= moved_atom
 
-			for(var/mob/newly_seeing as anything in get_hud_users_for_z_level(new_turf.z))
-				add_atom_to_single_mob_hud(newly_seeing, moved_atom)
+			add_atom_to_all_mob_huds(get_hud_users_for_z_level(new_turf.z), moved_atom)
 
 /// add just hud_atom's hud images (that are part of this atom_hud) to requesting_mob's client.images list
 /datum/atom_hud/proc/add_atom_to_single_mob_hud(mob/requesting_mob, atom/hud_atom) //unsafe, no sanity apart from client
@@ -314,7 +311,7 @@ GLOBAL_LIST_INIT(huds, list(
 			requesting_mob.client.images |= hud_atom.active_hud_list[hud_category]
 
 /// all passed in hud_atoms's hud images (that are part of this atom_hud) to requesting_mob's client.images list
-/// optimization of [/datum/atom_hud/proc/add_atom_to_single_mob_hud] for hot cases
+/// optimization of [/datum/atom_hud/proc/add_atom_to_single_mob_hud] for hot cases, we assert that no nulls will be passed in via the list
 /datum/atom_hud/proc/add_all_atoms_to_single_mob_hud(mob/requesting_mob, list/atom/hud_atoms) //unsafe, no sanity apart from client
 	if(!requesting_mob || !requesting_mob.client)
 		return
@@ -324,9 +321,27 @@ GLOBAL_LIST_INIT(huds, list(
 
 	for(var/hud_category in hud_icons)
 		for(var/atom/hud_atom as anything in hud_atoms)
-			if(!hud_atom || (mob_exceptions && (hud_atom in hud_exceptions[requesting_mob])))
+			if(mob_exceptions && (hud_atom in hud_exceptions[requesting_mob]))
 				continue
 			requesting_mob.client.images |= hud_atom.active_hud_list[hud_category]
+
+/// add just hud_atom's hud images (that are part of this atom_hud) to all the requesting_mobs's client.images list
+/// optimization of [/datum/atom_hud/proc/add_atom_to_single_mob_hud] for hot cases, we assert that no nulls will be passed in via the list
+/datum/atom_hud/proc/add_atom_to_all_mob_huds(list/mob/requesting_mobs, atom/hud_atom) //unsafe, no sanity apart from client
+	if(!hud_atom)
+		return
+
+	var/list/images_to_add = list()
+	for(var/hud_category in (hud_icons & hud_atom.active_hud_list))
+		images_to_add |= hud_atom.active_hud_list[hud_category]
+
+	// Cache for sonic speed, lists are structs
+	var/list/exceptions = hud_exceptions
+	for(var/mob/requesting_mob as anything in requesting_mobs)
+		if(!requesting_mob.client)
+			return
+		if(!exceptions[requesting_mob] || !(hud_atom in exceptions[requesting_mob]))
+			requesting_mob.client.images |= images_to_add
 
 /// remove every hud image for this hud on atom_to_remove from client_mob's client.images list
 /datum/atom_hud/proc/remove_atom_from_single_hud(mob/client_mob, atom/atom_to_remove)
@@ -336,13 +351,28 @@ GLOBAL_LIST_INIT(huds, list(
 		client_mob.client.images -= atom_to_remove.active_hud_list[hud_image]
 
 /// remove every hud image for this hud pulled from atoms_to_remove from client_mob's client.images list
-/// optimization of [/datum/atom_hud/proc/remove_atom_from_single_hud] for hot cases
+/// optimization of [/datum/atom_hud/proc/remove_atom_from_single_hud] for hot cases, we assert that no nulls will be passed in via the list
 /datum/atom_hud/proc/remove_all_atoms_from_single_hud(mob/client_mob, list/atom/atoms_to_remove)
 	if(!client_mob || !client_mob.client)
 		return
 	for(var/hud_image in hud_icons)
 		for(var/atom/atom_to_remove as anything in atoms_to_remove)
 			client_mob.client.images -= atom_to_remove.active_hud_list[hud_image]
+
+/// remove every hud image for this hud on atom_to_remove from client_mobs's client.images list
+/// optimization of [/datum/atom_hud/proc/remove_atom_from_single_hud] for hot cases, we assert that no nulls will be passed in via the list
+/datum/atom_hud/proc/remove_atom_from_all_huds(list/mob/client_mobs, atom/atom_to_remove)
+	if(!atom_to_remove?.active_hud_list)
+		return
+
+	var/list/images_to_remove = list()
+	for(var/hud_image in hud_icons)
+		images_to_remove |= atom_to_remove.active_hud_list[hud_image]
+
+	for(var/mob/client_mob as anything in client_mobs)
+		if(!client_mob.client)
+			return
+		client_mob.client.images -= images_to_remove
 
 /datum/atom_hud/proc/unregister_atom(datum/source, force)
 	SIGNAL_HANDLER
