@@ -13,27 +13,37 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
-
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
-
 	use_power = NO_POWER_USE
+
+	/// What is the lowest amount of time we can set the timer to?
 	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS
+	/// What is the highest amount of time we can set the timer to?
+	var/maximum_timer = 100 MINUTES
+	/// What is the default amount of time we set the timer to?
 	var/timer_set = SYNDIEBOMB_MIN_TIMER_SECONDS
-	var/maximum_timer = 60000
-
+	/// Can we be unanchored?
 	var/can_unanchor = TRUE
-
-	var/open_panel = FALSE //are the wires exposed?
-	var/active = FALSE //is the bomb counting down?
-	var/obj/item/bombcore/payload = /obj/item/bombcore
+	/// Are the wires exposed?
+	var/open_panel = FALSE
+	/// Is the bomb counting down?
+	var/active = FALSE
+	/// What sound do we make as we beep down the timer?
 	var/beepsound = 'sound/items/timer.ogg'
-	var/delayedbig = FALSE //delay wire pulsed?
-	var/delayedlittle = FALSE //activation wire pulsed?
-	var/obj/effect/countdown/syndicatebomb/countdown
-
-	var/next_beep
-	var/detonation_timer
+	/// Is the delay wire pulsed?
+	var/delayedbig = FALSE
+	/// Is the activation wire pulsed?
+	var/delayedlittle = FALSE
+	/// Should we just tell the payload to explode now? Usually triggered by an event (like cutting the wrong wire)
 	var/explode_now = FALSE
+	/// The timer for the bomb.
+	var/detonation_timer
+	/// When do we beep next?
+	var/next_beep
+	/// Reference to the bomb core inside the bomb, which is the part that actually explodes.
+	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate
+	/// The countdown that'll show up to ghosts regarding the bomb's timer.
+	var/obj/effect/countdown/syndicatebomb/countdown
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
 	. = (payload in src) && (active || ignore_active)
@@ -47,6 +57,9 @@
 /obj/machinery/syndicatebomb/atom_destruction()
 	if(!try_detonate())
 		..()
+
+/obj/machinery/syndicatebomb/ex_act(severity, target)
+	return
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
@@ -99,6 +112,8 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	. = ..()
+	. += {"The patented external shell design is resistant to "probably all" forms of external explosive compression, protecting the electronically-trigged bomb core from accidental early detonation."}
+	. += "A small window reveals some information about the payload: [payload.desc]."
 	. += {"A digital display on it reads "[seconds_remaining()]"."}
 
 /obj/machinery/syndicatebomb/update_icon_state()
@@ -273,7 +288,7 @@
 /obj/machinery/syndicatebomb/self_destruct
 	name = "self-destruct device"
 	desc = "Do not taunt. Warranty invalid if exposed to high temperature. Not suitable for agents under 3 years of age."
-	payload = /obj/item/bombcore/large
+	payload = /obj/item/bombcore/syndicate/large
 	can_unanchor = FALSE
 
 ///Bomb Cores///
@@ -298,7 +313,6 @@
 /obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
 
-
 /obj/item/bombcore/burn()
 	detonate()
 	..()
@@ -316,6 +330,24 @@
 //Note: the machine's defusal is mostly done from the wires code, this is here if you want the core itself to do anything.
 
 ///Bomb Core Subtypes///
+
+/// Subtype for the bomb cores found inside syndicate bombs, which will not detonate due to explosion/burning.
+/obj/item/bombcore/syndicate
+	name = "Donk Co. Super-Stable Bomb Payload"
+	desc = "After a string of unwanted detonations, this payload has been specifically redesigned to not explode unless triggered electronically by a bomb shell."
+
+/obj/item/bombcore/syndicate/ex_act(severity, target)
+	return
+
+/obj/item/bombcore/syndicate/burn()
+	return ..()
+
+/obj/item/bombcore/syndicate/large
+	name = "Donk Co. Super-Stable Bomb Payload XL"
+	range_heavy = 5
+	range_medium = 10
+	range_light = 20
+	range_flame = 20
 
 /obj/item/bombcore/training
 	name = "dummy payload"
