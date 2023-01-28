@@ -218,10 +218,16 @@
 						<th>Time Added</th>
 						</tr>"}
 	for(var/datum/crime/crime in crimes)
-		final_paper_text += "<tr><td>[crime.name]</td>"
-		final_paper_text += "<td>[crime.details]</td>"
-		final_paper_text += "<td>[crime.author]</td>"
-		final_paper_text += "<td>[crime.time]</td>"
+		if(crime.valid)
+			final_paper_text += "<tr><td>[crime.name]</td>"
+			final_paper_text += "<td>[crime.details]</td>"
+			final_paper_text += "<td>[crime.author]</td>"
+			final_paper_text += "<td>[crime.time]</td>"
+		else
+			final_paper_text += "<td>--REDACTED--</td>"
+			final_paper_text += "<td>--REDACTED--</td>"
+			final_paper_text += "<td>--REDACTED--</td>"
+			final_paper_text += "<td>--REDACTED--</td>"
 		final_paper_text += "</tr>"
 	final_paper_text += "</table><br><br>"
 

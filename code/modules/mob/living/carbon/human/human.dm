@@ -212,7 +212,11 @@
 				var/setcriminal = tgui_input_list(human_user, "Specify a new criminal status for this person.", "Security HUD", WANTED_STATUSES(), target_record.wanted_status)
 				if(!setcriminal || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				investigate_log("has been set from [target_record.wanted_status] to [setcriminal] by [key_name(human_user)].", INVESTIGATE_RECORDS)
+
+				var/datum/crime/new_crime = new(author = human_user, details = "Set by HUD")
+				target_record.crimes += new_crime
+
+				investigate_log("has been set from [target_record.wanted_status] to [setcriminal] via HUD by [key_name(human_user)].", INVESTIGATE_RECORDS)
 				target_record.wanted_status = setcriminal
 				sec_hud_set_security_status()
 				return
@@ -224,14 +228,20 @@
 					return
 				to_chat(human_user, "<b>Name:</b> [target_record.name]")
 				to_chat(human_user, "<b>Criminal Status:</b> [target_record.wanted_status]")
-				to_chat(human_user, "<b>Rapsheet:</b>")
-				for(var/datum/crime/crime in target_record.crimes)
-					to_chat(human_user, "<b>Crime:</b> [crime.name]")
-					to_chat(human_user, "<b>Details:</b> [crime.details]")
-					to_chat(human_user, "Added by [crime.author] at [crime.time]")
-					to_chat(human_user, "----------")
 				to_chat(human_user, "<b>Citations:</b> [length(target_record.citations)]")
-				to_chat(human_user, "<b>Note:</b> [target_record.security_note || "None."]")
+				to_chat(human_user, "<b>Note:</b> [target_record.security_note || "None"]")
+				to_chat(human_user, "<b>Rapsheet:</b> [length(target_record.crimes)] incidents")
+				if(length(target_record.crimes))
+					for(var/datum/crime/crime in target_record.crimes)
+						if(!crime.valid)
+							to_chat(human_user, span_notice("-- REDACTED --"))
+							to_chat(human_user, "----------")
+							continue
+
+						to_chat(human_user, "<b>Crime:</b> [crime.name]")
+						to_chat(human_user, "<b>Details:</b> [crime.details]")
+						to_chat(human_user, "Added by [crime.author] at [crime.time]")
+						to_chat(human_user, "----------")
 
 				return
 

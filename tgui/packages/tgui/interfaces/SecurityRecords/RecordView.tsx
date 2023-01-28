@@ -46,6 +46,7 @@ const RecordInfo = (props, context) => {
   const {
     age,
     crew_ref,
+    crimes,
     fingerprint,
     gender,
     name,
@@ -54,6 +55,8 @@ const RecordInfo = (props, context) => {
     species,
     wanted_status,
   } = foundRecord;
+
+  const hasValidCrimes = !!crimes.find((crime) => !!crime.valid);
 
   return (
     <Stack fill vertical>
@@ -93,9 +96,10 @@ const RecordInfo = (props, context) => {
                 const isSelected = button === wanted_status;
                 return (
                   <Button
-                    key={index}
-                    icon={isSelected ? 'check' : ''}
                     color={isSelected ? CRIMESTATUS2COLOR[button] : 'grey'}
+                    disabled={!hasValidCrimes}
+                    icon={isSelected ? 'check' : ''}
+                    key={index}
                     onClick={() =>
                       act('set_wanted', {
                         crew_ref: crew_ref,
