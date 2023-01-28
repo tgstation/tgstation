@@ -28,7 +28,7 @@
  */
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
-	desc = "Opens up the path of blades to you. \
+	desc = "Opens up the Path of Blades to you. \
 		Allows you to transmute a knife with two bars of silver to create a Sundered Blade. \
 		You can create up to five at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
@@ -221,8 +221,8 @@
 /datum/heretic_knowledge/spell/realignment
 	name = "Realignment"
 	desc = "Grants you Realignment a spell that wil realign your body rapidly for a short period. \
-		During this process, you will rapidly regenerate stamina and stuns, however, you will be unable to attack. \
-		This spell can be casted in rapid succession, but doing so will increase the cooldown."
+		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
+		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
 	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
 	spell_to_add = /datum/action/cooldown/spell/realignment
@@ -388,7 +388,7 @@
 		These blades will protect you from all attacks, but are consumed on use. \
 		Your Furious Steel spell will also have a shorter cooldown. \
 		Additionally, you become a master of combat, gaining full wound and stun immunity. \
-		Your Sundered Blades deal bonus damage and healing you on attack for a portion of the damage dealt."
+		Your Sundered Blades deal bonus damage and heal you on attack for a portion of the damage dealt."
 	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 	route = PATH_BLADE

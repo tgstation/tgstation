@@ -302,6 +302,7 @@
 		"circuit_multitool",
 		"comp_access_checker",
 		"comp_arithmetic",
+		"comp_assoc_list_pick",
 		"comp_binary_convert",
 		"comp_clock",
 		"comp_comparison",
@@ -332,6 +333,7 @@
 		"comp_list_assoc_literal",
 		"comp_list_clear",
 		"comp_list_literal",
+		"comp_list_pick",
 		"comp_list_remove",
 		"comp_logic",
 		"comp_matscanner",
@@ -369,7 +371,7 @@
 		"component_printer",
 		"integrated_circuit",
 		"module_duplicator",
-		"usb_cable",
+		"usb_cable"
 	)
 
 /////////////////////////Biotech/////////////////////////
