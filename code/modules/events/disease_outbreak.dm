@@ -182,7 +182,7 @@
 		else
 			max_severity = ADV_DISEASE_DANGEROUS
 
-	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_symptoms, max_severity)
+	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, max_severity)
 
 	var/list/name_symptoms = list() // For feedback
 	for(var/datum/symptom/new_symptom in advanced_disease.symptoms)
@@ -196,7 +196,7 @@
 	else
 		log_game("An event attempted to trigger a random advanced virus outbreak on [key_name(victim)], but failed.")
 
-/datum/disease/advance/random
+/datum/disease/advance/random/event
 	name = "Experimental Disease"
 	copy_type = /datum/disease/advance
 
@@ -204,7 +204,7 @@
 	announce_when = ADV_ANNOUNCE_DELAY
 
 // Pick the symptoms of the generated virus.
-/datum/disease/advance/random/New(max_symptoms, max_severity)
+/datum/disease/advance/random/event/New(max_symptoms, max_severity)
 	var/list/datum/symptom/possible_symptoms = list(
 		/datum/symptom/beard,
 		/datum/symptom/chills,
@@ -253,7 +253,7 @@
 	name = "Sample #[rand(1, 9999)]"
 
 // Assign the properties for the virus
-/datum/disease/advance/random/AssignProperties()
+/datum/disease/advance/random/event/AssignProperties()
 	visibility_flags |= HIDDEN_SCANNER
 
 	//Spread method this virus should have
@@ -280,11 +280,11 @@
 		CRASH("Our virus properties were empty or null!")
 
 // Reveal the virus when the level 7 announcement happens
-/datum/disease/advance/random/proc/MakeVisible()
+/datum/disease/advance/random/event/proc/MakeVisible()
 	visibility_flags &= ~HIDDEN_SCANNER
 
 // Assign the spread type and give it the correct description
-/datum/disease/advance/random/SetSpread(spread_id)
+/datum/disease/advance/random/event/SetSpread(spread_id)
 	switch(spread_id)
 		if(DISEASE_SPREAD_CONTACT_FLUIDS)
 			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
@@ -297,7 +297,7 @@
 			spread_text = "Airborne"
 
 // Select 1 of 6 groups of potential cures
-/datum/disease/advance/random/GenerateCure()
+/datum/disease/advance/random/event/GenerateCure()
 	if(properties?.len)
 		var/res = rand(1, 6)
 		if(res == oldres)
