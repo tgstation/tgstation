@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
 	icon = 'icons/obj/machines/crossing_signal.dmi'
 	base_icon_state = "crossing-"
+	plane = GAME_PLANE_UPPER
 	max_integrity = 250
 	integrity_failure = 0.25
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
