@@ -14,7 +14,6 @@
 	speak_chance = 0
 	maxHealth = 15
 	health = 15
-	see_in_dark = 10
 	harm_intent_damage = 6
 	melee_damage_lower = 5
 	melee_damage_upper = 6

@@ -9,13 +9,11 @@
 
 /datum/action/adjust_vision/Grant(mob/living/grant_to)
 	. = ..()
-	grant_to.see_in_dark = NIGHTVISION_FOV_RANGE
 	grant_to.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	grant_to.update_sight()
 
 /datum/action/adjust_vision/Remove(mob/living/remove_from)
 	. = ..()
-	remove_from.see_in_dark = initial(remove_from.see_in_dark)
 	remove_from.lighting_alpha = initial(remove_from.lighting_alpha)
 	remove_from.update_sight()
 

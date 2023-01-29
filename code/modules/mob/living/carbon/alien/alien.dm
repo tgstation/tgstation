@@ -5,7 +5,6 @@
 	dna = null
 	faction = list(ROLE_ALIEN)
 	sight = SEE_MOBS
-	see_in_dark = 4
 	verb_say = "hisses"
 	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"

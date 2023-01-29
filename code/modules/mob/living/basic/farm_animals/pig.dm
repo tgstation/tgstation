@@ -9,7 +9,6 @@
 	gender = MALE
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("oinks","squees")
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab/pig = 6)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"

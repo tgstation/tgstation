@@ -8,7 +8,6 @@
 
 	maxHealth = 5
 	health = 5
-	see_in_dark = 6
 	density = FALSE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_TINY
