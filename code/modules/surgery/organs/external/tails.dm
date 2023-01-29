@@ -28,7 +28,7 @@
 
 		if(IS_WEAKREF_OF(reciever, original_owner))
 			reciever.clear_mood_event("wrong_tail_regained")
-		else if(type in reciever.dna.species.external_organs)
+		else if(type in reciever.dna.species.external_organs && !HAS_TRAIT(organ_owner, TRAIT_FRANKENSTEIN))
 			reciever.add_mood_event("wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
@@ -38,7 +38,8 @@
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
 	if(type in organ_owner.dna.species.external_organs)
-		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
+		if(!HAS_TRAIT(organ_owner, TRAIT_FRANKENSTEIN))
+			organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 
 /obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)

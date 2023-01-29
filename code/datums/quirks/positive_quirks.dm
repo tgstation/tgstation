@@ -292,3 +292,13 @@
 
 /datum/quirk/item_quirk/signer/remove()
 	qdel(quirk_holder.GetComponent(/datum/component/sign_language))
+
+/datum/quirk/frankensteins_monster
+	name = "Frankenstein's Monster"
+	desc = "You're very open-minded about medical malpractice. You don't have particular opinions about whose limbs or bodyparts you get, or even have."
+	icon = "user-doctor"
+	value = 1
+	mob_trait = TRAIT_FRANKENSTEIN
+	gain_text = span_notice("You have a mild wish to become Frankenstein's monster.")
+	lose_text = span_danger("You can no longer remember whether Frankenstein or his monster was the big baddie of the original book.")
+	mail_goodies = list(/obj/item/organ/external/tail)
