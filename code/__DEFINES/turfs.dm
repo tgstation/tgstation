@@ -28,7 +28,7 @@
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
 
 /// Returns a list of turfs in the rectangle specified by BOTTOM LEFT corner and height/width, checks for being outside the world border for you
-#define CORNER_BLOCK(corner, width, height) CORNER_BLOCK(corner, width, height, 0, 0)
+#define CORNER_BLOCK(corner, width, height) CORNER_BLOCK_OFFSET(corner, width, height, 0, 0)
 
 /// Returns a list of turfs similar to CORNER_BLOCK but with offsets
 #define CORNER_BLOCK_OFFSET(corner, width, height, offset_x, offset_y) ((block(locate(corner.x + offset_x, corner.y + offset_y, corner.z), locate(min(corner.x + (width - 1) + offset_x, world.maxx), min(corner.y + (height - 1) + offset_y, world.maxy), corner.z))))
