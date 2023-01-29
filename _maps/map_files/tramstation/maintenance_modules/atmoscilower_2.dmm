@@ -26,6 +26,17 @@
 /obj/structure/girder,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
+"cw" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"cV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
 "dE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -119,7 +130,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/dug,
 /area/station/asteroid)
 "mP" = (
 /turf/closed/wall/rock/porous,
@@ -152,6 +163,14 @@
 	},
 /turf/open/floor/plating,
 /area/station/asteroid)
+"qB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
 "tS" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
@@ -580,7 +599,7 @@ JU
 KC
 KC
 To
-wc
+cV
 XC
 To
 KC
@@ -876,7 +895,7 @@ JU
 JU
 nM
 nM
-nM
+iq
 nM
 gr
 WY
@@ -903,11 +922,11 @@ JU
 JU
 JU
 nM
-nM
+yD
 yD
 CD
-nM
-NY
+yD
+cw
 lF
 na
 Ou
@@ -1691,7 +1710,7 @@ KC
 KC
 KC
 KC
-NH
+qB
 NH
 NH
 To

@@ -2,120 +2,267 @@
 "a" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/north{
+	id = "weirdpodthing2"
+	},
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/item/wallframe/button,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"i" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/east{
+	id = "weirdpodthing1"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"o" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"q" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"r" = (
+/obj/structure/grille,
+/obj/structure/window/spawner/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"t" = (
+/obj/structure/grille,
+/obj/structure/window/spawner/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 "w" = (
 /obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"x" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"C" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/lesser)
+"D" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"H" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance/three,
+/obj/machinery/button/door/directional/north{
+	id = "weirdpodthing1"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"O" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"P" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/shutters{
+	id = "weirdpodthing1"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"R" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/sand,
+/obj/machinery/door/poddoor/shutters{
+	id = "weirdpodthing2"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"T" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/decoration/material,
+/obj/effect/spawner/random/decoration/material,
+/obj/effect/spawner/random/engineering/material,
+/obj/effect/spawner/random/engineering/material,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "W" = (
 /turf/template_noop,
 /area/template_noop)
+"X" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/shutters{
+	id = "weirdpodthing2"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"Z" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 
 (1,1,1) = {"
 W
 a
+C
+C
+C
+C
+C
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+C
+C
+C
+C
+C
 a
 "}
 (2,1,1) = {"
 W
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+C
+C
+H
+r
+O
+C
+C
+i
+C
+C
+e
+r
+v
+C
+C
 "}
 (3,1,1) = {"
 w
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+F
+x
+M
+M
+M
+P
+m
+b
+f
+X
+M
+M
+M
+X
+D
 "}
 (4,1,1) = {"
-W
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+F
+P
+M
+M
+M
+P
+m
+b
+F
+X
+M
+M
+M
+R
+D
 "}
 (5,1,1) = {"
 W
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+C
+C
+T
+t
+q
+C
+C
+i
+C
+C
+A
+t
+A
+C
+o
 "}
 (6,1,1) = {"
 W
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+C
+C
+C
+C
+C
+Z
+Z
+Z
+C
+C
+C
+C
+C
 a
 "}
 (7,1,1) = {"
@@ -123,13 +270,13 @@ W
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
+Z
+Z
+Z
+Z
+Z
+Z
+Z
 a
 a
 a
@@ -140,11 +287,11 @@ a
 W
 a
 a
-a
-a
-a
-a
-a
+Z
+Z
+Z
+Z
+Z
 a
 a
 a
@@ -160,9 +307,9 @@ a
 a
 a
 a
-a
-a
-a
+Z
+Z
+Z
 a
 W
 W
@@ -179,8 +326,8 @@ a
 a
 a
 a
-a
-a
+Z
+Z
 a
 W
 W
