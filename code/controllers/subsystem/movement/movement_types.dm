@@ -384,7 +384,7 @@
 	///Bool used to determine if we're already making a path in JPS. this prevents us from re-pathing while we're already busy.
 	var/is_pathing = FALSE
 	///The initial path we received from an outside source. Can be used to save CPU if you had already calculated a path initially outside of the moveloop.
-	var/list/initial_pat
+	var/list/initial_path
 	///Callback to invoke once we make a path
 	var/datum/callback/on_finish_callback
 
