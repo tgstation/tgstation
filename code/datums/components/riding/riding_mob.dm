@@ -410,3 +410,20 @@
 	set_vehicle_dir_offsets(NORTH, movable_parent.pixel_x, 0)
 	set_vehicle_dir_offsets(EAST, movable_parent.pixel_x, 0)
 	set_vehicle_dir_offsets(WEST, movable_parent.pixel_x, 0)
+
+/datum/component/riding/creature/guardian
+	can_be_driven = FALSE
+
+/datum/component/riding/creature/guardian/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list(6, 3)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
+
+/datum/component/riding/creature/guardian/ride_check(mob/living/user, consequences = TRUE)
+	var/mob/living/simple_animal/hostile/guardian/charger = parent
+	if(!istype(charger))
+		return ..()
+	return charger.summoner == user

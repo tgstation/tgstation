@@ -198,7 +198,7 @@
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return
 		else if(O.tool_behaviour == TOOL_SCREWDRIVER)
-			panel_open = !panel_open
+			toggle_panel_open()
 			O.play_tool_sound(src)
 			if(panel_open)
 				to_chat(user, span_notice("You open the access panel."))

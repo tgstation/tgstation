@@ -221,7 +221,7 @@
 
 /// Extra checks ran while we're healing something (organ, mob).
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_checks(obj/item/melee/touch_attack/hand, atom/healing, mob/living/carbon/caster)
-	if(QDELETED(src) || QDELETED(hand) ||QDELETED(healing) || !IsAvailable())
+	if(QDELETED(src) || QDELETED(hand) || QDELETED(healing) || !IsAvailable())
 		return FALSE
 
 	return TRUE

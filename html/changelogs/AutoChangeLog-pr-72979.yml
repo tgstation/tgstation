@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - imageadd: "new inhand sprites for the holy flask"
+  - bugfix: "chaplains will no longer look like they are carrying a beer bottle when holding their holy flask"

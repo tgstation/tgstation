@@ -274,18 +274,13 @@ Doesn't work on other aliens/AI.*/
 	build_all_button_icons()
 	on_who.update_icons()
 
+// We do this in InterceptClickOn() instead of Activate()
+// because we use the click parameters for aiming the projectile
+// (or something like that)
 /datum/action/cooldown/alien/acid/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
 	if(!.)
 		unset_click_ability(caller, refund_cooldown = FALSE)
-		return FALSE
-
-	// We do this in InterceptClickOn() instead of Activate()
-	// because we use the click parameters for aiming the projectile
-	// (or something like that)
-	var/turf/user_turf = caller.loc
-	var/turf/target_turf = get_step(caller, target.dir) // Get the tile infront of the move, based on their direction
-	if(!isturf(target_turf))
 		return FALSE
 
 	var/modifiers = params2list(params)
@@ -297,7 +292,7 @@ Doesn't work on other aliens/AI.*/
 	neurotoxin.preparePixelProjectile(target, caller, modifiers)
 	neurotoxin.firer = caller
 	neurotoxin.fire()
-	caller.newtonian_move(get_dir(target_turf, user_turf))
+	caller.newtonian_move(get_dir(target, caller))
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.

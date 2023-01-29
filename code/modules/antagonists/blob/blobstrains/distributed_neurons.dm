@@ -37,6 +37,6 @@
 			spore.overmind = overmind
 			spore.update_icons()
 			overmind.blob_mobs.Add(spore)
-			spore.Zombify(exposed_mob)
+			spore.zombify(exposed_mob)
 			overmind.add_points(-5)
 			to_chat(overmind, span_notice("Spent 5 resources for the zombification of [exposed_mob]."))

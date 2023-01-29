@@ -41,6 +41,7 @@
 	if(!proximity_flag)
 		return
 	add_reagent(target)
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /datum/element/venomous/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER

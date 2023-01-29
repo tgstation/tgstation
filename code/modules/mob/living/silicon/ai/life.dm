@@ -5,10 +5,6 @@
 
 	update_gravity(has_gravity())
 
-	handle_status_effects(delta_time, times_fired)
-
-	handle_traits(delta_time, times_fired)
-
 	if(malfhack?.aidisabled)
 		deltimer(malfhacking)
 		// This proc handles cleanup of screen notifications and
@@ -62,6 +58,7 @@
 	update_stat()
 	diag_hud_set_health()
 	disconnect_shell()
+	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/silicon/ai/update_stat()
 	if(status_flags & GODMODE)
@@ -111,7 +108,7 @@
 	var/obj/machinery/power/apc/theAPC = null
 
 	var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
-	for (PRP=1, PRP<=4, PRP++)
+	for (PRP=1, PRP <= 4, PRP++)
 		T = get_turf(src)
 		AIarea = get_area(src)
 		if(AIarea)
@@ -156,14 +153,14 @@
 		else
 			to_chat(src, span_notice("Alert cancelled. Power has been restored without our assistance."))
 		setAiRestorePowerRoutine(POWER_RESTORATION_OFF)
-		set_blindness(0)
+		remove_status_effect(/datum/status_effect/temporary_blindness)
 		apc_override = null
 		update_sight()
 
 /mob/living/silicon/ai/proc/ai_lose_power()
 	disconnect_shell()
 	setAiRestorePowerRoutine(POWER_RESTORATION_START)
-	adjust_blindness(1)
+	adjust_temp_blindness(2 SECONDS)
 	update_sight()
 	to_chat(src, span_alert("You've lost power!"))
 	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 20)

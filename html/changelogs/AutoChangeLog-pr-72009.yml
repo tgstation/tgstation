@@ -1,6 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - spellcheck: "Admin fax report names now default to standard report rather than standart."
-  - rscdel: "Central Command can no longer be faxed directly from fax machines."
-  - spellcheck: "Replaced the ability to contact central command directly by being able to contact a randomly selected nanotrasen department."

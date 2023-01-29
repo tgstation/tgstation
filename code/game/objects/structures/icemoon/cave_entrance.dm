@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
  */
 /obj/effect/collapsing_demonic_portal/proc/drop_loot()
 	visible_message(span_warning("Something slips out of [src]!"))
-	var/loot = rand(1, 28)
+	var/loot = rand(1, 27)
 	switch(loot)
 		if(1)
 			new /obj/item/clothing/suit/hooded/cultrobes/hardened(loc)
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 			new /obj/item/ship_in_a_bottle(loc)
 			new /obj/item/oar(loc)
 		if(16)
-			new /obj/item/seeds/gatfruit(loc)
+			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
 		if(17)
 			new /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola(loc)
 		if(18)
@@ -192,5 +192,3 @@ GLOBAL_LIST_INIT(ore_probability, list(
 			new /obj/item/clothing/shoes/winterboots/ice_boots(loc)
 		if(27)
 			new /obj/item/book/granter/action/spell/sacredflame(loc)
-		if(28)
-			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)

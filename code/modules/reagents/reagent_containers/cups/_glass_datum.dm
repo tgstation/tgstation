@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 	icon = 'icons/obj/drinks/shot_glasses.dmi'
 
 /datum/glass_style/juicebox
-	required_container_type = /obj/item/reagent_containers/cup/glass/sillycup/smallcarton
+	required_container_type = /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton
 	icon = 'icons/obj/drinks/boxes.dmi'
 	/// This style changes the "drink type" of the container it's placed it as well, it's like food types
 	var/drink_type = NONE

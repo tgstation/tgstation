@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "Hitting a vendor from inside a wall will cause it to fall away from you, rather than crushing you without being able to move to your tile."

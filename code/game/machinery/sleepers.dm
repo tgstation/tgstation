@@ -64,14 +64,14 @@
 /obj/machinery/sleeper/RefreshParts()
 	. = ..()
 	var/matterbin_rating
-	for(var/obj/item/stock_parts/matter_bin/matterbins in component_parts)
-		matterbin_rating += matterbins.rating
+	for(var/datum/stock_part/matter_bin/matterbins in component_parts)
+		matterbin_rating += matterbins.tier
 	efficiency = initial(efficiency) * matterbin_rating
 	min_health = initial(min_health) * matterbin_rating
 
 	available_chems.Cut()
-	for(var/obj/item/stock_parts/manipulator/manipulators in component_parts)
-		for(var/i in 1 to manipulators.rating)
+	for(var/datum/stock_part/manipulator/manipulators in component_parts)
+		for(var/i in 1 to manipulators.tier)
 			available_chems |= possible_chems[i]
 
 	reset_chem_buttons()

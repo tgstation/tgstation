@@ -12,10 +12,17 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 30, ACID = 30, WOUND = 10)
+	armor_type = /datum/armor/rank_security
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+
+/datum/armor/rank_security
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
+	wound = 10
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security uniform"
@@ -138,8 +145,15 @@
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos"
 	inhand_icon_state = "r_suit"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 50, WOUND = 10)
+	armor_type = /datum/armor/security_head_of_security
 	strip_delay = 60
+
+/datum/armor/security_head_of_security
+	melee = 10
+	bio = 10
+	fire = 50
+	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/security/head_of_security/skirt
 	name = "head of security's skirt"
@@ -212,6 +226,8 @@
 	name = "prison jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "jumpsuit"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "prisonsuit"
 	inhand_icon_state = "jumpsuit"
 	greyscale_colors = "#ff8300"
 	greyscale_config = /datum/greyscale_config/jumpsuit_prison
@@ -226,6 +242,8 @@
 	name = "prison jumpskirt"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "jumpskirt"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "prisonskirt"
 	greyscale_colors = "#ff8300"
 	greyscale_config = /datum/greyscale_config/jumpsuit_prison
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_prison_inhand_left

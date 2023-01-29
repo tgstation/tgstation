@@ -3,7 +3,6 @@
 	circuit = /obj/item/circuitboard/computer/order_console/mining/golem
 	forced_express = TRUE
 	express_cost_multiplier = 1
-	uses_ltsrbt = FALSE
 	order_categories = list(
 		CATEGORY_GOLEM,
 		CATEGORY_MINING,

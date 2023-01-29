@@ -19,44 +19,53 @@
 #define BRAIN "brain"
 
 //Damage flag defines //
-/// Involves a melee attack or a thrown object.
-#define MELEE "melee"
-/// Involves a solid projectile.
-#define BULLET "bullet"
-/// Involves a laser.
-#define LASER "laser"
-/// Involves an EMP or energy-based projectile.
-#define ENERGY "energy"
-/// Involves a shockwave, usually from an explosion.
-#define BOMB "bomb"
-/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
-#define BIO "bio"
-/// Involves fire or temperature extremes.
-#define FIRE "fire"
+
 /// Involves corrosive substances.
 #define ACID "acid"
-/// Involved in checking the likelyhood of applying a wound to a mob.
-#define WOUND "wound"
+/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
+#define BIO "bio"
+/// Involves a shockwave, usually from an explosion.
+#define BOMB "bomb"
+/// Involves a solid projectile.
+#define BULLET "bullet"
 /// Involves being eaten
 #define CONSUME "consume"
+/// Involves an EMP or energy-based projectile.
+#define ENERGY "energy"
+/// Involves fire or temperature extremes.
+#define FIRE "fire"
+/// Involves a laser.
+#define LASER "laser"
+/// Involves a melee attack or a thrown object.
+#define MELEE "melee"
+/// Involved in checking the likelyhood of applying a wound to a mob.
+#define WOUND "wound"
+
+#define ARMOR_ALL "all_damage_types"
+
+/// Armor values that are used for damage
+#define ARMOR_LIST_DAMAGE(...) list(BIO, BOMB, BULLET, ENERGY, LASER, MELEE, WOUND)
+
+/// Armor values that are used for durability
+#define ARMOR_LIST_DURABILITY(...) list(ACID, FIRE)
+
+/// All armors, preferable in the order as seen above
+#define ARMOR_LIST_ALL(...) list(ACID, BIO, BOMB, BULLET, CONSUME, ENERGY, FIRE, LASER, MELEE, WOUND)
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)
 #define FIRELOSS (1<<1)
 #define TOXLOSS (1<<2)
 #define OXYLOSS (1<<3)
-#define SHAME             (1<<4)
+#define SHAME (1<<4)
 #define MANUAL_SUICIDE (1<<5) //suicide_act will do the actual killing.
-#define MANUAL_SUICIDE_NONLETHAL (1<<6)  //when the suicide is conditionally lethal
+#define MANUAL_SUICIDE_NONLETHAL (1<<6) //when the suicide is conditionally lethal
 
 #define EFFECT_STUN "stun"
 #define EFFECT_KNOCKDOWN "knockdown"
 #define EFFECT_UNCONSCIOUS "unconscious"
 #define EFFECT_PARALYZE "paralyze"
 #define EFFECT_IMMOBILIZE "immobilize"
-#define EFFECT_EYE_BLUR "eye_blur"
-#define EFFECT_DROWSY "drowsy"
-
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN (1<<0)
 #define CANKNOCKDOWN (1<<1)
@@ -187,7 +196,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 ///  Example: c20, shotguns, m90
 #define BOLT_TYPE_STANDARD 1
 ///Gun has a bolt, it is open when ready to fire. The gun can never have a chambered bullet with no magazine, but the bolt stays ready when a mag is removed.
-///  Example: Some SMGs, the L6
+///  Example: Tomson, Uzi, the L6 SAW
 #define BOLT_TYPE_OPEN 2
 ///Gun has no moving bolt mechanism, it cannot be racked. Also dumps the entire contents when emptied instead of a magazine.
 ///  Example: Break action shotguns, revolvers
@@ -276,6 +285,13 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Proceed with the attack chain, but don't call the normal methods.
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
+
+/// Flag for when /afterattack potentially acts on an item.
+/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
+/// Does not necessarily imply success, or even that it did hit an item, just intent.
+// This is intentionally not (1 << 0) because some stuff currently erroneously returns TRUE/FALSE for afterattack.
+// Doesn't need to be set if proximity flag is FALSE.
+#define AFTERATTACK_PROCESSED_ITEM (1 << 1)
 
 //Autofire component
 /// Compatible firemode is in the gun. Wait until it's held in the user hands.

@@ -18,9 +18,10 @@
 
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(toxpwr && affected_mob.health > health_required)
@@ -68,9 +69,12 @@
 	return ..()
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.mutation_roll(user)
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
+
+	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
 #define LIQUID_PLASMA_IG (325+T0C)
@@ -206,21 +210,6 @@
 		. = TRUE
 	..()
 
-/datum/reagent/toxin/minttoxin
-	name = "Mint Toxin"
-	description = "Useful for dealing with undesirable customers."
-	color = "#CF3600" // rgb: 207, 54, 0
-	toxpwr = 0
-	taste_description = "mint"
-	ph = 8
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	if(HAS_TRAIT(affected_mob, TRAIT_FAT))
-		affected_mob.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
-		affected_mob.inflate_gib()
-	return ..()
-
 /datum/reagent/toxin/carpotoxin
 	name = "Carpotoxin"
 	description = "A deadly neurotoxin produced by the dreaded spess carp."
@@ -270,7 +259,7 @@
 	switch(current_cycle)
 		if(1 to 5)
 			affected_mob.adjust_confusion(1 SECONDS * REM * delta_time)
-			affected_mob.adjust_drowsyness(1 * REM * delta_time)
+			affected_mob.adjust_drowsiness(2 SECONDS * REM * delta_time)
 			affected_mob.adjust_slurring(6 SECONDS * REM * delta_time)
 		if(5 to 8)
 			affected_mob.adjustStaminaLoss(40 * REM * delta_time, 0)
@@ -349,17 +338,21 @@
 
 	// Plant-B-Gone is just as bad
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 10))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 6))
-		mytray.adjust_weedlevel(-rand(4,8))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 10))
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 6))
+	mytray.adjust_weedlevel(-rand(4,8))
 
 /datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if(istype(exposed_obj, /obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = exposed_obj
-		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
+		alien_weeds.take_damage(rand(15, 35), BRUTE, 0) // Kills alien weeds pretty fast
+	if(istype(exposed_obj, /obj/structure/alien/resin/flower_bud))
+		var/obj/structure/alien/resin/flower_bud/flower = exposed_obj
+		flower.take_damage(rand(30, 50), BRUTE, 0)
 	else if(istype(exposed_obj, /obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(exposed_obj)
 	else if(istype(exposed_obj, /obj/structure/spacevine))
@@ -370,9 +363,13 @@
 	. = ..()
 	var/damage = min(round(0.4 * reac_volume, 0.1), 10)
 	if(exposed_mob.mob_biotypes & MOB_PLANT)
-		exposed_mob.adjustToxLoss(damage, required_biotype = affected_biotype)
+		// spray bottle emits 5u so it's dealing ~15 dmg per spray
+		exposed_mob.adjustToxLoss(damage * 20, required_biotype = affected_biotype)
+		return
+
 	if(!(methods & VAPOR) || !iscarbon(exposed_mob))
 		return
+
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	if(!exposed_carbon.wear_mask)
 		exposed_carbon.adjustToxLoss(damage, required_biotype = affected_biotype)
@@ -386,11 +383,11 @@
 
 	//Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!mytray)
+	if(!check_tray(chems, mytray))
 		return
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.5))
-		mytray.adjust_weedlevel(-rand(1,2))
+
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.5))
+	mytray.adjust_weedlevel(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
@@ -402,11 +399,11 @@
 
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!mytray)
+	if(!check_tray(chems, mytray))
 		return
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_pestlevel(-rand(1,2))
+
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
+	mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -423,11 +420,11 @@
 
 //Pest Spray
 /datum/reagent/toxin/pestkiller/organic/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!mytray)
+	if(!check_tray(chems, mytray))
 		return
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.1))
-		mytray.adjust_pestlevel(-rand(1,2))
+
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.1))
+	mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -440,7 +437,7 @@
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.damageoverlaytemp = 60
 	affected_mob.update_damage_hud()
-	affected_mob.blur_eyes(3 * REM * delta_time)
+	affected_mob.set_eye_blur_if_lower(6 SECONDS * REM * delta_time)
 	return ..()
 
 /datum/reagent/toxin/spore_burning
@@ -475,7 +472,7 @@
 	switch(current_cycle)
 		if(1 to 10)
 			affected_mob.adjust_confusion(2 SECONDS * REM * normalise_creation_purity() * delta_time)
-			affected_mob.adjust_drowsyness(2 * REM * normalise_creation_purity() * delta_time)
+			affected_mob.adjust_drowsiness(4 SECONDS * REM * normalise_creation_purity() * delta_time)
 		if(10 to 50)
 			affected_mob.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 			. = TRUE
@@ -609,7 +606,7 @@
 		switch(pick(1, 2, 3, 4))
 			if(1)
 				to_chat(affected_mob, span_danger("You can barely see!"))
-				affected_mob.blur_eyes(3)
+				affected_mob.set_eye_blur_if_lower(6 SECONDS)
 			if(2)
 				affected_mob.emote("cough")
 			if(3)
@@ -1050,11 +1047,12 @@
 
 // ...Why? I mean, clearly someone had to have done this and thought, well, acid doesn't hurt plants, but what brought us here, to this point?
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 1))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
-		mytray.adjust_weedlevel(-rand(1,2))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
+	mytray.adjust_weedlevel(-rand(1,2))
 
 /datum/reagent/toxin/acid/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1096,11 +1094,12 @@
 
 // SERIOUSLY
 /datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 2))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 3))
-		mytray.adjust_weedlevel(-rand(1,4))
+	if(!check_tray(chems, mytray))
+		return
+
+	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 2))
+	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 3))
+	mytray.adjust_weedlevel(-rand(1,4))
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjustFireLoss((current_cycle/15) * REM * normalise_creation_purity() * delta_time, FALSE, required_bodytype = affected_bodytype)

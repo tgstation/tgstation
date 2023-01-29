@@ -14,7 +14,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/wendigo
 	name = "wendigo"
-	desc = "A mythological man-eating legendary creature, you probably aren't going to survive this."
+	desc = "A mythological man-eating legendary creature, the sockets of it's eyes track you with an unsatiated hunger."
 	health = 2500
 	maxHealth = 2500
 	icon_state = "wendigo"
@@ -50,7 +50,7 @@ Difficulty: Hard
 	achievement_type = /datum/award/achievement/boss/wendigo_kill
 	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
 	score_achievement_type = /datum/award/score/wendigo_score
-	death_message = "falls, shaking the ground around it"
+	death_message = "falls to the ground in a bloody heap, shaking the arena"
 	death_sound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
@@ -292,7 +292,7 @@ Difficulty: Hard
 
 /obj/item/wendigo_blood
 	name = "bottle of wendigo blood"
-	desc = "You're not actually going to drink this, are you?"
+	desc = "A bottle of viscous red liquid... You're not actually going to drink this, are you?"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
@@ -310,7 +310,7 @@ Difficulty: Hard
 
 /obj/item/crusher_trophy/wendigo_horn
 	name = "wendigo horn"
-	desc = "A horn from the head of an unstoppable beast."
+	desc = "A gnarled horn ripped from the skull of a wendigo. Suitable as a trophy for a kinetic crusher."
 	icon_state = "wendigo_horn"
 	denied_type = /obj/item/crusher_trophy/wendigo_horn
 
@@ -329,7 +329,7 @@ Difficulty: Hard
 
 /obj/item/wendigo_skull
 	name = "wendigo skull"
-	desc = "A skull of a massive hulking beast."
+	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
 	icon = 'icons/obj/ice_moon/artifacts.dmi'
 	icon_state = "wendigo_skull"
 	w_class = WEIGHT_CLASS_TINY

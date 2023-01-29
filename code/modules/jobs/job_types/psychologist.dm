@@ -7,7 +7,6 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the Head of Personnel and the Chief Medical Officer"
-	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "PSYCHOLOGIST"
 

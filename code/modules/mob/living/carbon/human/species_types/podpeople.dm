@@ -3,7 +3,10 @@
 	name = "\improper Podperson"
 	plural_form = "Podpeople"
 	id = SPECIES_PODPERSON
-	species_traits = list(MUTCOLORS, EYECOLOR, HAS_FLESH, HAS_BONE)
+	species_traits = list(
+		MUTCOLORS,
+		EYECOLOR,
+	)
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
 	)

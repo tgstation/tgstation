@@ -111,7 +111,7 @@
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=10000)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
 	var/max_portal_pairs = 3
@@ -124,6 +124,11 @@
 	 * - A weakref to a /obj/machinery/computer/teleporter, meaning the last place it teleported to was a pre-setup location.
 	*/
 	var/last_portal_location
+
+/datum/armor/item_hand_tele
+	bomb = 30
+	fire = 100
+	acid = 100
 
 /obj/item/hand_tele/Initialize(mapload)
 	. = ..()

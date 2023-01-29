@@ -460,13 +460,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if (CONFIG_GET(flag/irc_first_connection_alert))
 				send2tgs_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
 	else if (isnum(cached_player_age) && cached_player_age < nnpa)
-		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
+		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age == 1?"":"s")]")
 	if(CONFIG_GET(flag/use_account_age_for_jobs) && account_age >= 0)
 		player_age = account_age
 	if(account_age >= 0 && account_age < nnpa)
-		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
+		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].")
 		if (CONFIG_GET(flag/irc_first_connection_alert))
-			send2tgs_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
+			send2tgs_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].")
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 	validate_key_in_db()
@@ -1289,3 +1289,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		winset(usr, "mapwindow.status_bar", "is-visible=true")
 	else
 		winset(usr, "mapwindow.status_bar", "is-visible=false")
+
+/// Clears the client's screen, aside from ones that opt out
+/client/proc/clear_screen()
+	for (var/object in screen)
+		if (istype(object, /atom/movable/screen))
+			var/atom/movable/screen/screen_object = object
+			if (!screen_object.clear_with_screen)
+				continue
+
+		screen -= object

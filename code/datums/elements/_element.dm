@@ -9,7 +9,7 @@
 	var/element_flags = NONE
 	/**
 	  * The index of the first attach argument to consider for duplicate elements
-	  * 
+	  *
 	  * All arguments from this index onwards (1 based) are hashed into the key to determine
 	  * if this is a new unique element or one already exists
 	  *
@@ -55,7 +55,7 @@
 	var/datum/element/ele = SSdcs.GetElement(arguments)
 	arguments[1] = src
 	if(ele.Attach(arglist(arguments)) == ELEMENT_INCOMPATIBLE)
-		CRASH("Incompatible [arguments[1]] assigned to a [type]! args: [json_encode(args)]")
+		CRASH("Incompatible element [ele.type] was assigned to a [type]! args: [json_encode(args)]")
 
 /**
  * Finds the singleton for the element type given and detaches it from src

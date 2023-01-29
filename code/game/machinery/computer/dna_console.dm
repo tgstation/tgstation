@@ -692,7 +692,7 @@
 				new_pair = (pair_str ? char + (pair_str[1] == char ? pair_str[2] : pair_str[1]) : null)
 				// every second letter in the sequence represents a valid pair of the new sequence, otherwise it belongs to old
 				if(new_pair)
-					if(i%2==0)
+					if(i%2 == 0)
 						new_sequence+=new_pair
 					else
 						old_sequence+=new_pair
@@ -1564,13 +1564,8 @@
 		// params["mutref"] - ATOM Ref of specific mutation to add to the injector
 		// params["advinj"] - Name of the advanced injector to add the mutation to
 		if("add_advinj_mut")
-			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
-			//  operational guard checks.
-			// This is needed because this operation can only be completed from the
-			//  genetic sequencer.
-			if(!can_modify_occupant())
+			if(!scanner_operational())
 				return
-
 			var/adv_inj = params["advinj"]
 
 			// GUARD CHECK - Make sure our advanced injector actually exists. This
@@ -1598,6 +1593,9 @@
 				return
 
 			var/bref = params["mutref"]
+			if(search_flag & SEARCH_OCCUPANT)
+				if(!can_modify_occupant())
+					return
 			// We've already made sure we can modify the occupant, so this is safe to
 			//  call
 			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flag)

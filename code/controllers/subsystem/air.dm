@@ -534,7 +534,9 @@ SUBSYSTEM_DEF(air)
 		active.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
 	#endif
 	active_turfs.Cut()
-	var/time = 0
+	// We compare this against turf.current cycle using <= to ensure O(n)
+	// It defaults to 0, so we start at -1
+	var/time = -1
 
 	for(var/turf/T as anything in ALL_TURFS())
 		if (!T.init_air)

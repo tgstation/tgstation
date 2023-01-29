@@ -134,6 +134,10 @@
 						/obj/item/radio/headset/headset_cargo)
 		ears = new headset(src)
 
+/mob/living/simple_animal/parrot/Destroy()
+	QDEL_NULL(ears)
+	return ..()
+
 /mob/living/simple_animal/parrot/examine(mob/user)
 	. = ..()
 	if(stat)
@@ -159,9 +163,7 @@
 
 /mob/living/simple_animal/parrot/get_status_tab_items()
 	. = ..()
-	. += ""
 	. += "Held Item: [held_item]"
-	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()

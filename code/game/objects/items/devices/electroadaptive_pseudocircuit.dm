@@ -54,6 +54,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!is_type_in_typecache(target, recycleable_circuits))
 		return
 	circuits++

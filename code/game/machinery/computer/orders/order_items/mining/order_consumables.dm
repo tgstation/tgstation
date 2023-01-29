@@ -13,6 +13,11 @@
 	item_path = /obj/item/storage/medkit/brute
 	cost_per_order = 600
 
+/datum/orderable_item/consumables/medkit_fire
+	item_path = /obj/item/storage/medkit/fire
+	desc = "For emergency magmatic burn relief."
+	cost_per_order = 700
+
 /datum/orderable_item/consumables/whiskey
 	item_path = /obj/item/reagent_containers/cup/glass/bottle/whiskey
 	cost_per_order = 100

@@ -68,7 +68,7 @@
 	if(..())
 		return
 	check_rcd()
-	base_console.internal_rcd.ui_always_active = TRUE
+	base_console.internal_rcd.owner = base_console
 	base_console.internal_rcd.ui_interact(owner)
 
 ///Generic action used with base construction consoles to build anything that can't be built with an RCD

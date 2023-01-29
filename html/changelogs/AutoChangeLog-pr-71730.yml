@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - code_imp: "Roundstart \"starting\" should be much snappier now"

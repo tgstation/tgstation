@@ -66,7 +66,7 @@
 				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
 					uplink_items += item
 					continue
-		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
+		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, 1, uplink_items)
 
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -258,7 +258,7 @@
 	result += objectives_text
 
 	if(uplink_handler)
-		result += "<br>The traitor had a total of [uplink_handler.progression_points] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
+		result += "<br>The traitor had a total of [DISPLAY_PROGRESSION(uplink_handler.progression_points)] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
 
 	var/special_role_text = lowertext(name)
 

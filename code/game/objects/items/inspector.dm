@@ -62,7 +62,7 @@
 	if(user.combat_mode)
 		return
 	cell_cover_open = !cell_cover_open
-	balloon_alert(user, "You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].")
+	balloon_alert(user, "[cell_cover_open ? "opened" : "closed"] cell cover")
 	return TRUE
 
 /obj/item/inspector/attackby(obj/item/I, mob/user, params)
@@ -225,13 +225,13 @@
 		time_mode = INSPECTOR_TIME_MODE_FAST
 		message = "LIGHTNING FAST."
 
-	balloon_alert(user, "You turn the screw-like dial, setting the device's scanning speed to [message]")
+	balloon_alert(user, "scanning speed set to [message]")
 
 /obj/item/inspector/clown/proc/cycle_sound(mob/user)
 	print_sound_mode++
 	if(print_sound_mode > max_mode)
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
-	balloon_alert(user, "You turn the dial with holes in it, setting the device's bleep setting to [mode_names[print_sound_mode]] mode.")
+	balloon_alert(user, "bleep setting set to [mode_names[print_sound_mode]]")
 
 /obj/item/inspector/clown/create_slip()
 	var/obj/item/paper/fake_report/slip = new(get_turf(src))
@@ -324,7 +324,7 @@
 			time_mode = INSPECTOR_TIME_MODE_HONK
 			power_per_print = INSPECTOR_POWER_USAGE_HONK
 			message = "HONK!"
-	balloon_alert(user, "You turn the screw-like dial, setting the device's scanning speed to [message]")
+	balloon_alert(user, "scanning speed set to [message]")
 
 /**
  * Reports printed by fake N-spect scanner

@@ -56,7 +56,11 @@
 	inhand_icon_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
+	armor_type = /datum/armor/backpack_holding
+
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/holding/Initialize(mapload)
 	. = ..()

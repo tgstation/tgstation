@@ -45,11 +45,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/white,
-/obj/item/pen/blue,
 /obj/machinery/light/directional/north,
+/obj/machinery/computer/med_data,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dQ" = (
@@ -76,11 +73,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/computer/station_alert{
-	desc = "Used to access the shuttle's automated alert system.";
-	dir = 1;
-	name = "ship alert console"
-	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/head/collectable/welding,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "en" = (
@@ -101,6 +95,19 @@
 "gQ" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"iO" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "iP" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -134,11 +141,8 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/red,
-/obj/item/pen/red,
 /obj/machinery/light/directional/north,
+/obj/machinery/computer/secure_data,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "jT" = (
@@ -155,6 +159,16 @@
 "kd" = (
 /turf/template_noop,
 /area/template_noop)
+"kE" = (
+/obj/structure/table/wood/fancy,
+/obj/item/flashlight/flare/candle/infinite{
+	desc = "A synthetic candle that won't melt down.";
+	name = "crimson red candle";
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "kJ" = (
 /obj/structure/table/wood/fancy,
 /obj/item/food/burger/baconburger{
@@ -180,9 +194,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/computer/secure_data{
-	dir = 4
-	},
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "lJ" = (
@@ -297,9 +312,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
-/obj/item/clothing/head/collectable/welding{
-	pixel_y = 5
+/obj/machinery/computer/station_alert{
+	desc = "Used to access the shuttle's automated alert system.";
+	dir = 8;
+	name = "ship alert console"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -385,9 +401,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/computer/med_data{
-	dir = 8
-	},
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/folder/white,
+/obj/item/pen/blue,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "sW" = (
@@ -408,19 +425,6 @@
 	anchored = 1;
 	name = "statue of an AI hologram"
 	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"tJ" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/cup/glass/mug/britcup{
-	pixel_x = 8;
-	pixel_y = -1
-	},
-/obj/item/storage/medkit/regular{
-	pixel_x = -9;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uV" = (
@@ -554,7 +558,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -562,7 +565,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/item/reactive_armour_shell,
+/obj/machinery/modular_computer/console/preset/research{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "zm" = (
@@ -597,9 +602,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/modular_computer/console/preset/research{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -607,6 +609,8 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/item/reactive_armour_shell,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "BB" = (
@@ -799,16 +803,6 @@
 	pixel_y = 27
 	},
 /turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Hi" = (
-/obj/structure/table/wood/fancy,
-/obj/item/candle/infinite{
-	desc = "A synthetic candle that won't melt down.";
-	name = "crimson red candle";
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "Ho" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1237,7 +1231,7 @@ en
 jt
 jt
 EC
-Hi
+kE
 Me
 jt
 aY
@@ -1266,7 +1260,7 @@ kd
 kd
 en
 EC
-Hi
+kE
 WT
 WT
 WT
@@ -1290,7 +1284,7 @@ WT
 WT
 WT
 EC
-Hi
+kE
 Me
 jt
 jt
@@ -1655,7 +1649,7 @@ qw
 Nv
 VO
 Gv
-tJ
+iO
 SK
 cf
 tB
@@ -1956,7 +1950,7 @@ kd
 kd
 en
 EC
-Hi
+kE
 WT
 WT
 WT
@@ -1980,7 +1974,7 @@ WT
 WT
 WT
 EC
-Hi
+kE
 Me
 jt
 jt
@@ -2019,7 +2013,7 @@ en
 jt
 jt
 EC
-Hi
+kE
 Me
 jt
 qE

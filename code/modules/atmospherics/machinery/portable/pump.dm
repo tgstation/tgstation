@@ -89,7 +89,7 @@
 			on = FALSE
 			update_appearance()
 	else if(on && holding && direction == PUMP_OUT)
-		usr.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
+		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

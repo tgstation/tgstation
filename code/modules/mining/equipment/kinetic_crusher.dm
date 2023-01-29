@@ -169,6 +169,10 @@
 	if(light_on)
 		. += "[icon_state]_lit"
 
+/obj/item/kinetic_crusher/compact //for admins
+	name = "compact kinetic crusher"
+	w_class = WEIGHT_CLASS_NORMAL
+
 //destablizing force
 /obj/projectile/destabilizer
 	name = "destabilizing force"

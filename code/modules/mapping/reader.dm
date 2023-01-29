@@ -319,8 +319,12 @@
 	var/relative_y = first_column.ycrd
 	var/highest_y = relative_y + y_relative_to_absolute
 
-	if(!cropMap && highest_y > world.maxy)
-		world.maxy = highest_y // Expand Y here. X is expanded later on
+	if(!cropMap && highest_y > world.maxx)
+		if(new_z)
+			// Need to avoid improperly loaded area/turf_contents
+			world.increaseMaxY(highest_y, max_zs_to_load = z_offset - 1)
+		else
+			world.increaseMaxY(highest_y)
 		expanded_y = TRUE
 
 	// Skip Y coords that are above the smallest of the three params
@@ -353,7 +357,11 @@
 		var/delta = max(final_x - x_delta_with, 0)
 		final_x -= delta
 	if(final_x > world.maxx && !cropMap)
-		world.maxx = final_x
+		if(new_z)
+			// Need to avoid improperly loaded area/turf_contents
+			world.increaseMaxX(final_x, max_zs_to_load = z_offset - 1)
+		else
+			world.increaseMaxX(final_x)
 		expanded_x = TRUE
 
 	var/lowest_x = max(x_lower, 1 - x_relative_to_absolute)
@@ -443,7 +451,11 @@
 		var/ycrd = relative_y + y_relative_to_absolute
 		var/zcrd = gset.zcrd + z_offset - 1
 		if(!cropMap && ycrd > world.maxy)
-			world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+			if(new_z)
+				// Need to avoid improperly loaded area/turf_contents
+				world.increaseMaxY(ycrd, max_zs_to_load = z_offset - 1)
+			else
+				world.increaseMaxY(ycrd)
 			expanded_y = TRUE
 		var/zexpansion = zcrd > world.maxz
 		var/no_afterchange = no_changeturf
@@ -495,7 +507,11 @@
 			final_x -= delta
 			x_target = x_step_count * key_len
 		if(final_x > world.maxx && !cropMap)
-			world.maxx = final_x
+			if(new_z)
+				// Need to avoid improperly loaded area/turf_contents
+				world.increaseMaxX(final_x, max_zs_to_load = z_offset - 1)
+			else
+				world.increaseMaxX(final_x)
 			expanded_x = TRUE
 
 		// We're gonna track the first and last pairs of coords we find
@@ -594,7 +610,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		for(var/line in lines)
 			// We do this here to avoid needing to check at each return statement
 			// No harm in it anyway
-			CHECK_TICK
+			MAPLOADING_CHECK_TICK
 
 			switch(line[length(line)])
 				if(";") // Var edit, we'll apply it
@@ -734,7 +750,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 			//then fill the members_attributes list with the corresponding variables
 			members_attributes += fields
-			CHECK_TICK
+			MAPLOADING_CHECK_TICK
 
 		//check and see if we can just skip this turf
 		//So you don't have to understand this horrid statement, we can do this if

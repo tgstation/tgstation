@@ -281,7 +281,11 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /datum/chemical_reaction/randomized/metalgen/GetPossibleReagents(kind)
 	switch(kind)
 		if(RNGCHEM_INPUT)
-			return GLOB.medicine_reagents
+			var/list/possible_ingredients = list()
+			for(var/datum/reagent/chemical in GLOB.medicine_reagents)
+				if(initial(chemical.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
+					possible_ingredients += chemical
+			return possible_ingredients
 	return ..()
 
 /obj/item/paper/secretrecipe

@@ -33,7 +33,7 @@
 	icon_state = "reactiveoff"
 	inhand_icon_state = null
 	blood_overlay_type = "armor"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/armor_reactive
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hit_reaction_chance = 50
@@ -49,6 +49,10 @@
 	var/reactivearmor_cooldown_duration = 10 SECONDS
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
+
+/datum/armor/armor_reactive
+	fire = 100
+	acid = 100
 
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()

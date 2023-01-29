@@ -250,6 +250,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop
 	cost = 10
+	surplus = 0 // not while there isnt one on any station
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/powersink

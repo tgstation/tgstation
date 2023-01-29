@@ -3,7 +3,7 @@
 	set name = "PDA Message"
 	set category = "Admin.Events"
 
-	if(!holder ||!check_rights(R_ADMIN))
+	if(!holder || !check_rights(R_ADMIN))
 		return
 
 	holder.message_pda()
@@ -64,7 +64,7 @@
 				if(!spam && target["name"] != params["user"])
 					continue
 				targets += target["tablet"]
-			
+
 			if(!length(targets))
 				to_chat(usr, span_warning("ERROR: Target is unavaiable(or not choosed)."))
 				return

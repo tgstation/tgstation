@@ -7,7 +7,11 @@
 	desc = "A raw Tiziran blood sausage, ready to be cured on a drying rack."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "raw_lizard_sausage"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/blood = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/blood = 3,
+	)
 	tastes = list("meat" = 1, "black pudding" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
@@ -21,7 +25,10 @@
 	desc = "A coarse dry-cured blood sausage, traditionally made by farmers in the farmlands around Zagoskeld. Similar in texture to old-Earth Spanish chorizo."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_sausage"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
 	tastes = list("meat" = 1, "black pudding" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
@@ -31,26 +38,32 @@
 	desc = "A common food on Tizira, headcheese is traditionally made of an animal's head, with the organs removed, boiled until it falls apart, at which point it is collected, strained of moisture, salted heavily, packed into blocks, and left to dry and age for several months. The resulting hard block tastes similar to cheese."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "raw_lizard_cheese"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/consumable/salt = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 15,
+		/datum/reagent/consumable/salt = 5,
+	)
 	tastes = list("meat" = 1, "salt" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_headcheese/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dryable,  /obj/item/food/headcheese)
+	AddElement(/datum/element/dryable, /obj/item/food/headcheese)
 
 /obj/item/food/headcheese
 	name = "headcheese block"
 	desc = "A cured block of headcheese. Delicious, if you're a lizard."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_cheese"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/consumable/salt = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 15,
+		/datum/reagent/consumable/salt = 5,
+	)
 	tastes = list("cheese" = 1, "salt" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/headcheese/MakeProcessable()
+/obj/item/food/headcheese/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/headcheese_slice
@@ -58,7 +71,10 @@
 	desc = "A slice of headcheese, useful for making sandwiches and snacks. Or surviving the cold Tiziran winters."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_cheese_slice"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/salt = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/salt = 1,
+	)
 	tastes = list("cheese" = 1, "salt" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_TINY
@@ -68,7 +84,11 @@
 	desc = "Crispy lung strips, with veggies and a spicy sauce. Delicious, if you like lungs."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lung_stirfry"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/capsaicin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/capsaicin = 2,
+	)
 	tastes = list("meat" = 1, "heat" = 1, "veggies" = 1)
 	foodtypes = MEAT | VEGETABLES | GORE
 	w_class = WEIGHT_CLASS_SMALL
@@ -98,7 +118,10 @@
 	desc = "The moonfish lays large, transparent white eggs which are prized in lizard cooking. Their flavour is similar to caviar, but generally is described as deeper and more complex."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "moonfish_eggs"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
 	tastes = list("caviar" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
@@ -108,7 +131,10 @@
 	desc = "A rich paste made from moonfish eggs. Generally the only way most lizards can get them, and used fairly heavily in coastal cooking."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "moonfish_caviar"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
 	tastes = list("caviar" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
@@ -118,7 +144,11 @@
 	desc = "Another example of cultural crossover between lizards and humans, desert snail escargot is closer to the Roman dish cocleas than the contemporary French escargot. It's a common street food in the desert cities."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_escargot"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/garlic = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/garlic = 2,
+	)
 	tastes = list("snails" = 1, "garlic" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -128,7 +158,12 @@
 	desc = "A blood sausage, battered and deep fried. Commonly served with fries as a quick and simple snack on the streets of Zagoskeld."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "fried_blood_sausage"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/salt = 1, /datum/reagent/consumable/cooking_oil = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/cooking_oil = 1,
+	)
 	tastes = list("black pudding" = 1, "batter" = 1, "oil" = 1)
 	foodtypes = MEAT | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -139,7 +174,12 @@
 	desc = "One of the many human foods to make its way to the lizards was french fries, which are called poms-franzisks in Draconic. When topped with barbecued meat and sauce, they make a hearty meal."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_fries"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/salt = 1, /datum/reagent/consumable/bbqsauce = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/bbqsauce = 2,
+	)
 	tastes = list("fries" = 2, "bbq sauce" = 1, "barbecued meat" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -149,7 +189,10 @@
 	desc = "A thick pink puree made from finely chopped poached eyeballs and brains, fried onions, and fat. Lizards swear it's delicious!"
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "brain_pate"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/liquidgibs = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/liquidgibs = 2,
+	)
 	tastes = list("brains" = 2)
 	foodtypes = MEAT | VEGETABLES | GORE
 	w_class = WEIGHT_CLASS_SMALL
@@ -159,7 +202,11 @@
 	desc = "A delicious snack from the streets of Zagoskeld, consisting of headcheese coated in rootbread breadcrumbs. Commonly served with fries."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "crispy_headcheese"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/cooking_oil = 2,
+	)
 	tastes = list("cheese" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS | GORE
 	w_class = WEIGHT_CLASS_SMALL
@@ -169,7 +216,12 @@
 	desc = "A popular Tiziran streetfood consisting of vinegar-marinated armorfish on a skewer with onion and chillis."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "picoss_skewer"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/vinegar = 1, /datum/reagent/consumable/capsaicin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/vinegar = 1,
+		/datum/reagent/consumable/capsaicin = 1,
+	)
 	tastes = list("fish" = 1, "acid" = 1, "onion" = 1, "heat" = 1)
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -179,7 +231,11 @@
 	desc = "Little crispy larvae in a korta nectar based sweet and spicy sauce. Bugtastic!"
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "nectar_larvae"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/korta_nectar = 3, /datum/reagent/consumable/capsaicin = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/korta_nectar = 3,
+		/datum/reagent/consumable/capsaicin = 1,
+	)
 	tastes = list("meat" = 1, "sweet" = 1, "heat" = 1)
 	foodtypes = GORE | MEAT | BUGS
 	w_class = WEIGHT_CLASS_SMALL
@@ -189,7 +245,10 @@
 	desc = "A medley of mushrooms, made to meet your monstrous munchies. Marvelous!"
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "mushroomy_stirfry"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("marvelous mushrooms" = 1, "sublime shrooms" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -200,7 +259,10 @@
 	desc = "A slab of grilled moonfish. Traditionally served over scalloped roots with a wine-based sauce."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "grilled_moonfish"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
 	burns_on_grill = TRUE
@@ -211,7 +273,11 @@
 	desc = "A slab of beautifully seared moonfish on a bed of potatoes and carrots, with a wine and demiglace reduction on top. Simply marvelous."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "moonfish_demiglace"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment = 2,
+	)
 	tastes = list("fish" = 2, "potatoes" = 1, "carrots" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
@@ -221,7 +287,11 @@
 	desc = "A massive platter of Tizira's finest meat and seafood, typically shared by groups at the beach. Of course, nothing's stopping you eating it on your own... fatass."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "surf_n_turf"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 10)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+	)
 	tastes = list("surf" = 1, "turf" = 1)
 	foodtypes = MEAT | SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_BULKY
@@ -233,7 +303,10 @@
 	desc = "A form of root and nut pasta originally native to the oceanside regions of Tizira. It's similar in texture and appearance to gnocchi."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "nizaya"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("gnocchi" = 1)
 	foodtypes = VEGETABLES | NUTS
 
@@ -242,7 +315,11 @@
 	desc = "A high class pasta dish from Tizira's vineyard region of Valyngia. Traditionally made with only the finest Tiziran wine... but the human swill will do, in a pinch."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "snail_nizaya"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
 	tastes = list("snails" = 1, "wine" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | MEAT | NUTS
 
@@ -251,7 +328,10 @@
 	desc = "A lizard adaptation of the Italian pasta dish, aglio e olio, made with nizaya pasta."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "garlic_nizaya"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 10)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+	)
 	tastes = list("garlic" = 1, "oil" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | NUTS
 
@@ -260,7 +340,11 @@
 	desc = "A sweet, creamy nizaya pasta dish made with korta milk and nectar."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "demit_nizaya"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/korta_nectar = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/korta_nectar = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("peppery sweet" = 1, "veggies" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | SUGAR | NUTS
 
@@ -269,7 +353,10 @@
 	desc = "A nizaya pasta dish made with seraka mushrooms and quality oil. Has a pronounced nutty flavour."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "mushroom_nizaya"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 10)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+	)
 	tastes = list("savouriness" = 1, "nuttiness" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES
 
@@ -285,10 +372,10 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 
-/obj/item/food/rootdough/MakeBakeable()
+/obj/item/food/rootdough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bread/root, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
-/obj/item/food/rootdough/MakeProcessable()
+/obj/item/food/rootdough/make_processable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatrootdough, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
 
 /obj/item/food/flatrootdough
@@ -300,10 +387,10 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 
-/obj/item/food/flatrootdough/MakeProcessable()
+/obj/item/food/flatrootdough/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
-/obj/item/food/flatrootdough/MakeGrillable()
+/obj/item/food/flatrootdough/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/root_flatbread, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdoughslice
@@ -316,10 +403,10 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 
-/obj/item/food/rootdoughslice/MakeProcessable()
+/obj/item/food/rootdoughslice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
-/obj/item/food/rootdoughslice/MakeBakeable()
+/obj/item/food/rootdoughslice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/rootroll, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/root_flatbread
@@ -385,7 +472,11 @@
 	name = "rustic flatbread"
 	desc = "A simple Tiziran country dish, popular as a side to meat or fish dishes. Topped with herbs and oil."
 	icon_state = "rustic_flatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/vitamin = 15, /datum/reagent/consumable/garlic = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/vitamin = 15,
+		/datum/reagent/consumable/garlic = 2,
+	)
 	tastes = list("bread" = 1, "herb" = 1, "oil" = 1, "garlic" = 1)
 	foodtypes = VEGETABLES | NUTS
 	boxtag = "Tiziran Flatbread"
@@ -394,7 +485,11 @@
 	name = "\improper Italic flatbread"
 	desc = "The introduction of human foods to Tizira led to an advancement in lizard cooking- the Italic flatbread is now a common sight on the menus of takeout stores on the planet."
 	icon_state = "italic_flatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 15)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 15,
+	)
 	tastes = list("bread" = 1, "herb" = 1, "oil" = 1, "garlic" = 1, "tomato" = 1, "meat" = 1)
 	foodtypes = VEGETABLES | NUTS | MEAT
 	boxtag = "Italic Flatbread"
@@ -403,7 +498,11 @@
 	name = "\improper Imperial flatbread"
 	desc = "A flatbread topped with pate, pickled vegetables, and cubed headcheese. Not very suited to anyone's tastes but the lizards."
 	icon_state = "imperial_flatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/consumable/nutriment/vitamin = 10)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/protein = 15,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+	)
 	tastes = list("bread" = 1, "herb" = 1, "oil" = 1, "garlic" = 1, "tomato" = 1, "meat" = 1)
 	foodtypes = VEGETABLES | MEAT | NUTS | GORE
 	boxtag = "Imperial Victory Flatbread"
@@ -412,40 +511,58 @@
 	name = "meatlovers flatbread"
 	desc = "Oddly enough, this Tiziran dish is actually a favorite of some health-minded humans."
 	icon_state = "rawmeat_flatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10)
-	tastes = list("bread" = 1, "meat" = 1,)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/protein = 10,
+	)
+	tastes = list("bread" = 1, "meat" = 1)
 	foodtypes = MEAT | NUTS | RAW | GORE
 
 /obj/item/food/pizza/flatbread/stinging
 	name = "\improper Stinging flatbread"
 	desc = "The electric mix of jellyfish and bee larva makes for a flavor sensation that leaves you asking for more!"
 	icon_state = "stinging_flatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/honey = 2)
-	tastes = list("bread" = 1, "sweetness" = 1, "stinging" = 1, "slime" = 1,)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/protein = 20,
+		/datum/reagent/consumable/honey = 2,
+	)
+	tastes = list("bread" = 1, "sweetness" = 1, "stinging" = 1, "slime" = 1)
 	foodtypes = BUGS | NUTS | SEAFOOD | GORE
 
 /obj/item/food/pizza/flatbread/zmorgast  // Name is based off of the Swedish dish Smörgåstårta
 	name = "\improper Zmorgast flatbread"
 	desc = "A Tiziran spin on the original Swedish sandwich cake, the Zmorgast is a common dish at family gatherings."
 	icon_state = "zmorgast_flatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 16, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
-	tastes = list("bread" = 1, "liver" = 1, "family" = 1,)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 16,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("bread" = 1, "liver" = 1, "family" = 1)
 	foodtypes = VEGETABLES | NUTS | MEAT
 
 /obj/item/food/pizza/flatbread/fish
 	name = "\improper BBQ fish flatbread"
 	desc = "Superengine delamination, clown ops, too cold outside, I just want to grill for Tizira's sake!"
 	icon_state = "fish_flatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/consumable/bbqsauce = 2)
-	tastes = list("bread" = 1, "fish" = 1,)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 20,
+		/datum/reagent/consumable/nutriment/protein = 15,
+		/datum/reagent/consumable/bbqsauce = 2,
+	)
+	tastes = list("bread" = 1, "fish" = 1)
 	foodtypes = SEAFOOD | NUTS
 
 /obj/item/food/pizza/flatbread/mushroom
 	name = "mushroom and tomato flatbread"
 	desc = "A simple alternative to the Italic flatbread, for when you've already filled up on meat elsewhere."
 	icon_state = "mushroom_flatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 18, /datum/reagent/consumable/nutriment/vitamin = 5)
-	tastes =  list("bread" = 1, "mushroom" = 1, "tomatoes" = 1,)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 18,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
+	tastes =  list("bread" = 1, "mushroom" = 1, "tomatoes" = 1)
 	foodtypes = VEGETABLES | NUTS
 
 /obj/item/food/pizza/flatbread/nutty
@@ -453,7 +570,7 @@
 	desc = "Modern advances in cuisine now allow for a double helping of the delicious taste of korta nuts, both as the base and as a topping on this flatbread."
 	icon_state = "nutty_flatbread"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
-	tastes =  list("bread" = 1, "nuts" = 2,)
+	tastes =  list("bread" = 1, "nuts" = 2)
 	foodtypes = NUTS
 
 //Sandwiches/Toast Dishes
@@ -462,7 +579,11 @@
 	desc = "A popular sandwich on Tizira, named in honour of the Imperial family."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "emperor_roll"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("bread" = 1, "cheese" = 1, "liver" = 1, "caviar" = 1)
 	foodtypes = VEGETABLES | NUTS | MEAT | GORE | SEAFOOD
 	food_flags = FOOD_FINGER_FOOD
@@ -473,7 +594,11 @@
 	desc = "A sweetened rootroll with sliced fruit, enjoyed as a seasonal dessert on Tizira."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "honey_roll"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/honey = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/honey = 2,
+	)
 	tastes = list("bread" = 1, "honey" = 1, "fruit" = 1)
 	foodtypes = VEGETABLES | NUTS | FRUIT
 	food_flags = FOOD_FINGER_FOOD
@@ -485,7 +610,12 @@
 	desc = "A bowl of rich, meaty dumpling soup, traditionally served during the festival of Atrakor's Might on Tizira. The dumplings are shaped like the Night Sky Lord himself."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "atrakor_dumplings"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/water = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/water = 5,
+	)
 	tastes = list("bone broth" = 1, "onion" = 1, "potato" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS
 
@@ -494,7 +624,12 @@
 	desc = "A hearty noodle soup made from meatballs and nizaya in a rich broth. Commonly topped with a handful of chopped nuts."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "meatball_noodles"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/water = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/water = 5,
+	)
 	tastes = list("bone broth" = 1, "meat" = 1, "gnocchi" = 1, "peanuts" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS
 
@@ -503,7 +638,11 @@
 	desc = "A bowl of sausage, onion, blood and vinegar, served ice cold. Every bit as rough as it sounds."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "black_broth"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/blood = 8, /datum/reagent/liquidgibs = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/blood = 8,
+		/datum/reagent/liquidgibs = 2,
+	)
 	tastes = list("vinegar" = 1, "metal" = 1)
 	foodtypes = MEAT | VEGETABLES | GORE
 
@@ -512,7 +651,10 @@
 	desc = "A slimy bowl of jellyfish stew. It jiggles if you shake it."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "jellyfish_stew"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment = 6,
+	)
 	tastes = list("slime" = 1)
 	foodtypes = MEAT | VEGETABLES | GORE
 
@@ -521,7 +663,11 @@
 	desc = "A big bowl of spicy, savoury soup made with rootbread. Heavily seasoned, and very tasty."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "rootbread_soup"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
 	tastes = list("bread" = 1, "egg" = 1, "chili" = 1, "garlic" = 1)
 	foodtypes = MEAT | VEGETABLES
 
@@ -531,7 +677,10 @@
 	desc = "A country dish from rural Tizira. Made with eggs, blood, and foraged greens. Traditionally eaten with rootbread and a spicy sauce."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "black_eggs"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
 	tastes = list("eggs" = 1, "greens" = 1, "blood" = 1)
 	foodtypes = MEAT | BREAKFAST | GORE
 	w_class = WEIGHT_CLASS_SMALL
@@ -541,7 +690,12 @@
 	desc = "A smooth and spicy tomato-based sauce topped with eggs and baked. Delicious."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "patzikula"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/capsaicin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/capsaicin = 2,
+	)
 	tastes = list("eggs" = 1, "tomato" = 1, "heat" = 1)
 	foodtypes = VEGETABLES | MEAT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
@@ -553,7 +707,11 @@
 	desc = "A big slab of korta nut brittle. So sugary it should be a crime!"
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "korta_brittle"
-	food_reagents = list(/datum/reagent/consumable/sugar = 20, /datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/korta_nectar = 15)
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 20,
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/korta_nectar = 15,
+	)
 	tastes = list("peppery heat" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
 	slice_type = /obj/item/food/cakeslice/korta_brittle
@@ -563,7 +721,11 @@
 	desc = "A little slice of korta nut brittle. A diabetic's worst enemy."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "korta_brittle_slice"
-	food_reagents = list(/datum/reagent/consumable/sugar = 4, /datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/korta_nectar = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 4,
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/korta_nectar = 3,
+	)
 	tastes = list("peppery heat" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
 
@@ -572,7 +734,11 @@
 	desc = "Shaved ice, korta nectar and berries. A sweet treat to eat to beat summer heat!"
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "korta_ice"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/ice = 4, /datum/reagent/consumable/berryjuice = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/ice = 4,
+		/datum/reagent/consumable/berryjuice = 6,
+	)
 	tastes = list("peppery sweet" = 1, "berry" = 1)
 	foodtypes = NUTS | SUGAR | FRUIT
 
@@ -581,7 +747,11 @@
 	desc = "A slightly bizarre dish from Tizira, consisting of seraka mushrooms coated with caramel on a skewer. Carries a pronounced 'sweet and savoury' kick."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "candied_mushrooms"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/caramel = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/caramel = 4,
+	)
 	tastes = list("savouriness" = 1, "sweetness" = 1)
 	foodtypes = SUGAR | VEGETABLES
 
@@ -601,7 +771,10 @@
 	desc = "Mashed root vegetables, mixed with korta flour and boiled to produce a large, round and slightly spicy dumpling. Commonly eaten in soup."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_dumplings"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
@@ -611,7 +784,10 @@
 	desc = "Seraka mushrooms that have been steeped in alkaline water to remove the extract, thereby making them completely safe to consume."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "steeped_mushrooms"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("savouriness" = 1, "nuttiness" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -621,7 +797,11 @@
 	desc = "A can of gunner jellyfish packed in brine. Contains a mild hallucinogen which is destroyed by cooking."
 	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "canned_jellyfish"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/toxin/mindbreaker = 2, /datum/reagent/consumable/salt = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/toxin/mindbreaker = 2,
+		/datum/reagent/consumable/salt = 1,
+	)
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
 	foodtypes = SEAFOOD | GORE
 	w_class = WEIGHT_CLASS_SMALL
@@ -631,7 +811,10 @@
 	desc = "Giant snails from the Tiziran desert, packaged in brine. Shells included. Probably best not eaten raw, unless you're a lizard."
 	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "canned_snails"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/salt = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/salt = 2,
+	)
 	tastes = list("snails" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
@@ -641,7 +824,10 @@
 	desc = "A can of bee larva packaged in honey. Probably appetizing to someone."
 	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "canned_larvae"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/honey = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/honey = 2,
+	)
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GORE | BUGS
 	w_class = WEIGHT_CLASS_SMALL

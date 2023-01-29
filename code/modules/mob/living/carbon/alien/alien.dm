@@ -12,8 +12,6 @@
 	type_of_meat = /obj/item/food/meat/slab/xeno
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
-	var/move_delay_add = 0 // movement delay to add
-
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	heat_protection = 0.5 // minor heat insulation
@@ -72,10 +70,6 @@
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R, delta_time, times_fired) //can metabolize all reagents
 	return FALSE
-
-/mob/living/carbon/alien/get_status_tab_items()
-	. = ..()
-	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)

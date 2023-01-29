@@ -59,8 +59,8 @@
 	opacity = TRUE
 	anchored = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_RESIN)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_RESIN
 	max_integrity = 200
 	var/resintype = null
 	can_atmos_pass = ATMOS_PASS_DENSITY
@@ -86,8 +86,8 @@
 	icon_state = "resin_wall-0"
 	base_icon_state = "resin_wall"
 	resintype = "wall"
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /obj/structure/alien/resin/wall/block_superconductivity()
 	return 1
@@ -111,8 +111,8 @@
 	opacity = FALSE
 	max_integrity = 160
 	resintype = "membrane"
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -142,8 +142,8 @@
 	base_icon_state = "weeds1"
 	max_integrity = 15
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WEEDS)
-	canSmoothWith = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ALIEN_WEEDS)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_WALLS
 	///the range of the weeds going to be affected by the node
 	var/node_range = NODERANGE
 	///the parent node that will determine if we grow or die

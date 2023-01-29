@@ -39,11 +39,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/get_status_tab_items()
 	. = ..()
-	. += ""
-
 	if(SSticker.HasRoundStarted())
 		return
-
 	var/time_remaining = SSticker.GetTimeLeft()
 	if(time_remaining > 0)
 		. += "Time To Start: [round(time_remaining/10)]s"

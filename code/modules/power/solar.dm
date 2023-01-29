@@ -56,7 +56,6 @@
 	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
 	overlay.appearance_flags = TILE_BOUND
 	overlay.icon_state = icon_state
-	overlay.layer = FLY_LAYER
 	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
 	overlay.pixel_z = z_offset
 	vis_contents += overlay
@@ -232,6 +231,12 @@
 /obj/machinery/power/solar/process()
 	if(machine_stat & BROKEN)
 		return
+	// space vines block out sunlight
+	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+	if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
+		unset_control()
+		return
+
 	if(control && (!powernet || control.powernet != powernet))
 		unset_control()
 	if(needs_to_turn)
@@ -401,6 +406,11 @@
 	if(powernet)
 		for(var/obj/machinery/power/M in powernet.nodes)
 			if(istype(M, /obj/machinery/power/solar))
+				// space vines block out sunlight
+				var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+				if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
+					continue
+
 				var/obj/machinery/power/solar/S = M
 				if(!S.control) //i.e unconnected
 					S.set_control(src)

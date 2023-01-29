@@ -10,7 +10,7 @@
 	inhand_icon_state = "space_helmet"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/helmet_space
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 	cold_protection = HEAD
@@ -23,6 +23,11 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	dog_fashion = null
+
+/datum/armor/helmet_space
+	bio = 100
+	fire = 80
+	acid = 70
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -42,7 +47,7 @@
 		/obj/item/tank/jetpack/oxygen/captain,
 		)
 	slowdown = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/suit_space
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
@@ -58,25 +63,37 @@
 	var/thermal_on = FALSE /// Status of the thermal regulator
 	var/show_hud = TRUE /// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 
+/datum/armor/suit_space
+	bio = 100
+	fire = 80
+	acid = 70
+
 /obj/item/clothing/suit/space/Initialize(mapload)
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
 
 /// Start Processing on the space suit when it is worn to heat the wearer
-/obj/item/clothing/suit/space/equipped(mob/user, slot)
+/obj/item/clothing/suit/space/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
 		update_hud_icon(user) // update the hud
+		RegisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 // On removal stop processing, save battery
-/obj/item/clothing/suit/space/dropped(mob/user)
+/obj/item/clothing/suit/space/dropped(mob/living/user)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	var/mob/living/carbon/human/human = user
-	if(istype(human))
-		human.update_spacesuit_hud_icon("0")
+	UnregisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+	var/mob/living/carbon/carbon_user = user
+	if(istype(carbon_user))
+		carbon_user.update_spacesuit_hud_icon("0")
+
+/obj/item/clothing/suit/space/proc/get_status_tab_item(mob/living/source, list/items)
+	SIGNAL_HANDLER
+	items += "Thermal Regulator: [thermal_on ? "On" : "Off"]"
+	items += "Cell Charge: [cell ? "[round(cell.percent(), 0.1)]%" : "No Cell!"]"
 
 // Space Suit temperature regulation and power usage
 /obj/item/clothing/suit/space/process(delta_time)

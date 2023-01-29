@@ -136,19 +136,11 @@
 			var/obj/item/toy/held_card_item = card_players[player]
 
 			player.add_mood_event("playing_cards", /datum/mood_event/playing_cards)
-			player.mind?.add_memory(
-				MEMORY_PLAYING_CARDS,
-				list(
-					DETAIL_PROTAGONIST = player,
-					DETAIL_PLAYERS = other_players,
-					DETAIL_CARDGAME = cardgame_desc,
-					DETAIL_DEALER = dealer,
-					DETAIL_HELD_CARD_ITEM = held_card_item,
-				),
-				story_value = STORY_VALUE_OKAY,
-				memory_flags = MEMORY_CHECK_BLINDNESS
-			)
-
+			player.add_mob_memory(/datum/memory/playing_cards, \
+				deuteragonist = dealer, \
+				game = cardgame_desc, \
+				protagonist_held_card = held_card_item, \
+				other_players = other_players)
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
 	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
@@ -220,14 +212,7 @@
 	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
 	target.add_mood_event("lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
 	thrower.add_mood_event("won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
-	add_memory_in_range(
-		target,
-		7,
-		MEMORY_PLAYING_52_PICKUP,
-		list(DETAIL_PROTAGONIST = thrower, DETAIL_DEUTERAGONIST = target, DETAIL_WHAT_BY = src),
-		story_value = STORY_VALUE_OKAY,
-		memory_flags = MEMORY_CHECK_BLINDNESS
-	)
+	add_memory_in_range(target, 7, /datum/memory/playing_card_pickup, protagonist = thrower, deuteragonist = target, antagonist = src)
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||

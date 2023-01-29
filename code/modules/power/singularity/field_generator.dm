@@ -34,7 +34,7 @@ no power level overlay is currently in the overlays list.
 	max_integrity = 500
 	can_atmos_pass = ATMOS_PASS_YES
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
-	armor = list(MELEE = 25, BULLET = 10, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
+	armor_type = /datum/armor/field_generator
 	///Amount of energy stored, used for visual overlays (over 9000?)
 	var/power_level = 0
 	///Current power mode of the machine, between FG_OFFLINE, FG_CHARGING, FG_ONLINE
@@ -51,6 +51,14 @@ no power level overlay is currently in the overlays list.
 	var/list/obj/machinery/field/generator/connected_gens = list()
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
+
+/datum/armor/field_generator
+	melee = 25
+	bullet = 10
+	laser = 100
+	energy = 100
+	fire = 50
+	acid = 70
 
 /obj/machinery/field/generator/update_overlays()
 	. = ..()

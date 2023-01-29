@@ -91,7 +91,7 @@
 /obj/structure/rack{
 	resistance_flags = 64
 	},
-/obj/item/clothing/head/helmet/space/beret{
+/obj/item/clothing/head/beret/sec{
 	name = "red beret"
 	},
 /turf/open/floor/carpet/red,

@@ -66,7 +66,7 @@
 				\n[span_info("Body temperature: ???")]")
 		return
 
-	if(ispodperson(M)&& !advanced)
+	if(ispodperson(M) && !advanced)
 		to_chat(user, "<span class='info'>[M]'s biological structure is too complex for the health analyzer.")
 		return
 
@@ -212,7 +212,7 @@
 		if(istype(eyes))
 			if(carbontarget.is_blind())
 				render_list += "<span class='alert ml-2'>Subject is blind.\n</span>"
-			else if(HAS_TRAIT(carbontarget, TRAIT_NEARSIGHT))
+			else if(carbontarget.is_nearsighted())
 				render_list += "<span class='alert ml-2'>Subject is nearsighted.\n</span>"
 
 	// Body part damage report
@@ -268,15 +268,15 @@
 			var/missing_organs = list()
 			if(!humantarget.getorganslot(ORGAN_SLOT_BRAIN))
 				missing_organs += "brain"
-			if(!(NOBLOOD in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_HEART))
+			if(!HAS_TRAIT(humantarget, TRAIT_NOBLOOD) && !humantarget.getorganslot(ORGAN_SLOT_HEART))
 				missing_organs += "heart"
 			if(!(TRAIT_NOBREATH in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LUNGS))
 				missing_organs += "lungs"
 			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
 				missing_organs += "liver"
-			if(!(NOSTOMACH in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
+			if(!the_dudes_species.mutantstomach && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
 				missing_organs += "stomach"
-			if(!(NO_TONGUE in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_TONGUE))
+			if(!the_dudes_species.mutanttongue && !humantarget.getorganslot(ORGAN_SLOT_TONGUE))
 				missing_organs += "tongue"
 			if(!humantarget.getorganslot(ORGAN_SLOT_EARS))
 				missing_organs += "ears"

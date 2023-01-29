@@ -17,15 +17,17 @@ GLOBAL_VAR(test_log)
 /// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
 GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
-/// The name of the test that is currently focused.
+/// A list of every test that is currently focused.
 /// Use the PERFORM_ALL_TESTS macro instead.
-GLOBAL_VAR_INIT(focused_test, focused_test())
+GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
-/proc/focused_test()
+/proc/focused_tests()
+	var/list/focused_tests = list()
 	for (var/datum/unit_test/unit_test as anything in subtypesof(/datum/unit_test))
 		if (initial(unit_test.focus))
-			return unit_test
-	return null
+			focused_tests += unit_test
+
+	return focused_tests.len > 0 ? focused_tests : null
 
 /datum/unit_test
 	//Bit of metadata for the future maybe
@@ -123,6 +125,16 @@ GLOBAL_VAR_INIT(focused_test, focused_test())
 		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
 
 		log_test("\t[path_prefix]_[name] was put in data/screenshots_new")
+
+/// Helper for screenshot tests to take an image of an atom from all directions and insert it into one icon
+/datum/unit_test/proc/get_flat_icon_for_all_directions(atom/thing, no_anim = TRUE)
+	var/icon/output = icon('icons/effects/effects.dmi', "nothing")
+
+	for (var/direction in GLOB.cardinals)
+		var/icon/partial = getFlatIcon(thing, defdir = direction, no_anim = no_anim)
+		output.Insert(partial, dir = direction)
+
+	return output
 
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
