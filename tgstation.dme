@@ -3833,6 +3833,7 @@
 #include "code\modules\mob\living\carbon\human\human_movement.dm"
 #include "code\modules\mob\living\carbon\human\human_say.dm"
 #include "code\modules\mob\living\carbon\human\human_stripping.dm"
+#include "code\modules\mob\living\carbon\human\human_suicide.dm"
 #include "code\modules\mob\living\carbon\human\human_update_icons.dm"
 #include "code\modules\mob\living\carbon\human\init_signals.dm"
 #include "code\modules\mob\living\carbon\human\inventory.dm"
