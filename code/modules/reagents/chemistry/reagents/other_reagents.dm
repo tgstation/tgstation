@@ -110,7 +110,7 @@
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
-/datum/reagent/liquidgibs
+/datum/reagent/consumable/s
 	name = "Liquid Gibs"
 	color = "#CC4633"
 	description = "You don't even want to think about what's in here."
@@ -120,8 +120,8 @@
 	ph = 7.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/shot_glass/liquidgibs
-	required_drink_type = /datum/reagent/liquidgibs
+/datum/glass_style/shot_glass/s
+	required_drink_type = /datum/reagent/consumable/s
 	icon_state = "shotglassred"
 
 /datum/reagent/bone_dust
