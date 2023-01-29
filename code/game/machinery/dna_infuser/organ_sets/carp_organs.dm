@@ -115,7 +115,7 @@
 //technically you could get around the mood issue by extracting and reimplanting the brain but it will be far easier to just go one z there and back
 /obj/item/organ/internal/brain/carp/Remove(mob/living/carbon/brain_owner, special, no_id_transfer)
 	. = ..()
-	UnregisterSignal(brain_owner)
+	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)
 	deltimer(cooldown_timer)
 
 /obj/item/organ/internal/brain/carp/get_attacking_limb(mob/living/carbon/human/target)
