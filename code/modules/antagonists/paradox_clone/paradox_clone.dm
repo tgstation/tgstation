@@ -91,7 +91,7 @@
 
 /datum/objective/assassinate/paradox_clone/update_explanation_text()
 	. = ..()
-	if(!target || !target.current)
+	if(!target?.current)
 		explanation_text = "Free Objective"
 		CRASH("WARNING! [ADMIN_LOOKUPFLW(owner)] paradox clone objectives forged without an original!")
 	explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]. Remember, your mission is to blend in, do not kill anyone else unless you have to!"
