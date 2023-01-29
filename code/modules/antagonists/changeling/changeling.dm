@@ -363,7 +363,7 @@
  *
  * [sting_path] - the power that's being purchased / evolved.
  */
-/datum/antagonist/changeling/proc/purchase_power(datum/action/changeling/sting_path, free = FALSE)
+/datum/antagonist/changeling/proc/purchase_power(datum/action/changeling/sting_path)
 	if(!ispath(sting_path))
 		CRASH("Changeling purchase_power attempted to purchase an invalid typepath!")
 
@@ -392,18 +392,31 @@
 		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
 		return FALSE
 
-	var/datum/action/changeling/new_action = new sting_path()
+	var/success = give_power(sting_path)
+	if(success)
+		genetic_points -= initial(sting_path.dna_cost)
+	return success
+
+/**
+ * Gives a passed changeling power datum to the player
+ *
+ * Is passed a path to a changeling power, and applies it to the user.
+ * If successful, we return TRUE, otherwise not.
+ *
+ * Arguments:
+ * * power_path - The path of the power we will be giving to our attached player.
+ */
+
+/datum/antagonist/changeling/proc/give_power(power_path)
+	var/datum/action/changeling/new_action = new power_path()
 
 	if(!new_action)
 		to_chat(owner.current, "This is awkward. Changeling power purchase failed, please report this bug to a coder!")
-		CRASH("Changeling purchase_power was unable to create a new changeling action for path [sting_path]!")
+		CRASH("Changeling give_power was unable to grant a new changeling action for path [power_path]!")
 
-	if(!free)
-		genetic_points -= new_action.dna_cost
-	purchased_powers[sting_path] = new_action
+	purchased_powers[power_path] = new_action
 	new_action.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
 	log_changeling_power("[key_name(owner)] adapted the [new_action] power")
-	return TRUE
 
 /*
  * Changeling's ability to re-adapt all of their learned powers.

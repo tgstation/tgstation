@@ -44,28 +44,28 @@
 
 /proc/generate_changeling_meteor(mob/candidate)
 	var/mob/dead/selected = make_body(candidate) //Give the selected player a body, and grab their mind
-	var/datum/mind/player_mind = new /datum/mind(selected.key)
+	var/datum/mind/player_mind = new(selected.key)
 	player_mind.active = TRUE
 
 	var/start_side = pick(GLOB.cardinals)
 	var/start_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/picked_start = spaceDebrisStartLoc(start_side, start_z)
 
-	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new/obj/effect/meteor/meaty/changeling(picked_start, get_random_station_turf())
-	var/mob/living/carbon/human/new_changeling = new /mob/living/carbon/human/(picked_start)
+	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new(picked_start, get_random_station_turf())
+	var/mob/living/carbon/human/new_changeling = new(picked_start)
 
 	new_changeling.forceMove(changeling_meteor) //Place our payload inside of its vessel
 
 	player_mind.transfer_to(new_changeling)
 	player_mind.special_role = ROLE_CHANGELING_MIDROUND
 	player_mind.add_antag_datum(/datum/antagonist/changeling/space)
-	SEND_SOUND(new_changeling, sound('sound/magic/mutate.ogg'))
+	SEND_SOUND(new_changeling, 'sound/magic/mutate.ogg')
 	message_admins("[ADMIN_LOOKUPFLW(new_changeling)] has been made into a space changeling by an event.")
 	new_changeling.log_message("was spawned as a midround space changeling by an event.", LOG_GAME)
 
-	var/datum/antagonist/changeling/changeling_datum = locate(/datum/antagonist/changeling) in player_mind.antag_datums
-	changeling_datum.purchase_power(/datum/action/changeling/suit/organic_space_suit, TRUE)
-	changeling_datum.purchase_power(/datum/action/changeling/weapon/arm_blade, TRUE)
+	var/datum/antagonist/changeling/changeling_datum = locate() in player_mind.antag_datums
+	changeling_datum.give_power(/datum/action/changeling/suit/organic_space_suit)
+	changeling_datum.give_power(/datum/action/changeling/weapon/arm_blade)
 	new_changeling.equipOutfit(/datum/outfit/changeling_space)
 
 	return new_changeling
