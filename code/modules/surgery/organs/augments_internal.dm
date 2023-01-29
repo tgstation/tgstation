@@ -173,6 +173,8 @@
 	var/throw_power_min = 1
 	var/throw_power_max = 4
 
+	var/emp_base_duration = 9 SECONDS ///How long will the implant malfunction if it is EMP'd
+
 /obj/item/organ/internal/cyberimp/muscle/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(ishuman(reciever)) //Sorry, only humans
@@ -181,6 +183,16 @@
 /obj/item/organ/internal/cyberimp/muscle/Remove(mob/living/carbon/implant_owner, special = 0)
 	. = ..()
 	UnregisterSignal(implant_owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+
+/obj/item/organ/internal/cyberimp/muscle/emp_act(severity)
+	. = ..()
+	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
+		return
+	organ_flags |= ORGAN_FAILING
+	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
+
+/obj/item/organ/internal/cyberimp/muscle/proc/reboot()
+	organ_flags &= ~ORGAN_FAILING
 
 /obj/item/organ/internal/cyberimp/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -194,9 +206,19 @@
 	if(isliving(target))
 		var/mob/living/living_target = target
 
+		source.changeNext_move(CLICK_CD_MELEE)
 		var/picked_hit_type = pick("punch", "smash", "kick")
 
-		source.changeNext_move(CLICK_CD_MELEE)
+		if(organ_flags & ORGAN_FAILING)
+			if(source.body_position != LYING_DOWN && living_target != source && prob(50))
+				to_chat(source, span_danger("You try to [picked_hit_type] [living_target], but loose your balance and fall!"))
+				source.Knockdown(3 SECONDS)
+				source.forceMove(get_turf(living_target))
+			else
+				to_chat(source, span_danger("Your muscles spasm!"))
+				source.Paralyze(1 SECONDS)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+
 		if(ishuman(target))
 			var/mob/living/carbon/human/human_target = target
 			if(human_target.check_shields(source, punch_damage, "[source]'s' [picked_hit_type]"))
