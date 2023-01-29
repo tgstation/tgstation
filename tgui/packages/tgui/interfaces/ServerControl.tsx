@@ -60,7 +60,7 @@ export const ServerControl = (props, context) => {
               </Table.Row>
               {servers.map((server) => (
                 <>
-                  <Table.Row header key={server} />
+                  <Table.Row header key={server} className="candystripe" />
                   <Table.Cell> {server.server_name}</Table.Cell>
                   <Button
                     mt={1}
@@ -93,7 +93,7 @@ export const ServerControl = (props, context) => {
               </Table.Row>
               {consoles.map((console) => (
                 <>
-                  <Table.Row header key={console} />
+                  <Table.Row header key={console} className="candystripe" />
                   <Table.Cell>
                     {' '}
                     {console.console_name} - Location:{' '}
@@ -123,25 +123,27 @@ export const ServerControl = (props, context) => {
               No history found.
             </NoticeBox>
           ) : (
-            <Table>
-              <Table.Row header>
-                <Table.Cell>Research Name</Table.Cell>
-                <Table.Cell>Cost</Table.Cell>
-                <Table.Cell>Researcher Name</Table.Cell>
-                <Table.Cell>Console Location</Table.Cell>
-              </Table.Row>
-              {logs.map((server_log) => (
-                <Table.Row
-                  mt={1}
-                  key={server_log.node_name}
-                  className="candystripe">
-                  <Table.Cell>{server_log.node_name}</Table.Cell>
-                  <Table.Cell>{server_log.node_cost}</Table.Cell>
-                  <Table.Cell>{server_log.node_researcher}</Table.Cell>
-                  <Table.Cell>{server_log.node_research_location}</Table.Cell>
+            <Section>
+              <Table>
+                <Table.Row header>
+                  <Table.Cell>Research Name</Table.Cell>
+                  <Table.Cell>Cost</Table.Cell>
+                  <Table.Cell>Researcher Name</Table.Cell>
+                  <Table.Cell>Console Location</Table.Cell>
                 </Table.Row>
-              ))}
-            </Table>
+                {logs.map((server_log) => (
+                  <Table.Row
+                    mt={1}
+                    key={server_log.node_name}
+                    className="candystripe">
+                    <Table.Cell>{server_log.node_name}</Table.Cell>
+                    <Table.Cell>{server_log.node_cost}</Table.Cell>
+                    <Table.Cell>{server_log.node_researcher}</Table.Cell>
+                    <Table.Cell>{server_log.node_research_location}</Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table>
+            </Section>
           )}
         </Collapsible>
       </Window.Content>
