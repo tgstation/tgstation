@@ -4,8 +4,8 @@
 /// 20 force weapon gets the cap of 20 damage added for a total of 40
 /// 35 force weapon still gets the cap of 20 for a total of 55 instead of a whopping 70 damage
 /// Steals 50 blood if they have enough. Splattercasting has one second of cooldown worth 5 blood, so 50 seconds cooldown of blood added!
-/datum/action/cooldown/spell/exsanguinating_strike
-	name = "Exsanguinating Strike"
+/datum/action/cooldown/spell/sanguine_strike
+	name = "Sanguine Strike"
 	desc = "Enchants your next weapon strike to deal more damage, heal you for damage dealt, and refill blood."
 	button_icon_state = "charge"
 
@@ -15,17 +15,17 @@
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 
-	invocation = "SHA PASDAY"
+	invocation = "SHAPSDAY"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	///Original force of the item enchanted.
 	var/original_force = 0
 
-/datum/action/cooldown/spell/exsanguinating_strike/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/sanguine_strike/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/exsanguinating_strike/can_cast_spell(feedback)
+/datum/action/cooldown/spell/sanguine_strike/can_cast_spell(feedback)
 	var/obj/item/to_enchant = owner.get_active_held_item() || owner.get_inactive_held_item()
 	if(!to_enchant)
 		if(feedback)
@@ -37,7 +37,7 @@
 		return FALSE
 	return ..()
 
-/datum/action/cooldown/spell/exsanguinating_strike/cast(mob/living/cast_on)
+/datum/action/cooldown/spell/sanguine_strike/cast(mob/living/cast_on)
 	. = ..()
 	// Then charge their main hand item, then charge their offhand item
 	var/obj/item/to_enchant = cast_on.get_active_held_item() || cast_on.get_inactive_held_item()
@@ -47,13 +47,13 @@
 	to_chat(cast_on, span_notice("[to_enchant] glows red for a moment."))
 	apply_enchantment(to_enchant)
 
-/datum/action/cooldown/spell/exsanguinating_strike/proc/apply_enchantment(obj/item/enchanted)
+/datum/action/cooldown/spell/sanguine_strike/proc/apply_enchantment(obj/item/enchanted)
 	original_force = enchanted.force
 	enchanted.force = min(enchanted.force * 2, enchanted.force + 20)
 	enchanted.AddElement(/datum/element/lifesteal, enchanted.force)
 	RegisterSignal(enchanted, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_enchanted_afterattack))
 
-/datum/action/cooldown/spell/exsanguinating_strike/proc/on_enchanted_afterattack(obj/item/enchanted, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/action/cooldown/spell/sanguine_strike/proc/on_enchanted_afterattack(obj/item/enchanted, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
 	UnregisterSignal(enchanted, COMSIG_ITEM_AFTERATTACK)
 	enchanted.force = original_force

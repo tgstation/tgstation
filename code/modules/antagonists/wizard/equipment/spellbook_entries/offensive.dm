@@ -85,10 +85,10 @@
 	category = "Offensive"
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
 
-/datum/spellbook_entry/exsanguinating_strike
+/datum/spellbook_entry/sanguine_strike
 	name = "Exsanguinating Strike"
 	desc = "Sanguine spell that enchants your next weapon strike to deal more damage, heal you for damage dealt, and refill blood."
-	spell_type =  /datum/action/cooldown/spell/exsanguinating_strike
+	spell_type =  /datum/action/cooldown/spell/sanguine_strike
 	category = "Offensive"
 
 /datum/spellbook_entry/scream_for_me
