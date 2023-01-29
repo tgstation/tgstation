@@ -1,4 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - rscadd: "Adds a new crate to cargo, the \"Amphibian Friends Crate!\" Gives you one frog and one axolotl."
