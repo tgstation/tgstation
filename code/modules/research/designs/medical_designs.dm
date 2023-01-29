@@ -484,27 +484,14 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/design/cyberimp_muscle_left
+/datum/design/cyberimp_muscle
 	name = "Left Arm Empower Implant"
-	desc = "This implant will empover the muscle system of a left arm of a human, increasing punch damage."
-	id = "ci-muscle-left"
+	desc = "This implant will empover the muscle system of a human arm, increasing punch damage."
+	id = "ci-muscle"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 60
 	materials = list(/datum/material/iron = 1200, /datum/material/silver = 300)
-	build_path = /obj/item/organ/internal/cyberimp/muscle/left
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
-/datum/design/cyberimp_muscle_right
-	name = "Right Arm Empower Implant"
-	desc = "This implant will empover the muscle system of a right arm of a human, increasing punch damage."
-	id = "ci-muscle-right"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	construction_time = 60
-	materials = list(/datum/material/iron = 1200, /datum/material/silver = 300)
-	build_path = /obj/item/organ/internal/cyberimp/muscle/right
+	build_path = /obj/item/organ/internal/cyberimp/arm/muscle
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
 	)
