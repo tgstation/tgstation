@@ -4503,6 +4503,7 @@
 #include "code\modules\research\rdmachines.dm"
 #include "code\modules\research\research_disk.dm"
 #include "code\modules\research\server.dm"
+#include "code\modules\research\server_control.dm"
 #include "code\modules\research\stock_parts.dm"
 #include "code\modules\research\anomaly\anomaly_core.dm"
 #include "code\modules\research\anomaly\anomaly_refinery.dm"
