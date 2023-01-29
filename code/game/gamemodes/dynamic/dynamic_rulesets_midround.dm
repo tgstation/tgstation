@@ -877,12 +877,38 @@
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
 	player_mind.active = TRUE
 
-	var/mob/living/carbon/human/clone = new ((pick(possible_spawns)))
+	var/mob/living/carbon/human/clone_victim = find_original()
+	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, pick(possible_spawns))
+
 	player_mind.transfer_to(clone)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
-	player_mind.special_role = ROLE_PARADOX_CLONE
-	player_mind.add_antag_datum(/datum/antagonist/paradox_clone)
+
+	var/datum/antagonist/paradox_clone/new_datum = player_mind.add_antag_datum(/datum/antagonist/paradox_clone)
+	new_datum.original_ref = WEAKREF(clone_victim.mind)
+	new_datum.setup_clone()
 
 	playsound(clone, 'sound/weapons/zapbang.ogg', 30, TRUE)
 	new /obj/item/storage/toolbox/mechanical(clone.loc) //so they dont get stuck in maints
+
+	message_admins("[ADMIN_LOOKUPFLW(clone)] has been made into a Paradox Clone by the midround ruleset.")
+	clone.log_message("was spawned as a Paradox Clone of [key_name(clone)] by the midround ruleset.", LOG_GAME)
+
 	return clone
+
+/**
+ * Trims through GLOB.player_list and finds a target
+ * Returns a single human victim, if none is possible then returns null.
+ */
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/proc/find_original()
+	var/list/possible_targets = list()
+
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(!player.client || !player.mind || player.stat)
+			continue
+		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		possible_targets += player
+
+	if(possible_targets.len)
+		return pick(possible_targets)
+	return FALSE
