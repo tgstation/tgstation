@@ -588,7 +588,6 @@ SUBSYSTEM_DEF(explosions)
 		var/lowest_y = our_y - i
 		var/highest_x = our_x + i
 		var/highest_y = our_y + i
-		var/diameter = i * 2
 		// top left to one before top right
 		if(highest_y <= max_y)
 			outlist += COORD_BLOCK(max(lowest_x, 1), highest_y, our_z, min(highest_x - 1, max_x), highest_y, our_z)
