@@ -67,14 +67,14 @@
 
 /obj/item/detective_scanner/pre_attack_secondary(atom/A, mob/user, params)
 	if(!scan(A, user)) // the user should only see this if a runtime occurs during the scan proc, so ideally never
-		balloon_alert(user, "error : please contact manufacturer") // but it's good to be safe
+		balloon_alert(user, "error 73058 : please contact manufacturer") // but it's good to be safe
 		scanning = FALSE // so we don't break the scanner if a runtime occurs
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
 	if(!scan(A, user))
-		balloon_alert(user, "error : please contact manufacturer") 
+		balloon_alert(user, "error 73058 : please contact manufacturer") 
 		scanning = FALSE
 	return . | AFTERATTACK_PROCESSED_ITEM
 
