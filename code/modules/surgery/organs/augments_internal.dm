@@ -165,7 +165,8 @@
 
 /obj/item/organ/internal/cyberimp/muscle
 	name = "empovered musculature implant"
-	desc = "A cybernetic implant that empowers the strength of a human arm."
+	desc = "A cybernetic implant that empowers the strength of a human arm. You shouldn't see it."
+	icon_state = "muscle_implant"
 	var/pucnh_damage = 13 //The amount of damage dealt by your punches. Not really high, but better then normall punches.
 
 /obj/item/organ/internal/cyberimp/muscle/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
@@ -187,7 +188,7 @@
 	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
 	if(isliving(target))
-		var/mob/living/L = target
+		var/mob/living/living_target = target
 
 		var/picked_hit_type = pick("punch", "smash", "kick")
 
@@ -196,21 +197,21 @@
 			var/mob/living/carbon/human/human_target = target
 			if(human_target.check_shields(source, pucnh_damage, "[source]'s' [picked_hit_type]"))
 				source.do_attack_animation(target)
-				playsound(L.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+				playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 				log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-		playsound(L.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+		playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 
-		L.apply_damage(pucnh_damage, BRUTE)
+		living_target.apply_damage(pucnh_damage, BRUTE)
 
 		if(source.body_position != LYING_DOWN) //Throw them if we are standing
-			var/atom/throw_target = get_edge_target_turf(L, source.dir)
-			L.throw_at(throw_target, 1, rand(1,4), source, gentle = TRUE)
+			var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
+			living_target.throw_at(throw_target, 1, rand(1,4), source, gentle = TRUE)
 
-		L.visible_message(span_danger("[source] [picked_hit_type]ed [L]!"), \
-					span_userdanger("You're [picked_hit_type]ed by [source]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
+		living_target.visible_message(span_danger("[source] [picked_hit_type]ed [living_target]!"), \
+					span_userdanger("You're [picked_hit_type]ed by [source]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, source)
 		to_chat(source, span_danger("You [picked_hit_type] [target]!"))
 
 		log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
@@ -218,11 +219,13 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/organ/internal/cyberimp/muscle/left
+	name = "empovered left arm implant"
 	desc = "A cybernetic implant that empowers the strength of a left human arm."
 	zone = BODY_ZONE_PRECISE_L_HAND
 	slot = ORGAN_SLOT_LEFT_ARM_AUG
 
 /obj/item/organ/internal/cyberimp/muscle/right
+	name = "empovered right arm implant"
 	desc = "A cybernetic implant that empowers the strength of a right human arm."
 	zone = BODY_ZONE_PRECISE_R_HAND
 	slot = ORGAN_SLOT_RIGHT_ARM_AUG
