@@ -23,7 +23,7 @@
 
 /datum/computer_file/program/science/on_start(mob/living/user)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link))
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = SSresearch.science_tech
 
 /datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)

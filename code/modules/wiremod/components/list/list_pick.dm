@@ -73,8 +73,11 @@
 	var/picked = tgui_input_list(user, message = message, items = showed_list)
 	if(!(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)))
 		return
-	if(picked)
-		output.set_output(picked)
+	choose_item(picked, showed_list)
+
+/obj/item/circuit_component/list_pick/proc/choose_item(choice, list/choice_list)
+	if(choice)
+		output.set_output(choice)
 		success.set_output(COMPONENT_SIGNAL)
 	else
 		failure.set_output(COMPONENT_SIGNAL)

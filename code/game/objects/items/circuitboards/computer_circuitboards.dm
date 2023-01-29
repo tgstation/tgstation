@@ -559,6 +559,11 @@
 	name = "Lavaland Shuttle"
 	build_path = /obj/machinery/computer/shuttle/mining/common
 
+/obj/item/circuitboard/computer/emergency_pod
+	name = "Emergency Pod Controls"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/computer/shuttle/pod
+
 /obj/item/circuitboard/computer/exoscanner_console
 	name = "Scanner Array Control Console"
 	build_path = /obj/machinery/computer/exoscanner_control

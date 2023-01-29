@@ -45,8 +45,9 @@ GLOBAL_VAR(command_name)
 
 	return GLOB.station_name
 
-/proc/set_station_name(newname)
-	GLOB.station_name = newname
+/proc/set_station_name(new_name)
+	var/old_name = GLOB.station_name
+	GLOB.station_name = new_name
 
 	var/config_server_name = CONFIG_GET(string/servername)
 	if(config_server_name)
@@ -54,6 +55,7 @@ GLOBAL_VAR(command_name)
 	else
 		world.name = html_decode(GLOB.station_name)
 
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_STATION_NAME_CHANGED, new_name, old_name)
 
 /proc/new_station_name()
 	var/random = rand(1,5)
@@ -176,8 +178,8 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	var/locations = strings(LOCATIONS_FILE, "locations")
 
 	var/list/names = list()
-	for(var/datum/data/record/t in GLOB.data_core.general)//Picks from crew manifest.
-		names += t.fields["name"]
+	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
+		names += target.name
 
 	var/maxwords = words//Extra var to check for duplicates.
 
