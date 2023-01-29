@@ -166,3 +166,25 @@
 
 /datum/ai_behavior/basic_melee_attack/sewer
 	action_cooldown = 0.8 SECONDS
+
+/mob/living/basic/cockroach/glockroach/mobroach
+	name = "mobroach"
+	desc = "WE'RE FUCKED, THAT GLOCKROACH HAS A TOMMYGUN!"
+	icon_state = "mobroach"
+	ai_controller = /datum/ai_controller/basic_controller/cockroach/mobroach
+
+/datum/ai_controller/basic_controller/cockroach/mobroach
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/mobroach, //If we are attacking someone, this will prevent us from hunting
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
+	)
+
+/datum/ai_planning_subtree/basic_ranged_attack_subtree/mobroach
+	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/mobroach
+
+/datum/ai_behavior/basic_ranged_attack/mobroach
+	shots = 4
+	action_cooldown = 2 SECONDS

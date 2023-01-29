@@ -1,5 +1,8 @@
 /// Determines brightness of the light emitted by kudzu with the light mutation
 #define LIGHT_MUTATION_BRIGHTNESS 4
+/// Kudzu light states
+#define PASS_LIGHT 0
+#define BLOCK_LIGHT 1
 /// Determines the probability that the toxicity mutation will harm someone who passes through it
 #define TOXICITY_MUTATION_PROB 10
 /// Determines the impact radius of kudzu's explosive mutation
@@ -252,7 +255,7 @@
 		var/obj/item/bodypart/limb = victim.get_bodypart(victim.get_random_valid_zone(even_weights = TRUE)) //Picks a random bodypart.
 		var/armor = victim.run_armor_check(limb, MELEE, null, null) //armor = the armor value of that randomly chosen bodypart. Nulls to not print a message, because it would still print on pierce.
 		var/datum/spacevine_mutation/thorns/thorn = locate() in vine.mutations //Searches for the thorns mutation in the "mutations"-list inside obj/structure/spacevine, and defines T if it finds it.
-		if(thorn && (prob(40))) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
+		if(thorn && prob(40) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE)) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
 			victim.apply_damage(50, BRUTE, def_zone = limb, wound_bonus = rand(-20,10), sharpness = SHARP_POINTY) //This one gets a bit lower damage because it ignores armor.
 			victim.Stun(1 SECONDS) //Stopped in place for a moment.
 			playsound(living_mob, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
@@ -260,7 +263,7 @@
 			span_userdanger("You are nailed by a sharp thorn!"))
 			log_combat(vine, living_mob, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
 		else
-			if(prob(80))
+			if(prob(80) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 				victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
 				victim.Knockdown(2 SECONDS)
 				playsound(victim, 'sound/weapons/whip.ogg', 50, TRUE, -1)
@@ -290,7 +293,7 @@
 	severity = SEVERITY_TRIVIAL
 
 /datum/spacevine_mutation/transparency/on_grow(obj/structure/spacevine/holder)
-	holder.set_opacity(0)
+	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
 
 /datum/spacevine_mutation/oxy_eater
@@ -360,17 +363,30 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
+	if(istype(crosser) && HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
+		return
+
 	if(prob(THORN_MUTATION_CUT_PROB) && istype(crosser) && !isvineimmune(crosser))
 		var/mob/living/victim = crosser
 		victim.adjustBruteLoss(15)
 		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/item, expected_damage)
+	if(iscarbon(hitter))
+		var/mob/living/carbon/carbon_victim = hitter
+		for(var/obj/item/clothing/worn_item in carbon_victim.get_equipped_items())
+			if((worn_item.body_parts_covered & HANDS) && (worn_item.clothing_flags & THICKMATERIAL))
+				return expected_damage
+
+	if(HAS_TRAIT(hitter, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(hitter, TRAIT_PLANT_SAFE))
+		return expected_damage
+
 	if(prob(THORN_MUTATION_CUT_PROB) && istype(hitter) && !isvineimmune(hitter))
 		var/mob/living/victim = hitter
 		victim.adjustBruteLoss(15)
 		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
-	. = expected_damage
+
+	return expected_damage
 
 /datum/spacevine_mutation/woodening
 	name = "Hardened"
@@ -398,6 +414,7 @@
 //This specific mutation only covers floors instead of structures, items, mobs and cant tangle mobs
 /datum/spacevine_mutation/timid/on_birth(obj/structure/spacevine/holder)
 	SET_PLANE_IMPLICIT(holder, FLOOR_PLANE)
+	holder.light_state = PASS_LIGHT
 	holder.can_tangle = FALSE
 	return ..()
 
@@ -440,6 +457,8 @@
 	var/trait_flags = 0
 	/// Should atmos always process this tile
 	var/always_atmos_process = FALSE
+	/// The kudzu blocks light on default once it grows
+	var/light_state = BLOCK_LIGHT
 
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
@@ -469,7 +488,7 @@
 	if(master)
 		master.VineDestroyed(src)
 	mutations = list()
-	set_opacity(0)
+	set_opacity(PASS_LIGHT)
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	return ..()
@@ -479,7 +498,7 @@
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		override += mutation.on_chem(src, chem)
 	if(!override && istype(chem, /datum/reagent/toxin/plantbgone))
-		if(prob(50))
+		if(prob(75))
 			qdel(src)
 
 /obj/structure/spacevine/proc/eat(mob/eater)
@@ -649,7 +668,7 @@
 	/// Actual maximum spread rate for this process tick
 	var/spread_max = round(clamp(delta_time * (spread_base + start_spread_bonus), max(delta_time * minimum_spread_rate, 1), spread_cap))
 	var/amount_processed = 0
-	for(var/obj/structure/spacevine/vine as anything in growth_queue)
+	for(var/obj/structure/spacevine/vine in growth_queue)
 		if(!vine.can_spread)
 			continue
 		growth_queue -= vine
@@ -678,7 +697,7 @@
 	if(!energy)
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
-		set_opacity(1)
+		set_opacity(light_state)
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2
@@ -707,6 +726,9 @@
 /obj/structure/spacevine/proc/spread()
 	var/direction = pick(GLOB.cardinals)
 	var/turf/stepturf = get_step(src, direction)
+	if(!istype(stepturf))
+		return
+
 	if(!isspaceturf(stepturf) && stepturf.Enter(src))
 		var/obj/structure/spacevine/spot_taken = locate() in stepturf //Locates any vine on target turf. Calls that vine "spot_taken".
 		var/datum/spacevine_mutation/vine_eating/eating = locate() in mutations //Locates the vine eating trait in our own seed and calls it E.
@@ -761,6 +783,8 @@
 	return FALSE
 
 #undef LIGHT_MUTATION_BRIGHTNESS
+#undef PASS_LIGHT
+#undef BLOCK_LIGHT
 #undef TOXICITY_MUTATION_PROB
 #undef EXPLOSION_MUTATION_IMPACT_RADIUS
 #undef GAS_MUTATION_REMOVAL_MULTIPLIER

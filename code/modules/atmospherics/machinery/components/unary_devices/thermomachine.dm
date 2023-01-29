@@ -10,7 +10,7 @@
 
 	density = TRUE
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/unary_thermomachine
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
 
@@ -33,6 +33,11 @@
 	var/base_heating = 140
 	var/base_cooling = 170
 	var/color_index = 1
+
+/datum/armor/unary_thermomachine
+	energy = 100
+	fire = 80
+	acid = 30
 
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
@@ -58,13 +63,13 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
 	var/calculated_bin_rating = 0
-	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
-		calculated_bin_rating += bin.rating
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		calculated_bin_rating += bin.tier
 	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
 
 	var/calculated_laser_rating = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		calculated_laser_rating += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		calculated_laser_rating += laser.tier
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
 	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
 

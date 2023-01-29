@@ -192,30 +192,6 @@ GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_SUPPLY,
 )))
 
-/// Types of Crimes Prisoners will have on their record roundstart.
-/// (They also can choose Random, which picks from these options... randomly!)
-GLOBAL_LIST_INIT(prisoner_crimes, list(
-	"Abhorrent Criminal Negligence" = "Incompetently risked numerous lives.",
-	"Attempted Development of Cloning" = "Attempted illegal research in the cloning sphere. Cloning, cloning construction, and cloning-related R&D was outlawed in 2560.",
-	"Attempted Murder" = "Attempted to maliciously kill someone.",
-	"Biological Terrorism" = "Created and or released a lethal biological agent/lifeform.",
-	"Classified" = "Consult Legal.",
-	"Corporate Espionage" = "Conducted espionage against Nanotrasen for commercial purposes.",
-	"Counterfeiting" = "Engaged in widespread fraud.",
-	"Enemy of the Corporation" = "Acted as, or knowingly aided, an enemy of Nanotrasen.",
-	"Grand Sabotage" = "Engaged in malicious destructive actions, seriously threatening Nanotrasen employees and or infrastructure.",
-	"Grand Theft" = "Stole items of high value or sensitive nature.",
-	"Identity Theft of High-Ranking Figure" = "Impersonated a high-ranking figure.",
-	"Kidnapping" = "Planned and executed a kidnapping.",
-	"Medical Malpractice" = "Engaged in organ harvesting, limb theft, or other malicious medical procedures.",
-	"Murder" = "Maliciously killed someone.",
-	"Mutiny" = "Attempted to overthrow/subvert Chain of Command.",
-	"Other" = "Consult Legal.",
-	"Tampering of Artificial Intelligence" = "Uploaded malicious, negligent, or otherwise blacklisted directives to an Artificial Intelligence.",
-	"Tax Evasion" = "Outstanding amount of tax evasion.",
-	"Worship of Blacklisted Deities" = "Practiced worship of blacklisted deities.",
-))
-
 	//Backpacks
 #define DBACKPACK "Department Backpack"
 #define DDUFFELBAG "Department Duffel Bag"

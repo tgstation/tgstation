@@ -6,18 +6,18 @@
 /datum/pet_command
 	/// Weak reference to who follows this command
 	var/datum/weakref/weak_parent
-	/// Key for command applied when you receive an order
-	var/command_key = PET_COMMAND_NONE
 	/// Unique name used for radial selection, should not be shared with other commands on one mob
 	var/command_name
 	/// Description to display in radial menu
 	var/command_desc
+	/// If true, command will not appear in radial menu and can only be accessed through speech
+	var/hidden = FALSE
 	/// Icon to display in radial menu
 	var/icon/radial_icon
 	/// Icon state to display in radial menu
 	var/radial_icon_state
 	/// Speech strings to listen out for
-	var/list/speech_commands
+	var/list/speech_commands = list()
 	/// Shown above the mob's head when it hears you
 	var/command_feedback
 	/// How close a mob needs to be to a target to respond to a command
@@ -26,11 +26,14 @@
 /datum/pet_command/New(mob/living/parent)
 	. = ..()
 	weak_parent = WEAKREF(parent)
-	parent.ai_controller.blackboard[command_key] = WEAKREF(src)
 
 /// Register a new guy we want to listen to
 /datum/pet_command/proc/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_MOB_SAY, PROC_REF(respond_to_command))
+
+/// Stop listening to a guy
+/datum/pet_command/proc/remove_friend(mob/living/unfriended)
+	UnregisterSignal(unfriended, COMSIG_MOB_SAY)
 
 /// Respond to something that one of our friends has asked us to do
 /datum/pet_command/proc/respond_to_command(mob/living/speaker, speech_args)
@@ -65,7 +68,7 @@
 		return
 	if (IS_DEAD_OR_INCAP(parent)) // Probably can't hear them if we're dead
 		return
-	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == command_key) // We're already doing it
+	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == WEAKREF(src)) // We're already doing it
 		return
 	set_command_active(parent, commander)
 
@@ -74,7 +77,7 @@
 	set_command_target(parent, null)
 
 	parent.ai_controller.CancelActions() // Stop whatever you're doing and do this instead
-	parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] = command_key
+	parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] = WEAKREF(src)
 	if (command_feedback)
 		parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
 
@@ -84,6 +87,8 @@
 
 /// Provide information about how to display this command in a radial menu
 /datum/pet_command/proc/provide_radial_data()
+	if (hidden)
+		return
 	var/datum/radial_menu_choice/choice = new()
 	choice.name = command_name
 	choice.image = icon(icon = radial_icon, icon_state = radial_icon_state)
@@ -117,27 +122,31 @@
 	. = ..()
 	RegisterSignal(tamer, COMSIG_MOB_POINTED, PROC_REF(look_for_target))
 
+/datum/pet_command/point_targetting/remove_friend(mob/living/unfriended)
+	. = ..()
+	UnregisterSignal(unfriended, COMSIG_MOB_POINTED)
+
 /// Target the pointed atom for actions
 /datum/pet_command/point_targetting/proc/look_for_target(mob/living/friend, atom/pointed_atom)
 	SIGNAL_HANDLER
 
-
 	var/mob/living/parent = weak_parent.resolve()
 	if (!parent)
-		return
+		return FALSE
 	if (!parent.ai_controller)
-		return
+		return FALSE
 	if (IS_DEAD_OR_INCAP(parent))
-		return
-	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] != command_key) // We're not listening right now
-		return
+		return FALSE
+	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] != WEAKREF(src)) // We're not listening right now
+		return FALSE
 	if (parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == WEAKREF(pointed_atom)) // That's already our target
-		return
+		return FALSE
 	if (!can_see(parent, pointed_atom, sense_radius))
-		return
+		return FALSE
 
 	parent.ai_controller.CancelActions()
 	// Deciding if they can actually do anything with this target is the behaviour's job
 	set_command_target(parent, pointed_atom)
 	// These are usually hostile actions so should have a record in chat
-	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [pointed_atom] and [pointed_reaction]!"))
+	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [pointed_atom] [pointed_reaction]!"))
+	return TRUE

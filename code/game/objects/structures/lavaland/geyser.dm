@@ -34,7 +34,7 @@
 	create_reagents(max_volume, DRAINABLE)
 	reagents.add_reagent(reagent_id, max_volume)
 
-	RegisterSignals(src, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(start_chemming))
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(start_chemming))
 
 	if(erupting_state)
 		icon_state = erupting_state
@@ -42,7 +42,6 @@
 		var/mutable_appearance/I = mutable_appearance('icons/obj/lavaland/terrain.dmi', "[icon_state]_soup")
 		I.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(I)
-
 
 ///start making those CHHHHHEEEEEEMS. Called whenever chems are removed, it's fine because START_PROCESSING checks if we arent already processing
 /obj/structure/geyser/proc/start_chemming()
@@ -83,7 +82,7 @@
 		var/obj/item/card/id/card = living.get_idcard()
 		if(card)
 			to_chat(user, span_notice("[point_value] mining points have been paid out!"))
-			card.mining_points += point_value
+			card.registered_account.mining_points += point_value
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
@@ -109,8 +108,9 @@
 	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
 /obj/structure/geyser/random/Initialize(mapload)
-	. = ..()
 	reagent_id = get_random_reagent_id()
+
+	return ..()
 
 ///A wearable tool that lets you empty plumbing machinery and some other stuff
 /obj/item/plunger

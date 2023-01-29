@@ -136,6 +136,7 @@
 	clean_old_turfs()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOVABLE_Z_CHANGED,
 		COMSIG_ATOM_UPDATE_LIGHT_RANGE,
 		COMSIG_ATOM_UPDATE_LIGHT_POWER,
 		COMSIG_ATOM_UPDATE_LIGHT_COLOR,
@@ -277,6 +278,8 @@
 ///Called when the current_holder is qdeleted, to remove the light effect.
 /datum/component/overlay_lighting/proc/on_holder_qdel(atom/movable/source, force)
 	SIGNAL_HANDLER
+	if(QDELETED(current_holder))
+		return
 	UnregisterSignal(current_holder, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	if(directional)
 		UnregisterSignal(current_holder, COMSIG_ATOM_DIR_CHANGE)

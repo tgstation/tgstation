@@ -2225,10 +2225,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/basic/cockroach,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/basic/cockroach,
 /turf/open/floor/iron,
 /area/station/medical/abandoned)
 "ayH" = (
@@ -2448,7 +2448,7 @@
 /obj/effect/spawner/random/structure/table_fancy,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -4177,13 +4177,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "aXU" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/space/basic,
 /area/space)
 "aXV" = (
@@ -4609,7 +4603,7 @@
 "bdC" = (
 /obj/structure/table,
 /obj/item/storage/box/bodybags,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 1
 	},
@@ -5306,7 +5300,6 @@
 /area/station/security/office)
 "bla" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
@@ -5318,6 +5311,7 @@
 	name = "virology camera";
 	network = list("ss13","medbay","virology")
 	},
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/virology)
 "blc" = (
@@ -8004,8 +7998,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "bQy" = (
-/mob/living/basic/cockroach,
 /obj/effect/mapping_helpers/burnt_floor,
+/mob/living/basic/cockroach,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "bRe" = (
@@ -9531,8 +9525,8 @@
 /area/station/engineering/atmos/mix)
 "ciF" = (
 /obj/structure/window/reinforced/spawner/east,
-/mob/living/carbon/human/species/monkey,
 /obj/structure/flora/bush/sparsegrass,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "ciH" = (
@@ -10492,8 +10486,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "ctW" = (
-/mob/living/simple_animal/slime,
 /obj/structure/cable,
+/mob/living/simple_animal/slime,
 /turf/open/floor/circuit/green,
 /area/station/science/xenobiology)
 "cug" = (
@@ -11816,8 +11810,8 @@
 /obj/item/defibrillator/loaded,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
 /obj/item/storage/belt/medical{
 	pixel_y = 3
 	},
@@ -14062,7 +14056,7 @@
 /area/station/science/explab)
 "dpI" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -14346,7 +14340,7 @@
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
@@ -14579,7 +14573,7 @@
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/healthanalyzer,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -16727,9 +16721,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/bot/secbot/beepsky/officer,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/simple_animal/bot/secbot/beepsky/officer,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "dYj" = (
@@ -20758,7 +20752,6 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "eXw" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
@@ -29561,8 +29554,8 @@
 "hfa" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/glasses/science{
 	pixel_y = 3
 	},
@@ -30029,10 +30022,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "hkR" = (
-/mob/living/basic/cockroach,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/mob/living/basic/cockroach,
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "hkU" = (
@@ -30092,11 +30085,11 @@
 /area/station/hallway/primary/central/aft)
 "hlG" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
 /obj/structure/cable,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hlM" = (
@@ -32520,15 +32513,11 @@
 /turf/open/floor/plating,
 /area/station/command/corporate_showroom)
 "hTv" = (
-/obj/structure/table/glass,
-/obj/item/paper_bin,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/item/folder/white,
-/obj/item/pen/red,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hTR" = (
 /obj/structure/closet/crate/coffin,
@@ -35574,6 +35563,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "iFp" = (
@@ -36774,9 +36764,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "iWL" = (
-/mob/living/carbon/human/species/monkey,
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/sparsegrass,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "iWR" = (
@@ -37171,7 +37161,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/west{
 	name = "Chemistry Desk";
-	req_access = list("chemistry")
+	req_access = list("plumbing")
 	},
 /obj/item/paper{
 	pixel_x = -1;
@@ -38638,10 +38628,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/sloth/citrus,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/mob/living/simple_animal/sloth/citrus,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "jrA" = (
@@ -46492,10 +46482,10 @@
 /area/station/cargo/sorting)
 "lkE" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "lkL" = (
@@ -46744,7 +46734,7 @@
 /area/station/maintenance/department/science)
 "lon" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/surgical_drapes,
 /obj/item/clothing/suit/apron/surgical,
 /obj/structure/window/reinforced{
@@ -47778,11 +47768,11 @@
 /area/station/engineering/atmos/pumproom)
 "lBH" = (
 /obj/structure/reagent_dispensers/wall/virusfood/directional/east,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "lBR" = (
@@ -51571,6 +51561,14 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
+/obj/structure/rack,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -6
+	},
+/obj/item/book/manual/wiki/infections,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe/antiviral,
+/obj/item/reagent_containers/syringe/antiviral,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "mzu" = (
@@ -55489,6 +55487,8 @@
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/contraband/armory,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "nyC" = (
@@ -57122,7 +57122,7 @@
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/item/storage/bag/bio,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
@@ -57326,11 +57326,11 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/library/abandoned)
 "nUR" = (
-/mob/living/basic/cockroach,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/basic/cockroach,
 /turf/open/floor/plating,
 /area/station/service/theater/abandoned)
 "nUT" = (
@@ -64705,7 +64705,7 @@
 	dir = 9
 	},
 /obj/machinery/light/small/directional/west,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -65780,8 +65780,8 @@
 /obj/item/defibrillator/loaded,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/gloves/latex/nitrile,
 /obj/item/storage/belt/medical{
 	pixel_y = 3
 	},
@@ -65810,7 +65810,7 @@
 /area/station/hallway/primary/central/aft)
 "qaq" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/restraints/handcuffs,
 /obj/item/clothing/mask/muzzle,
 /obj/effect/turf_decal/tile/red{
@@ -69250,11 +69250,11 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "qRZ" = (
@@ -69653,8 +69653,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/simple_animal/bot/secbot/pingsky,
 /obj/structure/cable/layer3,
+/mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "qYL" = (
@@ -70645,8 +70645,8 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/item/radio/intercom/directional/south,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/cmo)
 "rlC" = (
@@ -72426,7 +72426,7 @@
 /obj/item/healthanalyzer{
 	pixel_y = 3
 	},
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/hud/health,
 /turf/open/floor/iron,
@@ -76232,7 +76232,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/virology)
 "sFS" = (
@@ -77446,7 +77445,7 @@
 /area/station/science/xenobiology)
 "sTG" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/glasses/science,
 /obj/structure/sign/poster/official/science{
 	pixel_x = -32
@@ -79297,7 +79296,7 @@
 /obj/structure/table/glass,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
@@ -88110,10 +88109,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "vxi" = (
@@ -89258,7 +89257,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -93720,10 +93721,8 @@
 /area/station/hallway/secondary/entry)
 "wOz" = (
 /obj/structure/chair/office/light,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6
-	},
 /obj/effect/landmark/start/virologist,
+/obj/effect/turf_decal/trimline/green/filled/warning,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "wOP" = (
@@ -94273,6 +94272,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/food/grilled_cheese_sandwich,
 /turf/open/floor/iron/cafeteria,
 /area/station/medical/break_room)
 "wWy" = (
@@ -95611,9 +95611,9 @@
 "xoa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/carbon/human/species/monkey,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/green/filled/warning,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "xop" = (
@@ -96381,10 +96381,10 @@
 "xyb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "xyt" = (
@@ -98429,10 +98429,10 @@
 /area/station/hallway/primary/central/fore)
 "xXq" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/carp/lia,
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 1
 	},
+/mob/living/basic/carp/pet/lia,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "xXt" = (
@@ -98615,13 +98615,8 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "xZM" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space)
@@ -98987,14 +98982,10 @@
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/east,
-/obj/structure/rack,
-/obj/item/book/manual/wiki/infections,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -6
-	},
+/obj/structure/table/glass,
+/obj/item/paper_bin,
+/obj/item/folder/white,
+/obj/item/pen/red,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "yeZ" = (

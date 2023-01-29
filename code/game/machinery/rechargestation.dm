@@ -35,12 +35,12 @@
 	. = ..()
 	recharge_speed = 0
 	repairs = 0
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		recharge_speed += C.rating * 100
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		repairs += M.rating - 1
-	for(var/obj/item/stock_parts/cell/C in component_parts)
-		recharge_speed *= C.maxcharge / 10000
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		recharge_speed += capacitor.tier * 100
+	for(var/datum/stock_part/manipulator/matter_bin in component_parts)
+		repairs += matter_bin.tier - 1
+	for(var/obj/item/stock_parts/cell/cell in component_parts)
+		recharge_speed *= cell.maxcharge / 10000
 
 /obj/machinery/recharge_station/examine(mob/user)
 	. = ..()

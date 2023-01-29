@@ -112,9 +112,8 @@ Runs the event
 	* * In the worst case scenario we can still recall a event which we cancelled by accident, which is much better then to have a unwanted event
 	*/
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
-	var/datum/round_event/E = new typepath()
+	var/datum/round_event/E = new typepath(TRUE, src)
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
-	E.control = src
 	occurrences++
 
 	if(announce_chance_override != null)
@@ -133,10 +132,14 @@ Runs the event
 		log_game("Random Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+		announce_deadchat(random)
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
+
+///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
+/datum/round_event_control/proc/announce_deadchat(random)
+	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 //Returns the component for the listener
 /datum/round_event_control/proc/stop_random_event()
@@ -154,12 +157,15 @@ Runs the event
 	var/datum/round_event_control/control
 
 	/// When in the lifetime to call start().
+	/// This is in seconds - so 1 = ~2 seconds in.
 	var/start_when = 0
 	/// When in the lifetime to call announce(). If you don't want it to announce use announce_chance, below.
+	/// This is in seconds - so 1 = ~2 seconds in.
 	var/announce_when = 0
 	/// Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in the ion storm event.
 	var/announce_chance = 100
 	/// When in the lifetime the event should end.
+	/// This is in seconds - so 1 = ~2 seconds in.
 	var/end_when = 0
 
 	/// How long the event has existed. You don't need to change this.
@@ -268,7 +274,8 @@ Runs the event
 
 
 //Sets up the event then adds the event to the the list of running events
-/datum/round_event/New(my_processing = TRUE)
+/datum/round_event/New(my_processing = TRUE, datum/round_event_control/event_controller)
+	control = event_controller
 	setup()
 	processing = my_processing
 	SSevents.running += src

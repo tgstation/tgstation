@@ -3,7 +3,7 @@
 	desc = "A conspicuous crate with the Syndicate logo on it. You don't know how to open it."
 	icon_state = "syndicrate"
 	max_integrity = 500
-	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 0, BIO = 0)
+	armor_type = /datum/armor/crate_syndicrate
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	integrity_failure = 0 //prevents bust_open from activating
 	/// variable that only lets the crate open if opened by a key from the uplink
@@ -12,6 +12,12 @@
 	var/list/unlock_contents = list()
 
 /// if the crate takes damage it will explode 25% of the time
+/datum/armor/crate_syndicrate
+	melee = 30
+	bullet = 50
+	laser = 50
+	energy = 100
+
 /obj/structure/closet/crate/syndicrate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(created_items)
 		return ..()
@@ -43,7 +49,7 @@
 ///overwrites default opening behavior until it is unlocked via the syndicrate key
 /obj/structure/closet/crate/syndicrate/can_open(mob/living/user, force = FALSE)
 	if(!created_items)
-		balloon_alert(user, "Locked!")
+		balloon_alert(user, "locked!")
 		return FALSE
 	return ..()
 

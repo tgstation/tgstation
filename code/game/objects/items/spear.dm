@@ -19,7 +19,7 @@
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
 	sharpness = SHARP_EDGED // i know the whole point of spears is that they're pointy, but edged is more devastating at the moment so
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
 	bare_wound_bonus = 15
 	/// For explosive spears, what we cry out when we use this to bap someone
@@ -30,6 +30,10 @@
 	var/force_unwielded = 10
 	/// How much damage to do wielded
 	var/force_wielded = 18
+
+/datum/armor/item_spear
+	fire = 50
+	acid = 30
 
 /obj/item/spear/Initialize(mapload)
 	. = ..()
@@ -151,14 +155,15 @@
 	. = ..()
 	if(!proximity || !HAS_TRAIT(src, TRAIT_WIELDED) || !istype(AM))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(AM.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
-		return
+		return .
 	if(ismob(AM))
 		var/mob/mob_target = AM
 		if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
-			return
+			return .
 	if(iseffect(AM)) //and no accidentally wasting your moment of glory on graffiti
-		return
+		return .
 	user.say("[war_cry]", forced="spear warcry")
 	if(isliving(user))
 		var/mob/living/living_user = user
@@ -169,6 +174,7 @@
 		if(!QDELETED(living_user))
 			living_user.set_resting(new_resting = FALSE, silent = TRUE, instant = TRUE)
 	qdel(src)
+	return .
 
 //GREY TIDE
 /obj/item/spear/grey_tide

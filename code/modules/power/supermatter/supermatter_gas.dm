@@ -174,6 +174,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 		return
 	sm.absorbed_gasmix.gases[/datum/gas/miasma][MOLES] -= consumed_miasma
 	sm.external_power_trickle += consumed_miasma * MIASMA_POWER_GAIN
+	sm.log_activation("miasma absorption")
 
 /datum/sm_gas/freon
 	gas_path = /datum/gas/freon

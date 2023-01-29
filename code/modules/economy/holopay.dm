@@ -5,7 +5,7 @@
 	icon_state = "card_scanner"
 	alpha = 150
 	anchored = TRUE
-	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/structure_holopay
 	max_integrity = 15
 	layer = FLY_LAYER
 	/// ID linked to the holopay
@@ -16,6 +16,13 @@
 	var/shop_logo = "donate"
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
 	var/force_fee = 0
+
+/datum/armor/structure_holopay
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holopay/examine(mob/user)
 	. = ..()

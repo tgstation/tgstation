@@ -85,6 +85,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	special_target = specific_target
 	loopy_rod ||= force_looping
 
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
+
 	SSpoints_of_interest.make_point_of_interest(src)
 
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(on_entering_atom))

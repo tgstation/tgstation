@@ -23,7 +23,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Ageusia", "Vegetarian", "Deviant Tastes", "Gamer"),
 		list("Ananas Affinity", "Ananas Aversion", "Gamer"),
 		list("Alcohol Tolerance", "Light Drinker"),
-		list("Clown Enjoyer", "Mime Fan"),
+		list("Clown Enjoyer", "Mime Fan", "Pride Pin"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
@@ -61,19 +61,19 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			continue
 		hardcore_quirks[quirk_type] += hardcore_value
 
-/datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/cli)
+/datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/applied_client)
 	var/badquirk = FALSE
-	for(var/quirk_name in cli.prefs.all_quirks)
-		var/datum/quirk/Q = quirks[quirk_name]
-		if(Q)
-			if(user.add_quirk(Q))
+	for(var/quirk_name in applied_client.prefs.all_quirks)
+		var/datum/quirk/quirk_type = quirks[quirk_name]
+		if(ispath(quirk_type))
+			if(user.add_quirk(quirk_type, override_client = applied_client))
 				SSblackbox.record_feedback("nested tally", "quirks_taken", 1, list("[quirk_name]"))
 		else
-			stack_trace("Invalid quirk \"[quirk_name]\" in client [cli.ckey] preferences")
-			cli.prefs.all_quirks -= quirk_name
+			stack_trace("Invalid quirk \"[quirk_name]\" in client [applied_client.ckey] preferences")
+			applied_client.prefs.all_quirks -= quirk_name
 			badquirk = TRUE
 	if(badquirk)
-		cli.prefs.save_character()
+		applied_client.prefs.save_character()
 
 /*
  *Randomises the quirks for a specified mob
@@ -154,7 +154,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if (isnull(quirk))
 			continue
 
-		if (initial(quirk.mood_quirk) && CONFIG_GET(flag/disable_human_mood))
+		if ((initial(quirk.quirk_flags) & QUIRK_MOODLET_BASED) && CONFIG_GET(flag/disable_human_mood))
 			continue
 
 		var/blacklisted = FALSE

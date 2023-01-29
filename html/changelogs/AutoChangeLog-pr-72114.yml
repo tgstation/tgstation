@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - qol: "The Traitor's Antagonist Panel's Unlock and Failsafe entries will only appear if there is an Unlock/Failsafe Code to display."

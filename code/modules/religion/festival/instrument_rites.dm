@@ -121,7 +121,7 @@
 	if(prob(20))
 		to_chat(listener, span_warning(pick(sleepy_messages)))
 		listener.emote("yawn")
-	listener.blur_eyes(2)
+	listener.set_eye_blur_if_lower(4 SECONDS)
 
 /datum/religion_rites/song_tuner/lullaby/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))

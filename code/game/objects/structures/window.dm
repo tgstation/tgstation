@@ -10,7 +10,7 @@
 	max_integrity = 50
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/structure_window
 	can_atmos_pass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
@@ -34,7 +34,13 @@
 	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
 	var/bloodied = FALSE
 
+/datum/armor/structure_window
+	melee = 50
+	fire = 80
+	acid = 100
+
 /obj/structure/window/Initialize(mapload, direct)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	if(direct)
 		setDir(direct)
@@ -50,9 +56,9 @@
 		setDir()
 		AddElement(/datum/element/can_barricade)
 
-	//windows only block while reinforced and fulltile, so we'll use the proc
-	real_explosion_block = explosion_block
-	explosion_block = EXPLOSION_BLOCK_PROC
+	//windows only block while reinforced and fulltile
+	if(!reinf || !fulltile)
+		set_explosion_block(0)
 
 	flags_1 |= ALLOW_DARK_PAINTS_1
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
@@ -178,7 +184,7 @@
 /obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
-	..()
+	return ..()
 
 /obj/structure/window/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(!can_be_reached(user))
@@ -419,9 +425,6 @@
 
 	return TRUE
 
-/obj/structure/window/GetExplosionBlock()
-	return reinf && fulltile ? real_explosion_block : 0
-
 /obj/structure/window/spawner/east
 	dir = EAST
 
@@ -440,7 +443,7 @@
 	icon_state = "rwindow"
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list(MELEE = 80, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 0, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/window_reinforced
 	max_integrity = 75
 	explosion_block = 1
 	damage_deflection = 11
@@ -453,6 +456,12 @@
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 //2021 AND STILLLL GOING STRONG
 //2022 BABYYYYY ~lewc
+/datum/armor/window_reinforced
+	melee = 80
+	bomb = 25
+	fire = 80
+	acid = 100
+
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
 	switch(state)
 		if(RWINDOW_SECURE)
@@ -563,11 +572,18 @@
 	icon_state = "plasmawindow"
 	reinf = FALSE
 	heat_resistance = 25000
-	armor = list(MELEE = 80, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 45, BIO = 0, FIRE = 99, ACID = 100)
+	armor_type = /datum/armor/window_plasma
 	max_integrity = 200
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_MEDIUM_INSULATION
+
+/datum/armor/window_plasma
+	melee = 80
+	bullet = 5
+	bomb = 45
+	fire = 99
+	acid = 100
 
 /obj/structure/window/plasma/Initialize(mapload, direct)
 	. = ..()
@@ -600,12 +616,19 @@
 	icon_state = "plasmarwindow"
 	reinf = TRUE
 	heat_resistance = 50000
-	armor = list(MELEE = 80, BULLET = 20, LASER = 0, ENERGY = 0, BOMB = 60, BIO = 0, FIRE = 99, ACID = 100)
+	armor_type = /datum/armor/reinforced_plasma
 	max_integrity = 500
 	damage_deflection = 21
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
 	rad_insulation = RAD_HEAVY_INSULATION
+
+/datum/armor/reinforced_plasma
+	melee = 80
+	bullet = 20
+	bomb = 60
+	fire = 99
+	acid = 100
 
 /obj/structure/window/reinforced/plasma/block_superconductivity()
 	return TRUE
@@ -729,7 +752,7 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list(MELEE = 90, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/reinforced_shuttle
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE
@@ -738,6 +761,12 @@
 	glass_amount = 2
 	receive_ricochet_chance_mod = 1.2
 	rad_insulation = RAD_MEDIUM_INSULATION
+
+/datum/armor/reinforced_shuttle
+	melee = 90
+	bomb = 50
+	fire = 80
+	acid = 100
 
 /obj/structure/window/reinforced/shuttle/spawnDebris(location)
 	. = list()
@@ -769,7 +798,7 @@
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	heat_resistance = 1600
-	armor = list(MELEE = 95, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/plasma_plastitanium
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
@@ -778,6 +807,12 @@
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
 	rad_insulation = RAD_EXTREME_INSULATION
+
+/datum/armor/plasma_plastitanium
+	melee = 95
+	bomb = 50
+	fire = 80
+	acid = 100
 
 /obj/structure/window/reinforced/plasma/plastitanium/spawnDebris(location)
 	. = list()
@@ -811,7 +846,7 @@
 	decon_speed = 10
 	can_atmos_pass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	knock_sound = SFX_PAGE_TURN
 	bash_sound = 'sound/weapons/slashmiss.ogg'
 	break_sound = 'sound/items/poster_ripped.ogg'

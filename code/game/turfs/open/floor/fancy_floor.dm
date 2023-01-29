@@ -19,7 +19,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
-/turf/open/floor/wood/setup_broken_states()
+/turf/open/floor/wood/broken_states()
 	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
 /turf/open/floor/wood/examine(mob/user)
@@ -78,21 +78,21 @@
 	icon_state = "wood_tile"
 	floor_tile = /obj/item/stack/tile/wood/tile
 
-/turf/open/floor/wood/tile/setup_broken_states()
+/turf/open/floor/wood/tile/broken_states()
 	return list("wood_tile-broken", "wood_tile-broken2", "wood_tile-broken3")
 
 /turf/open/floor/wood/parquet
 	icon_state = "wood_parquet"
 	floor_tile = /obj/item/stack/tile/wood/parquet
 
-/turf/open/floor/wood/parquet/setup_broken_states()
+/turf/open/floor/wood/parquet/broken_states()
 	return list("wood_parquet-broken", "wood_parquet-broken2", "wood_parquet-broken3", "wood_parquet-broken4", "wood_parquet-broken5", "wood_parquet-broken6", "wood_parquet-broken7")
 
 /turf/open/floor/wood/large
 	icon_state = "wood_large"
 	floor_tile = /obj/item/stack/tile/wood/large
 
-/turf/open/floor/wood/large/setup_broken_states()
+/turf/open/floor/wood/large/broken_states()
 	return list("wood_large-broken", "wood_large-broken2", "wood_large-broken3")
 
 /turf/open/floor/bamboo
@@ -110,7 +110,7 @@
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/bamboo/setup_broken_states()
+/turf/open/floor/bamboo/broken_states()
 	return list("bamboodamaged")
 
 /turf/open/floor/bamboo/tatami
@@ -119,7 +119,7 @@
 	floor_tile = /obj/item/stack/tile/bamboo/tatami
 	smoothing_flags = NONE
 
-/turf/open/floor/bamboo/tatami/setup_broken_states()
+/turf/open/floor/bamboo/tatami/broken_states()
 	return list("tatami-damaged")
 
 /turf/open/floor/bamboo/tatami/purple
@@ -143,7 +143,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
-/turf/open/floor/grass/setup_broken_states()
+/turf/open/floor/grass/broken_states()
 	return list("sand")
 
 /turf/open/floor/grass/Initialize(mapload)
@@ -190,7 +190,7 @@
 	. = ..()
 	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2, worm_chance = 0)
 
-/turf/open/floor/fake_snow/setup_broken_states()
+/turf/open/floor/fake_snow/broken_states()
 	return list("snow_dug")
 
 /turf/open/floor/fake_snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
@@ -811,7 +811,7 @@
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
 
-/turf/open/floor/fakespace/setup_broken_states()
+/turf/open/floor/fakespace/broken_states()
 	return list("damaged")
 
 /turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)

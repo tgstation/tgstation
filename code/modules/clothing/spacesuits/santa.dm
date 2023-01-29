@@ -13,6 +13,7 @@
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "santahatnorm"
 	inhand_icon_state = "that"
+	flags_inv = NONE
 
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"

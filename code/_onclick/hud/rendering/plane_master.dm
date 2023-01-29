@@ -260,7 +260,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	multiz_scaled = FALSE
-	critical = PLANE_CRITICAL_FUCKO_PARALLAX
 
 /atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -287,6 +286,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
 		is_outside_bounds = TRUE // I'm sorry :(
 		return
+	// If we can't render, and we aren't the bottom layer, don't render us
+	// This way we only multiply against stuff that's not fullwhite space
+	var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+	var/turf/viewing_turf = get_turf(relevant)
+	if(!viewing_turf || offset != GET_LOWEST_STACK_OFFSET(viewing_turf.z))
+		parent_parallax.remove_relay_from(plane)
+	else
+		parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
 	return ..()
 
 /atom/movable/screen/plane_master/parallax/inside_bounds(mob/relevant)
@@ -294,6 +301,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
 		is_outside_bounds = FALSE
 		return
+	// Always readd, just in case we lost it
+	var/atom/movable/screen/plane_master/parent_parallax = home.our_hud.get_plane_master(PLANE_SPACE_PARALLAX)
+	parent_parallax.add_relay_to(plane, BLEND_OVERLAY)
 	return ..()
 
 /atom/movable/screen/plane_master/gravpulse
@@ -376,7 +386,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
-/atom/movable/screen/plane_master/game_world_upper_fov_hidden/Initialize()
+/atom/movable/screen/plane_master/game_world_upper_fov_hidden/Initialize(mapload)
 	. = ..()
 	// Dupe of the other hidden plane
 	add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
@@ -579,8 +589,16 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/splashscreen
 	name = "Splashscreen"
-	documentation = "Anything that's drawn above LITERALLY everything else. Think cinimatics and the well, spashscreen."
+	documentation = "Cinematics and the splash screen."
 	plane = SPLASHSCREEN_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
+	allows_offsetting = FALSE
+
+/atom/movable/screen/plane_master/escape_menu
+	name = "Escape Menu"
+	documentation = "Anything relating to the escape menu."
+	plane = ESCAPE_MENU_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	render_relay_planes = list(RENDER_PLANE_MASTER)
 	allows_offsetting = FALSE

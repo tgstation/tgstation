@@ -73,6 +73,11 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
+/obj/item/clothing/glasses/hud/health/night/meson
+	name = "night vision meson health scanner HUD"
+	desc = "Truly combat ready."
+	vision_flags = SEE_TURFS
+
 /obj/item/clothing/glasses/hud/health/night/science
 	name = "night vision medical science scanner HUD"
 	desc = "An clandestine medical science heads-up display that allows operatives to find \

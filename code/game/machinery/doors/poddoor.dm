@@ -10,13 +10,22 @@
 	heat_proof = TRUE
 	safe = FALSE
 	max_integrity = 600
-	armor = list(MELEE = 50, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 50, BIO = 0, FIRE = 100, ACID = 70)
+	armor_type = /datum/armor/door_poddoor
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
 	can_open_with_hands = FALSE
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1
+
+/datum/armor/door_poddoor
+	melee = 50
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 50
+	fire = 100
+	acid = 70
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -40,7 +49,7 @@
 		return
 	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
-	balloon_alert(user, "ID changed")
+	balloon_alert(user, "id changed")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)

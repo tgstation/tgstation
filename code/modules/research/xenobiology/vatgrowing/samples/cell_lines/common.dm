@@ -187,7 +187,7 @@
 		/datum/reagent/oxygen = -3)
 
 	virus_suspectibility = 2
-	resulting_atoms = list(/mob/living/simple_animal/hostile/carp = 1)
+	resulting_atoms = list(/mob/living/basic/carp = 1)
 
 /datum/micro_organism/cell_line/megacarp
 	desc = "Cartilaginous cyprinid cells"
@@ -208,7 +208,7 @@
 		/datum/reagent/oxygen = -3)
 
 	virus_suspectibility = 1
-	resulting_atoms = list(/mob/living/simple_animal/hostile/carp/megacarp = 1)
+	resulting_atoms = list(/mob/living/basic/carp/mega = 1)
 
 /datum/micro_organism/cell_line/snake
 	desc = "Ophidic cells"
@@ -304,7 +304,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1)
 
 	suppressive_reagents = list(
-		/datum/reagent/toxin/minttoxin = -3,
+		/datum/reagent/consumable/mintextract = -3,
 		/datum/reagent/consumable/frostoil = -2,
 		/datum/reagent/consumable/ice = -1)
 
@@ -530,7 +530,7 @@
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/clownstears = -8,
-		/datum/reagent/toxin/minttoxin = -6,
+		/datum/reagent/consumable/mintextract = -6,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/consumable/ethanol/fernet = -3,
 		/datum/reagent/toxin/lipolicide = -3,
@@ -581,7 +581,7 @@
 		/datum/reagent/toxin = -1)
 
 	virus_suspectibility = 0.5
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/frog = 1)
+	resulting_atoms = list(/mob/living/basic/frog = 1)
 
 /datum/micro_organism/cell_line/walking_mushroom
 	desc = "motile fungal hyphae"

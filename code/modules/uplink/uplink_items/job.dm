@@ -93,6 +93,15 @@
 	cost = 4
 	restricted_roles = list(JOB_COOK, JOB_BOTANIST, JOB_CLOWN, JOB_MIME)
 
+/datum/uplink_item/role_restricted/combat_baking
+	name = "Combat Bakery Kit"
+	desc = "A kit of clandestine baked weapons. Contains a baguette which a skilled mime could use as a sword, \
+		a pair of throwing croissants, and the recipe to make more on demand. Once the job is done, eat the evidence."
+	progression_minimum = 20 MINUTES
+	item = /obj/item/storage/box/syndie_kit/combat_baking
+	cost = 7
+	restricted_roles = list(JOB_COOK, JOB_MIME)
+
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. \

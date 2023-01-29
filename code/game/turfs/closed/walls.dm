@@ -6,7 +6,7 @@
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
-	explosion_block = 1
+	explosive_resistance = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 62500 //a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
@@ -222,11 +222,11 @@
 		var/obj/item/wallframe/F = W
 		if(F.try_build(src, user))
 			F.attach(src, user)
-		return TRUE
+			return TRUE
+		return FALSE
 	//Poster stuff
 	else if(istype(W, /obj/item/poster) && Adjacent(user)) //no tk memes.
-		place_poster(W,user)
-		return TRUE
+		return place_poster(W,user)
 
 	return FALSE
 
@@ -266,7 +266,7 @@
 	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)
-	if(explosion_block >= 2)
+	if(get_explosive_block() >= 2)
 		acidpwr = min(acidpwr, 50) //we reduce the power so strong walls never get melted.
 	return ..()
 
@@ -277,10 +277,18 @@
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
+		if(RCD_WALLFRAME)
+			return list("mode" = RCD_WALLFRAME, "delay" = 10, "cost" = 25)
 	return FALSE
 
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
+		if(RCD_WALLFRAME)
+			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
+			if(!try_wallmount(new_wallmount, user, src))
+				qdel(new_wallmount)
+				return FALSE
+			return TRUE
 		if(RCD_DECONSTRUCT)
 			to_chat(user, span_notice("You deconstruct the wall."))
 			ScrapeAway()

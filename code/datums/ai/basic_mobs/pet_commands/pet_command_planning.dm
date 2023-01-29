@@ -8,11 +8,8 @@
 /datum/ai_planning_subtree/pet_planning
 
 /datum/ai_planning_subtree/pet_planning/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/active_command_key = controller.blackboard[BB_ACTIVE_PET_COMMAND]
-	if (!active_command_key)
-		return // Do something else
-	var/datum/weakref/weak_command = controller.blackboard[active_command_key]
+	var/datum/weakref/weak_command = controller.blackboard[BB_ACTIVE_PET_COMMAND]
 	var/datum/pet_command/command = weak_command?.resolve()
 	if (!command)
-		return // We forgot this command at some point
+		return // Do something else
 	return command.execute_action(controller)

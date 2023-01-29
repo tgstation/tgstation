@@ -4,11 +4,10 @@
 #define RANDOM_LOWER_X 50
 #define RANDOM_LOWER_Y 50
 
-/proc/spawn_rivers(target_z, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors/unexplored, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y, new_baseturfs)
+/proc/spawn_rivers(target_z, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors/unexplored, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
 	var/list/possible_locs = block(locate(min_x, min_y, target_z), locate(max_x, max_y, target_z))
-	new_baseturfs = baseturfs_string_list(new_baseturfs, pick(possible_locs))
 	while(num_spawned < nodes && possible_locs.len)
 		var/turf/T = pick(possible_locs)
 		var/area/A = get_area(T)
@@ -27,8 +26,6 @@
 		// Workaround around ChangeTurf that's safe because of when this proc is called
 		var/turf/cur_turf = get_turf(W)
 		cur_turf = new turf_type(cur_turf)
-		if(new_baseturfs)
-			cur_turf.baseturfs = new_baseturfs
 		var/turf/target_turf = get_turf(pick(river_nodes - W))
 		if(!target_turf)
 			break
@@ -59,8 +56,6 @@
 			else
 				// Workaround around ChangeTurf that's safe because of when this proc is called
 				var/turf/river_turf = new turf_type(cur_turf)
-				if(new_baseturfs)
-					river_turf.baseturfs = new_baseturfs
 				river_turf.Spread(25, 11, whitelist_area)
 
 	for(var/WP in river_nodes)

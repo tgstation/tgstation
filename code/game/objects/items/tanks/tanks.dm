@@ -26,7 +26,7 @@
 	demolition_mod = 1.25
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/item_tank
 	integrity_failure = 0.5
 	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
@@ -48,6 +48,11 @@
 	var/mob/living/carbon/breathing_mob = null
 
 /// Closes the tank if dropped while open.
+/datum/armor/item_tank
+	bomb = 10
+	fire = 80
+	acid = 30
+
 /obj/item/tank/dropped(mob/living/user, silent)
 	. = ..()
 	// Close open air tank if its current user got sent to the shadowrealm.

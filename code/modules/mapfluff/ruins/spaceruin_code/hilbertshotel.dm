@@ -230,7 +230,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = "hotelwall"
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_HOTEL_WALLS
 	canSmoothWith = SMOOTH_GROUP_HOTEL_WALLS
-	explosion_block = INFINITY
+	explosive_resistance = INFINITY
 
 /turf/open/indestructible/hotelwood
 	desc = "Stylish dark wood with extra reinforcement. Secured firmly to the floor to prevent tampering."
@@ -250,7 +250,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	base_icon_state = "bluespace"
 	baseturfs = /turf/open/space/bluespace
 	flags_1 = NOJAUNT
-	explosion_block = INFINITY
+	explosive_resistance = INFINITY
 	var/obj/item/hilbertshotel/parentSphere
 
 /turf/open/space/bluespace/Initialize(mapload)
@@ -269,7 +269,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor
 	name = "Hotel Door"
 	icon_state = "hoteldoor"
-	explosion_block = INFINITY
+	explosive_resistance = INFINITY
 	var/obj/item/hilbertshotel/parentSphere
 
 /turf/closed/indestructible/hoteldoor/proc/promptExit(mob/living/user)
@@ -478,9 +478,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/analyzer/hilbertsanalyzer/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(istype(target, /obj/item/hilbertshotel))
+		. |= AFTERATTACK_PROCESSED_ITEM
 		if(!proximity)
 			to_chat(user, span_warning("It's to far away to scan!"))
-			return
+			return .
 		var/obj/item/hilbertshotel/sphere = target
 		if(sphere.activeRooms.len)
 			to_chat(user, "Currently Occupied Rooms:")
@@ -494,6 +495,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 				to_chat(user, roomnumber)
 		else
 			to_chat(user, "No vacated rooms.")
+		return .
 
 /obj/effect/landmark/lift_id/hilbert
 	specific_lift_id = HILBERT_TRAM

@@ -112,6 +112,8 @@
 		user.balloon_alert(user, "already busy!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if (!proximity || !check_allowed_items(target) || !isliving(user))
 		return
 

@@ -6,7 +6,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "gas_alt"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/mask_gas
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	///Max numbers of installable filters
@@ -17,6 +17,9 @@
 	var/starting_filter_type = /obj/item/gas_filter
 	///Does the mask have an FOV?
 	var/has_fov = TRUE
+
+/datum/armor/mask_gas
+	bio = 100
 
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
@@ -99,9 +102,14 @@
 	desc = "Improved gas mask utilized by atmospheric technicians. It's flameproof!"
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 20, ACID = 10)
+	armor_type = /datum/armor/gas_atmos
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
+
+/datum/armor/gas_atmos
+	bio = 100
+	fire = 20
+	acid = 10
 
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's gas mask"
@@ -129,13 +137,19 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
 	tint = 2
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 100, ACID = 55)
+	armor_type = /datum/armor/gas_welding
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
+
+/datum/armor/gas_welding
+	melee = 10
+	bio = 100
+	fire = 100
+	acid = 55
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)

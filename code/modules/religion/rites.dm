@@ -253,7 +253,7 @@
 	..()
 	var/altar_turf = get_turf(religious_tool)
 	for(var/i in 1 to 5)
-		new /obj/item/candle/infinite(altar_turf)
+		new /obj/item/flashlight/flare/candle/infinite(altar_turf)
 	playsound(altar_turf, 'sound/magic/fireball.ogg', 50, TRUE)
 	return TRUE
 

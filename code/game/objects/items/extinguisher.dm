@@ -116,6 +116,9 @@
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
 
+/obj/item/extinguisher/advanced/empty
+	starting_water = FALSE
+
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
 		user.visible_message(span_suicide("[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!"))
@@ -178,20 +181,21 @@
 	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
 	if (target.loc == user)
 		return
-	//TODO; Add support for reagents in water.
+
+	. |= AFTERATTACK_PROCESSED_ITEM
 
 	if(refilling)
 		refilling = FALSE
-		return
+		return .
 	if (!safety)
 
 
 		if (src.reagents.total_volume < 1)
 			balloon_alert(user, "it's empty!")
-			return
+			return .
 
 		if (world.time < src.last_use + 12)
-			return
+			return .
 
 		src.last_use = world.time
 
@@ -231,6 +235,8 @@
 
 		//Make em move dat ass, hun
 		move_particles(water_particles)
+
+	return .
 
 //Particle movement loop
 /obj/item/extinguisher/proc/move_particles(list/particles)

@@ -3,24 +3,16 @@
 	name = "moth wings"
 	desc = "Spread your wings and FLOOOOAAAAAT!"
 
-	feature_key = "moth_wings"
 	preference = "feature_moth_wings"
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
 
 	dna_block = DNA_MOTH_WINGS_BLOCK
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/moth
 
 	///Are we burned?
 	var/burnt = FALSE
 	///Store our old datum here for if our burned wings are healed
 	var/original_sprite_datum
-
-/obj/item/organ/external/wings/moth/get_global_feature_list()
-	return GLOB.moth_wings_list
-
-/obj/item/organ/external/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
-		return TRUE
-	return FALSE
 
 /obj/item/organ/external/wings/moth/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -63,10 +55,9 @@
 
 ///burn the wings off
 /obj/item/organ/external/wings/moth/proc/burn_wings()
+	var/datum/bodypart_overlay/mutant/wings/moth/wings = bodypart_overlay
+	wings.burnt = TRUE
 	burnt = TRUE
-
-	original_sprite_datum = sprite_datum
-	simple_change_sprite(/datum/sprite_accessory/moth_wings/burnt_off)
 
 ///heal our wings back up!!
 /obj/item/organ/external/wings/moth/proc/heal_wings(datum/source, heal_flags)
@@ -76,5 +67,31 @@
 		return
 
 	if(heal_flags & (HEAL_LIMBS|HEAL_ORGANS))
+		var/datum/bodypart_overlay/mutant/wings/moth/wings = bodypart_overlay
+		wings.burnt = FALSE
 		burnt = FALSE
-		simple_change_sprite(original_sprite_datum)
+
+///Moth wing bodypart overlay, including burn functionality!
+/datum/bodypart_overlay/mutant/wings/moth
+	feature_key = "moth_wings"
+	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	///Accessory datum of the burn sprite
+	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_wings/burnt_off
+	///Are we burned? If so we draw differently
+	var/burnt
+
+/datum/bodypart_overlay/mutant/wings/moth/New()
+	. = ..()
+
+	burn_datum = fetch_sprite_datum(burn_datum)
+
+/datum/bodypart_overlay/mutant/wings/moth/get_global_feature_list()
+	return GLOB.moth_wings_list
+
+/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
+		return TRUE
+	return FALSE
+
+/datum/bodypart_overlay/mutant/wings/moth/get_base_icon_state()
+	return burnt ? burn_datum.icon_state : sprite_datum.icon_state

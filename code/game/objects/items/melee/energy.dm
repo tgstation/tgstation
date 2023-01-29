@@ -1,7 +1,7 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/melee_energy
 	attack_verb_continuous = list("hits", "taps", "pokes")
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
@@ -12,6 +12,7 @@
 	bare_wound_bonus = 20
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NO_BLOOD_ON_ITEM
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
@@ -29,6 +30,10 @@
 	var/active_w_class = WEIGHT_CLASS_BULKY
 	/// The heat given off when active.
 	var/active_heat = 3500
+
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
 
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
@@ -62,9 +67,6 @@
 		attack_self(user)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
 	return (BRUTELOSS|FIRELOSS)
-
-/obj/item/melee/energy/add_blood_DNA(list/blood_dna)
-	return FALSE
 
 /obj/item/melee/energy/process(delta_time)
 	if(heat)

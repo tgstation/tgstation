@@ -129,9 +129,18 @@
 	desc = "It's a robust baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	soft_type = "sec"
-	armor = list(MELEE = 30, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 20, ACID = 50)
+	armor_type = /datum/armor/soft_sec
 	strip_delay = 60
 	dog_fashion = null
+
+/datum/armor/soft_sec
+	melee = 30
+	bullet = 25
+	laser = 25
+	energy = 35
+	bomb = 25
+	fire = 20
+	acid = 50
 
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"

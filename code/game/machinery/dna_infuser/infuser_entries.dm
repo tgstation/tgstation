@@ -45,12 +45,12 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 	)
 	/// organs that the machine could spit out in relation
 	var/list/output_organs = list(
+		/obj/item/organ/internal/appendix/fly,
 		/obj/item/organ/internal/eyes/fly,
-		/obj/item/organ/internal/tongue/fly,
 		/obj/item/organ/internal/heart/fly,
 		/obj/item/organ/internal/lungs/fly,
 		/obj/item/organ/internal/stomach/fly,
-		/obj/item/organ/internal/appendix/fly,
+		/obj/item/organ/internal/tongue/fly,
 	)
 	///message the target gets while being infused
 	var/infusion_desc = "fly-like"
@@ -71,8 +71,8 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 	)
 	output_organs = list(
 		/obj/item/organ/internal/eyes/night_vision/rat,
-		/obj/item/organ/internal/stomach/rat,
 		/obj/item/organ/internal/heart/rat,
+		/obj/item/organ/internal/stomach/rat,
 		/obj/item/organ/internal/tongue/rat,
 	)
 	infusion_desc = "skittish"
@@ -89,13 +89,13 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 		"always wants to travel",
 	)
 	input_obj_or_mob = list(
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/lungs/carp,
-		/obj/item/organ/internal/tongue/carp,
 		/obj/item/organ/internal/brain/carp,
 		/obj/item/organ/internal/heart/carp,
+		/obj/item/organ/internal/lungs/carp,
+		/obj/item/organ/internal/tongue/carp,
 	)
 	infusion_desc = "nomadic"
 
@@ -135,3 +135,47 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 		/obj/item/organ/internal/ears/fox,
 	)
 	infusion_desc = "inexcusable"
+
+/datum/infuser_entry/goliath
+	name = "Goliath"
+	infuse_mob_name = "Goliath"
+	desc = "The guy who said 'Whoever fights monsters should see to it that in the process he does not become a monster' clearly didn't see what a goliath miner can do!"
+	threshold_desc = "You can walk on lava!"
+	qualities = list(
+		"can breath both the station and lavaland air but can't deal with pure O2",
+		"immune to ashstorms",
+		"eyes that can see in the dark",
+		"a tendril hand can easily dig through basalt and obliterate hostile fauna, won't be fitting on gloves any time soon tho...",
+	)
+	input_obj_or_mob = list(
+		/mob/living/simple_animal/hostile/asteroid/goliath,
+	)
+	output_organs = list(
+		/obj/item/organ/internal/brain/goliath,
+		/obj/item/organ/internal/eyes/night_vision/goliath,
+		/obj/item/organ/internal/heart/goliath,
+		/obj/item/organ/internal/lungs/lavaland/goliath,
+	)
+	infusion_desc = "armored tendril-like"
+
+/datum/infuser_entry/mothroach
+	name = "Mothroach"
+	infuse_mob_name = "Mothroach"
+	desc = "So first they mixed moth and roach DNA to make mothroaches, and now we mix mothroach DNA with humanoids to make mothmen hybrids?"
+	threshold_desc = NO_THRESHOLD
+	qualities = list(
+		"eyes weak to bright lights",
+		"you flutter when you talk",
+		"wings that can't even carry your body weight",
+		"i hope it was worth it",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/mothroach,
+	)
+	output_organs = list(
+		/obj/item/organ/external/antennae,
+		/obj/item/organ/external/wings/moth,
+		/obj/item/organ/internal/eyes/moth,
+		/obj/item/organ/internal/tongue/moth,
+	)
+	infusion_desc = "fluffy"

@@ -4,13 +4,16 @@
 	id = SPECIES_PLASMAMAN
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD, NOTRANSSTING, HAS_BONE, NOAPPENDIX)
+	species_traits = list(
+		NOTRANSSTING,
+	)
 	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_HARDLY_WOUNDED,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
+		TRAIT_NOBLOOD,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -18,6 +21,8 @@
 	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/internal/liver/plasmaman
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
+	mutantappendix = null
+	mutantheart = null
 	burnmod = 1.5
 	heatmod = 1.5
 	brutemod = 1.5
@@ -113,8 +118,10 @@
 	. = ..()
 
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
-	if(job.plasmaman_outfit)
+	if(job?.plasmaman_outfit)
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
+	else 
+		give_important_for_life(equipping)
 	equipping.open_internals(equipping.get_item_for_held_index(2))
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)

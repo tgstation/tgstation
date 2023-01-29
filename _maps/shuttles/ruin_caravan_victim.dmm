@@ -14,7 +14,7 @@
 /area/shuttle/ruin/caravan/freighter1)
 "cu" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/mob/living/basic/syndicate/ranged/smg/space,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter1)
 "cC" = (
@@ -491,7 +491,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/mob/living/basic/syndicate/ranged/smg/space,
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -501,7 +501,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/melee/sword/space/stormtrooper,
+/mob/living/basic/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -642,7 +642,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/mob/living/basic/syndicate/ranged/smg/space,
 /turf/open/floor/iron/airless,
 /area/shuttle/ruin/caravan/freighter1)
 "Ld" = (

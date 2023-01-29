@@ -125,11 +125,14 @@
 	data["cart"] = list()
 	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
 		data["cart"] += list(list(
+			"cost_type" = SO.cost_type,
 			"object" = SO.pack.name,
 			"cost" = SO.pack.get_cost(),
 			"id" = SO.id,
 			"orderer" = SO.orderer,
-			"paid" = !isnull(SO.paying_account) //paid by requester
+			"paid" = !isnull(SO.paying_account), //paid by requester
+			"dep_order" = !!SO.department_destination,
+			"can_be_cancelled" = SO.can_be_cancelled,
 		))
 
 	data["requests"] = list()
@@ -251,7 +254,10 @@
 					. = TRUE
 					break
 		if("clear")
-			SSshuttle.shopping_list.Cut()
+			for(var/datum/supply_order/cancelled_order in SSshuttle.shopping_list)
+				if(cancelled_order.department_destination || cancelled_order.can_be_cancelled)
+					continue //don't cancel other department's orders or orders that can't be cancelled
+				SSshuttle.shopping_list -= cancelled_order
 			. = TRUE
 		if("approve")
 			var/id = text2num(params["id"])

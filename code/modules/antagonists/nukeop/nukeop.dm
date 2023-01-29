@@ -1,7 +1,7 @@
 /datum/antagonist/nukeop
 	name = ROLE_NUCLEAR_OPERATIVE
 	roundend_category = "syndicate operatives" //just in case
-	antagpanel_category = "NukeOp"
+	antagpanel_category = ANTAG_GROUP_SYNDICATE
 	job_rank = ROLE_OPERATIVE
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
@@ -108,16 +108,19 @@
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
 		antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]<br>"
-		owner.add_memory(MEMORY_NUKECODE, list(DETAIL_NUKE_CODE = nuke_team.memorized_code, DETAIL_PROTAGONIST = owner.current), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOMOOD | MEMORY_FLAG_NOPERSISTENCE)
+		owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = nuke_team.memorized_code)
 		to_chat(owner, "The nuclear authorization code is: <B>[nuke_team.memorized_code]</B>")
 	else
 		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
 
-/datum/antagonist/nukeop/proc/forge_objectives()
+/datum/antagonist/nukeop/forge_objectives()
 	if(nuke_team)
 		objectives |= nuke_team.objectives
 
 /datum/antagonist/nukeop/proc/move_to_spawnpoint()
+	// Ensure that the nukiebase is loaded, and wait for it if required
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+
 	var/team_number = 1
 	if(nuke_team)
 		team_number = nuke_team.members.Find(owner)
@@ -127,7 +130,6 @@
 	owner.current.forceMove(pick(GLOB.nukeop_leader_start))
 
 /datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
-	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	if(!new_team)
 		if(!always_new_team)
 			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)
@@ -361,7 +363,7 @@
 /datum/team/nuclear/proc/get_result()
 	var/shuttle_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/disk_rescued = is_disk_rescued()
-	var/syndies_didnt_escape = !is_infiltrator_docked_at_centcom()
+	var/syndies_didnt_escape = !is_infiltrator_docked_at_syndiebase()
 	var/team_is_dead = are_all_operatives_dead()
 	var/station_was_nuked = GLOB.station_was_nuked
 	var/station_nuke_source = GLOB.station_nuke_source
@@ -494,8 +496,15 @@
 	return common_part + disk_report + challenge_report
 
 /// Returns whether or not syndicate operatives escaped.
-/proc/is_infiltrator_docked_at_centcom()
+/proc/is_infiltrator_docked_at_syndiebase()
 	var/obj/docking_port/mobile/infiltrator/infiltrator_port = SSshuttle.getShuttle("syndicate")
-	var/obj/docking_port/stationary/transit/infiltrator_dock = locate() in infiltrator_port.loc
 
-	return infiltrator_port && (is_centcom_level(infiltrator_port.z) || infiltrator_dock)
+	var/datum/lazy_template/nukie_base/nukie_template = GLOB.lazy_templates[LAZY_TEMPLATE_KEY_NUKIEBASE]
+	if(!nukie_template)
+		return FALSE // if its not even loaded, cant be docked
+
+	for(var/datum/turf_reservation/loaded_area as anything in nukie_template.reservations)
+		var/infiltrator_turf = get_turf(infiltrator_port)
+		if(infiltrator_turf in loaded_area.reserved_turfs)
+			return TRUE
+	return FALSE
