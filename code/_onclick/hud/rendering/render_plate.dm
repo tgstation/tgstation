@@ -141,6 +141,7 @@
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	set_light_cutoff(10)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
 	. = ..()
@@ -161,7 +162,7 @@
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
 	offset_change(hud?.current_plane_offset || 0)
-	set_alpha(mymob.lighting_alpha)
+	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_cutoff_red, mymob.lighting_cutoff_green, mymob.lighting_cutoff_blue)
 
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
@@ -182,6 +183,18 @@
 		disable_alpha()
 	else
 		enable_alpha()
+
+/atom/movable/screen/plane_master/rendering_plate/lighting/proc/set_light_cutoff(light_cutoff, red_offset = 0, green_offset = 0, blue_offset = 0)
+	var/ratio = light_cutoff/100
+	remove_filter(list("light_cutdown", "light_cutup"))
+	if(!ratio)
+		return
+
+	var/red = red_offset/100
+	var/green = green_offset/100
+	var/blue = blue_offset/100
+	add_filter("light_cutdown", color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, -(ratio + red),-(ratio+green),-(ratio+blue),0)), 2, LINEAR_EASING, 0)
+	add_filter("light_cutup", color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, ratio+red,ratio+green,ratio+blue,0)), 2, LINEAR_EASING, 0)
 
 /atom/movable/screen/plane_master/rendering_plate/mask_emissive
 	name = "Emissive Mask"
