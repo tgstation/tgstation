@@ -57,6 +57,8 @@
 		SSmapping.used_turfs[cordon_turf] = src
 
 /datum/turf_reservation/proc/Reserve(width, height, zlevel)
+	src.width = width
+	src.height = height
 	if(width > world.maxx || height > world.maxy || width < 1 || height < 1)
 		return FALSE
 	var/list/avail = SSmapping.unused_turfs["[zlevel]"]
@@ -99,8 +101,6 @@
 		SSmapping.unused_turfs["[T.z]"] -= T
 		SSmapping.used_turfs[T] = src
 		T.ChangeTurf(turf_type, turf_type)
-	src.width = width
-	src.height = height
 	generate_cordon()
 	return TRUE
 
