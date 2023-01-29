@@ -13810,7 +13810,9 @@
 /area/station/commons/fitness)
 "eVk" = (
 /obj/structure/industrial_lift/tram,
-/obj/machinery/computer/tram_controls/directional/east,
+/obj/machinery/computer/tram_controls/directional/east{
+	pixel_x = 13
+	},
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "eVl" = (
@@ -16989,6 +16991,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"ghX" = (
+/obj/structure/industrial_lift/tram/subfloor/window,
+/obj/structure/window/reinforced/shuttle/tram{
+	icon_state = "shuttle_window-5"
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "gia" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
@@ -26299,6 +26308,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/office)
+"jGv" = (
+/obj/structure/industrial_lift/tram/subfloor/window,
+/obj/structure/window/reinforced/shuttle/tram,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "jGB" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
@@ -44742,7 +44756,9 @@
 /area/station/commons/dorms)
 "qia" = (
 /obj/structure/industrial_lift/tram,
-/obj/machinery/computer/tram_controls/directional/west,
+/obj/machinery/computer/tram_controls/directional/west{
+	pixel_x = -13
+	},
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qif" = (
@@ -59037,8 +59053,10 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "vmS" = (
-/obj/structure/industrial_lift/tram/subfloor,
-/obj/structure/window/reinforced/shuttle/tram,
+/obj/structure/industrial_lift/tram/subfloor/window,
+/obj/structure/window/reinforced/shuttle/tram{
+	icon_state = "shuttle_window-6"
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "vna" = (
@@ -163568,11 +163586,11 @@ izU
 jpv
 bqI
 izU
-vmS
+jGv
 njl
 xIl
 kOp
-vmS
+jGv
 izU
 gYR
 agt
@@ -166142,7 +166160,7 @@ vmS
 njl
 xIl
 sFS
-vmS
+ghX
 izU
 nWl
 vsR
