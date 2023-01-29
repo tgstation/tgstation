@@ -343,6 +343,8 @@
 	zone = BODY_ZONE_R_ARM
 	slot = ORGAN_SLOT_RIGHT_ARM_AUG
 
+	actions_types = list()
+
 	var/punch_damage = 13 ///The amount of damage dealt by your punches. Not really high, but better then normall punches.
 	var/gentle = TRUE //Will your throws be gentle or no
 	var/attack_throw_range = 1 ///How far away your attack will throw your oponent
