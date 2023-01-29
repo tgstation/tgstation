@@ -540,7 +540,7 @@
 
 /datum/design/universal_scanner
 	name = "Universal Scanner"
-	desc = "A utility scanner that fills multiple roles: Exports, sales, vendor pricetags."
+	desc = "A utility scanner that fills multiple roles: Exports, sales, and vendor price tags."
 	id = "universal_scanner"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
