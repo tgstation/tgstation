@@ -32,38 +32,10 @@
 
 /// Attempts to calaculate and store a list of turfs around the reservation for cordoning. Returns whether a valid cordon was calculated
 /datum/turf_reservation/proc/calculate_cordon_turfs(turf/BL, turf/TR)
-	var/list/possible_turfs = list()
+	if(BL.x < 2 || BL.y < 2 || TR.x > (world.maxx - 2) || TR.y > (world.maxy - 2))
+		return FALSE // no space for a cordon here
 
-	var/cordon_bottom = (BL.y > 1)
-	var/cordon_left = (BL.x > 1)
-	var/cordon_top = (TR.y < world.maxy)
-	var/cordon_right = (TR.x < world.maxx)
-	var/width = TR.x - BL.x
-	var/height = TR.y - BL.y
-
-	// edges
-	if(cordon_bottom)
-		possible_turfs += CORNER_BLOCK_OFFSET(BL, width, 1, 0, -1)
-	if(cordon_left)
-		possible_turfs += CORNER_BLOCK_OFFSET(BL, 1, height, -1, 0)
-	if(cordon_top)
-		possible_turfs += CORNER_BLOCK_OFFSET(BL, width, 1, 0, height)
-	if(cordon_right)
-		possible_turfs += CORNER_BLOCK_OFFSET(BL, 1, height, width, 0)
-
-	// corners
-	if(cordon_left)
-		if(cordon_bottom) // BL
-			possible_turfs += locate(BL.x - 1, BL.y - 1, BL.z)
-		if(cordon_top) // TL
-			possible_turfs += locate(BL.x - 1, TR.y + 1, BL.z)
-
-	if(cordon_right)
-		if(cordon_bottom) // BR
-			possible_turfs += locate(TR.x + 1, BL.y - 1, BL.z)
-		if(cordon_top) // TR
-			possible_turfs += locate(TR.x + 1, TR.y + 1, BL.z)
-
+	var/list/possible_turfs = CORNER_OUTLINE(BL, width, height)
 	for(var/turf/cordon_turf as anything in possible_turfs)
 		if(!(cordon_turf.flags_1 & UNUSED_RESERVATION_TURF))
 			return FALSE
