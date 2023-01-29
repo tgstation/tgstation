@@ -66,20 +66,25 @@
 	scanning = FALSE
 
 /obj/item/detective_scanner/pre_attack_secondary(atom/A, mob/user, params)
-	scan(A, user)
+	if(!scan(A, user)) // the user should only see this if a runtime occurs during the scan proc, so ideally never
+		balloon_alert(user, "error : please contact manufacturer") // but it's good to be safe
+		scanning = FALSE // so we don't break the scanner if a runtime occurs
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
-	scan(A, user)
+	if(!scan(A, user))
+		balloon_alert(user, "error : please contact manufacturer") 
+		scanning = FALSE
 	return . | AFTERATTACK_PROCESSED_ITEM
 
+// This must always return TRUE
 /obj/item/detective_scanner/proc/scan(atom/A, mob/user)
 	set waitfor = FALSE
 	if(!scanning)
 		// Can remotely scan objects and mobs.
 		if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
-			return
+			return TRUE
 
 		scanning = TRUE
 
@@ -177,7 +182,7 @@
 
 		add_log("---------------------------------------------------------", 0)
 		scanning = FALSE
-		return
+		return TRUE
 
 /obj/item/detective_scanner/proc/add_log(msg, broadcast = 1)
 	if(scanning)
