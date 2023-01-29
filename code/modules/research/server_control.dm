@@ -11,7 +11,7 @@
 
 /obj/machinery/computer/rdservercontrol/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link))
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/rdservercontrol/multitool_act(mob/living/user, obj/item/multitool/tool)
