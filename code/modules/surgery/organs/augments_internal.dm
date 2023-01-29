@@ -181,7 +181,7 @@
 /obj/item/organ/internal/cyberimp/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(source.get_active_hand() != source.get_bodypart(zone))
+	if(source.get_active_hand() != source.get_bodypart(check_zone(zone)))
 		return
 	if(!proximity)
 		return
