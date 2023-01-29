@@ -5,7 +5,6 @@
 	var/datum/round_event_control/event_control
 
 /datum/event_admin_setup/New(event_control)
-	. = ..()
 	src.event_control = event_control
 
 /datum/event_admin_setup/proc/prompt_admins()
