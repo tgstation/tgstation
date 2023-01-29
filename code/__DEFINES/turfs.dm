@@ -33,9 +33,6 @@
 /// Returns a list of turfs similar to CORNER_BLOCK but with offsets
 #define CORNER_BLOCK_OFFSET(corner, width, height, offset_x, offset_y) ((block(locate(corner.x + offset_x, corner.y + offset_y, corner.z), locate(min(corner.x + (width - 1) + offset_x, world.maxx), min(corner.y + (height - 1) + offset_y, world.maxy), corner.z))))
 
-/// Returns a list of turfs in the rectangle specified by the two coordinates. Prefer CORNER_BLOCK over this for simple rectangles
-#define COORD_BLOCK(tx1, ty1, tz1, tx2, ty2, tz2) (block(locate(tx1, ty1, tz1), locate(tx2, ty2, tz2)))
-
 /// Returns an outline (neighboring turfs) of the given block
 #define CORNER_OUTLINE(corner, width, height) ( \
 	CORNER_BLOCK_OFFSET(corner, width + 2, 1, -1, -1) + \

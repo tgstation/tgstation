@@ -38,9 +38,9 @@
 
 	require_area_resort()
 
-	var/list/generation_turfs = COORD_BLOCK(
-		bounds[MAP_MINX], bounds[MAP_MINY], SSmapping.station_start,
-		bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1)
+	var/list/generation_turfs = block(
+		locate(bounds[MAP_MINX], bounds[MAP_MINY], SSmapping.station_start),
+		locate(bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1))
 	for(var/turf/gen_turf as anything in generation_turfs)
 		atoms += gen_turf
 		for(var/atom in gen_turf)

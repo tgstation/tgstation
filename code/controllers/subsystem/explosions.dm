@@ -590,16 +590,24 @@ SUBSYSTEM_DEF(explosions)
 		var/highest_y = our_y + i
 		// top left to one before top right
 		if(highest_y <= max_y)
-			outlist += COORD_BLOCK(max(lowest_x, 1), highest_y, our_z, min(highest_x - 1, max_x), highest_y, our_z)
+			outlist += block(
+				locate(max(lowest_x, 1), highest_y, our_z),
+				locate(min(highest_x - 1, max_x), highest_y, our_z))
 		// top right to one before bottom right
 		if(highest_x <= max_x)
-			outlist += COORD_BLOCK(highest_x, min(highest_y, max_y), our_z, highest_x, max(lowest_y + 1, 1), our_z)
+			outlist += block(
+				locate(highest_x, min(highest_y, max_y), our_z),
+				locate(highest_x, max(lowest_y + 1, 1), our_z))
 		// bottom right to one before bottom left
 		if(lowest_y >= 1)
-			outlist += COORD_BLOCK(min(highest_x, max_x), lowest_y, our_z, max(lowest_x + 1, 1), lowest_y, our_z)
+			outlist += block(
+				locate(min(highest_x, max_x), lowest_y, our_z),
+				locate(max(lowest_x + 1, 1), lowest_y, our_z))
 		// bottom left to one before top left
 		if(lowest_x >= 1)
-			outlist += COORD_BLOCK(lowest_x, max(lowest_y, 1), our_z, lowest_x, min(highest_y - 1, max_y), our_z)
+			outlist += block(
+				locate(lowest_x, max(lowest_y, 1), our_z),
+				locate(lowest_x, min(highest_y - 1, max_y), our_z))
 
 	return outlist
 
