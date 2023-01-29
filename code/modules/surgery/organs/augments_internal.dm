@@ -167,18 +167,18 @@
 	name = "empovered musculature implant"
 	desc = "A cybernetic implant that empowers the strength of a human arm. You shouldn't see it."
 	icon_state = "muscle_implant"
-	var/pucnh_damage = 13 //The amount of damage dealt by your punches. Not really high, but better then normall punches.
+	var/punch_damage = 13 //The amount of damage dealt by your punches. Not really high, but better then normall punches.
 
 /obj/item/organ/internal/cyberimp/muscle/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	if(ishuman(receiver)) //Sorry, only humans
+	if(ishuman(reciever)) //Sorry, only humans
 		RegisterSignal(reciever, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
 /obj/item/organ/internal/cyberimp/muscle/Remove(mob/living/carbon/implant_owner, special = 0)
 	. = ..()
 	UnregisterSignal(implant_owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 
-/obj/item/organ/internal/cyberimp/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
+/obj/item/organ/internal/cyberimp/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
 	if(source.get_active_hand() != source.get_bodypart(zone))
@@ -195,7 +195,7 @@
 		source.changeNext_move(CLICK_CD_MELEE)
 		if(ishuman(target))
 			var/mob/living/carbon/human/human_target = target
-			if(human_target.check_shields(source, pucnh_damage, "[source]'s' [picked_hit_type]"))
+			if(human_target.check_shields(source, punch_damage, "[source]'s' [picked_hit_type]"))
 				source.do_attack_animation(target)
 				playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 				log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
@@ -204,7 +204,7 @@
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 
-		living_target.apply_damage(pucnh_damage, BRUTE)
+		living_target.apply_damage(punch_damage, BRUTE)
 
 		if(source.body_position != LYING_DOWN) //Throw them if we are standing
 			var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
