@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - config: "There's now a config-optional announcer for a round ending."
