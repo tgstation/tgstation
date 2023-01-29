@@ -36,7 +36,7 @@ export const ServerControl = (props, context) => {
   const { server_connected, servers, consoles, logs } = data;
   if (!server_connected) {
     return (
-      <Window width={575} height={400}>
+      <Window width={575} height={450}>
         <Window.Content>
           <NoticeBox textAlign="center" danger>
             Not connected to a Server. Please sync one using a multitool.
