@@ -90,12 +90,9 @@
 
 		if(WIRE_PROCEED)
 			if(!mend && B.active)
-				holder.visible_message(span_danger("[icon2html(B, viewers(holder))] An alarm sounds! It's go-"))
-				B.explode_now = TRUE
-				if(!istype(B.payload, /obj/machinery/syndicatebomb/training))
-					tell_admins(B)
-					if(isliving(usr))
-						add_memory_in_range(B, 7, /datum/memory/bomb_defuse_failure, protagonist = usr, antagonist = B)
+				holder.visible_message(span_danger("[icon2html(B, viewers(holder))] The digital display on the device deactivates."))
+				B.examinable_countdown = FALSE
+
 
 		if(WIRE_ACTIVATE)
 			if(!mend && B.active)
@@ -104,6 +101,7 @@
 				B.active = FALSE
 				B.delayedlittle = FALSE
 				B.delayedbig = FALSE
+				B.examinable_countdown = TRUE
 				B.update_appearance()
 				if(isliving(usr))
 					add_memory_in_range(B, 7, /datum/memory/bomb_defuse_success, protagonist = usr, antagonist = B, bomb_time_left = bomb_time_left)
