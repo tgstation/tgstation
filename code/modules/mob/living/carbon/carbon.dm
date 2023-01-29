@@ -555,14 +555,14 @@
 		return
 
 	var/new_sight = initial(sight)
-	lighting_alpha = initial(lighting_alpha)
+	lighting_cutoff = initial(lighting_cutoff)
 
 	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
 		set_invis_see(eyes.see_invisible)
 		new_sight |= eyes.sight_flags
-		if(!isnull(eyes.lighting_alpha))
-			lighting_alpha = eyes.lighting_alpha
+		if(!isnull(eyes.lighting_cutoff))
+			lighting_cutoff = eyes.lighting_cutoff
 
 	if(client.eye && client.eye != src)
 		var/atom/A = client.eye
@@ -576,19 +576,19 @@
 			set_invis_see(G.invis_override)
 		else
 			set_invis_see(min(G.invis_view, see_invisible))
-		if(!isnull(G.lighting_alpha))
-			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
+		if(!isnull(G.lighting_cutoff))
+			lighting_cutoff = max(lighting_cutoff, G.lighting_cutoff)
 
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
-		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
 		new_sight |= SEE_TURFS
-		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		new_sight |= SEE_MOBS
-		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS

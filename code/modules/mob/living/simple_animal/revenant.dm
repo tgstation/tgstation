@@ -23,7 +23,7 @@
 	sight = SEE_SELF
 	throwforce = 0
 
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	response_disarm_continuous = "swings through"

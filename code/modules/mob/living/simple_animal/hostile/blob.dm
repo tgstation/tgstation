@@ -10,7 +10,7 @@
 	maxbodytemp = INFINITY
 	unique_name = 1
 	combat_mode = TRUE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	initial_language_holder = /datum/language_holder/empty
 	retreat_distance = null //! retreat doesn't obey pass_flags, so won't work on blob mobs.
 	/// Blob camera that controls the blob

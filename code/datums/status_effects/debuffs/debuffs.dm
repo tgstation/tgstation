@@ -315,7 +315,7 @@
 	alert_type = null
 
 /datum/status_effect/cultghost/on_apply()
-	owner.set_invis_see(SEE_INVISI
+	owner.set_invis_see(SEE_INVISIBLE_OBSERVER)
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)

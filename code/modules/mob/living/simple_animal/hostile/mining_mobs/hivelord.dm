@@ -274,7 +274,7 @@
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 
 /mob/living/simple_animal/hostile/big_legion/Initialize(mapload)

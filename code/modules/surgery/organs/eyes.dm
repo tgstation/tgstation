@@ -30,8 +30,8 @@
 	var/flash_protect = FLASH_PROTECTION_NONE
 	/// What level of invisibility these eyes can see
 	var/see_invisible = SEE_INVISIBLE_LIVING
-	/// How much alpha lighting has (basically, night vision)
-	var/lighting_alpha
+	/// How much darkness to cut out of your view (basically, night vision)
+	var/lighting_cutoff
 
 	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
 	var/eye_color_right = "" //set to a hex code to override a mob's right eye color
@@ -72,8 +72,8 @@
 		affected_human.eye_color_right = eye_color_right
 	else
 		eye_color_right = affected_human.eye_color_right
-	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_alpha)
-		lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
+		lighting_cutoff = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	if(CONFIG_GET(flag/native_fov) && native_fov)
 		owner.add_fov_trait(type, native_fov)
 
@@ -189,21 +189,21 @@
 	damaged = TRUE
 
 /obj/item/organ/internal/eyes/night_vision
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/night_vision = TRUE
 
 /obj/item/organ/internal/eyes/night_vision/ui_action_click()
 	sight_flags = initial(sight_flags)
-	switch(lighting_alpha)
+	switch(lighting_cutoff)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+			lighting_cutoff = LIGHTING_PLANE_ALPHA_INVISIBLE
 		else
-			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			lighting_cutoff = LIGHTING_PLANE_ALPHA_VISIBLE
 	owner.update_sight()
 
 /obj/item/organ/internal/eyes/night_vision/alien
@@ -275,7 +275,7 @@
 	eye_color_left = "FC0"
 	eye_color_right = "FC0"
 	sight_flags = SEE_MOBS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/internal/eyes/robotic/flashlight

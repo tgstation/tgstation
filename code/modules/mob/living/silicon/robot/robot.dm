@@ -627,7 +627,7 @@
 
 	set_invis_see(initial(see_invisible))
 	var/new_sight = initial(sight)
-	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+	lighting_cutoff = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	if(client.eye != src)
 		var/atom/A = client.eye
@@ -636,11 +636,11 @@
 
 	if(sight_mode & BORGMESON)
 		new_sight |= SEE_TURFS
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 	if(sight_mode & BORGMATERIAL)
 		new_sight |= SEE_OBJS
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 	if(sight_mode & BORGXRAY)
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -648,7 +648,7 @@
 
 	if(sight_mode & BORGTHERM)
 		new_sight |= SEE_MOBS
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		set_invis_see(min(see_invisible, SEE_INVISIBLE_LIVING))
 
 	if(see_override)

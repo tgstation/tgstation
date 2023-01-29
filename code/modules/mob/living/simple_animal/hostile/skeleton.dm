@@ -26,7 +26,7 @@
 	robust_searching = 1
 	stat_attack = HARD_CRIT
 	faction = list("skeleton")
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	footstep_type = FOOTSTEP_MOB_SHOE
 	death_message = "collapses into a pile of bones!"
 	del_on_death = TRUE

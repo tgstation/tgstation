@@ -208,12 +208,12 @@
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 	if(user.sight & SEE_TURFS)
 		user.clear_sight(SEE_TURFS)
-		user.lighting_alpha = initial(user.lighting_alpha)
+		user.lighting_cutoff = initial(user.lighting_cutoff)
 	else
 		user.add_sight(SEE_TURFS)
-		user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		user.lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
-	user.sync_lighting_plane_alpha()
+	user.sync_lighting_plane_cutoff()
 
 	to_chat(user, span_notice("You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"]."))
 

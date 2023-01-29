@@ -24,5 +24,5 @@ GLOBAL_LIST_INIT(ghost_lighting_options, list(
 	var/mob/current_mob = client?.mob
 	if(!isobserver(current_mob))
 		return
-	current_mob.lighting_alpha = current_mob.default_lighting_alpha()
+	current_mob.lighting_cutoff = current_mob.default_lighting_cutoff()
 	current_mob.update_sight()

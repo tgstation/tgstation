@@ -10,5 +10,5 @@
 	response_harm_simple = "strike"
 	status_flags = NONE
 	combat_mode = TRUE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	mob_size = MOB_SIZE_LARGE

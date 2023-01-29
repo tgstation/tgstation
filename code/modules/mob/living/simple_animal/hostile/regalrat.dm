@@ -9,7 +9,7 @@
 	turns_per_move = 5
 	maxHealth = 70
 	health = 70
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	obj_damage = 10
 	butcher_results = list(/obj/item/clothing/head/costume/crown = 1,)
 	response_help_continuous = "glares at"

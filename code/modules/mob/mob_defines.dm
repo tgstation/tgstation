@@ -29,7 +29,10 @@
 
 	var/shift_to_open_context_menu = TRUE
 
-	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+	var/lighting_cutoff = LIGHTING_PLANE_ALPHA_VISIBLE
+	var/lighting_cutoff_red = 0
+	var/lighting_cutoff_green = 0
+	var/lighting_cutoff_blue = 0
 	var/datum/mind/mind
 	var/static/next_mob_id = 0
 
