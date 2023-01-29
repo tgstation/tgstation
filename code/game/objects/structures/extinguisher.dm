@@ -37,6 +37,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		if(!stored_extinguisher && opened)
 			context[SCREENTIP_CONTEXT_LMB] = "Insert extinguisher"
 
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/extinguisher_cabinet/Destroy()
 	if(stored_extinguisher)
@@ -67,7 +68,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		used_item.play_tool_sound(src)
 		if(used_item.use_tool(src, user, 60))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			balloon_alert(user, "cabinet deconstructed")
 			deconstruct(TRUE)
 		return
 
