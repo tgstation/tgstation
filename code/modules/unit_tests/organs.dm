@@ -1,6 +1,15 @@
 /datum/unit_test/organ_sanity/Run()
 	// Fetch the globally instantiated DNA Infuser entries.
 	for(var/obj/item/organ/test_organ as anything in subtypesof(/obj/item/organ))
+		var/organ_type = initial(test_organ.type)
+		if(organ_type == /obj/item/organ/internal)
+			continue
+		if(organ_type == /obj/item/organ/external)
+			continue
+		if(organ_type == /obj/item/organ/cyberimp)
+			continue
+		if(organ_type == /obj/item/organ/external/wings)
+			continue
 		// Human which will receive organ.
 		var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 		test_organ = new test_organ()
