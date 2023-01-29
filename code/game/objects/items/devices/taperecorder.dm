@@ -193,7 +193,7 @@
 			used += 1 SECONDS
 			if(max - used < time_left_warning && !time_warned)
 				time_warned = TRUE
-				balloon_alert(usr, "[(max - used) / 10] seconds left")
+				balloon_alert(usr, "[(max - used) / 10] second\s left")
 			sleep(1 SECONDS)
 		if(used >= max)
 			balloon_alert(usr, "tape full!")
@@ -258,7 +258,7 @@
 			break
 		if(mytape.storedinfo.len < i)
 			balloon_alert(usr, "recording ended")
-			sleep(1 SECONDS) //prevents multiple balloon alerts covering each other
+			stoplag(1 SECONDS) //prevents multiple balloon alerts covering each other
 			break
 		say("[mytape.storedinfo[i]]", sanitize=FALSE)//We want to display this properly, don't double encode
 		if(mytape.storedinfo.len < i + 1)
@@ -277,7 +277,7 @@
 
 /obj/item/taperecorder/attack_self(mob/user)
 	if(!mytape)
-		balloon_alert(user, "[src] is empty!")
+		balloon_alert(user, "it's empty!")
 		return
 
 	update_available_icons()
@@ -303,7 +303,7 @@
 
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))
-		balloon_alert(usr, "[mytape] is empty!")
+		balloon_alert(usr, "tape is empty!")
 		return
 	if(!canprint)
 		balloon_alert(usr, "can't print that fast!")
@@ -333,7 +333,7 @@
 
 		// Very unexpected. Better abort non-gracefully.
 		if(excerpt_length > MAX_PAPER_LENGTH)
-			balloon_alert(usr, "data corrupted, cannot print!")
+			balloon_alert(usr, "data corrupted, can't print!")
 			CRASH("Transcript entry has more than [MAX_PAPER_LENGTH] chars: [excerpt_length] chars")
 
 		// If we're going to overflow the paper's length, print the current transcribed text out first and reset to prevent us
@@ -353,7 +353,7 @@
 	transcript_paper.name = "[paper_name] page [page_count]"
 	transcript_paper.update_appearance()
 
-	balloon_alert(usr, "transcript printed, [page_count] pages")
+	balloon_alert(usr, "transcript printed\n[page_count] page\s")
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 
 	// Can't put the entire stack into their hands if there's multple pages, but hey we can at least put one page in.
@@ -434,13 +434,13 @@
 				if(loc != user)
 					return
 				tapeflip()
-				balloon_alert(user, "flipped [src]")
+				balloon_alert(user, "flipped tape")
 				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', 70, FALSE)
 			if("Unwind tape")
 				if(loc != user)
 					return
 				unspool()
-				balloon_alert(user, "unspooled [src]")
+				balloon_alert(user, "unspooled tape")
 
 /obj/item/tape/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(prob(50))
