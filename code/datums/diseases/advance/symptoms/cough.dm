@@ -54,7 +54,8 @@
 			if(prob(base_message_chance) && !suppress_warning)
 				to_chat(M, span_warning("[pick("You swallow excess mucus.", "You lightly cough.")]"))
 		else
-			M.emote("cough")
+			if(prob(20))
+				M.emote("cough")
 			if(M.CanSpreadAirborneDisease())
 				A.spread(spread_range)
 			if(power >= 1.5)

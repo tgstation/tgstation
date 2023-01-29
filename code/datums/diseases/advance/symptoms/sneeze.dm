@@ -46,12 +46,14 @@
 			if(!suppress_warning)
 				M.emote("sniff")
 		else
-			M.emote("sneeze")
+			if(prob(20))
+				M.emote("sneeze")
 			if(M.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
 				for(var/mob/living/L in oview(spread_range, M))
 					if(is_source_facing_target(M, L) && disease_air_spread_walk(get_turf(M), get_turf(L)))
 						L.AirborneContractDisease(A, TRUE)
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
+				to_chat(M, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you
 				var/turf/target = get_ranged_target_turf(M, turn(M.dir, 180), sneeze_distance)
 				M.throw_at(target, sneeze_distance, rand(1,4)) //with the wounds update, sneezing at 7 speed was causing peoples bones to spontaneously explode, turning cartoonish sneezing into a nightmarishly lethal GBS 2.0 outbreak
