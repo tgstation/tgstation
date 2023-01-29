@@ -124,8 +124,8 @@
 			if(!length(chosen_args) || !check_rights(R_FUN))
 				return ADMIN_CANCEL_EVENT
 
-			admin_forced_hallucination = chosen_args[1]
-			admin_forced_args = chosen_args.Copy(3)
+			admin_forced_hallucination = chosen_args[HALLUCINATION_ARG_TYPE]
+			admin_forced_args = chosen_args.Copy(HALLUCINATION_ARGLIST)
 
 /datum/event_admin_setup/mass_hallucination/apply_to_event(datum/round_event/mass_hallucination/event)
 	event.admin_forced_hallucination = admin_forced_hallucination
