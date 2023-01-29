@@ -33,7 +33,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		if(!stored_extinguisher)
 			context[SCREENTIP_CONTEXT_LMB] = "Disassemble the cabinet"
 
-	else if(is_type(held_item, /obj/item/extinguisher))
+	else if(istype(held_item, /obj/item/extinguisher))
 		if(!stored_extinguisher && opened)
 			context[SCREENTIP_CONTEXT_LMB] = "Insert extinguisher"
 
@@ -61,24 +61,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		stored_extinguisher = null
 		update_appearance()
 
-/obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
-		balloon_alert(source, "deconstructing cabinet...")
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 60))
+/obj/structure/extinguisher_cabinet/attackby(obj/item/used_item, mob/living/user, params)
+	if(used_item.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
+		balloon_alert(user, "deconstructing cabinet...")
+		used_item.play_tool_sound(src)
+		if(used_item.use_tool(src, user, 60))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			balloon_alert(source, "cabinet deconstructed")
+			balloon_alert(user, "cabinet deconstructed")
 			deconstruct(TRUE)
 		return
 
 	if(iscyborg(user) || isalien(user))
 		return
-	if(istype(I, /obj/item/extinguisher))
+	if(istype(used_item, /obj/item/extinguisher))
 		if(!stored_extinguisher && opened)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(used_item, src))
 				return
-			stored_extinguisher = I
-			balloon_alert(source, "extinguisher stored")
+			stored_extinguisher = used_item
+			balloon_alert(user, "extinguisher stored")
 			update_appearance()
 			return TRUE
 		else
@@ -97,7 +97,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		return
 	if(stored_extinguisher)
 		user.put_in_hands(stored_extinguisher)
-		balloon_alert(source, "extinguisher removed")
+		balloon_alert(user, "extinguisher removed")
 		stored_extinguisher = null
 		if(!opened)
 			opened = 1
@@ -130,7 +130,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/proc/toggle_cabinet(mob/user)
 	if(opened && broken)
-		balloon_alert(source, "it's broken!")
+		balloon_alert(user, "it's broken!")
 	else
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened
