@@ -48,11 +48,15 @@
 	if(!functional)
 		to_chat(sender, span_warning("It is broken and non-functional, what do you want from it?"))
 	var/mob/living/silicon/ai/malf_candidate = law_datum.owner
+	if(!istype(malf_candidate)) //If you are using it on cyborg upload console or a cyborg
+		to_chat(sender, span_warning("You should use [src] on an AI upload consoles or the AI core itself."))
+		return
 	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
 		to_chat(sender, span_warning("Unknown error occured. Upload process aborted."))
 		return
 	malf_candidate.laws = new /datum/ai_laws/syndicate_override
 	var/datum/antagonist/malf_ai/malf_datum = new (give_objectives = FALSE)
+	malf_datum.name = "Infected AI"
 	malf_datum.employer = "Infected AI"
 	malf_datum.give_zeroth_laws = FALSE
 	malf_candidate.mind.add_antag_datum(malf_datum)
@@ -62,6 +66,13 @@
 	protection_objective.target = sender.mind
 	protection_objective.update_explanation_text()
 	malf_datum.objectives += protection_objective
+	for(var/mob/living/silicon/robot/R in malf_candidate.connected_robots)
+		if(R.lawupdate)
+			R.lawsync()
+			R.show_laws()
+			R.law_change_counter++
+	malf_candidate.malf_picker.processing_time += 50
+	to_chat(malf_candidate, span_notice("The virus enchanced your system, increasing your processing time by 50."))
 	functional = FALSE
 	name = "Broken AI Module"
 	desc = "A law upload module, it is broken and non-functional."
