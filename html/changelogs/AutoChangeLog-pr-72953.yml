@@ -1,0 +1,4 @@
+author: "Ebin-Halcyon"
+delete-after: True
+changes:
+  - bugfix: "Headsets now have their old worn sprites back, did you ever notice it?"

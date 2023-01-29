@@ -27,7 +27,7 @@
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
-	if(CONFIG_GET(flag/no_default_techweb_link))
+	if(CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = new /datum/techweb
 	stored_research.techweb_servers |= src
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
@@ -119,7 +119,7 @@
 
 /obj/machinery/computer/rdservercontrol/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link))
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
