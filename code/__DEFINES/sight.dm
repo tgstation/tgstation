@@ -28,8 +28,7 @@
 #define VISOR_FLASHPROTECT (1<<0)
 #define VISOR_TINT (1<<1)
 #define VISOR_VISIONFLAGS (1<<2) //all following flags only matter for glasses
-#define VISOR_DARKNESSVIEW (1<<3)
-#define VISOR_INVISVIEW (1<<4)
+#define VISOR_INVISVIEW (1<<3)
 
 // BYOND internal values for the sight flags
 // See [https://www.byond.com/docs/ref/#/mob/var/sight]

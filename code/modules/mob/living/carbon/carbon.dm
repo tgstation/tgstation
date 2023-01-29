@@ -551,7 +551,6 @@
 			set_sight(initial(sight))
 		else
 			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_see_in_dark(8)
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
@@ -561,7 +560,6 @@
 	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
 		set_invis_see(eyes.see_invisible)
-		set_see_in_dark(eyes.see_in_dark)
 		new_sight |= eyes.sight_flags
 		if(!isnull(eyes.lighting_alpha))
 			lighting_alpha = eyes.lighting_alpha
@@ -574,7 +572,6 @@
 	if(glasses)
 		var/obj/item/clothing/glasses/G = glasses
 		new_sight |= G.vision_flags
-		set_see_in_dark(max(G.darkness_view, see_in_dark))
 		if(G.invis_override)
 			set_invis_see(G.invis_override)
 		else
@@ -584,7 +581,6 @@
 
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-		set_see_in_dark(max(see_in_dark, 8))
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
 		new_sight |= SEE_TURFS
@@ -596,7 +592,6 @@
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		set_see_in_dark(max(see_in_dark, 8))
 
 	if(see_override)
 		set_invis_see(see_override)
