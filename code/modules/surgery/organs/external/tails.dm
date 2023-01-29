@@ -28,7 +28,7 @@
 
 		if(IS_WEAKREF_OF(reciever, original_owner))
 			reciever.clear_mood_event("wrong_tail_regained")
-		else if(type in reciever.dna.species.external_organs && !HAS_TRAIT(organ_owner, TRAIT_FRANKENSTEIN))
+		else if(type in reciever.dna.species.external_organs && !HAS_TRAIT(reciever, TRAIT_FRANKENSTEIN))
 			reciever.add_mood_event("wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
