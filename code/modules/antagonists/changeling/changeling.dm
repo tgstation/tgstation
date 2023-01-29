@@ -1033,3 +1033,4 @@
 
 	head = /obj/item/clothing/head/helmet/space/changeling
 	suit = /obj/item/clothing/suit/space/changeling
+	l_hand = /obj/item/melee/arm_blade
