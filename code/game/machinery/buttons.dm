@@ -101,6 +101,7 @@
 				req_one_access = board.accesses
 			else
 				req_access = board.accesses
+			balloon_alert(user, "electronics added")
 			to_chat(user, span_notice("You add [W] to the button."))
 
 		if(!device && !board && W.tool_behaviour == TOOL_WRENCH)
@@ -163,14 +164,15 @@
 	if(panel_open)
 		if(device || board)
 			if(device)
-				device.forceMove(drop_location())
+				user.put_in_hands(device)
 				device = null
 			if(board)
-				board.forceMove(drop_location())
+				user.put_in_hands(board)
 				req_access = list()
 				req_one_access = list()
 				board = null
 			update_appearance()
+			balloon_alert(user, "electronics removed")
 			to_chat(user, span_notice("You remove electronics from the button frame."))
 
 		else
@@ -178,6 +180,7 @@
 				skin = "launcher"
 			else
 				skin = "doorctrl"
+			balloon_alert(user, "swapped button style")
 			to_chat(user, span_notice("You change the button frame's front panel."))
 		return
 
