@@ -167,9 +167,9 @@
 	name = "empovered musculature implant"
 	desc = "A cybernetic implant that empowers the strength of a human arm. You shouldn't see it."
 	icon_state = "muscle_implant"
-	var/punch_damage = 13 //The amount of damage dealt by your punches. Not really high, but better then normall punches.
+	var/punch_damage = 13 ///The amount of damage dealt by your punches. Not really high, but better then normall punches.
 	var/gentle = TRUE //Will your throws be gentle or no
-	var/throw_range = 1
+	var/attack_throw_range = 1 ///How far away your attack will throw your oponent
 	var/throw_power_min = 1
 	var/throw_power_max = 4
 
@@ -212,7 +212,7 @@
 
 		if(source.body_position != LYING_DOWN) //Throw them if we are standing
 			var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
-			living_target.throw_at(throw_target, throw_range, rand(throw_power_min,throw_power_max), source, gentle)
+			living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle)
 
 		living_target.visible_message(span_danger("[source] [picked_hit_type]ed [living_target]!"), \
 					span_userdanger("You're [picked_hit_type]ed by [source]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, source)
