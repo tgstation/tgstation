@@ -162,6 +162,11 @@
 
 	return to_add
 
+/datum/species/dullahan/randomize_active_underwear_only(mob/living/carbon/human/human_mob)
+	human_mob.undershirt = random_undershirt(human_mob.gender)
+	human_mob.underwear = random_underwear(human_mob.gender)
+	human_mob.socks = random_socks(human_mob.gender)
+
 /obj/item/organ/internal/brain/dullahan
 	decoy_override = TRUE
 	organ_flags = NONE
@@ -273,3 +278,4 @@
 			owner.gib()
 	owner = null
 	return ..()
+

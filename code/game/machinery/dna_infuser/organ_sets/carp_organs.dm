@@ -13,17 +13,20 @@
 
 /datum/status_effect/organ_set_bonus/carp/enable_bonus()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, REF(src))
+	ADD_TRAIT(owner, TRAIT_SPACEWALK, REF(src))
 
 /datum/status_effect/organ_set_bonus/carp/disable_bonus()
 	. = ..()
-	REMOVE_TRAIT(src, TRAIT_SPACEWALK, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_SPACEWALK, REF(src))
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
+/// Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
 /obj/item/organ/internal/lungs/carp
 	name = "mutated carp-lungs"
 	desc = "Carp DNA infused into what was once some normal lungs."
-	safe_oxygen_min = 0 //we don't breathe this!
+	// Oxygen causes suffocation.
+	safe_oxygen_min = 0
+	safe_oxygen_max = 15
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "lungs"
@@ -34,6 +37,7 @@
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "neck has odd gills.", BODY_ZONE_HEAD)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+	ADD_TRAIT(src, TRAIT_SPACEBREATHING, REF(src))
 
 ///occasionally sheds carp teeth, stronger melee (bite) attacks, but you can't cover your mouth anymore.
 /obj/item/organ/internal/tongue/carp
@@ -49,6 +53,7 @@
 
 /obj/item/organ/internal/tongue/carp/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/noticable_organ, "has big sharp teeth.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
 /obj/item/organ/internal/tongue/carp/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)

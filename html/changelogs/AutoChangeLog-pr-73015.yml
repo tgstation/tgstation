@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - admin: "Wanted statuses are now better logged by the records console"
