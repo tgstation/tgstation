@@ -369,7 +369,7 @@ GLOBAL_VAR(restart_counter)
 	if(!max_zs_to_load)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
-	var/list/to_add = BLOCK_COORDS(old_max + 1, 1, 1, maxx, maxy, max_zs_to_load)
+	var/list/to_add = COORD_BLOCK(old_max + 1, 1, 1, maxx, maxy, max_zs_to_load)
 	global_area.contained_turfs += to_add
 
 /world/proc/increaseMaxY(new_maxy, max_zs_to_load = maxz)
@@ -380,7 +380,7 @@ GLOBAL_VAR(restart_counter)
 	if(!max_zs_to_load)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
-	var/list/to_add = BLOCK_COORDS(1, old_maxy + 1, 1, maxx, maxy, max_zs_to_load)
+	var/list/to_add = COORD_BLOCK(1, old_maxy + 1, 1, maxx, maxy, max_zs_to_load)
 	global_area.contained_turfs += to_add
 
 /world/proc/incrementMaxZ()

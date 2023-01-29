@@ -38,16 +38,18 @@
 	var/cordon_left = (BL.x > 1)
 	var/cordon_top = (TR.y < world.maxy)
 	var/cordon_right = (TR.x < world.maxx)
+	var/width = TR.x - BL.x
+	var/height = TR.y - BL.y
 
 	// edges
 	if(cordon_bottom)
-		possible_turfs += BLOCK_COORDS(BL.x, BL.y - 1, BL.z, TR.x, BL.y - 1, BL.z)
+		possible_turfs += CORNER_BLOCK_OFFSET(BL, width, 1, 0, -1)
 	if(cordon_left)
-		possible_turfs += BLOCK_COORDS(BL.x - 1, BL.y, BL.z, BL.x - 1, TR.y, BL.z)
+		possible_turfs += CORNER_BLOCK_OFFSET(BL, 1, height, -1, 0)
 	if(cordon_top)
-		possible_turfs += BLOCK_COORDS(BL.x, TR.y + 1, BL.z, TR.x, TR.y + 1, BL.z)
+		possible_turfs += CORNER_BLOCK_OFFSET(BL, width, 1, 0, height)
 	if(cordon_right)
-		possible_turfs += BLOCK_COORDS(TR.x + 1, BL.y, BL.z, TR.x + 1, TR.y, BL.z)
+		possible_turfs += CORNER_BLOCK_OFFSET(BL, 1, height, width, 0)
 
 	// corners
 	if(cordon_left)

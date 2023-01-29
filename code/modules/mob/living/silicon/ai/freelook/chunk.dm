@@ -155,10 +155,10 @@
 		cameras["[z_level]"] = local_cameras
 
 		var/image/mirror_from = GLOB.cameranet.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
-		var/list/working_turfs = BLOCK_COORDS(
-			max(x, 1), max(y, 1), z_level,
-			min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z_level)
-		for(var/turf/lad as anything in working_turfs)
+		var/chunk_x = x || 1
+		var/chunk_y = y || 1
+		var/turf/chunk_corner = locate(x, y, z_level)
+		for(var/turf/lad as anything in CORNER_BLOCK(chunk_corner, CHUNK_SIZE - 1, CHUNK_SIZE - 1))
 			var/image/our_image = new /image(mirror_from)
 			our_image.loc = lad
 			turfs[lad] = our_image

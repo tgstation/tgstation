@@ -27,8 +27,24 @@
 
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
 
-/// Returns a list of turfs in the rectangle specified by the two coordinates
-#define BLOCK_COORDS(tx1, ty1, tz1, tx2, ty2, tz2) block(locate(tx1, ty1, tz1), locate(tx2, ty2, tz2))
+/// Returns a list of turfs in the rectangle specified by BOTTOM LEFT corner and height/width, checks for being outside the world border for you
+#define CORNER_BLOCK(corner, width, height) (block(locate(corner.x, corner.y, corner.z), locate(min(corner.x + width, world.maxx), min(corner.y + height, world.maxy), corner.z)))
+
+/// Returns a list of turfs similar to CORNER_BLOCK but with offsets
+#define CORNER_BLOCK_OFFSET(corner, width, height, offset_x, offset_y) ((block(locate(corner.x + offset_x, corner.y + offset_y, corner.z), locate(min(corner.x + width + offset_x, world.maxx), min(corner.y + height + offset_y, world.maxy), corner.z))))
+
+/// Returns a list of turfs in the rectangle specified by the two coordinates. Prefer CORNER_BLOCK over this for simple rectangles
+#define COORD_BLOCK(tx1, ty1, tz1, tx2, ty2, tz2) (block(locate(tx1, ty1, tz1), locate(tx2, ty2, tz2)))
+
+/// Returns an outline (neighboring turfs) of the given block
+#define CORNER_OUTLINE(corner, width, height) ( \
+	CORNER_BLOCK_OFFSET(corner, width + 2, 1, -1, -1) + \
+	CORNER_BLOCK_OFFSET(corner, width + 2, 1, -1, height) + \
+	CORNER_BLOCK_OFFSET(corner, 1, height, -1, 0) + \
+	CORNER_BLOCK_OFFSET(corner, 1, height, width, 0))
+
+/// Returns a list of around us
+#define TURF_NEIGHBORS(turf) CORNER_BLOCK_OFFSET(turf, 2, 2, -1, -1)
 
 /// The pipes, disposals, and wires are hidden
 #define UNDERFLOOR_HIDDEN 0

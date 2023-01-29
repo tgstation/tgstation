@@ -280,7 +280,7 @@
 			SSmapping.build_area_turfs(z_index)
 
 	if(!no_changeturf)
-		var/list/turfs = BLOCK_COORDS(
+		var/list/turfs = COORD_BLOCK(
 			bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ],
 			bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])
 		for(var/turf/T as anything in turfs)
