@@ -1,0 +1,4 @@
+author: "vincentiusvin"
+delete-after: True
+changes:
+  - bugfix: "fixed air alarm breaking on gasless tiles."

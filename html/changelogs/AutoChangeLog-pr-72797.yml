@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - admin: "When a player-owned mob is deleted from the game world, a stack trace is now dropped in the runtime logs. This allows admins and coders to investigate these issues easier."

@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "The R&D monitoring console now shows R&D consoles and their locations."
+  - refactor: "The R&D monitoring console now has a nice TGUI menu."
