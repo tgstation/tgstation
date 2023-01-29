@@ -304,6 +304,7 @@
 	desc = "A flask of the chaplain's holy water."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "holyflask"
+	inhand_icon_state = "holyflask"
 	list_reagents = list(/datum/reagent/water/holywater = 100)
 	drink_type = NONE
 

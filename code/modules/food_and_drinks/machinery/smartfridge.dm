@@ -267,6 +267,8 @@
 	icon_state = "drying_rack"
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
+	use_power = NO_POWER_USE
+	idle_power_usage = 0
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
