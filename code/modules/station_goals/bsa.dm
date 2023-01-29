@@ -116,7 +116,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 			return FALSE
 
 	var/turf/base = get_turf(src)
-	for(var/turf/T as anything in CORNER_BLOCK_OFFSET(base, width, 3, offset, -1)
+	for(var/turf/T as anything in CORNER_BLOCK_OFFSET(base, width, 3, offset, -1))
 		if(T.density || isspaceturf(T))
 			return FALSE
 	return TRUE
