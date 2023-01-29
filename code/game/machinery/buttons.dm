@@ -143,6 +143,15 @@
 /obj/machinery/button/attack_robot(mob/user)
 	return attack_ai(user)
 
+/obj/machinery/button/examine(mob/user)
+	. = ..()
+	if(panel_open && device)
+		. += span_notice("There is \a [device] inside, which could be removed with an <b>empty hand</b>.")
+	if(panel_open && board)
+		. += span_notice("There is \a [board] inside, which could be removed with an <b>empty hand</b>.")
+	if(panel_open && !board && !device)
+		. += span_notice("There is nothing currently installed in \the [src].")
+
 /obj/machinery/button/proc/setup_device()
 	if(id && istype(device, /obj/item/assembly/control))
 		var/obj/item/assembly/control/A = device
