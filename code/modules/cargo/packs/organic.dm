@@ -57,7 +57,7 @@
 
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
-	desc = "Any entrepreneuring botanist's dream. Contains fourteen different seeds, \
+	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, \
 		including one replica-pod seed and two mystery seeds!"
 	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_HYDROPONICS
