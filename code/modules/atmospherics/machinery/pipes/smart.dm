@@ -16,8 +16,8 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	var/map_loaded_pipe = FALSE
 
 /obj/machinery/atmospherics/pipe/smart/Initialize(mapload)
-	. = ..()
 	map_loaded_pipe = mapload
+	return ..()
 
 ///helper function to append all directions into an single bit flag
 /obj/machinery/atmospherics/pipe/smart/proc/append_directions(list/spanning_directions)
