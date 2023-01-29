@@ -1,5 +1,5 @@
 
-/obj/item/organ/internal/cyberimp/brain/bcc
+/obj/item/organ/internal/cyberimp/bci/bcc
 	name = "Body control core"
 	desc = "A small, self-contained computer that interfaces with the nervous system, allowing for direct control of the body's functions"
 	icon_state = "bcc"
@@ -11,10 +11,11 @@
 
 
 
-/obj/item/organ/internal/cyberimp/bcc/Initialize()
+/obj/item/organ/internal/cyberimp/bci/bcc/Initialize()
+	. = ..()
 
-
-/obj/item/organ/internal/cyberimp/bcc/attackby(obj/item/W, mob/user, params)
+/obj/item/organ/internal/cyberimp/bci/bcc/attackby(obj/item/W, mob/user, params)
+	. = ..()
 	if(istype(W, /obj/item/bcc_module))
 		if(add_module(W))
 			user.dropItemToGround(W)
@@ -25,26 +26,30 @@
 	else
 		return ..()
 
-/obj/item/organ/internal/cyberimp/bcc/on_life(delta_time, times_fired)
-	for(module in modules)
+/obj/item/organ/internal/cyberimp/bci/bcc/on_life(delta_time, times_fired)
+	. = ..()
+	for(var/obj/item/bcc_module/module in modules)
 		if(module.active)
-			module.trigger(delta_time, times_fired, mob)
-			module.stress(delta_time, mob, stress)
+			module.trigger(delta_time, times_fired, owner)
+			module.stress(delta_time, owner, stress)
 			stress += module.stress_cost * delta_time
 	if(stress > 20)
 		owner.adjustStaminaLoss(1*delta_time)
 	if(stress > 50)
-		owner.adjustOrganloss(ORGAN_SLOT_BRAIN, 1*delta_time)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.1*delta_time)
 	if(stress > 100)
 		if(prob(15))
-			owner.stun(50)
+			owner.Stun(50)
 	for(var/datum/reagent/medicine/R in owner.reagents.reagent_list)
 		owner.reagents.remove_reagent(R.type, remove_amt * delta_time)
 		stress += remove_amt * delta_time * 0.5
+	stress=max(120, stress)
 
 
 
-/obj/item/organ/internal/cyberimp/bcc/proc/add_module(module)
+/obj/item/organ/internal/cyberimp/bci/bcc/proc/add_module(module)
 
 	if(module in modules)
 		return FALSE
@@ -52,7 +57,7 @@
 	module.forceMove(src)
 	return TRUE
 
-/obj/item/organ/internal/cyberimp/bcc/proc/remove_module(module)
+/obj/item/organ/internal/cyberimp/bci/bcc/proc/remove_module(module)
 
 	if(module in modules)
 		modules -= module
@@ -79,7 +84,7 @@
 	activation_name = "basicheal"
 	stress_cost = 2 //healing is good, but it's not free
 
-/obj/item/bcc_module/basic_heal/trigger(delta_time, times_fired, mob)
+/obj/item/bcc_module/basic_heal/trigger(delta_time, times_fired, /mob/living/carbon/human/mob)
 	mob.adjustBruteLoss(-1*delta_time)
 	mob.adjustFireLoss(-1*delta_time)
 	mob.adjustOxyLoss(-1*delta_time)
@@ -87,7 +92,7 @@
 	mob.adjustStaminaLoss(-1*delta_time)
 	return
 
-/obj/item/bcc_module/basic_heal/stress(delta_time, mob, stress)
+/obj/item/bcc_module/basic_heal/stress(delta_time, /mob/living/carbon/human/mob, stress)
 	if(stress>40)
 		mob.adjustBruteLoss(2*delta_time)
 		mob.adjustFireLoss(2*delta_time)
