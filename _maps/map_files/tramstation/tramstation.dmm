@@ -59038,7 +59038,7 @@
 /area/station/commons/dorms)
 "vmS" = (
 /obj/structure/industrial_lift/tram/subfloor,
-/obj/structure/tramwall/titanium,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "vna" = (
