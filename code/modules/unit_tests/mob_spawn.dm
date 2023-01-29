@@ -48,7 +48,7 @@
 					TEST_FAIL("[ghost_role.type] has a defined \"[human_only_var]\" HUMAN ONLY var, but this type doesn't spawn humans.")
 
 		for(var/required_var in required_vars)
-			if(required_var == "prompt_name" && !ghost_role.prompt_ghost)
+			if(required_var == NAMEOF(ghost_role, prompt_name) && !ghost_role.prompt_ghost)
 				continue //only case it makes sense why you shouldn't have a prompt_name
 			if(!ghost_role.vars[required_var])
 				TEST_FAIL("[ghost_role.type] must have \"[required_var]\" defined. Reason: [required_vars[required_var]]")
