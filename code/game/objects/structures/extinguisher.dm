@@ -19,10 +19,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		icon_state = "extinguisher_empty"
 	else
 		stored_extinguisher = new /obj/item/extinguisher(src)
+	register_context()
 
-/obj/structure/extinguisher_cabinet/examine(mob/user)
+/obj/structure/extinguisher_cabinet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	. += span_notice("Right-click to [opened ? "close":"open"] it.")
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = opened ? "Close" : "Open"
+		if(stored_extinguisher)
+			context[SCREENTIP_CONTEXT_LMB] = "Take extinguisher" //Yes, this shows whether or not it's open! Extinguishers are taken immediately on LMB click when closed
+
+	else if(held_item.tool_behaviour == TOOL_WRENCH)
+		if(!stored_extinguisher)
+			context[SCREENTIP_CONTEXT_LMB] = "Disassemble the cabinet"
+
+	else if(is_type(held_item, /obj/item/extinguisher))
+		if(!stored_extinguisher && opened)
+			context[SCREENTIP_CONTEXT_LMB] = "Insert extinguisher"
+
 
 /obj/structure/extinguisher_cabinet/Destroy()
 	if(stored_extinguisher)
@@ -49,11 +63,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
-		to_chat(user, span_notice("You start unsecuring [name]..."))
+		balloon_alert(source, "deconstructing cabinet...")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 60))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			to_chat(user, span_notice("You unsecure [name]."))
+			balloon_alert(source, "cabinet deconstructed")
 			deconstruct(TRUE)
 		return
 
@@ -64,7 +78,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 			if(!user.transferItemToLoc(I, src))
 				return
 			stored_extinguisher = I
-			to_chat(user, span_notice("You place [I] in [src]."))
+			balloon_alert(source, "extinguisher stored")
 			update_appearance()
 			return TRUE
 		else
@@ -83,7 +97,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		return
 	if(stored_extinguisher)
 		user.put_in_hands(stored_extinguisher)
-		to_chat(user, span_notice("You take [stored_extinguisher] from [src]."))
+		balloon_alert(source, "extinguisher removed")
 		stored_extinguisher = null
 		if(!opened)
 			opened = 1
@@ -116,7 +130,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/proc/toggle_cabinet(mob/user)
 	if(opened && broken)
-		to_chat(user, span_warning("[src] is broken open."))
+		balloon_alert(source, "it's broken!")
 	else
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened
