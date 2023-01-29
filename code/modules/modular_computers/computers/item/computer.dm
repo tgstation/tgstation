@@ -318,8 +318,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(response == "Yes")
 			turn_on(user)
 
-/obj/item/modular_computer/emag_act(mob/user)
-	if(!enabled)
+/obj/item/modular_computer/emag_act(mob/user, forced)
+	if(!enabled && !forced)
 		to_chat(user, span_warning("You'd need to turn the [src] on first."))
 		return FALSE
 	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling

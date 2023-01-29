@@ -143,8 +143,6 @@
 			continue
 
 		var/visual_offset = plane.offset - new_offset
-		// we get like 47 -> 42 from just no AO/displace on lower levels. 39 with no FOV blocking
-		// 31 with only barebones lower planes
 
 		// Basically uh, if we're showing something down X amount of levels, or up any amount of levels
 		if(multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && (visual_offset > multiz_boundary || visual_offset < 0))

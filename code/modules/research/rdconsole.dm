@@ -47,8 +47,9 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/Initialize(mapload)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link))
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = SSresearch.science_tech
+	if(stored_research)
 		stored_research.consoles_accessing += src
 
 /obj/machinery/computer/rdconsole/Destroy()

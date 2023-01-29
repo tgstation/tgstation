@@ -251,6 +251,7 @@
 		"wirebrush",
 		"wirecutters",
 		"wrench",
+		"pickaxe",
 	)
 
 /datum/techweb_node/basic_medical
@@ -302,6 +303,7 @@
 		"circuit_multitool",
 		"comp_access_checker",
 		"comp_arithmetic",
+		"comp_assoc_list_pick",
 		"comp_binary_convert",
 		"comp_clock",
 		"comp_comparison",
@@ -332,6 +334,7 @@
 		"comp_list_assoc_literal",
 		"comp_list_clear",
 		"comp_list_literal",
+		"comp_list_pick",
 		"comp_list_remove",
 		"comp_logic",
 		"comp_matscanner",
@@ -369,7 +372,7 @@
 		"component_printer",
 		"integrated_circuit",
 		"module_duplicator",
-		"usb_cable",
+		"usb_cable"
 	)
 
 /////////////////////////Biotech/////////////////////////
@@ -1100,6 +1103,7 @@
 		"mech_honker",
 		"mech_mousetrap_mortar",
 		"mech_punching_face",
+		"clown_firing_pin",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1377,6 +1381,7 @@
 		"rangemod",
 		"superresonator",
 		"triggermod",
+		"mining_scanner",
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1444,6 +1449,7 @@
 		"mechanicalpinches",
 		"rangedanalyzer",
 		"searingtool",
+		"adv_fire_extinguisher",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)

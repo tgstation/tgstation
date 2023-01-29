@@ -3,6 +3,17 @@
 /////////////////Tools///////////////////
 /////////////////////////////////////////
 
+/datum/design/fire_extinguisher_advanced
+	name = "Advanced Fire Extinguisher"
+	id = "adv_fire_extinguisher"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/titanium = 500, /datum/material/gold = 500)
+	build_path = /obj/item/extinguisher/advanced/empty
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/handdrill
 	name = "Hand Drill"
 	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"

@@ -110,7 +110,7 @@
 	message_alien = "lets out a waning guttural screech, and collapses onto the floor..."
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
-	message_simple = "stops moving..."
+	message_animal_or_basic = "stops moving..."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_IMPORTANT
 	cooldown = (15 SECONDS)
 	stat_allowed = HARD_CRIT
@@ -118,10 +118,11 @@
 /datum/emote/living/deathgasp/run_emote(mob/living/user, params, type_override, intentional)
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return
-	if(user.death_message)
-		message_simple = user.death_message
+	var/custom_message = user.death_message
+	if(custom_message)
+		message_animal_or_basic = custom_message
 	. = ..()
-	message_simple = initial(message_simple)
+	message_animal_or_basic = initial(message_animal_or_basic)
 	if(. && user.death_sound)
 		if(!user.can_speak() || user.oxyloss >= 50)
 			return //stop the sound if oxyloss too high/cant speak
