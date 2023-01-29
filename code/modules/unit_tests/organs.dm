@@ -6,8 +6,6 @@
 			continue
 		if(organ_type == /obj/item/organ/external)
 			continue
-		if(organ_type == /obj/item/organ/cyberimp)
-			continue
 		if(organ_type == /obj/item/organ/external/wings)
 			continue
 		// Human which will receive organ.
