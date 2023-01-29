@@ -969,3 +969,79 @@
   Unit2E:
   - bugfix: Strange reagent once again spawns angry plants when added to hydroponics
       trays!
+2023-01-29:
+  A.C.M.O.:
+  - refactor: Refactored breathing, mostly check_breath, for Carbons and lungs organ.
+  - rscadd: Added the space-breathing trait for lungs.
+  - bugfix: Fixed the Space Carp DNA infusion to apply the Spacewalk trait, allowing
+      you to fly through space.
+  - bugfix: Fixed the Space Carp lungs, allowing you to breathe in space with them.
+  - bugfix: Fixed gas status indicators re-playing their on-throw animation when they
+      are refreshed.
+  - bugfix: Fixed gas status indicators getting stuck to the screen in some situations.
+  - bugfix: Fixed gas side effects, such as euphoria and hallucinations, to reset
+      when expected.
+  - bugfix: For Humans, fixed Miasma only being consumed from the air when Helium
+      is present.
+  Ebin-Halcyon:
+  - bugfix: The Paramedic cap is now the same color as their jumpsuit again.
+  Fikou:
+  - imageadd: secborgs are red again
+  Helg2:
+  - rscadd: Wings for fly persons from flight potion
+  LT3:
+  - bugfix: Tram platform no longer magically levitates objects when the tram walls
+      are destroyed or dismantled
+  NamelessFairy:
+  - bugfix: You can now set life and mana panels to 0 life/mana.
+  Profakos:
+  - bugfix: The ORM's input and output lights are once again visible
+  - bugfix: Traitors discounts stocks are once again limited to one item
+  Rhials:
+  - balance: Hitting a vendor from inside a wall will cause it to fall away from you,
+      rather than crushing you without being able to move to your tile.
+  SuperSlayer0:
+  - qol: Posters now tell that you can trap them with a glass shard when examined
+  - balance: Space dragon fire breath no longer damages allied space carps
+  Time-Green:
+  - qol: Hardcore random gets a sixpack
+  Unit2E:
+  - spellcheck: Heretic has received a minor grammar and spelling check over. Wrong
+      kind of heresy, there.
+  Vladoricious:
+  - qol: Nuclear PDAs now actually work like a PDA should, with the power to download
+      normal programs and delete them too. The nerds over at Cybersun even installed
+      a new "Why Fy Dry Ver", allowing you to download your programs while still on
+      the base!
+  - bugfix: As a result, Lone Ops will no longer get scammed out of over 1/5th of
+      their TC when buying the Detomatix cartridge and Midround Traitors with stolen
+      Nuclear PDAs will not be denied an uplink.
+  lizardqueenlexi:
+  - bugfix: Operating computers can now display alternative steps during repeatable
+      surgery steps.
+  ophaq:
+  - qol: Musicians rejoice! You can now interact with the instrument UI while laying
+      down.
+  - rscadd: Adds a new crate to cargo, the "Amphibian Friends Crate!" Gives you one
+      frog and one axolotl.
+  san7890:
+  - bugfix: Basic Mobs are now able to deathgasp.
+  - qol: The error message that shows up when APCs fail due to a Grid Check (powernet
+      failure) looks a little bit nicer now.
+  - balance: After an unfortunate event occuring when some nuclear operatives took
+      the ship to a Fireworks Store, the Syndicate have re-engineered their bomb cores
+      to only explode when electronically triggered by the bomb shell itself. The
+      payload inside a standard syndicate bomb can not be exploded with another explosion,
+      you must keep it in the bomb machinery for it to actually do some explodey stuff.
+  the-orange-cow:
+  - bugfix: Mint Toxin(a toxin) has been changed to Mint Extract(a food).  The chef's
+      mint can once again gib, fatties beware.
+  timothymtorres:
+  - qol: Add clown firing pin to techweb
+  - qol: Add advanced fire extinguisher to techweb
+  - qol: Add mining scanners to techweb
+  - qol: Add pickaxe to basic tools techweb
+  vinylspiders:
+  - imageadd: new inhand sprites for the holy flask
+  - bugfix: chaplains will no longer look like they are carrying a beer bottle when
+      holding their holy flask
