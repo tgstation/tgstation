@@ -35,5 +35,5 @@
 /obj/item/melee/touch_attack/scream_for_me
 	name = "\improper bloody touch"
 	desc = "Guaranteed to make your victims scream, or your money back!"
-	icon_state = "disintegrate"
+	icon_state = "scream_for_me"
 	inhand_icon_state = "disintegrate"
