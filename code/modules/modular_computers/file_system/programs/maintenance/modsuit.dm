@@ -18,7 +18,7 @@
 
 /datum/computer_file/program/maintenance/modsuit_control/application_attackby(obj/item/attacking_item, mob/living/user)
 	. = ..()
-	if(!istype(attacking_item, controlled_suit))
+	if(!istype(attacking_item, /obj/item/mod/control))
 		return FALSE
 	if(controlled_suit)
 		unsync_modsuit()
