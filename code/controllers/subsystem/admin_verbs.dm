@@ -83,6 +83,8 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 			cached_formats[original_name] = formatted_name
 
 		var/verb_desc = verb_information[VERB_MAP_DESCRIPTION]
+		if(!stat_data[cached_formats[verb_module]])
+			stat_data[cached_formats[verb_module]] = list()
 		stat_data[cached_formats[verb_module]] += list(list(cached_formats[original_name], verb_desc, original_name))
 	return stat_data
 
