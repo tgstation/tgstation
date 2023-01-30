@@ -1,10 +1,31 @@
+/obj/structure/window/reinforced/tram/front
+	name = "tram wall"
+	icon = 'icons/obj/smooth_structures/tram_window.dmi'
+	desc = "A lightweight titanium composite structure with a windscreen installed."
+	icon = 'icons/obj/smooth_structures/tram_window.dmi'
+	icon_state = "tram_window-0"
+	base_icon_state = "tram_window"
+	max_integrity = 100
+	wtype = "shuttle"
+	reinf = TRUE
+	fulltile = TRUE
+	flags_1 = PREVENT_CLICK_UNDER_1
+	reinf = TRUE
+	heat_resistance = 1600
+	armor_type = /datum/armor/window_tram
+	explosion_block = 3
+	glass_type = /obj/item/stack/sheet/titaniumglass
+	glass_amount = 2
+	receive_ricochet_chance_mod = 1.2
+	rad_insulation = RAD_MEDIUM_INSULATION
+
 /obj/structure/window/reinforced/tram
 	name = "tram window"
-	desc = "A window made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough to break and is most likely nigh fireproof."
+	desc = "A window made out of a titanium-silicate alloy. It looks tough to break. Is that a challenge?"
 	icon = 'icons/obj/smooth_structures/tram_window.dmi'
 	icon_state = "tram_mid"
 	reinf = TRUE
-	heat_resistance = 25000
+	heat_resistance = 1600
 	armor_type = /datum/armor/window_tram
 	max_integrity = 100
 	explosion_block = 0
@@ -48,6 +69,5 @@
 
 /obj/structure/window/reinforced/tram/spawnDebris(location)
 	. = list()
-	. += new /obj/item/shard/plasma(location)
-	. += new /obj/effect/decal/cleanable/glass/plasma(location)
+	. += new /obj/item/stack/sheet/titaniumglass(location)
 	. += new /obj/item/stack/rods(location)
