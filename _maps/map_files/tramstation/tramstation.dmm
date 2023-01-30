@@ -7751,6 +7751,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"cNy" = (
+/obj/machinery/static_signal/northeast,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/right)
 "cNS" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20307,6 +20311,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"hth" = (
+/obj/machinery/static_signal/southeast,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/right)
 "htr" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge Access"
@@ -37134,7 +37142,8 @@
 /area/station/hallway/primary/tram/center)
 "npG" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Hallway - Port Tram Platform South"
+	c_tag = "Hallway - Port Tram Platform South";
+	pixel_y = -23
 	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/left)
@@ -38690,6 +38699,11 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"nWd" = (
+/obj/structure/cable,
+/obj/machinery/static_signal/northwest,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/left)
 "nWl" = (
 /obj/structure/sign/directions/evac{
 	dir = 4;
@@ -45042,7 +45056,8 @@
 /area/station/engineering/atmos)
 "qms" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Hallway - Central Tram Platform South"
+	c_tag = "Hallway - Central Tram Platform South";
+	pixel_y = -23
 	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/center)
@@ -51329,11 +51344,9 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/solars/port/aft)
 "swb" = (
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /obj/machinery/camera/directional/east{
-	c_tag = "Hallway - Starboard Tram Platform South"
+	c_tag = "Hallway - Starboard Tram Platform South";
+	pixel_y = -23
 	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/right)
@@ -56463,6 +56476,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/center)
+"uoK" = (
+/obj/structure/cable,
+/obj/machinery/static_signal/southwest,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/left)
 "upb" = (
 /obj/structure/bed/double,
 /obj/item/bedsheet/dorms_double,
@@ -151063,13 +151081,13 @@ nCy
 ldm
 sPc
 hLJ
-hLJ
+nWd
 vbN
 vbN
 sFe
 vbN
 vbN
-hLJ
+uoK
 hLJ
 uaU
 uyl
@@ -178819,13 +178837,13 @@ pwp
 wZE
 uKj
 aYA
-aYA
+cNy
 seW
 seW
 seW
 seW
 seW
-aYA
+hth
 vvZ
 umj
 vte

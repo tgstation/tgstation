@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
 	icon = 'icons/obj/machines/crossing_signal.dmi'
 	base_icon_state = "crossing-"
+	plane = GAME_PLANE_UPPER
 	max_integrity = 250
 	integrity_failure = 0.25
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
@@ -45,6 +46,24 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/signal_direction
 	/// Are we malfunctioning?
 	var/malfunctioning = FALSE
+
+/obj/machinery/static_signal
+	name = "crossing signal"
+	desc = "Indicates to pedestrians if it's safe to cross the tracks."
+	icon = 'icons/obj/machines/crossing_signal.dmi'
+	icon_state = "static-base-left"
+	base_icon_state = "static-"
+	plane = GAME_PLANE_UPPER
+	max_integrity = 250
+	integrity_failure = 0.25
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	anchored = TRUE
+	density = FALSE
+	light_range = 1.5
+	light_power = 1
+	light_color = COLOR_VIBRANT_LIME
+	luminosity = 1
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
@@ -264,6 +283,29 @@ GLOBAL_LIST_EMPTY(tram_signals)
 /obj/machinery/crossing_signal/southwest
 	icon_state = "crossing-base-right"
 	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = -32
+	pixel_y = 20
+
+/obj/machinery/static_signal/northeast
+	icon_state = "static-base-left"
+	pixel_x = -2
+	pixel_y = -1
+
+/// Shifted to NW corner for west side of northern passage.
+/obj/machinery/static_signal/northwest
+	icon_state = "static-base-right"
+	pixel_x = -32
+	pixel_y = -1
+
+/// Shifted to SE corner for east side of northern passage.
+/obj/machinery/static_signal/southeast
+	icon_state = "static-base-left"
+	pixel_x = -2
+	pixel_y = 20
+
+/// Shifted to SW corner for west side of northern passage.
+/obj/machinery/static_signal/southwest
+	icon_state = "static-base-right"
 	pixel_x = -32
 	pixel_y = 20
 
