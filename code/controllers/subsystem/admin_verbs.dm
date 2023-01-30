@@ -35,9 +35,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	world.loop_checks = FALSE
 	RegisterSignal(src, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(assosciate_with_waiting))
 	admin_verb_map = list()
-	holder_map = list()
 	admin_linkup_map = list()
-	populate_verb_map(admin_verb_map)
 	generate_holder_map()
 	context_map = list()
 	populate_context_map(context_map)
@@ -90,15 +88,15 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 		stat_data[cached_formats[verb_module]] += list(list(cached_formats[original_name], verb_desc, original_name))
 	return stat_data
 
-/datum/controller/subsystem/admin_verbs/proc/populate_verb_map(list/verb_map)
-	return
-
 /datum/controller/subsystem/admin_verbs/proc/populate_context_map(list/context_map)
 	return
 
 /datum/controller/subsystem/admin_verbs/proc/generate_holder_map()
+	admin_verb_map = list()
+	holder_map = list()
 	for(var/mob/admin_module_holder/holder_type as anything in admin_verb_map)
 		holder_map[holder_type] = new holder_type
+		admin_verb_map[holder_type] = holder_map[holder_type].dynamic_map_generate()
 
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_admin_verb(mob/target, verb_type, ...)
 	if(IsAdminAdvancedProcCall())

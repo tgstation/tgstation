@@ -22,9 +22,8 @@
 		to_chat(usr, span_warning("You lack the permissions ([rights2text(permissions, " ")]) for this verb!")); \
 	} \
 } \
-/datum/controller/subsystem/admin_verbs/populate_verb_map(list/verb_map){ \
-	..(); \
-	verb_map[/mob/admin_module_holder/##module/##verb_name] = list(#module, #verb_name, verb_desc, permissions); \
+/mob/admin_module_holder/##module/##verb_name/dynamic_map_generate(){ \
+	return list(#module, #verb_name, verb_desc, permissions); \
 } \
 /mob/admin_module_holder/##module/##verb_name/proc/_##verb_name(##params)
 
