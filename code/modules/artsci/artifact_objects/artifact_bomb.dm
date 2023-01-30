@@ -2,8 +2,9 @@
 	weight = 0
 	examine_hint = "It is covered in very conspicuous markings."
 	valid_triggers = list(/datum/artifact_trigger/force, /datum/artifact_trigger/heat,/datum/artifact_trigger/shock,/datum/artifact_trigger/radiation,/datum/artifact_trigger/data) //no cold trigger incase it somehow spawns in space and maxcaps some poor carpies
-	var/dud = FALSE
 	deactivation_message = "sputters a bit, and falls silent once more."
+	var/dud = FALSE
+	var/dud_message = "sputters, failing to activate! Its a dud!"
 	var/inital_warning = "begins overloading, rattling violenty!"
 	var/explode_delay = 1 MINUTES // also delayed by finale_delay for fluff
 	var/explode_cooldown_time = 1 MINUTES
@@ -39,16 +40,22 @@
 
 /datum/artifact/bomb/effect_process()
 	. = ..()
-	to_chat(world,"proc")
 	if(active && COOLDOWN_FINISHED(src,alarm_cooldown) && (COOLDOWN_TIMELEFT(src,alarm_cooldown) <= finale_delay))
 		playsound(holder, active_alarm, 30, 1)
+		var/pixel_x_diff = rand(-3, 3)
+		var/pixel_y_diff = rand(-2,2)
+		animate(holder, pixel_x = pixel_x_diff, pixel_y = pixel_y_diff , time = 0.2 SECONDS, loop = 6, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(pixel_x = -pixel_x_diff , pixel_y = -pixel_y_diff , time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
 		COOLDOWN_START(src,alarm_cooldown, alarm_cooldown_time)
 
 /datum/artifact/bomb/proc/finale()
-	holder.visible_message(span_bolddanger("[holder] [final_message]"))
 	if(final_sound)
 		playsound(holder.loc, final_sound, 100, 1, -1)
-	addtimer(CALLBACK(src, PROC_REF(payload)), finale_delay)
+	if(finale_delay)
+		holder.visible_message(span_bolddanger("[holder] [final_message]"))
+		addtimer(CALLBACK(src, PROC_REF(payload)), finale_delay)
+	else
+		payload()
 
 /datum/artifact/bomb/Destroyed(silent=FALSE)
 	. = ..()
@@ -56,7 +63,11 @@
 		payload()
 		deltimer(timer_id)
 /datum/artifact/bomb/proc/payload()
-	return
+	. = TRUE
+	if(dud)
+		holder.visible_message(span_notice("[holder] [dud_message]"))
+		Deactivate(silent=TRUE)
+		return FALSE
 
 /obj/structure/artifact/bomb
 	assoc_datum = /datum/artifact/bomb/explosive
@@ -64,7 +75,7 @@
 /datum/artifact/bomb/explosive
 	associated_object = /obj/structure/artifact/bomb
 	type_name = "Bomb (explosive)"
-	weight = 200
+	weight = 700
 	var/devast
 	var/heavy
 	var/light
@@ -76,6 +87,8 @@
 	light = rand(3,10)
 
 /datum/artifact/bomb/explosive/payload(silent=TRUE)
+	if(!..())
+		return FALSE
 	explosion(holder, devast,heavy,light,light*1.5)
 	Destroyed(silent = TRUE)
 
@@ -86,6 +99,7 @@
 	associated_object = /obj/structure/artifact/bomb/devastating
 	type_name = "Bomb (explosive, devastating)"
 	do_alert = TRUE
+	weight = 550
 	explode_delay = 2 MINUTES
 
 /datum/artifact/bomb/explosive/devastating/New()
@@ -93,3 +107,20 @@
 	devast = rand(3,7)
 	heavy = rand(7,12)
 	light = rand(10,25)
+
+/obj/structure/artifact/bomb/chemical
+	assoc_datum = /datum/artifact/bomb/chemical
+
+/datum/artifact/bomb/chemical
+	associated_object = /obj/structure/artifact/bomb/chemical
+	type_name = "Bomb (chemical)"
+	weight = 500
+	explode_delay = 1 // so it dont complain
+	explode_cooldown_time = 5 MINUTES
+	finale_delay = 0
+	var/smoke = FALSE // if false deliver via foam instead
+
+/datum/artifact/bomb/chemical/setup()
+	 . = ..()
+	 smoke = prob(50)
+	 inital_warning = "'s pores start releasing [smoke ? "a thick smoke!" : "foam!"]"

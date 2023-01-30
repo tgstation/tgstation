@@ -8,7 +8,9 @@
 	var/touch_descriptors = list()
 	var/destroy_message = ""
 	var/deactivation_sounds = list()
-	var/max_sprites = 0 // amount of sprites we have for this origin
+	var/max_icons = 0 // amount of sprites we have for this origin
+	var/max_item_icons = 0 // amount of sprites we have for this origins items
+	var/max_small_item_icons = 0 // amount of sprites for this origins small items (cells, etc.)
 /datum/artifact_origin/proc/generate_name()
 		return "unknown"
 
@@ -36,7 +38,8 @@
 	nouns_small = list("staff","pearl","rod","cane","wand","trophy")
 	touch_descriptors = list("It feels cold.", "Its rough to the touch.", "You prick yourself on its rough surface!")
 	destroy_message = "warps on itself, vanishing from sight!"
-	max_sprites = 1
+	max_icons = 1
+	max_small_item_icons = 1
 
 /datum/artifact_origin/silicon
 	type_name = ORIGIN_SILICON

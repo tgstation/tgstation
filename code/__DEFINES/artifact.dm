@@ -1,6 +1,7 @@
 //size
-#define ARTIFACT_SIZE_SMALL 0 //items
-#define ARTIFACT_SIZE_LARGE 1 //not items
+#define ARTIFACT_SIZE_TINY 0 //items
+#define ARTIFACT_SIZE_SMALL 1 //big items
+#define ARTIFACT_SIZE_LARGE 2 //not items
 // stimuli
 #define STIMULUS_CARBON_TOUCH "carbontouch"
 #define STIMULUS_SILICON_TOUCH "silicontouch"

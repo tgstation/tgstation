@@ -5,7 +5,7 @@
 	var/obj/holder
 	///list weight for picking this artifact datum (0 = never)
 	var/weight = 0
-	///size class
+	///size class for visuals (ARTIFACT_SIZE_TINY,ARTIFACT_SIZE_SMALL,ARTIFACT_SIZE_LARGE)
 	var/artifact_size = ARTIFACT_SIZE_LARGE
 	///type name for displaying visually
 	var/type_name = "coderbus moment"
@@ -40,21 +40,28 @@
 	var/mutable_appearance/act_effect
 	
 
-/datum/artifact/New(obj/art)
-		. = ..()
-		//setup(art)
-
-/datum/artifact/proc/setup(obj/art)
+/datum/artifact/proc/setup(obj/art, var/forced_origin = null)
 	holder = art
-	
+	SSartifacts.artifacts += holder
+	if(forced_origin)
+		valid_origins = list(forced_origin)
 	artifact_origin = SSartifacts.artifact_origins_by_name[pick(valid_origins)]
 	var/named = "[pick(artifact_origin.adjectives)] [pick(isitem(holder) ? artifact_origin.nouns_small : artifact_origin.nouns_large)]"
 	holder.name = named
 	holder.desc = "You have absolutely no clue what this thing is or how it got here."
-	if(artifact_origin.max_sprites)
-		holder.icon_state = "[artifact_origin.type_name]-[rand(1,artifact_origin.max_sprites)]"
+	if(artifact_origin.max_icons)
+		var/dat_icon
+		var/origin_name = artifact_origin.type_name
+		switch(artifact_size)
+			if(ARTIFACT_SIZE_LARGE)
+				dat_icon = "[origin_name]-[rand(1,artifact_origin.max_icons)]"
+			if(ARTIFACT_SIZE_SMALL)
+				dat_icon = "[origin_name]-item-[rand(1,artifact_origin.max_item_icons)]"
+			if(ARTIFACT_SIZE_TINY)
+				dat_icon = "[origin_name]-item-small-[rand(1,artifact_origin.max_small_item_icons)]"
+		holder.icon_state = dat_icon
 	real_name = artifact_origin.generate_name()
-	act_effect = emissive_appearance(holder.icon, holder.icon_state + "fx", holder, alpha = holder.alpha)
+	act_effect = mutable_appearance(holder.icon, holder.icon_state + "fx", LIGHTING_PLANE + 0.5)
 	if(auto_activate)
 		Activate()
 	var/trigger_amount = rand(min_triggers,max_triggers)
@@ -204,7 +211,23 @@
 
 	if(I.force)
 		Stimulate(STIMULUS_FORCE,I.force)
-	
+
+/datum/artifact/proc/ex_act(severity)
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			Stimulate(STIMULUS_FORCE,200)
+			Stimulate(STIMULUS_HEAT,600)
+		if(EXPLODE_HEAVY)
+			Stimulate(STIMULUS_FORCE,100)
+			Stimulate(STIMULUS_HEAT,450)
+		if(EXPLODE_LIGHT)
+			Stimulate(STIMULUS_FORCE,40)
+			Stimulate(STIMULUS_HEAT,360)
+
+/datum/artifact/proc/emp_act(severity)
+	Stimulate(STIMULUS_SHOCK, 800)
+	Stimulate(STIMULUS_RADIATION, 4)
+
 ///////////// Effects for subtypes
 /datum/artifact/proc/effect_activate()
 	return
