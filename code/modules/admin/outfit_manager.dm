@@ -1,12 +1,8 @@
-/client/proc/outfit_manager()
-	set category = "Debug"
-	set name = "Outfit Manager"
+ADMIN_VERB(debug, outfit_manager, "", R_DEBUG)
 
-	if(!check_rights(R_DEBUG))
-		return
+/client/proc/outfit_manager()
 	var/datum/outfit_manager/ui = new(usr)
 	ui.ui_interact(usr)
-
 
 /datum/outfit_manager
 	var/client/owner

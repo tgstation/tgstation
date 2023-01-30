@@ -234,11 +234,7 @@
 	. = ..()
 	qdel(src)
 
-/client/proc/open_lua_editor()
-	set name = "Open Lua Editor"
-	set category = "Debug"
-	if(!check_rights_for(src, R_DEBUG))
-		return
+ADMIN_VERB(debug, open_lua_editor, "", R_DEBUG)
 	if(SSlua.initialized != TRUE)
 		to_chat(usr, span_warning("SSlua is not initialized!"))
 		return

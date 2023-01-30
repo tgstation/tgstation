@@ -45,31 +45,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
 
 // Debug verbs.
-/client/proc/restart_controller(controller in list("Master", "Failsafe"))
-	set category = "Debug"
-	set name = "Restart Controller"
-	set desc = "Restart one of the various periodic loop controllers for the game (be careful!)"
-
-	if(!holder)
-		return
+ADMIN_VERB(debug, restart_controller, "Restart one of the two main controllers for the game (be careful!)", R_DEBUG, controller in list("Master", "Failsafe"))
 	switch(controller)
 		if("Master")
 			Recreate_MC()
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Master Controller")
 		if("Failsafe")
 			new /datum/controller/failsafe()
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
-
+		else
+			stack_trace("Invalid controller type [controller] passed to restart_controller()")
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
 
-/client/proc/debug_controller()
-	set category = "Debug"
-	set name = "Debug Controller"
-	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
-
-	if(!holder)
-		return
-
+ADMIN_VERB(debug, debug_controller, "Debug one of the subsystem controllers", R_DEBUG)
 	var/list/controllers = list()
 	var/list/controller_choices = list()
 
@@ -84,7 +70,5 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
 	if (!istype(controller))
 		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(src, /mob/admin_module_holder/debug/view_variables, controller)
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
+	SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/debug/view_variables, controller)
 	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")

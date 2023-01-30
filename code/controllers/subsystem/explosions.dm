@@ -81,12 +81,9 @@ SUBSYSTEM_DEF(explosions)
 	flameturf -= T
 	throwturf -= T
 
-/client/proc/check_bomb_impacts()
-	set name = "Check Bomb Impact"
-	set category = "Debug"
-
+ADMIN_VERB(debug, check_bomb_impact, "", R_DEBUG)
 	var/newmode = tgui_alert(usr, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
-	var/turf/epicenter = get_turf(mob)
+	var/turf/epicenter = get_turf(usr)
 	if(!epicenter)
 		return
 

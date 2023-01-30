@@ -45,10 +45,7 @@
 	return offset_to_screen_loc(offset[1], offset[2], our_client?.view)
 
 //Debug procs
-/client/proc/test_movable_UI()
-	set category = "Debug"
-	set name = "Spawn Movable UI Object"
-
+ADMIN_VERB(debug, test_movable_UI, "", R_DEBUG)
 	var/atom/movable/screen/movable/M = new()
 	M.name = "Movable UI Object"
 	M.icon_state = "block"
@@ -61,23 +58,19 @@
 
 	M.screen_loc = screen_l
 
-	screen += M
+	usr.client.screen += M
 
-
-/client/proc/test_snap_UI()
-	set category = "Debug"
-	set name = "Spawn Snap UI Object"
-
+ADMIN_VERB(debug, spawn_snap_ui_object, "", R_DEBUG)
 	var/atom/movable/screen/movable/snap/S = new()
 	S.name = "Snap UI Object"
 	S.icon_state = "block"
 	S.maptext = MAPTEXT("Snap")
 	S.maptext_width = 64
 
-	var/screen_l = input(usr,"Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Snap UI Object") as text|null
+	var/screen_l = input(usr, "Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Snap UI Object") as text|null
 	if(!screen_l)
 		return
 
 	S.screen_loc = screen_l
 
-	screen += S
+	usr.client.screen += S

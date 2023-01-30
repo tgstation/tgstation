@@ -1,10 +1,4 @@
-/client/proc/cmd_admin_debug_traitor_objectives()
-	set name = "Debug Traitor Objectives"
-	set category = "Debug"
-
-	if(!check_rights(R_DEBUG))
-		return
-
+ADMIN_VERB(debug, debug_traitor_objectives, "", R_DEBUG)
 	SStraitor.traitor_debug_panel?.ui_interact(usr)
 
 /datum/traitor_objective_debug

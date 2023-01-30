@@ -68,10 +68,8 @@
 	/// Optional, force this threat level instead of picking randomly through the lorentz distribution
 	var/forced_threat_level
 
-/client/proc/run_dynamic_simulations()
-	set name = "Run Dynamic Simulations"
-	set category = "Debug"
-
+#ifdef TESTING
+ADMIN_VERB(debug, run_dynamic_simulations, "", R_DEBUG)
 	var/simulations = input(usr, "Enter number of simulations") as num
 	var/roundstart_players = input(usr, "Enter number of round start players") as num
 	var/forced_threat_level = input(usr, "Enter forced threat level, if you want one") as num | null
@@ -100,6 +98,7 @@
 	message_admins("Writing file...")
 	WRITE_FILE(file("[GLOB.log_directory]/dynamic_simulations.json"), json_encode(outputs))
 	message_admins("Writing complete.")
+#endif
 
 /proc/export_dynamic_json_of(ruleset_list)
 	var/list/export = list()

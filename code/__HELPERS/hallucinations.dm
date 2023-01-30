@@ -106,10 +106,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	return total_weight
 
 /// Debug verb for getting the weight of each distinct type within the random_hallucination_weighted_list
-/client/proc/debug_hallucination_weighted_list_per_type()
-	set name = "Show Hallucination Weights"
-	set category = "Debug"
-
+ADMIN_VERB(debug, show_hallucination_weights, "", R_DEBUG)
 	var/header = "<tr><th>Type</th> <th>Weight</th> <th>Percent</th>"
 
 	var/total_weight = debug_hallucination_weighted_list()
@@ -145,7 +142,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 
 	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
 	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(assoc_to_keys(all_weights), "")]</table>"
-	var/datum/browser/popup = new(mob, "hallucinationdebug", "Hallucination Weights", 600, 400)
+	var/datum/browser/popup = new(usr, "hallucinationdebug", "Hallucination Weights", 600, 400)
 	popup.set_content(page_contents)
 	popup.open()
 

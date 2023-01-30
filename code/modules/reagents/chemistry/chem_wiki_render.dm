@@ -1,8 +1,5 @@
 //Generates a wikitable txt file for use with the wiki - does not support productless reactions at the moment
-/client/proc/generate_wikichem_list()
-	set category = "Debug"
-	set name = "Parse Wikichems"
-
+ADMIN_VERB(debug, generate_wikichem_list, "Generate a wikichem list for the wiki", R_DEBUG)
 	//If we're a reaction product
 	var/prefix_reaction = {"{| class=\"wikitable sortable\" style=\"width:100%; text-align:left; border: 3px solid #FFDD66; cellspacing=0; cellpadding=2; background-color:white;\"
 ! scope=\"col\" style='width:150px; background-color:#FFDD66;'|Name
