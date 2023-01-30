@@ -92,7 +92,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 /datum/controller/subsystem/admin_verbs/proc/generate_holder_map()
 	admin_verb_map = list()
 	holder_map = list()
-	for(var/mob/admin_module_holder/holder_type as anything in admin_verb_map)
+	for(var/mob/admin_module_holder/holder_type as anything in subtypesof(/mob/admin_module_holder))
 		var/mob/admin_module_holder/holder = new holder_type
 		holder_map[holder_type] = holder
 		admin_verb_map[holder_type] = holder.dynamic_map_generate()
