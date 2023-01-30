@@ -32,27 +32,27 @@
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	rad_insulation = RAD_MEDIUM_INSULATION
 
-/obj/structure/window/reinforced/tram/left/north
+/obj/structure/window/reinforced/tram/left/directional/north
 	icon_state = "tram_left"
 	layer = LOW_ITEM_LAYER
 
-/obj/structure/window/reinforced/tram/left/south
+/obj/structure/window/reinforced/tram/left/directional/south
 	icon_state = "tram_left"
 	plane = WALL_PLANE_UPPER
 
-/obj/structure/window/reinforced/tram/mid/north
+/obj/structure/window/reinforced/tram/mid/directional/north
 	icon_state = "tram_mid"
 	layer = LOW_ITEM_LAYER
 
-/obj/structure/window/reinforced/tram/mid/south
+/obj/structure/window/reinforced/tram/mid/directional/south
 	icon_state = "tram_mid"
 	plane = WALL_PLANE_UPPER
 
-/obj/structure/window/reinforced/tram/right/north
+/obj/structure/window/reinforced/tram/right/directional/north
 	icon_state = "tram_right"
 	layer = LOW_ITEM_LAYER
 
-/obj/structure/window/reinforced/tram/right/south
+/obj/structure/window/reinforced/tram/right/directional/south
 	icon_state = "tram_right"
 	plane = WALL_PLANE_UPPER
 
@@ -63,11 +63,11 @@
 	fire = 99
 	acid = 100
 
-/obj/structure/window/reinforced/tram/Initialize(mapload, direct)
-	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive)
-
 /obj/structure/window/reinforced/tram/spawnDebris(location)
 	. = list()
 	. += new /obj/item/stack/sheet/titaniumglass(location)
 	. += new /obj/item/stack/rods(location)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tram/left, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tram/mid, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tram/right, 0)

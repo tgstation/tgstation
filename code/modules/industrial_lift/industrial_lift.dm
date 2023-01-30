@@ -817,9 +817,10 @@ GLOBAL_LIST_EMPTY(lifts)
 	icon_state = "textured_white_large"
 
 /obj/structure/industrial_lift/tram/subfloor
-	name = "tram"
-	desc = "A tram for tramversing the station."
 	icon_state = "tram_subfloor"
+
+/obj/structure/industrial_lift/tram/subfloor/window
+	icon_state = "tram_subfloor_window"
 
 /datum/armor/structure_industrial_lift
 	melee = 50
