@@ -10,6 +10,7 @@
 	light_power = 1
 	light_on = FALSE
 	bare_wound_bonus = 20
+	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_BLOOD_ON_ITEM
