@@ -13,7 +13,7 @@
 	var/offset_y = 0
 
 /datum/bodypart_overlay/emote/get_image(layer, obj/item/bodypart/limb)
-	var/image/overlay = image(icon, icon_state, layer = -layer) //-layer is a temporary fix, don't forget to remove later
+	var/image/overlay = image(icon, icon_state, layer = layer)
 	overlay.pixel_x = offset_x
 	overlay.pixel_y = offset_y
 	return overlay
