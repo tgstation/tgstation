@@ -52,26 +52,28 @@
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
-	if(human_receiver.can_mutate())
-		var/datum/species/rec_species = human_receiver.dna.species
-		rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
-		var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
-		head.unarmed_damage_low = 10
-		head.unarmed_damage_high = 15
-		head.unarmed_stun_threshold = 15
+	if(!human_receiver.can_mutate())
+		return
+	var/datum/species/rec_species = human_receiver.dna.species
+	rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
+	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
+	head.unarmed_damage_low = 10
+	head.unarmed_damage_high = 15
+	head.unarmed_stun_threshold = 15
 
 /obj/item/organ/internal/tongue/carp/Remove(mob/living/carbon/tongue_owner, special)
 	. = ..()
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
-	if(human_receiver.can_mutate())
-		var/datum/species/rec_species = human_receiver.dna.species
-		rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
-		var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
-		head.unarmed_damage_low = initial(head.unarmed_damage_low)
-		head.unarmed_damage_high = initial(head.unarmed_damage_high)
-		head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
+	if(!human_receiver.can_mutate())
+		return
+	var/datum/species/rec_species = human_receiver.dna.species
+	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
+	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
+	head.unarmed_damage_low = initial(head.unarmed_damage_low)
+	head.unarmed_damage_high = initial(head.unarmed_damage_high)
+	head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
 
 /obj/item/organ/internal/tongue/carp/on_life(delta_time, times_fired)
 	. = ..()

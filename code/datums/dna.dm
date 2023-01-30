@@ -503,8 +503,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/has_dna()
 	return dna
 
+/// Returns TRUE if the mob is allowed to mutate via its DNA, or FALSE if otherwise.
+/// Only an organic Carbon with valid DNA may mutate; not robots, AIs, aliens, Ians, or other mobs.
 /mob/proc/can_mutate()
-	return
+	return FALSE
 
 /mob/living/carbon/can_mutate()
 	if(!(mob_biotypes & MOB_ORGANIC))

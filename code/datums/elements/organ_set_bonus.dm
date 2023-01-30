@@ -6,6 +6,7 @@
 /datum/element/organ_set_bonus
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
+	/// Status Effect typepath to instantiate and apply to the mob.
 	var/datum/status_effect/organ_set_bonus/bonus_type
 
 /datum/element/organ_set_bonus/Attach(datum/target, bonus_type)
