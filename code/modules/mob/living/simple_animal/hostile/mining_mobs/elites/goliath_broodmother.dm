@@ -10,7 +10,7 @@
  * When it's health is below half, tendrils will spawn randomly around it.  When it is below a quarter of health, this effect is doubled.
  * It's attacks are as follows:
  * - Spawns a 3x3/plus shape of tentacles on the target location
- * - Spawns 2 baby goliaths on its tile, up to a max of 8.  Children blow up when they die.
+ * - Spawns 2 baby goliaths on its tile, up to a max of 6.  Children blow up when they die.
  * - The broodmother lets out a noise, and is able to move faster for 6.5 seconds.
  * - Summons your children around you.
  * The broodmother is a fight revolving around stage control, as the activator has to manage the baby goliaths and the broodmother herself, along with all the tendrils.
@@ -59,7 +59,7 @@
 /datum/action/innate/elite_attack/spawn_children
 	name = "Spawn Children"
 	button_icon_state = "spawn_children"
-	chosen_message = "<span class='boldwarning'>You will spawn two children at your location to assist you in combat.  You can have up to 8.</span>"
+	chosen_message = "<span class='boldwarning'>You will spawn two children at your location to assist you in combat.  You can have up to 6.</span>"
 	chosen_attack_num = SPAWN_CHILDREN
 
 /datum/action/innate/elite_attack/rage
@@ -120,10 +120,10 @@
 	new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(tturf, src)
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/spawn_children(target)
-	ranged_cooldown = world.time + 40
+	ranged_cooldown = world.time + 90
 	visible_message(span_boldwarning("The ground churns behind [src]!"))
 	for(var/i in 1 to 2)
-		if(children_list.len >= 8)
+		if(children_list.len >= 6)
 			return
 		var/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/newchild = new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(loc)
 		newchild.GiveTarget(target)
