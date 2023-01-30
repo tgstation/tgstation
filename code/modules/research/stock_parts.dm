@@ -219,12 +219,12 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
-/obj/item/storage/part_replacer/proc/get_sorted_parts()
+/obj/item/storage/part_replacer/proc/get_sorted_parts(ignore_stacks = FALSE)
 	var/list/part_list = list()
 	//Assemble a list of current parts, then sort them by their rating!
 	for(var/obj/item/component_part in contents)
-		//No need to put circuit boards in this list
-		if(istype(component_part, /obj/item/circuitboard))
+		//No need to put circuit boards in this list or stacks when exchanging parts
+		if(istype(component_part, /obj/item/circuitboard) || (ignore_stacks && istype(component_part, /obj/item/stack)))
 			continue
 		part_list += component_part
 		//Sort the parts. This ensures that higher tier items are applied first.

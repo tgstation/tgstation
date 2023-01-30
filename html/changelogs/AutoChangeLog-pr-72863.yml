@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - refactor: "stack components no longer exist inside a machine's component_parts"
+  - refactor: "move component printer & module duplicator circuitboards into machine_circuitboards.dm"

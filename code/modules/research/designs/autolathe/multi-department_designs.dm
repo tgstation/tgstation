@@ -537,3 +537,16 @@
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_FRAMES,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/universal_scanner
+	name = "Universal Scanner"
+	desc = "A utility scanner that fills multiple roles: Exports, sales, and vendor price tags."
+	id = "universal_scanner"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
+	build_path = /obj/item/universal_scanner
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO

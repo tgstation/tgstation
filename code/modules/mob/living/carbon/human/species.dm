@@ -791,9 +791,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob,
 /// but will not update the body right away.
 /datum/species/proc/randomize_active_underwear_only(mob/living/carbon/human/human_mob)
-	human_mob.undershirt = random_undershirt(human_mob.gender)
-	human_mob.underwear = random_underwear(human_mob.gender)
-	human_mob.socks = random_socks(human_mob.gender)
+	return
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob
 /datum/species/proc/randomize_active_underwear(mob/living/carbon/human/human_mob)

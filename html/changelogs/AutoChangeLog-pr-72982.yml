@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Operating computers can now display alternative steps during repeatable surgery steps."

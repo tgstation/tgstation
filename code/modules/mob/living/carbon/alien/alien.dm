@@ -109,6 +109,12 @@ Des: Removes all infected images from the alien.
 		return FALSE
 	return TRUE
 
+/mob/living/carbon/alien/get_visible_suicide_message()
+	return "[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."
+
+/mob/living/carbon/alien/get_blind_suicide_message()
+	return "You hear thrashing."
+
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	visible_message(
 		span_alertalien("[src] begins to twist and contort!"),
