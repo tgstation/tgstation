@@ -311,12 +311,7 @@ ADMIN_VERB(mapping, count_station_stacks, "", R_DEBUG)
 	popup.set_content(page_contents)
 	popup.open()
 
-ADMIN_VERB( \
-	mapping, \
-	check_for_obstructed_atmopsherics, \
-	"Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up", \
-	R_DEBUG)
-
+ADMIN_VERB(mapping, check_for_obstructed_atmopsherics, "Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up", R_DEBUG)
 	message_admins(span_adminnotice("[key_name_admin(usr)] is checking for obstructed atmospherics through the debug command."))
 	var/list/results = list()
 	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accomodate for this.</h2><br>"
