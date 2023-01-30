@@ -1,16 +1,13 @@
 ADMIN_VERB(game, jump_to_area, "Jump to the specified area", NONE, area/destination in world)
 	var/turf/point
 
-	turf_loop: for(var/turf/turf as anything in destination.get_contained_turfs())
+	for(var/turf/turf as anything in destination.get_contained_turfs())
 		if(turf.density)
 			continue
-		for(var/atom/movable/content in turf)
-			if(content.density)
-				continue turf_loop
 		point = turf
 
 	if(!point)
-		to_chat(usr, span_warning("No empty turf to jump to!"))
+		to_chat(usr, span_warning("No turf to jump to!"))
 		return
 
 	usr.forceMove(point)
