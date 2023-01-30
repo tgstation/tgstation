@@ -25,13 +25,12 @@
 		var/list/key_emotes = GLOB.emote_list["cry"]
 		for(var/datum/emote/living/carbon/human/cry/human_emote in key_emotes)
 			// The existing timer restarts if it is already running
-			addtimer(CALLBACK(human_emote, PROC_REF(end_visual), human_user, human_head, crying_overlay), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+			addtimer(CALLBACK(human_emote, PROC_REF(end_visual), human_head, crying_overlay), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-/datum/emote/living/carbon/human/cry/proc/end_visual(mob/living/carbon/human/human_user, obj/item/bodypart/head/human_head, datum/bodypart_overlay/crying_overlay)
+/datum/emote/living/carbon/human/cry/proc/end_visual(obj/item/bodypart/head/human_head, datum/bodypart_overlay/crying_overlay)
 	if(!QDELETED(human_head)) //keep in mind the human may have been decapitated by the time the callback runs
 		human_head.remove_bodypart_overlay(crying_overlay)
-	if(!QDELETED(human_user))
-		human_user.update_body()
+		human_head.owner?.update_body()
 
 #undef CRY_DURATION
 

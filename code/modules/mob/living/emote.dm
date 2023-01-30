@@ -25,13 +25,12 @@
 		var/list/key_emotes = GLOB.emote_list["blush"]
 		for(var/datum/emote/living/blush/living_emote in key_emotes)
 			// The existing timer restarts if it is already running
-			addtimer(CALLBACK(living_emote, PROC_REF(end_blush), human_user, human_head, blush_overlay), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+			addtimer(CALLBACK(living_emote, PROC_REF(end_blush), human_head, blush_overlay), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-/datum/emote/living/blush/proc/end_blush(mob/living/carbon/human/human_user, obj/item/bodypart/head/human_head, datum/bodypart_overlay/blush_overlay)
+/datum/emote/living/blush/proc/end_blush(obj/item/bodypart/head/human_head, datum/bodypart_overlay/blush_overlay)
 	if(!QDELETED(human_head)) //keep in mind the human may have been decapitated by the time the callback runs
 		human_head.remove_bodypart_overlay(blush_overlay)
-	if(!QDELETED(human_user))
-		human_user.update_body()
+		human_head.owner?.update_body()
 
 #undef BLUSH_DURATION
 
