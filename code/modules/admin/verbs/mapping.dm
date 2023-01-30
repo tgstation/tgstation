@@ -189,12 +189,7 @@ ADMIN_VERB(mapping, disable_all_communication_verbs, "", R_DEBUG)
 	message_admins("[key_name_admin(usr)] [message]")
 	log_admin("[key_name(usr)] [message]")
 
-ADMIN_VERB( \
-	mapping, \
-	generate_job_landmark_icons, \
-	"This generates the icon states for job starting location landmarks", \
-	R_DEBUG)
-
+ADMIN_VERB(mapping,	generate_job_landmark_icons, "This generates the icon states for job starting location landmarks", R_DEBUG)
 	var/icon/final = icon()
 	var/mob/living/carbon/human/dummy/D = new(locate(1,1,1)) //spawn on 1,1,1 so we don't have runtimes when items are deleted
 	D.setDir(SOUTH)
