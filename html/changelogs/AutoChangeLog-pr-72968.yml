@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - qol: "The error message that shows up when APCs fail due to a Grid Check (powernet failure) looks a little bit nicer now."
