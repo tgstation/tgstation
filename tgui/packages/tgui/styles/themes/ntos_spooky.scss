@@ -12,12 +12,9 @@
   $color-bg-grad-spread: 12%,
 );
 
-
 .theme-ntos_spooky {
   // Atomic classes
-  @include meta.load-css(
-    '../atomic/color.scss',
-  );
+  @include meta.load-css('../atomic/color.scss');
 
   // Components
   @include meta.load-css(
@@ -27,7 +24,7 @@
       'color-disabled': #363636,
       'color-selected': #610a0a,
       'color-caution': #1416a3,
-      'color-danger': #5c1e80,
+      'color-danger': #5c1e80
     )
   );
   @include meta.load-css(
@@ -50,10 +47,13 @@
     '../components/Tooltip.scss',
     $with: ('background-color': #000000)
   );
-  @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-default-fill': rgba(190, 0, 0, 0.75),
-    'background-color': rgba(34, 1, 1, 0.5),
-  ));
+  @include meta.load-css(
+    '../components/ProgressBar.scss',
+    $with: (
+      'color-default-fill': rgba(190, 0, 0, 0.75),
+      'background-color': rgba(34, 1, 1, 0.5)
+    )
+  );
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
