@@ -4,6 +4,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 /// just clarifying that no threshold does some special stuff, since only meme mutants have it
 #define DNA_INFUSION_NO_THRESHOLD ""
 
+/// Global proc that sets up each [/datum/infuser_entry] sub-type as singleton instances in a list, and returns it.
 /proc/prepare_infuser_entries()
 	var/list/entries = list()
 	// Regardless of names, we want the fly/failed mutant case to show first.
