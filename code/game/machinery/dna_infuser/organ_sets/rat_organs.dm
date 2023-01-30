@@ -39,6 +39,8 @@
 	icon_state = "stomach"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
+	/// Multiplier of [physiology.hunger_mod].
+	var/hunger_mod = 10
 
 /obj/item/organ/internal/stomach/rat/Initialize(mapload)
 	. = ..()
@@ -59,7 +61,7 @@
 	species.disliked_food = NONE
 	species.toxic_food = NONE
 	if(human_holder.physiology)
-		human_holder.physiology.hunger_mod *= 10
+		human_holder.physiology.hunger_mod *= hunger_mod
 	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
 
 /obj/item/organ/internal/stomach/rat/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
@@ -80,7 +82,7 @@
 	species.disliked_food = initial(species.disliked_food)
 	species.toxic_food = initial(species.toxic_food)
 	if(human_holder.physiology)
-		human_holder.physiology.hunger_mod /= 10
+		human_holder.physiology.hunger_mod /= hunger_mod
 	UnregisterSignal(stomach_owner, COMSIG_SPECIES_GAIN)
 
 /// makes you smaller, walk over tables, and take 1.5x damage
