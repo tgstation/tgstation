@@ -19,6 +19,13 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	/// The last destination we were at
 	var/previous_destination
 
+/obj/machinery/destination_sign/north
+	layer = BELOW_OBJ_LAYER
+
+/obj/machinery/destination_sign/south
+	plane = WALL_PLANE_UPPER
+	layer = BELOW_OBJ_LAYER
+
 /obj/machinery/destination_sign/indicator
 	icon_state = "indicator_central_idle"
 	base_icon_state = "indicator_"

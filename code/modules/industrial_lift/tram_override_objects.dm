@@ -32,50 +32,32 @@
 	desc = "A tram for tramversing the station."
 	icon_state = "tram_subfloor_window"
 
-/obj/structure/chair/sofa/bench/tram
-	greyscale_colors = "#00CCFF"
-
-/obj/structure/chair/sofa/bench/tram/left
-	name = "tram seating"
-	desc = "Not the most comfortable, but easy to keep clean!"
-	icon_state = "bench_left"
-	greyscale_config = /datum/greyscale_config/bench_left
-	greyscale_colors = "#00CCFF"
-
-/obj/structure/chair/sofa/bench/tram/right
-	name = "tram seating"
-	desc = "Not the most comfortable, but easy to keep clean!"
-	icon_state = "bench_right"
-	greyscale_config = /datum/greyscale_config/bench_right
-	greyscale_colors = "#00CCFF"
-
-/obj/structure/chair/sofa/bench/tram/solo
-	name = "tram seating"
-	desc = "Not the most comfortable, but easy to keep clean!"
-	icon_state = "bench_solo"
-	greyscale_config = /datum/greyscale_config/bench_solo
-	greyscale_colors = "#00CCFF"
-
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
 
 /obj/machinery/door/window/tram
+	name = "tram door"
+	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	var/associated_lift = MAIN_STATION_TRAM
 	var/datum/weakref/tram_ref
 	/// Directions the tram door can be forced open in an emergency
 	var/space_dir = null
-	name = "tram door"
-	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 
 /obj/machinery/door/window/tram/left
 	icon_state = "left"
 	base_state = "left"
 
+/obj/machinery/door/window/tram/left/directional/south
+	plane = WALL_PLANE_UPPER
+
 /obj/machinery/door/window/tram/right
 	icon_state = "right"
 	base_state = "right"
+
+/obj/machinery/door/window/tram/right/directional/south
+	plane = WALL_PLANE_UPPER
 
 /obj/machinery/door/window/tram/proc/find_tram()
 	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])

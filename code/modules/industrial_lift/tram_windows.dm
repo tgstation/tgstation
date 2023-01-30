@@ -11,11 +11,29 @@
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	rad_insulation = RAD_MEDIUM_INSULATION
 
-/obj/structure/window/reinforced/tram/left
+/obj/structure/window/reinforced/tram/left/north
 	icon_state = "tram_left"
+	layer = LOW_ITEM_LAYER
 
-/obj/structure/window/reinforced/tram/right
+/obj/structure/window/reinforced/tram/left/south
+	icon_state = "tram_left"
+	plane = WALL_PLANE_UPPER
+
+/obj/structure/window/reinforced/tram/mid/north
+	icon_state = "tram_mid"
+	layer = LOW_ITEM_LAYER
+
+/obj/structure/window/reinforced/tram/mid/south
+	icon_state = "tram_mid"
+	plane = WALL_PLANE_UPPER
+
+/obj/structure/window/reinforced/tram/right/north
 	icon_state = "tram_right"
+	layer = LOW_ITEM_LAYER
+
+/obj/structure/window/reinforced/tram/right/south
+	icon_state = "tram_right"
+	plane = WALL_PLANE_UPPER
 
 /datum/armor/window_tram
 	melee = 80
