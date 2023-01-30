@@ -5,7 +5,8 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman
 	head = /obj/item/clothing/head/helmet/space/plasmaman
 	mask = /obj/item/clothing/mask/breath
-	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	r_pocket= /obj/item/tank/internals/plasmaman/belt/full
+	internals_slot = ITEM_SLOT_RPOCKET
 
 /datum/outfit/plasmaman/security
 	name = "Security Plasmaman"
