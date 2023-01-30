@@ -298,7 +298,6 @@
 
 /obj/item/modular_computer/pda/silicon/cyborg
 	starting_programs = list(
-		/datum/computer_file/program/computerconfig,
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
 	)
