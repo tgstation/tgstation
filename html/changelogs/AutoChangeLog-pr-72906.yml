@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes:
-  - rscadd: "Added a new menu that shows on Escape."

@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - bugfix: "fixed fire cabinet examine text falsely saying to alt-click to open/close; it now has contextual screentips, and uses balloon alerts when relevant"

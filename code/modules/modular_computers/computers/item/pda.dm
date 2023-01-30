@@ -253,23 +253,21 @@
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
 	device_theme = "syndicate"
-	has_pda_programs = FALSE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#a80001#5C070F#000000"
-
+	long_ranged = TRUE
 	starting_programs = list(
-		/datum/computer_file/program/ntnetdownload/syndicate,
 		/datum/computer_file/program/radar/fission360,
 	)
 
-/obj/item/modular_computer/pda/nukeops/emag_act(mob/user)
-	if(!enabled)
-		to_chat(user, span_warning("You'd need to turn the [src] on first."))
-		return FALSE
-	to_chat(user, span_notice("You swipe \the [src]. It's screen briefly shows a message reading \"MEMORY CODE INJECTION DETECTED AND SUCCESSFULLY QUARANTINED\"."))
-	return FALSE
+/obj/item/modular_computer/pda/nukeops/Initialize(mapload)
+	. = ..()
+	emag_act(forced = TRUE)
+	var/datum/computer_file/program/messenger/msg = locate() in stored_files
+	if(msg)
+		msg.invisible = TRUE
 
 /**
  * Silicon PDA

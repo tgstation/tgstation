@@ -304,7 +304,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1)
 
 	suppressive_reagents = list(
-		/datum/reagent/toxin/minttoxin = -3,
+		/datum/reagent/consumable/mintextract = -3,
 		/datum/reagent/consumable/frostoil = -2,
 		/datum/reagent/consumable/ice = -1)
 
@@ -530,7 +530,7 @@
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/clownstears = -8,
-		/datum/reagent/toxin/minttoxin = -6,
+		/datum/reagent/consumable/mintextract = -6,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/consumable/ethanol/fernet = -3,
 		/datum/reagent/toxin/lipolicide = -3,
