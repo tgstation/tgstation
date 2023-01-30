@@ -12,8 +12,6 @@
 	anchored = TRUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	movement_type = PHASING | FLYING
-	min_wizard_trigger_potency = 6
-	max_wizard_trigger_potency = 7
 	/// The turf we're looking to coast to.
 	var/turf/destination_turf
 	/// Whether we notify ghosts.
