@@ -1239,6 +1239,7 @@
 	c_tag = "Hallway - Starboard Tram Platform North-East"
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/trimline/white/tram,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "azX" = (
@@ -7753,6 +7754,7 @@
 /area/station/hallway/secondary/exit)
 "cNy" = (
 /obj/machinery/static_signal/northeast,
+/obj/effect/turf_decal/trimline/white/tram,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "cNS" = (
@@ -8846,6 +8848,9 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/white/tram{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "djs" = (
@@ -20313,6 +20318,9 @@
 /area/station/security/courtroom)
 "hth" = (
 /obj/machinery/static_signal/southeast,
+/obj/effect/turf_decal/trimline/white/tram{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "htr" = (
@@ -23141,6 +23149,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/white/tram,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "ivN" = (
@@ -32516,6 +32525,9 @@
 	dir = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/trimline/white/tram{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "lLd" = (
@@ -38702,6 +38714,7 @@
 "nWd" = (
 /obj/structure/cable,
 /obj/machinery/static_signal/northwest,
+/obj/effect/turf_decal/trimline/white/tram,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "nWl" = (
@@ -56479,6 +56492,9 @@
 "uoK" = (
 /obj/structure/cable,
 /obj/machinery/static_signal/southwest,
+/obj/effect/turf_decal/trimline/white/tram{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "upb" = (
@@ -66913,9 +66929,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/corner{
-	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
