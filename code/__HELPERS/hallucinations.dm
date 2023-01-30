@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 	if(!length(raw_args))
 		CRASH("cause_hallucination called with no arguments.")
 
-	var/datum/hallucination/hallucination_type = raw_args[HALLUCINATION_ARG_IS_FORCED] // first arg is the type always
+	var/datum/hallucination/hallucination_type = raw_args[HALLUCINATION_ARG_TYPE] // first arg is the type always
 	if(!ispath(hallucination_type))
 		CRASH("cause_hallucination was given a non-hallucination type.")
 
@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 
 	if(length(raw_args) >= HALLUCINATION_ARGLIST)
 		var/list/passed_args = raw_args.Copy(HALLUCINATION_ARGLIST)
-		passed_args.Insert(HALLUCINATION_ARG_IS_FORCED, src)
+		passed_args.Insert(HALLUCINATION_ARG_TYPE, src)
 
 		new_hallucination = new hallucination_type(arglist(passed_args))
 	else
