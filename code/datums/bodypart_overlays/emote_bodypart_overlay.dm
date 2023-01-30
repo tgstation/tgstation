@@ -2,9 +2,9 @@
 ///Don't forget to go over this again later
 /datum/bodypart_overlay/emote
 	///Icon state of the overlay
-	var/icon_state = 'icons/mob/species/human/human_face.dmi'
+	var/icon_state
 	///Icon of the overlay
-	var/icon
+	var/icon = 'icons/mob/species/human/human_face.dmi'
 	///Color we apply to our overlay (none by default)
 	var/draw_color
 	///X offset of the overlay image
