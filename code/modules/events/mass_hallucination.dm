@@ -6,71 +6,36 @@
 	max_occurrences = 2
 	min_players = 1
 	category = EVENT_CATEGORY_HEALTH
+	admin_setup = /datum/event_admin_setup/mass_hallucination
 
+/datum/round_event/mass_hallucination
+	fakeable = FALSE
 	/// For admins, what hallucination did we pick
 	var/admin_forced_hallucination
 	/// For admins, what arguments are we passing to said hallucination
 	var/list/admin_forced_args
 
-/datum/round_event_control/mass_hallucination/admin_setup(mob/admin)
-	if(!check_rights(R_FUN))
-		return ADMIN_CANCEL_EVENT
-
-	var/force = tgui_alert(usr, "Do you want to force a hallucination?", name, list("Yes", "No", "Cancel"))
-	if(force == "Cancel")
-		return ADMIN_CANCEL_EVENT
-	if(force != "Yes")
-		return
-
-	var/force_what = tgui_alert(usr, "Generic hallucination or Custom configured delusion? (Delusions are those which make people appear as other mobs)", name, list("Hallucination", "Custom Delusion", "Cancel"))
-	switch(force_what)
-		if("Cancel")
-			return ADMIN_CANCEL_EVENT
-
-		if("Hallucination")
-			var/chosen = select_hallucination_type(admin, "What hallucination should be forced for [name]?", name)
-			if(!chosen || !check_rights(R_FUN))
-				return ADMIN_CANCEL_EVENT
-
-			admin_forced_hallucination = chosen
-
-		if("Custom Delusion")
-			var/list/chosen_args = create_delusion(admin)
-			if(!length(chosen_args) || !check_rights(R_FUN))
-				return ADMIN_CANCEL_EVENT
-
-			admin_forced_hallucination = chosen_args[1]
-			admin_forced_args = chosen_args.Copy(3)
-
-/datum/round_event/mass_hallucination
-	fakeable = FALSE
-
 /datum/round_event/mass_hallucination/start()
-	var/datum/round_event_control/mass_hallucination/our_controller = control
-
-	var/picked_hallucination = our_controller?.admin_forced_hallucination
-	var/list/other_args = our_controller?.admin_forced_args
-
-	if(!picked_hallucination)
+	if(!admin_forced_hallucination)
 		var/category_to_pick_from = rand(1, 10)
 		switch(category_to_pick_from)
 			if(1)
 				// Send the same sound to everyone
-				picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/fake_sound/normal)
+				admin_forced_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/fake_sound/normal)
 
 			if(2)
 				// Send the same sound to everyone, but weird
-				picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/fake_sound/weird)
+				admin_forced_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/fake_sound/weird)
 
 			if(3)
 				// Send the same message to everyone
-				picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/station_message)
+				admin_forced_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/station_message)
 
 			if(4)
 				// Send the same delusion to everyone, but...
-				picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
+				admin_forced_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
 				// The delusion will affect everyone BUT the hallucinator.
-				other_args = list(
+				admin_forced_args = list(
 					duration = 30 SECONDS,
 					skip_nearby = FALSE,
 					affects_us = FALSE,
@@ -80,9 +45,9 @@
 
 			if(5)
 				// Send the same delusion to everyone, but...
-				picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
+				admin_forced_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
 				// The delusion will affect only the hallucinator.
-				other_args = list(
+				admin_forced_args = list(
 					duration = 45 SECONDS,
 					skip_nearby = FALSE,
 					affects_us = TRUE,
@@ -103,14 +68,14 @@
 					/datum/hallucination/xeno_attack,
 				)
 
-				picked_hallucination = pick(generic_hallucinations)
+				admin_forced_hallucination = pick(generic_hallucinations)
 
-		if(!picked_hallucination)
-			CRASH("[type] couldn't find a hallucination to play. (Got: [picked_hallucination], Picked category: [category_to_pick_from])")
+		if(!admin_forced_hallucination)
+			CRASH("[type] couldn't find a hallucination to play. (Got: [admin_forced_hallucination], Picked category: [category_to_pick_from])")
 
-	var/list/hallucination_args = list(picked_hallucination, "mass hallucination")
-	if(islist(other_args))
-		hallucination_args += other_args
+	var/list/hallucination_args = list(admin_forced_hallucination, "mass hallucination")
+	if(islist(admin_forced_args))
+		hallucination_args += admin_forced_args
 
 	// We'll only hallucinate for carbons now, even though livings can hallucinate just fine in most cases.
 	for(var/mob/living/carbon/hallucinating as anything in GLOB.carbon_list)
@@ -129,7 +94,39 @@
 		// Not using the wrapper here because we already have a list / arglist
 		hallucinating._cause_hallucination(hallucination_args)
 
-/datum/round_event/mass_hallucination/end()
-	var/datum/round_event_control/mass_hallucination/our_controller = control
-	our_controller.admin_forced_hallucination = null
-	our_controller.admin_forced_args = null
+/datum/event_admin_setup/mass_hallucination
+	/// For admins, what hallucination did we pick
+	var/admin_forced_hallucination
+	/// For admins, what arguments are we passing to said hallucination
+	var/list/admin_forced_args
+
+/datum/event_admin_setup/mass_hallucination/prompt_admins()
+	var/force = tgui_alert(usr, "Do you want to force a hallucination?", event_control.name, list("Yes", "No", "Cancel"))
+	if(force == "Cancel")
+		return ADMIN_CANCEL_EVENT
+	if(force != "Yes")
+		return
+
+	var/force_what = tgui_alert(usr, "Generic hallucination or Custom configured delusion? (Delusions are those which make people appear as other mobs)", event_control.name, list("Hallucination", "Custom Delusion", "Cancel"))
+	switch(force_what)
+		if("Cancel")
+			return ADMIN_CANCEL_EVENT
+
+		if("Hallucination")
+			var/chosen = select_hallucination_type(usr, "What hallucination should be forced for [event_control.name]?", event_control.name)
+			if(!chosen || !check_rights(R_FUN))
+				return ADMIN_CANCEL_EVENT
+
+			admin_forced_hallucination = chosen
+
+		if("Custom Delusion")
+			var/list/chosen_args = create_delusion(usr)
+			if(!length(chosen_args) || !check_rights(R_FUN))
+				return ADMIN_CANCEL_EVENT
+
+			admin_forced_hallucination = chosen_args[HALLUCINATION_ARG_TYPE]
+			admin_forced_args = chosen_args.Copy(HALLUCINATION_ARGLIST)
+
+/datum/event_admin_setup/mass_hallucination/apply_to_event(datum/round_event/mass_hallucination/event)
+	event.admin_forced_hallucination = admin_forced_hallucination
+	event.admin_forced_args = admin_forced_args

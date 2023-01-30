@@ -3,6 +3,15 @@
 	desc = "Why is this here?"
 	icon_state = "syndicate"
 
+/datum/armor/closet_syndicate
+	melee = 70
+	bullet = 40
+	laser = 40
+	energy = 30
+	bomb = 30
+	fire = 70
+	acid = 70
+
 /obj/structure/closet/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."
 

@@ -560,7 +560,9 @@
 	unregister()
 	destination = null
 	previous = null
-	QDEL_NULL(assigned_transit) //don't need it where we're goin'!
+	if(!QDELETED(assigned_transit))
+		qdel(assigned_transit, force = TRUE)
+		assigned_transit = null
 	shuttle_areas = null
 	remove_ripples()
 	return ..()

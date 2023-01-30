@@ -517,12 +517,21 @@
 	integer = FALSE
 
 /datum/config_entry/flag/irc_announce_new_game
-	deprecated_by = /datum/config_entry/string/chat_announce_new_game
+	deprecated_by = /datum/config_entry/string/channel_announce_new_game
 
 /datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
 /datum/config_entry/string/chat_announce_new_game
+	deprecated_by = /datum/config_entry/string/channel_announce_new_game
+
+/datum/config_entry/flag/chat_announce_new_game/DeprecationUpdate(value)
+	return "" //default broadcast
+
+/datum/config_entry/string/channel_announce_new_game
+	default = null
+
+/datum/config_entry/string/channel_announce_end_game
 	default = null
 
 /datum/config_entry/string/chat_new_game_notifications
