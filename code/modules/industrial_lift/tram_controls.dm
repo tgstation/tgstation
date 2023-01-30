@@ -117,7 +117,7 @@
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
 		return FALSE
 	tram_part.tram_travel(to_where)
-	say("The tram has been called to [to_where.name].")
+	say("Departing for: [to_where.name].")
 	update_appearance()
 	return TRUE
 
@@ -130,6 +130,33 @@
 		icon_screen = "[base_icon_state][tram_part.from_where.name]_idle"
 	update_appearance(UPDATE_ICON)
 	return PROCESS_KILL
+
+/obj/machinery/computer/tram_controls/power_change() // Change tram operating status on power loss/recovery
+	. = ..()
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	update_operating()
+	if(tram_part)
+		if(!tram_part.travelling)
+			if(is_operational)
+				for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+					xing.set_signal_state(XING_STATE_AMBER, TRUE)
+				for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+					desto.icon_state = "[desto.base_icon_state][DESTINATION_OFF]"
+					desto.update_appearance()
+			else
+				for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+					xing.set_signal_state(XING_STATE_MALF, TRUE)
+				for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+					desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
+					desto.update_appearance()
+
+/obj/machinery/computer/tram_controls/proc/update_operating() // Pass the operating status from the controls to the lift_master
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	if(tram_part)
+		if(machine_stat & NOPOWER)
+			tram_part.is_operational = FALSE
+		else
+			tram_part.is_operational = TRUE
 
 /obj/item/circuit_component/tram_controls
 	display_name = "Tram Controls"

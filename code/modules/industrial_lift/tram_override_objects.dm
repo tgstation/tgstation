@@ -4,7 +4,7 @@
  * themselves moving to re register signals onto the turf via connect_loc. this is bad and dumb since it makes the tram
  * more expensive to move.
  *
- * if you map something on to the tram, make SURE if possible that it doesnt have anythign reacting to its own movement
+ * if you map something on to the tram, make SURE if possible that it doesnt have anything reacting to its own movement
  * it will make the tram more expensive to move and we dont want that because we dont want to return to the days where
  * the tram took a third of the tick per movement when its just carrying its default mapped in objects
  */
@@ -22,6 +22,14 @@
 /turf/open/floor/glass/reinforced/tram/Initialize(mapload)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/industrial_lift/tram/white
+	icon_state = "titanium_white"
+
+/obj/structure/industrial_lift/tram/subfloor
+	name = "tram"
+	desc = "A tram for tramversing the station."
+	icon_state = "tram_subfloor"
 
 /obj/structure/industrial_lift/tram/subfloor/window
 	name = "tram"
@@ -52,6 +60,48 @@
 	icon_state = "right"
 	base_state = "right"
 
+/obj/machinery/door/window/tram/proc/cycle_doors(command, forced=FALSE)
+	if(command == "open" && icon_state == "[base_state]open")
+		if(!forced)
+			if(!hasPower())
+				return 0
+		return 1
+	if(command == "close" && icon_state == base_state)
+		return 1
+	if(operating) //doors can still function when emag-disabled
+		return 0
+	if(forced < 2)
+		if(obj_flags & EMAGGED)
+			return 0
+	if(!operating) //in case of emag
+		operating = TRUE
+	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
+	switch(command)
+		if("open")
+			do_animate("opening")
+			icon_state ="[base_state]open"
+			sleep(8 DECISECONDS)
+			set_density(FALSE)
+			air_update_turf(TRUE, FALSE)
+			if(operating == 1) //emag again
+				operating = FALSE
+		if("close")
+			do_animate("closing")
+			icon_state = base_state
+			sleep(17 DECISECONDS)
+			set_density(TRUE)
+			air_update_turf(TRUE, TRUE)
+			operating = FALSE
+	update_freelook_sight()
+	return 1
+
+//When the tram is in station, the doors are locked to engineering and command only.
+/obj/machinery/door/window/tram/lock()
+	req_access = list("engineering")
+
+/obj/machinery/door/window/tram/unlock()
+	req_access = null
+
 /obj/machinery/door/window/tram/right/directional/south
 	plane = WALL_PLANE_UPPER
 
@@ -72,7 +122,7 @@
 	. += span_notice("It has labels indicating that it has an emergency mechanism to open from the inside using <b>just your hands</b> in the event of an emergency.")
 
 /obj/machinery/door/window/tram/try_safety_unlock(mob/user)
-	if(!hasPower())
+	if(!hasPower()  && density)
 		to_chat(user, span_notice("You begin pulling the tram emergency exit handle..."))
 		if(do_after(user, 15 SECONDS, target = src))
 			try_to_crowbar(null, user, TRUE)

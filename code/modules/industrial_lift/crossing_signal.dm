@@ -151,10 +151,11 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	end_processing()
 
 /obj/machinery/crossing_signal/process()
+
 	var/datum/lift_master/tram/tram = tram_ref?.resolve()
 
 	// Check for stopped states.
-	if(!tram || !is_operational)
+	if(!tram || !is_operational || !tram.is_operational)
 		// Tram missing, or we lost power.
 		// Tram missing throw the error message (blue)
 		set_signal_state(XING_STATE_MALF, force = !is_operational)
@@ -312,5 +313,4 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	pixel_y = 20
 
 #undef XING_STATE_GREEN
-#undef XING_STATE_AMBER
 #undef XING_STATE_RED

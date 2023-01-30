@@ -74,8 +74,9 @@ GLOBAL_LIST_EMPTY(tram_signs)
 /obj/machinery/destination_sign/proc/update_sign()
 	var/datum/lift_master/tram/tram = tram_ref?.resolve()
 
-	if(!tram || !is_operational)
+	if(!tram || !tram.is_operational)
 		icon_state = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]"
+		update_appearance()
 		return PROCESS_KILL
 
 	use_power(active_power_usage)
