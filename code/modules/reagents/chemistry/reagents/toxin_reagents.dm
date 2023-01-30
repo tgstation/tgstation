@@ -73,7 +73,7 @@
 		return
 
 	mytray.mutation_roll(user)
-	
+
 	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
@@ -209,21 +209,6 @@
 		affected_mob.heal_bodypart_damage(5)
 		. = TRUE
 	..()
-
-/datum/reagent/toxin/minttoxin
-	name = "Mint Toxin"
-	description = "Useful for dealing with undesirable customers."
-	color = "#CF3600" // rgb: 207, 54, 0
-	toxpwr = 0
-	taste_description = "mint"
-	ph = 8
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	if(HAS_TRAIT(affected_mob, TRAIT_FAT))
-		affected_mob.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
-		affected_mob.inflate_gib()
-	return ..()
 
 /datum/reagent/toxin/carpotoxin
 	name = "Carpotoxin"
@@ -364,7 +349,10 @@
 	. = ..()
 	if(istype(exposed_obj, /obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = exposed_obj
-		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
+		alien_weeds.take_damage(rand(15, 35), BRUTE, 0) // Kills alien weeds pretty fast
+	if(istype(exposed_obj, /obj/structure/alien/resin/flower_bud))
+		var/obj/structure/alien/resin/flower_bud/flower = exposed_obj
+		flower.take_damage(rand(30, 50), BRUTE, 0)
 	else if(istype(exposed_obj, /obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(exposed_obj)
 	else if(istype(exposed_obj, /obj/structure/spacevine))
@@ -375,9 +363,13 @@
 	. = ..()
 	var/damage = min(round(0.4 * reac_volume, 0.1), 10)
 	if(exposed_mob.mob_biotypes & MOB_PLANT)
-		exposed_mob.adjustToxLoss(damage, required_biotype = affected_biotype)
+		// spray bottle emits 5u so it's dealing ~15 dmg per spray
+		exposed_mob.adjustToxLoss(damage * 20, required_biotype = affected_biotype)
+		return
+
 	if(!(methods & VAPOR) || !iscarbon(exposed_mob))
 		return
+
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	if(!exposed_carbon.wear_mask)
 		exposed_carbon.adjustToxLoss(damage, required_biotype = affected_biotype)

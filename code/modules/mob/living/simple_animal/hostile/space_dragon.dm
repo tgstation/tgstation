@@ -306,6 +306,8 @@
 	for(var/mob/living/L in T.contents)
 		if(L in hit_list)
 			continue
+		if(L.mind?.has_antag_datum(/datum/antagonist/space_carp))
+			continue
 		hit_list += L
 		L.adjustFireLoss(30)
 		to_chat(L, span_userdanger("You're hit by [src]'s fire breath!"))

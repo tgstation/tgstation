@@ -73,3 +73,17 @@
 			continue
 		part.drop_limb()
 		part.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
+
+/mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
+	. = ..()
+	var/obj/item/organ/internal/brain/userbrain = getorganslot(ORGAN_SLOT_BRAIN)
+	if(userbrain)
+		userbrain.suicided = suicide_state
+
+/mob/living/carbon/can_suicide()
+	if(!..())
+		return FALSE
+	if(!(mobility_flags & MOBILITY_USE)) //just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+		to_chat(src, span_warning("You can't commit suicide whilst immobile! (You can type Ghost instead however)."))
+		return FALSE
+	return TRUE
