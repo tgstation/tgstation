@@ -1,4 +1,4 @@
-/datum/admins/admin_delete(datum/D)
+/datum/admins/proc/admin_delete(datum/D)
 	var/atom/A = D
 	var/coords = ""
 	var/jmp_coords = ""

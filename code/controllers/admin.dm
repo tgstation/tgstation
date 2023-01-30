@@ -43,32 +43,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
 	SSadmin_verbs.dynamic_invoke_admin_verb(usr.client, /mob/admin_module_holder/debug/view_variables, target)
 	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
-
-// Debug verbs.
-ADMIN_VERB(debug, restart_controller, "Restart one of the two main controllers for the game (be careful!)", R_DEBUG, controller in list("Master", "Failsafe"))
-	switch(controller)
-		if("Master")
-			Recreate_MC()
-		if("Failsafe")
-			new /datum/controller/failsafe()
-		else
-			stack_trace("Invalid controller type [controller] passed to restart_controller()")
-	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
-
-ADMIN_VERB(debug, debug_controller, "Debug one of the subsystem controllers", R_DEBUG)
-	var/list/controllers = list()
-	var/list/controller_choices = list()
-
-	for (var/datum/controller/controller in world)
-		if (istype(controller, /datum/controller/subsystem))
-			continue
-		controllers["[controller] (controller.type)"] = controller //we use an associated list to ensure clients can't hold references to controllers
-		controller_choices += "[controller] (controller.type)"
-
-	var/datum/controller/controller_string = input("Select controller to debug", "Debug Controller") as null|anything in controller_choices
-	var/datum/controller/controller = controllers[controller_string]
-
-	if (!istype(controller))
-		return
-	SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/debug/view_variables, controller)
-	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")

@@ -541,7 +541,7 @@ ADMIN_VERB(debug, colorblind_testing, "Change your view to a budger version of c
 ADMIN_VERB(debug, edit_debug_planes, "Edit and visuaize plane masters and their connections (relays)", R_DEBUG)
 	usr.client.holder.edit_plane_masters()
 
-/datum/admins/edit_plane_masters(mob/debug_on)
+/datum/admins/proc/edit_plane_masters(mob/debug_on)
 	if(debug_on)
 		owner.holder.plane_debug.set_mirroring(TRUE)
 		owner.holder.plane_debug.set_target(debug_on)
@@ -651,6 +651,107 @@ ADMIN_VERB(debug, run_empty_query, "Runs a query that does nothing", R_DEBUG, va
 	queries.Cut()
 
 	message_admins("[key_name_admin(usr)] ran [val] empty queries.")
+
+//Debug procs
+ADMIN_VERB(debug, test_movable_UI, "", R_DEBUG)
+	var/atom/movable/screen/movable/M = new()
+	M.name = "Movable UI Object"
+	M.icon_state = "block"
+	M.maptext = MAPTEXT("Movable")
+	M.maptext_width = 64
+
+	var/screen_l = input(usr,"Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Movable UI Object") as text|null
+	if(!screen_l)
+		return
+
+	M.screen_loc = screen_l
+
+	usr.client.screen += M
+
+// Debug verbs.
+ADMIN_VERB(debug, restart_controller, "Restart one of the two main controllers for the game (be careful!)", R_DEBUG, controller in list("Master", "Failsafe"))
+	switch(controller)
+		if("Master")
+			Recreate_MC()
+		if("Failsafe")
+			new /datum/controller/failsafe()
+		else
+			stack_trace("Invalid controller type [controller] passed to restart_controller()")
+	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
+
+ADMIN_VERB(debug, debug_controller, "Debug one of the subsystem controllers", R_DEBUG)
+	var/list/controllers = list()
+	var/list/controller_choices = list()
+
+	for (var/datum/controller/controller in world)
+		if (istype(controller, /datum/controller/subsystem))
+			continue
+		controllers["[controller] (controller.type)"] = controller //we use an associated list to ensure clients can't hold references to controllers
+		controller_choices += "[controller] (controller.type)"
+
+	var/datum/controller/controller_string = input("Select controller to debug", "Debug Controller") as null|anything in controller_choices
+	var/datum/controller/controller = controllers[controller_string]
+
+	if (!istype(controller))
+		return
+	SSadmin_verbs.dynamic_invoke_admin_verb(usr, /mob/admin_module_holder/debug/view_variables, controller)
+	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")
+
+ADMIN_VERB(debug, spawn_snap_ui_object, "", R_DEBUG)
+	var/atom/movable/screen/movable/snap/S = new()
+	S.name = "Snap UI Object"
+	S.icon_state = "block"
+	S.maptext = MAPTEXT("Snap")
+	S.maptext_width = 64
+
+	var/screen_l = input(usr, "Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Snap UI Object") as text|null
+	if(!screen_l)
+		return
+
+	S.screen_loc = screen_l
+
+	usr.client.screen += S
+
+/// Debug verb for getting the weight of each distinct type within the random_hallucination_weighted_list
+ADMIN_VERB(debug, show_hallucination_weights, "", R_DEBUG)
+	var/header = "<tr><th>Type</th> <th>Weight</th> <th>Percent</th>"
+
+	var/total_weight = debug_hallucination_weighted_list()
+	var/list/all_weights = list()
+	var/datum/hallucination/last_type
+	var/last_type_weight = 0
+	for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list)
+		var/this_weight = GLOB.random_hallucination_weighted_list[hallucination_type]
+		// Last_type is the abstract parent of the last hallucination type we iterated over
+		if(last_type)
+			// If this hallucination is the same path as the last type (subtype), add it to the total of the last type weight
+			if(ispath(hallucination_type, last_type))
+				last_type_weight += this_weight
+				continue
+
+			// Otherwise we moved onto the next hallucination subtype so we can stop
+			else
+				all_weights["<tr><td>[last_type]</td> <td>[last_type_weight] / [total_weight]</td> <td>[round(100 * (last_type_weight / total_weight), 0.01)]% chance</td></tr>"] = last_type_weight
+
+		// Set last_type to the abstract parent of this hallucination
+		last_type = initial(hallucination_type.abstract_hallucination_parent)
+		// If last_type is the base hallucination it has no distinct subtypes so we can total it up immediately
+		if(last_type == /datum/hallucination)
+			all_weights["<tr><td>[hallucination_type]</td> <td>[this_weight] / [total_weight]</td> <td>[round(100 * (this_weight / total_weight), 0.01)]% chance</td></tr>"] = this_weight
+			last_type = null
+
+		// Otherwise we start the weight sum for the next entry here
+		else
+			last_type_weight = this_weight
+
+	// Sort by weight descending, where weight is the values (not the keys). We assoc_to_keys later to get JUST the text
+	all_weights = sortTim(all_weights, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+
+	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
+	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(assoc_to_keys(all_weights), "")]</table>"
+	var/datum/browser/popup = new(usr, "hallucinationdebug", "Hallucination Weights", 600, 400)
+	popup.set_content(page_contents)
+	popup.open()
 
 ADMIN_VERB(debug, clear_dynamic_turf_reserverations, "Deallocates all reserved space, restoring it to round start conditions", R_DEBUG)
 	if(length(SSmapping.loaded_lazy_templates))

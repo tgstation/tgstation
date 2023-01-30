@@ -1,8 +1,7 @@
 ADMIN_VERB(game, jump_to_area, "Jump to the specified area", NONE, area/destination in world)
 	var/turf/point
 
-	turf_loop:
-	for(var/turf/turf as anything in destination.get_contained_turfs())
+	turf_loop: for(var/turf/turf as anything in destination.get_contained_turfs())
 		if(turf.density)
 			continue
 		for(var/atom/movable/content in turf)
