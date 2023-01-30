@@ -240,7 +240,7 @@
 
 /// Detects whether a user can use buttons on the machine
 /obj/machinery/computer/proc/has_auth(mob/user)
-	if(issilicon(player) || !isAdminGhostAI(user)) // Silicons don't need to authenticate
+	if(issilicon(player) || isAdminGhostAI(user)) // Silicons don't need to authenticate
 		return TRUE
 
 	if(!isliving(user))
