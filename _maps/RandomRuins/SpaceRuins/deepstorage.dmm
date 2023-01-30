@@ -809,7 +809,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{

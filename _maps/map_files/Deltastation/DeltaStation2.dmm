@@ -21519,7 +21519,7 @@
 /area/station/commons/lounge)
 "ffu" = (
 /obj/structure/table/wood,
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	pixel_y = 32
 	},
 /obj/item/wrench,
@@ -43547,7 +43547,7 @@
 "kzt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	pixel_y = 32
 	},
 /obj/machinery/light/small/directional/north,
@@ -69864,7 +69864,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -76322,7 +76322,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,

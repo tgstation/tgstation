@@ -1199,7 +1199,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -7865,7 +7865,7 @@
 	pixel_y = 5
 	},
 /obj/structure/table/wood,
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -9261,7 +9261,7 @@
 "Wv" = (
 /obj/structure/chair,
 /obj/effect/landmark/thunderdome/observe,
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,

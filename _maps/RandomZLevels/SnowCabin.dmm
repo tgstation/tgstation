@@ -722,7 +722,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cD" = (
-/obj/structure/sign/barsign{
+/obj/machinery/barsign{
 	pixel_y = -32;
 	req_access = null
 	},
