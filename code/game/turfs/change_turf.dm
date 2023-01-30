@@ -158,8 +158,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(thisarea.lighting_effects)
 			new_turf.add_overlay(thisarea.lighting_effects[SSmapping.z_level_to_plane_offset[z] + 1])
 
-	QUEUE_SMOOTH_NEIGHBORS(src)
-	QUEUE_SMOOTH(src)
+	if(flags_1 & INITIALIZED_1) // only queue for smoothing if SSatom initialized us
+		QUEUE_SMOOTH_NEIGHBORS(src)
+		QUEUE_SMOOTH(src)
 
 	return new_turf
 
