@@ -87,8 +87,8 @@
 /obj/machinery/computer/secure_data/ui_data(mob/user)
 	var/list/data = list()
 
-	var/has_access = isAdminGhostAI(user) || (authenticated && isliving(user))
-	data["authenticated"] = authenticated
+	var/has_access =  (authenticated && isliving(user)) || isAdminGhostAI(user)
+	data["authenticated"] = authenticated || isAdminGhostAI(user)
 	if(!has_access)
 		return data
 
