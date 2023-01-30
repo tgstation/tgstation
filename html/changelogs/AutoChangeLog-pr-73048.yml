@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "The carp migration event won't trigger if there are fewer than 12 players."
