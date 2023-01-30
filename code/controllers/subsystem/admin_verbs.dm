@@ -95,8 +95,9 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	admin_verb_map = list()
 	holder_map = list()
 	for(var/mob/admin_module_holder/holder_type as anything in admin_verb_map)
-		holder_map[holder_type] = new holder_type
-		admin_verb_map[holder_type] = holder_map[holder_type].dynamic_map_generate()
+		var/mob/admin_module_holder/holder = new holder_type
+		holder_map[holder_type] = holder
+		admin_verb_map[holder_type] = holder.dynamic_map_generate()
 
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_admin_verb(mob/target, verb_type, ...)
 	if(IsAdminAdvancedProcCall())
