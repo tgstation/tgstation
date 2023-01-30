@@ -7,7 +7,10 @@
 /proc/spawn_rivers(target_z, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors/unexplored, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
-	var/list/possible_locs = block(locate(min_x, min_y, target_z), locate(max_x, max_y, target_z))
+	var/width = max_x - min_x
+	var/height = max_y - min_y
+	var/turf/corner = locate(min_x, min_y, target_z)
+	var/list/possible_locs = CORNER_BLOCK(corner, width, height)
 	while(num_spawned < nodes && possible_locs.len)
 		var/turf/T = pick(possible_locs)
 		var/area/A = get_area(T)
