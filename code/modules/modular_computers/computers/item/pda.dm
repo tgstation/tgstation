@@ -252,7 +252,7 @@
  */
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
-	device_theme = "syndicate"
+	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
@@ -394,7 +394,7 @@
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"
-	device_theme = "syndicate"
+	device_theme = PDA_THEME_SYNDICATE
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate/Initialize(mapload)
 	. = ..()

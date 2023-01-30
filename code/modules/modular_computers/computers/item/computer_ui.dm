@@ -71,7 +71,7 @@
 		data["removable_media"] += "intelliCard"
 
 	data["programs"] = list()
-	for(var/datum/computer_file/program/P in stored_files)
+	for(var/datum/computer_file/program/P as anything in stored_files)
 		var/running = FALSE
 		if(P in idle_threads)
 			running = TRUE
@@ -79,6 +79,7 @@
 		data["programs"] += list(list(
 			"name" = P.filename,
 			"desc" = P.filedesc,
+			"header_program" = P.header_program,
 			"running" = running,
 			"icon" = P.program_icon,
 			"alert" = P.alert_pending,

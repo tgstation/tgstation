@@ -30,6 +30,15 @@
 		disk_host = null
 	return ..()
 
+/**
+ * Used for special cases where an application
+ * Requires special circumstances to install on a PC
+ * Args:
+ * * potential_host - the ModPC that is attempting to store this file.
+ */
+/datum/computer_file/proc/can_store_file(obj/item/modular_computer/potential_host)
+	return TRUE
+
 // Returns independent copy of this file.
 /datum/computer_file/proc/clone(rename = FALSE)
 	var/datum/computer_file/temp = new type

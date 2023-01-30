@@ -7,6 +7,7 @@
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
+	header_program = TRUE
 	available_on_ntnet = FALSE
 	usage_flags = PROGRAM_TABLET
 	ui_header = "ntnrc_idle.gif"

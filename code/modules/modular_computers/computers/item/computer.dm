@@ -34,6 +34,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/list/datum/computer_file/starting_programs = list()
 	///Static list of default programs that come with ALL computers, here so computers don't have to repeat this.
 	var/static/list/datum/computer_file/default_programs = list(
+		/datum/computer_file/program/themeify,
 		/datum/computer_file/program/ntnetdownload,
 		/datum/computer_file/program/filemanager,
 	)
@@ -50,7 +51,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 //	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
 
 	///The theme, used for the main menu and file browser apps.
-	var/device_theme = "ntos"
+	var/device_theme = PDA_THEME_NTOS
 
 	///Bool on whether the computer is currently active or not.
 	var/enabled = FALSE
@@ -321,18 +322,15 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!enabled && !forced)
 		to_chat(user, span_warning("You'd need to turn the [src] on first."))
 		return FALSE
-	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling
-	var/newemag = FALSE
-	for(var/datum/computer_file/program/app in stored_files)
-		if(!istype(app))
-			continue
-		if(app.run_emag())
-			newemag = TRUE
-	if(newemag)
-		to_chat(user, span_notice("You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
-		return TRUE
-	to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
-	return FALSE
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
+		return FALSE
+
+	. = ..()
+	obj_flags |= EMAGGED
+	device_theme = PDA_THEME_SYNDICATE
+	to_chat(user, span_notice("You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
+	return TRUE
 
 /obj/item/modular_computer/examine(mob/user)
 	. = ..()

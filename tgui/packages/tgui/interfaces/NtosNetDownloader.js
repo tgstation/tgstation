@@ -35,7 +35,7 @@ export const NtosNetDownloader = (props, context) => {
       filter((program) => program.category === selectedCategory),
     // This filters the list to only contain verified programs
     !emagged &&
-      PC_device_theme === 'ntos' &&
+      PC_device_theme !== 'syndicate' &&
       filter((program) => program.verifiedsource === 1),
     // This sorts all programs in the lists by name and compatibility
     sortBy(
