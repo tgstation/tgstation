@@ -28,16 +28,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		context[SCREENTIP_CONTEXT_RMB] = opened ? "Close" : "Open"
 		if(stored_extinguisher)
 			context[SCREENTIP_CONTEXT_LMB] = "Take extinguisher" //Yes, this shows whether or not it's open! Extinguishers are taken immediately on LMB click when closed
+		return CONTEXTUAL_SCREENTIP_SET
 
-	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		if(!stored_extinguisher)
-			context[SCREENTIP_CONTEXT_LMB] = "Disassemble the cabinet"
+	if(stored_extinguisher)
+		return NONE
 
-	else if(istype(held_item, /obj/item/extinguisher))
-		if(!stored_extinguisher && opened)
-			context[SCREENTIP_CONTEXT_LMB] = "Insert extinguisher"
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Disassemble cabinet"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/extinguisher) && opened)
+		context[SCREENTIP_CONTEXT_LMB] = "Insert extinguisher"
+		return CONTEXTUAL_SCREENTIP_SET
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/extinguisher_cabinet/Destroy()
 	if(stored_extinguisher)
