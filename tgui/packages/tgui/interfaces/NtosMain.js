@@ -29,43 +29,11 @@ export const NtosMain = (props, context) => {
       height={500}>
       <NtosWindow.Content scrollable>
         {Boolean(
-          has_light ||
-            removable_media.length ||
+          removable_media.length ||
             programs.some((program) => program.header_program)
         ) && (
           <Section>
             <Stack>
-              {!!has_light && (
-                <>
-                  <Stack.Item>
-                    <Button onClick={() => act('PC_light_color')}>
-                      Color:
-                      <ColorBox ml={1} color={comp_light_color} />
-                    </Button>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button
-                      icon="lightbulb"
-                      selected={light_on}
-                      onClick={() => act('PC_toggle_light')}>
-                      Flashlight: {light_on ? 'ON' : 'OFF'}
-                    </Button>
-                  </Stack.Item>
-                </>
-              )}
-              {removable_media.map((device) => (
-                <Stack.Item key={device}>
-                  <Button
-                    fluid
-                    icon="eject"
-                    content={device}
-                    onClick={() => act('PC_Eject_Disk', { name: device })}
-                    disabled={!device}
-                  />
-                </Stack.Item>
-              ))}
-            </Stack>
-            <Stack mt={1}>
               {filtered_programs.map((app) => (
                 <Stack.Item key={filtered_programs}>
                   <Button
@@ -80,18 +48,44 @@ export const NtosMain = (props, context) => {
                 </Stack.Item>
               ))}
             </Stack>
+            <Stack>
+              {removable_media.map((device) => (
+                <Stack.Item key={device} mt={1}>
+                  <Button
+                    fluid
+                    icon="eject"
+                    content={device}
+                    onClick={() => act('PC_Eject_Disk', { name: device })}
+                    disabled={!device}
+                  />
+                </Stack.Item>
+              ))}
+            </Stack>
           </Section>
         )}
         <Section
-          title="User Login"
+          title="Details"
           buttons={
             <>
-              <Button
-                icon="eject"
-                content="Eject ID"
-                disabled={!proposed_login.IDName}
-                onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
-              />
+              {!!has_light && (
+                <>
+                  <Button onClick={() => act('PC_light_color')}>
+                    <ColorBox color={comp_light_color} />
+                  </Button>
+                  <Button
+                    icon="lightbulb"
+                    color={light_on ? 'good' : 'bad'}
+                    selected={light_on}
+                    onClick={() => act('PC_toggle_light')}
+                  />
+                  <Button
+                    icon="eject"
+                    content="Eject ID"
+                    disabled={!proposed_login.IDName}
+                    onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
+                  />
+                </>
+              )}
               {!!show_imprint && (
                 <Button
                   icon="dna"
