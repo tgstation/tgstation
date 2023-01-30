@@ -181,7 +181,7 @@
 	name = "Captain Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/captain
-	gloves = /obj/item/clothing/gloves/color/captain //Too iconic to be replaced with a plasma version
+	gloves = /obj/item/clothing/gloves/captain //Too iconic to be replaced with a plasma version
 	head = /obj/item/clothing/head/helmet/space/plasmaman/captain
 
 /datum/outfit/plasmaman/head_of_personnel

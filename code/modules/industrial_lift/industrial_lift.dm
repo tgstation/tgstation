@@ -418,7 +418,7 @@ GLOBAL_LIST_EMPTY(lifts)
 				var/datum/callback/land_slam = new(collided, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
 
-				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION)
+				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, collided)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)
@@ -817,8 +817,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	icon_state = "titanium_white"
 
 /obj/structure/industrial_lift/tram/subfloor
-	name = "tram subfloor"
-	desc = "A sturdy looking thermoplastic subfloor the tram is built on."
+	name = "tram"
+	desc = "A tram for tramversing the station."
 	icon_state = "tram_subfloor"
 
 /datum/armor/structure_industrial_lift

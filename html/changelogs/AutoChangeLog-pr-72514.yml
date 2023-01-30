@@ -1,5 +1,0 @@
-author: "stanalbatross, thedonkified"
-delete-after: True
-changes:
-  - rscadd: "added the ability to make up to 10 individual highlights in tgchat, customise their colours, and toggle if they highlight the whole message or not. Ported from CM."
-  - rscadd: "you can now use regex for text highlighting. The syntax is /[regex expression]/, eg /dog[0-9]/. There are no quantifiers, but you can use capture groups. The regex must read a minimum of two characters."

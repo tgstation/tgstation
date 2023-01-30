@@ -196,7 +196,7 @@
 	else
 		mode = GIZMO_SCAN
 		icon_state = "gizmo_scan"
-	to_chat(user, span_notice("You switch the device to [mode==GIZMO_SCAN? "SCAN": "MARK"] MODE"))
+	to_chat(user, span_notice("You switch the device to [mode == GIZMO_SCAN? "SCAN": "MARK"] MODE"))
 
 /obj/item/abductor/gizmo/attack(mob/living/M, mob/user)
 	if(!ScientistCheck(user))
@@ -322,7 +322,7 @@
 	else
 		mode = MIND_DEVICE_MESSAGE
 		icon_state = "mind_device_message"
-	to_chat(user, span_notice("You switch the device to [mode==MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE"))
+	to_chat(user, span_notice("You switch the device to [mode == MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE"))
 
 /obj/item/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()

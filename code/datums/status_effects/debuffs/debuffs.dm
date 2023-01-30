@@ -192,7 +192,7 @@
 		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
 		// sleeping with a blindfold or in the dark helps us rest
-		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
+		if(owner.is_blind_from(EYES_COVERED) || is_sleeping_in_darkness)
 			healing += 0.1
 
 		// sleeping in silence is always better
@@ -288,25 +288,6 @@
 	name = "Stasis"
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
-
-/datum/status_effect/pacify
-	id = "pacify"
-	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 1
-	duration = 100
-	alert_type = null
-
-/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
-/datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
-	return ..()
-
-/datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
@@ -410,23 +391,33 @@
 	alert_type = null
 	duration = -1
 
+/datum/status_effect/neck_slice/on_apply()
+	if(!ishuman(owner))
+		return FALSE
+	if(!owner.get_bodypart(BODY_ZONE_HEAD))
+		return FALSE
+	return TRUE
+
 /datum/status_effect/neck_slice/tick()
-	var/mob/living/carbon/human/H = owner
-	var/obj/item/bodypart/throat = H.get_bodypart(BODY_ZONE_HEAD)
-	if(H.stat == DEAD || !throat)
-		H.remove_status_effect(/datum/status_effect/neck_slice)
+	var/obj/item/bodypart/throat = owner.get_bodypart(BODY_ZONE_HEAD)
+	if(owner.stat == DEAD || !throat) // they can lose their head while it's going.
+		qdel(src)
+		return
 
 	var/still_bleeding = FALSE
-	for(var/thing in throat.wounds)
-		var/datum/wound/W = thing
-		if(W.wound_type == WOUND_SLASH && W.severity > WOUND_SEVERITY_MODERATE)
+	for(var/datum/wound/bleeding_thing as anything in throat.wounds)
+		if(bleeding_thing.wound_type == WOUND_SLASH && bleeding_thing.severity > WOUND_SEVERITY_MODERATE)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)
-		H.remove_status_effect(/datum/status_effect/neck_slice)
+		qdel(src)
+		return
 
 	if(prob(10))
-		H.emote(pick("gasp", "gag", "choke"))
+		owner.emote(pick("gasp", "gag", "choke"))
+
+/datum/status_effect/neck_slice/get_examine_text()
+	return span_warning("[owner.p_their(TRUE)] neck is cut and is bleeding profusely!")
 
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)

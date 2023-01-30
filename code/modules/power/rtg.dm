@@ -28,8 +28,8 @@
 /obj/machinery/power/rtg/RefreshParts()
 	. = ..()
 	var/part_level = 0
-	for(var/obj/item/stock_parts/SP in component_parts)
-		part_level += SP.rating
+	for(var/datum/stock_part/stock_part in component_parts)
+		part_level += stock_part.tier
 
 	power_gen = initial(power_gen) * part_level
 

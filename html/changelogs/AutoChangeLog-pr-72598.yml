@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - code_imp: "Made the worn_icons unit test check the worn GAGS config rather than the normal one."

@@ -280,7 +280,7 @@ Behavior that's still missing from this component that original food items had t
 
 ///Makes sure the thing hasn't been destroyed or fully eaten to prevent eating phantom edibles
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
-	if(QDELETED(owner)|| !(IS_EDIBLE(owner)))
+	if(QDELETED(owner) || !(IS_EDIBLE(owner)))
 		return TRUE
 	if(owner.reagents.total_volume)
 		return FALSE
@@ -451,9 +451,9 @@ Behavior that's still missing from this component that original food items had t
 		return FALSE
 	var/mob/living/carbon/C = eater
 	var/covered = ""
-	if(C.is_mouth_covered(head_only = 1))
+	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
 		covered = "headgear"
-	else if(C.is_mouth_covered(mask_only = 1))
+	else if(C.is_mouth_covered(ITEM_SLOT_MASK))
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(feeder) || eater == feeder) ? "your" : "[eater.p_their()]"

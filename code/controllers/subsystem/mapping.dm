@@ -844,6 +844,8 @@ ADMIN_VERB(events, load_away_mission, "", R_FUN)
 
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)
+
+	UNTIL(initialized)
 	var/static/lazy_loading = FALSE
 	UNTIL(!lazy_loading)
 

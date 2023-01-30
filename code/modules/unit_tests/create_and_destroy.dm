@@ -32,6 +32,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/obj/machinery/launchpad/briefcase,
 		//Shouldn't be created
 		/mob/admin_module_holder,
+		//Both are abstract types meant to scream bloody murder if spawned in raw
+		/obj/item/organ/external,
+		/obj/item/organ/external/wings,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -100,6 +103,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	ignore += typesof(/obj/structure/industrial_lift)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	ignore += subtypesof(/obj/machinery/airlock_controller)
+	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
+	ignore += subtypesof(/atom/movable/screen/escape_menu)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type

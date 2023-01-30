@@ -324,7 +324,7 @@
 	if(!LAZYLEN(syringes))
 		to_chat(source, "[icon2html(src, source)]<span class='alert'>No syringes loaded.</span>")
 		return
-	if(reagents.total_volume<=0)
+	if(reagents.total_volume <= 0)
 		to_chat(source, "[icon2html(src, source)]<span class='alert'>No available reagents to load syringe with.</span>")
 		return
 	if(HAS_TRAIT(source, TRAIT_PACIFISM))

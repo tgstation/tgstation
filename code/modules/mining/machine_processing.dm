@@ -153,12 +153,14 @@
 		/datum/material/bluespace,
 	)
 	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_ORE_PROCESSOR, allowed_items=/obj/item/stack)
-	stored_research = new /datum/techweb/specialized/autounlocking/smelter
+	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
+		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
+	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
 	selected_material = GET_MATERIAL_REF(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	mineral_machine = null
-	QDEL_NULL(stored_research)
+	stored_research = null
 	return ..()
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)

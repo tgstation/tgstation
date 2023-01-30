@@ -398,7 +398,7 @@
 				M.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
 				M.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
 				M.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
-				M.apply_status_effect(/datum/status_effect/pacify, 100)
+				M.adjust_pacifism(10 SECONDS)
 			else
 				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 
@@ -412,7 +412,7 @@
 		M.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
 		M.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
 		M.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
-		M.apply_status_effect(/datum/status_effect/pacify, 40)
+		M.adjust_pacifism(4 SECONDS)
 
 #undef CONFUSION_STACK_MAX_MULTIPLIER
 #undef DEVIATION_NONE

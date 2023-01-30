@@ -3,11 +3,11 @@
 //Yes, I'm sorry.
 /datum/turf_reservation
 	var/list/reserved_turfs = list()
+	var/list/cordon_turfs = list()
 	var/width = 0
 	var/height = 0
 	var/bottom_left_coords[3]
 	var/top_right_coords[3]
-	var/wipe_reservation_on_release = TRUE
 	var/turf_type = /turf/open/space
 
 /datum/turf_reservation/transit
@@ -18,13 +18,47 @@
 	SSmapping.used_turfs -= reserved_turfs
 	reserved_turfs = list()
 
-	for(var/turf/reserved_turf as anything in reserved_copy)
+	var/list/cordon_copy = cordon_turfs.Copy()
+	SSmapping.used_turfs -= cordon_turfs
+	cordon_turfs = list()
+
+	var/release_turfs = reserved_copy + cordon_copy
+
+	for(var/turf/reserved_turf as anything in release_turfs)
 		SEND_SIGNAL(reserved_turf, COMSIG_TURF_RESERVATION_RELEASED, src)
 
 	// Makes the linter happy, even tho we don't await this
-	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, reserve_turfs), reserved_copy)
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, reserve_turfs), release_turfs)
+
+/// Attempts to calaculate and store a list of turfs around the reservation for cordoning. Returns whether a valid cordon was calculated
+/datum/turf_reservation/proc/calculate_cordon_turfs(turf/BL, turf/TR)
+	if(BL.x < 2 || BL.y < 2 || TR.x > (world.maxx - 2) || TR.y > (world.maxy - 2))
+		return FALSE // no space for a cordon here
+
+	var/list/possible_turfs = CORNER_OUTLINE(BL, width, height)
+	for(var/turf/cordon_turf as anything in possible_turfs)
+		if(!(cordon_turf.flags_1 & UNUSED_RESERVATION_TURF))
+			return FALSE
+	cordon_turfs = possible_turfs
+	return TRUE
+
+/// Actually generates the cordon around the reservation, and marking the cordon turfs as reserved
+/datum/turf_reservation/proc/generate_cordon()
+	for(var/turf/cordon_turf as anything in cordon_turfs)
+		var/area/misc/cordon/cordon_area = GLOB.areas_by_type[/area/misc/cordon] || new
+		var/area/old_area = cordon_turf.loc
+		old_area.turfs_to_uncontain += cordon_turf
+		cordon_area.contained_turfs += cordon_turf
+		cordon_area.contents += cordon_turf
+		cordon_turf.ChangeTurf(/turf/cordon, /turf/cordon)
+
+		cordon_turf.flags_1 &= ~UNUSED_RESERVATION_TURF
+		SSmapping.unused_turfs["[cordon_turf.z]"] -= cordon_turf
+		SSmapping.used_turfs[cordon_turf] = src
 
 /datum/turf_reservation/proc/Reserve(width, height, zlevel)
+	src.width = width
+	src.height = height
 	if(width > world.maxx || height > world.maxy || width < 1 || height < 1)
 		return FALSE
 	var/list/avail = SSmapping.unused_turfs["[zlevel]"]
@@ -51,6 +85,8 @@
 			if(!(checking.flags_1 & UNUSED_RESERVATION_TURF))
 				passing = FALSE
 				break
+		if(passing) // found a potentially valid area, now try to calculate its cordon
+			passing = calculate_cordon_turfs(BL, TR)
 		if(!passing)
 			continue
 		break
@@ -65,8 +101,7 @@
 		SSmapping.unused_turfs["[T.z]"] -= T
 		SSmapping.used_turfs[T] = src
 		T.ChangeTurf(turf_type, turf_type)
-	src.width = width
-	src.height = height
+	generate_cordon()
 	return TRUE
 
 /datum/turf_reservation/New()
