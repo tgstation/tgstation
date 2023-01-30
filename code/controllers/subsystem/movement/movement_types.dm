@@ -115,9 +115,9 @@
 	var/visual_delay = controller.visual_delay
 	var/result = move() //Is not necesarily a bool, can also return MOVELOOP_NOT_READ
 
-	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, success, delay * visual_delay)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay)
 
-	if(QDELETED(src) || result != TRUE) //Can happen
+	if(QDELETED(src) || result != MOVELOOP_SUCCESS) //Can happen
 		return
 
 	if(flags & MOVEMENT_LOOP_IGNORE_GLIDE)
@@ -128,7 +128,7 @@
 ///Handles the actual move, overriden by children
 ///Returns FALSE if nothing happen, TRUE otherwise
 /datum/move_loop/proc/move()
-	return FALSE
+	return MOVELOOP_FAILURE
 
 
 ///Pause our loop untill restarted with resume_loop()
@@ -194,7 +194,7 @@
 	moving.Move(get_step(moving, direction), direction, FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	// We cannot rely on the return value of Move(), we care about teleports and it doesn't
 	// Moving also can be null on occasion, if the move deleted it and therefor us
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 /**
  * Like move(), but it uses byond's pathfinding on a step by step basis
@@ -219,7 +219,7 @@
 /datum/move_loop/move/move_to/move()
 	var/atom/old_loc = moving.loc
 	step_to(moving, get_step(moving, direction))
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 
 /**
@@ -245,7 +245,7 @@
 /datum/move_loop/move/force/move()
 	var/atom/old_loc = moving.loc
 	moving.forceMove(get_step(moving, direction))
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 
 /datum/move_loop/has_target
@@ -303,7 +303,7 @@
 /datum/move_loop/has_target/force_move/move()
 	var/atom/old_loc = moving.loc
 	moving.forceMove(get_step(moving, get_dir(moving, target)))
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 
 /**
@@ -390,7 +390,7 @@
 
 /datum/move_loop/has_target/jps/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	. = ..()
-	on_finish_callback = CALLBACK(src, PROC_REF(OnFinishPathing))
+	on_finish_callback = CALLBACK(src, PROC_REF(on_finish_pathing))
 
 /datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first, initial_path)
 	. = ..()
@@ -403,7 +403,7 @@
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.skip_first = skip_first
-	src.initial_path = initial_path
+	src.initial_path = initial_path.Copy()
 	if(isidcard(id))
 		RegisterSignal(id, COMSIG_PARENT_QDELETING, PROC_REF(handle_no_id)) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
 
@@ -419,7 +419,7 @@
 	else
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 
-/datum/move_loop/has_target/jps/stop_loop()
+/datum/move_loop/has_target/jps/loop_stopped()
 	. = ..()
 	initial_path = null
 
@@ -442,7 +442,7 @@
 		SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
 
 ///Called when a path has finished being created
-/datum/move_loop/has_target/jps/proc/OnFinishPathing(list/path)
+/datum/move_loop/has_target/jps/proc/on_finish_pathing(list/path)
 	movement_path = path
 	is_pathing = FALSE
 
@@ -452,12 +452,12 @@
 			return MOVELOOP_NOT_READY
 		else
 			INVOKE_ASYNC(src, PROC_REF(recalculate_path))
-			return FALSE
+			return MOVELOOP_FAILURE
 
 	var/turf/next_step = movement_path[1]
 	var/atom/old_loc = moving.loc
 	moving.Move(next_step, get_dir(moving, next_step))
-	. = (old_loc != moving?.loc)
+	. = (old_loc != moving?.loc) ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
@@ -465,7 +465,7 @@
 		movement_path.Cut(1,2)
 	else
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
-		return FALSE
+		return MOVELOOP_FAILURE
 
 
 ///Base class of move_to and move_away, deals with the distance and target aspect of things
@@ -489,8 +489,8 @@
 
 /datum/move_loop/has_target/dist_bound/move()
 	if(!check_dist()) //If we're too close don't do the move
-		return FALSE
-	return TRUE
+		return MOVELOOP_FAILURE
+	return MOVELOOP_SUCCESS
 
 
 /**
@@ -524,7 +524,7 @@
 		return
 	var/atom/old_loc = moving.loc
 	step_to(moving, target)
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 /**
  * Wrapper around walk_away()
@@ -557,7 +557,7 @@
 		return
 	var/atom/old_loc = moving.loc
 	step_away(moving, target)
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 
 /**
@@ -665,7 +665,7 @@
 		x_rate = 0
 		y_rate = 0
 		return
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 /datum/move_loop/has_target/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
 	SIGNAL_HANDLER
@@ -741,7 +741,7 @@
 	var/turf/target_turf = get_step_towards(moving, target)
 	var/atom/old_loc = moving.loc
 	moving.Move(target_turf, get_dir(moving, target_turf))
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 
 /**
@@ -782,8 +782,8 @@
 
 /datum/move_loop/move_rand/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, list/directions)
 	if(..() && (length(potential_directions | directions) == length(potential_directions))) //i guess this could be useful if actually it really has yet to move
-		return TRUE
-	return FALSE
+		return MOVELOOP_SUCCESS
+	return MOVELOOP_FAILURE
 
 /datum/move_loop/move_rand/move()
 	var/list/potential_dirs = potential_directions.Copy()
@@ -793,9 +793,9 @@
 		var/atom/old_loc = moving.loc
 		moving.Move(moving_towards, testdir)
 		if(old_loc != moving?.loc)  //If it worked, we're done
-			return TRUE
+			return MOVELOOP_SUCCESS
 		potential_dirs -= testdir
-	return FALSE
+	return MOVELOOP_FAILURE
 
 /**
  * Wrapper around walk_rand(), doesn't actually result in a random walk, it's more like moving to random places in viewish
@@ -820,7 +820,7 @@
 /datum/move_loop/move_to_rand/move()
 	var/atom/old_loc = moving.loc
 	step_rand(moving)
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 /**
  * Snowflake disposal movement. Moves a disposal holder along a chain of disposal pipes
@@ -859,4 +859,4 @@
 		return FALSE
 	var/atom/old_loc = moving.loc
 	holder.current_pipe = holder.current_pipe.transfer(holder)
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
