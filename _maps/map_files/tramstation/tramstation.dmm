@@ -2263,12 +2263,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
-"aXP" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
-/turf/open/floor/noslip,
-/area/station/hallway/primary/tram/left)
 "aYe" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/watertank,
@@ -9526,7 +9520,6 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Hallway - Central Tram Platform North"
 	},
-/obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/center)
 "dtH" = (
@@ -10448,10 +10441,6 @@
 "dJJ" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/service)
-"dJK" = (
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip,
-/area/station/hallway/primary/tram/center)
 "dJM" = (
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -13843,10 +13832,6 @@
 /obj/structure/industrial_lift/tram,
 /obj/machinery/computer/tram_controls/directional/east{
 	pixel_x = 13
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8;
-	layer = 2.05
 	},
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
@@ -24109,10 +24094,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
-"iOY" = (
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip,
-/area/station/hallway/primary/tram/right)
 "iPi" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -25299,7 +25280,6 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Hallway - Starboard Tram Platform North"
 	},
-/obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/right)
 "jlQ" = (
@@ -28254,12 +28234,6 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"knd" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
-/turf/open/floor/noslip,
-/area/station/hallway/primary/tram/right)
 "knj" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/effect/decal/cleanable/cobweb,
@@ -37162,9 +37136,6 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Hallway - Port Tram Platform South"
 	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/left)
 "npL" = (
@@ -40991,10 +40962,6 @@
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
-"oON" = (
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip,
-/area/station/hallway/primary/tram/left)
 "oOR" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -41114,12 +41081,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
-"oSg" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
-/turf/open/floor/noslip,
-/area/station/hallway/primary/tram/center)
 "oSj" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -44386,9 +44347,6 @@
 /area/station/ai_monitored/turret_protected/ai_upload)
 "pZm" = (
 /obj/effect/landmark/start/hangover,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/center)
 "pZp" = (
@@ -44859,10 +44817,6 @@
 /obj/machinery/computer/tram_controls/directional/west{
 	pixel_x = -13
 	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4;
-	layer = 2.05
-	},
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qif" = (
@@ -45089,9 +45043,6 @@
 "qms" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Hallway - Central Tram Platform South"
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
 	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/center)
@@ -51383,9 +51334,6 @@
 	},
 /obj/machinery/camera/directional/east{
 	c_tag = "Hallway - Starboard Tram Platform South"
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
 	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/right)
@@ -58311,7 +58259,6 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Hallway - Port Tram Platform North"
 	},
-/obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/left)
 "uWi" = (
@@ -151893,7 +151840,7 @@ lNP
 wpP
 vVY
 cFs
-aXP
+ncN
 bhO
 uHT
 vcn
@@ -152658,13 +152605,13 @@ pzM
 fKO
 iuD
 qwg
-oON
+ncN
 cFs
 lNP
 wpP
 vVY
 cFs
-aXP
+ncN
 bhO
 pyf
 wIl
@@ -153172,13 +153119,13 @@ gaf
 fKO
 iuD
 qwg
-oON
+ncN
 cFs
 lNP
 wpP
 vVY
 cFs
-aXP
+ncN
 bhO
 pyf
 wIl
@@ -153943,7 +153890,7 @@ jvf
 jvf
 vJG
 qwg
-oON
+ncN
 cFs
 lNP
 wpP
@@ -163972,7 +163919,7 @@ tNU
 qia
 vqF
 sqz
-oSg
+wFw
 qLh
 vJF
 wyd
@@ -164737,7 +164684,7 @@ mHc
 beW
 vrF
 bip
-dJK
+wFw
 eOi
 rPU
 mXp
@@ -165251,13 +165198,13 @@ mHc
 beW
 gKo
 bip
-dJK
+wFw
 pWK
 waf
 sjd
 biX
 wHs
-oSg
+wFw
 fug
 buT
 tpr
@@ -166022,7 +165969,7 @@ jjy
 vyH
 jfC
 bip
-dJK
+wFw
 gej
 rEn
 eVk
@@ -176051,7 +175998,7 @@ iOd
 sRW
 vPi
 brm
-knd
+sFq
 ugF
 hTU
 wpK
@@ -176816,13 +176763,13 @@ ggp
 gGU
 pZY
 koh
-iOY
+sFq
 brm
 iOd
 sRW
 vPi
 brm
-knd
+sFq
 dQk
 pgk
 umK
@@ -177330,13 +177277,13 @@ mGb
 xlG
 vSk
 lHZ
-iOY
+sFq
 brm
 iOd
 sRW
 vPi
 brm
-knd
+sFq
 ugF
 oLs
 oMz
@@ -178101,7 +178048,7 @@ fgi
 fgi
 giR
 lHZ
-iOY
+sFq
 brm
 iOd
 sRW
