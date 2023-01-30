@@ -32,6 +32,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	assosciations_by_ckey = SSadmin_verbs.assosciations_by_ckey
 
 /datum/controller/subsystem/admin_verbs/Initialize()
+	world.loop_checks = FALSE
 	RegisterSignal(src, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(assosciate_with_waiting))
 	admin_verb_map = list()
 	holder_map = list()
@@ -41,6 +42,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 	context_map = list()
 	populate_context_map(context_map)
 	assosciations_by_ckey = list()
+	world.loop_checks = TRUE
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/admin_verbs/proc/generate_stat_data(client/target)
