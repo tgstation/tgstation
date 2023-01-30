@@ -1,1 +1,3 @@
 template: walls
+mode: !BitmaskDirectionalVis
+  cut_position_y: 16

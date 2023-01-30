@@ -2,7 +2,7 @@ template: walls
 mode: !BitmaskDirectionalVis
   # Has extra stuff on its edges, so cut more off it
   slice_point:
-    west: 24
-    north: 20
-    south: 21
-    east: 25
+    west: 8
+    north: 16
+    south: 17
+    east: 24

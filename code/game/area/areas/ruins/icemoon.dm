@@ -10,13 +10,7 @@
 
 /turf/closed/wall/bathhouse
 	desc = "It's cool to the touch, pleasantly so."
-	icon = 'icons/turf/shuttleold.dmi'
-	icon_state = "block"
-	base_icon_state = "block"
-	smoothing_flags = NONE
-	canSmoothWith = null
-	// It looks bad, on PURPOSE
-	use_splitvis = FALSE
+	icon = 'icons/turf/walls/bathroom_wall.dmi'
 
 /area/ruin/powered/mailroom
 	name = "\improper Abandoned Post Office"
