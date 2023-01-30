@@ -14,7 +14,7 @@ ADMIN_CONTEXT_ENTRY(context_subtle_message, "Subtle Message", R_ADMIN, mob/heare
 	message_admins(msg)
 	admin_ticket_log(hearer, msg)
 
-ADMIN_CONTEXT_ENTRY(contexxt_headset_message, "Headset Message", R_ADMIN, mob/living/carbon/human/hearer in world, sender as text in list(RADIO_CHANNEL_CENTCOM, RADIO_CHANNEL_SYNDICATE))
+ADMIN_CONTEXT_ENTRY(contexxt_headset_message, "Headset Message", R_ADMIN, mob/living/carbon/human/hearer in world, sender in list(RADIO_CHANNEL_CENTCOM, RADIO_CHANNEL_SYNDICATE))
 	if(!istype(hearer.ears, /obj/item/radio/headset))
 		to_chat(usr, "The person you are trying to contact is not wearing a headset.", confidential = TRUE)
 		return
