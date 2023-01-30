@@ -41,7 +41,7 @@
 	CORNER_BLOCK_OFFSET(corner, 1, height, width, 0))
 
 /// Returns a list of around us
-#define TURF_NEIGHBORS(turf) CORNER_BLOCK_OFFSET(turf, 2, 2, -1, -1)
+#define TURF_NEIGHBORS(turf) (CORNER_BLOCK_OFFSET(turf, 3, 3, -1, -1) - turf)
 
 /// The pipes, disposals, and wires are hidden
 #define UNDERFLOOR_HIDDEN 0
