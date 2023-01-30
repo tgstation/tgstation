@@ -6,6 +6,7 @@
 ///bonus of the carp: you can swim through space!
 /datum/status_effect/organ_set_bonus/carp
 	id = "organ_set_bonus_carp"
+	organs_needed = 4
 	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 	bonus_traits = TRAIT_SPACEWALK
