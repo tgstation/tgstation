@@ -86,32 +86,9 @@
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
 	description = "An 'advanced' disease will infect some members of the crew." //These are the ones that get viro lynched!
-<<<<<<< HEAD
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	///Admin selected custom severity rating for the event
-	var/chosen_severity
-	///Admin selected custom value for the maximum symptoms this virus should have
-	var/chosen_max_symptoms
-
-/datum/round_event_control/disease_outbreak/advanced/admin_setup()
-	if(!check_rights(R_FUN))
-		return ADMIN_CANCEL_EVENT
-
-	generate_candidates()
-
-	if(!length(disease_candidates))
-		message_admins("No disease candidates found!")
-		return ADMIN_CANCEL_EVENT
-
-	message_admins("[length(disease_candidates)] candidates found!")
-
-	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
-		chosen_severity = tgui_input_number(usr, "Select a custom severity for your virus!", "Plague Incorporation!", 3, 8)
-		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 3, 15)
-=======
 	admin_setup = /datum/event_admin_setup/disease_outbreak/advanced
->>>>>>> master
 
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
