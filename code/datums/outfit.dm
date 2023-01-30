@@ -245,7 +245,7 @@
 	if(!visualsOnly)
 		apply_fingerprints(H)
 		if(internals_slot)
-			if(internals_slot == ITEM_SLOT_HANDS)
+			if(internals_slot & ITEM_SLOT_HANDS)
 				var/obj/item/tank/internals/internals = H.is_holding_item_of_type(/obj/item/tank/internals)
 				if(internals)
 					H.open_internals(internals)
