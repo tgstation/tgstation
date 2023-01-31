@@ -277,7 +277,6 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	var/sight_flags = SEE_MOBS
-#warn maybe make this... blue? purple? play with it
 	var/lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/list/color_cutoffs = list(-5, 10, 10)
 

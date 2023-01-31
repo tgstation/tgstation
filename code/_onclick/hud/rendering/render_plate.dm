@@ -126,6 +126,8 @@
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
+	/// A list of light cutoffs we're actively using, (mass, r, g, b) to avoid filter churn
+	var/list/light_cutoffs
 
 /*!
  * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
@@ -185,10 +187,14 @@
 		enable_alpha()
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/set_light_cutoff(light_cutoff, list/color_cutoffs)
-	var/ratio = light_cutoff/100
-	#warn needs some sort of comparison to avoid constant unneeded work
+	var/list/new_cutoffs = list(light_cutoff)
+	new_cutoffs += color_cutoffs
+	if(new_cutoffs ~= light_cutoffs)
+		return
+
 	remove_filter(list("light_cutdown", "light_cutup"))
 
+	var/ratio = light_cutoff/100
 	if(!color_cutoffs)
 		color_cutoffs = list(0, 0, 0)
 

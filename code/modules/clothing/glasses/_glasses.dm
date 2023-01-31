@@ -16,8 +16,10 @@
 	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
 	/// Override to allow glasses to set higher than normal see_invis
 	var/invis_override = 0
-#warn autodoc
+	/// A percentage of how much rgb to "max" on the lighting plane
+	/// This lets us brighten darkness without washing out bright color
 	var/lighting_cutoff = null
+	/// Similar to lighting_cutoff, except it has individual r g and b components in the same 0-100 scale
 	var/list/color_cutoffs = null
 	/// The current hud icons
 	var/list/icon/current = list()
@@ -105,7 +107,6 @@
 		remove_client_colour(G.glass_colour_type)
 
 
-#warn I kind of want to add miner and engi mesons, one that's brighter then the other because it's working with lavaland's dark background
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
