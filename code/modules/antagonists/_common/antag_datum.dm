@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/action/antag_info/New(Target)
 	. = ..()
-	name += " [target]"
+	name = "Open [target] Information:"
 
 /datum/action/antag_info/Trigger(trigger_flags)
 	. = ..()
