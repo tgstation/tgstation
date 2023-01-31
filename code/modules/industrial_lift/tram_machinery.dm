@@ -660,6 +660,7 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	var/datum/weakref/tram_ref
 	/// Directions the tram door can be forced open in an emergency
 	var/space_dir = null
+	safe = FALSE
 
 /obj/machinery/door/window/tram/left
 	icon_state = "left"
@@ -692,7 +693,7 @@ GLOBAL_LIST_EMPTY(tram_signs)
 		if("open")
 			do_animate("opening")
 			icon_state ="[base_state]open"
-			sleep(8 DECISECONDS)
+			sleep(7 DECISECONDS)
 			set_density(FALSE)
 			air_update_turf(TRUE, FALSE)
 			if(operating == 1) //emag again
@@ -701,9 +702,9 @@ GLOBAL_LIST_EMPTY(tram_signs)
 			do_animate("closing")
 			icon_state = base_state
 			sleep(17 DECISECONDS)
-			set_density(TRUE)
 			air_update_turf(TRUE, TRUE)
 			operating = FALSE
+			set_density(TRUE)
 	update_freelook_sight()
 	return 1
 

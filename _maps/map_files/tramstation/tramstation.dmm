@@ -13842,10 +13842,11 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "eVk" = (
-/obj/structure/industrial_lift/tram,
-/obj/machinery/computer/tram_controls/directional/east{
-	pixel_x = 13
+/obj/structure/industrial_lift/tram/subfloor/window,
+/obj/structure/window/reinforced/tram/front{
+	icon_state = "tram_window-3"
 	},
+/obj/machinery/computer/tram_controls/directional/west,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "eVl" = (
@@ -44846,9 +44847,6 @@
 /area/station/commons/dorms)
 "qia" = (
 /obj/structure/industrial_lift/tram,
-/obj/machinery/computer/tram_controls/directional/west{
-	pixel_x = -13
-	},
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qif" = (
@@ -65892,6 +65890,7 @@
 /obj/structure/window/reinforced/tram/front{
 	icon_state = "tram_window-3"
 	},
+/obj/machinery/computer/tram_controls/directional/east,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "xIp" = (
@@ -163705,7 +163704,7 @@ bqI
 izU
 kOp
 njl
-xIl
+eVk
 sFS
 jGv
 izU
@@ -166018,7 +166017,7 @@ wxI
 wFw
 gej
 rEn
-eVk
+qia
 aok
 kwA
 qms
