@@ -820,10 +820,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/ai_module/upgrade/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
 	for(var/obj/machinery/porta_turret/ai/turret in GLOB.machines)
+		turret.emp_proofing = TRUE
 		turret.max_integrity = 200
 		turret.repair_damage(200)
-		turret.stun_projectile = /obj/projectile/energy/electrode/pass_glass // AI defenses are often built with glass, so this is big.
-		turret.stun_projectile_sound = 'sound/weapons/taser.ogg'
 		turret.lethal_projectile = /obj/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
 		turret.lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 

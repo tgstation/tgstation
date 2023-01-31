@@ -812,6 +812,13 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
+	/// toggles by a malf AI Upgrade,
+	var/emp_proofing = FALSE
+
+/obj/machinery/porta_turret/ai/emp_act(severity)
+	if(emp_proofing)
+		return
+	. = ..()
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction
