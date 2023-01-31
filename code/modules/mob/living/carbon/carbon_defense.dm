@@ -45,6 +45,8 @@
 	return null
 
 /mob/living/carbon/is_pepper_proof(check_flags = ALL)
+	if(HAS_TRAIT(src, TRAIT_PEPERSPRAY_RESISTANCE))
+		return TRUE
 	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & PEPPERPROOF))
 		return head
 	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & PEPPERPROOF))
