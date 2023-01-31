@@ -47,7 +47,7 @@
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
 			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
-			color_cutoffs = list(-10, 0, -10)
+			color_cutoffs = list(0, 0, -10)
 			change_glass_color(user, /datum/client_colour/glass_colour/yellow)
 
 		if(MODE_TRAY) //undoes the last mode, meson
