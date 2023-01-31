@@ -54,8 +54,6 @@ SUBSYSTEM_DEF(statpanels)
 		if(!target.holder)
 			target.stat_panel.send_message("remove_admin_tabs")
 		else
-			target.stat_panel.send_message("update_split_admin_tabs", !!(target.prefs.toggles & SPLIT_ADMIN_TABS))
-
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
 				target.stat_panel.send_message("add_admin_tabs", target.holder.href_token)
 
