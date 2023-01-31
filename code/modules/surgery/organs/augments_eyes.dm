@@ -15,23 +15,19 @@
 	var/HUD_type = 0
 	var/HUD_trait = null
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = 0, drop_if_replaced = FALSE)
-	. = ..()
-	if(!.)
-		return
+/obj/item/organ/internal/cyberimp/eyes/hud/on_insert(mob/living/carbon/eye_owner)
 	if(HUD_type)
 		var/datum/atom_hud/hud = GLOB.huds[HUD_type]
 		hud.show_to(eye_owner)
 	if(HUD_trait)
 		ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special = 0)
+/obj/item/organ/internal/cyberimp/eyes/hud/on_remove(mob/living/carbon/eye_owner)
 	if(HUD_type)
 		var/datum/atom_hud/hud = GLOB.huds[HUD_type]
 		hud.hide_from(eye_owner)
 	if(HUD_trait)
 		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
-	return ..()
 
 /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"

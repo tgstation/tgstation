@@ -267,15 +267,11 @@
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
-/obj/item/organ/internal/eyes/robotic/xray/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	if(!.)
-		return
+/obj/item/organ/internal/eyes/robotic/xray/Insert(mob/living/carbon/eye_owner)
 	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
 
-/obj/item/organ/internal/eyes/robotic/xray/Remove(mob/living/carbon/eye_owner, special = FALSE)
+/obj/item/organ/internal/eyes/robotic/xray/Remove(mob/living/carbon/eye_owner)
 	REMOVE_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
-	return ..()
 
 /obj/item/organ/internal/eyes/robotic/thermals
 	name = "thermal eyes"
@@ -301,10 +297,7 @@
 /obj/item/organ/internal/eyes/robotic/flashlight/emp_act(severity)
 	return
 
-/obj/item/organ/internal/eyes/robotic/flashlight/Insert(mob/living/carbon/victim, special = FALSE, drop_if_replaced = FALSE)
-	. = ..()
-	if(!.)
-		return
+/obj/item/organ/internal/eyes/robotic/flashlight/on_insert(mob/living/carbon/victim)
 	if(!eye)
 		eye = new /obj/item/flashlight/eyelight()
 	eye.on = TRUE
@@ -313,12 +306,11 @@
 	victim.become_blind(FLASHLIGHT_EYES)
 
 
-/obj/item/organ/internal/eyes/robotic/flashlight/Remove(mob/living/carbon/victim, special = 0)
+/obj/item/organ/internal/eyes/robotic/flashlight/on_remove(mob/living/carbon/victim)
 	eye.on = FALSE
 	eye.update_brightness(victim)
 	eye.forceMove(src)
 	victim.cure_blind(FLASHLIGHT_EYES)
-	..()
 
 // Welding shield implant
 /obj/item/organ/internal/eyes/robotic/shield
@@ -417,14 +409,10 @@
 		return
 	deactivate(silent = TRUE)
 
-/obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE)
-	. = ..()
-	if(!.)
-		return
+/obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_owner)
 	RegisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(update_visuals))
 
-/obj/item/organ/internal/eyes/robotic/glow/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	. = ..()
+/obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
 	UnregisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE)
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()

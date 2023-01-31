@@ -137,13 +137,10 @@
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
-/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	if(owner)
-		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
+/obj/item/organ/internal/heart/cursed/on_insert(mob/living/carbon/accursed)
+	to_chat(accursed, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
-/obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
-	. = ..()
+/obj/item/organ/internal/heart/cursed/on_remove(mob/living/carbon/accursed)
 	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
 /datum/action/item_action/organ_action/cursed_heart
@@ -280,18 +277,16 @@
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/owner, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_deleted))
+/obj/item/organ/internal/heart/ethereal/on_insert(mob/living/carbon/heart_owner)
+	RegisterSignal(heart_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(heart_owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
+	RegisterSignal(heart_owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_deleted))
 
-/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = FALSE)
-	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
-	REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
-	stop_crystalization_process(owner)
+/obj/item/organ/internal/heart/ethereal/on_remove(mob/living/carbon/heart_owner)
+	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
+	REMOVE_TRAIT(heart_owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+	stop_crystalization_process(heart_owner)
 	QDEL_NULL(current_crystal)
-	return ..()
 
 /obj/item/organ/internal/heart/ethereal/update_overlays()
 	. = ..()

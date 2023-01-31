@@ -69,21 +69,25 @@
 	deltimer(decay_timer)
 	return ..()
 
-/obj/item/organ/internal/monster_core/on_insert(mob/living/carbon/target_carbon)
+/obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon)
+	. = ..()
+	if(!.)
+		return
 	if (inert)
-		to_chat(owner, span_notice("[src] breaks down as you try to insert it."))
+		to_chat(target_carbon, span_notice("[src] breaks down as you try to insert it."))
 		qdel(src)
 		return FALSE
 	if (!decay_timer)
 		return TRUE
 	preserve(TRUE)
-	owner.visible_message(span_notice("[src] stabilizes as it's inserted."))
+	target_carbon.visible_message(span_notice("[src] stabilizes as it's inserted."))
 	return TRUE
 
 /obj/item/organ/internal/monster_core/Remove(mob/living/carbon/target_carbon, special = 0)
 	if (!inert && !special)
 		owner.visible_message(span_notice("[src] rapidly decays as it's removed."))
 		go_inert()
+	return ..()
 
 /**
  * Preserves the organ so that it will not decay.

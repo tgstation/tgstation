@@ -28,8 +28,7 @@
 
 /obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-
-	if(isnull(fly))
+	if(. && isnull(fly))
 		fly = new
 		fly.Grant(receiver)
 

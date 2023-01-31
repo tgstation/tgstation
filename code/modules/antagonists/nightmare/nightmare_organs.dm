@@ -26,10 +26,9 @@
 		terrorize_spell = new(src)
 		terrorize_spell.Grant(brain_owner)
 
-/obj/item/organ/internal/brain/shadow/nightmare/Remove(mob/living/carbon/M, special = FALSE, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/shadow/nightmare/on_remove(mob/living/carbon/brain_owner)
 	QDEL_NULL(our_jaunt)
 	QDEL_NULL(terrorize_spell)
-	return ..()
 
 /obj/item/organ/internal/heart/nightmare
 	name = "heart of darkness"
@@ -64,11 +63,10 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/heart/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
+/obj/item/organ/internal/heart/nightmare/Insert(mob/living/carbon/heart_owner, special)
 	if(special != HEART_SPECIAL_SHADOWIFY)
 		blade = new/obj/item/light_eater
-		M.put_in_hands(blade)
+		heart_owner.put_in_hands(blade)
 
 /obj/item/organ/internal/heart/nightmare/Remove(mob/living/carbon/M, special = FALSE)
 	respawn_progress = 0

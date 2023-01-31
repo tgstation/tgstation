@@ -147,8 +147,7 @@
 /obj/item/organ/internal/tongue/rat/on_insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	RegisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN, PROC_REF(its_on_the_mouse))
 
-/obj/item/organ/internal/tongue/rat/Remove(mob/living/carbon/tongue_owner, special)
-	. = ..()
+/obj/item/organ/internal/tongue/rat/on_remove(mob/living/carbon/tongue_owner)
 	UnregisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN)
 
 /obj/item/organ/internal/tongue/rat/proc/on_item_given(mob/living/carbon/offerer, mob/living/taker, obj/item/given)

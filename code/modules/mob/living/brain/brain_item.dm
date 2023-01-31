@@ -39,21 +39,21 @@
 	/// Maximum skillchip slots available. Do not reference this var directly and instead call get_max_skillchip_slots()
 	var/max_skillchip_slots = 5
 
-/obj/item/organ/internal/brain/Insert(mob/living/carbon/C, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/Insert(mob/living/carbon/brain_owner, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
 	. = ..()
 
 	name = initial(name)
 
-	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
-		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
+	if(brain_owner.mind && brain_owner.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
+		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
-		forceMove(C)
-		C.update_body_parts()
+		forceMove(brain_owner)
+		brain_owner.update_body_parts()
 		return
 
 	if(brainmob)
-		if(C.key)
-			C.ghostize()
+		if(brain_owner.key)
+			brain_owner.ghostize()
 
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(C)
