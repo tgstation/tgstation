@@ -18,11 +18,7 @@
 
 /// You can use any spraypaint can on a quirk poster to turn it into a contraband poster from the traitor objective
 /obj/item/poster/quirk/attackby(obj/item/postertool, mob/user, params)
-	if(!is_special_character(user))
-		return ..()
-	if(!HAS_TRAIT(user, TRAIT_POSTERBOY))
-		return ..()
-	if(!istype(postertool, /obj/item/toy/crayon))
+	if(!is_special_character(user) || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(postertool, /obj/item/toy/crayon))
 		return ..()
 	balloon_alert(user, "converting poster...")
 	if(!do_after(user, 5 SECONDS, user))
@@ -36,11 +32,7 @@
 /// Screentip for the above
 
 /obj/item/poster/quirk/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!is_special_character(user))
-		return NONE
-	if(!HAS_TRAIT(user, TRAIT_POSTERBOY))
-		return NONE
-	if(!istype(held_item, /obj/item/toy/crayon))
+	if(!is_special_character(user) || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(held_item, /obj/item/toy/crayon))
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = "Turn into Demoralizing Poster"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -88,9 +80,7 @@
 	RegisterSignal(host, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/proximity_monitor/advanced/quirk_posters/field_turf_crossed(atom/movable/crossed, turf/location)
-	if (!isliving(crossed))
-		return
-	if (!can_see(crossed, host, current_range))
+	if (!isliving(crossed) || !can_see(crossed, host, current_range))
 		return
 	on_seen(crossed)
 
@@ -100,13 +90,7 @@
 		on_seen(examiner)
 
 /datum/proximity_monitor/advanced/quirk_posters/proc/on_seen(mob/living/viewer)
-	if (!viewer.mind)
-		return
-	if (!viewer.mob_mood)
-		return
-	if (viewer.stat != CONSCIOUS)
-		return
-	if(viewer.is_blind())
+	if (!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
 		return
 	if(!viewer.can_read(host, READING_CHECK_LIGHT, TRUE))
 		return
