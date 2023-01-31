@@ -32,7 +32,7 @@
 	return values
 
 /datum/preference/choiced/pda_theme/create_default_value()
-	return GLOB.default_pda_themes[PDA_THEME_NTOS_NAME]
+	return PDA_THEME_NTOS_NAME
 
 // Returning false here because this pref is handled a little differently, due to its dependency on the existence of a PDA.
 /datum/preference/choiced/pda_theme/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
