@@ -168,10 +168,14 @@
 		if(user in emote_visual_instances) // If we already have a visual for this user:
 			overlay = emote_visual_instances[user] // Reference the existing one so we can still delete it later
 			attached_bodypart = human_user.get_bodypart(overlay.attached_body_zone)
+			if(!attached_bodypart)
+				return
 		else // Otherwise we make a new one and apply it to the user
 			overlay = new emote_visual()
 			emote_visual_instances[user] = overlay
 			attached_bodypart = human_user.get_bodypart(overlay.attached_body_zone)
+			if(!attached_bodypart)
+				return
 			attached_bodypart.add_bodypart_overlay(overlay)
 			human_user.update_body()
 		// Use a timer to remove the effect after the defined duration has passed
