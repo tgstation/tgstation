@@ -708,6 +708,13 @@ GLOBAL_LIST_EMPTY(tram_signs)
 			do_animate("closing")
 			icon_state = base_state
 			sleep(19 DECISECONDS)
+			for(var/i=1 to 4)
+				for(var/mob/living/crushee in get_turf(src))
+					if(crushee.dir == NORTH && dir == SOUTH)
+						crush()
+					if(crushee.dir == SOUTH && dir == NORTH)
+						crush()
+					sleep(1 DECISECONDS)
 			air_update_turf(TRUE, TRUE)
 			operating = FALSE
 			set_density(TRUE)
