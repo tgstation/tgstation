@@ -35,7 +35,7 @@
 /// Takes a non area atom and a threshold
 /// Makes it block emissive with any pixels with more alpha then that threshold, with the rest allowing the light to pass
 /// Returns a list of objects, automatically added to your vis_contents, that apply this effect
-/// QDEl them when appropriate
+/// QDEL them when appropriate
 /proc/partially_block_emissives(atom/make_blocker, alpha_to_leave)
 	var/static/uid = 0
 	uid++
