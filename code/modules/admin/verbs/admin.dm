@@ -39,8 +39,6 @@ ADMIN_VERB(admin, player_playtime, "Check the playtime for connected players", R
 	usr << browse(msg.Join(), "window=Player_playtime_check")
 
 ADMIN_VERB(admin, trigger_centcom_recall, "", R_ADMIN)
-	if(!check_rights(R_ADMIN))
-		return
 	var/message = pick(GLOB.admiral_messages)
 	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as message|null
 
@@ -50,6 +48,9 @@ ADMIN_VERB(admin, trigger_centcom_recall, "", R_ADMIN)
 	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
 	usr.log_message("triggered a CentCom recall, with the message of: [message]", LOG_GAME)
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
+
+ADMIN_VERB(admin, player_panel, "", R_ADMIN)
+	usr.client.holder?.player_panel_new()
 
 /datum/admins/proc/cmd_show_exp_panel(client/client_to_check)
 	if(!check_rights(R_ADMIN))
