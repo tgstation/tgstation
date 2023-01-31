@@ -248,6 +248,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list(RENDER_PLANE_GAME, EMISSIVE_MASK_PLANE)
 	critical = PLANE_CRITICAL_FUCKO_PARALLAX // goes funny when touched. no idea why I don't trust byond
 
+/atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_SPACE_LAYER)
+
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
 	name = "Parallax"
@@ -325,11 +329,19 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = FLOOR_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME, EMISSIVE_MASK_PLANE)
 
+/atom/movable/screen/plane_master/floor/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FLOOR_LAYER, relay_color = GLOB.em_block_color)
+
 /atom/movable/screen/plane_master/wall
 	name = "Wall"
 	documentation = "Holds all walls. We render this onto the game world. Separate so we can use this + space and floor planes as a guide for where byond blackness is NOT."
 	plane = WALL_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, EMISSIVE_MASK_PLANE)
+
+/atom/movable/screen/plane_master/wall/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
 
 /atom/movable/screen/plane_master/game
 	name = "Lower game world"
@@ -379,6 +391,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>We draw them to their own plane so we can hijack them for our emissive mask stuff"
 	plane = WALL_PLANE_UPPER
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, EMISSIVE_MASK_PLANE)
+
+/atom/movable/screen/plane_master/wall_upper/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
 
 /atom/movable/screen/plane_master/game_world_upper_fov_hidden
 	name = "Upper game world fov hidden"
@@ -473,24 +489,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
  */
 /atom/movable/screen/plane_master/emissive
 	name = "Emissive"
-	documentation = "This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.\
-		<br>Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.\
-		<br>Emissive blockers are pasted with an atom color that converts them to be entirely some different color.\
-		<br>Emissive overlays and emissive blockers are put onto the same plane (This one).\
-		<br>The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.\
-		<br>A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.\
-		<br>This is then used to alpha mask the lighting plane."
+	documentation = "Holds things that will be used to mask the lighting plane later on. Masked by the Emissive Mask plane to ensure we don't emiss out under a wall.\
+		<br>Relayed onto the Emissive render plane to do the actual masking of lighting, since we need to be transformed and other emissive stuff needs to be transformed too.\
+		<br>Don't want to double scale now."
 	plane = EMISSIVE_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_target = EMISSIVE_RENDER_TARGET
-	render_relay_planes = list()
+	render_relay_planes = list(EMISSIVE_RENDER_PLATE)
 	critical = PLANE_CRITICAL_DISPLAY
-
-/atom/movable/screen/plane_master/emissive/Initialize(mapload)
-	. = ..()
-	add_filter("emissive_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_MASK_RENDER_TARGET, offset)))
-	add_filter("em_block_masking", 2, color_matrix_filter(GLOB.em_mask_matrix))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"

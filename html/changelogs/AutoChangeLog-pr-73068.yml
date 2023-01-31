@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "prevents mob spawner plasmamen from spawning without their suit and internals."
+  - code_imp: "the equip proc can now find internals in the hand slot and automatically open them, allowing for less snowflakey code down the line."
