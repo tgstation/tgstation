@@ -23,7 +23,6 @@
 	sight = SEE_SELF
 	throwforce = 0
 
-	#warn I want to add spook coloring to these guys
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
