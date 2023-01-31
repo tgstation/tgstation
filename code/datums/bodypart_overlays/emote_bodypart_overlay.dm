@@ -10,7 +10,7 @@
 
 	///The time it should take for the overlay to be removed after emoting
 	var/emote_duration = 5.2 SECONDS
-	///The body zone to attach the overlay to
+	///The body zone to attach the overlay to, overlay won't be added if no bodypart can be found with this
 	var/attached_body_zone = BODY_ZONE_CHEST
 
 /datum/bodypart_overlay/simple/emote/get_image(layer, obj/item/bodypart/limb)

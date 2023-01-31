@@ -183,8 +183,8 @@
 		addtimer(CALLBACK(src, PROC_REF(end_visual), user, attached_bodypart, overlay), overlay.emote_duration, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /**
- * Removes the emote_visual from the user. Called as callback by display_visual().
- * Removes the emote_visual from emote_visual_instances and deletes it.
+ * Removes the emote_visual from the bodypart. Called as callback by display_visual().
+ * Removes the emote_visual instance from emote_visual_instances and deletes it.
  *
  * * Arguments:
  * * user - Person that sent the emote.
