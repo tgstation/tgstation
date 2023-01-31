@@ -88,6 +88,7 @@
 	while (tgui_alert(usr, "Add additional locations? Only applies to your current Z level..", "Carp Direction", list("Yes", "No")) == "Yes")
 		record_admin_location()
 
+/// Stores the admin's current location corresponding to the z level of that location
 /datum/event_admin_setup/carp_migration/proc/record_admin_location()
 	var/turf/aimed_turf = get_turf(usr)
 	var/z_level_key = "[aimed_turf.z]"
