@@ -4,35 +4,11 @@
 	mob_type_allowed_typecache = /mob/living
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 
-/// The time it takes for the blush visual to be removed
-#define BLUSH_DURATION (5.2 SECONDS)
-
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
 	message = "blushes."
-
-/datum/emote/living/blush/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(. && ishuman(user)) // Give them a visual blush effect if they're human
-		var/mob/living/carbon/human/human_user = user
-		var/datum/bodypart_overlay/blush_overlay = new /datum/bodypart_overlay/emote/blush()
-		var/obj/item/bodypart/head/human_head = human_user.get_bodypart(BODY_ZONE_HEAD)
-		human_head.add_bodypart_overlay(blush_overlay)
-		human_user.update_body_parts()
-
-		// Use a timer to remove the blush effect after the BLUSH_DURATION has passed
-		var/list/key_emotes = GLOB.emote_list["blush"]
-		for(var/datum/emote/living/blush/living_emote in key_emotes)
-			// The existing timer restarts if it is already running
-			addtimer(CALLBACK(living_emote, PROC_REF(end_blush), human_head, blush_overlay), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
-
-/datum/emote/living/blush/proc/end_blush(obj/item/bodypart/head/human_head, datum/bodypart_overlay/blush_overlay)
-	if(!QDELETED(human_head)) //keep in mind the human may have been decapitated by the time the callback runs
-		human_head.remove_bodypart_overlay(blush_overlay)
-		human_head.owner?.update_body()
-
-#undef BLUSH_DURATION
+	emote_visual = /datum/bodypart_overlay/emote/blush
 
 /datum/emote/living/sing_tune
 	key = "tunesing"

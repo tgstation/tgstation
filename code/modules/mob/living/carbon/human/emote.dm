@@ -1,9 +1,6 @@
 /datum/emote/living/carbon/human
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
-/// The time it takes for the crying visual to be removed
-#define CRY_DURATION (12.8 SECONDS)
-
 /datum/emote/living/carbon/human/cry
 	key = "cry"
 	key_third_person = "cries"
@@ -11,28 +8,7 @@
 	message_mime = "sobs silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	stat_allowed = SOFT_CRIT
-
-/datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(. && ishuman(user)) // Give them a visual crying effect if they're human
-		var/mob/living/carbon/human/human_user = user
-		var/datum/bodypart_overlay/crying_overlay = new /datum/bodypart_overlay/emote/cry()
-		var/obj/item/bodypart/head/human_head = human_user.get_bodypart(BODY_ZONE_HEAD)
-		human_head.add_bodypart_overlay(crying_overlay)
-		human_user.update_body()
-
-		// Use a timer to remove the effect after the defined duration has passed
-		var/list/key_emotes = GLOB.emote_list["cry"]
-		for(var/datum/emote/living/carbon/human/cry/human_emote in key_emotes)
-			// The existing timer restarts if it is already running
-			addtimer(CALLBACK(human_emote, PROC_REF(end_visual), human_head, crying_overlay), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
-
-/datum/emote/living/carbon/human/cry/proc/end_visual(obj/item/bodypart/head/human_head, datum/bodypart_overlay/crying_overlay)
-	if(!QDELETED(human_head)) //keep in mind the human may have been decapitated by the time the callback runs
-		human_head.remove_bodypart_overlay(crying_overlay)
-		human_head.owner?.update_body()
-
-#undef CRY_DURATION
+	emote_visual = /datum/bodypart_overlay/emote/cry
 
 /datum/emote/living/carbon/human/dap
 	key = "dap"
