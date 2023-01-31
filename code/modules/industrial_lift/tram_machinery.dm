@@ -673,6 +673,12 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	icon_state = "right"
 	base_state = "right"
 
+/obj/machinery/door/window/tram/hilbert
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	associated_lift = HILBERT_TRAM
+	icon_state = "windoor"
+	base_state = "windoor"
+
 /obj/machinery/door/window/tram/proc/cycle_doors(command, forced=FALSE)
 	if(command == "open" && icon_state == "[base_state]open")
 		if(!forced)
@@ -726,7 +732,6 @@ GLOBAL_LIST_EMPTY(tram_signs)
 /obj/machinery/door/window/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
-	associated_lift = MAIN_STATION_TRAM
 	INVOKE_ASYNC(src, PROC_REF(open))
 	find_tram()
 
