@@ -116,10 +116,9 @@
 
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
 			if(DT_PROB(0.5 * infestation, delta_time))
+				strikes_to_lose_limb--
 				switch(strikes_to_lose_limb)
-					if(3 to INFINITY)
-						to_chat(victim, span_deadsay("The skin on your [limb.plaintext_zone] is literally dripping off, you feel awful!"))
-					if(2)
+					if(2 to INFINITY)
 						to_chat(victim, span_deadsay("<b>The infection in your [limb.plaintext_zone] is literally dripping off, you feel horrible!</b>"))
 					if(1)
 						to_chat(victim, span_deadsay("<b>Infection has just about completely claimed your [limb.plaintext_zone]!</b>"))
@@ -128,7 +127,6 @@
 						threshold_penalty = 120 // piss easy to destroy
 						var/datum/brain_trauma/severe/paralysis/sepsis = new (limb.body_zone)
 						victim.gain_trauma(sepsis)
-				strikes_to_lose_limb--
 
 /datum/wound/burn/get_examine_description(mob/user)
 	if(strikes_to_lose_limb <= 0)
