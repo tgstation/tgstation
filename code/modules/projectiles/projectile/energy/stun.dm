@@ -28,3 +28,7 @@
 /obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	do_sparks(1, TRUE, src)
 	..()
+
+/obj/projectile/energy/electrode/pass_glass
+	name = "beam-electrode"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
