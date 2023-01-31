@@ -325,6 +325,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = FLOOR_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME, LIGHT_MASK_PLANE)
 
+/atom/movable/screen/plane_master/transparent_floor
+	name = "Transparent Floor"
+	documentation = "Really just openspace, stuff that is a turf but has no color or alpha whatsoever.\
+		<br>We use this to draw to just the light mask plane, cause if it's not there we get holes of blackness over openspace"
+	plane = TRANSPARENT_FLOOR_PLANE
+	render_relay_planes = list(LIGHT_MASK_PLANE)
+
 /atom/movable/screen/plane_master/wall
 	name = "Wall"
 	documentation = "Holds all walls. We render this onto the game world. Separate so we can use this + space and floor planes as a guide for where byond blackness is NOT."
