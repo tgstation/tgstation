@@ -16,7 +16,9 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	floor_tile = /obj/item/stack/tile/glass
 	overfloor_placed = FALSE
-	var/list/glow_stuff = list()
+	/// List of /atom/movable/render_step that are being used to make this glass floor glow
+	/// These are OWNED by this floor, they delete when we delete them, not before not after
+	var/list/glow_stuff
 	/// How much alpha to leave when cutting away emissive blockers
 	var/alpha_to_leave = 255
 	/// Color of starlight to use
