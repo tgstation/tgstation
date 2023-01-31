@@ -282,7 +282,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	icon_state = "icecream_mob"
 	desc = "filled with bright red ice cream. That's probably not strawberry..."
 	desc_prefix = "A suspicious $CONE_NAME"
-	reagent_type = /datum/reagent/liquidgibs
+	reagent_type = /datum/reagent/consumable/liquidgibs
 	hidden = TRUE
 
 /datum/ice_cream_flavour/custom
