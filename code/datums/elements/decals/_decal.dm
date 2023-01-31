@@ -43,7 +43,7 @@
 		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["plane"], result["layer"], result["alpha"], result["color"], result["smoothing"], result["cleanable"], result["desc"])
+		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], PLANE_TO_TRUE(result["plane"]), result["layer"], result["alpha"], result["color"], result["smoothing"], result["cleanable"], result["desc"])
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -111,7 +111,7 @@
 		return FALSE
 	var/temp_image = image(_icon, null, isnull(_smoothing) ? _icon_state : "[_icon_state]-[_smoothing]", _layer, _dir)
 	pic = new(temp_image)
-	pic.plane = _plane
+	SET_PLANE_EXPLICIT(pic, _plane, source)
 	pic.color = _color
 	pic.alpha = _alpha
 	return TRUE
@@ -172,5 +172,5 @@
 		return NONE
 
 	Detach(source)
-	source.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing_junction, cleanable, description)
+	source.AddElement(type, pic.icon, base_icon_state, directional, PLANE_TO_TRUE(pic.plane), pic.layer, pic.alpha, pic.color, smoothing_junction, cleanable, description)
 	return NONE
