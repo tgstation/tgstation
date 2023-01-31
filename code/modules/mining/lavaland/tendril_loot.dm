@@ -277,8 +277,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	var/sight_flags = SEE_MOBS
-	var/lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
-	var/list/color_cutoffs = list(-5, 10, 10)
+	var/list/color_cutoffs = list(10, 25, 25)
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
@@ -297,8 +296,6 @@
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
 	user.add_sight(sight_flags)
-	if(!isnull(lighting_cutoff))
-		user.lighting_cutoff = max(user.lighting_cutoff, lighting_cutoff)
 	if(!isnull(color_cutoffs))
 		user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, color_cutoffs)
 

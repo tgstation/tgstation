@@ -38,10 +38,13 @@
 // Lighting cutoff defines
 // These are a percentage of how much darkness to cut off (in rgb)
 #define LIGHTING_CUTOFF_VISIBLE 0
-#define LIGHTING_CUTOFF_REAL_LOW 2.6
+#define LIGHTING_CUTOFF_REAL_LOW 4.5
 #define LIGHTING_CUTOFF_MEDIUM 15
 #define LIGHTING_CUTOFF_HIGH 30
 #define LIGHTING_CUTOFF_FULLBRIGHT 100
+
+/// What counts as being able to see in the dark
+#define LIGHTING_NIGHTVISION_THRESHOLD 10
 
 /// The amount of lumcount on a tile for it to be considered dark (used to determine reading and nyctophobia)
 #define LIGHTING_TILE_IS_DARK 0.2

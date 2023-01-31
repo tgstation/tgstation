@@ -69,9 +69,8 @@
 	icon_state = "healthhudnight"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Blue green, dark
-	color_cutoffs = list(-10, 0, 15)
+	color_cutoffs = list(5, 15, 30)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/health/night/meson
@@ -107,9 +106,8 @@
 	icon_state = "diagnostichudnight"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Pale yellow
-	color_cutoffs = list(15, 5, -10)
+	color_cutoffs = list(30, 20, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses
@@ -178,9 +176,8 @@
 	desc = "An advanced heads-up display that provides ID data and vision in complete darkness."
 	icon_state = "securityhudnight"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Red with a tint of green
-	color_cutoffs = list(20, -10, -10)
+	color_cutoffs = list(35, 5, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
@@ -240,8 +237,7 @@
 	icon_state = "thermal"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	vision_flags = SEE_MOBS
-	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
-	color_cutoffs = list(10, -7, -10)
+	color_cutoffs = list(25, 8, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
@@ -249,15 +245,15 @@
 	switch (hud_type)
 		if (DATA_HUD_MEDICAL_ADVANCED)
 			icon_state = "meson"
-			color_cutoffs = list(-10, 0, -10)
+			color_cutoffs = list(5, 15, 5)
 			change_glass_color(user, /datum/client_colour/glass_colour/green)
 		if (DATA_HUD_SECURITY_ADVANCED)
 			icon_state = "thermal"
-			color_cutoffs = list(10, -7, -10)
+			color_cutoffs = list(25, 8, 5)
 			change_glass_color(user, /datum/client_colour/glass_colour/red)
 		else
 			icon_state = "purple"
-			color_cutoffs = list(0, -20, 10)
+			color_cutoffs = list(15, 0, 25)
 			change_glass_color(user, /datum/client_colour/glass_colour/purple)
 	user.update_sight()
 	user.update_worn_glasses()

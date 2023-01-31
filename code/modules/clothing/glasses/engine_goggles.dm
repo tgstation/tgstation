@@ -21,7 +21,7 @@
 	gender = PLURAL
 
 	vision_flags = NONE
-	lighting_cutoff = null
+	color_cutoffs = null
 
 	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_NONE)
 	var/mode = MODE_NONE
@@ -46,13 +46,11 @@
 	switch(mode)
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
-			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
-			color_cutoffs = list(0, -3, -17)
+			color_cutoffs = list(15, 12, 0)
 			change_glass_color(user, /datum/client_colour/glass_colour/yellow)
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
-			lighting_cutoff = null
 			color_cutoffs = list()
 			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
 

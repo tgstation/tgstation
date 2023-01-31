@@ -114,9 +114,8 @@
 	inhand_icon_state = "meson"
 	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 	vision_flags = SEE_TURFS
-	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Mesons get to be lightly green
-	color_cutoffs = list(-10, 0, -10)
+	color_cutoffs = list(5, 15, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
@@ -129,9 +128,8 @@
 	icon_state = "nvgmeson"
 	inhand_icon_state = "nvgmeson"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	// Night vision mesons get the same but more intense
-	color_cutoffs = list(-20, 0, -20)
+	color_cutoffs = list(10, 30, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/meson/gar
@@ -175,9 +173,8 @@
 	desc = "Lets the user see in the dark and recognize chemical compounds at a glance."
 	icon_state = "scihudnight"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	// Real vivid purple
-	color_cutoffs = list(0, -20, 10)
+	color_cutoffs = list(50, 10, 30)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/night
@@ -186,9 +183,8 @@
 	icon_state = "night"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	// Dark green
-	color_cutoffs = list(-20, 0, -20)
+	color_cutoffs = list(10, 30, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/eyepatch
@@ -448,9 +444,8 @@
 	icon_state = "thermal"
 	inhand_icon_state = "glasses"
 	vision_flags = SEE_MOBS
-	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Going for an orange color here
-	color_cutoffs = list(10, -7, -10)
+	color_cutoffs = list(25, 8, 5)
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	glass_colour_type = /datum/client_colour/glass_colour/red
 

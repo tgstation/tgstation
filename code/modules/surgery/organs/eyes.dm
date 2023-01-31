@@ -277,9 +277,8 @@
 	eye_color_left = "FC0"
 	eye_color_right = "FC0"
 	// We're gonna downshift green and blue a bit so darkness looks yellow
-	color_cutoffs = list(10, -7, -10)
+	color_cutoffs = list(25, 8, 5)
 	sight_flags = SEE_MOBS
-	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/internal/eyes/robotic/flashlight

@@ -1162,8 +1162,9 @@
 **/
 /mob/proc/has_nightvision()
 	// Accounts for negatives, sorta conservative. Change this if/when you change negatives in those lists yeah?
-	var/light_offset = min(lighting_color_cutoffs[1], lighting_color_cutoffs[2], lighting_color_cutoffs[3]) + lighting_cutoff
-	return light_offset <= LIGHTING_CUTOFF_HIGH
+
+	var/light_offset = (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3 + lighting_cutoff
+	return light_offset >= LIGHTING_NIGHTVISION_THRESHOLD
 
 /// This mob is abile to read books
 /mob/proc/is_literate()
