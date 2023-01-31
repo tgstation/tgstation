@@ -84,8 +84,6 @@
  * Retuns a truthy value (a ref to what is protecting us), or a falsy value (null)
  */
 /mob/living/proc/is_pepper_proof(check_flags = ALL)
-	if(HAS_TRAIT(src, TRAIT_PEPPERSPRAY_RESISTANCE))
-		return src
 	return null
 
 /mob/living/proc/on_hit(obj/projectile/P)
