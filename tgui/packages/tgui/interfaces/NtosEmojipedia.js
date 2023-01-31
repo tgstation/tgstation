@@ -5,7 +5,7 @@ import { NtosWindow } from '../layouts';
 
 export const NtosEmojipedia = (props, context) => {
   const { data } = useBackend(context);
-  const { emoji_list } = data;
+  const { PC_device_theme, emoji_list } = data;
   const [filter, updatefilter] = useSharedState(context, 'filter', '');
 
   let filtered_emoji_list = filter
@@ -18,7 +18,7 @@ export const NtosEmojipedia = (props, context) => {
   }
 
   return (
-    <NtosWindow width={600} height={800}>
+    <NtosWindow width={600} height={800} theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         <Section
           // required: follow semantic versioning every time you touch this file

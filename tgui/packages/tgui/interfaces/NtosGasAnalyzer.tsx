@@ -5,15 +5,16 @@ import { NtosWindow } from '../layouts';
 import { GasAnalyzerContent, GasAnalyzerData } from './GasAnalyzer';
 
 type NtosGasAnalyzerData = GasAnalyzerData & {
+  PC_device_theme: string;
   atmozphereMode: 'click' | 'env';
   clickAtmozphereCompatible: BooleanLike;
 };
 
 export const NtosGasAnalyzer = (props, context) => {
   const { act, data } = useBackend<NtosGasAnalyzerData>(context);
-  const { atmozphereMode, clickAtmozphereCompatible } = data;
+  const { PC_device_theme, atmozphereMode, clickAtmozphereCompatible } = data;
   return (
-    <NtosWindow width={500} height={450}>
+    <NtosWindow width={500} height={450} theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         {!!clickAtmozphereCompatible && (
           <Button

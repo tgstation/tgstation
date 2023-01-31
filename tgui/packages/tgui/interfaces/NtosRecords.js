@@ -6,12 +6,12 @@ import { NtosWindow } from '../layouts';
 export const NtosRecords = (props, context) => {
   const { act, data } = useBackend(context);
   const [searchTerm, setSearchTerm] = useLocalState(context, 'search', '');
-  const { mode, records } = data;
+  const { PC_device_theme, mode, records } = data;
 
   const isMatchingSearchTerms = createSearch(searchTerm);
 
   return (
-    <NtosWindow width={600} height={800}>
+    <NtosWindow width={600} height={800} theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         <Section textAlign="center">
           NANOTRASEN PERSONNEL RECORDS (CLASSIFIED)

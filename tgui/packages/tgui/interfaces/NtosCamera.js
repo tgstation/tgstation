@@ -3,8 +3,10 @@ import { NtosWindow } from '../layouts';
 import { Button, Box, NoticeBox, Stack } from '../components';
 
 export const NtosCamera = (props, context) => {
+  const { data } = useBackend(context);
+  const { PC_device_theme } = data;
   return (
-    <NtosWindow width={400} height={350}>
+    <NtosWindow width={400} height={350} theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         <NtosCameraContent />
       </NtosWindow.Content>

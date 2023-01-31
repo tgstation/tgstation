@@ -40,6 +40,7 @@ export const NtosMessenger = (props, context) => {
 const ContactsScreen = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    PC_device_theme,
     owner,
     ringer_status,
     sending_and_receiving,
@@ -59,7 +60,7 @@ const ContactsScreen = (props, context) => {
   let users =
     searchUser.length > 0 ? data.messengers.filter(search) : messengers;
   return (
-    <NtosWindow width={600} height={800}>
+    <NtosWindow width={600} height={800} theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         <Stack vertical>
           <Section fill textAlign="center">
@@ -179,9 +180,9 @@ const ContactsScreen = (props, context) => {
 
 const MessageListScreen = (props, context) => {
   const { act, data } = useBackend(context);
-  const { messages = [] } = data;
+  const { PC_device_theme, messages = [] } = data;
   return (
-    <NtosWindow width={600} height={800}>
+    <NtosWindow width={600} height={800} theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         <Stack vertical>
           <Section fill>

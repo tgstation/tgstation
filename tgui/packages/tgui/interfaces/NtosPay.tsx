@@ -3,6 +3,7 @@ import { useBackend } from '../backend';
 import { Stack, Section, Box, Button, Input, Table, Tooltip, NoticeBox, Divider, RestrictedInput } from '../components';
 
 type Data = {
+  PC_device_theme: string;
   name: string;
   owner_token: string;
   money: number;
@@ -17,8 +18,10 @@ type Transactions = {
 let name_to_token, money_to_send, token;
 
 export const NtosPay = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { PC_device_theme } = data;
   return (
-    <NtosWindow width={495} height={655}>
+    <NtosWindow width={495} height={655} theme={PC_device_theme}>
       <NtosWindow.Content>
         <NtosPayContent />
       </NtosWindow.Content>

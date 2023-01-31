@@ -3,8 +3,11 @@ import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs 
 import { NtosWindow } from '../layouts';
 
 export const NtosCyborgRemoteMonitor = (props, context) => {
+  const { data } = useBackend(context);
+  const { PC_device_theme } = data;
+
   return (
-    <NtosWindow width={600} height={800}>
+    <NtosWindow width={600} height={800} theme={PC_device_theme}>
       <NtosWindow.Content>
         <NtosCyborgRemoteMonitorContent />
       </NtosWindow.Content>

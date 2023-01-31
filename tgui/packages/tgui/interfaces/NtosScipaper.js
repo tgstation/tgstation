@@ -4,8 +4,10 @@ import { TableCell, TableRow } from '../components/Table';
 import { NtosWindow } from '../layouts';
 
 export const NtosScipaper = (props, context) => {
+  const { data } = useBackend(context);
+  const { PC_device_theme } = data;
   return (
-    <NtosWindow width={650} height={500}>
+    <NtosWindow width={650} height={500} theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         <NtosScipaperContent />
       </NtosWindow.Content>

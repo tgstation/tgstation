@@ -5,12 +5,12 @@ import { sanitizeText } from '../sanitize';
 
 export const NtosPhysScanner = (props, context) => {
   const { act, data } = useBackend(context);
-  const { set_mode, last_record, available_modes = [] } = data;
+  const { PC_device_theme, last_record } = data;
   const textHtml = {
     __html: sanitizeText(last_record),
   };
   return (
-    <NtosWindow width={600} height={350}>
+    <NtosWindow width={600} height={350} theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         <Section>
           Tap something (right-click) with your tablet to use the physical

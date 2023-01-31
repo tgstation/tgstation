@@ -163,7 +163,6 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	transfer_access = list()
-	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
 	if(!is_valid_z_level(get_turf(computer), get_turf(R)))

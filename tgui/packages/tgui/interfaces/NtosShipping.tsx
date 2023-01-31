@@ -4,6 +4,7 @@ import { Box, Button, LabeledList, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
+  PC_device_theme: string;
   current_user: string;
   card_owner: string;
   paperamt: number;
@@ -11,9 +12,11 @@ type Data = {
   has_id_slot: BooleanLike;
 };
 
-export const NtosShipping = () => {
+export const NtosShipping = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { PC_device_theme } = data;
   return (
-    <NtosWindow width={450} height={350}>
+    <NtosWindow width={450} height={350} theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         <ShippingHub />
         <ShippingOptions />

@@ -4,15 +4,16 @@ import { NtosWindow } from '../layouts';
 import { BooleanLike } from 'common/react';
 
 type Data = {
+  PC_device_theme: string;
   armed: BooleanLike;
 };
 
 export const NtosRevelation = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { armed } = data;
+  const { armed, PC_device_theme } = data;
 
   return (
-    <NtosWindow width={400} height={250} theme="syndicate">
+    <NtosWindow width={400} height={250} theme={PC_device_theme}>
       <NtosWindow.Content>
         <Section>
           <Button.Input

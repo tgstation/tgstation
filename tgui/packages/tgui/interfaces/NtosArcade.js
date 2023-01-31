@@ -5,8 +5,9 @@ import { NtosWindow } from '../layouts';
 
 export const NtosArcade = (props, context) => {
   const { act, data } = useBackend(context);
+  const { PC_device_theme } = data;
   return (
-    <NtosWindow width={450} height={350}>
+    <NtosWindow width={450} height={350} theme={PC_device_theme}>
       <NtosWindow.Content>
         <Section title="Outbomb Cuban Pete Ultra" textAlign="center">
           <Box>
