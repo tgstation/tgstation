@@ -22,6 +22,7 @@
 		TRAIT_NODISMEMBER,
 		TRAIT_NOHUNGER,
 		TRAIT_NOBLOOD,
+		TRAIT_PEPERSPRAY_RESISTANCE,
 	)
 
 	mutantheart = /obj/item/organ/internal/heart/nightmare
