@@ -108,6 +108,13 @@
 	affected_mob.adjustPlasma(20 * REM * delta_time)
 	return ..()
 
+/datum/reagent/toxin/plasma/on_mob_metabolize(mob/living/carbon/affected_mob)
+	if(HAS_TRAIT(affected_mob, TRAIT_PLASMA_LOVER_METABOLISM)) // sometimes mobs can temporarily metabolize plasma (e.g. plasma fixation disease symptom)
+		toxpwr = 0
+
+/datum/reagent/toxin/plasma/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	toxpwr = initial(toxpwr)
+
 /// Handles plasma boiling.
 /datum/reagent/toxin/plasma/proc/on_temp_change(datum/reagents/_holder, old_temp)
 	SIGNAL_HANDLER
@@ -155,6 +162,13 @@
 		var/mob/living/carbon/human/humi = affected_mob
 		humi.adjust_coretemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, affected_mob.get_body_temp_normal())
 	return ..()
+
+/datum/reagent/toxin/hot_ice/on_mob_metabolize(mob/living/carbon/affected_mob)
+	if(HAS_TRAIT(affected_mob, TRAIT_PLASMA_LOVER_METABOLISM))
+		toxpwr = 0
+
+/datum/reagent/toxin/hot_ice/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	toxpwr = initial(toxpwr)
 
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
