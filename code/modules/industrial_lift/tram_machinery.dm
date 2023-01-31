@@ -701,7 +701,7 @@ GLOBAL_LIST_EMPTY(tram_signs)
 		if("close")
 			do_animate("closing")
 			icon_state = base_state
-			sleep(17 DECISECONDS)
+			sleep(19 DECISECONDS)
 			air_update_turf(TRUE, TRUE)
 			operating = FALSE
 			set_density(TRUE)
