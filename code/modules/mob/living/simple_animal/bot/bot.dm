@@ -1063,6 +1063,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 				var/image/prevI = path[prevT]
 				direction = get_dir(prevT, T)
 				if(i > 2)
+					if(!prevI) // no image to put
+						continue
 					var/turf/prevprevT = path[i - 2]
 					var/prevDir = get_dir(prevprevT, prevT)
 					var/mixDir = direction|prevDir
