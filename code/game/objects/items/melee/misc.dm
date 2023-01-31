@@ -162,6 +162,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	throwforce = 10
+	attack_speed = CLICK_CD_RAPID
 	block_chance = 20
 	armour_penetration = 65
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
@@ -172,7 +173,6 @@
 	. = ..()
 	if(!proximity)
 		return
-	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
