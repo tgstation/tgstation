@@ -12,7 +12,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	stat = DEAD
 	density = FALSE
 	see_invisible = SEE_INVISIBLE_OBSERVER
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
@@ -603,14 +603,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Toggle Darkness"
 	set category = "Ghost"
 	switch(lighting_cutoff)
-		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_cutoff = LIGHTING_PLANE_ALPHA_INVISIBLE
+		if (LIGHTING_CUTOFF_VISIBLE)
+			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+		if (LIGHTING_CUTOFF_MEDIUM)
+			lighting_cutoff = LIGHTING_CUTOFF_HIGH
+		if (LIGHTING_CUTOFF_HIGH)
+			lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
 		else
-			lighting_cutoff = LIGHTING_PLANE_ALPHA_VISIBLE
+			lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
 
 	update_sight()
 

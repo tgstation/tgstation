@@ -23,17 +23,17 @@
 
 	var/next_mode_text = ""
 	switch(cast_on.lighting_cutoff)
-		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			cast_on.lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		if (LIGHTING_CUTOFF_VISIBLE)
+			cast_on.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 			next_mode_text = "More"
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			cast_on.lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		if (LIGHTING_CUTOFF_MEDIUM)
+			cast_on.lighting_cutoff = LIGHTING_CUTOFF_HIGH
 			next_mode_text = "Full"
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			cast_on.lighting_cutoff = LIGHTING_PLANE_ALPHA_INVISIBLE
+		if (LIGHTING_CUTOFF_HIGH)
+			cast_on.lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
 			next_mode_text = "OFF"
 		else
-			cast_on.lighting_cutoff = LIGHTING_PLANE_ALPHA_VISIBLE
+			cast_on.lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
 			next_mode_text = "ON"
 
 	cast_on.update_sight()

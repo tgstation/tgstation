@@ -211,7 +211,7 @@
 		user.lighting_cutoff = initial(user.lighting_cutoff)
 	else
 		user.add_sight(SEE_TURFS)
-		user.lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		user.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 
 	user.sync_lighting_plane_cutoff()
 

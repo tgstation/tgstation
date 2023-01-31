@@ -277,7 +277,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	var/sight_flags = SEE_MOBS
-	var/lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	var/lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	var/list/color_cutoffs = list(-5, 10, 10)
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
@@ -796,7 +796,7 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
 	var/datum/action/cooldown/scan/scan_ability

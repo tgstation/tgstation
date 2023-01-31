@@ -46,7 +46,7 @@
 	faction = list(FACTION_NEUTRAL,"silicon","turret")
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	held_items = list(null, null)

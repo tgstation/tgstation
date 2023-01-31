@@ -18,7 +18,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	obj_damage = 40
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	attack_sound = 'sound/weapons/punch3.ogg'
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"

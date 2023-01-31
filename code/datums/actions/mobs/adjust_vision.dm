@@ -9,7 +9,7 @@
 
 /datum/action/adjust_vision/Grant(mob/living/grant_to)
 	. = ..()
-	grant_to.lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	grant_to.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	grant_to.update_sight()
 
 /datum/action/adjust_vision/Remove(mob/living/remove_from)
@@ -25,12 +25,12 @@
 	var/mob/living/living_owner = owner
 	living_owner.sight = initial(living_owner.sight)
 	switch(living_owner.lighting_cutoff)
-		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			living_owner.lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			living_owner.lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			living_owner.lighting_cutoff = LIGHTING_PLANE_ALPHA_INVISIBLE
+		if (LIGHTING_CUTOFF_VISIBLE)
+			living_owner.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+		if (LIGHTING_CUTOFF_MEDIUM)
+			living_owner.lighting_cutoff = LIGHTING_CUTOFF_HIGH
+		if (LIGHTING_CUTOFF_HIGH)
+			living_owner.lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
 		else
-			living_owner.lighting_cutoff = LIGHTING_PLANE_ALPHA_VISIBLE
+			living_owner.lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
 	living_owner.update_sight()

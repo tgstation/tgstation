@@ -413,7 +413,7 @@
 /// Returns this mob's default lighting alpha
 /mob/proc/default_lighting_cutoff()
 	if(client?.combo_hud_enabled && client?.prefs?.toggles & COMBOHUD_LIGHTING)
-		return LIGHTING_PLANE_ALPHA_INVISIBLE
+		return LIGHTING_CUTOFF_FULLBRIGHT
 	return initial(lighting_cutoff)
 
 /// Returns a generic path of the object based on the slot

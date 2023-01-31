@@ -32,7 +32,7 @@
 	/// Percentage of how much rgb to max the lighting plane at
 	/// This lets us brighten it without washing out color
 	/// Scale from 0-100, reset off update_sight()
-	var/lighting_cutoff = LIGHTING_PLANE_ALPHA_VISIBLE
+	var/lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
 	// Individual color max for red, we can use this to color darkness without tinting the light
 	var/lighting_cutoff_red = 0
 	// Individual color max for green, we can use this to color darkness without tinting the light

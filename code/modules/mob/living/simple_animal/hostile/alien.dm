@@ -28,7 +28,7 @@
 	status_flags = CANPUSH
 	minbodytemp = 0
 	unsuitable_heat_damage = 20
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	unique_name = 1
 	gold_core_spawnable = NO_SPAWN
 	death_sound = 'sound/voice/hiss6.ogg'

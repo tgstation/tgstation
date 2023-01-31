@@ -23,7 +23,8 @@
 	sight = SEE_SELF
 	throwforce = 0
 
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	#warn I want to add spook coloring to these guys
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	response_disarm_continuous = "swings through"

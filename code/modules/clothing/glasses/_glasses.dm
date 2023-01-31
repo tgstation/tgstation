@@ -114,7 +114,7 @@
 	inhand_icon_state = "meson"
 	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 	vision_flags = SEE_TURFS
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Mesons get to be lightly green
 	color_cutoffs = list(-10, 0, -10)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
@@ -129,7 +129,7 @@
 	icon_state = "nvgmeson"
 	inhand_icon_state = "nvgmeson"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	// Night vision mesons get the same but more intense
 	color_cutoffs = list(-20, 0, -20)
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -175,7 +175,7 @@
 	desc = "Lets the user see in the dark and recognize chemical compounds at a glance."
 	icon_state = "scihudnight"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	// Real vivid purple
 	color_cutoffs = list(0, -20, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -186,7 +186,7 @@
 	icon_state = "night"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	// Dark green
 	color_cutoffs = list(-20, 0, -20)
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -448,7 +448,7 @@
 	icon_state = "thermal"
 	inhand_icon_state = "glasses"
 	vision_flags = SEE_MOBS
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Going for an orange color here
 	color_cutoffs = list(10, -7, -10)
 	flash_protect = FLASH_PROTECTION_SENSITIVE
@@ -569,7 +569,7 @@
 	inhand_icon_state = "nvgmeson"
 	flags_cover = GLASSESCOVERSEYES
 	flash_protect = FLASH_PROTECTION_WELDER
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	glass_colour_type = FALSE
 	vision_flags = SEE_TURFS
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MADNESS_IMMUNE)

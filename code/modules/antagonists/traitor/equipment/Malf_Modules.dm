@@ -784,7 +784,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	unlock_sound = 'sound/items/rped.ogg'
 
 /datum/ai_module/upgrade/upgrade_cameras/upgrade(mob/living/silicon/ai/AI)
-	AI.lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE //Night-vision, without which X-ray would be very limited in power.
+	AI.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM //Night-vision, without which X-ray would be very limited in power.
 	AI.update_sight()
 
 	var/upgraded_cameras = 0

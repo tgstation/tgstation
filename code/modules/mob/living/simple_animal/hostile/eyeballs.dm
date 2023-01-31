@@ -31,7 +31,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list("spooky")
 	del_on_death = 1
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
 /mob/living/simple_animal/hostile/eyeball/Initialize(mapload)

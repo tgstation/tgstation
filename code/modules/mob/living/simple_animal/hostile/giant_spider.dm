@@ -46,7 +46,8 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	#warn maybe some color for spiders too, look into most of the things with cutoffs yeah?
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	footstep_type = FOOTSTEP_MOB_CLAW
 	///How much of a reagent the mob injects on attack
 	var/poison_per_bite = 0

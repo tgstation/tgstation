@@ -39,7 +39,7 @@
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
 	hud_possible = list(ANTAG_HUD)
 
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	vision_range = 12
 	aggro_vision_range = 12
 

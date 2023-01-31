@@ -46,7 +46,7 @@
 	switch(mode)
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
-			lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 			color_cutoffs = list(-10, 0, -10)
 			change_glass_color(user, /datum/client_colour/glass_colour/yellow)
 

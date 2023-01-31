@@ -75,7 +75,7 @@
 	else
 		eye_color_right = affected_human.eye_color_right
 	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
-		lighting_cutoff = LIGHTING_PLANE_ALPHA_NV_TRAIT
+		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
 		owner.add_fov_trait(type, native_fov)
 
@@ -191,21 +191,21 @@
 	damaged = TRUE
 
 /obj/item/organ/internal/eyes/night_vision
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/night_vision = TRUE
 
 /obj/item/organ/internal/eyes/night_vision/ui_action_click()
 	sight_flags = initial(sight_flags)
 	switch(lighting_cutoff)
-		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_cutoff = LIGHTING_PLANE_ALPHA_INVISIBLE
+		if (LIGHTING_CUTOFF_VISIBLE)
+			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+		if (LIGHTING_CUTOFF_MEDIUM)
+			lighting_cutoff = LIGHTING_CUTOFF_HIGH
+		if (LIGHTING_CUTOFF_HIGH)
+			lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
 		else
-			lighting_cutoff = LIGHTING_PLANE_ALPHA_VISIBLE
+			lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
 	owner.update_sight()
 
 /obj/item/organ/internal/eyes/night_vision/alien
@@ -279,7 +279,7 @@
 	// We're gonna downshift green and blue a bit so darkness looks yellow
 	color_cutoffs = list(10, -7, -10)
 	sight_flags = SEE_MOBS
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/internal/eyes/robotic/flashlight

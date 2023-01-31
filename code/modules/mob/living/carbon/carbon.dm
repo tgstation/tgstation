@@ -585,15 +585,15 @@
 
 
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
 		new_sight |= SEE_TURFS
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
 
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		new_sight |= SEE_MOBS
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS

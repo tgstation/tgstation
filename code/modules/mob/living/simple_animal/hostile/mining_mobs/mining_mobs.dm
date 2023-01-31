@@ -15,7 +15,7 @@
 	combat_mode = TRUE
 	var/throw_message = "bounces off of"
 	var/fromtendril = FALSE
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	mob_size = MOB_SIZE_LARGE
 	var/icon_aggro = null
 

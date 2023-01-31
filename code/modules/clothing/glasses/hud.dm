@@ -69,7 +69,7 @@
 	icon_state = "healthhudnight"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Blue green, dark
 	color_cutoffs = list(-10, 0, 15)
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -107,7 +107,7 @@
 	icon_state = "diagnostichudnight"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Pale yellow
 	color_cutoffs = list(15, 5, -10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -178,7 +178,7 @@
 	desc = "An advanced heads-up display that provides ID data and vision in complete darkness."
 	icon_state = "securityhudnight"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	// Red with a tint of green
 	color_cutoffs = list(20, -10, -10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -240,7 +240,7 @@
 	icon_state = "thermal"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	vision_flags = SEE_MOBS
-	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	color_cutoffs = list(10, -7, -10)
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
