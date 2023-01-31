@@ -57,6 +57,11 @@
 ///Emagged/Syndicate NtOS (SyndiOS) PDA theme
 #define PDA_THEME_SYNDICATE "syndicate"
 
+//Maintenance-loot themes
+#define PDA_THEME_CAT "ntos_cat"
+#define PDA_THEME_LIGHT_MODE "ntos_lightmode"
+#define PDA_THEME_SPOOKY "ntos_eldritch"
+
 ///List of PDA themes that are accessible to everyone by default.
 GLOBAL_LIST_INIT(default_pda_themes, list(
 	PDA_THEME_NTOS,
@@ -64,4 +69,17 @@ GLOBAL_LIST_INIT(default_pda_themes, list(
 	PDA_THEME_RETRO,
 	PDA_THEME_SYNTH,
 	PDA_THEME_TERMINAL,
+))
+
+///List of PDA themes that are accessible to everyone by default.
+GLOBAL_LIST_INIT(pda_name_to_theme, list(
+	PDA_THEME_NTOS = "NtOS",
+	PDA_THEME_SYNDICATE = "Syndicate",
+	PDA_THEME_DARK_MODE = "NtOS Dark mode",
+	PDA_THEME_RETRO = "Retro",
+	PDA_THEME_SYNTH = "Synth",
+	PDA_THEME_TERMINAL = "Terminal",
+	PDA_THEME_CAT = "Cat",
+	PDA_THEME_LIGHT_MODE = "NtOS Light mode",
+	PDA_THEME_SPOOKY = "Eldritch",
 ))

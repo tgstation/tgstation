@@ -9,6 +9,7 @@ type Data = {
 
 type ThemeInfo = {
   theme_name: string;
+  theme_ref: string;
 };
 
 export const NtosThemeConfigure = (props, context) => {
@@ -26,13 +27,13 @@ export const NtosThemeConfigure = (props, context) => {
           {themes.map((theme) => (
             <Flex.Item key={theme} width="100%" grow={1}>
               <Button.Checkbox
-                checked={theme.theme_name === PC_device_theme}
+                checked={theme.theme_ref === PC_device_theme}
                 width="75%"
                 lineHeight="50px"
                 content={theme.theme_name}
                 onClick={() =>
                   act('PRG_change_theme', {
-                    selected_theme: theme.theme_name,
+                    selected_theme: theme.theme_ref,
                   })
                 }
               />

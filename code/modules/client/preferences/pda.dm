@@ -26,10 +26,13 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/choiced/pda_theme/init_possible_values()
-	return GLOB.default_pda_themes
+	var/list/values = list()
+	for(var/option_name in GLOB.default_pda_themes)
+		values += GLOB.pda_name_to_theme[option_name]
+	return values
 
 /datum/preference/choiced/pda_theme/create_default_value()
-	return PDA_THEME_NTOS
+	return GLOB.pda_name_to_theme[PDA_THEME_NTOS]
 
 // Returning false here because this pref is handled a little differently, due to its dependency on the existence of a PDA.
 /datum/preference/choiced/pda_theme/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)

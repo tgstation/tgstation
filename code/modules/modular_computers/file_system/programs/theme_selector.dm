@@ -18,9 +18,9 @@
 	var/list/data = get_header_data()
 
 	if(computer.obj_flags & EMAGGED)
-		data["themes"] += list(list("theme_name" = PDA_THEME_SYNDICATE))
+		data["themes"] += list(list("theme_name" = GLOB.pda_name_to_theme[PDA_THEME_SYNDICATE], "theme_ref" = PDA_THEME_SYNDICATE))
 	for(var/theme_key in GLOB.default_pda_themes + imported_themes)
-		data["themes"] += list(list("theme_name" = theme_key))
+		data["themes"] += list(list("theme_name" = GLOB.pda_name_to_theme[theme_key], "theme_ref" = theme_key))
 
 	return data
 

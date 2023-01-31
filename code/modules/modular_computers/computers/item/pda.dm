@@ -235,8 +235,8 @@
 		update_ringtone(new_ringtone)
 
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
-	if(new_theme && (new_theme != PDA_THEME_NTOS))
-		device_theme = new_theme
+	if(new_theme && (new_theme != GLOB.pda_name_to_theme[PDA_THEME_NTOS]))
+		device_theme = new_theme[GLOB.pda_name_to_theme]
 
 /// A simple proc to set the ringtone from a pda.
 /obj/item/modular_computer/pda/proc/update_ringtone(new_ringtone)

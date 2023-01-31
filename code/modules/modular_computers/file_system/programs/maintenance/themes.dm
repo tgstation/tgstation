@@ -1,7 +1,3 @@
-#define PDA_THEME_CAT "ntos_cat"
-#define PDA_THEME_LIGHT_MODE "ntos_lightmode"
-#define PDA_THEME_SPOOKY "ntos_eldritch"
-
 /datum/computer_file/program/maintenance/theme
 	filename = "theme"
 	filedesc = "Theme holder"
@@ -45,7 +41,3 @@
 
 /datum/computer_file/program/maintenance/theme/spooky
 	theme_type = PDA_THEME_SPOOKY
-
-#undef PDA_THEME_CAT
-#undef PDA_THEME_LIGHT_MODE
-#undef PDA_THEME_SPOOKY
