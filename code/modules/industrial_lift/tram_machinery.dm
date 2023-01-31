@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(tram_signs)
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
 		return FALSE
 	tram_part.tram_travel(to_where)
-	say("Departing for: [to_where.name].")
+	say("The next station is: [to_where.name]")
 	update_appearance()
 	return TRUE
 
