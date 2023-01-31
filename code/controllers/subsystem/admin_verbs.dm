@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	return sorted_stat_data
 
 /proc/cmp_admin_verb_name(list/info_left, list/info_right)
-	return sorttext(info_left[1], info_right[1])
+	return sorttext(info_right[1], info_left[1])
 
 /datum/controller/subsystem/admin_verbs/proc/populate_context_map(list/context_map)
 	return
