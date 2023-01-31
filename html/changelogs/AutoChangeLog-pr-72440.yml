@@ -1,0 +1,7 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "You can now revive 'basic mobs' with a Lazarus Injector, such as dogs, cows, axolotls, or carp."
+  - bugfix: "The same category of mobs can also now be effected by the Runic Golem Dominate spell."
+  - bugfix: "Basic Mobs will switch target if they can no longer attack their current target; meaning that if you become a Bileworm's friend it will stop attacking you."
+  - balance: "Mobs injected with the Lazarus Injector while it is EMPed will no longer attack other mobs revived by EMPed Lazarus Injectors."
