@@ -47,7 +47,7 @@
 	var/datum/proximity_monitor/advanced/quirk_posters/mood_buff
 
 /obj/structure/sign/poster/quirk/on_placed_poster(mob/user)
-	mood_buff = new(src, 7, TRUE, quirk_poster_department)
+	mood_buff = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE, department = quirk_poster_department)
 	return ..()
 
 /obj/structure/sign/poster/quirk/attackby(obj/item/I, mob/user, params)
@@ -60,10 +60,10 @@
 	return ..()
 
 /obj/structure/sign/poster/quirk/apply_holiday()
-	var/obj/structure/sign/poster/traitor/holi_data = /obj/structure/sign/poster/quirk/festive
-	name = initial(holi_data.name)
-	desc = initial(holi_data.desc)
-	icon_state = initial(holi_data.icon_state)
+	var/obj/structure/sign/poster/traitor/holiday_data = /obj/structure/sign/poster/quirk/festive
+	name = initial(holiday_data.name)
+	desc = initial(holiday_data.desc)
+	icon_state = initial(holiday_data.icon_state)
 
 /*
  * Applies a department-based mood if you can see the parent.
