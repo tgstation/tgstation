@@ -27688,9 +27688,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/obj/machinery/barsign{
-	pixel_y = 32
-	},
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "iyd" = (
@@ -37334,9 +37332,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/command/heads_quarters/captain)
 "lrL" = (
-/obj/machinery/barsign{
-	pixel_y = -32
-	},
+/obj/machinery/barsign/all_access/directional/south,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "lrN" = (
