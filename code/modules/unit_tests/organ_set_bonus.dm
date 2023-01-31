@@ -1,5 +1,7 @@
 /// Tests the "organ set bonus" Elements and Status Effects, which are for the DNA Infuser.
 /// Ensures the developers properly change IDs to be unique.
+/datum/unit_test/organ_set_bonus_id
+
 /datum/unit_test/organ_set_bonus_id/Run()
 	var/list/bonus_effects = typesof(/datum/status_effect/organ_set_bonus)
 	var/list/existing_ids = list()
@@ -19,6 +21,8 @@
 
 /// Tests the "organ set bonus" Elements and Status Effects, which are for the DNA Infuser.
 /// Ensures that each Element and Status Effect gets properly added/removed from mobs.
+/datum/unit_test/organ_set_bonus_sanity
+
 /datum/unit_test/organ_set_bonus_sanity/Run()
 	// Fetch the globally instantiated DNA Infuser entries.
 	for(var/datum/infuser_entry/infuser_entry as anything in GLOB.infuser_entries)
