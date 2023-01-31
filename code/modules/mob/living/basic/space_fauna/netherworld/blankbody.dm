@@ -23,6 +23,8 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 	ai_controller = /datum/ai_controller/basic_controller/blankbody
+	/// Used for mobs that get spawned in a spawner appearently.
+	var/datum/component/spawner/nest
 
 /mob/living/basic/netherworld/Initialize(mapload)
 	. = ..()
@@ -68,3 +70,9 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
 	)
+
+/mob/living/basic/netherworld/Destroy()
+	if(nest)
+		nest.spawned_mobs -= src
+		nest = null
+	return ..()
