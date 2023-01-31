@@ -14,7 +14,6 @@
 			existing_ids += effect_id
 
 /datum/unit_test/organ_set_bonus_sanity/proc/check_status_type(mob/living/carbon/human/lab_rat, datum/status_effect/status_type)
-	var/datum/status_effect/organ_set_bonus/added_status
 	for(var/datum/status_effect/present_effect as anything in lab_rat.status_effects)
 		if(istype(present_effect, status_type))
 			return present_effect

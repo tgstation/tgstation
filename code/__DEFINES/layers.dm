@@ -47,9 +47,15 @@
 #define O_LIGHTING_VISUAL_PLANE 11
 #define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
 
+#define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
-#define EMISSIVE_PLANE 14
+#define EMISSIVE_RENDER_PLATE 14
 #define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
+// Ensures all the render targets that point at the emissive plate layer correctly
+#define EMISSIVE_Z_BELOW_LAYER 1
+#define EMISSIVE_FLOOR_LAYER 2
+#define EMISSIVE_SPACE_LAYER 3
+#define EMISSIVE_WALL_LAYER 4
 
 /// Masks the emissive plane
 #define EMISSIVE_MASK_PLANE 15
@@ -210,11 +216,18 @@
 
 //---------- LIGHTING -------------
 
-#define LIGHTING_PRIMARY_LAYER 15	//The layer for the main lights of the station
-#define LIGHTING_PRIMARY_DIMMER_LAYER 15.1	//The layer that dims the main lights of the station
-#define LIGHTING_SECONDARY_LAYER 16	//The colourful, usually small lights that go on top
-
-
+// LIGHTING_PLANE layers
+// The layer of turf underlays starts at 0.01 and goes up by 0.01
+// Based off the z level. No I do not remember why, should check that
+/// Typically overlays, that "hide" portions of the turf underlay layer
+/// I'm allotting 100 z levels before this breaks. That'll never happen
+/// --Lemon
+#define LIGHTING_MASK_LAYER 10
+/// Misc things that draw on the turf lighting plane
+/// Space, solar beams, etc
+#define LIGHTING_PRIMARY_LAYER 15
+/// Stuff that needs to draw above everything else on this plane
+#define LIGHTING_ABOVE_ALL 20
 
 
 //---------- EMISSIVES -------------
