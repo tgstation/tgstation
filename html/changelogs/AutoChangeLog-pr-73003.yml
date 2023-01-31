@@ -1,0 +1,6 @@
+author: "A.C.M.O."
+delete-after: True
+changes:
+  - bugfix: "Fully fixed the DNA Infuser, which will now infuse organs as expected."
+  - bugfix: "Fixed flyperson species transformation and organ set bonus, which was throwing a runtime."
+  - bugfix: "Fixed many typos in organ-related source code."

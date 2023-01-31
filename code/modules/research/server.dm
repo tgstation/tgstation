@@ -9,7 +9,7 @@
 /// The ninja has blown the HDD up.
 #define HDD_OVERLOADED 4
 
-#define SERVER_NOMINAL_TEXT "<font color='lightgreen'>Nominal</font>"
+#define SERVER_NOMINAL_TEXT "Nominal"
 
 /obj/machinery/rnd/server
 	name = "\improper R&D Server"
@@ -27,7 +27,7 @@
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
-	if(CONFIG_GET(flag/no_default_techweb_link))
+	if(CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = new /datum/techweb
 	stored_research.techweb_servers |= src
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
@@ -87,15 +87,15 @@
 /// Gets status text based on this server's status for the computer.
 /obj/machinery/rnd/server/proc/get_status_text()
 	if(machine_stat & EMPED)
-		return "<font color=red>O&F@I*$ - R3*&O$T R@U!R%D</font>"
+		return "O&F@I*$ - R3*&O$T R@U!R%D"
 	else if(machine_stat & NOPOWER)
-		return "<font color=red>Offline - Server Unpowered</font>"
+		return "Offline - Server Unpowered"
 	else if(research_disabled)
-		return "<font color=red>Offline - Server Control Disabled</font>"
+		return "Offline - Server Control Disabled"
 	else if(!working)
 		// If, for some reason, working is FALSE even though we're not emp'd or powerless,
 		// We need something to update our working state - such as rebooting the server
-		return "<font color=red>Offline - Reboot Required</font>"
+		return "Offline - Reboot Required"
 
 	return SERVER_NOMINAL_TEXT
 
@@ -105,86 +105,6 @@
 	tool.buffer = stored_research
 	to_chat(user, span_notice("Stored [src]'s techweb information in [tool]."))
 	return TRUE
-
-/obj/machinery/computer/rdservercontrol
-	name = "R&D Server Controller"
-	desc = "Used to manage access to research and manufacturing databases."
-	icon_screen = "rdcomp"
-	icon_keyboard = "rd_key"
-	circuit = /obj/item/circuitboard/computer/rdservercontrol
-	req_access = list(ACCESS_RD)
-	var/list/servers = list()
-	///Connected techweb node the server is connected to.
-	var/datum/techweb/stored_research
-
-/obj/machinery/computer/rdservercontrol/Initialize(mapload, obj/item/circuitboard/C)
-	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link))
-		stored_research = SSresearch.science_tech
-
-/obj/machinery/computer/rdservercontrol/Topic(href, href_list)
-	if(..())
-		return
-
-	add_fingerprint(usr)
-	if (href_list["toggle"])
-		if(allowed(usr) || obj_flags & EMAGGED)
-			var/obj/machinery/rnd/server/S = locate(href_list["toggle"]) in stored_research.techweb_servers
-			S.toggle_disable(usr)
-		else
-			to_chat(usr, span_danger("Access Denied."))
-
-	updateUsrDialog()
-	return
-
-/obj/machinery/computer/rdservercontrol/ui_interact(mob/user)
-	. = ..()
-	var/list/dat = list()
-
-	dat += "<b>Connected Servers:</b>"
-	dat += "<table><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Status</b></td><td style='width:25%'><b>Control</b></td>"
-	for(var/obj/machinery/rnd/server/server as anything in stored_research.techweb_servers)
-		var/server_info = ""
-
-		var/status_text = server.get_status_text()
-		var/disable_text = server.research_disabled ? "<font color=red>Disabled</font>" : "<font color=lightgreen>Online</font>"
-
-		server_info += "<tr><td style='width:25%'>[server.name]</td>"
-		server_info += "<td style='width:25%'>[status_text]</td>"
-		server_info += "<td style='width:25%'><a href='?src=[REF(src)];toggle=[REF(server)]'>([disable_text])</a></td><br>"
-
-		dat += server_info
-
-	dat += "</table></br>"
-
-	dat += "<b>Research Log</b></br>"
-	if(stored_research && length(stored_research.research_logs))
-		dat += "<table BORDER=\"1\">"
-		dat += "<tr><td><b>Entry</b></td><td><b>Research Name</b></td><td><b>Cost</b></td><td><b>Researcher Name</b></td><td><b>Console Location</b></td></tr>"
-		for(var/i = stored_research.research_logs.len, i>0, i--)
-			dat += "<tr><td>[i]</td>"
-			for(var/j in stored_research.research_logs[i])
-				dat += "<td>[j]</td>"
-			dat +="</tr>"
-		dat += "</table>"
-
-	else
-		dat += "</br>No history found."
-
-	var/datum/browser/popup = new(user, "server_com", src.name, 900, 620)
-	popup.set_content(dat.Join())
-	popup.open()
-
-/obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)
-	. = ..()
-	src.updateUsrDialog()
-
-/obj/machinery/computer/rdservercontrol/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You disable the security protocols."))
 
 /// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
 /obj/machinery/rnd/server/master

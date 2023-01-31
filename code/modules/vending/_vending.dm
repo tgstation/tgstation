@@ -1066,7 +1066,7 @@
 			speak("You are not of legal age to purchase [R.name].")
 			if(!(usr in GLOB.narcd_underages))
 				if (isnull(sec_radio))
-					sec_radio = new
+					sec_radio = new (src)
 					sec_radio.set_listening(FALSE)
 				sec_radio.set_frequency(FREQ_SECURITY)
 				sec_radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [usr] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)

@@ -1,0 +1,5 @@
+author: "itseasytosee"
+delete-after: True
+changes:
+  - code_imp: "Greater support for variability in weapon attack speed"
+  - admin: "Admins are now able to grief you by hitting you with a toolbox 10 times in one second."
