@@ -383,7 +383,7 @@
 
 /obj/machinery/disposal/bin/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && AM.CanEnterDisposals())
-		if(prob(75))
+		if(HAS_TRAIT(throwingdatum.thrower, TRAIT_THROWINGARM) || prob(75))
 			AM.forceMove(src)
 			visible_message(span_notice("[AM] lands in [src]."))
 			update_appearance()
