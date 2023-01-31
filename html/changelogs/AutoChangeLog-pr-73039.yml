@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "You now should no longer be able to accidentally offer someone your \"off-hand\" item, since it's an abstract thing that shouldn't be considered a physical entity."
