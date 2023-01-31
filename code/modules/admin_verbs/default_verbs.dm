@@ -87,6 +87,7 @@ ADMIN_VERB_DEFAULT(game, requests_manager, "Open the request manager panel to vi
 	GLOB.requests.ui_interact(usr)
 
 ADMIN_VERB_DEFAULT(admin, admin_say, "Speak to your fellow jannies", message as text)
+	message ||= tgui_input_text(usr, "Message", "Admin Say")
 	message = emoji_parse(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
 		return
