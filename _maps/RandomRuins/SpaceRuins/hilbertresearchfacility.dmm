@@ -223,9 +223,7 @@
 "gv" = (
 /obj/structure/fluff/tram_rail,
 /obj/machinery/door/window/tram/hilbert,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
+/obj/structure/industrial_lift/tram/purple,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "gx" = (
@@ -361,9 +359,7 @@
 	bulb_colour = "#deefff";
 	bulb_power = 0.6
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
+/obj/structure/industrial_lift/tram/purple,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "iY" = (
@@ -429,9 +425,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
+/obj/structure/industrial_lift/tram/purple,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
 	},
@@ -778,9 +772,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "uc" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
+/obj/structure/industrial_lift/tram/purple,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
@@ -1513,9 +1505,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
+/obj/structure/industrial_lift/tram/purple,
 /obj/effect/landmark/lift_id/hilbert,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1821,9 +1811,7 @@
 /obj/machinery/door/window/tram/hilbert{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
+/obj/structure/industrial_lift/tram/purple,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Px" = (
@@ -1899,9 +1887,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
+/obj/structure/industrial_lift/tram/purple,
 /obj/machinery/computer/tram_controls{
 	dir = 8;
 	specific_lift_id = "tram_hilbert";
@@ -1973,9 +1959,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
+/obj/structure/industrial_lift/tram/purple,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
@@ -2260,9 +2244,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WQ" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
+/obj/structure/industrial_lift/tram/purple,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
 	},
