@@ -98,33 +98,38 @@
 // TODO: In the future, this should have more logic:
 // - Replace non-mutant organs before mutant ones.
 /obj/machinery/dna_infuser/proc/infuse_organ(mob/living/carbon/human/target)
-	if(!ishuman(target) || !infusing_into)
+	if(!ishuman(target))
 		return FALSE
 	var/obj/item/organ/new_organ = pick_organ(target)
 	if(!new_organ)
 		return FALSE
+	// Valid organ successfully picked.
+	new_organ = new new_organ()
 	if(!istype(new_organ, /obj/item/organ/internal/brain))
 		// Organ ISN'T brain, insert normally.
 		new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
-	else
-		// Organ IS brain, insert via special logic:
-		var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-		// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
-		old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
-		qdel(old_brain)
-		var/obj/item/organ/internal/brain/new_brain = new_organ
-		new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+		return TRUE
+	// Organ IS brain, insert via special logic:
+	var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
+	old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
+	qdel(old_brain)
+	var/obj/item/organ/internal/brain/new_brain = new_organ
+	new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
 	return TRUE
 
 /// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
-/// Tries to return a valid mutant organ if all of the following criteria are true:
+/// Tries to return a typepath of a valid mutant organ if all of the following criteria are true:
 /// 1. Target must have a pre-existing organ in the same organ slot as the new organ;
 ///   - or the new organ must be external.
 /// 2. Target's pre-existing organ must be organic / not robotic.
 /// 3. Target must not have the same/identical organ.
 /obj/machinery/dna_infuser/proc/pick_organ(mob/living/carbon/human/target)
+	if(!infusing_into)
+		return FALSE
 	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
-	for(var/obj/item/organ/new_organ in infusing_into.output_organs)
+	// Remove organ typepaths from the list if they're incompatible with target.
+	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
 		var/obj/item/organ/old_organ = target.getorganslot(initial(new_organ.slot))
 		if(old_organ)
 			if((old_organ.type != new_organ) && (old_organ.status == ORGAN_ORGANIC))
@@ -220,13 +225,13 @@
 
 /// Verify that the occupant/target is organic, and has mutable DNA.
 /obj/machinery/dna_infuser/proc/is_valid_occupant(mob/living/carbon/human/human_target, mob/user)
-	// Invalid: Occupant isn't Human, isn't organic, lacks DNA / has TRAIT_GENELESS.
-	if(!ishuman(human_target) || !(human_target.mob_biotypes & MOB_ORGANIC) || !human_target.has_dna() || HAS_TRAIT(human_target, TRAIT_GENELESS))
-		balloon_alert(user, "dna is missing!")
-		return FALSE
 	// Invalid: DNA is too damaged to mutate anymore / has TRAIT_BADDNA.
 	if(HAS_TRAIT(human_target, TRAIT_BADDNA))
 		balloon_alert(user, "dna is corrupted!")
+		return FALSE
+	// Invalid: Occupant isn't Human, isn't organic, lacks DNA / has TRAIT_GENELESS.
+	if(!ishuman(human_target) || !human_target.can_mutate())
+		balloon_alert(user, "dna is missing!")
 		return FALSE
 	// Valid: Occupant is an organic Human who has undamaged and mutable DNA.
 	return TRUE
