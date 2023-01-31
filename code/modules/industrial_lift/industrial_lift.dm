@@ -816,6 +816,9 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/tram/white
 	icon_state = "titanium_white"
 
+/obj/structure/industrial_lift/tram/purple
+	icon_state = "titanium_purple"
+
 /obj/structure/industrial_lift/tram/subfloor
 	name = "tram"
 	desc = "A tram for tramversing the station."

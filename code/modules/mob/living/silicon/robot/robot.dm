@@ -101,6 +101,13 @@
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
+/mob/living/silicon/robot/set_suicide(suicide_state)
+	. = ..()
+	if(mmi)
+		if(mmi.brain)
+			mmi.brain.suicided = suicide_state
+		if(mmi.brainmob)
+			mmi.brainmob.suiciding = suicide_state
 
 /**
  * Sets the tablet theme and icon
