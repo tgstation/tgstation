@@ -19,8 +19,6 @@
 	if(!.)
 		return
 
-	owner.internal_organs |= src
-	owner.internal_organs_slot[slot] = src
 	// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order
 	// Otherwise life processing breaks down
 	sortTim(owner.internal_organs_slot, GLOBAL_PROC_REF(cmp_organ_slot_asc))
@@ -31,9 +29,6 @@
 	. = ..()
 
 	if(organ_owner)
-		organ_owner.internal_organs -= src
-		if(organ_owner.internal_organs_slot[slot] == src)
-			organ_owner.internal_organs_slot.Remove(slot)
 		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
 			if(organ_owner.stat != DEAD)
 				organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)

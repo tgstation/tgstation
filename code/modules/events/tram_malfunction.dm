@@ -8,6 +8,7 @@
 	max_occurrences = 4
 	earliest_start = 15 MINUTES
 	category = EVENT_CATEGORY_ENGINEERING
+	description = "Tram crossing signals malfunction, tram collision damage is increased."
 
 //Check if there's a tram we can cause to malfunction.
 /datum/round_event_control/tram_malfunction/can_spawn_event(players_amt)
@@ -32,7 +33,7 @@
 	end_when = rand(TRAM_MALFUNCTION_TIME_LOWER, TRAM_MALFUNCTION_TIME_UPPER)
 
 /datum/round_event/tram_malfunction/announce()
-	priority_announce("Our automated monitoring indicates the software controlling the tram is malfunctioning. Please take care as we diagnose and resolve the issue.", "CentCom Engineering Division")
+	priority_announce("Our automated control system has lost contact with the tram's on board computer. Please take extra care while we diagnose and resolve the issue. Signals and emergency braking may not be available during this time.", "CentCom Engineering Division")
 
 /datum/round_event/tram_malfunction/start()
 	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)

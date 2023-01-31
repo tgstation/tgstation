@@ -1,5 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { createSearch } from 'common/string';
+import { Box, Button, Dimmer, Icon, Section, Stack, Input } from '../components';
 import { NtosWindow } from '../layouts';
 
 const NoIDDimmer = (props, context) => {
@@ -50,6 +51,13 @@ const ContactsScreen = (props, context) => {
     virus_attach,
     sending_virus,
   } = data;
+  const [searchUser, setSearchUser] = useLocalState(context, 'searchUser', '');
+  const search = createSearch(
+    searchUser,
+    (messengers) => messengers.name + messengers.job
+  );
+  let users =
+    searchUser.length > 0 ? data.messengers.filter(search) : messengers;
   return (
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
@@ -124,12 +132,21 @@ const ContactsScreen = (props, context) => {
           <Section fill textAlign="center">
             <Icon name="address-card" mr={1} />
             Detected Messengers
+            <Input
+              width="220px"
+              placeholder="Search by name or job..."
+              value={searchUser}
+              onInput={(e, value) => setSearchUser(value)}
+              mx={1}
+              ml={27}
+            />
           </Section>
         </Stack>
         <Stack vertical mt={1}>
           <Section fill>
             <Stack vertical>
-              {messengers.map((messenger) => (
+              {users.length === 0 && 'No users found'}
+              {users.map((messenger) => (
                 <Button
                   key={messenger.ref}
                   fluid

@@ -23,7 +23,7 @@
 
 /datum/computer_file/program/science/on_start(mob/living/user)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link))
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = SSresearch.science_tech
 
 /datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
@@ -204,21 +204,26 @@
 			computer.say("Successfully researched [tech_node.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
-				logname = "AI: [user.name]"
+				logname = "AI [user.name]"
 			if(iscyborg(user))
-				logname = "Cyborg: [user.name]"
+				logname = "CYBORG [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))
-					logname = "User: [idcard.registered_name]"
+					logname = "[idcard.registered_name]"
 			if(ishuman(user))
 				var/mob/living/carbon/human/human_user = user
 				var/obj/item/worn = human_user.wear_id
 				if(istype(worn))
 					var/obj/item/card/id/id_card_of_human_user = worn.GetID()
 					if(istype(id_card_of_human_user))
-						logname = "User: [id_card_of_human_user.registered_name]"
-			stored_research.research_logs += list(list(tech_node.display_name, price["General Research"], logname, "[get_area(computer)] ([user.x],[user.y],[user.z])"))
+						logname = "[id_card_of_human_user.registered_name]"
+			stored_research.research_logs += list(list(
+				"node_name" = tech_node.display_name,
+				"node_cost" = price["General Research"],
+				"node_researcher" = logname,
+				"node_research_location" = "[get_area(computer)] ([user.x],[user.y],[user.z])",
+			))
 			return TRUE
 		else
 			computer.say("Failed to research node: Internal database error!")
