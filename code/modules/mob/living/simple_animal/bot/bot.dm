@@ -1062,21 +1062,20 @@ Pass a positive integer as an argument to override a bot's default speed.
 				var/turf/prevT = path[i - 1]
 				var/image/prevI = path[prevT]
 				direction = get_dir(prevT, T)
-				if(i > 2)
-					if(prevI) // make sure we actually have an image to manipulate
-						var/turf/prevprevT = path[i - 2]
-						var/prevDir = get_dir(prevprevT, prevT)
-						var/mixDir = direction|prevDir
-						if(ISDIAGONALDIR(mixDir))
-							prevI.dir = mixDir
-							if(prevDir & (NORTH|SOUTH))
-								var/matrix/ntransform = matrix()
-								ntransform.Turn(90)
-								if((mixDir == NORTHWEST) || (mixDir == SOUTHEAST))
-									ntransform.Scale(-1, 1)
-								else
-									ntransform.Scale(1, -1)
-								prevI.transform = ntransform
+				if(i > 2 && prevI) // make sure we actually have an image to manipulate at index > 2
+					var/turf/prevprevT = path[i - 2]
+					var/prevDir = get_dir(prevprevT, prevT)
+					var/mixDir = direction|prevDir
+					if(ISDIAGONALDIR(mixDir))
+						prevI.dir = mixDir
+						if(prevDir & (NORTH|SOUTH))
+							var/matrix/ntransform = matrix()
+							ntransform.Turn(90)
+							if((mixDir == NORTHWEST) || (mixDir == SOUTHEAST))
+								ntransform.Scale(-1, 1)
+							else
+								ntransform.Scale(1, -1)
+							prevI.transform = ntransform
 
 			SET_PLANE(path_image, GAME_PLANE, T)
 			path_image.dir = direction
