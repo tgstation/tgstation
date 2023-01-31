@@ -564,6 +564,7 @@
 		old_module.on_suit_deactivation(deleting = deleting)
 		if(old_module.active)
 			old_module.on_deactivation(display_message = !deleting, deleting = deleting)
+	old_module.UnregisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS)
 	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null
