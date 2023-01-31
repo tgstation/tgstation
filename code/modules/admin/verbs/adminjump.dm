@@ -31,6 +31,7 @@ ADMIN_VERB(game, jump_to_coordinate, "", NONE, x as num, y as num, z as num)
 		return
 
 	var/turf/destination = locate(x, y, z)
+	usr.forceMove(destination)
 	log_admin("[key_name(usr)] jumped to [AREACOORD(destination)]")
 	message_admins("[key_name_admin(usr)] jumped to [AREACOORD(destination)]")
 

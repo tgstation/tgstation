@@ -177,7 +177,7 @@ ADMIN_CONTEXT_ENTRY(context_select_equipment, "Select Equipment", R_ADMIN, mob/t
 			user.admin_apply_outfit(target_mob, new_outfit)
 
 		if("customoutfit")
-			user.outfit_manager()
+			SSadmin_verbs.dynamic_invoke_admin_verb(user, /mob/admin_module_holder/debug/outfit_manager)
 
 		if("togglefavorite")
 			var/datum/outfit/outfit_path = resolve_outfit(params["path"])

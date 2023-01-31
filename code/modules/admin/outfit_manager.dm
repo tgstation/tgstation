@@ -1,6 +1,4 @@
 ADMIN_VERB(debug, outfit_manager, "", R_DEBUG)
-
-/client/proc/outfit_manager()
 	var/datum/outfit_manager/ui = new(usr)
 	ui.ui_interact(usr)
 
