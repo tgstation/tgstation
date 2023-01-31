@@ -69,6 +69,7 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 
 	CELL_LINE_TABLE_GLUTTON = list(/datum/micro_organism/cell_line/clown/glutton = 1),
 	CELL_LINE_TABLE_FROG = list(/datum/micro_organism/cell_line/frog = 1),
+	CELL_LINE_TABLE_AXOLOTL = list(/datum/micro_organism/cell_line/axolotl = 1),
 	CELL_LINE_TABLE_WALKING_MUSHROOM = list(/datum/micro_organism/cell_line/walking_mushroom = 1),
 	CELL_LINE_TABLE_QUEEN_BEE = list(/datum/micro_organism/cell_line/queen_bee = 1),
 	CELL_LINE_TABLE_LEAPER = list(/datum/micro_organism/cell_line/leaper = 1),
@@ -80,6 +81,7 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/queen_bee = 1,
 		/datum/micro_organism/cell_line/snake = 1,
 		/datum/micro_organism/cell_line/walking_mushroom = 2,
+		/datum/micro_organism/cell_line/axolotl = 1
 	)
 ))
 
