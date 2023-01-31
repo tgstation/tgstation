@@ -221,7 +221,7 @@
 	blend_mode = BLEND_MULTIPLY
 	render_relay_planes = list(RENDER_PLANE_GAME)
 
-/atom/movable/screen/plane_master/rendering_plate/mask_emissive/show_to(mob/mymob)
+/atom/movable/screen/plane_master/rendering_plate/light_mask/show_to(mob/mymob)
 	. = ..()
 	if(!.)
 		return
@@ -229,7 +229,7 @@
 	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, .proc/handle_sight)
 	handle_sight(mymob, mymob.sight, NONE)
 
-/atom/movable/screen/plane_master/rendering_plate/mask_emissive/hide_from(mob/oldmob)
+/atom/movable/screen/plane_master/rendering_plate/light_mask/hide_from(mob/oldmob)
 	. = ..()
 	var/atom/movable/screen/plane_master/overlay_lights = home.get_plane(GET_NEW_PLANE(O_LIGHTING_VISUAL_PLANE, offset))
 	overlay_lights.remove_filter("lighting_mask")
@@ -238,7 +238,7 @@
 	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, offset))
 	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE, .proc/handle_sight)
 
-/atom/movable/screen/plane_master/rendering_plate/mask_emissive/proc/handle_sight(datum/source, new_sight, old_sight)
+/atom/movable/screen/plane_master/rendering_plate/light_mask/proc/handle_sight(datum/source, new_sight, old_sight)
 	// If we can see something that shows "through" blackness, and we can't see turfs, disable our draw to the game plane
 	// And instead mask JUST the overlay lighting plane, since that will look fuckin wrong
 	var/atom/movable/screen/plane_master/overlay_lights = home.get_plane(GET_NEW_PLANE(O_LIGHTING_VISUAL_PLANE, offset))
