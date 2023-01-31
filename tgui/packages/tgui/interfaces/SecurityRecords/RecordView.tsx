@@ -43,6 +43,8 @@ const RecordInfo = (props, context) => {
   const { available_statuses } = data;
   const [open, setOpen] = useLocalState<boolean>(context, 'printOpen', false);
 
+  const { min_age, max_age } = data;
+
   const {
     age,
     crew_ref,
@@ -128,8 +130,8 @@ const RecordInfo = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Age">
               <RestrictedInput
-                minValue={18}
-                maxValue={100}
+                minValue={min_age}
+                maxValue={max_age}
                 onEnter={(event, value) =>
                   act('edit_field', {
                     crew_ref: crew_ref,

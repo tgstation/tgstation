@@ -76,6 +76,12 @@
 
 	return data
 
+/obj/machinery/computer/med_data/ui_static_data(mob/user)
+	var/list/data = list()
+	data["min_age"] = AGE_MIN
+	data["max_age"] = AGE_MAX
+	return data
+
 /obj/machinery/computer/med_data/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
