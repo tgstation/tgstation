@@ -4,6 +4,7 @@
 	name = "placeholder quirk poster"
 	desc = "Uh oh! You shouldn't have this!"
 	icon_state = "rolled_poster_legit"
+	/// People from the selected department will gain a mood buff. If no department is specified applies to the entire crew.
 	var/quirk_poster_department = NONE
 
 /obj/item/poster/quirk/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
@@ -78,6 +79,7 @@
  * - Applies a mood buff to people who are in visible range of the item.
  */
 /datum/proximity_monitor/advanced/quirk_posters
+	/// Defines the specific department that the poster will apply its mood buff to, if the poster has a quirk_poster_department.
 	var/department
 
 /datum/proximity_monitor/advanced/quirk_posters/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, department)
