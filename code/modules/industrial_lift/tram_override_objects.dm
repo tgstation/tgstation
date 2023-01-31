@@ -27,6 +27,11 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
+/obj/structure/industrial_lift/tram/subfloor/window
+	name = "tram"
+	desc = "A tram for tramversing the station."
+	icon_state = "tram_subfloor_window"
+
 /obj/structure/chair/sofa/bench/tram
 	greyscale_colors = "#00CCFF"
 
