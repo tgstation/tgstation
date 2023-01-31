@@ -5,6 +5,8 @@ export type SecurityRecordsData = {
   authenticated: BooleanLike;
   available_statuses: string[];
   records: SecurityRecord[];
+  min_age: number;
+  max_age: number;
 };
 
 export type SecurityRecord = {
