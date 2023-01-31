@@ -48,6 +48,8 @@
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	ai_controller = /datum/ai_controller/basic_controller/statue
+	/// Loot this mob drops on death.
+	var/loot
 
 	var/mob/living/creator = null
 
@@ -55,8 +57,10 @@
 
 /mob/living/basic/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
-	// Give spells
+	if(LAZYLEN(loot))
+		AddElement(/datum/element/death_drops, loot)
 
+	// Give spells
 	var/datum/action/cooldown/spell/aoe/flicker_lights/flicker = new(src)
 	flicker.Grant(src)
 	var/datum/action/cooldown/spell/aoe/blindness/blind = new(src)
