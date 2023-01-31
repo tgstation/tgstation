@@ -1137,7 +1137,7 @@
 	if(!hud_used)
 		return
 	for(var/atom/movable/screen/plane_master/rendering_plate/lighting/light as anything in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
-		light.set_light_cutoff(lighting_cutoff, lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
+		light.set_light_cutoff(lighting_cutoff, lighting_color_cutoffs)
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()

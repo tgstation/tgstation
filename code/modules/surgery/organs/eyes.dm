@@ -31,7 +31,9 @@
 	/// What level of invisibility these eyes can see
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	/// How much darkness to cut out of your view (basically, night vision)
-	var/lighting_cutoff
+	var/lighting_cutoff = null
+	/// List of color cutoffs from eyes, or null if not applicable
+	var/list/color_cutoffs = null
 
 	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
 	var/eye_color_right = "" //set to a hex code to override a mob's right eye color
@@ -274,6 +276,8 @@
 	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
 	eye_color_left = "FC0"
 	eye_color_right = "FC0"
+	// We're gonna downshift green and blue a bit so darkness looks yellow
+	color_cutoffs = list(10, -7, -10)
 	sight_flags = SEE_MOBS
 	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = FLASH_PROTECTION_SENSITIVE

@@ -30,9 +30,12 @@
 	var/shift_to_open_context_menu = TRUE
 
 	var/lighting_cutoff = LIGHTING_PLANE_ALPHA_VISIBLE
+	/// Lighting color cutoffs that come from the mob
 	var/lighting_cutoff_red = 0
 	var/lighting_cutoff_green = 0
 	var/lighting_cutoff_blue = 0
+	/// Either a list of red, green and blue cutoffs, or null
+	var/list/lighting_color_cutoffs = null
 	var/datum/mind/mind
 	var/static/next_mob_id = 0
 

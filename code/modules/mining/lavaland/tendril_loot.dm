@@ -279,6 +279,7 @@
 	var/sight_flags = SEE_MOBS
 #warn maybe make this... blue? purple? play with it
 	var/lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	var/list/color_cutoffs = list(-5, 10, 10)
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
@@ -299,6 +300,8 @@
 	user.add_sight(sight_flags)
 	if(!isnull(lighting_cutoff))
 		user.lighting_cutoff = max(user.lighting_cutoff, lighting_cutoff)
+	if(!isnull(color_cutoffs))
+		user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, color_cutoffs)
 
 //Red/Blue Cubes
 /obj/item/warp_cube

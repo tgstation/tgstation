@@ -186,9 +186,8 @@
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/set_light_cutoff(light_cutoff, list/color_cutoffs)
 	var/ratio = light_cutoff/100
+	#warn needs some sort of comparison to avoid constant unneeded work
 	remove_filter(list("light_cutdown", "light_cutup"))
-	if(!ratio)
-		return
 
 	if(!color_cutoffs)
 		color_cutoffs = list(0, 0, 0)

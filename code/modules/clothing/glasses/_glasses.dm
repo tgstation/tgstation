@@ -16,10 +16,17 @@
 	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
 	/// Override to allow glasses to set higher than normal see_invis
 	var/invis_override = 0
-#warn expand this to support tinting for the darkness
-	var/lighting_cutoff
+#warn autodoc
+	var/lighting_cutoff = null
+	var/list/color_cutoffs = null
 	/// The current hud icons
 	var/list/icon/current = list()
+// Potentially replace glass_color_type with a setup that colors lighting by dropping segments of different componets
+// Like the current idea, but applied without the mass cutoff (maybe? somehow?)
+// That or just a light color to the lighting plane, that'd work too
+// Enough to make it visible but not so much that it's a pain
+
+// That, or just make stuff that uses lighting_cutoff have colored offsets and all, like you were planning
 	/// Colors your vision when worn
 	var/glass_colour_type
 	/// Whether or not vision coloring is forcing
@@ -98,6 +105,7 @@
 		remove_client_colour(G.glass_colour_type)
 
 
+#warn I kind of want to add miner and engi mesons, one that's brighter then the other because it's working with lavaland's dark background
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
@@ -106,6 +114,8 @@
 	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 	vision_flags = SEE_TURFS
 	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	// Mesons get to be lightly green
+	color_cutoffs = list(-10, 0, -10)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
@@ -119,6 +129,8 @@
 	inhand_icon_state = "nvgmeson"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Night vision mesons get the same but more intense
+	color_cutoffs = list(-20, 0, -20)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/meson/gar
@@ -163,6 +175,8 @@
 	icon_state = "scihudnight"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Real vivid purple
+	color_cutoffs = list(0, -20, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/night
@@ -172,6 +186,8 @@
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Dark green
+	color_cutoffs = list(-20, 0, -20)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/eyepatch
@@ -432,6 +448,8 @@
 	inhand_icon_state = "glasses"
 	vision_flags = SEE_MOBS
 	lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	// Going for an orange color here
+	color_cutoffs = list(10, -7, -10)
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	glass_colour_type = /datum/client_colour/glass_colour/red
 

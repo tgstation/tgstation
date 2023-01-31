@@ -47,11 +47,13 @@
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
 			lighting_cutoff = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			color_cutoffs = list(-10, 0, -10)
 			change_glass_color(user, /datum/client_colour/glass_colour/yellow)
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
 			lighting_cutoff = null
+			color_cutoffs = list()
 			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
 
 		if(MODE_PIPE_CONNECTABLE)

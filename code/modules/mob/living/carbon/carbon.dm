@@ -556,6 +556,7 @@
 
 	var/new_sight = initial(sight)
 	lighting_cutoff = initial(lighting_cutoff)
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
 
 	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
@@ -563,6 +564,8 @@
 		new_sight |= eyes.sight_flags
 		if(!isnull(eyes.lighting_cutoff))
 			lighting_cutoff = eyes.lighting_cutoff
+		if(!isnull(eyes.color_cutoffs))
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, eyes.color_cutoffs)
 
 	if(client.eye && client.eye != src)
 		var/atom/A = client.eye
@@ -570,14 +573,16 @@
 			return
 
 	if(glasses)
-		var/obj/item/clothing/glasses/G = glasses
-		new_sight |= G.vision_flags
-		if(G.invis_override)
-			set_invis_see(G.invis_override)
+		new_sight |= glasses.vision_flags
+		if(glasses.invis_override)
+			set_invis_see(glasses.invis_override)
 		else
-			set_invis_see(min(G.invis_view, see_invisible))
-		if(!isnull(G.lighting_cutoff))
-			lighting_cutoff = max(lighting_cutoff, G.lighting_cutoff)
+			set_invis_see(min(glasses.invis_view, see_invisible))
+		if(!isnull(glasses.lighting_cutoff))
+			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
+		if(!isnull(glasses.color_cutoffs))
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
+
 
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
