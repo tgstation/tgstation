@@ -1,9 +1,36 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
 "cQ" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/dark_red/corner,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"de" = (
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"dm" = (
+/obj/effect/turf_decal/trimline/dark_red,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "dS" = (
@@ -19,9 +46,6 @@
 	pixel_y = 2;
 	pixel_x = -3;
 	summon_offset_x = -2
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /obj/structure/table/reinforced/titaniumglass,
 /turf/open/floor/holofloor/plating,
@@ -39,9 +63,6 @@
 	pixel_x = -3;
 	summon_offset_x = -2
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "iq" = (
@@ -57,11 +78,13 @@
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "iu" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/table/reinforced/titaniumglass,
-/obj/item/coin/thunderdome,
+/obj/item/coin/thunderdome{
+	pixel_y = 8
+	},
+/obj/machinery/trading_card_button/health{
+	pixel_y = -3
+	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "iB" = (
@@ -119,9 +142,6 @@
 	pixel_y = 2;
 	pixel_x = 3;
 	summon_offset_x = 2
-	},
-/obj/structure/window/reinforced{
-	dir = 4
 	},
 /obj/structure/table/reinforced/titaniumglass,
 /turf/open/floor/holofloor/plating,
@@ -229,15 +249,27 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "tE" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/table/reinforced/titaniumglass,
-/obj/item/book/manual/wiki/tgc,
+/obj/item/book/manual/wiki/tgc{
+	pixel_y = 12
+	},
+/obj/machinery/trading_card_button{
+	pixel_y = -3
+	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "tT" = (
 /turf/open/floor/holofloor/stairs/right,
+/area/template_noop)
+"uv" = (
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "vu" = (
 /obj/structure/window/reinforced{
@@ -276,6 +308,21 @@
 "wO" = (
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
+"xi" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
 "zk" = (
 /turf/open/floor/holofloor/stairs/medium{
 	dir = 1
@@ -294,10 +341,17 @@
 	pixel_x = 3;
 	summon_offset_x = 2
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/holofloor/plating,
+/area/template_noop)
+"Ar" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
 /area/template_noop)
 "Dt" = (
 /turf/open/floor/holofloor/stairs/left{
@@ -315,10 +369,13 @@
 /area/template_noop)
 "Fy" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/item/book/manual/wiki/tgc{
+	pixel_y = -4
 	},
-/obj/item/book/manual/wiki/tgc,
+/obj/machinery/trading_card_button/health{
+	pixel_y = 10;
+	panel_offset_y = -1
+	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "IB" = (
@@ -326,6 +383,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/dark_red/line,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "IK" = (
@@ -349,16 +409,37 @@
 /area/template_noop)
 "NC" = (
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/coin/thunderdome{
+	pixel_y = -4
+	},
+/obj/machinery/trading_card_button{
+	pixel_y = 10;
+	panel_offset_y = -1
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"NW" = (
 /obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
-/obj/item/coin/thunderdome,
-/turf/open/floor/holofloor/plating,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "Op" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 5
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
@@ -419,6 +500,9 @@
 "Wa" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/trimline/dark_red/end,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "Wk" = (
@@ -450,6 +534,18 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor/dark,
+/area/template_noop)
+"XJ" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "Yr" = (
 /turf/open/floor/holofloor/stairs/right{
@@ -486,6 +582,18 @@
 /obj/effect/turf_decal/trimline/dark_red/corner,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
+"ZP" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
 
 (1,1,1) = {"
 YB
@@ -513,14 +621,14 @@ So
 "}
 (3,1,1) = {"
 jv
-EY
-Jr
+am
+dm
 Op
 wc
 wc
-IK
-qx
-YN
+xi
+XJ
+uv
 mA
 "}
 (4,1,1) = {"
@@ -562,13 +670,13 @@ mA
 (7,1,1) = {"
 nR
 IB
-Zz
+Ar
 Wa
 wc
 wc
-IK
-WI
-YN
+NW
+ZP
+de
 mA
 "}
 (8,1,1) = {"

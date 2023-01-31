@@ -1,5 +1,6 @@
 #define MINING_SHIPPING_MULTIPLIER 0.65
-#define GET_MINING_SHIPPING_MULTIPLIER(cost) round(cost * MINING_SHIPPING_MULTIPLIER,5)
+#define GET_MINING_SHIPPING_MULTIPLIER(cost) round(cost * MINING_SHIPPING_MULTIPLIER, 5)
+#define CREDIT_TYPE_MINING "mp"
 
 /obj/machinery/computer/order_console/mining
 	name = "mining equipment order console"
@@ -17,6 +18,8 @@
 	35% cheaper than express delivery."}
 	express_tooltip = @{"Sends your purchases instantly."}
 
+	credit_type = CREDIT_TYPE_MINING
+
 	order_categories = list(
 		CATEGORY_MINING,
 		CATEGORY_CONSUMABLES,
@@ -29,8 +32,8 @@
 	var/failure_message = "Sorry, but you do not have enough mining points."
 	if(!express)
 		final_cost = GET_MINING_SHIPPING_MULTIPLIER(final_cost)
-	if(final_cost <= card.mining_points)
-		card.mining_points -= final_cost
+	if(final_cost <= card.registered_account.mining_points)
+		card.registered_account.mining_points -= final_cost
 		return TRUE
 	say(failure_message)
 	return FALSE
@@ -56,7 +59,7 @@
 		coupon = null,
 		charge_on_purchase = FALSE,
 		manifest_can_fail = FALSE,
-		cost_type = "mp",
+		cost_type = credit_type,
 		can_be_cancelled = FALSE,
 	)
 	say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
@@ -72,7 +75,7 @@
 	var/mob/living/living_user = user
 	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 	if(id_card)
-		data["points"] = id_card.mining_points
+		data["points"] = id_card.registered_account.mining_points
 
 	return data
 
@@ -186,23 +189,24 @@
 	var/point_movement = tgui_alert(user, "To ID (from card) or to card (from ID)?", "Mining Points Transfer", list(TO_USER_ID, TO_POINT_CARD))
 	if(!point_movement)
 		return
-	var/amount = tgui_input_number(user, "How much do you want to transfer? ID Balance: [attacking_id.mining_points], Card Balance: [points]", "Transfer Points", min_value = 0, round_value = 1)
+	var/amount = tgui_input_number(user, "How much do you want to transfer? ID Balance: [attacking_id.registered_account.mining_points], Card Balance: [points]", "Transfer Points", min_value = 0, round_value = 1)
 	if(!amount)
 		return
 	switch(point_movement)
 		if(TO_USER_ID)
 			if(amount > points)
 				amount = points
-			attacking_id.mining_points += amount
+			attacking_id.registered_account.mining_points += amount
 			points -= amount
 			to_chat(user, span_notice("You transfer [amount] mining points from [src] to [attacking_id]."))
 		if(TO_POINT_CARD)
-			if(amount > attacking_id.mining_points)
-				amount = attacking_id.mining_points
-			attacking_id.mining_points -= amount
+			if(amount > attacking_id.registered_account.mining_points)
+				amount = attacking_id.registered_account.mining_points
+			attacking_id.registered_account.mining_points -= amount
 			points += amount
 			to_chat(user, span_notice("You transfer [amount] mining points from [attacking_id] to [src]."))
 
+#undef CREDIT_TYPE_MINING
 #undef TO_POINT_CARD
 #undef TO_USER_ID
 #undef MINING_SHIPPING_MULTIPLIER

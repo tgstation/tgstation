@@ -40,6 +40,7 @@
 /datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/R, list/contents)
 	var/list/item_instances = contents["instances"]
 	var/list/machines = contents["machinery"]
+	var/list/structures = contents["structures"]
 	contents = contents["other"]
 
 
@@ -76,6 +77,22 @@
 	for(var/machinery_path in R.machinery)
 		if(!machines[machinery_path])//We don't care for volume with machines, just if one is there or not
 			return FALSE
+	
+	for(var/required_structure_path in R.structures)
+		// Check for the presence of the required structure. Allow for subtypes to be used if not blacklisted
+		var/needed_amount = R.structures[required_structure_path]
+		for(var/structure_path in structures)
+			if(!ispath(structure_path, required_structure_path) || R.blacklist.Find(structure_path))
+				continue
+
+				needed_amount -= structures[required_structure_path]
+				requirements_list[required_structure_path] = structures[structure_path] // Store an instance of what we are using for check_requirements
+				if(needed_amount <= 0)
+					break
+		
+		// We didn't find the required item
+		if(needed_amount > 0)
+			return FALSE
 
 	return R.check_requirements(a, requirements_list)
 
@@ -97,6 +114,7 @@
 	.["other"] = list()
 	.["instances"] = list()
 	.["machinery"] = list()
+	.["structures"] = list()
 	for(var/obj/object in get_environment(a, blacklist))
 		if(isitem(object))
 			var/obj/item/item = object
@@ -116,6 +134,8 @@
 				.["other"][item.type] += 1
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
+		else if (isstructure(object))
+			LAZYADDASSOCLIST(.["structures"], object.type, object)
 
 
 
@@ -229,10 +249,12 @@
 		requirements += R.reqs
 	if(R.machinery)
 		requirements += R.machinery
+	if(R.structures)
+		requirements += R.structures
 	main_loop:
 		for(var/path_key in requirements)
-			amt = R.reqs[path_key] || R.machinery[path_key]
-			if(!amt)//since machinery can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
+			amt = R.reqs?[path_key] || R.machinery?[path_key] || R.structures?[path_key]
+			if(!amt)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 				continue main_loop
 			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
@@ -323,7 +345,7 @@
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)
-		// Snowflake handling of reagent containers and storage atoms.
+		// Snowflake handling of reagent containers, storage atoms, and structures with contents.
 		// If we consumed them in our crafting, we should dump their contents out before qdeling them.
 		if(is_reagent_container(DL))
 			var/obj/item/reagent_containers/container = DL
@@ -331,6 +353,9 @@
 		else if(istype(DL, /obj/item/storage))
 			var/obj/item/storage/container = DL
 			container.emptyStorage()
+		else if(isstructure(DL))
+			var/obj/structure/structure = DL
+			structure.dump_contents(structure.drop_location())
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/is_recipe_available(datum/crafting_recipe/recipe, mob/user)
@@ -538,6 +563,12 @@
 		data["machinery"] = list()
 		for(var/req_atom as anything in recipe.machinery)
 			data["machinery"] += atoms.Find(req_atom)
+			
+	// Structures
+	if(recipe.structures)
+		data["structures"] = list()
+		for(var/req_atom as anything in recipe.structures)
+			data["structures"] += atoms.Find(req_atom)
 
 	// Ingredients / Materials
 	if(recipe.reqs.len)

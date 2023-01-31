@@ -331,7 +331,7 @@
 	/// whether this is in fake swordplay mode or not
 	var/fake_swordplay = FALSE
 
-/obj/item/food/baguette/Initialize()
+/obj/item/food/baguette/Initialize(mapload)
 	. = ..()
 	register_context()
 

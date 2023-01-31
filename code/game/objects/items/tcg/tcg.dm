@@ -15,6 +15,8 @@
 	var/flipped = FALSE
 	///Has this card been "tapped"? AKA, is it horizontal?
 	var/tapped = FALSE
+	///Cached icon used for inspecting the card
+	var/icon/cached_flat_icon
 
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
@@ -61,7 +63,14 @@
 	name_chaser += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
 	if(data_holder.rules) //This can sometimes be empty
 		name_chaser += "Ruleset: [data_holder.rules]"
+	name_chaser += list("[icon2html(get_cached_flat_icon(), user, "extra_classes" = "hugeicon")]")
+
 	return name_chaser
+
+/obj/item/tcgcard/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
 
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
