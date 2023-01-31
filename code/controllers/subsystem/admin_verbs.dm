@@ -94,7 +94,9 @@ SUBSYSTEM_DEF(admin_verbs)
 /datum/controller/subsystem/admin_verbs/proc/generate_holder_map()
 	admin_verb_map = list()
 	holder_map = list()
-	for(var/mob/admin_module_holder/holder_type as anything in subtypesof(/mob/admin_module_holder))
+	var/list/processing = typecacheof(sort_list(subtypesof(/mob/admin_module_holder), GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	processing -= typecache_next_level(/mob/admin_module_holder)
+	for(var/mob/admin_module_holder/holder_type as anything in processing)
 		var/mob/admin_module_holder/holder = new holder_type
 		holder_map[holder_type] = holder
 		admin_verb_map[holder_type] = holder.dynamic_map_generate()
