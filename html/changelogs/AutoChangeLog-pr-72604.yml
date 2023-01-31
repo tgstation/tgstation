@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Fixes parallax showing up ABOVE the game if you moved z levels while disconnected"
