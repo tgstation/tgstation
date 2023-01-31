@@ -86,9 +86,10 @@ SUBSYSTEM_DEF(admin_verbs)
 		if(!stat_data[cached_formats[verb_module]])
 			stat_data[cached_formats[verb_module]] = list()
 		stat_data[cached_formats[verb_module]] += list(list(cached_formats[original_name], verb_desc, original_name))
+	var/sorted_stat_data = list()
 	for(var/verb_category in stat_data)
-		stat_data[verb_category] = sort_list(stat_data[verb_category], GLOBAL_PROC_REF(cmp_admin_verb_name))
-	return stat_data
+		sorted_stat_data[verb_category] = sort_list(stat_data[verb_category], GLOBAL_PROC_REF(cmp_admin_verb_name))
+	return sorted_stat_data
 
 /proc/cmp_admin_verb_name(list/info_left, list/info_right)
 	return sorttext(info_left[1], info_right[1])
