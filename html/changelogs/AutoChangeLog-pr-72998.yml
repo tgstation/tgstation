@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - refactor: "Refactored a bunch of admin-related event code, hopefully you won't notice much"
-  - admin: "... But you specifically may notice some minor differences. Raw inputs changed into tgui ones, minor soul removal, etc."
