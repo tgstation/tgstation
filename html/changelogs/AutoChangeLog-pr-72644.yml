@@ -1,0 +1,9 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "plasmamen no longer can suffer liver failure from injecting themselves with plasma (unless they have a human liver for some reason)."
+  - bugfix: "a person who is infected with a plasma fixation disease can no longer can suffer liver failure from injecting themselves with plasma."
+  - bugfix: "plasmamen no longer can suffer liver failure from consuming other organic toxins, which they are not supposed to be affected by."
+  - bugfix: "plasma fixation heal-through-inject-or-consumption now works for plasmamen by letting the metabolism procs take care of removing it from their systems."
+  - bugfix: "hot ice now has the same wound-healing and nontoxic properties as plasma to plasmamen, since it is described as \"frozen plasma\". It is also nontoxic to plasma fixation virus sufferers."
+  - bugfix: "plasma breathed through internals now contributes to the healing amount from plasma fixation."
