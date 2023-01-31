@@ -60,26 +60,37 @@
 //Maintenance-loot themes
 #define PDA_THEME_CAT "ntos_cat"
 #define PDA_THEME_LIGHT_MODE "ntos_lightmode"
-#define PDA_THEME_SPOOKY "ntos_eldritch"
+#define PDA_THEME_SPOOKY "ntos_spooky"
+
+//Defines for the names of all the themes
+#define PDA_THEME_NTOS_NAME "NtOS"
+#define PDA_THEME_DARK_MODE_NAME "NtOS Dark mode"
+#define PDA_THEME_RETRO_NAME "Retro"
+#define PDA_THEME_SYNTH_NAME "Synth"
+#define PDA_THEME_TERMINAL_NAME "Terminal"
+#define SYNDICATE_THEME_NAME "Syndicate"
+#define CAT_THEME_NAME "Cat"
+#define LIGHT_THEME_NAME "NtOS Light mode"
+#define ELDRITCH_THEME_NAME "Eldritch"
 
 ///List of PDA themes that are accessible to everyone by default.
 GLOBAL_LIST_INIT(default_pda_themes, list(
-	PDA_THEME_NTOS,
-	PDA_THEME_DARK_MODE,
-	PDA_THEME_RETRO,
-	PDA_THEME_SYNTH,
-	PDA_THEME_TERMINAL,
+	PDA_THEME_NTOS_NAME = PDA_THEME_NTOS,
+	PDA_THEME_DARK_MODE_NAME = PDA_THEME_DARK_MODE,
+	PDA_THEME_RETRO_NAME = PDA_THEME_RETRO,
+	PDA_THEME_SYNTH_NAME = PDA_THEME_SYNTH,
+	PDA_THEME_TERMINAL_NAME = PDA_THEME_TERMINAL,
 ))
 
 ///List of PDA themes that are accessible to everyone by default.
 GLOBAL_LIST_INIT(pda_name_to_theme, list(
-	PDA_THEME_NTOS = "NtOS",
-	PDA_THEME_SYNDICATE = "Syndicate",
-	PDA_THEME_DARK_MODE = "NtOS Dark mode",
-	PDA_THEME_RETRO = "Retro",
-	PDA_THEME_SYNTH = "Synth",
-	PDA_THEME_TERMINAL = "Terminal",
-	PDA_THEME_CAT = "Cat",
-	PDA_THEME_LIGHT_MODE = "NtOS Light mode",
-	PDA_THEME_SPOOKY = "Eldritch",
+	PDA_THEME_NTOS_NAME = PDA_THEME_NTOS,
+	PDA_THEME_DARK_MODE_NAME = PDA_THEME_DARK_MODE,
+	PDA_THEME_RETRO_NAME = PDA_THEME_RETRO,
+	PDA_THEME_SYNTH_NAME = PDA_THEME_SYNTH,
+	PDA_THEME_TERMINAL_NAME = PDA_THEME_TERMINAL,
+	SYNDICATE_THEME_NAME = PDA_THEME_SYNDICATE,
+	CAT_THEME_NAME = PDA_THEME_CAT,
+	LIGHT_THEME_NAME = PDA_THEME_LIGHT_MODE,
+	ELDRITCH_THEME_NAME = PDA_THEME_SPOOKY,
 ))

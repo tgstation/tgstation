@@ -5,11 +5,11 @@
 	size = 2
 
 	///The type of theme we have
-	var/theme_type
+	var/theme_name
 
 /datum/computer_file/program/maintenance/theme/New()
 	. = ..()
-	filename = "[theme_type] NtOS theme"
+	filename = "[theme_name] NtOS theme"
 
 /datum/computer_file/program/maintenance/theme/can_store_file(obj/item/modular_computer/potential_host)
 	. = ..()
@@ -20,7 +20,7 @@
 	if(!theme_app)
 		return FALSE
 	//don't get the same one twice
-	if(theme_app.imported_themes.Find(theme_type))
+	if(theme_app.imported_themes.Find(theme_name))
 		return FALSE
 	return TRUE
 
@@ -29,15 +29,16 @@
 	//add the theme to the computer and increase its size to match
 	var/datum/computer_file/program/themeify/theme_app = locate() in computer.stored_files
 	if(theme_app)
-		theme_app.imported_themes += theme_type
+		theme_app.imported_themes += theme_name
 		theme_app.size += size
 		qdel(src)
+	return ..()
 
 /datum/computer_file/program/maintenance/theme/cat
-	theme_type = PDA_THEME_CAT
+	theme_name = CAT_THEME_NAME
 
 /datum/computer_file/program/maintenance/theme/lightmode
-	theme_type = PDA_THEME_LIGHT_MODE
+	theme_name = LIGHT_THEME_NAME
 
 /datum/computer_file/program/maintenance/theme/spooky
-	theme_type = PDA_THEME_SPOOKY
+	theme_name = ELDRITCH_THEME_NAME

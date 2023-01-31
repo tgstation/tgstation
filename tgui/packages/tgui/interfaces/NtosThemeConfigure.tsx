@@ -33,7 +33,7 @@ export const NtosThemeConfigure = (props, context) => {
                 content={theme.theme_name}
                 onClick={() =>
                   act('PRG_change_theme', {
-                    selected_theme: theme.theme_ref,
+                    selected_theme: theme.theme_name,
                   })
                 }
               />
