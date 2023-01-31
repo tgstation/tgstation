@@ -793,7 +793,7 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -2807,16 +2807,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
-"biX" = (
-/obj/structure/industrial_lift/tram,
-/obj/structure/fluff/tram_rail{
-	dir = 1
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "bja" = (
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east{
@@ -8102,10 +8092,10 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/chair/comfy/shuttle{
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
-/obj/effect/landmark/start/hangover,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "cTT" = (
@@ -13406,10 +13396,10 @@
 /area/station/cargo/warehouse)
 "eOi" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
 /obj/structure/window/reinforced/tram/left/directional/north,
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "eOk" = (
@@ -13494,11 +13484,11 @@
 "ePF" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/right/directional/north,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
 /obj/machinery/destination_sign/north{
 	pixel_y = 10
+	},
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -16830,13 +16820,13 @@
 /area/station/engineering/atmos)
 "gej" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
 /obj/machinery/destination_sign/north{
 	pixel_y = 10
 	},
 /obj/structure/window/reinforced/tram/left/directional/north,
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "gen" = (
@@ -28763,14 +28753,14 @@
 /area/station/engineering/supermatter)
 "kwA" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
 /obj/machinery/destination_sign/south{
 	pixel_y = -11
 	},
 /obj/structure/window/reinforced/tram/left/directional/south,
 /obj/effect/landmark/start/hangover,
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "kwD" = (
@@ -29063,10 +29053,10 @@
 /area/station/engineering/main)
 "kBX" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/window/reinforced/tram/left/directional/south,
+/obj/structure/chair/sofa/bench/right{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tram/left/directional/south,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "kBY" = (
@@ -44216,7 +44206,7 @@
 "pWK" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/right/directional/north,
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -49046,10 +49036,10 @@
 "rEn" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/comfy/shuttle{
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
-/obj/effect/landmark/start/hangover,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "rEu" = (
@@ -49853,8 +49843,8 @@
 "rPU" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -51043,13 +51033,13 @@
 "sqz" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/right/directional/south,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
 /obj/machinery/destination_sign/south{
 	pixel_y = -11
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "sqD" = (
@@ -55112,7 +55102,7 @@
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
 /obj/structure/industrial_lift/tram,
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/sofa/bench/right{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -59305,7 +59295,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -61296,10 +61286,10 @@
 "waf" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/fluff/tram_rail,
-/obj/structure/chair/comfy/shuttle{
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
-/obj/effect/landmark/start/hangover,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "wag" = (
@@ -62973,8 +62963,8 @@
 "wHs" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/right/directional/south,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -165247,7 +165237,7 @@ wFw
 pWK
 waf
 odj
-biX
+vqF
 wHs
 wFw
 fug
