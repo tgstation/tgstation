@@ -1161,8 +1161,9 @@
  * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
 **/
 /mob/proc/has_nightvision()
-#warn Redo this, thanks
-	return see_in_dark >= NIGHTVISION_FOV_RANGE
+	// Accounts for negatives, sorta conservative. Change this if/when you change negatives in those lists yeah?
+	var/light_offset = min(lighting_color_cutoffs[1], lighting_color_cutoffs[2], lighting_color_cutoffs[3]) + lighting_cutoff
+	return light_offset <= LIGHTING_CUTOFF_HIGH
 
 /// This mob is abile to read books
 /mob/proc/is_literate()
