@@ -59,10 +59,7 @@
 		SSair.stop_processing_machine(src)
 
 /obj/machinery/meter/return_air()
-	if(!isnull(target))
-		return target.return_air()
-	else
-		return ..()
+	return target?.return_air() || ..()
 
 /obj/machinery/meter/process_atmos()
 	var/datum/gas_mixture/pipe_air = target.return_air()
