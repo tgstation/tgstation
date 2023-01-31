@@ -46,9 +46,9 @@
 
 	to_chat(cast_on, "[user_message] [user_message_body]")
 
-	balloon_alert(trauma.owner, "voice in your head!")
+	cast_on.balloon_alert(trauma.owner, "voice in your head!")
 	to_chat(trauma.owner, "[fluff_text] [user_message_body]")
-	
+
 	log_directed_talk(cast_on, trauma.owner, to_send, LOG_SAY, "[name]")
 	for(var/dead_mob in GLOB.dead_mob_list)
 		if(!isobserver(dead_mob))
