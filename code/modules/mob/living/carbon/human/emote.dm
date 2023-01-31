@@ -8,7 +8,7 @@
 	message_mime = "sobs silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	stat_allowed = SOFT_CRIT
-	emote_visual = /datum/bodypart_overlay/emote/cry
+	emote_visual = /datum/bodypart_overlay/simple/emote/cry
 
 /datum/emote/living/carbon/human/dap
 	key = "dap"

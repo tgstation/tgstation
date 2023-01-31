@@ -8,7 +8,7 @@
 	key = "blush"
 	key_third_person = "blushes"
 	message = "blushes."
-	emote_visual = /datum/bodypart_overlay/emote/blush
+	emote_visual = /datum/bodypart_overlay/simple/emote/blush
 
 /datum/emote/living/sing_tune
 	key = "tunesing"

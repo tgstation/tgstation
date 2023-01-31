@@ -59,7 +59,7 @@
 	/// How long is the cooldown on the audio of the emote, if it has one?
 	var/audio_cooldown = 2 SECONDS
 	/// Typepath to the emote_overlay that should be used with this emote. (Leave empty for no overlay)
-	var/datum/bodypart_overlay/emote/emote_visual
+	var/datum/bodypart_overlay/simple/emote/emote_visual
 
 	/// Maps emote visuals to their users. Each user can have one at most and they are removed after use.
 	/// We need to track these instances so that they can be removed in case the user emotes again before the timer finishes.
@@ -164,7 +164,7 @@
 	if(ishuman(user)) // Give them a visual effect if they're human
 		var/mob/living/carbon/human/human_user = user
 		var/obj/item/bodypart/attached_bodypart
-		var/datum/bodypart_overlay/emote/overlay
+		var/datum/bodypart_overlay/simple/emote/overlay
 		if(user in emote_visual_instances) // If we already have a visual for this user:
 			overlay = emote_visual_instances[user] // Reference the existing one so we can still delete it later
 			attached_bodypart = human_user.get_bodypart(overlay.attached_body_zone)

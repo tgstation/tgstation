@@ -6,14 +6,14 @@
 	// Display blush visual
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		human_owner.get_bodypart(BODY_ZONE_HEAD).add_bodypart_overlay(new /datum/bodypart_overlay/emote/blush())
+		human_owner.get_bodypart(BODY_ZONE_HEAD).add_bodypart_overlay(new /datum/bodypart_overlay/simple/emote/blush())
 		human_owner.update_body()
 
 /datum/mood_event/drunk/remove_effects()
 	// Stop displaying blush visual
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		human_owner.get_bodypart(BODY_ZONE_HEAD).remove_bodypart_overlay(new /datum/bodypart_overlay/emote/blush())
+		human_owner.get_bodypart(BODY_ZONE_HEAD).remove_bodypart_overlay(new /datum/bodypart_overlay/simple/emote/blush())
 		human_owner.update_body()
 
 /datum/mood_event/quality_nice
