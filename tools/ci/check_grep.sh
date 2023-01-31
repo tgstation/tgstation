@@ -70,6 +70,12 @@ if $grep '(new|newlist|icon|matrix|sound)\(.+\)' $map_files;	then
 	echo -e "${RED}ERROR: Using unsupported procs in variables in a map file! Please remove all instances of this.${NC}"
 	st=1
 fi;
+part "armor lists"
+if $grep '\tarmor = list' $map_files; then
+	echo
+	echo -e "${RED}ERROR: Outdated armor list in map file.${NC}"
+	st=1
+fi;
 part "common spelling mistakes"
 if $grep -i 'nanotransen' $map_files; then
 	echo
@@ -111,14 +117,15 @@ section "common mistakes"
 part "global vars"
 if $grep '^/*var/' $code_files; then
 	echo
-    echo -e "${RED}ERROR: Unmanaged global var use detected in code, please use the helpers.${NC}"
-    st=1
+	echo -e "${RED}ERROR: Unmanaged global var use detected in code, please use the helpers.${NC}"
+	st=1
 fi;
+
 part "proc args with var/"
 if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
 	echo
-    echo -e "${RED}ERROR: Changed files contains a proc argument starting with 'var'.${NC}"
-    st=1
+	echo -e "${RED}ERROR: Changed files contains a proc argument starting with 'var'.${NC}"
+	st=1
 fi;
 
 part "balloon_alert sanity"
@@ -213,6 +220,12 @@ if [ "$pcre2_support" -eq 1 ]; then
 	if $grep -P 'for\b.*/obj/item/stock_parts/(?!cell)(?![\w_]+ in )' $code_files; then
 		echo
 		echo -e "${RED}ERROR: Should be using datum/stock_part instead"
+		st=1
+	fi;
+	part "improper atom initialize args"
+	if $grep -P '^/(obj|mob|turf|area|atom)/.+/Initialize\((?!mapload).*\)' $code_files; then
+		echo
+		echo -e "${RED}ERROR: Initialize override without 'mapload' argument.${NC}"
 		st=1
 	fi;
 else

@@ -476,8 +476,18 @@
 		return TRUE
 	return FALSE
 
-///Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
+/// Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
 #define HEALING_PER_MOL 1.1
+/// Determines the rate at which Plasma Fixation heals based on the amount of plasma being breathed through internals
+#define HEALING_PER_BREATH_PRESSURE 0.05
+/// Determines the highest amount you can be healed for when breathing plasma from internals
+#define MAX_HEAL_COEFFICIENT_INTERNALS 0.75
+/// Determines the highest amount you can be healed for from pulling plasma from the environment
+#define MAX_HEAL_COEFFICIENT_ENVIRONMENT 0.5
+/// Determines the highest amount you can be healed for when there is plasma in the bloodstream
+#define MAX_HEAL_COEFFICIENT_BLOODSTREAM 0.75
+/// This is the base heal amount before being multiplied by the healing coefficients
+#define BASE_HEAL_PLASMA_FIXATION 4
 
 /datum/symptom/heal/plasma
 	name = "Plasma Fixation"
@@ -503,24 +513,59 @@
 	if(A.totalTransmittable() >= 6)
 		temp_rate = 4
 
-/datum/symptom/heal/plasma/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
+// We do this to prevent liver damage from injecting plasma when plasma fixation virus reaches stage 4 and beyond
+/datum/symptom/heal/plasma/on_stage_change(datum/disease/advance/advanced_disease)
+	. = ..()
+	if(!.)
+		return FALSE
+		
+	if(advanced_disease.stage >= 4)
+		ADD_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	else 
+		REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	return TRUE
+
+/datum/symptom/heal/plasma/End(datum/disease/advance/advanced_disease)
+	. = ..()
+	if(!.)
+		return
+		
+	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+
+// Check internals breath, environmental plasma, and plasma in bloodstream to determine the heal power
+/datum/symptom/heal/plasma/CanHeal(datum/disease/advance/advanced_disease)
+	var/mob/living/diseased_mob = advanced_disease.affected_mob
 	var/datum/gas_mixture/environment
 	var/list/gases
 
 	. = 0
 
-	if(M.loc)
-		environment = M.loc.return_air()
+	// Check internals
+	///  the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
+	///  distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
+	///  balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
+	if(iscarbon(diseased_mob))
+		var/mob/living/carbon/breather = diseased_mob
+		var/obj/item/tank/internals/internals_tank = breather.internal
+		if(internals_tank)
+			var/datum/gas_mixture/tank_contents = internals_tank.return_air()
+			if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
+				if(tank_contents.gases[/datum/gas/plasma])
+					// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
+					. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
+	// Check environment			
+	if(diseased_mob.loc)
+		environment = diseased_mob.loc.return_air()
 	if(environment)
 		gases = environment.gases
 		if(gases[/datum/gas/plasma])
-			. += power * min(0.5, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
-	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
-		. += power * 0.75 //Determines how much the symptom heals if injected or ingested
+			. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+	// Check for reagents in bloodstream
+	if(diseased_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
+		. += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
-	var/heal_amt = 4 * actual_power
+	var/heal_amt = BASE_HEAL_PLASMA_FIXATION * actual_power
 
 	if(prob(5))
 		to_chat(M, span_notice("You feel yourself absorbing plasma inside and around you..."))
@@ -549,6 +594,11 @@
 
 ///Plasma End
 #undef HEALING_PER_MOL
+#undef HEALING_PER_BREATH_PRESSURE
+#undef MAX_HEAL_COEFFICIENT_INTERNALS
+#undef MAX_HEAL_COEFFICIENT_ENVIRONMENT
+#undef MAX_HEAL_COEFFICIENT_BLOODSTREAM
+#undef BASE_HEAL_PLASMA_FIXATION
 
 /datum/symptom/heal/radiation
 	name = "Radioactive Resonance"

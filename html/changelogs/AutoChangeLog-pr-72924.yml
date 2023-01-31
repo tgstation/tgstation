@@ -1,0 +1,6 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - rscadd: "Axolotl lovers rejoice! I added axolotls to cytology and as such are now swabbable."
+  - rscadd: "Frog cells are now named \"anura amphibian cells.\" This literally means \"frog amphibian cells.\""
+  - rscadd: "Axolotl are \"caudata amphibian cells.\" This literally means \"salamander amphibian cells.\""
