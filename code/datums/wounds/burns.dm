@@ -240,6 +240,10 @@
 // people complained about burns not healing on stasis beds, so in addition to checking if it's cured, they also get the special ability to very slowly heal on stasis beds if they have the healing effects stored
 /datum/wound/burn/on_stasis(delta_time, times_fired)
 	. = ..()
+	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
+		if(DT_PROB(0.5, delta_time))
+			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		return
 	if(flesh_healing > 0)
 		flesh_damage = max(flesh_damage - (0.1 * delta_time), 0)
 	if((flesh_damage <= 0) && (infestation <= 1))
