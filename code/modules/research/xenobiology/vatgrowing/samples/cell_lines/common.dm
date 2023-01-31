@@ -589,7 +589,7 @@
 
 	supplementary_reagents = list(
 		/datum/reagent/ants = 3,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 		/datum/reagent/consumable/salt = 1,
 		/datum/reagent/consumable/eggwhite= 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1,)
