@@ -88,7 +88,7 @@
 			var/datum/round_event_control/event = locate(event_to_run_type) in SSevents.control
 			if(!event)
 				return
-			if(event.admin_setup(usr) == ADMIN_CANCEL_EVENT)
+			if(event.admin_setup && event.admin_setup.prompt_admins() == ADMIN_CANCEL_EVENT)
 				return
 			var/always_announce_chance = 100
 			var/no_announce_chance = 0

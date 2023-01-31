@@ -196,3 +196,9 @@
 	name = "megamoth wings"
 	desc = "Don't get murderous."
 	sprite_accessory_override = /datum/sprite_accessory/wings/megamoth
+
+///fly wings, which relate to flies.
+/obj/item/organ/external/wings/functional/fly
+	name = "fly wings"
+	desc = "Fly as a fly."
+	sprite_accessory_override = /datum/sprite_accessory/wings/fly
