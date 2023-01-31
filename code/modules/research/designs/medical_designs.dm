@@ -485,7 +485,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/cyberimp_muscle
-	name = "Left Arm Empower Implant"
+	name = "Arm Empower Implant"
 	desc = "This implant will empover the muscle system of a human arm, increasing punch damage."
 	id = "ci-muscle"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
