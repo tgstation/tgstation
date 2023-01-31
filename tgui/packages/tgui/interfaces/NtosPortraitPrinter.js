@@ -15,7 +15,11 @@ export const NtosPortraitPrinter = (props, context) => {
     got_paintings && 'paintings' + '_' + paintings[listIndex]['md5'];
   const current_portrait_ratio = got_paintings && paintings[listIndex]['ratio'];
   return (
-    <NtosWindow title="Art Galaxy" width={400} height={446} theme={PC_device_theme}>
+    <NtosWindow
+      title="Art Galaxy"
+      width={400}
+      height={446}
+      theme={PC_device_theme}>
       <NtosWindow.Content>
         <Stack vertical fill>
           <Stack.Item>
