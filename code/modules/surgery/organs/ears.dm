@@ -70,6 +70,8 @@
 
 /obj/item/organ/internal/ears/cat/Insert(mob/living/carbon/human/ear_owner, special = 0, drop_if_replaced = TRUE)
 	. = ..()
+	if(!.)
+		return
 	if(istype(ear_owner) && ear_owner.dna)
 		color = ear_owner.hair_color
 		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = "Cat"

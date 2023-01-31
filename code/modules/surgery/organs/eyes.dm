@@ -50,6 +50,8 @@
 
 /obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
+	if(!.)
+		return
 	owner.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
 	refresh()
@@ -267,6 +269,8 @@
 
 /obj/item/organ/internal/eyes/robotic/xray/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
+	if(!.)
+		return
 	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
 
 /obj/item/organ/internal/eyes/robotic/xray/Remove(mob/living/carbon/eye_owner, special = FALSE)
@@ -299,6 +303,8 @@
 
 /obj/item/organ/internal/eyes/robotic/flashlight/Insert(mob/living/carbon/victim, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
+	if(!.)
+		return
 	if(!eye)
 		eye = new /obj/item/flashlight/eyelight()
 	eye.on = TRUE
@@ -413,6 +419,8 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
+	if(!.)
+		return
 	RegisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(update_visuals))
 
 /obj/item/organ/internal/eyes/robotic/glow/Remove(mob/living/carbon/eye_owner, special = FALSE)
@@ -552,15 +560,14 @@
 	overlay_ignore_lighting = TRUE
 	var/obj/item/flashlight/eyelight/adapted/adapt_light
 
-/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/Insert(mob/living/carbon/adapted, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
+/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_insert(mob/living/carbon/eye_owner)
 	//add lighting
 	if(!adapt_light)
 		adapt_light = new /obj/item/flashlight/eyelight/adapted()
 	adapt_light.on = TRUE
-	adapt_light.forceMove(adapted)
-	adapt_light.update_brightness(adapted)
-	ADD_TRAIT(adapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
+	adapt_light.forceMove(eye_owner)
+	adapt_light.update_brightness(eye_owner)
+	ADD_TRAIT(eye_owner, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
 	if(!owner.is_blind() && isturf(owner.loc) && owner.has_light_nearby(light_amount=0.5)) //we allow a little more than usual so we can produce light from the adapted eyes

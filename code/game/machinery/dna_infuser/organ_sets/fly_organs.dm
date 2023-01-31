@@ -10,7 +10,7 @@
 
 /datum/status_effect/organ_set_bonus/fly/enable_bonus()
 	. = ..()
-	if(!ishuman(owner))
+	if(!. || !ishuman(owner))
 		return
 	var/mob/living/carbon/human/new_fly = owner
 	if(isflyperson(new_fly))

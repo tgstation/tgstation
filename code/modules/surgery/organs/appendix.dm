@@ -79,10 +79,11 @@
 
 /obj/item/organ/internal/appendix/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	if(.)
-		if(inflamation_stage)
-			ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
-			organ_owner.med_hud_set_status()
+	if(!.)
+		return
+	if(inflamation_stage)
+		ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+		organ_owner.med_hud_set_status()
 
 /obj/item/organ/internal/appendix/get_status_text()
 	if((!(organ_flags & ORGAN_FAILING)) && inflamation_stage)

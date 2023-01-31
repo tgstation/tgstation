@@ -75,6 +75,8 @@
 
 /obj/item/organ/internal/cyberimp/arm/Insert(mob/living/carbon/arm_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
+	if(!.)
+		return
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	hand = arm_owner.hand_bodyparts[side]
 	if(hand)

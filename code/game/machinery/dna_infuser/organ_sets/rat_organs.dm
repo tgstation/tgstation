@@ -47,8 +47,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 	AddElement(/datum/element/noticable_organ, "mouth is drooling excessively.", BODY_ZONE_PRECISE_MOUTH)
 
-/obj/item/organ/internal/stomach/rat/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
+/obj/item/organ/internal/stomach/rat/on_insert(mob/living/carbon/receiver)
 	if(!ishuman(receiver))
 		return
 	var/mob/living/carbon/human/human_holder = receiver
@@ -70,8 +69,7 @@
 	new_species.disliked_food = NONE
 	new_species.toxic_food = NONE
 
-/obj/item/organ/internal/stomach/rat/Remove(mob/living/carbon/stomach_owner, special)
-	. = ..()
+/obj/item/organ/internal/stomach/rat/on_remove(mob/living/carbon/stomach_owner)
 	if(!ishuman(stomach_owner))
 		return
 	var/mob/living/carbon/human/human_holder = stomach_owner
@@ -100,9 +98,8 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 	AddElement(/datum/element/noticable_organ, "hunch%PRONOUN_ES over unnaturally!")
 
-/obj/item/organ/internal/heart/rat/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
-	if(!ishuman(receiver))
+/obj/item/organ/internal/heart/rat/on_insert(mob/living/carbon/receiver)
+	if(!. || !ishuman(receiver))
 		return
 	var/mob/living/carbon/human/human_receiver = receiver
 	if(!human_receiver.can_mutate())
@@ -112,8 +109,7 @@
 	if(human_receiver.physiology)
 		human_receiver.physiology.damage_resistance -= 50
 
-/obj/item/organ/internal/heart/rat/Remove(mob/living/carbon/heartless, special)
-	. = ..()
+/obj/item/organ/internal/heart/rat/on_remove(mob/living/carbon/heartless, special)
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
@@ -148,8 +144,7 @@
 	if(message == "hi?")
 		speech_args[SPEECH_MESSAGE] = "Um... cheesed to meet you?"
 
-/obj/item/organ/internal/tongue/rat/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
-	. = ..()
+/obj/item/organ/internal/tongue/rat/on_insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	RegisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN, PROC_REF(its_on_the_mouse))
 
 /obj/item/organ/internal/tongue/rat/Remove(mob/living/carbon/tongue_owner, special)

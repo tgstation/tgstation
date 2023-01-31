@@ -202,6 +202,8 @@
 
 /obj/item/organ/internal/heart/vampire/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
+	if(!.)
+		return
 	RegisterSignal(receiver, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /obj/item/organ/internal/heart/vampire/Remove(mob/living/carbon/heartless, special)

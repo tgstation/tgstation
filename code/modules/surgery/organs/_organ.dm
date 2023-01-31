@@ -91,7 +91,14 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, receiver)
 	SEND_SIGNAL(receiver, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
+	// Apply unique side-effects.
+	on_insert(receiver, special, drop_if_replaced)
 	return TRUE
+
+/// Called after the organ is inserted into a mob.
+/// Override this proc to create unique side-effects for inserting your organ.
+/obj/item/organ/proc/on_insert(mob/living/carbon/organ_owner, special)
+	return
 
 /*
  * Remove the organ from the select mob.
@@ -115,6 +122,14 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
+
+	// Apply or reset unique side-effects.
+	on_remove(organ_owner, special)
+
+/// Called after the organ is removed from a mob.
+/// Override this proc to create unique side-effects for removing your organ.
+/obj/item/organ/proc/on_remove(mob/living/carbon/organ_owner, special)
+	return
 
 /// Updates the traits of the organ on the specific organ it is called on. Should be called anytime an organ is given a trait while it is already in a body.
 /obj/item/organ/proc/update_organ_traits()
