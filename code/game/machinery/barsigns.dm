@@ -160,7 +160,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		return
 
 	set_machine_stat(machine_stat | EMPED)
-	addtimer(CALLBACK(src, PROC_REF(fix_emp), chosen_sign), 6 SECONDS) // debug with 6 secs revert to 60 after done
+	addtimer(CALLBACK(src, PROC_REF(fix_emp), chosen_sign), 60 SECONDS)
 	set_sign(new /datum/barsign/hiddensigns/empbarsign)
 
 /// Callback to un-emp the sign some time.
