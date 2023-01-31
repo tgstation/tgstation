@@ -433,14 +433,6 @@
 		retract(null, part)
 	return ..()
 
-/obj/item/mod/control/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
-	. = ..()
-	for(var/obj/item/mod/module/module as anything in modules)
-		var/list/module_icons = module.generate_worn_overlay(standing)
-		if(!length(module_icons))
-			continue
-		. += module_icons
-
 /obj/item/mod/control/update_icon_state()
 	icon_state = "[skin]-[base_icon_state][active ? "-sealed" : ""]"
 	return ..()
@@ -553,6 +545,7 @@
 	modules += new_module
 	complexity += new_module.complexity
 	new_module.mod = src
+	new_module.RegisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS, TYPE_PROC_REF(/obj/item/mod/module, add_module_overlay))
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
