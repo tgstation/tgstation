@@ -117,6 +117,7 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
+	weight = 10
 	description = "An 'advanced' disease will infect some members of the crew." //These are the ones that get viro lynched!
 	admin_setup = /datum/event_admin_setup/disease_outbreak/advanced
 
