@@ -1,9 +1,9 @@
 /datum/antagonist/space_dragon
 	name = "\improper Space Dragon"
 	roundend_category = "space dragons"
-	antagpanel_category = "Space Dragon"
+	antagpanel_category = ANTAG_GROUP_LEVIATHANS
 	job_rank = ROLE_SPACE_DRAGON
-	show_in_antagpanel = TRUE
+	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	/// All space carps created by this antagonist space dragon
@@ -35,8 +35,8 @@
 	owner.announce_objectives()
 	SEND_SOUND(owner.current, sound('sound/magic/demon_attack1.ogg'))
 
-/datum/antagonist/space_dragon/proc/forge_objectives()
-	var/datum/objective/summon_carp/summon = new()
+/datum/antagonist/space_dragon/forge_objectives()
+	var/datum/objective/summon_carp/summon = new
 	summon.dragon = src
 	objectives += summon
 

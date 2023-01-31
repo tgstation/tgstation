@@ -1,5 +1,0 @@
-author: "JohnFulpWillard, sprites by Tramzz"
-delete-after: True
-changes:
-  - rscadd: "Added Maintenance tablet applications, applications that can't be cloned or downloaded from the store, instead you can find one app in maintenance."
-  - balance: "The Analyzer tablet application is also a maintenance tablet application now."

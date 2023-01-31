@@ -27,6 +27,11 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
+/obj/structure/industrial_lift/tram/subfloor/window
+	name = "tram"
+	desc = "A tram for tramversing the station."
+	icon_state = "tram_subfloor_window"
+
 /obj/structure/chair/sofa/bench/tram
 	greyscale_colors = "#00CCFF"
 
@@ -54,7 +59,6 @@
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
-	layer = TRAM_XING_LAYER
 
 /obj/machinery/door/window/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'

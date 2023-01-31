@@ -137,7 +137,7 @@
 
 	skin = new_skin
 	update_appearance()
-	if(!CONFIG_GET(flag/no_default_techweb_link))
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		linked_techweb = SSresearch.science_tech
 
 	AddComponent(/datum/component/tippable, \
