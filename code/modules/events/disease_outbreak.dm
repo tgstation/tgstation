@@ -6,10 +6,9 @@
 	weight = 5
 	category = EVENT_CATEGORY_HEALTH
 	description = "A 'classic' virus will infect some members of the crew." //These are the ones with PERSONALITY
+	admin_setup = /datum/event_admin_setup/disease_outbreak
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
-	///Admin selected disease, to be passed down to the round_event
-	var/chosen_disease
 
 /datum/round_event_control/disease_outbreak/can_spawn_event(players_amt)
 	. = ..()
@@ -18,21 +17,6 @@
 	generate_candidates()
 	if(length(disease_candidates))
 		return TRUE
-
-/datum/round_event_control/disease_outbreak/admin_setup()
-	if(!check_rights(R_FUN))
-		return ADMIN_CANCEL_EVENT
-
-	generate_candidates()
-
-	if(!length(disease_candidates))
-		message_admins("No disease candidates found!")
-		return ADMIN_CANCEL_EVENT
-
-	message_admins("[length(disease_candidates)] candidates found!")
-
-	if(tgui_alert(usr, "Select a specific disease?", "Sickening behavior", list("Yes", "No")) == "Yes")
-		chosen_disease = tgui_input_list(usr, "Warning: Some of these are EXTREMELY dangerous.","Bacteria Hysteria", subtypesof(/datum/disease))
 
 /**
  * Creates a list of people who are elligible to become disease carriers for the event
@@ -68,10 +52,6 @@
 	var/datum/round_event_control/disease_outbreak/disease_event = control
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
-	if(disease_event.chosen_disease)
-		virus_type = disease_event.chosen_disease
-		disease_event.chosen_disease = null
-
 	if(!virus_type)
 		var/list/virus_candidates = list()
 
@@ -104,26 +84,7 @@
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
 	description = "An 'advanced' disease will infect some members of the crew." //These are the ones that get viro lynched!
-	///Admin selected custom severity rating for the event
-	var/chosen_severity
-	///Admin selected custom value for the maximum symptoms this virus should have
-	var/chosen_max_symptoms
-
-/datum/round_event_control/disease_outbreak/advanced/admin_setup()
-	if(!check_rights(R_FUN))
-		return ADMIN_CANCEL_EVENT
-
-	generate_candidates()
-
-	if(!length(disease_candidates))
-		message_admins("No disease candidates found!")
-		return ADMIN_CANCEL_EVENT
-
-	message_admins("[length(disease_candidates)] candidates found!")
-
-	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
-		chosen_severity = tgui_input_number(usr, "Select a custom severity for your virus!", "Plague Incorporation!", 3, 8)
-		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 3, 15)
+	admin_setup = /datum/event_admin_setup/disease_outbreak/advanced
 
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
@@ -136,17 +97,11 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
 
-	if(disease_event.chosen_max_symptoms)
-		max_symptoms = disease_event.chosen_max_symptoms
-		disease_event.chosen_max_symptoms = null
-	else
+	if(!max_symptoms)
 		max_symptoms = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes.
 		max_symptoms = clamp(max_symptoms, 3, 8) //Capping the virus symptoms prevents the event from becoming "smite one poor player with an -12 transmission hell virus" after a certain round length.
 
-	if(disease_event.chosen_severity)
-		max_severity = disease_event.chosen_severity
-		disease_event.chosen_severity = null
-	else
+	if(!max_severity)
 		max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //Max severity doesn't need clamping
 
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random(max_symptoms, max_severity)
@@ -162,3 +117,47 @@
 		announce_to_ghosts(victim)
 	else
 		log_game("An event attempted to trigger a random advanced virus outbreak on [key_name(victim)], but failed.")
+
+/datum/event_admin_setup/disease_outbreak
+	///Admin selected disease, to be passed down to the round_event
+	var/virus_type
+
+/// Checks for candidates. Returns false if there isn't enough
+/datum/event_admin_setup/disease_outbreak/proc/candidate_check()
+	var/datum/round_event_control/disease_outbreak/disease_control = event_control
+	disease_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
+	return length(disease_control.disease_candidates)
+
+/datum/event_admin_setup/disease_outbreak/prompt_admins()
+	var/candidate_count = candidate_check()
+	if(!candidate_check())
+		tgui_alert(usr, "There are no candidates eligible to recieve a disease!", "Error")
+		return ADMIN_CANCEL_EVENT
+	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
+
+	if(tgui_alert(usr, "Select a specific disease?", "Sickening behavior", list("Yes", "No")) == "Yes")
+		virus_type = tgui_input_list(usr, "Warning: Some of these are EXTREMELY dangerous.","Bacteria Hysteria", subtypesof(/datum/disease))
+
+/datum/event_admin_setup/disease_outbreak/apply_to_event(datum/round_event/disease_outbreak/event)
+	event.virus_type = virus_type
+
+/datum/event_admin_setup/disease_outbreak/advanced
+	///Admin selected custom severity rating for the event
+	var/max_severity
+	///Admin selected custom value for the maximum symptoms this virus should have
+	var/max_symptoms
+
+/datum/event_admin_setup/disease_outbreak/advanced/prompt_admins()
+	var/candidate_count = candidate_check()
+	if(!candidate_check())
+		tgui_alert(usr, "There are no candidates eligible to recieve a disease!", "Error")
+		return ADMIN_CANCEL_EVENT
+	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
+
+	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
+		max_severity = tgui_input_number(usr, "Select a custom severity for your virus!", "Plague Incorporation!", 3, 8)
+		max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 3, 15)
+
+/datum/event_admin_setup/disease_outbreak/advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
+	event.max_severity = max_severity
+	event.max_symptoms = max_symptoms

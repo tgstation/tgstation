@@ -182,6 +182,9 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS,
 		),
+	/obj/item/organ/internal/lungs = list(
+		"TRAIT_SPACEBREATHING" = TRAIT_SPACEBREATHING,
+		),
 	/obj/item/organ/internal/liver = list(
 		"TRAIT_LAW_ENFORCEMENT_METABOLISM" = TRAIT_LAW_ENFORCEMENT_METABOLISM,
 		"TRAIT_CULINARY_METABOLISM" = TRAIT_CULINARY_METABOLISM,
