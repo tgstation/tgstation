@@ -121,8 +121,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.unique_features = unique_features
 	new_dna.blood_type = blood_type
 	new_dna.features = features.Copy()
-	new_dna.species = new species.type
-	new_dna.species.species_traits = species.species_traits
+	new_dna.holder.set_species(species.type, icon_update = 0)
 	new_dna.real_name = real_name
 	// Mutations aren't gc managed, but they still aren't templates
 	// Let's do a proper copy
@@ -503,6 +502,16 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/has_dna()
 	return dna
 
+/// Returns TRUE if the mob is allowed to mutate via its DNA, or FALSE if otherwise.
+/// Only an organic Carbon with valid DNA may mutate; not robots, AIs, aliens, Ians, or other mobs.
+/mob/proc/can_mutate()
+	return FALSE
+
+/mob/living/carbon/can_mutate()
+	if(!(mob_biotypes & MOB_ORGANIC))
+		return FALSE
+	if(has_dna() && !HAS_TRAIT(src, TRAIT_GENELESS) && !HAS_TRAIT(src, TRAIT_BADDNA))
+		return TRUE
 
 /// Sets the DNA of the mob to the given DNA.
 /mob/living/carbon/human/proc/hardset_dna(unique_identity, list/mutation_index, list/default_mutation_genes, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/mutations, force_transfer_mutations)

@@ -152,6 +152,7 @@
 #include "objectives.dm"
 #include "orderable_items.dm"
 #include "operating_table.dm"
+#include "organ_set_bonus.dm"
 #include "outfit_sanity.dm"
 #include "paintings.dm"
 #include "pills.dm"

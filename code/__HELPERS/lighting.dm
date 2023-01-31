@@ -31,3 +31,31 @@
 	var/mutable_appearance/appearance = mutable_appearance(icon, icon_state, layer, offset_spokesman, EMISSIVE_PLANE, alpha, appearance_flags | EMISSIVE_APPEARANCE_FLAGS, offset_const)
 	appearance.color = GLOB.em_block_color
 	return appearance
+
+/// Takes a non area atom and a threshold
+/// Makes it block emissive with any pixels with more alpha then that threshold, with the rest allowing the light to pass
+/// Returns a list of objects, automatically added to your vis_contents, that apply this effect
+/// QDEL them when appropriate
+/proc/partially_block_emissives(atom/make_blocker, alpha_to_leave)
+	var/static/uid = 0
+	uid++
+	if(!make_blocker.render_target)
+		make_blocker.render_target = "partial_emissive_block_[uid]"
+
+	// First, we cut away a constant amount
+	var/cut_away = (alpha_to_leave - 1) / 255
+	var/atom/movable/render_step/color/alpha_threshold_down = new(make_blocker, make_blocker.render_target, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,-cut_away))
+	alpha_threshold_down.render_target = "*emissive_block_alpha_down_[uid]"
+	// Then we multiply what remains by the amount we took away
+	var/atom/movable/render_step/color/alpha_threshold_up = new(make_blocker, alpha_threshold_down.render_target, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,alpha_to_leave, 0,0,0,0))
+	alpha_threshold_up.render_target = "*emissive_block_alpha_up_[uid]"
+	// Now we just feed that into an emissive blocker
+	var/atom/movable/render_step/emissive_blocker/em_block = new(make_blocker, alpha_threshold_up.render_target)
+	var/list/hand_back = list()
+	hand_back += alpha_threshold_down
+	hand_back += alpha_threshold_up
+	hand_back += em_block
+	// Cast to movable so we can use vis_contents. will work for turfs, but not for areas
+	var/atom/movable/vis_cast = make_blocker
+	vis_cast.vis_contents += hand_back
+	return hand_back
