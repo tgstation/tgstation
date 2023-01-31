@@ -102,7 +102,7 @@ const PatientStateView = (props, context) => {
                 </>
               )}
             </LabeledList.Item>
-            {procedure.alternative_step && (
+            {!!data.alternative_step && (
               <LabeledList.Item label="Alternative Step">
                 {procedure.alternative_step}
                 {procedure.alt_chems_needed && (

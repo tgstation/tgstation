@@ -66,21 +66,16 @@ const ApcContent = (props, context) => {
   const adjustedCellChange = data.powerCellStatus / 100;
   if (data.failTime > 0) {
     return (
-      <NoticeBox info textAlign="center" mb={0}>
+      <NoticeBox>
         <b>
           <h3>SYSTEM FAILURE</h3>
         </b>
-        I/O regulators have malfunctioned! <br />
-        Awaiting system reboot.
+        <i>I/O regulators malfunction detected! Waiting for system reboot...</i>
         <br />
-        Executing software reboot in {data.failTime} seconds...
-        <br />
-        <br />
+        Automatic reboot in {data.failTime} seconds...
         <Button
           icon="sync"
           content="Reboot Now"
-          tooltip="Force an interface reset."
-          tooltipPosition="bottom"
           onClick={() => act('reboot')}
         />
       </NoticeBox>

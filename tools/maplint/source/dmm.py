@@ -2,10 +2,9 @@
 # by virtue of being read-only.
 import re
 from dataclasses import dataclass, field
-from typing import IO
 
 from .common import Constant, Filename, Null, Typepath
-from .error import MapParseError, MaplintError
+from .error import MaplintError
 
 REGEX_POP_ID = re.compile(r'^"(?P<key>.+)" = \($')
 REGEX_POP_CONTENT_HEADER = re.compile(r'^(?P<path>[/\w]+?)(?P<end>[{,)])$')
@@ -15,8 +14,6 @@ REGEX_VAR_EDIT = re.compile(r'^\t(?P<name>.+?) = (?P<definition>.+?);?$')
 @dataclass
 class Content:
     path: Typepath
-    filename: str
-    starting_line: int
     var_edits: dict[str, Constant] = field(default_factory = dict)
 
 @dataclass
@@ -40,22 +37,19 @@ class DMMParser:
     dmm: DMM
     line = 0
 
-    def __init__(self, reader: IO):
+    def __init__(self, reader):
         self.dmm = DMM()
         self.reader = reader
 
     def parse(self):
         if "dmm2tgm" not in self.next_line():
-            self.raise_error("Map isn't in TGM format. Consider using StrongDMM instead of Dream Maker.\n  Please also consider installing the map merge tools, found through Install.bat in the tools/hooks folder.")
+            raise MaplintError("Map isn't in TGM format. Consider using StrongDMM instead of Dream Maker.\n  Please also consider installing the map merge tools, found through Install.bat in the tools/hooks folder.")
 
-        try:
-            while self.parse_pop():
-                pass
+        while self.parse_pop():
+            pass
 
-            while self.parse_row():
-                pass
-        except MapParseError as error:
-            raise self.raise_error(error)
+        while self.parse_row():
+            pass
 
         return self.dmm
 
@@ -85,7 +79,7 @@ class DMMParser:
             if content_match is None:
                 self.raise_error("Pop content didn't lead to a path")
 
-            content = Content(Typepath(content_match.group("path")), self.reader.name, self.line)
+            content = Content(Typepath(content_match.group("path")))
             contents.append(content)
 
             content_end = content_match.group("end")
@@ -178,7 +172,7 @@ class DMMParser:
             self.raise_error(message)
 
     def raise_error(self, message):
-        raise MaplintError(message, self.reader.name, self.line)
+        raise MaplintError(f"{message} (line {self.line})")
 
-def parse_dmm(reader: IO):
+def parse_dmm(reader):
     return DMMParser(reader).parse()

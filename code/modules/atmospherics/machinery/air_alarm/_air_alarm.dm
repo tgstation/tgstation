@@ -158,15 +158,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		"value" = "[round(temp, 0.01)] Kelvin / [round(temp, 0.01) - T0C] Celcius",
 		"danger" = tlv_collection["temperature"].check_value(temp),
 	))
-	if(total_moles)
-		for(var/gas_path in environment.gases)
-			var/moles = environment.gases[gas_path][MOLES]
-			var/portion = moles / total_moles
-			data["envData"] += list(list(
-				"name" = GLOB.meta_gas_info[gas_path][META_GAS_NAME],
-				"value" = "[round(moles, 0.01)] moles / [round(100 * portion, 0.01)] % / [round(portion * pressure, 0.01)] kPa",
-				"danger" = tlv_collection[gas_path].check_value(portion * pressure),
-			))
+	for(var/gas_path in environment.gases)
+		var/moles = environment.gases[gas_path][MOLES]
+		var/portion = moles / total_moles
+		data["envData"] += list(list(
+			"name" = GLOB.meta_gas_info[gas_path][META_GAS_NAME],
+			"value" = "[round(moles, 0.01)] moles / [round(100 * portion, 0.01)] % / [round(portion * pressure, 0.01)] kPa",
+			"danger" = tlv_collection[gas_path].check_value(portion * pressure),
+		))
 
 	data["tlvSettings"] = list()
 	for(var/threshold in tlv_collection)
@@ -447,10 +446,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
 	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
-	if(total_moles)
-		for(var/gas_path in environment.gases)
-			var/moles = environment.gases[gas_path][MOLES]
-			danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
+	for(var/gas_path in environment.gases)
+		var/moles = environment.gases[gas_path][MOLES]
+		danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)
