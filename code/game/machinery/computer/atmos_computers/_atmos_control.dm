@@ -22,7 +22,7 @@
 /obj/machinery/computer/atmos_control/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	//special case for the station monitering console. We dont want to loose these chambers during reconnecting
-	if(!control)
+	if(!control && !isnull(atmos_chambers))
 		always_displayed_chambers = atmos_chambers.Copy()
 
 /// Reconnect only works for station based chambers.
