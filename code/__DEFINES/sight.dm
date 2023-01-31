@@ -54,6 +54,6 @@
 /// NOTE: this does not function with the SIDE_MAP map format. So we can't. :(
 //#define SEE_BLACKNESS (1<<10)
 
-/// Bitfield of sight flags that show things "inside" the blackness plane
-/// We've gotta alpha it down if we get this, cause otherwise the sight flag won't work
-#define BLACKNESS_CUTTING (SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_TURFS|SEE_TURFS)
+/// Bitfield of sight flags that show THINGS but no lighting
+/// Since lighting is an underlay on turfs, this is everything but that
+#define SEE_AVOID_TURF_BLACKNESS (SEE_MOBS|SEE_OBJS)

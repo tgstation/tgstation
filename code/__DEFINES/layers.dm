@@ -51,11 +51,12 @@
 #define EMISSIVE_PLANE 14
 #define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
 
-/// Masks the emissive plane
-#define EMISSIVE_MASK_PLANE 15
-#define EMISSIVE_MASK_RENDER_TARGET "*EMISSIVE_MASK_PLANE"
+#define RENDER_PLANE_LIGHTING 15
 
-#define RENDER_PLANE_LIGHTING 16
+/// Masks the lighting plane with turfs, so we never light up the void
+/// Failing that, masks emissives and the overlay lighting plane
+#define LIGHT_MASK_PLANE 16
+#define LIGHT_MASK_RENDER_TARGET "*LIGHT_MASK_PLANE"
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
