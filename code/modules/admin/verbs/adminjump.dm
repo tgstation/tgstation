@@ -19,8 +19,11 @@ ADMIN_VERB(game, jump_to_turf, "", NONE, turf/destination in world)
 	log_admin("[key_name(usr)] jumped to [AREACOORD(destination)]")
 	key_name_admin("[key_name(usr)] jumped to [AREACOORD(destination)]")
 
-ADMIN_VERB(game, jump_to_mob, "", NONE, mob/destination in world)
-	// we check for in world, destination cannot be in nullspace
+ADMIN_VERB(game, jump_to_mob, "", NONE, mob/destination)
+	destination ||= tgui_input_list(usr, "Select a mob to teleport to you", "Admin Jump", GLOB.mob_list - usr)
+	if(!destination)
+		return
+
 	usr.forceMove(get_turf(destination))
 	log_admin("[key_name(usr)] jumped to [key_name(destination)]")
 	message_admins("[key_name_admin(usr)] jumped to [ADMIN_LOOKUPFLW(destination)] at [AREACOORD(destination)]")
@@ -51,7 +54,11 @@ ADMIN_VERB(game, jump_to_player, "", NONE)
 	log_admin("[key_name(usr)] jumped to player [key_name(usr)]")
 	message_admins("[key_name_admin(usr)] jumped to player [key_name_admin(usr)]")
 
-ADMIN_VERB(game, get_mob, "", NONE, mob/teleportee in world)
+ADMIN_VERB(game, get_mob, "", NONE, mob/teleportee)
+	teleportee ||= tgui_input_list(usr, "Select a mob to teleport to you", "Admin Jump", GLOB.mob_list - usr)
+	if(!teleportee)
+		return
+
 	var/turf/destination = get_turf(usr)
 	teleportee.admin_teleport(destination)
 
