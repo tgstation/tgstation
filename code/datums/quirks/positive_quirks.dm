@@ -234,9 +234,8 @@
 		for(var/i in 1 to 2)
 			new /obj/item/poster/quirk/crew/random(src)
 		return
-	for(var/potential_poster in subtypesof(/obj/item/poster/quirk))
-		var/obj/item/poster/quirk/new_dept_poster = potential_poster
-		if(initial(new_dept_poster.quirk_poster_department) != department)
+	for(var/obj/item/poster/quirk/potential_poster as anything in subtypesof(/obj/item/poster/quirk))
+		if(initial(potential_poster.quirk_poster_department) != department)
 			continue
 		new potential_poster(src)
 
