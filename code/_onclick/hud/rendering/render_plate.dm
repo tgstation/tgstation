@@ -282,11 +282,6 @@
 		// Can't do it before cause it fucks with the filter
 		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, offset), relay_color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,1))
 
-/atom/movable/screen/plane_master/rendering_plate/mask_emissive/Initialize(mapload, datum/plane_master_group/home, offset)
-	. = ..()
-	// Uses a filter cause the alpha slider will fuck up colors and we want to be editable
-	add_filter("pump_alpha", 1, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,255, 0,0,0,0)))
-
 ///render plate for OOC stuff like ghosts, hud-screen effects, etc
 /atom/movable/screen/plane_master/rendering_plate/non_game
 	name = "Non-Game rendering plate"
