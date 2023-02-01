@@ -10,8 +10,8 @@ export const NtosEmojipedia = (props, context) => {
 
   let filtered_emoji_list = filter
     ? emoji_list.filter((emoji) => {
-        return emoji.name.toLowerCase().includes(filter.toLowerCase());
-      })
+      return emoji.name.toLowerCase().includes(filter.toLowerCase());
+    })
     : emoji_list;
   if (filtered_emoji_list.length === 0) {
     filtered_emoji_list = emoji_list;

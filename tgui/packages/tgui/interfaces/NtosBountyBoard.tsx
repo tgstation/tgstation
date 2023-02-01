@@ -1,5 +1,4 @@
 import { BountyBoardContent } from './BountyBoard';
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 export const NtosBountyBoard = (props, context) => {

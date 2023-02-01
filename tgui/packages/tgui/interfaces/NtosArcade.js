@@ -1,14 +1,5 @@
 import { resolveAsset } from '../assets';
-import { useBackend } from '../backend';
-import {
-  AnimatedNumber,
-  Box,
-  Button,
-  Grid,
-  LabeledList,
-  ProgressBar,
-  Section,
-} from '../components';
+import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosArcade = (props, context) => {
