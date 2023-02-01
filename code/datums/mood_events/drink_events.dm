@@ -13,14 +13,14 @@
 		attached_bodypart = human_owner.get_bodypart(blush_overlay.attached_body_zone)
 		if(attached_bodypart)
 			attached_bodypart.add_bodypart_overlay(blush_overlay)
-			human_owner.update_body()
+			human_owner.update_body_parts()
 
 /datum/mood_event/drunk/remove_effects()
 	// Stop displaying blush overlay
 	if(attached_bodypart)
 		attached_bodypart.remove_bodypart_overlay(blush_overlay)
 		if(attached_bodypart.owner) // Keep in mind that the user might have lost the attached bodypart by now
-			attached_bodypart.owner.update_body()
+			attached_bodypart.owner.update_body_parts()
 		else
 			attached_bodypart.update_icon_dropped()
 		attached_bodypart = null

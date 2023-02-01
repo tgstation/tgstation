@@ -177,7 +177,7 @@
 			if(!attached_bodypart)
 				return
 			attached_bodypart.add_bodypart_overlay(overlay)
-			human_user.update_body()
+			human_user.update_body_parts()
 		// Use a timer to remove the effect after the defined duration has passed
 		// The existing timer restarts if it is already running
 		addtimer(CALLBACK(src, PROC_REF(end_visual), user, attached_bodypart, overlay), overlay.emote_duration, TIMER_UNIQUE | TIMER_OVERRIDE)
@@ -196,7 +196,7 @@
 	if(!QDELETED(attached_bodypart))
 		attached_bodypart.remove_bodypart_overlay(overlay)
 		if(attached_bodypart.owner) // Keep in mind that the user might have lost the attached bodypart by now
-			attached_bodypart.owner.update_body()
+			attached_bodypart.owner.update_body_parts()
 		else
 			attached_bodypart.update_icon_dropped()
 	QDEL_NULL(overlay)
