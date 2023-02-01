@@ -19,7 +19,7 @@
 
 /obj/item/organ/internal/stomach/ethereal/on_remove(mob/living/carbon/stomach_owner)
 	UnregisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
-	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	UnregisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
 	stomach_owner.clear_mood_event("charge")
 	stomach_owner.clear_alert(ALERT_ETHEREAL_CHARGE)
 	stomach_owner.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
