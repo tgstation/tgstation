@@ -1,19 +1,20 @@
 /datum/mood_event/drunk
 	mood_change = 3
 	description = "Everything just feels better after a drink or two."
+	var/datum/bodypart_overlay/simple/emote/blush_visual = new /datum/bodypart_overlay/simple/emote/blush()
 
 /datum/mood_event/drunk/add_effects(param)
 	// Display blush visual
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		human_owner.get_bodypart(BODY_ZONE_HEAD).add_bodypart_overlay(new /datum/bodypart_overlay/simple/emote/blush())
+		human_owner.get_bodypart(blush_visual.attached_body_zone).add_bodypart_overlay(blush_visual)
 		human_owner.update_body()
 
 /datum/mood_event/drunk/remove_effects()
 	// Stop displaying blush visual
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		human_owner.get_bodypart(BODY_ZONE_HEAD).remove_bodypart_overlay(new /datum/bodypart_overlay/simple/emote/blush())
+		human_owner.get_bodypart(blush_visual.attached_body_zone).remove_bodypart_overlay(blush_visual)
 		human_owner.update_body()
 
 /datum/mood_event/quality_nice
