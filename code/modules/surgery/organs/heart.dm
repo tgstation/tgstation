@@ -143,7 +143,7 @@
 		return
 	to_chat(accursed, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
-/obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed)
+/obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
 	. = ..()
 	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
