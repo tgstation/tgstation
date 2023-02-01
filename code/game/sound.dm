@@ -254,7 +254,7 @@
 					'sound/machines/ping.ogg',
 					'sound/magic/Fireball.ogg',
 					'sound/misc/sadtrombone.ogg',
-					'sound/voice/beepsky/creep.ogg'
+					'sound/voice/beepsky/creep.ogg',
 					'sound/voice/beepsky/iamthelaw.ogg',
 					'sound/voice/hiss1.ogg',
 					'sound/weapons/bladeslice.ogg',
