@@ -108,3 +108,6 @@
 
 /turf/open/floor/glass/reinforced/plasma/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/glass/reinforced/plasma/telecomms
+	initial_gas_mix = TCOMMS_ATMOS
