@@ -4,30 +4,32 @@
 	/// The blush overlay to display when the owner is drunk
 	var/datum/bodypart_overlay/simple/emote/blush_overlay
 	/// The bodypart that the blush_overlay was applied to
-	var/obj/item/bodypart/attached_bodypart
+	var/datum/weakref/attached_bodypart
 
 /datum/mood_event/drunk/add_effects(param)
 	// Display blush overlay
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	attached_bodypart = human_owner.get_bodypart(BODY_ZONE_HEAD) // We can assume it goes on the head since we know it's the blush overlay
-	if(!attached_bodypart)
+	attached_bodypart = WEAKREF(human_owner.get_bodypart(BODY_ZONE_HEAD)) // We can assume it goes on the head since we know it's the blush overlay
+	var/obj/item/bodypart/referenced_bodypart = attached_bodypart.resolve()
+	if(!referenced_bodypart)
 		return
 	blush_overlay = new /datum/bodypart_overlay/simple/emote/blush()
-	attached_bodypart.add_bodypart_overlay(blush_overlay)
+	referenced_bodypart.add_bodypart_overlay(blush_overlay)
 	human_owner.update_body_parts()
 
 /datum/mood_event/drunk/remove_effects()
 	// Stop displaying blush overlay
-	if(!attached_bodypart)
+	var/obj/item/bodypart/referenced_bodypart = attached_bodypart.resolve()
+	if(!referenced_bodypart)
 		return
-	attached_bodypart.remove_bodypart_overlay(blush_overlay)
+	referenced_bodypart.remove_bodypart_overlay(blush_overlay)
 	QDEL_NULL(blush_overlay)
-	if(attached_bodypart.owner) // Keep in mind that the user might have lost the attached bodypart by now
-		attached_bodypart.owner.update_body_parts()
+	if(referenced_bodypart.owner) // Keep in mind that the user might have lost the attached bodypart by now
+		referenced_bodypart.owner.update_body_parts()
 	else
-		attached_bodypart.update_icon_dropped()
+		referenced_bodypart.update_icon_dropped()
 	attached_bodypart = null
 
 /datum/mood_event/quality_nice
