@@ -65,6 +65,7 @@
 		if(/obj/item/shard/plasma)
 			force = 11
 			throwforce = 21
+			custom_materials = list(/datum/material/iron=1000, /datum/material/glass=2000, /datum/material/plasma=750)
 			icon_prefix = "spearplasma"
 			force_unwielded = 11
 			force_wielded = 19
@@ -74,6 +75,7 @@
 			throwforce = 21
 			throw_range = 8
 			throw_speed = 5
+			custom_materials = list(/datum/material/iron=1000, /datum/material/glass=2000, /datum/material/titanium=750)
 			wound_bonus = -10
 			force_unwielded = 13
 			force_wielded = 18
@@ -84,6 +86,7 @@
 			throwforce = 22
 			throw_range = 9
 			throw_speed = 5
+			custom_materials = list(/datum/material/iron=1000, /datum/material/glass=2000, /datum/material/plasma=750, /datum/material/titanium=750)
 			wound_bonus = -10
 			bare_wound_bonus = 20
 			force_unwielded = 13
