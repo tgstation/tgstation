@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - admin: "Admins can now customize the crate type and landing zone of the stray drop pod event."
