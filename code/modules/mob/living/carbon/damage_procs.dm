@@ -32,7 +32,7 @@
 		if(TOX)
 			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			adjustOxyLoss(damage_amount, forced = forced)
+			adjustOxyLoss(damage_amount, forced = TRUE)
 		if(CLONE)
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)

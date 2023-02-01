@@ -28,7 +28,7 @@
 		if(TOX)
 			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			adjustOxyLoss(damage_amount, forced = forced)
+			adjustOxyLoss(damage_amount, forced = TRUE)
 		if(CLONE)
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
@@ -181,7 +181,7 @@
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = MOB_ORGANIC)
+/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = TRUE, required_biotype = MOB_ORGANIC)
 	if(!forced && (status_flags & GODMODE))
 		return
 	if(!forced && !(mob_biotypes & required_biotype))
@@ -192,10 +192,10 @@
 		updatehealth()
 
 
-/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
+/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = TRUE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
 		return
-	if(required_biotype && !(mob_biotypes & required_biotype))
+	if(!forced && !(mob_biotypes & required_biotype))
 		return
 	. = oxyloss
 	oxyloss = amount
@@ -209,7 +209,7 @@
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(required_biotype && !(mob_biotypes & required_biotype))
+	if(!forced && !(mob_biotypes & required_biotype))
 		return
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
@@ -219,7 +219,7 @@
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(required_biotype && !(mob_biotypes & required_biotype))
+	if(!forced && !(mob_biotypes & required_biotype))
 		return
 	toxloss = amount
 	if(updating_health)

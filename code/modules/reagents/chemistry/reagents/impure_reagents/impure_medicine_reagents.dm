@@ -43,7 +43,7 @@
 		if("tox")
 			owner.adjustToxLoss(-0.5, required_biotype = affected_biotype)
 		if("oxy")
-			owner.adjustOxyLoss(-0.5, required_biotype = affected_biotype)
+			owner.adjustOxyLoss(-0.5, forced = FALSE, required_biotype = affected_biotype)
 	..()
 
 // C2 medications
