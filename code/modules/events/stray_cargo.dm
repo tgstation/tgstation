@@ -16,16 +16,22 @@
 	var/pack_type_override
 
 /datum/event_admin_setup/stray_cargo/prompt_admins()
-	var/admin_targeted = tgui_alert(usr,"Aimed at current turf?", "Pod Targetting", list("Yes", "No"))
-	if(admin_targeted == "Yes")
-		landing_turf_override = get_turf(usr)
-	else
-		landing_turf_override = null
-	var/admin_selected_pack = tgui_alert(usr,"Select pod contents?", "Pod Contents", list("Yes", "No"))
-	if(admin_selected_pack == "Yes")
-		override_contents()
-	else
-		pack_type_override = null
+	var/admin_targeted = tgui_alert(usr,"Aimed at turf we're on?", "Pod Targetting", list("Yes", "No", "Cancel"))
+	switch(admin_targeted)
+		if("Yes")
+			landing_turf_override = get_turf(usr)
+		if("No")
+			landing_turf_override = null
+		else
+			return ADMIN_CANCEL_EVENT
+	var/admin_selected_pack = tgui_alert(usr,"Select pod contents?", "Pod Contents", list("Yes", "No", "Cancel"))
+	switch(admin_selected_pack)
+		if("Yes")
+			override_contents()
+		if("No")
+			pack_type_override = null
+		else
+			return ADMIN_CANCEL_EVENT
 	message_admins("[key_name_admin(usr)] has aimed a stray cargo pod at [landing_turf_override ? AREACOORD(landing_turf_override) : "a random location"]. The pod contents are [pack_type_override ? pack_type_override : "random"].")
 	log_admin("[key_name_admin(usr)] has aimed a stray cargo pod at [landing_turf_override ? AREACOORD(landing_turf_override) : "a random location"]. The pod contents are [pack_type_override ? pack_type_override : "random"].")
 
@@ -149,14 +155,14 @@
 	var/datum/supply_pack/misc/syndicate/custom_value/syndicate_pack = new
 	var/pack_telecrystals = tgui_input_number(usr, "Please input crate's value in telecrystals.", "Set Telecrystals.", 30)
 	if(isnull(pack_telecrystals))
-		pack_telecrystals = 30
+		return ADMIN_CANCEL_EVENT
 	var/list/possible_uplinks = list("Traitor" = UPLINK_TRAITORS, "Nuke Op" = UPLINK_NUKE_OPS, "Clown Op" = UPLINK_CLOWN_OPS)
 	var/uplink_type = tgui_input_list(usr, "Choose uplink to draw items from.", "Choose uplink type.", possible_uplinks)
 	var/selection
 	if(!isnull(uplink_type))
 		selection = possible_uplinks[uplink_type]
 	else
-		selection = UPLINK_TRAITORS
+		return ADMIN_CANCEL_EVENT
 	syndicate_pack.setup_contents(pack_telecrystals, selection)
 	pack_type_override = syndicate_pack
 
