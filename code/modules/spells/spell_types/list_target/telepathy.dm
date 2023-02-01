@@ -45,15 +45,17 @@
 	else
 		owner.balloon_alert(owner, "transmission blocked")
 		to_chat(owner, "<span class='warning'>Something has blocked your transmission!</span>")
-		failure_message_for_ghosts = " (blocked by antimagic)"
+		failure_message_for_ghosts = "<span class='[bold_telepathy_span]'> (blocked by antimagic)</span>"
 
 	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
 		if(!isobserver(ghost))
 			continue
 
 		var/from_link = FOLLOW_LINK(ghost, owner)
-		var/from_mob_name = "<span class='[bold_telepathy_span]'>[owner] [src]:</span>"
+		var/from_mob_name = "<span class='[bold_telepathy_span]'>[owner] [src]</span>"
+		from_mob_name += failure_message_for_ghosts
+		from_mob_name += "<span class='[bold_telepathy_span]'>:</span>"
 		var/to_link = FOLLOW_LINK(ghost, cast_on)
 		var/to_mob_name = span_name("[cast_on]")
 
-		to_chat(ghost, "[from_link] [from_mob_name] [formatted_message] [to_link] [to_mob_name][failure_message_for_ghosts]")
+		to_chat(ghost, "[from_link] [from_mob_name] [formatted_message] [to_link] [to_mob_name]")
