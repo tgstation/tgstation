@@ -58,12 +58,12 @@
 	var/can_message_change = FALSE
 	/// How long is the cooldown on the audio of the emote, if it has one?
 	var/audio_cooldown = 2 SECONDS
-	/// Typepath to the emote_overlay that should be used with this emote. (Leave empty for no overlay)
-	var/datum/bodypart_overlay/simple/emote/emote_visual
+	/// Typepath to a /bodypart_overlay/simple/emote subtype to display when emoting. (Leave empty for no overlay)
+	var/datum/bodypart_overlay/simple/emote/emote_overlay
 
-	/// Maps emote visuals to their users. Each user can have one at most and they are removed after use.
-	/// We need to track these instances so that they can be removed in case the user emotes again before the timer finishes.
-	var/list/emote_visual_instances
+	/// Maps emote_overlays to their users. Each user can have one at most and they are removed after use.
+	/// We need to track these instances so that they can still be removed if the user emotes again before the timer finishes.
+	var/list/emote_overlay_instances
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -76,8 +76,8 @@
 
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
-	if(emote_visual)
-		emote_visual_instances = new /list()
+	if(emote_overlay)
+		emote_overlay_instances = new /list()
 
 /**
  * Handles the modifications and execution of emotes.
@@ -152,27 +152,27 @@
 	return TRUE
 
 /**
- * Displays the emote_visual (if the emote has one) on the user and removes it after the duration specified by the emote_visual.
- * Creates an instance of the emote_visual and adds it to the emote_visual_instances with the user as key.
+ * Displays the emote_overlay (if the emote has one) on the user and removes it after the duration specified by the emote_overlay.
+ * Creates an instance of the emote_overlay and adds it to the emote_overlay_instances with the user as key.
  *
  * * Arguments:
  * * user - Person that is trying to send the emote.
  */
-/datum/emote/proc/display_visual(mob/user)
-	if(!emote_visual)
+/datum/emote/proc/display_overlay(mob/user)
+	if(!emote_overlay)
 		return
 	if(ishuman(user)) // Give them a visual effect if they're human
 		var/mob/living/carbon/human/human_user = user
 		var/obj/item/bodypart/attached_bodypart
 		var/datum/bodypart_overlay/simple/emote/overlay
-		if(user in emote_visual_instances) // If we already have a visual for this user:
-			overlay = emote_visual_instances[user] // Reference the existing one so we can still delete it later
+		if(user in emote_overlay_instances) // If we already have a visual for this user:
+			overlay = emote_overlay_instances[user] // Reference the existing one so we can still delete it later
 			attached_bodypart = human_user.get_bodypart(overlay.attached_body_zone)
 			if(!attached_bodypart)
 				return
 		else // Otherwise we make a new one and apply it to the user
-			overlay = new emote_visual()
-			emote_visual_instances[user] = overlay
+			overlay = new emote_overlay()
+			emote_overlay_instances[user] = overlay
 			attached_bodypart = human_user.get_bodypart(overlay.attached_body_zone)
 			if(!attached_bodypart)
 				return
@@ -183,16 +183,16 @@
 		addtimer(CALLBACK(src, PROC_REF(end_visual), user, attached_bodypart, overlay), overlay.emote_duration, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /**
- * Removes the emote_visual from the bodypart. Called as callback by display_visual().
- * Removes the emote_visual instance from emote_visual_instances and deletes it.
+ * Removes the emote_overlay from the bodypart. Called as callback by display_overlay().
+ * Removes the emote_overlay instance from emote_overlay_instances and deletes it.
  *
  * * Arguments:
  * * user - Person that sent the emote.
  * * attached_bodypart - Bodypart that the overlay is attached to.
- * * overlay - The emote_visual instance that is being removed.
+ * * overlay - The emote_overlay instance that is being removed.
  */
 /datum/emote/proc/end_visual(mob/user, obj/item/bodypart/attached_bodypart, datum/bodypart_overlay/overlay)
-	emote_visual_instances -= user
+	emote_overlay_instances -= user
 	if(!QDELETED(attached_bodypart))
 		attached_bodypart.remove_bodypart_overlay(overlay)
 		if(attached_bodypart.owner) // Keep in mind that the user might have lost the attached bodypart by now

@@ -1,11 +1,11 @@
-///Variant of bodypart_overlay for displaying emote overlays. Emotes can use a path to one of these for their emote_visual field to display it after emoting.
+///Variant of bodypart_overlay for displaying emote overlays. Emotes can use a path to one of these for their emote_overlay field to display it after emoting.
 /datum/bodypart_overlay/simple/emote
 	icon = 'icons/mob/species/human/emote_visuals.dmi'
 	///The offset define to use with the overlay (none by default), should correspond with a list(0,0) in a species' offset_features
 	var/offset
-	///X offset of the overlay image, stored here so we can know this even after the owner loses the bodypart we're on
+	///X offset of the overlay image, stored here so we can access this even after the owner loses the bodypart we're on
 	var/offset_x = 0
-	///Y offset of the overlay image, stored here so we can know this even after the owner loses the bodypart we're on
+	///Y offset of the overlay image, stored here so we can access this even after the owner loses the bodypart we're on
 	var/offset_y = 0
 
 	///The time it should take for the overlay to be removed after emoting
