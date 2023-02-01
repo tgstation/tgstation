@@ -70,12 +70,20 @@
 	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 
 /obj/machinery/door/window/tram/left
+	associated_lift = MAIN_STATION_TRAM
 	icon_state = "left"
 	base_state = "left"
 
 /obj/machinery/door/window/tram/right
+	associated_lift = MAIN_STATION_TRAM
 	icon_state = "right"
 	base_state = "right"
+
+/obj/machinery/door/window/tram/hilbert
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	associated_lift = HILBERT_TRAM
+	icon_state = "windoor"
+	base_state = "windoor"
 
 /obj/machinery/door/window/tram/proc/find_tram()
 	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
@@ -85,7 +93,6 @@
 /obj/machinery/door/window/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
-	associated_lift = MAIN_STATION_TRAM
 	INVOKE_ASYNC(src, PROC_REF(open))
 	find_tram()
 
