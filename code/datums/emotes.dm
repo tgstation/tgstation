@@ -161,26 +161,28 @@
 /datum/emote/proc/display_overlay(mob/user)
 	if(!emote_overlay)
 		return
-	if(ishuman(user)) // Give them a visual effect if they're human
-		var/mob/living/carbon/human/human_user = user
-		var/obj/item/bodypart/attached_bodypart
-		var/datum/bodypart_overlay/simple/emote/overlay
-		if(user in emote_overlay_instances) // If we already have a visual for this user:
-			overlay = emote_overlay_instances[user] // Reference the existing one so we can still delete it later
-			attached_bodypart = human_user.get_bodypart(overlay.attached_body_zone)
-			if(!attached_bodypart)
-				return
-		else // Otherwise we make a new one and apply it to the user
-			overlay = new emote_overlay()
-			emote_overlay_instances[user] = overlay
-			attached_bodypart = human_user.get_bodypart(overlay.attached_body_zone)
-			if(!attached_bodypart)
-				return
-			attached_bodypart.add_bodypart_overlay(overlay)
-			human_user.update_body_parts()
-		// Use a timer to remove the effect after the defined duration has passed
-		// The existing timer restarts if it is already running
-		addtimer(CALLBACK(src, PROC_REF(end_visual), user, attached_bodypart, overlay), overlay.emote_duration, TIMER_UNIQUE | TIMER_OVERRIDE)
+	if(!ishuman(user))
+		return
+	// Give them a visual effect if they're human
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/bodypart/attached_bodypart
+	var/datum/bodypart_overlay/simple/emote/overlay
+	if(user in emote_overlay_instances) // If we already have a visual for this user:
+		overlay = emote_overlay_instances[user] // Reference the existing one so we can still delete it later
+		attached_bodypart = human_user.get_bodypart(overlay.attached_body_zone)
+		if(!attached_bodypart)
+			return
+	else // Otherwise we make a new one and apply it to the user
+		overlay = new emote_overlay()
+		emote_overlay_instances[user] = overlay
+		attached_bodypart = human_user.get_bodypart(overlay.attached_body_zone)
+		if(!attached_bodypart)
+			return
+		attached_bodypart.add_bodypart_overlay(overlay)
+		human_user.update_body_parts()
+	// Use a timer to remove the effect after the defined duration has passed
+	// The existing timer restarts if it is already running
+	addtimer(CALLBACK(src, PROC_REF(end_visual), user, attached_bodypart, overlay), overlay.emote_duration, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /**
  * Removes the emote_overlay from the bodypart. Called as callback by display_overlay().
