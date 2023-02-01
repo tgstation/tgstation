@@ -63,8 +63,8 @@
 
 	return ..()
 
-/obj/item/organ/external/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
-	var/obj/item/bodypart/limb = reciever.get_bodypart(deprecise_zone(zone))
+/obj/item/organ/external/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	var/obj/item/bodypart/limb = receiver.get_bodypart(deprecise_zone(zone))
 
 	if(!limb)
 		return FALSE
@@ -76,16 +76,16 @@
 
 	if(bodypart_overlay.imprint_on_next_insertion) //We only want this set *once*
 
-		bodypart_overlay.set_appearance_from_name(reciever.dna.features[bodypart_overlay.feature_key])
+		bodypart_overlay.set_appearance_from_name(receiver.dna.features[bodypart_overlay.feature_key])
 		bodypart_overlay.imprint_on_next_insertion = FALSE
 
 	ownerlimb = limb
 	add_to_limb(ownerlimb)
 
 	if(external_bodytypes)
-		limb.synchronize_bodytypes(reciever)
+		limb.synchronize_bodytypes(receiver)
 
-	reciever.update_body_parts()
+	receiver.update_body_parts()
 
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
@@ -261,11 +261,11 @@
 	///Store our old datum here for if our antennae are healed
 	var/original_sprite_datum
 
-/obj/item/organ/external/antennae/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+/obj/item/organ/external/antennae/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 
-	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_antennae))
-	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_antennae))
+	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_antennae))
+	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_antennae))
 
 /obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()

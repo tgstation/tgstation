@@ -401,7 +401,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if(info.type == /datum/pipe_info/sensor)
 				var/datum/pipe_info/sensor/sensor_info = info
 				var/obj/machinery/air_sensor/sensor = sensor_info.id
-				if(GLOB.objects_by_id_tag[initial(sensor.chamber_id) + "_sensor"] != null)
+				if(GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(initial(sensor.chamber_id))] != null)
 					continue
 
 			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))

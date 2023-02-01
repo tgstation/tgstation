@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes:
+  - qol: "Revenant monologuing is now the same color as deadchat."

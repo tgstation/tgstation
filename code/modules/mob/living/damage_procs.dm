@@ -184,7 +184,7 @@
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = MOB_ORGANIC)
 	if(!forced && (status_flags & GODMODE))
 		return
-	if(!(mob_biotypes & required_biotype))
+	if(!forced && !(mob_biotypes & required_biotype))
 		return
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
