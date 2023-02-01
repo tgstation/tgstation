@@ -14,7 +14,7 @@
 	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
-/obj/item/organ/internal/brain/psyker/on_remove(mob/living/carbon/removed_from
+/obj/item/organ/internal/brain/psyker/on_remove(mob/living/carbon/removed_from)
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
