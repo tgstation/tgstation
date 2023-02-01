@@ -323,6 +323,7 @@
 				gas_breathed = handle_suffocation(breather, co2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
 				breathe_gas_volume(breath_gases, /datum/gas/carbon_dioxide, /datum/gas/oxygen, volume = gas_breathed)
 			else
+				// No amount of CO2, just suffocate
 				gas_breathed = handle_suffocation(breather, co2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
 		else
 			// Enough CO2 to breathe.
@@ -358,7 +359,7 @@
 				gas_breathed = handle_suffocation(breather, plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
 				breathe_gas_volume(breath_gases, /datum/gas/plasma, /datum/gas/carbon_dioxide, volume = gas_breathed)
 			else
-				// no partial pressure, just suffocate
+				// No amount of plasma, just suffocate
 				gas_breathed = handle_suffocation(breather, plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
 		else
 			// Enough Plasma to breathe.
