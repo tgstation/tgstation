@@ -57,7 +57,7 @@
 /datum/round_event/stray_cargo/setup()
 	start_when = rand(20, 40)
 	if(admin_override_turf)
-		impact_area = get_turf(admin_override_turf)
+		impact_area = get_area(admin_override_turf)
 	else
 		impact_area = find_event_area()
 	if(!impact_area)
