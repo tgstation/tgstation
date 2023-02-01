@@ -78,6 +78,7 @@
 	mob/living/user,
 )
 
+	context[SCREENTIP_CONTEXT_RMB] = "Make & Store seeds"
 	if(held_item?.get_plant_seed())
 		context[SCREENTIP_CONTEXT_LMB] = "Make seeds"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -136,11 +137,11 @@
 		return TRUE
 
 	if(seedify(attacking_item, -1, src, user))
-		//find all seeds lying on the turf and add them to the machine
-		var/obj/item/seeds/to_store
-		while((to_store = locate(/obj/item/seeds, loc)) != null)
-			add_seed(to_store, null)
-
+		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+			//find all seeds lying on the turf and add them to the machine
+			var/obj/item/seeds/to_store
+			while((to_store = locate(/obj/item/seeds, loc)) != null)
+				add_seed(to_store, null)
 		to_chat(user, span_notice("You extract some seeds."))
 		return TRUE
 
@@ -160,6 +161,10 @@
 		return TRUE
 
 	return ..()
+
+/obj/machinery/seed_extractor/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+
 
 /**
  * Generate seed string
