@@ -108,11 +108,6 @@
 
 	return to_add
 
-/datum/species/vampire/randomize_active_underwear_only(mob/living/carbon/human/human_mob)
-	human_mob.undershirt = random_undershirt(human_mob.gender)
-	human_mob.underwear = random_underwear(human_mob.gender)
-	human_mob.socks = random_socks(human_mob.gender)
-
 // Vampire blood is special, so it needs to be handled with its own entry.
 /datum/species/vampire/create_pref_blood_perks()
 	var/list/to_add = list()
