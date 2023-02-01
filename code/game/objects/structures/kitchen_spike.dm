@@ -9,6 +9,11 @@
 	anchored = FALSE
 	max_integrity = 200
 
+/obj/structure/kitchenspike_frame/examine(mob/user)
+	. = ..()
+	. += "Deconstruct with a welding tool to yield [MEATSPIKE_IRONROD_REQUIREMENT] iron sheets"
+	. += "Use [MEATSPIKE_IRONROD_REQUIREMENT] iron rods on it to create a Meat Spike"
+
 /obj/structure/kitchenspike_frame/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 0))
 		return FALSE
@@ -37,6 +42,8 @@
 		var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
 		transfer_fingerprints_to(new_meatspike)
 		qdel(src)
+		return
+	balloon_alert(user, "Need [MEATSPIKE_IRONROD_REQUIREMENT] iron rods for Spikes")
 
 /obj/structure/kitchenspike
 	name = "meat spike"
@@ -48,6 +55,11 @@
 	buckle_lying = FALSE
 	can_buckle = TRUE
 	max_integrity = 250
+
+/obj/structure/kitchenspike/examine(mob/user)
+	. = ..()
+	. += "Drag a mob onto it to hook it in place"
+	. += "Use a crowbar to pry out the spikes"
 
 /obj/structure/kitchenspike/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
