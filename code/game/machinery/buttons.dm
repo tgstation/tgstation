@@ -145,6 +145,8 @@
 
 /obj/machinery/button/examine(mob/user)
 	. = ..()
+	if(!panel_open)
+		return
 	if(panel_open && device)
 		. += span_notice("There is \a [device] inside, which could be removed with an <b>empty hand</b>.")
 	if(panel_open && board)
