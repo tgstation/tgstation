@@ -1,14 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import {
-  Box,
-  Button,
-  Dimmer,
-  Icon,
-  Section,
-  Stack,
-  Input,
-} from '../components';
+import { Box, Button, Dimmer, Icon, Section, Stack, Input } from '../components';
 import { NtosWindow } from '../layouts';
 
 const NoIDDimmer = (props, context) => {

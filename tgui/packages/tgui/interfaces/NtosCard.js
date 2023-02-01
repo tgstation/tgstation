@@ -1,13 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  Dropdown,
-  Input,
-  NumberInput,
-  Section,
-  Stack,
-} from '../components';
+import { Box, Button, Dropdown, Input, NumberInput, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 

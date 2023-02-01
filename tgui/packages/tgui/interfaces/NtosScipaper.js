@@ -1,20 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  BlockQuote,
-  Button,
-  Collapsible,
-  Dropdown,
-  Input,
-  LabeledList,
-  Section,
-  Stack,
-  Tabs,
-  Box,
-  Table,
-  NoticeBox,
-  Tooltip,
-  Icon,
-} from '../components';
+import { BlockQuote, Button, Collapsible, Dropdown, Input, LabeledList, Section, Stack, Tabs, Box, Table, NoticeBox, Tooltip, Icon } from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { NtosWindow } from '../layouts';
 

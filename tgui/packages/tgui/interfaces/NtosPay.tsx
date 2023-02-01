@@ -1,17 +1,6 @@
 import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
-import {
-  Stack,
-  Section,
-  Box,
-  Button,
-  Input,
-  Table,
-  Tooltip,
-  NoticeBox,
-  Divider,
-  RestrictedInput,
-} from '../components';
+import { Stack, Section, Box, Button, Input, Table, Tooltip, NoticeBox, Divider, RestrictedInput } from '../components';
 
 type Data = {
   name: string;

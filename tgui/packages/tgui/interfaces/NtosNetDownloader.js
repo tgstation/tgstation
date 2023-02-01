@@ -1,16 +1,6 @@
 import { scale, toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Button,
-  Stack,
-  Icon,
-  LabeledList,
-  NoticeBox,
-  ProgressBar,
-  Section,
-  Tabs,
-} from '../components';
+import { Box, Button, Stack, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
 import { NtosWindow } from '../layouts';
@@ -187,17 +177,17 @@ const Program = (props, context) => {
                   program.installed
                     ? 'good'
                     : !program.compatible
-                    ? 'bad'
-                    : 'grey'
+                      ? 'bad'
+                      : 'grey'
                 }
                 content={
                   program.installed
                     ? 'Installed'
                     : !program.compatible
-                    ? 'Incompatible'
-                    : !program.access
-                    ? 'No Access'
-                    : 'No Space'
+                      ? 'Incompatible'
+                      : !program.access
+                        ? 'No Access'
+                        : 'No Space'
                 }
               />
             )}

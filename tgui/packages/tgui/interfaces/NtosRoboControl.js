@@ -1,14 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  Dropdown,
-  LabeledList,
-  ProgressBar,
-  Section,
-  Stack,
-  Tabs,
-} from '../components';
+import { Box, Button, Dropdown, LabeledList, ProgressBar, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 const getMuleByRef = (mules, ref) => {
