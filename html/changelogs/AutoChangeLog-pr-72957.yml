@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "RPD not highlight a single variant option in its UI"
+  - bugfix: "heat exchange manifolds not displaying the right sprites for its layer"
+  - bugfix: "stack components inside machines not getting garbage collected"
