@@ -128,7 +128,7 @@
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 6,
-		/datum/reagent/liquidgibs = 3,
+		/datum/reagent/consumable/liquidgibs = 3,
 	)
 	tastes = list("noodles" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES

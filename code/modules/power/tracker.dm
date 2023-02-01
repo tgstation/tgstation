@@ -43,12 +43,15 @@
 	SET_PLANE(tracker_dish_edge, PLANE_TO_TRUE(tracker_dish_edge.plane), new_turf)
 	SET_PLANE(tracker_dish, PLANE_TO_TRUE(tracker_dish.plane), new_turf)
 
+/obj/effect/overlay/tracker
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
+	appearance_flags = TILE_BOUND
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	layer = FLY_LAYER
+
 /obj/machinery/power/tracker/proc/add_panel_overlay(icon_state, z_offset)
 	var/obj/effect/overlay/overlay = new()
-	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
-	overlay.appearance_flags = TILE_BOUND
 	overlay.icon_state = icon_state
-	overlay.layer = FLY_LAYER
 	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
 	overlay.pixel_z = z_offset
 	vis_contents += overlay

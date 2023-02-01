@@ -1,0 +1,6 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - rscadd: "Space now makes things in it starlight faintly blue"
+  - bugfix: "Glass floors that display space now properly let space shine through them, rather then hiding it in the dark"
+  - rscadd: "Glass floors above space now glow faintly depending on their glass type"

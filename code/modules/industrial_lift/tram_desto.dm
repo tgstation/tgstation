@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(tram_signs)
+
 /obj/machinery/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
@@ -32,8 +34,10 @@
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
+		GLOB.tram_signs += src
 
 /obj/machinery/destination_sign/Destroy()
+	GLOB.tram_signs -= src
 	. = ..()
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()

@@ -3,11 +3,15 @@ from typing import Optional
 
 from .common import Constant, Typepath
 from .dmm import DMM, Content
-from .error import MaplintError
+from .error import MaplintError, MapParseError
 
 def expect(condition, message):
     if not condition:
-        raise MaplintError(message)
+        raise MapParseError(message)
+
+"""Create an error linked to a specific content instance"""
+def fail_content(content: Content, message: str) -> MaplintError:
+    return MaplintError(message, content.filename, content.starting_line)
 
 class TypepathExtra:
     typepath: Typepath
@@ -99,9 +103,9 @@ def extract_choices(data, key) -> Optional[Choices]:
             pattern = constants_data.pop("pattern")
             return re.compile(pattern)
 
-        raise MaplintError(f"Unknown key in {key}: {', '.join(constants_data.keys())}.")
+        raise MapParseError(f"Unknown key in {key}: {', '.join(constants_data.keys())}.")
 
-    raise MaplintError(f"{key} must be a list of constants, or a pattern")
+    raise MapParseError(f"{key} must be a list of constants, or a pattern")
 
 class BannedVariable:
     variable: str
@@ -119,7 +123,7 @@ class BannedVariable:
 
         expect(len(data) == 0, f"Unknown key in banned variable {variable}: {', '.join(data.keys())}.")
 
-    def run(self, identified: Content):
+    def run(self, identified: Content) -> str:
         if identified.var_edits[self.variable] is None:
             return None
 
@@ -179,22 +183,22 @@ class Rules:
 
         expect(len(data) == 0, f"Unknown lint rules: {', '.join(data.keys())}.")
 
-    def run(self, identified: Content, contents: list[Content], identified_index) -> list[str]:
-        failures = []
+    def run(self, identified: Content, contents: list[Content], identified_index) -> list[MaplintError]:
+        failures: list[MaplintError] = []
 
         if self.banned:
-            failures.append(f"Typepath {identified.path} is banned.")
+            failures.append(fail_content(identified, f"Typepath {identified.path} is banned."))
 
         for banned_neighbor in self.banned_neighbors:
             for neighbor in contents[:identified_index] + contents[identified_index + 1:]:
                 if not banned_neighbor.matches(identified, neighbor):
                     continue
 
-                failures.append(f"Typepath {identified.path} has a banned neighbor: {neighbor.path}")
+                failures.append(fail_content(identified, f"Typepath {identified.path} has a banned neighbor: {neighbor.path}"))
 
         if self.banned_variables == True:
             if len(identified.var_edits) > 0:
-                failures.append(f"Typepath {identified.path} should not have any variable edits.")
+                failures.append(fail_content(identified, f"Typepath {identified.path} should not have any variable edits."))
         else:
             assert isinstance(self.banned_variables, list)
             for banned_variable in self.banned_variables:
@@ -202,7 +206,7 @@ class Rules:
                     ban_reason = banned_variable.run(identified)
                     if ban_reason is None:
                         continue
-                    failures.append(f"Typepath {identified.path} has a banned variable (set to {identified.var_edits[banned_variable.variable]}): {banned_variable.variable}. {ban_reason}")
+                    failures.append(fail_content(identified, f"Typepath {identified.path} has a banned variable (set to {identified.var_edits[banned_variable.variable]}): {banned_variable.variable}. {ban_reason}"))
 
         return failures
 
@@ -223,8 +227,8 @@ class Lint:
         for typepath, rules in data.items():
             self.rules[TypepathExtra(typepath)] = Rules(rules)
 
-    def run(self, map_data: DMM):
-        results = []
+    def run(self, map_data: DMM) -> list[MaplintError]:
+        all_failures: list[MaplintError] = []
         (width, height) = map_data.size()
 
         for pop, contents in map_data.pops.items():
@@ -256,6 +260,10 @@ class Lint:
                         coordinate_texts.append(f"and {leftover_coordinates} more")
 
                     for failure in failures:
-                        results.append(f"{failure}\n  Found at pop {pop} (found in {', '.join(coordinate_texts)})")
+                        if self.help is not None:
+                            failure.message += f"\n  {self.help}"
+                        failure.coordinates = ', '.join(coordinate_texts)
+                        failure.pop_id = pop
+                        all_failures.append(failure)
 
-        return list(set(results))
+        return list(set(all_failures))
