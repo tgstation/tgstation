@@ -262,7 +262,6 @@
 	crate_type = /obj/structure/closet/crate
 	///Total TC worth of contained uplink items
 	var/crate_value = 30
-	var/uplink_flag = UPLINK_TRAITORS
 	///What uplink the contents are pulled from
 	var/contents_uplink_type = UPLINK_TRAITORS
 
