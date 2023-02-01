@@ -224,10 +224,8 @@
 			final_paper_text += "<td>[crime.author]</td>"
 			final_paper_text += "<td>[crime.time]</td>"
 		else
-			final_paper_text += "<td>--REDACTED--</td>"
-			final_paper_text += "<td>--REDACTED--</td>"
-			final_paper_text += "<td>--REDACTED--</td>"
-			final_paper_text += "<td>--REDACTED--</td>"
+			for(var/i in 1 to 4)
+				final_paper_text += "<td>--REDACTED--</td>"
 		final_paper_text += "</tr>"
 	final_paper_text += "</table><br><br>"
 
