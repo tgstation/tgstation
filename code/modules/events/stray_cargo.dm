@@ -26,8 +26,8 @@
 		override_contents()
 	else
 		pack_type_override = null
-	message_admins("[key_name_admin(usr)] has aimed a stray cargo pod at [AREACOORD(landing_turf_override)]. The pod contains [pack_type_override].")
-	log_admin("[key_name_admin(usr)] has aimed a stray cargo pod at [AREACOORD(landing_turf_override)]. The pod contains [pack_type_override].")
+	message_admins("[key_name_admin(usr)] has aimed a stray cargo pod at [landing_turf_override ? AREACOORD(landing_turf_override) : "a random location"]. The pod contents are [pack_type_override ? pack_type_override : "random"].")
+	log_admin("[key_name_admin(usr)] has aimed a stray cargo pod at [landing_turf_override ? AREACOORD(landing_turf_override) : "a random location"]. The pod contents are [pack_type_override ? pack_type_override : "random"].")
 
 /datum/event_admin_setup/stray_cargo/proc/override_contents()
 	pack_type_override = tgui_input_list(usr, "Choose a cargo crate to drop.", "Choose pod contents.", sort_list(subtypesof(/datum/supply_pack), /proc/cmp_typepaths_asc))
