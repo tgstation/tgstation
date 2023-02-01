@@ -57,7 +57,7 @@
 /datum/round_event/stray_cargo/setup()
 	start_when = rand(20, 40)
 	if(admin_override_turf)
-		impact_area = admin_override_turf.loc
+		impact_area = get_turf(admin_override_turf)
 	else
 		impact_area = find_event_area()
 	if(!impact_area)
@@ -94,15 +94,15 @@
 			pack_type = pick(possible_pack_types)
 		else
 			pack_type = pick(stray_spawnable_supply_packs)
-	var/datum/supply_pack/SP
+	var/datum/supply_pack/supply_pack
 	if(ispath(pack_type, /datum/supply_pack))
-		SP = new pack_type
+		supply_pack = new pack_type
 	else  // treat this as a supply pack id and resolving it with SSshuttle
 		if(admin_override_contents)
-			SP = admin_override_contents //Syndicate crates create a new datum while being customized which will result in this being triggered. Outside of this situation this should never trigger
+			supply_pack = admin_override_contents //Syndicate crates create a new datum while being customized which will result in this being triggered. Outside of this situation this should never trigger
 		else
-			SP = SSshuttle.supply_packs[pack_type]
-	var/obj/structure/closet/crate/crate = SP.generate(null)
+			supply_pack = SSshuttle.supply_packs[pack_type]
+	var/obj/structure/closet/crate/crate = supply_pack.generate(null)
 	if(crate) //empty supply packs are a thing! get memed on.
 		crate.locked = FALSE //Unlock secure crates
 		crate.update_appearance()
@@ -152,8 +152,10 @@
 		pack_telecrystals = 30
 	var/list/possible_uplinks = list("Traitor" = UPLINK_TRAITORS, "Nuke Op" = UPLINK_NUKE_OPS, "Clown Op" = UPLINK_CLOWN_OPS)
 	var/uplink_type = tgui_input_list(usr, "Choose uplink to draw items from.", "Choose uplink type.", possible_uplinks)
-	var/selection = possible_uplinks[uplink_type]
-	if(isnull(selection))
+	var/selection
+	if(!isnull(uplink_type))
+		selection = possible_uplinks[uplink_type]
+	else
 		selection = UPLINK_TRAITORS
 	syndicate_pack.setup_contents(pack_telecrystals, selection)
 	pack_type_override = syndicate_pack
