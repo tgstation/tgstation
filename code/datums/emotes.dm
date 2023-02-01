@@ -77,7 +77,7 @@
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 	if(emote_overlay)
-		emote_overlay_instances = new /list()
+		emote_overlay_instances = list()
 
 /**
  * Handles the modifications and execution of emotes.
