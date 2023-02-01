@@ -16,31 +16,32 @@
 	var/casting = FALSE
 	/// List of prank implements you can find in your pockets
 	var/static/list/clown_items = list(
-		/obj/item/grown/bananapeel = 5,
-		/obj/item/food/pie/cream = 5,
 		/obj/item/bikehorn = 5,
-		/obj/item/toy/waterballoon = 5,
-		/obj/item/toy/snappop = 5,
-		/obj/item/assembly/mousetrap = 3,
+		/obj/item/food/pie/cream = 5,
+		/obj/item/grown/bananapeel = 5,
 		/obj/item/toy/balloon = 3,
-		/obj/item/stack/tile/fakepit/loaded = 2,
-		/obj/item/stack/tile/fakespace/loaded = 2,
-		/obj/item/stack/tile/fakeice/loaded = 2,
+		/obj/item/toy/snappop = 5,
+		/obj/item/toy/waterballoon = 5,
+		/obj/item/assembly/mousetrap = 3,
+		/obj/item/bikehorn/airhorn = 2,
 		/obj/item/reagent_containers/cup/soda_cans/canned_laughter = 2,
 		/obj/item/soap = 2,
-		/obj/item/bikehorn/airhorn = 2,
-		/obj/item/toy/spinningtoy = 2,
+		/obj/item/stack/tile/fakeice/loaded = 2,
+		/obj/item/stack/tile/fakepit/loaded = 2,
+		/obj/item/stack/tile/fakespace/loaded = 2,
 		/obj/item/storage/box/heretic_box = 2,
-		/obj/item/toy/gun = 2,
-		/obj/item/toy/foamblade = 2,
 		/obj/item/toy/balloon/corgi = 2,
-		/obj/item/restraints/legcuffs/beartrap = 1,
-		/obj/item/toy/crayon/spraycan/lubecan = 1,
-		/obj/item/toy/dummy = 1,
+		/obj/item/toy/foamblade = 2,
+		/obj/item/toy/gun = 2,
+		/obj/item/toy/spinningtoy = 2,
 		/obj/item/bikehorn/golden = 1,
 		/obj/item/dualsaber/toy = 1,
+		/obj/item/restraints/legcuffs/beartrap = 1,
 		/obj/item/toy/balloon/syndicate = 1,
-		/obj/item/toy/balloon/arrest = 1, )
+		/obj/item/toy/balloon/arrest = 1,
+		/obj/item/toy/crayon/spraycan/lubecan = 1,
+		/obj/item/toy/dummy = 1,
+	)
 
 /datum/action/cooldown/spell/clown_pockets/cast(mob/cast_on)
 	. = ..()
