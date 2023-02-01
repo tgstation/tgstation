@@ -1638,6 +1638,7 @@
 #include "code\game\objects\effects\phased_mob.dm"
 #include "code\game\objects\effects\portals.dm"
 #include "code\game\objects\effects\poster.dm"
+#include "code\game\objects\effects\poster_motivational.dm"
 #include "code\game\objects\effects\powerup.dm"
 #include "code\game\objects\effects\spiderwebs.dm"
 #include "code\game\objects\effects\step_triggers.dm"

@@ -52,8 +52,13 @@
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
 	desc = "Strange-looking hat-wear. Makes you want to cast fireballs."
-	icon_state = "marisa"
+	icon_state = "witch_hat"
+	greyscale_colors = "#343640#e0cab8#e0cab8"
+	greyscale_config = /datum/greyscale_config/witch_hat
+	greyscale_config_worn = /datum/greyscale_config/witch_hat_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 	dog_fashion = null
+
 
 /obj/item/clothing/head/wizard/magus
 	name = "\improper Magus helm"
@@ -153,8 +158,6 @@
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "witch hat"
-	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
-	icon_state = "marisa"
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
