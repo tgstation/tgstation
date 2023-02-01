@@ -21,8 +21,8 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 
 ///helper function to append all directions into an single bit flag
 /obj/machinery/atmospherics/pipe/smart/proc/append_directions(list/spanning_directions)
-	var/bit_flag = 0
-	for(var/i in 1 to spanning_directions.len)
+	var/bit_flag = NONE
+	for(var/i in 1 to length(spanning_directions))
 		var/spanning_direction = spanning_directions[i]
 		if(!spanning_direction)
 			continue
