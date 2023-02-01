@@ -145,7 +145,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	for(var/dir in dirs)
 		var/numdir = text2num(dir)
 		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
-		row["previews"] += list(list("selected" = dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir), "dir" = dir2text(numdir), "dir_name" = dirs[dir], "icon_state" = icon_state, "flipped" = flipped))
+		row["previews"] += list(list(
+			"selected" = dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir),
+			"dir" = dir2text(numdir), 
+			"dir_name" = dirs[dir],
+			"icon_state" = icon_state,
+			"flipped" = flipped,
+		))
 		if(i++ || dirtype == PIPE_ONEDIR)
 			rows += list(row)
 			row = list("previews" = list())
