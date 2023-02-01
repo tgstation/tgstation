@@ -1,0 +1,10 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Deleting a sec record removes it from the manifest again"
+  - qol: "It's now easier to see security notes via HUD."
+  - qol: "It's now easier to see why someone is set to arrest."
+  - qol: "Crime authors and armory access can edit crimes."
+  - balance: "Setting players to arrest requires a valid crime."
+  - balance: "Armory access can invalidate priors."
+  - balance: "Setting players to arrest via HUD creates a crime for the suspect."
