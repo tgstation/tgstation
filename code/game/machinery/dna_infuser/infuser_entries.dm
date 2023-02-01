@@ -1,16 +1,17 @@
 /// A list of all infuser entries
-GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
+GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 
 /// just clarifying that no threshold does some special stuff, since only meme mutants have it
-#define NO_THRESHOLD ""
+#define DNA_INFUSION_NO_THRESHOLD ""
 
-/proc/prepare_entries()
+/// Global proc that sets up each [/datum/infuser_entry] sub-type as singleton instances in a list, and returns it.
+/proc/prepare_infuser_entries()
 	var/list/entries = list()
-	//regardless of names we want the failed mutant case to show first
+	// Regardless of names, we want the fly/failed mutant case to show first.
 	var/prepended
-	for(var/datum/infuser_entry/entry_type as anything in typesof(/datum/infuser_entry))
+	for(var/datum/infuser_entry/entry_type as anything in subtypesof(/datum/infuser_entry))
 		var/datum/infuser_entry/entry = new entry_type()
-		if(entry.type == /datum/infuser_entry)
+		if(entry.type == /datum/infuser_entry/fly)
 			prepended = entry
 			continue
 		entries += entry
@@ -19,32 +20,43 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 	return sorted
 
 /datum/infuser_entry
-	//info for the book
-
+	//-- Vars for DNA Infusion Book --//
 	/// name of the mutant you become
-	var/name = "Rejected"
+	var/name = "Mutant"
 	/// what you have to infuse to become it
-	var/infuse_mob_name = "rejected creature"
+	var/infuse_mob_name = "some kind of mutant"
 	/// general desc
-	var/desc = "For whatever reason, when the body rejects DNA, the DNA goes sour, ending up as some kind of fly-like DNA jumble."
+	var/desc = "The ignorants call you a mutant. I prefer to think of mutants as the future of mankind! They could use a guy like you on their team."
 	/// desc of what passing the threshold gets you. if this is empty, there is no threshold, so this is also really a tally of whether this is a "meme" mutant or not
-	var/threshold_desc = "the DNA mess takes over, and you become a full-fledged flyperson."
-	/// various little bits
+	var/threshold_desc = "the DNA mess takes over, and you turn into a mutant freak!"
+	/// List of personal attributes added by the mutation.
 	var/list/qualities = list(
+		"override this",
+		"puts pineapple on pizza",
+		"inspiration for birth control",
+		"just a weird guy",
+	)
+	//-- Vars for DNA Infuser Machine --//
+	/// List of objects, mobs, and/or items, the machine will infuse to make output organs.
+	/// Rejected creatures, of course, are anything not covered by other recipes. This is a special case
+	var/list/input_obj_or_mob
+	/// List of organs that the machine could spit out in relation
+	var/list/output_organs
+	///message the target gets while being infused
+	var/infusion_desc = "mutant-like"
+
+/datum/infuser_entry/fly
+	name = "Rejected"
+	infuse_mob_name = "rejected creature"
+	desc = "For whatever reason, when the body rejects DNA, the DNA goes sour, ending up as some kind of fly-like DNA jumble."
+	threshold_desc = "the DNA mess takes over, and you become a full-fledged flyperson."
+	qualities = list(
 		"buzzy-like speech",
 		"vomit drinking",
 		"unidentifiable organs",
 		"this is a bad idea",
 	)
-
-	//info for the machine
-
-	/// ...THINGS, mobs or items, the machine will infuse to make output organs
-	var/list/input_obj_or_mob = list(
-		///rejected creatures, of course, are anything not covered by other recipes. This is a special case
-	)
-	/// organs that the machine could spit out in relation
-	var/list/output_organs = list(
+	output_organs = list(
 		/obj/item/organ/internal/appendix/fly,
 		/obj/item/organ/internal/eyes/fly,
 		/obj/item/organ/internal/heart/fly,
@@ -52,8 +64,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 		/obj/item/organ/internal/stomach/fly,
 		/obj/item/organ/internal/tongue/fly,
 	)
-	///message the target gets while being infused
-	var/infusion_desc = "fly-like"
+	infusion_desc = "fly-like"
 
 /datum/infuser_entry/rat
 	name = "Rat"
@@ -105,7 +116,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 	name = "Cat"
 	infuse_mob_name = "feline"
 	desc = "EVERYONE CALM DOWN! I'm not implying anything with this entry. Are we really so surprised that felinids are humans with mixed feline DNA?"
-	threshold_desc = NO_THRESHOLD
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
 		"oh, let me guess, you're a big fan of those japanese tourist bots",
 	)
@@ -122,7 +133,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 	name = "Fox"
 	infuse_mob_name = "vulpini"
 	desc = "Foxes are now quite rare because of the \"fox ears\" craze back in 2555. I mean, also because we're spacefarers who destroyed foxes' natural habitats ages ago, but that applies to most animals."
-	threshold_desc = NO_THRESHOLD
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
 		"oh come on really",
 		"you bring SHAME to all geneticists",
@@ -162,7 +173,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 	name = "Mothroach"
 	infuse_mob_name = "Mothroach"
 	desc = "So first they mixed moth and roach DNA to make mothroaches, and now we mix mothroach DNA with humanoids to make mothmen hybrids?"
-	threshold_desc = NO_THRESHOLD
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
 		"eyes weak to bright lights",
 		"you flutter when you talk",

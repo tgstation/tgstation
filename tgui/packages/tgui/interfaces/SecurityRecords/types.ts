@@ -7,6 +7,8 @@ export type SecurityRecordsData = {
   current_user: string;
   higher_access: BooleanLike;
   records: SecurityRecord[];
+  min_age: number;
+  max_age: number;
 };
 
 export type SecurityRecord = {

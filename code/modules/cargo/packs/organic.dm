@@ -224,7 +224,7 @@
 
 /// adds a randomized pizza from the pizza list
 /datum/supply_pack/organic/pizza/proc/add_normal_pizza(obj/structure/closet/crate/new_crate, list/rng_pizza_list)
-	var/randomize_pizza = pick_n_take(rng_pizza_list)
+	var/randomize_pizza = pick_weight(rng_pizza_list)
 	rng_pizza_list -= randomize_pizza
 	var/obj/item/pizzabox/new_pizza_box = new(new_crate)
 	new_pizza_box.pizza = new randomize_pizza

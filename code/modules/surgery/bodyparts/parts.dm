@@ -23,14 +23,6 @@
 		return FALSE
 	return ..()
 
-/obj/item/bodypart/chest/on_removal()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/undie_haver = owner
-		undie_haver.underwear = "Nude"
-		undie_haver.undershirt = "Nude"
-
-	..()
-
 /obj/item/bodypart/chest/Destroy()
 	QDEL_NULL(cavity_item)
 	return ..()
@@ -311,12 +303,6 @@
 	unarmed_damage_low = 2
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = 10
-
-/obj/item/bodypart/leg/on_removal()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/sock_haver = owner
-		sock_haver.socks = "Nude"
-	..()
 
 /obj/item/bodypart/leg/left
 	name = "left leg"
