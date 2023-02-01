@@ -1,5 +1,14 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Dropdown, LabeledList, ProgressBar, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
 const getMuleByRef = (mules, ref) => {
@@ -9,17 +18,9 @@ const getMuleByRef = (mules, ref) => {
 export const NtosRoboControl = (props, context) => {
   const { act, data } = useBackend(context);
   const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
-  const {
-    PC_device_theme,
-    bots,
-    drones,
-    id_owner,
-    has_id,
-    droneaccess,
-    dronepingtypes,
-  } = data;
+  const { bots, drones, id_owner, droneaccess, dronepingtypes } = data;
   return (
-    <NtosWindow width={550} height={550} theme={PC_device_theme}>
+    <NtosWindow width={550} height={550}>
       <NtosWindow.Content scrollable>
         <Section title="Robot Control Console">
           <LabeledList>

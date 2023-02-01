@@ -5,20 +5,20 @@ import { NtosWindow } from '../layouts';
 
 export const NtosEmojipedia = (props, context) => {
   const { data } = useBackend(context);
-  const { PC_device_theme, emoji_list } = data;
+  const { emoji_list } = data;
   const [filter, updatefilter] = useSharedState(context, 'filter', '');
 
   let filtered_emoji_list = filter
     ? emoji_list.filter((emoji) => {
-      return emoji.name.toLowerCase().includes(filter.toLowerCase());
-    })
+        return emoji.name.toLowerCase().includes(filter.toLowerCase());
+      })
     : emoji_list;
   if (filtered_emoji_list.length === 0) {
     filtered_emoji_list = emoji_list;
   }
 
   return (
-    <NtosWindow width={600} height={800} theme={PC_device_theme}>
+    <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
         <Section
           // required: follow semantic versioning every time you touch this file

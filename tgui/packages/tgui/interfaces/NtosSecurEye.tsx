@@ -1,10 +1,13 @@
 import { useBackend } from '../backend';
 import { Button, ByondUi } from '../components';
 import { NtosWindow } from '../layouts';
-import { prevNextCamera, selectCameras, CameraConsoleContent } from './CameraConsole';
+import {
+  prevNextCamera,
+  selectCameras,
+  CameraConsoleContent,
+} from './CameraConsole';
 
 type Data = {
-  PC_device_theme: string;
   mapRef: string;
   activeCamera: Camera;
   cameras: Camera[];
@@ -15,11 +18,8 @@ type Camera = {
 };
 
 export const NtosSecurEye = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const { PC_device_theme } = data;
-
   return (
-    <NtosWindow width={800} height={600} theme={PC_device_theme}>
+    <NtosWindow width={800} height={600}>
       <NtosWindow.Content>
         <div className="CameraConsole__left">
           <CameraConsoleContent />

@@ -3,18 +3,15 @@ import { NtosWindow } from '../layouts';
 import { SupermatterContent, SupermatterData } from './Supermatter';
 import { Button, ProgressBar, Section, Table } from '../components';
 
-type NtosSupermatterData = SupermatterData & {
-  PC_device_theme: string;
-  focus_uid?: number;
-};
+type NtosSupermatterData = SupermatterData & { focus_uid?: number };
 
 export const NtosSupermatter = (props, context) => {
   const { act, data } = useBackend<NtosSupermatterData>(context);
-  const { sm_data, gas_metadata, focus_uid, PC_device_theme } = data;
+  const { sm_data, gas_metadata, focus_uid } = data;
   const [activeUID, setActiveUID] = useLocalState(context, 'activeUID', 0);
   const activeSM = sm_data.find((sm) => sm.uid === activeUID);
   return (
-    <NtosWindow height={400} width={700} theme={PC_device_theme}>
+    <NtosWindow height={400} width={700}>
       <NtosWindow.Content>
         {activeSM ? (
           <SupermatterContent

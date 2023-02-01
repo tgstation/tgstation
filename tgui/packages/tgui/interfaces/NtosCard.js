@@ -1,13 +1,19 @@
 import { useBackend } from '../backend';
-import { Box, Button, Dropdown, Input, NumberInput, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  NumberInput,
+  Section,
+  Stack,
+} from '../components';
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
 export const NtosCard = (props, context) => {
-  const { data } = useBackend(context);
-  const { PC_device_theme } = data;
   return (
-    <NtosWindow width={500} height={670} theme={PC_device_theme}>
+    <NtosWindow width={500} height={670}>
       <NtosWindow.Content scrollable>
         <NtosCardContent />
       </NtosWindow.Content>

@@ -16,7 +16,7 @@ export const NtosThemeConfigure = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { PC_device_theme, themes } = data;
   return (
-    <NtosWindow theme={PC_device_theme} width={400} height={600} resizable>
+    <NtosWindow width={400} height={600}>
       <NtosWindow.Content scrollable>
         <Flex
           height="70%"

@@ -1,12 +1,20 @@
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, LabeledList, ProgressBar, Section, Slider, Tabs } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Slider,
+  Tabs,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosRobotact = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { PC_device_theme } = data;
   return (
-    <NtosWindow width={800} height={600} theme={PC_device_theme}>
+    <NtosWindow width={800} height={600}>
       <NtosWindow.Content>
         <NtosRobotactContent />
       </NtosWindow.Content>
@@ -220,8 +228,8 @@ export const NtosRobotactContent = (props, context) => {
                         wireAI === 'FAULT'
                           ? 'red'
                           : wireAI === 'READY'
-                            ? 'yellow'
-                            : 'green'
+                          ? 'yellow'
+                          : 'green'
                       }>
                       {wireAI}
                     </LabeledList.Item>
@@ -236,8 +244,8 @@ export const NtosRobotactContent = (props, context) => {
                         wireCamera === 'FAULT'
                           ? 'red'
                           : wireCamera === 'DISABLED'
-                            ? 'yellow'
-                            : 'green'
+                          ? 'yellow'
+                          : 'green'
                       }>
                       {wireCamera}
                     </LabeledList.Item>
@@ -252,8 +260,8 @@ export const NtosRobotactContent = (props, context) => {
                         locomotion === 'FAULT'
                           ? 'red'
                           : locomotion === 'DISABLED'
-                            ? 'yellow'
-                            : 'green'
+                          ? 'yellow'
+                          : 'green'
                       }>
                       {locomotion}
                     </LabeledList.Item>

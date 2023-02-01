@@ -1,13 +1,19 @@
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Grid,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosArcade = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { PC_device_theme } = data;
   return (
-    <NtosWindow width={450} height={350} theme={PC_device_theme}>
+    <NtosWindow width={450} height={350}>
       <NtosWindow.Content>
         <Section title="Outbomb Cuban Pete Ultra" textAlign="center">
           <Box>

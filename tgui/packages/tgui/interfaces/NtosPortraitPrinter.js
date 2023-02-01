@@ -6,7 +6,7 @@ import { NtosWindow } from '../layouts';
 export const NtosPortraitPrinter = (props, context) => {
   const { act, data } = useBackend(context);
   const [listIndex, setListIndex] = useLocalState(context, 'listIndex', 0);
-  const { PC_device_theme, paintings, search_string, search_mode } = data;
+  const { paintings, search_string, search_mode } = data;
   const got_paintings = !!paintings.length;
   const current_portrait_title = got_paintings && paintings[listIndex]['title'];
   const current_portrait_author =
@@ -15,11 +15,7 @@ export const NtosPortraitPrinter = (props, context) => {
     got_paintings && 'paintings' + '_' + paintings[listIndex]['md5'];
   const current_portrait_ratio = got_paintings && paintings[listIndex]['ratio'];
   return (
-    <NtosWindow
-      title="Art Galaxy"
-      width={400}
-      height={446}
-      theme={PC_device_theme}>
+    <NtosWindow title="Art Galaxy" width={400} height={446}>
       <NtosWindow.Content>
         <Stack vertical fill>
           <Stack.Item>

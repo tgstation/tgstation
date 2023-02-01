@@ -1,6 +1,14 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import { Box, Button, Dimmer, Icon, Section, Stack, Input } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  Section,
+  Stack,
+  Input,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
 const NoIDDimmer = (props, context) => {
@@ -40,7 +48,6 @@ export const NtosMessenger = (props, context) => {
 const ContactsScreen = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    PC_device_theme,
     owner,
     ringer_status,
     sending_and_receiving,
@@ -60,7 +67,7 @@ const ContactsScreen = (props, context) => {
   let users =
     searchUser.length > 0 ? data.messengers.filter(search) : messengers;
   return (
-    <NtosWindow width={600} height={800} theme={PC_device_theme}>
+    <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
         <Stack vertical>
           <Section fill textAlign="center">
@@ -180,9 +187,9 @@ const ContactsScreen = (props, context) => {
 
 const MessageListScreen = (props, context) => {
   const { act, data } = useBackend(context);
-  const { PC_device_theme, messages = [] } = data;
+  const { messages = [] } = data;
   return (
-    <NtosWindow width={600} height={800} theme={PC_device_theme}>
+    <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
         <Stack vertical>
           <Section fill>

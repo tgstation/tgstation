@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Input, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  Input,
+  Section,
+  Stack,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
 // byond defines for the program state
@@ -39,7 +47,6 @@ const NoChannelDimmer = (props, context) => {
 export const NtosNetChat = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    PC_device_theme,
     title,
     can_admin,
     adminmode,
@@ -82,7 +89,7 @@ export const NtosNetChat = (props, context) => {
   // client from this computer!
   const this_client = clients.find((client) => client.ref === selfref);
   return (
-    <NtosWindow width={1000} height={675} theme={PC_device_theme}>
+    <NtosWindow width={1000} height={675}>
       <NtosWindow.Content>
         <Stack fill>
           <Stack.Item>
