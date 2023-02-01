@@ -238,6 +238,9 @@
 			if(o2_pp)
 				gas_breathed = handle_suffocation(breather, o2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
 				breathe_gas_volume(breath_gases, /datum/gas/oxygen, /datum/gas/carbon_dioxide, volume = gas_breathed)
+			else
+				// No amount of O2, just suffocate
+				gas_breathed = handle_suffocation(breather, o2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
 		else
 			// Enough oxygen to breathe.
 			breather.failed_last_breath = FALSE
@@ -271,6 +274,9 @@
 			if(n2_pp)
 				gas_breathed = handle_suffocation(breather, n2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
 				breathe_gas_volume(breath_gases, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, volume = gas_breathed)
+			else
+				// no amount of N2, just suffocate
+				gas_breathed = handle_suffocation(breather, n2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
 		else
 			// Enough nitrogen to breathe.
 			breather.failed_last_breath = FALSE
@@ -316,6 +322,8 @@
 			if(co2_pp)
 				gas_breathed = handle_suffocation(breather, co2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
 				breathe_gas_volume(breath_gases, /datum/gas/carbon_dioxide, /datum/gas/oxygen, volume = gas_breathed)
+			else
+				gas_breathed = handle_suffocation(breather, co2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
 		else
 			// Enough CO2 to breathe.
 			breather.failed_last_breath = FALSE
@@ -349,6 +357,9 @@
 			if(plasma_pp)
 				gas_breathed = handle_suffocation(breather, plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
 				breathe_gas_volume(breath_gases, /datum/gas/plasma, /datum/gas/carbon_dioxide, volume = gas_breathed)
+			else
+				// no partial pressure, just suffocate
+				gas_breathed = handle_suffocation(breather, plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
 		else
 			// Enough Plasma to breathe.
 			breather.failed_last_breath = FALSE
