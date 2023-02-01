@@ -129,7 +129,7 @@
 	for(var/mob/living/living_mob in contents)
 		if(living_mob)
 			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
-			M.adjustBruteLoss(60 * delta_time)
+			living_mob.adjustBruteLoss(60 * delta_time)
 			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
 			if(living_mob.stat == DEAD)
 				var/mob/living/basic/blank
