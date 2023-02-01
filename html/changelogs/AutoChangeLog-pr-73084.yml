@@ -1,0 +1,5 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "17 year old crew member medical/security records will no longer show them as 18"
+  - code_imp: "Medical and security records now use the minimum and maximum age defines rather than hardcoded minimums and maximums"

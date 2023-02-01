@@ -12,10 +12,12 @@
 #define PLANE_SPACE -25
 #define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -12
+#define GRAVITY_PULSE_PLANE -13
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
+#define RENDER_PLANE_TRANSPARENT -12 //Transparent plane that shows openspace underneath the floor
+
+#define TRANSPARENT_FLOOR_PLANE -11
 
 #define FLOOR_PLANE -10
 

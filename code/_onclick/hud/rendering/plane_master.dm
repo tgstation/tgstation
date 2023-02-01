@@ -355,6 +355,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = FLOOR_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME, LIGHT_MASK_PLANE)
 
+/atom/movable/screen/plane_master/transparent_floor
+	name = "Transparent Floor"
+	documentation = "Really just openspace, stuff that is a turf but has no color or alpha whatsoever.\
+		<br>We use this to draw to just the light mask plane, cause if it's not there we get holes of blackness over openspace"
+	plane = TRANSPARENT_FLOOR_PLANE
+	render_relay_planes = list(LIGHT_MASK_PLANE)
+
 /atom/movable/screen/plane_master/floor/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FLOOR_LAYER, relay_color = GLOB.em_block_color)

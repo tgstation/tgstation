@@ -174,8 +174,8 @@
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
 	. = ..()
-	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]")
-	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]")
+	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]")
+	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]")
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
