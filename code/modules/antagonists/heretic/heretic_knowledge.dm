@@ -712,18 +712,17 @@
 
 	return ..()
 
-/datum/heretic_knowledge/mansus_restoration_ritual
-	name = "Mansus restoration" // sounds awful
+/datum/heretic_knowledge/mansus_restoration
+	name = "Mansus returnal" // sounds awful
 	desc = "Sacrifice lungs, potted plant and a radio to restore your link to the Mansus."
+	gain_text = "A way to return my powers, at any cost..."
 	required_atoms = (
-		/obj/item/organ/inter/lungs,
-		/obj/item/kirbyplants, // because why not lol
+		/obj/item/organ/internal/ears,
+		/obj/item/kirbyplants,
 		/obj/item/radio,
 	)
 	priority = MAX_KNOWLEDGE_PRIORITY - 4 // below basic rituals so you can see it
 	route = null
 
-/datum/heretic_knowledge/mansus_restoration_ritual/on_finished_recipe
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	ADD_TRAIT(our_heretic, TRAIT_ALLOW_HERETIC_CASTING, src)
-	to_chat(user, span_hypnophrase(span_big("You restored your link to the Mansus.")))
+/datum/heretic_knowledge/mansus_restoration/on_finished_recipe
+	UnregisterSignal(sac_target, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))

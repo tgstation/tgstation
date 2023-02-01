@@ -370,11 +370,10 @@
 	sac_target.clear_mood_event("shadow_realm")
 	if(!(IS_HERETIC(sac_target)))
 		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_MAGIC)
-
-	if(IS_HERETIC(sac_target))
-		REMOVE_TRAIT(sac_target, TRAIT_ALLOW_HERETIC_CASTING, src)
-		to_chat(sac_target, span_hypnophrase("Your link to the Mansus fell weaker, as if someone stole your powers.")
-		gain_knowledge(mansus_restoration_ritual)
+	else
+		RegisterSignal(sac_target, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
+		to_chat(sac_target, span_hypnophrase("Your link to the Mansus feels weaker, as if someone stole all your powers.")
+		gain_knowledge(mansus_restoration)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
