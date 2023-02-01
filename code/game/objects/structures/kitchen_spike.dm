@@ -11,7 +11,7 @@
 
 /obj/structure/kitchenspike_frame/examine(mob/user)
 	. = ..()
-	. += "Deconstruct with a welding tool to yield [MEATSPIKE_IRONROD_REQUIREMENT] iron sheets"
+	. += "Deconstruct it with a welding tool to yield [MEATSPIKE_IRONROD_REQUIREMENT] iron sheets"
 	. += "Use [MEATSPIKE_IRONROD_REQUIREMENT] iron rods on it to create a Meat Spike"
 
 /obj/structure/kitchenspike_frame/welder_act(mob/living/user, obj/item/tool)
