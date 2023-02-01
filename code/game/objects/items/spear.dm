@@ -13,7 +13,7 @@
 	demolition_mod = 0.75
 	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
 	armour_penetration = 10
-	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
+	custom_materials = list(/datum/material/iron=1000, /datum/material/glass=2000)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
@@ -206,6 +206,7 @@
 
 	throwforce = 22
 	armour_penetration = 15 //Enhanced armor piercing
+	custom_materials = list(/datum/material/bone=7000)
 	force_unwielded = 12
 	force_wielded = 20
 
@@ -220,5 +221,6 @@
 	desc = "A haphazardly-constructed bamboo stick with a sharpened tip, ready to poke holes into unsuspecting people."
 
 	throwforce = 22	//Better to throw
+	custom_materials = list(/datum/material/bamboo=40000)
 	force_unwielded = 10
 	force_wielded = 18
