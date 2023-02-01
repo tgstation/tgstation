@@ -136,6 +136,11 @@
 		return TRUE
 
 	if(seedify(attacking_item, -1, src, user))
+		//find all seeds lying on the turf and add them to the machine
+		var/obj/item/seeds/to_store
+		while((to_store = locate(/obj/item/seeds, loc)) != null)
+			add_seed(to_store, null)
+
 		to_chat(user, span_notice("You extract some seeds."))
 		return TRUE
 
@@ -176,17 +181,19 @@
  * needed to go to the ui handler
  *
  * to_add - what seed are we adding?
- * taking_from - where are we taking the seed from? A mob, a bag, etc?
- * user - who is inserting the seed?
+ * taking_from - where are we taking the seed from? A mob, a bag, etc? If null its means its just laying on the turf so force move it in
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/to_add, atom/taking_from)
-	if(ismob(taking_from))
-		var/mob/mob_loc = taking_from
-		if(!mob_loc.transferItemToLoc(to_add, src))
-			return FALSE
+	if(!isnull(taking_from))
+		if(ismob(taking_from))
+			var/mob/mob_loc = taking_from
+			if(!mob_loc.transferItemToLoc(to_add, src))
+				return FALSE
 
-	else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
-		return FALSE
+		else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
+			return FALSE
+	else
+		to_add.forceMove(src)
 
 	var/seed_id = generate_seed_hash(to_add)
 	if(piles[seed_id])
