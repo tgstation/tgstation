@@ -102,11 +102,11 @@
 	max_mobs = 15
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls through"
-	mob_types = list(/mob/living/basic/netherworld/migo, /mob/living/basic/netherworld/creature, /mob/living/basic/netherworld)
+	mob_types = list(/mob/living/basic/migo, /mob/living/basic/creature, /mob/living/basic/blankbody)
 	faction = list("nether")
 
 /obj/structure/spawner/nether/Initialize(mapload)
-	.=..()
+	. = ..()
 	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/spawner/nether/examine(mob/user)
@@ -132,7 +132,7 @@
 			M.adjustBruteLoss(60 * delta_time)
 			new /obj/effect/gibspawner/generic(get_turf(M), M)
 			if(M.stat == DEAD)
-				var/mob/living/basic/netherworld/blank
+				var/mob/living/basic/blank
 				blank = new(loc)
 				blank.name = "[M]"
 				blank.desc = "It's [M], but [M.p_their()] flesh has an ashy texture, and [M.p_their()] face is featureless save an eerie smile."

@@ -1,4 +1,4 @@
-/mob/living/basic/netherworld
+/mob/living/basic/blankbody
 	name = "blank body"
 	desc = "This looks human enough, but its flesh has an ashy texture, and it's face is featureless save an eerie smile."
 	icon_state = "blank-body"
@@ -13,7 +13,7 @@
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	attack_vis_effect = ATTACK_EFFECT_SLASH // I always thought they bit. Guess I was wrong.
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list("nether")
 	speak_emote = list("screams")
 	death_message = "falls apart into a fine dust."
@@ -26,13 +26,13 @@
 	/// Used for mobs that get spawned in a spawner appearently.
 	var/datum/component/spawner/nest
 
-/mob/living/basic/netherworld/Initialize(mapload)
+/mob/living/basic/blankbody/Initialize(mapload)
 	. = ..()
 	var/datum/callback/health_changes_callback = CALLBACK(src, PROC_REF(health_check))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 	AddComponent(/datum/component/damage_buffs, health_changes_callback)
 
-/mob/living/basic/netherworld/proc/health_check(mob/living/attacker)
+/mob/living/basic/blankbody/proc/health_check(mob/living/attacker)
 	if(health < maxHealth * 0.25)
 		health_low_behaviour()
 	else if (health < maxHealth * 0.5)
@@ -42,21 +42,27 @@
 	else
 		health_full_behaviour()
 
-/mob/living/basic/netherworld/proc/health_full_behaviour()
+/mob/living/basic/blankbody/proc/health_full_behaviour()
 	melee_damage_lower = 2
 	melee_damage_upper = 6
 
-/mob/living/basic/netherworld/proc/health_high_behaviour()
+/mob/living/basic/blankbody/proc/health_high_behaviour()
 	melee_damage_lower = 4
 	melee_damage_upper = 8
 
-/mob/living/basic/netherworld/proc/health_medium_behaviour()
+/mob/living/basic/blankbody/proc/health_medium_behaviour()
 	melee_damage_lower = 8
 	melee_damage_upper = 12
 
-/mob/living/basic/netherworld/proc/health_low_behaviour()
+/mob/living/basic/blankbody/proc/health_low_behaviour()
 	melee_damage_lower = 10
 	melee_damage_upper = 20
+
+/mob/living/basic/blankbody/Destroy()
+	if(nest)
+		nest.spawned_mobs -= src
+		nest = null
+	return ..()
 
 /datum/ai_controller/basic_controller/blankbody
 	blackboard = list(
@@ -70,9 +76,3 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
 	)
-
-/mob/living/basic/netherworld/Destroy()
-	if(nest)
-		nest.spawned_mobs -= src
-		nest = null
-	return ..()

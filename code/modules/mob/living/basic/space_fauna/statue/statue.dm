@@ -50,7 +50,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/statue
 	/// Loot this mob drops on death.
 	var/loot
-
+	/// Stores the creator in here if it has one.
 	var/mob/living/creator = null
 
 // No movement while seen code.
@@ -105,7 +105,7 @@
 /mob/living/basic/statue/proc/can_be_seen(turf/location)
 	// Check for darkness
 	if(location?.lighting_object)
-		if(location.get_lumcount()<0.1) // No one can see us in the darkness, right?
+		if(location.get_lumcount() < 0.1) // No one can see us in the darkness, right?
 			return null
 
 	// We aren't in darkness, loop for viewers.
@@ -119,8 +119,8 @@
 			if(mob_target.client && !mob_target.is_blind() && !mob_target.has_unlimited_silicon_privilege)
 				if(!istype(mob_target, /mob/living/basic/statue))
 					return mob_target
-		for(var/obj/vehicle/sealed/mecha/M in oview(src, 7))
-			for(var/mob/mechamob_target as anything in M.occupants)
+		for(var/obj/vehicle/sealed/mecha/mecha_mob_target in oview(src, 7))
+			for(var/mob/mechamob_target as anything in mecha_mob_target.occupants)
 				if(mechamob_target.client && !mechamob_target.is_blind())
 					return mechamob_target
 	return null
