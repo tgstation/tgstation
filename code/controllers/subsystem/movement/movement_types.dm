@@ -113,7 +113,7 @@
 		return
 
 	var/visual_delay = controller.visual_delay
-	var/result = move() //Is not necesarily a bool, can also return MOVELOOP_NOT_READ
+	var/result = move() //Result is an enum value. Enums defined in __DEFINES/movement.dm
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay)
 
@@ -383,8 +383,6 @@
 	COOLDOWN_DECLARE(repath_cooldown)
 	///Bool used to determine if we're already making a path in JPS. this prevents us from re-pathing while we're already busy.
 	var/is_pathing = FALSE
-	///The initial path we received from an outside source. Can be used to save CPU if you had already calculated a path initially outside of the moveloop.
-	var/list/initial_path
 	///Callback to invoke once we make a path
 	var/datum/callback/on_finish_callback
 
@@ -403,25 +401,23 @@
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.skip_first = skip_first
-	src.initial_path = initial_path.Copy()
+	movement_path = initial_path.Copy()
 	if(isidcard(id))
 		RegisterSignal(id, COMSIG_PARENT_QDELETING, PROC_REF(handle_no_id)) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
 
 /datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first, initial_path)
-	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && id == src.id && simulated_only == src.simulated_only && avoid == src.avoid && initial_path == src.initial_path)
+	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && id == src.id && simulated_only == src.simulated_only && avoid == src.avoid)
 		return TRUE
 	return FALSE
 
 /datum/move_loop/has_target/jps/loop_started()
 	. = ..()
-	if(initial_path)
-		movement_path = initial_path
-	else
+	if(!movement_path)
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 
 /datum/move_loop/has_target/jps/loop_stopped()
 	. = ..()
-	initial_path = null
+	movement_path = null
 
 /datum/move_loop/has_target/jps/Destroy()
 	id = null //Kill me
