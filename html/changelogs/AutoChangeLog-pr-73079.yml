@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Rehydrated Carp should now properly recognise who is the boss and follow their instructions."
